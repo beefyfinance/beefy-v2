@@ -10,12 +10,7 @@ import { balanceSlice } from './wallet/balance.ts';
 import { allowanceSlice } from './wallet/allowance.ts';
 import { dataLoaderSlice } from './data-loader.ts';
 import { walletSlice } from './wallet/wallet.ts';
-import {
-  bigNumberTransform,
-  chainIdsTransform,
-  filteredVaultsSlice,
-  userCategoryTransform,
-} from './filtered-vaults.ts';
+import { bigNumberTransform, filteredVaultsSlice } from './filtered-vaults.ts';
 import { platformsSlice } from './platforms.ts';
 import { partnersSlice } from './partners.ts';
 import { zapsSlice } from './zaps.ts';
@@ -86,8 +81,9 @@ const uiReducer = combineReducers({
     {
       key: 'filters',
       storage,
-      transforms: [bigNumberTransform, userCategoryTransform, chainIdsTransform],
+      transforms: [bigNumberTransform],
       blacklist: ['filteredVaultIds', 'sortedFilteredVaultIds', 'onlyUnstakedClm'],
+      version: 2, // increase this if you make changes to FilteredVaultsState
     },
     filteredVaultsSlice.reducer
   ),
@@ -101,8 +97,9 @@ const uiReducer = combineReducers({
   treasury: treasurySlice.reducer,
   addToWallet: addToWalletSlice.reducer,
   version: versionReducer,
-  tenderly: import.meta.env.DEV
-    ? persistReducer(
+  tenderly:
+    import.meta.env.DEV ?
+      persistReducer(
         {
           key: 'tenderly',
           storage,

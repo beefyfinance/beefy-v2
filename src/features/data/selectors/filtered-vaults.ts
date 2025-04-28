@@ -13,6 +13,7 @@ import escapeStringRegexp from 'escape-string-regexp';
 import type BigNumber from 'bignumber.js';
 import { selectVaultTotalApy } from './apy.ts';
 import { selectActivePromoForVault } from './promos.ts';
+import type { SortWithSubSort } from '../reducers/filtered-vaults-types.ts';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
@@ -26,6 +27,10 @@ export const selectFilterStrategyType = (state: BeefyState) => state.ui.filtered
 export const selectFilterVaultCategory = (state: BeefyState) =>
   state.ui.filteredVaults.vaultCategory;
 export const selectFilterPlatformIds = (state: BeefyState) => state.ui.filteredVaults.platformIds;
+export const selectFilterAvgApySort = (state: BeefyState) => state.ui.filteredVaults.subSort.apy;
+
+export const selectFilterSubSort = <T extends SortWithSubSort>(state: BeefyState, key: T) =>
+  state.ui.filteredVaults.subSort[key];
 
 export const selectFilterBoolean = createCachedSelector(
   (_state: BeefyState, key: KeysOfType<FilteredVaultsState, boolean>) => key,
@@ -193,8 +198,3 @@ export const selectVaultIsBoostedForFilter = (state: BeefyState, vaultId: VaultE
   const apy = selectVaultTotalApy(state, vaultId);
   return !!apy && (apy.boostedTotalDaily || 0) > 0;
 };
-
-export const selectAvgApySort = createSelector(
-  selectFilterOptions,
-  filterOptions => filterOptions.avgApySort
-);

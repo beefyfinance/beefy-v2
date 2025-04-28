@@ -72,7 +72,7 @@ const hasSortChanged = isAnyOf(
   filteredVaultsActions.setSort,
   filteredVaultsActions.setSortDirection,
   filteredVaultsActions.setSortFieldAndDirection,
-  filteredVaultsActions.setAvgApySort
+  filteredVaultsActions.setSubSort
 );
 
 const hasWalletChanged = isAnyOf(

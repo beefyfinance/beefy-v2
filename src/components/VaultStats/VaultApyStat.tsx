@@ -17,7 +17,7 @@ import {
   getApyLabelsTypeForVault,
 } from '../../helpers/apy.ts';
 import { useTranslation } from 'react-i18next';
-import { selectAvgApySort } from '../../features/data/selectors/filtered-vaults.ts';
+import { selectFilterAvgApySort } from '../../features/data/selectors/filtered-vaults.ts';
 import type { AvgApy } from '../../features/data/reducers/apy.ts';
 import ExclamationWarning from '../../images/icons/exclamation-warning.svg?react';
 import { DivWithTooltip } from '../Tooltip/DivWithTooltip.tsx';
@@ -40,7 +40,7 @@ export const VaultApyStat = memo(function VaultApyStat({
 }: VaultApyStatProps) {
   const { t } = useTranslation();
   const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
-  const avgApySort = useAppSelector(selectAvgApySort);
+  const subSortApy = useAppSelector(selectFilterAvgApySort);
   const avgApy = useAppSelector(state => selectVaultAvgApy(state, vaultId));
 
   const label =
@@ -76,17 +76,17 @@ export const VaultApyStat = memo(function VaultApyStat({
     data.boosted === 'prestake' ? t('PRE-STAKE')
     : data.boosted === 'active' ? formatted[boostedTotalKey]
     : type === 'daily' ? formatted[totalKey]
-    : avgApySort === 'default' ? formatted[totalKey]
-    : formatLargePercent(avgApy[avgApySort], 2, '???');
+    : subSortApy === 'default' ? formatted[totalKey]
+    : formatLargePercent(avgApy[subSortApy], 2, '???');
 
   const subValue =
     isBoosted ?
       type === 'daily' ? formatted[totalKey]
-      : avgApySort === 'default' ? formatted[totalKey]
-      : formatLargePercent(avgApy[avgApySort], 2, '???')
+      : subSortApy === 'default' ? formatted[totalKey]
+      : formatLargePercent(avgApy[subSortApy], 2, '???')
     : undefined;
 
-  const showAvgApyTooltip = avgApySort !== 'default' && type === 'yearly';
+  const showAvgApyTooltip = subSortApy !== 'default' && type === 'yearly';
 
   return (
     <VaultValueStat
@@ -208,12 +208,12 @@ export const AvgApyTooltipWarning = memo(function AvgApyTooltipWarning({
 }) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const avgApySort = useAppSelector(selectAvgApySort);
+  const subSortApy = useAppSelector(selectFilterAvgApySort);
   const vaultCreatedDate = new Date(vault.createdAt * 1000);
   const daysSinceCreation = differenceInDays(new Date(), vaultCreatedDate);
 
   const shouldShowWarning = useMemo(() => {
-    if (avgApySort === 'default' || !vault.createdAt) {
+    if (subSortApy === 'default' || !vault.createdAt) {
       return false;
     }
 
@@ -221,14 +221,14 @@ export const AvgApyTooltipWarning = memo(function AvgApyTooltipWarning({
       avg7d: 7,
       avg30d: 30,
       avg90d: 90,
-    }[avgApySort];
+    }[subSortApy];
 
     if (!periodDays) {
       return false;
     }
 
     return daysSinceCreation < periodDays;
-  }, [avgApySort, vault.createdAt, daysSinceCreation]);
+  }, [subSortApy, vault.createdAt, daysSinceCreation]);
 
   if (!shouldShowWarning) {
     return null;

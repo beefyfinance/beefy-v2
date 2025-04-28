@@ -19,7 +19,7 @@ const headerCss = css({
   width: '100%',
   color: 'text.dark',
   background: 'background.content.dark',
-  padding: '16px',
+  padding: '16px 24px',
   gridTemplateColumns: '1fr',
   alignItems: 'center',
   backgroundClip: 'padding-box',

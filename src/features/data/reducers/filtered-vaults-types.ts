@@ -21,5 +21,10 @@ export function isValidUserCategory(category: string): category is UserCategoryT
   return ['all', 'saved', 'deposited'].includes(category);
 }
 
-//temp remove 30/90 d
-export type AvgApySortType = 'avg7d' | 'default';
+export type AvgApySortType = 'default' | 'avg7d' | 'avg30d' | 'avg90d';
+
+export type SubSortsState = {
+  apy: AvgApySortType;
+};
+
+export type SortWithSubSort = keyof SubSortsState & SortType;

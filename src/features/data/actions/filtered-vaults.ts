@@ -302,8 +302,8 @@ function applyApySort(
 
       const avgApy = selectVaultAvgApy(state, vault.id);
 
-      if (filters.avgApySort !== 'default') {
-        const value = avgApy[filters.avgApySort];
+      if (filters.subSort.apy !== 'default') {
+        const value = avgApy[filters.subSort.apy];
         if (value !== undefined) {
           return value || 0;
         }
