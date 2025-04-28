@@ -56,7 +56,7 @@ const Layout = styled('div', {
     justifyContent: 'space-between',
     alignItems: 'center',
     gap: '8px',
-    backgroundColor: 'darkblue.80',
+    backgroundColor: 'darkBlue.80',
     padding: '8px 16px',
   },
 });

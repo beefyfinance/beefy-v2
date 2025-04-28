@@ -343,197 +343,84 @@ const config = buildConfig(
           vaultPausedBackground: { value: '#d153470c' },
           vaultTagDividerBackground: { value: '#D9D9D949' },
           zapDiscountedFeesBackground: { value: '#59a662' },
+          yellow: {
+            '40': { value: '#d6d05d' },
+            '80': { value: '#D6CE2B' },
+            '80-40a': { value: '#D6CE2B66' },
+          },
           gold: {
-            '10': {
-              value: '#f7f3e3',
-            },
-            '20': {
-              value: '#f7e9ca',
-            },
-            '30': {
-              value: '#f8dfa9',
-            },
-            '40': {
-              value: '#f3d894',
-            },
-            '50': {
-              value: '#eccc7d',
-            },
-            '60': {
-              value: '#e3bd63',
-            },
-            '70': {
-              value: '#d7a861',
-            },
-            '80': {
-              DEFAULT: { value: '#b17f49' },
-              '40': {
-                value: '#B17F4966',
-              },
-            },
-            '90': {
-              value: '#865c3b',
-            },
-            '100': {
-              value: '#5f412e',
-            },
+            '10': { value: '#f7f3e3' },
+            '20': { value: '#f7e9ca' },
+            '30': { value: '#f8dfa9' },
+            '40': { value: '#f3d894' },
+            '40-12a': { value: '#f3d8941f' },
+            '50': { value: '#eccc7d' },
+            '60': { value: '#e3bd63' },
+            '70': { value: '#d7a861' },
+            // NOTE: solid mix with some background color...
+            '70-20': { value: '#d7a86133' },
+            '80': { value: '#b17f49' },
+            '80-40a': { value: '#b17f4966' },
+            '90': { value: '#865c3b' },
+            '100': { value: '#5f412e' },
           },
           green: {
             DEFAULT: { value: '#4db258', description: 'primary main + indicators.success' },
-            '10': {
-              value: '#e3faeb',
-            },
-            '20': {
-              value: '#baf0ca',
-            },
-            '30': {
-              value: '#95e2a8',
-            },
-            '40': {
-              DEFAULT: {
-                value: '#72d286',
-              },
-              '12': {
-                value: '#72D2861E',
-              },
-            },
-            '50': {
-              value: '#53be64',
-            },
-            '60': {
-              value: '#449a4d',
-            },
-            '70': {
-              value: '#368a4d',
-            },
-            '80': {
-              DEFAULT: {
-                value: '#2a784c',
-              },
-              '40': {
-                value: '#2A784C66',
-              },
-            },
-            '90': {
-              value: '#1f6549',
-            },
-            '100': {
-              value: '#155042',
-            },
+            '10': { value: '#e3faeb' },
+            '20': { value: '#baf0ca' },
+            '30': { value: '#95e2a8' },
+            '40': { value: '#72d286' },
+            '40-12': { value: '#72d2861f' },
+            '50': { value: '#53be64' },
+            '50-20a': { value: '#53be6433' },
+            '60': { value: '#449a4d' },
+            '70': { value: '#368a4d' },
+            '80': { value: '#2a784c' },
+            '80-40a': { value: '#2a784c66' },
+            '90': { value: '#1f6549' },
+            '100': { value: '#155042' },
           },
-          darkblue: {
-            '40': {
-              value: '#3f4574',
-            },
-            '50': {
-              value: '#363b63',
-            },
-            '60': {
-              value: '#2d3153',
-            },
-            '70': {
-              value: '#242842',
-            },
-            '80': {
-              value: '#1c1e32',
-            },
-            '90': {
-              value: '#111321',
-            },
-            '100': {
-              DEFAULT: {
-                value: '#020203',
-              },
-              '64': {
-                value: '#020203A3',
-              },
-            },
+          darkBlue: {
+            '40': { value: '#3f4574' },
+            '50': { value: '#363b63' },
+            '60': { value: '#2d3153' },
+            '60-40a': { value: '#2d315366' },
+            '70': { value: '#242842' },
+            '80': { value: '#1c1e32' },
+            '90': { value: '#111321' },
+            '90-50a': { value: '#11132180' },
+            '100': { value: '#020203' },
+            '100-64a': { value: '#020203a3' },
           },
           red: {
             DEFAULT: { value: '#dc2c10', description: 'txsModal.error' },
-            '10': {
-              value: '#ffe9e3',
-            },
-            '20': {
-              value: '#ffd5c8',
-            },
-            '30': {
-              value: '#ffc1ae',
-            },
-            '40': {
-              value: '#ffa98f',
-            },
-            '50': {
-              value: '#ff9269',
-            },
-            '60': {
-              value: '#ee784c',
-            },
-            '70': {
-              value: '#e66e42',
-            },
-            '80': {
-              DEFAULT: {
-                value: '#df6539',
-              },
-              '40': {
-                value: '#DF653966',
-              },
-            },
-            '90': {
-              value: '#d85c30',
-            },
-            '100': {
-              value: '#cf5024',
-            },
+            '10': { value: '#ffe9e3' },
+            '20': { value: '#ffd5c8' },
+            '30': { value: '#ffc1ae' },
+            '40': { value: '#ffa98f' },
+            '50': { value: '#ff9269' },
+            '60': { value: '#ee784c' },
+            '70': { value: '#e66e42' },
+            '80': { value: '#df6539' },
+            '80-40a': { value: '#df653966' },
+            '90': { value: '#d85c30' },
+            '100': { value: '#cf5024' },
           },
           white: {
             DEFAULT: { value: '#ffffff' },
-            '70': {
-              DEFAULT: {
-                value: '#999cb3',
-              },
-              '4': {
-                value: '#999CB30A',
-              },
-              '24': {
-                value: '#999CB33D',
-              },
-              '64': {
-                value: '#999CB3A3',
-              },
-            },
-            '80': {
-              value: '#bcbecd',
-            },
-            '90': {
-              DEFAULT: {
-                value: '#d0d0da',
-              },
-              '4': {
-                value: '#D0D0DA0A',
-              },
-              '24': {
-                value: '#D0D0DA3D',
-              },
-              '64': {
-                value: '#D0D0DAA3',
-              },
-            },
-            '100': {
-              DEFAULT: {
-                value: '#f5f5ff',
-              },
-              '4': {
-                value: '#F5F5FF0A',
-              },
-              '24': {
-                value: '#F5F5FF3D',
-              },
-              '64': {
-                value: '#F5F5FFA3',
-              },
-            },
+            '70': { value: '#999cb3' },
+            '70-4a': { value: '#999cb30a' },
+            '70-24a': { value: '#999cb33d' },
+            '70-64a': { value: '#999cb3a3' },
+            '80': { value: '#bcbecd' },
+            '90': { value: '#d0d0da' },
+            '90-4a': { value: '#d0d0da0a' },
+            '90-24a': { value: '#d0d0da3d' },
+            '90-64a': { value: '#d0d0daa3' },
+            '100': { value: '#f5f5ff' },
+            '100-4a': { value: '#f5f5ff0a' },
+            '100-24a': { value: '#f5f5ff3d' },
+            '100-64a': { value: '#f5f5ffa3' },
           },
         },
         sizes: {
@@ -626,16 +513,34 @@ const config = buildConfig(
             },
           },
           indicators: {
-            loading: { value: '{colors.indicatorLoading}' },
-            warning: { value: '{colors.orangeWarning}' },
-            success: { value: '{colors.green}' },
-            error: { value: '{colors.redError}' },
-            info: { value: '{colors.cornflower}' },
+            loading: {
+              DEFAULT: { value: '{colors.indicatorLoading}' },
+              fg: { value: '{colors.yellow.40}' },
+              bg: { value: '{colors.yellow.80-40a}' },
+            },
+            warning: {
+              DEFAULT: { value: '{colors.orangeWarning}' },
+              fg: { value: '{colors.gold.30}' },
+              bg: { value: '{colors.gold.80-40a}' },
+            },
+            success: {
+              DEFAULT: { value: '{colors.green}' },
+              fg: { value: '{colors.green.40}' },
+              bg: { value: '{colors.green.80-40a}' },
+            },
+            error: {
+              DEFAULT: { value: '{colors.redError}' },
+              fg: { value: '{colors.red.40}' },
+              bg: { value: '{colors.red.80-40a}' },
+            },
+            info: {
+              DEFAULT: { value: '{colors.cornflower}' },
+            },
           },
           notification: {
             transparent: {
               text: { value: '{colors.gold.30}' },
-              background: { value: '{colors.gold.80.40}' },
+              background: { value: '{colors.gold.80-40a}' },
             },
             solid: {
               text: { value: '{colors.text.black}' },
@@ -645,11 +550,11 @@ const config = buildConfig(
           status: {
             ready: {
               text: { value: '{colors.green.40}' },
-              background: { value: '{colors.green.80.40}' },
+              background: { value: '{colors.green.80-40a}' },
             },
             waiting: {
               text: { value: '{colors.gold.40}' },
-              background: { value: '{colors.gold.80.40}' },
+              background: { value: '{colors.gold.80-40a}' },
             },
           },
           tooltip: {
@@ -738,9 +643,23 @@ const config = buildConfig(
         },
       },
       keyframes: {
-        loadingPulse: {
-          from: { transform: 'scale(0.5, 0.5)', opacity: '0.7' },
-          to: { transform: 'scale(3.0, 3.0)', opacity: '0' },
+        pulse3: {
+          // marker-2/03
+          from: { transform: 'scale(0)' },
+          // marker-1/03
+          to: { transform: 'scale(0.3)' },
+        },
+        pulse2: {
+          // marker-2/02
+          from: { transform: 'scale(0.3)', opacity: '1' },
+          // marker-1/02
+          to: { transform: 'scale(1)', opacity: '0' },
+        },
+        pulse1: {
+          // marker-2/01
+          from: { transform: 'scale(0.3)' },
+          // marker-1/01
+          to: { transform: 'scale(1)' },
         },
         scrollBackground: {
           '0%': {

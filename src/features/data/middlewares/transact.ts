@@ -12,7 +12,12 @@ import {
 } from '../selectors/data-loader.ts';
 import { selectAllChainIds } from '../selectors/chains.ts';
 import { selectVaultById } from '../selectors/vaults.ts';
-import { selectTransactPendingVaultIdOrUndefined } from '../selectors/transact.ts';
+import {
+  selectTransactMode,
+  selectTransactPendingVaultIdOrUndefined,
+  selectTransactStep,
+  selectTransactVaultIdOrUndefined,
+} from '../selectors/transact.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
 import { selectAreFeesLoaded, selectShouldInitFees } from '../selectors/fees.ts';
 import {
@@ -26,6 +31,12 @@ import { transactInit, transactInitReady } from '../actions/transact.ts';
 import { fetchFees } from '../actions/fees.ts';
 import { fetchUserOffChainRewardsForVaultAction } from '../actions/user-rewards/user-rewards.ts';
 import { selectMayHaveOffchainUserRewards } from '../selectors/user-rewards.ts';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
+import { selectBoostById, selectIsVaultPreStakedOrBoosted } from '../selectors/boosts.ts';
+import { selectUserVaultBalanceInShareTokenInBoosts } from '../selectors/balance.ts';
+import { transactActions } from '../reducers/wallet/transact.ts';
+import { TransactMode, TransactStep } from '../reducers/wallet/transact-types.ts';
+import { isVaultActive } from '../entities/vault.ts';
 
 const transactListener = createListenerMiddleware<BeefyState>();
 
@@ -135,6 +146,65 @@ transactListener.startListening({
     }
 
     dispatch(transactInitReady({ vaultId: action.payload.vaultId }));
+  },
+});
+
+/** switch away from boost tab if unstaked from all boosts */
+transactListener.startListening({
+  actionCreator: reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
+  effect: async (action, { getState, dispatch }) => {
+    if (
+      !action.meta.arg.walletAddress ||
+      !action.meta.arg.boostId ||
+      !action.payload.balance.boosts.length
+    ) {
+      // this is not a user boost balance update
+      return;
+    }
+
+    const state = getState();
+    const step = selectTransactStep(state);
+    if (step !== TransactStep.Form) {
+      // not on form step
+      return;
+    }
+
+    const mode = selectTransactMode(state);
+    if (mode !== TransactMode.Boost) {
+      // not on boost form tab
+      return;
+    }
+
+    const boost = selectBoostById(state, action.meta.arg.boostId);
+    const vaultId = selectTransactVaultIdOrUndefined(state);
+    if (!vaultId || vaultId !== boost.vaultId) {
+      // not on the same vault this boost is for
+      return;
+    }
+
+    const vaultHasBoost = selectIsVaultPreStakedOrBoosted(state, boost.vaultId);
+    if (vaultHasBoost) {
+      // there is still a boost for this vault, so tab will not be empty
+      return;
+    }
+
+    const balance = selectUserVaultBalanceInShareTokenInBoosts(
+      state,
+      boost.vaultId,
+      action.meta.arg.walletAddress
+    );
+    if (!balance.isZero()) {
+      // still have balance in some boost of this vault
+      return;
+    }
+
+    // switch to deposit if vault still active, otherwise withdraw tab
+    const vault = selectVaultById(state, vaultId);
+    dispatch(
+      transactActions.switchMode(
+        isVaultActive(vault) ? TransactMode.Deposit : TransactMode.Withdraw
+      )
+    );
   },
 });
 

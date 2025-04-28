@@ -4,6 +4,7 @@ import {
   isErc4626Vault,
   isGovVault,
   isStandardVault,
+  isVaultWithReceipt,
   type VaultEntity,
 } from '../entities/vault.ts';
 import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet.ts';
@@ -158,7 +159,7 @@ export const selectDashboardUserRewardsByVaultId = (
     }
   }
 
-  if (isStandardVault(vault)) {
+  if (isVaultWithReceipt(vault)) {
     const boosts = selectAllVaultBoostIds(state, vaultId);
     for (const boostId of boosts) {
       const boostRewards = selectBoostUserRewardsInToken(state, boostId, walletAddress) || [];

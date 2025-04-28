@@ -9,6 +9,7 @@ import {
   isGovVault,
   isSingleGovVault,
   isStandardVault,
+  isVaultWithReceipt,
   type VaultEntity,
   type VaultGov,
 } from '../entities/vault.ts';
@@ -145,6 +146,20 @@ export const selectUserVaultBalanceInShareTokenInBoosts = createSelector(
 );
 
 /**
+ * Only includes shares deposited in boosts, converted to deposit token
+ */
+export const selectUserVaultBalanceInDepositTokenInBoosts = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectVaultSharesToDepositTokenData(state, vaultId),
+  (shares, shareData) =>
+    shareData.shareToken ?
+      mooAmountToOracleAmount(shareData.shareToken, shareData.depositToken, shareData.ppfs, shares)
+    : shares
+)((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
+
+/**
  * Only includes shares deposited in current boost
  */
 export const selectUserVaultBalanceInShareTokenInCurrentBoost = createSelector(
@@ -240,7 +255,7 @@ export const selectVaultSharesToDepositTokenData = createCachedSelector(
   },
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
-    return !isSingleGovVault(vault) ?
+    return isVaultWithReceipt(vault) ?
         state.entities.tokens.byChainId[vault.chainId]?.byAddress[
           vault.receiptTokenAddress.toLowerCase()
         ]
@@ -294,6 +309,7 @@ export const selectUserVaultBalanceInShareTokenIncludingDisplaced = createCached
 
 /**
  * Total not in active boost
+ * Does not include pending withdrawal
  */
 export const selectUserVaultBalanceNotInActiveBoostInShareToken = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
@@ -303,16 +319,12 @@ export const selectUserVaultBalanceNotInActiveBoostInShareToken = createCachedSe
   (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
     selectUserVaultBalanceInShareTokenInBridged(state, vaultId, maybeWalletAddress),
   (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-    selectUserVaultBalanceInShareTokenPendingWithdrawal(state, vaultId, maybeWalletAddress),
-  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
     selectUserVaultBalanceInShareTokenInCurrentBoost(state, vaultId, maybeWalletAddress),
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     selectIsVaultPreStakedOrBoosted(state, vaultId),
-  (inVault, inBoosts, inBridge, pendingWithdrawal, inCurrentBoost, isBoosted) => {
+  (inVault, inBoosts, inBridge, inCurrentBoost, isBoosted) => {
     if (isBoosted) {
-      return bigNumberOrStaticZero(
-        inVault.plus(inBoosts).plus(pendingWithdrawal).plus(inBridge).minus(inCurrentBoost)
-      );
+      return bigNumberOrStaticZero(inVault.plus(inBoosts).plus(inBridge).minus(inCurrentBoost));
     }
 
     return BIG_ZERO;
@@ -508,51 +520,50 @@ export const selectVaultUserBalanceInDepositTokenBreakdown = (
     }
   }
 
-  // only standard vaults have boosts or bridged balances
-  if (!isStandardVault(vault)) {
-    return balances;
-  }
-
   // deposits in boost (even those expired)
-  const boostIds = selectAllVaultBoostIds(state, vaultId);
-  for (const boostId of boostIds) {
-    const boostShareBalance = selectBoostUserBalanceInToken(state, boostId, walletAddress);
-    if (boostShareBalance.gt(BIG_ZERO)) {
-      balances.entries.push({
-        type: 'boost',
-        id: `boost-${boostId}`,
-        boostId,
-        amount: mooAmountToOracleAmount(
-          shareData.shareToken,
-          shareData.depositToken,
-          shareData.ppfs,
-          boostShareBalance
-        ),
-      });
-    }
-  }
-
-  // bridged mooToken
-  if (vault.bridged) {
-    for (const [chainId, tokenAddress] of entries(vault.bridged)) {
-      const bridgedShareBalance = selectUserBalanceOfToken(
-        state,
-        chainId,
-        tokenAddress,
-        walletAddress
-      );
-      if (bridgedShareBalance.gt(BIG_ZERO)) {
+  if (isVaultWithReceipt(vault)) {
+    const boostIds = selectAllVaultBoostIds(state, vaultId);
+    for (const boostId of boostIds) {
+      const boostShareBalance = selectBoostUserBalanceInToken(state, boostId, walletAddress);
+      if (boostShareBalance.gt(BIG_ZERO)) {
         balances.entries.push({
-          type: 'bridged',
-          id: `bridged-${chainId}`,
-          chainId,
+          type: 'boost',
+          id: `boost-${boostId}`,
+          boostId,
           amount: mooAmountToOracleAmount(
             shareData.shareToken,
             shareData.depositToken,
             shareData.ppfs,
-            bridgedShareBalance
+            boostShareBalance
           ),
         });
+      }
+    }
+  }
+
+  // bridged mooToken
+  if (isStandardVault(vault)) {
+    if (vault.bridged) {
+      for (const [chainId, tokenAddress] of entries(vault.bridged)) {
+        const bridgedShareBalance = selectUserBalanceOfToken(
+          state,
+          chainId,
+          tokenAddress,
+          walletAddress
+        );
+        if (bridgedShareBalance.gt(BIG_ZERO)) {
+          balances.entries.push({
+            type: 'bridged',
+            id: `bridged-${chainId}`,
+            chainId,
+            amount: mooAmountToOracleAmount(
+              shareData.shareToken,
+              shareData.depositToken,
+              shareData.ppfs,
+              bridgedShareBalance
+            ),
+          });
+        }
       }
     }
   }
