@@ -643,17 +643,23 @@ const config = buildConfig(
         },
       },
       keyframes: {
-        pulse1: {
-          from: { transform: 'scale(0.3)', opacity: '0.4' },
-          to: { transform: 'scale(1)', opacity: '0' },
+        pulse3: {
+          // marker-2/03
+          from: { transform: 'scale(0)' },
+          // marker-1/03
+          to: { transform: 'scale(0.3)' },
         },
         pulse2: {
+          // marker-2/02
           from: { transform: 'scale(0.3)', opacity: '1' },
+          // marker-1/02
           to: { transform: 'scale(1)', opacity: '0' },
         },
-        pulse3: {
-          from: { transform: 'scale(0)' },
-          to: { transform: 'scale(0.3)' },
+        pulse1: {
+          // marker-2/01
+          from: { transform: 'scale(0.3)' },
+          // marker-1/01
+          to: { transform: 'scale(1)' },
         },
         scrollBackground: {
           '0%': {

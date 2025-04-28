@@ -57,7 +57,7 @@ const FooterNotification = styled(
 const FooterNotificationButton = styled('button', {
   base: {
     display: 'block',
-    whiteSpace: 'wrap',
+    textWrap: 'wrap balance',
     width: '100%',
     border: 'none',
     padding: '8px 16px',
