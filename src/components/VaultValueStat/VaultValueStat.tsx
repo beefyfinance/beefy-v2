@@ -1,4 +1,4 @@
-import { cva } from '@repo/styles/css';
+import { css } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import type { StyledVariantProps } from '@repo/styles/types';
 import { type FC, memo, type ReactNode, type SVGProps } from 'react';
@@ -30,8 +30,6 @@ export type VaultValueStatProps = {
   boosted?: boolean;
   /** icon to show before the main value */
   Icon?: FC<SVGProps<SVGSVGElement>>;
-  /** when true, the icon will get the boost color */
-  important?: boolean;
 } & Pick<LayoutVariantProps, 'layout' | 'align' | 'altLayout' | 'altAlign' | 'altFrom'> &
   Pick<ValueHolderVariantProps, 'textWrap'>;
 
@@ -46,7 +44,6 @@ export const VaultValueStat = memo(function VaultValueStat({
   boosted,
   hideLabel = false,
   Icon,
-  important = false,
   textWrap = true,
   ...rest
 }: VaultValueStatProps) {
@@ -62,7 +59,7 @@ export const VaultValueStat = memo(function VaultValueStat({
             <TextLoader placeholder="Loading..." />
           : value ?
             <>
-              {Icon && <Icon className={iconRecipe({ important })} />}
+              {Icon && <Icon className={iconClass} />}
               <ValueContent boosted={boosted} blur={blur}>
                 {value}
               </ValueContent>
@@ -85,19 +82,10 @@ export const VaultValueStat = memo(function VaultValueStat({
   );
 });
 
-const iconRecipe = cva({
-  base: {
-    width: '1em',
-    height: '1em',
-    color: 'inherit',
-  },
-  variants: {
-    important: {
-      true: {
-        color: 'text.boosted',
-      },
-    },
-  },
+const iconClass = css({
+  width: '1em',
+  height: '1em',
+  color: 'inherit',
 });
 
 const alignLeft = {

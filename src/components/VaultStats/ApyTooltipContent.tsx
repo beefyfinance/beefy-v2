@@ -76,7 +76,8 @@ export const ApyTooltipContent = memo(function ApyTooltipContent({
     return {
       current: currentItems.length ? currentItems : undefined,
       average: averageItems.length ? averageItems : undefined,
-      averageNoteDays: averageItems.length && partialDays !== undefined ? partialDays : undefined,
+      averageNoteDays:
+        averageItems.length && partialDays !== undefined ? Math.max(1, partialDays) : undefined,
     };
   }, [vault, isBoosted, rates, type, averages]);
 
@@ -100,7 +101,7 @@ export const ApyTooltipContent = memo(function ApyTooltipContent({
             <GroupFooter>
               {t('Vault-Apy-Average-Warning', {
                 count: averageNoteDays,
-                days: averageNoteDays.toFixed(1),
+                days: averageNoteDays.toFixed(0),
               })}
             </GroupFooter>
           )}

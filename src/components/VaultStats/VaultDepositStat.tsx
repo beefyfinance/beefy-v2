@@ -156,7 +156,6 @@ export const VaultDepositStat = memo(function VaultDepositStat({
           <VaultDepositedTooltip vaultId={vaultId} walletAddress={walletAddress} />
         : <BasicTooltipContent title={depositFormattedFull} />
       }
-      important={hasDisplacedDeposit}
       {...passthrough}
     />
   );
