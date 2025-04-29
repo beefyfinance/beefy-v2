@@ -21,6 +21,10 @@ export type PinnedConfig = {
   mode?: 'all' | 'any';
   /** conditions to match according to mode, undefined = match */
   conditions?: Array<PinnedConfigCondition>;
+  /** limit the results from thsi config to this many vaults */
+  limit?: number;
+  /** period for random limiting, default 6 hours */
+  period?: number;
 };
 
 export type PromoTokenRewardConfig = {
