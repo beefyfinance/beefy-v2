@@ -1,22 +1,22 @@
-import { isGovVault, type VaultEntity } from '../../features/data/entities/vault.ts';
-import { memo, useMemo } from 'react';
-import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format.ts';
-import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
-import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
-import { selectVaultById } from '../../features/data/selectors/vaults.ts';
-import {
-  PendingRewardsIconWithTooltip,
-  RewardsTooltipContent,
-} from '../RewardsTooltip/RewardsTooltip.tsx';
-import { useAppSelector } from '../../store.ts';
 import { css } from '@repo/styles/css';
-import { styles } from './styles.ts';
+import { memo, useMemo } from 'react';
+import { isGovVault, type VaultEntity } from '../../features/data/entities/vault.ts';
 import {
   DashboardDataStatus,
   selectDashboardUserRewardsOrStatusByVaultId,
 } from '../../features/data/selectors/dashboard.ts';
+import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import { BIG_ZERO } from '../../helpers/big-number.ts';
+import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format.ts';
+import { useAppSelector } from '../../store.ts';
+import {
+  PendingRewardsIconWithTooltip,
+  RewardsTooltipContent,
+} from '../RewardsTooltip/RewardsTooltip.tsx';
 import { DivWithTooltip } from '../Tooltip/DivWithTooltip.tsx';
+import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
+import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
+import { styles } from './styles.ts';
 
 export type VaultYieldRewardsStatProps = {
   vaultId: VaultEntity['id'];
@@ -39,13 +39,16 @@ export const VaultYieldRewardsStat = memo(function VaultYieldRewardsStat({
         r => r.token.chainId === vault.chainId && r.token.address === vault.depositTokenAddress
       );
       const depositToken =
-        !data.claimed.has &&
-        compoundedDepositRewards.length &&
-        compoundedDepositRewards.length === data.compounded.rewards.length
-          ? compoundedDepositRewards[0].token
-          : undefined;
-      const totalDepositYield = depositToken
-        ? compoundedDepositRewards.reduce((sum, r) => sum.plus(r.amount), BIG_ZERO)
+        (
+          !data.claimed.has &&
+          compoundedDepositRewards.length &&
+          compoundedDepositRewards.length === data.compounded.rewards.length
+        ) ?
+          compoundedDepositRewards[0].token
+        : undefined;
+      const totalDepositYield =
+        depositToken ?
+          compoundedDepositRewards.reduce((sum, r) => sum.plus(r.amount), BIG_ZERO)
         : BIG_ZERO;
 
       return {
@@ -57,7 +60,15 @@ export const VaultYieldRewardsStat = memo(function VaultYieldRewardsStat({
   }, [data, vault]);
 
   if (data === DashboardDataStatus.Loading) {
-    return <VaultValueStat label={label} value="-" loading={true} {...passthrough} />;
+    return (
+      <VaultValueStat
+        label={label}
+        value="-"
+        loading={true}
+        expectSubValue={true}
+        {...passthrough}
+      />
+    );
   }
 
   if (data === DashboardDataStatus.Missing) {
@@ -74,20 +85,20 @@ export const VaultYieldRewardsStat = memo(function VaultYieldRewardsStat({
     return (
       <VaultValueStat
         label={'VaultStat-Yield'}
-        triggerCss={styles.valueWithIcon}
         value={
           <>
             <DivWithTooltip
               tooltip={<RewardsTooltipContent compounded={true} claimed={true} rewards={data} />}
               className={css(styles.tooltipTrigger, styles.textGreen, styles.textOverflow)}
+              data-x={1}
             >
-              {received.depositToken
-                ? formatTokenDisplayCondensed(
-                    received.totalDepositYield,
-                    received.depositToken.decimals,
-                    6
-                  )
-                : formatLargeUsd(received.usd)}
+              {received.depositToken ?
+                formatTokenDisplayCondensed(
+                  received.totalDepositYield,
+                  received.depositToken.decimals,
+                  6
+                )
+              : formatLargeUsd(received.usd)}
             </DivWithTooltip>
             {data.pending.has && (
               <>

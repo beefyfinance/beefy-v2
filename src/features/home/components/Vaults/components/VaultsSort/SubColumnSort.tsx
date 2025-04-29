@@ -1,14 +1,14 @@
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { selectFilterSubSort } from '../../../../../data/selectors/filtered-vaults.ts';
 import { useTranslation } from 'react-i18next';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { type SortWithSubSort } from '../../../../../data/reducers/filtered-vaults-types.ts';
 import {
   filteredVaultsActions,
   type FilteredVaultsState,
   type SetSubSortPayload,
 } from '../../../../../data/reducers/filtered-vaults.ts';
-import { type SortWithSubSort } from '../../../../../data/reducers/filtered-vaults-types.ts';
+import { selectFilterSubSort } from '../../../../../data/selectors/filtered-vaults.ts';
 
 export type FilterSubColumn<T extends SortWithSubSort> = {
   label: string;
@@ -21,7 +21,7 @@ export type SubColumnSortProps<T extends SortWithSubSort> = {
   subColumns: FilterSubColumn<T>[];
 };
 
-export const SubColumnSort = memo(function ApyAvgSort<T extends SortWithSubSort>({
+export const SubColumnSort = memo(function SubColumnSort<T extends SortWithSubSort>({
   columnSelected,
   columnKey,
   subColumns,

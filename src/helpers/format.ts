@@ -1,11 +1,12 @@
 import BigNumber from 'bignumber.js';
-import type { TotalApy } from '../features/data/reducers/apy.ts';
+import { padStart } from 'lodash-es';
 import type { ReactNode } from 'react';
+import { hexToBigInt } from 'viem';
+import type { TotalApy } from '../features/data/reducers/apy.ts';
+import type { AveragesData } from '../features/data/selectors/apy.ts';
 import type { AllValuesAs } from '../features/data/utils/types-utils.ts';
 import { type BigNumberish, toBigNumber } from './big-number.ts';
-import { padStart } from 'lodash-es';
 import { strictEntries } from './object.ts';
-import { hexToBigInt } from 'viem';
 
 export enum Scale {
   None = 0,
@@ -301,6 +302,22 @@ export function formatTotalApy(
       return [key, formattedValue];
     })
   ) as AllValuesAs<TotalApy, string | ReactNode>; // required keys in input so should exist in output
+}
+
+export type FormattedAvgApy = {
+  [K in keyof AveragesData]: AveragesData[K] & { formatted?: string };
+};
+
+export function formatAvgApy(avgApy: AveragesData): FormattedAvgApy {
+  const avgKeys = ['avg7d', 'avg30d', 'avg90d'] as const;
+  return avgKeys.reduce((acc, key) => {
+    const item = avgApy[key];
+    acc[key] = {
+      ...item,
+      formatted: item.partial ? formatLargePercent(item.value, 2) : undefined,
+    };
+    return acc;
+  }, {} as FormattedAvgApy);
 }
 
 export function convertAmountToRawNumber(value: BigNumber.Value, decimals = 18) {

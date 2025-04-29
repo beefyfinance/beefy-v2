@@ -1,10 +1,17 @@
+import { first } from 'lodash-es';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { getUnixNow } from '../../../helpers/date.ts';
+import { isEmpty } from '../../../helpers/utils.ts';
 import type { BeefyState } from '../../../redux-types.ts';
+import type { BoostPromoEntity } from '../entities/promo.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedVault,
   isVaultActive,
   type VaultEntity,
 } from '../entities/vault.ts';
+import type { AvgApy, TotalApy } from '../reducers/apy.ts';
+import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
   selectBoostUserBalanceInToken,
   selectUserDepositedVaultIds,
@@ -12,6 +19,7 @@ import {
   selectUserVaultBalanceInUsdIncludingDisplaced,
   selectVaultSharesToDepositTokenData,
 } from './balance.ts';
+import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from './boosts.ts';
 import {
   selectIsUserBalanceAvailable,
   selectIsVaultApyAvailable,
@@ -19,14 +27,7 @@ import {
 } from './data-loader.ts';
 import { selectTokenPriceByAddress } from './tokens.ts';
 import { selectVaultById } from './vaults.ts';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
-import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from './boosts.ts';
-import type { AvgApy, TotalApy } from '../reducers/apy.ts';
-import { isEmpty } from '../../../helpers/utils.ts';
 import { selectWalletAddress } from './wallet.ts';
-import { first } from 'lodash-es';
-import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
-import type { BoostPromoEntity } from '../entities/promo.ts';
 
 const EMPTY_TOTAL_APY: TotalApy = {
   totalApy: 0,
@@ -254,6 +255,15 @@ export const selectYieldStatsByVaultId = (
   };
 };
 
+export type AveragesData = {
+  [K in keyof AvgApy]: {
+    days: number;
+    value: number;
+    partial: boolean;
+    full: boolean;
+  };
+};
+
 type ApyVaultUIData =
   | {
       status: 'loading' | 'missing' | 'hidden';
@@ -264,7 +274,14 @@ type ApyVaultUIData =
       type: 'apy' | 'apr';
       values: TotalApy;
       boosted: 'active' | 'prestake' | undefined;
+      averages: AveragesData | undefined;
     };
+
+const avgMeta = {
+  avg7d: { days: 7 },
+  avg30d: { days: 30 },
+  avg90d: { days: 90 },
+} as const;
 
 // TEMP: selector instead of connect/mapStateToProps
 export function selectApyVaultUIData(
@@ -291,12 +308,42 @@ export function selectApyVaultUIData(
 
   const values = selectVaultTotalApy(state, vaultId);
   const boost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
+
+  let prevValue = (boost ? values['boostedTotalApy'] : undefined) || values['totalApy'];
+  const rawAverages = selectVaultAvgApyOrUndefined(state, vaultId);
+  const averages = {
+    avg7d: { value: prevValue, partial: false, full: false, days: 0 },
+    avg30d: { value: prevValue, partial: false, full: false, days: 0 },
+    avg90d: { value: prevValue, partial: false, full: false, days: 0 },
+  };
+  const age = (getUnixNow() - vault.createdAt) / 86400;
+  const avgKeys = ['avg7d', 'avg30d', 'avg90d'] as const;
+  let prevFull = !!prevValue;
+  for (const key of avgKeys) {
+    const meta = avgMeta[key];
+    const avg = rawAverages && rawAverages[key];
+    const value = avg || prevValue;
+    const full = !!avg && age >= meta.days;
+    const partial = full || (prevFull && !!avg && age < meta.days);
+    averages[key] = {
+      days: Math.min(meta.days, age),
+      value,
+      partial,
+      full,
+    };
+    prevValue = value;
+    prevFull = full;
+  }
+  if (vaultId === 'balancerv3-arbitrum-ebtc-waarbwbtc') {
+    console.log(vaultId, rawAverages, averages, age);
+  }
+
   if (boost) {
-    return { status: 'available', type, values, boosted: boost.status };
+    return { status: 'available', type, values, boosted: boost.status, averages };
   }
 
   if (!isCowcentratedVault(vault) && !isCowcentratedGovVault(vault)) {
-    return { status: 'available', type, values, boosted: undefined };
+    return { status: 'available', type, values, boosted: undefined, averages };
   }
 
   return {
@@ -304,6 +351,7 @@ export function selectApyVaultUIData(
     type: values.totalType,
     values,
     boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
+    averages,
   };
 }
 

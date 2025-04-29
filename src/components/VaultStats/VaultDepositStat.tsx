@@ -1,7 +1,7 @@
-import type { VaultEntity } from '../../features/data/entities/vault.ts';
+import type BigNumber from 'bignumber.js';
 import { memo } from 'react';
-import type { BeefyState } from '../../redux-types.ts';
-import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import type { TokenEntity } from '../../features/data/entities/token.ts';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInDepositTokenIncludingDisplaced,
@@ -9,34 +9,28 @@ import {
   selectUserVaultBalanceNotInActiveBoostInDepositToken,
 } from '../../features/data/selectors/balance.ts';
 import {
-  formatLargeUsd,
-  formatTokenDisplay,
-  formatTokenDisplayCondensed,
-} from '../../helpers/format.ts';
+  selectIsBalanceAvailableForChainUser,
+  selectIsPricesAvailable,
+} from '../../features/data/selectors/data-loader.ts';
+import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
+import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import {
   selectIsBalanceHidden,
   selectWalletAddress,
 } from '../../features/data/selectors/wallet.ts';
-import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
-import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
-import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip.tsx';
-import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
-import {
-  selectIsBalanceAvailableForChainUser,
-  selectIsPricesAvailable,
-} from '../../features/data/selectors/data-loader.ts';
 import { BIG_ZERO } from '../../helpers/big-number.ts';
+import {
+  formatLargeUsd,
+  formatTokenDisplay,
+  formatTokenDisplayCondensed,
+} from '../../helpers/format.ts';
+import ExclaimRoundedSquare from '../../images/icons/exclaim-rounded-square.svg?react';
+import type { BeefyState } from '../../redux-types.ts';
 import { useAppSelector } from '../../store.ts';
-import type BigNumber from 'bignumber.js';
-import type { TokenEntity } from '../../features/data/entities/token.ts';
-import { legacyMakeStyles } from '../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import ErrorOutline from '../../images/icons/mui/ErrorOutline.svg?react';
-import InfoOutlined from '../../images/icons/mui/InfoOutlined.svg?react';
-import { css } from '@repo/styles/css';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent.tsx';
-
-const useStyles = legacyMakeStyles(styles);
+import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip.tsx';
+import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
+import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
 
 export type VaultDepositStatProps = {
   vaultId: VaultEntity['id'];
@@ -122,10 +116,18 @@ export const VaultDepositStat = memo(function VaultDepositStat({
   ...passthrough
 }: VaultDepositStatProps) {
   const data = useAppSelector(state => selectData(state, vaultId, walletAddress));
-  const classes = useStyles();
 
   if (data.loading) {
-    return <VaultValueStat label={label} value="-" blur={false} loading={true} {...passthrough} />;
+    return (
+      <VaultValueStat
+        label={label}
+        value="-"
+        blur={false}
+        loading={true}
+        expectSubValue={true}
+        {...passthrough}
+      />
+    );
   }
 
   if (!('vaultDeposit' in data) || data.totalDeposit.isZero()) {
@@ -140,21 +142,12 @@ export const VaultDepositStat = memo(function VaultDepositStat({
     6
   );
   const depositFormattedFull = formatTokenDisplay(data.totalDeposit, data.depositToken.decimals);
-  const IconComponent = isNotEarning ? ErrorOutline : InfoOutlined;
 
   return (
     <VaultValueStat
       label={label}
-      value={
-        isNotEarning ?
-          <div className={classes.depositWithIcon}>
-            <IconComponent
-              className={css(styles.depositIcon, isNotEarning && styles.depositIconNotEarning)}
-            />
-            {depositFormattedCondensed}
-          </div>
-        : depositFormattedCondensed
-      }
+      value={depositFormattedCondensed}
+      Icon={isNotEarning ? ExclaimRoundedSquare : undefined}
       subValue={formatLargeUsd(data.totalDepositUsd)}
       blur={data.hideBalance}
       loading={false}
@@ -163,6 +156,7 @@ export const VaultDepositStat = memo(function VaultDepositStat({
           <VaultDepositedTooltip vaultId={vaultId} walletAddress={walletAddress} />
         : <BasicTooltipContent title={depositFormattedFull} />
       }
+      important={hasDisplacedDeposit}
       {...passthrough}
     />
   );

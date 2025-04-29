@@ -1,18 +1,19 @@
-import { createCachedFactory, createFactory } from '../features/data/utils/factory-utils.ts';
-import type {
-  TotalApyComponent,
-  TotalApyDailyComponent,
-  TotalApyKey,
-  TotalApyYearlyComponent,
-} from '../features/data/reducers/apy.ts';
+import type { ApiApyDataAprComponents } from '../features/data/apis/beefy/beefy-api-types.ts';
 import {
   isCowcentratedGovVault,
   isErc4626Vault,
   type VaultEntity,
 } from '../features/data/entities/vault.ts';
+import type {
+  AvgApy,
+  TotalApyComponent,
+  TotalApyDailyComponent,
+  TotalApyKey,
+  TotalApyYearlyComponent,
+} from '../features/data/reducers/apy.ts';
+import { createCachedFactory, createFactory } from '../features/data/utils/factory-utils.ts';
 import { fromKeysMapper } from './object.ts';
 import { ucFirstLetter } from './string.ts';
-import type { ApiApyDataAprComponents } from '../features/data/apis/beefy/beefy-api-types.ts';
 
 const DISPLAY_ORDER = ((i = 0) =>
   ({
@@ -55,7 +56,7 @@ export const getApyComponents = createFactory(() => {
 export type ApyLabelsType = VaultEntity['type'] | 'cowcentrated-compounds';
 
 export type ApyLabels = {
-  [K in TotalApyKey | 'breakdown']: string[];
+  [K in TotalApyKey | keyof AvgApy | 'breakdown']: string[];
 };
 
 export const getApyLabelsForType = createCachedFactory(
@@ -84,6 +85,9 @@ export const getApyLabelsForType = createCachedFactory(
       boostedTotalDaily: [...makeLabels('boosted', 'Daily'), ...makeLabels('total', 'Daily')],
       boostedTotalApy: [...makeLabels('boosted', 'Yearly'), ...makeLabels('total', 'Yearly')],
       breakdown: [`Vault-Apy-${ucFirstLetter(type)}-Breakdown`, 'Vault-Apy-Breakdown'],
+      avg7d: makeLabels('avg7d', 'Yearly'),
+      avg30d: makeLabels('avg30d', 'Yearly'),
+      avg90d: makeLabels('avg90d', 'Yearly'),
     };
   },
   type => type

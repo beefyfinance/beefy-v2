@@ -1,6 +1,6 @@
+import { styled } from '@repo/styles/jsx';
 import { Fragment, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { styled } from '@repo/styles/jsx';
 
 export type InterestTooltipContentProps = {
   rows: {
@@ -33,7 +33,7 @@ const Rows = styled('div', {
   base: {
     textStyle: 'body',
     display: 'grid',
-    rowGap: '8px',
+    rowGap: '2px',
     columnGap: '48px',
     gridTemplateColumns: '1fr auto',
   },

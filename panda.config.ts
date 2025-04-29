@@ -1,8 +1,8 @@
 import { defineConfig } from '@pandacss/dev';
-import { buildConfig } from './tools/styles/config-builder.ts';
-import { pluginStricterProperties } from './tools/styles/stricter-properties-plugin.ts';
-import { pluginMoreTypes } from './tools/styles/more-types-plugin.ts';
 import basePreset from '@pandacss/preset-base';
+import { buildConfig } from './tools/styles/config-builder.ts';
+import { pluginMoreTypes } from './tools/styles/more-types-plugin.ts';
+import { pluginStricterProperties } from './tools/styles/stricter-properties-plugin.ts';
 
 /**
  * @dev some changes require running `npx panda codegen` after
@@ -76,7 +76,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -562,7 +562,7 @@ const config = buildConfig(
               background: { value: '{colors.white}' },
               text: {
                 DEFAULT: { value: '{colors.eclipseElixir}' },
-                title: { value: '{colors.eclipseElixir}' },
+                title: { value: '{colors.text.black}' },
                 content: { value: '{colors.eclipseElixir}' },
                 item: { value: '{colors.blackMarket}' },
                 label: { value: '{colors.eclipseElixir}' },

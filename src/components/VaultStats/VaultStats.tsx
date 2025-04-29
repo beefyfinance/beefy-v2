@@ -1,13 +1,13 @@
-import { legacyMakeStyles } from '../../helpers/mui.ts';
-import { styles } from './styles.ts';
+import { css } from '@repo/styles/css';
 import { memo } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
-import { css } from '@repo/styles/css';
-import { VaultDepositStat } from './VaultDepositStat.tsx';
-import { VaultWalletStat } from './VaultWalletStat.tsx';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { styles } from './styles.ts';
 import { VaultApyStat } from './VaultApyStat.tsx';
-import { VaultTvlStat } from './VaultTvlStat.tsx';
+import { VaultDepositStat } from './VaultDepositStat.tsx';
 import { VaultSafetyStat } from './VaultSafetyStat.tsx';
+import { VaultTvlStat } from './VaultTvlStat.tsx';
+import { VaultWalletStat } from './VaultWalletStat.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -20,24 +20,12 @@ export const VaultStats = memo(function VaultStats({ vaultId }: VaultStatsProps)
   return (
     <div className={classes.vaultStats}>
       <div className={css(styles.row)}>
-        <div className={classes.column}>
-          <VaultWalletStat vaultId={vaultId} />
-        </div>
-        <div className={classes.column}>
-          <VaultDepositStat vaultId={vaultId} />
-        </div>
-        <div className={classes.column}>
-          <VaultApyStat type="yearly" vaultId={vaultId} />
-        </div>
-        <div className={classes.column}>
-          <VaultApyStat type="daily" vaultId={vaultId} />
-        </div>
-        <div className={classes.column}>
-          <VaultTvlStat vaultId={vaultId} />
-        </div>
-        <div className={classes.column}>
-          <VaultSafetyStat vaultId={vaultId} />
-        </div>
+        <VaultWalletStat vaultId={vaultId} altAlign="right" altFrom="lg" />
+        <VaultDepositStat vaultId={vaultId} altAlign="right" altFrom="lg" />
+        <VaultApyStat type="yearly" vaultId={vaultId} altAlign="right" altFrom="lg" />
+        <VaultApyStat type="daily" vaultId={vaultId} altAlign="right" altFrom="lg" />
+        <VaultTvlStat vaultId={vaultId} altAlign="right" altFrom="lg" />
+        <VaultSafetyStat vaultId={vaultId} altAlign="right" altFrom="lg" />
       </div>
     </div>
   );
