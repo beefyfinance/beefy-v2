@@ -1,9 +1,11 @@
 import type { MouseEventHandler, ReactNode } from 'react';
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { styles } from './styles.ts';
 import { css, type CssStyles } from '@repo/styles/css';
-import CheckBoxOutlineBlank from '../../images/icons/mui/CheckBoxOutlineBlank.svg?react';
-import CheckBoxOutlined from '../../images/icons/mui/CheckBoxOutlined.svg?react';
+import CheckBoxOutlineBlank from '../../images/icons/CheckBoxBlank.svg?react';
+import CheckBoxOutlined from '../../images/icons/CheckBox.svg?react';
+import CircleCheckBoxOutlined from '../../images/icons/CircleCheckBoxBlank.svg?react';
+import CircleCheckBox from '../../images/icons/CircleCheckBox.svg?react';
 
 export type LabelledCheckboxProps = {
   checked: boolean;
@@ -12,6 +14,8 @@ export type LabelledCheckboxProps = {
   iconCss?: CssStyles;
   labelCss?: CssStyles;
   checkedIconCss?: CssStyles;
+  className?: CssStyles;
+  checkVariant?: 'square' | 'circle';
 };
 
 export const LabelledCheckbox = memo(function LabelledCheckbox({
@@ -21,6 +25,8 @@ export const LabelledCheckbox = memo(function LabelledCheckbox({
   iconCss,
   labelCss,
   checkedIconCss,
+  className,
+  checkVariant = 'square',
 }: LabelledCheckboxProps) {
   const handleChange = useCallback<MouseEventHandler<HTMLLabelElement>>(
     e => {
@@ -29,10 +35,19 @@ export const LabelledCheckbox = memo(function LabelledCheckbox({
     },
     [onChange, checked]
   );
-  const Icon = checked ? CheckBoxOutlined : CheckBoxOutlineBlank;
+  const Icon = useMemo(() => {
+    if (checkVariant === 'circle') {
+      return checked ? CircleCheckBox : CircleCheckBoxOutlined;
+    }
+    return checked ? CheckBoxOutlined : CheckBoxOutlineBlank;
+  }, [checkVariant, checked]);
 
   return (
-    <label onClick={handleChange} className={css(styles.checkbox)} data-checked={checked}>
+    <label
+      onClick={handleChange}
+      className={css(styles.checkbox, className)}
+      data-checked={checked}
+    >
       <Icon
         className={css(
           styles.icon,

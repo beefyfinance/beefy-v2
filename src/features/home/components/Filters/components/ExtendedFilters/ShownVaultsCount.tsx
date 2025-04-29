@@ -5,25 +5,26 @@ import {
   selectFilteredVaultCount,
   selectTotalVaultCount,
 } from '../../../../../data/selectors/filtered-vaults.ts';
-import { css, type CssStyles } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
 
-export type ShownVaultsCountProps = {
-  css?: CssStyles;
-};
-
-export const ShownVaultsCount = memo(function ShownVaultsCount({
-  css: cssProp,
-}: ShownVaultsCountProps) {
+export const ShownVaultsCount = memo(function ShownVaultsCount() {
   const { t } = useTranslation();
   const filteredVaultCount = useAppSelector(selectFilteredVaultCount);
   const totalVaultCount = useAppSelector(selectTotalVaultCount);
 
   return (
-    <div className={css(cssProp)}>
+    <ShownVaults>
       {t('Filter-ShowingVaults', {
         number: filteredVaultCount,
         count: totalVaultCount,
       })}
-    </div>
+    </ShownVaults>
   );
+});
+
+const ShownVaults = styled('div', {
+  base: {
+    textStyle: 'body.medium',
+    color: 'text.middle',
+  },
 });

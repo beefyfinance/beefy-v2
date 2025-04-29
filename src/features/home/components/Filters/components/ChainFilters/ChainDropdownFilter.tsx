@@ -78,6 +78,7 @@ export const ChainDropdownFilter = memo(function ChainDropdownFilter() {
       variant="filter"
       OptionIconComponent={OptionIcon}
       allSelectedLabel={t('Select-AllSelected')}
+      layer={1}
     />
   );
 });

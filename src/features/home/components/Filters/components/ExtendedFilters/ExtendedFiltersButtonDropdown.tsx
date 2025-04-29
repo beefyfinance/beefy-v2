@@ -12,8 +12,8 @@ export const ExtendedFiltersButtonDropdown = memo(function ExtendedFiltersButton
       <DropdownButtonTrigger variant="filter" size="lg">
         <FilterIcon />
       </DropdownButtonTrigger>
-      <FiltersDropdown padding="large">
-        <ExtendedFilters desktopView={true} />
+      <FiltersDropdown>
+        <ExtendedFilters />
       </FiltersDropdown>
     </DropdownProvider>
   );

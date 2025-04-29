@@ -24,7 +24,7 @@ const headerCss = css({
   alignItems: 'center',
   backgroundClip: 'padding-box',
   sm: {
-    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+    gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
     rowGap: '16px',
   },
   lg: {

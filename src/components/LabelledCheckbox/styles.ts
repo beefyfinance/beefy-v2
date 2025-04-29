@@ -5,9 +5,9 @@ export const styles = {
     textStyle: 'body.medium',
     display: 'flex',
     alignItems: 'center',
-    color: 'text.middle',
+    color: 'text.dark',
     cursor: 'pointer',
-    columnGap: '4px',
+    columnGap: '10px',
     userSelect: 'none',
   }),
   icon: css.raw({

@@ -9,6 +9,8 @@ import { StrategyTypeButtonFilter } from './components/StrategyTypeFilters/Strat
 import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
 import { styled } from '@repo/styles/jsx';
 import { BoostFilterButton } from './components/BoostFilter/BoostFilterButton.tsx';
+import { Sort } from './components/Sort/Sort.tsx';
+import { ExtendedFiltersButtonMobileFilters } from './components/ExtendedFilters/ExtendedFiltersButtonMobileFilters.tsx';
 
 export const Filters = memo(function Filters() {
   const isDesktop = useBreakpoint({ from: 'lg' });
@@ -19,6 +21,10 @@ export const Filters = memo(function Filters() {
 const MobileLayout = memo(function MobileLayout() {
   return (
     <Layout>
+      <MobileFilters>
+        <Sort />
+        <ExtendedFiltersButtonMobileFilters />
+      </MobileFilters>
       <Top>
         <UserCategoryButtonFilter />
       </Top>
@@ -57,6 +63,14 @@ const Top = styled('div', {
   base: {
     height: '40px',
     width: '100%',
+  },
+});
+
+const MobileFilters = styled(Top, {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
   },
 });
 

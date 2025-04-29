@@ -37,6 +37,7 @@ export const VaultsSearch = memo(function VaultsSearch() {
 });
 
 const input = css({
+  width: '100%',
   md: {
     maxWidth: '75%',
   },

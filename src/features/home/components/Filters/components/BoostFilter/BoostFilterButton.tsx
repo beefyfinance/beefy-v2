@@ -6,6 +6,7 @@ import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vau
 import { useTranslation } from 'react-i18next';
 import BoostSvg from '../../../../../../images/icons/boost.svg?react';
 import { styled } from '@repo/styles/jsx';
+import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
 
 export const BoostFilterButton = memo(function BoostFilterButton() {
   const { t } = useTranslation();
@@ -23,6 +24,21 @@ export const BoostFilterButton = memo(function BoostFilterButton() {
   );
 });
 
+export const BoostCheckBox = memo(function BoostCheckBox() {
+  const dispatch = useAppDispatch();
+  const value = useAppSelector(state => selectFilterBoolean(state, 'onlyBoosted'));
+  const handleChange = useCallback(() => {
+    dispatch(filteredVaultsActions.setBoolean({ filter: 'onlyBoosted', value: !value }));
+  }, [dispatch, value]);
+
+  return (
+    <BoostCheckBoxContainer>
+      <LabelledCheckbox checked={value} onChange={handleChange} label="Boosted" />
+      <BoostIcon />
+    </BoostCheckBoxContainer>
+  );
+});
+
 const BoostButton = styled(Button, {
   base: {
     display: 'flex',
@@ -35,5 +51,13 @@ const BoostIcon = styled(BoostSvg, {
     color: 'text.boosted',
     height: '16px',
     width: '14px',
+  },
+});
+
+const BoostCheckBoxContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });
