@@ -79,6 +79,8 @@ export const config = {
       'waEthLidoGHO',
       'csUSDC',
       'csUSDL',
+      'USDf',
+      'sUSDf',
     ],
   },
   polygon: {
