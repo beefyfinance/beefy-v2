@@ -59,6 +59,7 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
 type AverageApyTooltipContentProps = {
   vaultId: VaultEntity['id'];
   averages: FormattedAvgApy;
+  totalType: 'apy' | 'apr';
   header?: boolean;
 };
 
@@ -66,11 +67,10 @@ export const AverageApyTooltipContent = memo(function AverageApyTooltipContent({
   vaultId,
   averages,
   header = false,
+  totalType,
 }: AverageApyTooltipContentProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  // TODO select total type from TotalApy
-  const totalType = 'apy';
 
   const { rows, noteDays } = useMemo(() => {
     const labelType = getApyLabelsTypeForVault(vault, totalType);
@@ -88,12 +88,12 @@ export const AverageApyTooltipContent = memo(function AverageApyTooltipContent({
         break;
       }
       if (period.partial && !period.full) {
-        partialDays = period.dataWholeDays;
+        partialDays = period.dataDays;
       }
       items.push({
         label: [`Vault-Apy-${labelType}-Yearly-Avg`, `Vault-Apy-Yearly-Avg`],
         value: period.formatted,
-        labelTextParams: { count: period.dataWholeDays.toString() },
+        labelTextParams: { count: period.dataDays.toString() },
       });
     }
     return {
@@ -149,7 +149,12 @@ export const ApyTooltipContent = memo(function ApyTooltipContent({
         header={showAverages}
       />
       {showAverages && (
-        <AverageApyTooltipContent header={true} vaultId={vaultId} averages={averages} />
+        <AverageApyTooltipContent
+          header={true}
+          vaultId={vaultId}
+          averages={averages}
+          totalType={rates.totalType}
+        />
       )}
     </Groups>
   );

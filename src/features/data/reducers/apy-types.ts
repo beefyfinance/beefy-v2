@@ -55,8 +55,8 @@ export interface RawAvgApy {
 
 export type AvgApyPeriod = {
   days: number;
+  /* ceil(min(days,age)) */
   dataDays: number;
-  dataWholeDays: number;
   value: number;
   partial: boolean;
   full: boolean;

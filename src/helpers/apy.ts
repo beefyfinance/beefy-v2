@@ -21,7 +21,6 @@ export const EMPTY_AVG_APY: AvgApy = {
   periods: AVG_APY_PERIODS.map(days => ({
     days,
     dataDays: 0,
-    dataWholeDays: 0,
     value: 0,
     partial: false,
     full: false,

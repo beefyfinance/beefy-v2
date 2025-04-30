@@ -100,15 +100,13 @@ export const recalculateAvgApyAction = createAsyncThunk<
 
     let previousFull = true;
     const periods = rawAverage.periods.map(period => {
-      const dataDays = Math.min(vaultAge, period.days);
-      const dataWholeDays = Math.ceil(dataDays);
-      const full = dataWholeDays >= period.days;
+      const dataDays = Math.ceil(Math.min(vaultAge, period.days));
+      const full = dataDays > period.days;
       const partial = full || previousFull;
       previousFull = full;
       return {
         days: period.days,
         dataDays,
-        dataWholeDays,
         value: period.apy,
         partial,
         full,
@@ -130,7 +128,6 @@ export const recalculateAvgApyAction = createAsyncThunk<
         ({
           days,
           dataDays: 0,
-          dataWholeDays: 0,
           value: apy.boostedTotalApy || apy.totalApy,
           partial: false,
           full: false,

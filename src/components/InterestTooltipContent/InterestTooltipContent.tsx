@@ -27,7 +27,7 @@ export const InterestTooltipContent = memo(function InterestTooltipContent({
       {header && <Header>{header}</Header>}
       <Rows>
         {rows.map(({ label, value, labelTextParams }, index) => (
-          <Fragment key={typeof label === 'string' ? label : label[0]}>
+          <Fragment key={`${typeof label === 'string' ? label : label[0]}-${index}`}>
             <Label highlight={highLightLast && lastIndex == index}>
               {t(label, labelTextParams)}
             </Label>
