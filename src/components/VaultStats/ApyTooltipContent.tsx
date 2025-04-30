@@ -17,7 +17,7 @@ type TotalApyTooltipContentProps = {
   type: 'yearly' | 'daily';
   isBoosted: boolean;
   rates: FormattedTotalApy;
-  title?: boolean;
+  header?: boolean;
 };
 
 const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
@@ -25,7 +25,7 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
   type,
   isBoosted,
   rates,
-  title = false,
+  header = false,
 }: TotalApyTooltipContentProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const rows = useMemo(() => {
@@ -53,24 +53,19 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
     return items;
   }, [vault, isBoosted, rates, type]);
 
-  return (
-    <>
-      {title && <GroupHeader>Current</GroupHeader>}
-      <InterestTooltipContent rows={rows} />
-    </>
-  );
+  return <InterestTooltipContent rows={rows} header={header ? 'Current' : undefined} />;
 });
 
 type AverageApyTooltipContentProps = {
   vaultId: VaultEntity['id'];
   averages: FormattedAvgApy;
-  title?: boolean;
+  header?: boolean;
 };
 
 export const AverageApyTooltipContent = memo(function AverageApyTooltipContent({
   vaultId,
   averages,
-  title = false,
+  header = false,
 }: AverageApyTooltipContentProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -112,18 +107,18 @@ export const AverageApyTooltipContent = memo(function AverageApyTooltipContent({
   }
 
   return (
-    <>
-      {title && <GroupHeader>Historical</GroupHeader>}
-      <InterestTooltipContent rows={rows} highLightLast={false} />
-      {noteDays && (
-        <GroupFooter>
-          {t('Vault-Apy-Average-Warning', {
-            count: noteDays,
-            days: noteDays.toFixed(0),
-          })}
-        </GroupFooter>
-      )}
-    </>
+    <InterestTooltipContent
+      rows={rows}
+      highLightLast={false}
+      header={header ? 'Historical' : undefined}
+      footer={
+        !!noteDays &&
+        t('Vault-Apy-Average-Warning', {
+          count: noteDays,
+          days: noteDays.toFixed(0),
+        })
+      }
+    />
   );
 });
 
@@ -146,19 +141,15 @@ export const ApyTooltipContent = memo(function ApyTooltipContent({
 
   return (
     <Groups>
-      <div>
-        <TotalApyTooltipContent
-          vaultId={vaultId}
-          type={type}
-          isBoosted={isBoosted}
-          rates={rates}
-          title={showAverages}
-        />
-      </div>
+      <TotalApyTooltipContent
+        vaultId={vaultId}
+        type={type}
+        isBoosted={isBoosted}
+        rates={rates}
+        header={showAverages}
+      />
       {showAverages && (
-        <div>
-          <AverageApyTooltipContent title={true} vaultId={vaultId} averages={averages} />
-        </div>
+        <AverageApyTooltipContent header={true} vaultId={vaultId} averages={averages} />
       )}
     </Groups>
   );
@@ -169,20 +160,5 @@ const Groups = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     gap: '8px',
-  },
-});
-
-const GroupHeader = styled('div', {
-  base: {
-    textStyle: 'subline',
-    color: 'colorPalette.text.title',
-  },
-});
-
-const GroupFooter = styled('div', {
-  base: {
-    textStyle: 'body.sm',
-    fontStyle: 'italic',
-    maxWidth: '285px',
   },
 });
