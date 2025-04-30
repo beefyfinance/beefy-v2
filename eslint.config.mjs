@@ -93,6 +93,11 @@ export default tseslint.config(
               name: '@floating-ui/react-dom',
               message: 'Use @floating-ui/react instead',
             },
+            {
+              name: 'react-redux',
+              importNames: ['connect'],
+              message: 'Use useAppSelector hook, not connect',
+            },
           ],
           patterns: [
             {

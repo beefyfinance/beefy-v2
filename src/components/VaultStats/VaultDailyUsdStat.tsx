@@ -1,31 +1,37 @@
-import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { memo } from 'react';
-import { connect } from 'react-redux';
-import type { BeefyState } from '../../redux-types.ts';
-import { formatLargeUsd } from '../../helpers/format.ts';
-import {
-  selectIsVaultApyAvailable,
-  selectVaultShouldShowInterest,
-} from '../../features/data/selectors/data-loader.ts';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
   selectDidAPIReturnValuesForVault,
   selectYieldStatsByVaultId,
 } from '../../features/data/selectors/apy.ts';
-import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
-import { type CssStyles } from '@repo/styles/css';
+import {
+  selectIsVaultApyAvailable,
+  selectVaultShouldShowInterest,
+} from '../../features/data/selectors/data-loader.ts';
+import { formatLargeUsd } from '../../helpers/format.ts';
+import type { BeefyState } from '../../redux-types.ts';
+import { useAppSelector } from '../../store.ts';
+import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 
 export type VaultDailyUsdStatProps = {
   vaultId: VaultEntity['id'];
-  css?: CssStyles;
-  triggerCss?: CssStyles;
   walletAddress?: string;
-};
+} & Omit<VaultValueStatProps, keyof ReturnType<typeof selectVaultDailyUsdStat>>;
 
-export const VaultDailyUsdStat = memo(connect(mapStateToProps)(VaultValueStat));
+export const VaultDailyUsdStat = memo(function ({
+  vaultId,
+  walletAddress,
+}: VaultDailyUsdStatProps) {
+  // @dev don't do this - temp migration away from connect()
+  const props = useAppSelector(state => selectVaultDailyUsdStat(state, vaultId, walletAddress));
+  return <VaultValueStat {...props} />;
+});
 
-function mapStateToProps(
+// TODO better selector / hook
+function selectVaultDailyUsdStat(
   state: BeefyState,
-  { vaultId, css: cssProp, triggerCss, walletAddress }: VaultDailyUsdStatProps
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
 ) {
   const label = 'Dashboard-Filter-DailyYield';
 
@@ -37,7 +43,6 @@ function mapStateToProps(
       subValue: null,
       blur: false,
       loading: false,
-      css: cssProp,
     };
   }
 
@@ -49,7 +54,6 @@ function mapStateToProps(
       subValue: null,
       blur: false,
       loading: true,
-      css: cssProp,
     };
   }
 
@@ -61,7 +65,6 @@ function mapStateToProps(
       subValue: null,
       blur: false,
       loading: false,
-      css: cssProp,
     };
   }
 
@@ -75,7 +78,5 @@ function mapStateToProps(
     loading: !isLoaded,
     boosted: false,
     tooltip: null,
-    css: cssProp,
-    triggerCss,
   };
 }

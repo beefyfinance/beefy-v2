@@ -1,5 +1,4 @@
 import { memo, type ReactNode } from 'react';
-import { connect } from 'react-redux';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
 import {
@@ -12,6 +11,7 @@ import {
   formatTokenDisplayCondensed,
 } from '../../helpers/format.ts';
 import type { BeefyState } from '../../redux-types.ts';
+import { useAppSelector } from '../../store.ts';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent.tsx';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 
@@ -24,12 +24,17 @@ export type VaultAtDepositStatProps = {
   'label' | 'loading' | 'value' | 'subValue' | 'tooltip' | 'blur' | 'expectSubValue'
 >;
 
-export const VaultAtDepositStat = memo(connect(mapStateToProps)(VaultValueStat));
+export const VaultAtDepositStat = memo(function VaultAtDepositStat(props: VaultAtDepositStatProps) {
+  // @dev don't do this - temp migration away from connect()
+  const statProps = useAppSelector(state => selectVaultAtDepositStat(state, props));
+  return <VaultValueStat {...statProps} />;
+});
 
-function mapStateToProps(
+// TODO better selector / hook
+const selectVaultAtDepositStat = (
   state: BeefyState,
   { vaultId, pnlData, walletAddress }: VaultAtDepositStatProps
-): VaultValueStatProps {
+) => {
   const label = 'VaultStat-AtDeposit';
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
   const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
@@ -87,4 +92,4 @@ function mapStateToProps(
     boosted: false,
     tooltip,
   };
-}
+};

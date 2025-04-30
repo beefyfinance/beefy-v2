@@ -1,30 +1,42 @@
-import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { memo } from 'react';
-import { connect } from 'react-redux';
-import type { BeefyState } from '../../redux-types.ts';
-import { formatLargePercent, formatLargeUsd } from '../../helpers/format.ts';
-import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
+import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
 import {
   selectIsAnalyticsLoadedByAddress,
   selectUserDepositedTimelineByVaultId,
 } from '../../features/data/selectors/analytics.ts';
-import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
+import { formatLargePercent, formatLargeUsd } from '../../helpers/format.ts';
+import type { BeefyState } from '../../redux-types.ts';
+import { useAppSelector } from '../../store.ts';
 import { ClmPnlTooltipContent } from '../PnlTooltip/ClmPnlTooltipContent.tsx';
 import { showClmPnlTooltip } from '../PnlTooltip/helpers.ts';
-import { type CssStyles } from '@repo/styles/css';
+import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 
 export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];
-  css?: CssStyles;
   pnlData: UserVaultPnl;
   walletAddress: string;
-};
+} & Omit<VaultValueStatProps, keyof ReturnType<typeof selectVaultPnlStat>>;
 
-export const VaultPnlStat = memo(connect(mapStateToProps)(VaultValueStat));
+export const VaultPnlStat = memo(function ({
+  vaultId,
+  pnlData,
+  walletAddress,
+  ...rest
+}: VaultDailyStatProps) {
+  // @dev don't do this - temp migration away from connect()
+  const statProps = useAppSelector(state =>
+    selectVaultPnlStat(state, vaultId, pnlData, walletAddress)
+  );
+  return <VaultValueStat {...statProps} {...rest} />;
+});
 
-function mapStateToProps(
+// TODO better selector / hook
+function selectVaultPnlStat(
   state: BeefyState,
-  { vaultId, css: cssProp, pnlData, walletAddress }: VaultDailyStatProps
+  vaultId: VaultEntity['id'],
+  pnlData: UserVaultPnl,
+  walletAddress: string
 ) {
   const label = 'VaultStat-Pnl';
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
@@ -37,7 +49,6 @@ function mapStateToProps(
       subValue: null,
       blur: false,
       loading: true,
-      css: cssProp,
     };
   }
 
@@ -48,7 +59,6 @@ function mapStateToProps(
       subValue: null,
       blur: false,
       loading: false,
-      css: cssProp,
     };
   }
 
@@ -70,6 +80,5 @@ function mapStateToProps(
     loading: !isLoaded,
     boosted: false,
     tooltip: showClmPnlTooltip(pnlData) ? <ClmPnlTooltipContent userPnl={pnlData} /> : undefined,
-    css: cssProp,
   };
 }

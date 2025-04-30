@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import { connect } from 'react-redux';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectUserBalanceOfToken } from '../../features/data/selectors/balance.ts';
 import {
@@ -17,15 +16,21 @@ import {
 } from '../../features/data/selectors/wallet.ts';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format.ts';
 import type { BeefyState } from '../../redux-types.ts';
-import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
+import { useAppSelector } from '../../store.ts';
+import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 
 export type VaultWalletStatProps = {
   vaultId: VaultEntity['id'];
-};
+} & Omit<VaultValueStatProps, keyof ReturnType<typeof selectVaultWalletStat>>;
 
-export const VaultWalletStat = memo(connect(mapStateToProps)(VaultValueStat));
+export const VaultWalletStat = memo(function ({ vaultId, ...rest }: VaultWalletStatProps) {
+  // @dev don't do this - temp migration away from connect()
+  const statProps = useAppSelector(state => selectVaultWalletStat(state, vaultId));
+  return <VaultValueStat {...statProps} {...rest} />;
+});
 
-function mapStateToProps(state: BeefyState, { vaultId }: VaultWalletStatProps) {
+// TODO better selector / hook
+function selectVaultWalletStat(state: BeefyState, vaultId: VaultEntity['id']) {
   const label = 'VaultStat-WALLET';
   const vault = selectVaultById(state, vaultId);
   const hideBalance = selectIsBalanceHidden(state);

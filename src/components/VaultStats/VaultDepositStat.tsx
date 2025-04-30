@@ -56,8 +56,8 @@ type SelectDataReturn =
       notEarning: BigNumber;
     };
 
-// TEMP: selector instead of connect/mapStateToProps
-function selectData(
+// TODO better selector / hook
+function selectVaultDepositStat(
   state: BeefyState,
   vaultId: VaultEntity['id'],
   maybeWalletAddress?: string
@@ -115,7 +115,8 @@ export const VaultDepositStat = memo(function VaultDepositStat({
   label = 'VaultStat-DEPOSITED',
   ...passthrough
 }: VaultDepositStatProps) {
-  const data = useAppSelector(state => selectData(state, vaultId, walletAddress));
+  // @dev don't do this - temp migration away from connect()
+  const data = useAppSelector(state => selectVaultDepositStat(state, vaultId, walletAddress));
 
   if (data.loading) {
     return (

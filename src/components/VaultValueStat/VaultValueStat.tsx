@@ -25,7 +25,7 @@ export type VaultValueStatProps = {
   /** blur the values */
   blur?: boolean;
   /** show loading indicator instead of values */
-  loading: boolean;
+  loading?: boolean;
   /** when true, the main value and icon will get the boost color */
   boosted?: boolean;
   /** icon to show before the main value */
@@ -39,8 +39,8 @@ export const VaultValueStat = memo(function VaultValueStat({
   value,
   subValue,
   expectSubValue = false,
-  blur,
-  loading,
+  blur = false,
+  loading = false,
   boosted,
   hideLabel = false,
   Icon,
