@@ -7,12 +7,8 @@ export const OptionButton = styled('button', {
     gap: '8px',
     userSelect: 'none',
     cursor: 'pointer',
-    padding: '8px 14px',
     justifyContent: 'flex-start',
     textAlign: 'left',
-    '&:hover': {
-      backgroundColor: 'selectOptionActiveBackground',
-    },
     '&:active': {
       backgroundColor: 'transparent',
       color: 'text.light',
@@ -20,13 +16,10 @@ export const OptionButton = styled('button', {
   },
   variants: {
     active: {
-      true: {
-        backgroundColor: 'selectOptionActiveBackground',
-      },
+      true: {},
     },
     selected: {
       true: {
-        fontWeight: 'medium',
         color: 'text.light',
       },
     },

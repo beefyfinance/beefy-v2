@@ -9,7 +9,7 @@ export type SelectItem<TValue extends string = string> = {
   badge?: string;
 };
 
-type CommonProps<TItem extends SelectItem = SelectItem> = Override<
+export type CommonProps<TItem extends SelectItem = SelectItem> = Override<
   ButtonVariantProps,
   {
     className?: string;

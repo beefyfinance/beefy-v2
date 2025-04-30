@@ -21,15 +21,13 @@ export const Sort = memo(function Sort() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const sortField = useAppSelector(selectFilterSearchSortField);
-
-  const handleSort = useCallback(
-    (field: FilteredVaultsState['sort']) => {
-      dispatch(filteredVaultsActions.setSort(field));
-    },
-    [dispatch]
-  );
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [tempSortField, setTempSortField] = useState<FilteredVaultsState['sort']>(sortField);
+
+  const handleSort = useCallback(() => {
+    dispatch(filteredVaultsActions.setSort(tempSortField));
+    setIsOpen(false);
+  }, [dispatch, tempSortField]);
 
   const handleOpen = useCallback(() => {
     setIsOpen(open => !open);
@@ -46,14 +44,14 @@ export const Sort = memo(function Sort() {
             {COLUMNS.map(({ label, sortKey }) => (
               <StyledLabelledCheckBox
                 key={sortKey}
-                checked={sortKey === sortField}
-                onChange={() => handleSort(sortKey)}
+                checked={sortKey === tempSortField}
+                onChange={() => setTempSortField(sortKey)}
                 label={t(label)}
                 checkVariant="circle"
               />
             ))}
           </SortListContainer>
-          <Button variant="success" fullWidth={true} onClick={() => setIsOpen(false)}>
+          <Button variant="success" fullWidth={true} onClick={handleSort}>
             {t('Apply')}
           </Button>
         </Layout>

@@ -28,6 +28,11 @@ export const Container = styled('div', {
         maxWidth: 'container.xs',
       },
     },
+    noPadding: {
+      true: {
+        padding: 0,
+      },
+    },
   },
   defaultVariants: {
     maxWidth: 'xl',

@@ -48,14 +48,8 @@ export const LabelledCheckbox = memo(function LabelledCheckbox({
       className={css(styles.checkbox, className)}
       data-checked={checked}
     >
-      <Icon
-        className={css(
-          styles.icon,
-          iconCss,
-          checked && css.raw(styles.checkedIcon, checkedIconCss)
-        )}
-      />
-      <span className={css(styles.label, labelCss)}>{label}</span>
+      <Icon className={css(styles.icon, iconCss, checked && css.raw(checkedIconCss))} />
+      <span className={css(styles.label, checked && styles.checkedLabel, labelCss)}>{label}</span>
     </label>
   );
 });

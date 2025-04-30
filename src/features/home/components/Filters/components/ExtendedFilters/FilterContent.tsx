@@ -12,12 +12,15 @@ import {
   selectFilterChainIds,
   selectFilterPlatformIds,
 } from '../../../../../data/selectors/filtered-vaults.ts';
-import { PlatformDropdownFilter } from '../PlatformFilters/PlatformDropdownFilter.tsx';
+import { PlatformChecklist } from '../PlatformFilters/PlatformCheckList.tsx';
 import { selectFilterPlatforms } from '../../../../../data/selectors/platforms.ts';
 import { selectAllChains } from '../../../../../data/selectors/chains.ts';
 import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
-import { ChainDropdownFilter } from '../ChainFilters/ChainDropdownFilter.tsx';
+import { ChainCheckList } from '../ChainFilters/ChainCheckList.tsx';
 import { BoostCheckBox } from '../BoostFilter/BoostFilterButton.tsx';
+import { StategyTypeCheckBoxList } from '../StrategyTypeFilters/StategyTypeCheckboxList.tsx';
+import { VaultCategoryCheckList } from '../VaultCategoryFilters/VaultCategoryCheckList.tsx';
+import { AssetTypeCheckList } from '../AssetTypeFilters/AssetTypeCheckList.tsx';
 
 export interface FilterContentProps {
   handleContent: (content: FilterContent) => void;
@@ -38,18 +41,28 @@ export const MobileFilter = memo<FilterContentProps>(function MobileFilter({ han
     <>
       <PlatformsButton handleContent={handleContent} />
       <ChainsContentButton handleContent={handleContent} />
-      <MobileContentBoxes>
+
+      <MobileContentBox>
         <BoostCheckBox />
-      </MobileContentBoxes>
-      <MobileContentBoxes>
+      </MobileContentBox>
+      <MobileContentBox>
+        <VaultCategoryCheckList />
+      </MobileContentBox>
+      <MobileContentBox>
+        <AssetTypeCheckList />
+      </MobileContentBox>
+      <MobileContentBox>
+        <StategyTypeCheckBoxList />
+      </MobileContentBox>
+      <MobileContentBox>
         <MinTvlFilter />
-      </MobileContentBoxes>
-      <MobileContentBoxes>
+      </MobileContentBox>
+      <MobileContentBox>
         <CheckboxFilter filter="onlyZappable" label={t('Filter-Zappable')} />
         <CheckboxFilter filter="onlyEarningPoints" label={t('Filter-Points')} />
         <CheckboxFilter filter="onlyRetired" label={t('Filter-Retired')} />
         <CheckboxFilter filter="onlyPaused" label={t('Filter-Paused')} />
-      </MobileContentBoxes>
+      </MobileContentBox>
     </>
   );
 });
@@ -78,7 +91,9 @@ export const Chains = memo<FilterContentProps>(function Chains({ handleContent }
         <ArrowBack onClick={() => handleContent(FilterContent.Filter)} />
         <Title>{t('Chains')}</Title>
       </ContentHeader>
-      <ChainDropdownFilter />
+      <MobileContentContainer>
+        <ChainCheckList />
+      </MobileContentContainer>
     </>
   );
 });
@@ -91,7 +106,9 @@ export const Platforms = memo<FilterContentProps>(function Platforms({ handleCon
         <ArrowBack onClick={() => handleContent(FilterContent.Filter)} />
         <Title>{t('Platforms')}</Title>
       </ContentHeader>
-      <PlatformDropdownFilter />
+      <MobileContentContainer>
+        <PlatformChecklist />
+      </MobileContentContainer>
     </>
   );
 });
@@ -140,8 +157,6 @@ const ChainsContentButton = memo<FilterContentProps>(function ChainsContentButto
   const allChainsById = useAppSelector(selectAllChains);
 
   const selectedChainIds = useAppSelector(selectFilterChainIds);
-
-  console.log(allChainsById);
 
   const chainNameLabel = useMemo(() => {
     if (selectedChainIds.length === 1) {
@@ -223,10 +238,22 @@ const ContentHeader = styled('div', {
   },
 });
 
-const MobileContentBoxes = styled('div', {
+const MobileContentBox = styled('div', {
   base: {
     background: 'background.content.dark',
     borderRadius: '8px',
+    padding: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+  },
+});
+
+const MobileContentContainer = styled('div', {
+  base: {
+    backgroundColor: 'background.content.dark',
+    borderRadius: '8px',
+    height: 'auto',
     padding: '16px',
     display: 'flex',
     flexDirection: 'column',

@@ -17,7 +17,7 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
   }),
-  checkedIcon: css.raw({
+  checkedLabel: css.raw({
     color: 'text.light',
   }),
 };
