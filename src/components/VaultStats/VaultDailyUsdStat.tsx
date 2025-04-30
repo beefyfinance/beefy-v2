@@ -21,10 +21,11 @@ export type VaultDailyUsdStatProps = {
 export const VaultDailyUsdStat = memo(function ({
   vaultId,
   walletAddress,
+  ...passthrough
 }: VaultDailyUsdStatProps) {
   // @dev don't do this - temp migration away from connect()
   const props = useAppSelector(state => selectVaultDailyUsdStat(state, vaultId, walletAddress));
-  return <VaultValueStat {...props} />;
+  return <VaultValueStat {...props} {...passthrough} />;
 });
 
 // TODO better selector / hook

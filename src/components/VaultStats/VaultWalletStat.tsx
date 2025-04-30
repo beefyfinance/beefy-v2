@@ -23,10 +23,10 @@ export type VaultWalletStatProps = {
   vaultId: VaultEntity['id'];
 } & Omit<VaultValueStatProps, keyof ReturnType<typeof selectVaultWalletStat>>;
 
-export const VaultWalletStat = memo(function ({ vaultId, ...rest }: VaultWalletStatProps) {
+export const VaultWalletStat = memo(function ({ vaultId, ...passthrough }: VaultWalletStatProps) {
   // @dev don't do this - temp migration away from connect()
   const statProps = useAppSelector(state => selectVaultWalletStat(state, vaultId));
-  return <VaultValueStat {...statProps} {...rest} />;
+  return <VaultValueStat {...statProps} {...passthrough} />;
 });
 
 // TODO better selector / hook

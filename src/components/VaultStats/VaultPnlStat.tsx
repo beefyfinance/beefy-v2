@@ -22,13 +22,13 @@ export const VaultPnlStat = memo(function ({
   vaultId,
   pnlData,
   walletAddress,
-  ...rest
+  ...passthrough
 }: VaultDailyStatProps) {
   // @dev don't do this - temp migration away from connect()
   const statProps = useAppSelector(state =>
     selectVaultPnlStat(state, vaultId, pnlData, walletAddress)
   );
-  return <VaultValueStat {...statProps} {...rest} />;
+  return <VaultValueStat {...statProps} {...passthrough} />;
 });
 
 // TODO better selector / hook

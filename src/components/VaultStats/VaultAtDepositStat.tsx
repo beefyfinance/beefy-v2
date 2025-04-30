@@ -24,16 +24,25 @@ export type VaultAtDepositStatProps = {
   'label' | 'loading' | 'value' | 'subValue' | 'tooltip' | 'blur' | 'expectSubValue'
 >;
 
-export const VaultAtDepositStat = memo(function VaultAtDepositStat(props: VaultAtDepositStatProps) {
+export const VaultAtDepositStat = memo(function VaultAtDepositStat({
+  vaultId,
+  pnlData,
+  walletAddress,
+  ...passthrough
+}: VaultAtDepositStatProps) {
   // @dev don't do this - temp migration away from connect()
-  const statProps = useAppSelector(state => selectVaultAtDepositStat(state, props));
-  return <VaultValueStat {...statProps} />;
+  const statProps = useAppSelector(state =>
+    selectVaultAtDepositStat(state, vaultId, pnlData, walletAddress)
+  );
+  return <VaultValueStat {...statProps} {...passthrough} />;
 });
 
 // TODO better selector / hook
 const selectVaultAtDepositStat = (
   state: BeefyState,
-  { vaultId, pnlData, walletAddress }: VaultAtDepositStatProps
+  vaultId: VaultEntity['id'],
+  pnlData: UserVaultPnl,
+  walletAddress: string
 ) => {
   const label = 'VaultStat-AtDeposit';
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);

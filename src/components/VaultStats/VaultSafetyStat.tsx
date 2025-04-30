@@ -11,10 +11,16 @@ export type VaultSafetyStatProps = {
   vaultId: VaultEntity['id'];
 } & Omit<VaultValueStatProps, 'label' | 'value'>;
 
-export const VaultSafetyStat = memo(function ({ vaultId }: VaultSafetyStatProps) {
+export const VaultSafetyStat = memo(function ({ vaultId, ...passthrough }: VaultSafetyStatProps) {
   const label = 'VaultStat-SAFETY';
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  return <VaultValueStat label={label} value={<StatSafetyScore score={vault.safetyScore} />} />;
+  return (
+    <VaultValueStat
+      label={label}
+      value={<StatSafetyScore score={vault.safetyScore} />}
+      {...passthrough}
+    />
+  );
 });
 
 type StatSafetyScoreProps = {

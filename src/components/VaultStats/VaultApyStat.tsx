@@ -22,7 +22,7 @@ export type VaultApyStatProps = Omit<
 export const VaultApyStat = memo(function VaultApyStat({
   vaultId,
   type,
-  ...rest
+  ...passthrough
 }: VaultApyStatProps) {
   const { t } = useTranslation();
   const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
@@ -40,7 +40,7 @@ export const VaultApyStat = memo(function VaultApyStat({
   const boostedTotalKey = type === 'daily' ? 'boostedTotalDaily' : 'boostedTotalApy';
 
   if (data.status === 'loading') {
-    return <VaultValueStat label={label} value="-" blur={false} loading={true} {...rest} />;
+    return <VaultValueStat label={label} value="-" blur={false} loading={true} {...passthrough} />;
   }
 
   if (data.status !== 'available' || !formatted) {
@@ -50,7 +50,7 @@ export const VaultApyStat = memo(function VaultApyStat({
         value={data.status === 'hidden' ? '-' : '???'}
         blur={false}
         loading={false}
-        {...rest}
+        {...passthrough}
       />
     );
   }
@@ -93,7 +93,7 @@ export const VaultApyStat = memo(function VaultApyStat({
       blur={false}
       loading={false}
       boosted={isBoosted}
-      {...rest}
+      {...passthrough}
     />
   );
 });
