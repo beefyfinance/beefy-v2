@@ -1,9 +1,8 @@
 import BigNumber from 'bignumber.js';
-import { padStart } from 'lodash-es';
+import { mapValues, padStart } from 'lodash-es';
 import type { ReactNode } from 'react';
 import { hexToBigInt } from 'viem';
-import type { TotalApy } from '../features/data/reducers/apy.ts';
-import type { AveragesData } from '../features/data/selectors/apy.ts';
+import type { AvgApy, AvgApyPeriod, TotalApy } from '../features/data/reducers/apy-types.ts';
 import type { AllValuesAs } from '../features/data/utils/types-utils.ts';
 import { type BigNumberish, toBigNumber } from './big-number.ts';
 import { strictEntries } from './object.ts';
@@ -304,20 +303,18 @@ export function formatTotalApy(
   ) as AllValuesAs<TotalApy, string | ReactNode>; // required keys in input so should exist in output
 }
 
-export type FormattedAvgApy = {
-  [K in keyof AveragesData]: AveragesData[K] & { formatted?: string };
+export type FormattedAvgApy = AvgApy & {
+  periods: Record<number, AvgApyPeriod & { formatted?: string }>;
 };
 
-export function formatAvgApy(avgApy: AveragesData): FormattedAvgApy {
-  const avgKeys = ['avg7d', 'avg30d', 'avg90d'] as const;
-  return avgKeys.reduce((acc, key) => {
-    const item = avgApy[key];
-    acc[key] = {
+export function formatAvgApy(avgApy: AvgApy): FormattedAvgApy {
+  return {
+    ...avgApy,
+    periods: mapValues(avgApy.periods, item => ({
       ...item,
       formatted: item.partial ? formatLargePercent(item.value, 2) : undefined,
-    };
-    return acc;
-  }, {} as FormattedAvgApy);
+    })),
+  };
 }
 
 export function convertAmountToRawNumber(value: BigNumber.Value, decimals = 18) {

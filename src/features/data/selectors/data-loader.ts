@@ -1,10 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { createCachedSelector } from 're-reselect';
+import { keys } from '../../../helpers/object.ts';
 import type { BeefyState } from '../../../redux-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import { shouldVaultShowInterest } from '../entities/vault.ts';
-import { selectVaultById } from './vaults.ts';
-import { createCachedSelector } from 're-reselect';
 import {
   createAddressChainDataSelector,
   createAddressDataSelector,
@@ -20,7 +20,7 @@ import {
   shouldLoaderLoadOnce,
   shouldLoaderLoadRecent,
 } from './data-loader-helpers.ts';
-import { keys } from '../../../helpers/object.ts';
+import { selectVaultById } from './vaults.ts';
 
 export const selectIsChainConfigAvailable = createGlobalDataSelector(
   'chainConfig',
@@ -42,6 +42,7 @@ export const selectIsConfigAvailable: GlobalDataSelectorFn = createSelector(
 
 export const selectIsPricesAvailable = createGlobalDataSelector('prices', hasLoaderFulfilledOnce);
 export const selectIsApyAvailable = createGlobalDataSelector('apy', hasLoaderFulfilledOnce);
+export const selectIsAvgApyAvailable = createGlobalDataSelector('avgApy', hasLoaderFulfilledOnce);
 
 export const selectIsContractDataLoadedOnChain = createChainDataSelector(
   'contractData',

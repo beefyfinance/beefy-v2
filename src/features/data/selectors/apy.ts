@@ -1,6 +1,6 @@
 import { first } from 'lodash-es';
+import { EMPTY_AVG_APY } from '../../../helpers/apy.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
-import { getUnixNow } from '../../../helpers/date.ts';
 import { isEmpty } from '../../../helpers/utils.ts';
 import type { BeefyState } from '../../../redux-types.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
@@ -10,7 +10,7 @@ import {
   isVaultActive,
   type VaultEntity,
 } from '../entities/vault.ts';
-import type { AvgApy, TotalApy } from '../reducers/apy.ts';
+import type { AvgApy, TotalApy } from '../reducers/apy-types.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
   selectBoostUserBalanceInToken,
@@ -34,12 +34,6 @@ const EMPTY_TOTAL_APY: TotalApy = {
   totalMonthly: 0,
   totalDaily: 0,
   totalType: 'apy',
-};
-
-const EMPTY_AVG_APY: AvgApy = {
-  avg7d: 0,
-  avg30d: 0,
-  avg90d: 0,
 };
 
 export const selectVaultTotalApyOrUndefined = (
@@ -255,15 +249,6 @@ export const selectYieldStatsByVaultId = (
   };
 };
 
-export type AveragesData = {
-  [K in keyof AvgApy]: {
-    days: number;
-    value: number;
-    partial: boolean;
-    full: boolean;
-  };
-};
-
 type ApyVaultUIData =
   | {
       status: 'loading' | 'missing' | 'hidden';
@@ -274,14 +259,8 @@ type ApyVaultUIData =
       type: 'apy' | 'apr';
       values: TotalApy;
       boosted: 'active' | 'prestake' | undefined;
-      averages: AveragesData | undefined;
+      averages: AvgApy | undefined;
     };
-
-const avgMeta = {
-  avg7d: { days: 7 },
-  avg30d: { days: 30 },
-  avg90d: { days: 90 },
-} as const;
 
 // TEMP: selector instead of connect/mapStateToProps
 export function selectApyVaultUIData(
@@ -308,35 +287,7 @@ export function selectApyVaultUIData(
 
   const values = selectVaultTotalApy(state, vaultId);
   const boost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
-
-  let prevValue = (boost ? values['boostedTotalApy'] : undefined) || values['totalApy'];
-  const rawAverages = selectVaultAvgApyOrUndefined(state, vaultId);
-  const averages = {
-    avg7d: { value: prevValue, partial: false, full: false, days: 0 },
-    avg30d: { value: prevValue, partial: false, full: false, days: 0 },
-    avg90d: { value: prevValue, partial: false, full: false, days: 0 },
-  };
-  const age = (getUnixNow() - vault.createdAt) / 86400;
-  const avgKeys = ['avg7d', 'avg30d', 'avg90d'] as const;
-  let prevFull = !!prevValue;
-  for (const key of avgKeys) {
-    const meta = avgMeta[key];
-    const avg = rawAverages && rawAverages[key];
-    const value = avg || prevValue;
-    const full = !!avg && age >= meta.days;
-    const partial = full || (prevFull && !!avg && age < meta.days);
-    averages[key] = {
-      days: Math.min(meta.days, age),
-      value,
-      partial,
-      full,
-    };
-    prevValue = value;
-    prevFull = full;
-  }
-  if (vaultId === 'balancerv3-arbitrum-ebtc-waarbwbtc') {
-    console.log(vaultId, rawAverages, averages, age);
-  }
+  const averages = selectVaultAvgApyOrUndefined(state, vaultId);
 
   if (boost) {
     return { status: 'available', type, values, boosted: boost.status, averages };

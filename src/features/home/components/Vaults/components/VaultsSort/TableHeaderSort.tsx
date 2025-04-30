@@ -1,20 +1,20 @@
-import { memo, useCallback } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import {
-  selectFilterSearchSortDirection,
-  selectFilterSearchSortField,
-} from '../../../../../data/selectors/filtered-vaults.ts';
-import {
-  filteredVaultsActions,
-  type FilteredVaultsState,
-} from '../../../../../data/reducers/filtered-vaults.ts';
-import { SortColumnHeader } from '../../../../../../components/SortColumnHeader/SortColumnHeader.tsx';
-import { type FilterSubColumn, SubColumnSort } from './SubColumnSort.tsx';
 import { styled } from '@repo/styles/jsx';
+import { memo, useCallback } from 'react';
+import { SortColumnHeader } from '../../../../../../components/SortColumnHeader/SortColumnHeader.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import type {
   SortType,
   SortWithSubSort,
 } from '../../../../../data/reducers/filtered-vaults-types.ts';
+import {
+  filteredVaultsActions,
+  type FilteredVaultsState,
+} from '../../../../../data/reducers/filtered-vaults.ts';
+import {
+  selectFilterSearchSortDirection,
+  selectFilterSearchSortField,
+} from '../../../../../data/selectors/filtered-vaults.ts';
+import { type FilterSubColumn, SubColumnSort } from './SubColumnSort.tsx';
 
 type SubKeyField<T extends SortType> =
   T extends SortWithSubSort ? { subKeys: FilterSubColumn<T>[] } : unknown;
@@ -34,7 +34,9 @@ const SORT_COLUMNS = [
     value: 'apy',
     subKeys: [
       { label: 'Filter-SortApy-default', value: 'default' },
-      { label: 'Filter-SortApy-avg7d', value: 'avg7d' },
+      { label: 'Filter-SortApy-avg7d', value: 7 },
+      { label: 'Filter-SortApy-avg30d', value: 30 },
+      { label: 'Filter-SortApy-avg90d', value: 90 },
     ],
   },
   { label: 'Filter-SortDaily', value: 'daily' },

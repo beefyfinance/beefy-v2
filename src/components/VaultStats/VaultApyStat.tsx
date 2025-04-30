@@ -62,8 +62,8 @@ export const VaultApyStat = memo(function VaultApyStat({
     data.boosted === 'prestake' ? t('PRE-STAKE')
     : data.boosted === 'active' ? formatted[boostedTotalKey]
     : type === 'daily' ? formatted[totalKey]
-    : subSortApy === 'default' || !averages?.[subSortApy].partial ? formatted[totalKey]
-    : formatLargePercent(averages[subSortApy].value, 2, '???');
+    : subSortApy === 'default' || !averages?.periods[subSortApy].partial ? formatted[totalKey]
+    : formatLargePercent(averages.periods[subSortApy].value, 2, '???');
 
   const subValue =
     isBoosted ?
@@ -73,7 +73,7 @@ export const VaultApyStat = memo(function VaultApyStat({
     : undefined;
 
   const isAverage = subSortApy !== 'default' && type === 'yearly';
-  const isWarning = isAverage && !averages?.[subSortApy].full;
+  const isWarning = isAverage && !averages?.periods[subSortApy].full;
 
   return (
     <VaultValueStat

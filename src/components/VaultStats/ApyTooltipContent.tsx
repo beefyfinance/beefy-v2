@@ -12,6 +12,121 @@ import { type FormattedAvgApy, type FormattedTotalApy } from '../../helpers/form
 import { useAppSelector } from '../../store.ts';
 import { InterestTooltipContent } from '../InterestTooltipContent/InterestTooltipContent.tsx';
 
+type TotalApyTooltipContentProps = {
+  vaultId: VaultEntity['id'];
+  type: 'yearly' | 'daily';
+  isBoosted: boolean;
+  rates: FormattedTotalApy;
+  title?: boolean;
+};
+
+const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
+  vaultId,
+  type,
+  isBoosted,
+  rates,
+  title = false,
+}: TotalApyTooltipContentProps) {
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const rows = useMemo(() => {
+    const labels = getApyLabelsForType(getApyLabelsTypeForVault(vault, rates.totalType));
+    const allComponents = getApyComponents();
+    const components = allComponents[type];
+    const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';
+    const boostedTotalKey = type === 'daily' ? 'boostedTotalDaily' : 'boostedTotalApy';
+
+    const items: {
+      label: string | string[];
+      value: string;
+    }[] = components
+      .filter(key => key in rates)
+      .map(key => ({
+        label: labels[key],
+        value: rates[key] ?? '?',
+      }));
+
+    items.push({
+      label: labels[totalKey],
+      value: isBoosted ? (rates[boostedTotalKey] ?? '?') : rates[totalKey],
+    });
+
+    return items;
+  }, [vault, isBoosted, rates, type]);
+
+  return (
+    <>
+      {title && <GroupHeader>Current</GroupHeader>}
+      <InterestTooltipContent rows={rows} />
+    </>
+  );
+});
+
+type AverageApyTooltipContentProps = {
+  vaultId: VaultEntity['id'];
+  averages: FormattedAvgApy;
+  title?: boolean;
+};
+
+export const AverageApyTooltipContent = memo(function AverageApyTooltipContent({
+  vaultId,
+  averages,
+  title = false,
+}: AverageApyTooltipContentProps) {
+  const { t } = useTranslation();
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  // TODO select total type from TotalApy
+  const totalType = 'apy';
+
+  const { rows, noteDays } = useMemo(() => {
+    const labelType = getApyLabelsTypeForVault(vault, totalType);
+    const items: {
+      label: string | string[];
+      value: string;
+      labelTextParams?: Record<string, string>;
+    }[] = [];
+
+    let partialDays: number | undefined;
+
+    for (const days of averages.partial) {
+      const period = averages.periods[days];
+      if (!period || !period.formatted) {
+        break;
+      }
+      if (period.partial && !period.full) {
+        partialDays = period.dataWholeDays;
+      }
+      items.push({
+        label: [`Vault-Apy-${labelType}-Yearly-Avg`, `Vault-Apy-Yearly-Avg`],
+        value: period.formatted,
+        labelTextParams: { count: period.dataWholeDays.toString() },
+      });
+    }
+    return {
+      rows: items.length ? items : undefined,
+      noteDays: items.length && partialDays !== undefined ? Math.max(1, partialDays) : undefined,
+    };
+  }, [vault, averages, totalType]);
+
+  if (!rows) {
+    return null;
+  }
+
+  return (
+    <>
+      {title && <GroupHeader>Historical</GroupHeader>}
+      <InterestTooltipContent rows={rows} highLightLast={false} />
+      {noteDays && (
+        <GroupFooter>
+          {t('Vault-Apy-Average-Warning', {
+            count: noteDays,
+            days: noteDays.toFixed(0),
+          })}
+        </GroupFooter>
+      )}
+    </>
+  );
+});
+
 type ApyTooltipContentProps = {
   vaultId: VaultEntity['id'];
   type: 'yearly' | 'daily';
@@ -27,84 +142,22 @@ export const ApyTooltipContent = memo(function ApyTooltipContent({
   rates,
   averages,
 }: ApyTooltipContentProps) {
-  const { t } = useTranslation();
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const { current, average, averageNoteDays } = useMemo(() => {
-    const labels = getApyLabelsForType(getApyLabelsTypeForVault(vault, rates.totalType));
-    const allComponents = getApyComponents();
-    const components = allComponents[type];
-    const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';
-    const boostedTotalKey = type === 'daily' ? 'boostedTotalDaily' : 'boostedTotalApy';
-
-    const currentItems: {
-      label: string | string[];
-      value: string;
-    }[] = components
-      .filter(key => key in rates)
-      .map(key => ({
-        label: labels[key],
-        value: rates[key] ?? '?',
-      }));
-
-    currentItems.push({
-      label: labels[totalKey],
-      value: isBoosted ? (rates[boostedTotalKey] ?? '?') : rates[totalKey],
-    });
-
-    const averageItems: {
-      label: string | string[];
-      value: string;
-    }[] = [];
-    let partialDays: number | undefined;
-    if (averages && type === 'yearly') {
-      const avgKeys = ['avg7d', 'avg30d', 'avg90d'] as const;
-      for (const key of avgKeys) {
-        const item = averages[key];
-        if (!item || !item.formatted) {
-          break;
-        }
-        averageItems.push({
-          label: labels[key],
-          value: item.formatted,
-        });
-        if (item.partial && !item.full) {
-          partialDays = item.days;
-        }
-      }
-    }
-
-    return {
-      current: currentItems.length ? currentItems : undefined,
-      average: averageItems.length ? averageItems : undefined,
-      averageNoteDays:
-        averageItems.length && partialDays !== undefined ? Math.max(1, partialDays) : undefined,
-    };
-  }, [vault, isBoosted, rates, type, averages]);
-
-  if (current === undefined && average === undefined) {
-    return undefined;
-  }
+  const showAverages = !!averages && type === 'yearly';
 
   return (
     <Groups>
-      {current && (
+      <div>
+        <TotalApyTooltipContent
+          vaultId={vaultId}
+          type={type}
+          isBoosted={isBoosted}
+          rates={rates}
+          title={showAverages}
+        />
+      </div>
+      {showAverages && (
         <div>
-          <GroupHeader>Current</GroupHeader>
-          <InterestTooltipContent rows={current} />
-        </div>
-      )}
-      {average && (
-        <div>
-          <GroupHeader>Historical</GroupHeader>
-          <InterestTooltipContent rows={average} highLightLast={false} />
-          {averageNoteDays && (
-            <GroupFooter>
-              {t('Vault-Apy-Average-Warning', {
-                count: averageNoteDays,
-                days: averageNoteDays.toFixed(0),
-              })}
-            </GroupFooter>
-          )}
+          <AverageApyTooltipContent title={true} vaultId={vaultId} averages={averages} />
         </div>
       )}
     </Groups>

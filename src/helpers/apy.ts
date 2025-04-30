@@ -10,10 +10,24 @@ import type {
   TotalApyDailyComponent,
   TotalApyKey,
   TotalApyYearlyComponent,
-} from '../features/data/reducers/apy.ts';
+} from '../features/data/reducers/apy-types.ts';
 import { createCachedFactory, createFactory } from '../features/data/utils/factory-utils.ts';
 import { fromKeysMapper } from './object.ts';
 import { ucFirstLetter } from './string.ts';
+
+export const AVG_APY_PERIODS: ReadonlyArray<number> = [7, 30, 90];
+export const EMPTY_AVG_APY: AvgApy = {
+  periods: AVG_APY_PERIODS.map(days => ({
+    days,
+    dataDays: 0,
+    dataWholeDays: 0,
+    value: 0,
+    partial: false,
+    full: false,
+  })),
+  partial: [],
+  full: [],
+};
 
 const DISPLAY_ORDER = ((i = 0) =>
   ({
@@ -56,7 +70,7 @@ export const getApyComponents = createFactory(() => {
 export type ApyLabelsType = VaultEntity['type'] | 'cowcentrated-compounds';
 
 export type ApyLabels = {
-  [K in TotalApyKey | keyof AvgApy | 'breakdown']: string[];
+  [K in TotalApyKey | 'breakdown']: string[];
 };
 
 export const getApyLabelsForType = createCachedFactory(
@@ -85,9 +99,6 @@ export const getApyLabelsForType = createCachedFactory(
       boostedTotalDaily: [...makeLabels('boosted', 'Daily'), ...makeLabels('total', 'Daily')],
       boostedTotalApy: [...makeLabels('boosted', 'Yearly'), ...makeLabels('total', 'Yearly')],
       breakdown: [`Vault-Apy-${ucFirstLetter(type)}-Breakdown`, 'Vault-Apy-Breakdown'],
-      avg7d: makeLabels('avg7d', 'Yearly'),
-      avg30d: makeLabels('avg30d', 'Yearly'),
-      avg90d: makeLabels('avg90d', 'Yearly'),
     };
   },
   type => type

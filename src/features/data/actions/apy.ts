@@ -1,5 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { first, keyBy, mapValues, partition } from 'lodash-es';
+import { AVG_APY_PERIODS, EMPTY_AVG_APY, getApiApyDataComponents } from '../../../helpers/apy.ts';
+import { getUnixNow } from '../../../helpers/date.ts';
+import { compoundInterest, yearlyToDaily } from '../../../helpers/number.ts';
 import type { BeefyState } from '../../../redux-types.ts';
+import type { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api-types.ts';
+import type { ApiAvgApy } from '../apis/beefy/beefy-data-api-types.ts';
 import { getBeefyApi, getBeefyDataApi } from '../apis/instances.ts';
 import {
   isCowcentratedGovVault,
@@ -8,25 +14,23 @@ import {
   isStandardVault,
   type VaultEntity,
 } from '../entities/vault.ts';
-import type { TotalApy } from '../reducers/apy.ts';
-import { selectAllVaultIdsIncludingHidden, selectVaultById } from '../selectors/vaults.ts';
+import type { AvgApy, AvgApyPeriod, RawAvgApy, TotalApy } from '../reducers/apy-types.ts';
+import { selectVaultTotalApy } from '../selectors/apy.ts';
 import { selectActiveVaultBoostIds } from '../selectors/boosts.ts';
-import { first, partition } from 'lodash-es';
-import { compoundInterest, yearlyToDaily } from '../../../helpers/number.ts';
-import { isDefined } from '../utils/array-utils.ts';
-import { getApiApyDataComponents } from '../../../helpers/apy.ts';
-import type { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api-types.ts';
-import type { ApiAvgApy } from '../apis/beefy/beefy-data-api-types.ts';
 import {
   isMerklBoostCampaign,
   type MerklRewardsCampaignWithApr,
   selectVaultActiveMerklCampaigns,
 } from '../selectors/rewards.ts';
+import {
+  selectAllVaultIdsIncludingHidden,
+  selectAllVisibleVaultIds,
+  selectVaultById,
+} from '../selectors/vaults.ts';
+import { isDefined } from '../utils/array-utils.ts';
 
 export interface FetchAllApyFulfilledPayload {
   data: BeefyAPIApyBreakdownResponse;
-  // reducers need the state (balance)
-  state: BeefyState;
 }
 
 export const fetchApyAction = createAsyncThunk<
@@ -41,16 +45,8 @@ export const fetchApyAction = createAsyncThunk<
   return { data: prices, state: getState() };
 });
 
-export interface TransformedAvgApy {
-  vaultId: string;
-  avg7d: number;
-  avg30d: number;
-  avg90d: number;
-}
-
 export interface FetchAvgApysFulfilledPayload {
-  data: TransformedAvgApy[];
-  state: BeefyState;
+  data: Record<string, RawAvgApy>;
 }
 
 export const fetchAvgApyAction = createAsyncThunk<
@@ -59,19 +55,95 @@ export const fetchAvgApyAction = createAsyncThunk<
   {
     state: BeefyState;
   }
->('apy/fetchAvgApy', async (_, { getState }) => {
+>('apy/fetchAvgApy', async () => {
   const api = await getBeefyDataApi();
   const avgApys = await api.getAvgApys();
 
-  // Transform snake_case to camelCase
-  const transformedData = avgApys.map((apy: ApiAvgApy) => ({
-    vaultId: apy.vault_id,
-    avg7d: apy.avg_7d,
-    avg30d: apy.avg_30d,
-    avg90d: apy.avg_90d,
-  }));
+  const data = avgApys.map((apy: ApiAvgApy) => [
+    apy.vault_id,
+    {
+      periods: [
+        { days: 7, apy: apy.avg_7d },
+        { days: 30, apy: apy.avg_30d },
+        { days: 90, apy: apy.avg_90d },
+      ].filter(period => AVG_APY_PERIODS.includes(period.days)),
+    },
+  ]);
 
-  return { data: transformedData, state: getState() };
+  return { data: Object.fromEntries(data) };
+});
+
+export type FetchAvgApyFulfilledPayload = {
+  data: Record<string, AvgApy>;
+};
+
+export const recalculateAvgApyAction = createAsyncThunk<
+  FetchAvgApyFulfilledPayload,
+  void,
+  {
+    state: BeefyState;
+  }
+>('apy/recalculateAvgApy', async (_, { getState }) => {
+  const state = getState();
+  const rawAverages = state.biz.apy.rawAvgApy.byVaultId;
+  const unprocessedVaultIds = new Set(selectAllVisibleVaultIds(state));
+
+  const data = mapValues(rawAverages, (rawAverage, vaultId) => {
+    // don't try to process apy for vaults no longer in app
+    if (!unprocessedVaultIds.has(vaultId)) {
+      return EMPTY_AVG_APY;
+    }
+    unprocessedVaultIds.delete(vaultId);
+
+    const vault = selectVaultById(state, vaultId);
+    const vaultAge = (getUnixNow() - vault.createdAt) / 86400;
+
+    let previousFull = true;
+    const periods = rawAverage.periods.map(period => {
+      const dataDays = Math.min(vaultAge, period.days);
+      const dataWholeDays = Math.ceil(dataDays);
+      const full = dataWholeDays >= period.days;
+      const partial = full || previousFull;
+      previousFull = full;
+      return {
+        days: period.days,
+        dataDays,
+        dataWholeDays,
+        value: period.apy,
+        partial,
+        full,
+      } satisfies AvgApyPeriod;
+    });
+
+    return {
+      periods: keyBy(periods, 'days'),
+      partial: periods.filter(p => p.partial).map(p => p.days),
+      full: periods.filter(p => p.full).map(p => p.days),
+    };
+  });
+
+  // add current apy for vaults that are not in the api response to make sorting straightforward
+  for (const vaultId of unprocessedVaultIds) {
+    const apy = selectVaultTotalApy(state, vaultId);
+    const periods = AVG_APY_PERIODS.map(
+      days =>
+        ({
+          days,
+          dataDays: 0,
+          dataWholeDays: 0,
+          value: apy.boostedTotalApy || apy.totalApy,
+          partial: false,
+          full: false,
+        }) satisfies AvgApyPeriod
+    );
+    data[vaultId] = {
+      periods: keyBy(periods, 'days'),
+      partial: [],
+      full: [],
+    };
+  }
+
+  return { data };
 });
 
 export type RecalculateTotalApyPayload = {

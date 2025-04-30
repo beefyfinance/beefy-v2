@@ -1,111 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type BigNumber from 'bignumber.js';
+import { isAfter } from 'date-fns';
 import type { Draft } from 'immer';
 import type { BeefyState } from '../../../redux-types.ts';
 import {
   fetchApyAction,
   fetchAvgApyAction,
+  recalculateAvgApyAction,
   recalculateTotalApyAction,
-  type TransformedAvgApy,
 } from '../actions/apy.ts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types.ts';
-import type { BoostPromoEntity } from '../entities/promo.ts';
-import { type VaultEntity } from '../entities/vault.ts';
 import { selectBoostById } from '../selectors/boosts.ts';
 import { selectTokenPriceByAddress, selectVaultReceiptTokenPrice } from '../selectors/tokens.ts';
-import {
-  selectVaultByIdOrUndefined,
-  selectVaultWithReceiptByAddressOrUndefined,
-} from '../selectors/vaults.ts';
+import { selectVaultWithReceiptByAddressOrUndefined } from '../selectors/vaults.ts';
 import { createIdMap } from '../utils/array-utils.ts';
-import type BigNumber from 'bignumber.js';
-import type { ApiApyData } from '../apis/beefy/beefy-api-types.ts';
-import { isAfter } from 'date-fns';
+import type { ApyState, BoostAprData } from './apy-types.ts';
 import { getBoostStatusFromContractState } from './promos.ts';
-
-// boost is expressed as APR
-interface BoostAprData {
-  apr: number; //total Boost APR
-  aprByRewardToken: Array<{
-    rewardToken: string;
-    apr: number;
-  }>;
-}
-
-// TODO: this should be reworked
-export interface TotalApy {
-  totalApy: number;
-  totalType: 'apy' | 'apr';
-  totalMonthly: number;
-  totalDaily: number;
-  vaultApr?: number;
-  vaultDaily?: number;
-  tradingApr?: number;
-  tradingDaily?: number;
-  composablePoolApr?: number;
-  composablePoolDaily?: number;
-  liquidStakingApr?: number;
-  liquidStakingDaily?: number;
-  boostApr?: number;
-  boostDaily?: number;
-  boostedTotalApy?: number;
-  boostedTotalDaily?: number;
-  clmApr?: number;
-  clmDaily?: number;
-  merklApr?: number;
-  merklDaily?: number;
-  stellaSwapApr?: number;
-  stellaSwapDaily?: number;
-  rewardPoolApr?: number;
-  rewardPoolDaily?: number;
-  rewardPoolTradingApr?: number;
-  rewardPoolTradingDaily?: number;
-  merklBoostApr?: number;
-  merklBoostDaily?: number;
-}
-
-export interface AvgApy {
-  avg7d: number;
-  avg30d: number;
-  avg90d: number;
-}
-
-type ExtractAprComponents<T extends string> = T extends `${infer C}Apr` ? C : never;
-export type TotalApyKey = Exclude<keyof TotalApy, 'totalType'>;
-export type TotalApyComponent = ExtractAprComponents<TotalApyKey>;
-export type TotalApyYearlyComponent = `${TotalApyComponent}Apr`;
-export type TotalApyDailyComponent = `${TotalApyComponent}Daily`;
-
-/**
- * State containing APY infos indexed by vault id
- */
-export interface ApyState {
-  rawApy: {
-    byVaultId: {
-      // we reuse the api types, not the best idea but works for now
-      [vaultId: VaultEntity['id']]: ApiApyData;
-    };
-    byBoostId: {
-      [boostId: BoostPromoEntity['id']]: BoostAprData;
-    };
-  };
-  totalApy: {
-    byVaultId: {
-      // we reuse the api types, not the best idea but works for now
-      [vaultId: VaultEntity['id']]: TotalApy;
-    };
-  };
-  avgApy: {
-    byVaultId: {
-      [vaultId: VaultEntity['id']]: AvgApy;
-    };
-  };
-}
 
 export const initialApyState: ApyState = {
   rawApy: { byVaultId: {}, byBoostId: {} },
   totalApy: { byVaultId: {} },
+  rawAvgApy: { byVaultId: {} },
   avgApy: { byVaultId: {} },
 };
 
@@ -137,9 +54,10 @@ export const apySlice = createSlice({
         sliceState.totalApy.byVaultId = action.payload.totals;
       })
       .addCase(fetchAvgApyAction.fulfilled, (sliceState, action) => {
-        const avgApys = action.payload.data;
-        const state = action.payload.state;
-        transformAvgApys(avgApys, state, sliceState);
+        sliceState.rawAvgApy.byVaultId = action.payload.data;
+      })
+      .addCase(recalculateAvgApyAction.fulfilled, (sliceState, action) => {
+        sliceState.avgApy.byVaultId = action.payload.data;
       });
   },
 });
@@ -228,31 +146,4 @@ function addContractDataToState(
     // add data to state
     sliceState.rawApy.byBoostId[boost.id] = boostAprData;
   }
-}
-
-function transformAvgApys(
-  avgApys: TransformedAvgApy[],
-  state: BeefyState,
-  sliceState: Draft<ApyState>
-) {
-  const avgApyByVaultId: Record<VaultEntity['id'], AvgApy> = {};
-
-  for (const avgApy of avgApys) {
-    const vault = selectVaultByIdOrUndefined(state, avgApy.vaultId);
-    if (vault && vault.status !== 'active') {
-      avgApyByVaultId[avgApy.vaultId] = {
-        avg7d: 0,
-        avg30d: 0,
-        avg90d: 0,
-      };
-    } else {
-      avgApyByVaultId[avgApy.vaultId] = {
-        avg7d: avgApy.avg7d,
-        avg30d: avgApy.avg30d,
-        avg90d: avgApy.avg90d,
-      };
-    }
-  }
-
-  sliceState.avgApy.byVaultId = avgApyByVaultId;
 }
