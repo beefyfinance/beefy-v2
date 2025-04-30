@@ -1,6 +1,7 @@
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback } from 'react';
 import { SortColumnHeader } from '../../../../../../components/SortColumnHeader/SortColumnHeader.tsx';
+import { AVG_APY_PERIODS } from '../../../../../../helpers/apy.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import type {
   SortType,
@@ -34,9 +35,10 @@ const SORT_COLUMNS = [
     value: 'apy',
     subKeys: [
       { label: 'Filter-SortApy-default', value: 'default' },
-      { label: 'Filter-SortApy-avg7d', value: 7 },
-      { label: 'Filter-SortApy-avg30d', value: 30 },
-      { label: 'Filter-SortApy-avg90d', value: 90 },
+      ...AVG_APY_PERIODS.map(period => ({
+        label: `Filter-SortApy-avg${period}d`,
+        value: period,
+      })),
     ],
   },
   { label: 'Filter-SortDaily', value: 'daily' },

@@ -1,23 +1,23 @@
-import type { BeefyState } from '../../../redux-types.ts';
 import { createListenerMiddleware, isAnyOf, isFulfilled } from '@reduxjs/toolkit';
+import { REHYDRATE } from 'redux-persist/es/constants';
+import type { RehydrateAction } from 'redux-persist/es/types';
+import type { BeefyState } from '../../../redux-types.ts';
+import { recalculateAvgApyAction, recalculateTotalApyAction } from '../actions/apy.ts';
 import {
   fetchAllBalanceAction,
   fetchBalanceAction,
   recalculateDepositedVaultsAction,
 } from '../actions/balance.ts';
+import { fetchChainConfigs } from '../actions/chains.ts';
+import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
+import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
+import { fetchPlatforms } from '../actions/platforms.ts';
+import { fetchAllPricesAction } from '../actions/prices.ts';
+import { initPromos, promosRecalculatePinned } from '../actions/promos.ts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
 import { fetchAllVaults } from '../actions/vaults.ts';
-import { fetchAllPricesAction } from '../actions/prices.ts';
-import { fetchApyAction, fetchAvgApyAction } from '../actions/apy.ts';
-import { fetchPlatforms } from '../actions/platforms.ts';
-import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { calculateZapAvailabilityAction } from '../actions/zap.ts';
-import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
 import { filteredVaultsActions } from '../reducers/filtered-vaults.ts';
-import type { RehydrateAction } from 'redux-persist/es/types';
-import { REHYDRATE } from 'redux-persist/es/constants';
-import { fetchChainConfigs } from '../actions/chains.ts';
-import { selectIsConfigAvailable } from '../selectors/data-loader.ts';
 import {
   accountHasChanged,
   chainHasChanged,
@@ -25,8 +25,8 @@ import {
   userDidConnect,
   walletHasDisconnected,
 } from '../reducers/wallet/wallet.ts';
+import { selectIsConfigAvailable } from '../selectors/data-loader.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
-import { initPromos, promosRecalculatePinned } from '../actions/promos.ts';
 
 const filteredVaultsListener = createListenerMiddleware<BeefyState>();
 
@@ -44,14 +44,14 @@ const hasDataLoaded = isFulfilled(fetchChainConfigs, fetchAllVaults, fetchPlatfo
 
 const hasDataChanged = isFulfilled(
   fetchAllPricesAction,
-  fetchApyAction,
-  fetchAvgApyAction,
   fetchAllBalanceAction,
   fetchBalanceAction,
   fetchAllContractDataByChainAction,
   reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
   recalculateDepositedVaultsAction,
-  calculateZapAvailabilityAction
+  calculateZapAvailabilityAction,
+  recalculateTotalApyAction,
+  recalculateAvgApyAction
 );
 
 const hasFiltersChanged = isAnyOf(

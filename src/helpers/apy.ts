@@ -11,11 +11,12 @@ import type {
   TotalApyKey,
   TotalApyYearlyComponent,
 } from '../features/data/reducers/apy-types.ts';
+import type { AvgApySortType } from '../features/data/reducers/filtered-vaults-types.ts';
 import { createCachedFactory, createFactory } from '../features/data/utils/factory-utils.ts';
 import { fromKeysMapper } from './object.ts';
 import { ucFirstLetter } from './string.ts';
 
-export const AVG_APY_PERIODS: ReadonlyArray<number> = [7, 30, 90];
+export const AVG_APY_PERIODS = [7, 30, 90] as const satisfies Omit<AvgApySortType, 'default'>[];
 export const EMPTY_AVG_APY: AvgApy = {
   periods: AVG_APY_PERIODS.map(days => ({
     days,

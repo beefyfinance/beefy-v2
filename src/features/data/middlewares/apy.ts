@@ -33,23 +33,19 @@ apyListener.startListening({
     await delay(50);
 
     // Make sure we have vaults and raw apys
-    console.debug('wait vaults and apys');
     await condition(
       (_action, currentState) =>
         selectIsVaultsAvailable(currentState) && selectIsApyAvailable(currentState)
     );
 
     // Compute total apy for frontend
-    console.debug('wait apy recalc');
     await dispatch(recalculateTotalApyAction());
 
     // Make sure we have avg apys
-    console.debug('wait avg apys');
     await condition((_action, currentState) => selectIsAvgApyAvailable(currentState));
 
     // Compute average apy for frontend
-    console.debug('wait avg apy recalc');
-    console.log(await dispatch(recalculateAvgApyAction()));
+    await dispatch(recalculateAvgApyAction());
   },
 });
 

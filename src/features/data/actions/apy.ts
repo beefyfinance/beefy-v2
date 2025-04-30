@@ -66,7 +66,7 @@ export const fetchAvgApyAction = createAsyncThunk<
         { days: 7, apy: apy.avg_7d },
         { days: 30, apy: apy.avg_30d },
         { days: 90, apy: apy.avg_90d },
-      ].filter(period => AVG_APY_PERIODS.includes(period.days)),
+      ].filter(period => (AVG_APY_PERIODS as number[]).includes(period.days)),
     },
   ]);
 
