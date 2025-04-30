@@ -45,7 +45,6 @@ export const PlatformsButton = memo<FilterContentProps>(function PlatformsButton
 
   return (
     <ButtonFilter
-      size="sm"
       borderless={true}
       variant="filter"
       onClick={() => handleContent(FilterContent.Platform)}

@@ -93,6 +93,7 @@ export const Label = styled('span', {
 export const ButtonFilter = styled(Button, {
   base: {
     justifyContent: 'space-between',
+    padding: '14px 16px',
   },
 });
 

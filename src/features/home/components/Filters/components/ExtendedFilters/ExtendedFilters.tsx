@@ -38,8 +38,11 @@ const ExtendedFiltersContainer = styled('div', {
   base: {
     display: 'flex',
     flexDirection: 'column',
-    rowGap: '12px',
+    rowGap: '8px',
     padding: '16px 12px',
+    lg: {
+      rowGap: '12px',
+    },
   },
   variants: {
     customPadding: {
