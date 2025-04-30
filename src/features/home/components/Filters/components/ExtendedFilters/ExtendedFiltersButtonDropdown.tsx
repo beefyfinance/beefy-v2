@@ -9,10 +9,10 @@ import { styled } from '@repo/styles/jsx';
 export const ExtendedFiltersButtonDropdown = memo(function ExtendedFiltersButtonDropdown() {
   return (
     <DropdownProvider placement="bottom-end">
-      <DropdownButtonTrigger variant="filter" size="lg">
+      <DropdownButtonTrigger variant="filter" size="sm">
         <FilterIcon />
       </DropdownButtonTrigger>
-      <FiltersDropdown>
+      <FiltersDropdown padding="none">
         <ExtendedFilters />
       </FiltersDropdown>
     </DropdownProvider>
@@ -28,6 +28,6 @@ const FilterIcon = styled(FilterSvg, {
 
 const FiltersDropdown = styled(DropdownContent, {
   base: {
-    width: '360px',
+    width: '340px',
   },
 });

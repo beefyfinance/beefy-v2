@@ -9,27 +9,26 @@ export const Button = styled('button', {
     backgroundColor: 'transparent',
     borderRadius: '0px',
     paddingBlock: '6px',
-    paddingInline: '12px',
+    paddingInline: '10px',
     flexGrow: 1,
     flexShrink: 0,
     position: 'relative',
     _hover: {
       color: 'colorPalette.hover.color',
     },
-    '&:first-child': {
-      borderTopLeftRadius: '4px',
-      borderBottomLeftRadius: '4px',
+    _first: {
+      borderTopLeftRadius: '6px',
+      borderBottomLeftRadius: '6px',
     },
-
-    '&:last-child': {
-      borderTopRightRadius: '4px',
-      borderBottomRightRadius: '4px',
+    _last: {
+      borderTopRightRadius: '6px',
+      borderBottomRightRadius: '6px',
     },
   },
   variants: {
     noBackground: {
       false: {
-        paddingInline: '12px',
+        paddingInline: '10px',
       },
       true: {},
     },
@@ -57,6 +56,20 @@ export const Button = styled('button', {
       noBackground: false,
       css: {
         backgroundColor: 'colorPalette.active.background',
+        position: 'relative',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          borderColor: 'colorPalette.active.background',
+          borderStyle: 'solid',
+          borderWidth: '2px', // =Buttons borderWidth
+          borderRadius: 'inherit',
+          top: '-1px', // -Buttons borderWidth
+          left: '-1px',
+          right: '-1px',
+          bottom: '-1px',
+          zIndex: '[1]',
+        },
       },
     },
     {

@@ -10,6 +10,9 @@ import { SliderInput } from '../../../../../../components/Form/Input/SliderInput
 import { styled } from '@repo/styles/jsx';
 import { useTranslation } from 'react-i18next';
 
+//5 MILLION
+const MAX_INPUT = new BigNumber(50000000);
+
 export const MinTvlFilter = memo(function MinTvlFilter() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -35,7 +38,7 @@ export const MinTvlFilter = memo(function MinTvlFilter() {
         {t('Filter-MinTvl')}
         {value.gt(BIG_ZERO) && <Amount>{formatLargeUsd(value)}</Amount>}
       </Label>
-      <SliderInput onChange={handleChange} value={value} maxValue={maximumUnderlyingTvl} />
+      <SliderInput onChange={handleChange} value={value} maxValue={MAX_INPUT} />
     </Container>
   );
 });

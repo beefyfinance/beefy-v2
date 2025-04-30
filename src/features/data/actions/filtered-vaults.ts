@@ -19,6 +19,7 @@ import {
   selectAllVisibleVaultIds,
   selectIsVaultBlueChip,
   selectIsVaultCorrelated,
+  selectIsVaultMeme,
   selectIsVaultStable,
   selectVaultById,
   selectVaultIsPinned,
@@ -156,6 +157,9 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
             filterOptions.vaultCategory.includes('correlated') &&
             !selectIsVaultCorrelated(state, vault.id)
           ) {
+            return false;
+          }
+          if (filterOptions.vaultCategory.includes('meme') && !selectIsVaultMeme(state, vault.id)) {
             return false;
           }
         }

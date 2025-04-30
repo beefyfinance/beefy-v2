@@ -1,12 +1,10 @@
-import { memo, useCallback, useState, type FC } from 'react';
-import { Chains, Filter, Platforms, type FilterContentProps } from './FilterContent.tsx';
+import { memo, useCallback, useMemo, useState, type FC } from 'react';
+import { Filter, type FilterContentProps } from './FilterContent.tsx';
 import { styled } from '@repo/styles/jsx';
-
-export enum FilterContent {
-  Filter = 1,
-  Platform,
-  Chains,
-}
+import { FilterContent } from './types.ts';
+import { Chains } from './ChainsContent.tsx';
+import { Platforms } from './PlatformsContent.tsx';
+import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
 
 const contentToComponent: Record<FilterContent, FC<FilterContentProps>> = {
   [FilterContent.Filter]: Filter,
@@ -15,6 +13,7 @@ const contentToComponent: Record<FilterContent, FC<FilterContentProps>> = {
 };
 
 export const ExtendedFilters = memo(function ExtendedFilters() {
+  const desktop = useBreakpoint({ from: 'lg' });
   const [content, setContent] = useState<FilterContent>(FilterContent.Filter);
 
   const ContentComponent = contentToComponent[content];
@@ -23,8 +22,13 @@ export const ExtendedFilters = memo(function ExtendedFilters() {
     setContent(content);
   }, []);
 
+  const mustUseCustomPadding = useMemo(
+    () => desktop && content === FilterContent.Platform,
+    [content, desktop]
+  );
+
   return (
-    <ExtendedFiltersContainer>
+    <ExtendedFiltersContainer customPadding={mustUseCustomPadding}>
       <ContentComponent handleContent={handleContent} />
     </ExtendedFiltersContainer>
   );
@@ -35,5 +39,13 @@ const ExtendedFiltersContainer = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     rowGap: '12px',
+    padding: '16px 12px',
+  },
+  variants: {
+    customPadding: {
+      true: {
+        padding: '16px 12px 0px 12px',
+      },
+    },
   },
 });

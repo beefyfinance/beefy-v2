@@ -15,8 +15,16 @@ export const styles = {
     flexShrink: '0',
     padding: '6px 0px',
     border: '0',
-    borderRadius: '6px',
+    borderRadius: '0px',
     cursor: 'pointer',
+    _first: {
+      borderTopLeftRadius: '6px',
+      borderBottomLeftRadius: '6px',
+    },
+    _last: {
+      borderTopRightRadius: '6px',
+      borderBottomRightRadius: '6px',
+    },
   }),
   selected: css.raw({
     backgroundColor: 'background.content.dark',
@@ -38,6 +46,23 @@ export const styles = {
     md: {
       marginTop: '-32px',
       marginLeft: '-24px',
+    },
+  }),
+  active: css.raw({
+    backgroundColor: 'background.button',
+    position: 'relative',
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      borderColor: 'background.button',
+      borderStyle: 'solid',
+      borderWidth: '2px', // =Buttons borderWidth
+      borderRadius: 'inherit',
+      top: '-1px', // -Buttons borderWidth
+      left: '-1px',
+      right: '-1px',
+      bottom: '-1px',
+      zIndex: '[1]',
     },
   }),
 };

@@ -1,4 +1,4 @@
-import { bluechipTokens } from '../../../helpers/utils.ts';
+import { bluechipTokens, memeTokens } from '../../../helpers/utils.ts';
 import type { BeefyState } from '../../../redux-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
@@ -190,43 +190,12 @@ export const selectIsTokenStable = createCachedSelector(
   (chain, tokenId) => chain.stableCoins.includes(tokenId)
 )((_state: BeefyState, _chainId: ChainEntity['id'], tokenId: TokenEntity['id']) => tokenId);
 
-export const selectIsBeefyToken = (_: BeefyState, tokenId: TokenEntity['id']) => {
-  return [
-    'BIFI',
-    'oldBIFI',
-    'POTS',
-    'beFTM',
-    'beQI',
-    'beJOE',
-    'binSPIRIT',
-    'beVELO',
-    'beOPX',
-    'mooBIFI',
-  ].includes(tokenId);
-};
-
-export const selectIsLSDToken = (_: BeefyState, tokenId: TokenEntity['id']) => {
-  return [
-    'stETH',
-    'wstETH',
-    'rETH',
-    'sETH',
-    'frxETH',
-    'sfrxETH',
-    'cbETH',
-    'ankrETH',
-    'stMATIC',
-    'MaticX',
-    'BNBx',
-    'ankrBNB',
-    'sFTMx',
-    'ankrFTM',
-    'wstDOT',
-  ].includes(tokenId);
-};
-
 export const selectIsTokenBluechip = (_: BeefyState, tokenId: TokenEntity['id']) => {
   return bluechipTokens.includes(tokenId);
+};
+
+export const selectIsTokenMeme = (_: BeefyState, tokenId: TokenEntity['id']) => {
+  return memeTokens.includes(tokenId);
 };
 
 export const selectTokenPriceByAddress = createSelector(

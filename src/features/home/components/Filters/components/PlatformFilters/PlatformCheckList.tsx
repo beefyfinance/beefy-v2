@@ -5,11 +5,6 @@ import { selectFilterPlatforms } from '../../../../../data/selectors/platforms.t
 import { selectFilterPlatformIds } from '../../../../../data/selectors/filtered-vaults.ts';
 import type { PlatformEntity } from '../../../../../data/entities/platform.ts';
 import { MultipleSelectContent } from '../../../../../../components/Form/Select/Multi/MultipleSelectContent.tsx';
-import { Option } from '../../../../../../components/Form/Select/Option.tsx';
-import { OptionButton } from '../../../../../../components/Form/Select/OptionButton.tsx';
-import { OptionLabel } from '../../../../../../components/Form/Select/OptionLabel.tsx';
-import { OptionIcon } from '../../../../../../components/Form/Select/OptionIcon.tsx';
-import { OptionBadge } from '../../../../../../components/Form/Select/OptionBadge.tsx';
 
 export const PlatformChecklist = memo(function PlatformChecklist() {
   const dispatch = useAppDispatch();
@@ -76,11 +71,6 @@ export const PlatformChecklist = memo(function PlatformChecklist() {
       getItemProps={getItemProps}
       setListRefs={setListRefs}
       searchEnabled={true}
-      OptionComponent={Option}
-      OptionButtonComponent={OptionButton}
-      OptionLabelComponent={OptionLabel}
-      OptionIconComponent={OptionIcon}
-      OptionBadgeComponent={OptionBadge}
     />
   );
 });

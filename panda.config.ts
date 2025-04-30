@@ -820,7 +820,7 @@ const config = buildConfig(
         base: {
           color: '{colors.text.dark}',
           background: '{colors.background.content.dark}',
-          border: '{colors.background.button}',
+          border: '{colors.background.content}',
         },
         hover: {
           color: '{colors.text.middle}',

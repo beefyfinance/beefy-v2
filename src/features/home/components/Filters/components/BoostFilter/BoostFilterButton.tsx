@@ -17,14 +17,15 @@ export const BoostFilterButton = memo(function BoostFilterButton() {
   }, [dispatch, value]);
 
   return (
-    <BoostButton variant="filter" onClick={handleChange} data-active={value || undefined}>
-      {t('Boosted')}
+    <BoostButton size="sm" variant="filter" onClick={handleChange} data-active={value || undefined}>
+      {t('Filter-Boosts')}
       <BoostIcon />
     </BoostButton>
   );
 });
 
 export const BoostCheckBox = memo(function BoostCheckBox() {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const value = useAppSelector(state => selectFilterBoolean(state, 'onlyBoosted'));
   const handleChange = useCallback(() => {
@@ -33,7 +34,7 @@ export const BoostCheckBox = memo(function BoostCheckBox() {
 
   return (
     <BoostCheckBoxContainer>
-      <LabelledCheckbox checked={value} onChange={handleChange} label="Boosted" />
+      <LabelledCheckbox checked={value} onChange={handleChange} label={t('Filter-Boosts')} />
       <BoostIcon />
     </BoostCheckBoxContainer>
   );
@@ -42,7 +43,7 @@ export const BoostCheckBox = memo(function BoostCheckBox() {
 const BoostButton = styled(Button, {
   base: {
     display: 'flex',
-    gap: '4px',
+    gap: '2px',
   },
 });
 

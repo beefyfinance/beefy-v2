@@ -1,26 +1,20 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ShownVaultsCount } from './ShownVaultsCount.tsx';
 import { CheckboxFilter } from '../CheckboxFilter/CheckboxFilter.tsx';
 import { MinTvlFilter } from '../MinTvlFilter/MinTvlFilter.tsx';
-import { FilterContent } from './ExtendedFilters.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { styled } from '@repo/styles/jsx';
 import ArrowBackIcon from '../../../../../../images/icons/chevron-right.svg?react';
-import { useAppSelector } from '../../../../../../store.ts';
-import {
-  selectFilterChainIds,
-  selectFilterPlatformIds,
-} from '../../../../../data/selectors/filtered-vaults.ts';
-import { PlatformChecklist } from '../PlatformFilters/PlatformCheckList.tsx';
-import { selectFilterPlatforms } from '../../../../../data/selectors/platforms.ts';
-import { selectAllChains } from '../../../../../data/selectors/chains.ts';
 import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
-import { ChainCheckList } from '../ChainFilters/ChainCheckList.tsx';
+
 import { BoostCheckBox } from '../BoostFilter/BoostFilterButton.tsx';
 import { StategyTypeCheckBoxList } from '../StrategyTypeFilters/StategyTypeCheckboxList.tsx';
 import { VaultCategoryCheckList } from '../VaultCategoryFilters/VaultCategoryCheckList.tsx';
 import { AssetTypeCheckList } from '../AssetTypeFilters/AssetTypeCheckList.tsx';
+import { PlatformsButton } from './PlatformsContent.tsx';
+import { ChainsContentButton } from './ChainsContent.tsx';
+import type { FilterContent } from './types.ts';
 
 export interface FilterContentProps {
   handleContent: (content: FilterContent) => void;
@@ -39,9 +33,8 @@ export const MobileFilter = memo<FilterContentProps>(function MobileFilter({ han
 
   return (
     <>
-      <PlatformsButton handleContent={handleContent} />
       <ChainsContentButton handleContent={handleContent} />
-
+      <PlatformsButton handleContent={handleContent} />
       <MobileContentBox>
         <BoostCheckBox />
       </MobileContentBox>
@@ -79,135 +72,31 @@ export const DesktopFilter = memo<FilterContentProps>(function DesktopFilter({ h
       <CheckboxFilter filter="onlyRetired" label={t('Filter-Retired')} />
       <CheckboxFilter filter="onlyPaused" label={t('Filter-Paused')} />
       <MinTvlFilter />
+      <div />
     </>
   );
 });
 
-export const Chains = memo<FilterContentProps>(function Chains({ handleContent }) {
-  const { t } = useTranslation();
-  return (
-    <>
-      <ContentHeader>
-        <ArrowBack onClick={() => handleContent(FilterContent.Filter)} />
-        <Title>{t('Chains')}</Title>
-      </ContentHeader>
-      <MobileContentContainer>
-        <ChainCheckList />
-      </MobileContentContainer>
-    </>
-  );
-});
-
-export const Platforms = memo<FilterContentProps>(function Platforms({ handleContent }) {
-  const { t } = useTranslation();
-  return (
-    <>
-      <ContentHeader>
-        <ArrowBack onClick={() => handleContent(FilterContent.Filter)} />
-        <Title>{t('Platforms')}</Title>
-      </ContentHeader>
-      <MobileContentContainer>
-        <PlatformChecklist />
-      </MobileContentContainer>
-    </>
-  );
-});
-
-const PlatformsButton = memo<FilterContentProps>(function PlatformsButton({ handleContent }) {
-  const { t } = useTranslation();
-
-  const platforms = useAppSelector(selectFilterPlatforms);
-  const platformsIds = useAppSelector(selectFilterPlatformIds);
-
-  const platformLabel = useMemo(() => {
-    if (platformsIds.length === 1) {
-      return platforms.filter(p => p.id === platformsIds[0])[0];
-    }
-    return null;
-  }, [platforms, platformsIds]);
-
-  const label = useMemo(() => {
-    return (
-      platformsIds.length === 0 ? t('All')
-      : platformsIds.length === 1 && platformLabel ? platformLabel.name
-      : t('Select-CountSelected', { count: platformsIds.length })
-    );
-  }, [platformLabel, platformsIds.length, t]);
-
-  return (
-    <ButtonPlatforms
-      size="sm"
-      borderless={true}
-      variant="filter"
-      onClick={() => handleContent(FilterContent.Platform)}
-    >
-      <PlatformLabelContainer>
-        {t('Filter-Platform')} <Label>{label}</Label>
-      </PlatformLabelContainer>
-      <ArrowBackIcon />
-    </ButtonPlatforms>
-  );
-});
-
-const ChainsContentButton = memo<FilterContentProps>(function ChainsContentButton({
-  handleContent,
-}) {
-  const { t } = useTranslation();
-
-  const allChainsById = useAppSelector(selectAllChains);
-
-  const selectedChainIds = useAppSelector(selectFilterChainIds);
-
-  const chainNameLabel = useMemo(() => {
-    if (selectedChainIds.length === 1) {
-      return allChainsById.filter(c => c.id === selectedChainIds[0])[0];
-    }
-    return null;
-  }, [allChainsById, selectedChainIds]);
-
-  const label = useMemo(() => {
-    return (
-      selectedChainIds.length === 0 ? t('All')
-      : selectedChainIds.length === 1 && chainNameLabel ? chainNameLabel.name
-      : t('Filter-ChainMultiple')
-    );
-  }, [selectedChainIds.length, t, chainNameLabel]);
-
-  return (
-    <ButtonPlatforms
-      size="sm"
-      borderless={true}
-      variant="filter"
-      onClick={() => handleContent(FilterContent.Chains)}
-    >
-      <PlatformLabelContainer>
-        {t('Filter-Chain')} <Label>{label}</Label>
-      </PlatformLabelContainer>
-      <ArrowBackIcon />
-    </ButtonPlatforms>
-  );
-});
-
-const PlatformLabelContainer = styled('div', {
+export const ButtonLabelContainer = styled('div', {
   base: {
     display: 'flex',
     gap: '4px',
   },
 });
 
-const Label = styled('span', {
+export const Label = styled('span', {
   base: {
     color: 'text.light',
   },
 });
 
-const ButtonPlatforms = styled(Button, {
+export const ButtonFilter = styled(Button, {
   base: {
     justifyContent: 'space-between',
   },
 });
 
-const Title = styled('div', {
+export const Title = styled('div', {
   base: {
     textStyle: 'body.medium',
     color: 'text.middle',
@@ -217,7 +106,7 @@ const Title = styled('div', {
   },
 });
 
-const ArrowBack = styled(ArrowBackIcon, {
+export const ArrowBack = styled(ArrowBackIcon, {
   base: {
     transform: 'rotate(180deg)',
     color: 'text.dark',
@@ -229,7 +118,7 @@ const ArrowBack = styled(ArrowBackIcon, {
   },
 });
 
-const ContentHeader = styled('div', {
+export const ContentHeader = styled('div', {
   base: {
     display: 'flex',
     justifyContent: 'center',
@@ -238,7 +127,7 @@ const ContentHeader = styled('div', {
   },
 });
 
-const MobileContentBox = styled('div', {
+export const MobileContentBox = styled('div', {
   base: {
     background: 'background.content.dark',
     borderRadius: '8px',
@@ -249,7 +138,7 @@ const MobileContentBox = styled('div', {
   },
 });
 
-const MobileContentContainer = styled('div', {
+export const MobileContentContainer = styled('div', {
   base: {
     backgroundColor: 'background.content.dark',
     borderRadius: '8px',
