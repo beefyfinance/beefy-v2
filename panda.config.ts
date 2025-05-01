@@ -76,7 +76,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -131,9 +131,9 @@ const config = buildConfig(
         '--tooltip-content-horizontal-gap': '24px',
         '--tooltip-content-border-radius': '8px',
         // Vaults list grid
-        '--vaults-list-grid-columns': 'repeat(1, minmax(0, 1fr))',
+        '--vaults-list-grid-columns': 'repeat(2, minmax(0, 1fr))',
         sm: {
-          '--vaults-list-grid-columns': 'repeat(2, minmax(0, 1fr))',
+          '--vaults-list-grid-columns': 'repeat(3, minmax(0, 1fr))',
         },
         md: {
           '--vaults-list-grid-columns':
