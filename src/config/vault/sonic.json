@@ -1,5 +1,36 @@
 [
   {
+    "id": "silov2-sonic-ws-bes",
+    "name": "wS (beS Market)",
+    "type": "standard",
+    "token": "wS (beS Market)",
+    "tokenAddress": "0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38",
+    "tokenDecimals": 18,
+    "tokenProviderId": "silo",
+    "earnedToken": "mooSiloV2SonicwS (beS Market)",
+    "earnedTokenAddress": "0xB5c0570F781BDfde5ADff69866fDa932df855a14",
+    "earnContractAddress": "0xB5c0570F781BDfde5ADff69866fDa932df855a14",
+    "oracle": "lps",
+    "oracleId": "silov2-sonic-ws-bes",
+    "createdAt": 1746096273,
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["S"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "pointStructureIds": ["sonic-points", "silo-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xc76dFb89fF298145b417d221B2c747d84952e01d"
+    }
+  },
+  {
     "id": "euler-sonic-mevcapital-usdc.e",
     "name": "USDC.e (MEV Capital)",
     "token": "USDC.e",
