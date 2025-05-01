@@ -165,6 +165,5 @@ const Layout = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     gap: '8px',
-    maxWidth: '262px',
   },
 });
