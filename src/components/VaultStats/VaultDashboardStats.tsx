@@ -1,16 +1,16 @@
-import { memo } from 'react';
-import { legacyMakeStyles } from '../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { css } from '@repo/styles/css';
-import { VaultDailyUsdStat } from './VaultDailyUsdStat.tsx';
-import { VaultPnlStat } from './VaultPnlStat.tsx';
-import { VaultAtDepositStat } from './VaultAtDepositStat.tsx';
-import { VaultApyStat } from './VaultApyStat.tsx';
-import { useAppSelector } from '../../store.ts';
+import { memo } from 'react';
+import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectVaultPnl } from '../../features/data/selectors/analytics.ts';
-import { VaultYieldRewardsStat } from './VaultYieldRewardsStat.tsx';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { useAppSelector } from '../../store.ts';
+import { styles } from './styles.ts';
+import { VaultApyStat } from './VaultApyStat.tsx';
+import { VaultAtDepositStat } from './VaultAtDepositStat.tsx';
+import { VaultDailyUsdStat } from './VaultDailyUsdStat.tsx';
 import { VaultDepositStat } from './VaultDepositStat.tsx';
+import { VaultPnlStat } from './VaultPnlStat.tsx';
+import { VaultYieldRewardsStat } from './VaultYieldRewardsStat.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -28,40 +28,49 @@ export const VaultDashboardStats = memo(function VaultStats({ vaultId, address }
         <div className={css(styles.column, styles.columnDashboard, styles.hideSm)}>
           <VaultAtDepositStat
             pnlData={pnlData}
-            triggerCss={styles.textOverflow}
-            showLabel={false}
+            textWrap={false}
+            hideLabel={true}
             vaultId={vaultId}
             walletAddress={address}
+            align="right"
           />
         </div>
         <div className={css(styles.column, styles.columnDashboard, styles.hideSm)}>
           <VaultDepositStat
-            triggerCss={styles.textOverflow}
-            showLabel={false}
+            textWrap={false}
+            hideLabel={true}
             vaultId={vaultId}
             walletAddress={address}
+            align="right"
           />
         </div>
         <div className={css(styles.column, styles.columnDashboard, styles.hideSm)}>
-          <VaultYieldRewardsStat showLabel={false} vaultId={vaultId} walletAddress={address} />
+          <VaultYieldRewardsStat
+            hideLabel={true}
+            vaultId={vaultId}
+            walletAddress={address}
+            align="right"
+          />
         </div>
         <div className={css(styles.column, styles.columnDashboard)}>
           <VaultPnlStat
             walletAddress={address}
             pnlData={pnlData}
-            showLabel={false}
+            hideLabel={true}
             vaultId={vaultId}
+            align="right"
           />
         </div>
         <div className={css(styles.column, styles.columnDashboard, styles.hideMd)}>
-          <VaultApyStat type="yearly" showLabel={false} vaultId={vaultId} />
+          <VaultApyStat type="yearly" hideLabel={true} vaultId={vaultId} align="right" />
         </div>
         <div className={css(styles.column, styles.columnDashboard, styles.hideMd)}>
           <VaultDailyUsdStat
-            triggerCss={styles.textOverflow}
-            showLabel={false}
+            textWrap={false}
+            hideLabel={true}
             vaultId={vaultId}
             walletAddress={address}
+            align="right"
           />
         </div>
       </div>

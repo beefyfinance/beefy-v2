@@ -9,13 +9,20 @@ import {
 } from '../../../../../data/reducers/filtered-vaults.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import { selectFilterSearchSortField } from '../../../../../data/selectors/filtered-vaults.ts';
-import { SORT_COLUMNS } from '../../../Vaults/components/VaultsSort/VaultsSort.tsx';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
 
 const COLUMNS: {
   label: string;
   sortKey: FilteredVaultsState['sort'];
-}[] = [{ label: 'Filter-SortDate', sortKey: 'default' }, ...SORT_COLUMNS];
+}[] = [
+  { label: 'Filter-SortDate', sortKey: 'default' },
+  { label: 'Filter-SortWallet', sortKey: 'walletValue' },
+  { label: 'Filter-SortDeposited', sortKey: 'depositValue' },
+  { label: 'Filter-SortApy', sortKey: 'apy' },
+  { label: 'Filter-SortDaily', sortKey: 'daily' },
+  { label: 'Filter-SortTvl', sortKey: 'tvl' },
+  { label: 'Filter-SortSafety', sortKey: 'safetyScore' },
+];
 
 export const Sort = memo(function Sort() {
   const { t } = useTranslation();

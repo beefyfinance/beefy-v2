@@ -81,6 +81,8 @@ export const config = {
       'csUSDL',
       'USDf',
       'sUSDf',
+      'reUSD',
+      'RLUSD',
     ],
   },
   polygon: {

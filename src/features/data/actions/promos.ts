@@ -1,15 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getPromosApi } from '../apis/promos/promos.ts';
-import type { PromoCampaignEntity, PromoEntity, PromoPartnerEntity } from '../entities/promo.ts';
-import type { PinnedConfig, PinnedConfigCondition, PromoConfig } from '../apis/promos/types.ts';
-import type { VaultConfig } from '../apis/config-types.ts';
-import type { BeefyState } from '../../../redux-types.ts';
-import { selectAllVisibleVaultIds, selectVaultsPinnedConfigs } from '../selectors/vaults.ts';
-import { selectVaultTotalApy } from '../selectors/apy.ts';
-import { selectVaultCurrentBoostId } from '../selectors/boosts.ts';
-import { selectVaultHasActiveOffchainCampaigns } from '../selectors/rewards.ts';
-import { getUnixNow } from '../../../helpers/date.ts';
 import { sortBy } from 'lodash-es';
+import { getUnixNow } from '../../../helpers/date.ts';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { VaultConfig } from '../apis/config-types.ts';
+import { getPromosApi } from '../apis/promos/promos.ts';
+import type { PinnedConfig, PinnedConfigCondition, PromoConfig } from '../apis/promos/types.ts';
+import type { PromoCampaignEntity, PromoEntity, PromoPartnerEntity } from '../entities/promo.ts';
+import { selectVaultCurrentBoostId } from '../selectors/boosts.ts';
+import { selectVaultIsBoostedForFilter } from '../selectors/filtered-vaults.ts';
+import { selectVaultHasActiveOffchainCampaigns } from '../selectors/rewards.ts';
+import { selectAllVisibleVaultIds, selectVaultsPinnedConfigs } from '../selectors/vaults.ts';
 
 export type FulfilledInitPromosPayload = {
   promos: PromoEntity[];
@@ -140,8 +140,7 @@ function selectVaultMatchesCondition(
 ) {
   switch (condition.type) {
     case 'boosted': {
-      const apy = selectVaultTotalApy(state, vaultId);
-      if (!!apy && (apy.boostedTotalDaily || 0) > 0) {
+      if (selectVaultIsBoostedForFilter(state, vaultId)) {
         if (!condition.only) {
           // default: no further checks
           return true;

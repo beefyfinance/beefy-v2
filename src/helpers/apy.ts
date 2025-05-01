@@ -1,18 +1,36 @@
-import { createCachedFactory, createFactory } from '../features/data/utils/factory-utils.ts';
-import type {
-  TotalApyComponent,
-  TotalApyDailyComponent,
-  TotalApyKey,
-  TotalApyYearlyComponent,
-} from '../features/data/reducers/apy.ts';
+import type { ApiApyDataAprComponents } from '../features/data/apis/beefy/beefy-api-types.ts';
 import {
   isCowcentratedGovVault,
   isErc4626Vault,
   type VaultEntity,
 } from '../features/data/entities/vault.ts';
+import type {
+  AvgApy,
+  TotalApyComponent,
+  TotalApyDailyComponent,
+  TotalApyKey,
+  TotalApyYearlyComponent,
+} from '../features/data/reducers/apy-types.ts';
+import type { AvgApySortType } from '../features/data/reducers/filtered-vaults-types.ts';
+import { createCachedFactory, createFactory } from '../features/data/utils/factory-utils.ts';
 import { fromKeysMapper } from './object.ts';
 import { ucFirstLetter } from './string.ts';
-import type { ApiApyDataAprComponents } from '../features/data/apis/beefy/beefy-api-types.ts';
+
+export const AVG_APY_PERIODS = [7 /*, 30, 90*/] as const satisfies Omit<
+  AvgApySortType,
+  'default'
+>[];
+export const EMPTY_AVG_APY: AvgApy = {
+  periods: AVG_APY_PERIODS.map(days => ({
+    days,
+    dataDays: 0,
+    value: 0,
+    partial: false,
+    full: false,
+  })),
+  partial: [],
+  full: [],
+};
 
 const DISPLAY_ORDER = ((i = 0) =>
   ({

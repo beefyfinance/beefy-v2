@@ -1,4 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { orderBy, sortBy } from 'lodash-es';
+import { simplifySearchText } from '../../../helpers/string.ts';
 import type { BeefyState } from '../../../redux-types.ts';
 import {
   isCowcentratedLikeVault,
@@ -9,12 +11,28 @@ import {
   shouldVaultShowInterest,
   type VaultEntity,
 } from '../entities/vault.ts';
+import type { TotalApy } from '../reducers/apy-types.ts';
+import type { FilteredVaultsState } from '../reducers/filtered-vaults.ts';
+import { selectVaultAvgApy, selectVaultTotalApy } from '../selectors/apy.ts';
+import {
+  selectHasUserDepositInVault,
+  selectUserBalanceOfToken,
+  selectUserVaultBalanceInUsdIncludingDisplaced,
+  selectUserVaultDepositTokenWalletBalanceInUsd,
+} from '../selectors/balance.ts';
+import {
+  selectIsVaultPrestakedBoost,
+  selectVaultsActiveBoostPeriodFinish,
+} from '../selectors/boosts.ts';
+import { selectActiveChainIds, selectAllChainIds } from '../selectors/chains.ts';
 import {
   selectFilterOptions,
   selectFilterPlatformIdsForVault,
   selectVaultIsBoostedForFilter,
   selectVaultMatchesText,
 } from '../selectors/filtered-vaults.ts';
+import { selectIsVaultIdSaved } from '../selectors/saved-vaults.ts';
+import { selectVaultTvl, selectVaultUnderlyingTvlUsd } from '../selectors/tvl.ts';
 import {
   selectAllVisibleVaultIds,
   selectIsVaultBlueChip,
@@ -24,25 +42,7 @@ import {
   selectVaultById,
   selectVaultIsPinned,
 } from '../selectors/vaults.ts';
-import { selectActiveChainIds, selectAllChainIds } from '../selectors/chains.ts';
 import { selectVaultSupportsZap } from '../selectors/zap.ts';
-import {
-  selectIsVaultPrestakedBoost,
-  selectVaultsActiveBoostPeriodFinish,
-} from '../selectors/boosts.ts';
-import { selectIsVaultIdSaved } from '../selectors/saved-vaults.ts';
-import {
-  selectHasUserDepositInVault,
-  selectUserBalanceOfToken,
-  selectUserVaultBalanceInUsdIncludingDisplaced,
-  selectUserVaultDepositTokenWalletBalanceInUsd,
-} from '../selectors/balance.ts';
-import { simplifySearchText } from '../../../helpers/string.ts';
-import type { FilteredVaultsState } from '../reducers/filtered-vaults.ts';
-import { orderBy, sortBy } from 'lodash-es';
-import type { TotalApy } from '../reducers/apy.ts';
-import { selectVaultTotalApy } from '../selectors/apy.ts';
-import { selectVaultTvl, selectVaultUnderlyingTvlUsd } from '../selectors/tvl.ts';
 
 export type RecalculateFilteredVaultsParams = {
   dataChanged?: boolean;
@@ -301,6 +301,14 @@ function applyApySort(
       const apy = selectVaultTotalApy(state, vault.id);
       if (!apy) {
         return -1;
+      }
+
+      if (filters.subSort.apy !== 'default') {
+        const avgApy = selectVaultAvgApy(state, vault.id);
+        const value = avgApy.periods[filters.subSort.apy].value;
+        if (value !== undefined) {
+          return value || 0;
+        }
       }
 
       for (const field of fields) {

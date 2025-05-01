@@ -19,8 +19,12 @@ export const VaultTag = memo(
     const classes = useStyles();
     return (
       <div className={css(styles.vaultTag, cssProp)} ref={ref}>
-        {icon ? <div className={classes.vaultTagIcon}>{icon}</div> : null}
-        {text ? <div className={classes.vaultTagText}>{text}</div> : null}
+        {icon ?
+          <div className={classes.vaultTagIcon}>{icon}</div>
+        : null}
+        {text ?
+          <div className={classes.vaultTagText}>{text}</div>
+        : null}
       </div>
     );
   })
@@ -42,8 +46,12 @@ export const VaultTagWithTooltip = memo(
         ref={ref}
         {...rest}
       >
-        {icon ? <div className={classes.vaultTagIcon}>{icon}</div> : null}
-        {text ? <div className={classes.vaultTagText}>{text}</div> : null}
+        {icon ?
+          <div className={classes.vaultTagIcon}>{icon}</div>
+        : null}
+        {text ?
+          <div className={classes.vaultTagText}>{text}</div>
+        : null}
       </DivWithTooltip>
     );
   })

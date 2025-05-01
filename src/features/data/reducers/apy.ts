@@ -1,92 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type BigNumber from 'bignumber.js';
+import { isAfter } from 'date-fns';
 import type { Draft } from 'immer';
 import type { BeefyState } from '../../../redux-types.ts';
-import { fetchApyAction, recalculateTotalApyAction } from '../actions/apy.ts';
+import {
+  fetchApyAction,
+  fetchAvgApyAction,
+  recalculateAvgApyAction,
+  recalculateTotalApyAction,
+} from '../actions/apy.ts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types.ts';
-import type { BoostPromoEntity } from '../entities/promo.ts';
-import type { VaultEntity } from '../entities/vault.ts';
 import { selectBoostById } from '../selectors/boosts.ts';
 import { selectTokenPriceByAddress, selectVaultReceiptTokenPrice } from '../selectors/tokens.ts';
 import { selectVaultWithReceiptByAddressOrUndefined } from '../selectors/vaults.ts';
 import { createIdMap } from '../utils/array-utils.ts';
-import type BigNumber from 'bignumber.js';
-import type { ApiApyData } from '../apis/beefy/beefy-api-types.ts';
-import { isAfter } from 'date-fns';
+import type { ApyState, BoostAprData } from './apy-types.ts';
 import { getBoostStatusFromContractState } from './promos.ts';
-
-// boost is expressed as APR
-interface BoostAprData {
-  apr: number; //total Boost APR
-  aprByRewardToken: Array<{
-    rewardToken: string;
-    apr: number;
-  }>;
-}
-
-// TODO: this should be reworked
-export interface TotalApy {
-  totalApy: number;
-  totalType: 'apy' | 'apr';
-  totalMonthly: number;
-  totalDaily: number;
-  vaultApr?: number;
-  vaultDaily?: number;
-  tradingApr?: number;
-  tradingDaily?: number;
-  composablePoolApr?: number;
-  composablePoolDaily?: number;
-  liquidStakingApr?: number;
-  liquidStakingDaily?: number;
-  boostApr?: number;
-  boostDaily?: number;
-  boostedTotalApy?: number;
-  boostedTotalDaily?: number;
-  clmApr?: number;
-  clmDaily?: number;
-  merklApr?: number;
-  merklDaily?: number;
-  stellaSwapApr?: number;
-  stellaSwapDaily?: number;
-  rewardPoolApr?: number;
-  rewardPoolDaily?: number;
-  rewardPoolTradingApr?: number;
-  rewardPoolTradingDaily?: number;
-  merklBoostApr?: number;
-  merklBoostDaily?: number;
-}
-
-type ExtractAprComponents<T extends string> = T extends `${infer C}Apr` ? C : never;
-export type TotalApyKey = Exclude<keyof TotalApy, 'totalType'>;
-export type TotalApyComponent = ExtractAprComponents<TotalApyKey>;
-export type TotalApyYearlyComponent = `${TotalApyComponent}Apr`;
-export type TotalApyDailyComponent = `${TotalApyComponent}Daily`;
-
-/**
- * State containing APY infos indexed by vault id
- */
-export interface ApyState {
-  rawApy: {
-    byVaultId: {
-      // we reuse the api types, not the best idea but works for now
-      [vaultId: VaultEntity['id']]: ApiApyData;
-    };
-    byBoostId: {
-      [boostId: BoostPromoEntity['id']]: BoostAprData;
-    };
-  };
-  totalApy: {
-    byVaultId: {
-      // we reuse the api types, not the best idea but works for now
-      [vaultId: VaultEntity['id']]: TotalApy;
-    };
-  };
-}
 
 export const initialApyState: ApyState = {
   rawApy: { byVaultId: {}, byBoostId: {} },
   totalApy: { byVaultId: {} },
+  rawAvgApy: { byVaultId: {} },
+  avgApy: { byVaultId: {} },
 };
 
 export const apySlice = createSlice({
@@ -115,6 +52,12 @@ export const apySlice = createSlice({
       )
       .addCase(recalculateTotalApyAction.fulfilled, (sliceState, action) => {
         sliceState.totalApy.byVaultId = action.payload.totals;
+      })
+      .addCase(fetchAvgApyAction.fulfilled, (sliceState, action) => {
+        sliceState.rawAvgApy.byVaultId = action.payload.data;
+      })
+      .addCase(recalculateAvgApyAction.fulfilled, (sliceState, action) => {
+        sliceState.avgApy.byVaultId = action.payload.data;
       });
   },
 });

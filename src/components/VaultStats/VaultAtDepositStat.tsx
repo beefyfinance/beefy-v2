@@ -1,34 +1,49 @@
-import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { memo, type ReactNode } from 'react';
-import { connect } from 'react-redux';
-import type { BeefyState } from '../../redux-types.ts';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
+import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
+import {
+  selectIsAnalyticsLoadedByAddress,
+  selectUserDepositedTimelineByVaultId,
+} from '../../features/data/selectors/analytics.ts';
 import {
   formatLargeUsd,
   formatTokenDisplay,
   formatTokenDisplayCondensed,
 } from '../../helpers/format.ts';
-import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
-import {
-  selectIsAnalyticsLoadedByAddress,
-  selectUserDepositedTimelineByVaultId,
-} from '../../features/data/selectors/analytics.ts';
+import type { BeefyState } from '../../redux-types.ts';
+import { useAppSelector } from '../../store.ts';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent.tsx';
-import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
-import { type CssStyles } from '@repo/styles/css';
+import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 
 export type VaultAtDepositStatProps = {
   vaultId: VaultEntity['id'];
-  css?: CssStyles;
   pnlData: UserVaultPnl;
   walletAddress: string;
-};
+} & Omit<
+  VaultValueStatProps,
+  'label' | 'loading' | 'value' | 'subValue' | 'tooltip' | 'blur' | 'expectSubValue'
+>;
 
-export const VaultAtDepositStat = memo(connect(mapStateToProps)(VaultValueStat));
+export const VaultAtDepositStat = memo(function VaultAtDepositStat({
+  vaultId,
+  pnlData,
+  walletAddress,
+  ...passthrough
+}: VaultAtDepositStatProps) {
+  // @dev don't do this - temp migration away from connect()
+  const statProps = useAppSelector(state =>
+    selectVaultAtDepositStat(state, vaultId, pnlData, walletAddress)
+  );
+  return <VaultValueStat {...statProps} {...passthrough} />;
+});
 
-function mapStateToProps(
+// TODO better selector / hook
+const selectVaultAtDepositStat = (
   state: BeefyState,
-  { vaultId, css: cssProp, pnlData, walletAddress }: VaultAtDepositStatProps
-) {
+  vaultId: VaultEntity['id'],
+  pnlData: UserVaultPnl,
+  walletAddress: string
+) => {
   const label = 'VaultStat-AtDeposit';
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
   const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
@@ -40,7 +55,6 @@ function mapStateToProps(
       subValue: null,
       blur: false,
       loading: false,
-      css: cssProp,
     };
   }
 
@@ -51,7 +65,7 @@ function mapStateToProps(
       subValue: null,
       blur: false,
       loading: true,
-      css: cssProp,
+      expectSubValue: true,
     };
   }
 
@@ -86,6 +100,5 @@ function mapStateToProps(
     loading: !isLoaded,
     boosted: false,
     tooltip,
-    css: cssProp,
   };
-}
+};

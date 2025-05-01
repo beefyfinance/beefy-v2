@@ -1,12 +1,13 @@
 import { memo, useMemo } from 'react';
-import { LabeledStat } from '../LabeledStat/LabeledStat.tsx';
 import { useTranslation } from 'react-i18next';
-import { formatTotalApy } from '../../helpers/format.ts';
-import { selectApyVaultUIData } from '../../features/data/selectors/apy.ts';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
-import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
+import { selectApyVaultUIData } from '../../features/data/selectors/apy.ts';
+import { formatTotalApy } from '../../helpers/format.ts';
 import { useAppSelector } from '../../store.ts';
-import { ApyTooltipContent } from '../VaultStats/VaultApyStat.tsx';
+import { LabeledStat } from '../LabeledStat/LabeledStat.tsx';
+import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
+
+import { ApyTooltipContent } from '../VaultStats/ApyTooltipContent.tsx';
 
 type ApyStatsProps = {
   vaultId: VaultEntity['id'];
@@ -19,11 +20,9 @@ export const ApyStats = memo(function ApyStats({ vaultId, type }: ApyStatsProps)
   const label = useMemo(
     () =>
       t(
-        type === 'daily'
-          ? 'VaultStat-DAILY'
-          : data.type === 'apr'
-            ? 'VaultStat-APR'
-            : 'VaultStat-APY'
+        type === 'daily' ? 'VaultStat-DAILY'
+        : data.type === 'apr' ? 'VaultStat-APR'
+        : 'VaultStat-APY'
       ),
     [t, type, data.type]
   );
@@ -53,11 +52,10 @@ export const ApyStats = memo(function ApyStats({ vaultId, type }: ApyStatsProps)
       value={
         <LabeledStat
           boosted={
-            data.boosted === 'prestake'
-              ? t('PRE-STAKE')
-              : data.boosted === 'active'
-                ? formatted[boostedTotalKey]
-                : undefined
+            data.boosted === 'prestake' ? t('PRE-STAKE')
+            : data.boosted === 'active' ?
+              formatted[boostedTotalKey]
+            : undefined
           }
           value={formatted[totalKey]}
         />

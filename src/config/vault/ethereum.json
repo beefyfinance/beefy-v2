@@ -1,5 +1,85 @@
 [
   {
+    "id": "curve-reusd-sdola",
+    "name": "reUSD/sDOLA",
+    "type": "standard",
+    "token": "reusdsdola",
+    "tokenAddress": "0x48d670D189B4b48757992D36897bCa6E3f889040",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x17CEb96f71Ed655fed4b06eC5492d89865c14Fd4",
+    "earnedToken": "mooCurveReUSD-sDOLA",
+    "earnedTokenAddress": "0x17CEb96f71Ed655fed4b06eC5492d89865c14Fd4",
+    "oracle": "lps",
+    "oracleId": "curve-reusd-sdola",
+    "status": "active",
+    "createdAt": 1746091818,
+    "platformId": "curve",
+    "assets": ["reUSD", "sDOLA"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/dex/ethereum/pools/factory-stable-ng-413/deposit/",
+    "removeLiquidityUrl": "https://curve.fi/dex/ethereum/pools/factory-stable-ng-413/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x48d670D189B4b48757992D36897bCa6E3f889040",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x48d670D189B4b48757992D36897bCa6E3f889040",
+            "coins": [
+              "0x57aB1E0003F623289CD798B1824Be09a793e4Bec",
+              "0xb45ad160634c528Cc3D2926d9807104FA3157305"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-usdc-rlusd",
+    "name": "RLUSD/USDC",
+    "type": "standard",
+    "token": "RLUSD/USDC",
+    "tokenAddress": "0xD001aE433f254283FeCE51d4ACcE8c53263aa186",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x7Af50A047AC5c37EECf38025FaD92A81aA02AC9B",
+    "earnedToken": "mooCurveUSDC-RLUSD",
+    "earnedTokenAddress": "0x7Af50A047AC5c37EECf38025FaD92A81aA02AC9B",
+    "oracle": "lps",
+    "oracleId": "curve-usdc-rlusd",
+    "status": "active",
+    "createdAt": 1746091783,
+    "platformId": "curve",
+    "assets": ["RLUSD", "USDC"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/dex/ethereum/pools/factory-stable-ng-327/deposit/",
+    "removeLiquidityUrl": "https://curve.fi/dex/ethereum/pools/factory-stable-ng-327/withraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xD001aE433f254283FeCE51d4ACcE8c53263aa186",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xD001aE433f254283FeCE51d4ACcE8c53263aa186",
+            "coins": [
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "pendle-eqb-susdf-25sep25",
     "name": "sUSDf 25Sep25",
     "type": "standard",

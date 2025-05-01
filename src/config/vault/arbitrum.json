@@ -15759,38 +15759,6 @@
     "network": "arbitrum"
   },
   {
-    "id": "gmx-arb-uni-usdc",
-    "name": "UNI-USDC GM",
-    "type": "standard",
-    "token": "UNI-USDC GM",
-    "tokenAddress": "0xc7Abb2C5f3BF3CEB389dF0Eecd6120D451170B50",
-    "tokenDecimals": 18,
-    "tokenProviderId": "gmx",
-    "earnedToken": "mooGmxUNI-USDC",
-    "earnedTokenAddress": "0x6699395FA0a7a3a345D790BD83AB564301B3f302",
-    "earnContractAddress": "0x6699395FA0a7a3a345D790BD83AB564301B3f302",
-    "oracle": "lps",
-    "oracleId": "gmx-arb-uni-usdc",
-    "status": "eol",
-    "retiredAt": 1742594371,
-    "retireReason": "rewards",
-    "createdAt": 1700568258,
-    "platformId": "gmx",
-    "assets": ["UNI", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "gmx-gm",
-    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "network": "arbitrum"
-  },
-  {
     "id": "uniswap-gamma-arb-usdc.e",
     "name": "ARB-USDC.e LP",
     "type": "standard",
