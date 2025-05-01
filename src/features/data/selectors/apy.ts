@@ -1,10 +1,17 @@
+import { first } from 'lodash-es';
+import { EMPTY_AVG_APY } from '../../../helpers/apy.ts';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { isEmpty } from '../../../helpers/utils.ts';
 import type { BeefyState } from '../../../redux-types.ts';
+import type { BoostPromoEntity } from '../entities/promo.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedVault,
   isVaultActive,
   type VaultEntity,
 } from '../entities/vault.ts';
+import type { AvgApy, TotalApy } from '../reducers/apy-types.ts';
+import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
   selectBoostUserBalanceInToken,
   selectUserDepositedVaultIds,
@@ -12,6 +19,7 @@ import {
   selectUserVaultBalanceInUsdIncludingDisplaced,
   selectVaultSharesToDepositTokenData,
 } from './balance.ts';
+import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from './boosts.ts';
 import {
   selectIsUserBalanceAvailable,
   selectIsVaultApyAvailable,
@@ -19,14 +27,7 @@ import {
 } from './data-loader.ts';
 import { selectTokenPriceByAddress } from './tokens.ts';
 import { selectVaultById } from './vaults.ts';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
-import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from './boosts.ts';
-import type { TotalApy } from '../reducers/apy.ts';
-import { isEmpty } from '../../../helpers/utils.ts';
 import { selectWalletAddress } from './wallet.ts';
-import { first } from 'lodash-es';
-import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
-import type { BoostPromoEntity } from '../entities/promo.ts';
 
 const EMPTY_TOTAL_APY: TotalApy = {
   totalApy: 0,
@@ -47,6 +48,20 @@ export const selectVaultTotalApy = (
   vaultId: VaultEntity['id']
 ): Readonly<TotalApy> => {
   return selectVaultTotalApyOrUndefined(state, vaultId) || EMPTY_TOTAL_APY;
+};
+
+export const selectVaultAvgApyOrUndefined = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): Readonly<AvgApy> | undefined => {
+  return state.biz.apy.avgApy.byVaultId[vaultId] || undefined;
+};
+
+export const selectVaultAvgApy = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): Readonly<AvgApy> => {
+  return selectVaultAvgApyOrUndefined(state, vaultId) || EMPTY_AVG_APY;
 };
 
 export const selectDidAPIReturnValuesForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
@@ -244,6 +259,7 @@ type ApyVaultUIData =
       type: 'apy' | 'apr';
       values: TotalApy;
       boosted: 'active' | 'prestake' | undefined;
+      averages: AvgApy | undefined;
     };
 
 // TEMP: selector instead of connect/mapStateToProps
@@ -271,12 +287,14 @@ export function selectApyVaultUIData(
 
   const values = selectVaultTotalApy(state, vaultId);
   const boost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
+  const averages = selectVaultAvgApyOrUndefined(state, vaultId);
+
   if (boost) {
-    return { status: 'available', type, values, boosted: boost.status };
+    return { status: 'available', type, values, boosted: boost.status, averages };
   }
 
   if (!isCowcentratedVault(vault) && !isCowcentratedGovVault(vault)) {
-    return { status: 'available', type, values, boosted: undefined };
+    return { status: 'available', type, values, boosted: undefined, averages };
   }
 
   return {
@@ -284,6 +302,7 @@ export function selectApyVaultUIData(
     type: values.totalType,
     values,
     boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
+    averages,
   };
 }
 

@@ -20,3 +20,11 @@ export type UserCategoryType = 'all' | 'saved' | 'deposited';
 export function isValidUserCategory(category: string): category is UserCategoryType {
   return ['all', 'saved', 'deposited'].includes(category);
 }
+
+export type AvgApySortType = 'default' | 7 | 30 | 90;
+
+export type SubSortsState = {
+  apy: AvgApySortType;
+};
+
+export type SortWithSubSort = keyof SubSortsState & SortType;

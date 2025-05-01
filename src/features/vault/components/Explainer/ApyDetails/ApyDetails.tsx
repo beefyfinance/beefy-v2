@@ -1,16 +1,16 @@
-import { Fragment, memo, useMemo } from 'react';
-import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { formatTotalApy } from '../../../../../helpers/format.ts';
-import { StatLoader } from '../../../../../components/StatLoader/StatLoader.tsx';
-import { useTranslation } from 'react-i18next';
 import { css, type CssStyles } from '@repo/styles/css';
+import { Fragment, memo, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { StatLoader } from '../../../../../components/StatLoader/StatLoader.tsx';
 import {
   type ApyLabelsType,
   getApyComponents,
   getApyLabelsForType,
 } from '../../../../../helpers/apy.ts';
-import type { TotalApy } from '../../../../data/reducers/apy.ts';
+import { formatTotalApy } from '../../../../../helpers/format.ts';
+import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
+import type { TotalApy } from '../../../../data/reducers/apy-types.ts';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -52,12 +52,12 @@ export const ApyDetails = memo(function ApyDetails({
         </div>
         {yearly.map(key => (
           <Fragment key={key}>
-            {values[key] ? (
+            {values[key] ?
               <div>
                 <div className={classes.apyLabel}>{t(labels[key])}</div>
                 <div className={classes.apyValue}>{formatted[key]}</div>
               </div>
-            ) : null}
+            : null}
           </Fragment>
         ))}
       </div>

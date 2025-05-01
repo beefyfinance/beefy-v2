@@ -46,7 +46,7 @@ export const TransactionsFilter = memo(function SortColumns({
         sortKey={'datetime'}
         sorted={sort === 'datetime' ? sortDirection : 'none'}
         onChange={handleSort}
-        css={styles.justifyStart}
+        align={'left'}
       />
       <InfoGrid>
         {SORT_COLUMNS.map(({ label, sortKey }) => (

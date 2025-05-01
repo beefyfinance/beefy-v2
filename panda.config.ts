@@ -1,8 +1,8 @@
 import { defineConfig } from '@pandacss/dev';
-import { buildConfig } from './tools/styles/config-builder.ts';
-import { pluginStricterProperties } from './tools/styles/stricter-properties-plugin.ts';
-import { pluginMoreTypes } from './tools/styles/more-types-plugin.ts';
 import basePreset from '@pandacss/preset-base';
+import { buildConfig } from './tools/styles/config-builder.ts';
+import { pluginMoreTypes } from './tools/styles/more-types-plugin.ts';
+import { pluginStricterProperties } from './tools/styles/stricter-properties-plugin.ts';
 
 /**
  * @dev some changes require running `npx panda codegen` after
@@ -124,11 +124,21 @@ const config = buildConfig(
         '--onboard-connect-sidebar-progress-color': '{colors.greenLight}',
         '--onboard-connect-sidebar-progress-background': '{colors.green}',
         '--onboard-link-color': '{colors.text.dark}',
+        // Tooltips
         '--tooltip-content-vertical-padding': '12px',
         '--tooltip-content-horizontal-padding': '16px',
         '--tooltip-content-vertical-gap': '8px',
         '--tooltip-content-horizontal-gap': '24px',
         '--tooltip-content-border-radius': '8px',
+        // Vaults list grid
+        '--vaults-list-grid-columns': 'repeat(1, minmax(0, 1fr))',
+        sm: {
+          '--vaults-list-grid-columns': 'repeat(2, minmax(0, 1fr))',
+        },
+        md: {
+          '--vaults-list-grid-columns':
+            'minmax(0, 1fr) minmax(0, 1fr) minmax(110px, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(65px, 0.5fr)',
+        },
       },
       html: {
         color: 'text.light',
@@ -561,12 +571,14 @@ const config = buildConfig(
             light: {
               background: { value: '{colors.white}' },
               text: {
-                DEFAULT: { value: '{colors.eclipseElixir}' },
-                title: { value: '{colors.eclipseElixir}' },
-                content: { value: '{colors.eclipseElixir}' },
-                item: { value: '{colors.blackMarket}' },
-                label: { value: '{colors.eclipseElixir}' },
-                link: { value: '{colors.eclipseElixir}' },
+                DEFAULT: { value: '{colors.darkBlue.90}' },
+                title: { value: '{colors.darkBlue.90}' },
+                content: { value: '{colors.darkBlue.90}' },
+                item: { value: '{colors.darkBlue.90}' },
+                label: { value: '{colors.darkBlue.90}' },
+                link: { value: '{colors.darkBlue.90}' },
+                highlight: { value: '{colors.darkBlue.90}' },
+                footer: { value: '{colors.darkBlue.90}' },
               },
             },
             dark: {
@@ -578,6 +590,8 @@ const config = buildConfig(
                 item: { value: '{colors.text.middle}' },
                 label: { value: '{colors.text.light}' },
                 link: { value: '{colors.white}' },
+                highlight: { value: '{colors.white}' },
+                footer: { value: '{colors.white}' },
               },
             },
           },

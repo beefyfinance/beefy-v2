@@ -1,26 +1,27 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import BigNumber from 'bignumber.js';
+import createTransform from 'redux-persist/es/createTransform';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
+import { fetchAllVaults } from '../actions/vaults.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { PlatformEntity } from '../entities/platform.ts';
+import type { VaultEntity } from '../entities/vault.ts';
 import type { KeysOfType } from '../utils/types-utils.ts';
-import createTransform from 'redux-persist/es/createTransform';
 import type {
   SortDirectionType,
   SortType,
+  SortWithSubSort,
   StrategiesType,
+  SubSortsState,
   UserCategoryType,
   VaultAssetType,
   VaultCategoryType,
 } from './filtered-vaults-types.ts';
-import { isValidUserCategory } from './filtered-vaults-types.ts';
-import type { VaultEntity } from '../entities/vault.ts';
-import { fetchAllVaults } from '../actions/vaults.ts';
-import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
-import BigNumber from 'bignumber.js';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
 
 /**
  * State containing Vault infos
+ * Increase the version on persistReducer if you make changes to this shape
  */
 export type FilteredVaultsState = {
   /**
@@ -30,6 +31,7 @@ export type FilteredVaultsState = {
    **/
   reseted: boolean;
   sort: SortType;
+  subSort: SubSortsState;
   sortDirection: SortDirectionType;
   vaultCategory: VaultCategoryType[];
   userCategory: UserCategoryType;
@@ -50,14 +52,25 @@ export type FilteredVaultsState = {
   showMinimumUnderlyingTvlLarge: boolean;
   minimumUnderlyingTvl: BigNumber;
 };
+
 export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
 
 export type FilteredVaultBigNumberKeys = KeysOfType<FilteredVaultsState, BigNumber>;
+
+export type SetSubSortPayload<K extends SortWithSubSort = SortWithSubSort> = {
+  [K in SortWithSubSort]: {
+    column: K;
+    value: SubSortsState[K];
+  };
+}[K];
 
 const initialFilteredVaultsState: FilteredVaultsState = {
   reseted: true,
   sort: 'default',
   sortDirection: 'desc',
+  subSort: {
+    apy: 'default',
+  },
   vaultCategory: [],
   userCategory: 'all',
   strategyType: 'all',
@@ -92,6 +105,14 @@ export const filteredVaultsSlice = createSlice({
     setSort(sliceState, action: PayloadAction<FilteredVaultsState['sort']>) {
       sliceState.reseted = false;
       sliceState.sort = action.payload;
+    },
+    setSubSort(sliceState, action: PayloadAction<SetSubSortPayload>) {
+      sliceState.reseted = false;
+      const { column, value } = action.payload;
+      sliceState.subSort = {
+        ...sliceState.subSort,
+        [column]: value,
+      };
     },
     setSortDirection(sliceState, action: PayloadAction<FilteredVaultsState['sortDirection']>) {
       sliceState.reseted = false;
@@ -178,27 +199,8 @@ export const filteredVaultsSlice = createSlice({
 
 export const filteredVaultsActions = filteredVaultsSlice.actions;
 
-export const userCategoryTransform = createTransform(
-  (userCategory: FilteredVaultsState['userCategory']) => userCategory,
-  (userCategoryFromLocalStorage: string): FilteredVaultsState['userCategory'] => {
-    return isValidUserCategory(userCategoryFromLocalStorage) ? userCategoryFromLocalStorage : 'all';
-  },
-  { whitelist: ['userCategory'] }
-);
-
 export const bigNumberTransform = createTransform(
   (bigNumber: BigNumber) => bigNumber.toString(),
   (storedBigNumber: string) => new BigNumber(storedBigNumber),
   { whitelist: ['minimumUnderlyingTvl'] }
-);
-
-export const chainIdsTransform = createTransform(
-  (chanIds: FilteredVaultsState['chainIds']) => chanIds,
-  (chainIdsFromLocalStorage: FilteredVaultsState['chainIds']) => {
-    // TODO fix so we use real list of eol chains
-    return chainIdsFromLocalStorage.filter(
-      chainId => !['heco', 'harmony', 'moonriver', 'aurora', 'emerald', 'celo'].includes(chainId)
-    );
-  },
-  { whitelist: ['chainIds'] }
 );

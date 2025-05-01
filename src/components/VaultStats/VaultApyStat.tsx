@@ -1,18 +1,15 @@
-import { type VaultEntity } from '../../features/data/entities/vault.ts';
+import { styled } from '@repo/styles/jsx';
 import { memo, useMemo } from 'react';
-import { selectVaultById } from '../../features/data/selectors/vaults.ts';
-import { type FormattedTotalApy, formatTotalApy } from '../../helpers/format.ts';
-import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
-import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
-import { selectApyVaultUIData } from '../../features/data/selectors/apy.ts';
-import { useAppSelector } from '../../store.ts';
-import { InterestTooltipContent } from '../InterestTooltipContent/InterestTooltipContent.tsx';
-import {
-  getApyComponents,
-  getApyLabelsForType,
-  getApyLabelsTypeForVault,
-} from '../../helpers/apy.ts';
 import { useTranslation } from 'react-i18next';
+import { type VaultEntity } from '../../features/data/entities/vault.ts';
+import { selectApyVaultUIData } from '../../features/data/selectors/apy.ts';
+import { selectFilterAvgApySort } from '../../features/data/selectors/filtered-vaults.ts';
+import { formatAvgApy, formatTotalApy } from '../../helpers/format.ts';
+import InfoRoundedSquare from '../../images/icons/info-rounded-square.svg?react';
+import { useAppSelector } from '../../store.ts';
+import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
+import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
+import { ApyTooltipContent } from './ApyTooltipContent.tsx';
 
 export type VaultApyStatProps = Omit<
   VaultValueStatProps,
@@ -25,12 +22,16 @@ export type VaultApyStatProps = Omit<
 export const VaultApyStat = memo(function VaultApyStat({
   vaultId,
   type,
-  ...rest
+  ...passthrough
 }: VaultApyStatProps) {
   const { t } = useTranslation();
   const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
+  const subSortApy = useAppSelector(selectFilterAvgApySort);
+
   const label =
-    type === 'daily' ? 'VaultStat-DAILY' : data.type === 'apr' ? 'VaultStat-APR' : 'VaultStat-APY';
+    type === 'daily' ? 'VaultStat-DAILY'
+    : data.type === 'apr' ? 'VaultStat-APR'
+    : 'VaultStat-APY';
   const formatted = useMemo(
     () => (data.status === 'available' ? formatTotalApy(data.values, '???') : undefined),
     [data]
@@ -39,7 +40,7 @@ export const VaultApyStat = memo(function VaultApyStat({
   const boostedTotalKey = type === 'daily' ? 'boostedTotalDaily' : 'boostedTotalApy';
 
   if (data.status === 'loading') {
-    return <VaultValueStat label={label} value="-" blur={false} loading={true} {...rest} />;
+    return <VaultValueStat label={label} value="-" blur={false} loading={true} {...passthrough} />;
   }
 
   if (data.status !== 'available' || !formatted) {
@@ -49,75 +50,60 @@ export const VaultApyStat = memo(function VaultApyStat({
         value={data.status === 'hidden' ? '-' : '???'}
         blur={false}
         loading={false}
-        {...rest}
+        {...passthrough}
       />
     );
   }
 
   const isBoosted = !!data.boosted;
+  const averages = data.averages ? formatAvgApy(data.averages) : undefined;
+  const showAverage = subSortApy !== 'default' && type === 'yearly';
+  const hasAverageWarning = showAverage && !averages?.periods[subSortApy]?.full;
+
+  const boostedPercent =
+    data.boosted === 'prestake' ? t('PRE-STAKE')
+    : data.boosted === 'active' ? formatted[boostedTotalKey]
+    : undefined;
+  const currentPercent = formatted[totalKey];
+  const averagePercent =
+    showAverage && averages?.periods[subSortApy]?.partial ?
+      averages.periods[subSortApy].formatted
+    : undefined;
+
+  const value = boostedPercent ?? averagePercent ?? currentPercent;
+  const subValue = isBoosted ? (averagePercent ?? currentPercent) : undefined;
 
   return (
     <VaultValueStat
       label={label}
-      value={
-        data.boosted === 'prestake'
-          ? t('PRE-STAKE')
-          : data.boosted === 'active'
-            ? formatted[boostedTotalKey]
-            : formatted[totalKey]
-      }
-      subValue={isBoosted ? formatted[totalKey] : undefined}
+      Icon={hasAverageWarning ? InfoRoundedSquare : undefined}
+      value={value}
       tooltip={
-        <ApyTooltipContent vaultId={vaultId} type={type} isBoosted={isBoosted} rates={formatted} />
+        <ApyTooltipContent
+          vaultId={vaultId}
+          type={type}
+          isBoosted={isBoosted}
+          rates={formatted}
+          averages={averages}
+        />
       }
+      subValue={subValue}
       blur={false}
       loading={false}
       boosted={isBoosted}
-      {...rest}
+      {...passthrough}
     />
   );
 });
 
-type ApyTooltipContentProps = {
-  vaultId: VaultEntity['id'];
-  type: 'yearly' | 'daily';
-  isBoosted: boolean;
-  rates: FormattedTotalApy;
-};
-
-export const ApyTooltipContent = memo(function ApyTooltipContent({
-  vaultId,
-  type,
-  isBoosted,
-  rates,
-}: ApyTooltipContentProps) {
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const rows = useMemo(() => {
-    const labels = getApyLabelsForType(getApyLabelsTypeForVault(vault, rates.totalType));
-    const allComponents = getApyComponents();
-    const components = allComponents[type];
-    const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';
-    const boostedTotalKey = type === 'daily' ? 'boostedTotalDaily' : 'boostedTotalApy';
-
-    const items: {
-      label: string | string[];
-      value: string;
-      last?: boolean;
-    }[] = components
-      .filter(key => key in rates)
-      .map(key => ({
-        label: labels[key],
-        value: rates[key] ?? '?',
-      }));
-
-    items.push({
-      label: labels[totalKey],
-      value: isBoosted ? (rates[boostedTotalKey] ?? '?') : rates[totalKey],
-      last: true,
-    });
-
-    return items.length ? items : undefined;
-  }, [vault, isBoosted, rates, type]);
-
-  return rows ? <InterestTooltipContent rows={rows} /> : undefined;
+export const Container = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    justifyContent: 'flex-start',
+    lg: {
+      justifyContent: 'flex-end',
+    },
+  },
 });

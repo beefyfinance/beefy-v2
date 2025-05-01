@@ -1,7 +1,7 @@
-import type { ButtonHTMLAttributes, FC, HTMLAttributes, SVGProps } from 'react';
-import type { ButtonVariantProps } from '../../Button/styles.ts';
-import type { FCWithRef, HtmlProps, Override } from '../../../features/data/utils/types-utils.ts';
 import type { UseFloatingOptions } from '@floating-ui/react';
+import type { ButtonHTMLAttributes, FC, HTMLAttributes, SVGProps } from 'react';
+import type { FCWithRef, HtmlProps, Override } from '../../../features/data/utils/types-utils.ts';
+import type { ButtonVariantProps } from '../../Button/styles.ts';
 
 export type SelectItem<TValue extends string = string> = {
   value: TValue;

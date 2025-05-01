@@ -43,6 +43,15 @@ export type ApiCowcentratedPoint = ApiPoint & {
 export type ApiChartData = ApiPoint[];
 export type ApiCowcentratedChartData = ApiCowcentratedPoint[];
 
+export type ApiAvgApy = {
+  vault_id: VaultEntity['id'];
+  avg_7d: number;
+  avg_30d: number;
+  avg_90d: number;
+};
+
+export type ApiAvgApys = ApiAvgApy[];
+
 export interface IBeefyDataApi {
   getAvailableRanges(
     vaultId: VaultEntity['id'],
@@ -65,4 +74,6 @@ export interface IBeefyDataApi {
     bucket: ApiTimeBucket,
     chainId: ChainEntity['id']
   ): Promise<ApiCowcentratedChartData>;
+
+  getAvgApys(): Promise<ApiAvgApys>;
 }

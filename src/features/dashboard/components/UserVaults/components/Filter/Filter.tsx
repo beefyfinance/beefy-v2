@@ -1,6 +1,9 @@
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { memo } from 'react';
-import { SortColumnHeader } from '../../../../../../components/SortColumnHeader/SortColumnHeader.tsx';
+import {
+  SortColumnHeader,
+  type SortColumnHeaderProps,
+} from '../../../../../../components/SortColumnHeader/SortColumnHeader.tsx';
 import { styles } from './styles.ts';
 import type { SortedOptions } from '../../hook.ts';
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
@@ -44,14 +47,14 @@ const inputCss = css({
 const SORT_COLUMNS: {
   label: string;
   sortKey: SortedOptions['sort'];
-  cssKey?: keyof typeof styles;
+  show?: SortColumnHeaderProps['show'];
 }[] = [
-  { label: 'Dashboard-Filter-AtDeposit', sortKey: 'atDeposit', cssKey: 'hideSm' },
-  { label: 'Dashboard-Filter-Now', sortKey: 'now', cssKey: 'hideSm' },
-  { label: 'Dashboard-Filter-Yield', sortKey: 'yield', cssKey: 'hideSm' },
+  { label: 'Dashboard-Filter-AtDeposit', sortKey: 'atDeposit', show: 'md' },
+  { label: 'Dashboard-Filter-Now', sortKey: 'now', show: 'md' },
+  { label: 'Dashboard-Filter-Yield', sortKey: 'yield', show: 'md' },
   { label: 'Dashboard-Filter-Pnl', sortKey: 'pnl' },
-  { label: 'Dashboard-Filter-Apy', sortKey: 'apy', cssKey: 'hideMd' },
-  { label: 'Dashboard-Filter-DailyYield', sortKey: 'dailyYield', cssKey: 'hideMd' },
+  { label: 'Dashboard-Filter-Apy', sortKey: 'apy', show: 'lg' },
+  { label: 'Dashboard-Filter-DailyYield', sortKey: 'dailyYield', show: 'lg' },
 ];
 
 interface SortColumnsProps {
@@ -65,14 +68,14 @@ const SortColumns = memo(function SortColumns({ sortOptions, handleSort }: SortC
   const { sort, sortDirection } = sortOptions;
   return (
     <div className={classes.sortColumns}>
-      {SORT_COLUMNS.map(({ label, sortKey, cssKey }) => (
+      {SORT_COLUMNS.map(({ label, sortKey, show }) => (
         <SortColumnHeader
           key={label}
           label={label}
           sortKey={sortKey}
           sorted={sort === sortKey ? sortDirection : 'none'}
           onChange={handleSort}
-          css={cssKey ? styles[cssKey] : undefined}
+          show={show}
         />
       ))}
     </div>
