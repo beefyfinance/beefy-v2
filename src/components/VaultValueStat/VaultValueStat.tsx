@@ -54,15 +54,13 @@ export const VaultValueStat = memo(function VaultValueStat({
     <Layout {...rest}>
       {!hideLabel && <Label>{t(label)}</Label>}
       <Values tooltip={tooltip} disabled={!tooltip}>
-        <ValueHolder kind="primary" textWrap={textWrap}>
+        <ValueHolder kind="primary" textWrap={textWrap} boosted={boosted}>
           {loading ?
             <TextLoader placeholder="Loading..." />
           : value ?
             <>
               {Icon && <Icon className={iconClass} />}
-              <ValueContent boosted={boosted} blur={blur}>
-                {value}
-              </ValueContent>
+              <ValueContent blur={blur}>{value}</ValueContent>
             </>
           : '???'}
         </ValueHolder>
@@ -83,8 +81,8 @@ export const VaultValueStat = memo(function VaultValueStat({
 });
 
 const iconClass = css({
-  width: '1em',
-  height: '1em',
+  width: '0.875em',
+  height: '0.875em',
   color: 'inherit',
 });
 
@@ -338,6 +336,11 @@ const ValueHolder = styled('div', {
         textOverflow: 'ellipsis',
       },
     },
+    boosted: {
+      true: {
+        color: 'text.boosted',
+      },
+    },
   },
 });
 
@@ -349,11 +352,6 @@ const ValueContent = styled('div', {
     alignItems: 'inherit',
   },
   variants: {
-    boosted: {
-      true: {
-        color: 'text.boosted',
-      },
-    },
     strike: {
       true: {
         textDecoration: 'line-through',

@@ -1,6 +1,6 @@
+import { css, cx } from '@repo/styles/css';
 import { memo } from 'react';
 import SortArrow from '../../images/icons/sortArrow.svg?react';
-import { css, cx } from '@repo/styles/css';
 
 type SortIconProps = {
   direction: 'none' | 'asc' | 'desc';
@@ -9,9 +9,17 @@ type SortIconProps = {
 export const SortIcon = memo(function SortIcon({ direction }: SortIconProps) {
   return (
     <SortArrow
-      className={cx(direction === 'asc' && ascendingClass, direction !== 'none' && selectedClass)}
+      className={cx(
+        iconClass,
+        direction === 'asc' && ascendingClass,
+        direction !== 'none' && selectedClass
+      )}
     />
   );
+});
+
+const iconClass = css({
+  flexShrink: '0',
 });
 
 const ascendingClass = css({

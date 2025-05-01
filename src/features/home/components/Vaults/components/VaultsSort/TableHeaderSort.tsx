@@ -91,6 +91,6 @@ const HeaderRow = styled('div', {
     display: 'grid',
     width: '100%',
     columnGap: '24px',
-    gridTemplateColumns: 'repeat(6, minmax(0, 1fr))',
+    gridTemplateColumns: 'var(--vaults-list-grid-columns)',
   },
 });

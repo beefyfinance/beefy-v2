@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectApyVaultUIData } from '../../features/data/selectors/apy.ts';
 import { selectFilterAvgApySort } from '../../features/data/selectors/filtered-vaults.ts';
-import { formatAvgApy, formatLargePercent, formatTotalApy } from '../../helpers/format.ts';
+import { formatAvgApy, formatTotalApy } from '../../helpers/format.ts';
 import ExclaimRoundedSquare from '../../images/icons/exclaim-rounded-square.svg?react';
 import { useAppSelector } from '../../store.ts';
 import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
@@ -56,29 +56,27 @@ export const VaultApyStat = memo(function VaultApyStat({
   }
 
   const isBoosted = !!data.boosted;
-  const averages = data.averages;
+  const averages = data.averages ? formatAvgApy(data.averages) : undefined;
+  const showAverage = subSortApy !== 'default' && type === 'yearly';
+  const hasAverageWarning = showAverage && !averages?.periods[subSortApy]?.full;
 
-  const value =
+  const boostedPercent =
     data.boosted === 'prestake' ? t('PRE-STAKE')
     : data.boosted === 'active' ? formatted[boostedTotalKey]
-    : type === 'daily' ? formatted[totalKey]
-    : subSortApy === 'default' || !averages?.periods[subSortApy]?.partial ? formatted[totalKey]
-    : formatLargePercent(averages.periods[subSortApy].value, 2, '???');
-
-  const subValue =
-    isBoosted ?
-      type === 'daily' ? formatted[totalKey]
-      : subSortApy === 'default' ? formatted[totalKey]
-      : undefined
+    : undefined;
+  const currentPercent = formatted[totalKey];
+  const averagePercent =
+    showAverage && averages?.periods[subSortApy]?.partial ?
+      averages.periods[subSortApy].formatted
     : undefined;
 
-  const isAverage = subSortApy !== 'default' && type === 'yearly';
-  const isWarning = isAverage && !averages?.periods[subSortApy]?.full;
+  const value = boostedPercent ?? averagePercent ?? currentPercent;
+  const subValue = isBoosted ? (averagePercent ?? currentPercent) : undefined;
 
   return (
     <VaultValueStat
       label={label}
-      Icon={isWarning ? ExclaimRoundedSquare : undefined}
+      Icon={hasAverageWarning ? ExclaimRoundedSquare : undefined}
       value={value}
       tooltip={
         <ApyTooltipContent
@@ -86,7 +84,7 @@ export const VaultApyStat = memo(function VaultApyStat({
           type={type}
           isBoosted={isBoosted}
           rates={formatted}
-          averages={averages && formatAvgApy(averages)}
+          averages={averages}
         />
       }
       subValue={subValue}

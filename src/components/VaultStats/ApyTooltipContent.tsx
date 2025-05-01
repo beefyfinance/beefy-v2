@@ -140,7 +140,7 @@ export const ApyTooltipContent = memo(function ApyTooltipContent({
   const showAverages = !!averages && type === 'yearly';
 
   return (
-    <Groups>
+    <Layout>
       <TotalApyTooltipContent
         vaultId={vaultId}
         type={type}
@@ -156,14 +156,15 @@ export const ApyTooltipContent = memo(function ApyTooltipContent({
           totalType={rates.totalType}
         />
       )}
-    </Groups>
+    </Layout>
   );
 });
 
-const Groups = styled('div', {
+const Layout = styled('div', {
   base: {
     display: 'flex',
     flexDirection: 'column',
     gap: '8px',
+    maxWidth: '262px',
   },
 });

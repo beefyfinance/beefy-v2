@@ -1,8 +1,13 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import BigNumber from 'bignumber.js';
+import createTransform from 'redux-persist/es/createTransform';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
+import { fetchAllVaults } from '../actions/vaults.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { PlatformEntity } from '../entities/platform.ts';
+import type { VaultEntity } from '../entities/vault.ts';
 import type { KeysOfType } from '../utils/types-utils.ts';
-import createTransform from 'redux-persist/es/createTransform';
 import type {
   SortDirectionType,
   SortType,
@@ -13,11 +18,6 @@ import type {
   VaultAssetType,
   VaultCategoryType,
 } from './filtered-vaults-types.ts';
-import type { VaultEntity } from '../entities/vault.ts';
-import { fetchAllVaults } from '../actions/vaults.ts';
-import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
-import BigNumber from 'bignumber.js';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
 
 /**
  * State containing Vault infos
@@ -109,7 +109,6 @@ export const filteredVaultsSlice = createSlice({
     setSubSort(sliceState, action: PayloadAction<SetSubSortPayload>) {
       sliceState.reseted = false;
       const { column, value } = action.payload;
-      sliceState.sort = column;
       sliceState.subSort = {
         ...sliceState.subSort,
         [column]: value,

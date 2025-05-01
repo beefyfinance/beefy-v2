@@ -124,11 +124,21 @@ const config = buildConfig(
         '--onboard-connect-sidebar-progress-color': '{colors.greenLight}',
         '--onboard-connect-sidebar-progress-background': '{colors.green}',
         '--onboard-link-color': '{colors.text.dark}',
+        // Tooltips
         '--tooltip-content-vertical-padding': '12px',
         '--tooltip-content-horizontal-padding': '16px',
         '--tooltip-content-vertical-gap': '8px',
         '--tooltip-content-horizontal-gap': '24px',
         '--tooltip-content-border-radius': '8px',
+        // Vaults list grid
+        '--vaults-list-grid-columns': 'repeat(1, minmax(0, 1fr))',
+        sm: {
+          '--vaults-list-grid-columns': 'repeat(2, minmax(0, 1fr))',
+        },
+        md: {
+          '--vaults-list-grid-columns':
+            'minmax(0, 1fr) minmax(0, 1fr) minmax(110px, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(65px, 0.5fr)',
+        },
       },
       html: {
         color: 'text.light',

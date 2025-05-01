@@ -98,12 +98,12 @@ export const recalculateAvgApyAction = createAsyncThunk<
     const vault = selectVaultById(state, vaultId);
     const vaultAge = (getUnixNow() - vault.createdAt) / 86400;
 
-    let previousFull = true;
+    let previousFull = 0;
     const periods = rawAverage.periods.map(period => {
       const dataDays = Math.ceil(Math.min(vaultAge, period.days));
-      const full = dataDays > period.days;
-      const partial = full || previousFull;
-      previousFull = full;
+      const full = dataDays >= period.days;
+      const partial = full || dataDays > previousFull;
+      previousFull = dataDays;
       return {
         days: period.days,
         dataDays,
