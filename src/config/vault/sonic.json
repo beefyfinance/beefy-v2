@@ -253,7 +253,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sts+swpx&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -520,7 +520,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=bes+os&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -545,7 +545,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=bes+os&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -570,7 +570,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+bes&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -595,7 +595,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+bes&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -620,7 +620,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=asonusdc+wstkscusd&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
@@ -645,7 +645,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=asonusdc+wstkscusd&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
@@ -703,7 +703,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=busdc.e-20+wstkscusd&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
@@ -728,7 +728,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=busdc.e-20+wstkscusd&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
@@ -919,7 +919,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=wstkscusd+scusd&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
@@ -944,7 +944,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=wstkscusd+scusd&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
@@ -968,7 +968,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=staked+sonic+usd+sonic+usd&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
@@ -992,7 +992,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=staked+sonic+usd+sonic+usd&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
@@ -1016,7 +1016,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=wbtc+scbtc&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -1040,7 +1040,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=wbtc+scbtc&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -1064,7 +1064,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sfrxeth+frxeth&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -1088,7 +1088,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sfrxeth+frxeth&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -1391,7 +1391,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+usdt&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -1415,7 +1415,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+usdt&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -1439,7 +1439,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=frxeth+sceth&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
@@ -1463,7 +1463,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=frxusd+scusd&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
@@ -1630,7 +1630,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sceth+weth&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
@@ -1654,7 +1654,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sceth+weth&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
@@ -1678,7 +1678,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=weth+swpx&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -1702,7 +1702,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=swpx+os&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -1726,7 +1726,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+os&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -1750,7 +1750,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=os+ws&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -2022,7 +2022,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+weth&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -2046,7 +2046,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+weth&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -2070,7 +2070,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+scusd&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
@@ -2094,7 +2094,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+ws&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -2118,7 +2118,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sts+ws&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -2340,7 +2340,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+scusd&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
@@ -2364,7 +2364,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&ownerType=pools&filter=classic-stable&search=usdc.e+scusd",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic",
     "zaps": [
@@ -2420,7 +2420,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+sts&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -2444,7 +2444,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+swpx&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -2468,7 +2468,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+swpx&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
@@ -2492,7 +2492,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+usdc.e&ownerType=pools&filter=conc-liquidity",
-    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
