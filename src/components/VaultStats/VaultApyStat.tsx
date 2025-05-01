@@ -5,7 +5,7 @@ import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectApyVaultUIData } from '../../features/data/selectors/apy.ts';
 import { selectFilterAvgApySort } from '../../features/data/selectors/filtered-vaults.ts';
 import { formatAvgApy, formatTotalApy } from '../../helpers/format.ts';
-import ExclaimRoundedSquare from '../../images/icons/exclaim-rounded-square.svg?react';
+import InfoRoundedSquare from '../../images/icons/info-rounded-square.svg?react';
 import { useAppSelector } from '../../store.ts';
 import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
@@ -76,7 +76,7 @@ export const VaultApyStat = memo(function VaultApyStat({
   return (
     <VaultValueStat
       label={label}
-      Icon={hasAverageWarning ? ExclaimRoundedSquare : undefined}
+      Icon={hasAverageWarning ? InfoRoundedSquare : undefined}
       value={value}
       tooltip={
         <ApyTooltipContent
