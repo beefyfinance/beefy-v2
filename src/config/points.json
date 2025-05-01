@@ -953,12 +953,7 @@
         "name": "Scroll Points"
       }
     ],
-    "eligibility": [
-      {
-        "type": "on-chain-lp",
-        "chain": "scroll"
-      }
-    ],
+    "eligibility": [],
     "accounting": [
       {
         "id": "scroll",
