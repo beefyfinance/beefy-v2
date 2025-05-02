@@ -132,7 +132,7 @@
   },
   {
     "id": "curve-lend-fraxtal-fxs-crvusd",
-    "name": "crvUSD (FXS Market)",
+    "name": "crvUSD (FRAX Market)",
     "type": "standard",
     "token": "cvcrvUSD",
     "tokenAddress": "0xa7573CBD8738Ed268B931B038079f993e78D4216",
@@ -157,7 +157,7 @@
   },
   {
     "id": "curve-fraxtal-fxs-sdfxs",
-    "name": "sdFXS/FXS",
+    "name": "sdFXS/FRAX",
     "type": "standard",
     "token": "sdFXSFXS",
     "tokenAddress": "0x3df1658e3E76d14eF3C4d410829EA7575bB83B9B",
@@ -466,7 +466,7 @@
   },
   {
     "id": "curve-fraxtal-fxs-cvxfxs",
-    "name": "cvxFXS/FXS",
+    "name": "cvxFXS/FRAX",
     "type": "standard",
     "token": "cvxFXSFXS",
     "tokenAddress": "0x3a38e9b0B5cB034De01d5298Fc2Ed2D793C0C36F",
@@ -626,7 +626,7 @@
   },
   {
     "id": "curve-fraxtal-trifxs",
-    "name": "frxUSD/wfrxETH/FXS",
+    "name": "frxUSD/frxETH/FRAX",
     "type": "standard",
     "token": "TriFXS",
     "tokenAddress": "0xa0D3911349e701A1F49C1Ba2dDA34b4ce9636569",
@@ -640,7 +640,7 @@
     "status": "active",
     "createdAt": 1714638240,
     "platformId": "convex",
-    "assets": ["FRAX", "wfrxETH", "FXS"],
+    "assets": ["FRAX", "frxETH", "FXS"],
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
@@ -700,7 +700,7 @@
   },
   {
     "id": "ra-wbtc-wfrxeth",
-    "name": "WBTC-wfrxETH vLP",
+    "name": "WBTC-frxETH vLP",
     "type": "standard",
     "token": "WBTC-frxETH vLP",
     "tokenAddress": "0x59e8F1FDE7C3E49B5b8c9EBFba73216F94F3D992",
@@ -730,7 +730,7 @@
   },
   {
     "id": "ra-fxs-wfrxeth",
-    "name": "FXS-wfrxETH vLP",
+    "name": "FRAX-frxETH vLP",
     "type": "standard",
     "token": "FXS-frxETH vLP",
     "tokenAddress": "0x4f66cBd698F1fe6E2692D1De5d758027a5272787",
@@ -762,7 +762,7 @@
   },
   {
     "id": "curve-fraxtal-tricrv",
-    "name": "crvUSD/wfrxETH/CRV",
+    "name": "crvUSD/frxETH/CRV",
     "type": "standard",
     "token": "triCRV",
     "tokenAddress": "0xF593aE314749d0c92B450F0a13E7e1791f352bB7",
@@ -776,7 +776,7 @@
     "status": "active",
     "createdAt": 1712223338,
     "platformId": "convex",
-    "assets": ["crvUSD", "wfrxETH", "CRV"],
+    "assets": ["crvUSD", "frxETH", "CRV"],
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
@@ -883,7 +883,7 @@
   },
   {
     "id": "curve-fraxtal-sfrxeth",
-    "name": "wfrxETH/sfrxETH",
+    "name": "frxETH/sfrxETH",
     "type": "standard",
     "token": "sfrxfrxETH",
     "tokenAddress": "0xF2f426Fe123De7b769b2D4F8c911512F065225d3",
@@ -897,7 +897,7 @@
     "status": "active",
     "createdAt": 1712223290,
     "platformId": "convex",
-    "assets": ["wfrxETH", "sfrxETH"],
+    "assets": ["frxETH", "sfrxETH"],
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
