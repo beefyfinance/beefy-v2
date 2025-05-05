@@ -838,8 +838,6 @@ const config = buildConfig(
         },
         hover: {
           color: '{colors.text.middle}',
-          background: '{colors.background.button}',
-          border: '{colors.background.button}',
         },
         active: {
           color: '{colors.text.light}',
@@ -848,7 +846,6 @@ const config = buildConfig(
         },
         disabled: {
           color: '{colors.text.middle}',
-          border: '{colors.background.content}',
         },
       },
       range: {

@@ -43,7 +43,7 @@ export const BoostCheckBox = memo(function BoostCheckBox() {
 const BoostButton = styled(Button, {
   base: {
     display: 'flex',
-    gap: '2px',
+    gap: '4px',
   },
 });
 

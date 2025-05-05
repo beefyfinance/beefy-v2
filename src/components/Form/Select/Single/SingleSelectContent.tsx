@@ -36,7 +36,7 @@ export const SingleSelectContent = memo(function SingleSelectContent<
   OptionBadgeComponent = OptionBadge,
 }: SingleSelectContentProps<TItem>) {
   return (
-    <>
+    <div>
       {options.map((item, index) =>
         disabledIndexes?.includes(index) ?
           null
@@ -56,6 +56,6 @@ export const SingleSelectContent = memo(function SingleSelectContent<
             BadgeComponent={OptionBadgeComponent}
           />
       )}
-    </>
+    </div>
   );
 });

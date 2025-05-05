@@ -55,7 +55,7 @@ const Label = styled('div', {
 
 const Amount = styled('div', {
   base: {
-    textStyle: 'inherit',
+    textStyle: 'body',
     color: 'text.light',
   },
 });
@@ -64,6 +64,6 @@ const Container = styled('div', {
   base: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '4px',
+    gap: '8px',
   },
 });

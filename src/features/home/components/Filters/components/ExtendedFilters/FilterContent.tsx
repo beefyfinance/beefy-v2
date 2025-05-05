@@ -67,10 +67,12 @@ export const DesktopFilter = memo<FilterContentProps>(function DesktopFilter({ h
     <>
       <ShownVaultsCount />
       <PlatformsButton handleContent={handleContent} />
-      <CheckboxFilter filter="onlyZappable" label={t('Filter-Zappable')} />
-      <CheckboxFilter filter="onlyEarningPoints" label={t('Filter-Points')} />
-      <CheckboxFilter filter="onlyRetired" label={t('Filter-Retired')} />
-      <CheckboxFilter filter="onlyPaused" label={t('Filter-Paused')} />
+      <div>
+        <CheckboxFilter filter="onlyZappable" label={t('Filter-Zappable')} />
+        <CheckboxFilter filter="onlyEarningPoints" label={t('Filter-Points')} />
+        <CheckboxFilter filter="onlyRetired" label={t('Filter-Retired')} />
+        <CheckboxFilter filter="onlyPaused" label={t('Filter-Paused')} />
+      </div>
       <MinTvlFilter />
       <div />
     </>
@@ -93,7 +95,7 @@ export const Label = styled('span', {
 export const ButtonFilter = styled(Button, {
   base: {
     justifyContent: 'space-between',
-    padding: '14px 16px',
+    padding: '8px 16px',
   },
 });
 
@@ -135,7 +137,6 @@ export const MobileContentBox = styled('div', {
     padding: '16px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '12px',
   },
 });
 

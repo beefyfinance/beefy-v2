@@ -17,12 +17,12 @@ export const Button = styled('button', {
       color: 'colorPalette.hover.color',
     },
     _first: {
-      borderTopLeftRadius: '6px',
-      borderBottomLeftRadius: '6px',
+      borderTopLeftRadius: '8px',
+      borderBottomLeftRadius: '8px',
     },
     _last: {
-      borderTopRightRadius: '6px',
-      borderBottomRightRadius: '6px',
+      borderTopRightRadius: '8px',
+      borderBottomRightRadius: '8px',
     },
   },
   variants: {
@@ -62,12 +62,12 @@ export const Button = styled('button', {
           position: 'absolute',
           borderColor: 'colorPalette.active.background',
           borderStyle: 'solid',
-          borderWidth: '2px', // =Buttons borderWidth
+          borderWidth: '3px', // =Buttons borderWidth
           borderRadius: 'inherit',
-          top: '-1px', // -Buttons borderWidth
-          left: '-1px',
-          right: '-1px',
-          bottom: '-1px',
+          top: '-2px', // -Buttons borderWidth
+          left: '-2px',
+          right: '-2px',
+          bottom: '-2px',
           zIndex: '[1]',
         },
       },

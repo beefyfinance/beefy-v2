@@ -46,6 +46,7 @@ export const PlatformsButton = memo<FilterContentProps>(function PlatformsButton
   return (
     <ButtonFilter
       borderless={true}
+      size="md"
       variant="filter"
       onClick={() => handleContent(FilterContent.Platform)}
     >
@@ -83,7 +84,7 @@ export const MobilePlatformsContent = memo(function MobilePlatformsContent() {
 
 export const DesktopPlatformsContent = memo(function DesktopPlatformsContent() {
   return (
-    <Scrollable autoHeight={340}>
+    <Scrollable autoHeight={276}>
       <ScrollableContainer>
         <PlatformChecklist />
       </ScrollableContainer>

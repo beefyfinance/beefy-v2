@@ -5,8 +5,10 @@ import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vau
 import { debounce } from 'lodash-es';
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
 import { css } from '@repo/styles/css';
+import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
 
 export const VaultsSearch = memo(function VaultsSearch() {
+  const isDesktop = useBreakpoint({ from: 'lg' });
   const dispatch = useAppDispatch();
   const searchText = useAppSelector(selectFilterSearchText);
   const [value, setValue] = useState(searchText);
@@ -32,13 +34,18 @@ export const VaultsSearch = memo(function VaultsSearch() {
   }, [searchText, setValue]);
 
   return (
-    <SearchInput className={input} value={value} onValueChange={handleChange} focusOnSlash={true} />
+    <SearchInput
+      className={input}
+      value={value}
+      onValueChange={handleChange}
+      focusOnSlash={isDesktop}
+    />
   );
 });
 
 const input = css({
   width: '100%',
-  md: {
+  lg: {
     maxWidth: '75%',
   },
 });

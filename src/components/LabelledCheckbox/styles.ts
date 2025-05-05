@@ -9,6 +9,7 @@ export const styles = {
     cursor: 'pointer',
     columnGap: '10px',
     userSelect: 'none',
+    paddingBlock: '8px',
   }),
   icon: css.raw({
     color: 'text.dark',

@@ -60,28 +60,30 @@ export const MultipleSelectContent = memo(function MultipleSelectContent<
   return (
     <>
       {searchEnabled && <SearchField value={searchText} onValueChange={setSearchText} />}
-      {noSearchMatches ?
-        <>No matches.</>
-      : options.map((item, index) =>
-          disabledIndexes?.includes(index) ?
-            null
-          : <OptionComponent
-              key={item.value}
-              item={item}
-              index={index}
-              active={activeIndex === index}
-              selected={selected.includes(item.value)}
-              allSelected={allSelected}
-              noneSelected={noneSelected}
-              getProps={getItemProps}
-              ref={setListRefs[index]}
-              ButtonComponent={OptionButtonComponent}
-              LabelComponent={OptionLabelComponent}
-              IconComponent={OptionIconComponent}
-              BadgeComponent={OptionBadgeComponent}
-            />
-        )
-      }
+      <div>
+        {noSearchMatches ?
+          <>No matches.</>
+        : options.map((item, index) =>
+            disabledIndexes?.includes(index) ?
+              null
+            : <OptionComponent
+                key={item.value}
+                item={item}
+                index={index}
+                active={activeIndex === index}
+                selected={selected.includes(item.value)}
+                allSelected={allSelected}
+                noneSelected={noneSelected}
+                getProps={getItemProps}
+                ref={setListRefs[index]}
+                ButtonComponent={OptionButtonComponent}
+                LabelComponent={OptionLabelComponent}
+                IconComponent={OptionIconComponent}
+                BadgeComponent={OptionBadgeComponent}
+              />
+          )
+        }
+      </div>
     </>
   );
 });

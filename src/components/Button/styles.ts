@@ -97,6 +97,13 @@ export const buttonRecipe = cva({
       },
     },
     {
+      size: 'md',
+      borderless: false,
+      css: {
+        padding: '8px 16px',
+      },
+    },
+    {
       size: 'lg',
       borderless: false,
       css: {

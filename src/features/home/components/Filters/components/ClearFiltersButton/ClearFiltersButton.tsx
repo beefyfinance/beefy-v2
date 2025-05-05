@@ -26,7 +26,14 @@ export const ClearFiltersButton = memo(function ClearFiltersButton({
   }, [dispatch]);
 
   return (
-    <ClearFilter css={cssProp} variant="filter" size="sm" disabled={!active} onClick={handleReset}>
+    <ClearFilter
+      css={cssProp}
+      borderless={true}
+      variant="filter"
+      size="sm"
+      disabled={!active}
+      onClick={handleReset}
+    >
       {t('Filter-ClearAll')}
       {count > 0 ?
         <Count data-count={count} />
