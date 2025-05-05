@@ -634,7 +634,7 @@ export const config = {
     multicallAddress: '0x2840463Ea288c26B66E24f92E8C704e1aB6b095c',
     multicall3Address: '0x0955479C61B37074d689319fCaA84ffE1E9e8CF5',
     appMulticallContractAddress: '0xB1bFc21bEE2b2DDA4728481dbF52eDC3b9F5Fb79',
-    native: { symbol: 'FRAX', oracleId: 'FXS', decimals: 18 },
+    native: { symbol: 'FRAX', oracleId: 'WFXS', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
