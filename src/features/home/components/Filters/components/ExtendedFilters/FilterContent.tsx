@@ -96,6 +96,10 @@ export const ButtonFilter = styled(Button, {
     justifyContent: 'space-between',
     paddingBlock: '14px',
     paddingInline: '16px',
+    lg: {
+      paddingBlock: '8px',
+      paddingInline: '12px',
+    },
   },
 });
 
