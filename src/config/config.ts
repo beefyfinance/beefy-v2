@@ -644,6 +644,9 @@ export const config = {
     },
     stableCoins: [
       'crvUSD',
+      'scrvUSD',
+      'frxUSD',
+      'sfrxUSD',
       'FRAX',
       'frxUSDC',
       'USDC',
