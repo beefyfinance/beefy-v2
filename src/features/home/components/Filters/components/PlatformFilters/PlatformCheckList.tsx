@@ -5,8 +5,9 @@ import { selectFilterPlatforms } from '../../../../../data/selectors/platforms.t
 import { selectFilterPlatformIds } from '../../../../../data/selectors/filtered-vaults.ts';
 import type { PlatformEntity } from '../../../../../data/entities/platform.ts';
 import { MultipleSelectContent } from '../../../../../../components/Form/Select/Multi/MultipleSelectContent.tsx';
-
+import { useTranslation } from 'react-i18next';
 export const PlatformChecklist = memo(function PlatformChecklist() {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const platforms = useAppSelector(selectFilterPlatforms);
   const options = useMemo(
@@ -71,6 +72,7 @@ export const PlatformChecklist = memo(function PlatformChecklist() {
       getItemProps={getItemProps}
       setListRefs={setListRefs}
       searchEnabled={true}
+      placeholder={t('Filter-Platforms-Search-Placeholder')}
     />
   );
 });

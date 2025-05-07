@@ -6,8 +6,10 @@ import { debounce } from 'lodash-es';
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
 import { css } from '@repo/styles/css';
 import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useTranslation } from 'react-i18next';
 
 export const VaultsSearch = memo(function VaultsSearch() {
+  const { t } = useTranslation();
   const isDesktop = useBreakpoint({ from: 'lg' });
   const dispatch = useAppDispatch();
   const searchText = useAppSelector(selectFilterSearchText);
@@ -35,6 +37,7 @@ export const VaultsSearch = memo(function VaultsSearch() {
 
   return (
     <SearchInput
+      placeholder={t('Filter-Vaults-Search-Placeholder')}
       className={input}
       value={value}
       onValueChange={handleChange}

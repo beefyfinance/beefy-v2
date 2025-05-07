@@ -39,6 +39,7 @@ export const MinTvlFilter = memo(function MinTvlFilter() {
         {value.gt(BIG_ZERO) && <Amount>{formatLargeUsd(value)}</Amount>}
       </Label>
       <SliderInput onChange={handleChange} value={value} maxValue={MAX_INPUT} />
+      <div />
     </Container>
   );
 });
@@ -62,8 +63,12 @@ const Amount = styled('div', {
 
 const Container = styled('div', {
   base: {
+    paddingBlock: '8px',
     display: 'flex',
     flexDirection: 'column',
     gap: '8px',
+    lg: {
+      paddingBlock: '0px',
+    },
   },
 });

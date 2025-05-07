@@ -23,7 +23,9 @@ export type CommonProps<TItem extends SelectItem = SelectItem> = Override<
     /** can use styled() on this for css */
     OptionLabelComponent?: FC<OptionLabelProps>;
     /** optional */
-    OptionIconComponent?: FC<OptionIconProps<TItem>>;
+    OptionStartAdornmentComponent?: FC<OptionIconProps<TItem>>;
+    /** can use styled() on this for css */
+    OptionEndAdornmentComponent?: FC<OptionIconProps<TItem>>;
     /** can use styled() on this for css */
     OptionBadgeComponent?: FC<OptionBadgeProps>;
     /** can use styled() on this for css */
@@ -78,8 +80,9 @@ export type OptionProps<TItem extends SelectItem = SelectItem> = {
   getProps: (index: number) => ButtonProps;
   ButtonComponent: FCWithRef<OptionButtonProps, HTMLButtonElement>;
   LabelComponent: FC<OptionLabelProps>;
-  IconComponent?: FC<OptionIconProps<TItem>>;
   BadgeComponent?: FC<OptionBadgeProps>;
+  StartAdornmentComponent?: FC<OptionIconProps<TItem>>;
+  EndAdornmentComponent?: FC<OptionIconProps<TItem>>;
 };
 
 export type OptionButtonProps = Override<
@@ -106,6 +109,13 @@ export type OptionIconProps<TItem extends SelectItem = SelectItem> = {
 
 export type OptionBadgeProps = Override<
   SpanProps,
+  {
+    selected: boolean;
+  }
+>;
+
+export type OptionEndAdornmentProps = Override<
+  DivProps,
   {
     selected: boolean;
   }

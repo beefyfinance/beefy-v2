@@ -39,7 +39,8 @@ export const Select = memo(function Select<TItem extends SelectItem = SelectItem
   OptionComponent = Option,
   OptionButtonComponent = OptionButton,
   OptionLabelComponent = OptionLabel,
-  OptionIconComponent = undefined,
+  OptionStartAdornmentComponent = undefined,
+  OptionEndAdornmentComponent = undefined,
   OptionBadgeComponent = OptionBadge,
   placement = 'bottom-start',
   layer = 0,
@@ -216,8 +217,9 @@ export const Select = memo(function Select<TItem extends SelectItem = SelectItem
                 OptionComponent={OptionComponent}
                 OptionButtonComponent={OptionButtonComponent}
                 OptionLabelComponent={OptionLabelComponent}
-                OptionIconComponent={OptionIconComponent}
                 OptionBadgeComponent={OptionBadgeComponent}
+                OptionStartAdornmentComponent={OptionStartAdornmentComponent}
+                OptionEndAdornmentComponent={OptionEndAdornmentComponent}
               />
             </SelectDropdown>
           </FloatingFocusManager>

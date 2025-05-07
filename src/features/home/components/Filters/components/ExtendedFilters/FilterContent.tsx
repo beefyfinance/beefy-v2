@@ -47,7 +47,7 @@ export const MobileFilter = memo<FilterContentProps>(function MobileFilter({ han
       <MobileContentBox>
         <StategyTypeCheckBoxList />
       </MobileContentBox>
-      <MobileContentBox>
+      <MobileContentBox size="sm">
         <MinTvlFilter />
       </MobileContentBox>
       <MobileContentBox>
@@ -74,7 +74,6 @@ export const DesktopFilter = memo<FilterContentProps>(function DesktopFilter({ h
         <CheckboxFilter filter="onlyPaused" label={t('Filter-Paused')} />
       </div>
       <MinTvlFilter />
-      <div />
     </>
   );
 });
@@ -95,7 +94,8 @@ export const Label = styled('span', {
 export const ButtonFilter = styled(Button, {
   base: {
     justifyContent: 'space-between',
-    padding: '8px 16px',
+    paddingBlock: '14px',
+    paddingInline: '16px',
   },
 });
 
@@ -134,9 +134,16 @@ export const MobileContentBox = styled('div', {
   base: {
     background: 'background.content.dark',
     borderRadius: '8px',
-    padding: '16px',
+    padding: '6px 16px',
     display: 'flex',
     flexDirection: 'column',
+  },
+  variants: {
+    size: {
+      sm: {
+        padding: '4px 16px',
+      },
+    },
   },
 });
 

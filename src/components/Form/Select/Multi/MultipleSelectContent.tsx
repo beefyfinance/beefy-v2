@@ -20,6 +20,7 @@ interface MultipleSelectContentProps<TItem extends SelectItem = SelectItem>
   setListRefs: ((el: HTMLButtonElement | null) => void)[];
   searchEnabled?: boolean;
   searchFunction?: SearchFunction<TItem>;
+  placeholder?: string;
 }
 
 export const MultipleSelectContent = memo(function MultipleSelectContent<
@@ -37,8 +38,10 @@ export const MultipleSelectContent = memo(function MultipleSelectContent<
   OptionComponent = Option,
   OptionButtonComponent = OptionButton,
   OptionLabelComponent = OptionLabel,
-  OptionIconComponent = OptionIcon,
+  OptionStartAdornmentComponent = OptionIcon,
   OptionBadgeComponent = OptionBadge,
+  OptionEndAdornmentComponent,
+  placeholder,
 }: MultipleSelectContentProps<TItem>) {
   const [searchText, setSearchText] = useState<string>('');
   const deferredSearchText = useDeferredValue(searchText);
@@ -59,7 +62,9 @@ export const MultipleSelectContent = memo(function MultipleSelectContent<
 
   return (
     <>
-      {searchEnabled && <SearchField value={searchText} onValueChange={setSearchText} />}
+      {searchEnabled && (
+        <SearchField placeholder={placeholder} value={searchText} onValueChange={setSearchText} />
+      )}
       <div>
         {noSearchMatches ?
           <>No matches.</>
@@ -78,8 +83,9 @@ export const MultipleSelectContent = memo(function MultipleSelectContent<
                 ref={setListRefs[index]}
                 ButtonComponent={OptionButtonComponent}
                 LabelComponent={OptionLabelComponent}
-                IconComponent={OptionIconComponent}
                 BadgeComponent={OptionBadgeComponent}
+                StartAdornmentComponent={OptionStartAdornmentComponent}
+                EndAdornmentComponent={OptionEndAdornmentComponent}
               />
           )
         }

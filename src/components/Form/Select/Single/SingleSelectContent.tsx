@@ -32,8 +32,9 @@ export const SingleSelectContent = memo(function SingleSelectContent<
   OptionComponent = Option,
   OptionButtonComponent = OptionButton,
   OptionLabelComponent = OptionLabel,
-  OptionIconComponent = OptionIcon,
   OptionBadgeComponent = OptionBadge,
+  OptionStartAdornmentComponent = OptionIcon,
+  OptionEndAdornmentComponent,
 }: SingleSelectContentProps<TItem>) {
   return (
     <div>
@@ -52,8 +53,9 @@ export const SingleSelectContent = memo(function SingleSelectContent<
             ref={setListRefs[index]}
             ButtonComponent={OptionButtonComponent}
             LabelComponent={OptionLabelComponent}
-            IconComponent={OptionIconComponent}
             BadgeComponent={OptionBadgeComponent}
+            StartAdornmentComponent={OptionStartAdornmentComponent}
+            EndAdornmentComponent={OptionEndAdornmentComponent}
           />
       )}
     </div>

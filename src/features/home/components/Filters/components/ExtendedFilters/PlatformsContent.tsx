@@ -84,7 +84,7 @@ export const MobilePlatformsContent = memo(function MobilePlatformsContent() {
 
 export const DesktopPlatformsContent = memo(function DesktopPlatformsContent() {
   return (
-    <Scrollable autoHeight={276}>
+    <Scrollable autoHeight={340}>
       <ScrollableContainer>
         <PlatformChecklist />
       </ScrollableContainer>

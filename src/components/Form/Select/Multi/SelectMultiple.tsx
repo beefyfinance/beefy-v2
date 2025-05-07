@@ -43,7 +43,8 @@ export const SelectMultiple = memo(function Select<
   OptionComponent = Option,
   OptionButtonComponent = OptionButton,
   OptionLabelComponent = OptionLabel,
-  OptionIconComponent = OptionIcon,
+  OptionStartAdornmentComponent = OptionIcon,
+  OptionEndAdornmentComponent = undefined,
   OptionBadgeComponent = OptionBadge,
   placement = 'bottom-start',
   layer = 0,
@@ -201,7 +202,8 @@ export const SelectMultiple = memo(function Select<
                 OptionComponent={OptionComponent}
                 OptionButtonComponent={OptionButtonComponent}
                 OptionLabelComponent={OptionLabelComponent}
-                OptionIconComponent={OptionIconComponent}
+                OptionStartAdornmentComponent={OptionStartAdornmentComponent}
+                OptionEndAdornmentComponent={OptionEndAdornmentComponent}
                 OptionBadgeComponent={OptionBadgeComponent}
               />
             </SelectDropdown>

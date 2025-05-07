@@ -7,7 +7,7 @@ import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { MultipleSelectContent } from '../../../../../../components/Form/Select/Multi/MultipleSelectContent.tsx';
 import { getNetworkIcon } from './hooks.tsx';
 import { cva } from '@repo/styles/css';
-
+import { useTranslation } from 'react-i18next';
 const iconRecipe = cva({
   base: {
     width: '24px',
@@ -41,6 +41,7 @@ const ChainOptionIcon = memo(function ChainOptionIcon({
 });
 
 export const ChainCheckList = memo(function ChainCheckList() {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const activeChains = useAppSelector(selectActiveChains);
   const selectedChainIds = useAppSelector(selectFilterChainIds);
@@ -103,7 +104,8 @@ export const ChainCheckList = memo(function ChainCheckList() {
       getItemProps={getItemProps}
       setListRefs={setListRefs}
       searchEnabled={true}
-      OptionIconComponent={ChainOptionIcon}
+      OptionEndAdornmentComponent={ChainOptionIcon}
+      placeholder={t('Filter-Chains-Search-Placeholder')}
     />
   );
 });

@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import BoostSvg from '../../../../../../images/icons/boost.svg?react';
 import { styled } from '@repo/styles/jsx';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
+import { css } from '@repo/styles/css';
 
 export const BoostFilterButton = memo(function BoostFilterButton() {
   const { t } = useTranslation();
@@ -34,8 +35,13 @@ export const BoostCheckBox = memo(function BoostCheckBox() {
 
   return (
     <BoostCheckBoxContainer>
-      <LabelledCheckbox checked={value} onChange={handleChange} label={t('Filter-Boosts')} />
-      <BoostIcon />
+      <LabelledCheckbox
+        labelCss={css.raw({ paddingBlock: 0 })}
+        checked={value}
+        onChange={handleChange}
+        label={t('Filter-Boosts')}
+      />
+      <BoostIcon size="lg" />
     </BoostCheckBoxContainer>
   );
 });
@@ -52,6 +58,14 @@ const BoostIcon = styled(BoostSvg, {
     color: 'text.boosted',
     height: '16px',
     width: '14px',
+  },
+  variants: {
+    size: {
+      lg: {
+        height: '20px',
+        width: '20px',
+      },
+    },
   },
 });
 

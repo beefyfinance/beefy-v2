@@ -7,7 +7,7 @@ import {
 } from '../../../../../data/selectors/filtered-vaults.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { useTranslation } from 'react-i18next';
-import Clear from '../../../../../../images/icons/mui/Clear.svg?react';
+import Clear from '../../../../../../images/icons/clear.svg?react';
 import { type CssStyles } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 
@@ -45,7 +45,7 @@ export const ClearFiltersButton = memo(function ClearFiltersButton({
 const ClearFilter = styled(Button, {
   base: {
     marginLeft: 'auto',
-    gap: '4px',
+    gap: '8px',
   },
 });
 

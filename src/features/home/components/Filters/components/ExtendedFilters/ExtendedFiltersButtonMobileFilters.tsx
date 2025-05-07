@@ -6,7 +6,7 @@ import { selectHasActiveFilter } from '../../../../../data/selectors/filtered-va
 import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import { PulseHighlight } from '../../../../../vault/components/PulseHighlight/PulseHighlight.tsx';
 import { styled } from '@repo/styles/jsx';
-import Clear from '../../../../../../images/icons/mui/Clear.svg?react';
+import ClearIcon from '../../../../../../images/icons/clear.svg?react';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 
 export const ExtendedFiltersButtonMobileFilters = memo(
@@ -49,7 +49,9 @@ export const ExtendedFiltersButtonMobileFilters = memo(
               borderless={true}
               onClick={handleReset}
             >
-              <Clear />
+              <ClearContainer>
+                <Clear />
+              </ClearContainer>
             </FilterButton>
           </ActiveFilterContainer>
         : <Button size="sm" variant="filter" fullWidth={true} onClick={handleOpen}>
@@ -61,6 +63,23 @@ export const ExtendedFiltersButtonMobileFilters = memo(
     );
   }
 );
+
+const ClearContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '24px',
+    height: '24px',
+  },
+});
+
+const Clear = styled(ClearIcon, {
+  base: {
+    width: '16px',
+    height: '16px',
+  },
+});
 
 const ActiveFilterContainer = styled('div', {
   base: {

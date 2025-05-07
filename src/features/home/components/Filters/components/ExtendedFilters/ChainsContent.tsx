@@ -57,7 +57,6 @@ export const ChainsContentButton = memo<FilterContentProps>(function ChainsConte
 
   return (
     <ButtonFilter
-      size="md"
       borderless={true}
       variant="filter"
       onClick={() => handleContent(FilterContent.Chains)}

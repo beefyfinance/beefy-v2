@@ -9,14 +9,21 @@ import { styled } from '@repo/styles/jsx';
 export const ExtendedFiltersButtonDropdown = memo(function ExtendedFiltersButtonDropdown() {
   return (
     <DropdownProvider placement="bottom-end">
-      <DropdownButtonTrigger variant="filter" size="sm">
+      <DropdownButton variant="filter">
         <FilterIcon />
-      </DropdownButtonTrigger>
+      </DropdownButton>
       <FiltersDropdown padding="none">
         <ExtendedFilters />
       </FiltersDropdown>
     </DropdownProvider>
   );
+});
+
+const DropdownButton = styled(DropdownButtonTrigger, {
+  base: {
+    paddingBlock: '12px',
+    paddingInline: '14px',
+  },
 });
 
 const FilterIcon = styled(FilterSvg, {
