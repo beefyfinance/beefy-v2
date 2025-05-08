@@ -51,8 +51,8 @@ export const ToggleButtons = memo(function ToggleButtons<
     <Buttons
       fullWidth={fullWidth}
       variant={variant}
-      noBackground={noBackground ?? canUntoggle}
-      noBorder={noBorder ?? canUntoggle}
+      noBackground={noBackground}
+      noBorder={noBorder}
     >
       {options.map(({ value: optionValue, label }) => (
         <ToggleButton
@@ -61,7 +61,7 @@ export const ToggleButtons = memo(function ToggleButtons<
           label={label}
           onClick={handleClick}
           active={value === optionValue}
-          noBackground={noBackground ?? canUntoggle}
+          noBackground={noBackground}
           noPadding={noPadding}
           unselectable={!canUntoggle && value === optionValue}
         />

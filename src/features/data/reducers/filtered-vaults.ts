@@ -48,8 +48,6 @@ export type FilteredVaultsState = {
   onlyUnstakedClm: boolean;
   filteredVaultIds: VaultEntity['id'][];
   sortedFilteredVaultIds: VaultEntity['id'][];
-  showMinimumUnderlyingTvl: boolean;
-  showMinimumUnderlyingTvlLarge: boolean;
   minimumUnderlyingTvl: BigNumber;
 };
 
@@ -86,8 +84,6 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   onlyUnstakedClm: false,
   filteredVaultIds: [],
   sortedFilteredVaultIds: [],
-  showMinimumUnderlyingTvl: false,
-  showMinimumUnderlyingTvlLarge: false,
   minimumUnderlyingTvl: BIG_ZERO,
 };
 

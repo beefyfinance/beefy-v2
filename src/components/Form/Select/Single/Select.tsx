@@ -24,6 +24,7 @@ import { Option } from '../Option.tsx';
 import { OptionLabel } from '../OptionLabel.tsx';
 import { SelectLabel } from '../SelectLabel.tsx';
 import { OptionBadge } from '../OptionBadge.tsx';
+import { SingleSelectContent } from './SingleSelectContent.tsx';
 
 export const Select = memo(function Select<TItem extends SelectItem = SelectItem>({
   selected,
@@ -38,7 +39,8 @@ export const Select = memo(function Select<TItem extends SelectItem = SelectItem
   OptionComponent = Option,
   OptionButtonComponent = OptionButton,
   OptionLabelComponent = OptionLabel,
-  OptionIconComponent = undefined,
+  OptionStartAdornmentComponent = undefined,
+  OptionEndAdornmentComponent = undefined,
   OptionBadgeComponent = OptionBadge,
   placement = 'bottom-start',
   layer = 0,
@@ -204,23 +206,21 @@ export const Select = memo(function Select<TItem extends SelectItem = SelectItem
               ref={refs.setFloating}
               layer={layer}
             >
-              {options.map((item, index) => (
-                <OptionComponent
-                  key={item.value}
-                  item={item}
-                  index={index}
-                  active={activeIndex === index}
-                  selected={selectedIndex === index}
-                  allSelected={allSelected}
-                  noneSelected={noneSelected}
-                  getProps={getItemProps}
-                  ref={setListRefs[index]}
-                  ButtonComponent={OptionButtonComponent}
-                  LabelComponent={OptionLabelComponent}
-                  IconComponent={OptionIconComponent}
-                  BadgeComponent={OptionBadgeComponent}
-                />
-              ))}
+              <SingleSelectContent
+                options={options}
+                selectedIndex={selectedIndex}
+                activeIndex={activeIndex}
+                allSelected={allSelected}
+                noneSelected={noneSelected}
+                getItemProps={getItemProps}
+                setListRefs={setListRefs}
+                OptionComponent={OptionComponent}
+                OptionButtonComponent={OptionButtonComponent}
+                OptionLabelComponent={OptionLabelComponent}
+                OptionBadgeComponent={OptionBadgeComponent}
+                OptionStartAdornmentComponent={OptionStartAdornmentComponent}
+                OptionEndAdornmentComponent={OptionEndAdornmentComponent}
+              />
             </SelectDropdown>
           </FloatingFocusManager>
         </FloatingPortal>

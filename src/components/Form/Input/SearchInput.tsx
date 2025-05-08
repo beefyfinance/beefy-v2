@@ -14,6 +14,7 @@ import { css, cx } from '@repo/styles/css';
 import { BaseInput, type BaseInputProps } from './BaseInput.tsx';
 import type { Override } from '../../../features/data/utils/types-utils.ts';
 import { useMediaQuery } from '../../MediaQueries/useMediaQuery.ts';
+import SlashIcon from '../../../images/icons/slash.svg?react';
 
 const buttonCss = css({
   background: 'transparent',
@@ -25,24 +26,24 @@ const buttonCss = css({
   alignItems: 'center',
   color: 'text.dark',
   flexShrink: '0',
-  width: '24px',
-  height: '24px',
+  width: '20px',
+  height: '20px',
 });
 
 const pointerCss = css({
   cursor: 'pointer',
 });
 
-const slashCss = css({
-  border: `1px solid {colors.text.dark}`,
-  borderRadius: '4px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '20px',
-  height: '20px',
-  fontWeight: 'medium',
-});
+// const slashCss = css({
+//   border: `1px solid {colors.text.dark}`,
+//   borderRadius: '4px',
+//   display: 'flex',
+//   alignItems: 'center',
+//   justifyContent: 'center',
+//   width: '20px',
+//   height: '20px',
+//   fontWeight: 'medium',
+// });
 
 export type SearchInputProps = Override<
   Omit<BaseInputProps, 'fullWidth' | 'endAdornment'>,
@@ -54,10 +55,6 @@ export type SearchInputProps = Override<
     focusOnSlash?: boolean;
   }
 >;
-
-const SlashIcon = memo(function SlashIcon() {
-  return <div className={slashCss}>{'/'}</div>;
-});
 
 export const SearchInput = memo(function SearchInput({
   onValueChange,
@@ -89,11 +86,7 @@ export const SearchInput = memo(function SearchInput({
   const showSlash = focusOnSlash && !isFocused && !isTouch && value.length === 0;
   const endAdornment = useMemo(() => {
     if (showSlash) {
-      return (
-        <div className={buttonCss}>
-          <SlashIcon />
-        </div>
-      );
+      return <SlashIcon />;
     } else if (showClear) {
       return (
         <button type="button" onClick={handleClear} className={cx(buttonCss, pointerCss)}>

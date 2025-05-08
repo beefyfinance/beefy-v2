@@ -9,7 +9,7 @@ export type SortType =
 
 export type SortDirectionType = 'asc' | 'desc';
 
-export type VaultCategoryType = 'stable' | 'bluechip' | 'correlated';
+export type VaultCategoryType = 'stable' | 'bluechip' | 'meme' | 'correlated';
 
 export type VaultAssetType = 'lps' | 'single' | 'clm';
 

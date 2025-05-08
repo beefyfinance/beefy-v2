@@ -370,6 +370,7 @@ const config = buildConfig(
             // NOTE: solid mix with some background color...
             '70-20': { value: '#d7a86133' },
             '80': { value: '#b17f49' },
+            '80-32': { value: '#514444' },
             '80-40a': { value: '#b17f4966' },
             '90': { value: '#865c3b' },
             '100': { value: '#5f412e' },
@@ -841,11 +842,10 @@ const config = buildConfig(
         active: {
           color: '{colors.text.light}',
           background: '{colors.background.button}',
-          border: '{colors.background.content.light}',
+          border: '{colors.background.button}',
         },
         disabled: {
           color: '{colors.text.middle}',
-          border: '{colors.background.content}',
         },
       },
       range: {

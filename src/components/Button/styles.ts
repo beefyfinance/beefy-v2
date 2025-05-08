@@ -35,6 +35,9 @@ export const buttonRecipe = cva({
         textStyle: 'body.sm.medium',
       },
       sm: {
+        padding: '6px 10px',
+      },
+      md: {
         padding: '8px 16px',
       },
       lg: {
@@ -53,10 +56,6 @@ export const buttonRecipe = cva({
       true: {
         width: '100%',
       },
-    },
-    active: {
-      false: {},
-      true: {},
     },
     variant: {
       default: {
@@ -94,14 +93,21 @@ export const buttonRecipe = cva({
       size: 'sm',
       borderless: false,
       css: {
-        padding: '6px 14px',
+        padding: '6px 12px',
+      },
+    },
+    {
+      size: 'md',
+      borderless: false,
+      css: {
+        padding: '8px 16px',
       },
     },
     {
       size: 'lg',
       borderless: false,
       css: {
-        padding: '10px 22px',
+        padding: '8px 12px',
       },
     },
   ],
@@ -109,6 +115,5 @@ export const buttonRecipe = cva({
     size: 'lg',
     borderless: false,
     fullWidth: false,
-    active: false,
   },
 });

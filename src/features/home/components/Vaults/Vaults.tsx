@@ -1,23 +1,30 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { VaultsHeader } from './components/VaultsHeader/VaultsHeader.tsx';
 import { VaultsList } from './components/VaultsList/VaultsList.tsx';
-import { css } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
+import { Container } from '../../../../components/Container/Container.tsx';
+import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
 
 export const Vaults = memo(function Vaults() {
+  const isMobile = useBreakpoint({ to: 'xs' });
+
+  const maxWidth = useMemo(() => {
+    return isMobile ? 'xl' : 'lg';
+  }, [isMobile]);
   return (
-    <div className={vaultsClass}>
-      <VaultsHeader />
-      <VaultsList />
-    </div>
+    <Container maxWidth={maxWidth} noPadding={isMobile}>
+      <VaultsContainer>
+        <VaultsHeader />
+        <VaultsList />
+      </VaultsContainer>
+    </Container>
   );
 });
 
-const vaultsClass = css({
-  marginTop: '20px',
-  borderRadius: '12px',
-  border: 'solid 2px {colors.background.content.dark}',
-  contain: 'paint',
-  sm: {
-    marginTop: '32px',
+const VaultsContainer = styled('div', {
+  base: {
+    marginTop: '12px',
+    borderRadius: '12px',
+    contain: 'paint',
   },
 });

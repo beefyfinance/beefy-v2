@@ -23,7 +23,11 @@ export const BaseInput = memo(
     const [recipeProps, inputProps] = recipe.splitVariantProps(rest);
     const classes = recipe({
       ...recipeProps,
-      status: error ? 'error' : warning ? 'warning' : success ? 'success' : undefined,
+      status:
+        error ? 'error'
+        : warning ? 'warning'
+        : success ? 'success'
+        : undefined,
     });
 
     return (
@@ -63,7 +67,7 @@ const recipe = sva({
       borderStyle: 'solid',
       borderColor: 'transparent',
       borderRadius: '8px',
-      paddingInline: '16px',
+      paddingInline: '12px',
       paddingBlock: '8px',
     },
     input: {
@@ -128,6 +132,7 @@ const recipe = sva({
 const Adornments = styled('div', {
   base: {
     display: 'flex',
+    alignItems: 'center',
     flexDirection: 'row',
     flexShrink: '0',
     flexGrow: '0',

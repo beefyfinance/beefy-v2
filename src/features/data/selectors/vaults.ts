@@ -26,8 +26,8 @@ import {
   type VaultStandardCowcentrated,
 } from '../entities/vault.ts';
 import {
-  selectIsBeefyToken,
   selectIsTokenBluechip,
+  selectIsTokenMeme,
   selectIsTokenStable,
   selectTokenByIdOrUndefined,
 } from './tokens.ts';
@@ -417,18 +417,18 @@ export const selectIsVaultBlueChip = createSelector(
   res => res
 );
 
-export const selectIsVaultStable = createSelector(
+export const selectIsVaultMeme = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
-    return vault.assetIds.every(assetId => selectIsTokenStable(state, vault.chainId, assetId));
+    return vault.assetIds.some(assetId => selectIsTokenMeme(state, assetId));
   },
   res => res
 );
 
-export const selectIsVaultBeefy = createSelector(
+export const selectIsVaultStable = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
-    return vault.assetIds.some(assetId => selectIsBeefyToken(state, assetId));
+    return vault.assetIds.every(assetId => selectIsTokenStable(state, vault.chainId, assetId));
   },
   res => res
 );

@@ -42,6 +42,7 @@ export const AmountInputWithSlider = memo(function AmountInputWithSlider({
       .dividedBy(maxValue.gt(BIG_ZERO) ? maxValue : 1)
       .toNumber();
   }, [maxValue, value]);
+
   const error = useMemo(() => {
     return value.gt(maxValue);
   }, [maxValue, value]);

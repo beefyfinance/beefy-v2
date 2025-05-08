@@ -14,7 +14,7 @@ export const NewBadge = styled(NewText, {
     backgroundColor: 'green',
     color: 'background.header',
     paddingInline: '6px',
-    borderRadius: '10px',
+    borderRadius: '4px',
     height: '20px',
     pointerEvents: 'none',
     userSelect: 'none',

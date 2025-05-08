@@ -53,14 +53,13 @@ export const MultiToggleButtons = memo(function MultiToggleButtons<TValue extend
   );
 
   return (
-    <Buttons fullWidth={fullWidth} variant={variant} noBackground={true}>
+    <Buttons fullWidth={fullWidth} variant={variant}>
       {options.map(({ value: optionValue, label }) => (
         <ButtonComponent
           key={optionValue}
           value={optionValue}
           label={label}
           active={value.includes(optionValue)}
-          noBackground={true}
           onClick={handleClick}
         />
       ))}
