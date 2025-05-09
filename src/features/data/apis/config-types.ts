@@ -141,7 +141,11 @@ export interface CeloGasConfig {
   type: 'celo';
 }
 
-export type GasConfig = StandardGasConfig | EIP1559GasConfig | CeloGasConfig;
+export interface GaslessGasConfig {
+  type: 'gasless';
+}
+
+export type GasConfig = StandardGasConfig | EIP1559GasConfig | CeloGasConfig | GaslessGasConfig;
 
 type ChainId =
   | 'ethereum'
@@ -178,7 +182,8 @@ type ChainId =
   | 'berachain'
   | 'celo'
   | 'heco'
-  | 'harmony';
+  | 'harmony'
+  | 'saga';
 
 export type ChainConfig = {
   id: ChainId;
@@ -190,7 +195,6 @@ export type ChainConfig = {
   explorerAddressUrlTemplate?: string;
   explorerTokenUrlTemplate?: string;
   explorerTxUrlTemplate?: string;
-  multicallAddress: string;
   multicall3Address: Address;
   appMulticallContractAddress: string;
   native: {
