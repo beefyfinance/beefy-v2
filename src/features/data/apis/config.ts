@@ -19,6 +19,10 @@ import type { MigrationConfig } from '../reducers/wallet/migration.ts';
 import { entries, keys } from '../../../helpers/object.ts';
 import { getMigratorConfig, getMinterConfig } from '../../../helpers/getConfig.ts';
 
+const ammsChainPathToImportFn = import.meta.glob<AmmConfig[]>('../../../config/zap/amm/*.json', {
+  import: 'default',
+});
+
 /**
  * A class to access beefy configuration
  * Access to vaults, boosts, featured items, etc
@@ -37,10 +41,10 @@ export class ConfigAPI {
   }> {
     return Object.fromEntries(
       await Promise.all(
-        Object.keys(chainConfigs).map(async chainId => [
-          chainId,
-          (await import(`../../../config/zap/amm/${chainId}.json`)).default as AmmConfig[],
-        ])
+        Object.keys(chainConfigs).map(async chainId => {
+          const importer = ammsChainPathToImportFn[`../../../config/zap/amm/${chainId}.json`];
+          return [chainId, importer ? await importer() : []];
+        })
       )
     ) as {
       [chainId in ChainEntity['id']]: AmmConfig[];
