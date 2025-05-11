@@ -1,5 +1,46 @@
 [
   {
+    "id": "convex-tricrypto-usdt",
+    "name": "USDT/WBTC/WETH",
+    "type": "standard",
+    "token": "crvUSDTWBTCWETH",
+    "tokenAddress": "0xf5f5B97624542D72A9E06f04804Bf81baA15e2B4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xC4c68922058f45952C05296ABef16d8b5BD2190f",
+    "earnedToken": "mooCurveTriCryptoUSDT",
+    "earnedTokenAddress": "0xC4c68922058f45952C05296ABef16d8b5BD2190f",
+    "oracle": "lps",
+    "oracleId": "convex-tricrypto-usdt",
+    "status": "active",
+    "createdAt": 1746951023,
+    "platformId": "convex",
+    "assets": ["USDT", "WBTC", "WETH"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/dex/ethereum/pools/factory-tricrypto-1/deposit/",
+    "removeLiquidityUrl": "https://curve.fi/dex/ethereum/pools/factory-tricrypto-1/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xf5f5B97624542D72A9E06f04804Bf81baA15e2B4",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0xf5f5B97624542D72A9E06f04804Bf81baA15e2B4",
+            "coins": [
+              "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curve-reusd-sdola",
     "name": "reUSD/sDOLA",
     "type": "standard",
