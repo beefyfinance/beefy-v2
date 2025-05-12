@@ -1,5 +1,85 @@
 [
   {
+    "id": "curve-base-superoethb",
+    "name": "superOETHb/WETH",
+    "type": "standard",
+    "token": "sOETH/WETH",
+    "tokenAddress": "0x302A94E3C28c290EAF2a4605FC52e11Eb915f378",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x8fd71623dA01c2B4D7ff9E86ef6bF350Dd8Ec60C",
+    "earnedToken": "mooCurveWETH-superOETHb",
+    "earnedTokenAddress": "0x8fd71623dA01c2B4D7ff9E86ef6bF350Dd8Ec60C",
+    "oracle": "lps",
+    "oracleId": "curve-base-superoethb",
+    "status": "active",
+    "createdAt": 1746781988,
+    "platformId": "curve",
+    "assets": ["superOETHb", "WETH"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/dex/base/pools/factory-stable-ng-143/deposit/",
+    "removeLiquidityUrl": "https://curve.fi/dex/base/pools/factory-stable-ng-143/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x302A94E3C28c290EAF2a4605FC52e11Eb915f378",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x302A94E3C28c290EAF2a4605FC52e11Eb915f378",
+            "coins": [
+              "0x4200000000000000000000000000000000000006",
+              "0xDBFeFD2e8460a6Ee4955A68582F85708BAEA60A3"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-base-usdc-scrvusd",
+    "name": "scrvUSD/USDC",
+    "type": "standard",
+    "token": "scrvUSDC",
+    "tokenAddress": "0x5aB01ee6208596f2204B85bDFA39d34c2aDD98F6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x3a7d6D7E10b94329A488611306fA38762272F8bb",
+    "earnedToken": "mooCurveUSDC-scrvUSD",
+    "earnedTokenAddress": "0x3a7d6D7E10b94329A488611306fA38762272F8bb",
+    "oracle": "lps",
+    "oracleId": "curve-base-usdc-scrvusd",
+    "status": "active",
+    "createdAt": 1746781974,
+    "platformId": "curve",
+    "assets": ["scrvUSD", "USDC"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/dex/base/pools/factory-stable-ng-58/deposit/",
+    "removeLiquidityUrl": "https://curve.fi/dex/base/pools/factory-stable-ng-58/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x5aB01ee6208596f2204B85bDFA39d34c2aDD98F6",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x5aB01ee6208596f2204B85bDFA39d34c2aDD98F6",
+            "coins": [
+              "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+              "0x646A737B9B6024e49f5908762B3fF73e65B5160c"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "true-true",
     "name": "TRUE",
     "type": "standard",

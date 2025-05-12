@@ -1,5 +1,287 @@
 [
   {
+    "id": "shadow-cow-sonic-wbtc-usdc.e-vault",
+    "name": "WBTC-USDC.e",
+    "type": "standard",
+    "token": "WBTC-USDC.e",
+    "tokenAddress": "0x640Ce0aaA22Ba039F8DC7811910D44dB00EEdA56",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0x920D88cA46041eFdB317c1a4150e8f0515e88D9B",
+    "earnedToken": "mooCowShadowSonicWBTC-USDC",
+    "earnedTokenAddress": "0x920D88cA46041eFdB317c1a4150e8f0515e88D9B",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-wbtc-usdc.e",
+    "status": "active",
+    "createdAt": 1746722433,
+    "platformId": "shadow",
+    "assets": ["WBTC", "USDCe"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-wbtc-usdc.e-rp",
+    "name": "WBTC-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowShadowSonicWBTC-USDC",
+    "tokenAddress": "0x640Ce0aaA22Ba039F8DC7811910D44dB00EEdA56",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0xdEb2BB21613d737fc17AD3873B2485f37914bf8f",
+    "earnedToken": "rCowShadowSonicWBTC-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-wbtc-usdc.e",
+    "status": "active",
+    "createdAt": 1746722431,
+    "platformId": "shadow",
+    "assets": ["WBTC", "USDCe"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-wbtc-usdc.e",
+    "name": "WBTC-USDC.e",
+    "type": "cowcentrated",
+    "token": "WBTC-USDC.e shadow",
+    "tokenAddress": "0x8BC2f9e725cbB07c338df4e77c82190119ddd823",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "depositTokenAddresses": [
+      "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "0x29219dd400f2Bf60E5a23d13Be72B486D4038894"
+    ],
+    "earnContractAddress": "0x640Ce0aaA22Ba039F8DC7811910D44dB00EEdA56",
+    "earnedToken": "cowShadowSonicWBTC-USDC",
+    "earnedTokenAddress": "0x640Ce0aaA22Ba039F8DC7811910D44dB00EEdA56",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-wbtc-usdc.e",
+    "status": "active",
+    "createdAt": 1746722431,
+    "platformId": "beefy",
+    "feeTier": "0.15",
+    "assets": ["WBTC", "USDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-ws-wbtc-vault",
+    "name": "wS-WBTC",
+    "type": "standard",
+    "token": "wS-WBTC",
+    "tokenAddress": "0x2FcBcf97891C70764C617C41395CCFCEd3EDd06E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0x06Cc456A3c54A19bC173d8c81839c7bE65E78B48",
+    "earnedToken": "mooCowShadowSonicWBTC-S",
+    "earnedTokenAddress": "0x06Cc456A3c54A19bC173d8c81839c7bE65E78B48",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-wbtc",
+    "status": "active",
+    "createdAt": 1746722433,
+    "platformId": "shadow",
+    "assets": ["S", "WBTC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-ws-wbtc-rp",
+    "name": "wS-WBTC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowShadowSonicWBTC-S",
+    "tokenAddress": "0x2FcBcf97891C70764C617C41395CCFCEd3EDd06E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0x7abD140c3d0AadC1AB2253c4420C71A7c76EEAA6",
+    "earnedToken": "rCowShadowSonicWBTC-S",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-wbtc",
+    "status": "active",
+    "createdAt": 1746722397,
+    "platformId": "shadow",
+    "assets": ["S", "WBTC"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-ws-wbtc",
+    "name": "wS-WBTC",
+    "type": "cowcentrated",
+    "token": "wS-WBTC shadow",
+    "tokenAddress": "0xa1538e790cCDd639755602857F582a39Ed7f650C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "depositTokenAddresses": [
+      "0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38",
+      "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c"
+    ],
+    "earnContractAddress": "0x2FcBcf97891C70764C617C41395CCFCEd3EDd06E",
+    "earnedToken": "cowShadowSonicWBTC-S",
+    "earnedTokenAddress": "0x2FcBcf97891C70764C617C41395CCFCEd3EDd06E",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-wbtc",
+    "status": "active",
+    "createdAt": 1746722397,
+    "platformId": "beefy",
+    "feeTier": "0.15",
+    "assets": ["S", "WBTC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-wbtc-weth-vault",
+    "name": "WBTC-WETH",
+    "type": "standard",
+    "token": "WBTC-WETH",
+    "tokenAddress": "0x70B60cb2471627614aCC1E61dAFaD92De0a2e8a1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0x0c750C226351efb59Cf4ac6E7c1ACE68b18A9052",
+    "earnedToken": "mooCowShadowSonicWBTC-WETH",
+    "earnedTokenAddress": "0x0c750C226351efb59Cf4ac6E7c1ACE68b18A9052",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-wbtc-weth",
+    "status": "active",
+    "createdAt": 1746722433,
+    "platformId": "shadow",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-wbtc-weth-rp",
+    "name": "WBTC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowShadowSonicWBTC-WETH",
+    "tokenAddress": "0x70B60cb2471627614aCC1E61dAFaD92De0a2e8a1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0xD5A8fA052d2C896d7477DF688263F855F4C39ea4",
+    "earnedToken": "rCowShadowSonicWBTC-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-wbtc-weth",
+    "status": "active",
+    "createdAt": 1746722358,
+    "platformId": "shadow",
+    "assets": ["WBTC", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-wbtc-weth",
+    "name": "WBTC-WETH",
+    "type": "cowcentrated",
+    "token": "WBTC-WETH shadow",
+    "tokenAddress": "0x6B19C48449cE9dE4254A883749257Be5da660BFB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "depositTokenAddresses": [
+      "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b"
+    ],
+    "earnContractAddress": "0x70B60cb2471627614aCC1E61dAFaD92De0a2e8a1",
+    "earnedToken": "cowShadowSonicWBTC-WETH",
+    "earnedTokenAddress": "0x70B60cb2471627614aCC1E61dAFaD92De0a2e8a1",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-wbtc-weth",
+    "status": "active",
+    "createdAt": 1746722358,
+    "platformId": "beefy",
+    "feeTier": "0.17",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "silov2-sonic-ws-bes",
     "name": "wS (beS Market)",
     "type": "standard",

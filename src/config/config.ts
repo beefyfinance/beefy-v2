@@ -551,6 +551,7 @@ export const config = {
       'DOLA',
       'USDC',
       'crvUSD',
+      'scrvUSD',
       'eUSD',
       'hyUSD',
       'USDR',
