@@ -198,3 +198,21 @@ export const selectVaultIsBoostedForFilter = (state: BeefyState, vaultId: VaultE
   const apy = selectVaultTotalApy(state, vaultId);
   return !!apy && (apy.boostedTotalDaily || 0) > 0;
 };
+
+export const selectAnyDesktopExtenderFilterIsActive = createSelector(
+  selectFilterOptions,
+  filterOptions => {
+    if (
+      filterOptions.onlyZappable ||
+      filterOptions.onlyEarningPoints ||
+      filterOptions.onlyRetired ||
+      filterOptions.onlyPaused ||
+      filterOptions.platformIds.length > 0 ||
+      filterOptions.minimumUnderlyingTvl.gt(0)
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+);

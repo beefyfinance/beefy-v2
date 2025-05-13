@@ -79,7 +79,7 @@ const recipe = sva({
       flexGrow: '1',
       outline: 'none',
       '&::placeholder': {
-        color: 'text.dark',
+        color: 'white.70-64a',
         opacity: '1',
       },
       _focus: {

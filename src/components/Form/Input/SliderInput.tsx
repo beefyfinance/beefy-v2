@@ -11,6 +11,7 @@ interface SliderInputProps {
   max?: number;
   step?: number;
   disabled?: boolean;
+  size?: 'sm' | 'md';
 }
 
 export const SliderInput = memo(function SliderInput({
@@ -21,6 +22,7 @@ export const SliderInput = memo(function SliderInput({
   max = 100,
   step = 1,
   disabled = false,
+  size = 'sm',
 }: SliderInputProps) {
   const sliderValue = useMemo(() => {
     return value
@@ -57,6 +59,7 @@ export const SliderInput = memo(function SliderInput({
       min={min}
       max={max}
       step={step}
+      size={size}
     />
   );
 });
@@ -64,7 +67,6 @@ export const SliderInput = memo(function SliderInput({
 const Slider = styled('input', {
   base: {
     appearance: 'none',
-    height: '4px',
     width: '100%',
     zIndex: 'slider',
     margin: '0',
@@ -84,10 +86,20 @@ const Slider = styled('input', {
       },
     },
   },
+  variants: {
+    size: {
+      sm: {
+        height: '4px',
+      },
+      md: {
+        height: '8px',
+      },
+    },
+  },
 });
 const styles = {
   sliderBackground: css.raw({
     background:
-      'linear-gradient(to right, {colors.text.dark} 0%,{colors.text.dark} var(--value),{colors.background.content.light} var(--value), {colors.background.content.light} 100%)',
+      'linear-gradient(to right, {colors.white.70-64a} 0%,{colors.white.70-64a} var(--value),{colors.background.content.light} var(--value), {colors.background.content.light} 100%)',
   }),
 };

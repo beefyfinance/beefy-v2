@@ -9,6 +9,7 @@ import { formatLargeUsd } from '../../../../../../helpers/format.ts';
 import { SliderInput } from '../../../../../../components/Form/Input/SliderInput.tsx';
 import { styled } from '@repo/styles/jsx';
 import { useTranslation } from 'react-i18next';
+import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
 
 //5 MILLION
 const MAX_INPUT = new BigNumber(50000000);
@@ -17,6 +18,7 @@ export const MinTvlFilter = memo(function MinTvlFilter() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const value = useAppSelector(state => selectFilterBigNumber(state, 'minimumUnderlyingTvl'));
+  const isDesktop = useBreakpoint({ from: 'lg' });
 
   const maximumUnderlyingTvl = useAppSelector(selectMaximumUnderlyingVaultTvl);
 
@@ -38,7 +40,12 @@ export const MinTvlFilter = memo(function MinTvlFilter() {
         {t('Filter-MinTvl')}
         {value.gt(BIG_ZERO) && <Amount>{formatLargeUsd(value)}</Amount>}
       </Label>
-      <SliderInput onChange={handleChange} value={value} maxValue={MAX_INPUT} />
+      <SliderInput
+        onChange={handleChange}
+        value={value}
+        maxValue={MAX_INPUT}
+        size={isDesktop ? 'sm' : 'md'}
+      />
       <div />
     </Container>
   );

@@ -64,7 +64,9 @@ export const Platforms = memo<FilterContentProps>(function Platforms({ handleCon
   return (
     <>
       <ContentHeader>
-        <ArrowBack onClick={() => handleContent(FilterContent.Filter)} />
+        <BackButton onClick={() => handleContent(FilterContent.Filter)}>
+          <ArrowBack />
+        </BackButton>
         <Title>{t('Platforms')}</Title>
       </ContentHeader>
       {isDesktop ?
@@ -90,6 +92,18 @@ export const DesktopPlatformsContent = memo(function DesktopPlatformsContent() {
       </ScrollableContainer>
     </Scrollable>
   );
+});
+
+const BackButton = styled('button', {
+  base: {
+    backgroundColor: 'transparent',
+    border: 'none',
+    height: '20px',
+    width: '20px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 const ScrollableContainer = styled('div', {

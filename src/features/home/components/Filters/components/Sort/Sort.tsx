@@ -78,7 +78,7 @@ const SortListContainer = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: 'background.content.dark',
-    borderRadius: '8px',
+    borderRadius: '16px',
     gap: '12px',
     padding: '10px 16px',
   },
@@ -86,13 +86,13 @@ const SortListContainer = styled('div', {
 
 const Layout = styled('div', {
   base: {
-    backgroundColor: 'background.header',
+    backgroundColor: 'darkBlue.90',
     width: '100vw',
     display: 'flex',
     flexDirection: 'column',
     padding: '12',
     gap: '32px',
     justifyContent: 'space-between',
-    borderRadius: '8px 8px 0px 0px',
+    borderRadius: '16px 16px 0px 0px',
   },
 });

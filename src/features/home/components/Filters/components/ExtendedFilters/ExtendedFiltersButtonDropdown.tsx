@@ -5,12 +5,18 @@ import { DropdownButtonTrigger } from '../../../../../../components/Dropdown/Dro
 import { DropdownContent } from '../../../../../../components/Dropdown/DropdownContent.tsx';
 import FilterSvg from '../../../../../../images/icons/filter.svg?react';
 import { styled } from '@repo/styles/jsx';
+import { selectAnyDesktopExtenderFilterIsActive } from '../../../../../data/selectors/filtered-vaults.ts';
+import { useAppSelector } from '../../../../../../store.ts';
 
 export const ExtendedFiltersButtonDropdown = memo(function ExtendedFiltersButtonDropdown() {
+  const hasAnyDesktopExtenderFilterActive = useAppSelector(selectAnyDesktopExtenderFilterIsActive);
+
   return (
     <DropdownProvider placement="bottom-end">
-      <DropdownButton variant="filter">
-        <FilterIcon />
+      <DropdownButton data-active={hasAnyDesktopExtenderFilterActive || undefined} variant="filter">
+        <FilterIconContainer>
+          <FilterIcon />
+        </FilterIconContainer>
       </DropdownButton>
       <FiltersDropdown padding="none">
         <ExtendedFilters />
@@ -21,8 +27,19 @@ export const ExtendedFiltersButtonDropdown = memo(function ExtendedFiltersButton
 
 const DropdownButton = styled(DropdownButtonTrigger, {
   base: {
-    paddingBlock: '12px',
-    paddingInline: '14px',
+    paddingBlock: '10px',
+    paddingInline: '16px',
+  },
+});
+
+const FilterIconContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '20px',
+    height: '20px',
+    padding: '2px',
   },
 });
 
