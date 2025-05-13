@@ -7,11 +7,12 @@ import {
   Label,
   MobileContentContainer,
   Title,
+  IconContainer,
   type FilterContentProps,
 } from './FilterContent.tsx';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FilterContent } from './types.ts';
+import { FilterContent } from '../../../../../data/reducers/filtered-vaults-types.ts';
 import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
 import { useAppSelector } from '../../../../../../store.ts';
 import { selectFilterPlatforms } from '../../../../../data/selectors/platforms.ts';
@@ -53,7 +54,9 @@ export const PlatformsButton = memo<FilterContentProps>(function PlatformsButton
       <ButtonLabelContainer>
         {t('Filter-Platform')} <Label>{label}</Label>
       </ButtonLabelContainer>
-      <ArrowBackIcon />
+      <IconContainer>
+        <ArrowBackIcon />
+      </IconContainer>
     </ButtonFilter>
   );
 });
@@ -63,12 +66,14 @@ export const Platforms = memo<FilterContentProps>(function Platforms({ handleCon
   const isDesktop = useBreakpoint({ from: 'lg' });
   return (
     <>
-      <ContentHeader>
-        <BackButton onClick={() => handleContent(FilterContent.Filter)}>
-          <ArrowBack />
-        </BackButton>
-        <Title>{t('Platforms')}</Title>
-      </ContentHeader>
+      {isDesktop ?
+        <ContentHeader>
+          <BackButton onClick={() => handleContent(FilterContent.Filter)}>
+            <ArrowBack />
+          </BackButton>
+          <Title>{t('Platforms')}</Title>
+        </ContentHeader>
+      : null}
       {isDesktop ?
         <DesktopPlatformsContent />
       : <MobilePlatformsContent />}
@@ -78,9 +83,11 @@ export const Platforms = memo<FilterContentProps>(function Platforms({ handleCon
 
 export const MobilePlatformsContent = memo(function MobilePlatformsContent() {
   return (
-    <MobileContentContainer>
-      <PlatformChecklist />
-    </MobileContentContainer>
+    <Scrollable autoHeight={true}>
+      <MobileContentContainer>
+        <PlatformChecklist />
+      </MobileContentContainer>
+    </Scrollable>
   );
 });
 

@@ -14,7 +14,7 @@ import { VaultCategoryCheckList } from '../VaultCategoryFilters/VaultCategoryChe
 import { AssetTypeCheckList } from '../AssetTypeFilters/AssetTypeCheckList.tsx';
 import { PlatformsButton } from './PlatformsContent.tsx';
 import { ChainsContentButton } from './ChainsContent.tsx';
-import type { FilterContent } from './types.ts';
+import type { FilterContent } from '../../../../../data/reducers/filtered-vaults-types.ts';
 
 export interface FilterContentProps {
   handleContent: (content: FilterContent) => void;
@@ -156,9 +156,19 @@ export const MobileContentContainer = styled('div', {
     backgroundColor: 'background.content.dark',
     borderRadius: '8px',
     height: 'auto',
-    padding: '16px',
+    padding: '12px',
     display: 'flex',
     flexDirection: 'column',
     gap: '12px',
+  },
+});
+
+export const IconContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '20px',
+    width: '20px',
   },
 });

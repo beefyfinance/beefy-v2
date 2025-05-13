@@ -56,7 +56,6 @@ export const selectFilterPopinFilterCount = createSelector(
     filterOptions.assetType.length +
     filterOptions.vaultCategory.length +
     (filterOptions.strategyType !== 'all' ? 1 : 0) +
-    (filterOptions.sort !== 'default' ? 1 : 0) +
     filterOptions.chainIds.length +
     filterOptions.platformIds.length +
     (filterOptions.minimumUnderlyingTvl.gt(0) ? 1 : 0)
@@ -215,4 +214,9 @@ export const selectAnyDesktopExtenderFilterIsActive = createSelector(
 
     return false;
   }
+);
+
+export const selectFilterContent = createSelector(
+  selectFilterOptions,
+  filterOptions => filterOptions.filterContent
 );

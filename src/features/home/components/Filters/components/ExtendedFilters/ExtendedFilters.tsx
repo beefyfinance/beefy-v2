@@ -1,10 +1,13 @@
-import { memo, useCallback, useMemo, useState, type FC } from 'react';
+import { memo, useCallback, useMemo, type FC } from 'react';
 import { Filter, type FilterContentProps } from './FilterContent.tsx';
 import { styled } from '@repo/styles/jsx';
-import { FilterContent } from './types.ts';
 import { Chains } from './ChainsContent.tsx';
 import { Platforms } from './PlatformsContent.tsx';
 import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { FilterContent } from '../../../../../data/reducers/filtered-vaults-types.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { selectFilterContent } from '../../../../../data/selectors/filtered-vaults.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 
 const contentToComponent: Record<FilterContent, FC<FilterContentProps>> = {
   [FilterContent.Filter]: Filter,
@@ -14,13 +17,16 @@ const contentToComponent: Record<FilterContent, FC<FilterContentProps>> = {
 
 export const ExtendedFilters = memo(function ExtendedFilters() {
   const desktop = useBreakpoint({ from: 'lg' });
-  const [content, setContent] = useState<FilterContent>(FilterContent.Filter);
-
+  const content = useAppSelector(selectFilterContent);
+  const dispatch = useAppDispatch();
   const ContentComponent = contentToComponent[content];
 
-  const handleContent = useCallback((content: FilterContent) => {
-    setContent(content);
-  }, []);
+  const handleContent = useCallback(
+    (content: FilterContent) => {
+      dispatch(filteredVaultsActions.setFilterContent(content));
+    },
+    [dispatch]
+  );
 
   const mustUseCustomPadding = useMemo(
     () => desktop && content === FilterContent.Platform,
@@ -39,12 +45,17 @@ const ExtendedFiltersContainer = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     rowGap: '8px',
-    padding: '16px',
+    padding: '10px 12px',
+    lg: {
+      padding: '16px',
+    },
   },
   variants: {
     customPadding: {
       true: {
-        padding: '16px 16px 0px 16px',
+        lg: {
+          padding: '16px 16px 0px 16px',
+        },
       },
     },
   },

@@ -28,3 +28,9 @@ export type SubSortsState = {
 };
 
 export type SortWithSubSort = keyof SubSortsState & SortType;
+
+export enum FilterContent {
+  Filter = 1,
+  Platform,
+  Chains,
+}

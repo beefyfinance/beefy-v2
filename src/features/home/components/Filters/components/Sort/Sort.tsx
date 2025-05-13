@@ -47,20 +47,24 @@ export const Sort = memo(function Sort() {
       </Button>
       <Drawer open={isOpen} onClose={() => setIsOpen(false)} position="bottom">
         <Layout>
-          <SortListContainer>
-            {COLUMNS.map(({ label, sortKey }) => (
-              <StyledLabelledCheckBox
-                key={sortKey}
-                checked={sortKey === tempSortField}
-                onChange={() => setTempSortField(sortKey)}
-                label={t(label)}
-                checkVariant="circle"
-              />
-            ))}
-          </SortListContainer>
-          <Button variant="success" fullWidth={true} onClick={handleSort}>
-            {t('Apply')}
-          </Button>
+          <Main>
+            <SortListContainer>
+              {COLUMNS.map(({ label, sortKey }) => (
+                <StyledLabelledCheckBox
+                  key={sortKey}
+                  checked={sortKey === tempSortField}
+                  onChange={() => setTempSortField(sortKey)}
+                  label={t(label)}
+                  checkVariant="circle"
+                />
+              ))}
+            </SortListContainer>
+          </Main>
+          <Footer>
+            <Button variant="success" fullWidth={true} onClick={handleSort}>
+              {t('Apply')}
+            </Button>
+          </Footer>
         </Layout>
       </Drawer>
     </>
@@ -90,9 +94,21 @@ const Layout = styled('div', {
     width: '100vw',
     display: 'flex',
     flexDirection: 'column',
-    padding: '12',
     gap: '32px',
     justifyContent: 'space-between',
     borderRadius: '16px 16px 0px 0px',
+  },
+});
+const Main = styled('div', {
+  base: {
+    padding: '12px 12px 0px 12px',
+  },
+});
+
+const Footer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0px 20px 32px 20px',
   },
 });

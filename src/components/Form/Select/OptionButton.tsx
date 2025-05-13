@@ -9,7 +9,10 @@ export const OptionButton = styled('button', {
     cursor: 'pointer',
     justifyContent: 'flex-start',
     textAlign: 'left',
-    paddingBlock: '8px',
+    paddingBlock: '10px',
+    lg: {
+      paddingBlock: '8px',
+    },
     '&:active': {
       backgroundColor: 'transparent',
       color: 'text.light',

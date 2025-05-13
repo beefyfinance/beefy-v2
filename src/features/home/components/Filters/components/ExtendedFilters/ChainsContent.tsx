@@ -1,33 +1,27 @@
-import { ArrowBack, ButtonLabelContainer } from './FilterContent.tsx';
+import { ButtonLabelContainer } from './FilterContent.tsx';
 import { ChainCheckList } from '../ChainFilters/ChainCheckList.tsx';
 import { memo, useMemo } from 'react';
 import { selectFilterChainIds } from '../../../../../data/selectors/filtered-vaults.ts';
 import {
   ButtonFilter,
-  ContentHeader,
   Label,
   MobileContentContainer,
-  Title,
+  IconContainer,
   type FilterContentProps,
 } from './FilterContent.tsx';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../store.ts';
 import { selectAllChains } from '../../../../../data/selectors/chains.ts';
-import { FilterContent } from './types.ts';
 import ArrowBackIcon from '../../../../../../images/icons/chevron-right.svg?react';
-
-export const Chains = memo<FilterContentProps>(function Chains({ handleContent }) {
-  const { t } = useTranslation();
+import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
+import { FilterContent } from '../../../../../data/reducers/filtered-vaults-types.ts';
+export const Chains = memo<FilterContentProps>(function Chains() {
   return (
-    <>
-      <ContentHeader>
-        <ArrowBack onClick={() => handleContent(FilterContent.Filter)} />
-        <Title>{t('Chains')}</Title>
-      </ContentHeader>
+    <Scrollable autoHeight={true}>
       <MobileContentContainer>
         <ChainCheckList />
       </MobileContentContainer>
-    </>
+    </Scrollable>
   );
 });
 
@@ -64,7 +58,9 @@ export const ChainsContentButton = memo<FilterContentProps>(function ChainsConte
       <ButtonLabelContainer>
         {t('Filter-Chain')} <Label>{label}</Label>
       </ButtonLabelContainer>
-      <ArrowBackIcon />
+      <IconContainer>
+        <ArrowBackIcon />
+      </IconContainer>
     </ButtonFilter>
   );
 });

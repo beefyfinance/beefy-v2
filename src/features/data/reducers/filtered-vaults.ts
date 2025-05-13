@@ -8,15 +8,16 @@ import type { ChainEntity } from '../entities/chain.ts';
 import type { PlatformEntity } from '../entities/platform.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { KeysOfType } from '../utils/types-utils.ts';
-import type {
-  SortDirectionType,
-  SortType,
-  SortWithSubSort,
-  StrategiesType,
-  SubSortsState,
-  UserCategoryType,
-  VaultAssetType,
-  VaultCategoryType,
+import {
+  FilterContent,
+  type SortDirectionType,
+  type SortType,
+  type SortWithSubSort,
+  type StrategiesType,
+  type SubSortsState,
+  type UserCategoryType,
+  type VaultAssetType,
+  type VaultCategoryType,
 } from './filtered-vaults-types.ts';
 
 /**
@@ -49,6 +50,7 @@ export type FilteredVaultsState = {
   filteredVaultIds: VaultEntity['id'][];
   sortedFilteredVaultIds: VaultEntity['id'][];
   minimumUnderlyingTvl: BigNumber;
+  filterContent: FilterContent;
 };
 
 export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
@@ -85,6 +87,7 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   filteredVaultIds: [],
   sortedFilteredVaultIds: [],
   minimumUnderlyingTvl: BIG_ZERO,
+  filterContent: FilterContent.Filter,
 };
 
 export const filteredVaultsSlice = createSlice({
@@ -153,6 +156,10 @@ export const filteredVaultsSlice = createSlice({
     setPlatformIds(sliceState, action: PayloadAction<FilteredVaultsState['platformIds']>) {
       sliceState.reseted = false;
       sliceState.platformIds = action.payload;
+    },
+    setFilterContent(sliceState, action: PayloadAction<FilteredVaultsState['filterContent']>) {
+      sliceState.reseted = false;
+      sliceState.filterContent = action.payload;
     },
     setBoolean(
       sliceState,
