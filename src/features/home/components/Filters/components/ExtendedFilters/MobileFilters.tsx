@@ -83,12 +83,12 @@ export const MobileFilters = memo<MobileFiltersProps>(function MobileFilters({ o
 const Layout = styled('div', {
   base: {
     backgroundColor: 'darkBlue.90',
-    height: '100vh',
-    maxHeight: '100%',
+    minHeight: '100vh',
     width: '100vw',
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',
+    overflowY: 'auto',
   },
 });
 
