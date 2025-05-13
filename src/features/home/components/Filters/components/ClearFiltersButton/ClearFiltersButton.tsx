@@ -57,6 +57,8 @@ const ClearContainer = styled('div', {
 
 const ClearFilter = styled(Button, {
   base: {
+    paddingInline: '16px 10px',
+    paddingBlock: '8px',
     marginLeft: 'auto',
     gap: '8px',
   },

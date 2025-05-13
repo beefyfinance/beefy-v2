@@ -71,6 +71,12 @@ const MobileFilters = styled(Top, {
     display: 'flex',
     alignItems: 'center',
     gap: '12px',
+    '& > *:first-child': {
+      width: '50%',
+    },
+    '& > *:last-child': {
+      width: '50%',
+    },
   },
 });
 

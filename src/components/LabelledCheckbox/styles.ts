@@ -10,6 +10,12 @@ export const styles = {
     columnGap: '10px',
     userSelect: 'none',
     paddingBlock: '8px',
+    width: '100%',
+  }),
+  endAdornment: css.raw({
+    display: 'flex',
+    alignItems: 'center',
+    marginLeft: 'auto',
   }),
   icon: css.raw({
     color: 'text.dark',

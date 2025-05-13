@@ -10,15 +10,18 @@ import {
 import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import { selectFilterSearchSortField } from '../../../../../data/selectors/filtered-vaults.ts';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
+import { ToggleButtons } from '../../../../../../components/ToggleButtons/ToggleButtons.tsx';
 
 const COLUMNS: {
   label: string;
   sortKey: FilteredVaultsState['sort'];
+  toggleButtons?: boolean;
 }[] = [
   { label: 'Filter-SortDate', sortKey: 'default' },
   { label: 'Filter-SortWallet', sortKey: 'walletValue' },
   { label: 'Filter-SortDeposited', sortKey: 'depositValue' },
   { label: 'Filter-SortApy', sortKey: 'apy' },
+  { label: 'Filter-SortAvgApy', sortKey: 'apy', toggleButtons: true },
   { label: 'Filter-SortDaily', sortKey: 'daily' },
   { label: 'Filter-SortTvl', sortKey: 'tvl' },
   { label: 'Filter-SortSafety', sortKey: 'safetyScore' },
@@ -28,17 +31,31 @@ export const Sort = memo(function Sort() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const sortField = useAppSelector(selectFilterSearchSortField);
+  const subSortField = useAppSelector(state => state.ui.filteredVaults.subSort.apy);
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [tempSortField, setTempSortField] = useState<FilteredVaultsState['sort']>(sortField);
+  const [tempSubSortKey, setTempSubSortKey] = useState<'default' | 7 | 30 | 90>(subSortField || 7);
 
   const handleSort = useCallback(() => {
     dispatch(filteredVaultsActions.setSort(tempSortField));
+    if (tempSortField === 'apy') {
+      dispatch(filteredVaultsActions.setSubSort({ column: 'apy', value: tempSubSortKey }));
+    }
     setIsOpen(false);
-  }, [dispatch, tempSortField]);
+  }, [dispatch, tempSortField, tempSubSortKey]);
 
   const handleOpen = useCallback(() => {
     setIsOpen(open => !open);
   }, []);
+
+  // Helper to convert string to number or 'default'
+  const parseApyValue = (val: string): 'default' | 7 | 30 | 90 => {
+    if (val === 'default') return 'default';
+    const num = Number(val);
+    if (num === 7 || num === 30 || num === 90) return num;
+    return 'default';
+  };
 
   return (
     <>
@@ -49,14 +66,23 @@ export const Sort = memo(function Sort() {
         <Layout>
           <Main>
             <SortListContainer>
-              {COLUMNS.map(({ label, sortKey }) => (
-                <StyledLabelledCheckBox
-                  key={sortKey}
-                  checked={sortKey === tempSortField}
-                  onChange={() => setTempSortField(sortKey)}
-                  label={t(label)}
-                  checkVariant="circle"
-                />
+              {COLUMNS.map(({ label, sortKey, toggleButtons }) => (
+                <div key={sortKey} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <StyledLabelledCheckBox
+                    checked={sortKey === tempSortField}
+                    onChange={() => setTempSortField(sortKey)}
+                    label={t(label)}
+                    checkVariant="circle"
+                  />
+                  {toggleButtons && (
+                    <ToggleButtons
+                      value={String(tempSubSortKey)}
+                      onChange={val => setTempSubSortKey(parseApyValue(val))}
+                      options={[{ label: '7d', value: '7' }]}
+                      variant="filter"
+                    />
+                  )}
+                </div>
               ))}
             </SortListContainer>
           </Main>

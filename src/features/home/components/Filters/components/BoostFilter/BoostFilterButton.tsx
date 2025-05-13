@@ -40,8 +40,8 @@ export const BoostCheckBox = memo(function BoostCheckBox() {
         checked={value}
         onChange={handleChange}
         label={t('Filter-Boosts')}
+        endAdornment={<BoostIcon size="lg" />}
       />
-      <BoostIcon size="lg" />
     </BoostCheckBoxContainer>
   );
 });
