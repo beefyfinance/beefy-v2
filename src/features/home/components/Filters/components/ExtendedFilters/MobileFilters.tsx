@@ -87,16 +87,12 @@ const Layout = styled('div', {
     width: '100vw',
     display: 'flex',
     flexDirection: 'column',
-    position: 'relative',
-    overflowY: 'auto',
+    justifyContent: 'space-between',
   },
 });
 
 const Main = styled('div', {
   base: {
-    flexGrow: 1,
-    flexShrink: 1,
-    minHeight: 0,
     overflowY: 'auto',
     position: 'relative',
   },

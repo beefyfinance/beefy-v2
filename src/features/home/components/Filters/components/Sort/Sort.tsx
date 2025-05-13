@@ -94,7 +94,7 @@ const Layout = styled('div', {
     width: '100vw',
     display: 'flex',
     flexDirection: 'column',
-    gap: '32px',
+    gap: '24px',
     justifyContent: 'space-between',
     borderRadius: '16px 16px 0px 0px',
   },
