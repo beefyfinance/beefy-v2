@@ -18486,38 +18486,6 @@
     ]
   },
   {
-    "id": "solidlizard-sliz-usdc",
-    "name": "SLIZ-USDC.e vLP",
-    "type": "standard",
-    "token": "SLIZ-USDC.e vLP",
-    "tokenAddress": "0x9E7fB82fdF08a6aAba760A81F0A64602Af045d2a",
-    "tokenDecimals": 18,
-    "tokenProviderId": "solidlizard",
-    "earnedToken": "mooSolidLizardSLIZ-USDC",
-    "earnedTokenAddress": "0x9D8C4034BE31fA2704589dcB05DCdDA09Be322B4",
-    "earnContractAddress": "0x9D8C4034BE31fA2704589dcB05DCdDA09Be322B4",
-    "oracle": "lps",
-    "oracleId": "solidlizard-sliz-usdc",
-    "status": "eol",
-    "createdAt": 1679559921,
-    "retireReason": "tvl",
-    "retiredAt": 1690903973,
-    "platformId": "solidlizard",
-    "assets": ["SLIZ", "arbUSDCe"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://solidlizard.finance/swap?from=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&to=0x463913D3a3D3D291667D53B8325c598Eb88D3B0e",
-    "addLiquidityUrl": "https://solidlizard.finance/liquidity/create",
-    "removeLiquidityUrl": "https://solidlizard.finance/liquidity/0x9E7fB82fdF08a6aAba760A81F0A64602Af045d2a",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "arbitrum-solidlizard"
-      }
-    ]
-  },
-  {
     "id": "solidlizard-jrt-weth",
     "name": "JRT-ETH vLP",
     "type": "standard",

@@ -1,5 +1,85 @@
 [
   {
+    "id": "curve-usdc-usdf",
+    "name": "USDf/USDC",
+    "type": "standard",
+    "token": "USDC/USDf",
+    "tokenAddress": "0x72310DAAed61321b02B08A547150c07522c6a976",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x0014E0be19De3118b5b29842dd1696a2A98EB9Db",
+    "earnedToken": "mooCurveUSDC-USDf",
+    "earnedTokenAddress": "0x0014E0be19De3118b5b29842dd1696a2A98EB9Db",
+    "oracle": "lps",
+    "oracleId": "curve-usdc-usdf",
+    "status": "active",
+    "createdAt": 1747215194,
+    "platformId": "convex",
+    "assets": ["USDf", "USDC"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-391/deposit/",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-391/withdraw/",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x72310DAAed61321b02B08A547150c07522c6a976",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x72310DAAed61321b02B08A547150c07522c6a976",
+            "coins": [
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "0xFa2B947eEc368f42195f24F36d2aF29f7c24CeC2"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-link-stlink-ng",
+    "name": "stLINK/LINK",
+    "type": "standard",
+    "token": "stLINK-ng",
+    "tokenAddress": "0x7E13876B92F1a62C599C231f783f682E96B91761",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xca28b1C9F058Ce34332126CbBc71212AD101348F",
+    "earnedToken": "mooCurveLINK-stLINK",
+    "earnedTokenAddress": "0xca28b1C9F058Ce34332126CbBc71212AD101348F",
+    "oracle": "lps",
+    "oracleId": "curve-link-stlink-ng",
+    "status": "active",
+    "createdAt": 1747212289,
+    "platformId": "curve",
+    "assets": ["stLINK", "LINK"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-403/deposit/",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-403/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x7E13876B92F1a62C599C231f783f682E96B91761",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x7E13876B92F1a62C599C231f783f682E96B91761",
+            "coins": [
+              "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+              "0xb8b295df2cd735b15BE5Eb419517Aa626fc43cD5"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "convex-tricrypto-usdt",
     "name": "USDT/WBTC/WETH",
     "type": "standard",
