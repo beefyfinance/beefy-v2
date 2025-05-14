@@ -2,12 +2,15 @@ import { memo, useCallback, useState } from 'react';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { useTranslation } from 'react-i18next';
 import { MobileFilters } from './MobileFilters.tsx';
-import { selectHasActiveFilter } from '../../../../../data/selectors/filtered-vaults.ts';
+import {
+  selectFilterPopinFilterCount,
+  selectHasActiveFilter,
+} from '../../../../../data/selectors/filtered-vaults.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { PulseHighlight } from '../../../../../vault/components/PulseHighlight/PulseHighlight.tsx';
 import { styled } from '@repo/styles/jsx';
 import ClearIcon from '../../../../../../images/icons/clear.svg?react';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
+import { Count } from '../ClearFiltersButton/ClearFiltersButton.tsx';
 
 export const ExtendedFiltersButtonMobileFilters = memo(
   function ExtendedFiltersButtonMobileFilters() {
@@ -15,6 +18,7 @@ export const ExtendedFiltersButtonMobileFilters = memo(
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useAppDispatch();
     const active = useAppSelector(selectHasActiveFilter);
+    const count = useAppSelector(selectFilterPopinFilterCount);
 
     const handleClose = useCallback(() => {
       setIsOpen(false);
@@ -39,8 +43,8 @@ export const ExtendedFiltersButtonMobileFilters = memo(
               borderless={true}
               onClick={handleOpen}
             >
-              <PulseHighlight variant="success" />
               {t('Filter-Btn')}
+              {count > 0 && <Count data-count={count} />}
             </FilterButton>
             <FilterButton
               size="sm"

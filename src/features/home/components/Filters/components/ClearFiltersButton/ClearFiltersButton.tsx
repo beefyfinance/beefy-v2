@@ -64,7 +64,7 @@ const ClearFilter = styled(Button, {
   },
 });
 
-const Count = styled('span', {
+export const Count = styled('span', {
   base: {
     display: 'flex',
     justifyContent: 'center',
