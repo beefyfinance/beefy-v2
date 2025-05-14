@@ -10,10 +10,12 @@ export const buttonRecipe = cva({
     borderColor: 'colorPalette.border',
     borderRadius: '8px',
     textStyle: 'body.medium',
-    _hover: {
-      color: 'colorPalette.hover.color',
-      backgroundColor: 'colorPalette.hover.background',
-      borderColor: 'colorPalette.hover.border',
+    _primaryHover: {
+      _hover: {
+        color: 'colorPalette.hover.color',
+        backgroundColor: 'colorPalette.hover.background',
+        borderColor: 'colorPalette.hover.border',
+      },
     },
     _active: {
       color: 'colorPalette.active.color',

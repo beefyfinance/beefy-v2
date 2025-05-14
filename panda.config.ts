@@ -76,7 +76,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -239,6 +239,8 @@ const config = buildConfig(
       // React Router sets aria-current="page" on the active link
       // Floating UI sets aria-expanded="true" on the button when open
       active: '&:is(:active, [data-active], [aria-current="page"], [aria-expanded="true"])',
+      /** whether user's primary input device supports hover */
+      primaryHover: '@media (hover: hover)',
     },
     // Theme variables
     theme: {
