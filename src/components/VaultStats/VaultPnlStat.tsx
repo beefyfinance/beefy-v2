@@ -11,6 +11,7 @@ import { useAppSelector } from '../../store.ts';
 import { ClmPnlTooltipContent } from '../PnlTooltip/ClmPnlTooltipContent.tsx';
 import { showClmPnlTooltip } from '../PnlTooltip/helpers.ts';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
+import { useTranslation } from 'react-i18next';
 
 export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];
@@ -24,11 +25,12 @@ export const VaultPnlStat = memo(function ({
   walletAddress,
   ...passthrough
 }: VaultDailyStatProps) {
+  const { t } = useTranslation();
   // @dev don't do this - temp migration away from connect()
-  const statProps = useAppSelector(state =>
+  const { label, ...statProps } = useAppSelector(state =>
     selectVaultPnlStat(state, vaultId, pnlData, walletAddress)
   );
-  return <VaultValueStat {...statProps} {...passthrough} />;
+  return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
 });
 
 // TODO better selector / hook

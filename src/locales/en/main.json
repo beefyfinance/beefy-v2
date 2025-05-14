@@ -125,6 +125,7 @@
   "NoResults-FindVault": "Find and deposit in a vault.",
   "NoResults-ViewAllVaults": "View All Vaults",
   "NoResults-ViewConnectedDashboard": "View Your Dashboard",
+  "VaultStat-AvgAPY": "{{count}}-Day APY",
   "VaultStat-APY": "APY",
   "VaultStat-APR": "APR",
   "VaultStat-DAILY": "DAILY",

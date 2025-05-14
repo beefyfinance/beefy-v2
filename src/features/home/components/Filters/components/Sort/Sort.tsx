@@ -8,20 +8,25 @@ import {
   type FilteredVaultsState,
 } from '../../../../../data/reducers/filtered-vaults.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { selectFilterSearchSortField } from '../../../../../data/selectors/filtered-vaults.ts';
+import {
+  selectFilterAvgApySort,
+  selectFilterSearchSortField,
+} from '../../../../../data/selectors/filtered-vaults.ts';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
 import { ToggleButtons } from '../../../../../../components/ToggleButtons/ToggleButtons.tsx';
 
+type SortKey = FilteredVaultsState['sort'] | 'avgApy';
+
 const COLUMNS: {
   label: string;
-  sortKey: FilteredVaultsState['sort'];
+  sortKey: SortKey;
   toggleButtons?: boolean;
 }[] = [
   { label: 'Filter-SortDate', sortKey: 'default' },
   { label: 'Filter-SortWallet', sortKey: 'walletValue' },
   { label: 'Filter-SortDeposited', sortKey: 'depositValue' },
   { label: 'Filter-SortApy', sortKey: 'apy' },
-  { label: 'Filter-SortAvgApy', sortKey: 'apy', toggleButtons: true },
+  { label: 'Filter-SortAvgApy', sortKey: 'avgApy', toggleButtons: true },
   { label: 'Filter-SortDaily', sortKey: 'daily' },
   { label: 'Filter-SortTvl', sortKey: 'tvl' },
   { label: 'Filter-SortSafety', sortKey: 'safetyScore' },
@@ -31,17 +36,20 @@ export const Sort = memo(function Sort() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const sortField = useAppSelector(selectFilterSearchSortField);
-  const subSortField = useAppSelector(state => state.ui.filteredVaults.subSort.apy);
+  const subSortApy = useAppSelector(selectFilterAvgApySort);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [tempSortField, setTempSortField] = useState<FilteredVaultsState['sort']>(sortField);
-  const [tempSubSortKey, setTempSubSortKey] = useState<'default' | 7 | 30 | 90>(subSortField || 7);
+  const [tempSortField, setTempSortField] = useState<SortKey>(sortField);
+  const [tempSubSortKey, setTempSubSortKey] = useState<'default' | 7 | 30 | 90>(subSortApy || 7);
 
   const handleSort = useCallback(() => {
-    dispatch(filteredVaultsActions.setSort(tempSortField));
-    if (tempSortField === 'apy') {
+    if (tempSortField !== 'avgApy') {
+      dispatch(filteredVaultsActions.setSort(tempSortField));
+    } else {
       dispatch(filteredVaultsActions.setSubSort({ column: 'apy', value: tempSubSortKey }));
+      dispatch(filteredVaultsActions.setSort('apy'));
     }
+
     setIsOpen(false);
   }, [dispatch, tempSortField, tempSubSortKey]);
 
@@ -57,6 +65,10 @@ export const Sort = memo(function Sort() {
     return 'default';
   };
 
+  const handleChange = useCallback((val: SortKey) => {
+    setTempSortField(val);
+  }, []);
+
   return (
     <>
       <Button variant="filter" size="sm" onClick={handleOpen} fullWidth={true}>
@@ -69,8 +81,11 @@ export const Sort = memo(function Sort() {
               {COLUMNS.map(({ label, sortKey, toggleButtons }) => (
                 <div key={sortKey} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <StyledLabelledCheckBox
-                    checked={sortKey === tempSortField}
-                    onChange={() => setTempSortField(sortKey)}
+                    checked={
+                      sortKey === tempSortField ||
+                      (sortKey === 'avgApy' && tempSubSortKey !== 'default')
+                    }
+                    onChange={() => handleChange(sortKey)}
                     label={t(label)}
                     checkVariant="circle"
                   />
@@ -80,6 +95,7 @@ export const Sort = memo(function Sort() {
                       onChange={val => setTempSubSortKey(parseApyValue(val))}
                       options={[{ label: '7d', value: '7' }]}
                       variant="filter"
+                      untoggleValue="default"
                     />
                   )}
                 </div>

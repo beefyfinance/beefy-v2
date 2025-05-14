@@ -1,6 +1,6 @@
 import { legacyMakeStyles } from '../../helpers/mui.ts';
-import { memo, type ReactNode } from 'react';
-import { useAppSelector } from '../../store.ts';
+import { memo, useEffect, type ReactNode } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store.ts';
 import { selectUserDepositedVaultIds } from '../data/selectors/balance.ts';
 import {
   InvalidAddress,
@@ -23,6 +23,7 @@ import { DashboardMeta } from '../../components/Meta/DashboardMeta.tsx';
 import { UnstakedClmBannerDashboard } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBannerDashboard.tsx';
 import { DepositSummary, DepositSummaryPlaceholder } from './components/DepositSummary.tsx';
 import { Header } from './components/Header.tsx';
+import { filteredVaultsActions } from '../data/reducers/filtered-vaults.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -34,7 +35,9 @@ const DashboardPage = memo(function Dashboard({ mode }: DashboardProps) {
   return (
     <>
       <DashboardMeta />
-      {mode === 'url' ? <DashboardFromUrl /> : <DashboardFromWallet />}
+      {mode === 'url' ?
+        <DashboardFromUrl />
+      : <DashboardFromWallet />}
     </>
   );
 });
@@ -54,7 +57,9 @@ const DashboardFromUrl = memo(function DashboardFromWallet() {
 
   return (
     <DashboardContainer>
-      {addressOrDomain?.toLowerCase().startsWith('0x') ? <InvalidAddress /> : <InvalidDomain />}
+      {addressOrDomain?.toLowerCase().startsWith('0x') ?
+        <InvalidAddress />
+      : <InvalidDomain />}
     </DashboardContainer>
   );
 });
@@ -116,24 +121,30 @@ const DashboardForAddress = memo(function DashboardForAddress({
 }: DashboardForAddressProps) {
   const loading = useInitDashboard(address);
   const userVaults = useAppSelector(state => selectUserDepositedVaultIds(state, address));
+  const dispatch = useAppDispatch();
+
+  // Set the default sort to apy
+  useEffect(() => {
+    dispatch(filteredVaultsActions.setSubSort({ column: 'apy', value: 'default' }));
+  }, [dispatch]);
 
   return (
     <DashboardContainer>
       <DashboardMeta wallet={addressLabel || address} />
       <UnstakedClmBannerDashboard address={address} />
       <Header address={address} addressLabel={addressLabel}>
-        {loading ? <DepositSummaryPlaceholder /> : <DepositSummary address={address} />}
+        {loading ?
+          <DepositSummaryPlaceholder />
+        : <DepositSummary address={address} />}
       </Header>
-      {loading ? (
+      {loading ?
         <TechLoader />
-      ) : userVaults.length > 0 ? (
+      : userVaults.length > 0 ?
         <>
           <UserExposure address={address} />
           <UserVaults address={address} />
         </>
-      ) : (
-        <NoResults title={addressLabel || address} address={address} />
-      )}
+      : <NoResults title={addressLabel || address} address={address} />}
     </DashboardContainer>
   );
 });

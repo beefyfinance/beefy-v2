@@ -13,15 +13,17 @@ import type { BeefyState } from '../../redux-types.ts';
 import { useAppSelector } from '../../store.ts';
 import { InterestTooltipContent } from '../InterestTooltipContent/InterestTooltipContent.tsx';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
+import { useTranslation } from 'react-i18next';
 
 export type VaultTvlStatProps = {
   vaultId: VaultEntity['id'];
 } & Omit<VaultValueStatProps, keyof ReturnType<typeof selectVaultTvlStat>>;
 
 export const VaultTvlStat = memo(function ({ vaultId, ...passthrough }: VaultTvlStatProps) {
+  const { t } = useTranslation();
   // @dev don't do this - temp migration away from connect()
-  const statProps = useAppSelector(state => selectVaultTvlStat(state, vaultId));
-  return <VaultValueStat {...statProps} {...passthrough} />;
+  const { label, ...statProps } = useAppSelector(state => selectVaultTvlStat(state, vaultId));
+  return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
 });
 
 // TODO better selector / hook

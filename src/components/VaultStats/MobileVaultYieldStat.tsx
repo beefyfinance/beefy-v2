@@ -9,6 +9,7 @@ import {
   selectDashboardUserRewardsOrStatusByVaultId,
 } from '../../features/data/selectors/dashboard.ts';
 import { RewardsTooltipContent } from '../RewardsTooltip/RewardsTooltip.tsx';
+import { useTranslation } from 'react-i18next';
 
 export type MobileVaultYieldStatProps = {
   vaultId: VaultEntity['id'];
@@ -20,7 +21,8 @@ export const MobileVaultYieldStat = memo(function MobileVaultYieldStat({
   walletAddress,
   ...passthrough
 }: MobileVaultYieldStatProps) {
-  const label = 'VaultStat-Yield';
+  const { t } = useTranslation();
+  const label = t('VaultStat-Yield');
   const data = useAppSelector(state =>
     selectDashboardUserRewardsOrStatusByVaultId(state, vaultId, walletAddress)
   );

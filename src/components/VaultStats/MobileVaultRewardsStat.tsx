@@ -9,7 +9,7 @@ import {
   DashboardDataStatus,
   selectDashboardUserRewardsOrStatusByVaultId,
 } from '../../features/data/selectors/dashboard.ts';
-
+import { useTranslation } from 'react-i18next';
 export type MobileVaultRewardsStatProps = {
   vaultId: VaultEntity['id'];
   walletAddress: string;
@@ -20,7 +20,8 @@ export const MobileVaultRewardsStat = memo(function MobileVaultRewardsStat({
   walletAddress,
   ...passthrough
 }: MobileVaultRewardsStatProps) {
-  const label = 'VaultStat-Claimable-Rewards';
+  const { t } = useTranslation();
+  const label = t('VaultStat-Claimable-Rewards');
   const data = useAppSelector(state =>
     selectDashboardUserRewardsOrStatusByVaultId(state, vaultId, walletAddress)
   );

@@ -12,6 +12,7 @@ import { formatLargeUsd } from '../../helpers/format.ts';
 import type { BeefyState } from '../../redux-types.ts';
 import { useAppSelector } from '../../store.ts';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
+import { useTranslation } from 'react-i18next';
 
 export type VaultDailyUsdStatProps = {
   vaultId: VaultEntity['id'];
@@ -23,9 +24,12 @@ export const VaultDailyUsdStat = memo(function ({
   walletAddress,
   ...passthrough
 }: VaultDailyUsdStatProps) {
+  const { t } = useTranslation();
   // @dev don't do this - temp migration away from connect()
-  const props = useAppSelector(state => selectVaultDailyUsdStat(state, vaultId, walletAddress));
-  return <VaultValueStat {...props} {...passthrough} />;
+  const { label, ...statProps } = useAppSelector(state =>
+    selectVaultDailyUsdStat(state, vaultId, walletAddress)
+  );
+  return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
 });
 
 // TODO better selector / hook

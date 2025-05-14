@@ -31,7 +31,7 @@ import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent.tsx';
 import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip.tsx';
 import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
-
+import { useTranslation } from 'react-i18next';
 export type VaultDepositStatProps = {
   vaultId: VaultEntity['id'];
   walletAddress?: string;
@@ -115,13 +115,14 @@ export const VaultDepositStat = memo(function VaultDepositStat({
   label = 'VaultStat-DEPOSITED',
   ...passthrough
 }: VaultDepositStatProps) {
+  const { t } = useTranslation();
   // @dev don't do this - temp migration away from connect()
   const data = useAppSelector(state => selectVaultDepositStat(state, vaultId, walletAddress));
 
   if (data.loading) {
     return (
       <VaultValueStat
-        label={label}
+        label={t(label)}
         value="-"
         blur={false}
         loading={true}
@@ -132,7 +133,9 @@ export const VaultDepositStat = memo(function VaultDepositStat({
   }
 
   if (!('vaultDeposit' in data) || data.totalDeposit.isZero()) {
-    return <VaultValueStat label={label} value="0" blur={false} loading={false} {...passthrough} />;
+    return (
+      <VaultValueStat label={t(label)} value="0" blur={false} loading={false} {...passthrough} />
+    );
   }
 
   const hasDisplacedDeposit = data.vaultDeposit.lt(data.totalDeposit) || data.notEarning.gt(0);
@@ -146,7 +149,7 @@ export const VaultDepositStat = memo(function VaultDepositStat({
 
   return (
     <VaultValueStat
-      label={label}
+      label={t(label)}
       value={depositFormattedCondensed}
       Icon={isNotEarning ? ExclaimRoundedSquare : undefined}
       subValue={formatLargeUsd(data.totalDepositUsd)}
