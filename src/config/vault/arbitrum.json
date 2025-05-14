@@ -13661,8 +13661,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.finance/#/arbitrum/markets/one-way-market-5/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.finance/#/arbitrum/markets/one-way-market-5/vault/withdraw",
+    "addLiquidityUrl": "https://curve.finance/lend/arbitrum/markets/one-way-market-5/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/arbitrum/markets/one-way-market-5/vault/withdraw",
     "network": "arbitrum"
   },
   {

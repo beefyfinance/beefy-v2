@@ -2422,8 +2422,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.finance/#/ethereum/markets/one-way-market-10/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.finance/#/ethereum/markets/one-way-market-10/vault/withdraw",
+    "addLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-10/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-10/vault/withdraw",
     "network": "ethereum"
   },
   {
@@ -2446,8 +2446,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.finance/#/ethereum/markets/one-way-market-9/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.finance/#/ethereum/markets/one-way-market-9/vault/withdraw",
+    "addLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-9/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-9/vault/withdraw",
     "network": "ethereum"
   },
   {
@@ -2551,8 +2551,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.finance/#/ethereum/markets/one-way-market-2/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.finance/#/ethereum/markets/one-way-market-2/vault/withdraw",
+    "addLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-2/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-2/vault/withdraw",
     "network": "ethereum"
   },
   {
@@ -2577,8 +2577,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.finance/#/ethereum/markets/one-way-market-1/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.finance/#/ethereum/markets/one-way-market-1/vault/withdraw",
+    "addLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-1/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-1/vault/withdraw",
     "network": "ethereum"
   },
   {
@@ -2603,8 +2603,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.finance/#/ethereum/markets/one-way-market-8/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.finance/#/ethereum/markets/one-way-market-8/vault/withdraw",
+    "addLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-8/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-8/vault/withdraw",
     "network": "ethereum"
   },
   {
@@ -2793,8 +2793,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.finance/#/ethereum/markets/one-way-market-3/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.finance/#/ethereum/markets/one-way-market-3/vault/deposit",
+    "addLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-3/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-3/vault/deposit",
     "network": "ethereum"
   },
   {

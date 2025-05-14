@@ -501,9 +501,9 @@
   {
     "id": "curve-lend",
     "name": "Curve Lend",
-    "website": "https://lend.curve.finance/",
+    "website": "https://curve.finance/lend/",
     "twitter": "curvefinance",
-    "documentation": "https://lend.curve.finance/",
+    "documentation": "https://curve.finance/lend/",
     "description": "Curve lending allows the creation of permissionless lending/borrowing markets to borrow crvUSD against any token, or to borrow any token against crvUSD in an isolated mode, powered by LLAMMA for soft-liquidations.",
     "type": "money-market"
   },
