@@ -83,7 +83,7 @@
   "curve": {
     "title": "Curve",
     "text": "Curve Finance is a decentralized exchange and automated market maker deployed on many EVM compatible chains. It specializes in efficient trading of stablecoins and volatile assets. Curve has also introduced its own over-collateralized USD stablecoin, crvUSD, powered by a unique liquidation mechanism.",
-    "website": "https://curve.fi/",
+    "website": "https://curve.finance/",
     "social": {
       "telegram": "https://t.me/curvefi",
       "twitter": "https://x.com/CurveFinance"

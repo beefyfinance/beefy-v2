@@ -2205,9 +2205,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/avalanche/pools/aave/swap",
-    "addLiquidityUrl": "https://curve.fi/#/avalanche/pools/aave/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/avalanche/pools/aave/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/avalanche/pools/aave/swap",
+    "addLiquidityUrl": "https://curve.finance/#/avalanche/pools/aave/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/avalanche/pools/aave/withdraw",
     "network": "avax",
     "zaps": [
       {
@@ -2264,9 +2264,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/avalanche/pools/atricrypto/swap",
-    "addLiquidityUrl": "https://curve.fi/#/avalanche/pools/atricrypto/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/avalanche/pools/atricrypto/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/avalanche/pools/atricrypto/swap",
+    "addLiquidityUrl": "https://curve.finance/#/avalanche/pools/atricrypto/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/avalanche/pools/atricrypto/withdraw",
     "network": "avax",
     "zaps": [
       {
@@ -3297,9 +3297,9 @@
     ],
     "strategyTypeId": "multi-lp",
     "depositFee": 0.005,
-    "buyTokenUrl": "https://curve.fi/#/avalanche/pools/factory-v2-7/swap",
-    "addLiquidityUrl": "https://curve.fi/#/avalanche/pools/factory-v2-7/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/avalanche/pools/factory-v2-7/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/avalanche/pools/factory-v2-7/swap",
+    "addLiquidityUrl": "https://curve.finance/#/avalanche/pools/factory-v2-7/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/avalanche/pools/factory-v2-7/withdraw",
     "network": "avax",
     "zaps": [
       {
@@ -3626,8 +3626,8 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://avax.curve.fi/factory/4/deposit",
-    "removeLiquidityUrl": "https://avax.curve.fi/factory/4/withdraw",
+    "addLiquidityUrl": "https://avax.curve.finance/factory/4/deposit",
+    "removeLiquidityUrl": "https://avax.curve.finance/factory/4/withdraw",
     "network": "avax",
     "zaps": [
       {
@@ -4568,9 +4568,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/avalanche/pools/ren/swap",
-    "addLiquidityUrl": "https://curve.fi/#/avalanche/pools/ren/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/avalanche/pools/ren/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/avalanche/pools/ren/swap",
+    "addLiquidityUrl": "https://curve.finance/#/avalanche/pools/ren/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/avalanche/pools/ren/withdraw",
     "network": "avax",
     "zaps": [
       {
@@ -5978,9 +5978,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/avalanche/pools/factory-v2-33/swap",
-    "addLiquidityUrl": "https://curve.fi/#/avalanche/pools/factory-v2-33/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/avalanche/pools/factory-v2-33/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/avalanche/pools/factory-v2-33/swap",
+    "addLiquidityUrl": "https://curve.finance/#/avalanche/pools/factory-v2-33/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/avalanche/pools/factory-v2-33/withdraw",
     "network": "avax",
     "zaps": [
       {
@@ -6316,9 +6316,9 @@
       "ALGO_STABLE"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/avalanche/pools/factory-v2-55/swap",
-    "addLiquidityUrl": "https://curve.fi/#/avalanche/pools/factory-v2-55/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/avalanche/pools/factory-v2-55/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/avalanche/pools/factory-v2-55/swap",
+    "addLiquidityUrl": "https://curve.finance/#/avalanche/pools/factory-v2-55/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/avalanche/pools/factory-v2-55/withdraw",
     "network": "avax",
     "zaps": [
       {

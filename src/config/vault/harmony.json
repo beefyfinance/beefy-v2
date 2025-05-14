@@ -386,8 +386,8 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://harmony.curve.fi/tricrypto/deposit",
-    "removeLiquidityUrl": "https://harmony.curve.fi/tricrypto/withdraw",
+    "addLiquidityUrl": "https://harmony.curve.finance/tricrypto/deposit",
+    "removeLiquidityUrl": "https://harmony.curve.finance/tricrypto/withdraw",
     "network": "harmony"
   },
   {
@@ -420,8 +420,8 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://harmony.curve.fi/3pool/deposit",
-    "removeLiquidityUrl": "https://harmony.curve.fi/3pool/withdraw",
+    "addLiquidityUrl": "https://harmony.curve.finance/3pool/deposit",
+    "removeLiquidityUrl": "https://harmony.curve.finance/3pool/withdraw",
     "network": "harmony"
   },
   {

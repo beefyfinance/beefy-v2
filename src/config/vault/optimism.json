@@ -19,8 +19,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/dex/optimism/pools/factory-stable-ng-63/deposit/",
-    "removeLiquidityUrl": "https://curve.fi/dex/optimism/pools/factory-stable-ng-63/withdraw",
+    "addLiquidityUrl": "https://curve.finance/dex/optimism/pools/factory-stable-ng-63/deposit/",
+    "removeLiquidityUrl": "https://curve.finance/dex/optimism/pools/factory-stable-ng-63/withdraw",
     "network": "optimism",
     "zaps": [
       {
@@ -4160,8 +4160,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-7/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-7/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-stable-ng-7/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-stable-ng-7/withdraw",
     "network": "optimism",
     "zaps": [
       {
@@ -4691,8 +4691,8 @@
     "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-tricrypto-1/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-tricrypto-1/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-tricrypto-1/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-tricrypto-1/withdraw",
     "network": "optimism",
     "zaps": [
       {
@@ -4733,8 +4733,8 @@
     "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-tricrypto-0/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-tricrypto-0/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-tricrypto-0/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-tricrypto-0/withdraw",
     "network": "optimism",
     "zaps": [
       {
@@ -5797,9 +5797,9 @@
     "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-11/swap",
-    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-11/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-11/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/optimism/pools/factory-stable-ng-11/swap",
+    "addLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-stable-ng-11/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-stable-ng-11/withdraw",
     "network": "optimism",
     "zaps": [
       {
@@ -5838,9 +5838,9 @@
     "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-2/swap",
-    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-2/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-2/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/optimism/pools/factory-stable-ng-2/swap",
+    "addLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-stable-ng-2/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-stable-ng-2/withdraw",
     "network": "optimism",
     "zaps": [
       {
@@ -5879,9 +5879,9 @@
     "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-1/swap",
-    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-1/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-1/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/optimism/pools/factory-stable-ng-1/swap",
+    "addLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-stable-ng-1/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-stable-ng-1/withdraw",
     "network": "optimism",
     "zaps": [
       {
@@ -5920,9 +5920,9 @@
     "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-0/swap",
-    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-0/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-0/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/optimism/pools/factory-stable-ng-0/swap",
+    "addLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-stable-ng-0/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-stable-ng-0/withdraw",
     "network": "optimism",
     "zaps": [
       {
@@ -6446,9 +6446,9 @@
     "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/optimism/pools/factory-v2-63/swap",
-    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-63/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-63/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/optimism/pools/factory-v2-63/swap",
+    "addLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-v2-63/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-v2-63/withdraw",
     "network": "optimism",
     "zaps": [
       {
@@ -9407,9 +9407,9 @@
     "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/optimism/pools/factory-v2-47/swap",
-    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-47/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-47/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/optimism/pools/factory-v2-47/swap",
+    "addLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-v2-47/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-v2-47/withdraw",
     "network": "optimism",
     "zaps": [
       {
@@ -10538,9 +10538,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/optimism/pools/wsteth/swap",
-    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/wsteth/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/wsteth/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/optimism/pools/wsteth/swap",
+    "addLiquidityUrl": "https://curve.finance/#/optimism/pools/wsteth/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/optimism/pools/wsteth/withdraw",
     "network": "optimism",
     "zaps": [
       {
@@ -12793,9 +12793,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/optimism/pools/factory-v2-10/swap",
-    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-10/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-10/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/optimism/pools/factory-v2-10/swap",
+    "addLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-v2-10/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-v2-10/withdraw",
     "network": "optimism",
     "zaps": [
       {
@@ -12838,9 +12838,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/optimism/pools/factory-v2-12/swap",
-    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-12/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-12/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/optimism/pools/factory-v2-12/swap",
+    "addLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-v2-12/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-v2-12/withdraw",
     "network": "optimism",
     "zaps": [
       {
@@ -12887,9 +12887,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/optimism/pools/factory-v2-0/swap",
-    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-0/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-v2-0/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/optimism/pools/factory-v2-0/swap",
+    "addLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-v2-0/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/optimism/pools/factory-v2-0/withdraw",
     "network": "optimism",
     "zaps": [
       {

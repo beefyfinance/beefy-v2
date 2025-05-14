@@ -1552,8 +1552,8 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-498/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-498/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-498/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-498/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -1792,8 +1792,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-210/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-210/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-crypto-210/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-crypto-210/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -1928,9 +1928,9 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-30/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-30/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-30/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-30/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-30/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-30/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -1971,9 +1971,9 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-28/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-28/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-28/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-28/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-28/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-28/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -2014,9 +2014,9 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-27/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-27/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-27/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-27/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-27/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-27/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -2057,9 +2057,9 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-29/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-29/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-stable-ng-29/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-29/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-29/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-29/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -3797,9 +3797,9 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-339/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-339/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-339/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-339/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-339/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-339/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -4033,9 +4033,9 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-crypto-83/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-83/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-83/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-crypto-83/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-crypto-83/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-crypto-83/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -4213,9 +4213,9 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-crypto-1/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-1/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-1/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-crypto-1/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-crypto-1/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-crypto-1/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -4822,9 +4822,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-crypto-13/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-13/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-13/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-crypto-13/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-crypto-13/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-crypto-13/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -5257,9 +5257,9 @@
     ],
     "strategyTypeId": "multi-lp",
     "depositFee": 0.005,
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-107/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-107/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-107/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-107/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-107/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-107/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -5410,9 +5410,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/aave/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/aave/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/aave/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/aave/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/aave/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/aave/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -5542,9 +5542,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/ren/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/ren/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/ren/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/ren/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/ren/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/ren/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -5639,9 +5639,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/atricrypto3/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto3/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto3/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/atricrypto3/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/atricrypto3/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/atricrypto3/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -7037,9 +7037,9 @@
     "platformId": "curve",
     "assets": ["DAI", "pUSDCe", "USDT", "WBTC", "ETH"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/atricrypto/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/atricrypto/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/atricrypto/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/atricrypto/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/atricrypto/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -10591,9 +10591,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/eurtusd/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/eurtusd/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/eurtusd/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/eurtusd/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/eurtusd/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/eurtusd/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -10652,9 +10652,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-37/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-37/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-37/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-37/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-37/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-37/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -11430,9 +11430,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-23/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-23/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-23/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-23/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-23/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-23/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -12704,9 +12704,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-22/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-22/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-22/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-22/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-22/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-22/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -14069,9 +14069,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-85/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-85/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-85/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-85/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-85/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-85/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -14120,9 +14120,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-228/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-228/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-228/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-228/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-228/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-228/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -14171,9 +14171,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-255/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-255/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-255/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-255/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-255/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-255/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -14222,9 +14222,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-209/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-209/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-209/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-209/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-209/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-209/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -14944,9 +14944,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-286/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-286/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-286/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-286/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-286/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-286/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -14995,9 +14995,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-285/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-285/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-285/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-285/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-285/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-285/withdraw",
     "network": "polygon",
     "zaps": [
       {
@@ -15078,9 +15078,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/polygon/pools/factory-v2-304/swap",
-    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-304/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-304/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-304/swap",
+    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-304/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-304/withdraw",
     "network": "polygon",
     "zaps": [
       {

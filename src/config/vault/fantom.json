@@ -2020,9 +2020,9 @@
     ],
     "strategyTypeId": "multi-lp",
     "depositFee": 0.005,
-    "buyTokenUrl": "https://curve.fi/#/fantom/pools/factory-v2-61/swap",
-    "addLiquidityUrl": "https://curve.fi/#/fantom/pools/factory-v2-61/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fantom/pools/factory-v2-61/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/fantom/pools/factory-v2-61/swap",
+    "addLiquidityUrl": "https://curve.finance/#/fantom/pools/factory-v2-61/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fantom/pools/factory-v2-61/withdraw",
     "network": "fantom",
     "zaps": [
       {
@@ -3016,9 +3016,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/fantom/pools/geist/swap",
-    "addLiquidityUrl": "https://curve.fi/#/fantom/pools/geist/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fantom/pools/geist/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/fantom/pools/geist/swap",
+    "addLiquidityUrl": "https://curve.finance/#/fantom/pools/geist/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fantom/pools/geist/withdraw",
     "network": "fantom"
   },
   {
@@ -3510,9 +3510,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/fantom/pools/factory-v2-1/swap",
-    "addLiquidityUrl": "https://curve.fi/#/fantom/pools/factory-v2-1/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fantom/pools/factory-v2-1/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/fantom/pools/factory-v2-1/swap",
+    "addLiquidityUrl": "https://curve.finance/#/fantom/pools/factory-v2-1/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fantom/pools/factory-v2-1/withdraw",
     "network": "fantom",
     "zaps": [
       {
@@ -3638,9 +3638,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/fantom/pools/tricrypto/swap",
-    "addLiquidityUrl": "https://curve.fi/#/fantom/pools/tricrypto/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fantom/pools/tricrypto/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/fantom/pools/tricrypto/swap",
+    "addLiquidityUrl": "https://curve.finance/#/fantom/pools/tricrypto/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fantom/pools/tricrypto/withdraw",
     "network": "fantom",
     "zaps": [
       {
@@ -4278,9 +4278,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/fantom/pools/2pool/swap",
-    "addLiquidityUrl": "https://curve.fi/#/fantom/pools/2pool/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fantom/pools/2pool/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/fantom/pools/2pool/swap",
+    "addLiquidityUrl": "https://curve.finance/#/fantom/pools/2pool/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fantom/pools/2pool/withdraw",
     "network": "fantom",
     "zaps": [
       {
@@ -4327,9 +4327,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/fantom/pools/ren/swap",
-    "addLiquidityUrl": "https://curve.fi/#/fantom/pools/ren/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fantom/pools/ren/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/fantom/pools/ren/swap",
+    "addLiquidityUrl": "https://curve.finance/#/fantom/pools/ren/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fantom/pools/ren/withdraw",
     "network": "fantom",
     "zaps": [
       {
@@ -5470,9 +5470,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/fantom/pools/fusdt/swap",
-    "addLiquidityUrl": "https://curve.fi/#/fantom/pools/fusdt/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fantom/pools/fusdt/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/fantom/pools/fusdt/swap",
+    "addLiquidityUrl": "https://curve.finance/#/fantom/pools/fusdt/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fantom/pools/fusdt/withdraw",
     "network": "fantom"
   },
   {
@@ -10196,9 +10196,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/fantom/pools/factory-v2-41/swap",
-    "addLiquidityUrl": "https://curve.fi/#/fantom/pools/factory-v2-41/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fantom/pools/factory-v2-41/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/fantom/pools/factory-v2-41/swap",
+    "addLiquidityUrl": "https://curve.finance/#/fantom/pools/factory-v2-41/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fantom/pools/factory-v2-41/withdraw",
     "network": "fantom",
     "zaps": [
       {
@@ -10255,9 +10255,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/fantom/pools/factory-v2-42/swap",
-    "addLiquidityUrl": "https://curve.fi/#/fantom/pools/factory-v2-42/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fantom/pools/factory-v2-42/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/fantom/pools/factory-v2-42/swap",
+    "addLiquidityUrl": "https://curve.finance/#/fantom/pools/factory-v2-42/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fantom/pools/factory-v2-42/withdraw",
     "network": "fantom",
     "zaps": [
       {
@@ -10774,9 +10774,9 @@
       "ALGO_STABLE"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/fantom/pools/factory-v2-84/swap",
-    "addLiquidityUrl": "https://curve.fi/#/fantom/pools/factory-v2-84/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fantom/pools/factory-v2-84/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/fantom/pools/factory-v2-84/swap",
+    "addLiquidityUrl": "https://curve.finance/#/fantom/pools/factory-v2-84/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fantom/pools/factory-v2-84/withdraw",
     "network": "fantom",
     "zaps": [
       {
@@ -11178,9 +11178,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/fantom/pools/factory-v2-35/swap",
-    "addLiquidityUrl": "https://curve.fi/#/fantom/pools/factory-v2-35/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fantom/pools/factory-v2-35/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/fantom/pools/factory-v2-35/swap",
+    "addLiquidityUrl": "https://curve.finance/#/fantom/pools/factory-v2-35/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fantom/pools/factory-v2-35/withdraw",
     "network": "fantom",
     "zaps": [
       {
@@ -11408,9 +11408,9 @@
       "ALGO_STABLE"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/fantom/pools/factory-v2-62/swap",
-    "addLiquidityUrl": "https://curve.fi/#/fantom/pools/factory-v2-62/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fantom/pools/factory-v2-62/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/fantom/pools/factory-v2-62/swap",
+    "addLiquidityUrl": "https://curve.finance/#/fantom/pools/factory-v2-62/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fantom/pools/factory-v2-62/withdraw",
     "network": "fantom",
     "zaps": [
       {
