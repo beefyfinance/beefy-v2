@@ -58,6 +58,7 @@ const overrides: Record<
   'pendle-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
   'compound-base-eth': { harvestOnDeposit: undefined },
   'beefy-besonic': { vaultOwner: undefined }, // temp disabled while waiting for rewards to refill
+  'compound-polygon-usdc': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
