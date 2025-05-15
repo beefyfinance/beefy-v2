@@ -28,6 +28,7 @@ import {
   selectFilterPlatformIdsForVault,
   selectIsVaultBlueChip,
   selectIsVaultCorrelated,
+  selectIsVaultMeme,
   selectIsVaultStable,
   selectVaultIsBoostedForFilter,
   selectVaultMatchesText,
