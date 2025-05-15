@@ -4,7 +4,7 @@ import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vau
 import { selectActiveChains } from '../../../../../data/selectors/chains.ts';
 import { selectFilterChainIds } from '../../../../../data/selectors/filtered-vaults.ts';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
-import { MultipleSelectContent } from '../../../../../../components/Form/Select/Multi/MultipleSelectContent.tsx';
+import { SelectMultipleContent } from '../../../../../../components/Form/Select/Multi/SelectMultipleContent.tsx';
 import { getNetworkIcon } from './hooks.tsx';
 import { cva } from '@repo/styles/css';
 import { useTranslation } from 'react-i18next';
@@ -95,7 +95,7 @@ export const ChainCheckList = memo(function ChainCheckList() {
   const noneSelected = selectedChainIds.length === 0;
 
   return (
-    <MultipleSelectContent
+    <SelectMultipleContent
       options={options}
       selected={selectedChainIds}
       activeIndex={activeIndex}

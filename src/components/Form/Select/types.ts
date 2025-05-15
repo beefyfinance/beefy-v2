@@ -38,6 +38,12 @@ export type CommonProps<TItem extends SelectItem = SelectItem> = Override<
     placement?: UseFloatingOptions['placement'];
     /** z-index layer */
     layer?: 0 | 1 | 2;
+    /** enable search */
+    searchEnabled?: boolean;
+    /** search function */
+    searchFunction?: SearchFunction<TItem>;
+    /** placeholder */
+    placeholder?: string;
   }
 >;
 
@@ -54,8 +60,6 @@ type MultiOnlyProps<TItem extends SelectItem = SelectItem> = {
   /** pass a new one of these for logic */
   SelectedComponent?: FCWithRef<SelectedMultiProps<TItem>, HTMLButtonElement>;
   searchEnabled?: boolean;
-  searchFunction?: SearchFunction<TItem>;
-  searchComponent?: FC<SearchComponentProps<TItem>>;
   allSelectedLabel?: string;
 };
 

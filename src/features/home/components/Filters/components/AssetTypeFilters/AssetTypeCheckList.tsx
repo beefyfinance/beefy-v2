@@ -6,7 +6,7 @@ import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vau
 import { TYPE_OPTIONS } from './type-options.ts';
 import { entries } from '../../../../../../helpers/object.ts';
 import type { VaultAssetType } from '../../../../../data/reducers/filtered-vaults-types.ts';
-import { MultipleSelectContent } from '../../../../../../components/Form/Select/Multi/MultipleSelectContent.tsx';
+import { SelectMultipleContent } from '../../../../../../components/Form/Select/Multi/SelectMultipleContent.tsx';
 
 export const AssetTypeCheckList = memo(function AssetTypeCheckList() {
   const { t } = useTranslation();
@@ -60,7 +60,7 @@ export const AssetTypeCheckList = memo(function AssetTypeCheckList() {
   const noneSelected = value.length === 0;
 
   return (
-    <MultipleSelectContent
+    <SelectMultipleContent
       options={options}
       selected={value}
       activeIndex={activeIndex}

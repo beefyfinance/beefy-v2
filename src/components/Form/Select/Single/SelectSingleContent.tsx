@@ -6,7 +6,7 @@ import { OptionLabel } from '../OptionLabel.tsx';
 import { OptionBadge } from '../OptionBadge.tsx';
 import { OptionIcon } from '../OptionIcon.tsx';
 
-interface SingleSelectContentProps<TItem extends SelectItem = SelectItem>
+interface SelectSingleContentProps<TItem extends SelectItem = SelectItem>
   extends CommonProps<TItem> {
   options: TItem[];
   selectedIndex: number | null;
@@ -18,7 +18,7 @@ interface SingleSelectContentProps<TItem extends SelectItem = SelectItem>
   disabledIndexes?: number[];
 }
 
-export const SingleSelectContent = memo(function SingleSelectContent<
+export const SelectSingleContent = memo(function SelectSingleContent<
   TItem extends SelectItem = SelectItem,
 >({
   options,
@@ -35,7 +35,7 @@ export const SingleSelectContent = memo(function SingleSelectContent<
   OptionBadgeComponent = OptionBadge,
   OptionStartAdornmentComponent = OptionIcon,
   OptionEndAdornmentComponent,
-}: SingleSelectContentProps<TItem>) {
+}: SelectSingleContentProps<TItem>) {
   return (
     <div>
       {options.map((item, index) =>

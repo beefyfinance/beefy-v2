@@ -26,7 +26,7 @@ import { OptionIcon } from '../OptionIcon.tsx';
 import { OptionBadge } from '../OptionBadge.tsx';
 import { useMediaQuery } from '../../../MediaQueries/useMediaQuery.ts';
 import { indexesFromValues } from './helpers.ts';
-import { MultipleSelectContent } from './MultipleSelectContent.tsx';
+import { SelectMultipleContent } from './SelectMultipleContent.tsx';
 
 export const SelectMultiple = memo(function Select<
   TItem extends SelectItem<string> = SelectItem<string>,
@@ -50,6 +50,7 @@ export const SelectMultiple = memo(function Select<
   layer = 0,
   searchEnabled = false,
   searchFunction,
+  placeholder,
   allSelectedLabel = 'All',
   ...variantProps
 }: SelectMultiProps<TItem>) {
@@ -189,7 +190,7 @@ export const SelectMultiple = memo(function Select<
               ref={refs.setFloating}
               layer={layer}
             >
-              <MultipleSelectContent
+              <SelectMultipleContent
                 options={options}
                 selected={selected}
                 activeIndex={activeIndex}
@@ -199,6 +200,7 @@ export const SelectMultiple = memo(function Select<
                 setListRefs={setListRefs}
                 searchEnabled={searchEnabled}
                 searchFunction={searchFunction}
+                placeholder={placeholder}
                 OptionComponent={OptionComponent}
                 OptionButtonComponent={OptionButtonComponent}
                 OptionLabelComponent={OptionLabelComponent}

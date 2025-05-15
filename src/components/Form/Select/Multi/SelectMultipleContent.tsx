@@ -9,7 +9,7 @@ import { SearchField } from './SearchField.tsx';
 import { defaultSearchFunction } from './helpers.ts';
 import { isDefined } from '../../../../features/data/utils/array-utils.ts';
 
-interface MultipleSelectContentProps<TItem extends SelectItem = SelectItem>
+interface SelectMultipleContentProps<TItem extends SelectItem = SelectItem>
   extends CommonProps<TItem> {
   options: TItem[];
   selected: TItem['value'][];
@@ -23,7 +23,7 @@ interface MultipleSelectContentProps<TItem extends SelectItem = SelectItem>
   placeholder?: string;
 }
 
-export const MultipleSelectContent = memo(function MultipleSelectContent<
+export const SelectMultipleContent = memo(function SelectMultipleContent<
   TItem extends SelectItem = SelectItem,
 >({
   options,
@@ -42,7 +42,7 @@ export const MultipleSelectContent = memo(function MultipleSelectContent<
   OptionBadgeComponent = OptionBadge,
   OptionEndAdornmentComponent,
   placeholder,
-}: MultipleSelectContentProps<TItem>) {
+}: SelectMultipleContentProps<TItem>) {
   const [searchText, setSearchText] = useState<string>('');
   const deferredSearchText = useDeferredValue(searchText);
 

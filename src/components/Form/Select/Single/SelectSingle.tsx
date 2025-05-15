@@ -24,9 +24,9 @@ import { Option } from '../Option.tsx';
 import { OptionLabel } from '../OptionLabel.tsx';
 import { SelectLabel } from '../SelectLabel.tsx';
 import { OptionBadge } from '../OptionBadge.tsx';
-import { SingleSelectContent } from './SingleSelectContent.tsx';
+import { SelectSingleContent } from './SelectSingleContent.tsx';
 
-export const Select = memo(function Select<TItem extends SelectItem = SelectItem>({
+export const SelectSingle = memo(function SelectSingle<TItem extends SelectItem = SelectItem>({
   selected,
   options,
   onChange,
@@ -206,7 +206,7 @@ export const Select = memo(function Select<TItem extends SelectItem = SelectItem
               ref={refs.setFloating}
               layer={layer}
             >
-              <SingleSelectContent
+              <SelectSingleContent
                 options={options}
                 selectedIndex={selectedIndex}
                 activeIndex={activeIndex}

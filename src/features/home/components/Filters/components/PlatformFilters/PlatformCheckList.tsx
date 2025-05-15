@@ -4,7 +4,7 @@ import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vau
 import { selectFilterPlatforms } from '../../../../../data/selectors/platforms.ts';
 import { selectFilterPlatformIds } from '../../../../../data/selectors/filtered-vaults.ts';
 import type { PlatformEntity } from '../../../../../data/entities/platform.ts';
-import { MultipleSelectContent } from '../../../../../../components/Form/Select/Multi/MultipleSelectContent.tsx';
+import { SelectMultipleContent } from '../../../../../../components/Form/Select/Multi/SelectMultipleContent.tsx';
 import { useTranslation } from 'react-i18next';
 export const PlatformChecklist = memo(function PlatformChecklist() {
   const { t } = useTranslation();
@@ -63,7 +63,7 @@ export const PlatformChecklist = memo(function PlatformChecklist() {
   const noneSelected = platformsIds.length === 0;
 
   return (
-    <MultipleSelectContent
+    <SelectMultipleContent
       options={options}
       selected={platformsIds}
       activeIndex={activeIndex}

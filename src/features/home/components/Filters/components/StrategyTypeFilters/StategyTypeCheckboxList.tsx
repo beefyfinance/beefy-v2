@@ -6,7 +6,7 @@ import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vau
 import { TYPE_OPTIONS } from './type-options.ts';
 import { entries } from '../../../../../../helpers/object.ts';
 import type { StrategiesType } from '../../../../../data/reducers/filtered-vaults-types.ts';
-import { SingleSelectContent } from '../../../../../../components/Form/Select/Single/SingleSelectContent.tsx';
+import { SelectSingleContent } from '../../../../../../components/Form/Select/Single/SelectSingleContent.tsx';
 import type { SelectItem } from '../../../../../../components/Form/Select/types.ts';
 
 type StrategyTypeOption = SelectItem & {
@@ -47,7 +47,6 @@ export const StategyTypeCheckBoxList = memo(function StategyTypeCheckBoxList() {
     }),
     [handleChange, options, value]
   );
-
   const disabledIndexes = useMemo(() => {
     const allIndex = options.findIndex(opt => opt.value === 'all');
     return allIndex >= 0 ? [allIndex] : undefined;
@@ -58,7 +57,7 @@ export const StategyTypeCheckBoxList = memo(function StategyTypeCheckBoxList() {
   }, [selectedIndex]);
 
   return (
-    <SingleSelectContent
+    <SelectSingleContent
       options={options}
       selectedIndex={selectedIndex}
       activeIndex={selectedIndex}
