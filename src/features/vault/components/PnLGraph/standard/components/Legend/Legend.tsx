@@ -1,10 +1,10 @@
-import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
+import { css } from '@repo/styles/css';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../../../store.ts';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
 import { selectVaultById } from '../../../../../../data/selectors/vaults.ts';
-import { css } from '@repo/styles/css';
 
 const useStyles = legacyMakeStyles({
   items: css.raw({

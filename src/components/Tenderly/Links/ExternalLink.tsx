@@ -23,7 +23,9 @@ export const ExternalLink = memo(function ExternalLink({
   return (
     <a className={css(styles.link, cssProp)} href={href} target="_blank">
       {children}
-      {icon ? <OpenInNewRoundedIcon width={16} height={16} className={classes.icon} /> : null}
+      {icon ?
+        <OpenInNewRoundedIcon width={16} height={16} className={classes.icon} />
+      : null}
     </a>
   );
 });

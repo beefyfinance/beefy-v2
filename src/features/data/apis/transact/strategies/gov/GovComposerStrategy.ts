@@ -1,5 +1,23 @@
+import type { Abi } from 'abitype';
+import type BigNumber from 'bignumber.js';
+import { uniqBy } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { Step } from '../../../../reducers/wallet/stepper.ts';
+import { encodeFunctionData } from 'viem';
+import { bigNumberToBigInt, toWei, toWeiString } from '../../../../../../helpers/big-number.ts';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
+import { isTokenEqual, type TokenEntity, type TokenErc20 } from '../../../../entities/token.ts';
+import { isMultiGovVault, type VaultGov } from '../../../../entities/vault.ts';
+import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
+import { selectChainById } from '../../../../selectors/chains.ts';
+import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../../selectors/tokens.ts';
+import { selectTransactSlippage } from '../../../../selectors/transact.ts';
+import type { BeefyState, BeefyThunk } from '../../../../store/types.ts';
+import { slipBy } from '../../helpers/amounts.ts';
+import { onlyOneInput } from '../../helpers/options.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
+import { pickTokens } from '../../helpers/tokens.ts';
+import { getInsertIndex, NO_RELAY } from '../../helpers/zap.ts';
 import {
   type CowcentratedVaultDepositOption,
   type CowcentratedVaultDepositQuote,
@@ -26,25 +44,11 @@ import {
   type ZapStrategyIdToWithdrawQuote,
 } from '../../transact-types.ts';
 import {
-  type AnyComposableStrategy,
-  type IComposableStrategy,
-  type IComposerStrategy,
-  type IComposerStrategyStatic,
-  type ZapTransactHelpers,
-} from '../IStrategy.ts';
-import { isMultiGovVault, type VaultGov } from '../../../../entities/vault.ts';
-import {
   type ICowcentratedVaultType,
   type IGovVaultType,
   isCowcentratedVaultType,
   isGovVaultType,
 } from '../../vaults/IVaultType.ts';
-import { isTokenEqual, type TokenEntity, type TokenErc20 } from '../../../../entities/token.ts';
-import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../../selectors/tokens.ts';
-import type { BeefyState, BeefyThunk } from '../../../../../../redux-types.ts';
-import { selectChainById } from '../../../../selectors/chains.ts';
-import { selectTransactSlippage } from '../../../../selectors/transact.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import type {
   OrderInput,
   OrderOutput,
@@ -53,18 +57,14 @@ import type {
   ZapStepRequest,
   ZapStepResponse,
 } from '../../zap/types.ts';
-import type BigNumber from 'bignumber.js';
-import { getInsertIndex, NO_RELAY } from '../../helpers/zap.ts';
-import { bigNumberToBigInt, toWei, toWeiString } from '../../../../../../helpers/big-number.ts';
-import { slipBy } from '../../helpers/amounts.ts';
+import {
+  type AnyComposableStrategy,
+  type IComposableStrategy,
+  type IComposerStrategy,
+  type IComposerStrategyStatic,
+  type ZapTransactHelpers,
+} from '../IStrategy.ts';
 import type { GovComposerStrategyConfig } from '../strategy-configs.ts';
-import { onlyOneInput } from '../../helpers/options.ts';
-import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
-import { pickTokens } from '../../helpers/tokens.ts';
-import { uniqBy } from 'lodash-es';
-import type { Abi } from 'abitype';
-import { encodeFunctionData } from 'viem';
-import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;

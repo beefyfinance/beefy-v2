@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-
 import QiDaoLogo from '../../../../images/partners/qidao.svg';
 
 import { PartnerCard } from '../PartnerCard/PartnerCard.tsx';

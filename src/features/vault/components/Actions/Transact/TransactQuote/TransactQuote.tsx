@@ -1,9 +1,29 @@
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { Trans, useTranslation } from 'react-i18next';
-import { styles } from './styles.ts';
-import { memo, useEffect, useMemo } from 'react';
 import { css, type CssStyles } from '@repo/styles/css';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import type BigNumber from 'bignumber.js';
+import { debounce } from 'lodash-es';
+import { memo, useEffect, useMemo } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import {
+  transactClearQuotes,
+  transactFetchQuotesIfNeeded,
+} from '../../../../../data/actions/transact.ts';
+import {
+  QuoteCowcentratedNoSingleSideError,
+  QuoteCowcentratedNotCalmError,
+} from '../../../../../data/apis/transact/strategies/error.ts';
+import {
+  type CowcentratedVaultDepositQuote,
+  type CowcentratedZapDepositQuote,
+  isCowcentratedDepositQuote,
+  isZapQuote,
+  quoteNeedsSlippage,
+} from '../../../../../data/apis/transact/transact-types.ts';
+import { isCowcentratedLikeVault } from '../../../../../data/entities/vault.ts';
+import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectTransactInputAmounts,
   selectTransactInputMaxes,
@@ -16,30 +36,12 @@ import {
   selectTransactSelectedSelectionId,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
-import { transactFetchQuotesIfNeeded } from '../../../../../data/actions/transact.ts';
-import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
-import { TokenAmountIcon, TokenAmountIconLoader } from '../TokenAmountIcon/TokenAmountIcon.tsx';
-import {
-  type CowcentratedVaultDepositQuote,
-  type CowcentratedZapDepositQuote,
-  isCowcentratedDepositQuote,
-  isZapQuote,
-  quoteNeedsSlippage,
-} from '../../../../../data/apis/transact/transact-types.ts';
-import { ZapRoute } from '../ZapRoute/ZapRoute.tsx';
-import { QuoteTitleRefresh } from '../QuoteTitleRefresh/QuoteTitleRefresh.tsx';
-import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
-import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { ZapSlippage } from '../ZapSlippage/ZapSlippage.tsx';
-import type BigNumber from 'bignumber.js';
-import { debounce } from 'lodash-es';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import { isCowcentratedLikeVault } from '../../../../../data/entities/vault.ts';
-import {
-  QuoteCowcentratedNoSingleSideError,
-  QuoteCowcentratedNotCalmError,
-} from '../../../../../data/apis/transact/strategies/error.ts';
+import { QuoteTitleRefresh } from '../QuoteTitleRefresh/QuoteTitleRefresh.tsx';
+import { TokenAmountIcon, TokenAmountIconLoader } from '../TokenAmountIcon/TokenAmountIcon.tsx';
+import { ZapRoute } from '../ZapRoute/ZapRoute.tsx';
+import { ZapSlippage } from '../ZapSlippage/ZapSlippage.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -64,7 +66,7 @@ export const TransactQuote = memo(function TransactQuote({
       debounce(
         (dispatch: ReturnType<typeof useAppDispatch>, inputAmounts: BigNumber[]) => {
           if (inputAmounts.every(amount => amount.lte(BIG_ZERO))) {
-            dispatch(transactActions.clearQuotes());
+            dispatch(transactClearQuotes());
           } else {
             dispatch(transactFetchQuotesIfNeeded());
           }

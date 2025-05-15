@@ -1,17 +1,17 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { AlertWarning } from '../../../../../../components/Alerts/Alerts.tsx';
-import { useAppSelector } from '../../../../../../store.ts';
-import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import { selectChainById } from '../../../../../data/selectors/chains.ts';
-import type { ChainEntity } from '../../../../../data/entities/chain.ts';
-import { StandardVaultAbi } from '../../../../../../config/abi/StandardVaultAbi.ts';
 import { ERC20Abi } from '../../../../../../config/abi/ERC20Abi.ts';
-import { selectTokenByAddress } from '../../../../../data/selectors/tokens.ts';
-import type { TokenEntity } from '../../../../../data/entities/token.ts';
-import { useAsync } from '../../../../../../helpers/useAsync.ts';
-import { fetchContract } from '../../../../../data/apis/rpc-contract/viem-contract.ts';
+import { StandardVaultAbi } from '../../../../../../config/abi/StandardVaultAbi.ts';
 import { fromWei } from '../../../../../../helpers/big-number.ts';
+import { useAsync } from '../../../../../../helpers/useAsync.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import { fetchContract } from '../../../../../data/apis/rpc-contract/viem-contract.ts';
+import type { ChainEntity } from '../../../../../data/entities/chain.ts';
+import type { TokenEntity } from '../../../../../data/entities/token.ts';
+import type { VaultEntity } from '../../../../../data/entities/vault.ts';
+import { selectChainById } from '../../../../../data/selectors/chains.ts';
+import { selectTokenByAddress } from '../../../../../data/selectors/tokens.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 
 const strategyABI = [
   {

@@ -1,11 +1,11 @@
-import type { ISwapAggregator } from '../swap/ISwapAggregator.ts';
-import type { BeefyState } from '../../../../../redux-types.ts';
-import { getTokenAddress } from '../helpers/zap.ts';
-import type { ZapStepRequest, ZapStepResponse } from './types.ts';
 import { first } from 'lodash-es';
 import { isTokenNative } from '../../../entities/token.ts';
-import type { QuoteResponse } from '../swap/ISwapProvider.ts';
+import type { BeefyState } from '../../../store/types.ts';
+import { getTokenAddress } from '../helpers/zap.ts';
 import { QuoteChangedError } from '../strategies/error.ts';
+import type { ISwapAggregator } from '../swap/ISwapAggregator.ts';
+import type { QuoteResponse } from '../swap/ISwapProvider.ts';
+import type { ZapStepRequest, ZapStepResponse } from './types.ts';
 
 export type ZapAggregatorSwapRequest = ZapStepRequest & {
   providerId: string;
@@ -67,14 +67,14 @@ export async function fetchZapAggregatorSwap(
         data: swap.tx.data,
         value: swap.tx.value,
         tokens:
-          isFromNative && !insertBalance
-            ? []
-            : [
-                {
-                  token: getTokenAddress(swap.fromToken),
-                  index: insertBalance && !isFromNative ? swap.tx.inputPosition : -1, // use all balance : set allowance only
-                },
-              ],
+          isFromNative && !insertBalance ?
+            []
+          : [
+              {
+                token: getTokenAddress(swap.fromToken),
+                index: insertBalance && !isFromNative ? swap.tx.inputPosition : -1, // use all balance : set allowance only
+              },
+            ],
       },
     ],
   };

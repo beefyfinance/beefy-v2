@@ -16,7 +16,9 @@ export const TechLoader = memo(function TechLoader({ text, css: cssProp }: TechL
   return (
     <div className={css(styles.loader, cssProp)}>
       <img alt="Loading..." src={loadingImage} width={718 / 2} height={718 / 2} />
-      {text ? <div className={classes.text}>{text}</div> : null}
+      {text ?
+        <div className={classes.text}>{text}</div>
+      : null}
     </div>
   );
 });

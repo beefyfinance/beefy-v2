@@ -1,15 +1,15 @@
-import type { ChainEntity } from '../../../../../data/entities/chain.ts';
-import type BigNumber from 'bignumber.js';
 import { styled } from '@repo/styles/jsx';
-import type { TokenEntity } from '../../../../../data/entities/token.ts';
+import type BigNumber from 'bignumber.js';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { TokenImageFromEntity } from '../../../../../../components/TokenImage/TokenImage.tsx';
 import { DivWithTooltip } from '../../../../../../components/Tooltip/DivWithTooltip.tsx';
-import { getNetworkSrc } from '../../../../../../helpers/networkSrc.ts';
 import { formatLargePercent, formatUsd } from '../../../../../../helpers/format.ts';
-import { useAppSelector } from '../../../../../../store.ts';
+import { getNetworkSrc } from '../../../../../../helpers/networkSrc.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import type { ChainEntity } from '../../../../../data/entities/chain.ts';
+import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { selectChainById } from '../../../../../data/selectors/chains.ts';
 
 type Token = Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'chainId'>;

@@ -1,9 +1,9 @@
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { memo, type ReactNode, useCallback } from 'react';
+import { stepperReset } from '../../../../features/data/actions/wallet/stepper.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { useAppDispatch } from '../../../../features/data/store/hooks.ts';
 import CloseRoundedIcon from '../../../../images/icons/mui/CloseRounded.svg?react';
-import { useAppDispatch } from '../../../../store.ts';
 import { styles } from './styles.ts';
-import { stepperActions } from '../../../../features/data/reducers/wallet/stepper.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -15,7 +15,7 @@ export const Title = memo(function Title({ text }: TitleProps) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const handleClose = useCallback(() => {
-    dispatch(stepperActions.reset());
+    dispatch(stepperReset());
   }, [dispatch]);
 
   return (

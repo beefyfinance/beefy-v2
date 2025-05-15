@@ -1,10 +1,9 @@
 import { memo } from 'react';
-import { useAppSelector } from '../../../../store.ts';
-import { selectIsUserBalanceAvailable } from '../../../data/selectors/data-loader.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
+import { selectIsUserBalanceAvailable } from '../../../data/selectors/balance.ts';
+import { selectDashboardUserExposureByToken } from '../../../data/selectors/dashboard.ts';
 import { ExposureChart } from '../ExposureChart/ExposureChart.tsx';
 import type { ExposureDashboardChartLoaderProps } from '../ExposureChart/types.ts';
-
-import { selectDashboardUserExposureByToken } from '../../../data/selectors/dashboard.ts';
 
 const TokenExposure = memo(function TokenExposure({
   title,

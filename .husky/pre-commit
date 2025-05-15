@@ -1,1 +1,1 @@
-npx lint-staged --relative --max-arg-length 999999999
+npx lint-staged --relative

@@ -1,4 +1,23 @@
+import type { Address } from 'abitype';
+import BigNumber from 'bignumber.js';
+import type { TFunction } from 'react-i18next';
+import { BoostAbi } from '../../../../config/abi/BoostAbi.ts';
+import { BIG_ZERO, bigNumberToBigInt } from '../../../../helpers/big-number.ts';
+import { getWalletConnectionApi } from '../../apis/instances.ts';
+import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
+import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
+import type { Step } from '../../reducers/wallet/stepper-types.ts';
+import { selectBoostUserBalanceInToken } from '../../selectors/balance.ts';
+import { selectBoostById } from '../../selectors/boosts.ts';
+import { selectChainById } from '../../selectors/chains.ts';
+import { selectErc20TokenByAddress, selectTokenByAddress } from '../../selectors/tokens.ts';
+import { selectVaultByIdWithReceipt } from '../../selectors/vaults.ts';
+import { selectIsApprovalNeededForBoostStaking } from '../../selectors/wallet-actions.ts';
+import { selectWalletAddress } from '../../selectors/wallet.ts';
+import { getGasPriceOptions } from '../../utils/gas-utils.ts';
+import { stepperStartWithSteps } from './stepper.ts';
+import { approve } from './approval.ts';
 import {
   bindTransactionEvents,
   captureWalletErrors,
@@ -6,25 +25,6 @@ import {
   txStart,
   txWallet,
 } from './common.ts';
-import { selectWalletAddress } from '../../selectors/wallet.ts';
-import { selectBoostById } from '../../selectors/boosts.ts';
-import { selectVaultByIdWithReceipt } from '../../selectors/vaults.ts';
-import { selectErc20TokenByAddress, selectTokenByAddress } from '../../selectors/tokens.ts';
-import { getWalletConnectionApi } from '../../apis/instances.ts';
-import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
-import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
-import { BoostAbi } from '../../../../config/abi/BoostAbi.ts';
-import { selectChainById } from '../../selectors/chains.ts';
-import { getGasPriceOptions } from '../../utils/gas-utils.ts';
-import type { Address } from 'abitype';
-import { BIG_ZERO, bigNumberToBigInt } from '../../../../helpers/big-number.ts';
-import type { TFunction } from 'react-i18next';
-import BigNumber from 'bignumber.js';
-import type { Step } from '../../reducers/wallet/stepper.ts';
-import { startStepperWithSteps } from '../stepper.ts';
-import { selectBoostUserBalanceInToken } from '../../selectors/balance.ts';
-import { selectIsApprovalNeededForBoostStaking } from '../../selectors/wallet-actions.ts';
-import { approve } from './approval.ts';
 
 export const claimBoost = (boostId: BoostPromoEntity['id']) => {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -169,7 +169,7 @@ export const startStakeBoostSteps = (
       pending: false,
     });
 
-    dispatch(startStepperWithSteps(steps, boost.chainId));
+    dispatch(stepperStartWithSteps(steps, boost.chainId));
   });
 };
 
@@ -247,7 +247,7 @@ export const startUnstakeBoostSteps = (
       });
     }
 
-    dispatch(startStepperWithSteps(steps, boost.chainId));
+    dispatch(stepperStartWithSteps(steps, boost.chainId));
   });
 };
 

@@ -1,10 +1,10 @@
-import type BigNumber from 'bignumber.js';
 import type { AsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import type { VaultEntity } from '../../entities/vault.ts';
+import type BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { MigrationConfig } from '../../reducers/wallet/migration.ts';
-import type { BeefyState } from '../../../../redux-types.ts';
 import type { Address, Chain } from 'viem';
+import type { VaultEntity } from '../../entities/vault.ts';
+import type { MigrationConfig } from '../../reducers/wallet/migration-types.ts';
+import type { BeefyState } from '../../store/types.ts';
 import type { GasPricing } from '../gas-prices/gas-prices.ts';
 
 export interface IMigrationApi {

@@ -1,10 +1,10 @@
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo, useCallback } from 'react';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { css, type CssStyles } from '@repo/styles/css';
+import { useAppDispatch } from '../../../../../data/store/hooks.ts';
 import SwitchIcon from '../../../../../../images/switcher.svg?react';
 import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
-import { useAppDispatch } from '../../../../../../store.ts';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

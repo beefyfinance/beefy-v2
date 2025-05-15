@@ -1,10 +1,10 @@
 import { memo, useMemo } from 'react';
 import { Trans } from 'react-i18next';
-import { type VaultEntity, type VaultGov } from '../../../../data/entities/vault.ts';
-import { type CommonHelper, isGovCommonHelper, useCommonHelper } from './common.tsx';
-import { selectGovVaultEarnedTokens } from '../../../../data/selectors/tokens.ts';
-import { useAppSelector } from '../../../../../store.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
 import type { TokenEntity } from '../../../../data/entities/token.ts';
+import { type VaultEntity, type VaultGov } from '../../../../data/entities/vault.ts';
+import { selectGovVaultEarnedTokens } from '../../../../data/selectors/tokens.ts';
+import { type CommonHelper, isGovCommonHelper, useCommonHelper } from './common.ts';
 
 type GovHelper = CommonHelper<VaultGov> & {
   earnedTokens: TokenEntity[];

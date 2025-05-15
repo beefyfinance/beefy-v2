@@ -1,11 +1,11 @@
 import { memo, useCallback } from 'react';
-import { TechLoader } from '../../TechLoader/TechLoader.tsx';
-import { useAppDispatch, useAppSelector } from '../../../store.ts';
-import { selectTenderlyStatus } from '../../../features/data/selectors/tenderly.ts';
-import { Button } from '../../Button/Button.tsx';
 import { tenderlyOpenLogin } from '../../../features/data/reducers/tenderly.ts';
-import { VerticalLayout } from '../Layout/VerticalLayout.tsx';
+import { selectTenderlyStatus } from '../../../features/data/selectors/tenderly.ts';
+import { useAppDispatch, useAppSelector } from '../../../features/data/store/hooks.ts';
+import { Button } from '../../Button/Button.tsx';
+import { TechLoader } from '../../TechLoader/TechLoader.tsx';
 import { ErrorMessage } from '../Error/ErrorMessage.tsx';
+import { VerticalLayout } from '../Layout/VerticalLayout.tsx';
 
 export const SimulateForm = memo(function CallsForm() {
   const dispatch = useAppDispatch();

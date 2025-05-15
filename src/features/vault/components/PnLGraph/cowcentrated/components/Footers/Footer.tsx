@@ -1,12 +1,12 @@
-import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
-import { memo, useCallback, useMemo } from 'react';
-import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
-import { styles } from './styles.ts';
-import { useTranslation } from 'react-i18next';
 import { css, type CssStyles } from '@repo/styles/css';
-import { useAppSelector } from '../../../../../../../store.ts';
-import { selectCowcentratedLikeVaultDepositTokens } from '../../../../../../data/selectors/tokens.ts';
+import { memo, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ToggleButtons } from '../../../../../../../components/ToggleButtons/ToggleButtons.tsx';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../../data/store/hooks.ts';
+import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
+import { selectCowcentratedLikeVaultDepositTokens } from '../../../../../../data/selectors/tokens.ts';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -44,12 +44,12 @@ export const OverviewFooter = memo(function OverviewFooter({
   return (
     <div className={css(styles.footer, cssProp)}>
       <div className={classes.legendContainer}>
-        {position ? (
+        {position ?
           <div className={classes.legendItem}>
             <div className={classes.positionReferenceLine} />
             {t('Position')}
           </div>
-        ) : null}
+        : null}
         <div className={classes.legendItem}>
           <div className={classes.usdReferenceLine} />
           {t('Position Value')}

@@ -1,10 +1,13 @@
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import type { PropsWithChildren } from 'react';
 import { memo, useMemo } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
+import { useMediaQuery } from '../../../../../../components/MediaQueries/useMediaQuery.ts';
+import { TokenImage, VaultImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent.tsx';
+import { DivWithTooltip } from '../../../../../../components/Tooltip/DivWithTooltip.tsx';
 import { formatLargeUsd } from '../../../../../../helpers/format.ts';
-import { useAppSelector } from '../../../../../../store.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import {
   isVaultHoldingEntity,
@@ -14,9 +17,6 @@ import {
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { styles } from './styles.ts';
-import { TokenImage, VaultImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
-import { useMediaQuery } from '../../../../../../components/MediaQueries/useMediaQuery.ts';
-import { DivWithTooltip } from '../../../../../../components/Tooltip/DivWithTooltip.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 

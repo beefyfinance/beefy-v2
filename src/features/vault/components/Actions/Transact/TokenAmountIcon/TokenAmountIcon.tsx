@@ -1,20 +1,20 @@
+import { css, type CssStyles } from '@repo/styles/css';
+import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { memo, useMemo } from 'react';
-import type BigNumber from 'bignumber.js';
+import { IconLoader } from '../../../../../../components/IconLoader/IconLoader.tsx';
+import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
+import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { TokenImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
+import { formatLargeUsd } from '../../../../../../helpers/format.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
-import { useAppSelector } from '../../../../../../store.ts';
 import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
 } from '../../../../../data/selectors/tokens.ts';
-import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
-import { formatLargeUsd } from '../../../../../../helpers/format.ts';
-import { TokenImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { styles } from './styles.ts';
-import { css, type CssStyles } from '@repo/styles/css';
-import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
-import { IconLoader } from '../../../../../../components/IconLoader/IconLoader.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 

@@ -18,7 +18,9 @@ export const Source = memo(function Source({ title, claim, refresh, children }: 
       <div className={classes.rewards}>
         <div className={classes.titleHolder}>
           <div className={classes.title}>{title}</div>
-          {refresh ? <div className={classes.refresh}>{refresh}</div> : null}
+          {refresh ?
+            <div className={classes.refresh}>{refresh}</div>
+          : null}
         </div>
         {children}
       </div>

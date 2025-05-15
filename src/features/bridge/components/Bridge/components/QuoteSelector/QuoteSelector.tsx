@@ -1,6 +1,19 @@
+import { css, type CssStyles } from '@repo/styles/css';
+import BigNumber from 'bignumber.js';
 import { memo, type ReactNode, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
+import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
+import { getBridgeProviderIcon } from '../../../../../../helpers/bridgeProviderSrc.ts';
+import { formatMinutesDuration } from '../../../../../../helpers/date.ts';
+import { formatLargeUsd, formatTokenDisplayCondensed } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import Lock from '../../../../../../images/icons/mui/Lock.svg?react';
+import MonetizationOn from '../../../../../../images/icons/mui/MonetizationOn.svg?react';
+import Timer from '../../../../../../images/icons/mui/Timer.svg?react';
+import type { BeefyAnyBridgeConfig } from '../../../../../data/apis/config-types.ts';
+import { bridgeActions } from '../../../../../data/reducers/wallet/bridge.ts';
 import {
   selectBridgeConfigById,
   selectBridgeFormState,
@@ -13,21 +26,8 @@ import {
   selectBridgeQuoteSelectedId,
   selectBridgeQuoteStatus,
 } from '../../../../../data/selectors/bridge.ts';
-import { formatLargeUsd, formatTokenDisplayCondensed } from '../../../../../../helpers/format.ts';
-import { bridgeActions } from '../../../../../data/reducers/wallet/bridge.ts';
-import { css, type CssStyles } from '@repo/styles/css';
-import { getBridgeProviderIcon } from '../../../../../../helpers/bridgeProviderSrc.ts';
-import Lock from '../../../../../../images/icons/mui/Lock.svg?react';
-import MonetizationOn from '../../../../../../images/icons/mui/MonetizationOn.svg?react';
-import Timer from '../../../../../../images/icons/mui/Timer.svg?react';
-import { styles } from './styles.ts';
-import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
-import type { BeefyAnyBridgeConfig } from '../../../../../data/apis/config-types.ts';
-import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
-import { useTranslation } from 'react-i18next';
-import { formatMinutesDuration } from '../../../../../../helpers/date.ts';
 import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens.ts';
-import BigNumber from 'bignumber.js';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectApyVaultUIData } from '../../features/data/selectors/apy.ts';
 import { formatTotalApy } from '../../helpers/format.ts';
-import { useAppSelector } from '../../store.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { LabeledStat } from '../LabeledStat/LabeledStat.tsx';
 import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
-
 import { ApyTooltipContent } from '../VaultStats/ApyTooltipContent.tsx';
 
 type ApyStatsProps = {

@@ -15,9 +15,13 @@ export const NavItemInner = memo<NavItemInnerProps>(function NavItemInner({
       <Icon />
       <Title>
         {t(title)}
-        {Badge ? <Badge /> : null}
+        {Badge ?
+          <Badge />
+        : null}
       </Title>
-      {Arrow ? <Arrow /> : null}
+      {Arrow ?
+        <Arrow />
+      : null}
     </>
   );
 });

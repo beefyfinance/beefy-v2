@@ -1,14 +1,20 @@
-import type { BeefyState } from '../../../redux-types.ts';
-import type { VaultEntity } from '../entities/vault.ts';
-import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
-import type { TokenEntity } from '../entities/token.ts';
 import { createSelector } from '@reduxjs/toolkit';
-import { selectVaultShouldShowInterest } from './data-loader.ts';
-import { allDataApiBuckets } from '../apis/beefy/beefy-data-api-helpers.ts';
 import { fromKeys } from '../../../helpers/object.ts';
 import type { ChartApiPoint, ChartStat } from '../../vault/components/HistoricGraph/types.ts';
+import { allDataApiBuckets } from '../apis/beefy/beefy-data-api-helpers.ts';
+import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
+import type { TokenEntity } from '../entities/token.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import type { BeefyState } from '../store/types.ts';
+import {
+  createGlobalDataSelector,
+  createShouldLoaderLoadRecentEvaluator,
+} from './data-loader-helpers.ts';
+
+import { selectVaultShouldShowInterest } from './vaults.ts';
 
 const unavailableBuckets = fromKeys(allDataApiBuckets, false);
+const neverDispatchedBuckets = fromKeys(allDataApiBuckets, 0);
 
 export function selectHistoricalRangesStatus(state: BeefyState, vaultId: VaultEntity['id']) {
   return state.biz.historical.ranges.byVaultId[vaultId]?.status || 'idle';
@@ -217,6 +223,36 @@ export function selectHistoricalCowcentratedRangesAlreadyFulfilledBuckets(
   );
 }
 
+export function selectHistoricalPriceLastDispatchBuckets(
+  state: BeefyState,
+  oracleId: TokenEntity['oracleId']
+) {
+  return state.biz.historical.prices.byOracleId[oracleId]?.lastDispatch || neverDispatchedBuckets;
+}
+
+export function selectHistoricalApyLastDispatchBuckets(
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) {
+  return state.biz.historical.apys.byVaultId[vaultId]?.lastDispatch || neverDispatchedBuckets;
+}
+
+export function selectHistoricalTvlLastDispatchBuckets(
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) {
+  return state.biz.historical.tvls.byVaultId[vaultId]?.lastDispatch || neverDispatchedBuckets;
+}
+
+export function selectHistoricalCowcentratedRangesLastDispatchBuckets(
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) {
+  return (
+    state.biz.historical.clmPositions.byVaultId[vaultId]?.lastDispatch || neverDispatchedBuckets
+  );
+}
+
 export function selectHistoricalPriceBucketHasData(
   state: BeefyState,
   oracleId: TokenEntity['oracleId'],
@@ -279,6 +315,54 @@ export function selectHistoricalCowcentratedRangesBucketAlreadyFulfilled(
   bucket: ApiTimeBucket
 ) {
   return selectHistoricalCowcentratedRangesAlreadyFulfilledBuckets(state, vaultId)[bucket];
+}
+
+export function selectHistoricalPriceBucketDispatchedRecently(
+  state: BeefyState,
+  oracleId: TokenEntity['oracleId'],
+  bucket: ApiTimeBucket,
+  recentSeconds = 15
+) {
+  return (
+    selectHistoricalPriceLastDispatchBuckets(state, oracleId)[bucket] >=
+    Date.now() - recentSeconds * 1000
+  );
+}
+
+export function selectHistoricalApyBucketDispatchedRecently(
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  bucket: ApiTimeBucket,
+  recentSeconds = 15
+) {
+  return (
+    selectHistoricalApyLastDispatchBuckets(state, vaultId)[bucket] >=
+    Date.now() - recentSeconds * 1000
+  );
+}
+
+export function selectHistoricalTvlBucketDispatchedRecently(
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  bucket: ApiTimeBucket,
+  recentSeconds = 15
+) {
+  return (
+    selectHistoricalTvlLastDispatchBuckets(state, vaultId)[bucket] >=
+    Date.now() - recentSeconds * 1000
+  );
+}
+
+export function selectHistoricalCowcentratedRangesBucketDispatchedRecently(
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  bucket: ApiTimeBucket,
+  recentSeconds = 15
+) {
+  return (
+    selectHistoricalCowcentratedRangesLastDispatchBuckets(state, vaultId)[bucket] >=
+    Date.now() - recentSeconds * 1000
+  );
 }
 
 export function selectHistoricalBucketStatus(
@@ -364,6 +448,33 @@ export function selectHistoricalBucketAlreadyFulfilled(
   throw new Error(`Unknown stat: ${stat}`);
 }
 
+export function selectHistoricalBucketDispatchedRecently(
+  state: BeefyState,
+  stat: ChartStat,
+  vaultId: VaultEntity['id'],
+  oracleId: TokenEntity['oracleId'],
+  bucket: ApiTimeBucket,
+  recentSeconds = 15
+) {
+  switch (stat) {
+    case 'apy':
+      return selectHistoricalApyBucketDispatchedRecently(state, vaultId, bucket, recentSeconds);
+    case 'tvl':
+      return selectHistoricalTvlBucketDispatchedRecently(state, vaultId, bucket, recentSeconds);
+    case 'price':
+      return selectHistoricalPriceBucketDispatchedRecently(state, oracleId, bucket, recentSeconds);
+    case 'clm':
+      return selectHistoricalCowcentratedRangesBucketDispatchedRecently(
+        state,
+        vaultId,
+        bucket,
+        recentSeconds
+      );
+  }
+
+  throw new Error(`Unknown stat: ${stat}`);
+}
+
 type HistoricalBucketData<TStat extends ChartStat> = ChartApiPoint<TStat>[] | undefined;
 
 export function selectHistoricalBucketData<TStat extends ChartStat>(
@@ -389,3 +500,9 @@ export function selectHistoricalBucketData<TStat extends ChartStat>(
 
   throw new Error(`Unknown stat: ${stat}`);
 }
+
+export const selectShouldLoadAllCurrentCowcentratedRanges = createGlobalDataSelector(
+  'currentCowcentratedRanges',
+  createShouldLoaderLoadRecentEvaluator(3 * 60),
+  5
+);

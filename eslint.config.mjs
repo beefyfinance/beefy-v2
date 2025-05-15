@@ -45,7 +45,7 @@ export default tseslint.config(
       ...reactX.configs['recommended-typescript'].rules,
       ...reactDom.configs.recommended.rules,
       // so react-refresh can work (without having to refresh whole page)
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'react-refresh/only-export-components': 'error',
       // faster dev build/refresh
       'no-barrel-files/no-barrel-files': 'error',
       // faster dev build/refresh
@@ -144,5 +144,5 @@ export default tseslint.config(
       // 'react-x/no-children-prop': 'off',
       'react-hooks/exhaustive-deps': 'warn',
     },
-  }
+  },
 );

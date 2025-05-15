@@ -1,7 +1,7 @@
-import type { BeefyState } from '../../../redux-types.ts';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import type { BeefyState } from '../store/types.ts';
 
 export const selectAllowanceByTokenAddress = (
   state: BeefyState,

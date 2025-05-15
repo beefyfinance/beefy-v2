@@ -1,12 +1,12 @@
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
-import { selectFilterPlatforms } from '../../../../../data/selectors/platforms.ts';
-import { selectFilterPlatformIds } from '../../../../../data/selectors/filtered-vaults.ts';
-import type { PlatformEntity } from '../../../../../data/entities/platform.ts';
 import { SelectMultiple } from '../../../../../../components/Form/Select/Multi/SelectMultiple.tsx';
 import type { SelectMultiProps } from '../../../../../../components/Form/Select/types.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import type { PlatformEntity } from '../../../../../data/entities/platform.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
+import { selectFilterPlatformIds } from '../../../../../data/selectors/filtered-vaults.ts';
+import { selectFilterPlatforms } from '../../../../../data/selectors/platforms.ts';
 
 interface PlatformDropdownFilterProps {
   placement?: SelectMultiProps['placement'];

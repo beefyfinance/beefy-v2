@@ -1,9 +1,9 @@
 import { memo, useCallback } from 'react';
-import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
+import { useAppDispatch } from '../../../../../data/store/hooks.ts';
+import { transactSwitchMode } from '../../../../../data/actions/transact.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { useAppDispatch } from '../../../../../../store.ts';
-import { DepositTokensNotice } from './DepositTokensNotice.tsx';
 import type { UnifiedRewardToken } from '../../../../../data/selectors/rewards.ts';
+import { DepositTokensNotice } from './DepositTokensNotice.tsx';
 
 export type DepositClaimNoticeProps = {
   rewardTokens: UnifiedRewardToken[];
@@ -14,7 +14,7 @@ const DepositClaimNotice = memo(function DepositClaimNotice({
 }: DepositClaimNoticeProps) {
   const dispatch = useAppDispatch();
   const handleTab = useCallback(() => {
-    dispatch(transactActions.switchMode(TransactMode.Claim));
+    dispatch(transactSwitchMode(TransactMode.Claim));
   }, [dispatch]);
   return (
     <DepositTokensNotice

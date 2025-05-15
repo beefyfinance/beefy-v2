@@ -1,11 +1,11 @@
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../../store.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
   selectFilteredVaultCount,
   selectTotalVaultCount,
 } from '../../../../../data/selectors/filtered-vaults.ts';
-import { css, type CssStyles } from '@repo/styles/css';
 
 export type ShownVaultsCountProps = {
   css?: CssStyles;

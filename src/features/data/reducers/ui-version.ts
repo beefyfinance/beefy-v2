@@ -1,27 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-
-export type BuildVersion = {
-  /** git commit hash of build */
-  git?: string;
-  /** unix timestamp of build */
-  timestamp: number;
-  /** manifest content hash of build */
-  content: string;
-};
-
-export type NewVersionAvailable = {
-  currentVersion: BuildVersion;
-  newVersion: BuildVersion;
-  reloadFailed: boolean;
-};
-
-export type VersionState =
-  | {
-      updateAvailable: false;
-    }
-  | ({
-      updateAvailable: true;
-    } & NewVersionAvailable);
+import type { NewVersionAvailable, VersionState } from './ui-version-types.ts';
 
 const initialState: VersionState = {
   updateAvailable: false,

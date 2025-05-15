@@ -1,12 +1,12 @@
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
-import { useTranslation } from 'react-i18next';
-import OpenInNewRoundedIcon from '../../../../images/icons/mui/OpenInNewRounded.svg?react';
-import { selectChainById } from '../../../../features/data/selectors/chains.ts';
-import { styles } from './styles.ts';
-import { useAppSelector } from '../../../../store.ts';
-import { selectStepperChainId } from '../../../../features/data/selectors/stepper.ts';
-import { explorerTxUrl } from '../../../../helpers/url.ts';
 import { css } from '@repo/styles/css';
+import { useTranslation } from 'react-i18next';
+import { selectChainById } from '../../../../features/data/selectors/chains.ts';
+import { selectStepperChainId } from '../../../../features/data/selectors/stepper.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { explorerTxUrl } from '../../../../helpers/url.ts';
+import { useAppSelector } from '../../../../features/data/store/hooks.ts';
+import OpenInNewRoundedIcon from '../../../../images/icons/mui/OpenInNewRounded.svg?react';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -22,11 +22,9 @@ export function TransactionLink() {
   }
 
   const hash =
-    walletActionsState.result === 'success'
-      ? walletActionsState.data.receipt.transactionHash
-      : walletActionsState.result === 'success_pending'
-        ? walletActionsState.data.hash
-        : '';
+    walletActionsState.result === 'success' ? walletActionsState.data.receipt.transactionHash
+    : walletActionsState.result === 'success_pending' ? walletActionsState.data.hash
+    : '';
 
   if (!hash) {
     return null;

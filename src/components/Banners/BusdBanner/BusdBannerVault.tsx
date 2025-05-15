@@ -1,7 +1,7 @@
 import { memo } from 'react';
-import { useAppSelector } from '../../../store.ts';
-import { selectVaultById } from '../../../features/data/selectors/vaults.ts';
 import type { VaultEntity } from '../../../features/data/entities/vault.ts';
+import { selectVaultById } from '../../../features/data/selectors/vaults.ts';
+import { useAppSelector } from '../../../features/data/store/hooks.ts';
 import { BusdBanner } from './BusdBanner.tsx';
 
 export type BusdBannerVaultProps = {

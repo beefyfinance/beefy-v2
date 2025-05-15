@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { useAppSelector } from '../../../../store.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
 import { TokenCard } from '../DetailsCards/TokenCard.tsx';

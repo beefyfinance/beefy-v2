@@ -1,13 +1,13 @@
-import type { BeefyState } from '../../../redux-types.ts';
-import type { VaultEntity } from '../entities/vault.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { getUnixTime, isAfter } from 'date-fns';
-import { selectVaultRawTvl } from './tvl.ts';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
-import type { MerklRewardsCampaign, StellaSwapRewardsCampaign } from '../reducers/rewards-types.ts';
-import { isNonEmptyArray } from '../utils/array-utils.ts';
 import { uniqBy } from 'lodash-es';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { TokenEntity } from '../entities/token.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import type { MerklRewardsCampaign, StellaSwapRewardsCampaign } from '../reducers/rewards-types.ts';
+import type { BeefyState } from '../store/types.ts';
+import { isNonEmptyArray } from '../utils/array-utils.ts';
+import { selectVaultRawTvl } from './tvl.ts';
 
 export type UnifiedRewardToken = Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'chainId'>;
 

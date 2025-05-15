@@ -1,9 +1,9 @@
 import { memo } from 'react';
-import type { PromoCardProps } from './types.ts';
-import { CampaignPromoCard, PartnersPromoCard } from './PromoCard.tsx';
-import { useAppSelector } from '../../../../store.ts';
-import { selectBoostActiveRewardTokens } from '../../../data/selectors/boosts.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import type { BoostPromoEntity } from '../../../data/entities/promo.ts';
+import { selectBoostActiveRewardTokens } from '../../../data/selectors/boosts.ts';
+import { CampaignPromoCard, PartnersPromoCard } from './PromoCard.tsx';
+import type { PromoCardProps } from './types.ts';
 
 const BoostCard = memo(function BoostCard({ promo }: PromoCardProps<BoostPromoEntity>) {
   const rewards = useAppSelector(state => selectBoostActiveRewardTokens(state, promo.id));

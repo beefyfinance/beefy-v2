@@ -1,15 +1,15 @@
-import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
-import type { VaultEntity } from '../../../entities/vault.ts';
-import type BigNumber from 'bignumber.js';
-import type { BeefyState } from '../../../../../redux-types.ts';
-import { selectTokenByAddress } from '../../../selectors/tokens.ts';
-import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number.ts';
-import { buildExecute, buildFetchBalance } from '../utils.ts';
-import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Abi, Address } from 'abitype';
-import { getWalletConnectionApi } from '../../instances.ts';
+import type BigNumber from 'bignumber.js';
 import type { Hash } from 'viem';
+import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number.ts';
 import type { ChainEntity } from '../../../entities/chain.ts';
+import type { VaultEntity } from '../../../entities/vault.ts';
+import { selectTokenByAddress } from '../../../selectors/tokens.ts';
+import type { BeefyState } from '../../../store/types.ts';
+import { getWalletConnectionApi } from '../../instances.ts';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
+import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
+import { buildExecute, buildFetchBalance } from '../utils.ts';
 
 const id = 'magpie';
 

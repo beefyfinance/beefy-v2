@@ -1,17 +1,17 @@
+import { type CssStyles } from '@repo/styles/css';
+import BigNumber from 'bignumber.js';
 import { memo, useCallback } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
+import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance.ts';
+import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens.ts';
 import {
   selectTransactInputIndexAmount,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
-import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance.ts';
 import type { AmountInputProps } from '../AmountInput/AmountInput.tsx';
-import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
-import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens.ts';
-import BigNumber from 'bignumber.js';
 import { AmountInputWithSlider } from '../AmountInputWithSlider/AmountInputWithSlider.tsx';
 import { TokenSelectButton } from '../TokenSelectButton/TokenSelectButton.tsx';
-import { type CssStyles } from '@repo/styles/css';
 
 export type WithdrawTokenAmountInputProps = {
   css?: CssStyles;
@@ -34,7 +34,7 @@ export const WithdrawTokenAmountInput = memo(function WithdrawTokenAmountInput({
   const handleChange = useCallback<NonNullable<AmountInputProps['onChange']>>(
     (value, isMax) => {
       dispatch(
-        transactActions.setInputAmount({
+        transactSetInputAmount({
           index: 0,
           amount: value.decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR),
           max: isMax,
@@ -51,7 +51,7 @@ export const WithdrawTokenAmountInput = memo(function WithdrawTokenAmountInput({
       onChange={handleChange}
       value={value}
       price={price}
-      selectedToken={depositToken}
+      tokenDecimals={depositToken.decimals}
       endAdornment={<TokenSelectButton index={0} />}
     />
   );

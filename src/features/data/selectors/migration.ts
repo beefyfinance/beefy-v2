@@ -1,12 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types.ts';
-import type { VaultEntity } from '../entities/vault.ts';
-import { selectWalletAddress } from './wallet.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
-import { selectVaultById } from './vaults.ts';
-import type { MigrationConfig } from '../reducers/wallet/migration.ts';
-import { isLoaderIdle } from './data-loader-helpers.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import type { MigrationConfig } from '../reducers/wallet/migration-types.ts';
+import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
+import { isLoaderIdle } from './data-loader-helpers.ts';
+import { selectVaultById } from './vaults.ts';
+import { selectWalletAddress } from './wallet.ts';
 
 export const selectShouldInitMigration = (state: BeefyState) =>
   isLoaderIdle(state.ui.dataLoader.global.migrators);

@@ -1,21 +1,21 @@
+import { styled } from '@repo/styles/jsx';
+import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StatLoader } from '../../../StatLoader/StatLoader.tsx';
-import {
-  selectIsBalanceHidden,
-  selectIsWalletConnected,
-  selectWalletAddress,
-} from '../../../../features/data/selectors/wallet.ts';
 import {
   askForWalletConnection,
   doDisconnectWallet,
 } from '../../../../features/data/actions/wallet.ts';
-import { selectIsWalletPending } from '../../../../features/data/selectors/data-loader.ts';
-import { useAppDispatch, useAppSelector } from '../../../../store.ts';
-import { formatAddressShort, formatDomain } from '../../../../helpers/format.ts';
-import { useResolveAddress } from '../../../../features/data/hooks/resolver.tsx';
+import { useResolveAddress } from '../../../../features/data/hooks/resolver.ts';
 import { isFulfilledStatus } from '../../../../features/data/reducers/wallet/resolver-types.ts';
-import { styled } from '@repo/styles/jsx';
-import { memo, useCallback } from 'react';
+import {
+  selectIsBalanceHidden,
+  selectIsWalletConnected,
+  selectIsWalletPending,
+  selectWalletAddress,
+} from '../../../../features/data/selectors/wallet.ts';
+import { formatAddressShort, formatDomain } from '../../../../helpers/format.ts';
+import { useAppDispatch, useAppSelector } from '../../../../features/data/store/hooks.ts';
+import { StatLoader } from '../../../StatLoader/StatLoader.tsx';
 
 const WalletContainer = memo(function WalletContainer() {
   const dispatch = useAppDispatch();
@@ -37,19 +37,23 @@ const WalletContainer = memo(function WalletContainer() {
   return (
     <Button
       onClick={handleWalletConnect}
-      status={isWalletConnected ? 'connected' : walletAddress ? 'known' : 'unknown'}
+      status={
+        isWalletConnected ? 'connected'
+        : walletAddress ?
+          'known'
+        : 'unknown'
+      }
     >
-      {walletPending && !walletAddress ? (
+      {walletPending && !walletAddress ?
         <StatLoader foregroundColor="#68BE71" backgroundColor="#004708" />
-      ) : (
-        <Address blurred={blurred}>
-          {walletAddress
-            ? isFulfilledStatus(resolverStatus)
-              ? formatDomain(resolverStatus.value)
-              : formatAddressShort(walletAddress)
-            : t('Network-ConnectWallet')}
+      : <Address blurred={blurred}>
+          {walletAddress ?
+            isFulfilledStatus(resolverStatus) ?
+              formatDomain(resolverStatus.value)
+            : formatAddressShort(walletAddress)
+          : t('Network-ConnectWallet')}
         </Address>
-      )}
+      }
     </Button>
   );
 });

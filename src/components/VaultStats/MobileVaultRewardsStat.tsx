@@ -1,14 +1,14 @@
-import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { memo } from 'react';
-import { formatLargeUsd } from '../../helpers/format.ts';
-import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
-import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
-import { PendingRewardsIconWithTooltip } from '../RewardsTooltip/RewardsTooltip.tsx';
-import { useAppSelector } from '../../store.ts';
+import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import {
   DashboardDataStatus,
   selectDashboardUserRewardsOrStatusByVaultId,
 } from '../../features/data/selectors/dashboard.ts';
+import { formatLargeUsd } from '../../helpers/format.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
+import { PendingRewardsIconWithTooltip } from '../RewardsTooltip/RewardsTooltip.tsx';
+import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
+import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
 
 export type MobileVaultRewardsStatProps = {
   vaultId: VaultEntity['id'];

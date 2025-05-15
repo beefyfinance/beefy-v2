@@ -1,34 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type BigNumber from 'bignumber.js';
-import { fetchAllAllowanceAction, fetchAllowanceAction } from '../../actions/allowance.ts';
-import type { TokenAllowance } from '../../apis/allowance/allowance-types.ts';
 import type { Draft } from 'immer';
-import type { ChainEntity } from '../../entities/chain.ts';
-import type { TokenEntity } from '../../entities/token.ts';
-import { accountHasChanged, walletHasDisconnected } from './wallet.ts';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens.ts';
+import { fetchAllAllowanceAction, fetchAllowanceAction } from '../../actions/allowance.ts';
 import { initiateBoostForm } from '../../actions/boosts.ts';
 import { initiateMinterForm } from '../../actions/minters.ts';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens.ts';
+import type { TokenAllowance } from '../../apis/allowance/allowance-types.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
 import { selectMinterById } from '../../selectors/minters.ts';
-
-/**
- * State containing user allowances state
- * Allowance being the amount allowed to be spent big a contract
- * for the currently connected user
- */
-export interface AllowanceState {
-  byChainId: {
-    [chainId in ChainEntity['id']]?: {
-      byTokenAddress: {
-        [tokenAddress: TokenEntity['address']]: {
-          bySpenderAddress: {
-            [spenderAddress: string]: BigNumber;
-          };
-        };
-      };
-    };
-  };
-}
+import type { AllowanceState } from './allowance-types.ts';
+import { accountHasChanged, walletHasDisconnected } from './wallet.ts';
 
 export const initialAllowanceState: AllowanceState = { byChainId: {} };
 

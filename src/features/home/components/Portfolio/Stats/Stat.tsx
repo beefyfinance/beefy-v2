@@ -29,7 +29,11 @@ export const Stat = memo<StatProps>(function UserStat({
         )}
       </Label>
       <Value blurred={!loading && blurred}>
-        {loading ? <StatLoader /> : blurred ? '$100' : value}
+        {loading ?
+          <StatLoader />
+        : blurred ?
+          '$100'
+        : value}
       </Value>
     </StatContainer>
   );

@@ -1,13 +1,13 @@
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from '../../../../components/MediaQueries/useMediaQuery.ts';
 import { Section } from '../../../../components/Section/Section.tsx';
-import { useAppSelector } from '../../../../store.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
+import type { ChainEntity, ChainId } from '../../../data/entities/chain.ts';
 import { selectTreasurySorted } from '../../../data/selectors/treasury.ts';
 import { ChainHolding, MMHolding } from './components/ChainHolding/ChainHolding.tsx';
 import { styles } from './styles.ts';
-import type { ChainEntity, ChainId } from '../../../data/entities/chain.ts';
-import { useMediaQuery } from '../../../../components/MediaQueries/useMediaQuery.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -53,7 +53,13 @@ function useTreasuryColumns(numColumns: number) {
 function useNumColumns() {
   const isDesktop = useMediaQuery('(min-width: 1296px)', false);
   const isTablet = useMediaQuery('(min-width: 960px)', false);
-  return useMemo(() => (isDesktop ? 3 : isTablet ? 2 : 1), [isDesktop, isTablet]);
+  return useMemo(
+    () =>
+      isDesktop ? 3
+      : isTablet ? 2
+      : 1,
+    [isDesktop, isTablet]
+  );
 }
 
 export const DaoHoldings = memo(function DaoHoldings() {
@@ -68,11 +74,9 @@ export const DaoHoldings = memo(function DaoHoldings() {
         {treasuryColumns.map((columns, i) => (
           <div key={i} className={classes.column}>
             {columns.map(col =>
-              col.type === 'chain' ? (
+              col.type === 'chain' ?
                 <ChainHolding key={col.id} chainId={col.id as ChainEntity['id']} />
-              ) : (
-                <MMHolding key={col.id} mmId={col.id} />
-              )
+              : <MMHolding key={col.id} mmId={col.id} />
             )}
           </div>
         ))}

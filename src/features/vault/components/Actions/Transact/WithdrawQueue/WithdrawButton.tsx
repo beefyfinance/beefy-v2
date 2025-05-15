@@ -1,13 +1,13 @@
 import { memo, type MouseEventHandler } from 'react';
-import type { ChainEntity } from '../../../../../data/entities/chain.ts';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button/Button.tsx';
-import { useAppSelector } from '../../../../../../store.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../../../../data/selectors/wallet.ts';
 import { ActionConnect, ActionSwitch } from '../CommonActions/CommonActions.tsx';
-import { useTranslation } from 'react-i18next';
 
 type WithdrawButtonProps = {
   chainId: ChainEntity['id'];

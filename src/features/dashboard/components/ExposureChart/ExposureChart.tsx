@@ -15,13 +15,15 @@ export const ExposureChart = memo(function ExposureChart({
 
   return (
     <div className={classes.container}>
-      {title ? <div className={classes.title}>{title}</div> : null}
-      {rest.data ? (
+      {title ?
+        <div className={classes.title}>{title}</div>
+      : null}
+      {rest.data ?
         <div className={classes.infoContainer}>
           <PieChart {...rest} />
           <ChartDetails data={rest.data} />
         </div>
-      ) : null}
+      : null}
     </div>
   );
 });

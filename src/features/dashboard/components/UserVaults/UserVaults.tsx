@@ -1,13 +1,7 @@
-import { useTranslation } from 'react-i18next';
-import { forwardRef, memo, type Ref, useMemo } from 'react';
-import { Section } from '../../../../components/Section/Section.tsx';
-import { Filter } from './components/Filter/Filter.tsx';
-import { Vault } from './components/Vault/Vault.tsx';
-import { useSortedDashboardVaults } from './hook.ts';
-import type { VaultEntity } from '../../../data/entities/vault.ts';
-import { NoVaults } from './components/NoVaults/NoVaults.tsx';
-import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
 import { css } from '@repo/styles/css';
+import { forwardRef, memo, type Ref, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { NavigationType, useNavigationType } from 'react-router';
 import {
   type Components,
   type ContextProp,
@@ -15,9 +9,15 @@ import {
   type ListProps,
   Virtuoso,
 } from 'react-virtuoso';
-import { useAppSelector } from '../../../../store.ts';
+import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { Section } from '../../../../components/Section/Section.tsx';
+import { useAppSelector } from '../../../data/store/hooks.ts';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { selectLastViewedDashboardVaultId } from '../../../data/selectors/vaults-list.ts';
-import { useNavigationType, NavigationType } from 'react-router';
+import { Filter } from './components/Filter/Filter.tsx';
+import { NoVaults } from './components/NoVaults/NoVaults.tsx';
+import { Vault } from './components/Vault/Vault.tsx';
+import { useSortedDashboardVaults } from './hook.ts';
 
 export type UserVaultsProps = {
   address: string;

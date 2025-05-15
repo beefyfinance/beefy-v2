@@ -10,10 +10,14 @@ export const Banner = memo<BannerProps>(function Banner({ icon, text, onClose, v
     <div className={classes.banner}>
       <div className={classes.box}>
         <div className={classes.content}>
-          {icon ? <div className={classes.icon}>{icon}</div> : null}
+          {icon ?
+            <div className={classes.icon}>{icon}</div>
+          : null}
           <div className={classes.text}>{text}</div>
         </div>
-        {onClose ? <Clear onClick={onClose} className={classes.cross} /> : null}
+        {onClose ?
+          <Clear onClick={onClose} className={classes.cross} />
+        : null}
       </div>
     </div>
   );

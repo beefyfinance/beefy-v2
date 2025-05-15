@@ -1,6 +1,5 @@
 // To run: yarn launchpool bsc <0x12312312> CafeSwap
 import { promises as fs } from 'fs';
-
 import { addressBookToAppId, type AppChainId, getVaultsForChain } from './common/config.ts';
 import { BoostAbi } from '../src/config/abi/BoostAbi.ts';
 import { ERC20Abi } from '../src/config/abi/ERC20Abi.ts';

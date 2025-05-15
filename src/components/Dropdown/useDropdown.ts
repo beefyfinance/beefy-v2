@@ -58,21 +58,21 @@ export function useDropdown<TRef extends ReferenceType = Element>({
       }),
       shiftMiddleware({ padding: 16 }),
       arrowEnabled ? arrowMiddleware({ element: arrowRef, padding: 16 }) : undefined,
-      autoWidth || autoHeight
-        ? sizeMiddleware({
-            padding: 16,
-            apply({ availableWidth, availableHeight, elements }) {
-              if (autoWidth) {
-                elements.floating.style.width =
-                  elements.reference.getBoundingClientRect().width + 'px';
-                elements.floating.style.maxWidth = availableWidth + 'px';
-              }
-              if (autoHeight) {
-                elements.floating.style.maxHeight = availableHeight + 'px';
-              }
-            },
-          })
-        : undefined,
+      autoWidth || autoHeight ?
+        sizeMiddleware({
+          padding: 16,
+          apply({ availableWidth, availableHeight, elements }) {
+            if (autoWidth) {
+              elements.floating.style.width =
+                elements.reference.getBoundingClientRect().width + 'px';
+              elements.floating.style.maxWidth = availableWidth + 'px';
+            }
+            if (autoHeight) {
+              elements.floating.style.maxHeight = availableHeight + 'px';
+            }
+          },
+        })
+      : undefined,
     ].filter(isDefined);
   }, [offset, arrowHeight, placement, arrowRef, arrowEnabled, autoWidth, autoHeight]);
 
@@ -95,9 +95,9 @@ export function useDropdown<TRef extends ReferenceType = Element>({
   const interactions = useInteractions([click, dismiss, role]);
   const arrow = useMemo(
     () =>
-      arrowEnabled
-        ? { width: arrowWidth, height: arrowHeight, ref: arrowRef, staticOffset: arrowOffset }
-        : false,
+      arrowEnabled ?
+        { width: arrowWidth, height: arrowHeight, ref: arrowRef, staticOffset: arrowOffset }
+      : false,
     [arrowEnabled, arrowWidth, arrowHeight, arrowRef, arrowOffset]
   );
   const baseGetReferenceProps = interactions.getReferenceProps;

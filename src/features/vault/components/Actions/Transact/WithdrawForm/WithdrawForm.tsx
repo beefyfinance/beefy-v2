@@ -1,8 +1,18 @@
+import { styled } from '@repo/styles/jsx';
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
+import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
+import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
+import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { errorToString } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { useAppSelector } from '../../../../../../store.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import zapIcon from '../../../../../../images/icons/zap.svg';
+import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
+import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance.ts';
 import {
   selectTransactForceSelection,
   selectTransactNumTokens,
@@ -10,24 +20,14 @@ import {
   selectTransactOptionsStatus,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
-import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance.ts';
-import { errorToString } from '../../../../../../helpers/format.ts';
-import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
-import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
-import { TransactQuote } from '../TransactQuote/TransactQuote.tsx';
-import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
-import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { WithdrawTokenAmountInput } from '../WithdrawTokenAmountInput/WithdrawTokenAmountInput.tsx';
-import { WithdrawActions } from '../WithdrawActions/WithdrawActions.tsx';
-import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
-import zapIcon from '../../../../../../images/icons/zap.svg';
-import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice/WithdrawnInWalletNotice.tsx';
-import { useDispatch } from 'react-redux';
-import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
-import { styled } from '@repo/styles/jsx';
-import { WithdrawQueueLoader } from '../WithdrawQueue/WithdrawQueueLoader.tsx';
 import { FormFooter } from '../FormFooter/FormFooter.tsx';
+import { TransactQuote } from '../TransactQuote/TransactQuote.tsx';
+import { WithdrawActions } from '../WithdrawActions/WithdrawActions.tsx';
+import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice/WithdrawnInWalletNotice.tsx';
+import { WithdrawQueueLoader } from '../WithdrawQueue/WithdrawQueueLoader.tsx';
+import { WithdrawTokenAmountInput } from '../WithdrawTokenAmountInput/WithdrawTokenAmountInput.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -42,7 +42,7 @@ const DepositedInVault = memo(function DepositedInVault() {
   const handleMax = useCallback(() => {
     if (tokenAmount) {
       dispatch(
-        transactActions.setInputAmount({
+        transactSetInputAmount({
           index: 0,
           amount: tokenAmount.amount,
           max: true,

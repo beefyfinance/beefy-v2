@@ -1,28 +1,28 @@
+import { styled } from '@repo/styles/jsx';
+import { token } from '@repo/styles/tokens';
 import { memo, useCallback } from 'react';
+import type { TenderlyState } from '../../features/data/reducers/tenderly-types.ts';
+import { tenderlyClose } from '../../features/data/reducers/tenderly.ts';
 import {
   selectTenderlyErrorOrUndefined,
   selectTenderlyMode,
   selectTenderlyStatus,
 } from '../../features/data/selectors/tenderly.ts';
-import { useAppDispatch, useAppSelector } from '../../store.ts';
-import { Modal } from '../Modal/Modal.tsx';
-import { tenderlyClose } from '../../features/data/reducers/tenderly.ts';
 import { Card } from '../../features/vault/components/Card/Card.tsx';
 import { CardContent } from '../../features/vault/components/Card/CardContent.tsx';
 import { CardHeader } from '../../features/vault/components/Card/CardHeader.tsx';
 import { CardTitle } from '../../features/vault/components/Card/CardTitle.tsx';
-import CloseIcon from '../../images/icons/mui/Close.svg?react';
-import { styles } from './styles.ts';
-import { ResultForm } from './Result/ResultForm.tsx';
-import { RequestForm } from './Request/RequestForm.tsx';
-import { LoginForm } from './Login/LoginForm.tsx';
-import { CallsForm } from './Calls/CallsForm.tsx';
-import logoUrl from './logo.svg';
-import { SimulateForm } from './Simulate/SimulateForm.tsx';
-import type { TenderlyState } from '../../features/data/reducers/tenderly-types.ts';
-import { styled } from '@repo/styles/jsx';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
-import { token } from '@repo/styles/tokens';
+import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
+import CloseIcon from '../../images/icons/mui/Close.svg?react';
+import { Modal } from '../Modal/Modal.tsx';
+import { CallsForm } from './Calls/CallsForm.tsx';
+import { LoginForm } from './Login/LoginForm.tsx';
+import logoUrl from './logo.svg';
+import { RequestForm } from './Request/RequestForm.tsx';
+import { ResultForm } from './Result/ResultForm.tsx';
+import { SimulateForm } from './Simulate/SimulateForm.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -35,7 +35,9 @@ const FallbackMode = memo(function FallbackMode() {
     <>
       <div>{mode}</div>
       <div>{status}</div>
-      {error ? <div>{error.message || error.name || 'unknown error'}</div> : null}
+      {error ?
+        <div>{error.message || error.name || 'unknown error'}</div>
+      : null}
     </>
   );
 });
@@ -91,7 +93,9 @@ export const Tenderly = memo(function Tenderly() {
 
   return (
     <Modal open={open} onClose={handleClose}>
-      {open ? <TenderlyModal mode={mode} onClose={handleClose} /> : null}
+      {open ?
+        <TenderlyModal mode={mode} onClose={handleClose} />
+      : null}
     </Modal>
   );
 });

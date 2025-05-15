@@ -1,20 +1,20 @@
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { css } from '@repo/styles/css';
 import { Fragment, memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Collapsable } from '../../../../components/Collapsable/Collapsable.tsx';
+import { IconWithBasicTooltip } from '../../../../components/Tooltip/IconWithBasicTooltip.tsx';
 import { SCORED_RISKS } from '../../../../config/risk.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
 import { Card } from '../Card/Card.tsx';
-import { CardHeader } from '../Card/CardHeader.tsx';
 import { CardContent } from '../Card/CardContent.tsx';
+import { CardHeader } from '../Card/CardHeader.tsx';
+import { NoSafuRisks } from '../NoSafuRisks/NoSafuRisks.tsx';
+import down from './down.svg';
 import { styles } from './styles.ts';
 import up from './up.svg';
-import down from './down.svg';
-import { selectVaultById } from '../../../data/selectors/vaults.ts';
-import type { VaultEntity } from '../../../data/entities/vault.ts';
-import { useAppSelector } from '../../../../store.ts';
-import { Collapsable } from '../../../../components/Collapsable/Collapsable.tsx';
-import { css } from '@repo/styles/css';
-import { NoSafuRisks } from '../NoSafuRisks/NoSafuRisks.tsx';
-import { IconWithBasicTooltip } from '../../../../components/Tooltip/IconWithBasicTooltip.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -36,15 +36,14 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
               {SCORED_RISKS[risk] && (
                 <div className={classes.riskRow}>
                   <div className={classes.infoContainer}>
-                    {SCORED_RISKS[risk].score <= 0 ? (
+                    {SCORED_RISKS[risk].score <= 0 ?
                       <img alt="Positive score" src={up} className={css(styles.arrow, styles.up)} />
-                    ) : (
-                      <img
+                    : <img
                         alt="Negative score"
                         src={down}
                         className={css(styles.arrow, styles.down)}
                       />
-                    )}
+                    }
                     <div>
                       <div className={classes.moreInfoContainer}>
                         <div className={classes.risk}>

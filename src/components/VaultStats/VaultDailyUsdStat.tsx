@@ -2,15 +2,13 @@ import { memo } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
   selectDidAPIReturnValuesForVault,
+  selectIsVaultApyAvailable,
   selectYieldStatsByVaultId,
 } from '../../features/data/selectors/apy.ts';
-import {
-  selectIsVaultApyAvailable,
-  selectVaultShouldShowInterest,
-} from '../../features/data/selectors/data-loader.ts';
+import { selectVaultShouldShowInterest } from '../../features/data/selectors/vaults.ts';
+import type { BeefyState } from '../../features/data/store/types.ts';
 import { formatLargeUsd } from '../../helpers/format.ts';
-import type { BeefyState } from '../../redux-types.ts';
-import { useAppSelector } from '../../store.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 
 export type VaultDailyUsdStatProps = {

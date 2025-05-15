@@ -1,14 +1,14 @@
+import { css } from '@repo/styles/css';
 import { memo } from 'react';
-import { useAppSelector } from '../../../../store.ts';
 import { selectTokenPriceByTokenOracleId } from '../../../../features/data/selectors/tokens.ts';
-import { Icon } from './Icon.tsx';
 import { formatLargeUsd } from '../../../../helpers/format.ts';
-import { ActionLink } from './Action.tsx';
+import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import llamaSwapIcon from '../../../../images/icons/llama-swap.png';
 import shadowSwapIcon from '../../../../images/platforms/shadow.svg';
+import { ActionLink } from './Action.tsx';
 import { AddToWalletButton } from './AddToWalletButton.tsx';
-import { css } from '@repo/styles/css';
 import { type Token, tokens } from './config.ts';
+import { Icon } from './Icon.tsx';
 
 const buyPlatforms: Record<
   NonNullable<Token['buyLink']>['platform'],
@@ -51,14 +51,14 @@ const TokenRow = memo<TooltipTokenProps>(function TokenRow({ token }) {
       <ActionLink href={explorer.url} title={`View at ${explorer.name}`}>
         <Icon alt={explorer.name} src={explorer.icon} />
       </ActionLink>
-      {buyLink ? (
+      {buyLink ?
         <ActionLink href={buyLink.url} title={buyPlatforms[buyLink.platform].title}>
           <Icon
             alt={buyPlatforms[buyLink.platform].title}
             src={buyPlatforms[buyLink.platform].icon}
           />
         </ActionLink>
-      ) : null}
+      : null}
       <AddToWalletButton
         title={`Add to Wallet`}
         chainId={chainId}

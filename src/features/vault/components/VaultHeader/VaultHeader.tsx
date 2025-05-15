@@ -1,23 +1,23 @@
+import { css } from '@repo/styles/css';
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { VaultIdImage } from '../../../../components/TokenImage/TokenImage.tsx';
+import { VaultClmLikeTag } from '../../../../components/VaultIdentity/components/VaultTags/VaultTags.tsx';
+import { VaultPlatform } from '../../../../components/VaultPlatform/VaultPlatform.tsx';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { punctuationWrap } from '../../../../helpers/string.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedLikeVault,
   type VaultEntity,
 } from '../../../data/entities/vault.ts';
-import { selectVaultById } from '../../../data/selectors/vaults.ts';
-import { useAppSelector } from '../../../../store.ts';
 import { selectChainById } from '../../../data/selectors/chains.ts';
-import { useTranslation } from 'react-i18next';
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
-import { VaultPlatform } from '../../../../components/VaultPlatform/VaultPlatform.tsx';
-import { styles } from './styles.ts';
-import { ShareButton } from '../ShareButton/ShareButton.tsx';
-import { punctuationWrap } from '../../../../helpers/string.ts';
-import { SaveButton } from '../SaveButton/SaveButton.tsx';
-import { VaultClmLikeTag } from '../../../../components/VaultIdentity/components/VaultTags/VaultTags.tsx';
-import { css } from '@repo/styles/css';
 import { selectVaultIsBoostedForFilter } from '../../../data/selectors/filtered-vaults.ts';
-import { VaultIdImage } from '../../../../components/TokenImage/TokenImage.tsx';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
+import { SaveButton } from '../SaveButton/SaveButton.tsx';
+import { ShareButton } from '../ShareButton/ShareButton.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

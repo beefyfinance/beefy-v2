@@ -1,14 +1,27 @@
+import { css } from '@repo/styles/css';
+import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AssetsImage } from '../../../../components/AssetsImage/AssetsImage.tsx';
+import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink.tsx';
+import { PriceWithChange } from '../../../../components/PriceWithChange/PriceWithChange.tsx';
+import { explorerTokenUrl } from '../../../../helpers/url.ts';
+import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
+import Code from '../../../../images/icons/mui/Code.svg?react';
+import Link from '../../../../images/icons/mui/Link.svg?react';
+import DocsIcon from '../../../../images/icons/navigation/docs.svg?react';
 import { fetchAddressBookAction } from '../../../data/actions/tokens.ts';
 import type { ChainEntity } from '../../../data/entities/chain.ts';
 import type { TokenEntity } from '../../../data/entities/token.ts';
 import { isTokenErc20, isTokenNative } from '../../../data/entities/token.ts';
+import { selectBridgeByIdIfKnown } from '../../../data/selectors/bridges.ts';
 import { selectChainById } from '../../../data/selectors/chains.ts';
 import {
   selectIsAddressBookLoaded,
+  selectIsTokenLoaded,
   selectShouldInitAddressBook,
-} from '../../../data/selectors/data-loader.ts';
-import { selectIsTokenLoaded, selectTokenById } from '../../../data/selectors/tokens.ts';
+  selectTokenById,
+} from '../../../data/selectors/tokens.ts';
+import { BridgeTag, NativeTag } from '../BridgeTag/BridgeTag.tsx';
 import {
   AssetIconSymbol,
   AssetsBridgePrice,
@@ -19,18 +32,6 @@ import {
   styles,
   TitleContainer,
 } from './styles.ts';
-import { useAppDispatch, useAppSelector } from '../../../../store.ts';
-import { AssetsImage } from '../../../../components/AssetsImage/AssetsImage.tsx';
-import { selectBridgeByIdIfKnown } from '../../../data/selectors/bridges.ts';
-import { BridgeTag, NativeTag } from '../BridgeTag/BridgeTag.tsx';
-import { explorerTokenUrl } from '../../../../helpers/url.ts';
-import { PriceWithChange } from '../../../../components/PriceWithChange/PriceWithChange.tsx';
-import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink.tsx';
-import Code from '../../../../images/icons/mui/Code.svg?react';
-import Link from '../../../../images/icons/mui/Link.svg?react';
-import DocsIcon from '../../../../images/icons/navigation/docs.svg?react';
-import { memo, useEffect } from 'react';
-import { css } from '@repo/styles/css';
 
 function TokenCardDisplay({ token }: { token: TokenEntity }) {
   const { t } = useTranslation();
@@ -75,11 +76,11 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
           )}
         </Links>
         <AssetsBridgePrice>
-          {isNative ? (
+          {isNative ?
             <NativeTag chain={chain} />
-          ) : bridge ? (
+          : bridge ?
             <BridgeTag bridge={bridge} chain={chain} />
-          ) : null}
+          : null}
           <PriceWithChange oracleId={token.oracleId} />
         </AssetsBridgePrice>
       </TitleContainer>

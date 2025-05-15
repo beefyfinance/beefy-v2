@@ -1,17 +1,17 @@
-import { memo, type ReactNode, useCallback, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
-import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import { styled } from '@repo/styles/jsx';
-import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import { Trans, useTranslation } from 'react-i18next';
-import { selectDepositTokenByVaultId } from '../../../../../data/selectors/tokens.ts';
 import type BigNumber from 'bignumber.js';
-import type { VaultEntity } from '../../../../../data/entities/vault.ts';
-import { extractTagFromLpSymbol } from '../../../../../../helpers/tokens.ts';
+import { memo, type ReactNode, useCallback, useMemo } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
-import { ActionTokensNotice } from './ActionTokensNotice.tsx';
 import { VaultDepositTokenImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
+import { extractTagFromLpSymbol } from '../../../../../../helpers/tokens.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { transactSwitchMode } from '../../../../../data/actions/transact.ts';
+import type { VaultEntity } from '../../../../../data/entities/vault.ts';
+import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { selectDepositTokenByVaultId } from '../../../../../data/selectors/tokens.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { ActionTokensNotice } from './ActionTokensNotice.tsx';
 
 type WithdrawBoostNoticeProps = {
   vaultId: VaultEntity['id'];
@@ -46,7 +46,7 @@ const WithdrawBoostNotice = memo(function WithdrawBoostNotice({
     );
   }, [depositToken, balance, vault, t]);
   const handleTab = useCallback(() => {
-    dispatch(transactActions.switchMode(TransactMode.Boost));
+    dispatch(transactSwitchMode(TransactMode.Boost));
   }, [dispatch]);
 
   return <ActionTokensNotice onClick={handleTab} children={inner} />;

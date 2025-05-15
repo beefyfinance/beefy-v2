@@ -1,7 +1,15 @@
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
+import { TokenImage, TokensImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
+import zapIcon from '../../../../../../images/icons/zap.svg';
+import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
+import type { TokenEntity } from '../../../../../data/entities/token.ts';
+import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectTransactForceSelection,
   selectTransactNumTokens,
@@ -9,16 +17,8 @@ import {
   selectTransactSelected,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
-import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
-import { css, type CssStyles } from '@repo/styles/css';
-import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
-import { TokenImage, TokensImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
-import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
-import zapIcon from '../../../../../../images/icons/zap.svg';
-import { useTranslation } from 'react-i18next';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import type { TokenEntity } from '../../../../../data/entities/token.ts';
-import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -43,7 +43,7 @@ export const TokenSelectButton = memo(function TokenSelectButton({
   const canSwitchToTokenSelect = index === 0 && numTokenOptions > 1;
 
   const handleClick = useCallback(() => {
-    dispatch(transactActions.switchStep(TransactStep.TokenSelect));
+    dispatch(transactSwitchStep(TransactStep.TokenSelect));
   }, [dispatch]);
 
   const tokenSymbol = useMemo(() => {

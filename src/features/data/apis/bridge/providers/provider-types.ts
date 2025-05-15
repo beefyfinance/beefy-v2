@@ -1,11 +1,11 @@
+import type BigNumber from 'bignumber.js';
+import type { TFunction } from 'react-i18next';
+import type { ChainEntity } from '../../../entities/chain.ts';
+import type { TokenErc20, TokenNative } from '../../../entities/token.ts';
+import type { Step } from '../../../reducers/wallet/stepper-types.ts';
+import type { BeefyState } from '../../../store/types.ts';
 import type { BeefyAnyBridgeConfig } from '../../config-types.ts';
 import type { InputTokenAmount, TokenAmount } from '../../transact/transact-types.ts';
-import type { ChainEntity } from '../../../entities/chain.ts';
-import type { BeefyState } from '../../../../../redux-types.ts';
-import type { TokenErc20, TokenNative } from '../../../entities/token.ts';
-import type BigNumber from 'bignumber.js';
-import type { Step } from '../../../reducers/wallet/stepper.ts';
-import type { TFunction } from 'react-i18next';
 
 export interface TokenAllowance {
   amount: BigNumber;

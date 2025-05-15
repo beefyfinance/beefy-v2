@@ -1,21 +1,21 @@
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CardTitle } from '../../Card/CardTitle.tsx';
-import { StandardDescription } from '../Description/StandardDescription.tsx';
-import { selectVaultTotalApyOrUndefined } from '../../../../data/selectors/apy.ts';
+import { getApyLabelsTypeForVault } from '../../../../../helpers/apy.ts';
+import { explorerAddressUrl } from '../../../../../helpers/url.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
 import { shouldVaultShowInterest, type VaultEntity } from '../../../../data/entities/vault.ts';
+import { selectVaultTotalApyOrUndefined } from '../../../../data/selectors/apy.ts';
+import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../data/selectors/boosts.ts';
+import { selectChainById } from '../../../../data/selectors/chains.ts';
 import {
   selectStandardVaultById,
   selectVaultStrategyAddressOrUndefined,
 } from '../../../../data/selectors/vaults.ts';
-import { selectChainById } from '../../../../data/selectors/chains.ts';
-import { useAppSelector } from '../../../../../store.ts';
-import { explorerAddressUrl } from '../../../../../helpers/url.ts';
+import { CardTitle } from '../../Card/CardTitle.tsx';
 import { ApyDetails } from '../ApyDetails/ApyDetails.tsx';
-import { LendingOracle } from '../LendingOracle/LendingOracle.tsx';
+import { StandardDescription } from '../Description/StandardDescription.tsx';
 import { ExplainerCard } from '../ExplainerCard/ExplainerCard.tsx';
-import { getApyLabelsTypeForVault } from '../../../../../helpers/apy.ts';
-import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../data/selectors/boosts.ts';
+import { LendingOracle } from '../LendingOracle/LendingOracle.tsx';
 
 type StandardExplainerProps = {
   vaultId: VaultEntity['id'];
@@ -65,10 +65,12 @@ const StandardExplainer = memo(function StandardExplainer({ vaultId }: StandardE
       description={<StandardDescription vaultId={vaultId} />}
       details={
         <>
-          {showApy ? (
+          {showApy ?
             <ApyDetails type={getApyLabelsTypeForVault(vault, apys.totalType)} values={apys} />
-          ) : null}
-          {showLendingOracle ? <LendingOracle vaultId={vault.id} /> : null}
+          : null}
+          {showLendingOracle ?
+            <LendingOracle vaultId={vault.id} />
+          : null}
         </>
       }
     />

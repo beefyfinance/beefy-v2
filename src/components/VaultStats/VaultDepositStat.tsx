@@ -3,30 +3,29 @@ import { memo } from 'react';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
+  selectIsBalanceAvailableForChainUser,
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInDepositTokenIncludingDisplaced,
   selectUserVaultBalanceInUsdIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInDepositToken,
 } from '../../features/data/selectors/balance.ts';
-import {
-  selectIsBalanceAvailableForChainUser,
-  selectIsPricesAvailable,
-} from '../../features/data/selectors/data-loader.ts';
+
+import { selectIsPricesAvailable } from '../../features/data/selectors/prices.ts';
 import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import {
   selectIsBalanceHidden,
   selectWalletAddress,
 } from '../../features/data/selectors/wallet.ts';
+import type { BeefyState } from '../../features/data/store/types.ts';
 import { BIG_ZERO } from '../../helpers/big-number.ts';
 import {
   formatLargeUsd,
   formatTokenDisplay,
   formatTokenDisplayCondensed,
 } from '../../helpers/format.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
 import ExclaimRoundedSquare from '../../images/icons/exclaim-rounded-square.svg?react';
-import type { BeefyState } from '../../redux-types.ts';
-import { useAppSelector } from '../../store.ts';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent.tsx';
 import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip.tsx';
 import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';

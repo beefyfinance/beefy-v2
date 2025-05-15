@@ -27,13 +27,13 @@ export const ClmPnlTooltipContent = memo(function ClmPnlTooltipContent({
         <div className={classes.label}>{t('Base PNL')}</div>
         <div className={classes.value}>{formatLargeUsd(pnl.base.usd)}</div>
       </div>
-      {yields.claimed.sources.length ? (
+      {yields.claimed.sources.length ?
         <>
           <div className={classes.itemContainer}>
             <div className={classes.label}>{t('Claimed Rewards')}</div>
             <div className={classes.value}>{formatLargeUsd(yields.claimed.usd)}</div>
           </div>
-          {detailed ? (
+          {detailed ?
             <div className={classes.valueBreakdown}>
               {yields.claimed.sources.map(source => (
                 <Fragment key={`${source.source}-${source.token.symbol}`}>
@@ -46,16 +46,16 @@ export const ClmPnlTooltipContent = memo(function ClmPnlTooltipContent({
                 </Fragment>
               ))}
             </div>
-          ) : null}
+          : null}
         </>
-      ) : null}
-      {yields.pending.sources.length ? (
+      : null}
+      {yields.pending.sources.length ?
         <>
           <div className={classes.itemContainer}>
             <div className={classes.label}>{t('Unclaimed Rewards')}</div>
             <div className={classes.value}>{formatLargeUsd(yields.pending.usd)}</div>
           </div>
-          {detailed ? (
+          {detailed ?
             <div className={classes.valueBreakdown}>
               {yields.pending.sources.map(source => (
                 <Fragment key={`${source.source}-${source.token.symbol}`}>
@@ -68,9 +68,9 @@ export const ClmPnlTooltipContent = memo(function ClmPnlTooltipContent({
                 </Fragment>
               ))}
             </div>
-          ) : null}
+          : null}
         </>
-      ) : null}
+      : null}
       <div className={classes.itemContainer}>
         <div className={css(styles.label, styles.totalLabel)}>{t('Total PNL')}</div>
         <div className={css(styles.label, styles.totalValue)}>

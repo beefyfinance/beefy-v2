@@ -1,8 +1,23 @@
+import { styled } from '@repo/styles/jsx';
 import { memo, type ReactNode, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
+import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
+import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
+import {
+  TokenAmount,
+  TokenAmountFromEntity,
+} from '../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { errorToString } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import zapIcon from '../../../../../../images/icons/zap.svg';
+import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
+import type { TokenEntity } from '../../../../../data/entities/token.ts';
+import { isVaultActive } from '../../../../../data/entities/vault.ts';
+import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
 import {
   selectTransactForceSelection,
   selectTransactNumTokens,
@@ -11,30 +26,15 @@ import {
   selectTransactSelected,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
-import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
-import { errorToString } from '../../../../../../helpers/format.ts';
-import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
-import { DepositTokenAmountInput } from '../DepositTokenAmountInput/DepositTokenAmountInput.tsx';
-import { DepositBuyLinks } from '../DepositBuyLinks/DepositBuyLinks.tsx';
-import { DepositActions } from '../DepositActions/DepositActions.tsx';
-import { TransactQuote } from '../TransactQuote/TransactQuote.tsx';
-import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
-import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { RetirePauseReason } from '../../../RetirePauseReason/RetirePauseReason.tsx';
-import {
-  TokenAmount,
-  TokenAmountFromEntity,
-} from '../../../../../../components/TokenAmount/TokenAmount.tsx';
-import zapIcon from '../../../../../../images/icons/zap.svg';
-import { isVaultActive } from '../../../../../data/entities/vault.ts';
-import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
-import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
-import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { Actions } from '../Actions/Actions.tsx';
-import { styled } from '@repo/styles/jsx';
+import { DepositActions } from '../DepositActions/DepositActions.tsx';
+import { DepositBuyLinks } from '../DepositBuyLinks/DepositBuyLinks.tsx';
+import { DepositTokenAmountInput } from '../DepositTokenAmountInput/DepositTokenAmountInput.tsx';
 import { FormFooter } from '../FormFooter/FormFooter.tsx';
+import { TransactQuote } from '../TransactQuote/TransactQuote.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -52,7 +52,7 @@ const TokenInWallet = memo(function TokenInWallet({ token, index }: TokenInWalle
   const handleMax = useCallback(() => {
     if (token && balance) {
       dispatch(
-        transactActions.setInputAmount({
+        transactSetInputAmount({
           index,
           amount: balance,
           max: true,

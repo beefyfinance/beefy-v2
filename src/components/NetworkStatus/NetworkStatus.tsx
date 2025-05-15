@@ -1,36 +1,36 @@
-import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { css, cx } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
 import { isEqual, sortedUniq, uniq } from 'lodash-es';
 import { memo, type RefObject, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
-import { dataLoaderActions } from '../../features/data/reducers/data-loader.ts';
-import type { BeefyState } from '../../redux-types.ts';
-import { styles } from './styles.ts';
-import { useAppDispatch, useAppSelector } from '../../store.ts';
-import CloseIcon from '../../images/icons/mui/Close.svg?react';
 import type {
   DataLoaderState,
   LoaderState,
 } from '../../features/data/reducers/data-loader-types.ts';
+import { dataLoaderActions } from '../../features/data/reducers/data-loader.ts';
+import { selectChainById, selectEolChainIds } from '../../features/data/selectors/chains.ts';
+import {
+  isLoaderPending,
+  isLoaderRejected,
+} from '../../features/data/selectors/data-loader-helpers.ts';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
   selectWalletAddressIfKnown,
 } from '../../features/data/selectors/wallet.ts';
-import { selectChainById, selectEolChainIds } from '../../features/data/selectors/chains.ts';
-import { getNetworkSrc } from '../../helpers/networkSrc.ts';
-import iconUnsupportedChain from '../../images/icons/navigation/unsuported-chain.svg';
-import { entries } from '../../helpers/object.ts';
-import {
-  isLoaderPending,
-  isLoaderRejected,
-} from '../../features/data/selectors/data-loader-helpers.ts';
-import { styled } from '@repo/styles/jsx';
-import { DropdownTrigger } from '../Dropdown/DropdownTrigger.tsx';
-import { DropdownProvider } from '../Dropdown/DropdownProvider.tsx';
-import { DropdownContent } from '../Dropdown/DropdownContent.tsx';
+import type { BeefyState } from '../../features/data/store/types.ts';
 import { PulseHighlight } from '../../features/vault/components/PulseHighlight/PulseHighlight.tsx';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { getNetworkSrc } from '../../helpers/networkSrc.ts';
+import { entries } from '../../helpers/object.ts';
+import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
+import CloseIcon from '../../images/icons/mui/Close.svg?react';
+import iconUnsupportedChain from '../../images/icons/navigation/unsuported-chain.svg';
+import { DropdownContent } from '../Dropdown/DropdownContent.tsx';
+import { DropdownProvider } from '../Dropdown/DropdownProvider.tsx';
+import { DropdownTrigger } from '../Dropdown/DropdownTrigger.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -209,7 +209,7 @@ function useNetStatus<
   ) => R,
   M extends (state: LoaderState) => boolean = (state: LoaderState) => boolean,
 >(selector: S, matcher: M) {
-  return useAppSelector<R>(
+  return useAppSelector<BeefyState, R>(
     state => selector(state, matcher),
     // since we are returning a new array each time we select
     // use a comparator to avoid useless re-renders

@@ -1,6 +1,6 @@
 import { lazy, memo } from 'react';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { useAppSelector } from '../../../../../../store.ts';
 import {
   selectTransactMode,
   selectTransactVaultId,

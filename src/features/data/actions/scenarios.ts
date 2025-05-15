@@ -1,32 +1,32 @@
 import type { Action } from 'redux';
+import { chains as chainsConfig } from '../../../config/config.ts';
 import type { ChainEntity } from '../entities/chain.ts';
+import { recalculatePromoStatuses } from '../reducers/promos.ts';
+import { selectAllChainIds } from '../selectors/chains.ts';
 import { selectIsWalletKnown, selectWalletAddress } from '../selectors/wallet.ts';
+import type { BeefyDispatchFn, BeefyStateFn, BeefyThunk } from '../store/types.ts';
 import type { PollStop } from '../utils/async-utils.ts';
 import { createFulfilledActionCapturer, poll } from '../utils/async-utils.ts';
-import { fetchApyAction, fetchAvgApyAction } from './apy.ts';
-import { fetchChainConfigs } from './chains.ts';
-import { fetchAllPricesAction } from './prices.ts';
-import { fetchAllVaults, fetchVaultsLastHarvests } from './vaults.ts';
-import { fetchAllBalanceAction } from './balance.ts';
-import { fetchAllContractDataByChainAction } from './contract-data.ts';
 import { featureFlag_noDataPolling } from '../utils/feature-flags.ts';
-import type { BeefyStore, BeefyThunk } from '../../../redux-types.ts';
-import { chains as chainsConfig } from '../../../config/config.ts';
-import { initWallet } from './wallet.ts';
-import { fetchPartnersConfig } from './partners.ts';
-import { fetchAllAddressBookAction } from './tokens.ts';
-import { fetchPlatforms } from './platforms.ts';
-import { selectAllChainIds } from '../selectors/chains.ts';
+import { fetchApyAction, fetchAvgApyAction } from './apy.ts';
+import { fetchAllBalanceAction } from './balance.ts';
 import { fetchBridges } from './bridges.ts';
+import { fetchChainConfigs } from './chains.ts';
+import { fetchAllContractDataByChainAction } from './contract-data.ts';
+import { fetchPartnersConfig } from './partners.ts';
+import { fetchPlatforms } from './platforms.ts';
+import { fetchAllPricesAction } from './prices.ts';
+import { initPromos } from './promos.ts';
+import { fetchOffChainCampaignsAction } from './rewards.ts';
+import { fetchAllAddressBookAction } from './tokens.ts';
+import { fetchAllVaults, fetchVaultsLastHarvests } from './vaults.ts';
+import { initWallet } from './wallet.ts';
 import {
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
   fetchZapConfigsAction,
   fetchZapSwapAggregatorsAction,
 } from './zap.ts';
-import { fetchOffChainCampaignsAction } from './rewards.ts';
-import { initPromos } from './promos.ts';
-import { recalculatePromoStatuses } from '../reducers/promos.ts';
 
 declare const window: {
   __manual_poll?: () => unknown;
@@ -51,48 +51,48 @@ export const chains = chainsConfig.map(id => ({ id }));
 /**
  * Fetch all necessary information for the home page
  */
-export async function initAppData(store: BeefyStore) {
-  const captureFulfill = createFulfilledActionCapturer(store);
+export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStateFn) {
+  const captureFulfill = createFulfilledActionCapturer(dispatch, getState);
 
   // start fetching chain config
-  const chainListPromise = store.dispatch(fetchChainConfigs());
+  const chainListPromise = dispatch(fetchChainConfigs());
 
   // we fetch the configuration for all chain
-  const promosPromise = store.dispatch(initPromos());
-  const vaultsPromise = store.dispatch(fetchAllVaults());
+  const promosPromise = dispatch(initPromos());
+  const vaultsPromise = dispatch(fetchAllVaults());
 
   // we can start fetching prices right now and await them later
-  const pricesPromise = store.dispatch(fetchAllPricesAction());
+  const pricesPromise = dispatch(fetchAllPricesAction());
 
   // create the wallet instance as soon as we get the chain list
   setTimeout(() => {
     // we can start fetching apy, it will arrive when it wants, nothing depends on it
-    store.dispatch(fetchApyAction());
+    dispatch(fetchApyAction());
 
-    store.dispatch(fetchPartnersConfig());
+    dispatch(fetchPartnersConfig());
 
-    store.dispatch(fetchPlatforms());
+    dispatch(fetchPlatforms());
 
-    store.dispatch(fetchBridges());
+    dispatch(fetchBridges());
 
-    store.dispatch(fetchVaultsLastHarvests());
+    dispatch(fetchVaultsLastHarvests());
 
-    store.dispatch(fetchOffChainCampaignsAction());
+    dispatch(fetchOffChainCampaignsAction());
 
-    store.dispatch(fetchAvgApyAction());
+    dispatch(fetchAvgApyAction());
 
     // Zap (we need the data to know if zap is available for each vault)
-    store.dispatch(fetchZapConfigsAction());
-    store.dispatch(fetchZapSwapAggregatorsAction());
-    store.dispatch(fetchZapAggregatorTokenSupportAction());
-    store.dispatch(fetchZapAmmsAction());
+    dispatch(fetchZapConfigsAction());
+    dispatch(fetchZapSwapAggregatorsAction());
+    dispatch(fetchZapAggregatorTokenSupportAction());
+    dispatch(fetchZapAmmsAction());
   });
 
   // create the wallet instance as soon as we get the chain list
   setTimeout(() => {
     chainListPromise
       .then(() => {
-        store.dispatch(initWallet());
+        dispatch(initWallet());
       })
       .catch(console.error);
   });
@@ -100,7 +100,7 @@ export async function initAppData(store: BeefyStore) {
   // we need config data (for contract addresses) to start querying the rest
   await chainListPromise;
   // pre-load the addressbook
-  const addressBookPromise = store.dispatch(fetchAllAddressBookAction());
+  const addressBookPromise = dispatch(fetchAllAddressBookAction());
   // we need the chain list to handle the vault list
   await vaultsPromise;
   await promosPromise;
@@ -117,9 +117,14 @@ export async function initAppData(store: BeefyStore) {
       contractData: captureFulfill(fetchAllContractDataByChainAction({ chainId: chain.id })),
       user: undefined,
     };
-    const walletAddress = selectWalletAddress(store.getState());
+    const walletAddress = selectWalletAddress(getState());
     if (walletAddress) {
-      fulfillsByNet[chain.id]!.user = fetchCaptureUserData(store, chain.id, walletAddress);
+      fulfillsByNet[chain.id]!.user = fetchCaptureUserData(
+        dispatch,
+        getState,
+        chain.id,
+        walletAddress
+      );
     }
   }
 
@@ -133,9 +138,9 @@ export async function initAppData(store: BeefyStore) {
     (async () => {
       const chainFfs = fulfillsByNet[chain.id];
       if (chainFfs) {
-        store.dispatch((await chainFfs.contractData)());
+        dispatch((await chainFfs.contractData)());
         if (chainFfs.user !== undefined) {
-          return dispatchUserFfs(store, chainFfs.user);
+          return dispatchUserFfs(dispatch, chainFfs.user);
         }
       }
     })().catch(err => {
@@ -151,7 +156,7 @@ export async function initAppData(store: BeefyStore) {
   if (featureFlag_noDataPolling()) {
     console.debug('Polling disabled');
     try {
-      window['__manual_poll'] = () => store.dispatch(manualPoll());
+      window['__manual_poll'] = () => dispatch(manualPoll());
       console.debug('Use window.__manual_poll(); to simulate.');
     } catch {
       // ignore
@@ -167,20 +172,20 @@ export async function initAppData(store: BeefyStore) {
 
   // recompute boost activity status
   let pollStop = poll(async () => {
-    return store.dispatch(recalculatePromoStatuses());
+    return dispatch(recalculatePromoStatuses());
   }, 15 * 1000 /* every 15s */);
   pollStopFns.push(pollStop);
 
   // now set regular calls to update prices
   pollStop = poll(async () => {
-    return Promise.all([store.dispatch(fetchAllPricesAction()), store.dispatch(fetchApyAction())]);
+    return Promise.all([dispatch(fetchAllPricesAction()), dispatch(fetchApyAction())]);
   }, 45 * 1000 /* every 45s */);
   pollStopFns.push(pollStop);
 
   // regular calls to update last harvest
   pollStop = poll(
     async () => {
-      return store.dispatch(fetchVaultsLastHarvests());
+      return dispatch(fetchVaultsLastHarvests());
     },
     3 * 60 * 1000 /* every 3 minutes */
   );
@@ -195,7 +200,7 @@ export async function initAppData(store: BeefyStore) {
       };
 
       // dispatch fulfills in order
-      store.dispatch((await fulfills.contractData)());
+      dispatch((await fulfills.contractData)());
     }, 60 * 1000 /* every 60s */);
     pollStopFns.push(pollStop);
   }
@@ -203,15 +208,15 @@ export async function initAppData(store: BeefyStore) {
   // now set regular calls to update user data
   for (const chain of chains) {
     const pollStop = poll(async () => {
-      const walletAddress = selectWalletAddress(store.getState());
+      const walletAddress = selectWalletAddress(getState());
       if (!walletAddress) {
         return;
       }
       // trigger all calls at the same time
-      const fulfills = fetchCaptureUserData(store, chain.id, walletAddress);
+      const fulfills = fetchCaptureUserData(dispatch, getState, chain.id, walletAddress);
 
       // dispatch fulfills in order
-      await dispatchUserFfs(store, fulfills);
+      await dispatchUserFfs(dispatch, fulfills);
     }, 60 * 1000 /* every 60s */);
     pollStopFns.push(pollStop);
   }
@@ -242,11 +247,12 @@ export function manualPoll(): BeefyThunk {
 }
 
 export function fetchCaptureUserData(
-  store: BeefyStore,
+  dispatch: BeefyDispatchFn,
+  getState: BeefyStateFn,
   chainId: ChainEntity['id'],
   walletAddress: string
 ): Exclude<CapturedFulfilledActions['user'], undefined> {
-  const captureFulfill = createFulfilledActionCapturer(store);
+  const captureFulfill = createFulfilledActionCapturer(dispatch, getState);
 
   return {
     balance: captureFulfill(fetchAllBalanceAction({ chainId, walletAddress })),
@@ -256,9 +262,9 @@ export function fetchCaptureUserData(
 }
 
 export async function dispatchUserFfs(
-  store: BeefyStore,
+  dispatch: BeefyDispatchFn,
   userFfs: Exclude<CapturedFulfilledActions['user'], undefined>
 ) {
-  store.dispatch((await userFfs.balance)());
-  //store.dispatch((await userFfs.allowance)());
+  dispatch((await userFfs.balance)());
+  //dispatch((await userFfs.allowance)());
 }

@@ -14,6 +14,7 @@ type WithStatus<T extends object> = {
   status: LoadingStatus;
   error?: SerializedError;
   alreadyFulfilled: boolean;
+  lastDispatch: number;
 } & Partial<T>;
 
 export type RangeState = WithStatus<{
@@ -29,6 +30,7 @@ export type TimeBucketState<T extends AnyChartData = AnyChartData> = WithStatus<
 export type TimeBucketsState<T extends AnyChartData = AnyChartData> = {
   available: Record<ApiTimeBucket, boolean>;
   alreadyFulfilled: Record<ApiTimeBucket, boolean>;
+  lastDispatch: Record<ApiTimeBucket, number>;
   hasData: Record<ApiTimeBucket, boolean>;
   byTimeBucket: {
     [K in ApiTimeBucket]?: TimeBucketState<T>;

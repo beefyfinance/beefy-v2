@@ -1,21 +1,21 @@
-import { lazy, memo, type ReactNode } from 'react';
-import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { useAppSelector } from '../../../../../../store.ts';
-import {
-  selectTransactMode,
-  selectTransactVaultId,
-} from '../../../../../data/selectors/transact.ts';
 import { createSelector } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../../../../redux-types.ts';
-import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../../data/selectors/boosts.ts';
+import { lazy, memo, type ReactNode } from 'react';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import type { VaultEntity } from '../../../../../data/entities/vault.ts';
+import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectHasUserDepositInVault,
   selectUserVaultBalanceInDepositTokenInBoosts,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInShareToken,
 } from '../../../../../data/selectors/balance.ts';
-import type { VaultEntity } from '../../../../../data/entities/vault.ts';
+import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../../data/selectors/boosts.ts';
 import { selectVaultActiveExtraRewardTokens } from '../../../../../data/selectors/rewards.ts';
+import {
+  selectTransactMode,
+  selectTransactVaultId,
+} from '../../../../../data/selectors/transact.ts';
+import type { BeefyState } from '../../../../../data/store/types.ts';
 
 const BoostDepositNotice = lazy(() => import('./DepositBoostNotice.tsx'));
 const DepositClaimNotice = lazy(() => import('./DepositClaimNotice.tsx'));

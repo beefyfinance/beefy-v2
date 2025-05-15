@@ -1,88 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getUnixTime } from 'date-fns';
 import type { Draft } from 'immer';
 import { isEqual, keyBy, pick } from 'lodash-es';
+import { datesAreEqual, getUnixNow } from '../../../helpers/date.ts';
+import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
+import { initPromos, promosRecalculatePinned } from '../actions/promos.ts';
+import { fetchOffChainCampaignsAction } from '../actions/rewards.ts';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
+import type { BeefyOffChainRewardsCampaign } from '../apis/beefy/beefy-api-types.ts';
 import type {
-  BoostPromoEntity,
+  BoostContractData,
+  FetchAllContractDataResult,
+  GovVaultMultiContractData,
+} from '../apis/contract-data/contract-data-types.ts';
+import type {
   OffChainPromoEntity,
   PoolPromoEntity,
   PromoCampaignEntity,
   PromoEntity,
   PromoPartnerEntity,
 } from '../entities/promo.ts';
-import type { ChainEntity } from '../entities/chain.ts';
-import type { VaultEntity, VaultGov } from '../entities/vault.ts';
-import type { NormalizedEntity } from '../utils/normalized-entity.ts';
-import { initPromos, promosRecalculatePinned } from '../actions/promos.ts';
-import type {
-  BoostContractData,
-  FetchAllContractDataResult,
-  GovVaultMultiContractData,
-} from '../apis/contract-data/contract-data-types.ts';
-import { datesAreEqual, getUnixNow } from '../../../helpers/date.ts';
-import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
-import type { PinnedConfig } from '../apis/promos/types.ts';
-import { getUnixTime } from 'date-fns';
-import type { BeefyOffChainRewardsCampaign } from '../apis/beefy/beefy-api-types.ts';
-import { fetchOffChainCampaignsAction } from '../actions/rewards.ts';
-
-type OffchainRewardData = Pick<
-  BeefyOffChainRewardsCampaign,
-  'startTimestamp' | 'endTimestamp' | 'rewardToken' | 'type'
-> & {
-  apr: number;
-};
-
-export type PromosState = NormalizedEntity<PromoEntity> & {
-  byVaultId: {
-    [vaultId: VaultEntity['id']]: {
-      allIds: PromoEntity['id'][];
-      byType: {
-        [promoType in PromoEntity['type']]?: {
-          allIds: PromoEntity['id'][];
-        };
-      };
-    };
-  };
-  byType: {
-    [promoType in PromoEntity['type']]?: {
-      allIds: PromoEntity['id'][];
-      byChainId: {
-        [chainId in ChainEntity['id']]?: {
-          allIds: PromoEntity['id'][];
-        };
-      };
-    };
-  };
-  partners: {
-    allIds: PromoPartnerEntity['id'][];
-    byId: Record<PromoPartnerEntity['id'], PromoPartnerEntity>;
-  };
-  campaigns: {
-    allIds: PromoCampaignEntity['id'][];
-    byId: Record<PromoCampaignEntity['id'], PromoCampaignEntity>;
-  };
-  dataByType: {
-    boost: {
-      [boostId: BoostPromoEntity['id']]: BoostContractData;
-    };
-    pool: {
-      [vaultId: VaultGov['id']]: GovVaultMultiContractData;
-    };
-    offchain: {
-      [vaultId: VaultEntity['id']]: OffchainRewardData[];
-    };
-  };
-  statusById: {
-    [promoId: PromoEntity['id']]: 'active' | 'prestake' | 'inactive';
-  };
-  pinned: {
-    configs: PinnedConfig[];
-    byId: {
-      [vaultId: VaultEntity['id']]: boolean;
-    };
-  };
-};
+import type { OffchainRewardData, PromosState } from './promos-types.ts';
 
 export const initialPromosState: PromosState = {
   byId: {},
@@ -122,7 +60,7 @@ export const promosSlice = createSlice({
         sliceState.pinned.configs = action.payload.pinned;
       })
       .addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
-        addContractDataToState(sliceState, action.payload.data);
+        addContractDataToState(sliceState, action.payload.contractData);
       })
       .addCase(
         reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,

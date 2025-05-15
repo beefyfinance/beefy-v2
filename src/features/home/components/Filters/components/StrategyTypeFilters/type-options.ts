@@ -1,4 +1,4 @@
-import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults.ts';
+import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults-types.ts';
 
 export const TYPE_OPTIONS = {
   all: 'Filter-DropdwnDflt',

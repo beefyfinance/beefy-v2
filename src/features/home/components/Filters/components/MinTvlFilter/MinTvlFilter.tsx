@@ -1,19 +1,19 @@
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
+import BigNumber from 'bignumber.js';
 import { memo, useCallback, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useTranslation } from 'react-i18next';
+import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
+import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { formatLargeUsd } from '../../../../../../helpers/format.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import {
   selectFilterBigNumber,
   selectFilterBoolean,
+  selectMaximumUnderlyingVaultTvl,
 } from '../../../../../data/selectors/filtered-vaults.ts';
 import { AmountInputWithSlider } from '../../../../../vault/components/Actions/Transact/AmountInputWithSlider/AmountInputWithSlider.tsx';
-import { selectMaximumUnderlyingVaultTvl } from '../../../../../data/selectors/vaults.ts';
-import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number.ts';
-import BigNumber from 'bignumber.js';
-import { formatLargeUsd } from '../../../../../../helpers/format.ts';
-import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
 import { styles } from './styles.ts';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { useTranslation } from 'react-i18next';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -76,7 +76,7 @@ export const MinTvlFilter = memo(function MinTvlFilter() {
             value={value}
             maxValue={maxShownTvl}
             onChange={handleChange}
-            selectedToken={{ decimals: 10 }}
+            tokenDecimals={10}
             price={BIG_ONE}
             endAdornment={<span>{formatLargeUsd(maxShownTvl)}</span>}
           />

@@ -65,4 +65,9 @@ if (!command) {
   process.exit(1);
 }
 
-process.exit(await command());
+command()
+  .then(code => process.exit(code))
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });

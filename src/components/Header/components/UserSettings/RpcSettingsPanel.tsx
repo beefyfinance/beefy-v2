@@ -40,11 +40,9 @@ export const RpcSettingsPanel = memo(function RpcSettingsModal({
         </PanelCloseButton>
       </PanelHeader>
       <PanelContent>
-        {editChainId ? (
+        {editChainId ?
           <RpcEdit chainId={editChainId} onBack={onBack} />
-        ) : (
-          <RpcMenu onSelect={setEditChainId} />
-        )}
+        : <RpcMenu onSelect={setEditChainId} />}
       </PanelContent>
     </Panel>
   );

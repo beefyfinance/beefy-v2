@@ -1,15 +1,15 @@
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { memo, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { formatLargeUsd, formatTotalApy } from '../../../../../../helpers/format.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
-import { useAppSelector } from '../../../../../../store.ts';
 import {
   selectApyVaultUIData,
   selectYieldStatsByVaultId,
 } from '../../../../../data/selectors/apy.ts';
-import { formatLargeUsd, formatTotalApy } from '../../../../../../helpers/format.ts';
-import { useTranslation } from 'react-i18next';
-import { styles } from './styles.ts';
 import { MobileStat } from '../MobileStat/MobileStat.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

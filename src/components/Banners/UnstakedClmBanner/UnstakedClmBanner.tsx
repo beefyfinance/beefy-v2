@@ -1,12 +1,12 @@
 import { memo, useCallback } from 'react';
-import { selectUserUnstakedClms } from '../../../features/data/selectors/balance.ts';
-import { useAppDispatch, useAppSelector } from '../../../store.ts';
 import { Trans, useTranslation } from 'react-i18next';
-import { filteredVaultsActions } from '../../../features/data/reducers/filtered-vaults.ts';
 import { useNavigate } from 'react-router';
+import { filteredVaultsActions } from '../../../features/data/reducers/filtered-vaults.ts';
+import { selectUserUnstakedClms } from '../../../features/data/selectors/balance.ts';
+import { useAppDispatch, useAppSelector } from '../../../features/data/store/hooks.ts';
 import { ButtonLink } from '../Links/ButtonLink.tsx';
-import { UnstakedClmBannerVault } from './UnstakedClmBannerVault.tsx';
 import { ClmBanner } from './ClmBanner.tsx';
+import { UnstakedClmBannerVault } from './UnstakedClmBannerVault.tsx';
 
 export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
   const dispatch = useAppDispatch();

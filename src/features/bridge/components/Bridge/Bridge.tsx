@@ -1,16 +1,16 @@
 import type { FC } from 'react';
 import { memo, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
+import { initiateBridgeForm } from '../../../data/actions/bridge.ts';
+import { FormStep } from '../../../data/reducers/wallet/bridge-types.ts';
 import { selectBridgeFormStep } from '../../../data/selectors/bridge.ts';
+import { selectIsConfigAvailable } from '../../../data/selectors/config.ts';
 import { selectWalletAddressIfKnown } from '../../../data/selectors/wallet.ts';
-import { FormStep } from '../../../data/reducers/wallet/bridge.ts';
-import { PreviewStep } from './components/PreviewStep/PreviewStep.tsx';
 import { ConfirmStep } from './components/ConfirmStep/ConfirmStep.tsx';
+import { LoadingStep } from './components/LoadingStep/LoadingStep.tsx';
+import { PreviewStep } from './components/PreviewStep/PreviewStep.tsx';
 import { SelectFromChainStep } from './components/SelectFromChainStep/SelectFromChainStep.tsx';
 import { SelectToChainStep } from './components/SelectToChainStep/SelectToChainStep.tsx';
-import { initiateBridgeForm } from '../../../data/actions/bridge.ts';
-import { LoadingStep } from './components/LoadingStep/LoadingStep.tsx';
-import { selectIsConfigAvailable } from '../../../data/selectors/data-loader.ts';
 import { TransactionStep } from './components/TransactionStep/TransactionStep.tsx';
 
 const stepToComponent: Record<FormStep, FC> = {

@@ -1,25 +1,25 @@
+import { styled } from '@repo/styles/jsx';
+import { maxBy } from 'lodash-es';
 import { memo, useCallback, useMemo, useState } from 'react';
-import { selectVaultById } from '../../../../data/selectors/vaults.ts';
-import { selectBoostActiveRewards, selectBoostById } from '../../../../data/selectors/boosts.ts';
+import { Trans, useTranslation } from 'react-i18next';
+import { TimeUntil } from '../../../../../components/TimeUntil/TimeUntil.tsx';
+import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
 import type { BoostPromoEntity } from '../../../../data/entities/promo.ts';
+import { selectBoostAprByRewardToken } from '../../../../data/selectors/apy.ts';
 import {
   selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
   selectUserBalanceOfToken,
 } from '../../../../data/selectors/balance.ts';
-import { useAppSelector } from '../../../../../store.ts';
-import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
-import { ActionConnectSwitch } from './ActionConnectSwitch.tsx';
-import { type Reward, Rewards } from './Rewards.tsx';
+import { selectBoostActiveRewards, selectBoostById } from '../../../../data/selectors/boosts.ts';
+import { selectVaultById } from '../../../../data/selectors/vaults.ts';
 import { Claim } from './ActionButton/Claim.tsx';
 import { Unstake } from './ActionButton/Unstake.tsx';
+import { ActionConnectSwitch } from './ActionConnectSwitch.tsx';
 import { StakeInput } from './ActionInputButton/StakeInput.tsx';
 import { UnstakeInput } from './ActionInputButton/UnstakeInput.tsx';
-import { styled } from '@repo/styles/jsx';
-import { Trans, useTranslation } from 'react-i18next';
-import { maxBy } from 'lodash-es';
-import { selectBoostAprByRewardToken } from '../../../../data/selectors/apy.ts';
-import { TimeUntil } from '../../../../../components/TimeUntil/TimeUntil.tsx';
+import { type Reward, Rewards } from './Rewards.tsx';
 
 export const ActiveBoost = memo(function ActiveBoost({
   boostId,

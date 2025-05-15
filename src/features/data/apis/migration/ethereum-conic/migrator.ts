@@ -1,39 +1,36 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import type { Address } from 'abitype';
+import type BigNumber from 'bignumber.js';
+import type { Hash } from 'viem';
+import { ConicLpTokenStakerAbi } from '../../../../../config/abi/ConicLpTokenStakerAbi.ts';
+import { bigNumberToBigInt, fromWei, toWei } from '../../../../../helpers/big-number.ts';
+import { stepperStartWithSteps } from '../../../actions/wallet/stepper.ts';
+import { approve } from '../../../actions/wallet/approval.ts';
+import { migrateUnstake } from '../../../actions/wallet/migrate.ts';
+import { deposit } from '../../../actions/wallet/standard.ts';
+import { isTokenErc20 } from '../../../entities/token.ts';
+import type { VaultEntity } from '../../../entities/vault.ts';
+import type { Step } from '../../../reducers/wallet/stepper-types.ts';
+import { selectAllowanceByTokenAddress } from '../../../selectors/allowances.ts';
+import { selectUserBalanceToMigrateByVaultId } from '../../../selectors/migration.ts';
+import { selectTokenByAddress } from '../../../selectors/tokens.ts';
+import { selectVaultById } from '../../../selectors/vaults.ts';
+import type { BeefyState } from '../../../store/types.ts';
+import { createAppAsyncThunk } from '../../../utils/store-utils.ts';
+import { getWalletConnectionApi } from '../../instances.ts';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type {
   Migrator,
   MigratorExecuteProps,
   MigratorUnstakeProps,
   MigratorUpdateProps,
 } from '../migration-types.ts';
-import type { VaultEntity } from '../../../entities/vault.ts';
-import type BigNumber from 'bignumber.js';
-import type { BeefyState } from '../../../../../redux-types.ts';
-import { selectVaultById } from '../../../selectors/vaults.ts';
-import { getWalletConnectionApi } from '../../instances.ts';
-import { selectTokenByAddress } from '../../../selectors/tokens.ts';
-import { selectUserBalanceToMigrateByVaultId } from '../../../selectors/migration.ts';
-import { ConicLpTokenStakerAbi } from '../../../../../config/abi/ConicLpTokenStakerAbi.ts';
-import type { Step } from '../../../reducers/wallet/stepper.ts';
-import { bigNumberToBigInt, fromWei, toWei } from '../../../../../helpers/big-number.ts';
-import { startStepperWithSteps } from '../../../actions/stepper.ts';
-import { isTokenErc20 } from '../../../entities/token.ts';
-import { selectAllowanceByTokenAddress } from '../../../selectors/allowances.ts';
 import type { ConicMigrationUpdateFulfilledPayload } from './types.ts';
-import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
-import type { Address } from 'abitype';
-import type { Hash } from 'viem';
-import { migrateUnstake } from '../../../actions/wallet/migrate.ts';
-import { approve } from '../../../actions/wallet/approval.ts';
-import { deposit } from '../../../actions/wallet/standard.ts';
 
 const CONIC_LP_TOKEN_STAKER = '0xA5241560306298efb9ed80b87427e664FFff0CF9';
 
-export const fetchConicStakedBalance = createAsyncThunk<
+export const fetchConicStakedBalance = createAppAsyncThunk<
   ConicMigrationUpdateFulfilledPayload,
-  MigratorUpdateProps,
-  {
-    state: BeefyState;
-  }
+  MigratorUpdateProps
 >('migration/ethereum-conic/update', async ({ vaultId, walletAddress }, { getState }) => {
   const state = getState();
   const vault = selectVaultById(state, vaultId);
@@ -76,13 +73,7 @@ async function unstakeCall(
     lpStaker.write.unstake([bigNumberToBigInt(amountInWei), conicPoolAddress], args);
 }
 
-export const executeConicAction = createAsyncThunk<
-  void,
-  MigratorExecuteProps,
-  {
-    state: BeefyState;
-  }
->(
+export const executeConicAction = createAppAsyncThunk<void, MigratorExecuteProps>(
   'migration/ethereum-conic/execute',
   async ({ vaultId, t, migrationId }, { getState, dispatch }) => {
     const steps: Step[] = [];
@@ -126,7 +117,7 @@ export const executeConicAction = createAsyncThunk<
       extraInfo: { vaultId: vault.id },
     });
 
-    dispatch(startStepperWithSteps(steps, vault.chainId));
+    dispatch(stepperStartWithSteps(steps, vault.chainId));
   }
 );
 

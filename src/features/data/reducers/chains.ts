@@ -1,27 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type { Draft } from 'immer';
+import { omit } from 'lodash-es';
 import {
   fetchChainConfigs,
   restoreDefaultRpcsOnSingleChain,
   updateActiveRpc,
 } from '../actions/chains.ts';
 import type { ChainEntity } from '../entities/chain.ts';
-import type { NormalizedEntity } from '../utils/normalized-entity.ts';
-import { omit } from 'lodash-es';
-import type { Draft } from 'immer';
-
-type ActiveRpcConfig = {
-  rpcs: string[];
-};
-
-/**
- * State containing Vault infos
- */
-export type ChainsState = NormalizedEntity<ChainEntity> & {
-  activeIds: ChainEntity['id'][];
-  eolIds: ChainEntity['id'][];
-  chainIdByNetworkChainId: Record<ChainEntity['networkChainId'], ChainEntity['id']>;
-  activeRpcsByChainId: { -readonly [id in ChainEntity['id']]?: ActiveRpcConfig };
-};
+import type { ChainsState } from './chains-types.ts';
 
 export const initialChainsState: ChainsState = {
   byId: {},

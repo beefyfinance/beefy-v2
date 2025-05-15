@@ -1,10 +1,10 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../store.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { selectIsVaultQidao } from '../../../data/selectors/partners.ts';
-import { QiDao } from '../QiDaoCard/QiDaoCard.tsx';
 import { PartnerCards } from '../PartnerCard/PartnerCards.tsx';
+import { QiDao } from '../QiDaoCard/QiDaoCard.tsx';
 
 interface LeverageCardsProps {
   vaultId: VaultEntity['id'];

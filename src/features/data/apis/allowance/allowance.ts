@@ -1,19 +1,19 @@
-import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi.ts';
-import type { VaultGov, VaultStandard } from '../../entities/vault.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
+import type { Address } from 'abitype';
 import BigNumber from 'bignumber.js';
-import type { BoostPromoEntity } from '../../entities/promo.ts';
 import { chunk } from 'lodash-es';
+import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi.ts';
+import { BIG_ZERO } from '../../../../helpers/big-number.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity, TokenErc20 } from '../../entities/token.ts';
 import { isTokenErc20 } from '../../entities/token.ts';
-import type { FetchAllAllowanceResult, IAllowanceApi } from './allowance-types.ts';
+import type { VaultGov, VaultStandard } from '../../entities/vault.ts';
 import { selectTokenByAddress } from '../../selectors/tokens.ts';
-import { featureFlag_getAllowanceApiChunkSize } from '../../utils/feature-flags.ts';
-import type { BeefyState } from '../../../../redux-types.ts';
 import { selectVaultById } from '../../selectors/vaults.ts';
+import type { BeefyState } from '../../store/types.ts';
+import { featureFlag_getAllowanceApiChunkSize } from '../../utils/feature-flags.ts';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
-import type { Address } from 'abitype';
-import { BIG_ZERO } from '../../../../helpers/big-number.ts';
+import type { FetchAllAllowanceResult, IAllowanceApi } from './allowance-types.ts';
 
 export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
   constructor(protected chain: T) {}

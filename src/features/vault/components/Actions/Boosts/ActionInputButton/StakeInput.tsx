@@ -1,11 +1,10 @@
-import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
 import type BigNumber from 'bignumber.js';
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../../../../../../store.ts';
-import { ActionInputButton, type ActionInputButtonProps } from './ActionInputButton.tsx';
-
+import { useAppDispatch } from '../../../../../data/store/hooks.ts';
 import { startStakeBoostSteps } from '../../../../../data/actions/wallet/boost.ts';
+import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
+import { ActionInputButton, type ActionInputButtonProps } from './ActionInputButton.tsx';
 
 export type StakeInputProps = {
   boostId: BoostPromoEntity['id'];

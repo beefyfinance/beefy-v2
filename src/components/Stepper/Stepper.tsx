@@ -1,12 +1,14 @@
+import { styled } from '@repo/styles/jsx';
 import { type FC, memo, useEffect } from 'react';
-import { isEmpty } from '../../helpers/utils.ts';
-import { useAppDispatch, useAppSelector } from '../../store.ts';
+import { stepperUpdateCurrentStep } from '../../features/data/actions/wallet/stepper.ts';
+import { StepContent } from '../../features/data/reducers/wallet/stepper-types.ts';
 import {
   selectStepperCurrentStepData,
   selectStepperState,
   selectStepperStepContent,
 } from '../../features/data/selectors/stepper.ts';
-import { StepContent, stepperActions } from '../../features/data/reducers/wallet/stepper.ts';
+import { isEmpty } from '../../helpers/utils.ts';
+import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
 import {
   ErrorContent,
   StepsCountContent,
@@ -15,7 +17,6 @@ import {
   WaitingContent,
 } from './components/Content/Content.tsx';
 import { ProgressBar } from './components/ProgressBar/ProgressBar.tsx';
-import { styled } from '@repo/styles/jsx';
 
 const stepToComponent: Record<StepContent, FC> = {
   [StepContent.StartTx]: StepsStartContent,
@@ -34,7 +35,7 @@ const StepperImpl = () => {
 
   useEffect(() => {
     if (!isEmpty(currentStepData) && steps.modal && currentStepData.pending === false) {
-      dispatch(stepperActions.updateCurrentStep({ pending: true }));
+      dispatch(stepperUpdateCurrentStep({ pending: true }));
       dispatch(currentStepData.action);
     }
   }, [currentStepData, dispatch, steps.currentStep, steps.modal]);

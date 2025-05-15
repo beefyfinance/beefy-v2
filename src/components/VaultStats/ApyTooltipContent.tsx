@@ -9,7 +9,7 @@ import {
   getApyLabelsTypeForVault,
 } from '../../helpers/apy.ts';
 import { type FormattedAvgApy, type FormattedTotalApy } from '../../helpers/format.ts';
-import { useAppSelector } from '../../store.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { InterestTooltipContent } from '../InterestTooltipContent/InterestTooltipContent.tsx';
 
 type TotalApyTooltipContentProps = {

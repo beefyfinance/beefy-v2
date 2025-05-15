@@ -1,14 +1,14 @@
-import type { BoostRewardContractData } from '../../../../data/apis/contract-data/contract-data-types.ts';
+import { styled } from '@repo/styles/jsx';
 import type BigNumber from 'bignumber.js';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TokenImageFromEntity } from '../../../../../components/TokenImage/TokenImage.tsx';
 import { TokenAmount } from '../../../../../components/TokenAmount/TokenAmount.tsx';
-import { styled } from '@repo/styles/jsx';
+import { TokenImageFromEntity } from '../../../../../components/TokenImage/TokenImage.tsx';
 import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
-import { useAppSelector } from '../../../../../store.ts';
-import { selectTokenPriceByAddress } from '../../../../data/selectors/tokens.ts';
 import { formatLargePercent, formatLargeUsd } from '../../../../../helpers/format.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
+import type { BoostRewardContractData } from '../../../../data/apis/contract-data/contract-data-types.ts';
+import { selectTokenPriceByAddress } from '../../../../data/selectors/tokens.ts';
 
 export type Reward = BoostRewardContractData & {
   pending: BigNumber;

@@ -1,14 +1,14 @@
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo, useCallback } from 'react';
+import { Button } from '../../../../components/Button/Button.tsx';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
-import type { VaultEntity } from '../../../data/entities/vault.ts';
-import { useAppDispatch, useAppSelector } from '../../../../store.ts';
-import BookmarkBorder from '../../../../images/icons/mui/BookmarkBorder.svg?react';
+import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
 import Bookmark from '../../../../images/icons/mui/Bookmark.svg?react';
+import BookmarkBorder from '../../../../images/icons/mui/BookmarkBorder.svg?react';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { savedVaultsActions } from '../../../data/reducers/saved-vaults.ts';
 import { selectIsVaultIdSaved } from '../../../data/selectors/saved-vaults.ts';
 import { styles } from './styles.ts';
-import { css, type CssStyles } from '@repo/styles/css';
-import { Button } from '../../../../components/Button/Button.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -30,11 +30,9 @@ export const SaveButton = memo(function SaveButton({ vaultId, css: cssProp }: Sa
 
   return (
     <Button borderless={true} css={css.raw(styles.shareButton, cssProp)} onClick={handleSave}>
-      {isSaved ? (
+      {isSaved ?
         <Bookmark className={classes.icon} />
-      ) : (
-        <BookmarkBorder className={classes.icon} />
-      )}
+      : <BookmarkBorder className={classes.icon} />}
     </Button>
   );
 });

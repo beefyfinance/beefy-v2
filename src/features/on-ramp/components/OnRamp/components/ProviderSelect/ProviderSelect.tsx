@@ -1,20 +1,20 @@
+import { css } from '@repo/styles/css';
 import { memo, useCallback, useMemo } from 'react';
+import ContentLoader from 'react-content-loader';
+import { useTranslation } from 'react-i18next';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import ChevronRight from '../../../../../../images/icons/mui/ChevronRight.svg?react';
+import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
 import {
   selectIsCheapestProviderSelected,
   selectQuoteProviders,
   selectSelectedQuoteOrUndefined,
 } from '../../../../../data/selectors/on-ramp.ts';
-import { css } from '@repo/styles/css';
-import ContentLoader from 'react-content-loader';
-import { ProviderIcon } from '../ProviderIcon/ProviderIcon.tsx';
-import { useTranslation } from 'react-i18next';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
-import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
 import { PROVIDERS } from '../../providers.tsx';
-import ChevronRight from '../../../../../../images/icons/mui/ChevronRight.svg?react';
+import { ProviderIcon } from '../ProviderIcon/ProviderIcon.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -48,9 +48,11 @@ export const ProviderSelect = memo(function ProviderSelect({ pending }: Provider
         className={css(styles.button, canSwitchProvider ? styles.clickable : styles.unclickable)}
       >
         <div className={css(styles.icon, pending && styles.iconLoading)}>
-          {quote && quote.provider ? <ProviderIcon provider={quote.provider} /> : null}
+          {quote && quote.provider ?
+            <ProviderIcon provider={quote.provider} />
+          : null}
         </div>
-        {pending ? (
+        {pending ?
           <ContentLoader
             viewBox="0 0 152 16"
             width="152"
@@ -60,17 +62,18 @@ export const ProviderSelect = memo(function ProviderSelect({ pending }: Provider
           >
             <rect x="0" y="0" rx="8" ry="8" width="152" height="16" />
           </ContentLoader>
-        ) : !quote ? (
+        : !quote ?
           <>No quote found</>
-        ) : (
-          <>
+        : <>
             <div className={classes.provider}>{PROVIDERS[quote.provider].title}</div>
             <div className={classes.rate}>
               1 {quote.token} = {(1 / quote.rate).toFixed(2)} {quote.fiat}
             </div>
-            {multipleProviders ? <ChevronRight className={classes.arrow} /> : null}
+            {multipleProviders ?
+              <ChevronRight className={classes.arrow} />
+            : null}
           </>
-        )}
+        }
       </button>
     </div>
   );

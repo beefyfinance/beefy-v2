@@ -1,20 +1,26 @@
-import type BigNumber from 'bignumber.js';
-import { first } from 'lodash-es';
-import type { PayloadAction, SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import type { Draft } from 'immer';
+import { first } from 'lodash-es';
+import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import {
+  transactClearInput,
+  transactClearQuotes,
+  transactConfirmNeeded,
+  transactConfirmPending,
+  transactConfirmRejected,
+  transactConfirmUnneeded,
   transactFetchOptions,
   transactFetchQuotes,
   transactInit,
   transactInitReady,
+  transactSelectQuote,
+  transactSelectSelection,
+  transactSetInputAmount,
+  transactSetSlippage,
+  transactSwitchMode,
+  transactSwitchStep,
 } from '../../actions/transact.ts';
-import {
-  type QuoteOutputTokenAmountChange,
-  type TransactOption,
-  type TransactQuote,
-} from '../../apis/transact/transact-types.ts';
-import type { Draft } from 'immer';
-import { BIG_ZERO } from '../../../../helpers/big-number.ts';
+import { type TransactOption, type TransactQuote } from '../../apis/transact/transact-types.ts';
 import type {
   TransactOptions,
   TransactQuotes,
@@ -77,132 +83,82 @@ const initialTransactState: TransactState = {
 const transactSlice = createSlice({
   name: 'transact',
   initialState: initialTransactState,
-  reducers: {
-    switchMode(sliceState, action: PayloadAction<TransactMode>) {
-      sliceState.mode = action.payload;
-      sliceState.step = TransactStep.Form;
-      sliceState.inputAmounts = [BIG_ZERO];
-      sliceState.inputMaxes = [false];
-    },
-    switchStep(sliceState, action: PayloadAction<TransactStep>) {
-      sliceState.step = action.payload;
-    },
-    selectSelection(
-      sliceState,
-      action: PayloadAction<{
-        selectionId: string;
-        resetInput: boolean;
-      }>
-    ) {
-      sliceState.selectedSelectionId = action.payload.selectionId;
-      sliceState.step = TransactStep.Form;
-      sliceState.forceSelection = false;
-      if (action.payload.resetInput) {
-        clearInputs(sliceState);
-      }
-    },
-    setInputAmount(
-      sliceState,
-      action: PayloadAction<{
-        index: number;
-        amount: BigNumber;
-        max: boolean;
-      }>
-    ) {
-      const { index, amount, max } = action.payload;
-      if (!sliceState.inputAmounts[index] || !sliceState.inputAmounts[index].isEqualTo(amount)) {
-        sliceState.inputAmounts[index] = amount;
-      }
-      if (!sliceState.inputMaxes[index] || sliceState.inputMaxes[index] !== max) {
-        sliceState.inputMaxes[index] = max;
-      }
-    },
-    clearInput(sliceState) {
-      clearInputs(sliceState);
-      resetQuotes(sliceState);
-    },
-    clearQuotes(sliceState) {
-      resetQuotes(sliceState);
-    },
-    confirmPending(
-      sliceState,
-      action: PayloadAction<{
-        requestId: string;
-      }>
-    ) {
-      resetConfirm(sliceState);
-      sliceState.confirm.status = TransactStatus.Pending;
-      sliceState.confirm.requestId = action.payload.requestId;
-    },
-    confirmRejected(
-      sliceState,
-      action: PayloadAction<{
-        requestId: string;
-        error: SerializedError;
-      }>
-    ) {
-      if (sliceState.confirm.requestId === action.payload.requestId) {
-        sliceState.confirm.status = TransactStatus.Rejected;
-        sliceState.confirm.error = action.payload.error;
-      }
-    },
-    confirmNeeded(
-      sliceState,
-      action: PayloadAction<{
-        requestId: string;
-        changes: QuoteOutputTokenAmountChange[];
-        newQuote: TransactQuote;
-        originalQuoteId: TransactQuote['id'];
-      }>
-    ) {
-      if (sliceState.confirm.requestId === action.payload.requestId) {
-        sliceState.confirm.status = TransactStatus.Fulfilled;
-        sliceState.confirm.changes = action.payload.changes;
-        // replace quote
-        delete sliceState.quotes.byQuoteId[action.payload.originalQuoteId];
-        sliceState.quotes.byQuoteId[action.payload.newQuote.id] = action.payload.newQuote;
-        sliceState.quotes.allQuoteIds = Object.keys(sliceState.quotes.byQuoteId);
-        sliceState.selectedQuoteId = action.payload.newQuote.id;
-      }
-    },
-    confirmUnneeded(
-      sliceState,
-      action: PayloadAction<{
-        requestId: string;
-        newQuote: TransactQuote;
-        originalQuoteId: TransactQuote['id'];
-      }>
-    ) {
-      if (sliceState.confirm.requestId === action.payload.requestId) {
-        sliceState.confirm.status = TransactStatus.Fulfilled;
-        sliceState.confirm.changes = [];
-        // replace quote
-        delete sliceState.quotes.byQuoteId[action.payload.originalQuoteId];
-        sliceState.quotes.byQuoteId[action.payload.newQuote.id] = action.payload.newQuote;
-        sliceState.quotes.allQuoteIds = Object.keys(sliceState.quotes.byQuoteId);
-        sliceState.selectedQuoteId = action.payload.newQuote.id;
-      }
-    },
-    selectQuote(
-      sliceState,
-      action: PayloadAction<{
-        quoteId: string;
-      }>
-    ) {
-      sliceState.selectedQuoteId = action.payload.quoteId;
-      sliceState.step = TransactStep.Form;
-    },
-    setSlippage(
-      sliceState,
-      action: PayloadAction<{
-        slippage: number;
-      }>
-    ) {
-      sliceState.swapSlippage = action.payload.slippage;
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder
+      .addCase(transactSwitchMode, (sliceState, action) => {
+        sliceState.mode = action.payload;
+        sliceState.step = TransactStep.Form;
+        sliceState.inputAmounts = [BIG_ZERO];
+        sliceState.inputMaxes = [false];
+      })
+      .addCase(transactSwitchStep, (sliceState, action) => {
+        sliceState.step = action.payload;
+      })
+      .addCase(transactSelectSelection, (sliceState, action) => {
+        sliceState.selectedSelectionId = action.payload.selectionId;
+        sliceState.step = TransactStep.Form;
+        sliceState.forceSelection = false;
+        if (action.payload.resetInput) {
+          clearInputs(sliceState);
+        }
+      })
+      .addCase(transactSetInputAmount, (sliceState, action) => {
+        const { index, amount, max } = action.payload;
+        if (!sliceState.inputAmounts[index] || !sliceState.inputAmounts[index].isEqualTo(amount)) {
+          sliceState.inputAmounts[index] = amount;
+        }
+        if (!sliceState.inputMaxes[index] || sliceState.inputMaxes[index] !== max) {
+          sliceState.inputMaxes[index] = max;
+        }
+      })
+      .addCase(transactClearInput, sliceState => {
+        clearInputs(sliceState);
+        resetQuotes(sliceState);
+      })
+      .addCase(transactClearQuotes, sliceState => {
+        resetQuotes(sliceState);
+      })
+      .addCase(transactConfirmPending, (sliceState, action) => {
+        resetConfirm(sliceState);
+        sliceState.confirm.status = TransactStatus.Pending;
+        sliceState.confirm.requestId = action.payload.requestId;
+      })
+      .addCase(transactConfirmRejected, (sliceState, action) => {
+        if (sliceState.confirm.requestId === action.payload.requestId) {
+          sliceState.confirm.status = TransactStatus.Rejected;
+          sliceState.confirm.error = action.payload.error;
+        }
+      })
+      .addCase(transactConfirmNeeded, (sliceState, action) => {
+        if (sliceState.confirm.requestId === action.payload.requestId) {
+          sliceState.confirm.status = TransactStatus.Fulfilled;
+          sliceState.confirm.changes = action.payload.changes;
+          // replace quote
+          delete sliceState.quotes.byQuoteId[action.payload.originalQuoteId];
+          sliceState.quotes.byQuoteId[action.payload.newQuote.id] = action.payload.newQuote;
+          sliceState.quotes.allQuoteIds = Object.keys(sliceState.quotes.byQuoteId);
+          sliceState.selectedQuoteId = action.payload.newQuote.id;
+        }
+      })
+      .addCase(transactConfirmUnneeded, (sliceState, action) => {
+        if (sliceState.confirm.requestId === action.payload.requestId) {
+          sliceState.confirm.status = TransactStatus.Fulfilled;
+          sliceState.confirm.changes = [];
+          // replace quote
+          delete sliceState.quotes.byQuoteId[action.payload.originalQuoteId];
+          sliceState.quotes.byQuoteId[action.payload.newQuote.id] = action.payload.newQuote;
+          sliceState.quotes.allQuoteIds = Object.keys(sliceState.quotes.byQuoteId);
+          sliceState.selectedQuoteId = action.payload.newQuote.id;
+        }
+      })
+      .addCase(transactSelectQuote, (sliceState, action) => {
+        sliceState.selectedQuoteId = action.payload.quoteId;
+        sliceState.step = TransactStep.Form;
+      })
+      .addCase(transactSetSlippage, (sliceState, action) => {
+        sliceState.swapSlippage = action.payload.slippage;
+      })
       .addCase(transactInit, (sliceState, action) => {
         const isReady = sliceState.vaultId === action.payload.vaultId;
         const isPending = sliceState.pendingVaultId === action.payload.vaultId;
@@ -398,5 +354,4 @@ function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOp
   }
 }
 
-export const transactActions = transactSlice.actions;
 export const transactReducer = transactSlice.reducer;

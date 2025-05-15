@@ -1,23 +1,23 @@
+import { sva } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
 import { memo, useCallback } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store.ts';
-import { Modal } from '../Modal/Modal.tsx';
+import { useTranslation } from 'react-i18next';
+import { addToWalletActions } from '../../features/data/reducers/add-to-wallet.ts';
 import {
   selectAddToWalletError,
   selectAddToWalletIconUrl,
   selectAddToWalletStatus,
   selectAddToWalletToken,
 } from '../../features/data/selectors/add-to-wallet.ts';
-import { addToWalletActions } from '../../features/data/reducers/add-to-wallet.ts';
 import { Card } from '../../features/vault/components/Card/Card.tsx';
 import { CardContent } from '../../features/vault/components/Card/CardContent.tsx';
 import { CardHeader } from '../../features/vault/components/Card/CardHeader.tsx';
-import { CardTitle } from '../../features/vault/components/Card/CardTitle.tsx';
-import CloseIcon from '../../images/icons/mui/Close.svg?react';
-import { useTranslation } from 'react-i18next';
-import { AddTokenForm } from './AddTokenForm.tsx';
-import { sva } from '@repo/styles/css';
-import { styled } from '@repo/styles/jsx';
 import { CardIconButton } from '../../features/vault/components/Card/CardIconButton.tsx';
+import { CardTitle } from '../../features/vault/components/Card/CardTitle.tsx';
+import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
+import CloseIcon from '../../images/icons/mui/Close.svg?react';
+import { Modal } from '../Modal/Modal.tsx';
+import { AddTokenForm } from './AddTokenForm.tsx';
 
 const addTokenToWalletRecipe = sva({
   slots: ['card', 'cardHeader', 'cardIcon', 'cardTitle', 'closeButton', 'cardContent'],
@@ -106,7 +106,9 @@ export const AddTokenToWallet = memo(function AddTokenToWallet() {
     <Modal open={isOpen} onClose={handleClose}>
       <Card>
         <CardHeader>
-          {status === 'fulfilled' ? <FulfilledCardTitle /> : <PendingCardTitle />}
+          {status === 'fulfilled' ?
+            <FulfilledCardTitle />
+          : <PendingCardTitle />}
           <CardIconButton onClick={handleClose} aria-label="close">
             <CloseIcon />
           </CardIconButton>
