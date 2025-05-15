@@ -1,13 +1,15 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
-import { selectActiveChains } from '../../../../../data/selectors/chains.ts';
+import { selectActiveChains, selectChainById } from '../../../../../data/selectors/chains.ts';
 import { selectFilterChainIds } from '../../../../../data/selectors/filtered-vaults.ts';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { SelectMultipleContent } from '../../../../../../components/Form/Select/Multi/SelectMultipleContent.tsx';
 import { getNetworkIcon } from './hooks.ts';
 import { cva } from '@repo/styles/css';
 import { useTranslation } from 'react-i18next';
+import { NewBadge } from '../../../../../../components/Badges/NewBadge.tsx';
+import { styled } from '@repo/styles/jsx';
 
 const iconRecipe = cva({
   base: {
@@ -37,8 +39,14 @@ const ChainOptionIcon = memo(function ChainOptionIcon({
   selected: boolean;
   noneSelected: boolean;
 }) {
-  const Icon = getNetworkIcon(item.value);
-  return <Icon className={iconRecipe({ selected: selected || noneSelected })} />;
+  const chain = useAppSelector(state => selectChainById(state, item.value));
+  const Icon = getNetworkIcon(chain.id);
+  return (
+    <ChainOptionIconContainer>
+      {chain.new && <NewBadge />}
+      <Icon className={iconRecipe({ selected: selected || noneSelected })} />;
+    </ChainOptionIconContainer>
+  );
 });
 
 export const ChainCheckList = memo(function ChainCheckList() {
@@ -109,4 +117,12 @@ export const ChainCheckList = memo(function ChainCheckList() {
       placeholder={t('Filter-Chains-Search-Placeholder')}
     />
   );
+});
+
+const ChainOptionIconContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  },
 });

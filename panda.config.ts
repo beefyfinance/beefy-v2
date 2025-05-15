@@ -76,7 +76,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -389,6 +389,7 @@ const config = buildConfig(
             '60': { value: '#449a4d' },
             '70': { value: '#368a4d' },
             '80': { value: '#2a784c' },
+            '80-40': { value: '#274846' },
             '80-40a': { value: '#2a784c66' },
             '90': { value: '#1f6549' },
             '100': { value: '#155042' },
