@@ -1,5 +1,95 @@
 [
   {
+    "id": "moo_shadow-cow-sonic-wbtc-weth-vault-shadow",
+    "title": "Shadow & Beefy",
+    "vaultId": "shadow-cow-sonic-wbtc-weth-vault",
+    "assets": ["wBTC", "WETH"],
+    "tokenAddress": "0x0c750C226351efb59Cf4ac6E7c1ACE68b18A9052",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xfa067d1e67e6db12ddcc50b3b4194210df244713",
+    "tag": {
+      "text": "Shadow Boost"
+    },
+    "campaign": "shadow-beefy",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "smooBIFI"
+      },
+      {
+        "type": "token",
+        "address": "0x5555b2733602ded58d47b8d3d989e631cbee5555",
+        "symbol": "GEMS",
+        "decimals": 18,
+        "oracleId": "GEMS"
+      }
+    ]
+  },
+  {
+    "id": "moo_shadow-cow-sonic-wbtc-usdc.e-vault-shadow",
+    "title": "Shadow & Beefy",
+    "vaultId": "shadow-cow-sonic-wbtc-usdc.e-vault",
+    "assets": ["wBTC", "USDCe"],
+    "tokenAddress": "0x920D88cA46041eFdB317c1a4150e8f0515e88D9B",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x0c3c01f7fdfec3f36207783ae2a6404e216662a3",
+    "tag": {
+      "text": "Shadow Boost"
+    },
+    "campaign": "shadow-beefy",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "smooBIFI"
+      },
+      {
+        "type": "token",
+        "address": "0x5555b2733602ded58d47b8d3d989e631cbee5555",
+        "symbol": "GEMS",
+        "decimals": 18,
+        "oracleId": "GEMS"
+      }
+    ]
+  },
+  {
+    "id": "moo_shadow-cow-sonic-ws-wbtc-vault-shadow",
+    "title": "Shadow & Beefy",
+    "vaultId": "shadow-cow-sonic-ws-wbtc-vault",
+    "assets": ["wBTC", "wS"],
+    "tokenAddress": "0x06Cc456A3c54A19bC173d8c81839c7bE65E78B48",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x8de5919565728d21873fa68057eeb7ab281855f8",
+    "tag": {
+      "text": "Shadow Boost"
+    },
+    "campaign": "shadow-beefy",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "smooBIFI"
+      },
+      {
+        "type": "token",
+        "address": "0x5555b2733602ded58d47b8d3d989e631cbee5555",
+        "symbol": "GEMS",
+        "decimals": 18,
+        "oracleId": "GEMS"
+      }
+    ]
+  },
+  {
     "id": "moo_shadow-cow-sonic-ws-bes-vault",
     "title": "Beefy",
     "vaultId": "shadow-cow-sonic-ws-bes-vault",
@@ -9,9 +99,9 @@
     "version": 2,
     "contractAddress": "0xDd4ACAF5A67B9e48A17B7D523e80dF0c458fedff",
     "tag": {
-      "text": "DAO Boost"
+      "text": "Shadow Boost"
     },
-    "campaign": "dao-rewards",
+    "campaign": "shadow-beefy",
     "rewards": [
       {
         "type": "token",
@@ -19,6 +109,20 @@
         "symbol": "mooBIFI",
         "decimals": 18,
         "oracleId": "smooBIFI"
+      },
+      {
+        "type": "token",
+        "address": "0x5555b2733602ded58d47b8d3d989e631cbee5555",
+        "symbol": "GEMS",
+        "decimals": 18,
+        "oracleId": "GEMS"
+      },
+      {
+        "type": "token",
+        "address": "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+        "symbol": "USDCe",
+        "decimals": 6,
+        "oracleId": "USDCe"
       }
     ]
   },
