@@ -244,7 +244,7 @@ async function fetchCurvePools(
     throw new Error(`No curve chain id found for chain ${chainId}`);
   }
 
-  const url = `https://api.curve.fi/api/getPools/${curveChainId}/${endpoint}`;
+  const url = `https://api.curve.finance/api/getPools/${curveChainId}/${endpoint}`;
   if (!quiet) {
     console.log(`Fetching ${url}...`);
   }

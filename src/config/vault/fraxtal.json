@@ -19,8 +19,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/dex/fraxtal/pools/factory-stable-ng-44/deposit/",
-    "removeLiquidityUrl": "https://curve.fi/dex/fraxtal/pools/factory-stable-ng-44/withdraw",
+    "addLiquidityUrl": "https://curve.finance/dex/fraxtal/pools/factory-stable-ng-44/deposit/",
+    "removeLiquidityUrl": "https://curve.finance/dex/fraxtal/pools/factory-stable-ng-44/withdraw",
     "network": "fraxtal",
     "zaps": [
       {
@@ -58,8 +58,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-20/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-20/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-20/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-20/withdraw",
     "pointStructureIds": ["ethena"],
     "network": "fraxtal",
     "zaps": [
@@ -99,8 +99,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-21/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-21/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-21/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-21/withdraw",
     "pointStructureIds": ["ethena"],
     "network": "fraxtal",
     "zaps": [
@@ -140,8 +140,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.fi/#/fraxtal/markets/one-way-market-0/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.fi/#/fraxtal/markets/one-way-market-0/vault/withdraw",
+    "addLiquidityUrl": "https://curve.finance/lend/fraxtal/markets/one-way-market-0/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/fraxtal/markets/one-way-market-0/vault/withdraw",
     "pointStructureIds": ["fraxtal"],
     "network": "fraxtal"
   },
@@ -165,8 +165,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.fi/#/fraxtal/markets/one-way-market-1/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.fi/#/fraxtal/markets/one-way-market-1/vault/withdraw",
+    "addLiquidityUrl": "https://curve.finance/lend/fraxtal/markets/one-way-market-1/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/fraxtal/markets/one-way-market-1/vault/withdraw",
     "pointStructureIds": ["fraxtal"],
     "network": "fraxtal"
   },
@@ -190,8 +190,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.fi/#/fraxtal/markets/one-way-market-2/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.fi/#/fraxtal/markets/one-way-market-2/vault/withdraw",
+    "addLiquidityUrl": "https://curve.finance/lend/fraxtal/markets/one-way-market-2/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/fraxtal/markets/one-way-market-2/vault/withdraw",
     "pointStructureIds": ["fraxtal"],
     "network": "fraxtal"
   },
@@ -215,8 +215,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-27/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-27/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-27/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-27/withdraw",
     "pointStructureIds": ["fraxtal"],
     "network": "fraxtal",
     "zaps": [
@@ -256,8 +256,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-tricrypto-3/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-tricrypto-3/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-tricrypto-3/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-tricrypto-3/withdraw",
     "pointStructureIds": ["fraxtal"],
     "network": "fraxtal",
     "zaps": [
@@ -298,8 +298,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-23/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-23/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-23/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-23/withdraw",
     "pointStructureIds": ["fraxtal"],
     "network": "fraxtal",
     "zaps": [
@@ -339,8 +339,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-24/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-24/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-24/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-24/withdraw",
     "pointStructureIds": ["fraxtal"],
     "network": "fraxtal",
     "zaps": [
@@ -380,8 +380,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-22/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-22/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-22/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-22/withdraw",
     "pointStructureIds": ["fraxtal"],
     "network": "fraxtal",
     "zaps": [
@@ -443,8 +443,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-11/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-11/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-11/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-11/withdraw",
     "network": "fraxtal",
     "zaps": [
       {
@@ -483,8 +483,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-17/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-17/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-17/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-17/withdraw",
     "pointStructureIds": ["fraxtal"],
     "network": "fraxtal",
     "zaps": [
@@ -524,8 +524,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-15/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-15/deposit",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-15/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-15/deposit",
     "network": "fraxtal",
     "zaps": [
       {
@@ -564,8 +564,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-2/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-2/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-2/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-2/withdraw",
     "network": "fraxtal",
     "zaps": [
       {
@@ -604,8 +604,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-3/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-3/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-3/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-3/withdraw",
     "network": "fraxtal",
     "zaps": [
       {
@@ -644,8 +644,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-7/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-7/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-7/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-7/withdraw",
     "network": "fraxtal",
     "zaps": [
       {
@@ -684,8 +684,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-tricrypto-1/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-tricrypto-1/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-tricrypto-1/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-tricrypto-1/withdraw",
     "pointStructureIds": ["fraxtal"],
     "network": "fraxtal",
     "zaps": [
@@ -820,8 +820,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-tricrypto-0/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-tricrypto-0/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-tricrypto-0/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-tricrypto-0/withdraw",
     "network": "fraxtal",
     "zaps": [
       {
@@ -861,8 +861,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-0/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-0/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-0/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-0/withdraw",
     "network": "fraxtal",
     "zaps": [
       {
@@ -901,8 +901,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-1/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-1/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-1/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-1/withdraw",
     "network": "fraxtal",
     "zaps": [
       {
@@ -941,8 +941,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-6/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-6/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-6/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-6/withdraw",
     "network": "fraxtal",
     "zaps": [
       {

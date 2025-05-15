@@ -1,5 +1,96 @@
 [
   {
+    "id": "aerodrome-cow-base-weth-morpho-vault",
+    "name": "MORPHO-WETH",
+    "type": "standard",
+    "token": "MORPHO-WETH",
+    "tokenAddress": "0xC2728cFDCD23Ba720671cf13d97e2A1C510cc223",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xf66be2D62390405A11AeeB22D22E379524E128E2",
+    "earnedToken": "mooCowAerodromeWETH-MORPHO",
+    "earnedTokenAddress": "0xf66be2D62390405A11AeeB22D22E379524E128E2",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-morpho",
+    "status": "active",
+    "createdAt": 1747047048,
+    "platformId": "aerodrome",
+    "assets": ["MORPHO", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-morpho-rp",
+    "name": "MORPHO-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeWETH-MORPHO",
+    "tokenAddress": "0xC2728cFDCD23Ba720671cf13d97e2A1C510cc223",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xe9af76A20103B2C2a2267cc878730F30c13ffa2F",
+    "earnedToken": "rCowAerodromeWETH-MORPHO",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0xe9af76A20103B2C2a2267cc878730F30c13ffa2F"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-morpho",
+    "status": "active",
+    "createdAt": 1747047048,
+    "platformId": "aerodrome",
+    "assets": ["MORPHO", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-morpho",
+    "name": "MORPHO-WETH",
+    "type": "cowcentrated",
+    "token": "MORPHO-WETH aerodrome",
+    "tokenAddress": "0xB5F0b4aE66C14F7EFaA9aA1468E8FC536A3E288c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xBAa5CC21fd487B8Fcc2F632f3F4E8D37262a0842"
+    ],
+    "earnContractAddress": "0xC2728cFDCD23Ba720671cf13d97e2A1C510cc223",
+    "earnedToken": "cowAerodromeWETH-MORPHO",
+    "earnedTokenAddress": "0xC2728cFDCD23Ba720671cf13d97e2A1C510cc223",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-morpho",
+    "status": "active",
+    "createdAt": 1747047048,
+    "platformId": "aerodrome",
+    "feeTier": "0.27",
+    "assets": ["MORPHO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "curve-base-superoethb",
     "name": "superOETHb/WETH",
     "type": "standard",
@@ -19,8 +110,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/dex/base/pools/factory-stable-ng-143/deposit/",
-    "removeLiquidityUrl": "https://curve.fi/dex/base/pools/factory-stable-ng-143/withdraw",
+    "addLiquidityUrl": "https://curve.finance/dex/base/pools/factory-stable-ng-143/deposit/",
+    "removeLiquidityUrl": "https://curve.finance/dex/base/pools/factory-stable-ng-143/withdraw",
     "network": "base",
     "zaps": [
       {
@@ -59,8 +150,8 @@
     "migrationIds": ["l2-convex", "l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/dex/base/pools/factory-stable-ng-58/deposit/",
-    "removeLiquidityUrl": "https://curve.fi/dex/base/pools/factory-stable-ng-58/withdraw",
+    "addLiquidityUrl": "https://curve.finance/dex/base/pools/factory-stable-ng-58/deposit/",
+    "removeLiquidityUrl": "https://curve.finance/dex/base/pools/factory-stable-ng-58/withdraw",
     "network": "base",
     "zaps": [
       {
@@ -1517,7 +1608,9 @@
     "earnedTokenAddress": "0xEFeBCBa6Ae7A77A98067CFA531cDfeC2dBdED876",
     "oracle": "lps",
     "oracleId": "pendle-base-usr-24apr25",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1746801184,
+    "retireReason": "rewards",
     "createdAt": 1739444771,
     "platformId": "magpie",
     "assets": ["USR"],
@@ -15577,7 +15670,9 @@
     "earnContractAddress": "0xb78a44BB1B12fB3F93E24a0b80AbA74FA79bEC45",
     "oracle": "lps",
     "oracleId": "aerodrome-usda-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1746801396,
+    "retireReason": "tvl",
     "createdAt": 1713268046,
     "platformId": "aerodrome",
     "assets": ["USDA", "USDC"],
@@ -17676,9 +17771,9 @@
     "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/base/pools/factory-v2-12/swap",
-    "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-12/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-12/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/base/pools/factory-v2-12/swap",
+    "addLiquidityUrl": "https://curve.finance/#/base/pools/factory-v2-12/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/base/pools/factory-v2-12/withdraw",
     "network": "base",
     "zaps": [
       {
@@ -18147,9 +18242,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/base/pools/factory-v2-2/swap",
-    "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-2/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-2/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/base/pools/factory-v2-2/swap",
+    "addLiquidityUrl": "https://curve.finance/#/base/pools/factory-v2-2/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/base/pools/factory-v2-2/withdraw",
     "network": "base",
     "zaps": [
       {
@@ -18668,9 +18763,9 @@
     "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/base/pools/factory-crypto-4/swap",
-    "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-4/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-4/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/base/pools/factory-crypto-4/swap",
+    "addLiquidityUrl": "https://curve.finance/#/base/pools/factory-crypto-4/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/base/pools/factory-crypto-4/withdraw",
     "network": "base",
     "zaps": [
       {
@@ -18709,9 +18804,9 @@
     "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/base/pools/factory-v2-1/swap",
-    "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-1/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-v2-1/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/base/pools/factory-v2-1/swap",
+    "addLiquidityUrl": "https://curve.finance/#/base/pools/factory-v2-1/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/base/pools/factory-v2-1/withdraw",
     "network": "base",
     "zaps": [
       {
@@ -18752,9 +18847,9 @@
     "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/base/pools/factory-tricrypto-1/swap",
-    "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-tricrypto-1/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-tricrypto-1/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/base/pools/factory-tricrypto-1/swap",
+    "addLiquidityUrl": "https://curve.finance/#/base/pools/factory-tricrypto-1/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/base/pools/factory-tricrypto-1/withdraw",
     "network": "base",
     "zaps": [
       {
@@ -18796,9 +18891,9 @@
     "migrationIds": ["l2-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/base/pools/factory-crypto-1/swap",
-    "addLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-1/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/base/pools/factory-crypto-1/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/base/pools/factory-crypto-1/swap",
+    "addLiquidityUrl": "https://curve.finance/#/base/pools/factory-crypto-1/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/base/pools/factory-crypto-1/withdraw",
     "network": "base",
     "zaps": [
       {

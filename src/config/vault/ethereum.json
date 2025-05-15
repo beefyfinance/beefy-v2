@@ -1,5 +1,85 @@
 [
   {
+    "id": "curve-usdc-usdf",
+    "name": "USDf/USDC",
+    "type": "standard",
+    "token": "USDC/USDf",
+    "tokenAddress": "0x72310DAAed61321b02B08A547150c07522c6a976",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x0014E0be19De3118b5b29842dd1696a2A98EB9Db",
+    "earnedToken": "mooCurveUSDC-USDf",
+    "earnedTokenAddress": "0x0014E0be19De3118b5b29842dd1696a2A98EB9Db",
+    "oracle": "lps",
+    "oracleId": "curve-usdc-usdf",
+    "status": "active",
+    "createdAt": 1747215194,
+    "platformId": "convex",
+    "assets": ["USDf", "USDC"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-391/deposit/",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-391/withdraw/",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x72310DAAed61321b02B08A547150c07522c6a976",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x72310DAAed61321b02B08A547150c07522c6a976",
+            "coins": [
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "0xFa2B947eEc368f42195f24F36d2aF29f7c24CeC2"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-link-stlink-ng",
+    "name": "stLINK/LINK",
+    "type": "standard",
+    "token": "stLINK-ng",
+    "tokenAddress": "0x7E13876B92F1a62C599C231f783f682E96B91761",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xca28b1C9F058Ce34332126CbBc71212AD101348F",
+    "earnedToken": "mooCurveLINK-stLINK",
+    "earnedTokenAddress": "0xca28b1C9F058Ce34332126CbBc71212AD101348F",
+    "oracle": "lps",
+    "oracleId": "curve-link-stlink-ng",
+    "status": "active",
+    "createdAt": 1747212289,
+    "platformId": "curve",
+    "assets": ["stLINK", "LINK"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-403/deposit/",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-403/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x7E13876B92F1a62C599C231f783f682E96B91761",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x7E13876B92F1a62C599C231f783f682E96B91761",
+            "coins": [
+              "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+              "0xb8b295df2cd735b15BE5Eb419517Aa626fc43cD5"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "convex-tricrypto-usdt",
     "name": "USDT/WBTC/WETH",
     "type": "standard",
@@ -19,8 +99,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/dex/ethereum/pools/factory-tricrypto-1/deposit/",
-    "removeLiquidityUrl": "https://curve.fi/dex/ethereum/pools/factory-tricrypto-1/withdraw",
+    "addLiquidityUrl": "https://curve.finance/dex/ethereum/pools/factory-tricrypto-1/deposit/",
+    "removeLiquidityUrl": "https://curve.finance/dex/ethereum/pools/factory-tricrypto-1/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -60,8 +140,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/dex/ethereum/pools/factory-stable-ng-413/deposit/",
-    "removeLiquidityUrl": "https://curve.fi/dex/ethereum/pools/factory-stable-ng-413/withdraw",
+    "addLiquidityUrl": "https://curve.finance/dex/ethereum/pools/factory-stable-ng-413/deposit/",
+    "removeLiquidityUrl": "https://curve.finance/dex/ethereum/pools/factory-stable-ng-413/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -100,8 +180,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/dex/ethereum/pools/factory-stable-ng-327/deposit/",
-    "removeLiquidityUrl": "https://curve.fi/dex/ethereum/pools/factory-stable-ng-327/withraw",
+    "addLiquidityUrl": "https://curve.finance/dex/ethereum/pools/factory-stable-ng-327/deposit/",
+    "removeLiquidityUrl": "https://curve.finance/dex/ethereum/pools/factory-stable-ng-327/withraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -354,7 +434,9 @@
     "earnedTokenAddress": "0x5B14b69eDc64A0fa36F822AbC7a9E96ADc05eCb9",
     "oracle": "lps",
     "oracleId": "pendle-usd0++-24apr25",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1746801184,
+    "retireReason": "rewards",
     "createdAt": 1742795211,
     "platformId": "magpie",
     "assets": ["USD0++"],
@@ -378,7 +460,9 @@
     "earnedTokenAddress": "0x947D4dA9b496F1cB3Fe99B7A6c0795D494e017ea",
     "oracle": "lps",
     "oracleId": "pendle-usd0++-24apr25",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1746801184,
+    "retireReason": "rewards",
     "createdAt": 1742795212,
     "platformId": "equilibria",
     "assets": ["USD0++"],
@@ -515,15 +599,17 @@
     "earnedTokenAddress": "0xB045a2ed3C471EA3DB62Bd028ebC85B2661fbfe7",
     "oracle": "lps",
     "oracleId": "curve-aioz-weth",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1746801184,
+    "retireReason": "rewards",
     "createdAt": 1738835398,
     "platformId": "convex",
     "assets": ["AIOZ", "ETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/dex/#/ethereum/pools/factory-twocrypto-90/deposit",
-    "removeLiquidityUrl": "https://curve.fi/dex/#/ethereum/pools/factory-twocrypto-90/withdraw",
+    "addLiquidityUrl": "https://curve.finance/dex/#/ethereum/pools/factory-twocrypto-90/deposit",
+    "removeLiquidityUrl": "https://curve.finance/dex/#/ethereum/pools/factory-twocrypto-90/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -686,8 +772,8 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/dex/#/ethereum/pools/factory-stable-ng-193/deposit",
-    "removeLiquidityUrl": "https://curve.fi/dex/#/ethereum/pools/factory-stable-ng-193/withdraw",
+    "addLiquidityUrl": "https://curve.finance/dex/#/ethereum/pools/factory-stable-ng-193/deposit",
+    "removeLiquidityUrl": "https://curve.finance/dex/#/ethereum/pools/factory-stable-ng-193/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -725,8 +811,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/dex/#/ethereum/pools/factory-stable-ng-352/deposit",
-    "removeLiquidityUrl": "https://curve.fi/dex/#/ethereum/pools/factory-stable-ng-352/withdraw",
+    "addLiquidityUrl": "https://curve.finance/dex/#/ethereum/pools/factory-stable-ng-352/deposit",
+    "removeLiquidityUrl": "https://curve.finance/dex/#/ethereum/pools/factory-stable-ng-352/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -757,7 +843,9 @@
     "earnedTokenAddress": "0x1B5308C4485E63472226C0C985dFD1deEE1b47D3",
     "oracle": "lps",
     "oracleId": "pendle-syrupusdc-24apr25",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1746801184,
+    "retireReason": "rewards",
     "createdAt": 1738062918,
     "platformId": "magpie",
     "assets": ["syrupUSDC"],
@@ -781,7 +869,9 @@
     "earnedTokenAddress": "0xC1b5D2E9535DDFC56859fFC04Cd9E1563970aE74",
     "oracle": "lps",
     "oracleId": "pendle-syrupusdc-24apr25",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1746801184,
+    "retireReason": "rewards",
     "createdAt": 1738062908,
     "platformId": "equilibria",
     "assets": ["syrupUSDC"],
@@ -867,8 +957,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-271/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-271/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-271/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-271/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -1406,7 +1496,9 @@
     "earnedTokenAddress": "0x967f88e651db83B1A74058D7499263eA7b3066E2",
     "oracle": "lps",
     "oracleId": "aura-rseth-weth",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1746801184,
+    "retireReason": "rewards",
     "createdAt": 1724600411,
     "platformId": "aura",
     "assets": ["rsETH", "WETH"],
@@ -1624,7 +1716,9 @@
     "earnedTokenAddress": "0x858B326659D543CdF80199b95E9338fDc8C7B953",
     "oracle": "lps",
     "oracleId": "aura-gyro-gyd-sdai",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1746801184,
+    "retireReason": "rewards",
     "createdAt": 1724245063,
     "platformId": "aura",
     "assets": ["GYD", "sDAI"],
@@ -1767,8 +1861,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-183/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-183/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-183/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-183/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -1807,8 +1901,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-151/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-151/deposit",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-151/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-151/deposit",
     "network": "ethereum",
     "zaps": [
       {
@@ -1847,8 +1941,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/dex/ethereum/pools/factory-stable-ng-392/deposit/",
-    "removeLiquidityUrl": "https://curve.fi/dex/ethereum/pools/factory-stable-ng-392/deposit/",
+    "addLiquidityUrl": "https://curve.finance/dex/ethereum/pools/factory-stable-ng-392/deposit/",
+    "removeLiquidityUrl": "https://curve.finance/dex/ethereum/pools/factory-stable-ng-392/deposit/",
     "network": "ethereum",
     "zaps": [
       {
@@ -1887,8 +1981,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-150/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-150/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-150/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-150/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -1937,8 +2031,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-241/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-241/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-241/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-241/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -1979,8 +2073,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-170/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-170/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-170/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-170/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -2022,8 +2116,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-162/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-162/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-162/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-162/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -2065,8 +2159,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-118/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-118/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-118/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-118/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -2106,8 +2200,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-167/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-167/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-167/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-167/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -2146,8 +2240,8 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-114/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-114/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-114/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-114/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -2215,8 +2309,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-twocrypto-27/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-twocrypto-27/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-twocrypto-27/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-twocrypto-27/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -2368,8 +2462,8 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-169/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-169/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-169/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-169/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -2408,8 +2502,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-10/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-10/vault/withdraw",
+    "addLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-10/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-10/vault/withdraw",
     "network": "ethereum"
   },
   {
@@ -2432,8 +2526,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-9/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-9/vault/withdraw",
+    "addLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-9/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-9/vault/withdraw",
     "network": "ethereum"
   },
   {
@@ -2449,15 +2543,17 @@
     "earnedTokenAddress": "0xdB41502E5341CDBa0658AcC4033e4480385A5D49",
     "oracle": "lps",
     "oracleId": "fx-dola-fxusd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1746801184,
+    "retireReason": "rewards",
     "createdAt": 1715931834,
     "platformId": "fx",
     "assets": ["DOLA", "fxUSD"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-108/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-108/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-108/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-108/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -2535,8 +2631,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-2/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-2/vault/withdraw",
+    "addLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-2/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-2/vault/withdraw",
     "network": "ethereum"
   },
   {
@@ -2561,8 +2657,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-1/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-1/vault/withdraw",
+    "addLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-1/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-1/vault/withdraw",
     "network": "ethereum"
   },
   {
@@ -2587,8 +2683,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-8/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-8/vault/withdraw",
+    "addLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-8/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-8/vault/withdraw",
     "network": "ethereum"
   },
   {
@@ -2611,8 +2707,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-23/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-23/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-23/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-23/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -2653,8 +2749,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-31/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-31/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-tricrypto-31/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-tricrypto-31/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -2694,8 +2790,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-117/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-117/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-117/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-117/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -2735,8 +2831,8 @@
     "assets": ["PYUSD", "fxUSD"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-107/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-107/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-107/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-107/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -2777,8 +2873,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-3/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-3/vault/deposit",
+    "addLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-3/vault/deposit",
+    "removeLiquidityUrl": "https://curve.finance/lend/ethereum/markets/one-way-market-3/vault/deposit",
     "network": "ethereum"
   },
   {
@@ -2800,8 +2896,8 @@
     "assets": ["FXN", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-311/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-311/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-311/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-311/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -2839,8 +2935,8 @@
     "assets": ["GHO", "fxUSD"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-111/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-111/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-111/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-111/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -2879,8 +2975,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-253/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-253/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-253/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-253/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -2919,8 +3015,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-147/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-147/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-147/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-147/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -3077,8 +3173,8 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-70/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-70/withdraw",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-70/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-70/withdraw",
     "pointStructureIds": ["vector-reserve"],
     "network": "ethereum",
     "zaps": [
@@ -3289,9 +3385,9 @@
     "migrationIds": ["ethereum-prisma"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-v2-372/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-372/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-372/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-v2-372/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-372/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-372/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -3505,9 +3601,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-256/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-256/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-256/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-256/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-256/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-256/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -3549,9 +3645,9 @@
     "migrationIds": ["ethereum-prisma"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-339/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-339/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-339/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-339/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-339/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-339/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -3592,9 +3688,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-312/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-312/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-312/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-312/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-312/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-312/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -3633,9 +3729,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-v2-277/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-277/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-277/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-v2-277/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-277/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-277/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -3724,9 +3820,9 @@
     "migrationIds": ["ethereum-prisma"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-v2-371/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-371/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-371/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-v2-371/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-371/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-371/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -3768,9 +3864,9 @@
     "migrationIds": ["ethereum-prisma"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-17/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-17/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-17/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-17/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-17/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-17/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -3810,9 +3906,9 @@
     "migrationIds": ["ethereum-prisma"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-v2-342/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-342/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-342/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-v2-342/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-342/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-342/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -3862,9 +3958,9 @@
     "migrationIds": ["ethereum-prisma"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-333/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-333/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-333/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-333/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-333/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-333/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -3907,9 +4003,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-27/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-27/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crvusd-27/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-crvusd-27/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crvusd-27/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crvusd-27/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -3950,9 +4046,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-14/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-14/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-14/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-tricrypto-14/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-tricrypto-14/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-tricrypto-14/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -4170,9 +4266,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-2/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-2/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-2/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-tricrypto-2/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-tricrypto-2/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-tricrypto-2/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -4485,9 +4581,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-0/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-0/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-0/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-tricrypto-0/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-tricrypto-0/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-tricrypto-0/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -4527,9 +4623,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-4/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-4/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-4/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-tricrypto-4/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-tricrypto-4/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-tricrypto-4/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -4569,9 +4665,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-v2-298/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-298/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-298/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-v2-298/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-298/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-298/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -4666,9 +4762,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/wbeth/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/wbeth/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/wbeth/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/wbeth/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/wbeth/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/wbeth/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -4729,9 +4825,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/teth/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/teth/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/teth/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/teth/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/teth/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/teth/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -4823,9 +4919,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-v2-283/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-283/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-283/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-v2-283/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-283/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-283/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -4896,9 +4992,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-45/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-45/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-45/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-45/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-45/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-45/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -4939,9 +5035,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-151/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-151/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-151/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-151/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-151/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-151/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -5162,9 +5258,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-204/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-204/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-204/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-204/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-204/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-204/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -5203,9 +5299,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-140/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-140/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-140/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-140/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-140/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-140/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -5246,9 +5342,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-v2-209/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-209/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-209/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-v2-209/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-209/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-209/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -5289,9 +5385,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-v2-192/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-192/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-192/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-v2-192/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-192/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-192/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -5754,9 +5850,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/sbtc2/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/sbtc2/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/sbtc2/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/sbtc2/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/sbtc2/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/sbtc2/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -5796,9 +5892,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-v2-245/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-245/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-245/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-v2-245/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-245/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-245/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -5846,9 +5942,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/cvxeth/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/cvxeth/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/cvxeth/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/cvxeth/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/cvxeth/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/cvxeth/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -5887,9 +5983,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-192/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-192/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-192/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-192/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-192/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-192/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -5929,9 +6025,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/crveth/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/crveth/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/crveth/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/crveth/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/crveth/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/crveth/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -6081,7 +6177,9 @@
     "earnContractAddress": "0x7f3F33B42b9734e61cb44424D130B5f6e09C9Db3",
     "oracle": "lps",
     "oracleId": "convex-usdd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1746801184,
+    "retireReason": "rewards",
     "createdAt": 1668510000,
     "platformId": "convex",
     "assets": ["USDD", "DAI", "USDC", "USDT"],
@@ -6095,9 +6193,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-v2-116/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-116/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-116/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-v2-116/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-116/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-116/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -6155,9 +6253,9 @@
       "PARTIAL_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-v2-176/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-176/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-176/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-v2-176/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-176/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-176/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -6213,9 +6311,9 @@
       "PARTIAL_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-v2-138/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-138/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-138/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-v2-138/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-138/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-v2-138/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -6270,9 +6368,9 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/mim/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/mim/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/mim/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/mim/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/mim/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/mim/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -6323,9 +6421,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/tricrypto2/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/tricrypto2/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/tricrypto2/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/tricrypto2/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/tricrypto2/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/tricrypto2/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -6367,9 +6465,9 @@
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/steth/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/steth/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/steth/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/steth/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/steth/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/steth/withdraw",
     "network": "ethereum",
     "zaps": [
       {
@@ -6412,9 +6510,9 @@
       "PARTIAL_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/fraxusdc/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/fraxusdc/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/fraxusdc/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/fraxusdc/swap",
+    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/fraxusdc/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/fraxusdc/withdraw",
     "network": "ethereum",
     "zaps": [
       {
