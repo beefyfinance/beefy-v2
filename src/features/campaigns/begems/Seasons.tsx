@@ -53,7 +53,7 @@ const Layout = styled('div', {
   base: {
     margin: '0 auto',
     width: '100%',
-    maxWidth: 'container.lg',
+    maxWidth: '1128px',
     display: 'grid',
     gridTemplateRows: 'auto auto auto',
     gridTemplateColumns: 'minmax(0, 1fr)',
@@ -186,7 +186,7 @@ const Emerald = styled(
         width: '60px',
         right: 'calc(50% - 30px)',
         bottom: 'auto',
-        top: '-30px',
+        top: '-10px',
       },
     },
   },

@@ -31,7 +31,7 @@ export const Tab = memo(function Tab<TValue>({
 
 const Label = styled('div', {
   base: {
-    textStyle: 'body.lg.medium',
+    textStyle: 'body.medium',
     color: 'inherit',
     md: {
       textStyle: 'body.xl.medium',
