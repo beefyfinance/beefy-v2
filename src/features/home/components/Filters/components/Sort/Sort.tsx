@@ -45,6 +45,7 @@ export const Sort = memo(function Sort() {
   const handleSort = useCallback(() => {
     if (tempSortField !== 'avgApy') {
       dispatch(filteredVaultsActions.setSort(tempSortField));
+      dispatch(filteredVaultsActions.setSubSort({ column: 'apy', value: 'default' }));
     } else {
       dispatch(filteredVaultsActions.setSubSort({ column: 'apy', value: tempSubSortKey }));
       dispatch(filteredVaultsActions.setSort('apy'));
@@ -66,8 +67,29 @@ export const Sort = memo(function Sort() {
   };
 
   const handleChange = useCallback((val: SortKey) => {
-    setTempSortField(val);
+    if (val === 'avgApy') {
+      setTempSubSortKey(7);
+      setTempSortField('avgApy');
+    } else {
+      setTempSubSortKey('default');
+      setTempSortField(val);
+    }
   }, []);
+
+  const isChecked = useCallback(
+    (sortKey: SortKey) => {
+      if (sortKey === 'avgApy') {
+        return tempSubSortKey !== 'default';
+      }
+
+      if (sortKey === 'apy') {
+        return sortKey === tempSortField && tempSubSortKey === 'default';
+      }
+
+      return sortKey === tempSortField;
+    },
+    [tempSortField, tempSubSortKey]
+  );
 
   return (
     <>
@@ -81,10 +103,7 @@ export const Sort = memo(function Sort() {
               {COLUMNS.map(({ label, sortKey, toggleButtons }) => (
                 <div key={sortKey} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <StyledLabelledCheckBox
-                    checked={
-                      sortKey === tempSortField ||
-                      (sortKey === 'avgApy' && tempSubSortKey !== 'default')
-                    }
+                    checked={isChecked(sortKey)}
                     onChange={() => handleChange(sortKey)}
                     label={t(label)}
                     checkVariant="circle"
