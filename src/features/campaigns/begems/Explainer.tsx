@@ -13,7 +13,7 @@ export const Explainer = memo(function Explainer() {
         each season.
       </Text>
       <Text>
-        Beefy is issuing 80,000 beGEMS each season, representing its share of earned S tokens.
+        Beefy is issuing 80,000,000 beGEMS each season, representing its share of earned S tokens.
         beGEMS are liquid ERC-20 tokens — transferable, tradeable, and open to speculation. Users
         can earn beGEMS by boosting vaults, providing liquidity in lending markets, or voting for
         beS pairs across Sonic exchanges.
@@ -49,6 +49,8 @@ const Title = styled('h1', {
   base: {
     textStyle: 'h1',
     color: 'text.lightest',
+    width: '100%',
+    maxWidth: '445px', // for text wrapping...
   },
 });
 

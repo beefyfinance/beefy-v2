@@ -143,6 +143,7 @@ const config = buildConfig(
       html: {
         color: 'text.light',
         background: 'background.body',
+        fontSize: '16px',
         '&:has(.disable-scroll)': {
           overflow: 'hidden',
           '& body': { paddingLeft: 'calc(100vw - 100%)' },
@@ -447,14 +448,24 @@ const config = buildConfig(
           h1: { value: '32px' },
           h2: { value: '24px' },
           h3: { value: '21px' },
-          body: { DEFAULT: { value: '16px' }, md: { value: '14px' }, sm: { value: '12px' } },
+          body: {
+            xl: { value: '20px' },
+            DEFAULT: { value: '16px' },
+            md: { value: '14px' },
+            sm: { value: '12px' },
+          },
           subline: { DEFAULT: { value: '15px' }, sm: { value: '12px' } },
         },
         lineHeights: {
           h1: { value: '40px' },
           h2: { value: '32px' },
           h3: { value: '24px' },
-          body: { DEFAULT: { value: '24px' }, md: { value: '22px' }, sm: { value: '20px' } },
+          body: {
+            xl: { value: '32px' },
+            DEFAULT: { value: '24px' },
+            md: { value: '22px' },
+            sm: { value: '20px' },
+          },
           subline: { DEFAULT: { value: '24px' }, sm: { value: '20px' } },
         },
         fontWeights: {
@@ -778,6 +789,21 @@ const config = buildConfig(
       'body.sm.bold': {
         fontSize: '{fontSizes.body.sm}',
         lineHeight: '{lineHeights.body.sm}',
+        fontWeight: '{fontWeights.bold}',
+      },
+      'body.xl': {
+        fontSize: '{fontSizes.body.xl}',
+        lineHeight: '{lineHeights.body.xl}',
+        fontWeight: '{fontWeights.normal}',
+      },
+      'body.xl.medium': {
+        fontSize: '{fontSizes.body.xl}',
+        lineHeight: '{lineHeights.body.xl}',
+        fontWeight: '{fontWeights.medium}',
+      },
+      'body.xl.bold': {
+        fontSize: '{fontSizes.body.xl}',
+        lineHeight: '{lineHeights.body.xl}',
         fontWeight: '{fontWeights.bold}',
       },
       subline: {

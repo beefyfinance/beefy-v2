@@ -39,7 +39,7 @@ const Layout = styled('div', {
     flexDirection: 'column',
     width: '100%',
     gap: '40px',
-    paddingBlock: '24px',
+    paddingBlock: '24px 104px',
     md: {
       paddingBlock: '150px',
       gap: '64px',

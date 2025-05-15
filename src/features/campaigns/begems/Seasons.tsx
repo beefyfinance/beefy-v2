@@ -63,7 +63,7 @@ const Layout = styled('div', {
     },
     md: {
       gridTemplateRows: 'auto auto',
-      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+      gridTemplateColumns: '59% 41%',
     },
   },
 });
@@ -90,9 +90,6 @@ const Column = styled('div', {
       background:
         'linear-gradient(180deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.00) 100.07%), rgba(36, 40, 66, 0.40)',
     },
-    lg: {
-      padding: '64px',
-    },
   },
 });
 
@@ -104,6 +101,10 @@ const Blurb = styled(Column, {
       order: 2,
       borderRadius: '0 0 0 20px',
     },
+    lg: {
+      padding: '64px 40px 64px 64px',
+      justifyContent: 'flex-start',
+    },
   },
 });
 
@@ -113,6 +114,9 @@ const Form = styled(Column, {
     md: {
       order: 3,
       borderBottomLeftRadius: '0',
+    },
+    lg: {
+      padding: '130px 64px 64px 40px',
     },
   },
 });

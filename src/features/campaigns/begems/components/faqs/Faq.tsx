@@ -1,4 +1,4 @@
-import { css, cx } from '@repo/styles/css';
+import { css } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback, useId } from 'react';
 import AnimateHeight from 'react-animate-height';
@@ -19,10 +19,10 @@ export const Faq = memo(function Faq({ question, answer, open, onChange, index }
   }, [onChange, index]);
 
   return (
-    <Box>
-      <Header type="button" onClick={handleClick} aria-controls={id} aria-expanded={open}>
+    <Box type="button" onClick={handleClick} aria-controls={id} aria-expanded={open}>
+      <Header>
         <Title>{question}</Title>
-        <ChevronDown className={cx(iconClass, open && iconOpenClass)} />
+        <ChevronDown className={iconClass} />
       </Header>
       <AnimateHeight id={id} duration={300} height={open ? 'auto' : 0}>
         <Answer>
@@ -33,22 +33,25 @@ export const Faq = memo(function Faq({ question, answer, open, onChange, index }
   );
 });
 
-const Box = styled('div', {
+const Box = styled('button', {
   base: {
     padding: '16px 20px',
     borderRadius: '12px',
     border: '2px solid {colors.darkBlue.70}',
     color: 'text.dark',
     background: 'darkBlue.80',
+    display: 'block',
+    whiteSpace: 'wrap',
+    textAlign: 'left',
   },
 });
 
-const Header = styled('button', {
+const Header = styled('div', {
   base: {
     display: 'flex',
     gap: '20px',
     width: '100%',
-    textAlign: 'left',
+    alignItems: 'center',
   },
 });
 
@@ -57,17 +60,15 @@ const Title = styled('h3', {
     textStyle: 'body.medium',
     color: 'text.middle',
     flex: '1 1 auto',
+    md: {
+      textStyle: 'body.xl.medium',
+    },
   },
 });
 
 const iconClass = css({
   width: '12px',
   height: '8px',
-  transition: 'transform 0.3s ease',
-});
-
-const iconOpenClass = css({
-  transform: 'rotate(-180deg)',
 });
 
 const Answer = styled('div', {

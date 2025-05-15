@@ -27,7 +27,7 @@ import {
   type AmountInputProps,
 } from '../../vault/components/Actions/Transact/AmountInput/AmountInput.tsx';
 import { AmountInputWithSlider } from '../../vault/components/Actions/Transact/AmountInputWithSlider/AmountInputWithSlider.tsx';
-import { fromUnixTime, format } from 'date-fns';
+import { format, fromUnixTime } from 'date-fns';
 
 type SeasonRedeemProps = {
   season: number;
@@ -148,9 +148,12 @@ const Banner = styled('div', {
     color: 'darkBlue.70',
     padding: '6px 100px',
     borderRadius: '0 0 0 16px',
-    textStyle: 'subline', // figma is completely different text style...
+    textStyle: 'subline.sm',
     transformOrigin: 'center center',
     transform: 'rotate(30deg) translate(25%, -25%)',
+    md: {
+      textStyle: 'subline',
+    },
   },
 });
 
@@ -168,43 +171,45 @@ const RedeemForm = memo(function RedeemForm({
   onSubmit,
 }: RedeemFormProps) {
   return (
-    <FormLayout disabled={!available || !input || !output || !onSubmit}>
-      <Controls>
-        <ControlWithLabel>
-          <ControlLabel>
-            <Label>You redeem</Label>
-            <SubLabel>{available || <AmountAvailable balance={BIG_ZERO} />}</SubLabel>
-          </ControlLabel>
-          <div>
-            {input || (
-              <AmountInputWithSlider
-                value={BIG_ZERO}
-                maxValue={BIG_ZERO}
-                disabled={true}
-                tokenDecimals={18}
-              />
-            )}
-          </div>
-        </ControlWithLabel>
-        <ControlWithLabel>
-          <ControlLabel>
-            <Label>You get</Label>
-          </ControlLabel>
-          <div>{output || <OutputAmount amount={BIG_ZERO} />}</div>
-        </ControlWithLabel>
-      </Controls>
-      <ActionConnectSwitch chainId={'sonic'}>
-        <Button
-          variant="success"
-          fullWidth={true}
-          borderless={true}
-          onClick={onSubmit}
-          disabled={!onSubmit}
-        >
-          Redeem
-        </Button>
-      </ActionConnectSwitch>
-    </FormLayout>
+    <FormBackground>
+      <FormLayout disabled={!available || !input || !output || !onSubmit}>
+        <Controls>
+          <ControlWithLabel>
+            <ControlLabel>
+              <Label>You redeem</Label>
+              <SubLabel>{available || <AmountAvailable balance={BIG_ZERO} />}</SubLabel>
+            </ControlLabel>
+            <div>
+              {input || (
+                <AmountInputWithSlider
+                  value={BIG_ZERO}
+                  maxValue={BIG_ZERO}
+                  disabled={true}
+                  tokenDecimals={18}
+                />
+              )}
+            </div>
+          </ControlWithLabel>
+          <ControlWithLabel>
+            <ControlLabel>
+              <Label>You get</Label>
+            </ControlLabel>
+            <div>{output || <OutputAmount amount={BIG_ZERO} />}</div>
+          </ControlWithLabel>
+        </Controls>
+        <ActionConnectSwitch chainId={'sonic'}>
+          <Button
+            variant="success"
+            fullWidth={true}
+            borderless={true}
+            onClick={onSubmit}
+            disabled={!onSubmit}
+          >
+            Redeem
+          </Button>
+        </ActionConnectSwitch>
+      </FormLayout>
+    </FormBackground>
   );
 });
 
@@ -322,11 +327,8 @@ const Controls = styled('div', {
   },
 });
 
-const FormLayout = styled('div', {
+const FormBackground = styled('div', {
   base: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '24px',
     background: 'darkBlue.70',
     padding: '36px 16px 24px 16px',
     width: '100%',
@@ -335,6 +337,14 @@ const FormLayout = styled('div', {
       padding: '36px 24px',
       borderRadius: '20px',
     },
+  },
+});
+
+const FormLayout = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px',
   },
   variants: {
     disabled: {

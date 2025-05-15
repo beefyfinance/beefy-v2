@@ -40,7 +40,7 @@ const Title = styled('h2', {
     textAlign: 'center',
     color: 'text.middle',
     marginBottom: '16px',
-    sm: {
+    md: {
       textStyle: 'h1',
     },
   },
@@ -51,5 +51,8 @@ const List = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     gap: '8px',
+    md: {
+      gap: '12px',
+    },
   },
 });

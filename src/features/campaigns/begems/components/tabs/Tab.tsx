@@ -33,6 +33,9 @@ const Label = styled('div', {
   base: {
     textStyle: 'body.lg.medium',
     color: 'inherit',
+    md: {
+      textStyle: 'body.xl.medium',
+    },
   },
 });
 
