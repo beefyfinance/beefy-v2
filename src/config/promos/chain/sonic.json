@@ -7,7 +7,7 @@
     "tokenAddress": "0x0c750C226351efb59Cf4ac6E7c1ACE68b18A9052",
     "type": "boost",
     "version": 2,
-    "contractAddress": "0xfa067d1e67e6db12ddcc50b3b4194210df244713",
+    "contractAddress": "0x35ADf6DCfccFbD013dadE2fdE6db48456cA5Fe83",
     "tag": {
       "text": "Shadow Boost"
     },
@@ -91,7 +91,7 @@
   },
   {
     "id": "moo_shadow-cow-sonic-ws-bes-vault",
-    "title": "Beefy",
+    "title": "Shadow & Beefy",
     "vaultId": "shadow-cow-sonic-ws-bes-vault",
     "assets": ["beS", "S"],
     "tokenAddress": "0xB94932EdbD9406c0646c02bAAEa4F768F450f603",
