@@ -56,8 +56,9 @@ const overrides: Record<
   'aero-cow-eurc-cbbtc-vault': { harvestOnDeposit: undefined },
   'pendle-eqb-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
   'pendle-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
-  'compound-base-eth': { harvestOnDeposit: undefined },
-  'beefy-besonic': { vaultOwner: undefined }, // temp disabled while waiting for rewards to refill
+  'compound-base-eth': { harvestOnDeposit: undefined }, // temp disabled while waiting for rewards to refill
+  'compound-polygon-usdc': { harvestOnDeposit: undefined },
+  'beefy-besonic': { vaultOwner: undefined },
 };
 
 const oldValidOwners = [

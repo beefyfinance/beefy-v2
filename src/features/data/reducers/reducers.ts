@@ -7,6 +7,7 @@ import { analyticsSlice } from './analytics.ts';
 import { apySlice } from './apy.ts';
 import { articlesSlice } from './articles.ts';
 import { bridgesSlice } from './bridges.ts';
+import { beGemsReducer } from './campaigns/begems.ts';
 import { chainsSlice } from './chains.ts';
 import { dataLoaderSlice } from './data-loader.ts';
 import { feesSlice } from './fees.ts';
@@ -80,6 +81,9 @@ const userReducer = combineReducers({
 const uiReducer = combineReducers({
   addToWallet: addToWalletSlice.reducer,
   bridge: bridgeSlice.reducer,
+  campaigns: combineReducers({
+    begems: beGemsReducer,
+  }),
   dataLoader: dataLoaderSlice.reducer,
   filteredVaults: persistReducer(
     {

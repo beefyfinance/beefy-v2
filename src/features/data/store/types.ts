@@ -5,6 +5,7 @@ import type { AnalyticsState } from '../reducers/analytics-types.ts';
 import type { ApyState } from '../reducers/apy-types.ts';
 import type { ArticlesState } from '../reducers/articles-types.ts';
 import type { BridgesState } from '../reducers/bridges-types.ts';
+import type { BeGemsState } from '../reducers/campaigns/begems-types.ts';
 import type { ChainsState } from '../reducers/chains-types.ts';
 import type { DataLoaderState } from '../reducers/data-loader-types.ts';
 import type { FeesState } from '../reducers/fees-types.ts';
@@ -81,6 +82,9 @@ export interface BeefyState {
     treasury: TreasuryState;
     vaultsList: VaultsListState;
     version: VersionState;
+    campaigns: {
+      begems: BeGemsState;
+    };
   };
 }
 
