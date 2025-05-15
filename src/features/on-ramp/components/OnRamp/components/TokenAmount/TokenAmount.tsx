@@ -1,23 +1,23 @@
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo, useCallback, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useTranslation } from 'react-i18next';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { getNetworkSrc } from '../../../../../../helpers/networkSrc.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
+import { selectChainById } from '../../../../../data/selectors/chains.ts';
 import {
   selectInputAmount,
   selectNetwork,
   selectOutputAmount,
   selectToken,
 } from '../../../../../data/selectors/on-ramp.ts';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
 import { AmountInput } from '../AmountInput/AmountInput.tsx';
-import { TokenAmountAdornment } from '../TokenAmountAdornment/TokenAmountAdornment.tsx';
-import { AmountOutput } from '../AmountOutput/AmountOutput.tsx';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { getNetworkSrc } from '../../../../../../helpers/networkSrc.ts';
-import { selectChainById } from '../../../../../data/selectors/chains.ts';
 import { AmountLabel } from '../AmountLabel/AmountLabel.tsx';
-import { useTranslation } from 'react-i18next';
-import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
-import { css, type CssStyles } from '@repo/styles/css';
+import { AmountOutput } from '../AmountOutput/AmountOutput.tsx';
+import { TokenAmountAdornment } from '../TokenAmountAdornment/TokenAmountAdornment.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -48,24 +48,23 @@ export const TokenAmount = memo(function TokenAmount({ isInput, css: cssProp }: 
   return (
     <div className={css(cssProp)}>
       <AmountLabel css={styles.label}>{t('OnRamp-YouBuy')}</AmountLabel>
-      {isInput ? (
+      {isInput ?
         <AmountInput
           value={inputValue}
           onChange={setValue}
           maxDecimals={8}
           endAdornment={<TokenAmountAdornment token={token} />}
         />
-      ) : (
-        <AmountOutput
+      : <AmountOutput
           value={outputValue}
           maxDecimals={8}
           endAdornment={<TokenAmountAdornment token={token} />}
         />
-      )}
+      }
       <div className={classes.network}>
         <div className={classes.networkLabel}>network:</div>
         <button type="button" className={classes.networkButton} onClick={handleNetworkClick}>
-          {networkSrc ? (
+          {networkSrc ?
             <img
               src={networkSrc}
               width={20}
@@ -73,7 +72,7 @@ export const TokenAmount = memo(function TokenAmount({ isInput, css: cssProp }: 
               alt={network}
               className={classes.networkIcon}
             />
-          ) : null}
+          : null}
           {chain.name}
         </button>
       </div>

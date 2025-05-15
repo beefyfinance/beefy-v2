@@ -1,28 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { Draft } from 'immer';
-import type { ChainEntity } from '../entities/chain.ts';
-import type { VaultEntity } from '../entities/vault.ts';
-import type { NormalizedEntity } from '../utils/normalized-entity.ts';
-import type { MinterEntity } from '../entities/minter.ts';
+import { entries } from '../../../helpers/object.ts';
 import { fetchAllMinters, initiateMinterForm, reloadReserves } from '../actions/minters.ts';
 import type { MinterConfig } from '../apis/config-types.ts';
-import type BigNumber from 'bignumber.js';
-import { entries } from '../../../helpers/object.ts';
-
-export type MintersState = NormalizedEntity<MinterEntity> & {
-  byChainId: {
-    [chainId in ChainEntity['id']]?: MinterEntity['id'][];
-  };
-  byVaultId: {
-    [vaultId: VaultEntity['id']]: MinterEntity['id'][];
-  };
-  reservesById: {
-    [minterId: MinterEntity['id']]: BigNumber;
-  };
-  totalSupplyById: {
-    [minterId: MinterEntity['id']]: BigNumber;
-  };
-};
+import type { ChainEntity } from '../entities/chain.ts';
+import type { MinterEntity } from '../entities/minter.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import type { MintersState } from './minters-types.ts';
 
 export const initialMintersState: MintersState = {
   byId: {},

@@ -1,10 +1,10 @@
 import { memo } from 'react';
-import { useAppSelector } from '../../../../store.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../data/entities/vault.ts';
-import { selectVaultById } from '../../../data/selectors/vaults.ts';
-import { PlatformCard } from '../DetailsCards/PlatformCard.tsx';
 import { selectPlatformById } from '../../../data/selectors/platforms.ts';
 import { selectTokenByAddress } from '../../../data/selectors/tokens.ts';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
+import { PlatformCard } from '../DetailsCards/PlatformCard.tsx';
 
 interface PlatformsCardProps {
   vaultId: VaultEntity['id'];
@@ -22,9 +22,9 @@ export const PlatformsCard = memo(function PlatformsCard({ vaultId }: PlatformsC
 
   return (
     <>
-      {provider && provider.id !== platform.id ? (
+      {provider && provider.id !== platform.id ?
         <PlatformCard key={provider.id} platformId={provider.id} />
-      ) : null}
+      : null}
       <PlatformCard key={platform.id} platformId={platform.id} />
     </>
   );

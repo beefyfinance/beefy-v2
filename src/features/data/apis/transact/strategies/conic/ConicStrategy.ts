@@ -1,4 +1,57 @@
-import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy.ts';
+import type { Abi, Address } from 'abitype';
+import { first, uniqBy } from 'lodash-es';
+import type { Namespace, TFunction } from 'react-i18next';
+import { encodeFunctionData, getAbiItem } from 'viem';
+import { ZapAbi } from '../../../../../../config/abi/ZapAbi.ts';
+import {
+  BIG_ZERO,
+  bigNumberToBigInt,
+  fromWei,
+  toWeiString,
+} from '../../../../../../helpers/big-number.ts';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
+import {
+  isTokenEqual,
+  isTokenErc20,
+  isTokenNative,
+  type TokenEntity,
+  type TokenErc20,
+  type TokenNative,
+} from '../../../../entities/token.ts';
+import { isStandardVault, type VaultStandard } from '../../../../entities/vault.ts';
+import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
+import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
+import {
+  selectChainNativeToken,
+  selectChainWrappedNativeToken,
+  selectErc20TokenByAddress,
+  selectIsTokenLoaded,
+  selectTokenByAddress,
+  selectTokenById,
+} from '../../../../selectors/tokens.ts';
+import { selectTransactSlippage } from '../../../../selectors/transact.ts';
+import type { BeefyThunk } from '../../../../store/types.ts';
+import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
+import { slipBy } from '../../helpers/amounts.ts';
+import {
+  createOptionId,
+  createQuoteId,
+  createSelectionId,
+  onlyAssetCount,
+  onlyOneInput,
+  onlyOneToken,
+  onlyOneTokenAmount,
+} from '../../helpers/options.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
+import {
+  includeWrappedAndNative,
+  nativeAndWrappedAreSame,
+  nativeToWNative,
+  pickTokens,
+  wnativeToNative,
+} from '../../helpers/tokens.ts';
+import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
+import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import {
   type ConicDepositOption,
   type ConicDepositQuote,
@@ -11,64 +64,11 @@ import {
   type TokenAmount,
   type ZapQuoteStep,
 } from '../../transact-types.ts';
-import {
-  isTokenEqual,
-  isTokenErc20,
-  isTokenNative,
-  type TokenEntity,
-  type TokenErc20,
-  type TokenNative,
-} from '../../../../entities/token.ts';
-import {
-  createOptionId,
-  createQuoteId,
-  createSelectionId,
-  onlyAssetCount,
-  onlyOneInput,
-  onlyOneToken,
-  onlyOneTokenAmount,
-} from '../../helpers/options.ts';
-import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
-import {
-  selectChainNativeToken,
-  selectChainWrappedNativeToken,
-  selectErc20TokenByAddress,
-  selectIsTokenLoaded,
-  selectTokenByAddress,
-  selectTokenById,
-} from '../../../../selectors/tokens.ts';
-import type { Step } from '../../../../reducers/wallet/stepper.ts';
-import {
-  BIG_ZERO,
-  bigNumberToBigInt,
-  fromWei,
-  toWeiString,
-} from '../../../../../../helpers/big-number.ts';
-import type { Namespace, TFunction } from 'react-i18next';
-import type { BeefyThunk } from '../../../../../../redux-types.ts';
-import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
-import { isStandardVault, type VaultStandard } from '../../../../entities/vault.ts';
-import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
-import { ZapAbi } from '../../../../../../config/abi/ZapAbi.ts';
-import {
-  includeWrappedAndNative,
-  nativeAndWrappedAreSame,
-  nativeToWNative,
-  pickTokens,
-  wnativeToNative,
-} from '../../helpers/tokens.ts';
-import { selectTransactSlippage } from '../../../../selectors/transact.ts';
-import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
-import type { OrderInput, OrderOutput, UserlessZapRequest, ZapStep } from '../../zap/types.ts';
-import { first, uniqBy } from 'lodash-es';
-import { slipBy } from '../../helpers/amounts.ts';
-import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
 import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType.ts';
+import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
+import type { OrderInput, OrderOutput, UserlessZapRequest, ZapStep } from '../../zap/types.ts';
+import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy.ts';
 import type { ConicStrategyConfig } from '../strategy-configs.ts';
-import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
-import type { Abi, Address } from 'abitype';
-import { encodeFunctionData, getAbiItem } from 'viem';
-import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
 const strategyId = 'conic';
 type StrategyId = typeof strategyId;

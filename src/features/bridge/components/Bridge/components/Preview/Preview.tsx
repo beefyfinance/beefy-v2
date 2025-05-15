@@ -1,27 +1,27 @@
 import { memo, useCallback, useMemo } from 'react';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useTranslation } from 'react-i18next';
-import { styles } from './styles.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import {
-  selectCurrentChainId,
-  selectIsWalletConnected,
-} from '../../../../../data/selectors/wallet.ts';
-import { selectChainById } from '../../../../../data/selectors/chains.ts';
+import { Button } from '../../../../../../components/Button/Button.tsx';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { confirmBridgeForm } from '../../../../../data/actions/bridge.ts';
+import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet.ts';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
 import {
   selectBridgeDepositTokenForChainId,
   selectBridgeFormState,
   selectBridgeHasSelectedQuote,
 } from '../../../../../data/selectors/bridge.ts';
-import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet.ts';
-import { Button } from '../../../../../../components/Button/Button.tsx';
-import { ChainSelector } from '../ChainSelector/ChainSelector.tsx';
+import { selectChainById } from '../../../../../data/selectors/chains.ts';
+import {
+  selectCurrentChainId,
+  selectIsWalletConnected,
+} from '../../../../../data/selectors/wallet.ts';
 import { AmountSelector } from '../AmountSelector/AmountSelector.tsx';
+import { ChainSelector } from '../ChainSelector/ChainSelector.tsx';
 import { FormValidator } from '../FormValidator/FormValidator.tsx';
 import { QuoteSelector } from '../QuoteSelector/QuoteSelector.tsx';
-import { confirmBridgeForm } from '../../../../../data/actions/bridge.ts';
-import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
 import { ReceiverSelector } from '../ReceiverSelector/ReceiverSelector.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -65,8 +65,8 @@ function PreviewImpl() {
         <QuoteSelector />
       </div>
       <div className={classes.footer}>
-        {isWalletConnected ? (
-          isWalletOnFromChain ? (
+        {isWalletConnected ?
+          isWalletOnFromChain ?
             <Button
               onClick={handleStep}
               disabled={isConfirmDisabled}
@@ -76,8 +76,7 @@ function PreviewImpl() {
             >
               {t('Bridge-Review')}
             </Button>
-          ) : (
-            <Button
+          : <Button
               onClick={handleNetworkChange}
               variant="success"
               fullWidth={true}
@@ -85,9 +84,8 @@ function PreviewImpl() {
             >
               {t('Network-Change', { network: fromChain.name })}
             </Button>
-          )
-        ) : (
-          <Button
+
+        : <Button
             onClick={handleConnectWallet}
             variant="success"
             fullWidth={true}
@@ -95,7 +93,7 @@ function PreviewImpl() {
           >
             {t('Network-ConnectWallet')}
           </Button>
-        )}
+        }
       </div>
     </div>
   );

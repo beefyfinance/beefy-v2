@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
-
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);

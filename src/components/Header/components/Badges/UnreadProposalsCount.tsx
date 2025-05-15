@@ -1,8 +1,8 @@
 import { memo } from 'react';
-import type { BadgeComponentProps } from './types.ts';
-import { useAppSelector } from '../../../../store.ts';
 import { selectUnreadActiveProposalsBySpace } from '../../../../features/data/selectors/proposals.ts';
+import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { NotificationCount } from './NotificationCount.tsx';
+import type { BadgeComponentProps } from './types.ts';
 
 type UnreadSpaceProposalsCountProps = BadgeComponentProps & {
   space: string;

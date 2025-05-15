@@ -1,3 +1,5 @@
+import type { Namespace, TFunction } from 'react-i18next';
+import type { TokenEntity, TokenErc20 } from '../../../entities/token.ts';
 import type {
   VaultCowcentrated,
   VaultEntity,
@@ -5,7 +7,8 @@ import type {
   VaultGov,
   VaultStandard,
 } from '../../../entities/vault.ts';
-import type { BeefyStateFn } from '../../../../../redux-types.ts';
+import type { Step } from '../../../reducers/wallet/stepper-types.ts';
+import type { BeefyStateFn } from '../../../store/types.ts';
 import type {
   DepositOption,
   DepositQuote,
@@ -15,10 +18,7 @@ import type {
   WithdrawOption,
   WithdrawQuote,
 } from '../transact-types.ts';
-import type { TokenEntity, TokenErc20 } from '../../../entities/token.ts';
 import type { ZapStep } from '../zap/types.ts';
-import type { Step } from '../../../reducers/wallet/stepper.ts';
-import type { Namespace, TFunction } from 'react-i18next';
 
 export type VaultDepositRequest = {
   inputs: InputTokenAmount[];

@@ -1,20 +1,29 @@
-import type { BeefyState } from '../../../redux-types.ts';
-import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault.ts';
-import type { ChainEntity } from '../entities/chain.ts';
-import type { MerklVaultReward } from '../reducers/wallet/user-rewards-types.ts';
+import { createSelector } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
-import { createSelector } from '@reduxjs/toolkit';
-import { selectTokenByAddressOrUndefined, selectTokenPriceByTokenOracleId } from './tokens.ts';
-import { selectWalletAddress } from './wallet.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault.ts';
+import type { MerklVaultReward } from '../reducers/wallet/user-rewards-types.ts';
+import type { BeefyState } from '../store/types.ts';
+import { isNonEmptyArray } from '../utils/array-utils.ts';
+import { selectGovVaultPendingRewards, selectGovVaultPendingRewardsWithPrice } from './balance.ts';
+import {
+  createAddressDataSelector,
+  createGlobalDataSelector,
+  createHasLoaderDispatchedRecentlyEvaluator,
+  createShouldLoaderLoadRecentEvaluator,
+  hasLoaderFulfilledOnce,
+  isLoaderPending,
+  isLoaderRejected,
+} from './data-loader-helpers.ts';
 import {
   selectVaultActiveGovRewards,
   selectVaultActiveMerklCampaigns,
   selectVaultActiveStellaSwapCampaigns,
   type UnifiedRewardToken,
 } from './rewards.ts';
-import { selectGovVaultPendingRewards, selectGovVaultPendingRewardsWithPrice } from './balance.ts';
-import { isNonEmptyArray } from '../utils/array-utils.ts';
+import { selectTokenByAddressOrUndefined, selectTokenPriceByTokenOracleId } from './tokens.ts';
+import { selectWalletAddress } from './wallet.ts';
 
 export type UnifiedReward = {
   active: boolean;
@@ -250,4 +259,82 @@ export const selectUserGovVaultUnifiedRewards = createSelector(
 
     return rewards.filter(r => r.amount.gt(BIG_ZERO) || (r.active && r.apr));
   }
+);
+export const selectHasMerklRewardsDispatchedRecentlyForAnyUser = createGlobalDataSelector(
+  'merklRewards',
+  createHasLoaderDispatchedRecentlyEvaluator(15),
+  5
+);
+export const selectFetchMerklRewardsLastDispatched = createGlobalDataSelector(
+  'merklRewards',
+  loader => loader?.lastDispatched || 0
+);
+export const selectMerklRewardsForUserShouldLoad = createAddressDataSelector(
+  'merklRewards',
+  createShouldLoaderLoadRecentEvaluator(30 * 60),
+  5
+);
+export const selectMerklRewardsForUserHasFulfilledOnce = createAddressDataSelector(
+  'merklRewards',
+  hasLoaderFulfilledOnce
+);
+export const selectMerklRewardsForUserIsRejected = createAddressDataSelector(
+  'merklRewards',
+  isLoaderRejected
+);
+export const selectMerklRewardsForUserIsPending = createAddressDataSelector(
+  'merklRewards',
+  isLoaderPending
+);
+export const selectMerklUserRewardsStatus = createSelector(
+  selectMerklRewardsForUserHasFulfilledOnce,
+  selectMerklRewardsForUserShouldLoad,
+  selectMerklRewardsForUserIsRejected,
+  selectMerklRewardsForUserIsPending,
+  selectHasMerklRewardsDispatchedRecentlyForAnyUser,
+  (userFulfilled, userShouldLoad, userRejected, userPending, anyUserDispatchedRecently) => ({
+    canLoad: userShouldLoad && !anyUserDispatchedRecently,
+    isLoaded: userFulfilled,
+    isLoading: userPending,
+    isError: !userFulfilled && userRejected,
+  })
+);
+export const selectHasStellaSwapRewardsDispatchedRecentlyForAnyUser = createGlobalDataSelector(
+  'stellaSwapRewards',
+  createHasLoaderDispatchedRecentlyEvaluator(15),
+  5
+);
+export const selectFetchStellaSwapRewardsLastDispatched = createGlobalDataSelector(
+  'stellaSwapRewards',
+  loader => loader?.lastDispatched || 0
+);
+export const selectStellaSwapRewardsForUserShouldLoad = createAddressDataSelector(
+  'stellaSwapRewards',
+  createShouldLoaderLoadRecentEvaluator(30 * 60),
+  5
+);
+export const selectStellaSwapRewardsForUserHasFulfilledOnce = createAddressDataSelector(
+  'stellaSwapRewards',
+  hasLoaderFulfilledOnce
+);
+export const selectStellaSwapRewardsForUserIsRejected = createAddressDataSelector(
+  'stellaSwapRewards',
+  isLoaderRejected
+);
+export const selectStellaSwapRewardsForUserIsPending = createAddressDataSelector(
+  'stellaSwapRewards',
+  isLoaderPending
+);
+export const selectStellaSwapUserRewardsStatus = createSelector(
+  selectStellaSwapRewardsForUserHasFulfilledOnce,
+  selectStellaSwapRewardsForUserShouldLoad,
+  selectStellaSwapRewardsForUserIsRejected,
+  selectStellaSwapRewardsForUserIsPending,
+  selectHasStellaSwapRewardsDispatchedRecentlyForAnyUser,
+  (userFulfilled, userShouldLoad, userRejected, userPending, anyUserDispatchedRecently) => ({
+    canLoad: userShouldLoad && !anyUserDispatchedRecently,
+    isLoaded: userFulfilled,
+    isLoading: userPending,
+    isError: !userFulfilled && userRejected,
+  })
 );

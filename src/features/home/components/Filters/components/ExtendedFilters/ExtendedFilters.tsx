@@ -33,13 +33,13 @@ export const ExtendedFilters = memo(function ExtendedFilters({
       <CheckboxFilter filter="onlyRetired" label={t('Filter-Retired')} />
       <CheckboxFilter filter="onlyPaused" label={t('Filter-Paused')} />
       <MinTvlFilter />
-      {!desktopView ? (
+      {!desktopView ?
         <>
           <VaultCategoryDropdownFilter layer={1} />
           <AssetTypeDropdownFilter layer={1} />
           <StrategyTypeDropdownFilter layer={1} />
         </>
-      ) : null}
+      : null}
       <PlatformDropdownFilter placement={platformFilterPlacement} />
     </div>
   );

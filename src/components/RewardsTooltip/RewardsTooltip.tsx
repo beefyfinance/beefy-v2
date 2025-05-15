@@ -1,11 +1,7 @@
+import { uniq } from 'lodash-es';
 import { memo, useMemo } from 'react';
-import { styles } from './styles.ts';
-import { legacyMakeStyles } from '../../helpers/mui.ts';
-import type { VaultEntity } from '../../features/data/entities/vault.ts';
-import { AssetsImage } from '../AssetsImage/AssetsImage.tsx';
-import { useAppSelector } from '../../store.ts';
 import { useTranslation } from 'react-i18next';
-import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format.ts';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
   selectDashboardUserRewardsByVaultId,
   type UserReward,
@@ -13,11 +9,15 @@ import {
   type UserRewardSource,
   type UserRewardStatus,
 } from '../../features/data/selectors/dashboard.ts';
-import { uniq } from 'lodash-es';
 import { getMostCommon, isDefined } from '../../features/data/utils/array-utils.ts';
-import { ucFirstLetter } from '../../helpers/string.ts';
 import { groupByMap } from '../../helpers/collection.ts';
+import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format.ts';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { ucFirstLetter } from '../../helpers/string.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
+import { AssetsImage } from '../AssetsImage/AssetsImage.tsx';
 import { AsTooltip } from '../Tooltip/AsTooltip.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -58,12 +58,12 @@ export const PendingRewardsIconWithTooltip = memo(function PendingRewardsIconWit
   const { pending } = rewards;
   const tokens = useMemo(
     () =>
-      pending.has
-        ? {
-            chainId: getMostCommon(pending.rewards.map(r => r.token.chainId)),
-            symbols: uniq(pending.rewards.map(r => r.token.symbol)),
-          }
-        : undefined,
+      pending.has ?
+        {
+          chainId: getMostCommon(pending.rewards.map(r => r.token.chainId)),
+          symbols: uniq(pending.rewards.map(r => r.token.symbol)),
+        }
+      : undefined,
     [pending]
   );
 
@@ -101,9 +101,9 @@ export const RewardsTooltipContent = memo(function RewardsTooltipContent({
         ['pending', pending] as const,
       ]
         .map(([status, wanted]) =>
-          !!wanted && rewards[status]?.has
-            ? ([status, rewards[status].rewards] as const)
-            : undefined
+          !!wanted && rewards[status]?.has ?
+            ([status, rewards[status].rewards] as const)
+          : undefined
         )
         .filter(isDefined),
     [rewards, pending, claimed, compounded]

@@ -1,41 +1,40 @@
 import { memo, useCallback, useMemo } from 'react';
-import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { useTranslation } from 'react-i18next';
-import { CardContent } from '../../../../Card/CardContent.tsx';
 import { AssetsImage } from '../../../../../../../components/AssetsImage/AssetsImage.tsx';
-import { styles } from '../styles.ts';
+import { Button } from '../../../../../../../components/Button/Button.tsx';
 import { formatTokenDisplayCondensed } from '../../../../../../../helpers/format.ts';
-import { selectVaultById } from '../../../../../../data/selectors/vaults.ts';
-import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance.ts';
-import {
-  selectCurrentChainId,
-  selectIsWalletConnected,
-} from '../../../../../../data/selectors/wallet.ts';
-import {
-  selectErc20TokenByAddress,
-  selectTokenByAddress,
-} from '../../../../../../data/selectors/tokens.ts';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../data/store/hooks.ts';
+import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
+import { stepperStart, stepperAddStep } from '../../../../../../data/actions/wallet/stepper.ts';
 import {
   askForNetworkChange,
   askForWalletConnection,
 } from '../../../../../../data/actions/wallet.ts';
-import type { MinterCardParams } from '../../MinterCard.tsx';
+import { approve } from '../../../../../../data/actions/wallet/approval.ts';
+import { mintDeposit } from '../../../../../../data/actions/wallet/minters.ts';
+import { useInputForm } from '../../../../../../data/hooks/input.ts';
+import { selectAllowanceByTokenAddress } from '../../../../../../data/selectors/allowances.ts';
+import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance.ts';
+import { selectChainById } from '../../../../../../data/selectors/chains.ts';
 import {
   selectMinterById,
   selectMinterVaultsType,
 } from '../../../../../../data/selectors/minters.ts';
-import { selectAllowanceByTokenAddress } from '../../../../../../data/selectors/allowances.ts';
-import { selectChainById } from '../../../../../../data/selectors/chains.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../../store.ts';
-import { stepperActions } from '../../../../../../data/reducers/wallet/stepper.ts';
 import { selectIsStepperStepping } from '../../../../../../data/selectors/stepper.ts';
-import { startStepper } from '../../../../../../data/actions/stepper.ts';
-import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
+import {
+  selectErc20TokenByAddress,
+  selectTokenByAddress,
+} from '../../../../../../data/selectors/tokens.ts';
+import { selectVaultById } from '../../../../../../data/selectors/vaults.ts';
+import {
+  selectCurrentChainId,
+  selectIsWalletConnected,
+} from '../../../../../../data/selectors/wallet.ts';
+import { CardContent } from '../../../../Card/CardContent.tsx';
 import { AmountInput } from '../../../Transact/AmountInput/AmountInput.tsx';
-import { useInputForm } from '../../../../../../data/hooks/input.tsx';
-import { Button } from '../../../../../../../components/Button/Button.tsx';
-import { mintDeposit } from '../../../../../../data/actions/wallet/minters.ts';
-import { approve } from '../../../../../../data/actions/wallet/approval.ts';
+import type { MinterCardParams } from '../../MinterCard.tsx';
+import { styles } from '../styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -108,7 +107,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
 
     if (depositToken.type !== 'native' && depositTokenAllowance.isLessThan(formData.amount)) {
       dispatch(
-        stepperActions.addStep({
+        stepperAddStep({
           step: {
             step: 'approve',
             message: t('Vault-ApproveMsg'),
@@ -120,7 +119,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     }
 
     dispatch(
-      stepperActions.addStep({
+      stepperAddStep({
         step: {
           step: 'mint',
           message: t('Vault-TxnConfirm', { type: t('Mint-noun') }),
@@ -130,7 +129,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       })
     );
 
-    dispatch(startStepper(chain.id));
+    dispatch(stepperStart(chain.id));
   };
 
   return (

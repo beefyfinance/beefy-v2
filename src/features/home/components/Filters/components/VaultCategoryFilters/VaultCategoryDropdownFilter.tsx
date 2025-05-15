@@ -1,16 +1,16 @@
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { selectFilterVaultCategory } from '../../../../../data/selectors/filtered-vaults.ts';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
-import { CATEGORY_OPTIONS } from './category-options.ts';
+import { SelectMultiple } from '../../../../../../components/Form/Select/Multi/SelectMultiple.tsx';
 import type {
   SelectItem,
   SelectMultiProps,
 } from '../../../../../../components/Form/Select/types.ts';
 import { entries } from '../../../../../../helpers/object.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { VaultCategoryType } from '../../../../../data/reducers/filtered-vaults-types.ts';
-import { SelectMultiple } from '../../../../../../components/Form/Select/Multi/SelectMultiple.tsx';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
+import { selectFilterVaultCategory } from '../../../../../data/selectors/filtered-vaults.ts';
+import { CATEGORY_OPTIONS } from './category-options.ts';
 
 export type VaultCategoryDropdownFilterProps = {
   layer?: 0 | 1 | 2;

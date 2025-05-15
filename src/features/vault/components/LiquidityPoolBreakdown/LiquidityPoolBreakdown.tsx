@@ -1,26 +1,26 @@
+import { styled } from '@repo/styles/jsx';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import type { ToggleButtonItem } from '../../../../components/ToggleButtons/ToggleButtons.tsx';
+import { BIG_ZERO } from '../../../../helpers/big-number.ts';
+import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
+import { fetchAddressBookAction } from '../../../data/actions/tokens.ts';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../../data/entities/vault.ts';
+import {
+  selectHasBreakdownDataForVault,
+  selectLpBreakdownForVault,
+  selectShouldInitAddressBook,
+} from '../../../data/selectors/tokens.ts';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
 import { Card } from '../Card/Card.tsx';
 import { CardContent } from '../Card/CardContent.tsx';
 import { CardHeader } from '../Card/CardHeader.tsx';
 import { CardTitle } from '../Card/CardTitle.tsx';
-import { BIG_ZERO } from '../../../../helpers/big-number.ts';
-import { useTranslation } from 'react-i18next';
-import { BreakdownTable } from './components/BreakdownTable/BreakdownTable.tsx';
-import type { BreakdownMode } from './types.ts';
-import { ChartWithLegend } from './components/ChartWithLegend/ChartWithLegend.tsx';
-import { useCalculatedBreakdown } from './hooks.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../store.ts';
-import { selectVaultById } from '../../../data/selectors/vaults.ts';
-import {
-  selectHasBreakdownDataForVault,
-  selectLpBreakdownForVault,
-} from '../../../data/selectors/tokens.ts';
-import { isCowcentratedLikeVault, type VaultEntity } from '../../../data/entities/vault.ts';
-import { selectShouldInitAddressBook } from '../../../data/selectors/data-loader.ts';
-import { fetchAddressBookAction } from '../../../data/actions/tokens.ts';
 import { StatSwitcher } from '../StatSwitcher/StatSwitcher.tsx';
-import { styled } from '@repo/styles/jsx';
-import type { ToggleButtonItem } from '../../../../components/ToggleButtons/ToggleButtons.tsx';
+import { BreakdownTable } from './components/BreakdownTable/BreakdownTable.tsx';
+import { ChartWithLegend } from './components/ChartWithLegend/ChartWithLegend.tsx';
+import { useCalculatedBreakdown } from './hooks.ts';
+import type { BreakdownMode } from './types.ts';
 
 export type LiquidityPoolBreakdownProps = {
   vaultId: VaultEntity['id'];

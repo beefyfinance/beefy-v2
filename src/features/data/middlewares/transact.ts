@@ -1,25 +1,8 @@
-import type { BeefyState } from '../../../redux-types.ts';
-import { type AnyAction, createListenerMiddleware } from '@reduxjs/toolkit';
-import {
-  selectIsAddressBookLoaded,
-  selectIsConfigAvailable,
-  selectIsPricesAvailable,
-  selectIsZapLoaded,
-  selectShouldInitZapAggregatorTokenSupport,
-  selectShouldInitZapAmms,
-  selectShouldInitZapConfigs,
-  selectShouldInitZapSwapAggregators,
-} from '../selectors/data-loader.ts';
-import { selectAllChainIds } from '../selectors/chains.ts';
-import { selectVaultById } from '../selectors/vaults.ts';
-import {
-  selectTransactMode,
-  selectTransactPendingVaultIdOrUndefined,
-  selectTransactStep,
-  selectTransactVaultIdOrUndefined,
-} from '../selectors/transact.ts';
-import { selectWalletAddress } from '../selectors/wallet.ts';
-import { selectAreFeesLoaded, selectShouldInitFees } from '../selectors/fees.ts';
+import type { UnknownAction } from 'redux';
+import { fetchFees } from '../actions/fees.ts';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
+import { transactInit, transactInitReady, transactSwitchMode } from '../actions/transact.ts';
+import { fetchUserOffChainRewardsForVaultAction } from '../actions/user-rewards/user-rewards.ts';
 import {
   calculateZapAvailabilityAction,
   fetchZapAggregatorTokenSupportAction,
@@ -27,185 +10,197 @@ import {
   fetchZapConfigsAction,
   fetchZapSwapAggregatorsAction,
 } from '../actions/zap.ts';
-import { transactInit, transactInitReady } from '../actions/transact.ts';
-import { fetchFees } from '../actions/fees.ts';
-import { fetchUserOffChainRewardsForVaultAction } from '../actions/user-rewards/user-rewards.ts';
-import { selectMayHaveOffchainUserRewards } from '../selectors/user-rewards.ts';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
-import { selectBoostById, selectIsVaultPreStakedOrBoosted } from '../selectors/boosts.ts';
-import { selectUserVaultBalanceInShareTokenInBoosts } from '../selectors/balance.ts';
-import { transactActions } from '../reducers/wallet/transact.ts';
-import { TransactMode, TransactStep } from '../reducers/wallet/transact-types.ts';
 import { isVaultActive } from '../entities/vault.ts';
+import { TransactMode, TransactStep } from '../reducers/wallet/transact-types.ts';
+import { selectUserVaultBalanceInShareTokenInBoosts } from '../selectors/balance.ts';
+import { selectBoostById, selectIsVaultPreStakedOrBoosted } from '../selectors/boosts.ts';
+import { selectAllChainIds } from '../selectors/chains.ts';
+import { selectIsConfigAvailable } from '../selectors/config.ts';
+import { selectAreFeesLoaded, selectShouldInitFees } from '../selectors/fees.ts';
+import { selectIsPricesAvailable } from '../selectors/prices.ts';
+import { selectIsAddressBookLoaded } from '../selectors/tokens.ts';
+import {
+  selectTransactMode,
+  selectTransactPendingVaultIdOrUndefined,
+  selectTransactStep,
+  selectTransactVaultIdOrUndefined,
+} from '../selectors/transact.ts';
+import { selectMayHaveOffchainUserRewards } from '../selectors/user-rewards.ts';
+import { selectVaultById } from '../selectors/vaults.ts';
+import { selectWalletAddress } from '../selectors/wallet.ts';
+import {
+  selectIsZapLoaded,
+  selectShouldInitZapAggregatorTokenSupport,
+  selectShouldInitZapAmms,
+  selectShouldInitZapConfigs,
+  selectShouldInitZapSwapAggregators,
+} from '../selectors/zap.ts';
+import { startAppListening } from './listener-middleware.ts';
 
-const transactListener = createListenerMiddleware<BeefyState>();
+export function addTransactListeners() {
+  /** calculate zap availability after all needed data is loaded */
+  startAppListening({
+    actionCreator: fetchZapAggregatorTokenSupportAction.fulfilled,
+    effect: async (_, { dispatch, condition, cancelActiveListeners }) => {
+      // Cancel other listeners
+      cancelActiveListeners();
 
-/** calculate zap availability after all needed data is loaded */
-transactListener.startListening({
-  actionCreator: fetchZapAggregatorTokenSupportAction.fulfilled,
-  effect: async (_, { dispatch, condition, cancelActiveListeners }) => {
-    // Cancel other listeners
-    cancelActiveListeners();
+      // Wait for all data to be loaded
+      await condition((_, state): boolean => {
+        if (!selectIsConfigAvailable(state)) {
+          return false;
+        }
+        const chainIds = selectAllChainIds(state);
+        if (!chainIds.every(chainId => selectIsAddressBookLoaded(state, chainId))) {
+          return false;
+        }
 
-    // Wait for all data to be loaded
-    await condition((_, state): boolean => {
-      if (!selectIsConfigAvailable(state)) {
-        return false;
+        if (!selectIsPricesAvailable(state)) {
+          return false;
+        }
+
+        return selectIsZapLoaded(state);
+      });
+
+      // Compute vault zap support
+      dispatch(calculateZapAvailabilityAction());
+    },
+  });
+
+  /** init transact form and wait for data to finish loading */
+  startAppListening({
+    actionCreator: transactInit,
+    effect: async (action, { dispatch, condition, getState, signal }) => {
+      const shouldCancel = () => {
+        // another transactInit was dispatched with a different vault id
+        if (selectTransactPendingVaultIdOrUndefined(getState()) !== action.payload.vaultId) {
+          return true;
+        }
+        // was cancelled via externally
+        return signal.aborted;
+      };
+
+      if (shouldCancel()) {
+        return;
       }
-      const chainIds = selectAllChainIds(state);
-      if (!chainIds.every(chainId => selectIsAddressBookLoaded(state, chainId))) {
-        return false;
+
+      // Loaders for these are dispatched in initAppData
+      const vault = selectVaultById(getState(), action.payload.vaultId);
+      await condition(
+        (_, currentState) =>
+          selectIsConfigAvailable(currentState) &&
+          selectIsAddressBookLoaded(currentState, vault.chainId)
+      );
+
+      if (shouldCancel()) {
+        return;
       }
 
-      if (!selectIsPricesAvailable(state)) {
-        return false;
+      // Deposit/Withdraw: Init zap data loaders
+      const loaders: Promise<UnknownAction>[] = [];
+      if (selectShouldInitZapAmms(getState())) {
+        loaders.push(dispatch(fetchZapAmmsAction()));
       }
 
-      return selectIsZapLoaded(state);
-    });
-
-    // Compute vault zap support
-    dispatch(calculateZapAvailabilityAction());
-  },
-});
-
-/** init transact form and wait for data to finish loading */
-transactListener.startListening({
-  actionCreator: transactInit,
-  effect: async (action, { dispatch, condition, getState, signal }) => {
-    const shouldCancel = () => {
-      // another transactInit was dispatched with a different vault id
-      if (selectTransactPendingVaultIdOrUndefined(getState()) !== action.payload.vaultId) {
-        return true;
+      if (selectShouldInitZapConfigs(getState())) {
+        loaders.push(dispatch(fetchZapConfigsAction()));
       }
-      // was cancelled via externally
-      return signal.aborted;
-    };
 
-    if (shouldCancel()) {
-      return;
-    }
+      if (selectShouldInitZapSwapAggregators(getState())) {
+        loaders.push(dispatch(fetchZapSwapAggregatorsAction()));
+      }
 
-    // Loaders for these are dispatched in initAppData
-    const vault = selectVaultById(getState(), action.payload.vaultId);
-    await condition(
-      (_, currentState) =>
-        selectIsConfigAvailable(currentState) &&
-        selectIsAddressBookLoaded(currentState, vault.chainId)
-    );
+      if (selectShouldInitZapAggregatorTokenSupport(getState())) {
+        loaders.push(dispatch(fetchZapAggregatorTokenSupportAction()));
+      }
 
-    if (shouldCancel()) {
-      return;
-    }
+      // Deposit/Withdraw: Init fees data loader
+      if (selectShouldInitFees(getState())) {
+        loaders.push(dispatch(fetchFees()));
+      }
 
-    // Deposit/Withdraw: Init zap data loaders
-    const loaders: Promise<AnyAction>[] = [];
-    if (selectShouldInitZapAmms(getState())) {
-      loaders.push(dispatch(fetchZapAmmsAction()));
-    }
+      // Claim: Init user off-chain rewards data loader
+      const mayHaveOffchainRewards = selectMayHaveOffchainUserRewards(getState(), vault);
+      const walletAddress = selectWalletAddress(getState());
+      if (mayHaveOffchainRewards && walletAddress) {
+        // dispatch but don't wait on it
+        dispatch(fetchUserOffChainRewardsForVaultAction(vault.id, walletAddress));
+      }
 
-    if (selectShouldInitZapConfigs(getState())) {
-      loaders.push(dispatch(fetchZapConfigsAction()));
-    }
+      // Wait for all loaders to finish
+      await Promise.allSettled(loaders);
 
-    if (selectShouldInitZapSwapAggregators(getState())) {
-      loaders.push(dispatch(fetchZapSwapAggregatorsAction()));
-    }
+      if (shouldCancel()) {
+        return;
+      }
 
-    if (selectShouldInitZapAggregatorTokenSupport(getState())) {
-      loaders.push(dispatch(fetchZapAggregatorTokenSupportAction()));
-    }
+      // Wait for all data to be loaded (in case we didn't dispatch the above loaders)
+      await condition(
+        (_, currentState) => selectAreFeesLoaded(currentState) && selectIsZapLoaded(currentState)
+      );
 
-    // Deposit/Withdraw: Init fees data loader
-    if (selectShouldInitFees(getState())) {
-      loaders.push(dispatch(fetchFees()));
-    }
+      if (shouldCancel()) {
+        return;
+      }
 
-    // Claim: Init user off-chain rewards data loader
-    const mayHaveOffchainRewards = selectMayHaveOffchainUserRewards(getState(), vault);
-    const walletAddress = selectWalletAddress(getState());
-    if (mayHaveOffchainRewards && walletAddress) {
-      // dispatch but don't wait on it
-      dispatch(fetchUserOffChainRewardsForVaultAction(vault.id, walletAddress));
-    }
+      dispatch(transactInitReady({ vaultId: action.payload.vaultId }));
+    },
+  });
 
-    // Wait for all loaders to finish
-    await Promise.allSettled(loaders);
+  /** switch away from boost tab if unstaked from all boosts */
+  startAppListening({
+    actionCreator: reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
+    effect: async (action, { getState, dispatch }) => {
+      if (
+        !action.meta.arg.walletAddress ||
+        !action.meta.arg.boostId ||
+        !action.payload.balance.boosts.length
+      ) {
+        // this is not a user boost balance update
+        return;
+      }
 
-    if (shouldCancel()) {
-      return;
-    }
+      const state = getState();
+      const step = selectTransactStep(state);
+      if (step !== TransactStep.Form) {
+        // not on form step
+        return;
+      }
 
-    // Wait for all data to be loaded (in case we didn't dispatch the above loaders)
-    await condition(
-      (_, currentState) => selectAreFeesLoaded(currentState) && selectIsZapLoaded(currentState)
-    );
+      const mode = selectTransactMode(state);
+      if (mode !== TransactMode.Boost) {
+        // not on boost form tab
+        return;
+      }
 
-    if (shouldCancel()) {
-      return;
-    }
+      const boost = selectBoostById(state, action.meta.arg.boostId);
+      const vaultId = selectTransactVaultIdOrUndefined(state);
+      if (!vaultId || vaultId !== boost.vaultId) {
+        // not on the same vault this boost is for
+        return;
+      }
 
-    dispatch(transactInitReady({ vaultId: action.payload.vaultId }));
-  },
-});
+      const vaultHasBoost = selectIsVaultPreStakedOrBoosted(state, boost.vaultId);
+      if (vaultHasBoost) {
+        // there is still a boost for this vault, so tab will not be empty
+        return;
+      }
 
-/** switch away from boost tab if unstaked from all boosts */
-transactListener.startListening({
-  actionCreator: reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
-  effect: async (action, { getState, dispatch }) => {
-    if (
-      !action.meta.arg.walletAddress ||
-      !action.meta.arg.boostId ||
-      !action.payload.balance.boosts.length
-    ) {
-      // this is not a user boost balance update
-      return;
-    }
+      const balance = selectUserVaultBalanceInShareTokenInBoosts(
+        state,
+        boost.vaultId,
+        action.meta.arg.walletAddress
+      );
+      if (!balance.isZero()) {
+        // still have balance in some boost of this vault
+        return;
+      }
 
-    const state = getState();
-    const step = selectTransactStep(state);
-    if (step !== TransactStep.Form) {
-      // not on form step
-      return;
-    }
-
-    const mode = selectTransactMode(state);
-    if (mode !== TransactMode.Boost) {
-      // not on boost form tab
-      return;
-    }
-
-    const boost = selectBoostById(state, action.meta.arg.boostId);
-    const vaultId = selectTransactVaultIdOrUndefined(state);
-    if (!vaultId || vaultId !== boost.vaultId) {
-      // not on the same vault this boost is for
-      return;
-    }
-
-    const vaultHasBoost = selectIsVaultPreStakedOrBoosted(state, boost.vaultId);
-    if (vaultHasBoost) {
-      // there is still a boost for this vault, so tab will not be empty
-      return;
-    }
-
-    const balance = selectUserVaultBalanceInShareTokenInBoosts(
-      state,
-      boost.vaultId,
-      action.meta.arg.walletAddress
-    );
-    if (!balance.isZero()) {
-      // still have balance in some boost of this vault
-      return;
-    }
-
-    // switch to deposit if vault still active, otherwise withdraw tab
-    const vault = selectVaultById(state, vaultId);
-    dispatch(
-      transactActions.switchMode(
-        isVaultActive(vault) ? TransactMode.Deposit : TransactMode.Withdraw
-      )
-    );
-  },
-});
-
-export const transactMiddleware = transactListener.middleware;
+      // switch to deposit if vault still active, otherwise withdraw tab
+      const vault = selectVaultById(state, vaultId);
+      dispatch(
+        transactSwitchMode(isVaultActive(vault) ? TransactMode.Deposit : TransactMode.Withdraw)
+      );
+    },
+  });
+}

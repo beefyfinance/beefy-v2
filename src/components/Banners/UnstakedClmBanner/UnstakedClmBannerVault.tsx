@@ -1,17 +1,17 @@
 import { memo, useMemo } from 'react';
-import type { UnstakedClmBannerVaultImplProps, UnstakedClmBannerVaultProps } from './types.ts';
-import { useAppSelector } from '../../../store.ts';
-import { selectUserIsUnstakedForVaultId } from '../../../features/data/selectors/balance.ts';
-import { selectVaultById } from '../../../features/data/selectors/vaults.ts';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   isCowcentratedLikeVault,
   isCowcentratedVault,
 } from '../../../features/data/entities/vault.ts';
-import { ClmVaultBanner } from '../ClmVaultBanner/ClmVaultBanner.tsx';
-import { Trans, useTranslation } from 'react-i18next';
+import { selectUserIsUnstakedForVaultId } from '../../../features/data/selectors/balance.ts';
 import { selectTokenByAddress } from '../../../features/data/selectors/tokens.ts';
+import { selectVaultById } from '../../../features/data/selectors/vaults.ts';
+import { useAppSelector } from '../../../features/data/store/hooks.ts';
+import { ClmVaultBanner } from '../ClmVaultBanner/ClmVaultBanner.tsx';
 import { InternalLink } from '../Links/InternalLink.tsx';
 import { ClmBanner } from './ClmBanner.tsx';
+import type { UnstakedClmBannerVaultImplProps, UnstakedClmBannerVaultProps } from './types.ts';
 
 export const UnstakedClmBannerVault = memo<UnstakedClmBannerVaultProps>(
   function UnstakedClmBannerVault({ vaultId, fromVault }) {
@@ -45,28 +45,25 @@ const UnstakedClmBannerVaultImpl = memo<UnstakedClmBannerVaultImplProps>(
       )
     );
     const availableTypes =
-      vault.cowcentratedIds.pool && vault.cowcentratedIds.vault
-        ? 'both'
-        : vault.cowcentratedIds.pool
-          ? 'gov'
-          : 'standard';
+      vault.cowcentratedIds.pool && vault.cowcentratedIds.vault ? 'both'
+      : vault.cowcentratedIds.pool ? 'gov'
+      : 'standard';
     const thisType = vault.type;
-    const endOfKey = !fromVault
-      ? `link-${availableTypes}`
+    const endOfKey =
+      !fromVault ?
+        `link-${availableTypes}`
       : `this-${thisType}${availableTypes === 'both' ? '-both' : ''}`;
 
     const components = useMemo(() => {
       return {
-        GovLink: vault.cowcentratedIds.pool ? (
-          <InternalLink to={`/vault/${vault.cowcentratedIds.pool}`} />
-        ) : (
-          <span />
-        ),
-        VaultLink: vault.cowcentratedIds.vault ? (
-          <InternalLink to={`/vault/${vault.cowcentratedIds.vault}`} />
-        ) : (
-          <span />
-        ),
+        GovLink:
+          vault.cowcentratedIds.pool ?
+            <InternalLink to={`/vault/${vault.cowcentratedIds.pool}`} />
+          : <span />,
+        VaultLink:
+          vault.cowcentratedIds.vault ?
+            <InternalLink to={`/vault/${vault.cowcentratedIds.vault}`} />
+          : <span />,
       };
     }, [vault.cowcentratedIds.pool, vault.cowcentratedIds.vault]);
 

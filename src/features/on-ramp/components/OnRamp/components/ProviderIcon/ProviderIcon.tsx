@@ -14,7 +14,7 @@ export const ProviderIcon = memo(function CurrencyFlag({
 }: ProviderIconProps) {
   const src = getOnRampProviderIcon(provider);
 
-  return src ? (
-    <img src={src} width={width} height={width} alt={provider} className={css(cssProp)} />
-  ) : null;
+  return src ?
+      <img src={src} width={width} height={width} alt={provider} className={css(cssProp)} />
+    : null;
 });

@@ -1,12 +1,12 @@
-import type { ChainEntity } from '../../../../data/entities/chain.ts';
+import { styled } from '@repo/styles/jsx';
 import type BigNumber from 'bignumber.js';
 import { memo } from 'react';
-import { useAppSelector } from '../../../../../store.ts';
-import { selectChainById } from '../../../../data/selectors/chains.ts';
-import { getNetworkSrc } from '../../../../../helpers/networkSrc.ts';
-import { formatLargeUsd } from '../../../../../helpers/format.ts';
 import { ContentLoading } from '../../../../../components/ContentLoading/ContentLoading.tsx';
-import { styled } from '@repo/styles/jsx';
+import { formatLargeUsd } from '../../../../../helpers/format.ts';
+import { getNetworkSrc } from '../../../../../helpers/networkSrc.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
+import type { ChainEntity } from '../../../../data/entities/chain.ts';
+import { selectChainById } from '../../../../data/selectors/chains.ts';
 
 type ChainProps = {
   chainId: ChainEntity['id'];

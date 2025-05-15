@@ -1,22 +1,22 @@
 import { memo, useMemo } from 'react';
-import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
-import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
-import { Stat } from '../Stat/Stat.tsx';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../../../store.ts';
-import { selectClmPnl } from '../../../../../../data/selectors/analytics.ts';
+import { ClmPnlTooltipContent } from '../../../../../../../components/PnlTooltip/ClmPnlTooltipContent.tsx';
+import { showClmPnlTooltip } from '../../../../../../../components/PnlTooltip/helpers.ts';
+import { DivWithTooltip } from '../../../../../../../components/Tooltip/DivWithTooltip.tsx';
+import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
 import {
   formatLargeUsd,
   formatPositiveOrNegative,
   formatTokenDisplayCondensed,
 } from '../../../../../../../helpers/format.ts';
-import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../../data/store/hooks.ts';
 import HelpOutline from '../../../../../../../images/icons/mui/HelpOutline.svg?react';
-import { styles } from './styles.ts';
-import { ClmPnlTooltipContent } from '../../../../../../../components/PnlTooltip/ClmPnlTooltipContent.tsx';
-import { showClmPnlTooltip } from '../../../../../../../components/PnlTooltip/helpers.ts';
+import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
+import { selectClmPnl } from '../../../../../../data/selectors/analytics.ts';
 import { selectCowcentratedLikeVaultById } from '../../../../../../data/selectors/vaults.ts';
-import { DivWithTooltip } from '../../../../../../../components/Tooltip/DivWithTooltip.tsx';
+import { Stat } from '../Stat/Stat.tsx';
+import { styles } from './styles.ts';
 
 interface OverviewGraphHeaderProps {
   vaultId: VaultEntity['id'];
@@ -91,7 +91,7 @@ export const OverviewGraphHeader = memo(function OverviewGraphHeader({
           tokens[1].token.symbol
         )}
         value2={
-          hasPnlTooltip ? (
+          hasPnlTooltip ?
             <DivWithTooltip
               children={
                 <div className={classes.tooltip}>
@@ -110,12 +110,10 @@ export const OverviewGraphHeader = memo(function OverviewGraphHeader({
               variant="dark"
               size="compact"
             />
-          ) : (
-            <span className={pnl.withClaimedPending.usd.gt(BIG_ZERO) ? classes.green : classes.red}>
+          : <span className={pnl.withClaimedPending.usd.gt(BIG_ZERO) ? classes.green : classes.red}>
               {formatLargeUsd(pnl.withClaimedPending.usd, { positivePrefix: '+$' })}
               {' PNL'}
             </span>
-          )
         }
         subValue2={
           <DivWithTooltip

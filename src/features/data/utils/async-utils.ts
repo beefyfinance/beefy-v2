@@ -1,6 +1,6 @@
 import type { AsyncThunkAction } from '@reduxjs/toolkit';
-import type { Action, Dispatch, Store } from 'redux';
-import type { BeefyState } from '../../../redux-types.ts';
+import type { Action, Dispatch } from 'redux';
+import type { BeefyDispatchFn, BeefyState, BeefyStateFn } from '../store/types.ts';
 
 /**
  * allows us to do
@@ -103,7 +103,7 @@ export function poll(
  *
  * Feel free to implement any other solution if you find it better
  */
-export function createFulfilledActionCapturer(store: Store<BeefyState>) {
+export function createFulfilledActionCapturer(dispatch: BeefyDispatchFn, getState: BeefyStateFn) {
   type CustomAction<T> = Action<string> & {
     payload: T & {
       state?: BeefyState;
@@ -123,7 +123,7 @@ export function createFulfilledActionCapturer(store: Store<BeefyState>) {
           ...action,
           payload: {
             ...action.payload,
-            state: store.getState(),
+            state: getState(),
           },
         };
       } else {
@@ -168,20 +168,20 @@ export function createFulfilledActionCapturer(store: Store<BeefyState>) {
               // dispatch the error to the store reducers as normal
               // we reject to avoid being stuck on awaiting the returned promise
               console.error(`Rejected action: ${action.type}`);
-              store.dispatch(action);
+              dispatch(action);
               // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
               return reject(action);
             } else if (action.type.endsWith('/pending')) {
               // dispatch the action to the store reducers as normal
               // but we don't warn our caller yet
-              store.dispatch(action);
+              dispatch(action);
             } else {
               // this is not supposed to happen
               console.warn(`Unknown async action type provided: ${action.type}`);
-              store.dispatch(action);
+              dispatch(action);
             }
           },
-          () => store.getState(),
+          () => getState(),
           extra
         );
       } catch (e) {

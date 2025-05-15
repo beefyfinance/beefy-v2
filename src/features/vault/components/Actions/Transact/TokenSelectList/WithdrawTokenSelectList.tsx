@@ -1,19 +1,19 @@
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
+import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { transactSelectSelection } from '../../../../../data/actions/transact.ts';
 import {
   selectTransactVaultId,
   selectTransactWithdrawSelectionsForChainWithBalances,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
 import type { ListItemProps } from './components/ListItem/ListItem.tsx';
 import { ListItem } from './components/ListItem/ListItem.tsx';
-import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
-import { css, type CssStyles } from '@repo/styles/css';
-import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -54,7 +54,7 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
   const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
     selectionId => {
       dispatch(
-        transactActions.selectSelection({
+        transactSelectSelection({
           selectionId: selectionId,
           resetInput: false,
         })
@@ -71,7 +71,7 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
       {/*hasMultipleChains ? <div className={classes.chainSelector}>TODO {selectedChain}</div> : null*/}
       <Scrollable css={styles.listContainer}>
         <div className={classes.list}>
-          {filteredOptionsForChain.length ? (
+          {filteredOptionsForChain.length ?
             filteredOptionsForChain.map(option => (
               <ListItem
                 key={option.id}
@@ -84,9 +84,7 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
                 onSelect={handleTokenSelect}
               />
             ))
-          ) : (
-            <div className={classes.noResults}>{t('Transact-TokenSelect-NoResults')}</div>
-          )}
+          : <div className={classes.noResults}>{t('Transact-TokenSelect-NoResults')}</div>}
         </div>
       </Scrollable>
     </div>

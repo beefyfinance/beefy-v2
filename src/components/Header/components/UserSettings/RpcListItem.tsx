@@ -1,17 +1,17 @@
+import { styled } from '@repo/styles/jsx';
 import { memo, type MouseEventHandler, useCallback, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { restoreDefaultRpcsOnSingleChain } from '../../../../features/data/actions/chains.ts';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
-import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
-import { useAppSelector } from '../../../../store.ts';
 import {
   selectActiveRpcUrlForChain,
   selectChainById,
 } from '../../../../features/data/selectors/chains.ts';
-import { useDispatch } from 'react-redux';
-import { restoreDefaultRpcsOnSingleChain } from '../../../../features/data/actions/chains.ts';
+import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import Refresh from '../../../../images/icons/mui/Refresh.svg?react';
-import { PanelCloseButton } from './Panel.tsx';
-import { styled } from '@repo/styles/jsx';
+import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
 import type { ItemInnerProps } from '../../../SearchableList/Item.tsx';
+import { PanelCloseButton } from './Panel.tsx';
 
 export const ChainRpcItem = memo(function ChainRpcItem({
   value,

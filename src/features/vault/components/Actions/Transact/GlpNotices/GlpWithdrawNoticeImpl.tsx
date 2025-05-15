@@ -1,14 +1,14 @@
 import { memo, useCallback } from 'react';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
-import { useAppSelector } from '../../../../../../store.ts';
+import { selectChainById } from '../../../../../data/selectors/chains.ts';
 import {
   selectVaultById,
   selectVaultStrategyAddress,
 } from '../../../../../data/selectors/vaults.ts';
-import { selectChainById } from '../../../../../data/selectors/chains.ts';
+import { getUnlockTime } from './GetUnlockTime.ts';
 import { GlpNotice } from './GlpNotice.tsx';
 import type { GlpLikeConfig } from './types.ts';
-import { getUnlockTime } from './GetUnlockTime.ts';
 
 export type GlpWithdrawNoticeImplProps = {
   vaultId: VaultEntity['id'];

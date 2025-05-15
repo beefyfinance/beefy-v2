@@ -1,18 +1,41 @@
 import type { ActionReducerMapBuilder, AsyncThunk, SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import type { Draft } from 'immer';
+import { cloneDeep } from 'lodash-es';
+import { errorToString } from '../../../helpers/format.ts';
 import { fetchAllAllowanceAction } from '../actions/allowance.ts';
+import {
+  fetchClmHarvestsForUser,
+  fetchClmHarvestsForVaultsOfUserOnChain,
+  fetchWalletTimeline,
+  initDashboardByAddress,
+} from '../actions/analytics.ts';
 import { fetchApyAction, fetchAvgApyAction } from '../actions/apy.ts';
+import { fetchLastArticle } from '../actions/articles.ts';
 import { fetchAllBalanceAction, recalculateDepositedVaultsAction } from '../actions/balance.ts';
 import { initiateBoostForm } from '../actions/boosts.ts';
+import { fetchBridgeConfig } from '../actions/bridge.ts';
+import { fetchBridges } from '../actions/bridges.ts';
 import { fetchChainConfigs } from '../actions/chains.ts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
+import { fetchFees } from '../actions/fees.ts';
+import { fetchAllMigrators } from '../actions/migrator.ts';
+import { fetchAllMinters, initiateMinterForm } from '../actions/minters.ts';
+import { fetchOnRampSupportedProviders } from '../actions/on-ramp.ts';
+import { fetchPlatforms } from '../actions/platforms.ts';
 import { fetchAllPricesAction } from '../actions/prices.ts';
+import { initPromos } from '../actions/promos.ts';
+import { fetchActiveProposals } from '../actions/proposal.ts';
+import { fetchOffChainCampaignsAction } from '../actions/rewards.ts';
 import {
   fetchAddressBookAction,
   fetchAllAddressBookAction,
   fetchAllCurrentCowcentratedRanges,
   reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
 } from '../actions/tokens.ts';
+import { fetchTreasury } from '../actions/treasury.ts';
+import { fetchUserMerklRewardsAction } from '../actions/user-rewards/merkl-user-rewards.ts';
+import { fetchUserStellaSwapRewardsAction } from '../actions/user-rewards/stellaswap-user-rewards.ts';
 import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults.ts';
 import {
   askForNetworkChange,
@@ -26,11 +49,7 @@ import {
   fetchZapConfigsAction,
   fetchZapSwapAggregatorsAction,
 } from '../actions/zap.ts';
-import { fetchAllMinters, initiateMinterForm } from '../actions/minters.ts';
-import { fetchBridgeConfig } from '../actions/bridge.ts';
-import { fetchPlatforms } from '../actions/platforms.ts';
-import { fetchOnRampSupportedProviders } from '../actions/on-ramp.ts';
-import { fetchFees } from '../actions/fees.ts';
+import type { ChainEntity, ChainId } from '../entities/chain.ts';
 import type {
   ByAddressByChainDataEntity,
   ByChainDataEntity,
@@ -45,26 +64,6 @@ import type {
   LoaderStatePending,
   LoaderStateRejected,
 } from './data-loader-types.ts';
-import { errorToString } from '../../../helpers/format.ts';
-import { fetchTreasury } from '../actions/treasury.ts';
-import {
-  fetchClmHarvestsForUser,
-  fetchClmHarvestsForVaultsOfUserOnChain,
-  fetchWalletTimeline,
-  initDashboardByAddress,
-} from '../actions/analytics.ts';
-import { fetchActiveProposals } from '../actions/proposal.ts';
-import { fetchBridges } from '../actions/bridges.ts';
-import { fetchAllMigrators } from '../actions/migrator.ts';
-import { fetchLastArticle } from '../actions/articles.ts';
-import type { BeefyState } from '../../../redux-types.ts';
-import type { ChainEntity, ChainId } from '../entities/chain.ts';
-import type { Draft } from 'immer';
-import { cloneDeep } from 'lodash-es';
-import { fetchUserMerklRewardsAction } from '../actions/user-rewards/merkl-user-rewards.ts';
-import { fetchOffChainCampaignsAction } from '../actions/rewards.ts';
-import { fetchUserStellaSwapRewardsAction } from '../actions/user-rewards/stellaswap-user-rewards.ts';
-import { initPromos } from '../actions/promos.ts';
 
 const dataLoaderStateInit: LoaderStateIdle = {
   lastFulfilled: undefined,
@@ -186,7 +185,7 @@ function addGlobalAsyncThunkActions<TPayload, TArg>(
     TPayload,
     TArg,
     {
-      state: BeefyState;
+      state: unknown;
     }
   >,
   stateKey: LoaderGlobalKey,
@@ -308,7 +307,7 @@ function addByChainAsyncThunkActions<
     TPayload,
     TArg,
     {
-      state: BeefyState;
+      state: unknown;
     }
   >,
   stateKeys: Array<LoaderChainKey>
@@ -356,7 +355,7 @@ function addByAddressByChainAsyncThunkActions<
     TPayload,
     TArg,
     {
-      state: BeefyState;
+      state: unknown;
     }
   >,
   stateKeys: Array<LoaderAddressChainKey>
@@ -405,7 +404,7 @@ function addByAddressByChainAsyncThunkActions<
   ActionParams extends { vaultId: VaultEntity['id']; walletAddress: string }
 >(
   builder: ActionReducerMapBuilder<DataLoaderState>,
-  action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
+  action: AsyncThunk<unknown, ActionParams, { state: unknown }>,
   stateKeys: Array<LoaderAddressVaultKey>
 ) {
   builder
@@ -459,7 +458,7 @@ function addByAddressAsyncThunkActions<
     TPayload,
     TArg,
     {
-      state: BeefyState;
+      state: unknown;
     }
   >,
   addressKeys: Array<LoaderAddressKey>,

@@ -1,4 +1,16 @@
-import type { BeefyState } from '../../../../../../redux-types.ts';
+import { EEEE_ADDRESS } from '../../../../../../helpers/addresses.ts';
+import { fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
+import type { TokenEntity } from '../../../../entities/token.ts';
+import { isTokenNative } from '../../../../entities/token.ts';
+import type { VaultEntity } from '../../../../entities/vault.ts';
+import { selectAllChainIds, selectChainById } from '../../../../selectors/chains.ts';
+import { selectSupportedSwapTokensForChainAggregatorHavingPrice } from '../../../../selectors/tokens.ts';
+import { selectSwapAggregatorForChainType } from '../../../../selectors/zap.ts';
+import type { BeefyState } from '../../../../store/types.ts';
+import type { OneInchSwapConfig } from '../../../config-types.ts';
+import { getOneInchApi } from '../../../instances.ts';
+import { slipBy } from '../../helpers/amounts.ts';
 import type {
   ISwapProvider,
   QuoteRequest,
@@ -6,18 +18,6 @@ import type {
   SwapRequest,
   SwapResponse,
 } from '../ISwapProvider.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
-import type { TokenEntity } from '../../../../entities/token.ts';
-import { isTokenNative } from '../../../../entities/token.ts';
-import { selectSupportedSwapTokensForChainAggregatorHavingPrice } from '../../../../selectors/tokens.ts';
-import { getOneInchApi } from '../../../instances.ts';
-import { selectAllChainIds, selectChainById } from '../../../../selectors/chains.ts';
-import { fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
-import { EEEE_ADDRESS } from '../../../../../../helpers/addresses.ts';
-import { selectSwapAggregatorForChainType } from '../../../../selectors/zap.ts';
-import type { OneInchSwapConfig } from '../../../config-types.ts';
-import type { VaultEntity } from '../../../../entities/vault.ts';
-import { slipBy } from '../../helpers/amounts.ts';
 
 export class OneInchSwapProvider implements ISwapProvider {
   getId(): string {

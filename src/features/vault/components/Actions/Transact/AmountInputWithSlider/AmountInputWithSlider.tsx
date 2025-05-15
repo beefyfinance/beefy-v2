@@ -1,3 +1,4 @@
+import { css } from '@repo/styles/css';
 import {
   type ChangeEventHandler,
   type CSSProperties,
@@ -7,18 +8,15 @@ import {
   useCallback,
   useMemo,
 } from 'react';
-import { AmountInput, type AmountInputProps } from '../AmountInput/AmountInput.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
-import { selectTransactForceSelection } from '../../../../../data/selectors/transact.ts';
-import { useAppSelector } from '../../../../../../store.ts';
-import { css } from '@repo/styles/css';
-import { styles } from './styles.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import type { TokenEntity } from '../../../../../data/entities/token.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import { selectTransactForceSelection } from '../../../../../data/selectors/transact.ts';
+import { AmountInput, type AmountInputProps } from '../AmountInput/AmountInput.tsx';
+import { styles } from './styles.ts';
 
 type AmountInputWithSliderProps = AmountInputProps & {
-  selectedToken: Pick<TokenEntity, 'decimals'>;
-  endAdornment: ReactNode;
+  endAdornment?: ReactNode;
   warning?: boolean;
 };
 
@@ -28,7 +26,7 @@ export const AmountInputWithSlider = memo(function AmountInputWithSlider({
   value,
   maxValue,
   onChange,
-  selectedToken,
+  tokenDecimals,
   css: cssProp,
   price,
   endAdornment,
@@ -78,7 +76,7 @@ export const AmountInputWithSlider = memo(function AmountInputWithSlider({
         warningCss={styles.warningInput}
         value={value}
         maxValue={maxValue}
-        tokenDecimals={selectedToken.decimals}
+        tokenDecimals={tokenDecimals}
         onChange={onChange}
         error={error}
         allowInputAboveBalance={true}

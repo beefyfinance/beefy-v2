@@ -1,20 +1,18 @@
+import type BigNumber from 'bignumber.js';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
+import { selectIsContractDataLoadedOnChain } from '../../features/data/selectors/contract-data.ts';
+import { selectIsPricesAvailable } from '../../features/data/selectors/prices.ts';
+import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types.ts';
 import { selectTvlBreakdownByVaultId } from '../../features/data/selectors/tvl.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
-import { formatLargeUsd } from '../../helpers/format.ts';
-import type { BeefyState } from '../../redux-types.ts';
-import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
+import type { BeefyState } from '../../features/data/store/types.ts';
 import { BIG_ZERO } from '../../helpers/big-number.ts';
+import { formatLargeUsd } from '../../helpers/format.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
+import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
 import { TvlShareTooltip } from '../VaultStats/VaultTvlStat.tsx';
-import type BigNumber from 'bignumber.js';
-import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types.ts';
-import {
-  selectIsContractDataLoadedOnChain,
-  selectIsPricesAvailable,
-} from '../../features/data/selectors/data-loader.ts';
-import { useAppSelector } from '../../store.ts';
 
 type VaultTvlProps = {
   vaultId: VaultEntity['id'];

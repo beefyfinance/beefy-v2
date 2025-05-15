@@ -1,10 +1,44 @@
-import type {
-  IComposableStrategy,
-  IComposableStrategyStatic,
-  UserlessZapDepositBreakdown,
-  UserlessZapWithdrawBreakdown,
-  ZapTransactHelpers,
-} from '../IStrategy.ts';
+import { first, uniqBy } from 'lodash-es';
+import type { Namespace, TFunction } from 'react-i18next';
+import { BIG_ZERO, fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
+import {
+  isTokenEqual,
+  isTokenErc20,
+  isTokenNative,
+  type TokenErc20,
+  type TokenNative,
+} from '../../../../entities/token.ts';
+import {
+  isErc4626AsyncWithdrawVault,
+  isErc4626Vault,
+  isStandardVault,
+  type VaultErc4626,
+  type VaultStandard,
+} from '../../../../entities/vault.ts';
+import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
+import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
+import { selectChainById } from '../../../../selectors/chains.ts';
+import {
+  selectChainNativeToken,
+  selectChainWrappedNativeToken,
+} from '../../../../selectors/tokens.ts';
+import { selectTransactSlippage } from '../../../../selectors/transact.ts';
+import type { BeefyState, BeefyThunk } from '../../../../store/types.ts';
+import { slipBy } from '../../helpers/amounts.ts';
+import {
+  createOptionId,
+  createQuoteId,
+  createSelectionId,
+  onlyAssetCount,
+  onlyOneInput,
+  onlyOneToken,
+} from '../../helpers/options.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
+import { nativeAndWrappedAreSame, pickTokens } from '../../helpers/tokens.ts';
+import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
+import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import {
   type InputTokenAmount,
   isZapQuoteStepSwap,
@@ -21,27 +55,13 @@ import {
   type ZapQuoteStep,
   type ZapQuoteStepSwapAggregator,
 } from '../../transact-types.ts';
-import type { BeefyState, BeefyThunk } from '../../../../../../redux-types.ts';
 import {
-  isTokenEqual,
-  isTokenErc20,
-  isTokenNative,
-  type TokenErc20,
-  type TokenNative,
-} from '../../../../entities/token.ts';
-import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
-import {
-  createOptionId,
-  createQuoteId,
-  createSelectionId,
-  onlyAssetCount,
-  onlyOneInput,
-  onlyOneToken,
-} from '../../helpers/options.ts';
-import { first, uniqBy } from 'lodash-es';
-import { BIG_ZERO, fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
-import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
-import { selectTransactSlippage } from '../../../../selectors/transact.ts';
+  type IErc4626VaultType,
+  isErc4626VaultType,
+  isStandardVaultType,
+  type IStandardVaultType,
+} from '../../vaults/IVaultType.ts';
+import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
 import type {
   OrderInput,
   OrderOutput,
@@ -49,34 +69,14 @@ import type {
   ZapStep,
   ZapStepResponse,
 } from '../../zap/types.ts';
-import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
-import type { Step } from '../../../../reducers/wallet/stepper.ts';
-import type { Namespace, TFunction } from 'react-i18next';
-import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
-import {
-  isErc4626AsyncWithdrawVault,
-  isErc4626Vault,
-  isStandardVault,
-  type VaultErc4626,
-  type VaultStandard,
-} from '../../../../entities/vault.ts';
-import { slipBy } from '../../helpers/amounts.ts';
-import { nativeAndWrappedAreSame, pickTokens } from '../../helpers/tokens.ts';
-import {
-  selectChainNativeToken,
-  selectChainWrappedNativeToken,
-} from '../../../../selectors/tokens.ts';
-import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
-import { selectChainById } from '../../../../selectors/chains.ts';
-import {
-  type IErc4626VaultType,
-  isErc4626VaultType,
-  isStandardVaultType,
-  type IStandardVaultType,
-} from '../../vaults/IVaultType.ts';
+import type {
+  IComposableStrategy,
+  IComposableStrategyStatic,
+  UserlessZapDepositBreakdown,
+  UserlessZapWithdrawBreakdown,
+  ZapTransactHelpers,
+} from '../IStrategy.ts';
 import type { SingleStrategyConfig } from '../strategy-configs.ts';
-import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;

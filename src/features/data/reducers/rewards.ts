@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type { Draft } from 'immer';
+import { distributedOmit } from '../../../helpers/object.ts';
+import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { fetchOffChainCampaignsAction } from '../actions/rewards.ts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
 import type { GovVaultMultiContractData } from '../apis/contract-data/contract-data-types.ts';
-import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
-import type { Draft } from 'immer';
-import { distributedOmit } from '../../../helpers/object.ts';
 import type { RewardsState } from './rewards-types.ts';
 
 const initialState: RewardsState = {
@@ -69,7 +69,7 @@ export const rewardsSlice = createSlice({
         sliceState.offchain.byProviderId = byProviderId;
       })
       .addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
-        addGovVaultsMultiToState(sliceState, action.payload.data.govVaultsMulti);
+        addGovVaultsMultiToState(sliceState, action.payload.contractData.govVaultsMulti);
       })
       .addCase(
         reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,

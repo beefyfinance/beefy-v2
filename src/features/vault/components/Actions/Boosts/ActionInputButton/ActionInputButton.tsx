@@ -1,24 +1,26 @@
+import type BigNumber from 'bignumber.js';
+import { memo, useCallback, useEffect, useMemo } from 'react';
+import { Collapse } from '../../../../../../components/Collapse/Collapse.tsx';
+import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import ExpandLess from '../../../../../../images/icons/mui/ExpandLess.svg?react';
 import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
-import { memo, useCallback, useEffect, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
-import { selectBoostById } from '../../../../../data/selectors/boosts.ts';
-import { selectIsAddressBookLoaded } from '../../../../../data/selectors/data-loader.ts';
-import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
-import { selectErc20TokenByAddress } from '../../../../../data/selectors/tokens.ts';
-import { selectIsWalletKnown, selectWalletAddress } from '../../../../../data/selectors/wallet.ts';
-import { styles } from './styles.ts';
-import { isLoaderFulfilled } from '../../../../../data/selectors/data-loader-helpers.ts';
 import { initiateBoostForm } from '../../../../../data/actions/boosts.ts';
-import { AmountInput } from '../../Transact/AmountInput/AmountInput.tsx';
-import { useInputForm } from '../../../../../data/hooks/input.tsx';
-import type BigNumber from 'bignumber.js';
-import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
-import { ActionButton } from '../ActionButton/ActionButton.tsx';
-import { Collapse } from '../../../../../../components/Collapse/Collapse.tsx';
+import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
+import { useInputForm } from '../../../../../data/hooks/input.ts';
+import { selectBoostById } from '../../../../../data/selectors/boosts.ts';
+import { isLoaderFulfilled } from '../../../../../data/selectors/data-loader-helpers.ts';
+import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
+import {
+  selectErc20TokenByAddress,
+  selectIsAddressBookLoaded,
+} from '../../../../../data/selectors/tokens.ts';
 import { selectVaultByIdWithReceipt } from '../../../../../data/selectors/vaults.ts';
+import { selectIsWalletKnown, selectWalletAddress } from '../../../../../data/selectors/wallet.ts';
+import { AmountInput } from '../../Transact/AmountInput/AmountInput.tsx';
+import { ActionButton } from '../ActionButton/ActionButton.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

@@ -1,19 +1,19 @@
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo, type ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../components/AssetsImage/AssetsImage.tsx';
 import { Button } from '../../../../components/Button/Button.tsx';
 import { LinkButton } from '../../../../components/LinkButton/LinkButton.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../store.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { explorerTokenUrl } from '../../../../helpers/url.ts';
+import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
+import PlusIcon from '../../../../images/icons/plus.svg?react';
+import { addTokenToWalletAction } from '../../../data/actions/add-to-wallet.ts';
 import type { ChainEntity } from '../../../data/entities/chain.ts';
 import type { TokenEntity } from '../../../data/entities/token.ts';
 import { selectChainById } from '../../../data/selectors/chains.ts';
-import PlusIcon from '../../../../images/icons/plus.svg?react';
-import { styles } from './styles.ts';
-import { explorerTokenUrl } from '../../../../helpers/url.ts';
-import { addTokenToWalletAction } from '../../../data/actions/add-to-wallet.ts';
-import { css, type CssStyles } from '@repo/styles/css';
 import { selectTokenByAddress } from '../../../data/selectors/tokens.ts';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

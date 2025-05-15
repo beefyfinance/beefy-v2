@@ -1,22 +1,23 @@
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
 import type { VaultGov } from '../../features/data/entities/vault.ts';
-import { selectGovVaultPendingRewardsWithPrice } from '../../features/data/selectors/balance.ts';
+import {
+  selectGovVaultPendingRewardsWithPrice,
+  selectIsBalanceAvailableForChainUser,
+} from '../../features/data/selectors/balance.ts';
+
+import { selectIsPricesAvailable } from '../../features/data/selectors/prices.ts';
+import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
 import { selectGovVaultById } from '../../features/data/selectors/vaults.ts';
 import {
   selectIsBalanceHidden,
   selectWalletAddress,
 } from '../../features/data/selectors/wallet.ts';
+import type { BeefyState } from '../../features/data/store/types.ts';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format.ts';
-import type { BeefyState } from '../../redux-types.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
-import {
-  selectIsBalanceAvailableForChainUser,
-  selectIsPricesAvailable,
-} from '../../features/data/selectors/data-loader.ts';
-import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
-import { memo } from 'react';
-import { useAppSelector } from '../../store.ts';
 
 type GovVaultRewardsProps = {
   vaultId: string;
@@ -55,13 +56,14 @@ const selectGovVaultRewardsData = (
   }
 
   if (isLoaded) {
-    const userRewards = walletAddress
-      ? selectGovVaultPendingRewardsWithPrice(state, vault.id, walletAddress)
+    const userRewards =
+      walletAddress ?
+        selectGovVaultPendingRewardsWithPrice(state, vault.id, walletAddress)
       : undefined;
     const userReward =
-      userRewards && userRewards.length
-        ? userRewards.find(r => r.amount.gt(0)) || userRewards[0]
-        : undefined; // TODO: support multiple earned tokens [empty = ok, not used when clm-like]
+      userRewards && userRewards.length ?
+        userRewards.find(r => r.amount.gt(0)) || userRewards[0]
+      : undefined; // TODO: support multiple earned tokens [empty = ok, not used when clm-like]
 
     if (userReward) {
       const {
@@ -85,9 +87,9 @@ const selectGovVaultRewardsData = (
   }
 
   const earnedToken =
-    vault.earnedTokenAddresses.length > 0
-      ? selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0])
-      : undefined;
+    vault.earnedTokenAddresses.length > 0 ?
+      selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0])
+    : undefined;
 
   return {
     status: 'no-rewards',

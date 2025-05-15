@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../../../store.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import { selectTreasuryTokensExposure } from '../../../data/selectors/treasury.ts';
 import { TreasuryExposureChart } from '../ExposureChart/TreasuryExposureChart.tsx';
 

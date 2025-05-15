@@ -1,17 +1,10 @@
-import {
-  isErc4626AsyncWithdrawVault,
-  isErc4626Vault,
-  type VaultErc4626,
-} from '../../../entities/vault.ts';
-import type { BeefyState, BeefyStateFn } from '../../../../../redux-types.ts';
-import { selectTokenByAddress } from '../../../selectors/tokens.ts';
-import type {
-  IErc4626VaultType,
-  VaultDepositRequest,
-  VaultDepositResponse,
-  VaultWithdrawRequest,
-  VaultWithdrawResponse,
-} from './IVaultType.ts';
+import BigNumber from 'bignumber.js';
+import { first } from 'lodash-es';
+import type { Namespace, TFunction } from 'react-i18next';
+import { encodeFunctionData, getAddress } from 'viem';
+import { Erc4626VaultAbi } from '../../../../../config/abi/Erc4626VaultAbi.ts';
+import { BIG_ZERO, fromWei, toWei, toWeiBigInt } from '../../../../../helpers/big-number.ts';
+import { deposit, requestRedeem } from '../../../actions/wallet/erc4626.ts';
 import {
   isTokenEqual,
   isTokenErc20,
@@ -20,12 +13,25 @@ import {
   type TokenErc20,
 } from '../../../entities/token.ts';
 import {
+  isErc4626AsyncWithdrawVault,
+  isErc4626Vault,
+  type VaultErc4626,
+} from '../../../entities/vault.ts';
+import type { Step } from '../../../reducers/wallet/stepper-types.ts';
+import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
+import { selectFeesByVaultId } from '../../../selectors/fees.ts';
+import { selectTokenByAddress } from '../../../selectors/tokens.ts';
+import type { BeefyState, BeefyStateFn } from '../../../store/types.ts';
+import { fetchContract } from '../../rpc-contract/viem-contract.ts';
+import {
   createOptionId,
   createQuoteId,
   createSelectionId,
   onlyInputCount,
   onlyOneInput,
 } from '../helpers/options.ts';
+import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
+import { getInsertIndex, getTokenAddress } from '../helpers/zap.ts';
 import {
   type AllowanceTokenAmount,
   type Erc4626VaultDepositOption,
@@ -37,20 +43,14 @@ import {
   type TokenAmount,
   type TransactQuote,
 } from '../transact-types.ts';
-import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
-import { first } from 'lodash-es';
-import { BIG_ZERO, fromWei, toWei, toWeiBigInt } from '../../../../../helpers/big-number.ts';
-import { selectFeesByVaultId } from '../../../selectors/fees.ts';
-import BigNumber from 'bignumber.js';
-import type { Namespace, TFunction } from 'react-i18next';
-import type { Step } from '../../../reducers/wallet/stepper.ts';
-import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
 import type { ZapStep } from '../zap/types.ts';
-import { deposit, requestRedeem } from '../../../actions/wallet/erc4626.ts';
-import { fetchContract } from '../../rpc-contract/viem-contract.ts';
-import { encodeFunctionData, getAddress } from 'viem';
-import { getInsertIndex, getTokenAddress } from '../helpers/zap.ts';
-import { Erc4626VaultAbi } from '../../../../../config/abi/Erc4626VaultAbi.ts';
+import type {
+  IErc4626VaultType,
+  VaultDepositRequest,
+  VaultDepositResponse,
+  VaultWithdrawRequest,
+  VaultWithdrawResponse,
+} from './IVaultType.ts';
 
 export class Erc4626VaultType implements IErc4626VaultType {
   public readonly id = 'erc4626';

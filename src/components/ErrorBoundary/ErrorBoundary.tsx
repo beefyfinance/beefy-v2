@@ -1,5 +1,6 @@
-import { type ErrorInfo, type FC, PureComponent } from 'react';
 import { miniSerializeError } from '@reduxjs/toolkit';
+import { type ErrorInfo, type FC, PureComponent } from 'react';
+import { isError } from '../../helpers/error.ts';
 import { DefaultFallback } from './DefaultFallback.tsx';
 import { DevDefaultFallback } from './DevDefaultFallback.tsx';
 import type {
@@ -7,11 +8,9 @@ import type {
   ErrorBoundaryProps,
   ErrorBoundaryState,
 } from './types.ts';
-import { isError } from '../../helpers/error.ts';
 
-const DefaultFallbackComponent: FC<ErrorBoundaryHasErrorState> = import.meta.env.DEV
-  ? DevDefaultFallback
-  : DefaultFallback;
+const DefaultFallbackComponent: FC<ErrorBoundaryHasErrorState> =
+  import.meta.env.DEV ? DevDefaultFallback : DefaultFallback;
 
 function isReactDevTools(): boolean {
   try {
@@ -52,7 +51,7 @@ export class ErrorBoundary extends PureComponent<ErrorBoundaryProps, ErrorBounda
     }
 
     return {
-      hasError: true,
+      hasError: !!e,
       error: {
         message:
           (!!e &&
@@ -69,8 +68,9 @@ export class ErrorBoundary extends PureComponent<ErrorBoundaryProps, ErrorBounda
     if (import.meta.env.DEV) {
       if (isReactDevTools()) return;
 
-      const title = this.state.hasError
-        ? this.state.error.message || this.state.error.name || error.name
+      const title =
+        this.state.hasError ?
+          this.state.error.message || this.state.error.name || error.name
         : error.name;
 
       console.group(`%c❌❌❌ ErrorBoundary caught an error ⤵️⤵️⤵️`, `background: #4a3535;`);

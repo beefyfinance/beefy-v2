@@ -1,22 +1,9 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { ChainEntity } from '../../entities/chain.ts';
-import { initWallet } from '../../actions/wallet.ts';
-
-/**
- * Only address and hideBalance are persisted
- */
-export type WalletState = {
-  initialized: boolean;
-  address: string | undefined;
-  connectedAddress: string | undefined;
-  selectedChainId: ChainEntity['id'] | null;
-  error: 'unsupported chain' | null;
-  hideBalance: boolean;
-};
+import type { WalletState } from './wallet-types.ts';
 
 const initialWalletState: WalletState = {
-  initialized: false,
   address: undefined,
   connectedAddress: undefined,
   selectedChainId: null,
@@ -88,12 +75,6 @@ export const walletSlice = createSlice({
     setToggleHideBalance(sliceState) {
       sliceState.hideBalance = !sliceState.hideBalance;
     },
-  },
-  extraReducers: builder => {
-    builder.addCase(initWallet.fulfilled, (sliceState, _action) => {
-      // wallet connection api initialized
-      sliceState.initialized = true;
-    });
   },
 });
 

@@ -1,12 +1,12 @@
-import type { FilteredVaultBooleanKeys } from '../../../../../data/reducers/filtered-vaults.ts';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import type { ReactNode } from 'react';
 import { memo, useCallback } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { selectFilterBoolean } from '../../../../../data/selectors/filtered-vaults.ts';
 import type { LabelledCheckboxProps } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import type { FilteredVaultBooleanKeys } from '../../../../../data/reducers/filtered-vaults-types.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
+import { selectFilterBoolean } from '../../../../../data/selectors/filtered-vaults.ts';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -36,7 +36,9 @@ export const CheckboxFilter = memo(function CheckboxFilter({
     <LabelledCheckbox
       label={
         <>
-          {icon ? <div className={classes.labelIcon}>{icon}</div> : null}
+          {icon ?
+            <div className={classes.labelIcon}>{icon}</div>
+          : null}
           {label}
         </>
       }

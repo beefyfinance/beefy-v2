@@ -1,18 +1,18 @@
 import { memo, useCallback, useMemo } from 'react';
-import { styles } from './styles.ts';
-import { Step } from '../../../../../../components/Step/Step.tsx';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
+import type { ItemInnerProps } from '../../../../../../components/SearchableList/Item.tsx';
+import { SearchableList } from '../../../../../../components/SearchableList/SearchableList.tsx';
+import { Step } from '../../../../../../components/Step/Step.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { setOnRampToken } from '../../../../../data/actions/on-ramp.ts';
 import {
   selectFiat,
   selectIsFiatSupported,
   selectSupportedTokensForFiat,
 } from '../../../../../data/selectors/on-ramp.ts';
-import { SearchableList } from '../../../../../../components/SearchableList/SearchableList.tsx';
-import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
 import { FiatTitleAdornment } from '../FiatTitleAdornment/FiatTitleAdornment.tsx';
-import { setOnRampToken } from '../../../../../data/actions/on-ramp.ts';
-import type { ItemInnerProps } from '../../../../../../components/SearchableList/Item.tsx';
+import { styles } from './styles.ts';
 
 export const TokenStep = memo(function TokenStep() {
   const { t } = useTranslation();
@@ -26,7 +26,9 @@ export const TokenStep = memo(function TokenStep() {
       titleAdornment={supported ? <FiatTitleAdornment currencyCode={fiat} /> : undefined}
       noPadding={supported}
     >
-      {supported ? <TokenSelector fiat={fiat} /> : <FiatNotSupported fiat={fiat} />}
+      {supported ?
+        <TokenSelector fiat={fiat} />
+      : <FiatNotSupported fiat={fiat} />}
     </Step>
   );
 });

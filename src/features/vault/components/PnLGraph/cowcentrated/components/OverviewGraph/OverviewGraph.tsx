@@ -8,7 +8,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { usePnLChartData } from './hooks.tsx';
+import { usePnLChartData } from './hooks.ts';
 import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { GraphLoader } from '../../../../GraphLoader/Loader.tsx';
 import {
@@ -19,7 +19,7 @@ import {
 import { styles } from './styles.ts';
 import { XAxisTick } from '../../../../../../../components/XAxisTick/XAxisTick.tsx';
 import { OverviewTooltip, type OverviewTooltipProps } from '../Tooltips/Tooltips.tsx';
-import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks.tsx';
+import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks.ts';
 import { GraphNoData } from '../../../../../../../components/GraphNoData/GraphNoData.tsx';
 import { useBreakpoint } from '../../../../../../../components/MediaQueries/useBreakpoint.ts';
 import { token } from '@repo/styles/tokens';

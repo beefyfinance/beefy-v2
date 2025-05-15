@@ -1,9 +1,9 @@
+import type { Address } from 'abitype';
 import type BigNumber from 'bignumber.js';
-import type { BeefyState } from '../../../../redux-types.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity } from '../../entities/token.ts';
 import type { VaultEntity, VaultErc4626, VaultGov } from '../../entities/vault.ts';
-import type { Address } from 'abitype';
+import type { BeefyState } from '../../store/types.ts';
 
 export interface IBalanceApi {
   fetchAllBalances(

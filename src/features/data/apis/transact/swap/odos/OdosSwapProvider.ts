@@ -1,6 +1,5 @@
 import { ZERO_ADDRESS } from '../../../../../../helpers/addresses.ts';
 import { fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
-import type { BeefyState } from '../../../../../../redux-types.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
 import { isTokenNative, type TokenEntity } from '../../../../entities/token.ts';
 import type { VaultEntity } from '../../../../entities/vault.ts';
@@ -8,6 +7,7 @@ import { selectAllChainIds, selectChainById } from '../../../../selectors/chains
 import { selectSupportedSwapTokensForChainAggregatorHavingPrice } from '../../../../selectors/tokens.ts';
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
 import { selectSwapAggregatorForChainType, selectZapByChainId } from '../../../../selectors/zap.ts';
+import type { BeefyState } from '../../../../store/types.ts';
 import type { OdosSwapSwapConfig } from '../../../config-types.ts';
 import { getOdosApi } from '../../../instances.ts';
 import { slipBy } from '../../helpers/amounts.ts';

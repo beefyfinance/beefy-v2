@@ -1,9 +1,9 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types.ts';
+import { first, keyBy, mapValues, partition } from 'lodash-es';
+import { SCORED_RISKS } from '../../../config/risk.ts';
+import { safetyScoreNum } from '../../../helpers/safetyScore.ts';
+import type { VaultConfig } from '../apis/config-types.ts';
 import { getBeefyApi, getConfigApi } from '../apis/instances.ts';
 import type { ChainEntity, ChainId } from '../entities/chain.ts';
-import type { VaultConfig } from '../apis/config-types.ts';
-import { first, keyBy, mapValues, partition } from 'lodash-es';
 import {
   type VaultBase,
   type VaultCowcentrated,
@@ -17,10 +17,9 @@ import {
   type VaultStandardBaseOnly,
   type VaultStatus,
 } from '../entities/vault.ts';
-import { getVaultNames } from '../utils/vault-utils.ts';
-import { safetyScoreNum } from '../../../helpers/safetyScore.ts';
 import { isDefined } from '../utils/array-utils.ts';
-import { SCORED_RISKS } from '../../../config/risk.ts';
+import { createAppAsyncThunk } from '../utils/store-utils.ts';
+import { getVaultNames } from '../utils/vault-utils.ts';
 
 export interface FulfilledAllVaultsPayload {
   byChainId: {
@@ -31,25 +30,22 @@ export interface FulfilledAllVaultsPayload {
   };
 }
 
-export const fetchAllVaults = createAsyncThunk<
-  FulfilledAllVaultsPayload,
-  void,
-  {
-    state: BeefyState;
+export const fetchAllVaults = createAppAsyncThunk<FulfilledAllVaultsPayload>(
+  'vaults/fetchAllVaults',
+  async () => {
+    const api = await getConfigApi();
+    const vaultsByChainId = await api.fetchAllVaults();
+    return {
+      byChainId: mapValues(vaultsByChainId, (vaults, chainId) => {
+        const entities = buildVaultEntitiesForChain(vaults, chainId as ChainId);
+        return vaults.map((config, i) => ({
+          config,
+          entity: entities[i],
+        }));
+      }),
+    };
   }
->('vaults/fetchAllVaults', async () => {
-  const api = await getConfigApi();
-  const vaultsByChainId = await api.fetchAllVaults();
-  return {
-    byChainId: mapValues(vaultsByChainId, (vaults, chainId) => {
-      const entities = buildVaultEntitiesForChain(vaults, chainId as ChainId);
-      return vaults.map((config, i) => ({
-        config,
-        entity: entities[i],
-      }));
-    }),
-  };
-});
+);
 
 type FulfilledVaultsLastHarvestPayload = {
   byVaultId: {
@@ -57,7 +53,7 @@ type FulfilledVaultsLastHarvestPayload = {
   };
 };
 
-export const fetchVaultsLastHarvests = createAsyncThunk<FulfilledVaultsLastHarvestPayload>(
+export const fetchVaultsLastHarvests = createAppAsyncThunk<FulfilledVaultsLastHarvestPayload>(
   'vaults/last-harvest',
   async () => {
     const api = await getBeefyApi();

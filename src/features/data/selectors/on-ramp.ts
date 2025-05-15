@@ -1,8 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types.ts';
-import { InputMode } from '../reducers/on-ramp-types.ts';
 import { orderBy } from 'lodash-es';
 import type { ChainEntity } from '../entities/chain.ts';
+import { InputMode } from '../reducers/on-ramp-types.ts';
+import type { BeefyState } from '../store/types.ts';
 import { valueOrThrow } from '../utils/selector-utils.ts';
 import {
   createGlobalDataSelector,
@@ -71,9 +71,9 @@ export const selectIsFiatTokenSupported = (state: BeefyState, fiat: string, toke
 export const selectNetworksForFiatToken = createSelector(
   (state: BeefyState) => state.entities.chains.allIds,
   (state: BeefyState, fiat: string, token: string) =>
-    selectIsFiatTokenSupported(state, fiat, token)
-      ? state.ui.onRamp.byFiat[fiat].byToken[token].allNetworks
-      : [],
+    selectIsFiatTokenSupported(state, fiat, token) ?
+      state.ui.onRamp.byFiat[fiat].byToken[token].allNetworks
+    : [],
   (fiatTokenNetworks, appChains) => fiatTokenNetworks.filter(network => appChains.includes(network))
 );
 
@@ -137,7 +137,12 @@ export const selectQuoteError = (state: BeefyState) =>
 export const selectOutputAmount = createSelector(
   (state: BeefyState) => selectSelectedQuoteOrUndefined(state),
   (state: BeefyState) => selectInputMode(state),
-  (quote, mode) => (quote ? (mode === InputMode.Fiat ? quote.tokenAmount : quote.fiatAmount) : 0)
+  (quote, mode) =>
+    quote ?
+      mode === InputMode.Fiat ?
+        quote.tokenAmount
+      : quote.fiatAmount
+    : 0
 );
 
 export const selectIsCheapestProviderSelected = createSelector(

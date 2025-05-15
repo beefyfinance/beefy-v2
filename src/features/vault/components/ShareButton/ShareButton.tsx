@@ -1,29 +1,33 @@
-import ShareIcon from '../../../../images/icons/mui/Share.svg?react';
+import { styled } from '@repo/styles/jsx';
 import { memo, useCallback, useMemo } from 'react';
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
 import { useTranslation } from 'react-i18next';
-import twitterIcon from '../../../../images/icons/share/twitter.svg';
+import { DropdownContent } from '../../../../components/Dropdown/DropdownContent.tsx';
+import { DropdownProvider } from '../../../../components/Dropdown/DropdownProvider.tsx';
+import { DropdownButtonTrigger } from '../../../../components/Dropdown/DropdownTrigger.tsx';
+import { formatLargePercent } from '../../../../helpers/format.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
+import ShareIcon from '../../../../images/icons/mui/Share.svg?react';
 import lensterIcon from '../../../../images/icons/share/lenster.svg';
-import telegramIcon from '../../../../images/icons/share/telegram.svg';
 import linkIcon from '../../../../images/icons/share/link.svg';
+import telegramIcon from '../../../../images/icons/share/telegram.svg';
+import twitterIcon from '../../../../images/icons/share/twitter.svg';
 import {
   isCowcentratedVault,
   isGovVault,
   isGovVaultCowcentrated,
 } from '../../../data/entities/vault.ts';
-import { useAppSelector } from '../../../../store.ts';
-import { selectVaultById } from '../../../data/selectors/vaults.ts';
-import { selectChainById } from '../../../data/selectors/chains.ts';
-import { selectTokenByAddress } from '../../../data/selectors/tokens.ts';
 import { selectVaultTotalApy } from '../../../data/selectors/apy.ts';
-import { formatLargePercent } from '../../../../helpers/format.ts';
-import type { BeefyState } from '../../../../redux-types.ts';
 import {
   selectBoostById,
   selectBoostPartnerById,
   selectPreStakeOrActiveBoostIds,
 } from '../../../data/selectors/boosts.ts';
+import { selectChainById } from '../../../data/selectors/chains.ts';
+import { selectTokenByAddress } from '../../../data/selectors/tokens.ts';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
+import type { BeefyState } from '../../../data/store/types.ts';
+import { styles } from './styles.ts';
 import type {
   BoostedVaultExtraDetails,
   CommonExtraDetails,
@@ -34,10 +38,6 @@ import type {
   ShareServiceItemProps,
   VaultDetails,
 } from './types.ts';
-import { DropdownButtonTrigger } from '../../../../components/Dropdown/DropdownTrigger.tsx';
-import { styled } from '@repo/styles/jsx';
-import { DropdownProvider } from '../../../../components/Dropdown/DropdownProvider.tsx';
-import { DropdownContent } from '../../../../components/Dropdown/DropdownContent.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 

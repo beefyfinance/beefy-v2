@@ -5,11 +5,9 @@ import type {
   SelectItem,
   SelectSingleProps,
 } from '../../../../../../components/Form/Select/types.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import {
-  filteredVaultsActions,
-  type FilteredVaultsState,
-} from '../../../../../data/reducers/filtered-vaults.ts';
+import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults-types.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { selectFilterSearchSortField } from '../../../../../data/selectors/filtered-vaults.ts';
 
 export const DropdownSort = memo(function DropdownSort() {

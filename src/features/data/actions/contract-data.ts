@@ -1,5 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types.ts';
+import { partition } from 'lodash-es';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types.ts';
 import { getContractDataApi } from '../apis/instances.ts';
 import type { ChainEntity } from '../entities/chain.ts';
@@ -24,7 +23,7 @@ import {
   selectVaultIdsByChainIdIncludingHidden,
 } from '../selectors/vaults.ts';
 import { featureFlag_simulateRpcError } from '../utils/feature-flags.ts';
-import { partition } from 'lodash-es';
+import { createAppAsyncThunk } from '../utils/store-utils.ts';
 
 interface ActionParams {
   chainId: ChainEntity['id'];
@@ -32,17 +31,14 @@ interface ActionParams {
 
 export interface FetchAllContractDataFulfilledPayload {
   chainId: ChainEntity['id'];
-  data: FetchAllContractDataResult;
+  contractData: FetchAllContractDataResult;
   // Reducers handling this action need access to the full state
-  state: BeefyState;
+  // state: BeefyState;
 }
 
-export const fetchAllContractDataByChainAction = createAsyncThunk<
+export const fetchAllContractDataByChainAction = createAppAsyncThunk<
   FetchAllContractDataFulfilledPayload,
-  ActionParams,
-  {
-    state: BeefyState;
-  }
+  ActionParams
 >('contract-data/fetchAllContractDataByChainAction', async ({ chainId }, { getState }) => {
   if (featureFlag_simulateRpcError(chainId)) {
     throw new Error('Simulated RPC error');
@@ -100,7 +96,7 @@ export const fetchAllContractDataByChainAction = createAsyncThunk<
   // always re-fetch the latest state
   return {
     chainId,
-    data: res,
+    contractData: res,
     state: getState(),
   };
 });

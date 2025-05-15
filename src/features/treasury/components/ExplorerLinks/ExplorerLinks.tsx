@@ -1,15 +1,14 @@
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
-
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../store.ts';
+import { DropdownContent } from '../../../../components/Dropdown/DropdownContent.tsx';
+import { DropdownProvider } from '../../../../components/Dropdown/DropdownProvider.tsx';
+import { DropdownTrigger } from '../../../../components/Dropdown/DropdownTrigger.tsx';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
+import iconExternalLink from '../../../../images/icons/external-link.svg';
 import type { ChainEntity } from '../../../data/entities/chain.ts';
 import { selectTreasuryWalletAddressesByChainId } from '../../../data/selectors/treasury.ts';
 import { styles } from './styles.ts';
-import iconExternalLink from '../../../../images/icons/external-link.svg';
-import { DropdownProvider } from '../../../../components/Dropdown/DropdownProvider.tsx';
-import { DropdownTrigger } from '../../../../components/Dropdown/DropdownTrigger.tsx';
-import { DropdownContent } from '../../../../components/Dropdown/DropdownContent.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 

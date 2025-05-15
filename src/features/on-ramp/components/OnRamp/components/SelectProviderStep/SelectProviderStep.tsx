@@ -1,20 +1,20 @@
 import { memo, useCallback } from 'react';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { Step } from '../../../../../../components/Step/Step.tsx';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import type { ItemInnerProps } from '../../../../../../components/SearchableList/Item.tsx';
+import { SearchableList } from '../../../../../../components/SearchableList/SearchableList.tsx';
+import { Step } from '../../../../../../components/Step/Step.tsx';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
 import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectQuoteByProvider,
   selectSortedQuoteProviders,
 } from '../../../../../data/selectors/on-ramp.ts';
-import { useDispatch } from 'react-redux';
-import { SearchableList } from '../../../../../../components/SearchableList/SearchableList.tsx';
-import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
-import { ProviderIcon } from '../ProviderIcon/ProviderIcon.tsx';
 import { PROVIDERS } from '../../providers.tsx';
-import type { ItemInnerProps } from '../../../../../../components/SearchableList/Item.tsx';
+import { ProviderIcon } from '../ProviderIcon/ProviderIcon.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

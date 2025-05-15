@@ -1,11 +1,11 @@
 import { memo, useCallback } from 'react';
-import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
-import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { selectUserVaultBalanceInDepositToken } from '../../../../../data/selectors/balance.ts';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { transactSwitchMode } from '../../../../../data/actions/transact.ts';
 import type { PromoReward } from '../../../../../data/entities/promo.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
+import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { selectUserVaultBalanceInDepositToken } from '../../../../../data/selectors/balance.ts';
 import { DepositTokensNotice } from './DepositTokensNotice.tsx';
 
 export type BoostDepositNoticeProps = {
@@ -19,7 +19,7 @@ const BoostDepositNotice = memo(function BoostDepositNotice({
 }: BoostDepositNoticeProps) {
   const dispatch = useAppDispatch();
   const handleTab = useCallback(() => {
-    dispatch(transactActions.switchMode(TransactMode.Boost));
+    dispatch(transactSwitchMode(TransactMode.Boost));
   }, [dispatch]);
   const userDepositInVault = useAppSelector(state =>
     selectUserVaultBalanceInDepositToken(state, vaultId)

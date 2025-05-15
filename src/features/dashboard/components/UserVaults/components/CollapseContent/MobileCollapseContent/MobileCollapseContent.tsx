@@ -37,7 +37,7 @@ export const MobileCollapseContent = memo(function MobileCollapseContent({
   return (
     <div className={classes.container}>
       <div className={classes.toggleContainer}>
-        {useDropdown ? (
+        {useDropdown ?
           <Select
             options={options}
             selected={toggleTab}
@@ -45,24 +45,23 @@ export const MobileCollapseContent = memo(function MobileCollapseContent({
             variant="light"
             fullWidth={true}
           />
-        ) : (
-          <ToggleButtons<ToggleTabOptions>
+        : <ToggleButtons<ToggleTabOptions>
             value={toggleTab}
             onChange={setToggleTab}
             options={options}
             variant="filter"
           />
-        )}
+        }
       </div>
-      {toggleTab === 'stats' ? (
+      {toggleTab === 'stats' ?
         <VaultDashboardMobileStats address={address} vaultId={vaultId} />
-      ) : toggleTab === 'txHistory' ? (
+      : toggleTab === 'txHistory' ?
         <VaultTransactions address={address} vaultId={vaultId} />
-      ) : toggleTab === 'positionChart' ? (
+      : toggleTab === 'positionChart' ?
         <PositionGraph address={address} vaultId={vaultId} />
-      ) : toggleTab === 'compoundsChart' ? (
+      : toggleTab === 'compoundsChart' ?
         <CompoundsGraph address={address} vaultId={vaultId} />
-      ) : null}
+      : null}
     </div>
   );
 });

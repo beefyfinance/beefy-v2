@@ -1,17 +1,16 @@
+import BigNumber from 'bignumber.js';
+import { first } from 'lodash-es';
+import type { Namespace, TFunction } from 'react-i18next';
+import { encodeFunctionData } from 'viem';
+import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi.ts';
 import {
-  isCowcentratedStandardVault,
-  isStandardVault,
-  type VaultStandard,
-} from '../../../entities/vault.ts';
-import type { BeefyState, BeefyStateFn } from '../../../../../redux-types.ts';
-import { selectTokenByAddress } from '../../../selectors/tokens.ts';
-import type {
-  IStandardVaultType,
-  VaultDepositRequest,
-  VaultDepositResponse,
-  VaultWithdrawRequest,
-  VaultWithdrawResponse,
-} from './IVaultType.ts';
+  BIG_ZERO,
+  bigNumberToBigInt,
+  fromWei,
+  toWei,
+  toWeiString,
+} from '../../../../../helpers/big-number.ts';
+import { deposit, withdraw } from '../../../actions/wallet/standard.ts';
 import {
   isTokenEqual,
   isTokenErc20,
@@ -21,12 +20,26 @@ import {
   type TokenNative,
 } from '../../../entities/token.ts';
 import {
+  isCowcentratedStandardVault,
+  isStandardVault,
+  type VaultStandard,
+} from '../../../entities/vault.ts';
+import type { Step } from '../../../reducers/wallet/stepper-types.ts';
+import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
+import { selectFeesByVaultId } from '../../../selectors/fees.ts';
+import { selectTokenByAddress } from '../../../selectors/tokens.ts';
+import { selectWalletAddressOrThrow } from '../../../selectors/wallet.ts';
+import type { BeefyState, BeefyStateFn } from '../../../store/types.ts';
+import { fetchContract } from '../../rpc-contract/viem-contract.ts';
+import {
   createOptionId,
   createQuoteId,
   createSelectionId,
   onlyInputCount,
   onlyOneInput,
 } from '../helpers/options.ts';
+import { getVaultWithdrawnFromContract, getVaultWithdrawnFromState } from '../helpers/vault.ts';
+import { getInsertIndex, getTokenAddress } from '../helpers/zap.ts';
 import {
   type AllowanceTokenAmount,
   type InputTokenAmount,
@@ -38,27 +51,14 @@ import {
   type TokenAmount,
   type TransactQuote,
 } from '../transact-types.ts';
-import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
-import { first } from 'lodash-es';
-import {
-  BIG_ZERO,
-  bigNumberToBigInt,
-  fromWei,
-  toWei,
-  toWeiString,
-} from '../../../../../helpers/big-number.ts';
-import { selectFeesByVaultId } from '../../../selectors/fees.ts';
-import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi.ts';
-import BigNumber from 'bignumber.js';
-import { getInsertIndex, getTokenAddress } from '../helpers/zap.ts';
-import type { Namespace, TFunction } from 'react-i18next';
-import type { Step } from '../../../reducers/wallet/stepper.ts';
-import { getVaultWithdrawnFromContract, getVaultWithdrawnFromState } from '../helpers/vault.ts';
-import { selectWalletAddressOrThrow } from '../../../selectors/wallet.ts';
 import type { ZapStep } from '../zap/types.ts';
-import { fetchContract } from '../../rpc-contract/viem-contract.ts';
-import { encodeFunctionData } from 'viem';
-import { deposit, withdraw } from '../../../actions/wallet/standard.ts';
+import type {
+  IStandardVaultType,
+  VaultDepositRequest,
+  VaultDepositResponse,
+  VaultWithdrawRequest,
+  VaultWithdrawResponse,
+} from './IVaultType.ts';
 
 export class StandardVaultType implements IStandardVaultType {
   public readonly id = 'standard';

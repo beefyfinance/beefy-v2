@@ -1,16 +1,16 @@
+import { type CssStyles } from '@repo/styles/css';
 import { memo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button/Button.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import Clear from '../../../../../../images/icons/mui/Clear.svg?react';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import {
   selectFilterPopinFilterCount,
   selectHasActiveFilter,
 } from '../../../../../data/selectors/filtered-vaults.ts';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
-import { useTranslation } from 'react-i18next';
-import Clear from '../../../../../../images/icons/mui/Clear.svg?react';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { styles } from './styles.ts';
-import { type CssStyles } from '@repo/styles/css';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -31,11 +31,9 @@ export const ClearFiltersButton = memo(function ClearFiltersButton({
 
   return (
     <Button css={cssProp} variant="filter" size="sm" disabled={!active} onClick={handleReset}>
-      {count > 0 ? (
+      {count > 0 ?
         <span className={classes.badge} data-count={count} />
-      ) : (
-        <Clear className={classes.icon} />
-      )}
+      : <Clear className={classes.icon} />}
       {t('Filter-ClearAll')}
     </Button>
   );

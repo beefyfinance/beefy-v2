@@ -1,11 +1,11 @@
-import { memo } from 'react';
 import { css } from '@repo/styles/css';
-import { useAppSelector } from '../../../../store.ts';
+import { memo } from 'react';
+import { selectTokenByAddress } from '../../../../features/data/selectors/tokens.ts';
 import {
   selectVaultById,
   selectVaultPricePerFullShare,
 } from '../../../../features/data/selectors/vaults.ts';
-import { selectTokenByAddress } from '../../../../features/data/selectors/tokens.ts';
+import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 
 export const PricePerFullShare = memo(function PricePerFullShare() {
   const className = css({

@@ -70,7 +70,7 @@ export const GlpNotice = memo(function GlpNotice({
           cooldown: formatDistanceStrict(new Date(0), new Date(unlockInfo.cooldownDuration)),
         })}
       </p>
-      {haveUpdatedOnce && isLocked ? (
+      {haveUpdatedOnce && isLocked ?
         <p>
           <Trans
             t={t}
@@ -80,7 +80,7 @@ export const GlpNotice = memo(function GlpNotice({
             }}
           />
         </p>
-      ) : null}
+      : null}
     </AlertComponent>
   );
 });

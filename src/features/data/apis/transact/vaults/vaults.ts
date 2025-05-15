@@ -1,6 +1,6 @@
-import type { VaultTypeConstructor } from './IVaultType.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
-import type { BeefyStateFn } from '../../../../../redux-types.ts';
+import type { BeefyStateFn } from '../../../store/types.ts';
+import type { VaultTypeConstructor } from './IVaultType.ts';
 
 function makeLazyLoader<T extends VaultEntity>(loader: () => Promise<VaultTypeConstructor<T>>) {
   let constructor: VaultTypeConstructor<T> | undefined;

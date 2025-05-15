@@ -1,18 +1,18 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import type { ChainEntity } from '../../../../../../../data/entities/chain.ts';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../../../components/Button/Button.tsx';
-import { ActionConnectSwitch } from '../../../CommonActions/CommonActions.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../../../../../store.ts';
-import { startStepperWithSteps } from '../../../../../../../data/actions/stepper.ts';
-import { selectFetchStellaSwapRewardsLastDispatched } from '../../../../../../../data/selectors/data-loader.ts';
-import { styles } from './styles.ts';
+import { TenderlyStellaSwapClaimButton } from '../../../../../../../../components/Tenderly/Buttons/TenderlyStellaSwapClaimButton.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../../../../data/store/hooks.ts';
+import { stepperStartWithSteps } from '../../../../../../../data/actions/wallet/stepper.ts';
+import { claimStellaSwap } from '../../../../../../../data/actions/wallet/offchain.ts';
+import type { ChainEntity } from '../../../../../../../data/entities/chain.ts';
+import type { VaultEntity } from '../../../../../../../data/entities/vault.ts';
 import { selectChainById } from '../../../../../../../data/selectors/chains.ts';
 import { selectIsStepperStepping } from '../../../../../../../data/selectors/stepper.ts';
-import type { VaultEntity } from '../../../../../../../data/entities/vault.ts';
-import { TenderlyStellaSwapClaimButton } from '../../../../../../../../components/Tenderly/Buttons/TenderlyStellaSwapClaimButton.tsx';
+import { selectFetchStellaSwapRewardsLastDispatched } from '../../../../../../../data/selectors/user-rewards.ts';
+import { ActionConnectSwitch } from '../../../CommonActions/CommonActions.tsx';
 import { TimeCountdown } from '../../TimeCountdown/TimeCountdown.tsx';
-import { claimStellaSwap } from '../../../../../../../data/actions/wallet/offchain.ts';
+import { styles } from './styles.ts';
 
 const STELLA_SWAP_MIN_TIME_BETWEEN_REQUESTS_MS = 5000;
 
@@ -34,7 +34,7 @@ export const Claim = memo(function Claim({ chainId, vaultId, withChain }: ClaimP
   const disable = isStepping || shouldWait;
   const handleClaim = useCallback(() => {
     dispatch(
-      startStepperWithSteps(
+      stepperStartWithSteps(
         [
           {
             step: 'claim-rewards',

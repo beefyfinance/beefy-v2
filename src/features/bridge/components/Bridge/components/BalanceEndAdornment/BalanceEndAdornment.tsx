@@ -1,13 +1,13 @@
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { memo } from 'react';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { formatTokenDisplayCondensed } from '../../../../../../helpers/format.ts';
-import { useAppSelector } from '../../../../../../store.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
 import { selectBridgeDepositTokenForChainId } from '../../../../../data/selectors/bridge.ts';
 import { selectIsWalletConnected } from '../../../../../data/selectors/wallet.ts';
 import { styles } from './styles.ts';
-import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

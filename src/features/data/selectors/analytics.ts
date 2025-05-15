@@ -1,40 +1,28 @@
+import { createSelector } from '@reduxjs/toolkit';
+import BigNumber from 'bignumber.js';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import { ClmPnl, PnL } from '../../../helpers/pnl.ts';
-import type { BeefyState } from '../../../redux-types.ts';
+import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types.ts';
+import type {
+  ClmPriceHistoryEntryClassic,
+  ClmPriceHistoryEntryClm,
+} from '../apis/clm/clm-api-types.ts';
 import type { DatabarnProductPriceRow } from '../apis/databarn/databarn-types.ts';
-import {
-  isCowcentratedLikeVault,
-  isCowcentratedStandardVault,
-  type VaultEntity,
-} from '../entities/vault.ts';
-import {
-  selectCowcentratedLikeVaultDepositTokens,
-  selectCowcentratedLikeVaultDepositTokensWithPrices,
-  selectLpBreakdownForVault,
-  selectTokenByAddress,
-  selectTokenPriceByAddress,
-} from './tokens.ts';
-import {
-  selectCowcentratedLikeVaultById,
-  selectVaultById,
-  selectVaultPricePerFullShare,
-} from './vaults.ts';
-import {
-  selectGovVaultPendingRewardsWithPrice,
-  selectUserDepositedVaultIds,
-  selectUserLpBreakdownBalance,
-  selectUserVaultBalanceInShareTokenIncludingDisplaced,
-} from './balance.ts';
-import { selectWalletAddress } from './wallet.ts';
-import { selectIsConfigAvailable } from './data-loader.ts';
 import {
   type AnyTimelineEntity,
   type AnyTimelineEntry,
   isTimelineEntityCowcentrated,
   isTimelineEntityStandard,
 } from '../entities/analytics.ts';
-import { createSelector } from '@reduxjs/toolkit';
+import {
+  isCowcentratedLikeVault,
+  isCowcentratedStandardVault,
+  type VaultEntity,
+} from '../entities/vault.ts';
+import type { AnalyticsIntervalData, AnalyticsState } from '../reducers/analytics-types.ts';
+import type { BeefyState } from '../store/types.ts';
+import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils.ts';
 import {
   type AmountUsd,
   type PnlYieldSource,
@@ -47,24 +35,36 @@ import {
   type UserStandardPnl,
   type UserVaultPnl,
 } from './analytics-types.ts';
-import { selectFeesByVaultId } from './fees.ts';
-import BigNumber from 'bignumber.js';
+import {
+  selectGovVaultPendingRewardsWithPrice,
+  selectUserDepositedVaultIds,
+  selectUserLpBreakdownBalance,
+  selectUserVaultBalanceInShareTokenIncludingDisplaced,
+} from './balance.ts';
+import { selectIsConfigAvailable } from './config.ts';
 import {
   createAddressDataSelector,
   hasLoaderFulfilledOnce,
   isLoaderIdle,
 } from './data-loader-helpers.ts';
-import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types.ts';
-import type { AnalyticsIntervalData, AnalyticsState } from '../reducers/analytics-types.ts';
-import type {
-  ClmPriceHistoryEntryClassic,
-  ClmPriceHistoryEntryClm,
-} from '../apis/clm/clm-api-types.ts';
-import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils.ts';
+import { selectFeesByVaultId } from './fees.ts';
+import {
+  selectCowcentratedLikeVaultDepositTokens,
+  selectCowcentratedLikeVaultDepositTokensWithPrices,
+  selectLpBreakdownForVault,
+  selectTokenByAddress,
+  selectTokenPriceByAddress,
+} from './tokens.ts';
 import {
   selectUserMerklRewardsForVault,
   selectUserStellaSwapRewardsForVault,
 } from './user-rewards.ts';
+import {
+  selectCowcentratedLikeVaultById,
+  selectVaultById,
+  selectVaultPricePerFullShare,
+} from './vaults.ts';
+import { selectWalletAddress } from './wallet.ts';
 
 export const selectUserAnalytics = createSelector(
   (state: BeefyState, address?: string) => address || selectWalletAddress(state),

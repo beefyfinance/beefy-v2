@@ -1,13 +1,13 @@
-import { memo, useCallback, useMemo } from 'react';
-import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
 import { css, type CssStyles, cx } from '@repo/styles/css';
-import ChevronRight from '../../../../../../../images/icons/mui/ChevronRight.svg?react';
+import { memo, useCallback, useMemo } from 'react';
 import { ListJoin } from '../../../../../../../components/ListJoin.tsx';
-import { useAppSelector } from '../../../../../../../store.ts';
+import { TokenAmountFromEntity } from '../../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../../data/store/hooks.ts';
+import ChevronRight from '../../../../../../../images/icons/mui/ChevronRight.svg?react';
 import { selectTransactQuoteById } from '../../../../../../data/selectors/transact.ts';
 import { QuoteTitle } from '../../QuoteTitle/QuoteTitle.tsx';
-import { TokenAmountFromEntity } from '../../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

@@ -1,11 +1,11 @@
 import { memo } from 'react';
-import { isStandardVault, type VaultEntity } from '../../../../data/entities/vault.ts';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../store.ts';
-import { selectVaultById } from '../../../../data/selectors/vaults.ts';
-import { selectChainById } from '../../../../data/selectors/chains.ts';
-import { explorerAddressUrl } from '../../../../../helpers/url.ts';
 import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
+import { explorerAddressUrl } from '../../../../../helpers/url.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
+import { isStandardVault, type VaultEntity } from '../../../../data/entities/vault.ts';
+import { selectChainById } from '../../../../data/selectors/chains.ts';
+import { selectVaultById } from '../../../../data/selectors/vaults.ts';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -38,7 +38,7 @@ export const LendingOracle = memo(function LendingOracle({ vaultId }: LendingOra
       <div className={classes.apys}>
         <div>
           <div className={classes.apyLabel}>{t('Oracle')}</div>
-          {vault.lendingOracle.address ? (
+          {vault.lendingOracle.address ?
             <a
               className={classes.oracleLink}
               target="_blank"
@@ -46,9 +46,8 @@ export const LendingOracle = memo(function LendingOracle({ vaultId }: LendingOra
             >
               {oraclesMapToText[vault.lendingOracle.provider]}
             </a>
-          ) : (
-            <div className={classes.apyValue}>{oraclesMapToText[vault.lendingOracle.provider]}</div>
-          )}
+          : <div className={classes.apyValue}>{oraclesMapToText[vault.lendingOracle.provider]}</div>
+          }
         </div>
         {vault.lendingOracle.loops && (
           <div>

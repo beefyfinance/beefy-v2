@@ -1,12 +1,12 @@
 import { memo, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import { selectMinterById } from '../../../../../data/selectors/minters.ts';
 import { Card } from '../../../Card/Card.tsx';
 import { CardHeaderTabs } from '../../../Card/CardHeaderTabs.tsx';
-import { Mint } from './components/Mint.tsx';
-import { Burn } from './components/Burn.tsx';
 import type { MinterCardParams } from '../MinterCard.tsx';
-import { selectMinterById } from '../../../../../data/selectors/minters.ts';
-import { useAppSelector } from '../../../../../../store.ts';
+import { Burn } from './components/Burn.tsx';
+import { Mint } from './components/Mint.tsx';
 
 export const MintBurnCard = memo(function MintBurn({ vaultId, minterId }: MinterCardParams) {
   const { t } = useTranslation();
@@ -34,11 +34,9 @@ export const MintBurnCard = memo(function MintBurn({ vaultId, minterId }: Minter
   return (
     <Card>
       <CardHeaderTabs selected={mintBurn} options={options} onChange={setMintBurn} />
-      {mintBurn === 'mint' ? (
+      {mintBurn === 'mint' ?
         <Mint vaultId={vaultId} minterId={minterId} />
-      ) : (
-        <Burn vaultId={vaultId} minterId={minterId} />
-      )}
+      : <Burn vaultId={vaultId} minterId={minterId} />}
     </Card>
   );
 });

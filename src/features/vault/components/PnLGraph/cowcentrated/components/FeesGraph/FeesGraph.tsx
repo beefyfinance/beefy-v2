@@ -8,7 +8,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { useFeesChartData } from './hooks.tsx';
+import { useFeesChartData } from './hooks.ts';
 import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { GraphLoader } from '../../../../GraphLoader/Loader.tsx';
 import {
@@ -21,7 +21,7 @@ import { FeesTooltip, type FeesTooltipProps } from '../Tooltips/Tooltips.tsx';
 import type { ClmInvestorFeesTimeSeriesPoint } from '../../../../../../../helpers/graph/timeseries.ts';
 import { LINE_COLORS } from '../../../../../../../helpers/charts.ts';
 import type { GraphBucket } from '../../../../../../../helpers/graph/types.ts';
-import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks.tsx';
+import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks.ts';
 import { useBreakpoint } from '../../../../../../../components/MediaQueries/useBreakpoint.ts';
 import { token } from '@repo/styles/tokens';
 

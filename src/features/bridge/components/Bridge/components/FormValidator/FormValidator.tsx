@@ -1,12 +1,12 @@
+import { debounce } from 'lodash-es';
 import { memo, useEffect, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { validateBridgeForm } from '../../../../../data/actions/bridge.ts';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
 import {
   selectBridgeDepositTokenForChainId,
   selectBridgeFormState,
 } from '../../../../../data/selectors/bridge.ts';
-import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
-import { validateBridgeForm } from '../../../../../data/actions/bridge.ts';
-import { debounce } from 'lodash-es';
 
 export const FormValidator = memo(function FormValidator() {
   const dispatch = useAppDispatch();

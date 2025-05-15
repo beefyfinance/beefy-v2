@@ -1,14 +1,6 @@
-import { createSlice, type SerializedError } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { addTokenToWalletAction } from '../actions/add-to-wallet.ts';
-import type { TokenEntity } from '../entities/token.ts';
-
-export type AddToWalletState = {
-  status: 'idle' | 'pending' | 'fulfilled' | 'rejected';
-  requestId: string | null;
-  token: TokenEntity | null;
-  iconUrl: string | null;
-  error: SerializedError | null;
-};
+import type { AddToWalletState } from './add-to-wallet-types.ts';
 
 const initialAddToWalletState: AddToWalletState = {
   status: 'idle',

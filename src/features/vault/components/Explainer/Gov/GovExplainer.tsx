@@ -1,12 +1,12 @@
-import { useTranslation } from 'react-i18next';
-import { CardTitle } from '../../Card/CardTitle.tsx';
-import type { VaultGov } from '../../../../data/entities/vault.ts';
-import { selectGovVaultById } from '../../../../data/selectors/vaults.ts';
-import { useAppSelector } from '../../../../../store.ts';
-import { selectChainById } from '../../../../data/selectors/chains.ts';
-import { explorerAddressUrl } from '../../../../../helpers/url.ts';
-import { GovDescription } from '../Description/GovDescription.tsx';
 import { memo, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { explorerAddressUrl } from '../../../../../helpers/url.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
+import type { VaultGov } from '../../../../data/entities/vault.ts';
+import { selectChainById } from '../../../../data/selectors/chains.ts';
+import { selectGovVaultById } from '../../../../data/selectors/vaults.ts';
+import { CardTitle } from '../../Card/CardTitle.tsx';
+import { GovDescription } from '../Description/GovDescription.tsx';
 import { ExplainerCard } from '../ExplainerCard/ExplainerCard.tsx';
 
 type GovExplainerProps = {

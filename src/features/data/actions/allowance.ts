@@ -1,5 +1,3 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types.ts';
 import type { FetchAllAllowanceResult } from '../apis/allowance/allowance-types.ts';
 import { getAllowanceApi } from '../apis/instances.ts';
 import type { ChainEntity } from '../entities/chain.ts';
@@ -10,6 +8,7 @@ import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts.ts';
 import { selectChainById } from '../selectors/chains.ts';
 import { selectVaultById, selectVaultIdsByChainIdIncludingHidden } from '../selectors/vaults.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
+import { createAppAsyncThunk } from '../utils/store-utils.ts';
 
 interface ActionParams {
   chainId: ChainEntity['id'];
@@ -21,12 +20,9 @@ export interface FetchAllAllowanceFulfilledPayload {
   data: FetchAllAllowanceResult;
 }
 
-export const fetchAllAllowanceAction = createAsyncThunk<
+export const fetchAllAllowanceAction = createAppAsyncThunk<
   FetchAllAllowanceFulfilledPayload,
-  ActionParams,
-  {
-    state: BeefyState;
-  }
+  ActionParams
 >('allowance/fetchAllAllowanceAction', async ({ chainId, walletAddress }, { getState }) => {
   const state = getState();
   const chain = selectChainById(state, chainId);
@@ -68,12 +64,9 @@ interface FetchAllowanceActionParams {
   walletAddress: string;
 }
 
-export const fetchAllowanceAction = createAsyncThunk<
+export const fetchAllowanceAction = createAppAsyncThunk<
   FetchAllAllowanceFulfilledPayload,
-  FetchAllowanceActionParams,
-  {
-    state: BeefyState;
-  }
+  FetchAllowanceActionParams
 >(
   'allowance/fetchAllowanceAction',
   async ({ chainId, spenderAddress, tokens, walletAddress }, { getState }) => {
@@ -83,9 +76,9 @@ export const fetchAllowanceAction = createAsyncThunk<
     const api = await getAllowanceApi(chain);
 
     const allowanceRes =
-      userAddress && spenderAddress
-        ? await api.fetchTokensAllowance(getState(), tokens, userAddress, spenderAddress)
-        : [];
+      userAddress && spenderAddress ?
+        await api.fetchTokensAllowance(getState(), tokens, userAddress, spenderAddress)
+      : [];
 
     return { chainId, data: allowanceRes };
   }

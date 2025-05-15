@@ -1,15 +1,15 @@
 import { memo } from 'react';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import {
   isCowcentratedLikeVault,
   isErc4626Vault,
   isStandardVault,
   type VaultEntity,
 } from '../../../data/entities/vault.ts';
-import { useAppSelector } from '../../../../store.ts';
-import { selectWalletAddress } from '../../../data/selectors/wallet.ts';
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
-import { StandardPnLGraphLoader } from './standard/StandardPnLGraph.tsx';
+import { selectWalletAddress } from '../../../data/selectors/wallet.ts';
 import { CowcentratedPnlGraphLoader } from './cowcentrated/CowcentratedPnlGraph.tsx';
+import { StandardPnLGraphLoader } from './standard/StandardPnLGraph.tsx';
 
 type PnLGraphIfWalletProps = {
   vaultId: VaultEntity['id'];

@@ -1,16 +1,16 @@
+import { type CssStyles } from '@repo/styles/css';
 import { memo } from 'react';
-import { AlertInfo } from '../../../../../../components/Alerts/Alerts.tsx';
 import { Trans, useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../../store.ts';
-import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import { selectTokenByAddress } from '../../../../../data/selectors/tokens.ts';
-import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
+import { AlertInfo } from '../../../../../../components/Alerts/Alerts.tsx';
+import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
+import { selectTokenByAddress } from '../../../../../data/selectors/tokens.ts';
 import { selectTransactVaultId } from '../../../../../data/selectors/transact.ts';
-import { type CssStyles } from '@repo/styles/css';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

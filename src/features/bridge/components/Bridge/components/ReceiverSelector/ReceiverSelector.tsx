@@ -1,14 +1,14 @@
-import { type ChangeEventHandler, memo, useCallback, useMemo } from 'react';
-import { styles } from './styles.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { selectBridgeFormState } from '../../../../../data/selectors/bridge.ts';
 import { css, type CssStyles } from '@repo/styles/css';
-import { bridgeActions } from '../../../../../data/reducers/wallet/bridge.ts';
+import { type ChangeEventHandler, memo, useCallback, useMemo } from 'react';
 import { isAddress } from 'viem';
-import { selectChainById } from '../../../../../data/selectors/chains.ts';
-import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
-import type { LabelledCheckboxProps } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
 import { BaseInput } from '../../../../../../components/Form/Input/BaseInput.tsx';
+import type { LabelledCheckboxProps } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
+import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { bridgeActions } from '../../../../../data/reducers/wallet/bridge.ts';
+import { selectBridgeFormState } from '../../../../../data/selectors/bridge.ts';
+import { selectChainById } from '../../../../../data/selectors/chains.ts';
+import { styles } from './styles.ts';
 
 type ReceiverSelectorProps = {
   css?: CssStyles;
@@ -54,7 +54,7 @@ export const ReceiverSelector = memo(function ReceiverSelector({
         checked={receiverIsDifferent}
         onChange={handleReceiverToggle}
       />
-      {receiverIsDifferent ? (
+      {receiverIsDifferent ?
         <BaseInput
           className={css(styles.input)}
           value={receiverAddress || ''}
@@ -62,7 +62,7 @@ export const ReceiverSelector = memo(function ReceiverSelector({
           error={addressError !== undefined}
           placeholder="0x...."
         />
-      ) : null}
+      : null}
     </div>
   );
 });

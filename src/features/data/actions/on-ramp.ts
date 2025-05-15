@@ -1,5 +1,3 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types.ts';
 import { getOnRampApi } from '../apis/instances.ts';
 import type {
   ApiQuoteRequest,
@@ -28,45 +26,37 @@ import {
   selectToken,
   selectTokenOrUndefined,
 } from '../selectors/on-ramp.ts';
+import { createAppAsyncThunk } from '../utils/store-utils.ts';
 
 export type FulfilledSupportedPayload = ApiSupportedResponse;
 
-export const fetchOnRampSupportedProviders = createAsyncThunk<
-  FulfilledSupportedPayload,
-  void,
-  {
-    state: BeefyState;
+export const fetchOnRampSupportedProviders = createAppAsyncThunk<FulfilledSupportedPayload, void>(
+  'on-ramp/fetchSupported',
+  async () => {
+    const api = await getOnRampApi();
+    return await api.getSupported();
   }
->('on-ramp/fetchSupported', async () => {
-  const api = await getOnRampApi();
-  return await api.getSupported();
-});
+);
 
 export type FulfilledQuotePayload = ApiQuoteResponse;
 
-export const fetchOnRampQuote = createAsyncThunk<
-  FulfilledQuotePayload,
-  ApiQuoteRequest,
-  {
-    state: BeefyState;
+export const fetchOnRampQuote = createAppAsyncThunk<FulfilledQuotePayload, ApiQuoteRequest>(
+  'on-ramp/fetchQuote',
+  async options => {
+    const api = await getOnRampApi();
+    return await api.getQuote(options);
   }
->('on-ramp/fetchQuote', async options => {
-  const api = await getOnRampApi();
-  return await api.getQuote(options);
-});
+);
 
 export type FulfilledSetFiatPayload = {
   fiat: string;
   step: FormStep;
 };
 
-export const setOnRampFiat = createAsyncThunk<
+export const setOnRampFiat = createAppAsyncThunk<
   FulfilledSetFiatPayload,
   {
     fiat: string;
-  },
-  {
-    state: BeefyState;
   }
 >('on-ramp/setFiat', async (options, { getState }) => {
   const state = getState();
@@ -96,13 +86,10 @@ export type FulfilledSetTokenPayload = {
   step: FormStep;
 };
 
-export const setOnRampToken = createAsyncThunk<
+export const setOnRampToken = createAppAsyncThunk<
   FulfilledSetTokenPayload,
   {
     token: string;
-  },
-  {
-    state: BeefyState;
   }
 >('on-ramp/setToken', async (options, { getState }) => {
   const state = getState();
@@ -134,83 +121,80 @@ export type ValidateFulfilledPayload = {
   input: undefined | InputError;
 };
 
-export const validateOnRampForm = createAsyncThunk<
-  ValidateFulfilledPayload,
-  void,
-  {
-    state: BeefyState;
-  }
->('on-ramp/validateForm', async (_, { getState, dispatch }) => {
-  const state = getState();
-  const errors: ValidateFulfilledPayload = {
-    fiat: undefined,
-    token: undefined,
-    network: undefined,
-    input: undefined,
-  };
-  const fiat = selectFiatOrUndefined(state);
-  if (!fiat) {
-    errors.fiat = FiatError.NotSelected;
-    return errors;
-  }
-
-  if (!selectIsFiatSupported(state, fiat)) {
-    errors.fiat = FiatError.NotSupported;
-    return errors;
-  }
-
-  const token = selectTokenOrUndefined(state);
-  if (!token) {
-    errors.token = TokenError.NotSelected;
-    return errors;
-  }
-
-  if (!selectIsFiatTokenSupported(state, fiat, token)) {
-    errors.token = TokenError.NotSupported;
-    return errors;
-  }
-
-  const network = selectNetworkOrUndefined(state);
-  if (!network) {
-    errors.network = NetworkError.NotSelected;
-    return errors;
-  }
-
-  if (!selectIsFiatTokenNetworkSupported(state, fiat, token, network)) {
-    errors.network = NetworkError.NotSupported;
-    return errors;
-  }
-
-  const inputAmount = selectInputAmount(state);
-  if (!inputAmount) {
-    errors.input = InputError.NotEntered;
-    return errors;
-  }
-
-  const inputMode = selectInputModeOrUndefined(state);
-  if (inputMode === InputMode.Fiat) {
-    const range = selectFiatTokenMinMaxFiat(state, fiat, token, network);
-    console.log(range, inputAmount);
-    if (inputAmount < range.min || inputAmount > range.max) {
-      errors.input = InputError.OutOfRange;
+export const validateOnRampForm = createAppAsyncThunk<ValidateFulfilledPayload, void>(
+  'on-ramp/validateForm',
+  async (_, { getState, dispatch }) => {
+    const state = getState();
+    const errors: ValidateFulfilledPayload = {
+      fiat: undefined,
+      token: undefined,
+      network: undefined,
+      input: undefined,
+    };
+    const fiat = selectFiatOrUndefined(state);
+    if (!fiat) {
+      errors.fiat = FiatError.NotSelected;
       return errors;
     }
-  } else {
-    // no min/max token amount in API
+
+    if (!selectIsFiatSupported(state, fiat)) {
+      errors.fiat = FiatError.NotSupported;
+      return errors;
+    }
+
+    const token = selectTokenOrUndefined(state);
+    if (!token) {
+      errors.token = TokenError.NotSelected;
+      return errors;
+    }
+
+    if (!selectIsFiatTokenSupported(state, fiat, token)) {
+      errors.token = TokenError.NotSupported;
+      return errors;
+    }
+
+    const network = selectNetworkOrUndefined(state);
+    if (!network) {
+      errors.network = NetworkError.NotSelected;
+      return errors;
+    }
+
+    if (!selectIsFiatTokenNetworkSupported(state, fiat, token, network)) {
+      errors.network = NetworkError.NotSupported;
+      return errors;
+    }
+
+    const inputAmount = selectInputAmount(state);
+    if (!inputAmount) {
+      errors.input = InputError.NotEntered;
+      return errors;
+    }
+
+    const inputMode = selectInputModeOrUndefined(state);
+    if (inputMode === InputMode.Fiat) {
+      const range = selectFiatTokenMinMaxFiat(state, fiat, token, network);
+      console.log(range, inputAmount);
+      if (inputAmount < range.min || inputAmount > range.max) {
+        errors.input = InputError.OutOfRange;
+        return errors;
+      }
+    } else {
+      // no min/max token amount in API
+    }
+
+    const providers = selectProvidersForFiatTokenNetwork(state, fiat, token, network);
+
+    dispatch(
+      fetchOnRampQuote({
+        amount: inputAmount,
+        amountType: inputMode === InputMode.Fiat ? 'fiat' : 'crypto',
+        network: network,
+        cryptoCurrency: token,
+        fiatCurrency: fiat,
+        providers: providers,
+      })
+    );
+
+    return errors;
   }
-
-  const providers = selectProvidersForFiatTokenNetwork(state, fiat, token, network);
-
-  dispatch(
-    fetchOnRampQuote({
-      amount: inputAmount,
-      amountType: inputMode === InputMode.Fiat ? 'fiat' : 'crypto',
-      network: network,
-      cryptoCurrency: token,
-      fiatCurrency: fiat,
-      providers: providers,
-    })
-  );
-
-  return errors;
-});
+);

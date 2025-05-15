@@ -1,13 +1,13 @@
 import { memo, useMemo } from 'react';
-import { type VaultEntity } from '../../../../../../data/entities/vault.ts';
-import type { ChainEntity } from '../../../../../../data/entities/chain.ts';
-import { useAppSelector } from '../../../../../../../store.ts';
+import { useTranslation } from 'react-i18next';
 import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
+import { useAppSelector } from '../../../../../../data/store/hooks.ts';
+import type { ChainEntity } from '../../../../../../data/entities/chain.ts';
+import { type VaultEntity } from '../../../../../../data/entities/vault.ts';
 import { selectUserGovVaultUnifiedRewards } from '../../../../../../data/selectors/user-rewards.ts';
-import { Claim } from './Claim/Claim.tsx';
 import { RewardList } from '../RewardList.tsx';
 import { Source } from '../Source/Source.tsx';
-import { useTranslation } from 'react-i18next';
+import { Claim } from './Claim/Claim.tsx';
 
 type GovRewardsProps = {
   vaultId: VaultEntity['id'];

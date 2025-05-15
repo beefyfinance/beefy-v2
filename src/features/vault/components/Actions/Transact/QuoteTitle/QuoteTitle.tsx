@@ -1,12 +1,12 @@
-import { memo } from 'react';
-import { styles } from './styles.ts';
-import { useTranslation } from 'react-i18next';
 import { css, type CssStyles } from '@repo/styles/css';
+import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { TransactQuote, ZapQuote } from '../../../../../data/apis/transact/transact-types.ts';
 import { isZapQuote } from '../../../../../data/apis/transact/transact-types.ts';
 import { selectZapQuoteTitle } from '../../../../../data/selectors/zap.ts';
-import { useAppSelector } from '../../../../../../store.ts';
 import { ProviderIcon } from '../ProviderIcon/ProviderIcon.tsx';
+import { styles } from './styles.ts';
 
 export type QuoteTitleProps = {
   quote: TransactQuote;

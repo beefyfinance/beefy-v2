@@ -30,7 +30,7 @@ export const DesktopCollapseContent = memo(function DesktopCollapseContent({
 
   return (
     <>
-      {options.length > 1 ? (
+      {options.length > 1 ?
         <div className={classes.toggleContainer}>
           <ToggleButtons<ToggleTabOptions>
             value={toggleTab}
@@ -39,17 +39,17 @@ export const DesktopCollapseContent = memo(function DesktopCollapseContent({
             variant="filter"
           />
         </div>
-      ) : null}
+      : null}
       <div className={classes.collapseInner}>
         <TabletStats vaultId={vaultId} address={address} />
         <ErrorBoundary>
-          {toggleTab === 'txHistory' ? (
+          {toggleTab === 'txHistory' ?
             <VaultTransactions address={address} vaultId={vaultId} />
-          ) : toggleTab === 'positionChart' ? (
+          : toggleTab === 'positionChart' ?
             <PositionGraph address={address} vaultId={vaultId} />
-          ) : toggleTab === 'compoundsChart' ? (
+          : toggleTab === 'compoundsChart' ?
             <CompoundsGraph address={address} vaultId={vaultId} />
-          ) : null}
+          : null}
         </ErrorBoundary>
       </div>
     </>

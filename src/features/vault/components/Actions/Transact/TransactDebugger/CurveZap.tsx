@@ -1,24 +1,23 @@
+import { uniqBy } from 'lodash-es';
 import { Fragment, memo, useEffect, useState } from 'react';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { formatLargeUsd } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { useAppSelector, useAppStore } from '../../../../../../store.ts';
-import { styles } from './styles.ts';
-import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import { getSwapAggregator } from '../../../../../data/apis/instances.ts';
+import type { CurveStrategyConfig } from '../../../../../data/apis/transact/strategies/strategy-configs.ts';
+import type { ISwapAggregator } from '../../../../../data/apis/transact/swap/ISwapAggregator.ts';
+import { isTokenEqual, type TokenEntity } from '../../../../../data/entities/token.ts';
 import { isStandardVault, type VaultStandard } from '../../../../../data/entities/vault.ts';
 import {
+  selectIsAddressBookLoaded,
   selectTokenByAddressOrUndefined,
   selectTokenPriceByTokenOracleId,
 } from '../../../../../data/selectors/tokens.ts';
-import type { ISwapAggregator } from '../../../../../data/apis/transact/swap/ISwapAggregator.ts';
-import { isTokenEqual, type TokenEntity } from '../../../../../data/entities/token.ts';
-import { getSwapAggregator } from '../../../../../data/apis/instances.ts';
-import { uniqBy } from 'lodash-es';
-import { formatLargeUsd } from '../../../../../../helpers/format.ts';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
-import {
-  selectIsAddressBookLoaded,
-  selectIsZapLoaded,
-} from '../../../../../data/selectors/data-loader.ts';
-import type { CurveStrategyConfig } from '../../../../../data/apis/transact/strategies/strategy-configs.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { selectIsZapLoaded } from '../../../../../data/selectors/zap.ts';
+import { useAppStore } from '../../../../../data/store/store.ts';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -28,14 +27,17 @@ type CurveZapProps = {
 export const CurveZap = memo(function CurveZap({ vaultId }: CurveZapProps) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const zap = isStandardVault(vault)
-    ? vault.zaps.find((zap): zap is CurveStrategyConfig => zap.strategyId === 'curve')
+  const zap =
+    isStandardVault(vault) ?
+      vault.zaps.find((zap): zap is CurveStrategyConfig => zap.strategyId === 'curve')
     : undefined;
 
   return (
     <div className={classes.item}>
       <h1>Curve Zap</h1>
-      {zap && isStandardVault(vault) ? <ZapLoader vault={vault} zap={zap} /> : <NoZap />}
+      {zap && isStandardVault(vault) ?
+        <ZapLoader vault={vault} zap={zap} />
+      : <NoZap />}
     </div>
   );
 });

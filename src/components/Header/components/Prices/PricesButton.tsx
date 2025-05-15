@@ -22,7 +22,12 @@ export const PricesButton = memo(function PricesButton() {
         <TokenPrice
           key={i}
           token={token}
-          mode={i === current ? 'current' : i === next ? 'next' : 'hidden'}
+          mode={
+            i === current ? 'current'
+            : i === next ?
+              'next'
+            : 'hidden'
+          }
         />
       ))}
     </Trigger>

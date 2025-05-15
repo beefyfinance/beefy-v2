@@ -1,30 +1,30 @@
+import { groupBy, keyBy } from 'lodash-es';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { AlertWarning } from '../../../../../../../components/Alerts/Alerts.tsx';
+import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
+import { formatUsd } from '../../../../../../../helpers/format.ts';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
+import { strictEntries } from '../../../../../../../helpers/object.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../data/store/hooks.ts';
 import ExpandLess from '../../../../../../../images/icons/mui/ExpandLess.svg?react';
 import ExpandMore from '../../../../../../../images/icons/mui/ExpandMore.svg?react';
-import { useTranslation } from 'react-i18next';
-import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
-import { groupBy, keyBy } from 'lodash-es';
+import { fetchUserMerklRewardsAction } from '../../../../../../data/actions/user-rewards/merkl-user-rewards.ts';
+import type { ChainEntity, ChainId } from '../../../../../../data/entities/chain.ts';
 import { type VaultEntity } from '../../../../../../data/entities/vault.ts';
+import { selectChainById } from '../../../../../../data/selectors/chains.ts';
 import {
+  selectMerklUserRewardsStatus,
   selectUserMerklUnifiedRewardsForChain,
   selectUserMerklUnifiedRewardsForVault,
   type UnifiedReward,
 } from '../../../../../../data/selectors/user-rewards.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../../store.ts';
-import type { ChainEntity, ChainId } from '../../../../../../data/entities/chain.ts';
-import { formatUsd } from '../../../../../../../helpers/format.ts';
-import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
-import { Claim } from './Claim/Claim.tsx';
-import { styles } from './styles.ts';
+import { isNonEmptyArray, type NonEmptyArray } from '../../../../../../data/utils/array-utils.ts';
+import { RefreshButton } from '../RefreshButton/RefreshButton.tsx';
 import { RewardList } from '../RewardList.tsx';
 import { Source } from '../Source/Source.tsx';
-import { isNonEmptyArray, type NonEmptyArray } from '../../../../../../data/utils/array-utils.ts';
-import { selectChainById } from '../../../../../../data/selectors/chains.ts';
-import { strictEntries } from '../../../../../../../helpers/object.ts';
-import { selectMerklUserRewardsStatus } from '../../../../../../data/selectors/data-loader.ts';
-import { fetchUserMerklRewardsAction } from '../../../../../../data/actions/user-rewards/merkl-user-rewards.ts';
-import { AlertWarning } from '../../../../../../../components/Alerts/Alerts.tsx';
-import { RefreshButton } from '../RefreshButton/RefreshButton.tsx';
+import { Claim } from './Claim/Claim.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { useAppSelector } from '../../../../../../store.ts';
-import type { BeefyState } from '../../../../../../redux-types.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import type { BeefyState } from '../../../../../data/store/types.ts';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);

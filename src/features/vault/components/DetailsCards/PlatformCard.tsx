@@ -1,27 +1,27 @@
+import { css } from '@repo/styles/css';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { selectIsPlatformsAvailable } from '../../../data/selectors/data-loader.ts';
+import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink.tsx';
+import { getPlatformSrc } from '../../../../helpers/platformsSrc.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
+import Link from '../../../../images/icons/mui/Link.svg?react';
+import Twitter from '../../../../images/icons/mui/Twitter.svg?react';
+import DocsIcon from '../../../../images/icons/navigation/docs.svg?react';
+import type { PlatformEntity } from '../../../data/entities/platform.ts';
+import { selectIsPlatformsAvailable } from '../../../data/selectors/config.ts';
+import { selectPlatformById } from '../../../data/selectors/platforms.ts';
+import { TagTooltip, TagWithTooltip } from '../BridgeTag/BridgeTag.tsx';
 import {
   AssetIconSymbol,
   AssetsBridgePrice,
   AssetSymbol,
   Container,
   Description,
+  Image,
   Links,
   styles,
   TitleContainer,
-  Image,
 } from './styles.ts';
-import { useAppSelector } from '../../../../store.ts';
-import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink.tsx';
-import Link from '../../../../images/icons/mui/Link.svg?react';
-import Twitter from '../../../../images/icons/mui/Twitter.svg?react';
-import DocsIcon from '../../../../images/icons/navigation/docs.svg?react';
-import { memo } from 'react';
-import type { PlatformEntity } from '../../../data/entities/platform.ts';
-import { selectPlatformById } from '../../../data/selectors/platforms.ts';
-import { TagTooltip, TagWithTooltip } from '../BridgeTag/BridgeTag.tsx';
-import { getPlatformSrc } from '../../../../helpers/platformsSrc.ts';
-import { css } from '@repo/styles/css';
 
 function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
   const { t } = useTranslation();
@@ -60,7 +60,7 @@ function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
           )}
         </Links>
         <AssetsBridgePrice>
-          {platform.type ? (
+          {platform.type ?
             <TagWithTooltip
               tooltip={
                 <TagTooltip content={t(`Details-Platform-Type-Description-${platform.type}`)} />
@@ -68,7 +68,7 @@ function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
             >
               {t(`Details-Platform-Type-${platform.type}`)}
             </TagWithTooltip>
-          ) : null}
+          : null}
         </AssetsBridgePrice>
       </TitleContainer>
       <Description className={css(!platform.description && styles.descriptionPending)}>

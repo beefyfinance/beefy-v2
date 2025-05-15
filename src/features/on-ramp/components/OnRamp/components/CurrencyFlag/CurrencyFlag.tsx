@@ -14,7 +14,7 @@ export const CurrencyFlag = memo<CurrencyFlagProps>(function CurrencyFlag({
   const src = getCurrencyFlag(currencyCode);
   const height = ((width / 48) * 32).toFixed(2);
 
-  return src ? (
-    <img src={src} width={width} height={height} alt={currencyCode} className={className} />
-  ) : null;
+  return src ?
+      <img src={src} width={width} height={height} alt={currencyCode} className={className} />
+    : null;
 });

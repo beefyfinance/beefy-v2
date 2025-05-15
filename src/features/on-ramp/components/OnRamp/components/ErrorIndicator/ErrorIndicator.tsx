@@ -26,7 +26,9 @@ export const ErrorIndicator = memo(function ErrorIndicator({
         <ReportProblemOutlined className={classes.icon} />
       </div>
       <div className={classes.title}>{title}</div>
-      {content ? <div className={classes.content}>{content}</div> : null}
+      {content ?
+        <div className={classes.content}>{content}</div>
+      : null}
     </div>
   );
 });

@@ -1,13 +1,13 @@
 import { orderBy } from 'lodash-es';
 import { useCallback, useMemo, useState } from 'react';
-import { useAppSelector } from '../../../../store.ts';
-import { selectUserDashboardFilteredVaults } from '../../../data/selectors/filtered-vaults.ts';
-import { isUserClmPnl } from '../../../data/selectors/analytics-types.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import { isVaultActive } from '../../../data/entities/vault.ts';
+import { isUserClmPnl } from '../../../data/selectors/analytics-types.ts';
 import {
   selectDashboardUserVaultsDailyYield,
   selectDashboardUserVaultsPnl,
 } from '../../../data/selectors/dashboard.ts';
+import { selectUserDashboardFilteredVaults } from '../../../data/selectors/filtered-vaults.ts';
 
 export type SortedOptions = {
   sort: 'atDeposit' | 'now' | 'yield' | 'pnl' | 'apy' | 'dailyYield' | 'default';

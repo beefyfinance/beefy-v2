@@ -15,11 +15,11 @@ export const StepHeader = memo(function StepHeader({ onBack, children }: StepHea
 
   return (
     <div className={classes.container}>
-      {onBack ? (
+      {onBack ?
         <button type="button" onClick={onBack} className={classes.backButton}>
           <BackArrow className={classes.backIcon} />
         </button>
-      ) : null}
+      : null}
       {children}
     </div>
   );

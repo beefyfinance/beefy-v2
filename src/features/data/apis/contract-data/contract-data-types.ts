@@ -1,6 +1,7 @@
-import type { BeefyState } from '../../../../redux-types.ts';
-import type { BoostPromoEntity } from '../../entities/promo.ts';
+import type { Address } from 'abitype';
 import type BigNumber from 'bignumber.js';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
+import type { TokenEntity } from '../../entities/token.ts';
 import {
   type VaultCowcentrated,
   type VaultErc4626,
@@ -8,8 +9,7 @@ import {
   type VaultGovMulti,
   type VaultStandard,
 } from '../../entities/vault.ts';
-import type { TokenEntity } from '../../entities/token.ts';
-import type { Address } from 'abitype';
+import type { BeefyState } from '../../store/types.ts';
 
 export interface IContractDataApi {
   fetchAllContractData(

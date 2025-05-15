@@ -28,11 +28,9 @@ export const RefreshButton = memo(function RefreshButton({
     <div className={classes.container}>
       <DivWithTooltip tooltip={<BasicTooltipContent title={title} content={text} />}>
         <button type="button" disabled={isDisabled} onClick={onClick} className={classes.button}>
-          {status === 'error' && !canLoad ? (
+          {status === 'error' && !canLoad ?
             <ErrorOutline className={classes.icon} />
-          ) : (
-            <Refresh className={classes.icon} />
-          )}
+          : <Refresh className={classes.icon} />}
         </button>
       </DivWithTooltip>
     </div>

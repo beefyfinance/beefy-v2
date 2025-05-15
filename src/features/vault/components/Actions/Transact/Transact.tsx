@@ -1,18 +1,18 @@
 import type { ComponentType } from 'react';
 import { memo, useEffect } from 'react';
-import type { VaultEntity } from '../../../../data/entities/vault.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../data/store/hooks.ts';
 import { transactInit } from '../../../../data/actions/transact.ts';
+import type { VaultEntity } from '../../../../data/entities/vault.ts';
+import { TransactStep } from '../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectTransactStep,
   selectTransactVaultIdOrUndefined,
 } from '../../../../data/selectors/transact.ts';
-import { LoadingStep } from './LoadingStep/LoadingStep.tsx';
-import { FormStep } from './FormStep/FormStep.tsx';
 import { Card } from '../../Card/Card.tsx';
-import { TokenSelectStep } from './TokenSelectStep/TokenSelectStep.tsx';
-import { TransactStep } from '../../../../data/reducers/wallet/transact-types.ts';
+import { FormStep } from './FormStep/FormStep.tsx';
+import { LoadingStep } from './LoadingStep/LoadingStep.tsx';
 import { QuoteSelectStep } from './QuoteSelectStep/QuoteSelectStep.tsx';
+import { TokenSelectStep } from './TokenSelectStep/TokenSelectStep.tsx';
 
 const stepToComponent: Record<TransactStep, ComponentType> = {
   [TransactStep.Loading]: LoadingStep,

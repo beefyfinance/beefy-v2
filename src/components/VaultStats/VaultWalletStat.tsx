@@ -1,10 +1,11 @@
 import { memo } from 'react';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
-import { selectUserBalanceOfToken } from '../../features/data/selectors/balance.ts';
 import {
   selectIsBalanceAvailableForChainUser,
-  selectIsPricesAvailable,
-} from '../../features/data/selectors/data-loader.ts';
+  selectUserBalanceOfToken,
+} from '../../features/data/selectors/balance.ts';
+
+import { selectIsPricesAvailable } from '../../features/data/selectors/prices.ts';
 import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
@@ -14,9 +15,9 @@ import {
   selectIsBalanceHidden,
   selectWalletAddress,
 } from '../../features/data/selectors/wallet.ts';
+import type { BeefyState } from '../../features/data/store/types.ts';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format.ts';
-import type { BeefyState } from '../../redux-types.ts';
-import { useAppSelector } from '../../store.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 
 export type VaultWalletStatProps = {

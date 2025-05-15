@@ -1,7 +1,21 @@
-import type { BeefyState } from '../../../../redux-types.ts';
-import { isGovVault, type VaultEntity } from '../../entities/vault.ts';
+import type { Address } from 'abitype';
+import { uniqBy } from 'lodash-es';
+import { BeefyZapRouterAbi } from '../../../../config/abi/BeefyZapRouterAbi.ts';
+import { ZERO_ADDRESS } from '../../../../helpers/addresses.ts';
+import { BIG_ZERO } from '../../../../helpers/big-number.ts';
+import { getWalletConnectionApi } from '../../apis/instances.ts';
+import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
+import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import type { UserlessZapRequest, ZapOrder, ZapStep } from '../../apis/transact/zap/types.ts';
 import type { TokenEntity } from '../../entities/token.ts';
+import { isGovVault, type VaultEntity } from '../../entities/vault.ts';
+import { selectChainById } from '../../selectors/chains.ts';
+import { selectTokenByAddress, selectTokenByAddressOrUndefined } from '../../selectors/tokens.ts';
+import { selectVaultById } from '../../selectors/vaults.ts';
+import { selectWalletAddress } from '../../selectors/wallet.ts';
+import { selectZapByChainId } from '../../selectors/zap.ts';
+import type { BeefyState } from '../../store/types.ts';
+import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import {
   bindTransactionEvents,
   captureWalletErrors,
@@ -9,20 +23,6 @@ import {
   txStart,
   txWallet,
 } from './common.ts';
-import { selectTokenByAddress, selectTokenByAddressOrUndefined } from '../../selectors/tokens.ts';
-import { uniqBy } from 'lodash-es';
-import { selectWalletAddress } from '../../selectors/wallet.ts';
-import { selectVaultById } from '../../selectors/vaults.ts';
-import { selectChainById } from '../../selectors/chains.ts';
-import { selectZapByChainId } from '../../selectors/zap.ts';
-import { BIG_ZERO } from '../../../../helpers/big-number.ts';
-import type { Address } from 'abitype';
-import { getWalletConnectionApi } from '../../apis/instances.ts';
-import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
-import { getGasPriceOptions } from '../../utils/gas-utils.ts';
-import { ZERO_ADDRESS } from '../../../../helpers/addresses.ts';
-import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
-import { BeefyZapRouterAbi } from '../../../../config/abi/BeefyZapRouterAbi.ts';
 
 export const zapExecuteOrder = (
   vaultId: VaultEntity['id'],

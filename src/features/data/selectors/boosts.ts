@@ -1,19 +1,14 @@
-import type { BeefyState } from '../../../redux-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
-import type { VaultEntity } from '../entities/vault.ts';
-import {
-  selectBoostUserBalanceInToken,
-  selectBoostUserRewardsInToken,
-  selectUserVaultBalanceInShareTokenInCurrentBoost,
-} from './balance.ts';
+import { isAfter } from 'date-fns';
+import { orderBy } from 'lodash-es';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { BeefyOffChainRewardsCampaignType } from '../apis/beefy/beefy-api-types.ts';
-import { isAfter } from 'date-fns';
-import { orderBy } from 'lodash-es';
-import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
 import type { BoostRewardContractData } from '../apis/contract-data/contract-data-types.ts';
+import type { ChainEntity } from '../entities/chain.ts';
 import type { BoostPromoEntity, PromoEntity } from '../entities/promo.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import type { BeefyState } from '../store/types.ts';
+import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
 
 function requireBoost(
   promosById: { [id: string]: PromoEntity | undefined },
@@ -124,27 +119,6 @@ export const selectPastVaultBoostIds = createCachedSelector(
     arrayOrStaticEmpty((boostIds || []).filter(id => statusById[id] === 'inactive'))
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectPastBoostIdsWithUserBalance = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-) => {
-  const expiredBoostIds = selectPastVaultBoostIds(state, vaultId);
-
-  const boostIds: string[] = [];
-  for (const eolBoostId of expiredBoostIds) {
-    const userBalance = selectBoostUserBalanceInToken(state, eolBoostId);
-    if (userBalance.gt(0)) {
-      boostIds.push(eolBoostId);
-      continue;
-    }
-    const userRewards = selectBoostUserRewardsInToken(state, eolBoostId);
-    if (userRewards?.some(r => r.amount.gt(0))) {
-      boostIds.push(eolBoostId);
-    }
-  }
-  return boostIds;
-};
-
 export const selectVaultsActiveBoostPeriodFinish = (
   state: BeefyState,
   vaultId: BoostPromoEntity['id']
@@ -221,11 +195,3 @@ export const selectBoostActiveRewardTokens = createCachedSelector(
       )
     )
 )((_state: BeefyState, boostId: BoostPromoEntity['id']) => boostId);
-
-export const selectUserHasDepositedInActiveBoost = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-    selectUserVaultBalanceInShareTokenInCurrentBoost(state, vaultId, maybeWalletAddress),
-  balanceInCurrentBoost => {
-    return balanceInCurrentBoost.gt(BIG_ZERO);
-  }
-)((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);

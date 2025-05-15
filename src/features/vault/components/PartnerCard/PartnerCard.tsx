@@ -22,7 +22,10 @@ export const PartnerCard = memo(function PartnerCard({
     <a href={url} target="_blank" className={classes.link}>
       <div className={classes.container}>
         <div className={classes.title}>
-          {logo ? <img src={logo} alt={title} className={classes.icon} /> : null} {title}
+          {logo ?
+            <img src={logo} alt={title} className={classes.icon} />
+          : null}{' '}
+          {title}
         </div>
         <div className={classes.content}>{content}</div>
       </div>

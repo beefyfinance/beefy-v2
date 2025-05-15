@@ -1,19 +1,19 @@
+import { css } from '@repo/styles/css';
 import { memo, useEffect } from 'react';
-import type { VaultEntity } from '../../../../data/entities/vault.ts';
+import { LoadingIndicator } from '../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../data/store/hooks.ts';
+import { initiateMinterForm } from '../../../../data/actions/minters.ts';
+import { fetchAddressBookAction } from '../../../../data/actions/tokens.ts';
 import type { MinterEntity } from '../../../../data/entities/minter.ts';
+import type { VaultEntity } from '../../../../data/entities/vault.ts';
+import { isLoaderFulfilled } from '../../../../data/selectors/data-loader-helpers.ts';
+import { selectMinterById } from '../../../../data/selectors/minters.ts';
 import {
   selectIsAddressBookLoaded,
   selectShouldInitAddressBook,
-} from '../../../../data/selectors/data-loader.ts';
+} from '../../../../data/selectors/tokens.ts';
 import { selectIsWalletKnown, selectWalletAddress } from '../../../../data/selectors/wallet.ts';
-import { selectMinterById } from '../../../../data/selectors/minters.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../store.ts';
-import { LoadingIndicator } from '../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
 import { Card } from '../../Card/Card.tsx';
-import { isLoaderFulfilled } from '../../../../data/selectors/data-loader-helpers.ts';
-import { initiateMinterForm } from '../../../../data/actions/minters.ts';
-import { fetchAddressBookAction } from '../../../../data/actions/tokens.ts';
-import { css } from '@repo/styles/css';
 import { MintBurnCard } from './MintBurnCard/MintBurnCard.tsx';
 
 export interface MinterCardParams {
@@ -52,7 +52,11 @@ export const MinterCard = memo(function MinterCard({ vaultId, minterId }: Minter
   }, [minterId, walletAddress, dispatch, minter.chainId, shouldInitAddresBook]);
 
   return (
-    <>{isFormReady ? <MintBurnCard vaultId={vaultId} minterId={minterId} /> : <LoadingCard />}</>
+    <>
+      {isFormReady ?
+        <MintBurnCard vaultId={vaultId} minterId={minterId} />
+      : <LoadingCard />}
+    </>
   );
 });
 

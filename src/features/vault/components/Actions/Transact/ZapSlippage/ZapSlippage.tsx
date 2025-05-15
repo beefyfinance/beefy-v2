@@ -1,3 +1,4 @@
+import { css, type CssStyles } from '@repo/styles/css';
 import type {
   ButtonHTMLAttributes,
   ChangeEventHandler,
@@ -6,22 +7,20 @@ import type {
   MouseEventHandler,
 } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
 import { useTranslation } from 'react-i18next';
-import { css, type CssStyles } from '@repo/styles/css';
+import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent.tsx';
+import { IconWithBasicTooltip } from '../../../../../../components/Tooltip/IconWithBasicTooltip.tsx';
+import { IconWithTooltip } from '../../../../../../components/Tooltip/IconWithTooltip.tsx';
 import { formatPercent } from '../../../../../../helpers/format.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { selectTransactSlippage } from '../../../../../data/selectors/transact.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import ErrorOutline from '../../../../../../images/icons/mui/ErrorOutline.svg?react';
 import ExpandLess from '../../../../../../images/icons/mui/ExpandLess.svg?react';
 import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
 import ReportProblemOutlined from '../../../../../../images/icons/mui/ReportProblemOutlined.svg?react';
-import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
-import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent.tsx';
-import { IconWithTooltip } from '../../../../../../components/Tooltip/IconWithTooltip.tsx';
-import { IconWithBasicTooltip } from '../../../../../../components/Tooltip/IconWithBasicTooltip.tsx';
-import { transactFetchQuotes } from '../../../../../data/actions/transact.ts';
+import { transactFetchQuotes, transactSetSlippage } from '../../../../../data/actions/transact.ts';
+import { selectTransactSlippage } from '../../../../../data/selectors/transact.ts';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -160,7 +159,7 @@ const CustomSlippageInput = memo(function CustomSlippageInput({
         onFocus={handleFocus}
         ref={inputRef}
       />
-      {showPlaceholder ? (
+      {showPlaceholder ?
         <button
           type="button"
           className={css(styles.option, styles.button, styles.customPlaceholder)}
@@ -168,7 +167,7 @@ const CustomSlippageInput = memo(function CustomSlippageInput({
         >
           {placeholder}
         </button>
-      ) : null}
+      : null}
     </div>
   );
 });
@@ -210,7 +209,7 @@ export const ZapSlippage = memo(function ZapSlippage({ css: cssProp }: ZapSlippa
   const [customFocused, setCustomFocused] = useState(false);
   const handleChange = useCallback<CustomSlippageInputProps['onChange']>(
     value => {
-      dispatch(transactActions.setSlippage({ slippage: value ? value / 100 : DEFAULT_SLIPPAGE }));
+      dispatch(transactSetSlippage({ slippage: value ? value / 100 : DEFAULT_SLIPPAGE }));
       dispatch(transactFetchQuotes());
     },
     [dispatch]
@@ -234,7 +233,7 @@ export const ZapSlippage = memo(function ZapSlippage({ css: cssProp }: ZapSlippa
               slippage >= SLIPPAGE_DANGER && styles.danger
             )}
           >
-            {slippage >= SLIPPAGE_WARNING ? (
+            {slippage >= SLIPPAGE_WARNING ?
               <IconWithBasicTooltip
                 iconSize={16}
                 title={t(
@@ -247,13 +246,13 @@ export const ZapSlippage = memo(function ZapSlippage({ css: cssProp }: ZapSlippa
                 )}
                 Icon={slippage >= SLIPPAGE_DANGER ? ReportProblemOutlined : ErrorOutline}
               />
-            ) : null}
+            : null}
             {formatPercent(slippage, 1)}
           </div>
           <Icon />
         </div>
       </button>
-      {open ? (
+      {open ?
         <div className={classes.selector}>
           {SLIPPAGE_PRESETS.map((percent, i) => (
             <SlippageButton
@@ -276,7 +275,7 @@ export const ZapSlippage = memo(function ZapSlippage({ css: cssProp }: ZapSlippa
             isCustom={isCustom}
           />
         </div>
-      ) : null}
+      : null}
     </div>
   );
 });

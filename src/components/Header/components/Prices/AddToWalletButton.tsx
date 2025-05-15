@@ -1,10 +1,10 @@
 import { styled } from '@repo/styles/jsx';
-import AccountBalanceWallet from '../../../../images/icons/mui/AccountBalanceWallet.svg?react';
 import { memo, useCallback } from 'react';
-import { useAppDispatch } from '../../../../store.ts';
 import { addTokenToWalletAction } from '../../../../features/data/actions/add-to-wallet.ts';
-import { ActionButton } from './Action.tsx';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
+import { useAppDispatch } from '../../../../features/data/store/hooks.ts';
+import AccountBalanceWallet from '../../../../images/icons/mui/AccountBalanceWallet.svg?react';
+import { ActionButton } from './Action.tsx';
 
 type AddToWalletButtonProps = {
   title: string;

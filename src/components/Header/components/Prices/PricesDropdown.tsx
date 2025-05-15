@@ -1,9 +1,9 @@
 import { memo, type MouseEvent, useCallback } from 'react';
-import { useAppSelector } from '../../../../store.ts';
 import { selectVaultExistsById } from '../../../../features/data/selectors/vaults.ts';
-import { Tokens } from './Tokens.tsx';
-import { PricePerFullShare } from './PricePerFullShare.tsx';
+import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { DropdownContent } from '../../../Dropdown/DropdownContent.tsx';
+import { PricePerFullShare } from './PricePerFullShare.tsx';
+import { Tokens } from './Tokens.tsx';
 
 type PricesDropdownProps = {
   setOpen: (setter: boolean | ((open: boolean) => boolean)) => void;
@@ -28,7 +28,9 @@ export const PricesDropdown = memo(function PricesDropdown({ setOpen }: PricesDr
   return (
     <DropdownContent onClick={handleClick}>
       <Tokens />
-      {vaultLoaded ? <PricePerFullShare /> : null}
+      {vaultLoaded ?
+        <PricePerFullShare />
+      : null}
     </DropdownContent>
   );
 });
