@@ -120,9 +120,9 @@
       {
         "type": "token",
         "address": "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
-        "symbol": "USDCe",
+        "symbol": "sUSDCe",
         "decimals": 6,
-        "oracleId": "USDCe"
+        "oracleId": "sUSDCe"
       }
     ]
   },
