@@ -1,9 +1,9 @@
 import { isCowcentratedLikeVault, type VaultEntity } from '../../entities/vault.ts';
-import type { BeefyDispatchFn, BeefyStateFn, BeefyThunk } from '../../../../redux-types.ts';
-import { fetchUserStellaSwapRewardsAction } from './stellaswap-user-rewards.ts';
-import { fetchUserMerklRewardsAction } from './merkl-user-rewards.ts';
 import { selectUserDepositedVaultIds } from '../../selectors/balance.ts';
 import { selectVaultById } from '../../selectors/vaults.ts';
+import type { BeefyDispatchFn, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
+import { fetchUserMerklRewardsAction } from './merkl-user-rewards.ts';
+import { fetchUserStellaSwapRewardsAction } from './stellaswap-user-rewards.ts';
 
 function maybeHasStellaSwapRewards(vault: VaultEntity): boolean {
   return vault.chainId === 'moonbeam' && vault.platformId === 'stellaswap';
@@ -17,7 +17,7 @@ export function fetchUserOffChainRewardsForVaultAction(
   vaultId: VaultEntity['id'],
   walletAddress: string
 ): BeefyThunk {
-  return async function (dispatch: BeefyDispatchFn, getState: BeefyStateFn) {
+  return async function (dispatch, getState) {
     const vault = selectVaultById(getState(), vaultId);
     if (maybeHasMerklRewards(vault)) {
       dispatch(fetchUserMerklRewardsAction({ walletAddress }));

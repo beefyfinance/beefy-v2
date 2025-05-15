@@ -1,4 +1,10 @@
+import { css } from '@repo/styles/css';
 import { memo } from 'react';
+import { Link } from 'react-router';
+import { VaultIdentity } from '../../../../components/VaultIdentity/VaultIdentity.tsx';
+import { VaultStats } from '../../../../components/VaultStats/VaultStats.tsx';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedLikeVault,
@@ -8,14 +14,8 @@ import {
   isVaultRetired,
   type VaultEntity,
 } from '../../../data/entities/vault.ts';
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
-import { css } from '@repo/styles/css';
-import { useAppSelector } from '../../../../store.ts';
-import { Link } from 'react-router';
-import { VaultIdentity } from '../../../../components/VaultIdentity/VaultIdentity.tsx';
-import { VaultStats } from '../../../../components/VaultStats/VaultStats.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

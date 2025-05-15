@@ -1,18 +1,18 @@
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../components/Button/Button.tsx';
 import { ButtonLink } from '../../../../components/Button/ButtonLink.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../store.ts';
-import { askForWalletConnection, doDisconnectWallet } from '../../../data/actions/wallet.ts';
-import { selectWalletAddressIfKnown } from '../../../data/selectors/wallet.ts';
+import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
 import { Section } from '../../../../components/Section/Section.tsx';
-import { styles } from './styles.ts';
-import iconEmptyState from '../../../../images/empty-state.svg';
-import { AddressInput } from '../AddressInput/AddressInput.tsx';
 import { isValidAddress } from '../../../../helpers/addresses.ts';
 import { formatAddressShort } from '../../../../helpers/format.ts';
-import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
+import iconEmptyState from '../../../../images/empty-state.svg';
+import { askForWalletConnection, doDisconnectWallet } from '../../../data/actions/wallet.ts';
+import { selectWalletAddressIfKnown } from '../../../data/selectors/wallet.ts';
+import { AddressInput } from '../AddressInput/AddressInput.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -39,9 +39,9 @@ export const InvalidAddress = memo(function InvalidAddress() {
     <Error
       title={t('Dashboard-Title-InvalidAddress')}
       text={t(
-        connectedAddress
-          ? 'Dashboard-Text-InvalidAddress-Connected'
-          : 'Dashboard-Text-InvalidAddress'
+        connectedAddress ?
+          'Dashboard-Text-InvalidAddress-Connected'
+        : 'Dashboard-Text-InvalidAddress'
       )}
       connectedAction={'dashboard'}
     />
@@ -68,11 +68,9 @@ export const NoResults = memo(function NoResults({ title, address }: NoResultsPr
     <Error
       title={title}
       text={t(
-        requestForConnectedWallet
-          ? 'Dashboard-Text-NoData-ViewingConnected'
-          : connectedAddress
-            ? 'Dashboard-Text-NoData-Connected'
-            : 'Dashboard-Text-NoData'
+        requestForConnectedWallet ? 'Dashboard-Text-NoData-ViewingConnected'
+        : connectedAddress ? 'Dashboard-Text-NoData-Connected'
+        : 'Dashboard-Text-NoData'
       )}
       connectedAction={!requestForConnectedWallet ? 'dashboard' : 'vaults'}
     />
@@ -101,7 +99,9 @@ const Error = memo(function Error({ title, text, connectedAction = 'vaults' }: E
         </div>
         <div className={classes.textContainer}>
           <div className={classes.title}>{wrappedTitle}</div>
-          {text ? <div className={classes.text}>{text}</div> : null}
+          {text ?
+            <div className={classes.text}>{text}</div>
+          : null}
         </div>
         <Actions connectedAction={connectedAction} />
       </div>
@@ -129,21 +129,19 @@ const Actions = memo(function Actions({ connectedAction }: ActionProps) {
   return (
     <div className={classes.actionsContainer}>
       <div className={classes.center}>
-        {connectedAddress ? (
-          connectedAction === 'dashboard' ? (
+        {connectedAddress ?
+          connectedAction === 'dashboard' ?
             <ButtonLink css={styles.btn} to={`/dashboard/${connectedAddress}`} variant="success">
               {t('NoResults-ViewConnectedDashboard')}
             </ButtonLink>
-          ) : (
-            <ButtonLink css={styles.btn} to="/" variant="success">
+          : <ButtonLink css={styles.btn} to="/" variant="success">
               {t('NoResults-ViewAllVaults')}
             </ButtonLink>
-          )
-        ) : (
-          <Button css={styles.btn} onClick={handleWalletConnect} variant="success">
+
+        : <Button css={styles.btn} onClick={handleWalletConnect} variant="success">
             {t('NoResults-ConnectWallet')}
           </Button>
-        )}
+        }
       </div>
       <Divider />
       <AddressInput />

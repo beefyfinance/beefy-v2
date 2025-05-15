@@ -1,18 +1,18 @@
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { Trans, useTranslation } from 'react-i18next';
-import { styles } from './styles.ts';
-import { useAppSelector } from '../../../../../../store.ts';
-import { memo } from 'react';
-import { selectTransactVaultId } from '../../../../../data/selectors/transact.ts';
-import { selectAreFeesLoaded, selectFeesByVaultId } from '../../../../../data/selectors/fees.ts';
 import { css, type CssStyles } from '@repo/styles/css';
-import { formatLargePercent } from '../../../../../../helpers/format.ts';
+import { memo } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
-import { PerformanceFees } from './PerformanceFees.tsx';
+import { formatLargePercent } from '../../../../../../helpers/format.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import { selectAreFeesLoaded, selectFeesByVaultId } from '../../../../../data/selectors/fees.ts';
+import { selectTransactVaultId } from '../../../../../data/selectors/transact.ts';
 import { Label } from './Label.tsx';
+import { LabelCustomTooltip, LabelTooltip } from './LabelTooltip.tsx';
+import { PerformanceFees } from './PerformanceFees.tsx';
+import { styles } from './styles.ts';
 import { Value } from './Value.tsx';
 import { MaybeZapFees } from './ZapFees.tsx';
-import { LabelCustomTooltip, LabelTooltip } from './LabelTooltip.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -33,29 +33,21 @@ export const VaultFees = memo(function VaultFees({ css: cssProp }: VaultFeesProp
           {t('Transact-Fee-Deposit')} <LabelTooltip title={t('Transact-Fee-Deposit-Explainer')} />
         </Label>
         <Value>
-          {areFeesLoaded ? (
-            fees ? (
+          {areFeesLoaded ?
+            fees ?
               formatLargePercent(fees.deposit ?? 0, 2, '0%')
-            ) : (
-              '?'
-            )
-          ) : (
-            <TextLoader placeholder={'0.0%'} />
-          )}
+            : '?'
+          : <TextLoader placeholder={'0.0%'} />}
         </Value>
         <Label>
           {t('Transact-Fee-Withdraw')} <LabelTooltip title={t('Transact-Fee-Withdraw-Explainer')} />
         </Label>
         <Value>
-          {areFeesLoaded ? (
-            fees ? (
+          {areFeesLoaded ?
+            fees ?
               formatLargePercent(fees.withdraw, 2, '0%')
-            ) : (
-              '?'
-            )
-          ) : (
-            <TextLoader placeholder={'0.0%'} />
-          )}
+            : '?'
+          : <TextLoader placeholder={'0.0%'} />}
         </Value>
         <MaybeZapFees />
       </div>
@@ -64,11 +56,8 @@ export const VaultFees = memo(function VaultFees({ css: cssProp }: VaultFeesProp
           t={t}
           i18nKey={'Transact-Fee-Performance-Explainer'}
           components={{
-            PerformanceTooltip: fees ? (
-              <LabelCustomTooltip tooltip={<PerformanceFees fees={fees} />} />
-            ) : (
-              <span />
-            ),
+            PerformanceTooltip:
+              fees ? <LabelCustomTooltip tooltip={<PerformanceFees fees={fees} />} /> : <span />,
           }}
         />
       </div>
@@ -89,15 +78,11 @@ export const WithdrawFees = memo(function WithdrawFees({ css: cssProp }: VaultFe
           {t('Transact-Fee-Withdraw')} <LabelTooltip title={t('Transact-Fee-Withdraw-Explainer')} />
         </Label>
         <Value>
-          {areFeesLoaded ? (
-            fees ? (
+          {areFeesLoaded ?
+            fees ?
               formatLargePercent(fees.withdraw, 2, '0%')
-            ) : (
-              '?'
-            )
-          ) : (
-            <TextLoader placeholder={'0.0%'} />
-          )}
+            : '?'
+          : <TextLoader placeholder={'0.0%'} />}
         </Value>
         <MaybeZapFees />
       </div>

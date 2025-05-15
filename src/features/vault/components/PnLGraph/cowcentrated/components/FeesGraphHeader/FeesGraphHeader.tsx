@@ -1,15 +1,15 @@
 import { memo } from 'react';
-import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
-import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
-import { Stat } from '../Stat/Stat.tsx';
 import { useTranslation } from 'react-i18next';
-import { styles } from './styles.ts';
-import { useAppSelector } from '../../../../../../../store.ts';
 import {
   formatLargeUsd,
   formatTokenDisplayCondensed,
 } from '../../../../../../../helpers/format.ts';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../../data/store/hooks.ts';
+import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
 import { selectClmAutocompoundedPendingFeesByVaultId } from '../../../../../../data/selectors/analytics.ts';
+import { Stat } from '../Stat/Stat.tsx';
+import { styles } from './styles.ts';
 
 interface FeesGraphHeaderProps {
   vaultId: VaultEntity['id'];

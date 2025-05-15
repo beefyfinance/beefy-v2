@@ -1,46 +1,43 @@
-import type { BeefyState } from '../../../redux-types.ts';
 import { createSelector } from '@reduxjs/toolkit';
-import type { ChainEntity } from '../entities/chain.ts';
+import BigNumber from 'bignumber.js';
 import { orderBy } from 'lodash-es';
-import { selectTokenPriceByAddress } from './tokens.ts';
-import { selectWalletAddressIfKnown } from './wallet.ts';
-import {
-  selectAddressHasVaultPendingWithdrawal,
-  selectBoostUserRewardsInToken,
-  selectUserBalanceOfToken,
-  selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInShareTokenIncludingDisplaced,
-  selectUserVaultBalanceNotInActiveBoostInShareToken,
-} from './balance.ts';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { extractTagFromLpSymbol } from '../../../helpers/tokens.ts';
+import type { PulseHighlightProps } from '../../vault/components/PulseHighlight/PulseHighlight.tsx';
+import type { BoostReward } from '../apis/balance/balance-types.ts';
 import {
   type TokenAmount,
   type TransactOption,
   type TransactQuote,
 } from '../apis/transact/transact-types.ts';
-import BigNumber from 'bignumber.js';
+import type { ChainEntity } from '../entities/chain.ts';
+import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
 import { TransactStatus } from '../reducers/wallet/transact-types.ts';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import type { BeefyState } from '../store/types.ts';
 import { valueOrThrow } from '../utils/selector-utils.ts';
+import {
+  selectAddressHasVaultPendingWithdrawal,
+  selectBoostUserRewardsInToken,
+  selectPastBoostIdsWithUserBalance,
+  selectUserBalanceOfToken,
+  selectUserVaultBalanceInDepositToken,
+  selectUserVaultBalanceInShareTokenIncludingDisplaced,
+  selectUserVaultBalanceNotInActiveBoostInShareToken,
+} from './balance.ts';
+import { selectAllVaultBoostIds, selectPreStakeOrActiveBoostIds } from './boosts.ts';
 import {
   selectVaultHasActiveGovRewards,
   selectVaultHasActiveMerklCampaigns,
   selectVaultHasActiveStellaSwapCampaigns,
 } from './rewards.ts';
+import { selectTokenPriceByAddress } from './tokens.ts';
 import {
   selectConnectedUserHasGovRewardsForVault,
   selectConnectedUserHasMerklRewardsForVault,
   selectConnectedUserHasStellaSwapRewardsForVault,
 } from './user-rewards.ts';
 import { selectVaultById } from './vaults.ts';
-import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
-import { extractTagFromLpSymbol } from '../../../helpers/tokens.ts';
-import {
-  selectAllVaultBoostIds,
-  selectPastBoostIdsWithUserBalance,
-  selectPreStakeOrActiveBoostIds,
-} from './boosts.ts';
-import type { BoostReward } from '../apis/balance/balance-types.ts';
-import type { PulseHighlightProps } from '../../vault/components/PulseHighlight/PulseHighlight.tsx';
+import { selectWalletAddressIfKnown } from './wallet.ts';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>

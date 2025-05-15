@@ -1,13 +1,13 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Visible } from '../../../../../components/MediaQueries/Visible.tsx';
+import { VisibleAbove } from '../../../../../components/MediaQueries/VisibleAbove.tsx';
 import { formatLargePercent, formatLargeUsd } from '../../../../../helpers/format.ts';
-import { useAppSelector } from '../../../../../store.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
 import { selectUserGlobalStats } from '../../../../data/selectors/apy.ts';
 import { selectIsBalanceHidden } from '../../../../data/selectors/wallet.ts';
-import { VisibleAbove } from '../../../../../components/MediaQueries/VisibleAbove.tsx';
 import { Stat } from './Stat.tsx';
 import { Stats } from './Stats.tsx';
-import { Visible } from '../../../../../components/MediaQueries/Visible.tsx';
 
 export const UserStats = memo(function UserStats() {
   const stats = useAppSelector(selectUserGlobalStats);

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../../store.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
   selectFilteredVaultCount,
   selectTotalVaultCount,

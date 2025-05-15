@@ -1,17 +1,17 @@
+import { styled } from '@repo/styles/jsx';
 import { memo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { stepperStartWithSteps } from '../../../../../data/actions/wallet/stepper.ts';
+import { fulfillRedeem } from '../../../../../data/actions/wallet/erc4626.ts';
 import type { VaultErc4626 } from '../../../../../data/entities/vault.ts';
 import { selectUserVaultPendingWithdrawal } from '../../../../../data/selectors/balance.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { fulfillRedeem } from '../../../../../data/actions/wallet/erc4626.ts';
-import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import { startStepperWithSteps } from '../../../../../data/actions/stepper.ts';
-import { useTranslation } from 'react-i18next';
 import {
   selectErc20TokenByAddress,
   selectTokenPriceByTokenOracleId,
 } from '../../../../../data/selectors/tokens.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { PendingRequest } from './PendingRequest.tsx';
-import { styled } from '@repo/styles/jsx';
 
 export type PendingWithdrawRequestsProps = {
   vaultId: VaultErc4626['id'];
@@ -34,7 +34,7 @@ export const PendingWithdrawRequests = memo(function PendingWithdrawRequests({
   const handleWithdraw = useCallback(
     (id: bigint) => {
       dispatch(
-        startStepperWithSteps(
+        stepperStartWithSteps(
           [
             {
               step: 'fulfill-request-withdraw',

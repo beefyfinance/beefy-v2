@@ -1,23 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { ChainEntity } from '../entities/chain.ts';
-import type { VaultEntity } from '../entities/vault.ts';
 import { fetchPartnersConfig } from '../actions/partners.ts';
+import type { PartnersState } from './partners-types.ts';
 
-/**
- * State containing Vault infos
- */
-export type PartnersState = {
-  qidao: {
-    byVaultId: {
-      [vaultId: VaultEntity['id']]: boolean;
-    };
-  };
-  nexus: {
-    byChainId: {
-      [chainId in ChainEntity['id']]?: boolean;
-    };
-  };
-};
 export const initialPartnersState: PartnersState = {
   qidao: {
     byVaultId: {},

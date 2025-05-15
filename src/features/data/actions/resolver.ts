@@ -1,6 +1,5 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types.ts';
 import { getNameServicesApi } from '../apis/instances.ts';
+import { createAppAsyncThunk } from '../utils/store-utils.ts';
 
 type ResolveFulfilledPayload = {
   address: string;
@@ -11,10 +10,9 @@ export type ResolveAddressToDomainArgs = {
   address?: string | null | undefined;
 };
 
-export const resolveAddressToDomain = createAsyncThunk<
+export const resolveAddressToDomain = createAppAsyncThunk<
   ResolveFulfilledPayload,
-  ResolveAddressToDomainArgs,
-  { state: BeefyState }
+  ResolveAddressToDomainArgs
 >(
   'resolver/addressToDomain',
   async ({ address }) => {
@@ -54,10 +52,9 @@ export type ResolveDomainToAddressArgs = {
   domain?: string | null | undefined;
 };
 
-export const resolveDomainToAddress = createAsyncThunk<
+export const resolveDomainToAddress = createAppAsyncThunk<
   ResolveFulfilledPayload,
-  ResolveDomainToAddressArgs,
-  { state: BeefyState }
+  ResolveDomainToAddressArgs
 >(
   'resolver/domainToAddress',
   async ({ domain }) => {

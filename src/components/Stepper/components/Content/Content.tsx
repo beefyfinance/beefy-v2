@@ -1,9 +1,13 @@
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { css, cx } from '@repo/styles/css';
 import { type FC, memo, type MouseEventHandler, type ReactNode, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import type { Step } from '../../../../features/data/reducers/wallet/stepper.ts';
-import { stepperActions } from '../../../../features/data/reducers/wallet/stepper.ts';
+import { resetWallet } from '../../../../features/data/actions/wallet/common.ts';
+import { stepperReset } from '../../../../features/data/actions/wallet/stepper.ts';
+import { isWalletActionError } from '../../../../features/data/actions/wallet/wallet-action.ts';
+import type { VaultEntity } from '../../../../features/data/entities/vault.ts';
+import type { Step } from '../../../../features/data/reducers/wallet/stepper-types.ts';
+import type { BridgeAdditionalData } from '../../../../features/data/reducers/wallet/wallet-action-types.ts';
+import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import {
   selectBoostAdditionalData,
   selectBoostClaimed,
@@ -14,25 +18,19 @@ import {
   selectStepperItems,
   selectZapReturned,
 } from '../../../../features/data/selectors/stepper.ts';
+import { ShareButton } from '../../../../features/vault/components/ShareButton/ShareButton.tsx';
+import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { formatTokenDisplayCondensed } from '../../../../helpers/format.ts';
-import { useAppDispatch, useAppSelector } from '../../../../store.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { explorerTxUrl } from '../../../../helpers/url.ts';
+import { useAppDispatch, useAppSelector } from '../../../../features/data/store/hooks.ts';
+import iconError from '../../../../images/icons/error.svg';
 import { Button } from '../../../Button/Button.tsx';
+import { CircularProgress } from '../../../CircularProgress/CircularProgress.tsx';
+import { ListJoin } from '../../../ListJoin.tsx';
+import { Title } from '../Title/Title.tsx';
 import { TransactionLink } from '../TransactionLink/TransactionLink.tsx';
 import { styles } from './styles.ts';
-import { Title } from '../Title/Title.tsx';
-import { ListJoin } from '../../../ListJoin.tsx';
-import iconError from '../../../../images/icons/error.svg';
-import { ShareButton } from '../../../../features/vault/components/ShareButton/ShareButton.tsx';
-import type { VaultEntity } from '../../../../features/data/entities/vault.ts';
-import {
-  type BridgeAdditionalData,
-  isWalletActionError,
-} from '../../../../features/data/reducers/wallet/wallet-action.ts';
-import { selectChainById } from '../../../../features/data/selectors/chains.ts';
-import { explorerTxUrl } from '../../../../helpers/url.ts';
-import { BIG_ZERO } from '../../../../helpers/big-number.ts';
-import { CircularProgress } from '../../../CircularProgress/CircularProgress.tsx';
-import { resetWallet } from '../../../../features/data/actions/wallet/common.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -134,7 +132,7 @@ export const CloseButton = memo(function CloseButton() {
   const dispatch = useAppDispatch();
 
   const handleClose = useCallback(() => {
-    dispatch(stepperActions.reset());
+    dispatch(stepperReset());
     dispatch(resetWallet());
   }, [dispatch]);
 

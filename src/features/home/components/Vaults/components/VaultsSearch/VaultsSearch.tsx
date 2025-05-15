@@ -1,12 +1,12 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { selectFilterSearchText } from '../../../../../data/selectors/filtered-vaults.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
-import { debounce } from 'lodash-es';
-import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
 import { css } from '@repo/styles/css';
 import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
 import { useTranslation } from 'react-i18next';
+import { debounce } from 'lodash-es';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
+import { selectFilterSearchText } from '../../../../../data/selectors/filtered-vaults.ts';
 
 export const VaultsSearch = memo(function VaultsSearch() {
   const { t } = useTranslation();

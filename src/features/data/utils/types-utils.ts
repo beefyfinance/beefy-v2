@@ -19,9 +19,9 @@ export type KeysOfType<T, V> = {
 }[keyof T];
 
 export type SnakeToCamelCase<Key extends string> =
-  Key extends `${infer FirstPart}_${infer FirstLetter}${infer LastPart}`
-    ? `${FirstPart}${Uppercase<FirstLetter>}${SnakeToCamelCase<LastPart>}`
-    : Key;
+  Key extends `${infer FirstPart}_${infer FirstLetter}${infer LastPart}` ?
+    `${FirstPart}${Uppercase<FirstLetter>}${SnakeToCamelCase<LastPart>}`
+  : Key;
 
 export type ChangeTypeOfKeys<T extends object, Keys extends keyof T, NewType> = {
   [K in keyof T]: K extends Keys ? NewType : T[K];
@@ -38,7 +38,9 @@ export type MapNullToUndefined<T extends object> = {
 
 type Web3KeepTypes = boolean;
 type Web3ConvertType<T> =
-  T extends Array<infer U> ? Web3ConvertType<U>[] : T extends Web3KeepTypes ? T : string;
+  T extends Array<infer U> ? Web3ConvertType<U>[]
+  : T extends Web3KeepTypes ? T
+  : string;
 
 export type AsWeb3Result<T extends object> = Prettify<{
   [key in keyof T]: Web3ConvertType<T[key]>;
@@ -85,9 +87,9 @@ export type SvgProps<T> = Omit<SVGProps<T>, 'ref'> & {
 };
 
 export type MergeObjectUnion<T> = {
-  [K in T extends infer P ? keyof P : never]: T extends infer P
-    ? K extends keyof P
-      ? P[K]
-      : never
-    : never;
+  [K in T extends infer P ? keyof P : never]: T extends infer P ?
+    K extends keyof P ?
+      P[K]
+    : never
+  : never;
 };

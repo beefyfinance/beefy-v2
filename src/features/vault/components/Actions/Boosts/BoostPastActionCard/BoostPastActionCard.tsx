@@ -1,20 +1,20 @@
+import { styled } from '@repo/styles/jsx';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../../store.ts';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
 import {
   selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
 } from '../../../../../data/selectors/balance.ts';
-import { selectVaultByIdWithReceipt } from '../../../../../data/selectors/vaults.ts';
 import { selectBoostById } from '../../../../../data/selectors/boosts.ts';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
-import { type Reward, Rewards } from '../Rewards.tsx';
+import { selectVaultByIdWithReceipt } from '../../../../../data/selectors/vaults.ts';
 import { Claim } from '../ActionButton/Claim.tsx';
 import { Unstake } from '../ActionButton/Unstake.tsx';
 import { ActionConnectSwitch } from '../ActionConnectSwitch.tsx';
-import { styled } from '@repo/styles/jsx';
 import { BoostStaked } from '../BoostStaked/BoostStaked.tsx';
+import { type Reward, Rewards } from '../Rewards.tsx';
 
 interface BoostPastCardActionCardProps {
   boostId: BoostPromoEntity['id'];

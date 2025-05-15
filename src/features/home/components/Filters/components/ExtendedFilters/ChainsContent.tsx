@@ -10,7 +10,7 @@ import {
   type FilterContentProps,
 } from './FilterContent.tsx';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../../store.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { selectAllChains } from '../../../../../data/selectors/chains.ts';
 import ArrowBackIcon from '../../../../../../images/icons/chevron-right.svg?react';
 import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';

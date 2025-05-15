@@ -1,8 +1,19 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types.ts';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { uniqueTokens } from '../../../helpers/tokens.ts';
 import type { FetchAllBalancesResult } from '../apis/balance/balance-types.ts';
 import { getBalanceApi } from '../apis/instances.ts';
 import type { ChainEntity } from '../entities/chain.ts';
+import type { BoostPromoEntity } from '../entities/promo.ts';
+import type { TokenEntity } from '../entities/token.ts';
+import {
+  isCowcentratedLikeVault,
+  isCowcentratedVault,
+  isErc4626Vault,
+  isGovVault,
+  type VaultEntity,
+  type VaultErc4626,
+  type VaultGov,
+} from '../entities/vault.ts';
 import {
   selectAllTokenWhereUserCouldHaveBalance,
   selectUserDepositedVaultIds,
@@ -20,19 +31,8 @@ import {
   selectAllVisibleVaultIds,
 } from '../selectors/vaults.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
-import type { TokenEntity } from '../entities/token.ts';
-import {
-  isCowcentratedLikeVault,
-  isCowcentratedVault,
-  isErc4626Vault,
-  isGovVault,
-  type VaultEntity,
-  type VaultErc4626,
-  type VaultGov,
-} from '../entities/vault.ts';
-import { uniqueTokens } from '../../../helpers/tokens.ts';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
-import type { BoostPromoEntity } from '../entities/promo.ts';
+import type { BeefyState } from '../store/types.ts';
+import { createAppAsyncThunk } from '../utils/store-utils.ts';
 
 export interface FetchAllBalanceActionParams {
   chainId: ChainEntity['id'];
@@ -47,12 +47,9 @@ export interface FetchAllBalanceFulfilledPayload {
   state: BeefyState;
 }
 
-export const fetchAllBalanceAction = createAsyncThunk<
+export const fetchAllBalanceAction = createAppAsyncThunk<
   FetchAllBalanceFulfilledPayload,
-  FetchAllBalanceActionParams,
-  {
-    state: BeefyState;
-  }
+  FetchAllBalanceActionParams
 >('balance/fetchAllBalanceAction', async ({ chainId, walletAddress }, { getState }) => {
   const state = getState();
   const chain = selectChainById(state, chainId);
@@ -88,12 +85,9 @@ export type FetchBalanceParams = {
   vaults?: VaultEntity[];
 };
 
-export const fetchBalanceAction = createAsyncThunk<
+export const fetchBalanceAction = createAppAsyncThunk<
   FetchAllBalanceFulfilledPayload,
-  FetchBalanceParams,
-  {
-    state: BeefyState;
-  }
+  FetchBalanceParams
 >(
   'balance/fetchBalanceAction',
   async ({ chainId, tokens: requestedTokens = [], vaults = [] }, { getState }) => {
@@ -162,12 +156,9 @@ export type RecalculateDepositedVaultsPayload = {
   addedVaultIds: VaultEntity['id'][];
 };
 
-export const recalculateDepositedVaultsAction = createAsyncThunk<
+export const recalculateDepositedVaultsAction = createAppAsyncThunk<
   RecalculateDepositedVaultsPayload,
-  RecalculateDepositedVaultsParams,
-  {
-    state: BeefyState;
-  }
+  RecalculateDepositedVaultsParams
 >('balance/recalculateDepositedVaultsAction', async ({ walletAddress }, { getState }) => {
   const state = getState();
   const allVaultIds = selectAllVisibleVaultIds(state);

@@ -1,13 +1,11 @@
+import { styled } from '@repo/styles/jsx';
 import { memo } from 'react';
-import { useAppSelector } from '../../../../../store.ts';
-import {
-  selectPastBoostIdsWithUserBalance,
-  selectVaultCurrentBoostId,
-} from '../../../../data/selectors/boosts.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
+import { selectPastBoostIdsWithUserBalance } from '../../../../data/selectors/balance.ts';
+import { selectVaultCurrentBoostId } from '../../../../data/selectors/boosts.ts';
+import { selectTransactVaultId } from '../../../../data/selectors/transact.ts';
 import { ActiveBoost } from './ActiveBoost.tsx';
 import { PastBoosts } from './PastBoosts.tsx';
-import { styled } from '@repo/styles/jsx';
-import { selectTransactVaultId } from '../../../../data/selectors/transact.ts';
 
 export const Boosts = memo(function Boosts() {
   const vaultId = useAppSelector(selectTransactVaultId);

@@ -144,17 +144,15 @@ function getRequestUrlInit(request: FetchCommonJsonRequest): {
   init: FetchRequestInit;
 } {
   const signal: AbortSignal | undefined =
-    'signal' in request && request.signal
-      ? request.signal
-      : 'timeout' in request && request.timeout
-        ? getTimeoutAbortSignal(request.timeout)
-        : undefined;
+    'signal' in request && request.signal ? request.signal
+    : 'timeout' in request && request.timeout ? getTimeoutAbortSignal(request.timeout)
+    : undefined;
 
   const headers = request.headers ? new Headers(request.headers) : new Headers();
 
-  const params = request.params
-    ? isURLSearchParamsInit(request.params)
-      ? new URLSearchParams(request.params)
+  const params =
+    request.params ?
+      isURLSearchParamsInit(request.params) ? new URLSearchParams(request.params)
       : getUrlSearchParams(request.params, request.paramsOptions)
     : new URLSearchParams();
   if (request.cacheBuster) {

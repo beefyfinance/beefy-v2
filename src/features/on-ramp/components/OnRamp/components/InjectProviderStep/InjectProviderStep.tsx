@@ -1,12 +1,12 @@
 import { memo, useCallback } from 'react';
-import { Step } from '../../../../../../components/Step/Step.tsx';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { selectSelectedQuote } from '../../../../../data/selectors/on-ramp.ts';
+import { Step } from '../../../../../../components/Step/Step.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
+import { selectSelectedQuote } from '../../../../../data/selectors/on-ramp.ts';
 import { PROVIDERS } from '../../providers.tsx';
 import { ProviderFrame } from './ProviderFrame.tsx';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
 
 export const InjectProviderStep = memo(function InjectProviderStep() {
   const quote = useAppSelector(selectSelectedQuote);

@@ -1,10 +1,10 @@
-import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
+import { styled } from '@repo/styles/jsx';
 import { memo, useCallback } from 'react';
-import { useAppSelector } from '../../../../store.ts';
+import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import { selectAllChainIds } from '../../../../features/data/selectors/chains.ts';
+import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { SearchableList } from '../../../SearchableList/SearchableList.tsx';
 import { ChainRpcItem, ChainRpcReset } from './RpcListItem.tsx';
-import { styled } from '@repo/styles/jsx';
 
 export interface RpcMenuProps {
   onSelect: (chainId: ChainEntity['id']) => void;

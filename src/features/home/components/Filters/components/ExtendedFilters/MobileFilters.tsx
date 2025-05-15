@@ -5,13 +5,13 @@ import { Button } from '../../../../../../components/Button/Button.tsx';
 import ClearIcon from '../../../../../../images/icons/clear.svg?react';
 import { Drawer } from '../../../../../../components/Modal/Drawer.tsx';
 import { styled } from '@repo/styles/jsx';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import {
   selectFilterContent,
   selectFilteredVaultCount,
 } from '../../../../../data/selectors/filtered-vaults.ts';
 import { FilterContent } from '../../../../../data/reducers/filtered-vaults-types.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 export type MobileFiltersProps = {
   open: boolean;
   onClose: () => void;

@@ -1,15 +1,15 @@
+import { css } from '@repo/styles/css';
 import { memo } from 'react';
-import { useAppSelector } from '../../../../store.ts';
-import { selectBoostCampaignById, selectBoostPartnerById } from '../../../data/selectors/boosts.ts';
+import { useTranslation } from 'react-i18next';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import type { PromoSocials } from '../../../data/apis/promos/types.ts';
 import type { TokenEntity } from '../../../data/entities/token.ts';
-import { useTranslation } from 'react-i18next';
-import { Socials } from './Socials.tsx';
+import { selectBoostCampaignById, selectBoostPartnerById } from '../../../data/selectors/boosts.ts';
 import { CardContent } from '../Card/CardContent.tsx';
 import { RewardTokenDetails } from '../RewardTokenDetails/RewardTokenDetails.tsx';
 import { Partner } from './Partner.tsx';
-import { css } from '@repo/styles/css';
+import { Socials } from './Socials.tsx';
 
 const useStyles = legacyMakeStyles({
   header: css.raw({

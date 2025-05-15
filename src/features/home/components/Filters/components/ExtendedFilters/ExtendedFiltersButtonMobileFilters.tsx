@@ -6,7 +6,7 @@ import {
   selectFilterPopinFilterCount,
   selectHasActiveFilter,
 } from '../../../../../data/selectors/filtered-vaults.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { styled } from '@repo/styles/jsx';
 import ClearIcon from '../../../../../../images/icons/clear.svg?react';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';

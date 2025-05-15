@@ -1,4 +1,9 @@
 import { type AsyncThunk, createSlice } from '@reduxjs/toolkit';
+import BigNumber from 'bignumber.js';
+import { fromUnixTime } from 'date-fns';
+import type { Draft } from 'immer';
+import { orderBy, uniqBy } from 'lodash-es';
+import type { GraphBucket } from '../../../helpers/graph/types.ts';
 import {
   fetchClmHarvestsForVaultsOfUserOnChain,
   fetchClmPendingRewards,
@@ -9,20 +14,15 @@ import {
   recalculateClmPoolHarvestsForUserVaultId,
   recalculateClmVaultHarvestsForUserVaultId,
 } from '../actions/analytics.ts';
-import type { VaultEntity } from '../entities/vault.ts';
-import type { Draft } from 'immer';
-import BigNumber from 'bignumber.js';
-import type { ApiClassicHarvestRow, ApiClmHarvestRow } from '../apis/clm/clm-api-types.ts';
-import { fromUnixTime } from 'date-fns';
-import { orderBy, uniqBy } from 'lodash-es';
-import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types.ts';
 import {
   getDataApiBucket,
   getDataApiBucketIntervalKey,
 } from '../apis/beefy/beefy-data-api-helpers.ts';
+import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types.ts';
+import type { ApiClassicHarvestRow, ApiClmHarvestRow } from '../apis/clm/clm-api-types.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import type { BeefyMetaThunkConfig } from '../store/types.ts';
 import type { AnalyticsState, ClassicHarvest, ClmHarvest } from './analytics-types.ts';
-import type { GraphBucket } from '../../../helpers/graph/types.ts';
-import type { BeefyMetaThunkConfig } from '../../../redux-types.ts';
 
 const initialState: AnalyticsState = {
   classicHarvests: {

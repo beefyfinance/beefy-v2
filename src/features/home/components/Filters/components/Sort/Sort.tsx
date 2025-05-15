@@ -3,17 +3,15 @@ import { Button } from '../../../../../../components/Button/Button.tsx';
 import { useTranslation } from 'react-i18next';
 import { Drawer } from '../../../../../../components/Modal/Drawer.tsx';
 import { styled } from '@repo/styles/jsx';
-import {
-  filteredVaultsActions,
-  type FilteredVaultsState,
-} from '../../../../../data/reducers/filtered-vaults.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
   selectFilterAvgApySort,
   selectFilterSearchSortField,
 } from '../../../../../data/selectors/filtered-vaults.ts';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
 import { ToggleButtons } from '../../../../../../components/ToggleButtons/ToggleButtons.tsx';
+import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults-types.ts';
 
 type SortKey = FilteredVaultsState['sort'] | 'avgApy';
 

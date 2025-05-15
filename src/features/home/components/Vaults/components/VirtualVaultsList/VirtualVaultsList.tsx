@@ -1,18 +1,18 @@
+import { css } from '@repo/styles/css';
+import { token } from '@repo/styles/tokens';
 import { forwardRef, memo, type Ref, useMemo } from 'react';
-import { Vault } from '../../../Vault/Vault.tsx';
-import type { VaultEntity } from '../../../../../data/entities/vault.ts';
+import { NavigationType, useNavigationType } from 'react-router';
 import {
   type Components,
   type FlatIndexLocationWithAlign,
   type ListProps,
   Virtuoso,
 } from 'react-virtuoso';
-import { css } from '@repo/styles/css';
 import { useBreakpoints } from '../../../../../../components/MediaQueries/useBreakpoints.ts';
-import { useAppSelector } from '../../../../../../store.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { selectLastViewedVaultsVaultId } from '../../../../../data/selectors/vaults-list.ts';
-import { useNavigationType, NavigationType } from 'react-router';
-import { token } from '@repo/styles/tokens';
+import { Vault } from '../../../Vault/Vault.tsx';
 
 function useVaultHeightEstimate() {
   const breakpoints = useBreakpoints();

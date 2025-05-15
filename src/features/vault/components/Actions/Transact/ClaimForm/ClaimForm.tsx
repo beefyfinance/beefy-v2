@@ -1,20 +1,20 @@
 import { memo, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { useAppSelector } from '../../../../../../store.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { isCowcentratedLikeVault, isGovVault } from '../../../../../data/entities/vault.ts';
-import { selectTransactVaultId } from '../../../../../data/selectors/transact.ts';
-import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import { selectWalletAddress } from '../../../../../data/selectors/wallet.ts';
 import { selectHasUserDepositInVault } from '../../../../../data/selectors/balance.ts';
-import { MerklRewards } from './Merkl/MerklRewards.tsx';
-import { GovRewards } from './Gov/GovRewards.tsx';
 import {
   selectVaultHasActiveMerklCampaigns,
   selectVaultHasActiveStellaSwapCampaigns,
 } from '../../../../../data/selectors/rewards.ts';
-import { useTranslation } from 'react-i18next';
+import { selectTransactVaultId } from '../../../../../data/selectors/transact.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { selectWalletAddress } from '../../../../../data/selectors/wallet.ts';
+import { GovRewards } from './Gov/GovRewards.tsx';
+import { MerklRewards } from './Merkl/MerklRewards.tsx';
 import { StellaSwapRewards } from './StellaSwap/StellaSwapRewards.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -54,14 +54,14 @@ const ClaimFormLoader = memo(function ClaimFormLoader() {
   return (
     <div className={classes.container}>
       <div className={classes.description}>{t(descriptionKey)}</div>
-      {isGovVault(vault) ? (
+      {isGovVault(vault) ?
         <GovRewards
           vaultId={vault.id}
           chainId={vault.chainId}
           walletAddress={walletAddress}
           deposited={deposited}
         />
-      ) : null}
+      : null}
       <MerklRewards
         vaultId={vault.id}
         chainId={vault.chainId}

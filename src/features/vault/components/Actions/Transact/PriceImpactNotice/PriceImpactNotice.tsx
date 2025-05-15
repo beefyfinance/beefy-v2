@@ -80,13 +80,13 @@ export const PriceImpactNotice = memo(function PriceImpactNotice({
           priceImpact: formatLargePercent(-priceImpact, 2, '0.00%'),
         })}
       </p>
-      {shouldConfirm && !hideCheckbox ? (
+      {shouldConfirm && !hideCheckbox ?
         <LabelledCheckbox
           onChange={setConfirmed}
           checked={confirmed}
           label={t('Transact-Notice-PriceImpact-Confirm')}
         />
-      ) : null}
+      : null}
     </AlertComponent>
   );
 });

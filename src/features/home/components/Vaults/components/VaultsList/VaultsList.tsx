@@ -1,9 +1,9 @@
+import { css } from '@repo/styles/css';
 import { memo, useDeferredValue } from 'react';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { selectFilteredVaults } from '../../../../../data/selectors/filtered-vaults.ts';
 import { NoResults } from '../NoResults/NoResults.tsx';
 import { VirtualVaultsList } from '../VirtualVaultsList/VirtualVaultsList.tsx';
-import { useAppSelector } from '../../../../../../store.ts';
-import { css } from '@repo/styles/css';
 
 export const VaultsList = memo(function VaultsList() {
   const vaultIds = useAppSelector(selectFilteredVaults);
@@ -11,11 +11,9 @@ export const VaultsList = memo(function VaultsList() {
 
   return (
     <div className={listClass}>
-      {deferredVaultIds.length === 0 ? (
+      {deferredVaultIds.length === 0 ?
         <NoResults />
-      ) : (
-        <VirtualVaultsList vaultIds={deferredVaultIds} />
-      )}
+      : <VirtualVaultsList vaultIds={deferredVaultIds} />}
     </div>
   );
 });

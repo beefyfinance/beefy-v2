@@ -1,4 +1,4 @@
-import type { MigrationConfig } from '../../reducers/wallet/migration.ts';
+import type { MigrationConfig } from '../../reducers/wallet/migration-types.ts';
 import type { IMigrationApi, Migrator } from './migration-types.ts';
 
 const migrators: MigrationConfig['id'][] = [

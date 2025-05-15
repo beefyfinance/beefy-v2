@@ -16,11 +16,9 @@ export const LinkIcon: FC<LinkIconProps> = ({ href, logo, alt }) => {
 
   return (
     <a className={classes.link} href={href} target="_blank">
-      {typeof logo === 'string' ? (
+      {typeof logo === 'string' ?
         <img alt={alt} src={logo} />
-      ) : (
-        <IconComponent className={classes.svgIcon} />
-      )}
+      : <IconComponent className={classes.svgIcon} />}
     </a>
   );
 };

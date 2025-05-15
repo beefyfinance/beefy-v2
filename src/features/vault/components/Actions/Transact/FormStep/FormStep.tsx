@@ -1,6 +1,9 @@
 import { type ComponentType, lazy, memo, Suspense, useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { transactFetchOptions, transactSwitchMode } from '../../../../../data/actions/transact.ts';
+import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectTransactMode,
   selectTransactShouldShowBoost,
@@ -10,12 +13,12 @@ import {
   selectTransactShouldShowWithdrawNotification,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
-import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
-import { CardHeaderTabs, type TabOption } from '../../../Card/CardHeaderTabs.tsx';
-import { transactFetchOptions } from '../../../../../data/actions/transact.ts';
-import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
-import type { BeefyState } from '../../../../../../redux-types.ts';
+import type { BeefyState } from '../../../../../data/store/types.ts';
+import { CardHeaderTabs } from '../../../Card/CardHeaderTabs.tsx';
+import {
+  HighlightableTab,
+  type HighlightableTabOption,
+} from '../../../Card/CardHighlightableTab.tsx';
 import { FormStepFooter } from '../FormStepFooter/FormStepFooter.tsx';
 
 const DepositFormLoader = lazy(() => import('../DepositForm/DepositForm.tsx'));
@@ -40,7 +43,7 @@ export const FormStep = memo(function FormStep() {
   const Component = modeToComponent[mode];
   const handleModeChange = useCallback(
     (newMode: string) => {
-      dispatch(transactActions.switchMode(parseInt(newMode)));
+      dispatch(transactSwitchMode(parseInt(newMode)));
     },
     [dispatch]
   );
@@ -53,8 +56,10 @@ export const FormStep = memo(function FormStep() {
             {
               value: TransactMode.Claim.toString(),
               label: t('Transact-Claim'),
-              shouldHighlight: (state: BeefyState) =>
-                selectTransactShouldShowClaimsNotification(state, vaultId),
+              context: {
+                shouldHighlight: (state: BeefyState) =>
+                  selectTransactShouldShowClaimsNotification(state, vaultId),
+              },
             },
           ]
         : []),
@@ -63,18 +68,22 @@ export const FormStep = memo(function FormStep() {
             {
               value: TransactMode.Boost.toString(),
               label: t('Transact-Boost'),
-              shouldHighlight: (state: BeefyState) =>
-                selectTransactShouldShowBoostNotification(state, vaultId),
+              context: {
+                shouldHighlight: (state: BeefyState) =>
+                  selectTransactShouldShowBoostNotification(state, vaultId),
+              },
             },
           ]
         : []),
         {
           value: TransactMode.Withdraw.toString(),
           label: t('Transact-Withdraw'),
-          shouldHighlight: (state: BeefyState) =>
-            selectTransactShouldShowWithdrawNotification(state, vaultId),
+          context: {
+            shouldHighlight: (state: BeefyState) =>
+              selectTransactShouldShowWithdrawNotification(state, vaultId),
+          },
         },
-      ] satisfies Array<TabOption>,
+      ] satisfies Array<HighlightableTabOption>,
     [t, vaultId, showClaim, showBoost]
   );
 
@@ -89,6 +98,7 @@ export const FormStep = memo(function FormStep() {
         selected={mode.toString()}
         options={modeOptions}
         onChange={handleModeChange}
+        TabComponent={HighlightableTab}
       />
       <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} height={344} />}>
         <Component />

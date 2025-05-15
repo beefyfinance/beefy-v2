@@ -6,7 +6,7 @@ import { DropdownContent } from '../../../../../../components/Dropdown/DropdownC
 import FilterSvg from '../../../../../../images/icons/filter.svg?react';
 import { styled } from '@repo/styles/jsx';
 import { selectAnyDesktopExtenderFilterIsActive } from '../../../../../data/selectors/filtered-vaults.ts';
-import { useAppSelector } from '../../../../../../store.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 
 export const ExtendedFiltersButtonDropdown = memo(function ExtendedFiltersButtonDropdown() {
   const hasAnyDesktopExtenderFilterActive = useAppSelector(selectAnyDesktopExtenderFilterIsActive);

@@ -8,7 +8,7 @@ import {
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import { BIG_ZERO } from '../../helpers/big-number.ts';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format.ts';
-import { useAppSelector } from '../../store.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
 import {
   PendingRewardsIconWithTooltip,
   RewardsTooltipContent,

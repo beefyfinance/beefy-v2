@@ -307,3 +307,13 @@ export function featureFlag_simulateLiveBoost(boostId: string): boolean {
   const boostIds = getSimulateLiveBoosts();
   return boostIds.has(boostId);
 }
+
+export function featureFlag_mockProgressBar(): boolean {
+  const params = getSearchParams();
+  return params.has('__mock_progress_bar');
+}
+
+export function featureFlag_mockSeason(): boolean {
+  const params = getSearchParams();
+  return params.has('__mock_season');
+}

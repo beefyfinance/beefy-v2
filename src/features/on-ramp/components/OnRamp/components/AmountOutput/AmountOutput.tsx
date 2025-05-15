@@ -1,11 +1,11 @@
 import { memo, useMemo } from 'react';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
 import ContentLoader from 'react-content-loader';
-import { useAppSelector } from '../../../../../../store.ts';
-import { selectQuoteStatus } from '../../../../../data/selectors/on-ramp.ts';
-import { BaseInput } from '../../../../../../components/Form/Input/BaseInput.tsx';
 import type { BaseInputProps } from '../../../../../../components/Form/Input/BaseInput.tsx';
+import { BaseInput } from '../../../../../../components/Form/Input/BaseInput.tsx';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import { selectQuoteStatus } from '../../../../../data/selectors/on-ramp.ts';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

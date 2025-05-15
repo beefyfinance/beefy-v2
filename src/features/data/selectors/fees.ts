@@ -1,13 +1,13 @@
 import { createCachedSelector } from 're-reselect';
-import type { BeefyState } from '../../../redux-types.ts';
 import type { VaultEntity } from '../entities/vault.ts';
-import type { VaultFee } from '../reducers/fees.ts';
-import { selectIsVaultGov, selectVaultDepositFee } from './vaults.ts';
+import type { VaultFee } from '../reducers/fees-types.ts';
+import type { BeefyState } from '../store/types.ts';
 import {
   createGlobalDataSelector,
   hasLoaderFulfilledOnce,
   shouldLoaderLoadOnce,
 } from './data-loader-helpers.ts';
+import { selectIsVaultGov, selectVaultDepositFee } from './vaults.ts';
 
 const GOV_FEES: Readonly<VaultFee> = {
   id: 'gov-fees',

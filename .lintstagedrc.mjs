@@ -20,6 +20,17 @@ const makeLongCmd = (cmd, args, argsIfLong) => {
   return `${cmd} ${joinArgs(argsIfLong)}`;
 };
 
+const ran = new Set();
+const onlyOnce = (cmds) => cmds.filter((cmd) => {
+  if (ran.has(cmd)) {
+    console.log(`>>> Skipping ${cmd}`)
+    return false;
+  }
+  ran.add(cmd);
+  return true;
+});
+
+
 export default {
   // tsc
   './(src|scripts|tools)/**/*.{ts,tsx,js}': ifStaged(stagedFiles => {
@@ -32,34 +43,32 @@ export default {
       return [];
     }
 
+    const cmds = [
+      makeLongCmd('prettier', ['--write', ...stagedFiles], ['--write', 'src/**/*.{ts,tsx,js}'])
+    ];
+
+    // tsc
     if (changed.src && (changed.scripts || changed.tools)) {
-      return [makeCmd('tsc', ['--project', 'tsconfig.json'])];
+      cmds.push(makeCmd('tsc', ['--project', 'tsconfig.json']));
     } else {
       if (changed.src) {
-        return [makeCmd('tsc', ['--project', 'tsconfig.app.json'])];
+        cmds.push(makeCmd('tsc', ['--project', 'tsconfig.app.json']));
       }
       if (changed.scripts || changed.tools) {
-        return [makeCmd('tsc', ['--project', 'tsconfig.scripts.json'])];
+        cmds.push(makeCmd('tsc', ['--project', 'tsconfig.scripts.json']));
       }
     }
 
-    return [];
-  }),
-  // eslint
-  './(src|scripts|tools)/**/*.{tsx,ts,js}': ifStaged(stagedFiles => {
-    const dirs = ['src', 'scripts', 'tools'];
-    const changed = dirs.reduce((acc, dir) => {
-      acc[dir] = stagedFiles.some(file => file.startsWith(`${dir}/`));
-      return acc;
-    }, {});
-    const dirsToCheck = dirs.filter(dir => !!changed[dir]);
-    if (dirsToCheck.length === 0) {
-      return [];
+    // eslint
+    const dirsToLint = dirs.filter(dir => !!changed[dir]);
+    if (dirsToLint.length > 0) {
+      cmds.push(makeCmd('eslint', ['-c', 'eslint.config.mjs', '--no-config-lookup', ...dirsToLint]));
     }
-    return [makeCmd('eslint', ['-c', 'eslint.config.mjs', '--no-config-lookup', ...dirsToCheck])];
+
+    return onlyOnce(cmds);
   }),
   // prettier
-  './(src|scripts|tools)/**/*.{ts,tsx,js,json}': ifStaged(stagedFiles => {
-    return [makeLongCmd('prettier', ['--write', ...stagedFiles], ['--write', 'src/**/*.{ts,tsx,json}'])];
+  './(src|scripts|tools)/**/*.json': ifStaged(stagedFiles => {
+    return [makeLongCmd('prettier', ['--write', ...stagedFiles], ['--write', 'src/**/*.json'])];
   }),
 };

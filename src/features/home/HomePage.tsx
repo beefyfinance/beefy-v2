@@ -1,14 +1,14 @@
-import { memo } from 'react';
-import { Filters } from './components/Filters/Filters.tsx';
-import { Portfolio } from './components/Portfolio/Portfolio.tsx';
-import { Loading } from './components/Loading/Loading.tsx';
-import { selectIsVaultListAvailable } from '../data/selectors/data-loader.ts';
-import { Vaults } from './components/Vaults/Vaults.tsx';
-import { useAppSelector } from '../../store.ts';
-import { Banners } from './components/Banners/Banners.tsx';
-import { HomeMeta } from '../../components/Meta/HomeMeta.tsx';
-import { Container } from '../../components/Container/Container.tsx';
 import { styled } from '@repo/styles/jsx';
+import { memo } from 'react';
+import { Container } from '../../components/Container/Container.tsx';
+import { HomeMeta } from '../../components/Meta/HomeMeta.tsx';
+import { useAppSelector } from '../data/store/hooks.ts';
+import { selectIsVaultListAvailable } from '../data/selectors/vaults-list.ts';
+import { Banners } from './components/Banners/Banners.tsx';
+import { Filters } from './components/Filters/Filters.tsx';
+import { Loading } from './components/Loading/Loading.tsx';
+import { Portfolio } from './components/Portfolio/Portfolio.tsx';
+import { Vaults } from './components/Vaults/Vaults.tsx';
 
 const HomePage = memo(function HomePage() {
   const isVaultListAvailable = useAppSelector(selectIsVaultListAvailable);

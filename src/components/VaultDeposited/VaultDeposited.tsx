@@ -2,22 +2,21 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
+  selectIsBalanceAvailableForChainUser,
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken,
   selectUserVaultBalanceInUsdIncludingDisplaced,
 } from '../../features/data/selectors/balance.ts';
-import {
-  selectIsBalanceAvailableForChainUser,
-  selectIsPricesAvailable,
-} from '../../features/data/selectors/data-loader.ts';
+
+import { selectIsPricesAvailable } from '../../features/data/selectors/prices.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import {
   selectIsBalanceHidden,
   selectWalletAddress,
 } from '../../features/data/selectors/wallet.ts';
+import type { BeefyState } from '../../features/data/store/types.ts';
 import { formatLargeUsd } from '../../helpers/format.ts';
-import type { BeefyState } from '../../redux-types.ts';
-import { useAppSelector } from '../../store.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { TokenAmountFromEntity } from '../TokenAmount/TokenAmount.tsx';
 import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
 import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip.tsx';

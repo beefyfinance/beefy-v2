@@ -1,13 +1,18 @@
+import BigNumber from 'bignumber.js';
+import { first } from 'lodash-es';
+import type { Namespace, TFunction } from 'react-i18next';
+import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
+import { exitGovVault, stakeGovVault, unstakeGovVault } from '../../../actions/wallet/gov.ts';
+import type { TokenEntity } from '../../../entities/token.ts';
+import { isTokenEqual, isTokenErc20 } from '../../../entities/token.ts';
 import { isGovVault, isGovVaultCowcentrated, type VaultGov } from '../../../entities/vault.ts';
-import type { BeefyState, BeefyStateFn } from '../../../../../redux-types.ts';
+import type { Step } from '../../../reducers/wallet/stepper-types.ts';
+import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
+import { selectGovVaultPendingRewards } from '../../../selectors/balance.ts';
+import { selectFeesByVaultId } from '../../../selectors/fees.ts';
 import { selectTokenByAddress } from '../../../selectors/tokens.ts';
-import type {
-  IGovVaultType,
-  VaultDepositRequest,
-  VaultDepositResponse,
-  VaultWithdrawRequest,
-  VaultWithdrawResponse,
-} from './IVaultType.ts';
+import { selectWalletAddress } from '../../../selectors/wallet.ts';
+import type { BeefyState, BeefyStateFn } from '../../../store/types.ts';
 import {
   createOptionId,
   createQuoteId,
@@ -15,7 +20,6 @@ import {
   onlyInputCount,
   onlyOneInput,
 } from '../helpers/options.ts';
-import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
 import {
   type AllowanceTokenAmount,
   type GovVaultDepositOption,
@@ -27,17 +31,13 @@ import {
   type TokenAmount,
   type TransactQuote,
 } from '../transact-types.ts';
-import type { TokenEntity } from '../../../entities/token.ts';
-import { isTokenEqual, isTokenErc20 } from '../../../entities/token.ts';
-import { first } from 'lodash-es';
-import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
-import { selectFeesByVaultId } from '../../../selectors/fees.ts';
-import BigNumber from 'bignumber.js';
-import type { Namespace, TFunction } from 'react-i18next';
-import type { Step } from '../../../reducers/wallet/stepper.ts';
-import { selectGovVaultPendingRewards } from '../../../selectors/balance.ts';
-import { selectWalletAddress } from '../../../selectors/wallet.ts';
-import { exitGovVault, stakeGovVault, unstakeGovVault } from '../../../actions/wallet/gov.ts';
+import type {
+  IGovVaultType,
+  VaultDepositRequest,
+  VaultDepositResponse,
+  VaultWithdrawRequest,
+  VaultWithdrawResponse,
+} from './IVaultType.ts';
 
 export class GovVaultType implements IGovVaultType {
   public readonly id = 'gov';

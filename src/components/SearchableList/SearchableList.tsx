@@ -48,7 +48,7 @@ export const SearchableList = memo(function SearchableList<TValue extends string
       </div>
       <Scrollable hideShadows={hideShadows}>
         <div className={listClass}>
-          {filteredOptions.length ? (
+          {filteredOptions.length ?
             filteredOptions.map(value => (
               <Item
                 key={value}
@@ -58,9 +58,7 @@ export const SearchableList = memo(function SearchableList<TValue extends string
                 EndAdornmentComponent={EndComponent}
               />
             ))
-          ) : (
-            <div className={noMatchesClass}>{t('NoMatches')}</div>
-          )}
+          : <div className={noMatchesClass}>{t('NoMatches')}</div>}
         </div>
       </Scrollable>
     </div>

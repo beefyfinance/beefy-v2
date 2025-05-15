@@ -1,18 +1,18 @@
+import { css } from '@repo/styles/css';
 import { memo } from 'react';
-import { useAppSelector } from '../../../../../../store.ts';
-import { selectTransactSelectedQuoteOrUndefined } from '../../../../../data/selectors/transact.ts';
+import { useTranslation } from 'react-i18next';
+import { formatPercent } from '../../../../../../helpers/format.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { ZapQuote } from '../../../../../data/apis/transact/transact-types.ts';
 import {
   isZapFeeDiscounted,
   isZapQuote,
 } from '../../../../../data/apis/transact/transact-types.ts';
-import { Value } from './Value.tsx';
+import { selectTransactSelectedQuoteOrUndefined } from '../../../../../data/selectors/transact.ts';
 import { Label } from './Label.tsx';
-import { useTranslation } from 'react-i18next';
 import { LabelTooltip } from './LabelTooltip.tsx';
-import { formatPercent } from '../../../../../../helpers/format.ts';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { css } from '@repo/styles/css';
+import { Value } from './Value.tsx';
 
 const useStyles = legacyMakeStyles({
   original: css.raw({
@@ -54,14 +54,12 @@ const ZapFees = memo(function ZapFees({ quote }: ZapFeesProps) {
         {t('Transact-Fee-Zap')} <LabelTooltip title={t('Transact-Fee-Zap-Explainer')} />
       </Label>
       <Value>
-        {hasDiscountFee ? (
+        {hasDiscountFee ?
           <>
             <span className={classes.discounted}>{formatPercent(fee.value, 2)}</span>
             <span className={classes.original}>{formatPercent(fee.original, 2)}</span>
           </>
-        ) : (
-          formatPercent(fee.value)
-        )}
+        : formatPercent(fee.value)}
       </Value>
     </>
   );

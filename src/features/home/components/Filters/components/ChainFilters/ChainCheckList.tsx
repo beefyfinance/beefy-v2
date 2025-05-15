@@ -1,13 +1,14 @@
 import { memo, useCallback, useMemo, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { selectActiveChains } from '../../../../../data/selectors/chains.ts';
 import { selectFilterChainIds } from '../../../../../data/selectors/filtered-vaults.ts';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { SelectMultipleContent } from '../../../../../../components/Form/Select/Multi/SelectMultipleContent.tsx';
-import { getNetworkIcon } from './hooks.tsx';
+import { getNetworkIcon } from './hooks.ts';
 import { cva } from '@repo/styles/css';
 import { useTranslation } from 'react-i18next';
+
 const iconRecipe = cva({
   base: {
     width: '24px',

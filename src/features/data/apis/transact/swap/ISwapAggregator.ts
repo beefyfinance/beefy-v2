@@ -1,10 +1,9 @@
 import type { ChainEntity } from '../../../entities/chain.ts';
-import type { BeefyState } from '../../../../../redux-types.ts';
 import type { TokenEntity } from '../../../entities/token.ts';
-import type { QuoteRequest, QuoteResponse, SwapRequest, SwapResponse } from './ISwapProvider.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
-
+import type { BeefyState } from '../../../store/types.ts';
 import type { StrategySwapConfig } from '../strategies/strategy-configs.ts';
+import type { QuoteRequest, QuoteResponse, SwapRequest, SwapResponse } from './ISwapProvider.ts';
 
 export type TokenSupport = {
   /** Tokens supported per input token */

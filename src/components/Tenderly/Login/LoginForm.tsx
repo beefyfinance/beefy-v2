@@ -1,24 +1,24 @@
 import { type ChangeEventHandler, memo, type ReactNode, useCallback, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../store.ts';
-import {
-  selectTenderlyCredentialsOrUndefined,
-  selectTenderlyStatus,
-} from '../../../features/data/selectors/tenderly.ts';
 import {
   type TenderlyCredentials,
   tenderlyLogin,
 } from '../../../features/data/actions/tenderly.ts';
+import {
+  selectTenderlyCredentialsOrUndefined,
+  selectTenderlyStatus,
+} from '../../../features/data/selectors/tenderly.ts';
 import { legacyMakeStyles } from '../../../helpers/mui.ts';
-import { Button } from '../../Button/Button.tsx';
-import { VerticalLayout } from '../Layout/VerticalLayout.tsx';
-import { ErrorMessage } from '../Error/ErrorMessage.tsx';
-import { styles } from './styles.ts';
-import { ExternalLink } from '../Links/ExternalLink.tsx';
-import { HorizontalLayout } from '../Layout/HorizontalLayout.tsx';
+import { useAppDispatch, useAppSelector } from '../../../features/data/store/hooks.ts';
 import InfoOutlined from '../../../images/icons/mui/InfoOutlined.svg?react';
 import { AlertInfo } from '../../Alerts/Alerts.tsx';
-import logoUrl from '../logo.svg';
+import { Button } from '../../Button/Button.tsx';
 import { BaseInput } from '../../Form/Input/BaseInput.tsx';
+import { ErrorMessage } from '../Error/ErrorMessage.tsx';
+import { HorizontalLayout } from '../Layout/HorizontalLayout.tsx';
+import { VerticalLayout } from '../Layout/VerticalLayout.tsx';
+import { ExternalLink } from '../Links/ExternalLink.tsx';
+import logoUrl from '../logo.svg';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -67,11 +67,13 @@ const CredentialInput = memo(function CredentialInput({
           onChange={handleChange}
           placeholder={placeholder}
         />
-        {hasHelp ? (
+        {hasHelp ?
           <HorizontalLayout css={styles.help} gap={8}>
             <InfoOutlined className={classes.helpIcon} />
-            {help ? <div className={classes.helpText}>{help}</div> : null}
-            {helpLink ? (
+            {help ?
+              <div className={classes.helpText}>{help}</div>
+            : null}
+            {helpLink ?
               <div>
                 <ExternalLink
                   css={styles.helpLinkAnchor}
@@ -90,9 +92,9 @@ const CredentialInput = memo(function CredentialInput({
                   {typeof helpLink === 'string' ? 'Help' : helpLink.text}
                 </ExternalLink>
               </div>
-            ) : null}
+            : null}
           </HorizontalLayout>
-        ) : null}
+        : null}
       </div>
     </VerticalLayout>
   );
@@ -132,7 +134,9 @@ export const LoginForm = memo(function LoginForm() {
       <AlertInfo>
         {`Enter your Tenderly Credentials to continue. These are saved in your browser local storage for ${window.location.host}.`}
       </AlertInfo>
-      {status === 'rejected' ? <ErrorMessage /> : null}
+      {status === 'rejected' ?
+        <ErrorMessage />
+      : null}
       <CredentialInput
         setCredentials={setCredentials}
         credentials={credentials}

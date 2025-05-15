@@ -1,8 +1,9 @@
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { memo, useCallback } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { selectFilterBigNumber } from '../../../../../data/selectors/filtered-vaults.ts';
-import { selectMaximumUnderlyingVaultTvl } from '../../../../../data/selectors/vaults.ts';
+import {
+  selectFilterBigNumber,
+  selectMaximumUnderlyingVaultTvl,
+} from '../../../../../data/selectors/filtered-vaults.ts';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import BigNumber from 'bignumber.js';
 import { formatLargeUsd } from '../../../../../../helpers/format.ts';
@@ -10,6 +11,7 @@ import { SliderInput } from '../../../../../../components/Form/Input/SliderInput
 import { styled } from '@repo/styles/jsx';
 import { useTranslation } from 'react-i18next';
 import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 
 //5 MILLION
 const MAX_INPUT = new BigNumber(50000000);

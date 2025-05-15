@@ -1,7 +1,8 @@
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { Fragment, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../../store.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { keys } from '../../../../../../helpers/object.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import {
   selectTreasuryAssetsByChainId,
@@ -10,7 +11,6 @@ import {
 import { AssetInfo, AssetInfoMM } from '../AssetInfo/AssetInfo.tsx';
 import { useSortedAssets, useSortedMMHoldings } from './hooks.ts';
 import { styles } from './styles.ts';
-import { keys } from '../../../../../../helpers/object.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

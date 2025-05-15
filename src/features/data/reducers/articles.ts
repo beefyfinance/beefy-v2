@@ -1,15 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchLastArticle } from '../actions/articles.ts';
-
-import type { BeefyArticleConfig } from '../apis/beefy/beefy-api-types.ts';
-
-type ArticleEntity = BeefyArticleConfig;
-
-export type ArticlesState = {
-  lastArticle: ArticleEntity | null;
-  lastReadArticleId: ArticleEntity['id'] | null;
-};
+import type { ArticleEntity, ArticlesState } from './articles-types.ts';
 
 const initialArticlesState: ArticlesState = {
   lastArticle: null,

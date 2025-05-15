@@ -55,9 +55,18 @@ async function run({ cmd, args, env }: RunArgs) {
       const child = args ? spawn(cmd, args, options) : spawn(cmd, options);
       const unforward = forwardKillSignals(child);
       child.on('error', console.error);
+      child.on('disconnect', () => {
+        resolve(1);
+      });
       child.on('exit', (code, signal) => {
         unforward();
-        resolve(code === null ? (signal === 'SIGINT' ? 0 : 1) : code);
+        resolve(
+          code === null ?
+            signal === 'SIGINT' ?
+              0
+            : 1
+          : code
+        );
       });
     } catch (error) {
       console.error(error);

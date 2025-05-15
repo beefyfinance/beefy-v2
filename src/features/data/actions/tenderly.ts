@@ -1,23 +1,23 @@
-import { type AnyAction, createAsyncThunk, type ThunkDispatch } from '@reduxjs/toolkit';
-import type { Step } from '../reducers/wallet/stepper.ts';
-import type { BeefyState } from '../../../redux-types.ts';
-import { getWalletConnectionApi } from '../apis/instances.ts';
-import { ZERO_ADDRESS } from '../../../helpers/addresses.ts';
-import { sleep, withTimeoutSignal } from '../utils/async-utils.ts';
-import type { ChainId } from '../entities/chain.ts';
-import type { TransactOption, TransactQuote } from '../apis/transact/transact-types.ts';
+import type { EIP1193Provider } from '@web3-onboard/core';
 import type { TFunction } from 'react-i18next';
-import { getTransactSteps } from './transact.ts';
+import { ZERO_ADDRESS } from '../../../helpers/addresses.ts';
+import { getWalletConnectionApi } from '../apis/instances.ts';
 import { TenderlyApi } from '../apis/tenderly/tenderly-api.ts';
+import type { TenderlySimulateRequest, TenderlySimulateResponse } from '../apis/tenderly/types.ts';
+import type { TransactOption, TransactQuote } from '../apis/transact/transact-types.ts';
+import type { ChainId } from '../entities/chain.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import type { Step } from '../reducers/wallet/stepper-types.ts';
+import { selectChainById } from '../selectors/chains.ts';
 import {
   selectTenderlyCredentialsOrUndefined,
   selectTenderlyRequestOrUndefined,
 } from '../selectors/tenderly.ts';
-import type { TenderlySimulateRequest, TenderlySimulateResponse } from '../apis/tenderly/types.ts';
-import { selectChainById } from '../selectors/chains.ts';
-import type { VaultEntity } from '../entities/vault.ts';
-import type { EIP1193Provider } from '@web3-onboard/core';
+import type { BeefyDispatchFn } from '../store/types.ts';
+import { sleep, withTimeoutSignal } from '../utils/async-utils.ts';
+import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { claimMerkl, claimStellaSwap } from './wallet/offchain.ts';
+import { getTransactSteps } from './wallet/transact.ts';
 
 export type TenderlyTxCallRequest = {
   data: string;
@@ -58,10 +58,7 @@ type MockReceipt = {
   type: number;
 };
 
-export async function captureTransactionsFromSteps(
-  steps: Step[],
-  dispatch: ThunkDispatch<BeefyState, unknown, AnyAction>
-) {
+export async function captureTransactionsFromSteps(steps: Step[], dispatch: BeefyDispatchFn) {
   const api = await getWalletConnectionApi();
   const mockReceipts = new Map<string, MockReceipt>();
   const inProgress = new Set<string>();
@@ -167,12 +164,9 @@ type TenderlySaveConfigPayload = {
   credentials: TenderlyCredentials;
 };
 
-export const tenderlyLogin = createAsyncThunk<
+export const tenderlyLogin = createAppAsyncThunk<
   TenderlySaveConfigPayload,
-  TenderlySaveConfigParams,
-  {
-    state: BeefyState;
-  }
+  TenderlySaveConfigParams
 >('tenderly/saveConfig', async ({ credentials }) => {
   const api = new TenderlyApi(credentials);
 
@@ -192,12 +186,9 @@ type TenderlySimulateTransactQuoteParams = {
   t: TFunction;
 };
 
-export const tenderlySimulateTransactQuote = createAsyncThunk<
+export const tenderlySimulateTransactQuote = createAppAsyncThunk<
   TenderlyOpenSimulationPayload,
-  TenderlySimulateTransactQuoteParams,
-  {
-    state: BeefyState;
-  }
+  TenderlySimulateTransactQuoteParams
 >('tenderly/simulateTransactQuote', async ({ option, quote, t }, { getState, dispatch }) => {
   const steps = await getTransactSteps(quote, t, getState);
   const txs = await captureTransactionsFromSteps(steps, dispatch);
@@ -210,12 +201,9 @@ type TenderlyStellaSwapClaimButtonParams = {
   t: TFunction;
 };
 
-export const tenderlySimulateStellaSwapClaim = createAsyncThunk<
+export const tenderlySimulateStellaSwapClaim = createAppAsyncThunk<
   TenderlyOpenSimulationPayload,
-  TenderlyStellaSwapClaimButtonParams,
-  {
-    state: BeefyState;
-  }
+  TenderlyStellaSwapClaimButtonParams
 >('tenderly/simulateStellaSwapClaim', async ({ chainId, vaultId, t }, { dispatch }) => {
   const steps: Step[] = [
     {
@@ -234,12 +222,9 @@ type TenderlyMerklClaimButtonParams = {
   t: TFunction;
 };
 
-export const tenderlySimulateMerklClaim = createAsyncThunk<
+export const tenderlySimulateMerklClaim = createAppAsyncThunk<
   TenderlyOpenSimulationPayload,
-  TenderlyMerklClaimButtonParams,
-  {
-    state: BeefyState;
-  }
+  TenderlyMerklClaimButtonParams
 >('tenderly/simulateMerklClaim', async ({ chainId, t }, { dispatch }) => {
   const steps: Step[] = [
     {
@@ -270,12 +255,9 @@ export type TenderlySimulatePayload = {
   responses: Array<TenderlySimulateResponse>;
 };
 
-export const tenderlySimulate = createAsyncThunk<
+export const tenderlySimulate = createAppAsyncThunk<
   TenderlySimulatePayload,
-  TenderlySimulateParams,
-  {
-    state: BeefyState;
-  }
+  TenderlySimulateParams
 >('tenderly/simulate', async ({ config }, { getState }) => {
   const state = getState();
   const creds = selectTenderlyCredentialsOrUndefined(state);

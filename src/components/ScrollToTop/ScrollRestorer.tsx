@@ -1,7 +1,7 @@
 import { memo, useEffect, useRef } from 'react';
 import { NavigationType, useLocation, useNavigationType } from 'react-router';
-import { useAppDispatch } from '../../store.ts';
 import { setDashboardLast, setVaultsLast } from '../../features/data/reducers/vaults-list.ts';
+import { useAppDispatch } from '../../features/data/store/hooks.ts';
 
 export const ScrollRestorer = memo(function ScrollRestorer() {
   const location = useLocation();

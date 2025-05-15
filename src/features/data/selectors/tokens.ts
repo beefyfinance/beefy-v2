@@ -1,13 +1,31 @@
 import { bluechipTokens, memeTokens } from '../../../helpers/utils.ts';
-import type { BeefyState } from '../../../redux-types.ts';
+import { createSelector } from '@reduxjs/toolkit';
+import BigNumber from 'bignumber.js';
+import { fromUnixTime, sub } from 'date-fns';
+import { orderBy } from 'lodash-es';
+import { createCachedSelector } from 're-reselect';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import {
+  getDataApiBucket,
+  getDataApiBucketsLongerThan,
+} from '../apis/beefy/beefy-data-api-helpers.ts';
+import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import { isTokenErc20, isTokenNative } from '../entities/token.ts';
-import { selectAllChainIds, selectChainById } from './chains.ts';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
-import { selectIsAddressBookLoaded, selectIsPricesAvailable } from './data-loader.ts';
 import { isStandardVault, type VaultEntity } from '../entities/vault.ts';
-import { createCachedSelector } from 're-reselect';
+import type { BeefyState } from '../store/types.ts';
+import { isDefined } from '../utils/array-utils.ts';
+import { valueOrThrow } from '../utils/selector-utils.ts';
+import { selectAllChainIds, selectChainById } from './chains.ts';
+import {
+  createChainDataSelector,
+  createGlobalDataSelector,
+  hasLoaderFulfilledOnce,
+  shouldLoaderLoadOnce,
+} from './data-loader-helpers.ts';
+import { selectHistoricalPriceBucketDispatchedRecently } from './historical.ts';
+import { selectIsPricesAvailable } from './prices.ts';
 import {
   selectCowcentratedLikeVaultById,
   selectGovVaultById,
@@ -15,18 +33,6 @@ import {
   selectVaultByIdWithReceiptOrUndefined,
   selectVaultPricePerFullShare,
 } from './vaults.ts';
-import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
-import { orderBy } from 'lodash-es';
-import BigNumber from 'bignumber.js';
-import { fromUnixTime, sub } from 'date-fns';
-
-import {
-  getDataApiBucket,
-  getDataApiBucketsLongerThan,
-} from '../apis/beefy/beefy-data-api-helpers.ts';
-import { createSelector } from '@reduxjs/toolkit';
-import { valueOrThrow } from '../utils/selector-utils.ts';
-import { isDefined } from '../utils/array-utils.ts';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -240,6 +246,26 @@ export const selectLpBreakdownForVaultId = (state: BeefyState, vaultId: VaultEnt
   return selectLpBreakdownForVault(state, selectVaultById(state, vaultId));
 };
 
+const selectShouldInitAddressBookGlobal = createGlobalDataSelector(
+  'addressBook',
+  shouldLoaderLoadOnce
+);
+export const selectIsAddressBookLoadedGlobal = createGlobalDataSelector(
+  'addressBook',
+  hasLoaderFulfilledOnce
+);
+const selectShouldInitAddressBookChain = createChainDataSelector(
+  'addressBook',
+  shouldLoaderLoadOnce
+);
+const selectIsAddressBookLoadedChain = createChainDataSelector(
+  'addressBook',
+  hasLoaderFulfilledOnce
+);
+export const selectShouldInitAddressBook = (state: BeefyState, chainId: ChainEntity['id']) =>
+  selectShouldInitAddressBookGlobal(state) || selectShouldInitAddressBookChain(state, chainId);
+export const selectIsAddressBookLoaded = (state: BeefyState, chainId: ChainEntity['id']) =>
+  selectIsAddressBookLoadedGlobal(state) || selectIsAddressBookLoadedChain(state, chainId);
 export const selectHasBreakdownDataByOracleId = (
   state: BeefyState,
   oracleId: TokenEntity['oracleId'],
@@ -326,14 +352,16 @@ export const selectPriceWithChange = createCachedSelector(
     selectTokenPriceByTokenOracleId(state, oracleId),
   (state: BeefyState, oracleId: string, _bucket: ApiTimeBucket) =>
     state.biz.historical.prices.byOracleId[oracleId],
+  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
+    selectHistoricalPriceBucketDispatchedRecently(state, oracleId, bucket),
   (_state: BeefyState, _oracleId: string, bucket: ApiTimeBucket) => bucket,
-  (price, oracle, requestedBucket) => {
+  (price, oracle, dispatchedRecently, requestedBucket) => {
     // wait for price, or load if no buckets have been requested yet
     if (!price || !oracle) {
       return {
         bucket: requestedBucket,
         price: undefined,
-        shouldLoad: !!price,
+        shouldLoad: !!price && !dispatchedRecently,
         previousPrice: undefined,
         previousDate: undefined,
       };
@@ -389,7 +417,7 @@ export const selectPriceWithChange = createCachedSelector(
     return {
       bucket: requestedBucket,
       price,
-      shouldLoad: true,
+      shouldLoad: !dispatchedRecently,
       previousPrice: undefined,
       previousDate: undefined,
     };

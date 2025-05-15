@@ -1,15 +1,15 @@
-import { memo, useCallback } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { selectTransactInputIndexAmount } from '../../../../../data/selectors/transact.ts';
-import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
-import type { AmountInputProps } from '../AmountInput/AmountInput.tsx';
-import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
+import { type CssStyles } from '@repo/styles/css';
 import BigNumber from 'bignumber.js';
+import { memo, useCallback } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
+import type { TokenEntity } from '../../../../../data/entities/token.ts';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
 import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens.ts';
+import { selectTransactInputIndexAmount } from '../../../../../data/selectors/transact.ts';
+import type { AmountInputProps } from '../AmountInput/AmountInput.tsx';
 import { AmountInputWithSlider } from '../AmountInputWithSlider/AmountInputWithSlider.tsx';
 import { TokenSelectButton } from '../TokenSelectButton/TokenSelectButton.tsx';
-import type { TokenEntity } from '../../../../../data/entities/token.ts';
-import { type CssStyles } from '@repo/styles/css';
 
 export type DepositTokenAmountInputProps = {
   index: number;
@@ -32,7 +32,7 @@ export const DepositTokenAmountInput = memo(function DepositTokenAmountInput({
   const handleChange = useCallback<NonNullable<AmountInputProps['onChange']>>(
     (value, isMax) => {
       dispatch(
-        transactActions.setInputAmount({
+        transactSetInputAmount({
           index,
           amount: value.decimalPlaces(token.decimals, BigNumber.ROUND_FLOOR),
           max: isMax,
@@ -49,7 +49,7 @@ export const DepositTokenAmountInput = memo(function DepositTokenAmountInput({
       price={price}
       maxValue={userBalance}
       onChange={handleChange}
-      selectedToken={token}
+      tokenDecimals={token.decimals}
       endAdornment={<TokenSelectButton index={index} />}
     />
   );

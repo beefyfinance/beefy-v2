@@ -1,6 +1,6 @@
 import { memo, useCallback } from 'react';
 import { Button } from '../../../../../../components/Button/Button.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { selectFilterBoolean } from '../../../../../data/selectors/filtered-vaults.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { useTranslation } from 'react-i18next';

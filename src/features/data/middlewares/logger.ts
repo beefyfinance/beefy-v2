@@ -1,9 +1,8 @@
-// https://coderwall.com/p/pafnew/redux-middleware-logger
+import type { AnyAction, Dispatch, MiddlewareAPI } from 'redux';
+import type { BeefyState } from '../store/types.ts';
 
 // debug middleware for when redux browser extension is not helpful
-import type { BeefyState } from '../../../redux-types.ts';
-import type { AnyAction, Dispatch, MiddlewareAPI } from 'redux';
-
+// https://coderwall.com/p/pafnew/redux-middleware-logger
 export const loggerMiddleware =
   ({ getState }: MiddlewareAPI<Dispatch, BeefyState>) =>
   (next: Dispatch) =>

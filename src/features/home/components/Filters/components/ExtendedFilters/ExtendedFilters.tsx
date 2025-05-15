@@ -5,7 +5,7 @@ import { Chains } from './ChainsContent.tsx';
 import { Platforms } from './PlatformsContent.tsx';
 import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
 import { FilterContent } from '../../../../../data/reducers/filtered-vaults-types.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { selectFilterContent } from '../../../../../data/selectors/filtered-vaults.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 

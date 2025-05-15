@@ -33,11 +33,15 @@ export const ExplainerCard = memo(function ExplainerCard({
     <Card css={cssProp}>
       <CardHeader>
         <div>{title}</div>
-        {links ? <ContractsDropdown links={links} /> : null}
+        {links ?
+          <ContractsDropdown links={links} />
+        : null}
       </CardHeader>
       <CardContent css={styles.content}>
         <div className={classes.description}>{description}</div>
-        {details ? <div className={classes.details}>{details}</div> : null}
+        {details ?
+          <div className={classes.details}>{details}</div>
+        : null}
       </CardContent>
     </Card>
   );

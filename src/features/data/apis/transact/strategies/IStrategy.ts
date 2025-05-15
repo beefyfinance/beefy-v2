@@ -1,3 +1,11 @@
+import type { Namespace, TFunction } from 'react-i18next';
+import type { TokenEntity } from '../../../entities/token.ts';
+import type { VaultEntity } from '../../../entities/vault.ts';
+import type { ZapEntity } from '../../../entities/zap.ts';
+import type { Step } from '../../../reducers/wallet/stepper-types.ts';
+import type { BeefyState } from '../../../store/types.ts';
+import type { Balances } from '../helpers/Balances.ts';
+import type { ISwapAggregator } from '../swap/ISwapAggregator.ts';
 import type {
   DepositOption,
   DepositQuote,
@@ -11,15 +19,7 @@ import type {
   ZapStrategyIdToWithdrawQuote,
 } from '../transact-types.ts';
 import type { VaultTypeFromVault } from '../vaults/IVaultType.ts';
-import type { ISwapAggregator } from '../swap/ISwapAggregator.ts';
-import type { VaultEntity } from '../../../entities/vault.ts';
-import type { BeefyState } from '../../../../../redux-types.ts';
-import type { ZapEntity } from '../../../entities/zap.ts';
-import type { Step } from '../../../reducers/wallet/stepper.ts';
-import type { Namespace, TFunction } from 'react-i18next';
 import type { UserlessZapRequest } from '../zap/types.ts';
-import type { TokenEntity } from '../../../entities/token.ts';
-import type { Balances } from '../helpers/Balances.ts';
 import type { AnyStrategyId, StrategyIdToConfig, ZapStrategyId } from './strategy-configs.ts';
 
 export interface IStrategy<TId extends AnyStrategyId = AnyStrategyId> {

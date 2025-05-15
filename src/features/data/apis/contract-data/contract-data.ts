@@ -1,4 +1,12 @@
+import type { Address } from 'abitype';
+import BigNumber from 'bignumber.js';
+import { addDays } from 'date-fns';
+import { chunk, pick, sortBy } from 'lodash-es';
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi.ts';
+import { BIG_ZERO, fromWei } from '../../../../helpers/big-number.ts';
+import { isFiniteNumber } from '../../../../helpers/number.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type {
   VaultCowcentrated,
   VaultErc4626,
@@ -7,10 +15,14 @@ import type {
   VaultStandardBeefy,
   VaultStandardCowcentrated,
 } from '../../entities/vault.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
-import BigNumber from 'bignumber.js';
-import type { BoostPromoEntity } from '../../entities/promo.ts';
-import { chunk, pick, sortBy } from 'lodash-es';
+import { selectTokenByAddress, selectTokenByAddressOrUndefined } from '../../selectors/tokens.ts';
+import { selectVaultById } from '../../selectors/vaults.ts';
+import type { BeefyState } from '../../store/types.ts';
+import {
+  featureFlag_getContractDataApiChunkSize,
+  featureFlag_simulateLiveBoost,
+} from '../../utils/feature-flags.ts';
+import { fetchContract } from '../rpc-contract/viem-contract.ts';
 import type {
   BoostContractData,
   BoostRawContractData,
@@ -30,18 +42,6 @@ import type {
   StandardVaultContractData,
   StandardVaultRawContractData,
 } from './contract-data-types.ts';
-import {
-  featureFlag_getContractDataApiChunkSize,
-  featureFlag_simulateLiveBoost,
-} from '../../utils/feature-flags.ts';
-import type { BeefyState } from '../../../../redux-types.ts';
-import { selectVaultById } from '../../selectors/vaults.ts';
-import { selectTokenByAddress, selectTokenByAddressOrUndefined } from '../../selectors/tokens.ts';
-import { isFiniteNumber } from '../../../../helpers/number.ts';
-import { BIG_ZERO, fromWei } from '../../../../helpers/big-number.ts';
-import { addDays } from 'date-fns';
-import { fetchContract } from '../rpc-contract/viem-contract.ts';
-import type { Address } from 'abitype';
 
 export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi {
   constructor(protected chain: T) {}

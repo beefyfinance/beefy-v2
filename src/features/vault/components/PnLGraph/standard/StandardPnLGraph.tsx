@@ -1,22 +1,22 @@
-import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
 import { memo, useCallback, useMemo, useState } from 'react';
-import { useAppSelector } from '../../../../../store.ts';
+import { useTranslation } from 'react-i18next';
+import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData.tsx';
+import type { ToggleButtonItem } from '../../../../../components/ToggleButtons/ToggleButtons.tsx';
+import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
 import { type VaultEntity } from '../../../../data/entities/vault.ts';
 import { selectHasDataToShowGraphByVaultId } from '../../../../data/selectors/analytics.ts';
-import { Footer } from './components/Footer/Footer.tsx';
-import { Graph } from './components/Graph/Graph.tsx';
-import { Header } from './components/Header/Header.tsx';
-import { useVaultPeriods } from './hooks.tsx';
-import { styles } from './styles.ts';
 import { selectWalletAddress } from '../../../../data/selectors/wallet.ts';
-import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData.tsx';
 import { Card } from '../../Card/Card.tsx';
 import { CardContent } from '../../Card/CardContent.tsx';
 import { CardHeader } from '../../Card/CardHeader.tsx';
 import { CardTitle } from '../../Card/CardTitle.tsx';
-import { useTranslation } from 'react-i18next';
 import { StatSwitcher } from '../../StatSwitcher/StatSwitcher.tsx';
-import type { ToggleButtonItem } from '../../../../../components/ToggleButtons/ToggleButtons.tsx';
+import { Footer } from './components/Footer/Footer.tsx';
+import { Graph } from './components/Graph/Graph.tsx';
+import { Header } from './components/Header/Header.tsx';
+import { useVaultPeriods } from './hooks.ts';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

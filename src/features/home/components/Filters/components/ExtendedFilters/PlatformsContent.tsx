@@ -14,7 +14,7 @@ import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FilterContent } from '../../../../../data/reducers/filtered-vaults-types.ts';
 import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
-import { useAppSelector } from '../../../../../../store.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { selectFilterPlatforms } from '../../../../../data/selectors/platforms.ts';
 import { selectFilterPlatformIds } from '../../../../../data/selectors/filtered-vaults.ts';
 import ArrowBackIcon from '../../../../../../images/icons/chevron-right.svg?react';

@@ -2,7 +2,7 @@ import type { MigratorUnstakeProps } from '../../apis/migration/migration-types.
 import type { Hash } from 'viem';
 import type { VaultEntity } from '../../entities/vault.ts';
 import type BigNumber from 'bignumber.js';
-import type { MigrationConfig } from '../../reducers/wallet/migration.ts';
+import type { MigrationConfig } from '../../reducers/wallet/migration-types.ts';
 import {
   bindTransactionEvents,
   captureWalletErrors,

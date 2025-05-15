@@ -1,7 +1,12 @@
-import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
-import type { BeefyState } from '../../../redux-types.ts';
-import type { BoostPromoEntity } from '../entities/promo.ts';
+import { createSelector } from '@reduxjs/toolkit';
+import BigNumber from 'bignumber.js';
+import { createCachedSelector } from 're-reselect';
+import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
+import { getUnixNow } from '../../../helpers/date.ts';
+import { entries, keys } from '../../../helpers/object.ts';
+import type { BoostReward } from '../apis/balance/balance-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
+import type { BoostPromoEntity } from '../entities/promo.ts';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token.ts';
 import {
   isCowcentratedLikeVault,
@@ -13,13 +18,25 @@ import {
   type VaultEntity,
   type VaultGov,
 } from '../entities/vault.ts';
+import type { BeefyState } from '../store/types.ts';
+import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
+import {
+  arrayOrStaticEmpty,
+  bigNumberOrStaticZero,
+  valueOrThrow,
+} from '../utils/selector-utils.ts';
+import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils.ts';
+import type { UserLpBreakdownBalance } from './balance-types.ts';
 import {
   selectAllVaultBoostIds,
   selectBoostById,
   selectIsVaultPreStakedOrBoosted,
+  selectPastVaultBoostIds,
   selectVaultCurrentBoostId,
 } from './boosts.ts';
-import { createCachedSelector } from 're-reselect';
+import { selectIsConfigAvailable } from './config.ts';
+import { createAddressChainDataSelector, hasLoaderFulfilledOnce } from './data-loader-helpers.ts';
+import { selectIsPricesAvailable } from './prices.ts';
 import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
@@ -32,19 +49,6 @@ import {
   selectVaultIdsByChainIdIncludingHidden,
 } from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
-import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
-import BigNumber from 'bignumber.js';
-import { createSelector } from '@reduxjs/toolkit';
-import { entries } from '../../../helpers/object.ts';
-import type { UserLpBreakdownBalance } from './balance-types.ts';
-import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils.ts';
-import type { BoostReward } from '../apis/balance/balance-types.ts';
-import {
-  arrayOrStaticEmpty,
-  bigNumberOrStaticZero,
-  valueOrThrow,
-} from '../utils/selector-utils.ts';
-import { getUnixNow } from '../../../helpers/date.ts';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (walletAddress) {
@@ -870,3 +874,51 @@ export const selectUserIsUnstakedForVaultId = createSelector(
     );
   }
 );
+export const selectIsUserBalanceAvailable = createSelector(
+  (state: BeefyState, _walletAddress: string | undefined) => selectIsConfigAvailable(state),
+  (state: BeefyState, _walletAddress: string | undefined) => selectIsPricesAvailable(state),
+  (state: BeefyState, _walletAddress: string | undefined) => state.ui.dataLoader.byChainId,
+  (state: BeefyState, _walletAddress: string | undefined) => state.ui.dataLoader.byAddress,
+  (_state: BeefyState, walletAddress: string | undefined) => walletAddress?.toLowerCase(),
+  (configAvailable, pricesAvailable, byChainId, byAddress, walletAddress) => {
+    if (!configAvailable || !pricesAvailable || !walletAddress) {
+      return false;
+    }
+    for (const chainId of keys(byChainId)) {
+      // if any chain has balance data, then balance data is available
+      if (
+        hasLoaderFulfilledOnce(byChainId[chainId]?.contractData) &&
+        hasLoaderFulfilledOnce(byAddress[walletAddress]?.byChainId[chainId]?.balance)
+      ) {
+        return true;
+      }
+    }
+    // if no chain has balance data
+    // then balance data is unavailable
+    return false;
+  }
+);
+export const selectIsBalanceAvailableForChainUser = createAddressChainDataSelector(
+  'balance',
+  hasLoaderFulfilledOnce
+);
+export const selectPastBoostIdsWithUserBalance = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => {
+  const expiredBoostIds = selectPastVaultBoostIds(state, vaultId);
+
+  const boostIds: string[] = [];
+  for (const eolBoostId of expiredBoostIds) {
+    const userBalance = selectBoostUserBalanceInToken(state, eolBoostId);
+    if (userBalance.gt(0)) {
+      boostIds.push(eolBoostId);
+      continue;
+    }
+    const userRewards = selectBoostUserRewardsInToken(state, eolBoostId);
+    if (userRewards?.some(r => r.amount.gt(0))) {
+      boostIds.push(eolBoostId);
+    }
+  }
+  return boostIds;
+};

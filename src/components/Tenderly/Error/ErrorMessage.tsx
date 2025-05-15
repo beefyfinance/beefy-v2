@@ -1,8 +1,8 @@
-import { memo } from 'react';
-import { AlertError } from '../../Alerts/Alerts.tsx';
-import { useAppSelector } from '../../../store.ts';
-import { selectTenderlyErrorOrUndefined } from '../../../features/data/selectors/tenderly.ts';
 import { type CssStyles } from '@repo/styles/css';
+import { memo } from 'react';
+import { selectTenderlyErrorOrUndefined } from '../../../features/data/selectors/tenderly.ts';
+import { useAppSelector } from '../../../features/data/store/hooks.ts';
+import { AlertError } from '../../Alerts/Alerts.tsx';
 
 export type ErrorProps = {
   css?: CssStyles;

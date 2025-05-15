@@ -1,10 +1,10 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PartnerCard } from '../PartnerCard/PartnerCard.tsx';
 import { getPartnerSrc } from '../../../../helpers/partnerSrc.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
-import { useAppSelector } from '../../../../store.ts';
+import { PartnerCard } from '../PartnerCard/PartnerCard.tsx';
 
 export type PoolTogetherCardProps = {
   vaultId: VaultEntity['id'];

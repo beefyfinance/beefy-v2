@@ -1,9 +1,9 @@
-import { createCachedSelector } from 're-reselect';
-import type { BeefyState } from '../../../redux-types.ts';
-import type { VaultEntity } from '../entities/vault.ts';
-import { first } from 'lodash-es';
 import { createSelector } from '@reduxjs/toolkit';
+import { first } from 'lodash-es';
+import { createCachedSelector } from 're-reselect';
 import type { PromoEntity } from '../entities/promo.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
 
 export const selectPromoById = (state: BeefyState, promoId: PromoEntity['id']) =>

@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types.ts';
-import type { PlatformEntity } from '../entities/platform.ts';
 import { createCachedSelector } from 're-reselect';
+import type { PlatformEntity } from '../entities/platform.ts';
+import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
 
 export const selectPlatformById = createCachedSelector(

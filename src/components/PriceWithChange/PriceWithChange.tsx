@@ -1,15 +1,15 @@
-import { memo, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store.ts';
-import { selectPriceWithChange } from '../../features/data/selectors/tokens.ts';
-import { formatLargePercent, formatLargeUsd, formatUsd } from '../../helpers/format.ts';
-import type BigNumber from 'bignumber.js';
-import { fetchHistoricalPrices } from '../../features/data/actions/historical.ts';
-import { BIG_ZERO } from '../../helpers/big-number.ts';
 import { css, type CssStyles } from '@repo/styles/css';
+import type BigNumber from 'bignumber.js';
 import { format } from 'date-fns';
+import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { styles } from './styles.ts';
+import { fetchHistoricalPrices } from '../../features/data/actions/historical.ts';
+import { selectPriceWithChange } from '../../features/data/selectors/tokens.ts';
+import { BIG_ZERO } from '../../helpers/big-number.ts';
+import { formatLargePercent, formatLargeUsd, formatUsd } from '../../helpers/format.ts';
+import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
 import { DivWithTooltip } from '../Tooltip/DivWithTooltip.tsx';
+import { styles } from './styles.ts';
 
 export type PriceWithChangeProps = {
   oracleId: string;

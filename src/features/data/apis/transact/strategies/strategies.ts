@@ -52,9 +52,8 @@ export type BasicZapStrategyStatic = Exclude<
 >;
 
 type StrategyIdToPromiseLoader = {
-  [K in ZapStrategyId]: () => StrategyIdToStatic[K]['id'] extends K
-    ? Promise<StrategyIdToStatic[K]>
-    : never;
+  [K in ZapStrategyId]: () => StrategyIdToStatic[K]['id'] extends K ? Promise<StrategyIdToStatic[K]>
+  : never;
 };
 
 // ensure key->strategy mapping matches

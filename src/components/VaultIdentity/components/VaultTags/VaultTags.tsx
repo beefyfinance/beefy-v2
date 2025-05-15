@@ -1,15 +1,9 @@
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo, useMemo } from 'react';
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { VaultTag, VaultTagWithTooltip } from './VaultTag.tsx';
 import { useTranslation } from 'react-i18next';
-import type { PromoEntity } from '../../../../features/data/entities/promo.ts';
-import { useAppSelector } from '../../../../store.ts';
-import { useIsOverflowingHorizontally } from '../../../../helpers/overflow.tsx';
-import { BasicTooltipContent } from '../../../Tooltip/BasicTooltipContent.tsx';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
+import type { PromoEntity } from '../../../../features/data/entities/promo.ts';
 import type { TokenEntity } from '../../../../features/data/entities/token.ts';
-import { selectTokenByAddress } from '../../../../features/data/selectors/tokens.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedLikeVault,
@@ -26,22 +20,28 @@ import {
   type VaultGovCowcentrated,
   type VaultStandardCowcentrated,
 } from '../../../../features/data/entities/vault.ts';
-import { VaultPlatform } from '../../../VaultPlatform/VaultPlatform.tsx';
-import {
-  selectCowcentratedVaultById,
-  selectVaultById,
-} from '../../../../features/data/selectors/vaults.ts';
-import { getBoostIconSrc } from '../../../../helpers/boostIconSrc.ts';
-import { css, type CssStyles } from '@repo/styles/css';
-import { getIcon } from '../../../../helpers/iconSrc.ts';
 import { selectPlatformById } from '../../../../features/data/selectors/platforms.ts';
 import {
   selectActivePromoForVault,
   selectPromoById,
 } from '../../../../features/data/selectors/promos.ts';
+import { selectTokenByAddress } from '../../../../features/data/selectors/tokens.ts';
+import {
+  selectCowcentratedVaultById,
+  selectVaultById,
+} from '../../../../features/data/selectors/vaults.ts';
+import { getBoostIconSrc } from '../../../../helpers/boostIconSrc.ts';
+import { getIcon } from '../../../../helpers/iconSrc.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { useIsOverflowingHorizontally } from '../../../../helpers/overflow.ts';
+import { useAppSelector } from '../../../../features/data/store/hooks.ts';
+import BoostIcon from '../../../../images/icons/boost.svg?react';
 import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
 import { useMediaQuery } from '../../../MediaQueries/useMediaQuery.ts';
-import BoostIcon from '../../../../images/icons/boost.svg?react';
+import { BasicTooltipContent } from '../../../Tooltip/BasicTooltipContent.tsx';
+import { VaultPlatform } from '../../../VaultPlatform/VaultPlatform.tsx';
+import { styles } from './styles.ts';
+import { VaultTag, VaultTagWithTooltip } from './VaultTag.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 

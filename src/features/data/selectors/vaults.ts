@@ -1,8 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types.ts';
+import { createCachedSelector } from 're-reselect';
+import { BIG_ONE } from '../../../helpers/big-number.ts';
 import type { ChainEntity } from '../entities/chain.ts';
-import type { TokenEntity, TokenErc20 } from '../entities/token.ts';
-import { isTokenErc20 } from '../entities/token.ts';
+import type { TokenEntity } from '../entities/token.ts';
 import {
   getCowcentratedPool,
   isCowcentratedGovVault,
@@ -16,6 +16,7 @@ import {
   isVaultPausedOrRetired,
   isVaultRetired,
   isVaultWithReceipt,
+  shouldVaultShowInterest,
   type VaultCowcentrated,
   type VaultCowcentratedLike,
   type VaultEntity,
@@ -25,22 +26,10 @@ import {
   type VaultStandard,
   type VaultStandardCowcentrated,
 } from '../entities/vault.ts';
-import {
-  selectIsTokenBluechip,
-  selectIsTokenMeme,
-  selectIsTokenStable,
-  selectTokenByIdOrUndefined,
-} from './tokens.ts';
-import { createCachedSelector } from 're-reselect';
-import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
-import { differenceWith, isEqual } from 'lodash-es';
-import { selectChainById } from './chains.ts';
-import { selectPlatformById } from './platforms.ts';
-import type { PlatformEntity } from '../entities/platform.ts';
-import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
-import { selectVaultUnderlyingTvlUsd } from './tvl.ts';
-import { selectIsConfigAvailable } from './data-loader.ts';
+import type { BeefyState } from '../store/types.ts';
 import { featureFlag_disableRedirect } from '../utils/feature-flags.ts';
+import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
+import { selectIsConfigAvailable } from './config.ts';
 
 export const selectAllVaultIdsIncludingHidden = (state: BeefyState) => state.entities.vaults.allIds;
 export const selectAllVisibleVaultIds = (state: BeefyState) => state.entities.vaults.allVisibleIds;
@@ -402,50 +391,6 @@ export const selectAllActiveVaultIds = (state: BeefyState) => state.entities.vau
 
 export const selectTotalActiveVaults = (state: BeefyState) => selectAllActiveVaultIds(state).length;
 
-export const selectIsVaultBlueChip = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => {
-    const vault = selectVaultById(state, vaultId);
-    const chain = selectChainById(state, vault.chainId);
-    const nonStables = differenceWith(vault.assetIds, chain.stableCoins, isEqual);
-    return (
-      nonStables.length > 0 &&
-      nonStables.every(tokenId => {
-        return selectIsTokenBluechip(state, tokenId);
-      })
-    );
-  },
-  res => res
-);
-
-export const selectIsVaultMeme = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => {
-    const vault = selectVaultById(state, vaultId);
-    return vault.assetIds.some(assetId => selectIsTokenMeme(state, assetId));
-  },
-  res => res
-);
-
-export const selectIsVaultStable = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => {
-    const vault = selectVaultById(state, vaultId);
-    return vault.assetIds.every(assetId => selectIsTokenStable(state, vault.chainId, assetId));
-  },
-  res => res
-);
-
-export const selectIsVaultCorrelated = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => {
-    const vault = selectVaultById(state, vaultId);
-
-    return (
-      vault.risks.includes('IL_NONE') &&
-      vault.assetIds.length > 1 &&
-      !selectIsVaultStable(state, vaultId)
-    );
-  },
-  res => res
-);
-
 export const selectVaultDepositFee = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
   return vault.depositFee;
@@ -462,79 +407,6 @@ export const selectAllVaultIdsWithBridgedVersion = (state: BeefyState) =>
 
 export const selectAllVaultsWithBridgedVersion = (state: BeefyState) =>
   selectAllVaultIdsWithBridgedVersion(state).map(id => selectVaultById(state, id));
-
-export const selectVaultHasAssetsWithRisks = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-):
-  | {
-      risks: false;
-    }
-  | {
-      risks: true;
-      tokens: TokenErc20[];
-    } => {
-  const vault = selectVaultById(state, vaultId);
-
-  const tokensWithRisks: TokenErc20[] = [];
-
-  for (const tokenId of vault.assetIds) {
-    const token = selectTokenByIdOrUndefined(state, vault.chainId, tokenId);
-
-    if (token && isTokenErc20(token) && (token?.risks?.length || 0) > 0) {
-      tokensWithRisks.push(token);
-    }
-  }
-
-  if (tokensWithRisks.length >= 1) {
-    return {
-      risks: true,
-      tokens: tokensWithRisks,
-    };
-  }
-
-  // by default return false
-  return {
-    risks: false,
-  };
-};
-
-export const selectVaultHasPlatformWithRisks = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-):
-  | {
-      risks: false;
-    }
-  | {
-      risks: true;
-      platform: PlatformEntity;
-    } => {
-  const vault = selectVaultById(state, vaultId);
-
-  const platform = selectPlatformById(state, vault.platformId);
-
-  if ((platform?.risks?.length || 0) > 0) {
-    return {
-      risks: true,
-      platform,
-    };
-  } else {
-    return { risks: false };
-  }
-};
-
-export const selectMaximumUnderlyingVaultTvl = (state: BeefyState) => {
-  const ids = selectAllActiveVaultIds(state);
-  let maxTvl = BIG_ZERO;
-  for (const id of ids) {
-    const underlyingTvl = selectVaultUnderlyingTvlUsd(state, id);
-    if (underlyingTvl.gt(maxTvl)) {
-      maxTvl = underlyingTvl;
-    }
-  }
-  return maxTvl;
-};
 
 export const selectAllCowcentratedVaults = createSelector(
   selectAllCowcentratedVaultIds,
@@ -580,3 +452,8 @@ export const selectVaultIdForVaultPage = createSelector(
     return vault.id;
   }
 );
+/** Returns false if vault is retired or paused and not earning */
+export const selectVaultShouldShowInterest = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  (vault: VaultEntity) => shouldVaultShowInterest(vault)
+)((_, vaultId: VaultEntity['id']) => vaultId);

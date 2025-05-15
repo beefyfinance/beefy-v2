@@ -1,35 +1,35 @@
 import { memo, useCallback, useEffect } from 'react';
-import { styles } from './styles.ts';
+import { useTranslation } from 'react-i18next';
+import { Button } from '../../../../components/Button/Button.tsx';
+import { BIG_ZERO } from '../../../../helpers/big-number.ts';
+import { formatTokenDisplayCondensed } from '../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { getSingleAssetSrc } from '../../../../helpers/singleAssetSrc.ts';
-import { Button } from '../../../../components/Button/Button.tsx';
-import type { VaultEntity } from '../../../data/entities/vault.ts';
-import { isVaultActive } from '../../../data/entities/vault.ts';
-import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../store.ts';
-import { selectVaultById } from '../../../data/selectors/vaults.ts';
-import { formatTokenDisplayCondensed } from '../../../../helpers/format.ts';
-import {
-  selectCurrentChainId,
-  selectIsWalletConnected,
-  selectWalletAddress,
-  selectWalletAddressIfKnown,
-} from '../../../data/selectors/wallet.ts';
+import { isEmpty } from '../../../../helpers/utils.ts';
+import type { MigrationConfig } from '../../../data/reducers/wallet/migration-types.ts';
+import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
 import {
   fetchAllMigrators,
   migratorExecute,
   migratorUpdate,
 } from '../../../data/actions/migrator.ts';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
+import { isVaultActive } from '../../../data/entities/vault.ts';
 import {
   selectMigrationIdsByVaultId,
   selectMigratorById,
   selectShouldInitMigration,
   selectUserBalanceToMigrateByVaultId,
 } from '../../../data/selectors/migration.ts';
-import { BIG_ZERO } from '../../../../helpers/big-number.ts';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
+import {
+  selectCurrentChainId,
+  selectIsWalletConnected,
+  selectWalletAddress,
+  selectWalletAddressIfKnown,
+} from '../../../data/selectors/wallet.ts';
 import { ActionConnect, ActionSwitch } from '../Actions/Transact/CommonActions/CommonActions.tsx';
-import { isEmpty } from '../../../../helpers/utils.ts';
-import type { MigrationConfig } from '../../../data/reducers/wallet/migration.ts';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -110,15 +110,13 @@ const Migrator = memo(function Migrator({
               migrator: migrator.name,
             })}
           </div>
-          {!isWalletConnected ? (
+          {!isWalletConnected ?
             <ActionConnect />
-          ) : isWalletOnVaultChain ? (
+          : isWalletOnVaultChain ?
             <Button onClick={handleMigrateAll} variant="success" fullWidth={true} borderless={true}>
               {t('Migration-Action')}
             </Button>
-          ) : (
-            <ActionSwitch chainId={vault.chainId} />
-          )}
+          : <ActionSwitch chainId={vault.chainId} />}
         </div>
       </div>
     );

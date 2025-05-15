@@ -1,17 +1,17 @@
-import { memo } from 'react';
 import { styled } from '@repo/styles/jsx';
+import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { VaultIcon } from '../../../../../../components/VaultIdentity/components/VaultIcon/VaultIcon.tsx';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
+import { selectBoostUserBalanceInToken } from '../../../../../data/selectors/balance.ts';
+import { selectBoostById } from '../../../../../data/selectors/boosts.ts';
 import {
   selectErc20TokenByAddress,
   selectTokenByAddress,
 } from '../../../../../data/selectors/tokens.ts';
 import { selectVaultByIdWithReceipt } from '../../../../../data/selectors/vaults.ts';
-import { selectBoostUserBalanceInToken } from '../../../../../data/selectors/balance.ts';
-import { useAppSelector } from '../../../../../../store.ts';
-import { selectBoostById } from '../../../../../data/selectors/boosts.ts';
-import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
-import { useTranslation } from 'react-i18next';
 
 export const BoostStaked = memo(function BoostStaked({
   boostId,

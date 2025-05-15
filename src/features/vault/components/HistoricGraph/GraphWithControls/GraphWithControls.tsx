@@ -1,22 +1,22 @@
-import type { VaultEntity } from '../../../../data/entities/vault.ts';
-import type { TokenEntity } from '../../../../data/entities/token.ts';
 import { memo, useMemo, useState } from 'react';
-import { useAppSelector } from '../../../../../store.ts';
-import { selectHistoricalAvailableBuckets } from '../../../../data/selectors/historical.ts';
-import { GraphLoader } from '../../GraphLoader/Loader.tsx';
-import { RangeSwitcher } from '../RangeSwitcher/RangeSwitcher.tsx';
-import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
-import { Graph } from '../Graph/Graph.tsx';
-import type { TimeRange } from '../utils.ts';
-import { getAvailableRanges, getDefaultTimeRange, timeRangeToBucket } from '../utils.ts';
-import type { LineTogglesState } from '../LineToggles/LineToggles.tsx';
-import { LineToggles } from '../LineToggles/LineToggles.tsx';
-import { styles } from './styles.ts';
 import { useTranslation } from 'react-i18next';
-import { useHistoricalStatLoader } from '../../../../data/hooks/historical.tsx';
-import type { ChartStat } from '../types.ts';
 import { ErrorBoundary } from '../../../../../components/ErrorBoundary/ErrorBoundary.tsx';
 import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData.tsx';
+import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
+import type { TokenEntity } from '../../../../data/entities/token.ts';
+import type { VaultEntity } from '../../../../data/entities/vault.ts';
+import { useHistoricalStatLoader } from '../../../../data/hooks/historical.ts';
+import { selectHistoricalAvailableBuckets } from '../../../../data/selectors/historical.ts';
+import { GraphLoader } from '../../GraphLoader/Loader.tsx';
+import { Graph } from '../Graph/Graph.tsx';
+import type { LineTogglesState } from '../LineToggles/LineToggles.tsx';
+import { LineToggles } from '../LineToggles/LineToggles.tsx';
+import { RangeSwitcher } from '../RangeSwitcher/RangeSwitcher.tsx';
+import type { ChartStat } from '../types.ts';
+import type { TimeRange } from '../utils.ts';
+import { getAvailableRanges, getDefaultTimeRange, timeRangeToBucket } from '../utils.ts';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -49,7 +49,7 @@ export const GraphWithControls = memo(function GraphWithControls({
   return (
     <div className={classes.container}>
       <div className={classes.graph}>
-        {hasData ? (
+        {hasData ?
           <ErrorBoundary>
             <Graph
               vaultId={vaultId}
@@ -60,18 +60,14 @@ export const GraphWithControls = memo(function GraphWithControls({
               inverted={inverted}
             />
           </ErrorBoundary>
-        ) : loading ? (
+        : loading ?
           <GraphLoader imgHeight={220} />
-        ) : (
-          <GraphNoData reason={willRetry ? 'error-retry' : 'wait-collect'} />
-        )}
+        : <GraphNoData reason={willRetry ? 'error-retry' : 'wait-collect'} />}
       </div>
       <div className={classes.footer}>
-        {stat === 'clm' ? (
+        {stat === 'clm' ?
           <CowcentratedLegend />
-        ) : (
-          <LineToggles toggles={lineToggles} onChange={setLineToggles} />
-        )}
+        : <LineToggles toggles={lineToggles} onChange={setLineToggles} />}
         <RangeSwitcher range={range} availableRanges={availableRanges} onChange={setRange} />
       </div>
     </div>

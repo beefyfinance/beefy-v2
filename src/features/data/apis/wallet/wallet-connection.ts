@@ -184,9 +184,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
           },
           eth_chainId: async ({ baseRequest }) => {
             const value = await baseRequest({ method: 'eth_chainId' });
-            return isHex(value, { strict: true })
-              ? value
-              : `0x${parseInt(value + '', 10).toString(16)}`;
+            return isHex(value, { strict: true }) ? value : (
+                `0x${parseInt(value + '', 10).toString(16)}`
+              );
           },
         });
 
@@ -197,9 +197,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
             originalOn(event, value => {
               // call original handler with modified value -- chainId: Dec->Hex
               (listener as ChainListener)(
-                isHex(value, { strict: true })
-                  ? value
-                  : `0x${parseInt(value + '', 10).toString(16)}`
+                isHex(value, { strict: true }) ? value : (
+                  `0x${parseInt(value + '', 10).toString(16)}`
+                )
               );
             });
           } else {
@@ -453,9 +453,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
      * withProviderWrapper(), which sets providerWrapper, is only called from Tenderly actions
      * otherwise providerWrapper is undefined and the original unmodified provider is used
      */
-    const wrappedProvider = this.providerWrapper
-      ? this.providerWrapper(realProvider)
-      : realProvider;
+    const wrappedProvider =
+      this.providerWrapper ? this.providerWrapper(realProvider) : realProvider;
 
     return createWalletClient({
       transport: custom(wrappedProvider),
@@ -493,9 +492,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     try {
       await WalletConnectionApi.connect(
         onboard,
-        lastSelectedWallet
-          ? { autoSelect: { label: lastSelectedWallet, disableModals: false } }
-          : undefined
+        lastSelectedWallet ?
+          { autoSelect: { label: lastSelectedWallet, disableModals: false } }
+        : undefined
       );
     } catch (err) {
       // We clear last connected wallet here so that attempting to reconnect opens the modal

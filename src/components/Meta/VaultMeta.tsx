@@ -1,11 +1,11 @@
 import { memo } from 'react';
-import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../store.ts';
-import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectChainById } from '../../features/data/selectors/chains.ts';
-import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
 import { selectPlatformById } from '../../features/data/selectors/platforms.ts';
+import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
+import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { Meta } from './Meta.tsx';
 
 export type VaultMetaProps = {

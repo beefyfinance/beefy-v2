@@ -16,7 +16,7 @@ interface SelectMultipleContentProps<TItem extends SelectItem = SelectItem>
   activeIndex: number | null;
   allSelected: boolean;
   noneSelected: boolean;
-  getItemProps: (index: number) => Record<string, any>;
+  getItemProps: (index: number) => Record<string, unknown>;
   setListRefs: ((el: HTMLButtonElement | null) => void)[];
   searchEnabled?: boolean;
   searchFunction?: SearchFunction<TItem>;

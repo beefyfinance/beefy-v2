@@ -130,16 +130,16 @@ export const PieChartTooltip = memo(function PieChartTooltip(props: TooltipProps
     return (
       <div className={classes.container}>
         <div className={classes.titleContainer}>
-          {data.key !== 'others' ? (
+          {data.key !== 'others' ?
             <>
-              {data.type === 'chain' && data.chainId !== 'others' ? (
+              {data.type === 'chain' && data.chainId !== 'others' ?
                 <img className={classes.icon} src={getNetworkSrc(data.chainId)} alt={title} />
-              ) : null}
-              {data.type === 'token' ? (
+              : null}
+              {data.type === 'token' ?
                 <AssetsImage size={24} chainId={data.chainId} assetSymbols={data.symbols} />
-              ) : null}
+              : null}
             </>
-          ) : null}
+          : null}
           <div className={classes.title}>{title}</div>
         </div>
         <div className={classes.infoContainer}>

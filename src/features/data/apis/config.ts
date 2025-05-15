@@ -1,5 +1,6 @@
 import { config as chainConfigs } from '../../../config/config.ts';
 import type { ChainEntity } from '../entities/chain.ts';
+import type { MigrationConfig } from '../reducers/wallet/migration-types.ts';
 import type {
   AmmConfig,
   BeefyBridgeConfig,
@@ -15,7 +16,6 @@ import type {
   ZapConfig,
 } from './config-types.ts';
 import { mapValues } from 'lodash-es';
-import type { MigrationConfig } from '../reducers/wallet/migration.ts';
 import { entries, keys } from '../../../helpers/object.ts';
 import { getMigratorConfig, getMinterConfig } from '../../../helpers/getConfig.ts';
 

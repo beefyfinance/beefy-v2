@@ -1,12 +1,12 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useMemo } from 'react';
-import { useAppSelector } from '../../../../../store.ts';
-import { selectTvlByChain } from '../../../../data/selectors/tvl.ts';
-import { selectActiveChainIds } from '../../../../data/selectors/chains.ts';
-import { orderBy } from 'lodash-es';
-import { entries } from '../../../../../helpers/object.ts';
-import type { ChainEntity } from '../../../../data/entities/chain.ts';
 import type BigNumber from 'bignumber.js';
+import { orderBy } from 'lodash-es';
+import { memo, useMemo } from 'react';
+import { entries } from '../../../../../helpers/object.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
+import type { ChainEntity } from '../../../../data/entities/chain.ts';
+import { selectActiveChainIds } from '../../../../data/selectors/chains.ts';
+import { selectTvlByChain } from '../../../../data/selectors/tvl.ts';
 import { Chain } from './Chain.tsx';
 
 export const Chains = memo(function Chains() {

@@ -48,8 +48,10 @@ export class TenderlyInvalidResponseFormatError extends TenderlyError {
 async function tryGetErrorMessageFromResponse(response: Response): Promise<string | undefined> {
   try {
     const json: unknown = await response.json();
-    return json && typeof json === 'object' && 'message' in json && typeof json.message === 'string'
-      ? json.message
+    return (
+        json && typeof json === 'object' && 'message' in json && typeof json.message === 'string'
+      ) ?
+        json.message
       : undefined;
   } catch {
     return undefined;

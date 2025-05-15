@@ -1,9 +1,9 @@
 import { memo } from 'react';
-import { tenderlyChains } from '../config.ts';
-import { Button } from '../../Button/Button.tsx';
 import type { ChainId } from '../../../features/data/entities/chain.ts';
-import { useAppSelector } from '../../../store.ts';
 import { selectTenderlyMode } from '../../../features/data/selectors/tenderly.ts';
+import { useAppSelector } from '../../../features/data/store/hooks.ts';
+import { Button } from '../../Button/Button.tsx';
+import { tenderlyChains } from '../config.ts';
 import logoUrl from '../logo.svg';
 import { styles } from './styles.ts';
 

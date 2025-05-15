@@ -1,14 +1,14 @@
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { useTranslation } from 'react-i18next';
-import { styles } from './styles.ts';
 import { memo, useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button/Button.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
-  selectTransactQuoteStatus,
-  selectTransactSelectedQuoteOrUndefined,
-  selectTransactVaultId,
-} from '../../../../../data/selectors/transact.ts';
+  transactSteps,
+  transactStepsClaimGov,
+} from '../../../../../data/actions/wallet/transact.ts';
 import type {
   GovComposerZapWithdrawQuote,
   GovVaultWithdrawQuote,
@@ -19,31 +19,34 @@ import {
   isGovComposerWithdrawQuote,
   isGovVaultWithdrawQuote,
 } from '../../../../../data/apis/transact/transact-types.ts';
-import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
-import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
-import { transactSteps, transactStepsClaimGov } from '../../../../../data/actions/transact.ts';
-import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
-import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
-import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
-import {
-  selectGovVaultById,
-  selectIsVaultGov,
-  selectVaultById,
-} from '../../../../../data/selectors/vaults.ts';
-import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
-import { selectGovVaultPendingRewards } from '../../../../../data/selectors/balance.ts';
 import {
   isCowcentratedLikeVault,
   isGovVault,
   type VaultGov,
 } from '../../../../../data/entities/vault.ts';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
-import { GlpWithdrawNotice } from '../GlpNotices/GlpNotices.tsx';
-import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotice/ScreamAvailableLiquidityNotice.tsx';
-import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
-import { WithdrawFees } from '../VaultFees/VaultFees.tsx';
+import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { selectGovVaultPendingRewards } from '../../../../../data/selectors/balance.ts';
+import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
+import {
+  selectTransactQuoteStatus,
+  selectTransactSelectedQuoteOrUndefined,
+  selectTransactVaultId,
+} from '../../../../../data/selectors/transact.ts';
+import {
+  selectGovVaultById,
+  selectIsVaultGov,
+  selectVaultById,
+} from '../../../../../data/selectors/vaults.ts';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet.ts';
-import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
+import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
+import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
+import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
+import { GlpWithdrawNotice } from '../GlpNotices/GlpNotices.tsx';
+import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
+import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
+import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotice/ScreamAvailableLiquidityNotice.tsx';
+import { WithdrawFees } from '../VaultFees/VaultFees.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

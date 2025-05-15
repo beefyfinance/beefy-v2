@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectVaultPnl } from '../../features/data/selectors/analytics.ts';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
-import { useAppSelector } from '../../store.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { styles } from './styles.ts';
 import { VaultApyStat } from './VaultApyStat.tsx';
 import { VaultAtDepositStat } from './VaultAtDepositStat.tsx';

@@ -1,33 +1,9 @@
 import { type AnyAction, createSlice, type Draft } from '@reduxjs/toolkit';
-import type { VaultEntity } from '../../entities/vault.ts';
 import type BigNumber from 'bignumber.js';
 import { fetchAllMigrators } from '../../actions/migrator.ts';
 import type { CommonMigrationUpdateFulfilledAction } from '../../apis/migration/migration-types.ts';
-import type { BaseMigrationConfig } from '../../apis/config-types.ts';
-
-export type MigrationConfig = BaseMigrationConfig;
-
-type UserMigrationData = {
-  [migrationId: string]: {
-    initialized: boolean;
-    balance: BigNumber;
-  };
-};
-
-export interface MigrationState {
-  byUserAddress: {
-    [address: string]: {
-      byVaultId: {
-        [vaultId: VaultEntity['id']]: {
-          byMigrationId: UserMigrationData;
-        };
-      };
-    };
-  };
-  byMigrationId: {
-    [migrationId: MigrationConfig['id']]: MigrationConfig;
-  }; // loaded from configs
-}
+import type { VaultEntity } from '../../entities/vault.ts';
+import type { MigrationConfig, MigrationState } from './migration-types.ts';
 
 const migrationInitialState: MigrationState = { byUserAddress: {}, byMigrationId: {} };
 

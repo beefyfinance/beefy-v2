@@ -1,8 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import type { Draft } from 'immer';
+import { isNativeAlternativeAddress } from '../../../helpers/addresses.ts';
+import { entries } from '../../../helpers/object.ts';
+import { fetchBridgeConfig } from '../actions/bridge.ts';
 import { fetchChainConfigs } from '../actions/chains.ts';
+import { fetchAllMinters } from '../actions/minters.ts';
 import { fetchAllPricesAction } from '../actions/prices.ts';
+import { initPromos } from '../actions/promos.ts';
 import type { FetchAddressBookPayload } from '../actions/tokens.ts';
 import {
   fetchAddressBookAction,
@@ -10,74 +15,21 @@ import {
   fetchAllCurrentCowcentratedRanges,
 } from '../actions/tokens.ts';
 import { fetchAllVaults } from '../actions/vaults.ts';
-import type { ChainEntity } from '../entities/chain.ts';
-import type {
-  CurrentCowcentratedRangeData,
-  TokenEntity,
-  TokenErc20,
-  TokenLpBreakdown,
-  TokenNative,
-} from '../entities/token.ts';
-import { isTokenErc20, isTokenNative } from '../entities/token.ts';
-import { getDepositTokenFromLegacyVaultConfig } from '../utils/config-hacks.ts';
-import { fetchAllMinters } from '../actions/minters.ts';
-import type { MinterConfig, VaultConfig } from '../apis/config-types.ts';
-import { isNativeAlternativeAddress } from '../../../helpers/addresses.ts';
-import { fetchBridgeConfig } from '../actions/bridge.ts';
-import { entries } from '../../../helpers/object.ts';
 import type { LpData } from '../apis/beefy/beefy-api-types.ts';
+import type { MinterConfig, VaultConfig } from '../apis/config-types.ts';
+import type { PromoTokenRewardConfig } from '../apis/promos/types.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { TokenEntity, TokenErc20, TokenNative } from '../entities/token.ts';
+import { isTokenErc20, isTokenNative } from '../entities/token.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedStandardVault,
   isCowcentratedVault,
   type VaultEntity,
 } from '../entities/vault.ts';
-import { initPromos } from '../actions/promos.ts';
-import type { PromoTokenRewardConfig } from '../apis/promos/types.ts';
+import { getDepositTokenFromLegacyVaultConfig } from '../utils/config-hacks.ts';
+import type { TokensState } from './tokens-types.ts';
 
-/**
- * State containing Vault infos
- */
-export type TokensState = {
-  // we need to split by chain because tokens from different chains have the same ids
-  byChainId: {
-    [chainId in ChainEntity['id']]?: {
-      byId: {
-        [id: string]: TokenEntity['address'];
-      };
-      byAddress: {
-        [address: string]: TokenEntity;
-      };
-      native: TokenNative['id'] | undefined;
-      wnative: TokenErc20['id'] | undefined;
-      /**
-       * we keep the list of tokens where we could be interested in fetching the balance of
-       * it would be more correct to put those inside the balance reducer but this token
-       * reducer has a number of config fixes that I find would make for a more complex code
-       * if refactored. And we have to update the config anyway to make it smaller, so move this
-       * inside the balance reducer once the config is reworked
-       */
-      interestingBalanceTokenAddresses: TokenEntity['address'][];
-      /** list of tokens that have an active vault */
-      tokenIdsInActiveVaults: TokenEntity['id'][];
-    };
-  };
-  prices: {
-    byOracleId: {
-      [tokenId: TokenEntity['oracleId']]: BigNumber;
-    };
-  };
-  breakdown: {
-    byOracleId: {
-      [tokenId: TokenEntity['oracleId']]: TokenLpBreakdown;
-    };
-  };
-  cowcentratedRanges: {
-    byOracleId: {
-      [tokenId: TokenEntity['oracleId']]: CurrentCowcentratedRangeData;
-    };
-  };
-};
 export const initialTokensState: TokensState = {
   byChainId: {},
   prices: { byOracleId: {} },
@@ -89,7 +41,17 @@ export const tokensSlice = createSlice({
   name: 'tokens',
   initialState: initialTokensState,
   reducers: {
-    // standard reducer logic, with auto-generated action types per reducer
+    addToken: (
+      sliceState,
+      action: PayloadAction<{ token: TokenEntity; interesting: boolean; override?: boolean }>
+    ) => {
+      const { token, interesting, override } = action.payload;
+      if (override) {
+        addTokenToState(sliceState, token, interesting);
+      } else {
+        addTokenToStateIfNotExists(sliceState, token, interesting);
+      }
+    },
   },
   extraReducers: builder => {
     // handle native token config
@@ -224,6 +186,8 @@ export const tokensSlice = createSlice({
       });
   },
 });
+
+export const addToken = tokensSlice.actions.addToken;
 
 function addBridgeTokenToState(
   sliceState: Draft<TokensState>,
@@ -605,6 +569,20 @@ function getOrCreateTokensChainState(sliceState: Draft<TokensState>, chainId: Ch
   }
 
   return chainState;
+}
+
+function addTokenToStateIfNotExists(
+  sliceState: Draft<TokensState>,
+  token: TokenEntity,
+  interesting: boolean = false
+) {
+  const chainState = getOrCreateTokensChainState(sliceState, token.chainId);
+  const addressKey = token.address.toLowerCase();
+  if (!chainState.byAddress[addressKey]) {
+    addTokenToState(sliceState, token, interesting);
+  } else if (interesting) {
+    ensureInterestingToken(token.address, token.chainId, sliceState);
+  }
 }
 
 function addTokenToState(

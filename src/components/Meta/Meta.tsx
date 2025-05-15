@@ -22,14 +22,28 @@ export const Meta = memo(function Meta({
 
   return (
     <Helmet>
-      {fullTitle ? <title>{fullTitle}</title> : null}
-      {fullTitle ? <meta property="og:title" content={fullTitle} /> : null}
-      {fullTitle ? <meta property="twitter:title" content={fullTitle} /> : null}
-      {description ? <meta name="description" content={description} /> : null}
-      {description ? <meta property="og:description" content={description} /> : null}
-      {description ? <meta property="twitter:description" content={description} /> : null}
+      {fullTitle ?
+        <title>{fullTitle}</title>
+      : null}
+      {fullTitle ?
+        <meta property="og:title" content={fullTitle} />
+      : null}
+      {fullTitle ?
+        <meta property="twitter:title" content={fullTitle} />
+      : null}
+      {description ?
+        <meta name="description" content={description} />
+      : null}
+      {description ?
+        <meta property="og:description" content={description} />
+      : null}
+      {description ?
+        <meta property="twitter:description" content={description} />
+      : null}
       {/* do not accidentally noindex entire domain when using hash router */}
-      {noindex && routerMode === 'browser' ? <meta name="robots" content="noindex" /> : null}
+      {noindex && routerMode === 'browser' ?
+        <meta name="robots" content="noindex" />
+      : null}
     </Helmet>
   );
 });

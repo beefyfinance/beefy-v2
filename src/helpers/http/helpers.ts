@@ -57,7 +57,9 @@ function valuesToString(
 
   return entries.map(([k, v]) => [
     k,
-    v === null ? nullString : v === undefined ? undefinedString : v.toString(),
+    v === null ? nullString
+    : v === undefined ? undefinedString
+    : v.toString(),
   ]);
 }
 

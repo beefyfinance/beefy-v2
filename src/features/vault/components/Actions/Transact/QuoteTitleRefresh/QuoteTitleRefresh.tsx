@@ -1,10 +1,10 @@
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo, useCallback } from 'react';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
+import { useAppDispatch } from '../../../../../data/store/hooks.ts';
 import Refresh from '../../../../../../images/icons/mui/Refresh.svg?react';
-import { css, type CssStyles } from '@repo/styles/css';
-import { useAppDispatch } from '../../../../../../store.ts';
 import { transactFetchQuotes } from '../../../../../data/actions/transact.ts';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -27,11 +27,11 @@ export const QuoteTitleRefresh = memo(function QuoteTitleRefresh({
   return (
     <div className={css(styles.holder, cssProp)}>
       <div className={classes.title}>{title}</div>
-      {enableRefresh ? (
+      {enableRefresh ?
         <button type="button" className={classes.refreshButton} onClick={handleRefresh}>
           <Refresh className={classes.refreshIcon} />
         </button>
-      ) : null}
+      : null}
     </div>
   );
 });

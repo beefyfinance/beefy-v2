@@ -1,13 +1,13 @@
-import { useTranslation } from 'react-i18next';
-import { UserStats } from './Stats/UserStats.tsx';
-import { VaultsStats } from './Stats/VaultsStats.tsx';
-import VisibilityOffOutlinedIcon from '../../../../images/icons/eyeOff.svg?react';
-import VisibilityOutlinedIcon from '../../../../images/icons/eyeOn.svg?react';
-import { selectIsBalanceHidden } from '../../../data/selectors/wallet.ts';
-import { setToggleHideBalance } from '../../../data/reducers/wallet/wallet.ts';
-import { useAppDispatch, useAppSelector } from '../../../../store.ts';
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
+import VisibilityOffOutlinedIcon from '../../../../images/icons/eyeOff.svg?react';
+import VisibilityOutlinedIcon from '../../../../images/icons/eyeOn.svg?react';
+import { setToggleHideBalance } from '../../../data/reducers/wallet/wallet.ts';
+import { selectIsBalanceHidden } from '../../../data/selectors/wallet.ts';
+import { UserStats } from './Stats/UserStats.tsx';
+import { VaultsStats } from './Stats/VaultsStats.tsx';
 
 export const Portfolio = memo(function Portfolio() {
   const { t } = useTranslation();
@@ -38,7 +38,9 @@ const VisibilityToggle = memo(function VisibilityToggle() {
 
   return (
     <ToggleButton onClick={updateHideBalance}>
-      {hideBalance ? <VisibilityOutlinedIcon /> : <VisibilityOffOutlinedIcon />}
+      {hideBalance ?
+        <VisibilityOutlinedIcon />
+      : <VisibilityOffOutlinedIcon />}
     </ToggleButton>
   );
 });

@@ -1,4 +1,23 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import type BigNumber from 'bignumber.js';
+import type { Address, Hash } from 'viem';
+import { SolidlyGaugeAbi } from '../../../../../config/abi/SolidlyGaugeAbi.ts';
+import { SolidlyVoterAbi } from '../../../../../config/abi/SolidlyVoterAbi.ts';
+import { bigNumberToBigInt, fromWei, toWei } from '../../../../../helpers/big-number.ts';
+import { stepperStartWithSteps } from '../../../actions/wallet/stepper.ts';
+import { approve } from '../../../actions/wallet/approval.ts';
+import { migrateUnstake } from '../../../actions/wallet/migrate.ts';
+import { deposit } from '../../../actions/wallet/standard.ts';
+import { isTokenErc20 } from '../../../entities/token.ts';
+import type { VaultEntity } from '../../../entities/vault.ts';
+import type { Step } from '../../../reducers/wallet/stepper-types.ts';
+import { selectAllowanceByTokenAddress } from '../../../selectors/allowances.ts';
+import { selectUserBalanceToMigrateByVaultId } from '../../../selectors/migration.ts';
+import { selectTokenByAddress } from '../../../selectors/tokens.ts';
+import { selectVaultById } from '../../../selectors/vaults.ts';
+import type { BeefyState } from '../../../store/types.ts';
+import { createAppAsyncThunk } from '../../../utils/store-utils.ts';
+import { getWalletConnectionApi } from '../../instances.ts';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type {
   CommonMigrationUpdateFulfilledPayload,
   Migrator,
@@ -6,34 +25,12 @@ import type {
   MigratorUnstakeProps,
   MigratorUpdateProps,
 } from '../migration-types.ts';
-import type { VaultEntity } from '../../../entities/vault.ts';
-import type BigNumber from 'bignumber.js';
-import type { BeefyState } from '../../../../../redux-types.ts';
-import { selectVaultById } from '../../../selectors/vaults.ts';
-import { getWalletConnectionApi } from '../../instances.ts';
-import { selectTokenByAddress } from '../../../selectors/tokens.ts';
-import { selectUserBalanceToMigrateByVaultId } from '../../../selectors/migration.ts';
-import { SolidlyGaugeAbi } from '../../../../../config/abi/SolidlyGaugeAbi.ts';
-import { SolidlyVoterAbi } from '../../../../../config/abi/SolidlyVoterAbi.ts';
-import type { Step } from '../../../reducers/wallet/stepper.ts';
-import { bigNumberToBigInt, fromWei, toWei } from '../../../../../helpers/big-number.ts';
-import { startStepperWithSteps } from '../../../actions/stepper.ts';
-import { isTokenErc20 } from '../../../entities/token.ts';
-import { selectAllowanceByTokenAddress } from '../../../selectors/allowances.ts';
-import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
-import type { Address, Hash } from 'viem';
-import { migrateUnstake } from '../../../actions/wallet/migrate.ts';
-import { approve } from '../../../actions/wallet/approval.ts';
-import { deposit } from '../../../actions/wallet/standard.ts';
 
 const PEARL_VOTER = '0xa26C2A6BfeC5512c13Ae9EacF41Cb4319d30cCF0';
 
-export const fetchPearlStakedBalance = createAsyncThunk<
+export const fetchPearlStakedBalance = createAppAsyncThunk<
   CommonMigrationUpdateFulfilledPayload,
-  MigratorUpdateProps,
-  {
-    state: BeefyState;
-  }
+  MigratorUpdateProps
 >('migration/polygon-pearl/update', async ({ vaultId, walletAddress }, { getState }) => {
   const state = getState();
   const vault = selectVaultById(state, vaultId);
@@ -68,13 +65,7 @@ async function unstakeCall(
     gaugeContract.write.withdraw([bigNumberToBigInt(amountInWei)], args);
 }
 
-export const executePearlAction = createAsyncThunk<
-  void,
-  MigratorExecuteProps,
-  {
-    state: BeefyState;
-  }
->(
+export const executePearlAction = createAppAsyncThunk<void, MigratorExecuteProps>(
   'migration/polygon-pearl/execute',
   async ({ vaultId, t, migrationId }, { getState, dispatch }) => {
     const steps: Step[] = [];
@@ -118,7 +109,7 @@ export const executePearlAction = createAsyncThunk<
       extraInfo: { vaultId: vault.id },
     });
 
-    dispatch(startStepperWithSteps(steps, vault.chainId));
+    dispatch(stepperStartWithSteps(steps, vault.chainId));
   }
 );
 

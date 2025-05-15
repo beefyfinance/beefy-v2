@@ -1,5 +1,5 @@
-import type { BeefyState } from '../../../redux-types.ts';
-import { createListenerMiddleware, isFulfilled } from '@reduxjs/toolkit';
+import { isFulfilled } from '@reduxjs/toolkit';
+import { createWalletDebouncer } from '../../../helpers/middleware.ts';
 import {
   fetchAllBalanceAction,
   fetchBalanceAction,
@@ -8,28 +8,33 @@ import {
 import { initiateBoostForm } from '../actions/boosts.ts';
 import { initiateMinterForm } from '../actions/minters.ts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
-import { createWalletDebouncer } from '../../../helpers/middleware.ts';
+import { startAppListening } from './listener-middleware.ts';
 
-const balanceListener = createListenerMiddleware<BeefyState>();
+const hasUserBalanceChanged = isFulfilled(
+  fetchAllBalanceAction,
+  fetchBalanceAction,
+  initiateBoostForm,
+  initiateMinterForm,
+  reloadBalanceAndAllowanceAndGovRewardsAndBoostData
+);
 
-const depositedDebouncer = createWalletDebouncer(100);
+export function addBalanceListeners() {
+  const depositedDebouncer = createWalletDebouncer(100);
 
-balanceListener.startListening({
-  matcher: isFulfilled(
-    fetchAllBalanceAction,
-    fetchBalanceAction,
-    initiateBoostForm,
-    initiateMinterForm,
-    reloadBalanceAndAllowanceAndGovRewardsAndBoostData
-  ),
-  effect: async (action, { dispatch, delay }) => {
-    if (await depositedDebouncer(action.payload.walletAddress, delay)) {
-      return;
-    }
+  startAppListening({
+    matcher: hasUserBalanceChanged,
+    effect: async (action, { dispatch, delay }) => {
+      const walletAddress = action.payload.walletAddress;
+      if (!walletAddress) {
+        return;
+      }
 
-    // Compute user deposited vaults
-    dispatch(recalculateDepositedVaultsAction({ walletAddress: action.payload.walletAddress }));
-  },
-});
+      if (await depositedDebouncer(walletAddress, delay)) {
+        return;
+      }
 
-export const balanceMiddleware = balanceListener.middleware;
+      // Compute user deposited vaults
+      dispatch(recalculateDepositedVaultsAction({ walletAddress }));
+    },
+  });
+}

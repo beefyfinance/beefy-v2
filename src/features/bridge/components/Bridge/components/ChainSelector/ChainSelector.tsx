@@ -1,14 +1,15 @@
+import { css, type CssStyles, cx } from '@repo/styles/css';
 import { memo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import type { ChainEntity } from '../../../../../data/entities/chain.ts';
+import { FormStep } from '../../../../../data/reducers/wallet/bridge-types.ts';
+import { bridgeActions } from '../../../../../data/reducers/wallet/bridge.ts';
 import { selectBridgeFormState } from '../../../../../data/selectors/bridge.ts';
 import { selectChainById } from '../../../../../data/selectors/chains.ts';
-import { css, type CssStyles, cx } from '@repo/styles/css';
-import type { ChainEntity } from '../../../../../data/entities/chain.ts';
-import { useTranslation } from 'react-i18next';
-import { bridgeActions, FormStep } from '../../../../../data/reducers/wallet/bridge.ts';
-import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

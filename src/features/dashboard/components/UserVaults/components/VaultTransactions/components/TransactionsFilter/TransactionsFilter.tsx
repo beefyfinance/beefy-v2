@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { SortColumnHeader } from '../../../../../../../../components/SortColumnHeader/SortColumnHeader.tsx';
 import { InfoGrid } from '../InfoGrid/InfoGrid.tsx';
 import { Row } from '../../../Row/Row.tsx';
-import type { SortedOptions } from '../../hook.tsx';
+import type { SortedOptions } from '../../hook.ts';
 import { css, type CssStyles } from '@repo/styles/css';
 
 const SORT_COLUMNS: {

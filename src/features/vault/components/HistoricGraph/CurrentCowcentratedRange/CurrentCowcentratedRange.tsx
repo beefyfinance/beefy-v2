@@ -1,20 +1,20 @@
-import { formatTokenDisplayCondensed } from '../../../../../helpers/format.ts';
-import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
-import { useAppSelector } from '../../../../../store.ts';
+import type BigNumber from 'bignumber.js';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button } from '../../../../../components/Button/Button.tsx';
+import { useBreakpoint } from '../../../../../components/MediaQueries/useBreakpoint.ts';
+import { BIG_ONE, BIG_ZERO } from '../../../../../helpers/big-number.ts';
+import { formatTokenDisplayCondensed } from '../../../../../helpers/format.ts';
+import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
+import SwapIcon from '../../../../../images/icons/swap.svg?react';
+import type { CurrentCowcentratedRangeData } from '../../../../data/entities/token.ts';
+import type { VaultEntity } from '../../../../data/entities/vault.ts';
 import {
   selectCowcentratedLikeVaultDepositTokens,
   selectCurrentCowcentratedRangesByVaultId,
 } from '../../../../data/selectors/tokens.ts';
-import type { VaultEntity } from '../../../../data/entities/vault.ts';
 import { styles } from './styles.ts';
-import { BIG_ONE, BIG_ZERO } from '../../../../../helpers/big-number.ts';
-import type { CurrentCowcentratedRangeData } from '../../../../data/entities/token.ts';
-import type BigNumber from 'bignumber.js';
-import { Button } from '../../../../../components/Button/Button.tsx';
-import SwapIcon from '../../../../../images/icons/swap.svg?react';
-import { useBreakpoint } from '../../../../../components/MediaQueries/useBreakpoint.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

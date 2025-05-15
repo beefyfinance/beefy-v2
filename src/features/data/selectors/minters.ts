@@ -1,9 +1,9 @@
-import type { BeefyState } from '../../../redux-types.ts';
 import type { MinterEntity } from '../entities/minter.ts';
 import { isGovVault, isStandardVault, type VaultEntity } from '../entities/vault.ts';
-import { selectVaultById } from './vaults.ts';
-import { createGlobalDataSelector, shouldLoaderLoadOnce } from './data-loader-helpers.ts';
+import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
+import { createGlobalDataSelector, shouldLoaderLoadOnce } from './data-loader-helpers.ts';
+import { selectVaultById } from './vaults.ts';
 
 export const selectMinterById = (state: BeefyState, minterId: MinterEntity['id']) => {
   const mintersById = state.entities.minters.byId;
@@ -42,9 +42,9 @@ export const selectMinterVaultsType = (state: BeefyState, minterId: MinterEntity
     },
     { vaultsCount: 0, govsCount: 0 }
   );
-  return vaultsCount > 0 && govsCount > 0
-    ? 'WithEarnings'
-    : vaultsCount > 0 && govsCount === 0
-      ? 'WithoutEarnings'
-      : 'OnlyEarnings';
+  return (
+    vaultsCount > 0 && govsCount > 0 ? 'WithEarnings'
+    : vaultsCount > 0 && govsCount === 0 ? 'WithoutEarnings'
+    : 'OnlyEarnings'
+  );
 };

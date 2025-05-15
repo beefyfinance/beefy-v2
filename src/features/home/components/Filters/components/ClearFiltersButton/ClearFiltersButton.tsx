@@ -1,6 +1,6 @@
 import { memo, useCallback } from 'react';
 import { Button } from '../../../../../../components/Button/Button.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
   selectFilterPopinFilterCount,
   selectHasActiveFilter,

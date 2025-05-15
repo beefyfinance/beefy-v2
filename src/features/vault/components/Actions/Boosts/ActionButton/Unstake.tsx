@@ -1,12 +1,12 @@
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../../../../../../store.ts';
-import { startStepperWithSteps } from '../../../../../data/actions/stepper.ts';
-import type { Step } from '../../../../../data/reducers/wallet/stepper.ts';
-import { ActionButton } from './ActionButton.tsx';
-import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
-import type { ChainEntity } from '../../../../../data/entities/chain.ts';
+import { useAppDispatch } from '../../../../../data/store/hooks.ts';
+import { stepperStartWithSteps } from '../../../../../data/actions/wallet/stepper.ts';
 import { exitBoost } from '../../../../../data/actions/wallet/boost.ts';
+import type { ChainEntity } from '../../../../../data/entities/chain.ts';
+import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
+import type { Step } from '../../../../../data/reducers/wallet/stepper-types.ts';
+import { ActionButton } from './ActionButton.tsx';
 
 type UnstakeProps = {
   boostId: BoostPromoEntity['id'];
@@ -20,7 +20,7 @@ export const Unstake = memo(function Claim({ boostId, chainId, disabled, canClai
   const dispatch = useAppDispatch();
   const handleClick = useCallback(() => {
     dispatch(
-      startStepperWithSteps(
+      stepperStartWithSteps(
         [
           {
             step: 'boost-claim-unstake',

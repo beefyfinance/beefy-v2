@@ -1,22 +1,22 @@
+import { type CssStyles } from '@repo/styles/css';
 import { memo } from 'react';
-import type { TokenEntity } from '../../features/data/entities/token.ts';
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
-import { useAppSelector } from '../../store.ts';
+import type { TokenEntity } from '../../features/data/entities/token.ts';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
   selectTokenByAddressOrUndefined,
   selectVaultTokenSymbols,
 } from '../../features/data/selectors/tokens.ts';
-import type { AssetsImageProps } from '../AssetsImage/AssetsImage.tsx';
-import { AssetsImage, MissingAssetsImage } from '../AssetsImage/AssetsImage.tsx';
-import { singleAssetExists } from '../../helpers/singleAssetSrc.ts';
 import {
   selectNonGovVaultIdsByDepositTokenAddress,
   selectVaultByAddressOrUndefined,
   selectVaultById,
 } from '../../features/data/selectors/vaults.ts';
-import type { VaultEntity } from '../../features/data/entities/vault.ts';
-import { type CssStyles } from '@repo/styles/css';
-import type { BeefyState } from '../../redux-types.ts';
+import type { BeefyState } from '../../features/data/store/types.ts';
+import { singleAssetExists } from '../../helpers/singleAssetSrc.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
+import type { AssetsImageProps } from '../AssetsImage/AssetsImage.tsx';
+import { AssetsImage, MissingAssetsImage } from '../AssetsImage/AssetsImage.tsx';
 
 type AddressChainIdOptions = {
   address: TokenEntity['address'];

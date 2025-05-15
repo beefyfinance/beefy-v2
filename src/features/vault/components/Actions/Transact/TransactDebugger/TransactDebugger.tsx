@@ -1,10 +1,10 @@
 import { lazy, memo } from 'react';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import { selectTokenByAddressOrUndefined } from '../../../../../data/selectors/tokens.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { styles } from './styles.ts';
 import { TransactState } from './TransactState.tsx';
-import { useAppSelector } from '../../../../../../store.ts';
-import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import { selectTokenByAddressOrUndefined } from '../../../../../data/selectors/tokens.ts';
 
 const CurveZap = lazy(() =>
   import('./CurveZap.tsx').then(module => ({ default: module.CurveZap }))
@@ -28,12 +28,16 @@ const TransactDebugger = memo(function TransactDebugger({ vaultId }: TransactDeb
 
   return (
     <div className={classes.container}>
-      {depositToken && depositToken.providerId === 'curve' ? <CurveZap vaultId={vaultId} /> : null}
-      {depositToken &&
-      depositToken.providerId &&
-      ['balancer', 'beethovenx'].includes(depositToken.providerId) ? (
+      {depositToken && depositToken.providerId === 'curve' ?
+        <CurveZap vaultId={vaultId} />
+      : null}
+      {(
+        depositToken &&
+        depositToken.providerId &&
+        ['balancer', 'beethovenx'].includes(depositToken.providerId)
+      ) ?
         <BalancerZap vaultId={vaultId} />
-      ) : null}
+      : null}
       <TransactState />
     </div>
   );

@@ -7,9 +7,8 @@ import {
   tenderlySimulateStellaSwapClaim,
   tenderlySimulateTransactQuote,
 } from '../actions/tenderly.ts';
-import { transactActions } from './wallet/transact.ts';
+import { transactConfirmRejected } from '../actions/transact.ts';
 import type { TenderlyState } from './tenderly-types.ts';
-import type { BeefyState } from '../../../redux-types.ts';
 
 const initialState: TenderlyState = {
   mode: 'closed',
@@ -37,7 +36,7 @@ export const tenderlySlice = createSlice({
         TenderlyOpenSimulationPayload,
         T,
         {
-          state: BeefyState;
+          state: unknown;
         }
       >
     ) => {
@@ -83,7 +82,7 @@ export const tenderlySlice = createSlice({
     handleCalls(tenderlySimulateStellaSwapClaim);
 
     builder
-      .addCase(transactActions.confirmRejected, state => {
+      .addCase(transactConfirmRejected, state => {
         if (state.mode !== 'calls' || state.status !== 'pending') {
           return;
         }

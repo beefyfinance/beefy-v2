@@ -1,16 +1,14 @@
 import { memo, useMemo } from 'react';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
-import {
-  selectIsContractDataLoadedOnChain,
-  selectIsPricesAvailable,
-} from '../../features/data/selectors/data-loader.ts';
+import { selectIsContractDataLoadedOnChain } from '../../features/data/selectors/contract-data.ts';
 import { selectPlatformById } from '../../features/data/selectors/platforms.ts';
+import { selectIsPricesAvailable } from '../../features/data/selectors/prices.ts';
 import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types.ts';
 import { selectTvlBreakdownByVaultId } from '../../features/data/selectors/tvl.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import type { BeefyState } from '../../features/data/store/types.ts';
 import { formatLargeUsd, formatPercent } from '../../helpers/format.ts';
-import type { BeefyState } from '../../redux-types.ts';
-import { useAppSelector } from '../../store.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { InterestTooltipContent } from '../InterestTooltipContent/InterestTooltipContent.tsx';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 import { useTranslation } from 'react-i18next';

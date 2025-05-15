@@ -1,24 +1,24 @@
+import { groupBy } from 'lodash-es';
 import { memo, useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { groupBy } from 'lodash-es';
+import { AlertWarning } from '../../../../../../../components/Alerts/Alerts.tsx';
+import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
+import { strictEntries } from '../../../../../../../helpers/object.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../data/store/hooks.ts';
+import { fetchUserStellaSwapRewardsAction } from '../../../../../../data/actions/user-rewards/stellaswap-user-rewards.ts';
+import type { ChainEntity, ChainId } from '../../../../../../data/entities/chain.ts';
 import { type VaultEntity } from '../../../../../../data/entities/vault.ts';
+import { selectChainById } from '../../../../../../data/selectors/chains.ts';
 import {
+  selectStellaSwapUserRewardsStatus,
   selectUserStellaSwapUnifiedRewardsForVault,
   type UnifiedReward,
 } from '../../../../../../data/selectors/user-rewards.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../../store.ts';
-import type { ChainEntity, ChainId } from '../../../../../../data/entities/chain.ts';
-import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
-import { Claim } from './Claim/Claim.tsx';
+import { isNonEmptyArray, type NonEmptyArray } from '../../../../../../data/utils/array-utils.ts';
+import { RefreshButton } from '../RefreshButton/RefreshButton.tsx';
 import { RewardList } from '../RewardList.tsx';
 import { Source } from '../Source/Source.tsx';
-import { isNonEmptyArray, type NonEmptyArray } from '../../../../../../data/utils/array-utils.ts';
-import { selectChainById } from '../../../../../../data/selectors/chains.ts';
-import { strictEntries } from '../../../../../../../helpers/object.ts';
-import { AlertWarning } from '../../../../../../../components/Alerts/Alerts.tsx';
-import { RefreshButton } from '../RefreshButton/RefreshButton.tsx';
-import { fetchUserStellaSwapRewardsAction } from '../../../../../../data/actions/user-rewards/stellaswap-user-rewards.ts';
-import { selectStellaSwapUserRewardsStatus } from '../../../../../../data/selectors/data-loader.ts';
+import { Claim } from './Claim/Claim.tsx';
 
 function useUserRewardsLoader(walletAddress: string, autoRefresh: boolean) {
   const dispatch = useAppDispatch();

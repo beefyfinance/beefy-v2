@@ -1,6 +1,21 @@
+import { uniqBy } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { BeefyThunk } from '../../../../../../redux-types.ts';
-import type { Step } from '../../../../reducers/wallet/stepper.ts';
+import { toWeiString } from '../../../../../../helpers/big-number.ts';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
+import type { TokenEntity, TokenErc20 } from '../../../../entities/token.ts';
+import {
+  isCowcentratedStandardVault,
+  type VaultStandardCowcentrated,
+} from '../../../../entities/vault.ts';
+import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
+import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../../selectors/tokens.ts';
+import { selectTransactSlippage } from '../../../../selectors/transact.ts';
+import type { BeefyThunk } from '../../../../store/types.ts';
+import { slipBy } from '../../helpers/amounts.ts';
+import { onlyOneInput } from '../../helpers/options.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
+import { pickTokens } from '../../helpers/tokens.ts';
+import { NO_RELAY } from '../../helpers/zap.ts';
 import type {
   CowcentratedVaultDepositOption,
   CowcentratedVaultDepositQuote,
@@ -21,6 +36,13 @@ import type {
   ZapStrategyIdToWithdrawOption,
   ZapStrategyIdToWithdrawQuote,
 } from '../../transact-types.ts';
+import {
+  type ICowcentratedVaultType,
+  isCowcentratedVaultType,
+  isStandardVaultType,
+  type IStandardVaultType,
+} from '../../vaults/IVaultType.ts';
+import type { OrderInput, OrderOutput, UserlessZapRequest, ZapStep } from '../../zap/types.ts';
 import type {
   AnyComposableStrategy,
   IComposableStrategy,
@@ -29,28 +51,6 @@ import type {
   ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { VaultComposerStrategyConfig } from '../strategy-configs.ts';
-import {
-  isCowcentratedStandardVault,
-  type VaultStandardCowcentrated,
-} from '../../../../entities/vault.ts';
-import {
-  type ICowcentratedVaultType,
-  isCowcentratedVaultType,
-  isStandardVaultType,
-  type IStandardVaultType,
-} from '../../vaults/IVaultType.ts';
-import type { TokenEntity, TokenErc20 } from '../../../../entities/token.ts';
-import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../../selectors/tokens.ts';
-import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
-import { selectTransactSlippage } from '../../../../selectors/transact.ts';
-import type { OrderInput, OrderOutput, UserlessZapRequest, ZapStep } from '../../zap/types.ts';
-import { pickTokens } from '../../helpers/tokens.ts';
-import { toWeiString } from '../../../../../../helpers/big-number.ts';
-import { slipBy } from '../../helpers/amounts.ts';
-import { uniqBy } from 'lodash-es';
-import { NO_RELAY } from '../../helpers/zap.ts';
-import { onlyOneInput } from '../../helpers/options.ts';
-import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
 const strategyId = 'vault-composer';
 type StrategyId = typeof strategyId;

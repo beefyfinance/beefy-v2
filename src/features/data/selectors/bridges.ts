@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types.ts';
-import type { BridgeEntity } from '../entities/bridge.ts';
 import { createCachedSelector } from 're-reselect';
+import type { BridgeEntity } from '../entities/bridge.ts';
+import type { BeefyState } from '../store/types.ts';
 
 export const selectBridgeById = createCachedSelector(
   (state: BeefyState) => state.entities.bridges.byId,

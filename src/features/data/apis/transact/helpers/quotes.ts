@@ -1,3 +1,8 @@
+import type BigNumber from 'bignumber.js';
+import { BIG_ZERO, compareBigNumber } from '../../../../../helpers/big-number.ts';
+import { selectTokenPriceByAddress } from '../../../selectors/tokens.ts';
+import type { BeefyState } from '../../../store/types.ts';
+import type { QuoteResponse } from '../swap/ISwapProvider.ts';
 import {
   isZapQuoteStepSwap,
   isZapQuoteStepSwapAggregator,
@@ -5,11 +10,6 @@ import {
   type ZapFee,
   type ZapQuoteStep,
 } from '../transact-types.ts';
-import type { BeefyState } from '../../../../../redux-types.ts';
-import { BIG_ZERO, compareBigNumber } from '../../../../../helpers/big-number.ts';
-import { selectTokenPriceByAddress } from '../../../selectors/tokens.ts';
-import type BigNumber from 'bignumber.js';
-import type { QuoteResponse } from '../swap/ISwapProvider.ts';
 
 export const ZERO_FEE: ZapFee = { value: 0 };
 
