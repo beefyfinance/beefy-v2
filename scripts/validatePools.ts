@@ -127,6 +127,7 @@ const nonHarvestOnDepositPools = [
   'aero-cow-usdz-cbbtc-vault',
   'aero-cow-eurc-usdc-vault',
   'silov2-sonic-usdce-ws',
+  'compound-polygon-usdc',
 ];
 const excludedAbPools = [
   'gmx-arb-near-usdc',

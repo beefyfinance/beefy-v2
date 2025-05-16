@@ -792,14 +792,14 @@ export const config = {
     name: 'Saga',
     chainId: 5464,
     rpc: ['https://sagaevm.jsonrpc.sagarpc.io'],
-    explorerUrl: 'https://sagaevm.sagaexplorer.io/',
+    explorerUrl: 'https://sagaevm-5464-1.sagaexplorer.io/',
     multicall3Address: '0x864DDc9B50B9A0dF676d826c9B9EDe9F8913a160', // TODO ?
     appMulticallContractAddress: '0x2840463Ea288c26B66E24f92E8C704e1aB6b095c',
     native: { symbol: 'GAS', oracleId: 'WGAS', decimals: 18 },
     gas: {
       type: 'gasless',
     },
-    stableCoins: [], // TODO
+    stableCoins: ['USDC', 'USDT'],
   },
   aurora: {
     name: 'Aurora',
