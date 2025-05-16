@@ -67,7 +67,7 @@ const recipe = sva({
       borderStyle: 'solid',
       borderColor: 'transparent',
       borderRadius: '8px',
-      paddingInline: '16px',
+      paddingInline: '12px',
       paddingBlock: '8px',
     },
     input: {
@@ -79,7 +79,7 @@ const recipe = sva({
       flexGrow: '1',
       outline: 'none',
       '&::placeholder': {
-        color: 'text.dark',
+        color: 'white.70-64a',
         opacity: '1',
       },
       _focus: {
@@ -132,6 +132,7 @@ const recipe = sva({
 const Adornments = styled('div', {
   base: {
     display: 'flex',
+    alignItems: 'center',
     flexDirection: 'row',
     flexShrink: '0',
     flexGrow: '0',

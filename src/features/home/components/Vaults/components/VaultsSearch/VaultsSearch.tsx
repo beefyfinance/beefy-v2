@@ -1,4 +1,6 @@
 import { css } from '@repo/styles/css';
+import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useTranslation } from 'react-i18next';
 import { debounce } from 'lodash-es';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
@@ -7,6 +9,8 @@ import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vau
 import { selectFilterSearchText } from '../../../../../data/selectors/filtered-vaults.ts';
 
 export const VaultsSearch = memo(function VaultsSearch() {
+  const { t } = useTranslation();
+  const isDesktop = useBreakpoint({ from: 'lg' });
   const dispatch = useAppDispatch();
   const searchText = useAppSelector(selectFilterSearchText);
   const [value, setValue] = useState(searchText);
@@ -32,12 +36,19 @@ export const VaultsSearch = memo(function VaultsSearch() {
   }, [searchText, setValue]);
 
   return (
-    <SearchInput className={input} value={value} onValueChange={handleChange} focusOnSlash={true} />
+    <SearchInput
+      placeholder={t('Filter-Vaults-Search-Placeholder')}
+      className={input}
+      value={value}
+      onValueChange={handleChange}
+      focusOnSlash={isDesktop}
+    />
   );
 });
 
 const input = css({
-  md: {
+  width: '100%',
+  lg: {
     maxWidth: '75%',
   },
 });

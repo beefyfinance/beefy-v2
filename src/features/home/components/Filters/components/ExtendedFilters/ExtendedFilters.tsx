@@ -1,46 +1,62 @@
-import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { PlatformDropdownFilter } from '../PlatformFilters/PlatformDropdownFilter.tsx';
-import { styles } from './styles.ts';
-import { VaultCategoryDropdownFilter } from '../VaultCategoryFilters/VaultCategoryDropdownFilter.tsx';
-import { CheckboxFilter } from '../CheckboxFilter/CheckboxFilter.tsx';
-import { ShownVaultsCount } from './ShownVaultsCount.tsx';
-import { AssetTypeDropdownFilter } from '../AssetTypeFilters/AssetTypeDropdownFilter.tsx';
-import { MinTvlFilter } from '../MinTvlFilter/MinTvlFilter.tsx';
-import { StrategyTypeDropdownFilter } from '../StrategyTypeFilters/StrategyTypeDropdownFilter.tsx';
+import { memo, useCallback, useMemo, type FC } from 'react';
+import { Filter, type FilterContentProps } from './FilterContent.tsx';
+import { styled } from '@repo/styles/jsx';
+import { Chains } from './ChainsContent.tsx';
+import { Platforms } from './PlatformsContent.tsx';
 import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { FilterContent } from '../../../../../data/reducers/filtered-vaults-types.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { selectFilterContent } from '../../../../../data/selectors/filtered-vaults.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 
-const useStyles = legacyMakeStyles(styles);
-
-export type ExtendedFiltersProps = {
-  desktopView: boolean;
+const contentToComponent: Record<FilterContent, FC<FilterContentProps>> = {
+  [FilterContent.Filter]: Filter,
+  [FilterContent.Platform]: Platforms,
+  [FilterContent.Chains]: Chains,
 };
-export const ExtendedFilters = memo(function ExtendedFilters({
-  desktopView,
-}: ExtendedFiltersProps) {
-  const { t } = useTranslation();
-  const classes = useStyles();
-  const mobileView = useBreakpoint({ to: 'xs' });
-  const platformFilterPlacement = mobileView ? 'top-start' : 'bottom-start';
+
+export const ExtendedFilters = memo(function ExtendedFilters() {
+  const desktop = useBreakpoint({ from: 'lg' });
+  const content = useAppSelector(selectFilterContent);
+  const dispatch = useAppDispatch();
+  const ContentComponent = contentToComponent[content];
+
+  const handleContent = useCallback(
+    (content: FilterContent) => {
+      dispatch(filteredVaultsActions.setFilterContent(content));
+    },
+    [dispatch]
+  );
+
+  const mustUseCustomPadding = useMemo(
+    () => desktop && content === FilterContent.Platform,
+    [content, desktop]
+  );
 
   return (
-    <div className={classes.extendedFilters}>
-      <ShownVaultsCount css={styles.shownVaultsCount} />
-      <CheckboxFilter filter="onlyBoosted" label={t('Filter-Boost')} />
-      <CheckboxFilter filter="onlyEarningPoints" label={t('Filter-Points')} />
-      <CheckboxFilter filter="onlyZappable" label={t('Filter-Zappable')} />
-      <CheckboxFilter filter="onlyRetired" label={t('Filter-Retired')} />
-      <CheckboxFilter filter="onlyPaused" label={t('Filter-Paused')} />
-      <MinTvlFilter />
-      {!desktopView ?
-        <>
-          <VaultCategoryDropdownFilter layer={1} />
-          <AssetTypeDropdownFilter layer={1} />
-          <StrategyTypeDropdownFilter layer={1} />
-        </>
-      : null}
-      <PlatformDropdownFilter placement={platformFilterPlacement} />
-    </div>
+    <ExtendedFiltersContainer customPadding={mustUseCustomPadding}>
+      <ContentComponent handleContent={handleContent} />
+    </ExtendedFiltersContainer>
   );
+});
+
+const ExtendedFiltersContainer = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: '8px',
+    padding: '10px 12px',
+    lg: {
+      padding: '16px',
+    },
+  },
+  variants: {
+    customPadding: {
+      true: {
+        lg: {
+          padding: '16px 16px 0px 16px',
+        },
+      },
+    },
+  },
 });

@@ -6,10 +6,13 @@ export const OptionLabel = styled('span', {
     minWidth: '0',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    color: 'text.dark',
   },
   variants: {
     selected: {
-      true: {},
+      true: {
+        color: 'text.light',
+      },
     },
   },
 });

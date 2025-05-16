@@ -19,15 +19,17 @@ import type { BeefyState } from '../../features/data/store/types.ts';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
+import { useTranslation } from 'react-i18next';
 
 export type VaultWalletStatProps = {
   vaultId: VaultEntity['id'];
 } & Omit<VaultValueStatProps, keyof ReturnType<typeof selectVaultWalletStat>>;
 
 export const VaultWalletStat = memo(function ({ vaultId, ...passthrough }: VaultWalletStatProps) {
+  const { t } = useTranslation();
   // @dev don't do this - temp migration away from connect()
-  const statProps = useAppSelector(state => selectVaultWalletStat(state, vaultId));
-  return <VaultValueStat {...statProps} {...passthrough} />;
+  const { label, ...statProps } = useAppSelector(state => selectVaultWalletStat(state, vaultId));
+  return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
 });
 
 // TODO better selector / hook

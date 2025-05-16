@@ -7,5 +7,6 @@ export const NewBadge = styled(BaseNewBadge, {
     top: '-2px',
     right: '0',
     transform: 'translate(50%, -50%)',
+    md: {},
   },
 });

@@ -1,10 +1,10 @@
+import { bluechipTokens, memeTokens } from '../../../helpers/utils.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { fromUnixTime, sub } from 'date-fns';
 import { orderBy } from 'lodash-es';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
-import { bluechipTokens } from '../../../helpers/utils.ts';
 import {
   getDataApiBucket,
   getDataApiBucketsLongerThan,
@@ -196,43 +196,12 @@ export const selectIsTokenStable = createCachedSelector(
   (chain, tokenId) => chain.stableCoins.includes(tokenId)
 )((_state: BeefyState, _chainId: ChainEntity['id'], tokenId: TokenEntity['id']) => tokenId);
 
-export const selectIsBeefyToken = (_: BeefyState, tokenId: TokenEntity['id']) => {
-  return [
-    'BIFI',
-    'oldBIFI',
-    'POTS',
-    'beFTM',
-    'beQI',
-    'beJOE',
-    'binSPIRIT',
-    'beVELO',
-    'beOPX',
-    'mooBIFI',
-  ].includes(tokenId);
-};
-
-export const selectIsLSDToken = (_: BeefyState, tokenId: TokenEntity['id']) => {
-  return [
-    'stETH',
-    'wstETH',
-    'rETH',
-    'sETH',
-    'frxETH',
-    'sfrxETH',
-    'cbETH',
-    'ankrETH',
-    'stMATIC',
-    'MaticX',
-    'BNBx',
-    'ankrBNB',
-    'sFTMx',
-    'ankrFTM',
-    'wstDOT',
-  ].includes(tokenId);
-};
-
 export const selectIsTokenBluechip = (_: BeefyState, tokenId: TokenEntity['id']) => {
   return bluechipTokens.includes(tokenId);
+};
+
+export const selectIsTokenMeme = (_: BeefyState, tokenId: TokenEntity['id']) => {
+  return memeTokens.includes(tokenId);
 };
 
 export const selectTokenPriceByAddress = createSelector(

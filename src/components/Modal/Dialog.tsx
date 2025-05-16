@@ -1,6 +1,9 @@
 import { styled } from '@repo/styles/jsx';
+import { cva, type RecipeVariantProps } from '@repo/styles/css';
 
-export const Dialog = styled('div', {
+export type DialogVariantProps = NonNullable<RecipeVariantProps<typeof dialogRecipe>>;
+
+const dialogRecipe = cva({
   base: {
     display: 'flex',
     minHeight: '0',
@@ -24,6 +27,9 @@ export const Dialog = styled('div', {
       left: {
         marginRight: 'auto',
       },
+      bottom: {
+        marginTop: 'auto',
+      },
     },
   },
   defaultVariants: {
@@ -31,3 +37,5 @@ export const Dialog = styled('div', {
     position: 'center',
   },
 });
+
+export const Dialog = styled('div', dialogRecipe);

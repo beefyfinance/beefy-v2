@@ -2,7 +2,6 @@ import { css } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import type { StyledVariantProps } from '@repo/styles/types';
 import { type FC, memo, type ReactNode, type SVGProps } from 'react';
-import { useTranslation } from 'react-i18next';
 import { TextLoader } from '../TextLoader/TextLoader.tsx';
 import { DivWithTooltip } from '../Tooltip/DivWithTooltip.tsx';
 
@@ -47,12 +46,11 @@ export const VaultValueStat = memo(function VaultValueStat({
   textWrap = true,
   ...rest
 }: VaultValueStatProps) {
-  const { t } = useTranslation();
   const showSubValue = expectSubValue || !!subValue;
 
   return (
     <Layout {...rest}>
-      {!hideLabel && <Label>{t(label)}</Label>}
+      {!hideLabel && <Label>{label}</Label>}
       <Values tooltip={tooltip} disabled={!tooltip}>
         <ValueHolder kind="primary" textWrap={textWrap} boosted={boosted}>
           {loading ?

@@ -7,6 +7,7 @@ import {
 import { formatLargeUsd } from '../../helpers/format.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { RewardsTooltipContent } from '../RewardsTooltip/RewardsTooltip.tsx';
+import { useTranslation } from 'react-i18next';
 import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
 
@@ -20,7 +21,8 @@ export const MobileVaultYieldStat = memo(function MobileVaultYieldStat({
   walletAddress,
   ...passthrough
 }: MobileVaultYieldStatProps) {
-  const label = 'VaultStat-Yield';
+  const { t } = useTranslation();
+  const label = t('VaultStat-Yield');
   const data = useAppSelector(state =>
     selectDashboardUserRewardsOrStatusByVaultId(state, vaultId, walletAddress)
   );

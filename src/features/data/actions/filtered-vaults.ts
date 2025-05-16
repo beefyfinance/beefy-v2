@@ -28,6 +28,7 @@ import {
   selectFilterPlatformIdsForVault,
   selectIsVaultBlueChip,
   selectIsVaultCorrelated,
+  selectIsVaultMeme,
   selectIsVaultStable,
   selectVaultIsBoostedForFilter,
   selectVaultMatchesText,
@@ -155,6 +156,9 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
           ) {
             return false;
           }
+          if (filterOptions.vaultCategory.includes('meme') && !selectIsVaultMeme(state, vault.id)) {
+            return false;
+          }
         }
 
         // User category: 'Saved'
@@ -192,7 +196,6 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
 
         // Underlying TVL
         if (
-          filterOptions.showMinimumUnderlyingTvl &&
           filterOptions.minimumUnderlyingTvl.gt(0) &&
           selectVaultUnderlyingTvlUsd(state, vault.id).lt(filterOptions.minimumUnderlyingTvl)
         ) {

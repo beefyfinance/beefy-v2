@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { ToggleButtons } from '../../../../components/ToggleButtons/ToggleButtons.tsx';
 import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
-import { Select } from '../../../../components/Form/Select/Single/Select.tsx';
+import { SelectSingle } from '../../../../components/Form/Select/Single/SelectSingle.tsx';
 import type { SelectItem } from '../../../../components/Form/Select/types.ts';
 
 export type StatSwitcherProps<T extends string = string> = {
@@ -18,7 +18,7 @@ export const StatSwitcher = memo(function StatSwitcher<T extends string = string
   const mobileView = useBreakpoint({ to: 'xs' });
 
   return mobileView ?
-      <Select
+      <SelectSingle
         fullWidth={true}
         options={options}
         selected={stat}

@@ -14,15 +14,16 @@ export const Option = memo(
       noneSelected = false,
       ButtonComponent,
       LabelComponent,
-      IconComponent,
       BadgeComponent = OptionBadge,
+      StartAdornmentComponent,
+      EndAdornmentComponent,
     }: OptionProps<TItem>,
     ref: Ref<HTMLButtonElement>
   ) {
     return (
       <ButtonComponent {...getProps(index)} ref={ref} active={active} selected={selected}>
-        {IconComponent && (
-          <IconComponent
+        {StartAdornmentComponent && (
+          <StartAdornmentComponent
             item={item}
             selected={selected}
             allSelected={allSelected}
@@ -31,6 +32,14 @@ export const Option = memo(
         )}
         <LabelComponent selected={selected}>{item.label}</LabelComponent>
         {item.badge && <BadgeComponent selected={selected}>{item.badge}</BadgeComponent>}
+        {EndAdornmentComponent && (
+          <EndAdornmentComponent
+            item={item}
+            selected={selected}
+            allSelected={allSelected}
+            noneSelected={noneSelected}
+          />
+        )}
       </ButtonComponent>
     );
   })

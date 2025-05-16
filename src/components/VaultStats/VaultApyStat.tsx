@@ -29,9 +29,10 @@ export const VaultApyStat = memo(function VaultApyStat({
   const subSortApy = useAppSelector(selectFilterAvgApySort);
 
   const label =
-    type === 'daily' ? 'VaultStat-DAILY'
-    : data.type === 'apr' ? 'VaultStat-APR'
-    : 'VaultStat-APY';
+    type === 'daily' ? t('VaultStat-DAILY')
+    : data.type === 'apr' ? t('VaultStat-APR')
+    : subSortApy !== 'default' ? t('VaultStat-AvgAPY', { count: subSortApy })
+    : t('VaultStat-APY');
   const formatted = useMemo(
     () => (data.status === 'available' ? formatTotalApy(data.values, '???') : undefined),
     [data]

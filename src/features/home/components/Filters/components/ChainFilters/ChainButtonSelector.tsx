@@ -16,8 +16,14 @@ type ChainButtonProps = {
   id: ChainEntity['id'];
   selected: boolean;
   onChange: (selected: boolean, id: ChainEntity['id']) => void;
+  allSelected?: boolean;
 };
-const ChainButton = memo(function ChainButton({ id, selected, onChange }: ChainButtonProps) {
+const ChainButton = memo(function ChainButton({
+  id,
+  selected,
+  onChange,
+  allSelected,
+}: ChainButtonProps) {
   const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, id));
   const handleChange = useCallback(() => {
@@ -25,20 +31,22 @@ const ChainButton = memo(function ChainButton({ id, selected, onChange }: ChainB
   }, [id, selected, onChange]);
   const Icon = getNetworkIcon(id);
 
+  const isAllSelected = allSelected || selected;
+
   return (
     <ButtonWithTooltip
       openOnClick={false}
       tooltip={chain.name}
       placement="top"
       onClick={handleChange}
-      className={css(styles.button, selected && styles.selected)}
+      className={css(styles.button, isAllSelected && styles.selected, selected && styles.active)}
       variant="dark"
     >
       {chain.new ?
         <NewBadge css={styles.badge} />
       : null}
       <Icon
-        className={cx(classes.icon, !selected && classes.unselectedIcon)}
+        className={cx(classes.icon, !isAllSelected && classes.unselectedIcon)}
         width={24}
         height={24}
       />
@@ -82,8 +90,9 @@ export const ChainButtonSelector = memo(function ChainButtonSelector({
         <ChainButton
           key={id}
           id={id}
-          selected={selected.length === 0 || selected.includes(id)}
+          selected={selected.includes(id)}
           onChange={handleChange}
+          allSelected={selected.length === 0}
         />
       ))}
     </Buttons>

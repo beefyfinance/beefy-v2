@@ -1,4 +1,4 @@
-import { memo, useCallback, useDeferredValue, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import type { SelectItem, SelectMultiProps } from '../types.ts';
 import {
   autoUpdate,
@@ -22,13 +22,15 @@ import { Option } from '../Option.tsx';
 import { isDefined } from '../../../../features/data/utils/array-utils.ts';
 import { SelectLabel } from '../SelectLabel.tsx';
 import { OptionLabel } from '../OptionLabel.tsx';
-import { SearchField } from './SearchField.tsx';
-import { OptionBadge } from '../OptionBadge.tsx';
 import { OptionIcon } from '../OptionIcon.tsx';
+import { OptionBadge } from '../OptionBadge.tsx';
 import { useMediaQuery } from '../../../MediaQueries/useMediaQuery.ts';
-import { defaultSearchFunction, indexesFromValues } from './helpers.ts';
+import { indexesFromValues } from './helpers.ts';
+import { SelectMultipleContent } from './SelectMultipleContent.tsx';
 
-export const SelectMultiple = memo(function Select<TItem extends SelectItem = SelectItem>({
+export const SelectMultiple = memo(function Select<
+  TItem extends SelectItem<string> = SelectItem<string>,
+>({
   selected,
   options,
   onChange,
@@ -41,12 +43,14 @@ export const SelectMultiple = memo(function Select<TItem extends SelectItem = Se
   OptionComponent = Option,
   OptionButtonComponent = OptionButton,
   OptionLabelComponent = OptionLabel,
-  OptionIconComponent = OptionIcon,
+  OptionStartAdornmentComponent = OptionIcon,
+  OptionEndAdornmentComponent = undefined,
   OptionBadgeComponent = OptionBadge,
   placement = 'bottom-start',
   layer = 0,
   searchEnabled = false,
-  searchFunction = defaultSearchFunction,
+  searchFunction,
+  placeholder,
   allSelectedLabel = 'All',
   ...variantProps
 }: SelectMultiProps<TItem>) {
@@ -58,19 +62,6 @@ export const SelectMultiple = memo(function Select<TItem extends SelectItem = Se
     () => selectedIndexes.map(index => options[index]).filter(isDefined),
     [options, selectedIndexes]
   );
-  const [searchText, setSearchText] = useState<string>('');
-  const deferredSearchText = useDeferredValue(searchText);
-  const disabledIndexes = useMemo(() => {
-    if (!searchEnabled) {
-      return undefined;
-    }
-    if (deferredSearchText.length === 0) {
-      return [];
-    }
-    return options
-      .map((option, index) => (searchFunction(option, deferredSearchText) ? undefined : index))
-      .filter(isDefined);
-  }, [searchEnabled, deferredSearchText, options, searchFunction]);
   const isTouch = useMediaQuery('(pointer: coarse)');
 
   const handleSelect = useCallback(
@@ -126,7 +117,6 @@ export const SelectMultiple = memo(function Select<TItem extends SelectItem = Se
     onNavigate: setActiveIndex,
     loop: true,
     virtual: searchEnabled && !isTouch,
-    disabledIndices: disabledIndexes,
     enabled: !isTouch,
   });
   const click = useClick(context, { event: 'mousedown' });
@@ -174,7 +164,6 @@ export const SelectMultiple = memo(function Select<TItem extends SelectItem = Se
 
   const allSelected = selected.length === options.length;
   const noneSelected = selected.length === 0;
-  const noSearchMatches = searchEnabled && disabledIndexes?.length === options.length;
 
   return (
     <>
@@ -200,32 +189,25 @@ export const SelectMultiple = memo(function Select<TItem extends SelectItem = Se
               style={floatingStyles}
               ref={refs.setFloating}
               layer={layer}
-              header={
-                searchEnabled && <SearchField value={searchText} onValueChange={setSearchText} />
-              }
             >
-              {noSearchMatches ?
-                <>No matches.</>
-              : options.map((item, index) =>
-                  disabledIndexes?.includes(index) ?
-                    null
-                  : <OptionComponent
-                      key={item.value}
-                      item={item}
-                      index={index}
-                      active={activeIndex === index}
-                      selected={selected.includes(item.value)}
-                      getProps={getItemProps}
-                      ref={setListRefs[index]}
-                      allSelected={allSelected}
-                      noneSelected={noneSelected}
-                      ButtonComponent={OptionButtonComponent}
-                      LabelComponent={OptionLabelComponent}
-                      IconComponent={OptionIconComponent}
-                      BadgeComponent={OptionBadgeComponent}
-                    />
-                )
-              }
+              <SelectMultipleContent
+                options={options}
+                selected={selected}
+                activeIndex={activeIndex}
+                allSelected={allSelected}
+                noneSelected={noneSelected}
+                getItemProps={getItemProps}
+                setListRefs={setListRefs}
+                searchEnabled={searchEnabled}
+                searchFunction={searchFunction}
+                placeholder={placeholder}
+                OptionComponent={OptionComponent}
+                OptionButtonComponent={OptionButtonComponent}
+                OptionLabelComponent={OptionLabelComponent}
+                OptionStartAdornmentComponent={OptionStartAdornmentComponent}
+                OptionEndAdornmentComponent={OptionEndAdornmentComponent}
+                OptionBadgeComponent={OptionBadgeComponent}
+              />
             </SelectDropdown>
           </FloatingFocusManager>
         </FloatingPortal>

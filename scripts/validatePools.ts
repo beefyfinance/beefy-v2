@@ -59,6 +59,7 @@ const overrides: Record<
   'compound-base-eth': { harvestOnDeposit: undefined },
   'compound-polygon-usdc': { harvestOnDeposit: undefined },
   'beefy-besonic': { vaultOwner: undefined }, // temp disabled while waiting for rewards to refill
+  'compound-polygon-usdc': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [

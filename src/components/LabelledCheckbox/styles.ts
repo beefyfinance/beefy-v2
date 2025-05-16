@@ -5,10 +5,17 @@ export const styles = {
     textStyle: 'body.medium',
     display: 'flex',
     alignItems: 'center',
-    color: 'text.middle',
+    color: 'text.dark',
     cursor: 'pointer',
-    columnGap: '4px',
+    columnGap: '10px',
     userSelect: 'none',
+    paddingBlock: '8px',
+    width: '100%',
+  }),
+  endAdornment: css.raw({
+    display: 'flex',
+    alignItems: 'center',
+    marginLeft: 'auto',
   }),
   icon: css.raw({
     color: 'text.dark',
@@ -17,7 +24,7 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
   }),
-  checkedIcon: css.raw({
+  checkedLabel: css.raw({
     color: 'text.light',
   }),
 };

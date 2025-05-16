@@ -9,11 +9,13 @@ import {
   useState,
 } from 'react';
 import CloseRounded from '../../../images/icons/mui/CloseRounded.svg?react';
-import SearchIcon from '../../../images/icons/mui/Search.svg?react';
+import SearchIcon from '../../../images/icons/search.svg?react';
 import { css, cx } from '@repo/styles/css';
 import { BaseInput, type BaseInputProps } from './BaseInput.tsx';
 import type { Override } from '../../../features/data/utils/types-utils.ts';
 import { useMediaQuery } from '../../MediaQueries/useMediaQuery.ts';
+import SlashIcon from '../../../images/icons/slash.svg?react';
+import { styled } from '@repo/styles/jsx';
 
 const buttonCss = css({
   background: 'transparent',
@@ -25,23 +27,19 @@ const buttonCss = css({
   alignItems: 'center',
   color: 'text.dark',
   flexShrink: '0',
-  width: '24px',
-  height: '24px',
+  width: '20px',
+  height: '20px',
 });
 
 const pointerCss = css({
   cursor: 'pointer',
 });
 
-const slashCss = css({
-  border: `1px solid {colors.text.dark}`,
-  borderRadius: '4px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '20px',
-  height: '20px',
-  fontWeight: 'medium',
+const StartSearchIcon = styled(SearchIcon, {
+  base: {
+    transform: 'rotate(270deg)',
+    color: 'white.70-64a',
+  },
 });
 
 export type SearchInputProps = Override<
@@ -54,10 +52,6 @@ export type SearchInputProps = Override<
     focusOnSlash?: boolean;
   }
 >;
-
-const SlashIcon = memo(function SlashIcon() {
-  return <div className={slashCss}>{'/'}</div>;
-});
 
 export const SearchInput = memo(function SearchInput({
   onValueChange,
@@ -89,11 +83,7 @@ export const SearchInput = memo(function SearchInput({
   const showSlash = focusOnSlash && !isFocused && !isTouch && value.length === 0;
   const endAdornment = useMemo(() => {
     if (showSlash) {
-      return (
-        <div className={buttonCss}>
-          <SlashIcon />
-        </div>
-      );
+      return <SlashIcon />;
     } else if (showClear) {
       return (
         <button type="button" onClick={handleClear} className={cx(buttonCss, pointerCss)}>
@@ -149,7 +139,7 @@ export const SearchInput = memo(function SearchInput({
       onFocus={handleFocus}
       onBlur={handleBlur}
       fullWidth={true}
-      startAdornment={<SearchIcon />}
+      startAdornment={<StartSearchIcon />}
       endAdornment={endAdornment}
       placeholder={placeholder}
       warning={warning || (minLength > 0 && value.length > 0 && value.length < minLength)}
