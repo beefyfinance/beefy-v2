@@ -143,5 +143,10 @@
     "chainId": "berachain",
     "router": "0xe103ab2f922aa1a56EC058AbfDA2CeEa1e95bCd7",
     "manager": "0xd0019D13d2F2eb3BA81bca1650cD45cD2Db6526E"
+  },
+  {
+    "chainId": "saga",
+    "router": "0xcA7b72437193665d078aEeaDFFa565E1A2E71c3B",
+    "manager": "0xFeEFCc6CEB8dB58575f7075Ff91D322037e43808"
   }
 ]

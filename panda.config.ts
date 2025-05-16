@@ -950,6 +950,7 @@ const config = buildConfig(
       polygon: { primary: '#f5f0fd', header: 0.3 },
       real: { primary: '#ffffff', header: '#1c122c66' },
       rootstock: { primary: '#000000', header: '#1c122c66' },
+      saga: { primary: '#000000', header: '#12121233' },
       scroll: { primary: '#ffe6c8', header: '#c9cbce' },
       sei: { primary: '#000000', header: '#1c122c66' },
       sonic: { primary: '#10283c', secondary: '#fe9a4c', header: { primary: 0.5, secondary: 0.5 } },
