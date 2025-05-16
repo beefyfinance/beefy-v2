@@ -22,7 +22,7 @@
       },
       {
         "type": "token",
-        "address": "0x5555b2733602ded58d47b8d3d989e631cbee5555",
+        "address": "0x5555b2733602DEd58D47b8D3D989E631CBee5555",
         "symbol": "GEMS",
         "decimals": 18,
         "oracleId": "GEMS"
@@ -52,7 +52,7 @@
       },
       {
         "type": "token",
-        "address": "0x5555b2733602ded58d47b8d3d989e631cbee5555",
+        "address": "0x5555b2733602DEd58D47b8D3D989E631CBee5555",
         "symbol": "GEMS",
         "decimals": 18,
         "oracleId": "GEMS"
@@ -82,7 +82,7 @@
       },
       {
         "type": "token",
-        "address": "0x5555b2733602ded58d47b8d3d989e631cbee5555",
+        "address": "0x5555b2733602DEd58D47b8D3D989E631CBee5555",
         "symbol": "GEMS",
         "decimals": 18,
         "oracleId": "GEMS"
@@ -112,7 +112,7 @@
       },
       {
         "type": "token",
-        "address": "0x5555b2733602ded58d47b8d3d989e631cbee5555",
+        "address": "0x5555b2733602DEd58D47b8D3D989E631CBee5555",
         "symbol": "GEMS",
         "decimals": 18,
         "oracleId": "GEMS"
