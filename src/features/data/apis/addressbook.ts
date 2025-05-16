@@ -41,7 +41,7 @@ export const getChainAddressBook = memoize(
     }
 
     // map to our own token entity
-    return addrBookEntries.reduce((agg, [tokenId, bookToken]) => {
+    const tokens = addrBookEntries.reduce((agg, [tokenId, bookToken]) => {
       if (tokenId === 'WNATIVE') {
         agg[tokenId] = {
           id: wnative.symbol,
@@ -108,5 +108,30 @@ export const getChainAddressBook = memoize(
 
       return agg;
     }, {} as ChainAddressBook);
+
+    return patchTokens(tokens, chain);
   }
 );
+
+function patchTokens(tokens: ChainAddressBook, chain: ChainEntity): ChainAddressBook {
+  if (chain.id === 'saga') {
+    const wgas: TokenEntity = {
+      id: 'WGAS',
+      type: 'erc20',
+      address: '0xE3dbcD53f4Ce1b06Ab200f4912BD35672e68f1FA', // dummy wrapped gas
+      symbol: 'WGAS',
+      oracleId: 'WGAS',
+      decimals: 18,
+      chainId: 'saga',
+      website: 'https://www.saga.xyz/',
+      description: 'Meta-token for gas on Saga. Saga is gasless for users.',
+      bridge: 'native',
+      documentation: 'https://docs.saga.xyz/',
+      buyUrl: '',
+      risks: [],
+    };
+    tokens['WNATIVE'] = wgas;
+    tokens['WGAS'] = wgas;
+  }
+  return tokens;
+}
