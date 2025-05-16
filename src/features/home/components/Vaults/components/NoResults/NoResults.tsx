@@ -1,19 +1,19 @@
 import type { PropsWithChildren } from 'react';
 import { memo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Button } from '../../../../../../components/Button/Button.tsx';
+import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { askForWalletConnection, doDisconnectWallet } from '../../../../../data/actions/wallet.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
+import { selectIsUserBalanceAvailable } from '../../../../../data/selectors/balance.ts';
 import {
   selectFilterUserCategory,
   selectHasActiveFilterExcludingUserCategoryAndSort,
 } from '../../../../../data/selectors/filtered-vaults.ts';
-import { styles } from './styles.ts';
 import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet.ts';
-import { useTranslation } from 'react-i18next';
-import { selectIsUserBalanceAvailable } from '../../../../../data/selectors/data-loader.ts';
-import { askForWalletConnection, doDisconnectWallet } from '../../../../../data/actions/wallet.ts';
-import { Button } from '../../../../../../components/Button/Button.tsx';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
-import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -30,7 +30,9 @@ const Message = memo(function Message({ title, text, children }: MessageProps) {
     <div className={classes.message}>
       <div className={classes.title}>{t(title)}</div>
       <div className={classes.text}>{t(text)}</div>
-      {children ? <div className={classes.extra}>{children}</div> : null}
+      {children ?
+        <div className={classes.extra}>{children}</div>
+      : null}
     </div>
   );
 });

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { NotificationDot } from './NotificationDot.tsx';
-import { useHaveUnreadArticle, useHaveUnreadProposal } from './hooks.tsx';
+import { useHaveUnreadArticle, useHaveUnreadProposal } from './hooks.ts';
 
 export const UnreadDots = memo(function UnreadDots() {
   const haveUnreadArticle = useHaveUnreadArticle();

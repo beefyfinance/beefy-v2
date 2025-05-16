@@ -1,3 +1,5 @@
+import { lazy, memo } from 'react';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import {
   isCowcentratedLikeVault,
   isErc4626Vault,
@@ -5,8 +7,6 @@ import {
   isStandardVault,
   type VaultEntity,
 } from '../../../data/entities/vault.ts';
-import { lazy, memo } from 'react';
-import { useAppSelector } from '../../../../store.ts';
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
 
 const StandardExplainer = lazy(() => import('./Standard/StandardExplainer.tsx'));

@@ -1,28 +1,28 @@
-import type { ChainId } from '../../../features/data/entities/chain.ts';
-import type {
-  TenderlySimulateRequest,
-  TenderlySimulateResponse,
-} from '../../../features/data/apis/tenderly/types.ts';
+import { css, cx } from '@repo/styles/css';
 import { Fragment, memo, useMemo } from 'react';
-import { useAppSelector } from '../../../store.ts';
-import {
-  selectTenderlyCredentialsOrUndefined,
-  selectTenderlyResultOrUndefined,
-} from '../../../features/data/selectors/tenderly.ts';
-import { AlertError } from '../../Alerts/Alerts.tsx';
-import { legacyMakeStyles } from '../../../helpers/mui.ts';
-import { stackRecipe, styles, transactionRecipe } from './styles.ts';
 import type {
   TenderlySimulateConfig,
   TenderlyTxCallRequest,
 } from '../../../features/data/actions/tenderly.ts';
-import { css, cx } from '@repo/styles/css';
+import type {
+  TenderlySimulateRequest,
+  TenderlySimulateResponse,
+} from '../../../features/data/apis/tenderly/types.ts';
+import type { ChainId } from '../../../features/data/entities/chain.ts';
+import {
+  selectTenderlyCredentialsOrUndefined,
+  selectTenderlyResultOrUndefined,
+} from '../../../features/data/selectors/tenderly.ts';
+import { legacyMakeStyles } from '../../../helpers/mui.ts';
+import { useAppSelector } from '../../../features/data/store/hooks.ts';
+import { AlertError } from '../../Alerts/Alerts.tsx';
+import { Scrollable } from '../../Scrollable/Scrollable.tsx';
+import { VerticalLayout } from '../Layout/VerticalLayout.tsx';
+import { ExplorerAddressLink } from '../Links/ExplorerAddressLink.tsx';
 import { ExternalLink } from '../Links/ExternalLink.tsx';
 import type { StackEntry } from './StackEntry.ts';
-import { ExplorerAddressLink } from '../Links/ExplorerAddressLink.tsx';
+import { stackRecipe, styles, transactionRecipe } from './styles.ts';
 import { TenderlySimulateResponseProcessor } from './TenderlySimulateResponseProcessor.ts';
-import { VerticalLayout } from '../Layout/VerticalLayout.tsx';
-import { Scrollable } from '../../Scrollable/Scrollable.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -190,13 +190,11 @@ const Stack = memo(function Stack({ chainId, stack, baseUrl }: StackProps) {
 
   return (
     <div className={classes.stack}>
-      {baseUrl ? (
+      {baseUrl ?
         <ExternalLink href={`${baseUrl}/debugger?trace=${stack.id}`} css={styles.stackTag}>
           {typeLabel}
         </ExternalLink>
-      ) : (
-        <div className={classes.stackTag}>{typeLabel}</div>
-      )}
+      : <div className={classes.stackTag}>{typeLabel}</div>}
       <div className={classes.stackDetails}>
         <div className={classes.stackToFunc}>
           <div className={classes.stackTo}>
@@ -206,42 +204,40 @@ const Stack = memo(function Stack({ chainId, stack, baseUrl }: StackProps) {
           </div>
           <div className={classes.stackFuncAccessor}>{'.'}</div>
           <div className={classes.stackFunc}>
-            {call.funcLabel && call.func ? (
+            {call.funcLabel && call.func ?
               <abbr title={call.func}>{call.funcLabel}</abbr>
-            ) : (
-              (call.funcLabel ?? call.func)
-            )}
+            : (call.funcLabel ?? call.func)}
           </div>
           <div className={classes.stackFuncParamsOpen}>{'('}</div>
           {hasInput ? null : <div className={classes.stackFuncParamsClose}>{')'}</div>}
         </div>
-        {hasInput ? (
+        {hasInput ?
           <div className={classes.stackInput}>
-            {call.inputLabels ? (
+            {call.inputLabels ?
               <ParamsDisplay input={call.inputLabels} />
-            ) : call.input ? (
+            : call.input ?
               <BytesDisplay value={call.input} />
-            ) : null}
+            : null}
             <div className={classes.stackFuncParamsClose}>{')'}</div>
           </div>
-        ) : null}
-        {hasOutput ? (
+        : null}
+        {hasOutput ?
           <div className={classes.stackOutput}>
             <div className={classes.stackFuncOutput}>{'→'}</div>
-            {call.outputLabels ? (
+            {call.outputLabels ?
               <ParamsDisplay input={call.outputLabels} />
-            ) : call.output ? (
+            : call.output ?
               <BytesDisplay value={call.output} />
-            ) : null}
+            : null}
           </div>
-        ) : null}
-        {errorSource ? (
+        : null}
+        {errorSource ?
           <div className={classes.stackSource}>
             {errorSource.prev}
             <strong>{errorSource.source}</strong>
             {errorSource.next}
           </div>
-        ) : null}
+        : null}
       </div>
     </div>
   );
@@ -329,11 +325,15 @@ type TransactionResultProps = {
 };
 const TransactionResult = memo(function TransactionResult(props: TransactionResultProps) {
   const { index, baseUrl, call, request, response } = props;
-  const didSave = response
-    ? request.save || (request.save_if_fails && !response.simulation.status)
-    : false;
+  const didSave =
+    response ? request.save || (request.save_if_fails && !response.simulation.status) : false;
   const url = didSave && response ? `${baseUrl}/${response.simulation.id}` : undefined;
-  const status = response ? (response.simulation.status ? 'success' : 'revert') : 'missing';
+  const status =
+    response ?
+      response.simulation.status ?
+        'success'
+      : 'revert'
+    : 'missing';
   const classes = transactionRecipe({ status });
   const statusText = status === 'missing' ? '-' : status.toUpperCase();
 
@@ -343,13 +343,11 @@ const TransactionResult = memo(function TransactionResult(props: TransactionResu
         <div className={classes.transactionHeaderIndex}>{`#${index}`}</div>
         <div className={classes.transactionHeaderStep}>{call.step}</div>
         <div className={classes.transactionHeaderStatus}>
-          {url ? (
+          {url ?
             <ExternalLink href={url} icon>
               {statusText}
             </ExternalLink>
-          ) : (
-            statusText
-          )}
+          : statusText}
         </div>
       </div>
       {status === 'missing' ? null : (

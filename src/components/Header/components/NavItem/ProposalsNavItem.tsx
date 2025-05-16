@@ -1,12 +1,12 @@
 import { memo, useCallback } from 'react';
-import type { NavItemProps } from '../DropNavItem/types.ts';
-import { NavLinkItem } from './NavLinkItem.tsx';
 import { markAllProposalsRead } from '../../../../features/data/actions/proposal.ts';
-import { useAppDispatch } from '../../../../store.ts';
+import { useAppDispatch } from '../../../../features/data/store/hooks.ts';
 import {
   UnreadMainProposalsCount,
   UnreadProfitProposalsCount,
 } from '../Badges/UnreadProposalsCount.tsx';
+import type { NavItemProps } from '../DropNavItem/types.ts';
+import { NavLinkItem } from './NavLinkItem.tsx';
 
 type ProposalsNavItemProps = NavItemProps & {
   space: string;

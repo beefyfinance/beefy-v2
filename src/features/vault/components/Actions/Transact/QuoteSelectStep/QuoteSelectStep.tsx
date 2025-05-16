@@ -1,15 +1,15 @@
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
-import { StepHeader } from '../StepHeader/StepHeader.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { transactSelectQuote, transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
 import { selectTransactQuoteIds } from '../../../../../data/selectors/transact.ts';
-import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
+import { StepHeader } from '../StepHeader/StepHeader.tsx';
 import type { ListItemProps } from './ListItem/ListItem.tsx';
 import { ListItem } from './ListItem/ListItem.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -19,11 +19,11 @@ export const QuoteSelectStep = memo(function QuoteSelectStep() {
   const classes = useStyles();
   const quotes = useAppSelector(selectTransactQuoteIds);
   const handleBack = useCallback(() => {
-    dispatch(transactActions.switchStep(TransactStep.Form));
+    dispatch(transactSwitchStep(TransactStep.Form));
   }, [dispatch]);
   const handleSelect = useCallback<ListItemProps['onSelect']>(
     quoteId => {
-      dispatch(transactActions.selectQuote({ quoteId }));
+      dispatch(transactSelectQuote({ quoteId }));
     },
     [dispatch]
   );

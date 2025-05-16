@@ -1,11 +1,11 @@
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { css } from '@repo/styles/css';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatLargePercent } from '../../../../helpers/format.ts';
-import { useAppSelector } from '../../../../store.ts';
-import { styles } from './styles.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import { selectDashboardUserStablecoinsExposure } from '../../../data/selectors/dashboard.ts';
-import { css } from '@repo/styles/css';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

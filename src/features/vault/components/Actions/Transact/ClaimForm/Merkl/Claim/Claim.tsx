@@ -1,17 +1,17 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import type { ChainEntity } from '../../../../../../../data/entities/chain.ts';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../../../components/Button/Button.tsx';
-import { ActionConnectSwitch } from '../../../CommonActions/CommonActions.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../../../../../store.ts';
-import { startStepperWithSteps } from '../../../../../../../data/actions/stepper.ts';
-import { selectFetchMerklRewardsLastDispatched } from '../../../../../../../data/selectors/data-loader.ts';
-import { styles } from './styles.ts';
+import { TenderlyMerklClaimButton } from '../../../../../../../../components/Tenderly/Buttons/TenderlyMerklClaimButton.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../../../../data/store/hooks.ts';
+import { stepperStartWithSteps } from '../../../../../../../data/actions/wallet/stepper.ts';
+import { claimMerkl } from '../../../../../../../data/actions/wallet/offchain.ts';
+import type { ChainEntity } from '../../../../../../../data/entities/chain.ts';
 import { selectChainById } from '../../../../../../../data/selectors/chains.ts';
 import { selectIsStepperStepping } from '../../../../../../../data/selectors/stepper.ts';
-import { TenderlyMerklClaimButton } from '../../../../../../../../components/Tenderly/Buttons/TenderlyMerklClaimButton.tsx';
+import { selectFetchMerklRewardsLastDispatched } from '../../../../../../../data/selectors/user-rewards.ts';
+import { ActionConnectSwitch } from '../../../CommonActions/CommonActions.tsx';
 import { TimeCountdown } from '../../TimeCountdown/TimeCountdown.tsx';
-import { claimMerkl } from '../../../../../../../data/actions/wallet/offchain.ts';
+import { styles } from './styles.ts';
 
 const MERKL_MIN_TIME_BETWEEN_REQUESTS_MS = 15000;
 
@@ -32,7 +32,7 @@ export const Claim = memo(function Claim({ chainId, withChain }: ClaimProps) {
   const disable = isStepping || shouldWait;
   const handleClaim = useCallback(() => {
     dispatch(
-      startStepperWithSteps(
+      stepperStartWithSteps(
         [
           {
             step: 'claim-rewards',

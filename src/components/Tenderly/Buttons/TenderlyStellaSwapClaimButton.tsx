@@ -1,10 +1,10 @@
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../../../store.ts';
 import { tenderlySimulateStellaSwapClaim } from '../../../features/data/actions/tenderly.ts';
-import { TenderlyButton } from './TenderlyButton.tsx';
 import type { ChainEntity } from '../../../features/data/entities/chain.ts';
 import type { VaultEntity } from '../../../features/data/entities/vault.ts';
+import { useAppDispatch } from '../../../features/data/store/hooks.ts';
+import { TenderlyButton } from './TenderlyButton.tsx';
 
 export type TenderlyStellaSwapClaimButtonProps = {
   chainId: ChainEntity['id'];

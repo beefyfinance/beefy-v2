@@ -1,10 +1,10 @@
-import { memo } from 'react';
-import { styles } from './styles.ts';
 import { css, type CssStyles } from '@repo/styles/css';
-import { useAppSelector } from '../../../../../../store.ts';
-import { selectQuoteError, selectQuoteStatus } from '../../../../../data/selectors/on-ramp.ts';
+import { memo } from 'react';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import { selectQuoteError, selectQuoteStatus } from '../../../../../data/selectors/on-ramp.ts';
 import { ProviderSelect } from '../ProviderSelect/ProviderSelect.tsx';
+import { styles } from './styles.ts';
 
 const Rejected = memo(function Rejected() {
   const error = useAppSelector(selectQuoteError);
@@ -19,7 +19,9 @@ export const QuoteBest = memo(function QuoteBest({ css: cssProp }: QuoteBestProp
 
   return (
     <div className={css(styles.container, cssProp)}>
-      {status === 'rejected' ? <Rejected /> : <ProviderSelect pending={status !== 'fulfilled'} />}
+      {status === 'rejected' ?
+        <Rejected />
+      : <ProviderSelect pending={status !== 'fulfilled'} />}
     </div>
   );
 });

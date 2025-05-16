@@ -6,7 +6,7 @@ import {
   type VaultCowcentratedLike,
   type VaultGov,
 } from '../../../../data/entities/vault.ts';
-import { type CommonHelper, isCowcentratedLikeCommonHelper, useCommonHelper } from './common.tsx';
+import { type CommonHelper, isCowcentratedLikeCommonHelper, useCommonHelper } from './common.ts';
 
 type CowcentratedLikeHelper = CommonHelper<VaultCowcentratedLike>;
 

@@ -1,22 +1,22 @@
-import type { BeefyState } from '../../../redux-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
-import { selectErc20TokenByAddress } from './tokens.ts';
-import { FormStep } from '../reducers/wallet/bridge.ts';
+import { createSelector } from '@reduxjs/toolkit';
 import type { IBridgeQuote } from '../apis/bridge/providers/provider-types.ts';
 import type { BeefyAnyBridgeConfig } from '../apis/config-types.ts';
-import {
-  selectStepperCurrentStepData,
-  selectStepperItems,
-  selectStepperStepContent,
-} from './stepper.ts';
-import { StepContent } from '../reducers/wallet/stepper.ts';
-import { createSelector } from '@reduxjs/toolkit';
+import type { ChainEntity } from '../entities/chain.ts';
+import { FormStep } from '../reducers/wallet/bridge-types.ts';
+import { StepContent } from '../reducers/wallet/stepper-types.ts';
+import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
 import {
   createGlobalDataSelector,
   hasLoaderFulfilledOnce,
   shouldLoaderLoadOnce,
 } from './data-loader-helpers.ts';
+import {
+  selectStepperCurrentStepData,
+  selectStepperItems,
+  selectStepperStepContent,
+} from './stepper.ts';
+import { selectErc20TokenByAddress } from './tokens.ts';
 
 export const selectIsBridgeConfigLoaded = createGlobalDataSelector(
   'bridgeConfig',

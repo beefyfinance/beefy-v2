@@ -26,13 +26,13 @@ export const Item = memo(function Item<TValue extends string = string>({
 
   return (
     <button type="button" onClick={handleClick} className={buttonClass}>
-      {ItemInnerComponent ? <ItemInnerComponent value={value} /> : value}
+      {ItemInnerComponent ?
+        <ItemInnerComponent value={value} />
+      : value}
       <div className={endAdornmentClass}>
-        {EndAdornmentComponent ? (
+        {EndAdornmentComponent ?
           <EndAdornmentComponent value={value} />
-        ) : (
-          <ChevronRight className={arrowClass} />
-        )}
+        : <ChevronRight className={arrowClass} />}
       </div>
     </button>
   );

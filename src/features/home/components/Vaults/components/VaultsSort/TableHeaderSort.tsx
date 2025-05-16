@@ -2,15 +2,13 @@ import { styled } from '@repo/styles/jsx';
 import { memo, useCallback } from 'react';
 import { SortColumnHeader } from '../../../../../../components/SortColumnHeader/SortColumnHeader.tsx';
 import { AVG_APY_PERIODS } from '../../../../../../helpers/apy.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import type {
+  FilteredVaultsState,
   SortType,
   SortWithSubSort,
 } from '../../../../../data/reducers/filtered-vaults-types.ts';
-import {
-  filteredVaultsActions,
-  type FilteredVaultsState,
-} from '../../../../../data/reducers/filtered-vaults.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import {
   selectFilterSearchSortDirection,
   selectFilterSearchSortField,

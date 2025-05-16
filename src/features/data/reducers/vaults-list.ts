@@ -1,9 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-
-export type VaultsListState = {
-  vaultsLast: string | undefined;
-  dashboardLast: string | undefined;
-};
+import type { VaultsListState } from './vaults-list-types.ts';
 
 const initialState: VaultsListState = {
   vaultsLast: undefined,

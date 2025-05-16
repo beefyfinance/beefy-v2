@@ -1,13 +1,12 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types.ts';
-import { getBeefyApi } from '../apis/instances.ts';
-import type { ProposalEntity } from '../entities/proposal.ts';
 import { uniq } from 'lodash-es';
-import { selectAllProposalIdsBySpace } from '../selectors/proposals.ts';
 import type {
   BeefySnapshotActiveResponse,
   BeefySnapshotProposal,
 } from '../apis/beefy/beefy-api-types.ts';
+import { getBeefyApi } from '../apis/instances.ts';
+import type { ProposalEntity } from '../entities/proposal.ts';
+import { selectAllProposalIdsBySpace } from '../selectors/proposals.ts';
+import { createAppAsyncThunk } from '../utils/store-utils.ts';
 
 const READ_STORAGE_KEY = 'readProposals';
 
@@ -50,19 +49,16 @@ export type FetchActiveProposalsFulfilledPayload = {
   read: BeefySnapshotProposal['id'][];
 };
 
-export const fetchActiveProposals = createAsyncThunk<
-  FetchActiveProposalsFulfilledPayload,
-  void,
-  {
-    state: BeefyState;
-  }
->('proposals/fetchActive', async () => {
-  const api = await getBeefyApi();
-  const proposals = await api.getActiveProposals();
-  const read = getReadProposals();
+export const fetchActiveProposals = createAppAsyncThunk<FetchActiveProposalsFulfilledPayload, void>(
+  'proposals/fetchActive',
+  async () => {
+    const api = await getBeefyApi();
+    const proposals = await api.getActiveProposals();
+    const read = getReadProposals();
 
-  return { proposals, read };
-});
+    return { proposals, read };
+  }
+);
 
 export type MarkAllProposalsReadFulfilledPayload = {
   read: ProposalEntity['id'][];
@@ -72,12 +68,9 @@ export type MarkAllProposalsReadArgs = {
   space: string;
 };
 
-export const markAllProposalsRead = createAsyncThunk<
+export const markAllProposalsRead = createAppAsyncThunk<
   MarkAllProposalsReadFulfilledPayload,
-  MarkAllProposalsReadArgs,
-  {
-    state: BeefyState;
-  }
+  MarkAllProposalsReadArgs
 >('proposals/markAllRead', async ({ space }, { getState }) => {
   const state = getState();
   const proposalIds: ProposalEntity['id'][] = selectAllProposalIdsBySpace(state, space);

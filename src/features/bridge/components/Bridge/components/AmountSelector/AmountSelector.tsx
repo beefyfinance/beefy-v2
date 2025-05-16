@@ -1,21 +1,21 @@
+import { css, type CssStyles } from '@repo/styles/css';
+import BigNumber from 'bignumber.js';
 import { memo, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { formatTokenDisplayCondensed } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { bridgeActions } from '../../../../../data/reducers/wallet/bridge.ts';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
 import {
   selectBridgeDepositTokenForChainId,
   selectBridgeFormState,
 } from '../../../../../data/selectors/bridge.ts';
-import { css, type CssStyles } from '@repo/styles/css';
-import { useTranslation } from 'react-i18next';
-import { bridgeActions } from '../../../../../data/reducers/wallet/bridge.ts';
+import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens.ts';
 import type { AmountInputProps } from '../../../../../vault/components/Actions/Transact/AmountInput/AmountInput.tsx';
 import { AmountInput } from '../../../../../vault/components/Actions/Transact/AmountInput/AmountInput.tsx';
-import { formatTokenDisplayCondensed } from '../../../../../../helpers/format.ts';
-import BigNumber from 'bignumber.js';
-import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
-import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens.ts';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

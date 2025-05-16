@@ -1,19 +1,27 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types.ts';
-import { type VaultEntity } from '../entities/vault.ts';
-import { selectUserDepositedVaultIds } from './balance.ts';
-import { selectAllVisibleVaultIds, selectVaultById } from './vaults.ts';
-import { selectTokenByAddress, selectVaultTokenSymbols } from './tokens.ts';
-import { createCachedSelector } from 're-reselect';
-import type { KeysOfType } from '../utils/types-utils.ts';
-import type { FilteredVaultsState } from '../reducers/filtered-vaults.ts';
-import type { PlatformEntity } from '../entities/platform.ts';
-import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string.ts';
-import escapeStringRegexp from 'escape-string-regexp';
 import type BigNumber from 'bignumber.js';
+import escapeStringRegexp from 'escape-string-regexp';
+import { differenceWith, isEqual } from 'lodash-es';
+import { createCachedSelector } from 're-reselect';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string.ts';
+import type { PlatformEntity } from '../entities/platform.ts';
+import { type VaultEntity } from '../entities/vault.ts';
+import type { FilteredVaultsState, SortWithSubSort } from '../reducers/filtered-vaults-types.ts';
+import type { BeefyState } from '../store/types.ts';
+import type { KeysOfType } from '../utils/types-utils.ts';
 import { selectVaultTotalApy } from './apy.ts';
+import { selectUserDepositedVaultIds } from './balance.ts';
+import { selectChainById } from './chains.ts';
 import { selectActivePromoForVault } from './promos.ts';
-import type { SortWithSubSort } from '../reducers/filtered-vaults-types.ts';
+import {
+  selectIsTokenBluechip,
+  selectIsTokenStable,
+  selectTokenByAddress,
+  selectVaultTokenSymbols,
+} from './tokens.ts';
+import { selectVaultUnderlyingTvlUsd } from './tvl.ts';
+import { selectAllActiveVaultIds, selectAllVisibleVaultIds, selectVaultById } from './vaults.ts';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
@@ -197,4 +205,48 @@ export const selectVaultIsBoostedForFilter = (state: BeefyState, vaultId: VaultE
 
   const apy = selectVaultTotalApy(state, vaultId);
   return !!apy && (apy.boostedTotalDaily || 0) > 0;
+};
+export const selectIsVaultBlueChip = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+    const chain = selectChainById(state, vault.chainId);
+    const nonStables = differenceWith(vault.assetIds, chain.stableCoins, isEqual);
+    return (
+      nonStables.length > 0 &&
+      nonStables.every(tokenId => {
+        return selectIsTokenBluechip(state, tokenId);
+      })
+    );
+  },
+  res => res
+);
+export const selectIsVaultStable = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+    return vault.assetIds.every(assetId => selectIsTokenStable(state, vault.chainId, assetId));
+  },
+  res => res
+);
+export const selectIsVaultCorrelated = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+
+    return (
+      vault.risks.includes('IL_NONE') &&
+      vault.assetIds.length > 1 &&
+      !selectIsVaultStable(state, vaultId)
+    );
+  },
+  res => res
+);
+export const selectMaximumUnderlyingVaultTvl = (state: BeefyState) => {
+  const ids = selectAllActiveVaultIds(state);
+  let maxTvl = BIG_ZERO;
+  for (const id of ids) {
+    const underlyingTvl = selectVaultUnderlyingTvlUsd(state, id);
+    if (underlyingTvl.gt(maxTvl)) {
+      maxTvl = underlyingTvl;
+    }
+  }
+  return maxTvl;
 };

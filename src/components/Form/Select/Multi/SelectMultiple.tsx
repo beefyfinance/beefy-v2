@@ -204,12 +204,12 @@ export const SelectMultiple = memo(function Select<TItem extends SelectItem = Se
                 searchEnabled && <SearchField value={searchText} onValueChange={setSearchText} />
               }
             >
-              {noSearchMatches ? (
+              {noSearchMatches ?
                 <>No matches.</>
-              ) : (
-                options.map((item, index) =>
-                  disabledIndexes?.includes(index) ? null : (
-                    <OptionComponent
+              : options.map((item, index) =>
+                  disabledIndexes?.includes(index) ?
+                    null
+                  : <OptionComponent
                       key={item.value}
                       item={item}
                       index={index}
@@ -224,9 +224,8 @@ export const SelectMultiple = memo(function Select<TItem extends SelectItem = Se
                       IconComponent={OptionIconComponent}
                       BadgeComponent={OptionBadgeComponent}
                     />
-                  )
                 )
-              )}
+              }
             </SelectDropdown>
           </FloatingFocusManager>
         </FloatingPortal>

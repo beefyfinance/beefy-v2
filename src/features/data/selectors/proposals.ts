@@ -1,8 +1,9 @@
-import type { ProposalEntity } from '../entities/proposal.ts';
-import type { BeefyState } from '../../../redux-types.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
+import type { ProposalEntity } from '../entities/proposal.ts';
+import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
+import { createGlobalDataSelector, shouldLoaderLoadOnce } from './data-loader-helpers.ts';
 
 const DELAY_NON_CORE_PROPOSALS = 2 * 60 * 60; // 2 hours
 
@@ -66,4 +67,8 @@ export const selectUnreadActiveProposalsBySpace = createSelector(
   (state: BeefyState, space: string) => selectAllActiveProposalsBySpace(state, space),
   (state: BeefyState) => state.entities.proposals.readIds,
   (proposals, readIds): ProposalEntity[] => proposals.filter(p => !readIds.includes(p.id))
+);
+export const selectShouldInitProposals = createGlobalDataSelector(
+  'proposals',
+  shouldLoaderLoadOnce
 );

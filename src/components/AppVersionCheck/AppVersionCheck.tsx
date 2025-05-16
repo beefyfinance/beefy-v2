@@ -1,12 +1,13 @@
 import { memo, useCallback, useEffect, useMemo } from 'react';
-import { legacyMakeStyles } from '../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { useAppDispatch, useAppSelector } from '../../store.ts';
-import { type BuildVersion, setUpdateAvailable } from '../../features/data/reducers/ui-version.ts';
-import { selectAppVersionInfo } from '../../features/data/selectors/version.ts';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../Button/Button.tsx';
+import type { BuildVersion } from '../../features/data/reducers/ui-version-types.ts';
+import { setUpdateAvailable } from '../../features/data/reducers/ui-version.ts';
+import { selectAppVersionInfo } from '../../features/data/selectors/version.ts';
 import { featureFlag_simUpdate } from '../../features/data/utils/feature-flags.ts';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
+import { Button } from '../Button/Button.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -88,13 +89,13 @@ export const AppVersionCheck = memo(function AppVersionCheck() {
     <div className={classes.positioner}>
       <div className={classes.alert}>
         <div className={classes.message}>{message}</div>
-        {!app.reloadFailed ? (
+        {!app.reloadFailed ?
           <div className={classes.action}>
             <Button onClick={handleReload} size={'sm'} variant={'success'} css={styles.button}>
               {t('Update-Reload')}
             </Button>
           </div>
-        ) : null}
+        : null}
       </div>
     </div>
   );

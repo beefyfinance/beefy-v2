@@ -1,5 +1,5 @@
 import { type ComponentType, lazy, memo } from 'react';
-import { useAppSelector } from '../../../../store.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import { selectActivePromoForVault } from '../../../data/selectors/promos.ts';
 import type { PromoCardLoaderProps, PromoCardProps, PromoCardTypeToComponent } from './types.ts';
 

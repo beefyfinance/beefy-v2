@@ -46,6 +46,7 @@ const initialTimeBucketsState = <T extends AnyChartData = AnyChartData>(): TimeB
   available: fromKeys(allDataApiBuckets, false),
   alreadyFulfilled: fromKeys(allDataApiBuckets, false),
   hasData: fromKeys(allDataApiBuckets, false),
+  lastDispatch: fromKeys(allDataApiBuckets, 0),
   byTimeBucket: {},
 });
 
@@ -61,6 +62,7 @@ export const historicalSlice = createSlice({
         state.ranges.byVaultId[vaultId] = {
           status: 'pending',
           alreadyFulfilled: state.ranges.byVaultId[vaultId]?.alreadyFulfilled || false,
+          lastDispatch: Date.now(),
         };
       })
       .addCase(fetchHistoricalRanges.rejected, (state, action) => {
@@ -70,24 +72,26 @@ export const historicalSlice = createSlice({
           status: 'rejected',
           alreadyFulfilled: state.ranges.byVaultId[vaultId]?.alreadyFulfilled || false,
           error: action.error,
+          lastDispatch: state.ranges.byVaultId[vaultId]?.lastDispatch || Date.now(),
         };
       })
-      .addCase(fetchHistoricalRanges.fulfilled, (sliceState, action) => {
+      .addCase(fetchHistoricalRanges.fulfilled, (state, action) => {
         const { vaultId, oracleId, ranges, isCowcentrated } = action.payload;
 
-        sliceState.ranges.byVaultId[vaultId] = {
+        state.ranges.byVaultId[vaultId] = {
           status: 'fulfilled',
           alreadyFulfilled: true,
           ranges,
+          lastDispatch: state.ranges.byVaultId[vaultId]?.lastDispatch || Date.now(),
         };
 
-        initAllTimeBuckets(sliceState, oracleId, vaultId);
-        sliceState.apys.byVaultId[vaultId].available = getBucketsFromRange(ranges.apys);
-        sliceState.tvls.byVaultId[vaultId].available = getBucketsFromRange(ranges.tvls);
+        initAllTimeBuckets(state, oracleId, vaultId);
+        state.apys.byVaultId[vaultId].available = getBucketsFromRange(ranges.apys);
+        state.tvls.byVaultId[vaultId].available = getBucketsFromRange(ranges.tvls);
         if (isCowcentrated) {
-          sliceState.clmPositions.byVaultId[vaultId].available = getBucketsFromRange(ranges.clm);
+          state.clmPositions.byVaultId[vaultId].available = getBucketsFromRange(ranges.clm);
         }
-        sliceState.prices.byOracleId[oracleId].available = getBucketsFromRange(ranges.prices);
+        state.prices.byOracleId[oracleId].available = getBucketsFromRange(ranges.prices);
       })
       .addCase(fetchHistoricalApys.pending, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
@@ -165,6 +169,7 @@ function getOrCreateTimeBucketBucket(
     bucketState = state.byTimeBucket[bucket] = {
       status: 'idle',
       alreadyFulfilled: false,
+      lastDispatch: 0,
     };
   }
 
@@ -174,6 +179,9 @@ function getOrCreateTimeBucketBucket(
 function setTimeBucketPending(state: Draft<TimeBucketsState>, bucketKey: ApiTimeBucket) {
   const bucketState = getOrCreateTimeBucketBucket(state, bucketKey);
   bucketState.status = 'pending';
+  bucketState.lastDispatch = Date.now();
+
+  state.lastDispatch[bucketKey] = bucketState.lastDispatch;
 }
 
 function setTimeBucketRejected(

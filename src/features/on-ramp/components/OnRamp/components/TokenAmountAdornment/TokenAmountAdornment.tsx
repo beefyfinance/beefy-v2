@@ -1,9 +1,9 @@
 import { memo, useCallback } from 'react';
-import { ButtonAdornment } from '../ButtonAdornment/ButtonAdornment.tsx';
-import { useAppDispatch } from '../../../../../../store.ts';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
 import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
+import { useAppDispatch } from '../../../../../data/store/hooks.ts';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
+import { ButtonAdornment } from '../ButtonAdornment/ButtonAdornment.tsx';
 import { styles } from './styles.ts';
 
 export type TokenAmountAdornmentProps = {

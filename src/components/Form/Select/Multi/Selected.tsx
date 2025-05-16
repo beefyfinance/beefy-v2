@@ -25,13 +25,12 @@ export const Selected = memo(
     const { t } = useTranslation();
     const selected = !!items && items.length > 0;
     const label =
-      allSelected && allSelectedLabel
-        ? allSelectedLabel
-        : selected
-          ? items.length === 1
-            ? items[0].label
-            : t('Select-CountSelected', { count: items.length })
-          : unselectedLabel;
+      allSelected && allSelectedLabel ? allSelectedLabel
+      : selected ?
+        items.length === 1 ?
+          items[0].label
+        : t('Select-CountSelected', { count: items.length })
+      : unselectedLabel;
 
     return (
       <ButtonComponent {...getProps()} ref={ref} selected={selected} {...buttonVariantProps}>

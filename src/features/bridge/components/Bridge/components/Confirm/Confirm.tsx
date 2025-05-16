@@ -1,35 +1,35 @@
+import { css } from '@repo/styles/css';
 import { memo, useCallback, useMemo } from 'react';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useTranslation } from 'react-i18next';
+import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
+import { TechLoader } from '../../../../../../components/TechLoader/TechLoader.tsx';
+import { getBridgeProviderLogo } from '../../../../../../helpers/bridgeProviderSrc.ts';
+import { formatMinutesDuration } from '../../../../../../helpers/date.ts';
 import {
   formatLargeUsd,
   formatTokenDisplay,
   formatTokenDisplayCondensed,
 } from '../../../../../../helpers/format.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { getNetworkSrc } from '../../../../../../helpers/networkSrc.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import MonetizationOn from '../../../../../../images/icons/mui/MonetizationOn.svg?react';
+import Timer from '../../../../../../images/icons/mui/Timer.svg?react';
+import { performBridge } from '../../../../../data/actions/bridge.ts';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet.ts';
 import {
   selectBridgeConfirmQuote,
   selectBridgeConfirmStatus,
 } from '../../../../../data/selectors/bridge.ts';
 import { selectChainById } from '../../../../../data/selectors/chains.ts';
+import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
+import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens.ts';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../../../../data/selectors/wallet.ts';
 import { styles } from './styles.ts';
-import { getNetworkSrc } from '../../../../../../helpers/networkSrc.ts';
-import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
-import { performBridge } from '../../../../../data/actions/bridge.ts';
-import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
-import { TechLoader } from '../../../../../../components/TechLoader/TechLoader.tsx';
-import { css } from '@repo/styles/css';
-import { getBridgeProviderLogo } from '../../../../../../helpers/bridgeProviderSrc.ts';
-import MonetizationOn from '../../../../../../images/icons/mui/MonetizationOn.svg?react';
-import Timer from '../../../../../../images/icons/mui/Timer.svg?react';
-import { formatMinutesDuration } from '../../../../../../helpers/date.ts';
-import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -143,17 +143,17 @@ const ConfirmReady = memo(function ConfirmReady() {
             />
             <div> {toChain.name}</div>
           </div>
-          {quote.receiver ? (
+          {quote.receiver ?
             <>
               <div className={classes.via}>{t('Bridge-At')}</div>
               <div className={classes.receiver}>{quote.receiver}</div>
             </>
-          ) : null}
+          : null}
         </div>
       </div>
       <div className={classes.buttonsContainer}>
-        {isWalletConnected ? (
-          isWalletOnFromChain ? (
+        {isWalletConnected ?
+          isWalletOnFromChain ?
             <Button
               onClick={handleBridge}
               disabled={isStepping}
@@ -163,8 +163,7 @@ const ConfirmReady = memo(function ConfirmReady() {
             >
               {t('Confirm')}
             </Button>
-          ) : (
-            <Button
+          : <Button
               onClick={handleNetworkChange}
               variant="success"
               fullWidth={true}
@@ -172,9 +171,8 @@ const ConfirmReady = memo(function ConfirmReady() {
             >
               {t('Network-Change', { network: fromChain.name })}
             </Button>
-          )
-        ) : (
-          <Button
+
+        : <Button
             onClick={handleConnectWallet}
             variant="success"
             fullWidth={true}
@@ -182,7 +180,7 @@ const ConfirmReady = memo(function ConfirmReady() {
           >
             {t('Network-ConnectWallet')}
           </Button>
-        )}
+        }
       </div>
     </>
   );

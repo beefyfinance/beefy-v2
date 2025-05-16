@@ -1,3 +1,3 @@
-import type { BeefyState } from '../../../redux-types.ts';
+import type { BeefyState } from '../store/types.ts';
 
 export const selectAppVersionInfo = (state: BeefyState) => state.ui.version;

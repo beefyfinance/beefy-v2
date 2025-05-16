@@ -1,8 +1,8 @@
+import { css } from '@repo/styles/css';
 import { memo } from 'react';
-import { useAppSelector } from '../../../../store.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import { selectBoostPartnerById } from '../../../data/selectors/boosts.ts';
 import { Socials } from './Socials.tsx';
-import { css } from '@repo/styles/css';
 
 type PartnerSubCardProps = {
   partnerId: string;

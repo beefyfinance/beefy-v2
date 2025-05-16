@@ -3,7 +3,7 @@ import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { Transaction, TransactionMobile } from './components/Transaction/Transaction.tsx';
 import { TransactionsFilter } from './components/TransactionsFilter/TransactionsFilter.tsx';
-import { useSortedTransactionHistory } from './hook.tsx';
+import { useSortedTransactionHistory } from './hook.ts';
 import { TransactionTimelineSeparator } from './components/TransactionTimelineSeparator/TransactionTimelineSeparator.tsx';
 import { css } from '@repo/styles/css';
 import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
@@ -38,12 +38,14 @@ export const VaultTransactions = memo(function VaultTransactions({
       <TransactionsFilter sortOptions={sortedOptions} handleSort={handleSort} />
       {sortedTimeline.map((tx, i) => (
         <Fragment key={tx.transactionId}>
-          {i > 0 &&
-          i + 1 < sortedTimeline.length &&
-          sortedOptions.sort === 'datetime' &&
-          tx.timeline !== sortedTimeline[i - 1].timeline ? (
+          {(
+            i > 0 &&
+            i + 1 < sortedTimeline.length &&
+            sortedOptions.sort === 'datetime' &&
+            tx.timeline !== sortedTimeline[i - 1].timeline
+          ) ?
             <TransactionTimelineSeparator />
-          ) : null}
+          : null}
           <TxComponent tx={tx} />
         </Fragment>
       ))}

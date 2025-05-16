@@ -1,10 +1,10 @@
+import { type CssStyles } from '@repo/styles/css';
 import { memo, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertWarning } from '../../../../components/Alerts/Alerts.tsx';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import { isGovVault, type VaultEntity } from '../../../data/entities/vault.ts';
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
-import { useAppSelector } from '../../../../store.ts';
-import { type CssStyles } from '@repo/styles/css';
 
 export type RetirePauseReasonProps = {
   vaultId: VaultEntity['id'];

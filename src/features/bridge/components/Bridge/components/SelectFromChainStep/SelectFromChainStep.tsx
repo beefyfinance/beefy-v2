@@ -1,13 +1,14 @@
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { bridgeActions, FormStep } from '../../../../../data/reducers/wallet/bridge.ts';
 import { SearchableList } from '../../../../../../components/SearchableList/SearchableList.tsx';
 import { Step } from '../../../../../../components/Step/Step.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { selectBridgeSupportedChainIds } from '../../../../../data/selectors/bridge.ts';
-import { ChainListItem } from '../ListItem/ChainListItem.tsx';
-import { BalanceEndAdornment } from '../BalanceEndAdornment/BalanceEndAdornment.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
+import { FormStep } from '../../../../../data/reducers/wallet/bridge-types.ts';
+import { bridgeActions } from '../../../../../data/reducers/wallet/bridge.ts';
+import { selectBridgeSupportedChainIds } from '../../../../../data/selectors/bridge.ts';
+import { BalanceEndAdornment } from '../BalanceEndAdornment/BalanceEndAdornment.tsx';
+import { ChainListItem } from '../ListItem/ChainListItem.tsx';
 
 const ChainSelector = memo(function ChainSelector() {
   const dispatch = useAppDispatch();

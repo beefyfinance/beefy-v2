@@ -1,9 +1,10 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { getConfigApi } from '../apis/instances.ts';
-import type { ChainConfig } from '../apis/config-types.ts';
-import type { ChainEntity, ChainId } from '../entities/chain.ts';
+import { createAction } from '@reduxjs/toolkit';
 import { isObject, isPlainObject } from 'lodash-es';
+import type { ChainConfig } from '../apis/config-types.ts';
+import { getConfigApi } from '../apis/instances.ts';
 import { rpcClientManager } from '../apis/rpc-contract/rpc-manager.ts';
+import type { ChainEntity, ChainId } from '../entities/chain.ts';
+import { createAppAsyncThunk } from '../utils/store-utils.ts';
 
 export interface FulfilledPayload {
   chainConfigs: ChainConfig[];
@@ -60,7 +61,7 @@ const removeLocalStoredRpcs = (chainId: ChainId) => {
   }
 };
 
-export const fetchChainConfigs = createAsyncThunk<FulfilledPayload>(
+export const fetchChainConfigs = createAppAsyncThunk<FulfilledPayload>(
   'chains/fetchChainConfigs',
   async () => {
     const api = await getConfigApi();

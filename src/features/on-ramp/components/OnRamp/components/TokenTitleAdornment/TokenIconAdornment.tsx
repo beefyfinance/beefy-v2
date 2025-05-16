@@ -1,10 +1,10 @@
-import { memo, useCallback } from 'react';
-import { styles } from './styles.ts';
-import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
 import { css, type CssStyles } from '@repo/styles/css';
-import { useAppDispatch } from '../../../../../../store.ts';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
+import { memo, useCallback } from 'react';
+import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
+import { useAppDispatch } from '../../../../../data/store/hooks.ts';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
+import { styles } from './styles.ts';
 
 export type TokenIconAdornmentProps = {
   token: string;

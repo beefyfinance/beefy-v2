@@ -1,17 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { NormalizedEntity } from '../utils/normalized-entity.ts';
-import type { ProposalEntity } from '../entities/proposal.ts';
-import { fetchActiveProposals, markAllProposalsRead } from '../actions/proposal.ts';
 import { keyBy, uniq } from 'lodash-es';
-
-export type ProposalsState = NormalizedEntity<ProposalEntity> & {
-  readIds: ProposalEntity['id'][];
-  bySpace: {
-    [space: string]: {
-      allIds: string[];
-    };
-  };
-};
+import { fetchActiveProposals, markAllProposalsRead } from '../actions/proposal.ts';
+import type { ProposalsState } from './proposals-types.ts';
 
 export const initialState: ProposalsState = {
   byId: {},

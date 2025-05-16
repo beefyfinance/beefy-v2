@@ -1,20 +1,20 @@
-import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../store.ts';
-import { selectVaultById } from '../../../data/selectors/vaults.ts';
-import { selectTokenByAddress } from '../../../data/selectors/tokens.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { selectHistoricalAvailableCharts } from '../../../data/selectors/historical.ts';
+import { selectTokenByAddress } from '../../../data/selectors/tokens.ts';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
 import { Card } from '../Card/Card.tsx';
 import { CardContent } from '../Card/CardContent.tsx';
 import { CardHeader } from '../Card/CardHeader.tsx';
 import { CardTitle } from '../Card/CardTitle.tsx';
 import { StatSwitcher } from '../StatSwitcher/StatSwitcher.tsx';
+import { CurrentCowcentratedRangeIfAvailable } from './CurrentCowcentratedRange/CurrentCowcentratedRange.tsx';
 import { GraphWithControls } from './GraphWithControls/GraphWithControls.tsx';
 import { styles } from './styles.ts';
-import { getDefaultStat } from './utils.ts';
-import { CurrentCowcentratedRangeIfAvailable } from './CurrentCowcentratedRange/CurrentCowcentratedRange.tsx';
 import type { ChartStat } from './types.ts';
+import { getDefaultStat } from './utils.ts';
 
 type HistoricGraphsProps = {
   vaultId: VaultEntity['id'];

@@ -5,7 +5,7 @@ import { fetchAllVaults } from '../../actions/vaults.ts';
 import { mapValuesDeep } from '../../utils/array-utils.ts';
 import { sleep } from '../../utils/async-utils.ts';
 import { featureFlag_replayReduxActions } from '../../utils/feature-flags.ts';
-import { store } from '../../../../store.ts';
+import { store } from '../../store/store.ts';
 import type { AnyAction } from '@reduxjs/toolkit';
 
 declare const window: {

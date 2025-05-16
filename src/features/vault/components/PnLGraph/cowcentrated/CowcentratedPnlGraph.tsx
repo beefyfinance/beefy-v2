@@ -1,36 +1,36 @@
 import { type FC, memo, useEffect, useMemo, useState } from 'react';
-import { isCowcentratedStandardVault, type VaultEntity } from '../../../../data/entities/vault.ts';
-import { Card } from '../../Card/Card.tsx';
-import { CardContent } from '../../Card/CardContent.tsx';
-import { CardHeader } from '../../Card/CardHeader.tsx';
-import { CardTitle } from '../../Card/CardTitle.tsx';
 import { useTranslation } from 'react-i18next';
-import { StatSwitcher } from '../../StatSwitcher/StatSwitcher.tsx';
-import { styles } from './styles.ts';
+import { ErrorBoundary } from '../../../../../components/ErrorBoundary/ErrorBoundary.tsx';
+import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData.tsx';
+import type { ToggleButtonItem } from '../../../../../components/ToggleButtons/ToggleButtons.tsx';
 import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
-import { OverviewGraphHeader } from './components/OverviewGraphHeader/OverviewGraphHeader.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../../store.ts';
-import { selectCowcentratedLikeVaultById } from '../../../../data/selectors/vaults.ts';
-import { selectHasBreakdownDataForVaultId } from '../../../../data/selectors/tokens.ts';
-import {
-  selectIsAddressBookLoaded,
-  selectIsContractDataLoadedOnChain,
-} from '../../../../data/selectors/data-loader.ts';
-import { selectHasDataToShowGraphByVaultId } from '../../../../data/selectors/analytics.ts';
-import { CLMOverviewGraph } from './components/OverviewGraph/OverviewGraph.tsx';
-import { useVaultPeriodsOverviewGraph } from './components/OverviewGraph/hooks.tsx';
-import { FeesFooter, OverviewFooter } from './components/Footers/Footer.tsx';
-import { FeesGraphHeader } from './components/FeesGraphHeader/FeesGraphHeader.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../data/store/hooks.ts';
 import {
   fetchClmHarvestsForUserVault,
   fetchClmPendingRewards,
 } from '../../../../data/actions/analytics.ts';
+import { isCowcentratedStandardVault, type VaultEntity } from '../../../../data/entities/vault.ts';
+import { selectHasDataToShowGraphByVaultId } from '../../../../data/selectors/analytics.ts';
+import { selectIsContractDataLoadedOnChain } from '../../../../data/selectors/contract-data.ts';
+import {
+  selectHasBreakdownDataForVaultId,
+  selectIsAddressBookLoaded,
+} from '../../../../data/selectors/tokens.ts';
+import { selectCowcentratedLikeVaultById } from '../../../../data/selectors/vaults.ts';
 import { selectWalletAddress } from '../../../../data/selectors/wallet.ts';
+import { Card } from '../../Card/Card.tsx';
+import { CardContent } from '../../Card/CardContent.tsx';
+import { CardHeader } from '../../Card/CardHeader.tsx';
+import { CardTitle } from '../../Card/CardTitle.tsx';
+import { StatSwitcher } from '../../StatSwitcher/StatSwitcher.tsx';
 import { CLMFeesGraph } from './components/FeesGraph/FeesGraph.tsx';
-import { useVaultPeriodsFeesGraph } from './components/FeesGraph/hooks.tsx';
-import { ErrorBoundary } from '../../../../../components/ErrorBoundary/ErrorBoundary.tsx';
-import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData.tsx';
-import type { ToggleButtonItem } from '../../../../../components/ToggleButtons/ToggleButtons.tsx';
+import { useVaultPeriodsFeesGraph } from './components/FeesGraph/hooks.ts';
+import { FeesGraphHeader } from './components/FeesGraphHeader/FeesGraphHeader.tsx';
+import { FeesFooter, OverviewFooter } from './components/Footers/Footer.tsx';
+import { useVaultPeriodsOverviewGraph } from './components/OverviewGraph/hooks.ts';
+import { CLMOverviewGraph } from './components/OverviewGraph/OverviewGraph.tsx';
+import { OverviewGraphHeader } from './components/OverviewGraphHeader/OverviewGraphHeader.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -91,22 +91,20 @@ export const OverviewGraph = memo(function OverviewGraph({
     <CardContent css={styles.content}>
       <OverviewGraphHeader vaultId={vaultId} />
       <div className={classes.graphContainer}>
-        {canShowGraph ? (
+        {canShowGraph ?
           <ErrorBoundary>
             <CLMOverviewGraph period={period} address={address} vaultId={vaultId} />
           </ErrorBoundary>
-        ) : (
-          <GraphNoData reason="wait-collect" />
-        )}
+        : <GraphNoData reason="wait-collect" />}
       </div>
-      {canShowGraph ? (
+      {canShowGraph ?
         <OverviewFooter
           labels={labels}
           period={period}
           handlePeriod={setPeriod}
           position={isCowcentratedStandardVault(vault)}
         />
-      ) : null}
+      : null}
     </CardContent>
   );
 });
@@ -121,15 +119,13 @@ export const FeesGraph = memo(function FeesGraph({ vaultId, address }: Cowcentra
     <CardContent css={styles.content}>
       <FeesGraphHeader vaultId={vaultId} address={address} />
       <div className={classes.graphContainer}>
-        {canShowGraph ? (
+        {canShowGraph ?
           <CLMFeesGraph vaultId={vaultId} period={period} address={address} />
-        ) : (
-          <GraphNoData reason="wait-collect" />
-        )}
+        : <GraphNoData reason="wait-collect" />}
       </div>
-      {canShowGraph ? (
+      {canShowGraph ?
         <FeesFooter labels={labels} vaultId={vaultId} period={period} handlePeriod={setPeriod} />
-      ) : null}
+      : null}
     </CardContent>
   );
 });
@@ -174,9 +170,9 @@ export const CowcentratedPnlGraph = memo(function CowcentratedPnlGraph({
     <Card css={styles.card}>
       <CardHeader>
         <CardTitle>{t('Graph-PositionPerformance')}</CardTitle>
-        {Object.keys(options).length > 1 ? (
+        {Object.keys(options).length > 1 ?
           <StatSwitcher<ChartType> stat={stat} options={options} onChange={setStat} />
-        ) : null}
+        : null}
       </CardHeader>
       <ErrorBoundary>
         <GraphComponent vaultId={vaultId} address={address} />
@@ -197,7 +193,7 @@ export const DashboardOverviewGraph = memo(function DashboardOverviewGraph({
 
   return (
     <div className={classes.dashboardPnlContainer}>
-      {canShowGraph ? (
+      {canShowGraph ?
         <>
           <CLMOverviewGraph address={address} period={period} vaultId={vaultId} />
           <OverviewFooter
@@ -208,9 +204,7 @@ export const DashboardOverviewGraph = memo(function DashboardOverviewGraph({
             position={isCowcentratedStandardVault(vault)}
           />
         </>
-      ) : (
-        <GraphNoData reason="wait-collect" />
-      )}
+      : <GraphNoData reason="wait-collect" />}
     </div>
   );
 });
@@ -226,7 +220,7 @@ export const DashboardFeesGraph = memo(function DashboardFeesGraph({
 
   return (
     <div className={classes.dashboardPnlContainer}>
-      {canShowGraph ? (
+      {canShowGraph ?
         <>
           <CLMFeesGraph address={address} period={period} vaultId={vaultId} />
           <FeesFooter
@@ -237,9 +231,7 @@ export const DashboardFeesGraph = memo(function DashboardFeesGraph({
             handlePeriod={setPeriod}
           />
         </>
-      ) : (
-        <GraphNoData reason="wait-collect" />
-      )}
+      : <GraphNoData reason="wait-collect" />}
     </div>
   );
 });

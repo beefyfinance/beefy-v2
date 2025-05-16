@@ -1,3 +1,6 @@
+import { token } from '@repo/styles/tokens';
+import { format, fromUnixTime } from 'date-fns';
+import { max as lodashMax } from 'lodash-es';
 import { memo, useCallback, useMemo } from 'react';
 import {
   Area,
@@ -10,29 +13,26 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import type { VaultEntity } from '../../../../data/entities/vault.ts';
-import type { TokenEntity } from '../../../../data/entities/token.ts';
-import type { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types.ts';
-import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
-import { format, fromUnixTime } from 'date-fns';
+import { useBreakpoint } from '../../../../../components/MediaQueries/useBreakpoint.ts';
 import { XAxisTick } from '../../../../../components/XAxisTick/XAxisTick.tsx';
-import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../helpers/graph/graph.ts';
 import {
   formatLargePercent,
   formatTokenDisplayCondensed,
   formatUsd,
 } from '../../../../../helpers/format.ts';
-import type { LineTogglesState } from '../LineToggles/LineToggles.tsx';
-import { TooltipContent } from '../TooltipContent/TooltipContent.tsx';
-import type { BaseTooltipProps } from '../TooltipContent/TooltipContent.tsx';
-import { useChartData } from './useChartData.tsx';
-import { styles } from './styles.ts';
-import { useAppSelector } from '../../../../../store.ts';
+import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../helpers/graph/graph.ts';
+import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
+import type { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types.ts';
+import type { TokenEntity } from '../../../../data/entities/token.ts';
+import type { VaultEntity } from '../../../../data/entities/vault.ts';
 import { selectVaultById } from '../../../../data/selectors/vaults.ts';
-import { max as lodashMax } from 'lodash-es';
+import type { LineTogglesState } from '../LineToggles/LineToggles.tsx';
+import type { BaseTooltipProps } from '../TooltipContent/TooltipContent.tsx';
+import { TooltipContent } from '../TooltipContent/TooltipContent.tsx';
 import type { ChartStat } from '../types.ts';
-import { useBreakpoint } from '../../../../../components/MediaQueries/useBreakpoint.ts';
-import { token } from '@repo/styles/tokens';
+import { styles } from './styles.ts';
+import { useChartData } from './useChartData.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -79,11 +79,11 @@ export const Graph = memo(function Graph<TStat extends ChartStat>({
   }, [data.length, isMobile]);
 
   const yTickFormatter = useMemo(() => {
-    return stat === 'apy'
-      ? (value: number) => formatLargePercent(value)
-      : stat === 'clm'
-        ? (value: number) => formatTokenDisplayCondensed(value, 18)
-        : (value: number) => formatUsd(value);
+    return (
+      stat === 'apy' ? (value: number) => formatLargePercent(value)
+      : stat === 'clm' ? (value: number) => formatTokenDisplayCondensed(value, 18)
+      : (value: number) => formatUsd(value)
+    );
   }, [stat]);
 
   const diff = useMemo(() => {
@@ -146,17 +146,19 @@ export const Graph = memo(function Graph<TStat extends ChartStat>({
             fill="rgba(255, 255, 255, 0.05)"
             fillOpacity={isClm ? 0 : 100}
           />
-          {isClm ? <Bar dataKey="ranges" fill="#6A71AE4C" /> : null}
+          {isClm ?
+            <Bar dataKey="ranges" fill="#6A71AE4C" />
+          : null}
           <Tooltip
             content={tooltipContentCreator}
             wrapperStyle={{ outline: 'none', zIndex: token('zIndex.tooltip') }}
           />
-          {!isClm && toggles.movingAverage ? (
+          {!isClm && toggles.movingAverage ?
             <Area dataKey="ma" stroke="#5C70D6" strokeWidth={1.5} fill="none" />
-          ) : null}
-          {!isClm && toggles.average ? (
+          : null}
+          {!isClm && toggles.average ?
             <ReferenceLine y={avg} stroke="#4DB258" strokeWidth={1.5} strokeDasharray="3 3" />
-          ) : null}
+          : null}
           <YAxis
             dataKey="v"
             tickFormatter={yTickFormatter}

@@ -5,7 +5,7 @@ import { UNSCORED_RISKS } from '../../../../config/risk.ts';
 import { styles } from './styles.ts';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { css, type CssStyles } from '@repo/styles/css';
-import { useVaultHasRisks } from './hooks.tsx';
+import { useVaultHasRisks } from './hooks.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

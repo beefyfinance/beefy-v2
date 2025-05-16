@@ -6,7 +6,7 @@ import { VaultAtDepositStat } from '../../../../../../../../../components/VaultS
 import { VaultDailyUsdStat } from '../../../../../../../../../components/VaultStats/VaultDailyUsdStat.tsx';
 import { VaultDepositStat } from '../../../../../../../../../components/VaultStats/VaultDepositStat.tsx';
 import { legacyMakeStyles } from '../../../../../../../../../helpers/mui.ts';
-import { useAppSelector } from '../../../../../../../../../store.ts';
+import { useAppSelector } from '../../../../../../../../data/store/hooks.ts';
 import { type VaultEntity } from '../../../../../../../../data/entities/vault.ts';
 import { selectVaultPnl } from '../../../../../../../../data/selectors/analytics.ts';
 import { RowMobile } from '../../../../Row/Row.tsx';

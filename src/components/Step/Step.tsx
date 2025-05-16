@@ -35,17 +35,19 @@ export const Step = memo(function Step({
 
   return (
     <div className={classes.container} style={cardStyle}>
-      {title ? (
+      {title ?
         <div className={classes.titleBar}>
-          {onBack !== undefined ? (
+          {onBack !== undefined ?
             <button type="button" onClick={onBack} className={classes.backButton}>
               <BackArrow className={classes.backIcon} />
             </button>
-          ) : null}
+          : null}
           <div>{title}</div>
-          {titleAdornment ? <div className={classes.adornment}>{titleAdornment}</div> : null}
+          {titleAdornment ?
+            <div className={classes.adornment}>{titleAdornment}</div>
+          : null}
         </div>
-      ) : null}
+      : null}
       <div className={css(styles.content, contentCss, noPadding && styles.noPadding)}>
         {children}
       </div>

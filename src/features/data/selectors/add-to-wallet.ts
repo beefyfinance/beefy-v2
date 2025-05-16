@@ -1,4 +1,4 @@
-import type { BeefyState } from '../../../redux-types.ts';
+import type { BeefyState } from '../store/types.ts';
 import { valueOrThrow } from '../utils/selector-utils.ts';
 
 export const selectAddToWalletStatus = (state: BeefyState) => state.ui.addToWallet.status;

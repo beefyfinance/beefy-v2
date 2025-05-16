@@ -1,24 +1,23 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../../redux-types.ts';
+import { type Address, getAddress } from 'viem';
+import { fromWei } from '../../../../helpers/big-number.ts';
+import { pushOrSet } from '../../../../helpers/object.ts';
 import { getMerklRewardsApi } from '../../apis/instances.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
-import { selectAllChainIds, selectChainByNetworkChainId } from '../../selectors/chains.ts';
-import { selectVaultByAddressOrUndefined } from '../../selectors/vaults.ts';
-import { selectMerklRewardsForUserShouldLoad } from '../../selectors/data-loader.ts';
-import { type Address, getAddress } from 'viem';
 import {
   getCowcentratedPool,
   isCowcentratedLikeVault,
   isCowcentratedVault,
   type VaultEntity,
 } from '../../entities/vault.ts';
-import { isDefined } from '../../utils/array-utils.ts';
-import { fromWei } from '../../../../helpers/big-number.ts';
-import { pushOrSet } from '../../../../helpers/object.ts';
 import type {
   MerklTokenReward,
   MerklVaultReward,
 } from '../../reducers/wallet/user-rewards-types.ts';
+import { selectAllChainIds, selectChainByNetworkChainId } from '../../selectors/chains.ts';
+import { selectMerklRewardsForUserShouldLoad } from '../../selectors/user-rewards.ts';
+import { selectVaultByAddressOrUndefined } from '../../selectors/vaults.ts';
+import { isDefined } from '../../utils/array-utils.ts';
+import { createAppAsyncThunk } from '../../utils/store-utils.ts';
 import type {
   FetchUserMerklRewardsActionParams,
   FetchUserMerklRewardsFulfilledPayload,
@@ -90,12 +89,9 @@ function addVaultRewardToExisting(existing: MerklVaultReward, next: MerklVaultRe
   existing.unclaimed = existing.unclaimed.plus(next.unclaimed);
 }
 
-export const fetchUserMerklRewardsAction = createAsyncThunk<
+export const fetchUserMerklRewardsAction = createAppAsyncThunk<
   FetchUserMerklRewardsFulfilledPayload,
-  FetchUserMerklRewardsActionParams,
-  {
-    state: BeefyState;
-  }
+  FetchUserMerklRewardsActionParams
 >(
   'rewards/fetchUserMerklRewardsAction',
   async ({ walletAddress }, { getState }) => {

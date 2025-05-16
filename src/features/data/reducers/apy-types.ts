@@ -68,6 +68,14 @@ export type AvgApy = {
   full: number[];
 };
 
+export type RawAprByBoostId = {
+  [boostId: BoostPromoEntity['id']]: BoostAprData;
+};
+
+export type ApyContractState = {
+  rawApyByBoostId: RawAprByBoostId;
+};
+
 /**
  * State containing APY infos indexed by vault id
  */
@@ -77,9 +85,7 @@ export interface ApyState {
       // we reuse the api types, not the best idea but works for now
       [vaultId: VaultEntity['id']]: ApiApyData;
     };
-    byBoostId: {
-      [boostId: BoostPromoEntity['id']]: BoostAprData;
-    };
+    byBoostId: RawAprByBoostId;
   };
   totalApy: {
     byVaultId: {

@@ -84,14 +84,14 @@ export const OverviewTooltip = memo(function OverviewTooltip({
         <div className={classes.label}>{t('Graph-cowcentrated-overview-tooltip-hold-value')}:</div>
         <div className={classes.value}>{formatUsd(heldUsd)}</div>
       </div>
-      {featureFlag_detailedTooltips()
-        ? Object.entries(debug).map(([key, value]) => (
-            <div className={classes.itemContainer} key={key}>
-              <div className={classes.label}>{key}:</div>
-              <div className={classes.value}>{value.toString(10)}</div>
-            </div>
-          ))
-        : null}
+      {featureFlag_detailedTooltips() ?
+        Object.entries(debug).map(([key, value]) => (
+          <div className={classes.itemContainer} key={key}>
+            <div className={classes.label}>{key}:</div>
+            <div className={classes.value}>{value.toString(10)}</div>
+          </div>
+        ))
+      : null}
     </div>
   );
 });

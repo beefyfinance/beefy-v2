@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type BigNumber from 'bignumber.js';
 import type { Draft } from 'immer';
+import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import {
   fetchAllBalanceAction,
   type FetchAllBalanceFulfilledPayload,
@@ -8,87 +8,17 @@ import {
   recalculateDepositedVaultsAction,
 } from '../../actions/balance.ts';
 import { initiateBoostForm } from '../../actions/boosts.ts';
+import { initiateMinterForm } from '../../actions/minters.ts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens.ts';
 import type {
   BoostBalance,
-  BoostReward,
   Erc4626PendingBalance,
-  Erc4626PendingBalanceRequest,
   GovVaultBalance,
-  GovVaultReward,
   TokenBalance,
 } from '../../apis/balance/balance-types.ts';
-import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
-import type { TokenEntity } from '../../entities/token.ts';
-import type { VaultEntity } from '../../entities/vault.ts';
-import { initiateMinterForm } from '../../actions/minters.ts';
 import { selectMinterById } from '../../selectors/minters.ts';
-import { BIG_ZERO } from '../../../../helpers/big-number.ts';
-
-/**
- * State containing user balances state
- */
-export interface BalanceState {
-  // we want to keep everything by address to be able to display the right
-  // data even when the user quickly changes account
-  byAddress: {
-    [address: string]: {
-      // quick access to all deposited vaults for this address
-      // this can include gov, standard, or a boost's target vault
-      depositedVaultIds: VaultEntity['id'][];
-
-      /**
-       * all balances below represent token amounts
-       */
-      tokenAmount: {
-        /**
-         * Token balance, used to know standard vault balance with earnToken (mooXyzToken)
-         * and oracle balance, to display how much the user can put in a vault or boost
-         */
-        byChainId: {
-          [chainId in ChainEntity['id']]?: {
-            byTokenAddress: {
-              [tokenAddress: TokenEntity['address']]: {
-                balance: BigNumber;
-              };
-            };
-          };
-        };
-
-        /**
-         * The boost balance to know how much we withdraw from the boost
-         * and how much rewards we can claim
-         */
-        byBoostId: {
-          [boostId: BoostPromoEntity['id']]: {
-            balance: BigNumber;
-            rewards: BoostReward[];
-          };
-        };
-
-        /**
-         * The gov vault token balance and pending rewards
-         */
-        byGovVaultId: {
-          [vaultId: VaultEntity['id']]: {
-            balance: BigNumber;
-            rewards: GovVaultReward[];
-          };
-        };
-
-        byVaultId: {
-          [vaultId: VaultEntity['id']]: {
-            pendingWithdrawals: {
-              shares: BigNumber;
-              requests: Erc4626PendingBalanceRequest[];
-            };
-          };
-        };
-      };
-    };
-  };
-}
+import type { BalanceState } from './balance-types.ts';
 
 export const initialBalanceState: BalanceState = {
   byAddress: {},

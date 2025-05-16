@@ -1,4 +1,19 @@
+import BigNumber from 'bignumber.js';
+import { first, orderBy, uniqBy } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';
+import {
+  BIG_ZERO,
+  bigNumberToStringDeep,
+  compareBigNumber,
+  fromWei,
+  fromWeiToTokenAmount,
+  toWeiFromTokenAmount,
+  toWeiString,
+} from '../../../../../../helpers/big-number.ts';
+import { isFulfilledResult } from '../../../../../../helpers/promises.ts';
+import { tokenInList } from '../../../../../../helpers/tokens.ts';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
 import {
   isTokenEqual,
   isTokenErc20,
@@ -6,7 +21,50 @@ import {
   type TokenErc20,
   type TokenNative,
 } from '../../../../entities/token.ts';
-import type { Step } from '../../../../reducers/wallet/stepper.ts';
+import { isStandardVault, type VaultStandard } from '../../../../entities/vault.ts';
+import { type AmmEntityBalancer, isBalancerAmm } from '../../../../entities/zap.ts';
+import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
+import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
+import { selectChainById } from '../../../../selectors/chains.ts';
+import {
+  selectChainNativeToken,
+  selectChainWrappedNativeToken,
+  selectTokenByAddressOrUndefined,
+  selectTokenPriceByTokenOracleId,
+} from '../../../../selectors/tokens.ts';
+import { selectTransactSlippage } from '../../../../selectors/transact.ts';
+import { selectAmmById } from '../../../../selectors/zap.ts';
+import type { BeefyState, BeefyThunk } from '../../../../store/types.ts';
+import { isDefined } from '../../../../utils/array-utils.ts';
+import { createFactory } from '../../../../utils/factory-utils.ts';
+import {
+  isBalancerAllPool,
+  isBalancerSinglePool,
+} from '../../../amm/balancer/common/type-guards.ts';
+import { ComposableStablePool } from '../../../amm/balancer/composable-stable/ComposableStablePool.ts';
+import { GyroPool } from '../../../amm/balancer/gyro/GyroPool.ts';
+import { MetaStablePool } from '../../../amm/balancer/meta-stable/MetaStablePool.ts';
+import { BalancerFeature } from '../../../amm/balancer/types.ts';
+import type { PoolConfig, VaultConfig } from '../../../amm/balancer/vault/types.ts';
+import { WeightedPool } from '../../../amm/balancer/weighted/WeightedPool.ts';
+import { mergeTokenAmounts, slipBy, slipTokenAmountBy } from '../../helpers/amounts.ts';
+import { Balances } from '../../helpers/Balances.ts';
+import {
+  createOptionId,
+  createQuoteId,
+  createSelectionId,
+  onlyOneInput,
+  onlyOneTokenAmount,
+} from '../../helpers/options.ts';
+import {
+  calculatePriceImpact,
+  highestFeeOrZero,
+  totalValueOfTokenAmounts,
+} from '../../helpers/quotes.ts';
+import { allTokensAreDistinct, includeWrappedAndNative, pickTokens } from '../../helpers/tokens.ts';
+import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
+import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
+import type { QuoteRequest, QuoteResponse } from '../../swap/ISwapProvider.ts';
 import {
   type BalancerDepositOption,
   type BalancerDepositOptionAllAggregator,
@@ -31,41 +89,8 @@ import {
   type ZapQuoteStepSwap,
   type ZapQuoteStepSwapAggregator,
 } from '../../transact-types.ts';
-import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
-import {
-  createOptionId,
-  createQuoteId,
-  createSelectionId,
-  onlyOneInput,
-  onlyOneTokenAmount,
-} from '../../helpers/options.ts';
-import {
-  selectChainNativeToken,
-  selectChainWrappedNativeToken,
-  selectTokenByAddressOrUndefined,
-  selectTokenPriceByTokenOracleId,
-} from '../../../../selectors/tokens.ts';
-import { selectChainById } from '../../../../selectors/chains.ts';
-import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
-import { first, orderBy, uniqBy } from 'lodash-es';
-import {
-  BIG_ZERO,
-  bigNumberToStringDeep,
-  compareBigNumber,
-  fromWei,
-  fromWeiToTokenAmount,
-  toWeiFromTokenAmount,
-  toWeiString,
-} from '../../../../../../helpers/big-number.ts';
-import {
-  calculatePriceImpact,
-  highestFeeOrZero,
-  totalValueOfTokenAmounts,
-} from '../../helpers/quotes.ts';
-import BigNumber from 'bignumber.js';
-import type { BeefyState, BeefyThunk } from '../../../../../../redux-types.ts';
-import type { QuoteRequest, QuoteResponse } from '../../swap/ISwapProvider.ts';
+import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType.ts';
+import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
 import type {
   OrderInput,
   OrderOutput,
@@ -73,33 +98,8 @@ import type {
   ZapStep,
   ZapStepResponse,
 } from '../../zap/types.ts';
-import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
-import { selectTransactSlippage } from '../../../../selectors/transact.ts';
-import { Balances } from '../../helpers/Balances.ts';
-import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
-import { mergeTokenAmounts, slipBy, slipTokenAmountBy } from '../../helpers/amounts.ts';
-import { allTokensAreDistinct, includeWrappedAndNative, pickTokens } from '../../helpers/tokens.ts';
-import { isStandardVault, type VaultStandard } from '../../../../entities/vault.ts';
-import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
-import { isDefined } from '../../../../utils/array-utils.ts';
-import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType.ts';
+import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy.ts';
 import type { BalancerStrategyConfig } from '../strategy-configs.ts';
-import { type AmmEntityBalancer, isBalancerAmm } from '../../../../entities/zap.ts';
-import { selectAmmById } from '../../../../selectors/zap.ts';
-import { createFactory } from '../../../../utils/factory-utils.ts';
-import type { PoolConfig, VaultConfig } from '../../../amm/balancer/vault/types.ts';
-import { GyroPool } from '../../../amm/balancer/gyro/GyroPool.ts';
-import { WeightedPool } from '../../../amm/balancer/weighted/WeightedPool.ts';
-import { MetaStablePool } from '../../../amm/balancer/meta-stable/MetaStablePool.ts';
-import { BalancerFeature } from '../../../amm/balancer/types.ts';
-import { ComposableStablePool } from '../../../amm/balancer/composable-stable/ComposableStablePool.ts';
-import { isFulfilledResult } from '../../../../../../helpers/promises.ts';
-import { tokenInList } from '../../../../../../helpers/tokens.ts';
-import {
-  isBalancerAllPool,
-  isBalancerSinglePool,
-} from '../../../amm/balancer/common/type-guards.ts';
-import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
 type ZapHelpers = {
   slippage: number;

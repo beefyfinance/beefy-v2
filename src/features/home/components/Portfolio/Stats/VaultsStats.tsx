@@ -1,11 +1,11 @@
 import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Modal } from '../../../../../components/Modal/Modal.tsx';
 import { formatLargeUsd } from '../../../../../helpers/format.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
 import { selectTotalTvl } from '../../../../data/selectors/tvl.ts';
 import { selectTotalActiveVaults } from '../../../../data/selectors/vaults.ts';
 import { ModalTvl } from '../ModalTvl/ModalTvl.tsx';
-import { useAppSelector } from '../../../../../store.ts';
-import { Modal } from '../../../../../components/Modal/Modal.tsx';
 import { Stat } from './Stat.tsx';
 import { Stats } from './Stats.tsx';
 

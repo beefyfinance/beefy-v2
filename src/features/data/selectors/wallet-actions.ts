@@ -1,6 +1,6 @@
 import type BigNumber from 'bignumber.js';
-import type { BeefyState } from '../../../redux-types.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
+import type { BeefyState } from '../store/types.ts';
 import { selectAllowanceByTokenAddress } from './allowances.ts';
 import { selectTokenByAddress } from './tokens.ts';
 import { selectVaultByIdWithReceipt } from './vaults.ts';

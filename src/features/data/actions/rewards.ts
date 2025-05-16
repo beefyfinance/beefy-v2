@@ -1,7 +1,6 @@
-import type { BeefyState } from '../../../redux-types.ts';
 import type { BeefyOffChainRewardsCampaign } from '../apis/beefy/beefy-api-types.ts';
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getBeefyApi } from '../apis/instances.ts';
+import { createAppAsyncThunk } from '../utils/store-utils.ts';
 
 export type FetchOffChainRewardsActionParams = void;
 
@@ -9,12 +8,9 @@ export type FetchOffChainRewardsFulfilledPayload = {
   campaigns: BeefyOffChainRewardsCampaign[];
 };
 
-export const fetchOffChainCampaignsAction = createAsyncThunk<
+export const fetchOffChainCampaignsAction = createAppAsyncThunk<
   FetchOffChainRewardsFulfilledPayload,
-  FetchOffChainRewardsActionParams,
-  {
-    state: BeefyState;
-  }
+  FetchOffChainRewardsActionParams
 >('rewards/fetchOffChainCampaigns', async () => {
   const api = await getBeefyApi();
   const campaigns = await api.getOffChainRewardCampaigns();

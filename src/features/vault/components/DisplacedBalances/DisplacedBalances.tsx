@@ -1,21 +1,21 @@
+import { css } from '@repo/styles/css';
+import { groupBy } from 'lodash-es';
 import { memo, useMemo } from 'react';
-import { styles } from './styles.ts';
+import { Trans, useTranslation } from 'react-i18next';
+import { Link } from 'react-router';
+import { TokenAmountFromEntity } from '../../../../components/TokenAmount/TokenAmount.tsx';
+import { TokenImage } from '../../../../components/TokenImage/TokenImage.tsx';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
+import type { TokenEntity } from '../../../data/entities/token.ts';
 import type { VaultEntity } from '../../../data/entities/vault.ts';
-import { useAppSelector } from '../../../../store.ts';
 import {
   selectVaultUserBalanceInDepositTokenBreakdown,
   type UserVaultBalanceBreakdownBridged,
   type UserVaultBalanceBreakdownEntry,
 } from '../../../data/selectors/balance.ts';
-import type { TokenEntity } from '../../../data/entities/token.ts';
-import { TokenImage } from '../../../../components/TokenImage/TokenImage.tsx';
-import { Trans, useTranslation } from 'react-i18next';
-import { TokenAmountFromEntity } from '../../../../components/TokenAmount/TokenAmount.tsx';
-import { groupBy } from 'lodash-es';
-import { css } from '@repo/styles/css';
 import { selectChainById } from '../../../data/selectors/chains.ts';
-import { Link } from 'react-router';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 const typesToShow = ['bridged'] as const satisfies Array<UserVaultBalanceBreakdownEntry['type']>;

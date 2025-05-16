@@ -30,11 +30,9 @@ export const Socials = memo(function Socials({ website, websiteLabel, socials }:
   return (
     <div className={socialsCss}>
       {website &&
-        (websiteLabel ? (
+        (websiteLabel ?
           <LinkButton href={website} text={websiteLabel} />
-        ) : (
-          <LinkIcon alt="website" href={website} logo={Link} />
-        ))}
+        : <LinkIcon alt="website" href={website} logo={Link} />)}
       {socials?.twitter && <LinkIcon alt="twitter" logo={Twitter} href={socials.twitter} />}
       {socials?.telegram && <LinkIcon alt="telegram" logo={Telegram} href={socials.telegram} />}
       {socials?.discord && <LinkIcon alt="discord" logo={Discord} href={socials.discord} />}

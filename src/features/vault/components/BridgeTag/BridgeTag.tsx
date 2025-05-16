@@ -27,7 +27,9 @@ export const NativeTag = memo(function NativeTag({ chain, css: cssProp }: Native
 
   return (
     <TagWithTooltip tooltip={<NativeTooltip chain={chain} />} css={cssProp} hoverCloseDelay={150}>
-      {icon ? <img src={icon} alt={chain.name} className={classes.icon} width={24} /> : null}
+      {icon ?
+        <img src={icon} alt={chain.name} className={classes.icon} width={24} />
+      : null}
       {t('TokenBridge-native')}
     </TagWithTooltip>
   );
@@ -40,9 +42,8 @@ export type BridgeTagProps = {
 };
 export const BridgeTag = memo(function BridgeTag({ bridge, chain, css: cssProp }: BridgeTagProps) {
   const classes = useStyles();
-  const icon = bridge.id.includes('canonical')
-    ? getNetworkSrc(chain.id)
-    : getAssetBridgeIcon(bridge.id);
+  const icon =
+    bridge.id.includes('canonical') ? getNetworkSrc(chain.id) : getAssetBridgeIcon(bridge.id);
 
   return (
     <TagWithTooltip
@@ -50,7 +51,9 @@ export const BridgeTag = memo(function BridgeTag({ bridge, chain, css: cssProp }
       css={cssProp}
       hoverCloseDelay={150}
     >
-      {icon ? <img src={icon} alt={bridge.name} className={classes.icon} width={24} /> : null}
+      {icon ?
+        <img src={icon} alt={bridge.name} className={classes.icon} width={24} />
+      : null}
       {bridge.tagName}
     </TagWithTooltip>
   );

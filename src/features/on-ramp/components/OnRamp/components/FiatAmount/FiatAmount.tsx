@@ -1,5 +1,10 @@
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo, useCallback } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useTranslation } from 'react-i18next';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { InputError } from '../../../../../data/reducers/on-ramp-types.ts';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
 import {
   selectFiat,
   selectFiatTokenMinMaxFiat,
@@ -9,16 +14,11 @@ import {
   selectOutputAmount,
   selectToken,
 } from '../../../../../data/selectors/on-ramp.ts';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
 import { AmountInput } from '../AmountInput/AmountInput.tsx';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { FiatAmountAdornment } from '../FiatAmountAdornment/FiatAmountAdornment.tsx';
-import { AmountOutput } from '../AmountOutput/AmountOutput.tsx';
 import { AmountLabel } from '../AmountLabel/AmountLabel.tsx';
-import { useTranslation } from 'react-i18next';
-import { InputError } from '../../../../../data/reducers/on-ramp-types.ts';
-import { css, type CssStyles } from '@repo/styles/css';
+import { AmountOutput } from '../AmountOutput/AmountOutput.tsx';
+import { FiatAmountAdornment } from '../FiatAmountAdornment/FiatAmountAdornment.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -74,9 +74,9 @@ const FiatAmountInput = memo(function FiatAmountInput({ fiat }: FiatAmountInputP
         error={error === InputError.OutOfRange}
         endAdornment={<FiatAmountAdornment currencyCode={fiat} />}
       />
-      {error === InputError.OutOfRange ? (
+      {error === InputError.OutOfRange ?
         <OutOfRangeError currency={fiat} min={range.min} max={range.max} />
-      ) : null}
+      : null}
     </>
   );
 });
@@ -107,7 +107,9 @@ export const FiatAmount = memo(function FiatAmount({ isInput, css: cssProp }: Fi
   return (
     <div className={css(cssProp)}>
       <AmountLabel css={styles.label}>{t('OnRamp-YouPay')}</AmountLabel>
-      {isInput ? <FiatAmountInput fiat={fiat} /> : <FiatAmountOutput fiat={fiat} />}
+      {isInput ?
+        <FiatAmountInput fiat={fiat} />
+      : <FiatAmountOutput fiat={fiat} />}
     </div>
   );
 });

@@ -1,32 +1,32 @@
+import { orderBy } from 'lodash-es';
 import { memo, useMemo } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import type { ChainEntity } from '../../../features/data/entities/chain.ts';
 import {
   isCowcentratedLikeVault,
   type VaultEntity,
 } from '../../../features/data/entities/vault.ts';
-import {
-  selectAllCowcentratedVaultsByChainId,
-  selectVaultById,
-} from '../../../features/data/selectors/vaults.ts';
-import type { BeefyState } from '../../../redux-types.ts';
-import { isDefined } from '../../../features/data/utils/array-utils.ts';
-import { useAppSelector } from '../../../store.ts';
-import { getIcon } from '../../../helpers/iconSrc.ts';
-import { Trans, useTranslation } from 'react-i18next';
-import { ListJoin } from '../../ListJoin.tsx';
-import type { ChainEntity } from '../../../features/data/entities/chain.ts';
-import {
-  selectChainWrappedNativeToken,
-  selectTokenByIdOrUndefined,
-} from '../../../features/data/selectors/tokens.ts';
+import { selectVaultTotalApy } from '../../../features/data/selectors/apy.ts';
 import {
   selectConcentratedLiquidityManagerPlatforms,
   selectPlatformById,
 } from '../../../features/data/selectors/platforms.ts';
-import { orderBy } from 'lodash-es';
+import {
+  selectChainWrappedNativeToken,
+  selectTokenByIdOrUndefined,
+} from '../../../features/data/selectors/tokens.ts';
 import { selectVaultTvl } from '../../../features/data/selectors/tvl.ts';
-import { DismissibleBanner } from '../Banner/DismissibleBanner.tsx';
-import { selectVaultTotalApy } from '../../../features/data/selectors/apy.ts';
+import {
+  selectAllCowcentratedVaultsByChainId,
+  selectVaultById,
+} from '../../../features/data/selectors/vaults.ts';
+import type { BeefyState } from '../../../features/data/store/types.ts';
+import { isDefined } from '../../../features/data/utils/array-utils.ts';
 import { formatLargePercent } from '../../../helpers/format.ts';
+import { getIcon } from '../../../helpers/iconSrc.ts';
+import { useAppSelector } from '../../../features/data/store/hooks.ts';
+import { ListJoin } from '../../ListJoin.tsx';
+import { DismissibleBanner } from '../Banner/DismissibleBanner.tsx';
 import { InternalLink } from '../Links/InternalLink.tsx';
 
 type RetiredSuggestClmBannerProps = {

@@ -393,6 +393,7 @@ const config = buildConfig(
           darkBlue: {
             '40': { value: '#3f4574' },
             '50': { value: '#363b63' },
+            '50-56a': { value: '#363b638e' },
             '60': { value: '#2d3153' },
             '60-40a': { value: '#2d315366' },
             '70': { value: '#242842' },
@@ -446,14 +447,14 @@ const config = buildConfig(
           h1: { value: '32px' },
           h2: { value: '24px' },
           h3: { value: '21px' },
-          body: { DEFAULT: { value: '16px' }, sm: { value: '12px' } },
+          body: { DEFAULT: { value: '16px' }, md: { value: '14px' }, sm: { value: '12px' } },
           subline: { DEFAULT: { value: '15px' }, sm: { value: '12px' } },
         },
         lineHeights: {
           h1: { value: '40px' },
           h2: { value: '32px' },
           h3: { value: '24px' },
-          body: { DEFAULT: { value: '24px' }, sm: { value: '20px' } },
+          body: { DEFAULT: { value: '24px' }, md: { value: '22px' }, sm: { value: '20px' } },
           subline: { DEFAULT: { value: '24px' }, sm: { value: '20px' } },
         },
         fontWeights: {
@@ -489,6 +490,7 @@ const config = buildConfig(
               },
               inactive: { value: '{colors.vaultInactiveVaultbackground}' },
             },
+            cardBody: { value: '{colors.darkBlue.70}' },
           },
           scrollbar: {
             thumb: { value: '{colors.eclipseElixir}' },
@@ -746,6 +748,21 @@ const config = buildConfig(
       'body.bold': {
         fontSize: '{fontSizes.body}',
         lineHeight: '{lineHeights.body}',
+        fontWeight: '{fontWeights.bold}',
+      },
+      'body.md': {
+        fontSize: '{fontSizes.body.md}',
+        lineHeight: '{lineHeights.body.md}',
+        fontWeight: '{fontWeights.normal}',
+      },
+      'body.md.medium': {
+        fontSize: '{fontSizes.body.md}',
+        lineHeight: '{lineHeights.body.md}',
+        fontWeight: '{fontWeights.medium}',
+      },
+      'body.md.bold': {
+        fontSize: '{fontSizes.body.md}',
+        lineHeight: '{lineHeights.body.md}',
         fontWeight: '{fontWeights.bold}',
       },
       'body.sm': {

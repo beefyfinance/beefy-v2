@@ -1,12 +1,12 @@
 import { memo, useCallback } from 'react';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
-import { useAppSelector } from '../../../../../../store.ts';
-import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { selectChainById } from '../../../../../data/selectors/chains.ts';
-import { GlpNotice } from './GlpNotice.tsx';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet.ts';
-import type { GlpLikeConfig } from './types.ts';
 import { getUnlockTime } from './GetUnlockTime.ts';
+import { GlpNotice } from './GlpNotice.tsx';
+import type { GlpLikeConfig } from './types.ts';
 
 export type GlpDepositNoticeImplProps = {
   vaultId: VaultEntity['id'];

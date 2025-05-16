@@ -1,8 +1,8 @@
 import type BigNumber from 'bignumber.js';
-import type { BeefyState } from '../../../../redux-types.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity, TokenErc20 } from '../../entities/token.ts';
 import type { VaultGov, VaultStandard } from '../../entities/vault.ts';
+import type { BeefyState } from '../../store/types.ts';
 
 export interface IAllowanceApi {
   fetchAllAllowances(

@@ -1,36 +1,36 @@
+import { css } from '@repo/styles/css';
+import type BigNumber from 'bignumber.js';
+import { formatISO9075 } from 'date-fns';
 import { memo, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { TokenAmount } from '../../../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { TokenImage } from '../../../../../../../../components/TokenImage/TokenImage.tsx';
+import { VaultNetwork } from '../../../../../../../../components/VaultIdentity/VaultIdentity.tsx';
+import { BIG_ZERO } from '../../../../../../../../helpers/big-number.ts';
+import {
+  formatLargeUsd,
+  formatTokenDisplayCondensed,
+} from '../../../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
+import { getNetworkSrc } from '../../../../../../../../helpers/networkSrc.ts';
+import { explorerTxUrl } from '../../../../../../../../helpers/url.ts';
+import { useAppSelector } from '../../../../../../../data/store/hooks.ts';
 import {
   isTimelineEntryStandard,
   type TimelineEntryCowcentratedPool,
   type TimelineEntryCowcentratedVault,
   type TimelineEntryStandard,
 } from '../../../../../../../data/entities/analytics.ts';
-import { css } from '@repo/styles/css';
-import { formatISO9075 } from 'date-fns';
-import {
-  formatLargeUsd,
-  formatTokenDisplayCondensed,
-} from '../../../../../../../../helpers/format.ts';
-import { BIG_ZERO } from '../../../../../../../../helpers/big-number.ts';
-import { Row, RowMobile } from '../../../Row/Row.tsx';
-import { InfoGrid } from '../InfoGrid/InfoGrid.tsx';
-import { TokenAmount } from '../../../../../../../../components/TokenAmount/TokenAmount.tsx';
-import { MobileStat } from '../../../MobileStat/MobileStat.tsx';
-import { useTranslation } from 'react-i18next';
-import { explorerTxUrl } from '../../../../../../../../helpers/url.ts';
+import type { TokenEntity } from '../../../../../../../data/entities/token.ts';
 import { selectChainById } from '../../../../../../../data/selectors/chains.ts';
-import { useAppSelector } from '../../../../../../../../store.ts';
-import { getNetworkSrc } from '../../../../../../../../helpers/networkSrc.ts';
-import { VaultNetwork } from '../../../../../../../../components/VaultIdentity/VaultIdentity.tsx';
 import {
   selectCowcentratedLikeVaultDepositTokens,
   selectDepositTokenByVaultId,
 } from '../../../../../../../data/selectors/tokens.ts';
-import { TokenImage } from '../../../../../../../../components/TokenImage/TokenImage.tsx';
-import type { TokenEntity } from '../../../../../../../data/entities/token.ts';
-import type BigNumber from 'bignumber.js';
+import { MobileStat } from '../../../MobileStat/MobileStat.tsx';
+import { Row, RowMobile } from '../../../Row/Row.tsx';
+import { InfoGrid } from '../InfoGrid/InfoGrid.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

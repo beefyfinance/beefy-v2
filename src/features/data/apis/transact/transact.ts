@@ -1,16 +1,13 @@
-import {
-  type DepositOption,
-  type DepositQuote,
-  type InputTokenAmount,
-  type ITransactApi,
-  type TransactQuote,
-  type WithdrawOption,
-  type WithdrawQuote,
-} from './transact-types.ts';
 import { partition, uniq } from 'lodash-es';
+import type { Namespace, TFunction } from 'react-i18next';
+import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises.ts';
 import { isCowcentratedLikeVault, type VaultEntity } from '../../entities/vault.ts';
-import type { BeefyStateFn } from '../../../../redux-types.ts';
+import type { Step } from '../../reducers/wallet/stepper-types.ts';
 import { selectVaultById, selectVaultUnderlyingVault } from '../../selectors/vaults.ts';
+import { selectSwapAggregatorsExistForChain, selectZapByChainId } from '../../selectors/zap.ts';
+import type { BeefyStateFn } from '../../store/types.ts';
+import { isDefined } from '../../utils/array-utils.ts';
+import { getSwapAggregator } from '../instances.ts';
 import {
   type AnyComposableStrategy,
   type IComposableStrategyStatic,
@@ -21,10 +18,6 @@ import {
   type TransactHelpers,
   type ZapTransactHelpers,
 } from './strategies/IStrategy.ts';
-import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises.ts';
-import type { Namespace, TFunction } from 'react-i18next';
-import type { Step } from '../../reducers/wallet/stepper.ts';
-import { type VaultTypeFromVault } from './vaults/IVaultType.ts';
 import {
   type AnyZapStrategyStatic,
   type ComposableStrategyId,
@@ -35,17 +28,24 @@ import {
   type StrategyIdToStatic,
   strategyLoadersById,
 } from './strategies/strategies.ts';
-import { getVaultTypeBuilder } from './vaults/vaults.ts';
-import { VaultStrategy } from './strategies/vault/VaultStrategy.ts';
-import { selectSwapAggregatorsExistForChain, selectZapByChainId } from '../../selectors/zap.ts';
-import { getSwapAggregator } from '../instances.ts';
-import { isDefined } from '../../utils/array-utils.ts';
 import type {
   AnyStrategyId,
   StrategyIdToConfig,
   ZapStrategyConfig,
   ZapStrategyId,
 } from './strategies/strategy-configs.ts';
+import { VaultStrategy } from './strategies/vault/VaultStrategy.ts';
+import {
+  type DepositOption,
+  type DepositQuote,
+  type InputTokenAmount,
+  type ITransactApi,
+  type TransactQuote,
+  type WithdrawOption,
+  type WithdrawQuote,
+} from './transact-types.ts';
+import { type VaultTypeFromVault } from './vaults/IVaultType.ts';
+import { getVaultTypeBuilder } from './vaults/vaults.ts';
 
 type StrategyConstructorWithOptions<TId extends ZapStrategyId = ZapStrategyId> = {
   [K in TId]: {

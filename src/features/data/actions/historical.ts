@@ -1,25 +1,25 @@
-import { type AnyAction, createAsyncThunk, type ThunkAction } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types.ts';
-import { getBeefyDataApi, getClmApi } from '../apis/instances.ts';
-import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault.ts';
+import { sub } from 'date-fns';
+import { isMoreThanDurationAgoUnix } from '../../../helpers/date.ts';
+import type { ChartStat } from '../../vault/components/HistoricGraph/types.ts';
+import { getDataApiBucket } from '../apis/beefy/beefy-data-api-helpers.ts';
 import type {
   ApiChartData,
   ApiCowcentratedChartData,
   ApiRanges,
   ApiTimeBucket,
 } from '../apis/beefy/beefy-data-api-types.ts';
-import { selectCowcentratedLikeVaultById, selectVaultById } from '../selectors/vaults.ts';
-import { selectTokenByAddress } from '../selectors/tokens.ts';
-import type { TokenEntity } from '../entities/token.ts';
-import { featureFlag_simulateBeefyApiError } from '../utils/feature-flags.ts';
-import { sleep } from '../utils/async-utils.ts';
-import type { ChartStat } from '../../vault/components/HistoricGraph/types.ts';
-import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils.ts';
-import { isMoreThanDurationAgoUnix } from '../../../helpers/date.ts';
-import { getDataApiBucket } from '../apis/beefy/beefy-data-api-helpers.ts';
-import { sub } from 'date-fns';
 import { isClmPriceHistoryEntriesClm } from '../apis/clm/clm-api-typeguards.ts';
 import type { ClmPriceHistoryEntryClm } from '../apis/clm/clm-api-types.ts';
+import { getBeefyDataApi, getClmApi } from '../apis/instances.ts';
+import type { TokenEntity } from '../entities/token.ts';
+import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault.ts';
+import { selectTokenByAddress } from '../selectors/tokens.ts';
+import { selectCowcentratedLikeVaultById, selectVaultById } from '../selectors/vaults.ts';
+import type { BeefyThunk } from '../store/types.ts';
+import { sleep } from '../utils/async-utils.ts';
+import { featureFlag_simulateBeefyApiError } from '../utils/feature-flags.ts';
+import { createAppAsyncThunk } from '../utils/store-utils.ts';
+import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils.ts';
 
 export interface HistoricalRangesPayload {
   vaultId: VaultEntity['id'];
@@ -32,12 +32,9 @@ export interface HistoricalRangesParams {
   vaultId: VaultEntity['id'];
 }
 
-export const fetchHistoricalRanges = createAsyncThunk<
+export const fetchHistoricalRanges = createAppAsyncThunk<
   HistoricalRangesPayload,
-  HistoricalRangesParams,
-  {
-    state: BeefyState;
-  }
+  HistoricalRangesParams
 >('historical/fetchHistoricalRanges', async ({ vaultId }, { getState }) => {
   const state = getState();
   const vault = selectVaultById(state, vaultId);
@@ -64,18 +61,15 @@ export interface HistoricalApysParams {
   bucket: ApiTimeBucket;
 }
 
-export const fetchHistoricalApys = createAsyncThunk<
-  HistoricalApysPayload,
-  HistoricalApysParams,
-  {
-    state: BeefyState;
-  }
->('historical/fetchHistoricalApys', async ({ vaultId, bucket }) => {
-  const api = await getBeefyDataApi();
-  const data = await api.getApyChartData(vaultId, bucket);
+export const fetchHistoricalApys = createAppAsyncThunk<HistoricalApysPayload, HistoricalApysParams>(
+  'historical/fetchHistoricalApys',
+  async ({ vaultId, bucket }) => {
+    const api = await getBeefyDataApi();
+    const data = await api.getApyChartData(vaultId, bucket);
 
-  return { data };
-});
+    return { data };
+  }
+);
 
 export interface HistoricalTvlsPayload {
   data: ApiChartData;
@@ -86,18 +80,15 @@ export interface HistoricalTvlsParams {
   bucket: ApiTimeBucket;
 }
 
-export const fetchHistoricalTvls = createAsyncThunk<
-  HistoricalTvlsPayload,
-  HistoricalTvlsParams,
-  {
-    state: BeefyState;
-  }
->('historical/fetchHistoricalTvls', async ({ vaultId, bucket }) => {
-  const api = await getBeefyDataApi();
-  const data = await api.getTvlChartData(vaultId, bucket);
+export const fetchHistoricalTvls = createAppAsyncThunk<HistoricalTvlsPayload, HistoricalTvlsParams>(
+  'historical/fetchHistoricalTvls',
+  async ({ vaultId, bucket }) => {
+    const api = await getBeefyDataApi();
+    const data = await api.getTvlChartData(vaultId, bucket);
 
-  return { data };
-});
+    return { data };
+  }
+);
 
 export interface HistoricalPricesPayload {
   data: ApiChartData;
@@ -108,12 +99,9 @@ export interface HistoricalPricesParams {
   bucket: ApiTimeBucket;
 }
 
-export const fetchHistoricalPrices = createAsyncThunk<
+export const fetchHistoricalPrices = createAppAsyncThunk<
   HistoricalPricesPayload,
-  HistoricalPricesParams,
-  {
-    state: BeefyState;
-  }
+  HistoricalPricesParams
 >('historical/fetchHistoricalPrices', async ({ oracleId, bucket }) => {
   if (featureFlag_simulateBeefyApiError('historical-prices')) {
     await sleep(5000);
@@ -135,23 +123,19 @@ export interface HistoricalCowcentratedParams {
   bucket: ApiTimeBucket;
 }
 
-export const fetchHistoricalCowcentratedRanges = createAsyncThunk<
+export const fetchHistoricalCowcentratedRanges = createAppAsyncThunk<
   HistoricalCowcentratedPayload,
-  HistoricalCowcentratedParams,
-  {
-    state: BeefyState;
-  }
+  HistoricalCowcentratedParams
 >('historical/fetchHistoricalCowcentratedRanges', async ({ bucket, vaultId }, { getState }) => {
   const state = getState();
   const vault = selectCowcentratedLikeVaultById(state, vaultId);
   const api = await getClmApi();
-  const bucketToUse = isMoreThanDurationAgoUnix(vault.createdAt, { days: 30 })
-    ? bucket
-    : ('1h_1M' as const);
+  const bucketToUse =
+    isMoreThanDurationAgoUnix(vault.createdAt, { days: 30 }) ? bucket : ('1h_1M' as const);
   const { range, maPeriod } = getDataApiBucket(bucketToUse);
-  const clmPeriod = bucketToUse.split('_')[0] as typeof bucketToUse extends `${infer T}_${string}`
-    ? T
-    : never;
+  const clmPeriod = bucketToUse.split('_')[0] as typeof bucketToUse extends `${infer T}_${string}` ?
+    T
+  : never;
 
   const clmAddress = getCowcentratedAddressFromCowcentratedLikeVault(vault);
   const rawData = await api.getPriceHistoryForVaultSince(
@@ -187,7 +171,7 @@ export function fetchHistoricalStat(
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket
-): ThunkAction<unknown, BeefyState, unknown, AnyAction> {
+): BeefyThunk {
   switch (stat) {
     case 'apy':
       return fetchHistoricalApys({ vaultId, bucket });

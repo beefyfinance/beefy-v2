@@ -1,5 +1,13 @@
+import { css, type CssStyles } from '@repo/styles/css';
 import type { ComponentType, ReactNode } from 'react';
 import { Fragment, memo, useCallback, useMemo } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import { ListJoin } from '../../../../../../components/ListJoin.tsx';
+import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import {
   isCowcentratedDepositQuote,
   type TokenAmount,
@@ -14,20 +22,12 @@ import {
   type ZapQuoteStepUnused,
   type ZapQuoteStepWithdraw,
 } from '../../../../../data/apis/transact/transact-types.ts';
-import { Trans, useTranslation } from 'react-i18next';
-import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { selectPlatformById } from '../../../../../data/selectors/platforms.ts';
-import { ListJoin } from '../../../../../../components/ListJoin.tsx';
-import { selectTransactQuoteIds } from '../../../../../data/selectors/transact.ts';
-import { css, type CssStyles } from '@repo/styles/css';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { QuoteTitle } from '../QuoteTitle/QuoteTitle.tsx';
-import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { selectPlatformById } from '../../../../../data/selectors/platforms.ts';
+import { selectTransactQuoteIds } from '../../../../../data/selectors/transact.ts';
 import { selectZapSwapProviderName } from '../../../../../data/selectors/zap.ts';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { QuoteTitle } from '../QuoteTitle/QuoteTitle.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -56,11 +56,11 @@ const StepContentSwap = memo(function StepContentSwap({
     selectZapSwapProviderName(state, providerId, via, t)
   );
   const textKey =
-    via === 'aggregator' && providerId === 'wnative'
-      ? step.toToken.type === 'native'
-        ? 'Transact-Route-Step-Unwrap'
-        : 'Transact-Route-Step-Wrap'
-      : 'Transact-Route-Step-Swap';
+    via === 'aggregator' && providerId === 'wnative' ?
+      step.toToken.type === 'native' ?
+        'Transact-Route-Step-Unwrap'
+      : 'Transact-Route-Step-Wrap'
+    : 'Transact-Route-Step-Swap';
 
   return (
     <Trans
@@ -268,7 +268,7 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
   const quotes = useAppSelector(selectTransactQuoteIds);
   const hasMultipleOptions = quotes.length > 1;
   const handleSwitch = useCallback(() => {
-    dispatch(transactActions.switchStep(TransactStep.QuoteSelect));
+    dispatch(transactSwitchStep(TransactStep.QuoteSelect));
   }, [dispatch]);
 
   if (

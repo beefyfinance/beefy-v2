@@ -1,10 +1,10 @@
+import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectPlatformById } from '../../features/data/selectors/platforms.ts';
 import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
-import type { VaultEntity } from '../../features/data/entities/vault.ts';
-import { useAppSelector } from '../../store.ts';
-import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
 
 export type VaultPlatformProps = {
   vaultId: VaultEntity['id'];
@@ -24,9 +24,9 @@ export const VaultPlatform = memo(function VaultPlatform({ vaultId }: VaultPlatf
 
   return (
     <>
-      {providerName && providerName !== platformName
-        ? t('VaultTag-PlatformWithProvider', { platform: platformName, provider: providerName })
-        : t('VaultTag-Platform', { platform: platformName })}
+      {providerName && providerName !== platformName ?
+        t('VaultTag-PlatformWithProvider', { platform: platformName, provider: providerName })
+      : t('VaultTag-Platform', { platform: platformName })}
     </>
   );
 });

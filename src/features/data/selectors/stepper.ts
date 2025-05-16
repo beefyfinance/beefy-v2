@@ -1,25 +1,27 @@
 import BigNumber from 'bignumber.js';
-import type { BeefyState } from '../../../redux-types.ts';
-import { formatTokenDisplayCondensed } from '../../../helpers/format.ts';
-import { isTokenErc20 } from '../entities/token.ts';
-import { type Step, StepContent } from '../reducers/wallet/stepper.ts';
-import type { TokenAmount } from '../apis/transact/transact-types.ts';
-import { selectChainNativeToken, selectTokenByAddressOrUndefined } from './tokens.ts';
-import { BIG_ZERO, fromWei } from '../../../helpers/big-number.ts';
-import { selectVaultById } from './vaults.ts';
+import { type Abi, getAddress, parseEventLogs } from 'viem';
 import { ZERO_ADDRESS } from '../../../helpers/addresses.ts';
+import { BIG_ZERO, fromWei } from '../../../helpers/big-number.ts';
+import { formatTokenDisplayCondensed } from '../../../helpers/format.ts';
+import {
+  isWalletActionBridgeSuccess,
+  isWalletActionSuccess,
+} from '../actions/wallet/wallet-action.ts';
+import type { TokenAmount } from '../apis/transact/transact-types.ts';
+import { isTokenErc20 } from '../entities/token.ts';
+import { type Step, StepContent } from '../reducers/wallet/stepper-types.ts';
 import {
   type BridgeAdditionalData,
   isBaseAdditionalData,
   isBoostAdditionalData,
-  isWalletActionBridgeSuccess,
-  isWalletActionSuccess,
   isZapAdditionalData,
   type WalletActionsSuccessState,
-} from '../reducers/wallet/wallet-action.ts';
-import { type Abi, getAddress, parseEventLogs } from 'viem';
-import { selectBoostById } from './boosts.ts';
+} from '../reducers/wallet/wallet-action-types.ts';
+import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
+import { selectBoostById } from './boosts.ts';
+import { selectChainNativeToken, selectTokenByAddressOrUndefined } from './tokens.ts';
+import { selectVaultById } from './vaults.ts';
 
 export const selectStepperState = (state: BeefyState) => {
   return state.ui.stepperState;

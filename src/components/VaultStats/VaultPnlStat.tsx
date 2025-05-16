@@ -5,9 +5,9 @@ import {
   selectIsAnalyticsLoadedByAddress,
   selectUserDepositedTimelineByVaultId,
 } from '../../features/data/selectors/analytics.ts';
+import type { BeefyState } from '../../features/data/store/types.ts';
 import { formatLargePercent, formatLargeUsd } from '../../helpers/format.ts';
-import type { BeefyState } from '../../redux-types.ts';
-import { useAppSelector } from '../../store.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { ClmPnlTooltipContent } from '../PnlTooltip/ClmPnlTooltipContent.tsx';
 import { showClmPnlTooltip } from '../PnlTooltip/helpers.ts';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';

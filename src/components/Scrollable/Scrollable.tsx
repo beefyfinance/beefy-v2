@@ -99,7 +99,10 @@ export const Scrollable = memo(function Scrollable({
         onUpdate={handleUpdate}
         autoHeight={!!autoHeight}
         autoHeightMax={
-          !autoHeight ? undefined : typeof autoHeight === 'boolean' ? 99999999 : autoHeight
+          !autoHeight ? undefined
+          : typeof autoHeight === 'boolean' ?
+            99999999
+          : autoHeight
         }
       >
         {children}

@@ -1,14 +1,19 @@
-import type { BeefyState } from '../../../redux-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import { createSelector } from '@reduxjs/toolkit';
-import type { AmmEntity, SwapAggregatorEntity } from '../entities/zap.ts';
-import type { TokenEntity } from '../entities/token.ts';
-import type { VaultEntity } from '../entities/vault.ts';
-import { selectPlatformByIdOrUndefined } from './platforms.ts';
+import { uniqBy } from 'lodash-es';
 import type { TFunction } from 'react-i18next';
 import { isZapQuoteStepSwap, type ZapQuoteStep } from '../apis/transact/transact-types.ts';
-import { uniqBy } from 'lodash-es';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { TokenEntity } from '../entities/token.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import type { AmmEntity, SwapAggregatorEntity } from '../entities/zap.ts';
+import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
+import {
+  createGlobalDataSelector,
+  hasLoaderFulfilledOnce,
+  shouldLoaderLoadOnce,
+} from './data-loader-helpers.ts';
+import { selectPlatformByIdOrUndefined } from './platforms.ts';
 
 export const selectZapByChainId = (state: BeefyState, chainId: ChainEntity['id']) =>
   state.entities.zaps.zaps.byChainId[chainId] || undefined;
@@ -140,3 +145,33 @@ export const selectZapQuoteTitle = (state: BeefyState, steps: ZapQuoteStep[], t:
     };
   }
 };
+const selectIsZapConfigsLoaded = createGlobalDataSelector('zapConfigs', hasLoaderFulfilledOnce);
+const selectIsZapSwapAggregatorsLoaded = createGlobalDataSelector(
+  'zapSwapAggregators',
+  hasLoaderFulfilledOnce
+);
+const selectIsZapAggregatorTokenSupportLoaded = createGlobalDataSelector(
+  'zapAggregatorTokenSupport',
+  hasLoaderFulfilledOnce
+);
+const selectIsZapAmmsLoaded = createGlobalDataSelector('zapAmms', hasLoaderFulfilledOnce);
+export const selectIsZapLoaded = createSelector(
+  selectIsZapConfigsLoaded,
+  selectIsZapSwapAggregatorsLoaded,
+  selectIsZapAggregatorTokenSupportLoaded,
+  selectIsZapAmmsLoaded,
+  (...availables) => availables.every(available => available === true)
+);
+export const selectShouldInitZapConfigs = createGlobalDataSelector(
+  'zapConfigs',
+  shouldLoaderLoadOnce
+);
+export const selectShouldInitZapSwapAggregators = createGlobalDataSelector(
+  'zapSwapAggregators',
+  shouldLoaderLoadOnce
+);
+export const selectShouldInitZapAggregatorTokenSupport = createGlobalDataSelector(
+  'zapAggregatorTokenSupport',
+  shouldLoaderLoadOnce
+);
+export const selectShouldInitZapAmms = createGlobalDataSelector('zapAmms', shouldLoaderLoadOnce);

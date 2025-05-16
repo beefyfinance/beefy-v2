@@ -1,5 +1,5 @@
-import type { BeefyState } from '../../../redux-types.ts';
 import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault.ts';
+import type { BeefyState } from '../store/types.ts';
 import { selectVaultById } from './vaults.ts';
 
 export const selectIsVaultQidao = (state: BeefyState, vaultId: VaultEntity['id']) => {

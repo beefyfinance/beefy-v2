@@ -1,21 +1,12 @@
-import type { ThunkDispatch } from '@reduxjs/toolkit';
-import type { BeefyDispatchFn, BeefyState, BeefyThunk } from '../../../../redux-types.ts';
-import type { Action } from 'redux';
-import { BaseError, type Chain, type Hash, type PublicClient, type TransactionReceipt } from 'viem';
-import {
-  createWalletActionErrorAction,
-  createWalletActionPendingAction,
-  createWalletActionResetAction,
-  createWalletActionSuccessAction,
-  type TrxError,
-  type TxAdditionalData,
-} from '../../reducers/wallet/wallet-action.ts';
-import { StepContent, stepperActions } from '../../reducers/wallet/stepper.ts';
 import type { Address } from 'abitype';
-import type { GasPricing } from '../../apis/gas-prices/gas-prices.ts';
-import { FriendlyError } from '../../utils/error-utils.ts';
+import { uniqBy } from 'lodash-es';
+import { BaseError, type Chain, type Hash, type PublicClient, type TransactionReceipt } from 'viem';
+import { waitForTransactionReceipt } from 'viem/actions';
 import { errorToString } from '../../../../helpers/format.ts';
+import type { GasPricing } from '../../apis/gas-prices/gas-prices.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
+import type { MinterEntity } from '../../entities/minter.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity } from '../../entities/token.ts';
 import {
   isCowcentratedLikeVault,
@@ -26,27 +17,31 @@ import {
   isVaultWithReceipt,
   type VaultEntity,
 } from '../../entities/vault.ts';
-import type { BoostPromoEntity } from '../../entities/promo.ts';
-import type { MinterEntity } from '../../entities/minter.ts';
-import type { MigrationConfig } from '../../reducers/wallet/migration.ts';
-import { updateSteps } from '../stepper.ts';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../tokens.ts';
-import { reloadReserves } from '../minters.ts';
-import { migratorUpdate } from '../migrator.ts';
-import { transactActions } from '../../reducers/wallet/transact.ts';
-import { fetchUserMerklRewardsAction } from '../user-rewards/merkl-user-rewards.ts';
-import { waitForTransactionReceipt } from 'viem/actions';
+import type { MigrationConfig } from '../../reducers/wallet/migration-types.ts';
+import { StepContent } from '../../reducers/wallet/stepper-types.ts';
+import type { TrxError, TxAdditionalData } from '../../reducers/wallet/wallet-action-types.ts';
 import {
   selectChainNativeToken,
   selectGovVaultEarnedTokens,
   selectTokenByAddress,
   selectTokenByIdOrUndefined,
 } from '../../selectors/tokens.ts';
+import type { BeefyDispatchFn, BeefyState, BeefyThunk } from '../../store/types.ts';
 import { isDefined } from '../../utils/array-utils.ts';
-import { uniqBy } from 'lodash-es';
+import { FriendlyError } from '../../utils/error-utils.ts';
+import { migratorUpdate } from '../migrator.ts';
+import { reloadReserves } from '../minters.ts';
+import { transactClearInput } from '../transact.ts';
+import { stepperSetStepContent, stepperUpdate } from './stepper.ts';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../tokens.ts';
+import { fetchUserMerklRewardsAction } from '../user-rewards/merkl-user-rewards.ts';
+import {
+  createWalletActionErrorAction,
+  createWalletActionPendingAction,
+  createWalletActionResetAction,
+  createWalletActionSuccessAction,
+} from './wallet-action.ts';
 
-export const WALLET_ACTION = 'WALLET_ACTION';
-export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
 type TxRefreshOnSuccess = {
   walletAddress: string;
   chainId: ChainEntity['id'];
@@ -72,44 +67,36 @@ export type TxWriteProps = {
 /**
  * Called before building a transaction
  */
-export function txStart(dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>) {
+export function txStart(dispatch: BeefyDispatchFn) {
   dispatch(createWalletActionResetAction());
   // should already be set by Stepper
-  // dispatch(stepperActions.setStepContent({ stepContent: StepContent.StartTx }));
+  // dispatch(stepperSetStepContent({ stepContent: StepContent.StartTx }));
 }
 
 /**
  * Must call just before calling .send() on a transaction
  */
-export function txWallet(dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>) {
-  dispatch(stepperActions.setStepContent({ stepContent: StepContent.WalletTx }));
+export function txWallet(dispatch: BeefyDispatchFn) {
+  dispatch(stepperSetStepContent({ stepContent: StepContent.WalletTx }));
 }
 
 /**
  * Called when .send() succeeds / tx is submitted to RPC
  */
-function txSubmitted(
-  dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>,
-  context: TxContext,
-  hash: Hash
-) {
+function txSubmitted(dispatch: BeefyDispatchFn, context: TxContext, hash: Hash) {
   const { additionalData } = context;
   dispatch(createWalletActionPendingAction(hash, additionalData));
-  dispatch(stepperActions.setStepContent({ stepContent: StepContent.WaitingTx }));
+  dispatch(stepperSetStepContent({ stepContent: StepContent.WaitingTx }));
 }
 
 /**
  * Called when tx is successfully mined
  */
-function txMined(
-  dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>,
-  context: TxContext,
-  receipt: TransactionReceipt
-) {
+function txMined(dispatch: BeefyDispatchFn, context: TxContext, receipt: TransactionReceipt) {
   const { additionalData, refreshOnSuccess } = context;
 
   dispatch(createWalletActionSuccessAction(receipt, additionalData));
-  dispatch(updateSteps());
+  dispatch(stepperUpdate());
 
   // fetch new balance and allowance of native token (gas spent) and allowance token
   if (refreshOnSuccess) {
@@ -155,7 +142,7 @@ function txMined(
     }
 
     if (clearInput) {
-      dispatch(transactActions.clearInput());
+      dispatch(transactClearInput());
     }
 
     if (rewards) {
@@ -175,19 +162,14 @@ function txMined(
 /**
  * Called when tx fails
  */
-function txError(
-  dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>,
-  context: TxContext,
-  error: unknown,
-  from?: string
-) {
+function txError(dispatch: BeefyDispatchFn, context: TxContext, error: unknown, from?: string) {
   const { additionalData } = context;
   const txError = getWalletErrorMessage(error);
   if (from) {
     console.error(from, txError, error);
   }
   dispatch(createWalletActionErrorAction(txError, additionalData));
-  dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
+  dispatch(stepperSetStepContent({ stepContent: StepContent.ErrorTx }));
 }
 
 export const resetWallet = () => {
@@ -211,8 +193,8 @@ function getWalletErrorMessage(error: unknown): TrxError {
   return { message: errorToString(error) };
 }
 
-export function captureWalletErrors<T extends BeefyThunk>(func: T) {
-  return async (dispatch: BeefyDispatchFn, getState: () => BeefyState, extraArgument: unknown) => {
+export function captureWalletErrors<T extends BeefyThunk>(func: T): BeefyThunk {
+  return async (dispatch, getState, extraArgument) => {
     try {
       return await func(dispatch, getState, extraArgument);
     } catch (error) {
@@ -222,7 +204,7 @@ export function captureWalletErrors<T extends BeefyThunk>(func: T) {
 }
 
 export function bindTransactionEvents(
-  dispatch: ThunkDispatch<BeefyState, unknown, Action<unknown>>,
+  dispatch: BeefyDispatchFn,
   transactionHashPromise: Promise<Hash>,
   client: PublicClient,
   additionalData: TxAdditionalData,
@@ -254,7 +236,7 @@ export function bindTransactionEvents(
 }
 
 export function sendTransaction(
-  dispatch: ThunkDispatch<BeefyState, unknown, Action<unknown>>,
+  dispatch: BeefyDispatchFn,
   builder: () => Promise<Hash>,
   client: PublicClient,
   additionalData: TxAdditionalData,

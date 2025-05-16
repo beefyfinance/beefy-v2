@@ -1,25 +1,25 @@
+import { css, type CssStyles } from '@repo/styles/css';
+import BigNumber from 'bignumber.js';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
+import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
+import type { ToggleProps } from '../../../../../../components/Toggle/Toggle.tsx';
+import { Toggle } from '../../../../../../components/Toggle/Toggle.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import buildLpIcon from '../../../../../../images/icons/build-lp.svg';
+import OpenInNewRoundedIcon from '../../../../../../images/icons/mui/OpenInNewRounded.svg?react';
+import { transactSelectSelection } from '../../../../../data/actions/transact.ts';
+import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import {
   selectTransactDepositTokensForChainIdWithBalances,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
 import type { ListItemProps } from './components/ListItem/ListItem.tsx';
 import { ListItem } from './components/ListItem/ListItem.tsx';
-import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
-import BigNumber from 'bignumber.js';
-import type { ToggleProps } from '../../../../../../components/Toggle/Toggle.tsx';
-import { Toggle } from '../../../../../../components/Toggle/Toggle.tsx';
-import { css, type CssStyles } from '@repo/styles/css';
-import buildLpIcon from '../../../../../../images/icons/build-lp.svg';
-import type { VaultEntity } from '../../../../../data/entities/vault.ts';
-import OpenInNewRoundedIcon from '../../../../../../images/icons/mui/OpenInNewRounded.svg?react';
-import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 const DUST_HIDDEN_THRESHOLD = new BigNumber('0.01');
@@ -65,7 +65,7 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
   const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
     tokenId => {
       dispatch(
-        transactActions.selectSelection({
+        transactSelectSelection({
           selectionId: tokenId,
           resetInput: true,
         })

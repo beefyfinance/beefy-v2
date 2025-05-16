@@ -1,13 +1,13 @@
+import { type CssStyles, cva } from '@repo/styles/css';
 import { memo, useCallback, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { useTranslation } from 'react-i18next';
+import { SelectMultiple } from '../../../../../../components/Form/Select/Multi/SelectMultiple.tsx';
+import type { OptionIconProps } from '../../../../../../components/Form/Select/types.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { selectActiveChains } from '../../../../../data/selectors/chains.ts';
-import { useTranslation } from 'react-i18next';
-import { type CssStyles, cva } from '@repo/styles/css';
-import { getNetworkIcon, useSelectedChainIds } from './hooks.tsx';
-import { SelectMultiple } from '../../../../../../components/Form/Select/Multi/SelectMultiple.tsx';
-import type { OptionIconProps } from '../../../../../../components/Form/Select/types.ts';
+import { getNetworkIcon, useSelectedChainIds } from './hooks.ts';
 
 type ChainOption = {
   value: ChainEntity['id'];

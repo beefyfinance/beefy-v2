@@ -1,7 +1,8 @@
 import { sva } from '@repo/styles/css';
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../store.ts';
+import { askForNetworkChange, askForWalletConnection } from '../../features/data/actions/wallet.ts';
+import { getWalletConnectionApi } from '../../features/data/apis/instances.ts';
 import {
   selectAddToWalletIconUrl,
   selectAddToWalletToken,
@@ -11,10 +12,9 @@ import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../features/data/selectors/wallet.ts';
-import { getWalletConnectionApi } from '../../features/data/apis/instances.ts';
-import { askForNetworkChange, askForWalletConnection } from '../../features/data/actions/wallet.ts';
-import { CopyText } from './CopyText.tsx';
+import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
 import { Button } from '../Button/Button.tsx';
+import { CopyText } from './CopyText.tsx';
 
 const addTokenFormRecipe = sva({
   slots: ['details', 'label', 'buttons'],
@@ -73,11 +73,10 @@ export const AddTokenForm = memo(function AddTokenForm() {
     dispatch(askForNetworkChange({ chainId }));
   }, [dispatch, chainId]);
 
-  const handleClick = isWalletConnectedCorrectChain
-    ? handleAddToken
-    : isWalletConnected
-      ? handleNetworkChange
-      : handleConnect;
+  const handleClick =
+    isWalletConnectedCorrectChain ? handleAddToken
+    : isWalletConnected ? handleNetworkChange
+    : handleConnect;
 
   return (
     <>
@@ -91,11 +90,11 @@ export const AddTokenForm = memo(function AddTokenForm() {
       </div>
       <div className={classes.buttons}>
         <Button variant="success" fullWidth={true} borderless={true} onClick={handleClick}>
-          {isWalletConnectedCorrectChain
-            ? t('Add-To-Wallet')
-            : isWalletConnected
-              ? t('Network-Change', { network: chain.name })
-              : t('Network-ConnectWallet')}
+          {isWalletConnectedCorrectChain ?
+            t('Add-To-Wallet')
+          : isWalletConnected ?
+            t('Network-Change', { network: chain.name })
+          : t('Network-ConnectWallet')}
         </Button>
       </div>
     </>

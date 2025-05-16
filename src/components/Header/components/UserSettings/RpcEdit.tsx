@@ -1,13 +1,13 @@
+import { styled } from '@repo/styles/jsx';
 import { type ChangeEvent, memo, useCallback, useMemo, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../store.ts';
-import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import { useTranslation } from 'react-i18next';
-import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import { updateActiveRpc } from '../../../../features/data/actions/chains.ts';
-import { BaseInput } from '../../../Form/Input/BaseInput.tsx';
+import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
+import { selectChainById } from '../../../../features/data/selectors/chains.ts';
+import { useAppDispatch, useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { Button } from '../../../Button/Button.tsx';
 import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
-import { styled } from '@repo/styles/jsx';
+import { BaseInput } from '../../../Form/Input/BaseInput.tsx';
 
 const URL_REGX = /^https:\/\//;
 

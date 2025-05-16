@@ -1,44 +1,43 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import type {
-  CommonMigrationUpdateFulfilledPayload,
-  MigratorUnstakeProps,
-  MigratorExecuteProps,
-  MigratorUpdateProps,
-} from './migration-types.ts';
-import type { BeefyState } from '../../../../redux-types.ts';
-import { selectVaultById } from '../../selectors/vaults.ts';
-import { selectTokenByAddress } from '../../selectors/tokens.ts';
-import { selectUserBalanceToMigrateByVaultId } from '../../selectors/migration.ts';
-import type { Step } from '../../reducers/wallet/stepper.ts';
-import { startStepperWithSteps } from '../../actions/stepper.ts';
-import { isTokenErc20 } from '../../entities/token.ts';
-import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
-import type { VaultEntity } from '../../entities/vault.ts';
 import type BigNumber from 'bignumber.js';
 import type { Hash } from 'viem';
 import { fromWei } from '../../../../helpers/big-number.ts';
-import { migrateUnstake } from '../../actions/wallet/migrate.ts';
+import { stepperStartWithSteps } from '../../actions/wallet/stepper.ts';
 import { approve } from '../../actions/wallet/approval.ts';
+import { migrateUnstake } from '../../actions/wallet/migrate.ts';
 import { deposit } from '../../actions/wallet/standard.ts';
+import { isTokenErc20 } from '../../entities/token.ts';
+import type { VaultEntity } from '../../entities/vault.ts';
+import type { Step } from '../../reducers/wallet/stepper-types.ts';
+import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
+import { selectUserBalanceToMigrateByVaultId } from '../../selectors/migration.ts';
+import { selectTokenByAddress } from '../../selectors/tokens.ts';
+import { selectVaultById } from '../../selectors/vaults.ts';
+import type { BeefyState } from '../../store/types.ts';
+import { createAppAsyncThunk } from '../../utils/store-utils.ts';
+import type {
+  CommonMigrationUpdateFulfilledPayload,
+  MigratorExecuteProps,
+  MigratorUnstakeProps,
+  MigratorUpdateProps,
+} from './migration-types.ts';
 
 export function buildFetchBalance(
   id: string,
   fetchBalance: (vault: VaultEntity, walletAddress: string, state: BeefyState) => Promise<string>
 ) {
-  return createAsyncThunk<
-    CommonMigrationUpdateFulfilledPayload,
-    MigratorUpdateProps,
-    { state: BeefyState }
-  >(`migration/${id}/update`, async ({ vaultId, walletAddress }, { getState }) => {
-    const state = getState();
-    const vault = selectVaultById(state, vaultId);
-    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  return createAppAsyncThunk<CommonMigrationUpdateFulfilledPayload, MigratorUpdateProps>(
+    `migration/${id}/update`,
+    async ({ vaultId, walletAddress }, { getState }) => {
+      const state = getState();
+      const vault = selectVaultById(state, vaultId);
+      const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
-    const balance = await fetchBalance(vault, walletAddress, state);
-    const fixedBalance = fromWei(balance, depositToken.decimals);
-    console.debug(id, vault.id, fixedBalance.toNumber());
-    return { vaultId, walletAddress, balance: fixedBalance, migrationId: id };
-  });
+      const balance = await fetchBalance(vault, walletAddress, state);
+      const fixedBalance = fromWei(balance, depositToken.decimals);
+      console.debug(id, vault.id, fixedBalance.toNumber());
+      return { vaultId, walletAddress, balance: fixedBalance, migrationId: id };
+    }
+  );
 }
 
 export function buildExecute(
@@ -49,7 +48,7 @@ export function buildExecute(
     state: BeefyState
   ) => Promise<(args: MigratorUnstakeProps) => Promise<Hash>>
 ) {
-  return createAsyncThunk<void, MigratorExecuteProps, { state: BeefyState }>(
+  return createAppAsyncThunk<void, MigratorExecuteProps>(
     `migration/${id}/execute`,
     async ({ vaultId, t, migrationId }, { getState, dispatch }) => {
       const steps: Step[] = [];
@@ -93,7 +92,7 @@ export function buildExecute(
         extraInfo: { vaultId: vault.id },
       });
 
-      dispatch(startStepperWithSteps(steps, vault.chainId));
+      dispatch(stepperStartWithSteps(steps, vault.chainId));
     }
   );
 }

@@ -23,7 +23,11 @@ export const BaseInput = memo(
     const [recipeProps, inputProps] = recipe.splitVariantProps(rest);
     const classes = recipe({
       ...recipeProps,
-      status: error ? 'error' : warning ? 'warning' : success ? 'success' : undefined,
+      status:
+        error ? 'error'
+        : warning ? 'warning'
+        : success ? 'success'
+        : undefined,
     });
 
     return (

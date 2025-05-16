@@ -1,5 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { VaultEntity } from '../entities/vault.ts';
 import type {
   ByAddressByChainDataEntity,
   ByAddressGlobalDataEntity,
@@ -11,10 +13,8 @@ import type {
   LoaderStatePending,
   LoaderStateRejected,
 } from '../reducers/data-loader-types.ts';
-import type { BeefyState } from '../../../redux-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
+import type { BeefyState } from '../store/types.ts';
 import { createCachedFactory } from '../utils/factory-utils.ts';
-import type { VaultEntity } from '../entities/vault.ts';
 
 // time since a loader was last dispatched before it is allowed to be dispatched again
 const DEFAULT_DISPATCHED_RECENT_SECONDS = 30;
@@ -160,8 +160,8 @@ export const shouldLoaderLoadRecent = createShouldLoaderLoadRecentEvaluator(
 
 const createTimeCacheInvalidator = createCachedFactory(
   (invalidateCacheAfterSeconds: number | undefined): (() => number) => {
-    return invalidateCacheAfterSeconds === undefined
-      ? () => 0
+    return invalidateCacheAfterSeconds === undefined ?
+        () => 0
       : () => Math.trunc(Date.now() / 1000 / invalidateCacheAfterSeconds);
   },
   invalidateCacheAfterSeconds => invalidateCacheAfterSeconds?.toString() ?? 'undefined'

@@ -17,7 +17,7 @@ import { styles } from './styles.ts';
 import { css, type CssStyles } from '@repo/styles/css';
 import { isMaybeDomain, isValidAddress } from '../../../../helpers/addresses.ts';
 import { FloatingError } from './FloatingError/FloatingError.tsx';
-import { useResolveDomain } from '../../../data/hooks/resolver.tsx';
+import { useResolveDomain } from '../../../data/hooks/resolver.ts';
 import {
   isFulfilledStatus,
   isPendingStatus,
@@ -137,11 +137,13 @@ export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?:
         }
         placeholder={t('Dashboard-SearchInput-Placeholder')}
       />
-      {hasFocus &&
-      !isValid &&
-      userInput.length > 0 &&
-      !isPendingStatus(resolverStatus) &&
-      !isFulfilledStatus(resolverStatus) ? (
+      {(
+        hasFocus &&
+        !isValid &&
+        userInput.length > 0 &&
+        !isPendingStatus(resolverStatus) &&
+        !isFulfilledStatus(resolverStatus)
+      ) ?
         <FloatingError
           userInput={userInput}
           anchorRef={anchorEl}
@@ -150,7 +152,7 @@ export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?:
           isDomainValid={isDomainValid}
           isDomainResolving={isDomainResolving}
         />
-      ) : null}
+      : null}
     </>
   );
 });

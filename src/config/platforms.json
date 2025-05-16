@@ -492,18 +492,18 @@
   {
     "id": "curve",
     "name": "Curve",
-    "website": "https://curve.fi/",
+    "website": "https://curve.finance/",
     "twitter": "curvefinance",
-    "documentation": "https://docs.curve.fi/",
+    "documentation": "https://docs.curve.finance/",
     "description": "Curve is an exchange liquidity pool on Ethereum. Curve is designed for extremely efficient stablecoin trading and low risk, supplemental fee income for liquidity providers, without an opportunity cost.",
     "type": "amm"
   },
   {
     "id": "curve-lend",
     "name": "Curve Lend",
-    "website": "https://lend.curve.fi/",
+    "website": "https://curve.finance/lend/",
     "twitter": "curvefinance",
-    "documentation": "https://lend.curve.fi/",
+    "documentation": "https://curve.finance/lend/",
     "description": "Curve lending allows the creation of permissionless lending/borrowing markets to borrow crvUSD against any token, or to borrow any token against crvUSD in an isolated mode, powered by LLAMMA for soft-liquidations.",
     "type": "money-market"
   },
@@ -912,7 +912,7 @@
     "website": "https://www.convexfinance.com/",
     "twitter": "ConvexFinance",
     "documentation": "https://docs.convexfinance.com/",
-    "description": "Convex allows Curve.fi liquidity providers to earn trading fees and claim boosted CRV without locking CRV themselves. Liquidity providers can receive boosted CRV and liquidity mining rewards with minimal effort.",
+    "description": "Convex allows Curve liquidity providers to earn trading fees and claim boosted CRV without locking CRV themselves. Liquidity providers can receive boosted CRV and liquidity mining rewards with minimal effort.",
     "type": "yield-boost"
   },
   {

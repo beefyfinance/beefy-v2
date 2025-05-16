@@ -39,21 +39,24 @@ export const ValueBlock = memo(function ValueBlock({
         <div className={css(styles.label, labelCss)}>{label}</div>
         {!loading && tooltip && <IconWithTooltip tooltip={tooltip} iconCss={styles.tooltipIcon} />}
       </div>
-      {textContent ? (
+      {textContent ?
         <div className={css(styles.value, valueCss, blurred && styles.blurred)}>
-          {!loading ? <>{blurred ? '....' : value}</> : <ContentLoading />}
+          {!loading ?
+            <>{blurred ? '....' : value}</>
+          : <ContentLoading />}
         </div>
-      ) : !loading ? (
+      : !loading ?
         <>{blurred ? '....' : value}</>
-      ) : (
-        <div className={classes.noTextContentLoader}>
+      : <div className={classes.noTextContentLoader}>
           <ContentLoading />
         </div>
-      )}
+      }
 
       {usdValue && (
         <div className={css(styles.price, priceCss, blurred && styles.blurred)}>
-          {!loading ? <>{blurred ? '...' : usdValue}</> : <ContentLoading />}
+          {!loading ?
+            <>{blurred ? '...' : usdValue}</>
+          : <ContentLoading />}
         </div>
       )}
     </>

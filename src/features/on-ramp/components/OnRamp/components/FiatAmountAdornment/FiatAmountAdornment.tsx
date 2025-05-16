@@ -1,9 +1,9 @@
 import { memo, useCallback } from 'react';
-import { CurrencyFlag } from '../CurrencyFlag/CurrencyFlag.tsx';
-import { ButtonAdornment } from '../ButtonAdornment/ButtonAdornment.tsx';
-import { useAppDispatch } from '../../../../../../store.ts';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
+import { useAppDispatch } from '../../../../../data/store/hooks.ts';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
+import { ButtonAdornment } from '../ButtonAdornment/ButtonAdornment.tsx';
+import { CurrencyFlag } from '../CurrencyFlag/CurrencyFlag.tsx';
 
 export type FiatAmountAdornmentProps = {
   currencyCode: string;

@@ -1,19 +1,19 @@
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo, useEffect } from 'react';
-import { AlertError, AlertWarning } from '../../../../../../components/Alerts/Alerts.tsx';
 import { Trans, useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../../store.ts';
+import { AlertError, AlertWarning } from '../../../../../../components/Alerts/Alerts.tsx';
+import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { errorToString } from '../../../../../../helpers/format.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectTransactConfirmChanges,
   selectTransactConfirmError,
   selectTransactConfirmStatus,
 } from '../../../../../data/selectors/transact.ts';
-import { errorToString } from '../../../../../../helpers/format.ts';
-import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { styles } from './styles.ts';
-import { css, type CssStyles } from '@repo/styles/css';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
-import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

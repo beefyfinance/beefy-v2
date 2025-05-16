@@ -1,4 +1,4 @@
-import type { VaultFee } from '../../../../../data/reducers/fees.ts';
+import type { VaultFee } from '../../../../../data/reducers/fees-types.ts';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatPercent } from '../../../../../../helpers/format.ts';

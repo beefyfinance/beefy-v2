@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react';
 import { Trans } from 'react-i18next';
 import { type VaultEntity, type VaultStandard } from '../../../../data/entities/vault.ts';
-import { type CommonHelper, isStandardCommonHelper, useCommonHelper } from './common.tsx';
+import { type CommonHelper, isStandardCommonHelper, useCommonHelper } from './common.ts';
 import { DescriptionLink } from './DescriptionLink/DescriptionLink.tsx';
 
 type StandardHelper = CommonHelper<VaultStandard>;

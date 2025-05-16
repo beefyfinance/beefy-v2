@@ -1,5 +1,5 @@
-import type { IVaultType } from '../../vaults/IVaultType.ts';
-import type { IStrategy } from '../IStrategy.ts';
+import type { Namespace, TFunction } from 'react-i18next';
+import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
 import type {
   DepositOption,
   DepositQuote,
@@ -7,8 +7,8 @@ import type {
   WithdrawOption,
   WithdrawQuote,
 } from '../../transact-types.ts';
-import type { Step } from '../../../../reducers/wallet/stepper.ts';
-import type { Namespace, TFunction } from 'react-i18next';
+import type { IVaultType } from '../../vaults/IVaultType.ts';
+import type { IStrategy } from '../IStrategy.ts';
 
 const strategyId = 'vault';
 type StrategyId = typeof strategyId;

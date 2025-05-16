@@ -57,9 +57,9 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://curve.fi/#/celo/pools/factory-v2-1/swap",
-    "addLiquidityUrl": "https://curve.fi/#/celo/pools/factory-v2-1/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/celo/pools/factory-v2-1/withdraw",
+    "buyTokenUrl": "https://curve.finance/#/celo/pools/factory-v2-1/swap",
+    "addLiquidityUrl": "https://curve.finance/#/celo/pools/factory-v2-1/deposit",
+    "removeLiquidityUrl": "https://curve.finance/#/celo/pools/factory-v2-1/withdraw",
     "network": "celo"
   },
   {

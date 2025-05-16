@@ -1,26 +1,26 @@
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CardTitle } from '../../Card/CardTitle.tsx';
-import { selectVaultTotalApy } from '../../../../data/selectors/apy.ts';
+import { getApyLabelsTypeForVault } from '../../../../../helpers/apy.ts';
+import { explorerAddressUrl } from '../../../../../helpers/url.ts';
+import { useAppSelector } from '../../../../data/store/hooks.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedStandardVault,
   shouldVaultShowInterest,
   type VaultCowcentratedLike,
 } from '../../../../data/entities/vault.ts';
+import { selectVaultTotalApy } from '../../../../data/selectors/apy.ts';
+import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../data/selectors/boosts.ts';
+import { selectChainById } from '../../../../data/selectors/chains.ts';
 import {
   selectCowcentratedLikeVaultById,
   selectVaultStrategyAddressOrUndefined,
 } from '../../../../data/selectors/vaults.ts';
-import { selectChainById } from '../../../../data/selectors/chains.ts';
-import { useAppSelector } from '../../../../../store.ts';
-import { explorerAddressUrl } from '../../../../../helpers/url.ts';
-import { ApyDetails } from '../ApyDetails/ApyDetails.tsx';
-import { ExplainerCard } from '../ExplainerCard/ExplainerCard.tsx';
-import { CowcentratedLikeDescription } from '../Description/CowcentratedLikeDescription.tsx';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../../../../data/utils/vault-utils.ts';
-import { getApyLabelsTypeForVault } from '../../../../../helpers/apy.ts';
-import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../data/selectors/boosts.ts';
+import { CardTitle } from '../../Card/CardTitle.tsx';
+import { ApyDetails } from '../ApyDetails/ApyDetails.tsx';
+import { CowcentratedLikeDescription } from '../Description/CowcentratedLikeDescription.tsx';
+import { ExplainerCard } from '../ExplainerCard/ExplainerCard.tsx';
 
 type CowcentratedExplainerProps = {
   vaultId: VaultCowcentratedLike['id'];
@@ -92,9 +92,9 @@ const CowcentratedExplainer = memo(function CowcentratedExplainer({
       links={links}
       description={<CowcentratedLikeDescription vaultId={vaultId} />}
       details={
-        showApy ? (
+        showApy ?
           <ApyDetails type={getApyLabelsTypeForVault(vault, apys.totalType)} values={apys} />
-        ) : undefined
+        : undefined
       }
     />
   );

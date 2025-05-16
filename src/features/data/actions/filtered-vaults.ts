@@ -1,7 +1,5 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import { orderBy, sortBy } from 'lodash-es';
 import { simplifySearchText } from '../../../helpers/string.ts';
-import type { BeefyState } from '../../../redux-types.ts';
 import {
   isCowcentratedLikeVault,
   isGovVault,
@@ -12,7 +10,7 @@ import {
   type VaultEntity,
 } from '../entities/vault.ts';
 import type { TotalApy } from '../reducers/apy-types.ts';
-import type { FilteredVaultsState } from '../reducers/filtered-vaults.ts';
+import type { FilteredVaultsState } from '../reducers/filtered-vaults-types.ts';
 import { selectVaultAvgApy, selectVaultTotalApy } from '../selectors/apy.ts';
 import {
   selectHasUserDepositInVault,
@@ -28,6 +26,9 @@ import { selectActiveChainIds, selectAllChainIds } from '../selectors/chains.ts'
 import {
   selectFilterOptions,
   selectFilterPlatformIdsForVault,
+  selectIsVaultBlueChip,
+  selectIsVaultCorrelated,
+  selectIsVaultStable,
   selectVaultIsBoostedForFilter,
   selectVaultMatchesText,
 } from '../selectors/filtered-vaults.ts';
@@ -35,13 +36,12 @@ import { selectIsVaultIdSaved } from '../selectors/saved-vaults.ts';
 import { selectVaultTvl, selectVaultUnderlyingTvlUsd } from '../selectors/tvl.ts';
 import {
   selectAllVisibleVaultIds,
-  selectIsVaultBlueChip,
-  selectIsVaultCorrelated,
-  selectIsVaultStable,
   selectVaultById,
   selectVaultIsPinned,
 } from '../selectors/vaults.ts';
 import { selectVaultSupportsZap } from '../selectors/zap.ts';
+import type { BeefyState } from '../store/types.ts';
+import { createAppAsyncThunk } from '../utils/store-utils.ts';
 
 export type RecalculateFilteredVaultsParams = {
   dataChanged?: boolean;
@@ -54,12 +54,9 @@ export type RecalculateFilteredVaultsPayload = {
   sorted: VaultEntity['id'][];
 };
 
-export const recalculateFilteredVaultsAction = createAsyncThunk<
+export const recalculateFilteredVaultsAction = createAppAsyncThunk<
   RecalculateFilteredVaultsPayload,
-  RecalculateFilteredVaultsParams,
-  {
-    state: BeefyState;
-  }
+  RecalculateFilteredVaultsParams
 >(
   'filtered-vaults/recalculateFilteredVaults',
   async ({ filtersChanged, sortChanged, dataChanged }, { getState }) => {

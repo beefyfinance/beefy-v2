@@ -17,15 +17,13 @@ export const StatSwitcher = memo(function StatSwitcher<T extends string = string
 }: StatSwitcherProps<T>) {
   const mobileView = useBreakpoint({ to: 'xs' });
 
-  return mobileView ? (
-    <Select
-      fullWidth={true}
-      options={options}
-      selected={stat}
-      onChange={onChange}
-      variant="middle"
-    />
-  ) : (
-    <ToggleButtons value={stat} options={options} onChange={onChange} variant="filter" />
-  );
+  return mobileView ?
+      <Select
+        fullWidth={true}
+        options={options}
+        selected={stat}
+        onChange={onChange}
+        variant="middle"
+      />
+    : <ToggleButtons value={stat} options={options} onChange={onChange} variant="filter" />;
 });

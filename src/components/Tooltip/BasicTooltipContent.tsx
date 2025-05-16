@@ -14,7 +14,9 @@ export const BasicTooltipContent = memo(function BasicTooltipContent({
   return (
     <>
       <Title>{title}</Title>
-      {content ? <Text>{content}</Text> : null}
+      {content ?
+        <Text>{content}</Text>
+      : null}
     </>
   );
 });

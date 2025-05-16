@@ -1,12 +1,20 @@
 import BigNumber from 'bignumber.js';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO, compareBigNumber, isFiniteBigNumber } from '../../../helpers/big-number.ts';
-import type { BeefyState } from '../../../redux-types.ts';
+import { entries, keys } from '../../../helpers/object.ts';
+import { explorerAddressUrl } from '../../../helpers/url.ts';
 import type { ChainEntity, ChainId } from '../entities/chain.ts';
 import type { TokenHoldingEntity, TreasuryHoldingEntity } from '../entities/treasury.ts';
 import { isTokenHoldingEntity, isVaultHoldingEntity } from '../entities/treasury.ts';
+import type { BeefyState } from '../store/types.ts';
 import { selectLpBreakdownBalance } from './balance.ts';
 import { selectChainById } from './chains.ts';
+import {
+  createGlobalDataSelector,
+  hasLoaderFulfilledOnce,
+  shouldLoaderLoadOnce,
+} from './data-loader-helpers.ts';
+import { selectIsVaultStable } from './filtered-vaults.ts';
 import {
   selectHasBreakdownDataByOracleId,
   selectIsTokenStable,
@@ -14,14 +22,7 @@ import {
   selectVaultTokenSymbols,
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens.ts';
-import { selectIsVaultStable, selectVaultPricePerFullShare } from './vaults.ts';
-import { explorerAddressUrl } from '../../../helpers/url.ts';
-import { entries, keys } from '../../../helpers/object.ts';
-import {
-  createGlobalDataSelector,
-  hasLoaderFulfilledOnce,
-  shouldLoaderLoadOnce,
-} from './data-loader-helpers.ts';
+import { selectVaultPricePerFullShare } from './vaults.ts';
 
 export const selectIsTreasuryLoaded = createGlobalDataSelector('treasury', hasLoaderFulfilledOnce);
 

@@ -41,9 +41,9 @@ export function getDepositTokenFromLegacyVaultConfig(
       chainId,
       oracleId: vaultConfig.oracleId,
       address:
-        vaultConfig.type === 'cowcentrated'
-          ? vaultConfig.tokenAddress + '-' + vaultConfig.id
-          : vaultConfig.tokenAddress,
+        vaultConfig.type === 'cowcentrated' ?
+          vaultConfig.tokenAddress + '-' + vaultConfig.id
+        : vaultConfig.tokenAddress,
       decimals: vaultConfig.tokenDecimals,
       symbol: vaultConfig.token,
       providerId: vaultConfig.tokenProviderId,

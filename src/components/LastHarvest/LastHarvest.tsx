@@ -1,3 +1,5 @@
+import { css } from '@repo/styles/css';
+import { formatDistanceToNowStrict } from 'date-fns';
 import { Fragment, memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -8,15 +10,13 @@ import {
   type VaultEntity,
   type VaultStandardCowcentrated,
 } from '../../features/data/entities/vault.ts';
-import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
-import { useAppSelector } from '../../store.ts';
 import {
   selectVaultById,
   selectVaultLastHarvestByVaultId,
 } from '../../features/data/selectors/vaults.ts';
-import { formatDistanceToNowStrict } from 'date-fns';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
-import { css } from '@repo/styles/css';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
+import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
 
 type LastHarvestProps = {
   vaultId: VaultEntity['id'];
@@ -114,7 +114,7 @@ export const LastHarvestCowcentratedVault = memo(function LastHarvestCowcentrate
       value={data.harvests[0].formatted}
       usdValue={t(`Vault-LastHarvest-Label-${data.harvests[0].type}`)}
       tooltip={
-        data.showTooltip ? (
+        data.showTooltip ?
           <div className={classes.tooltip}>
             {data.harvests.map(({ type, formatted }) => (
               <Fragment key={type}>
@@ -123,7 +123,7 @@ export const LastHarvestCowcentratedVault = memo(function LastHarvestCowcentrate
               </Fragment>
             ))}
           </div>
-        ) : undefined
+        : undefined
       }
     />
   );

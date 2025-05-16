@@ -2,7 +2,6 @@ import { first } from 'lodash-es';
 import { EMPTY_AVG_APY } from '../../../helpers/apy.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { isEmpty } from '../../../helpers/utils.ts';
-import type { BeefyState } from '../../../redux-types.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
 import {
   isCowcentratedGovVault,
@@ -11,22 +10,22 @@ import {
   type VaultEntity,
 } from '../entities/vault.ts';
 import type { AvgApy, TotalApy } from '../reducers/apy-types.ts';
+import type { BeefyState } from '../store/types.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
   selectBoostUserBalanceInToken,
+  selectIsUserBalanceAvailable,
   selectUserDepositedVaultIds,
   selectUserVaultBalanceInDepositTokenIncludingDisplaced,
   selectUserVaultBalanceInUsdIncludingDisplaced,
   selectVaultSharesToDepositTokenData,
 } from './balance.ts';
 import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from './boosts.ts';
-import {
-  selectIsUserBalanceAvailable,
-  selectIsVaultApyAvailable,
-  selectVaultShouldShowInterest,
-} from './data-loader.ts';
+import { selectIsConfigAvailable } from './config.ts';
+import { selectIsContractDataLoadedOnChain } from './contract-data.ts';
+import { createGlobalDataSelector, hasLoaderFulfilledOnce } from './data-loader-helpers.ts';
 import { selectTokenPriceByAddress } from './tokens.ts';
-import { selectVaultById } from './vaults.ts';
+import { selectVaultById, selectVaultShouldShowInterest } from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
 
 const EMPTY_TOTAL_APY: TotalApy = {
@@ -262,6 +261,15 @@ type ApyVaultUIData =
       averages: AvgApy | undefined;
     };
 
+export const selectIsVaultApyAvailable = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  if (!selectIsConfigAvailable(state) || !selectIsApyAvailable(state)) {
+    return false;
+  }
+
+  const vault = selectVaultById(state, vaultId);
+  return selectIsContractDataLoadedOnChain(state, vault.chainId);
+};
+
 // TEMP: selector instead of connect/mapStateToProps
 export function selectApyVaultUIData(
   state: BeefyState,
@@ -313,3 +321,5 @@ export const selectBoostAprByRewardToken = (state: BeefyState, boostId: BoostPro
 export const selectBoostApr = (state: BeefyState, boostId: string): number => {
   return state.biz.apy.rawApy.byBoostId[boostId]?.apr || 0;
 };
+export const selectIsApyAvailable = createGlobalDataSelector('apy', hasLoaderFulfilledOnce);
+export const selectIsAvgApyAvailable = createGlobalDataSelector('avgApy', hasLoaderFulfilledOnce);

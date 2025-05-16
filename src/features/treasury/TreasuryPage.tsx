@@ -1,18 +1,16 @@
-import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { memo, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store.ts';
+import { useTranslation } from 'react-i18next';
+import { TechLoader } from '../../components/TechLoader/TechLoader.tsx';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../data/store/hooks.ts';
 import { fetchTreasury } from '../data/actions/treasury.ts';
+import { selectIsVaultsAvailable } from '../data/selectors/config.ts';
+import { selectIsAddressBookLoadedGlobal } from '../data/selectors/tokens.ts';
 import { selectIsTreasuryLoaded, selectShouldInitTreasury } from '../data/selectors/treasury.ts';
 import { DaoExposure } from './components/DaoExposure/DaoExposure.tsx';
 import { DaoHoldings } from './components/DaoHoldings/DaoHoldings.tsx';
 import { DaoSummary } from './components/DaoSummary/DaoSummary.tsx';
 import { styles } from './styles.ts';
-import { TechLoader } from '../../components/TechLoader/TechLoader.tsx';
-import { useTranslation } from 'react-i18next';
-import {
-  selectIsAddressBookLoadedGlobal,
-  selectIsVaultsAvailable,
-} from '../data/selectors/data-loader.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

@@ -1,11 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-
 import type { VaultEntity } from '../entities/vault.ts';
-
-export type SavedVaultsState = {
-  byVaultId: Record<VaultEntity['id'], boolean>;
-};
+import type { SavedVaultsState } from './saved-vaults-type.ts';
 
 const initialSavedVaultsState: SavedVaultsState = {
   byVaultId: {},

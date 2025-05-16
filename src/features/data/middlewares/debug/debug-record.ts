@@ -1,9 +1,9 @@
 import BigNumber from 'bignumber.js';
 import { isObject } from 'lodash-es';
-import type { Action, AnyAction, Dispatch } from 'redux';
-import type { ChainEntity } from '../../entities/chain.ts';
+import type { Action, UnknownAction } from 'redux';
 import { mapValuesDeep } from '../../utils/array-utils.ts';
 import { featureFlag_recordReduxActions } from '../../utils/feature-flags.ts';
+import { startAppListening } from '../listener-middleware.ts';
 
 declare const window: {
   __export_action_log?: typeof exportActionLog;
@@ -36,56 +36,44 @@ function exportActionLog(pretty: boolean = true) {
   downloadObjectAsJsonFile(actionLog, filename, pretty);
 }
 
-if (window && featureFlag_recordReduxActions()) {
-  window.__export_action_log = exportActionLog;
-}
-
-export function debugRecorderMiddleware() {
-  if (featureFlag_recordReduxActions()) {
-    console.info('Recording redux actions, use `__export_action_log()` to export the result');
+export function addDebugRecordListeners() {
+  if (window) {
+    window.__export_action_log = exportActionLog;
   }
-  return (next: Dispatch) =>
-    (action: {
-      type: string;
-      payload: {
-        chainId?: ChainEntity['id'];
-      };
-    }) => {
-      if (featureFlag_recordReduxActions()) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let smallAction: any = action;
-        // empty some actions to make the export less heavy
-        if (
-          action.type.startsWith('vaults/fetchAllVaults/') ||
-          action.type.startsWith('boosts/fetchAllBoosts/') ||
-          action.type.startsWith('chains/fetchChainConfigs/')
-        ) {
-          smallAction = { ...smallAction, payload: '__PAYLOAD__' };
-        }
 
-        // remove previous state from action payload
-        if (
-          smallAction.payload &&
-          isObject(smallAction.payload) &&
-          'state' in smallAction.payload
-        ) {
-          smallAction = { ...smallAction, payload: { ...smallAction.payload, state: '__STATE__' } };
-        }
+  startAppListening({
+    matcher: (_action: unknown): _action is UnknownAction => true,
+    effect: (action: UnknownAction) => {
+      let smallAction: UnknownAction = action;
 
-        // map non-serializable objects
-        const serializableAction = mapValuesDeep(smallAction, val => {
-          if (val instanceof BigNumber) {
-            return '__BIG_NUM__' + val.toString(10);
-          } else if (val instanceof Date) {
-            return '__DATE__' + val.toUTCString();
-          } else {
-            return val;
-          }
-        }) as AnyAction;
-        actionLog.push(serializableAction);
+      // empty some actions to make the export less heavy
+      if (
+        action.type.startsWith('vaults/fetchAllVaults/') ||
+        action.type.startsWith('boosts/fetchAllBoosts/') ||
+        action.type.startsWith('chains/fetchChainConfigs/')
+      ) {
+        smallAction = { ...smallAction, payload: '__PAYLOAD__' };
       }
-      return next(action);
-    };
+
+      // remove previous state from action payload
+      if (smallAction.payload && isObject(smallAction.payload) && 'state' in smallAction.payload) {
+        smallAction = { ...smallAction, payload: { ...smallAction.payload, state: '__STATE__' } };
+      }
+
+      // map non-serializable objects
+      const serializableAction = mapValuesDeep(smallAction, val => {
+        if (val instanceof BigNumber) {
+          return '__BIG_NUM__' + val.toString(10);
+        } else if (val instanceof Date) {
+          return '__DATE__' + val.toUTCString();
+        } else {
+          return val;
+        }
+      }) as UnknownAction;
+
+      actionLog.push(serializableAction);
+    },
+  });
 }
 
 // https://stackoverflow.com/a/45831280/2523414

@@ -1,12 +1,12 @@
 import { memo, useCallback, useEffect } from 'react';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button/Button.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { styles } from './styles.ts';
+import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { bridgeActions } from '../../../../../data/reducers/wallet/bridge.ts';
 import { selectBridgeTxState } from '../../../../../data/selectors/bridge.ts';
-import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

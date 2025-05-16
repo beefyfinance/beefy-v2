@@ -1,14 +1,14 @@
-import { useTranslation } from 'react-i18next';
-import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import { styles } from './styles.ts';
-import { useAppSelector } from '../../../../../../store.ts';
-import { LinkButton } from '../../../../../../components/LinkButton/LinkButton.tsx';
 import { css, type CssStyles } from '@repo/styles/css';
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { LinkButton } from '../../../../../../components/LinkButton/LinkButton.tsx';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
   selectTransactNumTokens,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { styles } from './styles.ts';
 
 export type DepositBuyLinksProps = {
   css?: CssStyles;

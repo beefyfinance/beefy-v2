@@ -1,11 +1,12 @@
-import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
-import type BigNumber from 'bignumber.js';
 import { css, type CssStyles } from '@repo/styles/css';
+import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconWithTooltip } from '../../../../../../../components/Tooltip/IconWithTooltip.tsx';
 import { BasicTooltipContent } from '../../../../../../../components/Tooltip/BasicTooltipContent.tsx';
+import { DivWithTooltip } from '../../../../../../../components/Tooltip/DivWithTooltip.tsx';
+import { IconWithTooltip } from '../../../../../../../components/Tooltip/IconWithTooltip.tsx';
+import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
 import {
   formatLargePercent,
   formatLargeUsd,
@@ -13,13 +14,11 @@ import {
   formatTokenDisplay,
   formatTokenDisplayCondensed,
 } from '../../../../../../../helpers/format.ts';
-import { useAppSelector } from '../../../../../../../store.ts';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
 import { selectStandardGovPnl } from '../../../../../../data/selectors/analytics.ts';
-
 import { styles } from './styles.ts';
-import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
-import { DivWithTooltip } from '../../../../../../../components/Tooltip/DivWithTooltip.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 

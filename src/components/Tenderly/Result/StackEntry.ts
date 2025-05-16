@@ -56,14 +56,14 @@ export class StackEntry {
 
     return {
       prev:
-        prevStart < code_start
-          ? file.source.substring(prevStart, code_start).replace(/^\s*\n+/g, '')
-          : '',
+        prevStart < code_start ?
+          file.source.substring(prevStart, code_start).replace(/^\s*\n+/g, '')
+        : '',
       source: file.source.substring(code_start, code_start + code_length),
       next:
-        nextStart > code_start + code_length
-          ? file.source.substring(code_start + code_length, nextStart).replace(/\n+\s*$/g, '')
-          : '',
+        nextStart > code_start + code_length ?
+          file.source.substring(code_start + code_length, nextStart).replace(/\n+\s*$/g, '')
+        : '',
     };
   }
 
@@ -102,13 +102,15 @@ export class StackEntry {
     const funcLabel = trace.function_name;
 
     const input = trace.input && trace.input.length > 10 ? trace.input?.slice(10) : undefined;
-    const inputLabels = trace.decoded_input?.length
-      ? Object.fromEntries(trace.decoded_input.map(d => [d.soltype.name, d.value]))
+    const inputLabels =
+      trace.decoded_input?.length ?
+        Object.fromEntries(trace.decoded_input.map(d => [d.soltype.name, d.value]))
       : undefined;
 
     const output = trace.output && trace.output !== '0x' ? trace.output : undefined;
-    const outputLabels = trace.decoded_output?.length
-      ? Object.fromEntries(trace.decoded_output.map(d => [d.soltype.name, d.value]))
+    const outputLabels =
+      trace.decoded_output?.length ?
+        Object.fromEntries(trace.decoded_output.map(d => [d.soltype.name, d.value]))
       : undefined;
 
     return {

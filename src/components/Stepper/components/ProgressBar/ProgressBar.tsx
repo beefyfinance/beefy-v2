@@ -1,12 +1,12 @@
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
-import { memo } from 'react';
 import { css } from '@repo/styles/css';
+import { memo } from 'react';
 import {
   selectErrorBar,
   selectStepperProgress,
   selectSuccessBar,
 } from '../../../../features/data/selectors/stepper.ts';
-import { useAppSelector } from '../../../../store.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);

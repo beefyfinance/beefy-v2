@@ -1,12 +1,12 @@
 import { memo, useCallback, useMemo } from 'react';
-import { MultiToggleButtons } from '../../../../../../components/ToggleButtons/MultiToggleButtons.tsx';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import { selectFilterVaultCategory } from '../../../../../data/selectors/filtered-vaults.ts';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
-import { CATEGORY_OPTIONS } from './category-options.ts';
-import type { VaultCategoryType } from '../../../../../data/reducers/filtered-vaults-types.ts';
+import { MultiToggleButtons } from '../../../../../../components/ToggleButtons/MultiToggleButtons.tsx';
 import { entries } from '../../../../../../helpers/object.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import type { VaultCategoryType } from '../../../../../data/reducers/filtered-vaults-types.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
+import { selectFilterVaultCategory } from '../../../../../data/selectors/filtered-vaults.ts';
+import { CATEGORY_OPTIONS } from './category-options.ts';
 
 export const VaultCategoryButtonFilter = memo(function VaultCategoryButtonFilter() {
   const { t } = useTranslation();

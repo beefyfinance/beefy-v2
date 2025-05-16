@@ -36,7 +36,9 @@ export const Introduction = memo(function Introduction() {
           ))}
         </div>
       </div>
-      {featureFlag_debugOnRamp() ? <Debug /> : null}
+      {featureFlag_debugOnRamp() ?
+        <Debug />
+      : null}
     </div>
   );
 });

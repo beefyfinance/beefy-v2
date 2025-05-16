@@ -1,8 +1,8 @@
+import type BigNumber from 'bignumber.js';
 import { type FC, memo } from 'react';
-import { legacyMakeStyles } from '../../helpers/mui.ts';
-import { styles } from './styles.ts';
+import { useTranslation } from 'react-i18next';
+import type { TokenEntity } from '../../features/data/entities/token.ts';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
-import { useAppSelector } from '../../store.ts';
 import {
   selectUserVaultBalanceNotInActiveBoostInDepositToken,
   selectVaultUserBalanceInDepositTokenBreakdown,
@@ -12,15 +12,15 @@ import {
   type UserVaultBalanceBreakdownPendingWithdrawal,
   type UserVaultBalanceBreakdownVault,
 } from '../../features/data/selectors/balance.ts';
-import { selectTokenPriceByTokenOracleId } from '../../features/data/selectors/tokens.ts';
-import type { TokenEntity } from '../../features/data/entities/token.ts';
-import type BigNumber from 'bignumber.js';
-import { TokenAmount } from '../TokenAmount/TokenAmount.tsx';
-import { formatLargeUsd } from '../../helpers/format.ts';
-import { useTranslation } from 'react-i18next';
-import { selectChainById } from '../../features/data/selectors/chains.ts';
 import { selectBoostById } from '../../features/data/selectors/boosts.ts';
+import { selectChainById } from '../../features/data/selectors/chains.ts';
+import { selectTokenPriceByTokenOracleId } from '../../features/data/selectors/tokens.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import { formatLargeUsd } from '../../helpers/format.ts';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { useAppSelector } from '../../features/data/store/hooks.ts';
+import { TokenAmount } from '../TokenAmount/TokenAmount.tsx';
+import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

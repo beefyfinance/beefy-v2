@@ -1,10 +1,39 @@
-import type {
-  IComposableStrategy,
-  IComposableStrategyStatic,
-  UserlessZapDepositBreakdown,
-  UserlessZapWithdrawBreakdown,
-  ZapTransactHelpers,
-} from '../IStrategy.ts';
+import BigNumber from 'bignumber.js';
+import { first, uniqBy } from 'lodash-es';
+import type { Namespace, TFunction } from 'react-i18next';
+import { type Abi, encodeFunctionData } from 'viem';
+import {
+  BIG_ZERO,
+  bigNumberToBigInt,
+  fromWei,
+  toWei,
+  toWeiString,
+} from '../../../../../../helpers/big-number.ts';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
+import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../../entities/token.ts';
+import { isCowcentratedVault, type VaultCowcentrated } from '../../../../entities/vault.ts';
+import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
+import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
+import { selectChainById } from '../../../../selectors/chains.ts';
+import { selectTokenPriceByAddress } from '../../../../selectors/tokens.ts';
+import { selectTransactSlippage } from '../../../../selectors/transact.ts';
+import { selectVaultStrategyAddress } from '../../../../selectors/vaults.ts';
+import type { BeefyState, BeefyThunk } from '../../../../store/types.ts';
+import { BeefyCLMPool } from '../../../beefy/beefy-clm-pool.ts';
+import { mergeTokenAmounts, slipAllBy, slipBy } from '../../helpers/amounts.ts';
+import { Balances } from '../../helpers/Balances.ts';
+import {
+  createOptionId,
+  createQuoteId,
+  createSelectionId,
+  onlyOneInput,
+  onlyOneToken,
+} from '../../helpers/options.ts';
+import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes.ts';
+import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
+import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
+import type { QuoteRequest } from '../../swap/ISwapProvider.ts';
 import {
   type CowcentratedZapDepositOption,
   type CowcentratedZapDepositQuote,
@@ -22,34 +51,8 @@ import {
   type ZapQuoteStepSwap,
   type ZapQuoteStepSwapAggregator,
 } from '../../transact-types.ts';
-import type { Step } from '../../../../reducers/wallet/stepper.ts';
-import type { Namespace, TFunction } from 'react-i18next';
-import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../../entities/token.ts';
-import {
-  createOptionId,
-  createQuoteId,
-  createSelectionId,
-  onlyOneInput,
-  onlyOneToken,
-} from '../../helpers/options.ts';
-import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
-import {
-  BIG_ZERO,
-  bigNumberToBigInt,
-  fromWei,
-  toWei,
-  toWeiString,
-} from '../../../../../../helpers/big-number.ts';
-import { selectChainById } from '../../../../selectors/chains.ts';
-import { selectVaultStrategyAddress } from '../../../../selectors/vaults.ts';
-import { BeefyCLMPool } from '../../../beefy/beefy-clm-pool.ts';
-import { selectTokenPriceByAddress } from '../../../../selectors/tokens.ts';
-import type { QuoteRequest } from '../../swap/ISwapProvider.ts';
-import { first, uniqBy } from 'lodash-es';
-import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes.ts';
-import type { BeefyState, BeefyThunk } from '../../../../../../redux-types.ts';
-import { selectTransactSlippage } from '../../../../selectors/transact.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
+import { type ICowcentratedVaultType, isCowcentratedVaultType } from '../../vaults/IVaultType.ts';
+import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
 import type {
   OrderInput,
   OrderOutput,
@@ -58,18 +61,15 @@ import type {
   ZapStepRequest,
   ZapStepResponse,
 } from '../../zap/types.ts';
-import { Balances } from '../../helpers/Balances.ts';
-import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
-import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
-import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
-import { mergeTokenAmounts, slipAllBy, slipBy } from '../../helpers/amounts.ts';
-import BigNumber from 'bignumber.js';
-import { isCowcentratedVault, type VaultCowcentrated } from '../../../../entities/vault.ts';
-import { type ICowcentratedVaultType, isCowcentratedVaultType } from '../../vaults/IVaultType.ts';
-import type { CowcentratedStrategyConfig } from '../strategy-configs.ts';
 import { QuoteCowcentratedNoSingleSideError, QuoteCowcentratedNotCalmError } from '../error.ts';
-import { encodeFunctionData, type Abi } from 'viem';
-import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
+import type {
+  IComposableStrategy,
+  IComposableStrategyStatic,
+  UserlessZapDepositBreakdown,
+  UserlessZapWithdrawBreakdown,
+  ZapTransactHelpers,
+} from '../IStrategy.ts';
+import type { CowcentratedStrategyConfig } from '../strategy-configs.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;

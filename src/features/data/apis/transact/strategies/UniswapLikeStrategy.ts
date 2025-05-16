@@ -1,4 +1,55 @@
-import type { ZapTransactHelpers } from './IStrategy.ts';
+import BigNumber from 'bignumber.js';
+import { first, uniqBy } from 'lodash-es';
+import type { Namespace, TFunction } from 'react-i18next';
+import {
+  BIG_ZERO,
+  bigNumberToStringDeep,
+  fromWei,
+  toWei,
+  toWeiString,
+} from '../../../../../helpers/big-number.ts';
+import { tokenInList } from '../../../../../helpers/tokens.ts';
+import { zapExecuteOrder } from '../../../actions/wallet/zap.ts';
+import type { ChainEntity } from '../../../entities/chain.ts';
+import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token.ts';
+import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../entities/token.ts';
+import { isStandardVault, type VaultStandard } from '../../../entities/vault.ts';
+import { type AmmEntityUniswapLike, isUniswapLikeAmm } from '../../../entities/zap.ts';
+import type { Step } from '../../../reducers/wallet/stepper-types.ts';
+import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
+import { selectChainById } from '../../../selectors/chains.ts';
+import {
+  selectChainNativeToken,
+  selectChainWrappedNativeToken,
+  selectIsTokenLoaded,
+  selectTokenById,
+} from '../../../selectors/tokens.ts';
+import { selectTransactSlippage } from '../../../selectors/transact.ts';
+import { selectAmmById } from '../../../selectors/zap.ts';
+import type { BeefyState, BeefyThunk } from '../../../store/types.ts';
+import { getUniswapLikePool } from '../../amm/amm.ts';
+import type { IUniswapLikePool } from '../../amm/types.ts';
+import { slipBy, tokenAmountToWei } from '../helpers/amounts.ts';
+import { Balances } from '../helpers/Balances.ts';
+import {
+  createOptionId,
+  createQuoteId,
+  createSelectionId,
+  onlyAssetCount,
+  onlyOneInput,
+  onlyOneToken,
+} from '../helpers/options.ts';
+import { calculatePriceImpact, highestFeeOrZero, ZERO_FEE } from '../helpers/quotes.ts';
+import {
+  allTokensAreDistinct,
+  includeWrappedAndNative,
+  nativeAndWrappedAreSame,
+  pickTokens,
+  tokensToLp,
+} from '../helpers/tokens.ts';
+import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
+import { getTokenAddress, NO_RELAY } from '../helpers/zap.ts';
+import type { QuoteRequest } from '../swap/ISwapProvider.ts';
 import {
   type InputTokenAmount,
   isZapQuoteStepBuild,
@@ -21,46 +72,8 @@ import {
   type ZapQuoteStepSwapAggregator,
   type ZapQuoteStepSwapPool,
 } from '../transact-types.ts';
-import {
-  selectChainNativeToken,
-  selectChainWrappedNativeToken,
-  selectIsTokenLoaded,
-  selectTokenById,
-} from '../../../selectors/tokens.ts';
-import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token.ts';
-import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../entities/token.ts';
-import {
-  allTokensAreDistinct,
-  includeWrappedAndNative,
-  nativeAndWrappedAreSame,
-  pickTokens,
-  tokensToLp,
-} from '../helpers/tokens.ts';
-import {
-  createOptionId,
-  createQuoteId,
-  createSelectionId,
-  onlyAssetCount,
-  onlyOneInput,
-  onlyOneToken,
-} from '../helpers/options.ts';
-import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
-import { calculatePriceImpact, highestFeeOrZero, ZERO_FEE } from '../helpers/quotes.ts';
-import { first, uniqBy } from 'lodash-es';
-import {
-  BIG_ZERO,
-  bigNumberToStringDeep,
-  fromWei,
-  toWei,
-  toWeiString,
-} from '../../../../../helpers/big-number.ts';
-import { getUniswapLikePool } from '../../amm/amm.ts';
-import { selectChainById } from '../../../selectors/chains.ts';
-import type { QuoteRequest } from '../swap/ISwapProvider.ts';
-import type { Namespace, TFunction } from 'react-i18next';
-import type { Step } from '../../../reducers/wallet/stepper.ts';
-import type { BeefyState, BeefyThunk } from '../../../../../redux-types.ts';
-import { selectTransactSlippage } from '../../../selectors/transact.ts';
+import { isStandardVaultType, type IStandardVaultType } from '../vaults/IVaultType.ts';
+import { fetchZapAggregatorSwap } from '../zap/swap.ts';
 import type {
   OrderInput,
   OrderOutput,
@@ -68,22 +81,9 @@ import type {
   ZapStep,
   ZapStepResponse,
 } from '../zap/types.ts';
-import { getTokenAddress, NO_RELAY } from '../helpers/zap.ts';
-import type { ChainEntity } from '../../../entities/chain.ts';
-import { fetchZapAggregatorSwap } from '../zap/swap.ts';
-import { Balances } from '../helpers/Balances.ts';
-import { isStandardVault, type VaultStandard } from '../../../entities/vault.ts';
-import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
-import BigNumber from 'bignumber.js';
-import { slipBy, tokenAmountToWei } from '../helpers/amounts.ts';
-import type { IUniswapLikePool } from '../../amm/types.ts';
 import { QuoteChangedError } from './error.ts';
-import { selectAmmById } from '../../../selectors/zap.ts';
-import { type AmmEntityUniswapLike, isUniswapLikeAmm } from '../../../entities/zap.ts';
-import { isStandardVaultType, type IStandardVaultType } from '../vaults/IVaultType.ts';
+import type { ZapTransactHelpers } from './IStrategy.ts';
 import type { UniswapLikeStrategyConfig } from './strategy-configs.ts';
-import { tokenInList } from '../../../../../helpers/tokens.ts';
-import { zapExecuteOrder } from '../../../actions/wallet/zap.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;

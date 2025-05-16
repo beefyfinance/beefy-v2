@@ -1,13 +1,13 @@
 import type { PropsWithChildren } from 'react';
 import { memo, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../data/store/hooks.ts';
+import { fetchAllMinters } from '../../../../data/actions/minters.ts';
 import type { VaultEntity } from '../../../../data/entities/vault.ts';
 import {
   selectMintersByVaultId,
   selectShouldInitMinters,
 } from '../../../../data/selectors/minters.ts';
-import { fetchAllMinters } from '../../../../data/actions/minters.ts';
 import { MinterCard } from './MinterCard.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../../store.ts';
 
 export type MinterCardsParams = PropsWithChildren<{
   vaultId: VaultEntity['id'];

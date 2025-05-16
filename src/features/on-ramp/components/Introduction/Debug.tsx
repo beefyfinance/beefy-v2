@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { useAppSelector } from '../../../../store.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 import { selectCanQuote, selectHaveQuote } from '../../../data/selectors/on-ramp.ts';
 
 export const Debug = memo(function Debug() {

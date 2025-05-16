@@ -1,13 +1,13 @@
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../../../components/Button/Button.tsx';
-import { ActionConnectSwitch } from '../../../CommonActions/CommonActions.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../../../../../store.ts';
-import { startStepperWithSteps } from '../../../../../../../data/actions/stepper.ts';
-import type { VaultGov } from '../../../../../../../data/entities/vault.ts';
-import { selectGovVaultById } from '../../../../../../../data/selectors/vaults.ts';
-import { selectIsStepperStepping } from '../../../../../../../data/selectors/stepper.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../../data/store/hooks.ts';
+import { stepperStartWithSteps } from '../../../../../../../data/actions/wallet/stepper.ts';
 import { claimGovVault } from '../../../../../../../data/actions/wallet/gov.ts';
+import type { VaultGov } from '../../../../../../../data/entities/vault.ts';
+import { selectIsStepperStepping } from '../../../../../../../data/selectors/stepper.ts';
+import { selectGovVaultById } from '../../../../../../../data/selectors/vaults.ts';
+import { ActionConnectSwitch } from '../../../CommonActions/CommonActions.tsx';
 
 type ClaimProps = {
   vaultId: VaultGov['id'];
@@ -21,7 +21,7 @@ export const Claim = memo(function Claim({ vaultId }: ClaimProps) {
 
   const handleClaim = useCallback(() => {
     dispatch(
-      startStepperWithSteps(
+      stepperStartWithSteps(
         [
           {
             step: 'claim-gov',

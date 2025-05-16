@@ -1,6 +1,6 @@
 import type { MinterConfig } from '../features/data/apis/config-types.ts';
 import type { ChainEntity } from '../features/data/entities/chain.ts';
-import type { MigrationConfig } from '../features/data/reducers/wallet/migration.ts';
+import type { MigrationConfig } from '../features/data/reducers/wallet/migration-types.ts';
 
 const mintersPathToImportFn = import.meta.glob<MinterConfig[]>('../config/minters/*.ts', {
   import: 'minters',
