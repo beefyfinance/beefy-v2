@@ -239,10 +239,19 @@ export class CeloGasPricer implements IGasPricer {
   }
 }
 
+export class GaslessGasPricer implements IGasPricer {
+  async getGasPrice(): Promise<GasPricing> {
+    return {
+      gasPrice: 0n,
+    };
+  }
+}
+
 const classByType: Readonly<Record<GasConfig['type'], new (chain: ChainEntity) => IGasPricer>> = {
   standard: StandardGasPricer,
   eip1559: EIP1559GasPricer,
   celo: CeloGasPricer,
+  gasless: GaslessGasPricer,
 } as const;
 
 export function createGasPricer(chain: ChainEntity): IGasPricer {

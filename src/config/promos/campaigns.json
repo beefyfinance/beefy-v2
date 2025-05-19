@@ -1,4 +1,12 @@
 {
+  "shadow-beefy": {
+    "title": "Shadow × Beefy",
+    "description": "Shadow Exchange is a concentrated liquidity layer and exchange built on the Sonic network, powered by x(3,3)—a more fluid and accessible incentive model.",
+    "social": {
+      "discord": "https://discord.com/invite/shadowexchange",
+      "twitter": "https://x.com/ShadowonSonic"
+    }
+  },
   "renzo-lido": {
     "title": "Renzo × Lido",
     "description": "Lido and Renzo joined forces with Beefy to bring users earnings completely denominated in ETH. Earn ezETH and wstETH on top of your ezETH-wstETH position.",
