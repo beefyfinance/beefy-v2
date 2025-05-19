@@ -44,7 +44,7 @@ const ChainOptionIcon = memo(function ChainOptionIcon({
   return (
     <ChainOptionIconContainer>
       {chain.new && <NewBadge />}
-      <Icon className={iconRecipe({ selected: selected || noneSelected })} />;
+      <Icon className={iconRecipe({ selected: selected || noneSelected })} />
     </ChainOptionIconContainer>
   );
 });
