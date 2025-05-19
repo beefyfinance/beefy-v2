@@ -62,6 +62,7 @@ export const MobileFilters = memo<MobileFiltersProps>(function MobileFilters({ o
       <Layout>
         <Main ref={mainRef}>
           <ExtendedFilters />
+          <div />
         </Main>
         <Shadow style={{ opacity: `${shadowOpacity}%` }} />
         <Footer>
