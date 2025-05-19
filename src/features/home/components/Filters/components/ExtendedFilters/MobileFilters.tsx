@@ -62,7 +62,7 @@ export const MobileFilters = memo<MobileFiltersProps>(function MobileFilters({ o
       <Layout>
         <Main ref={mainRef}>
           <ExtendedFilters />
-          <div />
+          <MobileSpacing />
         </Main>
         <Shadow style={{ opacity: `${shadowOpacity}%` }} />
         <Footer>
@@ -141,5 +141,11 @@ const Shadow = styled('div', {
     bottom: '80px',
     height: '55px',
     background: 'linear-gradient(0deg, #111321 2.91%, rgba(17, 19, 33, 0) 100%)',
+  },
+});
+
+const MobileSpacing = styled('div', {
+  base: {
+    height: '28px',
   },
 });
