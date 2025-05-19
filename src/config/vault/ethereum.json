@@ -183,7 +183,7 @@
     "oracleId": "curve-reusd-sdola",
     "status": "active",
     "createdAt": 1746091818,
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["reUSD", "sDOLA"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
