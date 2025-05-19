@@ -54,6 +54,7 @@ const Backdrop = styled('div', {
     width: '100%',
     height: '100%',
     inset: 0,
+    touchAction: 'none',
   },
   variants: {
     scrollable: {
