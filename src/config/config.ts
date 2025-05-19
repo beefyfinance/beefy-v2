@@ -4,7 +4,7 @@ export const config = {
   ethereum: {
     name: 'Ethereum',
     chainId: 1,
-    rpc: ['https://eth.llamarpc.com', 'https://eth.drpc.org'],
+    rpc: ['https://eth.drpc.org', 'https://eth.llamarpc.com', 'https://eth-pokt.nodies.app'],
     explorerUrl: 'https://etherscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x47bec05dC291e61cd4360322eA44882cA468dD54',
