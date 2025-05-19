@@ -1,4 +1,4 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, prepareAutoBatched, type PayloadAction } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import createTransform from 'redux-persist/es/createTransform';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
@@ -119,15 +119,21 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState[action.payload.filter] = action.payload.value;
     },
-    setBigNumber(
-      sliceState,
-      action: PayloadAction<{
+    setBigNumber: {
+      reducer(
+        sliceState,
+        action: PayloadAction<{
+          filter: FilteredVaultBigNumberKeys;
+          value: BigNumber;
+        }>
+      ) {
+        sliceState.reseted = false;
+        sliceState[action.payload.filter] = action.payload.value;
+      },
+      prepare: prepareAutoBatched<{
         filter: FilteredVaultBigNumberKeys;
         value: BigNumber;
-      }>
-    ) {
-      sliceState.reseted = false;
-      sliceState[action.payload.filter] = action.payload.value;
+      }>(),
     },
   },
   extraReducers: builder => {
