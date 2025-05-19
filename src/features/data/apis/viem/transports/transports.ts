@@ -11,7 +11,7 @@ export function makeCustomFallbackTransport(
       retryCount: retries,
       retryDelay: 350,
       batch: {
-        batchSize: 10,
+        batchSize: 3, // TODO configure per provider
       },
     })
   );

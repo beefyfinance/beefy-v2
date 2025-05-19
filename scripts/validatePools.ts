@@ -57,6 +57,7 @@ const overrides: Record<
   'pendle-eqb-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
   'pendle-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
   'compound-base-eth': { harvestOnDeposit: undefined },
+  'compound-polygon-usdc': { harvestOnDeposit: undefined },
   'beefy-besonic': { vaultOwner: undefined }, // temp disabled while waiting for rewards to refill
   'compound-polygon-usdc': { harvestOnDeposit: undefined },
 };
@@ -128,6 +129,7 @@ const nonHarvestOnDepositPools = [
   'aero-cow-usdz-cbbtc-vault',
   'aero-cow-eurc-usdc-vault',
   'silov2-sonic-usdce-ws',
+  'compound-polygon-usdc',
 ];
 const excludedAbPools = [
   'gmx-arb-near-usdc',
@@ -522,6 +524,14 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
 
     for (const reward of promo.rewards) {
       if (reward.type !== 'token' || !reward.address) continue;
+
+      if (!isValidChecksumAddress(reward.address)) {
+        console.error(
+          `Error: Promo ${promo.id}: Earned token ${reward.address} address is not checksummed: ${maybeChecksumAddress(reward.address)}`
+        );
+        exitCode = 1;
+        return;
+      }
 
       const earnedVault = nonGovVaults.find(pool => pool.earnContractAddress === reward.address);
       if (earnedVault) {
