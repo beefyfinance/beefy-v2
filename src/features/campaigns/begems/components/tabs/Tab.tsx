@@ -41,8 +41,9 @@ const Label = styled('div', {
 
 const SubLabel = styled('div', {
   base: {
-    textStyle: 'body.sm',
+    textStyle: 'subline.sm',
     color: 'var(--sub-label-color, {colors.gold.30})',
+    textTransform: 'none',
   },
 });
 

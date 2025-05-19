@@ -35,7 +35,7 @@ export const Faq = memo(function Faq({ question, answer, open, onChange, index }
 
 const Box = styled('button', {
   base: {
-    padding: '16px 20px',
+    padding: '14px 18px',
     borderRadius: '12px',
     border: '2px solid {colors.darkBlue.70}',
     color: 'text.dark',
@@ -43,6 +43,9 @@ const Box = styled('button', {
     display: 'block',
     whiteSpace: 'wrap',
     textAlign: 'left',
+    md: {
+      padding: '24px 34px 24px 26px',
+    },
   },
 });
 
@@ -75,5 +78,9 @@ const Answer = styled('div', {
   base: {
     textStyle: 'body.md',
     paddingTop: '8px',
+    md: {
+      textStyle: 'body',
+      paddingRight: '36px',
+    },
   },
 });

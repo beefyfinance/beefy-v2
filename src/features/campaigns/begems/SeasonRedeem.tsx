@@ -148,11 +148,13 @@ const Banner = styled('div', {
     color: 'darkBlue.70',
     padding: '6px 100px',
     borderRadius: '0 0 0 16px',
-    textStyle: 'subline.sm',
+    textStyle: 'subline.sm.semiBold',
     transformOrigin: 'center center',
     transform: 'rotate(30deg) translate(25%, -25%)',
+    boxShadow:
+      '0px 27px 40px 0px rgba(0, 0, 0, 0.40), 0px 8.14px 12.059px 0px rgba(0, 0, 0, 0.26), 0px 3.381px 5.009px 0px rgba(0, 0, 0, 0.20), 0px 1.223px 1.812px 0px rgba(0, 0, 0, 0.14)',
     md: {
-      textStyle: 'subline',
+      textStyle: 'subline.semiBold',
     },
   },
 });
@@ -334,7 +336,7 @@ const FormBackground = styled('div', {
     width: '100%',
     borderRadius: 'inherit',
     md: {
-      padding: '36px 24px',
+      padding: '36px 24px 32px 24px',
       borderRadius: '20px',
     },
   },

@@ -51,6 +51,9 @@ const Title = styled('h1', {
     color: 'text.lightest',
     width: '100%',
     maxWidth: '445px', // for text wrapping...
+    md: {
+      textStyle: 'h1.accent',
+    },
   },
 });
 

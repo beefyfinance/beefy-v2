@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import { Container } from '../../../components/Container/Container.tsx';
 import { Faqs } from './components/faqs/Faqs.tsx';
+import { styled } from '@repo/styles/jsx';
 
 const faqs = [
   {
@@ -27,8 +27,21 @@ const faqs = [
 
 export const FrequentlyAskedQuestions = memo(function () {
   return (
-    <Container maxWidth="sm">
+    <Layout>
       <Faqs title="Frequently Asked Questions" faqs={faqs} />
-    </Container>
+    </Layout>
   );
+});
+
+const Layout = styled('div', {
+  base: {
+    width: '100%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    paddingInline: '12px',
+    sm: {
+      paddingInline: '24px',
+      maxWidth: '696px',
+    },
+  },
 });

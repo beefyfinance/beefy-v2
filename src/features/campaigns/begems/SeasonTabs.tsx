@@ -8,7 +8,7 @@ import {
   selectBeGemsSeasonData,
 } from '../../data/selectors/campaigns/begems.ts';
 import { Tab } from './components/tabs/Tab.tsx';
-import { Tabs } from './components/tabs/Tabs.tsx';
+import { Tabs, TabsShadow } from './components/tabs/Tabs.tsx';
 
 type SeasonTabsProps = {
   selected: number;
@@ -22,11 +22,18 @@ export const SeasonTabs = memo(function SeasonTabs({
   onChange,
 }: SeasonTabsProps) {
   return (
-    <Tabs>
-      {options.map(option => (
-        <SeasonTab key={option} value={option} onChange={onChange} selected={selected === option} />
-      ))}
-    </Tabs>
+    <TabsShadow>
+      <Tabs>
+        {options.map(option => (
+          <SeasonTab
+            key={option}
+            value={option}
+            onChange={onChange}
+            selected={selected === option}
+          />
+        ))}
+      </Tabs>
+    </TabsShadow>
   );
 });
 
@@ -41,7 +48,7 @@ const SeasonTab = memo(function SeasonTab({ value, onChange, selected }: SeasonT
   const data = useAppSelector(state => selectBeGemsSeasonData(state, value));
   const subLabel = useMemo(() => {
     if (data.priceForFullShare?.gt(BIG_ZERO)) {
-      return `beGEMS${value} = ${formatTokenDisplayCondensed(data.priceForFullShare, 18, 4)} S`;
+      return `beGEMS${value} \u200B=\u00A0${formatTokenDisplayCondensed(data.priceForFullShare, 18, 4)}\u00A0S`;
     }
     return `beGEMS${value}`;
   }, [data, value]);

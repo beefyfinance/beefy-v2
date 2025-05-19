@@ -4,8 +4,12 @@ import { type CSSProperties, memo } from 'react';
 export const ProgressBar = memo(function ProgressBar({ progress }: { progress: number }) {
   return (
     <Sizer style={{ '--progress': `${progress}%` } as CSSProperties}>
-      <GlowLeft />
-      <GlowRight />
+      <GlowCropper>
+        <GlowSizer>
+          <GlowTop />
+          <GlowBottom />
+        </GlowSizer>
+      </GlowCropper>
       <Bar />
       <DotOuter>
         <DotInner />
@@ -34,32 +38,51 @@ const Bar = styled('div', {
   },
 });
 
-const GlowLeft = styled('div', {
+const GlowCropper = styled('div', {
   base: {
     position: 'absolute',
     top: '0',
     left: '0',
-    background:
-      'linear-gradient(180deg, rgba(113, 207, 132, 0.25) 0%, rgba(113, 207, 132, 0.00) 55%)',
-    height: '41px',
-    width: 'calc(var(--progress, 0%) + 0px)',
+    height: '77px',
+    width: '100%',
+    overflow: 'hidden',
+  },
+});
+
+const GlowSizer = styled('div', {
+  base: {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    height: '77px',
+    width: 'calc(var(--progress, 0%) + 80px)',
     transition: 'width 0.2s linear',
   },
 });
 
-const GlowRight = styled('div', {
+const GlowTop = styled('div', {
   base: {
     position: 'absolute',
-    top: '0',
-    left: 'var(--progress, 0%)',
-    transition: 'left 0.2s linear',
-    background:
-      'radial-gradient(50% 50% at 50% 50%, rgba(113, 207, 132, 0.66) 0%, rgba(113, 207, 132, 0.00) 83.82%)',
-    backgroundSize: '200% 200%',
-    backgroundPosition: '160% 100%',
-    backgroundRepeat: 'no-repeat',
+    top: '-33px',
+    left: '-47px',
+    right: '0',
+    height: '33px',
+    background: 'green.40',
+    opacity: '0.1',
+    filter: 'blur(28px)',
+  },
+});
+
+const GlowBottom = styled('div', {
+  base: {
+    position: 'absolute',
+    top: '-41px',
+    left: '-64px',
+    right: '0',
     height: '41px',
-    width: '100%',
+    background: 'green.40',
+    opacity: '0.78',
+    filter: 'blur(22px)',
   },
 });
 

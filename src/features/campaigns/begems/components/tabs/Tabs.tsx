@@ -8,7 +8,14 @@ export const Tabs = styled('div', {
     display: 'flex',
     flexDirection: 'row',
     gap: '1px',
+  },
+});
+
+export const TabsShadow = styled('div', {
+  base: {
+    position: 'relative',
+    zIndex: '[1]',
     boxShadow:
-      '0px 27px 40px 0px rgba(0, 0, 0, 0.12), 0px 8.14px 12.059px 0px rgba(0, 0, 0, 0.08), 0px 3.381px 5.009px 0px rgba(0, 0, 0, 0.04), 0px 1.223px 1.812px 0px rgba(0, 0, 0, 0.01)',
+      '0px 6px 12px 0px rgba(0, 0, 0, 0.40), 0px 4px 6px 0px rgba(0, 0, 0, 0.26), 0px 1px 2px 0px rgba(0, 0, 0, 0.20)',
   },
 });
