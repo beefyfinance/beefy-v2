@@ -22,7 +22,7 @@ export const MobileFilters = memo<MobileFiltersProps>(function MobileFilters({ o
   const dispatch = useAppDispatch();
   const filteredVaultCount = useAppSelector(selectFilteredVaultCount);
   const content = useAppSelector(selectFilterContent);
-  const [shadowOpacity, setShadowOpacity] = useState(1);
+  const [shadowOpacity, setShadowOpacity] = useState(100);
   const mainRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = useCallback(() => {
@@ -30,7 +30,7 @@ export const MobileFilters = memo<MobileFiltersProps>(function MobileFilters({ o
       const { scrollTop, scrollHeight, clientHeight } = mainRef.current;
       const maxScroll = scrollHeight - clientHeight;
       const scrollPercentage = scrollTop / maxScroll;
-      const opacity = Math.max(0, Math.min(1, 1 - scrollPercentage));
+      const opacity = Math.max(0, Math.min(100, 100 - scrollPercentage * 100));
       setShadowOpacity(opacity);
     }
   }, []);
@@ -62,8 +62,9 @@ export const MobileFilters = memo<MobileFiltersProps>(function MobileFilters({ o
       <Layout>
         <Main ref={mainRef}>
           <ExtendedFilters />
+          <div />
         </Main>
-        <Shadow style={{ opacity: shadowOpacity }} />
+        <Shadow style={{ opacity: `${shadowOpacity}%` }} />
         <Footer>
           <ClearButton borderless={true} onClick={handleReset}>
             {t('Filter-Clear')}
