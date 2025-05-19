@@ -13,7 +13,7 @@
     "start": "vite-node ./scripts/cli.ts dev",
     "build": "vite-node ./scripts/cli.ts build",
     "build:skip-validate": "vite-node ./scripts/cli.ts build --skip-validate",
-    "preview": "vite preview --host",
+    "preview": "vite preview",
     "clean": "node ./scripts/clean.js",
     "validate": "vite-node ./scripts/validatePools.ts",
     "creationdate": "vite-node ./scripts/getPoolCreationTimestamp.ts",
