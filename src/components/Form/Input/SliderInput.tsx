@@ -1,7 +1,6 @@
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback, useMemo, type ChangeEventHandler, type CSSProperties } from 'react';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
-import { css } from '@repo/styles/css';
 
 interface SliderInputProps {
   value: BigNumber;
@@ -51,7 +50,6 @@ export const SliderInput = memo(function SliderInput({
   return (
     <Slider
       disabled={disabled}
-      className={css(styles.sliderBackground)}
       style={{ '--value': `${sliderValue}%` } as CSSProperties}
       onChange={handleSliderChange}
       value={sliderValue}
@@ -74,6 +72,8 @@ const Slider = styled('input', {
     borderRadius: '8px',
     outline: 'none',
     border: 'none',
+    background:
+      'linear-gradient(to right, {colors.white.70-64a} 0%,{colors.white.70-64a} var(--value),{colors.background.content.light} var(--value), {colors.background.content.light} 100%)',
     '&::-webkit-slider-thumb': {
       appearance: 'none',
       height: '16px',
@@ -97,9 +97,3 @@ const Slider = styled('input', {
     },
   },
 });
-const styles = {
-  sliderBackground: css.raw({
-    background:
-      'linear-gradient(to right, {colors.white.70-64a} 0%,{colors.white.70-64a} var(--value),{colors.background.content.light} var(--value), {colors.background.content.light} 100%)',
-  }),
-};

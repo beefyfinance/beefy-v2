@@ -44,6 +44,7 @@ export const MobileCollapseContent = memo(function MobileCollapseContent({
             onChange={setToggleTab}
             variant="light"
             fullWidth={true}
+            OptionStartAdornmentComponent={() => <></>}
           />
         : <ToggleButtons<ToggleTabOptions>
             value={toggleTab}

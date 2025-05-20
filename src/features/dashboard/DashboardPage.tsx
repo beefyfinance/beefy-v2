@@ -1,4 +1,4 @@
-import { memo, useEffect, type ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate, useParams } from 'react-router';
 import { UnstakedClmBannerDashboard } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBannerDashboard.tsx';
@@ -6,7 +6,7 @@ import { DashboardMeta } from '../../components/Meta/DashboardMeta.tsx';
 import { TechLoader } from '../../components/TechLoader/TechLoader.tsx';
 import { isMaybeDomain, isValidAddress } from '../../helpers/addresses.ts';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
-import { useAppDispatch, useAppSelector } from '../data/store/hooks.ts';
+import { useAppSelector } from '../data/store/hooks.ts';
 import { useResolveDomain } from '../data/hooks/resolver.ts';
 import { isFulfilledStatus, isRejectedStatus } from '../data/reducers/wallet/resolver-types.ts';
 import { selectUserDepositedVaultIds } from '../data/selectors/balance.ts';
@@ -23,7 +23,6 @@ import { UserExposure } from './components/UserExposure/UserExposure.tsx';
 import { UserVaults } from './components/UserVaults/UserVaults.tsx';
 import { useInitDashboard } from './hooks.ts';
 import { styles } from './styles.ts';
-import { filteredVaultsActions } from '../data/reducers/filtered-vaults.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -121,12 +120,6 @@ const DashboardForAddress = memo(function DashboardForAddress({
 }: DashboardForAddressProps) {
   const loading = useInitDashboard(address);
   const userVaults = useAppSelector(state => selectUserDepositedVaultIds(state, address));
-  const dispatch = useAppDispatch();
-
-  // Set the default sort to apy
-  useEffect(() => {
-    dispatch(filteredVaultsActions.setSubSort({ column: 'apy', value: 'default' }));
-  }, [dispatch]);
 
   return (
     <DashboardContainer>

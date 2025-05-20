@@ -71,10 +71,10 @@ const MobileFilters = styled(Top, {
     display: 'flex',
     alignItems: 'center',
     gap: '12px',
-    '& > *:first-child': {
+    '& > :first-child': {
       width: '50%',
     },
-    '& > *:last-child': {
+    '& > :last-child': {
       width: '50%',
     },
   },

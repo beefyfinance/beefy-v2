@@ -1,11 +1,11 @@
 import type { MouseEventHandler, ReactNode } from 'react';
 import { memo, useCallback, useMemo } from 'react';
-import { styles } from './styles.ts';
 import { css, type CssStyles } from '@repo/styles/css';
 import CheckBoxOutlineBlank from '../../images/icons/CheckBoxBlank.svg?react';
 import CheckBoxOutlined from '../../images/icons/CheckBox.svg?react';
 import CircleCheckBoxOutlined from '../../images/icons/CircleCheckBoxBlank.svg?react';
 import CircleCheckBox from '../../images/icons/CircleCheckBox.svg?react';
+import { styled } from '@repo/styles/jsx';
 
 export type LabelledCheckboxProps = {
   checked: boolean;
@@ -14,7 +14,6 @@ export type LabelledCheckboxProps = {
   iconCss?: CssStyles;
   labelCss?: CssStyles;
   checkedIconCss?: CssStyles;
-  className?: CssStyles;
   checkVariant?: 'square' | 'circle';
   endAdornment?: ReactNode;
 };
@@ -26,7 +25,6 @@ export const LabelledCheckbox = memo(function LabelledCheckbox({
   iconCss,
   labelCss,
   checkedIconCss,
-  className,
   checkVariant = 'square',
   endAdornment,
 }: LabelledCheckboxProps) {
@@ -45,14 +43,48 @@ export const LabelledCheckbox = memo(function LabelledCheckbox({
   }, [checkVariant, checked]);
 
   return (
-    <label
-      onClick={handleChange}
-      className={css(styles.checkbox, className)}
-      data-checked={checked}
-    >
+    <Label onClick={handleChange} data-checked={checked}>
       <Icon className={css(styles.icon, iconCss, checked && css.raw(checkedIconCss))} />
-      <span className={css(styles.label, checked && styles.checkedLabel, labelCss)}>{label}</span>
-      {endAdornment && <div className={css(styles.endAdornment)}>{endAdornment}</div>}
-    </label>
+      <Text className={css(checked && styles.checkedLabel, labelCss)}>{label}</Text>
+      {endAdornment && <EndAdornment>{endAdornment}</EndAdornment>}
+    </Label>
   );
 });
+
+const Label = styled('label', {
+  base: {
+    textStyle: 'body.medium',
+    display: 'flex',
+    alignItems: 'center',
+    color: 'text.dark',
+    cursor: 'pointer',
+    columnGap: '10px',
+    userSelect: 'none',
+    paddingBlock: '8px',
+    width: '100%',
+  },
+});
+
+const EndAdornment = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    marginLeft: 'auto',
+  },
+});
+
+const Text = styled('span', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+});
+
+const styles = {
+  icon: css.raw({
+    color: 'text.dark',
+  }),
+  checkedLabel: css.raw({
+    color: 'text.light',
+  }),
+};

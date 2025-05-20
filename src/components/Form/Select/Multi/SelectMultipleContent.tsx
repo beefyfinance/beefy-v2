@@ -5,9 +5,9 @@ import { OptionButton } from '../OptionButton.tsx';
 import { OptionLabel } from '../OptionLabel.tsx';
 import { OptionIcon } from '../OptionIcon.tsx';
 import { OptionBadge } from '../OptionBadge.tsx';
-import { SearchField } from './SearchField.tsx';
 import { defaultSearchFunction } from './helpers.ts';
 import { isDefined } from '../../../../features/data/utils/array-utils.ts';
+import { SearchInput } from '../../Input/SearchInput.tsx';
 
 interface SelectMultipleContentProps<TItem extends SelectItem = SelectItem>
   extends CommonProps<TItem> {
@@ -63,7 +63,7 @@ export const SelectMultipleContent = memo(function SelectMultipleContent<
   return (
     <>
       {searchEnabled && (
-        <SearchField placeholder={placeholder} value={searchText} onValueChange={setSearchText} />
+        <SearchInput placeholder={placeholder} value={searchText} onValueChange={setSearchText} />
       )}
       <div>
         {noSearchMatches ?
