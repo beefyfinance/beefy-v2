@@ -45,7 +45,7 @@ export const ChainsContentButton = memo<FilterContentProps>(function ChainsConte
     return (
       selectedChainIds.length === 0 ? t('All')
       : selectedChainIds.length === 1 && chainNameLabel ? chainNameLabel.name
-      : t('Filter-ChainMultiple')
+      : t('Select-CountSelected', { count: selectedChainIds.length })
     );
   }, [selectedChainIds.length, t, chainNameLabel]);
 

@@ -44,8 +44,10 @@ export const LabelledCheckbox = memo(function LabelledCheckbox({
 
   return (
     <Label onClick={handleChange} data-checked={checked}>
-      <Icon className={css(styles.icon, iconCss, checked && css.raw(checkedIconCss))} />
-      <Text className={css(checked && styles.checkedLabel, labelCss)}>{label}</Text>
+      <Icon className={css(styles.icon, iconCss, checked && checkedIconCss)} />
+      <Text checked={checked} className={css(labelCss)}>
+        {label}
+      </Text>
       {endAdornment && <EndAdornment>{endAdornment}</EndAdornment>}
     </Label>
   );
@@ -78,13 +80,17 @@ const Text = styled('span', {
     display: 'flex',
     alignItems: 'center',
   },
+  variants: {
+    checked: {
+      true: {
+        color: 'text.light',
+      },
+    },
+  },
 });
 
 const styles = {
   icon: css.raw({
     color: 'text.dark',
-  }),
-  checkedLabel: css.raw({
-    color: 'text.light',
   }),
 };
