@@ -76,7 +76,7 @@ export const SelectMultipleContent = memo(function SelectMultipleContent<
                 item={item}
                 index={index}
                 active={activeIndex === index}
-                selected={selected.includes(item.value)}
+                selected={selected.includes(item.value) || (item.value === 'all' && allSelected)}
                 allSelected={allSelected}
                 noneSelected={noneSelected}
                 getProps={getItemProps}

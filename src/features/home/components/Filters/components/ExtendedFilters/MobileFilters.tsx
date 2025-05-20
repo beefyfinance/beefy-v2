@@ -44,18 +44,17 @@ export const MobileFilters = memo<MobileFiltersProps>(function MobileFilters({ o
   }, [handleScroll]);
 
   const handleReset = useCallback(() => {
-    dispatch(filteredVaultsActions.reset());
-    onClose();
-    dispatch(filteredVaultsActions.setFilterContent(FilterContent.Filter));
-  }, [dispatch, onClose]);
-
-  const handleShow = useCallback(() => {
-    if (content !== FilterContent.Filter) {
-      dispatch(filteredVaultsActions.setFilterContent(FilterContent.Filter));
-    } else {
+    if (content === FilterContent.Filter) {
+      dispatch(filteredVaultsActions.reset());
       onClose();
     }
-  }, [dispatch, onClose, content]);
+    dispatch(filteredVaultsActions.setFilterContent(FilterContent.Filter));
+  }, [content, dispatch, onClose]);
+
+  const handleShow = useCallback(() => {
+    dispatch(filteredVaultsActions.setFilterContent(FilterContent.Filter));
+    onClose();
+  }, [dispatch, onClose]);
 
   return (
     <Drawer scrollable={false} open={open} onClose={onClose} position="bottom">
@@ -67,10 +66,15 @@ export const MobileFilters = memo<MobileFiltersProps>(function MobileFilters({ o
         <Shadow style={{ opacity: `${shadowOpacity}%` }} />
         <Footer>
           <ClearButton borderless={true} onClick={handleReset}>
-            {t('Filter-Clear')}
-            <CloseContainer>
-              <ClearIcon />
-            </CloseContainer>
+            {content !== FilterContent.Filter ?
+              <>{t('Filter-Cancel')}</>
+            : <>
+                {t('Filter-Clear')}
+                <CloseContainer>
+                  <ClearIcon />
+                </CloseContainer>
+              </>
+            }
           </ClearButton>
           <Button style={{ width: '70%' }} variant="success" borderless={true} onClick={handleShow}>
             {t('Filter-ShownVaults', { number: filteredVaultCount })}

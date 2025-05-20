@@ -6,18 +6,21 @@ import { selectFilterPlatformIds } from '../../../../../data/selectors/filtered-
 import type { PlatformEntity } from '../../../../../data/entities/platform.ts';
 import { SelectMultipleContent } from '../../../../../../components/Form/Select/Multi/SelectMultipleContent.tsx';
 import { useTranslation } from 'react-i18next';
+import { isEmpty } from 'lodash-es';
 export const PlatformChecklist = memo(function PlatformChecklist() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const platforms = useAppSelector(selectFilterPlatforms);
   const options = useMemo(
-    () =>
-      platforms
+    () => [
+      { label: 'All', value: 'all' },
+      ...platforms
         .map(platform => ({
           label: platform.name,
           value: platform.id,
         }))
         .sort((a, b) => a.label.localeCompare(b.label)),
+    ],
     [platforms]
   );
 
@@ -26,6 +29,10 @@ export const PlatformChecklist = memo(function PlatformChecklist() {
 
   const handleChange = useCallback(
     (selected: PlatformEntity['id'][]) => {
+      if (selected.includes('all')) {
+        dispatch(filteredVaultsActions.setPlatformIds([]));
+        return;
+      }
       dispatch(
         filteredVaultsActions.setPlatformIds(
           selected.length === platformsIds.length ? [] : selected
@@ -59,8 +66,8 @@ export const PlatformChecklist = memo(function PlatformChecklist() {
     [options.length]
   );
 
-  const allSelected = platformsIds.length === options.length;
-  const noneSelected = platformsIds.length === 0;
+  const allSelected = useMemo(() => isEmpty(platformsIds), [platformsIds]);
+  const noneSelected = useMemo(() => platformsIds.length === 0, [platformsIds]);
 
   return (
     <SelectMultipleContent

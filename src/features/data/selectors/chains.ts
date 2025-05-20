@@ -23,6 +23,9 @@ export const selectChainById = createCachedSelector(
   }
 )((_, chainId) => chainId);
 
+export const selectChainByIdOrUndefined = (state: BeefyState, chainId: ChainEntity['id']) =>
+  state.entities.chains.byId[chainId] || undefined;
+
 export const selectChainByNetworkChainId = (
   state: BeefyState,
   networkChainId: number
