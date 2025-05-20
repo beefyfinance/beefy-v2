@@ -7,11 +7,16 @@ import { Drawer } from '../../../../../../components/Modal/Drawer.tsx';
 import { styled } from '@repo/styles/jsx';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import {
+  selectFilterChainIds,
   selectFilterContent,
   selectFilteredVaultCount,
+  selectFilterPlatformIds,
 } from '../../../../../data/selectors/filtered-vaults.ts';
 import { FilterContent } from '../../../../../data/reducers/filtered-vaults-types.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import type { ChainId } from '../../../../../data/entities/chain.ts';
+import { isEqual } from 'lodash-es';
+
 export type MobileFiltersProps = {
   open: boolean;
   onClose: () => void;
@@ -24,6 +29,10 @@ export const MobileFilters = memo<MobileFiltersProps>(function MobileFilters({ o
   const content = useAppSelector(selectFilterContent);
   const [shadowOpacity, setShadowOpacity] = useState(100);
   const mainRef = useRef<HTMLDivElement>(null);
+  const platforms = useAppSelector(selectFilterPlatformIds);
+  const chains = useAppSelector(selectFilterChainIds);
+  const [platformsCopy, setPlatformsCopy] = useState<string[]>(platforms);
+  const [chainsCopy, setChainsCopy] = useState<ChainId[]>(chains);
 
   const handleScroll = useCallback(() => {
     if (mainRef.current) {
@@ -48,13 +57,40 @@ export const MobileFilters = memo<MobileFiltersProps>(function MobileFilters({ o
       dispatch(filteredVaultsActions.reset());
       onClose();
     }
+
+    if (content === FilterContent.Platform) {
+      if (!isEqual(platforms, platformsCopy)) {
+        dispatch(filteredVaultsActions.setPlatformIds(platformsCopy));
+      }
+    }
+
+    if (content === FilterContent.Chains) {
+      if (!isEqual(chains, chainsCopy)) {
+        dispatch(filteredVaultsActions.setChainIds(chainsCopy));
+      }
+    }
+
     dispatch(filteredVaultsActions.setFilterContent(FilterContent.Filter));
-  }, [content, dispatch, onClose]);
+  }, [content, dispatch, onClose, platforms, platformsCopy, chains, chainsCopy]);
 
   const handleShow = useCallback(() => {
-    dispatch(filteredVaultsActions.setFilterContent(FilterContent.Filter));
-    onClose();
-  }, [dispatch, onClose]);
+    if (content !== FilterContent.Filter) {
+      dispatch(filteredVaultsActions.setFilterContent(FilterContent.Filter));
+    } else {
+      onClose();
+    }
+  }, [content, dispatch, onClose]);
+
+  useEffect(() => {
+    if (content === FilterContent.Platform) {
+      setPlatformsCopy(platforms);
+    }
+
+    if (content === FilterContent.Chains) {
+      setChainsCopy(chains);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [content, dispatch]);
 
   return (
     <Drawer scrollable={false} open={open} onClose={onClose} position="bottom">
