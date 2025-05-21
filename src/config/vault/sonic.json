@@ -535,7 +535,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sts+swpx&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "network": "sonic"
   },
   {
@@ -655,7 +655,7 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/S/0xb0695ce12c56AAe40894235e2d1888D0b62Dd110",
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "network": "sonic",
     "zaps": [
       {
@@ -713,7 +713,7 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/S/0xe715cbA7B5cCb33790ceBFF1436809d36cb17E57",
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "network": "sonic",
     "zaps": [
       {
@@ -951,7 +951,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "besonic",
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "network": "sonic",
     "zaps": [
       {
@@ -1061,7 +1061,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xc5954b1b9df8a0c0b7788d2cc2bc18d4bae9b0c2000200000000000000000099/add-liquidity",
     "network": "sonic",
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "zaps": [
       {
         "strategyId": "balancer",
@@ -1353,7 +1353,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sfrxeth+frxeth&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "network": "sonic"
   },
   {
@@ -1377,7 +1377,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sfrxeth+frxeth&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "network": "sonic"
   },
   {
@@ -1588,7 +1588,7 @@
     "strategyTypeId": "compounds",
     "network": "sonic",
     "createdAt": 1739903476,
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -1618,7 +1618,7 @@
     "platformId": "shadow",
     "assets": ["BRUSH", "S"],
     "risks": [],
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -1650,7 +1650,7 @@
     "feeTier": "0.50",
     "assets": ["BRUSH", "S"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -1728,7 +1728,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=frxeth+sceth&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points", "rings"],
+    "pointStructureIds": ["rings"],
     "network": "sonic"
   },
   {
@@ -1752,7 +1752,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=frxusd+scusd&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points", "rings"],
+    "pointStructureIds": ["rings"],
     "network": "sonic"
   },
   {
@@ -1892,7 +1892,7 @@
     "status": "active",
     "platformId": "beethovenx",
     "assets": ["mooSiloSonicUSDCe", "scUSD"],
-    "pointStructureIds": ["sonic-points", "rings", "silo-points"],
+    "pointStructureIds": ["rings", "silo-points"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v3/0x43026d483f42fb35efe03c20b251142d022783f2/add-liquidity",
@@ -1968,7 +1968,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=weth+swpx&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "network": "sonic"
   },
   {
@@ -1992,7 +1992,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=swpx+os&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "network": "sonic"
   },
   {
@@ -2431,7 +2431,7 @@
     "strategyTypeId": "compounds",
     "network": "sonic",
     "createdAt": 1737594510,
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -2461,7 +2461,7 @@
     "platformId": "shadow",
     "assets": ["mooBIFI", "USDCe"],
     "risks": [],
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -2493,7 +2493,7 @@
     "feeTier": "1",
     "assets": ["mooBIFI", "USDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -2557,7 +2557,7 @@
     "platformId": "beethovenx",
     "assets": ["scUSD", "BRUSH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points", "rings"],
+    "pointStructureIds": ["rings"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xc5ab8d98f959453e416b2f15848a02cc99bc695e000200000000000000000022/add-liquidity",
     "network": "sonic",
@@ -2734,7 +2734,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+swpx&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "network": "sonic"
   },
   {
@@ -2758,7 +2758,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+swpx&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "network": "sonic"
   },
   {
@@ -3154,7 +3154,7 @@
     "platformId": "beethovenx",
     "assets": ["BEETS", "stS", "LUDWIG"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x21fed4063bf8ebf4f51f4adf4ecfc9717aa4ca9d000100000000000000000044/add-liquidity",
     "network": "sonic",
@@ -3361,7 +3361,7 @@
     "platformId": "equalizer",
     "assets": ["BRUSH", "S"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": [],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0x38cFA6cB37d074B6E954C52d10a4cf0e4268607b",
     "network": "sonic",
