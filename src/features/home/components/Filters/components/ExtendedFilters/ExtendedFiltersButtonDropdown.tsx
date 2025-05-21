@@ -27,8 +27,8 @@ export const ExtendedFiltersButtonDropdown = memo(function ExtendedFiltersButton
 
 const DropdownButton = styled(DropdownButtonTrigger, {
   base: {
-    paddingBlock: '10px',
-    paddingInline: '16px',
+    paddingBlock: '6px',
+    paddingInline: '10px',
   },
 });
 
