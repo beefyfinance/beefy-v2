@@ -59,6 +59,9 @@ const overrides: Record<
   'compound-base-eth': { harvestOnDeposit: undefined },
   'compound-polygon-usdc': { harvestOnDeposit: undefined },
   'beefy-besonic': { vaultOwner: undefined }, // temp disabled while waiting for rewards to refill
+  'shadow-cow-sonic-wbtc-usdc.e-vault': { harvestOnDeposit: undefined },
+  'shadow-cow-sonic-wbtc-weth-vault': { harvestOnDeposit: undefined },
+  'shadow-cow-sonic-ws-bes-vault': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
