@@ -6,9 +6,6 @@ export const Container = styled('div', {
     marginLeft: 'auto',
     marginRight: 'auto',
     paddingInline: '12px',
-    sm: {
-      paddingInline: '24px',
-    },
   },
   variants: {
     maxWidth: {
