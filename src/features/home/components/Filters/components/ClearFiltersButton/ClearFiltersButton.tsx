@@ -37,9 +37,26 @@ export const ClearFiltersButton = memo(function ClearFiltersButton({
       {t('Filter-ClearAll')}
       {count > 0 ?
         <Count data-count={count} />
-      : <ClearIcon />}
+      : <ClearContainer>
+          <Clear />
+        </ClearContainer>
+      }
     </ClearFilter>
   );
+});
+
+const ClearContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '20px',
+    width: '20px',
+    '& svg': {
+      width: '14px',
+      height: '14px',
+    },
+  },
 });
 
 const ClearFilter = styled(Button, {
@@ -51,13 +68,6 @@ const ClearFilter = styled(Button, {
   },
 });
 
-export const ClearIcon = styled(Clear, {
-  base: {
-    width: '14px',
-    height: '14px',
-  },
-});
-
 export const Count = styled('span', {
   base: {
     display: 'flex',
@@ -65,8 +75,8 @@ export const Count = styled('span', {
     alignItems: 'center',
     flexShrink: '0',
     flexGrow: '0',
-    width: '24px',
-    height: '24px',
+    width: '20px',
+    height: '20px',
     '&:before': {
       boxShadow:
         '0px 24.3px 36px 0px rgba(0, 0, 0, 0.40), 0px 7.326px 10.853px 0px rgba(0, 0, 0, 0.26), 0px 3.043px 4.508px 0px rgba(0, 0, 0, 0.20), 0px 1.1px 1.63px 0px rgba(0, 0, 0, 0.14)',
