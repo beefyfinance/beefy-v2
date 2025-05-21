@@ -59,6 +59,9 @@ const overrides: Record<
   'compound-base-eth': { harvestOnDeposit: undefined },
   'compound-polygon-usdc': { harvestOnDeposit: undefined },
   'beefy-besonic': { vaultOwner: undefined }, // temp disabled while waiting for rewards to refill
+  'shadow-cow-sonic-wbtc-usdc.e-vault': { harvestOnDeposit: undefined },
+  'shadow-cow-sonic-wbtc-weth-vault': { harvestOnDeposit: undefined },
+  'shadow-cow-sonic-ws-bes-vault': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
@@ -129,11 +132,13 @@ const nonHarvestOnDepositPools = [
   'aero-cow-eurc-usdc-vault',
   'silov2-sonic-usdce-ws',
   'compound-polygon-usdc',
+  'shadow-cow-sonic-wbtc-usdc.e-vault',
+  'shadow-cow-sonic-wbtc-weth-vault',
+  'shadow-cow-sonic-ws-bes-vault',
 ];
 const excludedAbPools = [
   'gmx-arb-near-usdc',
   'gmx-arb-atom-usdc',
-  'gmx-arb-bnb-usdc',
   'gmx-arb-xrp-usdc',
   'gmx-arb-doge-usdc',
 ];

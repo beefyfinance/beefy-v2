@@ -14317,38 +14317,6 @@
     "network": "arbitrum"
   },
   {
-    "id": "gmx-arb-bnb-usdc",
-    "name": "BNB-USDC GM",
-    "type": "standard",
-    "token": "BNB-USDC GM",
-    "tokenAddress": "0x2d340912Aa47e33c90Efb078e69E70EFe2B34b9B",
-    "tokenDecimals": 18,
-    "tokenProviderId": "gmx",
-    "earnedToken": "mooGmxBNB-USDC",
-    "earnedTokenAddress": "0x6510f2CAd573BcDc4E0eC2b749fCaea8812fD797",
-    "earnContractAddress": "0x6510f2CAd573BcDc4E0eC2b749fCaea8812fD797",
-    "oracle": "lps",
-    "oracleId": "gmx-arb-bnb-usdc",
-    "status": "eol",
-    "retiredAt": 1727377666,
-    "retireReason": "rewards",
-    "createdAt": 1710772701,
-    "platformId": "gmx",
-    "assets": ["BNB", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "gmx-gm",
-    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "network": "arbitrum"
-  },
-  {
     "id": "gmx-arb-aave-usdc",
     "name": "AAVE-USDC GM",
     "type": "standard",
