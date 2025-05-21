@@ -38,7 +38,7 @@ async function dev() {
   const env = developmentEnv();
   return await runAll([
     { cmd: 'panda', args: ['codegen'], env },
-    { cmd: 'vite', args: ['dev'], env },
+    { cmd: 'vite', args: ['dev', ...process.argv.slice(3)], env },
   ]);
 }
 

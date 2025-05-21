@@ -1,6 +1,5 @@
 import { memo } from 'react';
 import { ChainButtonFilter } from './components/ChainFilters/ChainButtonFilter.tsx';
-import { ChainDropdownFilter } from './components/ChainFilters/ChainDropdownFilter.tsx';
 import { UserCategoryButtonFilter } from './components/UserCategoryFilters/UserCategoryButtonFilter.tsx';
 import { AssetTypeButtonFilter } from './components/AssetTypeFilters/AssetTypeButtonFilter.tsx';
 import { ExtendedFiltersButtonDropdown } from './components/ExtendedFilters/ExtendedFiltersButtonDropdown.tsx';
@@ -9,7 +8,9 @@ import { VaultCategoryButtonFilter } from './components/VaultCategoryFilters/Vau
 import { StrategyTypeButtonFilter } from './components/StrategyTypeFilters/StrategyTypeButtonFilter.tsx';
 import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
 import { styled } from '@repo/styles/jsx';
-import { ExtendedFiltersButtonSidebar } from './components/ExtendedFilters/ExtendedFiltersButtonSidebar.tsx';
+import { BoostFilterButton } from './components/BoostFilter/BoostFilterButton.tsx';
+import { Sort } from './components/Sort/Sort.tsx';
+import { ExtendedFiltersButtonMobileFilters } from './components/ExtendedFilters/ExtendedFiltersButtonMobileFilters.tsx';
 
 export const Filters = memo(function Filters() {
   const isDesktop = useBreakpoint({ from: 'lg' });
@@ -20,18 +21,13 @@ export const Filters = memo(function Filters() {
 const MobileLayout = memo(function MobileLayout() {
   return (
     <Layout>
+      <MobileFilters>
+        <Sort />
+        <ExtendedFiltersButtonMobileFilters />
+      </MobileFilters>
       <Top>
         <UserCategoryButtonFilter />
       </Top>
-      <Bottom>
-        <Left>
-          <ChainDropdownFilter />
-        </Left>
-        <Right>
-          <ExtendedFiltersButtonSidebar />
-          <ClearFiltersButton />
-        </Right>
-      </Bottom>
     </Layout>
   );
 });
@@ -43,16 +39,13 @@ const DesktopLayout = memo(function DesktopLayout() {
         <ChainButtonFilter />
       </Top>
       <Bottom>
-        <Left>
-          <UserCategoryButtonFilter />
-        </Left>
-        <Right>
-          <VaultCategoryButtonFilter />
-          <AssetTypeButtonFilter />
-          <StrategyTypeButtonFilter />
-          <ExtendedFiltersButtonDropdown />
-          <ClearFiltersButton />
-        </Right>
+        <UserCategoryButtonFilter />
+        <BoostFilterButton />
+        <VaultCategoryButtonFilter />
+        <AssetTypeButtonFilter />
+        <StrategyTypeButtonFilter />
+        <ExtendedFiltersButtonDropdown />
+        <ClearFiltersButton />
       </Bottom>
     </Layout>
   );
@@ -63,20 +56,33 @@ const Layout = styled('div', {
     display: 'flex',
     flexWrap: 'wrap',
     gap: '12px',
-    sm: {
-      gap: '16px',
-    },
   },
 });
 
 const Top = styled('div', {
   base: {
+    height: '40px',
     width: '100%',
+  },
+});
+
+const MobileFilters = styled(Top, {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    '& > :first-child': {
+      width: '50%',
+    },
+    '& > :last-child': {
+      width: '50%',
+    },
   },
 });
 
 const Bottom = styled('div', {
   base: {
+    height: '40px',
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
@@ -87,35 +93,9 @@ const Bottom = styled('div', {
     },
     lg: {
       display: 'flex',
-      flexDirection: 'row',
-    },
-  },
-});
-
-const Left = styled('div', {
-  base: {
-    display: 'flex',
-    flexDirection: 'inherit',
-    gap: 'inherit',
-    lg: {
-      marginRight: 'auto',
-    },
-  },
-});
-
-const Right = styled('div', {
-  base: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(0px, 1fr))',
-    gap: 'inherit',
-    width: '100%',
-    md: {},
-    lg: {
-      marginLeft: 'auto',
-      display: 'flex',
       flexDirection: 'inherit',
       gap: 'inherit',
-      width: 'auto',
+      width: '100%',
     },
   },
 });

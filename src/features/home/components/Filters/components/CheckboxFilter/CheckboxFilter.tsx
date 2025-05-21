@@ -2,14 +2,11 @@ import type { ReactNode } from 'react';
 import { memo, useCallback } from 'react';
 import type { LabelledCheckboxProps } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styled } from '@repo/styles/jsx';
 import type { FilteredVaultBooleanKeys } from '../../../../../data/reducers/filtered-vaults-types.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { selectFilterBoolean } from '../../../../../data/selectors/filtered-vaults.ts';
-import { styles } from './styles.ts';
-
-const useStyles = legacyMakeStyles(styles);
 
 export type CheckboxFilterProps = {
   filter: FilteredVaultBooleanKeys;
@@ -23,7 +20,6 @@ export const CheckboxFilter = memo(function CheckboxFilter({
   icon,
 }: CheckboxFilterProps) {
   const dispatch = useAppDispatch();
-  const classes = useStyles();
   const value = useAppSelector(state => selectFilterBoolean(state, filter));
   const handleChange = useCallback<LabelledCheckboxProps['onChange']>(
     checked => {
@@ -37,7 +33,7 @@ export const CheckboxFilter = memo(function CheckboxFilter({
       label={
         <>
           {icon ?
-            <div className={classes.labelIcon}>{icon}</div>
+            <IconContainer>{icon}</IconContainer>
           : null}
           {label}
         </>
@@ -46,4 +42,12 @@ export const CheckboxFilter = memo(function CheckboxFilter({
       checked={value}
     />
   );
+});
+
+const IconContainer = styled('div', {
+  base: {
+    '& img': {
+      display: 'block',
+    },
+  },
 });

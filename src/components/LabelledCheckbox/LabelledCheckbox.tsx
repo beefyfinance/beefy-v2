@@ -1,9 +1,11 @@
 import type { MouseEventHandler, ReactNode } from 'react';
-import { memo, useCallback } from 'react';
-import { styles } from './styles.ts';
+import { memo, useCallback, useMemo } from 'react';
 import { css, type CssStyles } from '@repo/styles/css';
-import CheckBoxOutlineBlank from '../../images/icons/mui/CheckBoxOutlineBlank.svg?react';
-import CheckBoxOutlined from '../../images/icons/mui/CheckBoxOutlined.svg?react';
+import CheckBoxOutlineBlank from '../../images/icons/CheckBoxBlank.svg?react';
+import CheckBoxOutlined from '../../images/icons/CheckBox.svg?react';
+import CircleCheckBoxOutlined from '../../images/icons/CircleCheckBoxBlank.svg?react';
+import CircleCheckBox from '../../images/icons/CircleCheckBox.svg?react';
+import { styled } from '@repo/styles/jsx';
 
 export type LabelledCheckboxProps = {
   checked: boolean;
@@ -12,6 +14,8 @@ export type LabelledCheckboxProps = {
   iconCss?: CssStyles;
   labelCss?: CssStyles;
   checkedIconCss?: CssStyles;
+  checkVariant?: 'square' | 'circle';
+  endAdornment?: ReactNode;
 };
 
 export const LabelledCheckbox = memo(function LabelledCheckbox({
@@ -21,6 +25,8 @@ export const LabelledCheckbox = memo(function LabelledCheckbox({
   iconCss,
   labelCss,
   checkedIconCss,
+  checkVariant = 'square',
+  endAdornment,
 }: LabelledCheckboxProps) {
   const handleChange = useCallback<MouseEventHandler<HTMLLabelElement>>(
     e => {
@@ -29,18 +35,62 @@ export const LabelledCheckbox = memo(function LabelledCheckbox({
     },
     [onChange, checked]
   );
-  const Icon = checked ? CheckBoxOutlined : CheckBoxOutlineBlank;
+  const Icon = useMemo(() => {
+    if (checkVariant === 'circle') {
+      return checked ? CircleCheckBox : CircleCheckBoxOutlined;
+    }
+    return checked ? CheckBoxOutlined : CheckBoxOutlineBlank;
+  }, [checkVariant, checked]);
 
   return (
-    <label onClick={handleChange} className={css(styles.checkbox)} data-checked={checked}>
-      <Icon
-        className={css(
-          styles.icon,
-          iconCss,
-          checked && css.raw(styles.checkedIcon, checkedIconCss)
-        )}
-      />
-      <span className={css(styles.label, labelCss)}>{label}</span>
-    </label>
+    <Label onClick={handleChange} data-checked={checked}>
+      <Icon className={css(styles.icon, iconCss, checked && checkedIconCss)} />
+      <Text checked={checked} className={css(labelCss)}>
+        {label}
+      </Text>
+      {endAdornment && <EndAdornment>{endAdornment}</EndAdornment>}
+    </Label>
   );
 });
+
+const Label = styled('label', {
+  base: {
+    textStyle: 'body.medium',
+    display: 'flex',
+    alignItems: 'center',
+    color: 'text.dark',
+    cursor: 'pointer',
+    columnGap: '10px',
+    userSelect: 'none',
+    paddingBlock: '8px',
+    width: '100%',
+  },
+});
+
+const EndAdornment = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    marginLeft: 'auto',
+  },
+});
+
+const Text = styled('span', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  variants: {
+    checked: {
+      true: {
+        color: 'text.light',
+      },
+    },
+  },
+});
+
+const styles = {
+  icon: css.raw({
+    color: 'text.dark',
+  }),
+};

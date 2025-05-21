@@ -17,7 +17,7 @@ import { DivWithTooltip } from '../Tooltip/DivWithTooltip.tsx';
 import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
 import { styles } from './styles.ts';
-
+import { useTranslation } from 'react-i18next';
 export type VaultYieldRewardsStatProps = {
   vaultId: VaultEntity['id'];
   walletAddress: string;
@@ -28,6 +28,7 @@ export const VaultYieldRewardsStat = memo(function VaultYieldRewardsStat({
   walletAddress,
   ...passthrough
 }: VaultYieldRewardsStatProps) {
+  const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const label = isGovVault(vault) ? 'VaultStat-Claimable-Rewards' : 'VaultStat-Yield';
   const data = useAppSelector(state =>
@@ -62,7 +63,7 @@ export const VaultYieldRewardsStat = memo(function VaultYieldRewardsStat({
   if (data === DashboardDataStatus.Loading) {
     return (
       <VaultValueStat
-        label={label}
+        label={t(label)}
         value="-"
         loading={true}
         expectSubValue={true}

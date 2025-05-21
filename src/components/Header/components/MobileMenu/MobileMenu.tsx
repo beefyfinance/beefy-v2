@@ -153,7 +153,7 @@ export const DropMobile = memo<DropMobileProps>(function DropMobile({
       </NavItem>
       <SubItems>
         {items.map(item => {
-          const NavComponent = item.MobileComponent ?? NavLinkItem;
+          const NavComponent = item.MobileComponent ?? item.Component ?? NavLinkItem;
           return (
             <NavComponent
               key={item.title}

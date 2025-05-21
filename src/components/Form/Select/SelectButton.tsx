@@ -13,6 +13,9 @@ export const SelectButton = styled(
       selected: {
         true: {},
       },
+      active: {
+        true: {},
+      },
       variant: {
         filter: {
           color: 'text.middle',

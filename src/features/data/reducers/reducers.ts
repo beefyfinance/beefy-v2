@@ -86,8 +86,8 @@ const uiReducer = combineReducers({
       key: 'filters',
       storage,
       transforms: [bigNumberTransform],
-      blacklist: ['filteredVaultIds', 'sortedFilteredVaultIds', 'onlyUnstakedClm'],
-      version: 2, // increase this if you make changes to FilteredVaultsState
+      blacklist: ['filteredVaultIds', 'sortedFilteredVaultIds', 'onlyUnstakedClm', 'filterContent'],
+      version: 3, // increase this if you make changes to FilteredVaultsState
     },
     filteredVaultsSlice.reducer
   ),

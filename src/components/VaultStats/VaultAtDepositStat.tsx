@@ -14,6 +14,7 @@ import {
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent.tsx';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
+import { useTranslation } from 'react-i18next';
 
 export type VaultAtDepositStatProps = {
   vaultId: VaultEntity['id'];
@@ -30,11 +31,12 @@ export const VaultAtDepositStat = memo(function VaultAtDepositStat({
   walletAddress,
   ...passthrough
 }: VaultAtDepositStatProps) {
+  const { t } = useTranslation();
   // @dev don't do this - temp migration away from connect()
-  const statProps = useAppSelector(state =>
+  const { label, ...statProps } = useAppSelector(state =>
     selectVaultAtDepositStat(state, vaultId, pnlData, walletAddress)
   );
-  return <VaultValueStat {...statProps} {...passthrough} />;
+  return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
 });
 
 // TODO better selector / hook

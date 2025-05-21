@@ -15,7 +15,7 @@ export type SortType =
 
 export type SortDirectionType = 'asc' | 'desc';
 
-export type VaultCategoryType = 'stable' | 'bluechip' | 'correlated';
+export type VaultCategoryType = 'stable' | 'bluechip' | 'meme' | 'correlated';
 
 export type VaultAssetType = 'lps' | 'single' | 'clm';
 
@@ -34,6 +34,12 @@ export type SubSortsState = {
 };
 
 export type SortWithSubSort = keyof SubSortsState & SortType;
+
+export enum FilterContent {
+  Filter = 1,
+  Platform,
+  Chains,
+}
 /**
  * State containing Vault infos
  * Increase the version on persistReducer if you make changes to this shape
@@ -63,10 +69,10 @@ export type FilteredVaultsState = {
   onlyUnstakedClm: boolean;
   filteredVaultIds: VaultEntity['id'][];
   sortedFilteredVaultIds: VaultEntity['id'][];
-  showMinimumUnderlyingTvl: boolean;
-  showMinimumUnderlyingTvlLarge: boolean;
   minimumUnderlyingTvl: BigNumber;
+  filterContent: FilterContent;
 };
+
 export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
 export type FilteredVaultBigNumberKeys = KeysOfType<FilteredVaultsState, BigNumber>;
 export type SetSubSortPayload<K extends SortWithSubSort = SortWithSubSort> = {

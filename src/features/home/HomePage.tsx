@@ -34,8 +34,8 @@ const HomePage = memo(function HomePage() {
       <Content>
         <Container maxWidth="lg">
           <Filters />
-          <Vaults />
         </Container>
+        <Vaults />
       </Content>
     </>
   );
