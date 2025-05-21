@@ -2,6 +2,12 @@ import { cva, type RecipeVariantProps } from '@repo/styles/css';
 
 export type ButtonVariantProps = NonNullable<RecipeVariantProps<typeof buttonRecipe>>;
 
+const activeStyles = {
+  color: 'colorPalette.active.color',
+  backgroundColor: 'colorPalette.active.background',
+  borderColor: 'colorPalette.active.border',
+} as const;
+
 export const buttonRecipe = cva({
   base: {
     colorPalette: 'buttons.default',
@@ -10,23 +16,20 @@ export const buttonRecipe = cva({
     borderColor: 'colorPalette.border',
     borderRadius: '8px',
     textStyle: 'body.medium',
-    _primaryHover: {
-      _hover: {
-        color: 'colorPalette.hover.color',
-        backgroundColor: 'colorPalette.hover.background',
-        borderColor: 'colorPalette.hover.border',
-      },
-    },
-    _active: {
-      color: 'colorPalette.active.color',
-      backgroundColor: 'colorPalette.active.background',
-      borderColor: 'colorPalette.active.border',
-    },
+    _active: activeStyles,
     _disabled: {
       color: 'colorPalette.disabled.color',
       backgroundColor: 'colorPalette.disabled.background',
       borderColor: 'colorPalette.disabled.border',
       opacity: '0.4',
+    },
+    _primaryHover: {
+      _active: activeStyles,
+      _hover: {
+        color: 'colorPalette.hover.color',
+        backgroundColor: 'colorPalette.hover.background',
+        borderColor: 'colorPalette.hover.border',
+      },
     },
   },
   variants: {
