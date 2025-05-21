@@ -920,6 +920,21 @@ const checkPointsStructureIds = (pool: VaultConfig) => {
         shouldHaveProviderArr.push(regex.test(earnedToken));
       } else if (eligibility.type === 'vault-whitelist') {
         shouldHaveProviderArr.push(hasProvider);
+      } else if (eligibility.type === 'underlying-whitelist') {
+        if (!('tokens' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
+        }
+        if (!('chain' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.chain missing`);
+        }
+
+        if (eligibility.chain !== pool.network) {
+          shouldHaveProviderArr.push(false);
+        } else {
+          shouldHaveProviderArr.push(
+            pool.assets?.every(a => eligibility.tokens?.includes(a)) ?? false
+          );
+        }
       } else {
         throw new Error(
           `Error: ${pointProvider.id} : eligibility.type ${eligibility.type} not implemented, please implement.`
