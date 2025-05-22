@@ -1,5 +1,123 @@
 [
   {
+    "id": "pancake-cow-bsc-b-wbnb-rp",
+    "name": "B-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBNBB-WBNB",
+    "tokenAddress": "0x7a1aF0e6A4888B5E9cd4f55B4Caf9F268E1CAEaA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x15220A20fa482dbEc0Af2EFa68cf42b8600A5A2B",
+    "earnedToken": "rCowPancakeBNBB-WBNB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-b-wbnb",
+    "status": "active",
+    "createdAt": 1747915398,
+    "platformId": "pancakeswap",
+    "assets": ["B", "WBNB"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-b-wbnb",
+    "name": "B-WBNB",
+    "type": "cowcentrated",
+    "token": "B-WBNB pancakeswap",
+    "tokenAddress": "0x88e5283d0aA8f8c58Eb7ffe5C73ACE72F2B0C3bf",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x6bdcCe4A559076e37755a78Ce0c06214E59e4444",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnContractAddress": "0x7a1aF0e6A4888B5E9cd4f55B4Caf9F268E1CAEaA",
+    "earnedToken": "cowPancakeBNBB-WBNB",
+    "earnedTokenAddress": "0x7a1aF0e6A4888B5E9cd4f55B4Caf9F268E1CAEaA",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-b-wbnb",
+    "status": "active",
+    "createdAt": 1747915398,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["B", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-usd1-wbnb-rp",
+    "name": "USD1-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBNBUSD1-WBNB",
+    "tokenAddress": "0x30A95B69FecB302a984b7370bf7e1Aead821cD9f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xE5deD95d0A424B2E0C1F92b746189B9AdFFc7202",
+    "earnedToken": "rCowPancakeBNBUSD1-WBNB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usd1-wbnb",
+    "status": "active",
+    "createdAt": 1747915358,
+    "platformId": "pancakeswap",
+    "assets": ["USD1", "WBNB"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-usd1-wbnb",
+    "name": "USD1-WBNB",
+    "type": "cowcentrated",
+    "token": "USD1-WBNB pancakeswap",
+    "tokenAddress": "0x4a3218606AF9B4728a9F187E1c1a8c07fBC172a9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnContractAddress": "0x30A95B69FecB302a984b7370bf7e1Aead821cD9f",
+    "earnedToken": "cowPancakeBNBUSD1-WBNB",
+    "earnedTokenAddress": "0x30A95B69FecB302a984b7370bf7e1Aead821cD9f",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usd1-wbnb",
+    "status": "active",
+    "createdAt": 1747915358,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["USD1", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-bsc-mubarak-wbnb-rp",
     "name": "mubarak-WBNB Reward Pool",
     "type": "gov",
