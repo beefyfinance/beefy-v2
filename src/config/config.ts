@@ -249,6 +249,7 @@ export const config = {
       'msUSD',
       'wUSDM',
       'Bold',
+      'BOLDV2',
     ],
   },
   arbitrum: {
@@ -566,6 +567,7 @@ export const config = {
       'sUSDS',
       'smUSDC',
       'OUSDT',
+      'BOLDV2',
     ],
   },
   gnosis: {

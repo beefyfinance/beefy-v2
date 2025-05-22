@@ -1,5 +1,122 @@
 [
   {
+    "id": "aerodrome-bold-lusd-new",
+    "name": "BOLD-LUSD sLP",
+    "type": "standard",
+    "token": "sAMM-Bold/LUSD",
+    "tokenAddress": "0xEf3EFc734a3FE0bF20762992ec839939bA3Af050",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseBOLD-LUSD",
+    "earnedTokenAddress": "0xc3d599344b7B0AbdB8c7193162D6aea37f2D4b72",
+    "earnContractAddress": "0xc3d599344b7B0AbdB8c7193162D6aea37f2D4b72",
+    "oracle": "lps",
+    "oracleId": "aerodrome-bold-lusd-new",
+    "createdAt": 1747926146,
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["BOLDV2", "LUSD"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x03569CC076654F82679C4BA2124D64774781B01D&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-bold-usdc-new",
+    "name": "BOLD-USDC sLP",
+    "type": "standard",
+    "token": "sAMM-Bold/USDC",
+    "tokenAddress": "0x2De3fE21d32319a1550264dA37846737885Ad7A1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseBOLD-USDC",
+    "earnedTokenAddress": "0x5f6D99B0ea25f354eb808805Cff05c44852071c9",
+    "earnContractAddress": "0x5f6D99B0ea25f354eb808805Cff05c44852071c9",
+    "oracle": "lps",
+    "oracleId": "aerodrome-bold-usdc-new",
+    "createdAt": 1747925924,
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["BOLDV2", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x03569CC076654F82679C4BA2124D64774781B01D&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-noice-rp",
+    "name": "noice-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBasenoice-WETH",
+    "tokenAddress": "0xe9B2507C4362E4225142E7fcc17ad4C281aAc990",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xf928661983941C50253249D71549BAa7674811Fe",
+    "earnedToken": "rCowUniswapBasenoice-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-noice",
+    "status": "active",
+    "createdAt": 1747925163,
+    "platformId": "uniswap",
+    "assets": ["noice", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-noice-weth",
+    "name": "noice-WETH",
+    "type": "cowcentrated",
+    "token": "noice-WETH uniswap",
+    "tokenAddress": "0xeFF7f8Fe083d7a446717B992bf84391253e54789",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x9Cb41FD9dC6891BAe8187029461bfAADF6CC0C69"
+    ],
+    "earnContractAddress": "0xe9B2507C4362E4225142E7fcc17ad4C281aAc990",
+    "earnedToken": "cowUniswapBasenoice-WETH",
+    "earnedTokenAddress": "0xe9B2507C4362E4225142E7fcc17ad4C281aAc990",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-noice",
+    "status": "active",
+    "createdAt": 1747925163,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["noice", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-weth-morpho-vault",
     "name": "MORPHO-WETH",
     "type": "standard",
