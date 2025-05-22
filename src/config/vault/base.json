@@ -1,5 +1,155 @@
 [
   {
+    "id": "uniswap-cow-base-weth-kta-rp",
+    "name": "KTA-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseKTA-WETH",
+    "tokenAddress": "0xbf05bb976BF4a6200D88C6fDdcf86a14D8a768c0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x4250d483858fdA2AB297ED08378a0b34Bc42F0A1",
+    "earnedToken": "rCowUniswapBaseKTA-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-kta",
+    "status": "active",
+    "createdAt": 1747938891,
+    "platformId": "uniswap",
+    "assets": ["KTA", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-kta",
+    "name": "KTA-WETH",
+    "type": "cowcentrated",
+    "token": "KTA-WETH uniswap",
+    "tokenAddress": "0x8d421B0D641193D67Dd1aa024DAb17fcdE0BfC89",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xc0634090F2Fe6c6d75e61Be2b949464aBB498973"
+    ],
+    "earnContractAddress": "0xbf05bb976BF4a6200D88C6fDdcf86a14D8a768c0",
+    "earnedToken": "cowUniswapBaseKTA-WETH",
+    "earnedTokenAddress": "0xbf05bb976BF4a6200D88C6fDdcf86a14D8a768c0",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-kta",
+    "status": "active",
+    "createdAt": 1747938891,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["KTA", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-kta-vault",
+    "name": "KTA-WETH",
+    "type": "standard",
+    "token": "KTA-WETH",
+    "tokenAddress": "0xEB9daac34fdD0c22b9EA27284165177732d92B52",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x1E90Ea05C406F38A92e07333264D70A0B74E84c7",
+    "earnedToken": "mooCowAerodromeKTA-WETH",
+    "earnedTokenAddress": "0x1E90Ea05C406F38A92e07333264D70A0B74E84c7",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-kta",
+    "status": "active",
+    "createdAt": 1747938821,
+    "platformId": "aerodrome",
+    "assets": ["KTA", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-kta-rp",
+    "name": "KTA-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeKTA-WETH",
+    "tokenAddress": "0xEB9daac34fdD0c22b9EA27284165177732d92B52",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xc1BE65745D6391f3B7626a6B107d2A13Ab962489",
+    "earnedToken": "rCowAerodromeKTA-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-kta",
+    "status": "active",
+    "createdAt": 1747938820,
+    "platformId": "aerodrome",
+    "assets": ["KTA", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-kta",
+    "name": "KTA-WETH",
+    "type": "cowcentrated",
+    "token": "KTA-WETH aerodrome",
+    "tokenAddress": "0x46D710c35BdfB800a18A820712310048Ef8B5256",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xc0634090F2Fe6c6d75e61Be2b949464aBB498973"
+    ],
+    "earnContractAddress": "0xEB9daac34fdD0c22b9EA27284165177732d92B52",
+    "earnedToken": "cowAerodromeKTA-WETH",
+    "earnedTokenAddress": "0xEB9daac34fdD0c22b9EA27284165177732d92B52",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-kta",
+    "status": "active",
+    "createdAt": 1747938820,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["KTA", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-bold-lusd-new",
     "name": "BOLD-LUSD sLP",
     "type": "standard",
@@ -1022,7 +1172,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-weth-kta",
     "status": "active",
-    "createdAt": 1742690126,
+    "createdAt": 1747938820,
     "platformId": "aerodrome",
     "assets": ["KTA", "WETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
