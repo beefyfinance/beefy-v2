@@ -97,7 +97,8 @@ const LineToggleLabel = memo(function LineToggleLabel({ text, color }: LineToggl
 const Toggles = styled('div', {
   base: {
     display: 'flex',
-    gap: '8px 16px',
+    gap: '4px 16px',
+    flexWrap: 'wrap',
   },
 });
 
