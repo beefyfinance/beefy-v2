@@ -31,20 +31,24 @@ export const LineToggles = memo(function LineToggles({
 
   return (
     <Toggles className={css(cssProp)}>
-      <LineToggle
-        checked={toggles.average}
-        color="#4DB258"
-        label={t('Average')}
-        onChange={handleChange}
-        toggle={'average'}
-      />
-      <LineToggle
-        checked={toggles.movingAverage}
-        color="#5C70D6"
-        label={t('Moving-Average')}
-        onChange={handleChange}
-        toggle={'movingAverage'}
-      />
+      <div>
+        <LineToggle
+          checked={toggles.average}
+          color="#4DB258"
+          label={t('Average')}
+          onChange={handleChange}
+          toggle={'average'}
+        />
+      </div>
+      <div>
+        <LineToggle
+          checked={toggles.movingAverage}
+          color="#5C70D6"
+          label={t('Moving-Average')}
+          onChange={handleChange}
+          toggle={'movingAverage'}
+        />
+      </div>
     </Toggles>
   );
 });
