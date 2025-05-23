@@ -510,7 +510,6 @@ export const config = {
     name: 'Base',
     chainId: 8453,
     rpc: [
-      'https://base.llamarpc.com',
       'https://base-mainnet.public.blastapi.io',
       'https://base.drpc.org',
       'https://base.api.onfinality.io/public',
