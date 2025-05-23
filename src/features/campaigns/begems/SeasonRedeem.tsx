@@ -17,6 +17,7 @@ import {
 } from '../../data/selectors/campaigns/begems.ts';
 import {
   selectTokenByAddress,
+  selectTokenByAddressOrUndefined,
   selectTokenById,
   selectTokenPriceByTokenOracleId,
 } from '../../data/selectors/tokens.ts';
@@ -46,7 +47,7 @@ export const SeasonRedeem = memo(function SeasonForm({ season }: SeasonRedeemPro
     );
   }
 
-  return <RedeemFormDisabled season={season} />;
+  return <RedeemFormDisabled season={season} tokenAddress={data.token} />;
 });
 
 type RedeemFormEnabledProps = {
@@ -112,20 +113,40 @@ const RedeemFormEnabled = memo(function RedeemFormEnabled({
 
 type RedeemFormDisabledProps = {
   season: number;
+  tokenAddress?: string | undefined;
 };
 
-const RedeemFormDisabled = memo(function RedeemFormDisabled({ season }: RedeemFormDisabledProps) {
+const RedeemFormDisabled = memo(function RedeemFormDisabled({
+  season,
+  tokenAddress,
+}: RedeemFormDisabledProps) {
   const config = useAppSelector(state => selectBeGemsSeason(state, season));
+  const inputToken = useAppSelector(state =>
+    tokenAddress ? selectTokenByAddressOrUndefined(state, 'sonic', tokenAddress) : undefined
+  );
   const text = useMemo(() => {
     const date = fromUnixTime(config.endTime);
     return `Redeem in ${format(date, 'MMMM')}`;
   }, [config]);
+
   return (
     <>
       <Corner>
         <Banner>{text}</Banner>
       </Corner>
-      <RedeemForm />
+      <RedeemForm
+        input={
+          inputToken && (
+            <AmountInputWithSlider
+              value={BIG_ZERO}
+              maxValue={BIG_ZERO}
+              disabled={true}
+              tokenDecimals={18}
+              endAdornment={<TokenAdornment token={inputToken} />}
+            />
+          )
+        }
+      />
     </>
   );
 });

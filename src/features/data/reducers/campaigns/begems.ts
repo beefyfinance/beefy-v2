@@ -15,17 +15,17 @@ const initialState: BeGemsState = {
       1: {
         number: 1,
         startTime: 1747008000 - mockOffset,
-        endTime: 1751327999 - mockOffset,
+        endTime: 1751284800 - mockOffset, // Mon Jun 30 2025 12:00:00 UTC
       },
       2: {
         number: 2,
-        startTime: 1751328000 - mockOffset,
-        endTime: 1756684799 - mockOffset,
+        startTime: 1751284800 - mockOffset,
+        endTime: 1756641600 - mockOffset, // Sun Aug 31 2025 12:00:00 UTC
       },
       3: {
         number: 3,
-        startTime: 1756684799 - mockOffset,
-        endTime: 1761958799 - mockOffset,
+        startTime: 1756641600 - mockOffset,
+        endTime: 1761912000 - mockOffset, // Fri Oct 31 2025 12:00:00 UTC
       },
     },
     dataByNumber: {

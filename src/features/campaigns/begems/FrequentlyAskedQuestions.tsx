@@ -4,24 +4,24 @@ import { styled } from '@repo/styles/jsx';
 
 const faqs = [
   {
-    question: 'When can I redeem beGEMS?',
+    question: 'How can I earn beGEMS?',
     answer:
-      'At the end of each season, Beefy will open claims on this page allowing beGEMS holders to redeem them for S tokens.',
+      'You can earn beGEMS by boosting specific vaults, providing liquidity to Sonic lending markets, and voting on key beS trading pairs on Sonic exchanges.',
   },
   {
     question: 'How much is a beGEMS worth?',
     answer:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.',
+      "beGEMS are redeemable for a proportional share of Beefy's Sonic Gems allocation at the end of each season. Their value depends on how many Sonic Gems Beefy earns during that season.",
+  },
+  {
+    question: 'When can I redeem beGEMS?',
+    answer:
+      'At the end of each season, the redeem module above will become active, allowing beGEMS holders to claim S tokens.',
   },
   {
     question: 'When does the season end?',
     answer:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.',
-  },
-  {
-    question: 'How can I earn beGEMS?',
-    answer:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.',
+      'Season 1 ends in June. Start and end dates for future seasons haven’t been announced yet.',
   },
 ];
 
