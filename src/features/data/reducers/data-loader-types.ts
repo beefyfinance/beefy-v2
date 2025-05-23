@@ -87,6 +87,7 @@ export interface DataLoaderState {
     currentCowcentratedRanges: LoaderState;
     merklRewards: LoaderState;
     stellaSwapRewards: LoaderState;
+    beGemsCampaign: LoaderState;
   };
   byChainId: {
     [chainId in ChainEntity['id']]?: ByChainDataEntity;
