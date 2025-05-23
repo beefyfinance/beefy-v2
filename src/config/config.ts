@@ -249,6 +249,7 @@ export const config = {
       'msUSD',
       'wUSDM',
       'Bold',
+      'BOLDV2',
     ],
   },
   arbitrum: {
@@ -509,7 +510,6 @@ export const config = {
     name: 'Base',
     chainId: 8453,
     rpc: [
-      'https://base.llamarpc.com',
       'https://base-mainnet.public.blastapi.io',
       'https://base.drpc.org',
       'https://base.api.onfinality.io/public',
@@ -566,6 +566,7 @@ export const config = {
       'sUSDS',
       'smUSDC',
       'OUSDT',
+      'BOLDV2',
     ],
   },
   gnosis: {

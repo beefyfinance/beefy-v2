@@ -1,14 +1,15 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, prepareAutoBatched, type PayloadAction } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import createTransform from 'redux-persist/es/createTransform';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
 import { fetchAllVaults } from '../actions/vaults.ts';
-import type {
-  FilteredVaultBigNumberKeys,
-  FilteredVaultBooleanKeys,
-  FilteredVaultsState,
-  SetSubSortPayload,
+import {
+  FilterContent,
+  type FilteredVaultBigNumberKeys,
+  type FilteredVaultBooleanKeys,
+  type FilteredVaultsState,
+  type SetSubSortPayload,
 } from './filtered-vaults-types.ts';
 
 const initialFilteredVaultsState: FilteredVaultsState = {
@@ -33,9 +34,8 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   onlyUnstakedClm: false,
   filteredVaultIds: [],
   sortedFilteredVaultIds: [],
-  showMinimumUnderlyingTvl: false,
-  showMinimumUnderlyingTvlLarge: false,
   minimumUnderlyingTvl: BIG_ZERO,
+  filterContent: FilterContent.Filter,
 };
 
 export const filteredVaultsSlice = createSlice({
@@ -105,6 +105,10 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState.platformIds = action.payload;
     },
+    setFilterContent(sliceState, action: PayloadAction<FilteredVaultsState['filterContent']>) {
+      sliceState.reseted = false;
+      sliceState.filterContent = action.payload;
+    },
     setBoolean(
       sliceState,
       action: PayloadAction<{
@@ -115,15 +119,21 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState[action.payload.filter] = action.payload.value;
     },
-    setBigNumber(
-      sliceState,
-      action: PayloadAction<{
+    setBigNumber: {
+      reducer(
+        sliceState,
+        action: PayloadAction<{
+          filter: FilteredVaultBigNumberKeys;
+          value: BigNumber;
+        }>
+      ) {
+        sliceState.reseted = false;
+        sliceState[action.payload.filter] = action.payload.value;
+      },
+      prepare: prepareAutoBatched<{
         filter: FilteredVaultBigNumberKeys;
         value: BigNumber;
-      }>
-    ) {
-      sliceState.reseted = false;
-      sliceState[action.payload.filter] = action.payload.value;
+      }>(),
     },
   },
   extraReducers: builder => {

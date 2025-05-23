@@ -911,8 +911,39 @@
     ],
     "eligibility": [
       {
-        "type": "on-chain-lp",
-        "chain": "sonic"
+        "type": "underlying-whitelist",
+        "chain": "sonic",
+        "tokens": [
+          "anS",
+          "aSonUSDC",
+          "aUSDC",
+          "BEETS",
+          "beS",
+          "bUSDC.e-20",
+          "bUSDCe-20",
+          "OS",
+          "S",
+          "scBTC",
+          "scETH",
+          "scUSD",
+          "SHADOW",
+          "stkscBTC",
+          "stkscETH",
+          "stkscUSD",
+          "stS",
+          "USDC.e",
+          "USDCe",
+          "USDT",
+          "wanS",
+          "WBTC",
+          "WETH",
+          "wOS",
+          "wS",
+          "wstkscBTC",
+          "wstkscETH",
+          "wstkscUSD",
+          "x33"
+        ]
       }
     ],
     "accounting": [

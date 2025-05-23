@@ -8,7 +8,7 @@ import { styles } from './styles.ts';
 import { ToggleButtons } from '../../../../../../../components/ToggleButtons/ToggleButtons.tsx';
 import { useChartOptions } from '../useChartOptions.ts';
 import { useMediaQuery } from '../../../../../../../components/MediaQueries/useMediaQuery.ts';
-import { Select } from '../../../../../../../components/Form/Select/Single/Select.tsx';
+import { SelectSingle } from '../../../../../../../components/Form/Select/Single/SelectSingle.tsx';
 import type { SelectItem } from '../../../../../../../components/Form/Select/types.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -38,12 +38,13 @@ export const MobileCollapseContent = memo(function MobileCollapseContent({
     <div className={classes.container}>
       <div className={classes.toggleContainer}>
         {useDropdown ?
-          <Select
+          <SelectSingle
             options={options}
             selected={toggleTab}
             onChange={setToggleTab}
             variant="light"
             fullWidth={true}
+            OptionStartAdornmentComponent={() => <></>}
           />
         : <ToggleButtons<ToggleTabOptions>
             value={toggleTab}

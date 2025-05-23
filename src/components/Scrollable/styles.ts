@@ -40,7 +40,6 @@ export const styles = {
     bottom: '0',
     height: '80',
     background: 'linear-gradient(180deg, rgba(35, 39, 67, 0) 0%, {colors.background.content} 100%)',
-    borderRadius: '12px',
   }),
   leftShadow: css.raw({
     top: '0',

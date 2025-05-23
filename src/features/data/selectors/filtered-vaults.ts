@@ -16,6 +16,7 @@ import { selectChainById } from './chains.ts';
 import { selectActivePromoForVault } from './promos.ts';
 import {
   selectIsTokenBluechip,
+  selectIsTokenMeme,
   selectIsTokenStable,
   selectTokenByAddress,
   selectVaultTokenSymbols,
@@ -64,10 +65,9 @@ export const selectFilterPopinFilterCount = createSelector(
     filterOptions.assetType.length +
     filterOptions.vaultCategory.length +
     (filterOptions.strategyType !== 'all' ? 1 : 0) +
-    (filterOptions.sort !== 'default' ? 1 : 0) +
     filterOptions.chainIds.length +
     filterOptions.platformIds.length +
-    (filterOptions.showMinimumUnderlyingTvl && filterOptions.minimumUnderlyingTvl.gt(0) ? 1 : 0)
+    (filterOptions.minimumUnderlyingTvl.gt(0) ? 1 : 0)
 );
 
 export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
@@ -85,7 +85,7 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.searchText !== '' ||
     filterOptions.platformIds.length > 0 ||
     filterOptions.chainIds.length > 0 ||
-    (filterOptions.showMinimumUnderlyingTvl && filterOptions.minimumUnderlyingTvl.gt(0))
+    filterOptions.minimumUnderlyingTvl.gt(0)
 );
 
 export const selectHasActiveFilter = createSelector(
@@ -206,6 +206,29 @@ export const selectVaultIsBoostedForFilter = (state: BeefyState, vaultId: VaultE
   const apy = selectVaultTotalApy(state, vaultId);
   return !!apy && (apy.boostedTotalDaily || 0) > 0;
 };
+
+export const selectAnyDesktopExtenderFilterIsActive = createSelector(
+  selectFilterOptions,
+  filterOptions => {
+    if (
+      filterOptions.onlyZappable ||
+      filterOptions.onlyEarningPoints ||
+      filterOptions.onlyRetired ||
+      filterOptions.onlyPaused ||
+      filterOptions.platformIds.length > 0 ||
+      filterOptions.minimumUnderlyingTvl.gt(0)
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+);
+
+export const selectFilterContent = createSelector(
+  selectFilterOptions,
+  filterOptions => filterOptions.filterContent
+);
 export const selectIsVaultBlueChip = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
@@ -239,6 +262,15 @@ export const selectIsVaultCorrelated = createSelector(
   },
   res => res
 );
+
+export const selectIsVaultMeme = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+    return vault.assetIds.some(assetId => selectIsTokenMeme(state, assetId));
+  },
+  res => res
+);
+
 export const selectMaximumUnderlyingVaultTvl = (state: BeefyState) => {
   const ids = selectAllActiveVaultIds(state);
   let maxTvl = BIG_ZERO;
