@@ -2,6 +2,12 @@ import { cva, type RecipeVariantProps } from '@repo/styles/css';
 
 export type ButtonVariantProps = NonNullable<RecipeVariantProps<typeof buttonRecipe>>;
 
+const activeStyles = {
+  color: 'colorPalette.active.color',
+  backgroundColor: 'colorPalette.active.background',
+  borderColor: 'colorPalette.active.border',
+} as const;
+
 export const buttonRecipe = cva({
   base: {
     colorPalette: 'buttons.default',
@@ -10,21 +16,20 @@ export const buttonRecipe = cva({
     borderColor: 'colorPalette.border',
     borderRadius: '8px',
     textStyle: 'body.medium',
-    _hover: {
-      color: 'colorPalette.hover.color',
-      backgroundColor: 'colorPalette.hover.background',
-      borderColor: 'colorPalette.hover.border',
-    },
-    _active: {
-      color: 'colorPalette.active.color',
-      backgroundColor: 'colorPalette.active.background',
-      borderColor: 'colorPalette.active.border',
-    },
+    _active: activeStyles,
     _disabled: {
       color: 'colorPalette.disabled.color',
       backgroundColor: 'colorPalette.disabled.background',
       borderColor: 'colorPalette.disabled.border',
       opacity: '0.4',
+    },
+    _primaryHover: {
+      _active: activeStyles,
+      _hover: {
+        color: 'colorPalette.hover.color',
+        backgroundColor: 'colorPalette.hover.background',
+        borderColor: 'colorPalette.hover.border',
+      },
     },
   },
   variants: {
@@ -35,6 +40,9 @@ export const buttonRecipe = cva({
         textStyle: 'body.sm.medium',
       },
       sm: {
+        padding: '6px 10px',
+      },
+      md: {
         padding: '8px 16px',
       },
       lg: {
@@ -53,10 +61,6 @@ export const buttonRecipe = cva({
       true: {
         width: '100%',
       },
-    },
-    active: {
-      false: {},
-      true: {},
     },
     variant: {
       default: {
@@ -94,14 +98,21 @@ export const buttonRecipe = cva({
       size: 'sm',
       borderless: false,
       css: {
-        padding: '6px 14px',
+        padding: '6px 12px',
+      },
+    },
+    {
+      size: 'md',
+      borderless: false,
+      css: {
+        padding: '8px 16px',
       },
     },
     {
       size: 'lg',
       borderless: false,
       css: {
-        padding: '10px 22px',
+        padding: '8px 12px',
       },
     },
   ],
@@ -109,6 +120,5 @@ export const buttonRecipe = cva({
     size: 'lg',
     borderless: false,
     fullWidth: false,
-    active: false,
   },
 });

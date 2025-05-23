@@ -55,7 +55,7 @@ export const Header = memo(function Header() {
 const HeaderContainer = styled(Container, {
   base: {
     textStyle: 'body.medium',
-    padding: '4px 20px 4px 12px',
+    paddingBlock: '4px',
     minHeight: '64px',
     display: 'flex',
     alignItems: 'center',

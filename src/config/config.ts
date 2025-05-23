@@ -249,6 +249,7 @@ export const config = {
       'msUSD',
       'wUSDM',
       'Bold',
+      'BOLDV2',
     ],
   },
   arbitrum: {
@@ -509,7 +510,6 @@ export const config = {
     name: 'Base',
     chainId: 8453,
     rpc: [
-      'https://base.llamarpc.com',
       'https://base-mainnet.public.blastapi.io',
       'https://base.drpc.org',
       'https://base.api.onfinality.io/public',
@@ -566,6 +566,7 @@ export const config = {
       'sUSDS',
       'smUSDC',
       'OUSDT',
+      'BOLDV2',
     ],
   },
   gnosis: {
@@ -716,7 +717,7 @@ export const config = {
     explorerUrl: 'https://scrollscan.com/',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xB58AD63989237E962F3E618eEeb43c30574c6F72',
-    native: { symbol: 'ETH', oracleId: 'ETH', decimals: 18 },
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,

@@ -76,7 +76,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -240,6 +240,8 @@ const config = buildConfig(
       // React Router sets aria-current="page" on the active link
       // Floating UI sets aria-expanded="true" on the button when open
       active: '&:is(:active, [data-active], [aria-current="page"], [aria-expanded="true"])',
+      /** whether user's primary input device supports hover */
+      primaryHover: '@media (hover: hover)',
     },
     // Theme variables
     theme: {
@@ -371,6 +373,7 @@ const config = buildConfig(
             // NOTE: solid mix with some background color...
             '70-20': { value: '#d7a86133' },
             '80': { value: '#b17f49' },
+            '80-32': { value: '#514444' },
             '80-40a': { value: '#b17f4966' },
             '90': { value: '#865c3b' },
             '100': { value: '#5f412e' },
@@ -387,6 +390,7 @@ const config = buildConfig(
             '60': { value: '#449a4d' },
             '70': { value: '#368a4d' },
             '80': { value: '#2a784c' },
+            '80-40': { value: '#274846' },
             '80-40a': { value: '#2a784c66' },
             '90': { value: '#1f6549' },
             '100': { value: '#155042' },
@@ -904,11 +908,10 @@ const config = buildConfig(
         active: {
           color: '{colors.text.light}',
           background: '{colors.background.button}',
-          border: '{colors.background.content.light}',
+          border: '{colors.background.button}',
         },
         disabled: {
           color: '{colors.text.middle}',
-          border: '{colors.background.content}',
         },
       },
       range: {
@@ -959,8 +962,8 @@ const config = buildConfig(
       thumb: 10,
       highlight: 100,
       slider: 200,
-      dropdown: 500,
-      badge: 600,
+      badge: 500,
+      dropdown: 600,
       tooltip: 700,
       version: 800,
       modal: 900,

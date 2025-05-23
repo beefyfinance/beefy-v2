@@ -35,7 +35,7 @@ const Layout = styled('div', {
     border: '2px solid {colors.background.content.light}',
     borderRadius: '8px',
     backgroundColor: 'background.content',
-    padding: '6px 0',
+    padding: '6px 12px',
     gap: '6px',
     color: 'text.middle',
     maxWidth: '100%',

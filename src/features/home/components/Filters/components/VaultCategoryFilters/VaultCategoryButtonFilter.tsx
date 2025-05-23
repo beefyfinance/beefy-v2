@@ -27,12 +27,6 @@ export const VaultCategoryButtonFilter = memo(function VaultCategoryButtonFilter
   );
 
   return (
-    <MultiToggleButtons
-      value={value}
-      options={options}
-      onChange={handleChange}
-      fullWidth={false}
-      variant="filter"
-    />
+    <MultiToggleButtons value={value} options={options} onChange={handleChange} variant="filter" />
   );
 });

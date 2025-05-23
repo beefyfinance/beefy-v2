@@ -54,15 +54,6 @@ export const styles = {
     flexGrow: '0',
     flexShrink: '0',
   }),
-  extendedFilters: css.raw({
-    color: 'text.light',
-    display: 'flex',
-    flexDirection: 'column',
-    rowGap: '16px',
-  }),
-  shownVaultsCount: css.raw({
-    width: '100%',
-  }),
   select: css.raw({
     width: '100%',
     marginTop: '16px',

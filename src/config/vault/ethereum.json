@@ -1,5 +1,133 @@
 [
   {
+    "id": "curve-bold-usdc-new",
+    "name": "BOLD/USDC",
+    "type": "standard",
+    "token": "BOLDUSDC",
+    "tokenAddress": "0xEFc6516323FbD28e80B85A497B65A86243a54B3E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xC3CB31faFE8f1f2A991A833D0F0e34187bC6D5AD",
+    "earnedToken": "mooCurveBOLD-USDC",
+    "earnedTokenAddress": "0xC3CB31faFE8f1f2A991A833D0F0e34187bC6D5AD",
+    "oracle": "lps",
+    "oracleId": "curve-bold-usdc-new",
+    "status": "active",
+    "createdAt": 1747909024,
+    "platformId": "curve",
+    "assets": ["BOLD", "USDC"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-455/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-455/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xEFc6516323FbD28e80B85A497B65A86243a54B3E",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xEFc6516323FbD28e80B85A497B65A86243a54B3E",
+            "coins": [
+              "0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-bold-lusd",
+    "name": "BOLD/LUSD",
+    "type": "standard",
+    "token": "BOLDLUSD",
+    "tokenAddress": "0x7ED17e037B7d88A8270c89B3aFA9C38e5218F12b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x834d00dC6073E1Ba68a11b1b58d568ee1e030513",
+    "earnedToken": "mooCurveBOLD-LUSD",
+    "earnedTokenAddress": "0x834d00dC6073E1Ba68a11b1b58d568ee1e030513",
+    "oracle": "lps",
+    "oracleId": "curve-bold-lusd",
+    "status": "active",
+    "createdAt": 1747909016,
+    "platformId": "curve",
+    "assets": ["BOLD", "LUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-456/deposit/",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-456/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x7ED17e037B7d88A8270c89B3aFA9C38e5218F12b",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x7ED17e037B7d88A8270c89B3aFA9C38e5218F12b",
+            "coins": [
+              "0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pendle-fgho-31jul25",
+    "name": "GHO 31Jul25",
+    "type": "standard",
+    "token": "fGHO-31JUL25",
+    "tokenAddress": "0xC64D59eb11c869012C686349d24e1D7C91C86ee2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0x7Dc2a6F789c46917B51154a43831530F4EbBb95c",
+    "earnedToken": "mooPenpie-fGHO-31JUL25",
+    "earnedTokenAddress": "0x7Dc2a6F789c46917B51154a43831530F4EbBb95c",
+    "oracle": "lps",
+    "oracleId": "pendle-fgho-31jul25",
+    "status": "active",
+    "createdAt": 1747814491,
+    "platformId": "magpie",
+    "assets": ["GHO"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xC64D59eb11c869012C686349d24e1D7C91C86ee2/zap/in?chain=ethereum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xC64D59eb11c869012C686349d24e1D7C91C86ee2/zap/out?chain=ethereum",
+    "network": "ethereum"
+  },
+  {
+    "id": "pendle-eqb-fgho-31jul25",
+    "name": "GHO 31Jul25",
+    "type": "standard",
+    "token": "fGHO-31JUL25",
+    "tokenAddress": "0xC64D59eb11c869012C686349d24e1D7C91C86ee2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0x1Af1D811a6a23b22B46F8f68A8D460bccB958176",
+    "earnedToken": "mooEqb-fGHO-31JUL25",
+    "earnedTokenAddress": "0x1Af1D811a6a23b22B46F8f68A8D460bccB958176",
+    "oracle": "lps",
+    "oracleId": "pendle-fgho-31jul25",
+    "status": "active",
+    "createdAt": 1747814484,
+    "platformId": "equilibria",
+    "assets": ["GHO"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xC64D59eb11c869012C686349d24e1D7C91C86ee2/zap/in?chain=ethereum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xC64D59eb11c869012C686349d24e1D7C91C86ee2/zap/out?chain=ethereum",
+    "network": "ethereum"
+  },
+  {
     "id": "pendle-usd0++-27nov25",
     "name": "USD0++ 27Nov25",
     "type": "standard",
@@ -848,14 +976,14 @@
     "tokenDecimals": 18,
     "tokenProviderId": "curve",
     "earnContractAddress": "0xbcebd16B29A16B9Bff138b68b3f31515b33D1637",
-    "earnedToken": "mooCurveBOLD-USDC",
+    "earnedToken": "mooCurveBOLDUSDC",
     "earnedTokenAddress": "0xbcebd16B29A16B9Bff138b68b3f31515b33D1637",
     "oracle": "lps",
     "oracleId": "curve-bold-usdc",
     "status": "active",
     "createdAt": 1738661313,
     "platformId": "curve",
-    "assets": ["BOLD", "USDC"],
+    "assets": ["Bold", "USDC"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",

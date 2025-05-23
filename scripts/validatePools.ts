@@ -56,9 +56,12 @@ const overrides: Record<
   'aero-cow-eurc-cbbtc-vault': { harvestOnDeposit: undefined },
   'pendle-eqb-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
   'pendle-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
-  'compound-base-eth': { harvestOnDeposit: undefined }, // temp disabled while waiting for rewards to refill
+  'compound-base-eth': { harvestOnDeposit: undefined },
   'compound-polygon-usdc': { harvestOnDeposit: undefined },
-  'beefy-besonic': { vaultOwner: undefined },
+  'beefy-besonic': { vaultOwner: undefined }, // temp disabled while waiting for rewards to refill
+  'shadow-cow-sonic-wbtc-usdc.e-vault': { harvestOnDeposit: undefined },
+  'shadow-cow-sonic-wbtc-weth-vault': { harvestOnDeposit: undefined },
+  'shadow-cow-sonic-ws-bes-vault': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
@@ -129,11 +132,13 @@ const nonHarvestOnDepositPools = [
   'aero-cow-eurc-usdc-vault',
   'silov2-sonic-usdce-ws',
   'compound-polygon-usdc',
+  'shadow-cow-sonic-wbtc-usdc.e-vault',
+  'shadow-cow-sonic-wbtc-weth-vault',
+  'shadow-cow-sonic-ws-bes-vault',
 ];
 const excludedAbPools = [
   'gmx-arb-near-usdc',
   'gmx-arb-atom-usdc',
-  'gmx-arb-bnb-usdc',
   'gmx-arb-xrp-usdc',
   'gmx-arb-doge-usdc',
 ];
@@ -915,6 +920,21 @@ const checkPointsStructureIds = (pool: VaultConfig) => {
         shouldHaveProviderArr.push(regex.test(earnedToken));
       } else if (eligibility.type === 'vault-whitelist') {
         shouldHaveProviderArr.push(hasProvider);
+      } else if (eligibility.type === 'underlying-whitelist') {
+        if (!('tokens' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
+        }
+        if (!('chain' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.chain missing`);
+        }
+
+        if (eligibility.chain !== pool.network) {
+          shouldHaveProviderArr.push(false);
+        } else {
+          shouldHaveProviderArr.push(
+            pool.assets?.every(a => eligibility.tokens?.includes(a)) ?? false
+          );
+        }
       } else {
         throw new Error(
           `Error: ${pointProvider.id} : eligibility.type ${eligibility.type} not implemented, please implement.`

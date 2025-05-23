@@ -23,13 +23,5 @@ export const UserCategoryButtonFilter = memo(function UserCategoryButtonFilter()
     [dispatch]
   );
 
-  return (
-    <ToggleButtons
-      value={value}
-      options={options}
-      onChange={handleChange}
-      variant="filter"
-      fullWidth={true}
-    />
-  );
+  return <ToggleButtons value={value} options={options} onChange={handleChange} variant="filter" />;
 });
