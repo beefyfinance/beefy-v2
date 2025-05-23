@@ -1,12 +1,9 @@
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
 import type { LabelledCheckboxProps } from '../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
 import { LabelledCheckbox } from '../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
-import { styles } from './styles.ts';
 import { css, type CssStyles } from '@repo/styles/css';
-
-const useStyles = legacyMakeStyles(styles);
+import { styled } from '@repo/styles/jsx';
 
 export type LineTogglesState = {
   average: boolean;
@@ -33,22 +30,26 @@ export const LineToggles = memo(function LineToggles({
   );
 
   return (
-    <div className={css(styles.toggles, cssProp)}>
-      <LineToggle
-        checked={toggles.average}
-        color="#4DB258"
-        label={t('Average')}
-        onChange={handleChange}
-        toggle={'average'}
-      />
-      <LineToggle
-        checked={toggles.movingAverage}
-        color="#5C70D6"
-        label={t('Moving-Average')}
-        onChange={handleChange}
-        toggle={'movingAverage'}
-      />
-    </div>
+    <Toggles className={css(cssProp)}>
+      <div>
+        <LineToggle
+          checked={toggles.average}
+          color="#4DB258"
+          label={t('Average')}
+          onChange={handleChange}
+          toggle={'average'}
+        />
+      </div>
+      <div>
+        <LineToggle
+          checked={toggles.movingAverage}
+          color="#5C70D6"
+          label={t('Moving-Average')}
+          onChange={handleChange}
+          toggle={'movingAverage'}
+        />
+      </div>
+    </Toggles>
   );
 });
 
@@ -74,6 +75,7 @@ const LineToggle = memo(function LineToggle({
 
   return (
     <LabelledCheckbox
+      containerCss={styles.container}
       iconCss={styles.toggleIcon}
       labelCss={styles.toggleLabel}
       checked={checked}
@@ -88,11 +90,43 @@ type LineToggleLabelProps = {
   color: string;
 };
 const LineToggleLabel = memo(function LineToggleLabel({ text, color }: LineToggleLabelProps) {
-  const classes = useStyles();
   return (
     <>
-      <span style={{ backgroundColor: color }} className={classes.toggleLabelLine} />
+      <ToggleLabelLine style={{ backgroundColor: color }} />
       {text}
     </>
   );
 });
+
+const Toggles = styled('div', {
+  base: {
+    display: 'flex',
+    gap: '4px 16px',
+    flexWrap: 'wrap',
+  },
+});
+
+const ToggleLabelLine = styled('span', {
+  base: {
+    height: '2px',
+    width: '12px',
+  },
+});
+
+const styles = {
+  container: css.raw({
+    paddingBlock: '0px',
+  }),
+  toggleIcon: css.raw({
+    width: '16px',
+    height: '16px',
+  }),
+  toggleLabel: css.raw({
+    textStyle: 'subline.sm',
+    display: 'flex',
+    gap: '8px',
+    color: 'text.dark',
+    whiteSpace: 'nowrap',
+    paddingBlock: '0px',
+  }),
+};

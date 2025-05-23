@@ -11,6 +11,7 @@ export type LabelledCheckboxProps = {
   checked: boolean;
   onChange: (checked: boolean) => void;
   label: ReactNode;
+  containerCss?: CssStyles;
   iconCss?: CssStyles;
   labelCss?: CssStyles;
   checkedIconCss?: CssStyles;
@@ -27,6 +28,7 @@ export const LabelledCheckbox = memo(function LabelledCheckbox({
   checkedIconCss,
   checkVariant = 'square',
   endAdornment,
+  containerCss,
 }: LabelledCheckboxProps) {
   const handleChange = useCallback<MouseEventHandler<HTMLLabelElement>>(
     e => {
@@ -43,7 +45,7 @@ export const LabelledCheckbox = memo(function LabelledCheckbox({
   }, [checkVariant, checked]);
 
   return (
-    <Label onClick={handleChange} data-checked={checked}>
+    <Label className={css(containerCss)} onClick={handleChange} data-checked={checked}>
       <Icon className={css(styles.icon, iconCss, checked && checkedIconCss)} />
       <Text checked={checked} className={css(labelCss)}>
         {label}
