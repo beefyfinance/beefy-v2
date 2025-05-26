@@ -1,5 +1,80 @@
 [
   {
+    "id": "silov2-sonic-ws-valamore",
+    "name": "wS (Valamore)",
+    "token": "wS",
+    "tokenAddress": "0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0xfDd63AD264A06c3C5b515348BcF692837e841091",
+    "earnedToken": "mooSiloSValamore",
+    "earnedTokenAddress": "0xfDd63AD264A06c3C5b515348BcF692837e841091",
+    "oracle": "tokens",
+    "oracleId": "WS",
+    "status": "active",
+    "createdAt": 1748262203,
+    "platformId": "silo",
+    "assets": ["S"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "pointStructureIds": ["sonic-points", "silo-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "silov2-sonic-usdc-valamore",
+    "name": "USDC (Valamore)",
+    "token": "USDC",
+    "tokenAddress": "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x24c8D7Dc7D1d2dc0e6f6AE97345c04450a174782",
+    "earnedToken": "mooSiloUSDCValamore",
+    "earnedTokenAddress": "0x24c8D7Dc7D1d2dc0e6f6AE97345c04450a174782",
+    "oracle": "tokens",
+    "oracleId": "sUSDCe",
+    "status": "active",
+    "createdAt": 1748262203,
+    "platformId": "silo",
+    "assets": ["USDCe"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "pointStructureIds": ["sonic-points", "silo-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "silov2-sonic-usdc-apostro",
+    "name": "USDC (Apostro)",
+    "token": "USDC",
+    "tokenAddress": "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x392Ea759ad696004e5A8f1Ece45CAc99FAc45F4F",
+    "earnedToken": "mooSiloUSDCApostro",
+    "earnedTokenAddress": "0x392Ea759ad696004e5A8f1Ece45CAc99FAc45F4F",
+    "oracle": "tokens",
+    "oracleId": "sUSDCe",
+    "status": "active",
+    "createdAt": 1748262203,
+    "platformId": "silo",
+    "assets": ["USDCe"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "pointStructureIds": ["sonic-points", "silo-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "swapx-ichi-wbtc-weth",
     "name": "WBTC-WETH",
     "type": "standard",
