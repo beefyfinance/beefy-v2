@@ -142,7 +142,7 @@ const config = buildConfig(
       },
       html: {
         color: 'text.light',
-        background: 'background.body',
+        background: 'background.header',
         '&:has(.disable-scroll)': {
           overflow: 'hidden',
           '& body': { paddingLeft: 'calc(100vw - 100%)' },
