@@ -143,6 +143,7 @@ const config = buildConfig(
       html: {
         color: 'text.light',
         background: 'background.body',
+        fontSize: '16px',
         '&:has(.disable-scroll)': {
           overflow: 'hidden',
           '& body': { paddingLeft: 'calc(100vw - 100%)' },
@@ -448,22 +449,33 @@ const config = buildConfig(
           },
         },
         fontSizes: {
-          h1: { value: '32px' },
+          h1: { DEFAULT: { value: '32px' }, accent: { value: '45px' } },
           h2: { value: '24px' },
           h3: { value: '21px' },
-          body: { DEFAULT: { value: '16px' }, md: { value: '14px' }, sm: { value: '12px' } },
+          body: {
+            xl: { value: '20px' },
+            DEFAULT: { value: '16px' },
+            md: { value: '14px' },
+            sm: { value: '12px' },
+          },
           subline: { DEFAULT: { value: '15px' }, sm: { value: '12px' } },
         },
         lineHeights: {
-          h1: { value: '40px' },
+          h1: { DEFAULT: { value: '40px' }, accent: { value: '56px' } },
           h2: { value: '32px' },
           h3: { value: '24px' },
-          body: { DEFAULT: { value: '24px' }, md: { value: '22px' }, sm: { value: '20px' } },
+          body: {
+            xl: { value: '32px' },
+            DEFAULT: { value: '24px' },
+            md: { value: '22px' },
+            sm: { value: '20px' },
+          },
           subline: { DEFAULT: { value: '24px' }, sm: { value: '20px' } },
         },
         fontWeights: {
           normal: { value: 400 },
           medium: { value: 500 },
+          semiBold: { value: 600 },
           bold: { value: 700 },
         },
         letterSpacings: {
@@ -729,6 +741,11 @@ const config = buildConfig(
         lineHeight: '{lineHeights.h1}',
         fontWeight: '{fontWeights.medium}',
       },
+      'h1.accent': {
+        fontSize: '{fontSizes.h1.accent}',
+        lineHeight: '{lineHeights.h1.accent}',
+        fontWeight: '{fontWeights.medium}',
+      },
       h2: {
         fontSize: '{fontSizes.h2}',
         lineHeight: '{lineHeights.h2}',
@@ -784,6 +801,21 @@ const config = buildConfig(
         lineHeight: '{lineHeights.body.sm}',
         fontWeight: '{fontWeights.bold}',
       },
+      'body.xl': {
+        fontSize: '{fontSizes.body.xl}',
+        lineHeight: '{lineHeights.body.xl}',
+        fontWeight: '{fontWeights.normal}',
+      },
+      'body.xl.medium': {
+        fontSize: '{fontSizes.body.xl}',
+        lineHeight: '{lineHeights.body.xl}',
+        fontWeight: '{fontWeights.medium}',
+      },
+      'body.xl.bold': {
+        fontSize: '{fontSizes.body.xl}',
+        lineHeight: '{lineHeights.body.xl}',
+        fontWeight: '{fontWeights.bold}',
+      },
       subline: {
         fontSize: '{fontSizes.subline}',
         lineHeight: '{lineHeights.subline}',
@@ -791,10 +823,24 @@ const config = buildConfig(
         textTransform: 'uppercase',
         letterSpacing: '{letterSpacings.subline}',
       },
+      'subline.semiBold': {
+        fontSize: '{fontSizes.subline}',
+        lineHeight: '{lineHeights.subline}',
+        fontWeight: '{fontWeights.semiBold}',
+        textTransform: 'uppercase',
+        letterSpacing: '{letterSpacings.subline}',
+      },
       'subline.sm': {
         fontSize: '{fontSizes.subline.sm}',
         lineHeight: '{lineHeights.subline.sm}',
         fontWeight: '{fontWeights.medium}',
+        textTransform: 'uppercase',
+        letterSpacing: '{letterSpacings.subline}',
+      },
+      'subline.sm.semiBold': {
+        fontSize: '{fontSizes.subline.sm}',
+        lineHeight: '{lineHeights.subline.sm}',
+        fontWeight: '{fontWeights.semiBold}',
         textTransform: 'uppercase',
         letterSpacing: '{letterSpacings.subline}',
       },

@@ -16,6 +16,7 @@ import { fetchAllBalanceAction, recalculateDepositedVaultsAction } from '../acti
 import { initiateBoostForm } from '../actions/boosts.ts';
 import { fetchBridgeConfig } from '../actions/bridge.ts';
 import { fetchBridges } from '../actions/bridges.ts';
+import { initCampaignBeGems } from '../actions/campaigns/begems.ts';
 import { fetchChainConfigs } from '../actions/chains.ts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { fetchFees } from '../actions/fees.ts';
@@ -140,6 +141,7 @@ export const initialDataLoaderState: DataLoaderState = {
     currentCowcentratedRanges: dataLoaderStateInit,
     merklRewards: dataLoaderStateInit,
     stellaSwapRewards: dataLoaderStateInit,
+    beGemsCampaign: dataLoaderStateInit,
   },
   byChainId: {},
   byAddress: {},
@@ -547,6 +549,7 @@ export const dataLoaderSlice = createSlice({
       'currentCowcentratedRanges',
       false
     );
+    addGlobalAsyncThunkActions(builder, initCampaignBeGems, 'beGemsCampaign', false);
 
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);

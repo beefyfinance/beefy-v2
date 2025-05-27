@@ -30,6 +30,7 @@
   "Header-Analytics": "Analytics",
   "Header-PlatformDashboard": "Platform Dashboard",
   "Header-Treasury": "Treasury",
+  "Header-Gems": "beGEMS",
   "Header-Badge-New": "New",
   "Footer-Audit": "Audit",
   "Footer-MediaKit": "Media Kit",
@@ -619,6 +620,10 @@
   "Stepper-bridge-Success-Content": "Outgoing transaction of {{amount}} mooBIFI from {{from}} sent.",
   "Stepper-bridge-Success-Track-Incoming": "Track the incoming transaction to {{to}} at <Link>{{provider}}</Link>.",
   "Stepper-bridge-Success-Track-Outgoing": "See the outgoing transaction on the <Link>{{from}} block explorer</Link>.",
+
+  "Stepper-redeem-rewards-Building-Content": "Building redeem transaction...",
+  "Stepper-redeem-rewards-Success-Title": "S Redeemed",
+  "Stepper-redeem-rewards-Success-Content": "You have successfully redeemed beGEMS for S",
 
   "Stepper-migration-Building-Content": "Building migration transaction...",
   "How-It-Works": "How It Works",
