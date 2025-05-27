@@ -41,7 +41,6 @@ const selectBoostDepositNotice = createSelector(
 const selectDepositClaimNotice = createSelector(
   [selectHasUserDepositInVault, selectVaultActiveExtraRewardTokens],
   (deposited, tokens) => {
-    console.log(deposited, tokens);
     if (!deposited && tokens && tokens.length) {
       return () => <DepositClaimNotice rewardTokens={tokens} />;
     }
