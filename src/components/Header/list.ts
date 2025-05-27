@@ -12,6 +12,7 @@ import TreasuryIcon from '../../images/icons/navigation/treasury.svg?react';
 import DaoIcon from '../../images/icons/navigation/dao.svg?react';
 import PartnersIcon from '../../images/icons/navigation/partners.svg?react';
 import AnalyticsIcon from '../../images/icons/navigation/analytics.svg?react';
+import GemsIcon from '../../images/icons/navigation/gems.svg?react';
 import ProfitDistributionIcon from '../../images/icons/navigation/profit-distribution.svg?react';
 import {
   MainProposalsNavItem,
@@ -52,6 +53,7 @@ export const ResourcesNavItems: NavItemConfig[] = [
   { title: 'Header-Audit', Icon: AuditIcon, url: 'https://github.com/beefyfinance/beefy-audits' },
   { title: 'Header-Partners', Icon: PartnersIcon, url: 'https://beefy.com/partners' },
   { title: 'Header-Analytics', Icon: AnalyticsIcon, url: 'https://analytics.beefy.finance/' },
+  { title: 'Header-Gems', Icon: GemsIcon, url: '/campaigns/begems' },
 ];
 
 export const MobileList: NavConfig[] = [

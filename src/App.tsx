@@ -21,6 +21,7 @@ const BridgePage = lazy(() => import('./features/bridge/BridgePage.tsx'));
 const DashboardPage = lazy(() => import('./features/dashboard/DashboardPage.tsx'));
 const TreasuryPage = lazy(() => import('./features/treasury/TreasuryPage.tsx'));
 const NotFoundPage = lazy(() => import('./features/pagenotfound/NotFoundPage.tsx'));
+const BeGemsPage = lazy(() => import('./features/campaigns/begems/BeGemsPage.tsx'));
 
 export const App = memo(function App() {
   return (
@@ -40,6 +41,7 @@ export const App = memo(function App() {
               <Route path="/dashboard/:address" element={<DashboardPage mode={'url'} />} />
               <Route path="/dashboard" element={<DashboardPage mode={'wallet'} />} />
               <Route path="/treasury" element={<TreasuryPage />} />
+              <Route path="/campaigns/begems" element={<BeGemsPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>

@@ -1,0 +1,188 @@
+import type { Abi } from 'viem';
+
+export const beGemsFactoryAbi = [
+  {
+    inputs: [{ internalType: 'address', name: '_treasury', type: 'address' }],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
+  { inputs: [], name: 'FailedDeployment', type: 'error' },
+  {
+    inputs: [
+      { internalType: 'uint256', name: 'balance', type: 'uint256' },
+      { internalType: 'uint256', name: 'needed', type: 'uint256' },
+    ],
+    name: 'InsufficientBalance',
+    type: 'error',
+  },
+  { inputs: [], name: 'NoMoreGems', type: 'error' },
+  { inputs: [], name: 'NotEnoughS', type: 'error' },
+  { inputs: [], name: 'NotYourGems', type: 'error' },
+  {
+    inputs: [{ internalType: 'address', name: 'owner', type: 'address' }],
+    name: 'OwnableInvalidOwner',
+    type: 'error',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'OwnableUnauthorizedAccount',
+    type: 'error',
+  },
+  { inputs: [], name: 'RedemptionNotOpen', type: 'error' },
+  { inputs: [], name: 'SeasonAlreadyOpen', type: 'error' },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'uint256', name: 'seasonNum', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'amountOfGems', type: 'uint256' },
+      { indexed: false, internalType: 'address', name: 'gems', type: 'address' },
+    ],
+    name: 'NewSeason',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'uint256', name: 'seasonNum', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'amountOfS', type: 'uint256' },
+    ],
+    name: 'OpenSeason',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'previousOwner', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'newOwner', type: 'address' },
+    ],
+    name: 'OwnershipTransferred',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'who', type: 'address' },
+      { indexed: true, internalType: 'uint256', name: 'seasonNum', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'amountOfS', type: 'uint256' },
+    ],
+    name: 'Redeemed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'uint256', name: 'seasonNum', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'amountOfS', type: 'uint256' },
+    ],
+    name: 'TopUpSeason',
+    type: 'event',
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: '_amountOfGems', type: 'uint256' }],
+    name: 'createSeason',
+    outputs: [{ internalType: 'address', name: 'gems', type: 'address' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: 'seasonNum', type: 'uint256' }],
+    name: 'getPriceForFullShare',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: '_seasonNum', type: 'uint256' }],
+    name: 'getSeason',
+    outputs: [
+      {
+        components: [
+          { internalType: 'uint256', name: 'seasonNum', type: 'uint256' },
+          { internalType: 'address', name: 'gems', type: 'address' },
+          { internalType: 'uint256', name: 'amountOfS', type: 'uint256' },
+        ],
+        internalType: 'struct BeefyGemsFactory.Season',
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'instance',
+    outputs: [{ internalType: 'contract BeefyGems', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'numSeasons',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: 'seasonNum', type: 'uint256' }],
+    name: 'openSeasonRedemption',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'owner',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: 'seasonNum', type: 'uint256' }],
+    name: 'recoverS',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'uint256', name: 'seasonNum', type: 'uint256' },
+      { internalType: 'uint256', name: '_amount', type: 'uint256' },
+      { internalType: 'address', name: '_who', type: 'address' },
+    ],
+    name: 'redeem',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: 'seasonNum', type: 'uint256' }],
+    name: 'topUpSeason',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'newOwner', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'treasury',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  { stateMutability: 'payable', type: 'receive' },
+] as const satisfies Abi;
