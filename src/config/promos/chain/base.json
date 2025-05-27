@@ -1,5 +1,28 @@
 [
   {
+    "id": "moo_aerodrome-ousdt-usdc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-ousdt-usdc",
+    "assets": ["OUSDT", "USDC"],
+    "tokenAddress": "0xfAde70ee9b3907Ace0A0B81603b9841c4E46C0F6",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xC96f9962Ef15aacA777Bf857713d8eF26720d80a",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
     "id": "pool_uniswap-cow-weth-degen-rp",
     "title": "Degen",
     "vaultId": "uniswap-cow-weth-degen-rp",
