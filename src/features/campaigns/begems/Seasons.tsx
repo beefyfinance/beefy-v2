@@ -5,13 +5,10 @@ import gemEmerald from '../../../images/campaigns/begems/emerald.svg';
 import gemRuby from '../../../images/campaigns/begems/ruby.svg';
 import gemSapphire from '../../../images/campaigns/begems/sapphire.svg';
 import { selectBeGemsSeasonNumbers } from '../../data/selectors/campaigns/begems.ts';
-import { featureFlag_mockProgressBar } from '../../data/utils/feature-flags.ts';
 import { Explainer } from './Explainer.tsx';
-import { MockSeasonProgressBar, SeasonProgressBar } from './SeasonProgress.tsx';
+import { SeasonProgressBar } from './SeasonProgress.tsx';
 import { SeasonRedeem } from './SeasonRedeem.tsx';
 import { SeasonTabs } from './SeasonTabs.tsx';
-
-const ProgressBar = featureFlag_mockProgressBar() ? MockSeasonProgressBar : SeasonProgressBar;
 
 export const Seasons = memo(function Redeem() {
   const seasons = useAppSelector(selectBeGemsSeasonNumbers);
@@ -27,7 +24,7 @@ export const Seasons = memo(function Redeem() {
         </Blurb>
         <Tabs>
           <SeasonTabs selected={season} options={seasons} onChange={setSeason} />
-          <ProgressBar />
+          <SeasonProgressBar />
         </Tabs>
         <Form>
           <SeasonRedeem season={season} />

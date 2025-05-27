@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '../../../components/Button/Button.tsx';
 import { TokenAmount } from '../../../components/TokenAmount/TokenAmount.tsx';
 import { TokenImageFromEntity } from '../../../components/TokenImage/TokenImage.tsx';
-import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { useAppDispatch, useAppSelector } from '../../data/store/hooks.ts';
 import { stepperStartWithSteps } from '../../data/actions/wallet/stepper.ts';
 import { redeemGems } from '../../data/actions/wallet/begems.ts';
@@ -21,7 +21,6 @@ import {
   selectTokenById,
   selectTokenPriceByTokenOracleId,
 } from '../../data/selectors/tokens.ts';
-import { featureFlag_mockSeason } from '../../data/utils/feature-flags.ts';
 import { ActionConnectSwitch } from '../../vault/components/Actions/Boosts/ActionConnectSwitch.tsx';
 import {
   AmountInput,
@@ -64,9 +63,7 @@ const RedeemFormEnabled = memo(function RedeemFormEnabled({
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const inputToken = useAppSelector(state => selectTokenByAddress(state, 'sonic', tokenAddress));
-  const balance = useAppSelector(state =>
-    featureFlag_mockSeason() ? BIG_ONE : selectUserBalanceOfToken(state, 'sonic', tokenAddress)
-  );
+  const balance = useAppSelector(state => selectUserBalanceOfToken(state, 'sonic', tokenAddress));
   const [inputAmount, setInputAmount] = useState<BigNumber>(BIG_ZERO);
   const setMax = useCallback(() => {
     setInputAmount(balance);

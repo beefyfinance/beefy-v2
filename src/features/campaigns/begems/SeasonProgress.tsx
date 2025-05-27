@@ -1,4 +1,4 @@
-import { memo, useMemo, useEffect, useState } from 'react';
+import { memo, useMemo } from 'react';
 import { getUnixNow } from '../../../helpers/date.ts';
 import { useAppSelector } from '../../data/store/hooks.ts';
 import { selectBeGemsSeasons } from '../../data/selectors/campaigns/begems.ts';
@@ -14,25 +14,6 @@ export const SeasonProgressBar = memo(function SeasonProgressBar() {
     const progress = ((now - firstStart) / (lastEnd - firstStart)) * 100;
     return { progress };
   }, [seasons]);
-
-  return (
-    <Layout>
-      <ProgressBar progress={progress} />
-    </Layout>
-  );
-});
-
-export const MockSeasonProgressBar = memo(function MockSeasonProgressBar() {
-  const [progress, setProgress] = useState<number>(0);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setProgress(prev => ((prev * 1000 + 500) % 100000) / 1000);
-    }, 200);
-    return () => {
-      clearInterval(id);
-    };
-  }, [setProgress]);
 
   return (
     <Layout>

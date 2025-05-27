@@ -1,11 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { initCampaignBeGems } from '../../actions/campaigns/begems.ts';
-import { featureFlag_mockSeason } from '../../utils/feature-flags.ts';
 import type { BeGemsState } from './begems-types.ts';
-
-const mockOffset = featureFlag_mockSeason() ? 86400 * 70 : 0;
 
 const initialState: BeGemsState = {
   factory: '0x9d9cC601aD926F870220590d22179540566E6722',
@@ -14,24 +10,24 @@ const initialState: BeGemsState = {
     configByNumber: {
       1: {
         number: 1,
-        startTime: 1747008000 - mockOffset,
-        endTime: 1751284800 - mockOffset, // Mon Jun 30 2025 12:00:00 UTC
+        startTime: 1747008000,
+        endTime: 1751284800, // Mon Jun 30 2025 12:00:00 UTC
       },
       2: {
         number: 2,
-        startTime: 1751284800 - mockOffset,
-        endTime: 1756641600 - mockOffset, // Sun Aug 31 2025 12:00:00 UTC
+        startTime: 1751284800,
+        endTime: 1756641600, // Sun Aug 31 2025 12:00:00 UTC
       },
       3: {
         number: 3,
-        startTime: 1756641600 - mockOffset,
-        endTime: 1761912000 - mockOffset, // Fri Oct 31 2025 12:00:00 UTC
+        startTime: 1756641600,
+        endTime: 1761912000, // Fri Oct 31 2025 12:00:00 UTC
       },
     },
     dataByNumber: {
       1: {
         token: '0xd70c020c48403295100884ee47db80d51BAA9d87',
-        priceForFullShare: featureFlag_mockSeason() ? new BigNumber('2.345678') : BIG_ZERO,
+        priceForFullShare: BIG_ZERO,
       },
       2: {
         token: undefined,
@@ -62,9 +58,7 @@ export const beGemsSlice = createSlice({
         ) {
           sliceState.seasons.dataByNumber[season.num] = {
             token: season.token,
-            priceForFullShare:
-              (featureFlag_mockSeason() ? existing?.priceForFullShare : season.priceForFullShare) ||
-              season.priceForFullShare,
+            priceForFullShare: season.priceForFullShare,
           };
         }
       }
