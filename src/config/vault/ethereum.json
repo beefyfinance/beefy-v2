@@ -1,5 +1,85 @@
 [
   {
+    "id": "curve-usd0-usd0++",
+    "name": "USD0/USD0++",
+    "type": "standard",
+    "token": "USD0USD0++",
+    "tokenAddress": "0x1d08E7adC263CfC70b1BaBe6dC5Bb339c16Eec52",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x6E0d7f2929194cEa155FFC809BBf941EC5732395",
+    "earnedToken": "mooCurveUSD0-USD0++",
+    "earnedTokenAddress": "0x6E0d7f2929194cEa155FFC809BBf941EC5732395",
+    "oracle": "lps",
+    "oracleId": "curve-usd0-usd0++",
+    "status": "active",
+    "createdAt": 1748423442,
+    "platformId": "curve",
+    "assets": ["USD0", "USD0++"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-189/deposit/",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-189/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x1d08E7adC263CfC70b1BaBe6dC5Bb339c16Eec52",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x1d08E7adC263CfC70b1BaBe6dC5Bb339c16Eec52",
+            "coins": [
+              "0x73A15FeD60Bf67631dC6cd7Bc5B6e8da8190aCF5",
+              "0x35D8949372D46B7a3D5A56006AE77B215fc69bC0"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-usd0-usdc",
+    "name": "USD0/USDC",
+    "type": "standard",
+    "token": "USD0-USDC",
+    "tokenAddress": "0x14100f81e33C33Ecc7CDac70181Fb45B6E78569F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x9f22e7f32135b6A18D23D23996Af36cA7d47E20E",
+    "earnedToken": "mooCurveUSD0-USDC",
+    "earnedTokenAddress": "0x9f22e7f32135b6A18D23D23996Af36cA7d47E20E",
+    "oracle": "lps",
+    "oracleId": "curve-usd0-usdc",
+    "status": "active",
+    "createdAt": 1748423422,
+    "platformId": "curve",
+    "assets": ["USD0", "USDC"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-188/deposit/",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-188/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x14100f81e33C33Ecc7CDac70181Fb45B6E78569F",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x14100f81e33C33Ecc7CDac70181Fb45B6E78569F",
+            "coins": [
+              "0x73A15FeD60Bf67631dC6cd7Bc5B6e8da8190aCF5",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curve-bold-usdc-new",
     "name": "BOLD/USDC",
     "type": "standard",
