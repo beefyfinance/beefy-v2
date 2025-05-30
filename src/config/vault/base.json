@@ -30,7 +30,7 @@
   },
   {
     "id": "aerodrome-cow-base-usdc-reth-rp",
-    "name": "USDC-rETH Reward Pool",
+    "name": "rETH-USDC Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowAerodromerETH-USDC",
