@@ -10,7 +10,10 @@ import {
   fetchClmPendingRewards,
 } from '../../../../data/actions/analytics.ts';
 import { isCowcentratedStandardVault, type VaultEntity } from '../../../../data/entities/vault.ts';
-import { selectHasDataToShowGraphByVaultId } from '../../../../data/selectors/analytics.ts';
+import {
+  selectClmAutocompoundedFeesEnabledByVaultId,
+  selectHasDataToShowGraphByVaultId,
+} from '../../../../data/selectors/analytics.ts';
 import { selectIsContractDataLoadedOnChain } from '../../../../data/selectors/contract-data.ts';
 import {
   selectHasBreakdownDataForVaultId,
@@ -145,24 +148,27 @@ export const CowcentratedPnlGraph = memo(function CowcentratedPnlGraph({
   const [stat, setStat] = useState<ChartType>('overview');
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
-  const compounds = vault.strategyTypeId === 'compounds';
+  const fetchCompounds = vault.strategyTypeId === 'compounds';
+  const showCompounds = useAppSelector(state =>
+    selectClmAutocompoundedFeesEnabledByVaultId(state, vaultId)
+  );
 
   useEffect(() => {
-    if (compounds) {
+    if (fetchCompounds) {
       dispatch(fetchClmHarvestsForUserVault({ vaultId, walletAddress: address }));
+      dispatch(fetchClmPendingRewards({ vaultId }));
     }
-    dispatch(fetchClmPendingRewards({ vaultId }));
-  }, [dispatch, vaultId, address, compounds]);
+  }, [dispatch, vaultId, address, fetchCompounds]);
 
   const options = useMemo(() => {
     const opts: Array<ToggleButtonItem<ChartType>> = [
       { value: 'overview', label: t('Graph-Overview') },
     ];
-    if (compounds) {
+    if (showCompounds) {
       opts.push({ value: 'fees', label: t('Graph-Fees') });
     }
     return opts;
-  }, [t, compounds]);
+  }, [t, showCompounds]);
 
   const GraphComponent = chartToComponent[stat];
 

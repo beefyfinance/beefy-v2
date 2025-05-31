@@ -16,6 +16,7 @@ import {
   isTimelineEntityStandard,
 } from '../entities/analytics.ts';
 import {
+  getCowcentratedPool,
   isCowcentratedLikeVault,
   isCowcentratedStandardVault,
   type VaultEntity,
@@ -652,6 +653,40 @@ export const selectUserClmVaultHarvestTimelineByVaultId = createCachedSelector(
     return userAnalytics.clmVaultHarvests.byVaultId[vaultId] || undefined;
   }
 )((_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
+
+const selectClmHasPendingFeesOrHarvestsByVaultId = createSelector(
+  [selectCowcentratedLikeVaultById, selectClmPendingRewardsByVaultId, selectClmHarvestsByVaultId],
+  (vault, pendingRewards, harvests) => {
+    if (vault.strategyTypeId !== 'compounds') {
+      return false;
+    }
+
+    const hasPendingRewards =
+      pendingRewards && (!pendingRewards.fees0.isZero() || !pendingRewards.fees1.isZero());
+    const hasPastHarvests = harvests && harvests.length > 0;
+
+    // @dev note: will show if any harvest was before user deposit which may not be desired
+    return hasPendingRewards || hasPastHarvests;
+  }
+);
+
+/**
+ * Some platforms have option to switch between fees0/1 and reward tokens to reward pool
+ * These have 'strategyTypeId' of 'compounds' but may never give any fees to be compounded in the base CLM
+ * So we hide the 'fees' chart if there are no (>0) harvests and no pending fees
+ * Requires fetchClmHarvestsForXXX and fetchClmPendingRewards to be called
+ **/
+export const selectClmAutocompoundedFeesEnabledByVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => {
+  const vault = selectCowcentratedLikeVaultById(state, vaultId);
+  return selectClmHasPendingFeesOrHarvestsByVaultId(
+    state,
+    // auto compounding is on the base CLM and so is stored on the pool vault id
+    getCowcentratedPool(vault) || vault.cowcentratedIds.clm
+  );
+};
 
 export const selectClmAutocompoundedPendingFeesByVaultId = (
   state: BeefyState,

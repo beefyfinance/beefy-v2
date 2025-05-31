@@ -2,7 +2,10 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { isCowcentratedLikeVault, type VaultEntity } from '../../../../../data/entities/vault.ts';
-import { selectHasDataToShowGraphByVaultId } from '../../../../../data/selectors/analytics.ts';
+import {
+  selectClmAutocompoundedFeesEnabledByVaultId,
+  selectHasDataToShowGraphByVaultId,
+} from '../../../../../data/selectors/analytics.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import {
   DashboardFeesGraph,
@@ -17,10 +20,13 @@ export function useChartOptions(vaultId: VaultEntity['id'], address: string) {
   const hasAnalyticsData = useAppSelector(state =>
     selectHasDataToShowGraphByVaultId(state, vaultId, address)
   );
+  const typeOfCharts = isCowcentratedLikeVault(vault) ? 'cowcentrated' : vault.type;
+  const showCompounds = useAppSelector(
+    state =>
+      typeOfCharts === 'cowcentrated' && selectClmAutocompoundedFeesEnabledByVaultId(state, vaultId)
+  );
 
   return useMemo(() => {
-    const typeOfCharts = isCowcentratedLikeVault(vault) ? 'cowcentrated' : vault.type;
-
     const PositionGraph =
       typeOfCharts === 'cowcentrated' ? DashboardOverviewGraph : DashboardPnLGraph;
     const CompoundsGraph = DashboardFeesGraph;
@@ -29,7 +35,7 @@ export function useChartOptions(vaultId: VaultEntity['id'], address: string) {
     if (hasAnalyticsData) {
       if (typeOfCharts === 'cowcentrated') {
         availableCharts.push({ value: 'positionChart', label: t('Dashboard-PositionChart') });
-        if (vault.strategyTypeId === 'compounds') {
+        if (showCompounds) {
           availableCharts.push({ value: 'compoundsChart', label: t('Dashboard-CompoundsChart') });
         }
       } else {
@@ -38,5 +44,5 @@ export function useChartOptions(vaultId: VaultEntity['id'], address: string) {
     }
 
     return { PositionGraph, CompoundsGraph, availableCharts };
-  }, [t, vault, hasAnalyticsData]);
+  }, [t, typeOfCharts, showCompounds, hasAnalyticsData]);
 }
