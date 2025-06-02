@@ -7,13 +7,5 @@
     ],
     "limit": 3,
     "period": 3600
-  },
-  {
-    "id": ["uniswap-cow-weth-degen-rp"],
-    "conditions": [
-      {
-        "type": "boosted"
-      }
-    ]
   }
 ]
