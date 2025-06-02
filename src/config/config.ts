@@ -82,6 +82,8 @@ export const config = {
       'sUSDf',
       'reUSD',
       'RLUSD',
+      'lvlUSD',
+      'slvlUSD',
     ],
   },
   polygon: {

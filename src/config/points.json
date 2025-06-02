@@ -1,5 +1,39 @@
 [
   {
+    "id": "level",
+    "docs": "https://level-money.gitbook.io/docs/rewards/what-is-level-xp",
+    "points": [
+      {
+        "id": "level",
+        "name": "Level XP"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["lvlUSD", "slvlUSD"]
+      }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-balances-subgraph",
+        "role": "Indexing of all balances of all beefy products",
+        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "level",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://app.level.money/farm"
+      }
+    ]
+  },
+  {
     "id": "resolv",
     "docs": "https://docs.resolv.xyz/litepaper/using-resolv/resolv-points",
     "points": [
