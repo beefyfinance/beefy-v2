@@ -1166,5 +1166,39 @@
         "url": "TODO"
       }
     ]
+  },
+  {
+    "id": "falcon-miles",
+    "docs": "https://app.falcon.finance/miles",
+    "points": [
+      {
+        "id": "falcon-miles",
+        "name": "Falcon Miles"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["USDf", "sUSDf"]
+      }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-balances-subgraph",
+        "role": "Indexing of all balances of all beefy products",
+        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "falcon-miles",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://app.falcon.finance/miles"
+      }
+    ]
   }
 ]

@@ -428,6 +428,7 @@
     "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-391/deposit/",
     "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-391/withdraw/",
     "network": "ethereum",
+    "pointStructureIds": ["falcon-miles"],
     "zaps": [
       {
         "strategyId": "curve",
@@ -628,7 +629,8 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x45F163E583D34b8E276445dd3Da9aE077D137d72/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x45F163E583D34b8E276445dd3Da9aE077D137d72/zap/out?chain=ethereum",
-    "network": "ethereum"
+    "network": "ethereum",
+    "pointStructureIds": ["falcon-miles"]
   },
   {
     "id": "pendle-susdf-25sep25",
@@ -652,7 +654,8 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x45F163E583D34b8E276445dd3Da9aE077D137d72/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x45F163E583D34b8E276445dd3Da9aE077D137d72/zap/out?chain=ethereum",
-    "network": "ethereum"
+    "network": "ethereum",
+    "pointStructureIds": ["falcon-miles"]
   },
   {
     "id": "pendle-eqb-sdola-09oct25",
