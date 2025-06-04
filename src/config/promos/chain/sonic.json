@@ -1,5 +1,143 @@
 [
   {
+    "id": "moo_silov2-sonic-usdc-valamore-begems1",
+    "title": "Beefy",
+    "vaultId": "silov2-sonic-usdc-valamore",
+    "assets": ["USDCe"],
+    "tokenAddress": "0x24c8D7Dc7D1d2dc0e6f6AE97345c04450a174782",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x65E44AD1291757C79E4760596F65002a4C42B7b1",
+    "tag": {
+      "text": "beGEMS Boost"
+    },
+    "campaign": "begems-boost",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xd70c020c48403295100884ee47db80d51BAA9d87",
+        "symbol": "beGEMS1",
+        "decimals": 18,
+        "oracleId": "beGEMS1"
+      }
+    ]
+  },
+  {
+    "id": "moo_swapx-ichi-bes-os-begems1",
+    "title": "Beefy",
+    "vaultId": "swapx-ichi-bes-os",
+    "assets": ["beS", "oS"],
+    "tokenAddress": "0x94755F33aBEdceF54823346085df6C7CF59511C2",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xb68283DE2F47b5416E52820E0C914e6c4923fF44",
+    "tag": {
+      "text": "beGEMS Boost"
+    },
+    "campaign": "begems-boost",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xd70c020c48403295100884ee47db80d51BAA9d87",
+        "symbol": "beGEMS1",
+        "decimals": 18,
+        "oracleId": "beGEMS1"
+      }
+    ]
+  },
+  {
+    "id": "moo_defive-ws-bes-begems1",
+    "title": "Beefy",
+    "vaultId": "defive-ws-bes",
+    "assets": ["wS", "beS"],
+    "tokenAddress": "0x3e3F36eE9EBd776ccDC32e8670CE37b9B00c0a45",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x5962D839307E812C4650171baf902e7D15315B7e",
+    "tag": {
+      "text": "beGEMS Boost"
+    },
+    "campaign": "begems-boost",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xd70c020c48403295100884ee47db80d51BAA9d87",
+        "symbol": "beGEMS1",
+        "decimals": 18,
+        "oracleId": "beGEMS1"
+      }
+    ]
+  },
+  {
+    "id": "moo_beets-sonic-sonic-quartet-audition-act-ii-begems1",
+    "title": "Beefy",
+    "vaultId": "beets-sonic-sonic-quartet-audition-act-ii",
+    "assets": ["scETH", "scBTC", "scUSDC", "stS"],
+    "tokenAddress": "0xD74FcA8DA8efAE7742C212Ce47aa26f6fcdC7e54",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x5B76EEDc7a7545fE2578377ceA0749d9fB54568e",
+    "tag": {
+      "text": "beGEMS Boost"
+    },
+    "campaign": "begems-boost",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xd70c020c48403295100884ee47db80d51BAA9d87",
+        "symbol": "beGEMS1",
+        "decimals": 18,
+        "oracleId": "beGEMS1"
+      }
+    ]
+  },
+  {
+    "id": "moo_euler-sonic-re7labs-usdc.e-begems1",
+    "title": "Beefy",
+    "vaultId": "euler-sonic-re7labs-usdc.e",
+    "assets": ["USDCe"],
+    "tokenAddress": "0x0356485CbFC04E69DAba736C29AFE0b90393d521",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x60b7F83Fa9AF270f3337Ac6E082882dF6F244ab9",
+    "tag": {
+      "text": "beGEMS Boost"
+    },
+    "campaign": "begems-boost",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xd70c020c48403295100884ee47db80d51BAA9d87",
+        "symbol": "beGEMS1",
+        "decimals": 18,
+        "oracleId": "beGEMS1"
+      }
+    ]
+  },
+  {
+    "id": "moo_shadow-cow-sonic-usdc.e-bes-vault-begems1",
+    "title": "Beefy",
+    "vaultId": "shadow-cow-sonic-usdc.e-bes-vault",
+    "assets": ["USDCe", "beS"],
+    "tokenAddress": "0x91D2cB866C64089B72AA749bAF69592b50ab724f",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xc3AFc5D9DEFe03d493EaA89aac560053c33B8e44",
+    "tag": {
+      "text": "beGEMS Boost"
+    },
+    "campaign": "begems-boost",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xd70c020c48403295100884ee47db80d51BAA9d87",
+        "symbol": "beGEMS1",
+        "decimals": 18,
+        "oracleId": "beGEMS1"
+      }
+    ]
+  },
+  {
     "id": "moo_shadow-cow-sonic-wbtc-weth-vault-shadow",
     "title": "Shadow & Beefy",
     "vaultId": "shadow-cow-sonic-wbtc-weth-vault",
