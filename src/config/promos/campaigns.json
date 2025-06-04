@@ -1,4 +1,12 @@
 {
+  "begems-boost": {
+    "title": "Beefy beGEMS1 Boost",
+    "description": "Sonic Gems are airdrop points awarded exclusively by Sonic to apps building on its chain. They’re distributed based on various factors and are redeemable for S tokens at the end of each season. Beefy is issuing 80,000,000 beGEMS each season, representing its share of earned S tokens. beGEMS are liquid ERC-20 tokens — transferable, tradeable, and open to speculation.",
+    "social": {
+      "discord": "https://beefy.finance/discord",
+      "twitter": "https://x.com/beefyfinance"
+    }
+  },
   "shadow-beefy": {
     "title": "Shadow × Beefy",
     "description": "Shadow Exchange is a concentrated liquidity layer and exchange built on the Sonic network, powered by x(3,3)—a more fluid and accessible incentive model.",
