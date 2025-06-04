@@ -277,7 +277,6 @@
     "assets": ["ezETH", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["renzo"],
     "network": "linea",
     "zaps": [
       {
@@ -311,7 +310,6 @@
     "assets": ["ezETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["renzo"],
     "network": "linea",
     "zaps": [
       {
@@ -348,7 +346,6 @@
     "assets": ["ezETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["renzo"],
     "network": "linea",
     "zaps": [
       {
@@ -1213,7 +1210,6 @@
     "addLiquidityUrl": "https://www.thenile.exchange/manage/v1/0xa9a1fb9f6664a0b6bfb1f52724fd7b23842248c5",
     "removeLiquidityUrl": "https://www.thenile.exchange/manage/v1/0xa9a1fb9f6664a0b6bfb1f52724fd7b23842248c5",
     "network": "linea",
-    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1322,7 +1318,6 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ezeth-weth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ezeth-weth-pegged-price",
     "network": "linea",
-    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "gamma",
@@ -1739,7 +1734,6 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://www.thenile.exchange/swap",
     "network": "linea",
-    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "single"

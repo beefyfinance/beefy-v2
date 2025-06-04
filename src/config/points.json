@@ -268,39 +268,6 @@
     ]
   },
   {
-    "id": "renzo",
-    "docs": "https://docs.renzoprotocol.com/docs/product/renzo-ezpoints",
-    "points": [
-      {
-        "id": "renzo-ezpoints",
-        "name": "Renzo EZPoints"
-      }
-    ],
-    "eligibility": [
-      {
-        "type": "vault-whitelist"
-      }
-    ],
-    "accounting": [
-      {
-        "id": "beefy-lrt-subgraph",
-        "role": "Raw indexing of blockchain data, computes time weighted balances",
-        "url": "https://github.com/beefyfinance/lrt-subgraph"
-      },
-      {
-        "id": "beefy-lrt-api",
-        "role": "API for the LRT subgraph. Provides stable API.",
-        "url": "https://github.com/beefyfinance/beefy-lrt-api"
-      },
-      {
-        "id": "Renzo",
-        "role": "Distribution of rewards",
-        "type": "claim-rewards",
-        "url": "https://claim.renzoprotocol.com/"
-      }
-    ]
-  },
-  {
     "id": "etherfi",
     "docs": "https://etherfi.gitbook.io/etherfi/getting-started/loyalty-points/integrations-points#beefy",
     "points": [
