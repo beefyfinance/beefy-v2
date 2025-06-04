@@ -744,7 +744,7 @@
         "ammId": "mode-velodrome-v2"
       }
     ],
-    "pointStructureIds": ["mode-volume", "renzo"]
+    "pointStructureIds": ["mode-volume"]
   },
   {
     "id": "velodrome-mode-usdt-usdc",

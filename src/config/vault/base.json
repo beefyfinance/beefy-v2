@@ -16824,7 +16824,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x2416092f143378750bb29b79ed961ab195cceea5&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -16861,7 +16860,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x2416092f143378750bb29b79ed961ab195cceea5&token1=0x4200000000000000000000000000000000000006&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "solidly",

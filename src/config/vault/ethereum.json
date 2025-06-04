@@ -3474,7 +3474,7 @@
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x848a5564158d84b8a8fb68ab5d004fae11619a5400000000000000000000066a/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x848a5564158d84b8a8fb68ab5d004fae11619a5400000000000000000000066a/remove-liquidity",
-    "pointStructureIds": ["renzo", "kelp", "etherfi", "swell"],
+    "pointStructureIds": ["kelp", "etherfi", "swell"],
     "network": "ethereum",
     "zaps": [
       {
@@ -3662,7 +3662,6 @@
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x596192bb6e41802428ac943d2f1476c1af25cc0e000000000000000000000659/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x596192bb6e41802428ac943d2f1476c1af25cc0e000000000000000000000659/remove-liquidity",
-    "pointStructureIds": ["renzo"],
     "network": "ethereum",
     "zaps": [
       {

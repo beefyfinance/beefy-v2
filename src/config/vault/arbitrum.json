@@ -7539,7 +7539,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/out?chain=arbitrum",
-    "pointStructureIds": ["renzo"],
     "network": "arbitrum"
   },
   {
@@ -9412,7 +9411,6 @@
     "assets": ["ezETH", "wstETH"],
     "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["renzo"],
     "network": "arbitrum",
     "zaps": [
       {
@@ -9823,7 +9821,6 @@
     "assets": ["ezETH", "WETH"],
     "risks": [],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["renzo"],
     "network": "arbitrum",
     "zaps": [
       {
@@ -10573,7 +10570,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3dB08a6e9cB4391348b0B404F493E7ae264c0/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3dB08a6e9cB4391348b0B404F493E7ae264c0/zap/out?chain=arbitrum",
-    "pointStructureIds": ["renzo"],
+    "pointStructureIds": [],
     "network": "arbitrum"
   },
   {
@@ -10681,7 +10678,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/out?chain=arbitrum",
-    "pointStructureIds": ["renzo"],
     "network": "arbitrum"
   },
   {
@@ -11051,7 +11047,6 @@
     "assets": ["ezETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["renzo"],
     "network": "arbitrum",
     "zaps": [
       {
@@ -12417,7 +12412,6 @@
     "assets": ["ezETH", "wstETH"],
     "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["renzo"],
     "network": "arbitrum",
     "zaps": [
       {
@@ -13329,7 +13323,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3db08a6e9cb4391348b0b404f493e7ae264c0/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3db08a6e9cb4391348b0b404f493e7ae264c0/zap/out?chain=arbitrum",
-    "pointStructureIds": ["renzo"],
     "network": "arbitrum"
   },
   {
@@ -13622,7 +13615,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516/remove-liquidity",
-    "pointStructureIds": ["renzo"],
     "network": "arbitrum",
     "zaps": [
       {
@@ -14050,7 +14042,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5e03c94fc5fb2e21882000a96df0b63d2c4312e2/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5e03c94fc5fb2e21882000a96df0b63d2c4312e2/zap/out?chain=arbitrum",
-    "pointStructureIds": ["renzo"],
     "network": "arbitrum"
   },
   {
