@@ -76,7 +76,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -986,7 +986,7 @@ const config = buildConfig(
       gnosis: { primary: '#133629', header: 0.4 },
       harmony: { primary: '#01d8af', header: '#00d8af33' },
       heco: { primary: '#02943f', header: 0.2 },
-      hyperevm: { primary: '#000000', header: 0.2 },
+      hyperevm: { primary: '#072723', header: 0.2 },
       kava: { primary: '#ff564f', header: 0.2 },
       linea: { primary: '#121212', header: 0.2 },
       lisk: { primary: '#000000', header: '#12121233' },

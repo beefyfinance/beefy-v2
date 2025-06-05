@@ -48,6 +48,7 @@ export const MERKL_SUPPORTED_CHAINS: Partial<Record<ChainEntity['id'], Address>>
   sonic: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
   saga: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
   lisk: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  hyperevm: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
 };
 
 function parseReasonId(reasonId: string):
