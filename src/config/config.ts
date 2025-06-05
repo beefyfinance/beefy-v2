@@ -84,6 +84,8 @@ export const config = {
       'RLUSD',
       'lvlUSD',
       'slvlUSD',
+      'mEDGE',
+      'mMEV',
     ],
   },
   polygon: {
