@@ -183,7 +183,8 @@ type ChainId =
   | 'celo'
   | 'heco'
   | 'harmony'
-  | 'saga';
+  | 'saga'
+  | 'hyperevm';
 
 export type ChainConfig = {
   id: ChainId;

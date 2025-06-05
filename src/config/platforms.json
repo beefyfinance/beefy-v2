@@ -1456,5 +1456,14 @@
     "documentation": "https://truemarkets.gitbook.io/",
     "description": "Truemarkets is a news and information source on the frontier of alternative media. At its core, it is a decentralized prediction market that enables users to forecast outcomes of real world events.",
     "type": "farm"
+  },
+  {
+    "id": "kittenswap",
+    "name": "KittenSwap",
+    "website": "https://kittenswap.finance/",
+    "twitter": "KittenSwap",
+    "documentation": "https://docs.kittenswap.finance/",
+    "description": "Kittenswap is a decentralized exchange (DEX) built on HyperEVM that implements the innovative ve(3,3) tokenomics model. Our platform combines the efficiency of automated market makers (AMMs) with a unique token distribution and governance system that aligns the interests of all participants.",
+    "type": "amm"
   }
 ]

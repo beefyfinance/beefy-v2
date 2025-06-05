@@ -1,0 +1,181 @@
+[
+  {
+    "id": "kittenswap-cow-hyperevm-whype-purr-rp",
+    "name": "PURR-WHYPE Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowKittenswapHyperevmPURR-WHYPE",
+    "tokenAddress": "0xE055CCfC930E4b702D92dB85EdcEC99c9E441d76",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kittenswap",
+    "earnContractAddress": "0x6EA6ce58D6948bD8575E1a3b82eF9bE3D69dc2bd",
+    "earnedToken": "rCowKittenswapHyperevmPURR-WHYPE",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "kittenswap-cow-hyperevm-whype-purr",
+    "status": "active",
+    "createdAt": 1749144271,
+    "platformId": "kittenswap",
+    "assets": ["PURR", "WHYPE"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "kittenswap-cow-hyperevm-whype-purr",
+    "name": "PURR-WHYPE",
+    "type": "cowcentrated",
+    "token": "PURR-WHYPE kittenswap",
+    "tokenAddress": "0xE9a8f101a77C8e73292d8543Dc4A530eA81662AB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kittenswap",
+    "depositTokenAddresses": [
+      "0x5555555555555555555555555555555555555555",
+      "0x9b498C3c8A0b8CD8BA1D9851d40D186F1872b44E"
+    ],
+    "earnContractAddress": "0xE055CCfC930E4b702D92dB85EdcEC99c9E441d76",
+    "earnedToken": "cowKittenswapHyperevmPURR-WHYPE",
+    "earnedTokenAddress": "0xE055CCfC930E4b702D92dB85EdcEC99c9E441d76",
+    "oracle": "lps",
+    "oracleId": "kittenswap-cow-hyperevm-whype-purr",
+    "status": "active",
+    "createdAt": 1749144271,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["PURR", "WHYPE"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "kittenswap-cow-hyperevm-whype-usde-rp",
+    "name": "USDe-WHYPE Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowKittenswapHyperevmUSDe-WHYPE",
+    "tokenAddress": "0x82e9dB204D8243538E04958FdAEDFaF21B58D014",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kittenswap",
+    "earnContractAddress": "0x0D968C40feff3FEa6953aA7c1FDeFEB0818f10e9",
+    "earnedToken": "rCowKittenswapHyperevmUSDe-WHYPE",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "kittenswap-cow-hyperevm-whype-usde",
+    "status": "active",
+    "createdAt": 1749080658,
+    "platformId": "kittenswap",
+    "assets": ["USDe", "WHYPE"],
+    "pointStructureIds": ["ethena"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "kittenswap-cow-hyperevm-whype-usde",
+    "name": "USDe-WHYPE",
+    "type": "cowcentrated",
+    "token": "USDe-WHYPE kittenswap",
+    "tokenAddress": "0xC556606315051B23161b906D6E67F5aCa8002557",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kittenswap",
+    "depositTokenAddresses": [
+      "0x5555555555555555555555555555555555555555",
+      "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34"
+    ],
+    "earnContractAddress": "0x82e9dB204D8243538E04958FdAEDFaF21B58D014",
+    "earnedToken": "cowKittenswapHyperevmUSDe-WHYPE",
+    "earnedTokenAddress": "0x82e9dB204D8243538E04958FdAEDFaF21B58D014",
+    "oracle": "lps",
+    "oracleId": "kittenswap-cow-hyperevm-whype-usde",
+    "status": "active",
+    "createdAt": 1749080658,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["USDe", "WHYPE"],
+    "pointStructureIds": ["ethena"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "kittenswap-cow-hyperevm-whype-usdt0-rp",
+    "name": "USD₮0-WHYPE Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowKittenswapHyperevmUSDT0-WHYPE",
+    "tokenAddress": "0x716D2dD531d826eb3fa1f1fFcFdd7102217a3199",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kittenswap",
+    "earnContractAddress": "0xb400EA86eB0dEd6d313b89EE579fD76cB730922a",
+    "earnedToken": "rCowKittenswapHyperevmUSDT0-WHYPE",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "kittenswap-cow-hyperevm-whype-usdt0",
+    "status": "active",
+    "createdAt": 1749075916,
+    "platformId": "kittenswap",
+    "assets": ["USDT0", "WHYPE"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "kittenswap-cow-hyperevm-whype-usdt0",
+    "name": "USD₮0-WHYPE",
+    "type": "cowcentrated",
+    "token": "USD₮0-WHYPE kittenswap",
+    "tokenAddress": "0xEC31710146EE79Faf276a7076B67a9b2ecAbEaE3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kittenswap",
+    "depositTokenAddresses": [
+      "0x5555555555555555555555555555555555555555",
+      "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb"
+    ],
+    "earnContractAddress": "0x716D2dD531d826eb3fa1f1fFcFdd7102217a3199",
+    "earnedToken": "cowKittenswapHyperevmUSDT0-WHYPE",
+    "earnedTokenAddress": "0x716D2dD531d826eb3fa1f1fFcFdd7102217a3199",
+    "oracle": "lps",
+    "oracleId": "kittenswap-cow-hyperevm-whype-usdt0",
+    "status": "active",
+    "createdAt": 1749075916,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["USDT0", "WHYPE"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  }
+]
