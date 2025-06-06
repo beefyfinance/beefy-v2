@@ -1167,5 +1167,40 @@
         "url": "https://app.falcon.finance/miles"
       }
     ]
+  },
+  {
+    "id": "kittenswap",
+    "docs": "https://app.kittenswap.finance/points",
+    "points": [
+      {
+        "id": "kittenswap-points",
+        "name": "Kittenswap Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "platform",
+        "platformId": "kittenswap",
+        "liveAfter": "2025-06-04"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-balances-subgraph",
+        "role": "Indexing of all balances of all beefy products",
+        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
+      },
+      {
+        "id": "beefy-balances-api",
+        "role": "API for the balances subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-balances-api"
+      },
+      {
+        "id": "kittenswap-points",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://app.kittenswap.finance/points"
+      }
+    ]
   }
 ]
