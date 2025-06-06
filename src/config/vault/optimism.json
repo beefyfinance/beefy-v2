@@ -1167,7 +1167,6 @@
     "assets": ["wstETH", "ezETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["renzo"],
     "network": "optimism",
     "zaps": [
       {
@@ -1198,7 +1197,6 @@
     "assets": ["wstETH", "ezETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["renzo"],
     "network": "optimism",
     "zaps": [
       {
@@ -1227,7 +1225,6 @@
     "oracleId": "uniswap-cow-op-wsteth-ezeth",
     "status": "active",
     "createdAt": 1725021320,
-    "pointStructureIds": ["renzo"],
     "platformId": "beefy",
     "assets": ["wstETH", "ezETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -1817,7 +1814,6 @@
     "strategyTypeId": "pool",
     "network": "optimism",
     "createdAt": 1722192821,
-    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -2363,7 +2359,6 @@
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.01",
-    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "cowcentrated"

@@ -148,5 +148,10 @@
     "chainId": "saga",
     "router": "0xcA7b72437193665d078aEeaDFFa565E1A2E71c3B",
     "manager": "0xFeEFCc6CEB8dB58575f7075Ff91D322037e43808"
+  },
+  {
+    "chainId": "hyperevm",
+    "router": "0xF08cc9422a43Be7c1d6663DF2890Cf7E36E79307",
+    "manager": "0x455891384DE7A55E34C748461ef91433D6Ed0d09"
   }
 ]

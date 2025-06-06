@@ -1101,7 +1101,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "besonic",
-    "pointStructureIds": [],
+    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
