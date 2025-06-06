@@ -1,5 +1,25 @@
 [
   {
+    "id": "moo_aerodrome-cow-base-usdc-reth-vault-rocket-pool",
+    "title": "Rocket Pool",
+    "vaultId": "aerodrome-cow-base-usdc-reth-vault",
+    "assets": ["rETH", "USDC"],
+    "tokenAddress": "0xa3DF64FA9144Eda326946C74D9BcaC8B86b93947",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xa2B110D75E045588041C67cf5Df8099BD593843D",
+    "partners": ["rocket-pool"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x994ac01750047B9d35431a7Ae4Ed312ee955E030",
+        "symbol": "axlOP",
+        "decimals": 18,
+        "oracleId": "axlOP"
+      }
+    ]
+  },
+  {
     "id": "moo_aerodrome-ousdt-usdc",
     "title": "Beefy",
     "vaultId": "aerodrome-ousdt-usdc",

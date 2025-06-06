@@ -1,4 +1,13 @@
 {
+  "rocket-pool": {
+    "title": "Rocket Pool",
+    "text": "Rocket Pool is a decentralised staking protocol providing liquid & node staking products for the Ethereum (ETH) ecosystem.",
+    "website": "https://rocketpool.net/",
+    "social": {
+      "discord": "https://discord.gg/rocketpool",
+      "twitter": "https://x.com/Rocket_Pool"
+    }
+  },
   "renzo": {
     "title": "Renzo",
     "text": "Renzo is a liquid restaking protocol that aims to improve the Ethereum ecosystem by simplifying the restaking process and providing higher yields.",
