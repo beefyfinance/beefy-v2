@@ -259,7 +259,7 @@
     "assets": ["BOLDV2", "LUSD"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x03569CC076654F82679C4BA2124D64774781B01D&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=-1",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x03569cc076654f82679c4ba2124d64774781b01d&token1=0x368181499736d0c0cc614dbb145e2ec1ac86b8c6&type=0&chain0=8453&chain1=8453&factory=0x420DD381b31aEf6683db6B902084cB0FFECe40Da",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
@@ -288,7 +288,7 @@
     "assets": ["BOLDV2", "USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x03569CC076654F82679C4BA2124D64774781B01D&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=-1",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x03569cc076654f82679c4ba2124d64774781b01d&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&type=0&chain0=8453&chain1=8453&factory=0x420DD381b31aEf6683db6B902084cB0FFECe40Da",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
