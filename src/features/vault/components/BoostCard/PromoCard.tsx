@@ -10,6 +10,7 @@ import { CardContent } from '../Card/CardContent.tsx';
 import { RewardTokenDetails } from '../RewardTokenDetails/RewardTokenDetails.tsx';
 import { Partner } from './Partner.tsx';
 import { Socials } from './Socials.tsx';
+import { MarkdownText } from '../../../components/Markdown/MarkdownText.tsx';
 
 const useStyles = legacyMakeStyles({
   header: css.raw({
@@ -138,7 +139,7 @@ export const PromoCard = memo<PromoCardProps>(function PromoCard({
       </div>
       <CardContent className={classes.content}>
         {title && <div className={classes.campaignTitle}>{title}</div>}
-        {text && <div className={classes.campaignText}>{text}</div>}
+        {text && <MarkdownText className={classes.campaignText} text={text} />}
         {partnerIds &&
           partnerIds.map(partnerId => <Partner key={partnerId} partnerId={partnerId} />)}
         {tokens &&
