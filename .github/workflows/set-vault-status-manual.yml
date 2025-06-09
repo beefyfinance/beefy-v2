@@ -50,10 +50,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Set Vault Status
         run: |
@@ -66,7 +66,7 @@ jobs:
           # Convert comma-separated vault IDs into multiple --vault arguments
           VAULT_ARGS=$(echo "${{ github.event.inputs.vaults }}" | tr ',' '\n' | xargs -I {} echo "--vaults {}" | tr '\n' ' ')
 
-          yarn setVaultStatus \
+          npm run setVaultStatus \
             --status "${{ github.event.inputs.status }}" \
             $CHAIN_ARG \
             $REASON_ARG \
