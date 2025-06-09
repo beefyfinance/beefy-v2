@@ -11,17 +11,17 @@ const initialState: BeGemsState = {
       1: {
         number: 1,
         startTime: 1747008000,
-        endTime: 1751284800, // Mon Jun 30 2025 12:00:00 UTC
+        endTime: 1750248000, // Wed Jun 18 2025 12:00:00 UTC
       },
       2: {
         number: 2,
-        startTime: 1751284800,
-        endTime: 1756641600, // Sun Aug 31 2025 12:00:00 UTC
+        startTime: 1750248000,
+        endTime: 1755518400, // Mon Aug 18 2025 12:00:00 UTC
       },
       3: {
         number: 3,
-        startTime: 1756641600,
-        endTime: 1761912000, // Fri Oct 31 2025 12:00:00 UTC
+        startTime: 1755518400,
+        endTime: 1760788800, // Sat Oct 18 2025 12:00:00 UTC
       },
     },
     dataByNumber: {
