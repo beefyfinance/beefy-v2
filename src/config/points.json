@@ -912,7 +912,7 @@
     "eligibility": [
       {
         "type": "token-holding",
-        "tokens": ["wstkscUSD", "stkscUSD", "scUSD", "scETH"]
+        "tokens": ["wstkscUSD", "stkscUSD", "scUSD", "scETH", "wstkscETH"]
       }
     ],
     "accounting": [
