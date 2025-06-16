@@ -1083,9 +1083,9 @@
     ],
     "accounting": [
       {
-        "id": "beefy-balances-subgraph",
-        "role": "Indexing of all balances of all beefy products",
-        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
+        "id": "beefy-lrt-subgraph",
+        "role": "Raw indexing of blockchain data, computes time weighted balances",
+        "url": "https://github.com/beefyfinance/lrt-subgraph"
       },
       {
         "id": "beefy-lrt-api",
