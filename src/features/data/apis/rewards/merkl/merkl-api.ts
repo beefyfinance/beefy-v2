@@ -1,4 +1,9 @@
-import type { IMerklRewardsApi, MerklRewardsRequest, MerklRewardsResponse } from './merkl-types.ts';
+import type {
+  IMerklRewardsApi,
+  MerklRewardsParams,
+  MerklRewardsRequest,
+  MerklRewardsResponse,
+} from './merkl-types.ts';
 import { featureFlag_simulateMerklApiFailure } from '../../../utils/feature-flags.ts';
 import { makeRateLimitedHttpHelper } from '../../../../../helpers/http/http.ts';
 import type { HttpHelper } from '../../../../../helpers/http/types.ts';
@@ -17,8 +22,19 @@ export class MerklRewardsApi implements IMerklRewardsApi {
       throw new Error('Simulated Merkl API failure');
     }
 
-    return await this.http.getJson<MerklRewardsResponse>('/v3/rewards', {
-      params: { user: request.user },
+    const params: MerklRewardsParams = {
+      chainId: request.chainId.join(','),
+      test: request.test ? 'true' : 'false',
+      claimableOnly: request.claimableOnly ? 'true' : 'false',
+      breakdownPage: request.breakdownPage.toString(),
+    };
+
+    if (request.reloadChainId) {
+      params.reloadChainId = request.reloadChainId.toString();
+    }
+
+    return await this.http.getJson<MerklRewardsResponse>(`/v4/users/${request.user}/rewards`, {
+      params,
     });
   }
 }

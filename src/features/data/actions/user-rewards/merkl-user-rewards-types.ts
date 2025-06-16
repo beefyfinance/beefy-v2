@@ -6,7 +6,8 @@ import type {
 
 export type FetchUserMerklRewardsActionParams = {
   walletAddress: string;
-  force?: boolean;
+  /** optionally request merkl api to bypass cache for this chain id */
+  reloadChainId?: ChainId;
 };
 
 export type FetchUserMerklRewardsFulfilledPayload = {
