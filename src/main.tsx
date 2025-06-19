@@ -11,7 +11,7 @@ import { persistor, store } from './features/data/store/store.ts';
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <ErrorBoundary fallback={MinimalFallback}>
-    <Provider store={store} identityFunctionCheck="never" stabilityCheck="never">
+    <Provider store={store} identityFunctionCheck="never" stabilityCheck="once">
       <PersistGate loading={null} persistor={persistor}>
         <I18nextProvider i18n={i18n}>
           <App />

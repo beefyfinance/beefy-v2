@@ -24,7 +24,11 @@ import {
 import { selectVaultUnderlyingTvlUsd } from './tvl.ts';
 import { selectAllActiveVaultIds, selectAllVisibleVaultIds, selectVaultById } from './vaults.ts';
 
-export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
+export const selectFilterOptions = createSelector(
+  (state: BeefyState) => state.ui.filteredVaults,
+  filteredVaults => filteredVaults
+);
+
 export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
 export const selectFilterChainIds = (state: BeefyState) => state.ui.filteredVaults.chainIds;
 export const selectFilterSearchSortField = (state: BeefyState) => state.ui.filteredVaults.sort;
