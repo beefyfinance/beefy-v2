@@ -1,5 +1,5 @@
 import { type Address, getAddress } from 'viem';
-import { fromWei } from '../../../../helpers/big-number.ts';
+import { BIG_ZERO, fromWei } from '../../../../helpers/big-number.ts';
 import { pushOrSet } from '../../../../helpers/object.ts';
 import { getMerklRewardsApi } from '../../apis/instances.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
@@ -13,7 +13,7 @@ import type {
   MerklTokenReward,
   MerklVaultReward,
 } from '../../reducers/wallet/user-rewards-types.ts';
-import { selectAllChainIds, selectChainByNetworkChainId } from '../../selectors/chains.ts';
+import { selectChainById, selectChainByNetworkChainId } from '../../selectors/chains.ts';
 import { selectMerklRewardsForUserShouldLoad } from '../../selectors/user-rewards.ts';
 import { selectVaultByAddressOrUndefined } from '../../selectors/vaults.ts';
 import { isDefined } from '../../utils/array-utils.ts';
@@ -25,31 +25,31 @@ import type {
 
 // ChainId -> Merkl Distributor contract address
 // https://app.merkl.xyz/status
-export const MERKL_SUPPORTED_CHAINS: Partial<Record<ChainEntity['id'], Address>> = {
-  ethereum: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  polygon: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  optimism: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  arbitrum: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  base: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  gnosis: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  zkevm: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  mantle: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  mode: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  linea: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  bsc: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  zksync: '0xe117ed7Ef16d3c28fCBA7eC49AFAD77f451a6a21',
-  fuse: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  moonbeam: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  manta: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  fraxtal: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  celo: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  sei: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  rootstock: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  sonic: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  saga: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  lisk: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-  hyperevm: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-};
+export const MERKL_SUPPORTED_CHAINS = new Map<ChainEntity['id'], Address>([
+  ['ethereum', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['polygon', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['optimism', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['arbitrum', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['base', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['gnosis', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['zkevm', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['mantle', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['mode', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['linea', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['bsc', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['zksync', '0xe117ed7Ef16d3c28fCBA7eC49AFAD77f451a6a21'],
+  ['fuse', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['moonbeam', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['manta', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['fraxtal', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['celo', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['sei', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['rootstock', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['sonic', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['saga', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['lisk', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['hyperevm', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+]);
 
 function parseReasonId(reasonId: string):
   | {
@@ -97,15 +97,19 @@ export const fetchUserMerklRewardsAction = createAppAsyncThunk<
   FetchUserMerklRewardsActionParams
 >(
   'rewards/fetchUserMerklRewardsAction',
-  async ({ walletAddress }, { getState }) => {
+  async ({ walletAddress, reloadChainId }, { getState }) => {
     const state = getState();
     const api = await getMerklRewardsApi();
-
-    const rewards = await api.fetchRewards({
+    const supportedChainIds = Array.from(MERKL_SUPPORTED_CHAINS.keys());
+    const response = await api.fetchRewards({
       user: walletAddress,
+      chainId: supportedChainIds.map(chainId => selectChainById(state, chainId).networkChainId),
+      test: false,
+      claimableOnly: true,
+      breakdownPage: 0, // TODO if any breakdown has >= 1000 entries, we need to handle pagination
+      reloadChainId:
+        reloadChainId ? selectChainById(state, reloadChainId).networkChainId : undefined,
     });
-
-    const allChainIds = selectAllChainIds(state);
     const byVaultId: Record<string, MerklVaultReward[]> = {};
     const byChainId: Record<string, MerklTokenReward[]> = {};
     const addRewardToVault = (vaultId: string, reward: MerklVaultReward) => {
@@ -119,37 +123,68 @@ export const fetchUserMerklRewardsAction = createAppAsyncThunk<
       }
     };
 
-    for (const [networkChainId, chainData] of Object.entries(rewards)) {
-      const claimChain = selectChainByNetworkChainId(state, parseInt(networkChainId));
-      if (!claimChain) {
+    for (const chainData of response) {
+      // Skip chains that are not supported by Beefy app (should not be returned by the API)
+      const computeChain = selectChainByNetworkChainId(state, chainData.chain.id);
+      if (!computeChain) {
         continue;
       }
 
-      const { tokenData, campaignData } = chainData;
+      for (const rewardData of chainData.rewards) {
+        // Skip test token
+        if (rewardData.token.symbol === 'aglaMerkl') {
+          continue;
+        }
 
-      for (const [campaignId, reasons] of Object.entries(campaignData)) {
-        for (const [reasonId, reasonData] of Object.entries(reasons)) {
-          // Skip if nothing to claim or reward is the test token
-          if (reasonData.unclaimed === '0' || reasonData.symbol === 'aglaMerkl') {
+        // Skip tokens on chain that is not supported by Beefy (@see MERKL_SUPPORTED_CHAINS)
+        const tokenChain = selectChainByNetworkChainId(state, rewardData.token.chainId);
+        if (!tokenChain) {
+          continue;
+        }
+
+        // Skip if nothing to claim for this token
+        const rewardAmount = fromWei(rewardData.amount, rewardData.token.decimals);
+        const rewardClaimed = fromWei(rewardData.claimed, rewardData.token.decimals);
+        const rewardUnclaimed = rewardAmount.minus(rewardClaimed);
+        if (rewardUnclaimed.lte(BIG_ZERO)) {
+          continue;
+        }
+
+        const token = {
+          decimals: rewardData.token.decimals,
+          symbol: rewardData.token.symbol,
+          address: getAddress(rewardData.token.address),
+          chainId: tokenChain.id,
+        };
+
+        // Record all claimable rewards for the token by chain id
+        pushOrSet(byChainId, tokenChain.id, {
+          token,
+          accumulated: rewardAmount,
+          unclaimed: rewardUnclaimed,
+          proof: rewardData.proofs,
+        });
+
+        // Record all claimable rewards for the token by vault id
+        for (const breakdown of rewardData.breakdowns) {
+          // Skip if nothing to claim from this campaign
+          const breakdownAmount = fromWei(breakdown.amount, rewardData.token.decimals);
+          const breakdownClaimed = fromWei(breakdown.claimed, rewardData.token.decimals);
+          const breakdownUnclaimed = breakdownAmount.minus(breakdownClaimed);
+          if (breakdownUnclaimed.lte(BIG_ZERO)) {
             continue;
           }
 
-          const reason = parseReasonId(reasonId);
           // Skip rewards for other platforms
+          const reason = parseReasonId(breakdown.reason);
           if (!reason) {
             continue;
           }
 
-          const vaults = allChainIds
+          const vaults = supportedChainIds
             .map(chainId => selectVaultByAddressOrUndefined(state, chainId, reason.address))
             .filter(isDefined)
-            .filter(v =>
-              isCowcentratedLikeVault(v) ?
-                v.type === reason.type &&
-                reasonData.mainParameter.toLowerCase() === v.poolAddress.toLowerCase()
-              : v.type === reason.type &&
-                reasonData.mainParameter.toLowerCase() === v.contractAddress.toLowerCase()
-            );
+            .filter(v => v.type === reason.type);
 
           if (vaults.length === 0) {
             if (reason.type !== 'standard') {
@@ -170,15 +205,10 @@ export const fetchUserMerklRewardsAction = createAppAsyncThunk<
           const vault = vaults[0];
 
           const reward: MerklVaultReward = {
-            campaignIds: [campaignId],
-            token: {
-              decimals: reasonData.decimals,
-              symbol: reasonData.symbol,
-              address: getAddress(reasonData.token),
-              chainId: claimChain.id,
-            },
-            accumulated: fromWei(reasonData.accumulated, reasonData.decimals),
-            unclaimed: fromWei(reasonData.unclaimed, reasonData.decimals),
+            campaignIds: [breakdown.campaignId],
+            token,
+            accumulated: breakdownAmount,
+            unclaimed: breakdownUnclaimed,
           };
 
           // Add reward to the vault
@@ -193,25 +223,6 @@ export const fetchUserMerklRewardsAction = createAppAsyncThunk<
           }
         }
       }
-
-      for (const [tokenAddress, token] of Object.entries(tokenData)) {
-        // Skip if nothing to claim or reward is the test token
-        if (token.unclaimed === '0' || token.symbol === 'aglaMerkl') {
-          continue;
-        }
-
-        pushOrSet(byChainId, claimChain.id, {
-          token: {
-            address: getAddress(tokenAddress),
-            symbol: token.symbol,
-            decimals: token.decimals,
-            chainId: claimChain.id,
-          },
-          accumulated: fromWei(token.accumulated, token.decimals),
-          unclaimed: fromWei(token.unclaimed, token.decimals),
-          proof: token.proof,
-        });
-      }
     }
 
     return {
@@ -221,8 +232,8 @@ export const fetchUserMerklRewardsAction = createAppAsyncThunk<
     };
   },
   {
-    condition({ walletAddress, force }, { getState }) {
-      if (force) {
+    condition({ walletAddress, reloadChainId }, { getState }) {
+      if (reloadChainId) {
         return true;
       }
       return selectMerklRewardsForUserShouldLoad(getState(), walletAddress);

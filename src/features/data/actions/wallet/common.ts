@@ -145,13 +145,13 @@ function txMined(dispatch: BeefyDispatchFn, context: TxContext, receipt: Transac
       dispatch(transactClearInput());
     }
 
-    if (rewards) {
+    if (rewards && walletAddress && chainId) {
       // Wait 60s before checking rewards after tx success
       setTimeout(() => {
         dispatch(
           fetchUserMerklRewardsAction({
             walletAddress,
-            force: true,
+            reloadChainId: chainId,
           })
         );
       }, 60 * 1000);
