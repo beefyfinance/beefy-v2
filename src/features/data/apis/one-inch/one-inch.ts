@@ -24,6 +24,7 @@ export const supportedChainIds: ChainConfig['id'][] = [
   'avax',
   'fantom',
   'aurora',
+  'sonic',
 ];
 
 export class OneInchApi implements IOneInchApi {
