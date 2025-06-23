@@ -153,25 +153,32 @@ export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, se
   });
 }
 
-export const selectUserDashboardFilteredVaults = (
-  state: BeefyState,
-  text: string,
-  walletAddress?: string
-) => {
-  if (!walletAddress) return [];
-  const vaults = selectUserDepositedVaultIds(state, walletAddress).map(id =>
-    selectVaultById(state, id)
-  );
-  const searchText = simplifySearchText(text);
-  const filteredVaults = vaults.filter(vault => {
-    if (searchText.length > 0 && !selectVaultMatchesText(state, vault, searchText)) {
-      return false;
-    }
+export const selectUserDashboardFilteredVaults = createSelector(
+  [
+    (state: BeefyState, text: string, walletAddress?: string) => ({
+      state,
+      searchText: simplifySearchText(text),
+      walletAddress,
+    }),
+  ],
+  ({ state, searchText, walletAddress }): VaultEntity[] => {
+    if (!walletAddress) return [];
 
-    return true;
-  });
-  return filteredVaults;
-};
+    const vaults = selectUserDepositedVaultIds(state, walletAddress).map(id =>
+      selectVaultById(state, id)
+    );
+
+    const filteredVaults = vaults.filter(vault => {
+      if (searchText.length > 0 && !selectVaultMatchesText(state, vault, searchText)) {
+        return false;
+      }
+
+      return true;
+    });
+
+    return filteredVaults;
+  }
+);
 
 export function selectFilterPlatformIdsForVault(state: BeefyState, vault: VaultEntity): string[] {
   const vaultPlatform = selectPlatformIdForFilter(state, vault.platformId);

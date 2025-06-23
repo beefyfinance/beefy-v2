@@ -80,74 +80,81 @@ const EMPTY_GLOBAL_STATS = {
 /**
  * Ignores boost component of APY
  */
-export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
-  const walletAddress = address || selectWalletAddress(state);
-  if (!walletAddress) {
-    return EMPTY_GLOBAL_STATS;
-  }
-
-  if (!selectIsUserBalanceAvailable(state, walletAddress)) {
-    return EMPTY_GLOBAL_STATS;
-  }
-
-  const userVaultIds = selectUserDepositedVaultIds(state, walletAddress);
-
-  if (userVaultIds.length === 0) {
-    return EMPTY_GLOBAL_STATS;
-  }
-
-  const newGlobalStats = {
-    ...EMPTY_GLOBAL_STATS,
-    depositedVaults: userVaultIds.length,
-  };
-
-  const userVaults = userVaultIds.map(vaultId => selectVaultById(state, vaultId));
-
-  for (const vault of userVaults) {
-    const vaultUsdBalance = selectUserVaultBalanceInUsdIncludingDisplaced(
-      state,
-      vault.id,
-      walletAddress
-    ).toNumber();
-
-    if (vaultUsdBalance <= 0) {
-      continue;
+export const selectUserGlobalStats = createSelector(
+  [
+    (state: BeefyState, address?: string) => {
+      const walletAddress = address || selectWalletAddress(state);
+      return { state, walletAddress };
+    },
+  ],
+  ({ state, walletAddress }) => {
+    if (!walletAddress) {
+      return EMPTY_GLOBAL_STATS;
     }
 
-    // Add vault balance to total
-    newGlobalStats.deposited += vaultUsdBalance;
-
-    if (!isVaultActive(vault)) {
-      continue;
+    if (!selectIsUserBalanceAvailable(state, walletAddress)) {
+      return EMPTY_GLOBAL_STATS;
     }
 
-    // Add period totals for each vault
-    const apyData = selectVaultTotalApy(state, vault.id);
+    const userVaultIds = selectUserDepositedVaultIds(state, walletAddress);
 
-    if (isEmpty(apyData)) {
-      continue;
+    if (userVaultIds.length === 0) {
+      return EMPTY_GLOBAL_STATS;
     }
-    const { dailyUsd, monthlyUsd, yearlyUsd } = selectYieldStatsByVaultId(
-      state,
-      vault.id,
-      walletAddress
-    );
 
-    newGlobalStats.daily += dailyUsd.toNumber();
-    newGlobalStats.monthly += monthlyUsd.toNumber();
-    newGlobalStats.yearly += yearlyUsd.toNumber();
-  }
+    const newGlobalStats = {
+      ...EMPTY_GLOBAL_STATS,
+      depositedVaults: userVaultIds.length,
+    };
 
-  // Skip yield calc if user has no deposits
-  if (newGlobalStats.deposited <= 0) {
+    const userVaults = userVaultIds.map(vaultId => selectVaultById(state, vaultId));
+
+    for (const vault of userVaults) {
+      const vaultUsdBalance = selectUserVaultBalanceInUsdIncludingDisplaced(
+        state,
+        vault.id,
+        walletAddress
+      ).toNumber();
+
+      if (vaultUsdBalance <= 0) {
+        continue;
+      }
+
+      // Add vault balance to total
+      newGlobalStats.deposited += vaultUsdBalance;
+
+      if (!isVaultActive(vault)) {
+        continue;
+      }
+
+      // Add period totals for each vault
+      const apyData = selectVaultTotalApy(state, vault.id);
+
+      if (isEmpty(apyData)) {
+        continue;
+      }
+      const { dailyUsd, monthlyUsd, yearlyUsd } = selectYieldStatsByVaultId(
+        state,
+        vault.id,
+        walletAddress
+      );
+
+      newGlobalStats.daily += dailyUsd.toNumber();
+      newGlobalStats.monthly += monthlyUsd.toNumber();
+      newGlobalStats.yearly += yearlyUsd.toNumber();
+    }
+
+    // Skip yield calc if user has no deposits
+    if (newGlobalStats.deposited <= 0) {
+      return newGlobalStats;
+    }
+
+    // Compute average apy
+    newGlobalStats.apy = newGlobalStats.yearly / newGlobalStats.deposited;
+
     return newGlobalStats;
   }
-
-  // Compute average apy
-  newGlobalStats.apy = newGlobalStats.yearly / newGlobalStats.deposited;
-
-  return newGlobalStats;
-};
+);
 
 export const selectYieldStatsByVaultId = (
   state: BeefyState,

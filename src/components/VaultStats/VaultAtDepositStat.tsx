@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { memo, type ReactNode } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
@@ -34,12 +35,11 @@ export const VaultAtDepositStat = memo(function VaultAtDepositStat({
   const { t } = useTranslation();
   // @dev don't do this - temp migration away from connect()
   const { label, ...statProps } = useAppSelector(state =>
-    selectVaultAtDepositStat(state, vaultId, pnlData, walletAddress)
+    selectVaultAtDepositStatMemoized(state, vaultId, pnlData, walletAddress)
   );
   return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
 });
 
-// TODO better selector / hook
 const selectVaultAtDepositStat = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
@@ -104,3 +104,26 @@ const selectVaultAtDepositStat = (
     tooltip,
   };
 };
+
+const selectVaultAtDepositStatMemoized = createSelector(
+  (state: BeefyState) => state,
+  (
+    _state: BeefyState,
+    vaultId: VaultEntity['id'],
+    _pnlData: UserVaultPnl,
+    _walletAddress: string
+  ) => vaultId,
+  (
+    _state: BeefyState,
+    _vaultId: VaultEntity['id'],
+    pnlData: UserVaultPnl,
+    _walletAddress: string
+  ) => pnlData,
+  (
+    _state: BeefyState,
+    _vaultId: VaultEntity['id'],
+    _pnlData: UserVaultPnl,
+    walletAddress: string
+  ) => walletAddress,
+  selectVaultAtDepositStat
+);
