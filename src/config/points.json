@@ -912,7 +912,7 @@
     "eligibility": [
       {
         "type": "token-holding",
-        "tokens": ["wstkscUSD", "stkscUSD", "scUSD", "scETH"]
+        "tokens": ["wstkscUSD", "stkscUSD", "scUSD", "scETH", "wstkscETH"]
       }
     ],
     "accounting": [
@@ -1077,7 +1077,8 @@
         "liveAfter": "2025-03-01"
       },
       {
-        "type": "vault-whitelist"
+        "type": "token-holding",
+        "tokens": ["mooSiloSonicUSDCe"]
       }
     ],
     "accounting": [
@@ -1092,10 +1093,10 @@
         "url": "https://github.com/beefyfinance/beefy-lrt-api"
       },
       {
-        "id": "lisk-points",
+        "id": "silo-points",
         "role": "Distribution of rewards",
-        "type": "airdrop",
-        "url": "TODO"
+        "type": "claim-rewards",
+        "url": "https://docs.silo.finance/docs/developers/apis/position-api#points"
       }
     ]
   },

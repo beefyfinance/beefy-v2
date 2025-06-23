@@ -29,7 +29,7 @@ export const claimMerkl = (chainId: ChainEntity['id']) => {
       return;
     }
 
-    const distributorAddress = MERKL_SUPPORTED_CHAINS[chainId];
+    const distributorAddress = MERKL_SUPPORTED_CHAINS.get(chainId);
     if (!distributorAddress) {
       throw new Error(`No Merkl contract found for chain ${chainId}`);
     }
@@ -37,7 +37,7 @@ export const claimMerkl = (chainId: ChainEntity['id']) => {
     const chain = selectChainById(state, chainId);
     const native = selectChainNativeToken(state, chainId);
     const { byChainId } = await dispatch(
-      fetchUserMerklRewardsAction({ walletAddress: address, force: true })
+      fetchUserMerklRewardsAction({ walletAddress: address, reloadChainId: chainId })
     ).unwrap();
     const unclaimedRewards = (byChainId[chain.id] || []).map(({ token, accumulated, proof }) => ({
       token: token.address,

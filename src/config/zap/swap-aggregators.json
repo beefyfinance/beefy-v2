@@ -552,5 +552,16 @@
     "priorityTokens": ["S", "WS", "USDCe", "WETH"],
     "blockedTokens": [],
     "blockedVaults": [""]
+  },
+  {
+    "id": "one-inch-sonic",
+    "type": "one-inch",
+    "chainId": "sonic",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": ["S", "WS", "USDCe", "WETH"],
+    "blockedTokens": [],
+    "blockedVaults": [""]
   }
 ]

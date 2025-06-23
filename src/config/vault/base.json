@@ -1,5 +1,364 @@
 [
   {
+    "id": "uniswap-cow-base-bnkr-weth-rp",
+    "name": "BNKR-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseBNKR-WETH",
+    "tokenAddress": "0xCdd84A29a4b6b7E546757C9481F88db477Deb423",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x2D4D32FB19564B066ebe7c59206e6C64f529faB3",
+    "earnedToken": "rCowUniswapBaseBNKR-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-bnkr-weth",
+    "status": "active",
+    "createdAt": 1749473835,
+    "platformId": "uniswap",
+    "assets": ["BNKR", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-bnkr-weth",
+    "name": "BNKR-WETH",
+    "type": "cowcentrated",
+    "token": "BNKR-WETH uniswap",
+    "tokenAddress": "0xAEC085E5A5CE8d96A7bDd3eB3A62445d4f6CE703",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x22aF33FE49fD1Fa80c7149773dDe5890D3c76F3b",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "earnContractAddress": "0xCdd84A29a4b6b7E546757C9481F88db477Deb423",
+    "earnedToken": "cowUniswapBaseBNKR-WETH",
+    "earnedTokenAddress": "0xCdd84A29a4b6b7E546757C9481F88db477Deb423",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-bnkr-weth",
+    "status": "active",
+    "createdAt": 1749473835,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["BNKR", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-lay-rp",
+    "name": "LAY-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseLAY-WETH",
+    "tokenAddress": "0x7D7785B537Be53Dd1eA1C9d2503216Ca138eC907",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xf5D255cbd4E3C3357F8957c20B4c85aBd014640F",
+    "earnedToken": "rCowUniswapBaseLAY-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-lay",
+    "status": "active",
+    "createdAt": 1749473800,
+    "platformId": "uniswap",
+    "assets": ["LAY", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-lay-weth",
+    "name": "LAY-WETH",
+    "type": "cowcentrated",
+    "token": "LAY-WETH uniswap",
+    "tokenAddress": "0x303b00d7A2Ad12a480dB7C04DE5835ec9Ccc37B0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xb89D354AD1b0d95a48b3De4607F75a8cD710c1bA"
+    ],
+    "earnContractAddress": "0x7D7785B537Be53Dd1eA1C9d2503216Ca138eC907",
+    "earnedToken": "cowUniswapBaseLAY-WETH",
+    "earnedTokenAddress": "0x7D7785B537Be53Dd1eA1C9d2503216Ca138eC907",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-lay",
+    "status": "active",
+    "createdAt": 1749473800,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["LAY", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-tig-usdc-rp",
+    "name": "TIG-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseTIG-USDC",
+    "tokenAddress": "0xED91eEA17c91E5a46A3A756C4FF030A2608318db",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x420E4B939EAb92C5e5FCDF71b15864CDFaB6caad",
+    "earnedToken": "rCowUniswapBaseTIG-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-tig-usdc",
+    "status": "active",
+    "createdAt": 1749473771,
+    "platformId": "uniswap",
+    "assets": ["TIG", "USDC"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-tig-usdc",
+    "name": "TIG-USDC",
+    "type": "cowcentrated",
+    "token": "TIG-USDC uniswap",
+    "tokenAddress": "0x5280d5E63b416277d0F81FAe54Bb1e0444cAbDAA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0C03Ce270B4826Ec62e7DD007f0B716068639F7B",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0xED91eEA17c91E5a46A3A756C4FF030A2608318db",
+    "earnedToken": "cowUniswapBaseTIG-USDC",
+    "earnedTokenAddress": "0xED91eEA17c91E5a46A3A756C4FF030A2608318db",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-tig-usdc",
+    "status": "active",
+    "createdAt": 1749473771,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["TIG", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-rfl-usdc-vault",
+    "name": "RFL-USDC",
+    "type": "standard",
+    "token": "RFL-USDC",
+    "tokenAddress": "0x5Ca9B0B7271bE6b3730e9Dd70961D1adD7e5705c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x69F0bB3715334C5A553B01f3D1976F2E7BE58D35",
+    "earnedToken": "mooCowAerodromeRFL-USDC",
+    "earnedTokenAddress": "0x69F0bB3715334C5A553B01f3D1976F2E7BE58D35",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-rfl-usdc",
+    "status": "active",
+    "createdAt": 1749473734,
+    "platformId": "aerodrome",
+    "assets": ["RFL", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-rfl-usdc-rp",
+    "name": "RFL-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeRFL-USDC",
+    "tokenAddress": "0x5Ca9B0B7271bE6b3730e9Dd70961D1adD7e5705c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x54C0f1b8aC2b31d987665e4243242B1382274479",
+    "earnedToken": "rCowAerodromeRFL-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-rfl-usdc",
+    "status": "active",
+    "createdAt": 1749473733,
+    "platformId": "aerodrome",
+    "assets": ["RFL", "USDC"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-rfl-usdc",
+    "name": "RFL-USDC",
+    "type": "cowcentrated",
+    "token": "RFL-USDC aerodrome",
+    "tokenAddress": "0x51c230951b82Dbf7b8696B6fCd2be199cC10779f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x6e2c81b6c2C0e02360F00a0dA694e489acB0b05e",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0x5Ca9B0B7271bE6b3730e9Dd70961D1adD7e5705c",
+    "earnedToken": "cowAerodromeRFL-USDC",
+    "earnedTokenAddress": "0x5Ca9B0B7271bE6b3730e9Dd70961D1adD7e5705c",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-rfl-usdc",
+    "status": "active",
+    "createdAt": 1749473733,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["RFL", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-giza-usdc-vault",
+    "name": "GIZA-USDC",
+    "type": "standard",
+    "token": "GIZA-USDC",
+    "tokenAddress": "0x49a2Ef509eFaf8932322aB77495c8ADd75cdD013",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x3724d2907E36e25DD2001a7EF5173AdD6e5647B5",
+    "earnedToken": "mooCowAerodromeGIZA-USDC",
+    "earnedTokenAddress": "0x3724d2907E36e25DD2001a7EF5173AdD6e5647B5",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-giza-usdc",
+    "status": "active",
+    "createdAt": 1749473734,
+    "platformId": "aerodrome",
+    "assets": ["GIZA", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-giza-usdc-rp",
+    "name": "GIZA-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeGIZA-USDC",
+    "tokenAddress": "0x49a2Ef509eFaf8932322aB77495c8ADd75cdD013",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x34C0E2dFee046164F92486884B3cc5a13e3726bD",
+    "earnedToken": "rCowAerodromeGIZA-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-giza-usdc",
+    "status": "active",
+    "createdAt": 1749473679,
+    "platformId": "aerodrome",
+    "assets": ["GIZA", "USDC"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-giza-usdc",
+    "name": "GIZA-USDC",
+    "type": "cowcentrated",
+    "token": "GIZA-USDC aerodrome",
+    "tokenAddress": "0xe077DdFb9E9d9403A8eC42D3023D17e8417ee399",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x590830dFDf9A3F68aFCDdE2694773dEBDF267774",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0x49a2Ef509eFaf8932322aB77495c8ADd75cdD013",
+    "earnedToken": "cowAerodromeGIZA-USDC",
+    "earnedTokenAddress": "0x49a2Ef509eFaf8932322aB77495c8ADd75cdD013",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-giza-usdc",
+    "status": "active",
+    "createdAt": 1749473679,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["GIZA", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-usdc-reth-vault",
     "name": "rETH-USDC",
     "type": "standard",
