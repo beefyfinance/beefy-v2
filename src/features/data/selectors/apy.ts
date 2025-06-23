@@ -36,33 +36,45 @@ const EMPTY_TOTAL_APY: TotalApy = {
   totalType: 'apy',
 };
 
-export const selectVaultTotalApyOrUndefined = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-): Readonly<TotalApy> | undefined => {
-  return state.biz.apy.totalApy.byVaultId[vaultId] || undefined;
-};
+export const selectVaultTotalApyOrUndefined = createSelector(
+  [
+    (state: BeefyState) => state.biz.apy.totalApy.byVaultId,
+    (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  ],
+  (totalApyByVaultId, vaultId) => {
+    return totalApyByVaultId[vaultId] || undefined;
+  }
+);
 
-export const selectVaultTotalApy = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-): Readonly<TotalApy> => {
-  return selectVaultTotalApyOrUndefined(state, vaultId) || EMPTY_TOTAL_APY;
-};
+export const selectVaultTotalApy = createSelector(
+  [
+    selectVaultTotalApyOrUndefined,
+    (_state: BeefyState, _vaultId: VaultEntity['id']) => EMPTY_TOTAL_APY,
+  ],
+  (totalApyOrUndefined, emptyTotalApy) => {
+    return totalApyOrUndefined || emptyTotalApy;
+  }
+);
 
-export const selectVaultAvgApyOrUndefined = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-): Readonly<AvgApy> | undefined => {
-  return state.biz.apy.avgApy.byVaultId[vaultId] || undefined;
-};
+export const selectVaultAvgApyOrUndefined = createSelector(
+  [
+    (state: BeefyState) => state.biz.apy.avgApy.byVaultId,
+    (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  ],
+  (avgApyByVaultId, vaultId) => {
+    return avgApyByVaultId[vaultId] || undefined;
+  }
+);
 
-export const selectVaultAvgApy = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-): Readonly<AvgApy> => {
-  return selectVaultAvgApyOrUndefined(state, vaultId) || EMPTY_AVG_APY;
-};
+export const selectVaultAvgApy = createSelector(
+  [
+    selectVaultAvgApyOrUndefined,
+    (_state: BeefyState, _vaultId: VaultEntity['id']) => EMPTY_AVG_APY,
+  ],
+  (avgApyOrUndefined, emptyAvgApy) => {
+    return avgApyOrUndefined || emptyAvgApy;
+  }
+);
 
 export const selectDidAPIReturnValuesForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
   return state.biz.apy.totalApy.byVaultId[vaultId] !== undefined;

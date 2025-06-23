@@ -81,15 +81,19 @@ export const selectTokenByIdOrUndefined = (
   return byChainId[chainId]?.byAddress[address] || undefined;
 };
 
-export const selectTokenByAddress = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  address: TokenEntity['address']
-) =>
-  valueOrThrow(
-    state.entities.tokens.byChainId[chainId]?.byAddress[address.toLowerCase()],
-    `selectTokenByAddress: Unknown token address "${address}"`
-  );
+export const selectTokenByAddress = createSelector(
+  [
+    (state: BeefyState) => state.entities.tokens.byChainId,
+    (_state: BeefyState, chainId: ChainEntity['id']) => chainId,
+    (_state: BeefyState, _chainId: ChainEntity['id'], address: TokenEntity['address']) => address,
+  ],
+  (tokensByChainId, chainId, address) => {
+    return valueOrThrow(
+      tokensByChainId[chainId]?.byAddress[address.toLowerCase()],
+      `selectTokenByAddress: Unknown token address "${address}"`
+    );
+  }
+);
 
 export const selectTokenByAddressOrUndefined = (
   state: BeefyState,
@@ -235,16 +239,29 @@ export const selectVaultReceiptTokenPrice = (
   return depositTokenPrice.times(receiptTokenPPFS);
 };
 
-export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
-  state.entities.tokens.breakdown.byOracleId[oracleId];
+export const selectLpBreakdownByOracleId = createSelector(
+  [
+    (state: BeefyState) => state.entities.tokens.breakdown.byOracleId,
+    (_state: BeefyState, oracleId: TokenEntity['oracleId']) => oracleId,
+  ],
+  (breakdownByOracleId, oracleId) => breakdownByOracleId[oracleId]
+);
 
-export const selectLpBreakdownForVault = (state: BeefyState, vault: VaultEntity) => {
-  return selectLpBreakdownByOracleId(state, vault.breakdownId);
-};
+export const selectLpBreakdownForVault = createSelector(
+  [
+    (state: BeefyState) => state.entities.tokens.breakdown.byOracleId,
+    (_state: BeefyState, vault: VaultEntity) => vault.breakdownId,
+  ],
+  (breakdownByOracleId, breakdownId) => breakdownByOracleId[breakdownId]
+);
 
-export const selectLpBreakdownForVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  return selectLpBreakdownForVault(state, selectVaultById(state, vaultId));
-};
+export const selectLpBreakdownForVaultId = createSelector(
+  [
+    selectVaultById,
+    (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.tokens.breakdown.byOracleId,
+  ],
+  (vault, breakdownByOracleId) => breakdownByOracleId[vault.breakdownId]
+);
 
 const selectShouldInitAddressBookGlobal = createGlobalDataSelector(
   'addressBook',

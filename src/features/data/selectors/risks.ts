@@ -1,4 +1,4 @@
-import type { PlatformEntity } from '../entities/platform.ts';
+import { createSelector } from '@reduxjs/toolkit';
 import { isTokenErc20, type TokenErc20 } from '../entities/token.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
@@ -6,62 +6,45 @@ import { selectPlatformById } from './platforms.ts';
 import { selectTokenByIdOrUndefined } from './tokens.ts';
 import { selectVaultById } from './vaults.ts';
 
-export const selectVaultHasAssetsWithRisks = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-):
-  | {
-      risks: false;
+export const selectVaultHasAssetsWithRisks = createSelector(
+  [selectVaultById, (state: BeefyState, _vaultId: VaultEntity['id']) => state],
+  (vault, state) => {
+    const tokensWithRisks: TokenErc20[] = [];
+
+    for (const tokenId of vault.assetIds) {
+      const token = selectTokenByIdOrUndefined(state, vault.chainId, tokenId);
+
+      if (token && isTokenErc20(token) && (token?.risks?.length || 0) > 0) {
+        tokensWithRisks.push(token);
+      }
     }
-  | {
-      risks: true;
-      tokens: TokenErc20[];
-    } => {
-  const vault = selectVaultById(state, vaultId);
 
-  const tokensWithRisks: TokenErc20[] = [];
-
-  for (const tokenId of vault.assetIds) {
-    const token = selectTokenByIdOrUndefined(state, vault.chainId, tokenId);
-
-    if (token && isTokenErc20(token) && (token?.risks?.length || 0) > 0) {
-      tokensWithRisks.push(token);
+    if (tokensWithRisks.length >= 1) {
+      return {
+        risks: true,
+        tokens: tokensWithRisks,
+      };
     }
-  }
 
-  if (tokensWithRisks.length >= 1) {
+    // by default return false
     return {
-      risks: true,
-      tokens: tokensWithRisks,
+      risks: false,
     };
   }
+);
 
-  // by default return false
-  return {
-    risks: false,
-  };
-};
-export const selectVaultHasPlatformWithRisks = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-):
-  | {
-      risks: false;
+export const selectVaultHasPlatformWithRisks = createSelector(
+  [selectVaultById, (state: BeefyState, _vaultId: VaultEntity['id']) => state],
+  (vault, state) => {
+    const platform = selectPlatformById(state, vault.platformId);
+
+    if ((platform?.risks?.length || 0) > 0) {
+      return {
+        risks: true,
+        platform,
+      };
+    } else {
+      return { risks: false, platform };
     }
-  | {
-      risks: true;
-      platform: PlatformEntity;
-    } => {
-  const vault = selectVaultById(state, vaultId);
-
-  const platform = selectPlatformById(state, vault.platformId);
-
-  if ((platform?.risks?.length || 0) > 0) {
-    return {
-      risks: true,
-      platform,
-    };
-  } else {
-    return { risks: false };
   }
-};
+);

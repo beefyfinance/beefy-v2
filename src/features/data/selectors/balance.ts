@@ -493,105 +493,107 @@ export type UserVaultBalanceBreakdown = {
   entries: UserVaultBalanceBreakdownEntry[];
 };
 
-export const selectVaultUserBalanceInDepositTokenBreakdown = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  walletAddress?: string
-): UserVaultBalanceBreakdown => {
-  const vault = selectVaultById(state, vaultId);
-  const shareData = selectVaultSharesToDepositTokenData(state, vaultId);
-  const vaultBalance = selectUserVaultBalanceInDepositToken(state, vaultId);
-  const balances: UserVaultBalanceBreakdown = {
-    depositToken: shareData.depositToken,
-    entries: [],
-  };
+export const selectVaultUserBalanceInDepositTokenBreakdown = createSelector(
+  [
+    selectVaultById,
+    selectVaultSharesToDepositTokenData,
+    selectUserVaultBalanceInDepositToken,
+    (_state: BeefyState, _vaultId: VaultEntity['id'], walletAddress?: string) => walletAddress,
+    (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) => state,
+  ],
+  (vault, shareData, vaultBalance, walletAddress, state) => {
+    const balances: UserVaultBalanceBreakdown = {
+      depositToken: shareData.depositToken,
+      entries: [],
+    };
 
-  if (vaultBalance.gt(BIG_ZERO)) {
-    balances.entries.push({
-      type: 'vault',
-      id: `vault-${vaultId}`,
-      vaultId,
-      amount: vaultBalance,
-    });
-  }
-
-  // gov vaults do not have balances elsewhere
-  if (isGovVault(vault) || !shareData.shareToken) {
-    return balances;
-  }
-
-  // only erc4626 vaults may have pending withdrawals
-  if (isErc4626Vault(vault)) {
-    const pendingWithdrawal = selectUserVaultBalanceInShareTokenPendingWithdrawal(
-      state,
-      vaultId,
-      walletAddress
-    );
-    if (pendingWithdrawal.gt(BIG_ZERO)) {
+    if (vaultBalance.gt(BIG_ZERO)) {
       balances.entries.push({
-        type: 'pending-withdrawal',
-        id: `pending-withdrawal-${vaultId}`,
-        vaultId,
-        amount: mooAmountToOracleAmount(
-          shareData.shareToken,
-          shareData.depositToken,
-          shareData.ppfs,
-          pendingWithdrawal
-        ),
+        type: 'vault',
+        id: `vault-${vault.id}`,
+        vaultId: vault.id,
+        amount: vaultBalance,
       });
     }
-  }
 
-  // deposits in boost (even those expired)
-  if (isVaultWithReceipt(vault)) {
-    const boostIds = selectAllVaultBoostIds(state, vaultId);
-    for (const boostId of boostIds) {
-      const boostShareBalance = selectBoostUserBalanceInToken(state, boostId, walletAddress);
-      if (boostShareBalance.gt(BIG_ZERO)) {
+    // gov vaults do not have balances elsewhere
+    if (isGovVault(vault) || !shareData.shareToken) {
+      return balances;
+    }
+
+    // only erc4626 vaults may have pending withdrawals
+    if (isErc4626Vault(vault)) {
+      const pendingWithdrawal = selectUserVaultBalanceInShareTokenPendingWithdrawal(
+        state,
+        vault.id,
+        walletAddress
+      );
+      if (pendingWithdrawal.gt(BIG_ZERO)) {
         balances.entries.push({
-          type: 'boost',
-          id: `boost-${boostId}`,
-          boostId,
+          type: 'pending-withdrawal',
+          id: `pending-withdrawal-${vault.id}`,
+          vaultId: vault.id,
           amount: mooAmountToOracleAmount(
             shareData.shareToken,
             shareData.depositToken,
             shareData.ppfs,
-            boostShareBalance
+            pendingWithdrawal
           ),
         });
       }
     }
-  }
 
-  // bridged mooToken
-  if (isStandardVault(vault)) {
-    if (vault.bridged) {
-      for (const [chainId, tokenAddress] of entries(vault.bridged)) {
-        const bridgedShareBalance = selectUserBalanceOfToken(
-          state,
-          chainId,
-          tokenAddress,
-          walletAddress
-        );
-        if (bridgedShareBalance.gt(BIG_ZERO)) {
+    // deposits in boost (even those expired)
+    if (isVaultWithReceipt(vault)) {
+      const boostIds = selectAllVaultBoostIds(state, vault.id);
+      for (const boostId of boostIds) {
+        const boostShareBalance = selectBoostUserBalanceInToken(state, boostId, walletAddress);
+        if (boostShareBalance.gt(BIG_ZERO)) {
           balances.entries.push({
-            type: 'bridged',
-            id: `bridged-${chainId}`,
-            chainId,
+            type: 'boost',
+            id: `boost-${boostId}`,
+            boostId,
             amount: mooAmountToOracleAmount(
               shareData.shareToken,
               shareData.depositToken,
               shareData.ppfs,
-              bridgedShareBalance
+              boostShareBalance
             ),
           });
         }
       }
     }
-  }
 
-  return balances;
-};
+    // bridged mooToken
+    if (isStandardVault(vault)) {
+      if (vault.bridged) {
+        for (const [chainId, tokenAddress] of entries(vault.bridged)) {
+          const bridgedShareBalance = selectUserBalanceOfToken(
+            state,
+            chainId,
+            tokenAddress,
+            walletAddress
+          );
+          if (bridgedShareBalance.gt(BIG_ZERO)) {
+            balances.entries.push({
+              type: 'bridged',
+              id: `bridged-${chainId}`,
+              chainId,
+              amount: mooAmountToOracleAmount(
+                shareData.shareToken,
+                shareData.depositToken,
+                shareData.ppfs,
+                bridgedShareBalance
+              ),
+            });
+          }
+        }
+      }
+    }
+
+    return balances;
+  }
+);
 
 export const selectGovVaultUserStakedBalanceInDepositToken = (
   state: BeefyState,
@@ -774,73 +776,96 @@ export const selectTreasuryV3PositionBreakdown = (
   return { assets };
 };
 
-export const selectUserLpBreakdownBalance = (
-  state: BeefyState,
-  vault: VaultEntity,
-  breakdown: TokenLpBreakdown,
-  walletAddress?: string
-): UserLpBreakdownBalance => {
-  const lpTotalSupplyDecimal = new BigNumber(breakdown.totalSupply);
-  const underlyingTotalSupplyDecimal =
-    breakdown && 'underlyingLiquidity' in breakdown ?
-      new BigNumber(breakdown.underlyingLiquidity || 0)
-    : BIG_ZERO;
-
-  const userBalanceDecimal = selectUserVaultBalanceInDepositTokenIncludingDisplaced(
-    state,
-    vault.id,
-    walletAddress
-  );
-
-  const userShareOfPool =
-    lpTotalSupplyDecimal.gt(BIG_ZERO) ?
-      userBalanceDecimal.dividedBy(lpTotalSupplyDecimal)
-    : BIG_ZERO;
-
-  const oneLpShareOfPool =
-    lpTotalSupplyDecimal.gt(BIG_ZERO) ? BIG_ONE.dividedBy(lpTotalSupplyDecimal) : BIG_ZERO;
-
-  const underlyingShareOfPool =
-    underlyingTotalSupplyDecimal.gt(BIG_ZERO) ?
-      underlyingTotalSupplyDecimal.dividedBy(underlyingTotalSupplyDecimal)
-    : BIG_ZERO;
-
-  const assets = breakdown.tokens.map((tokenAddress, i) => {
-    const reserves = new BigNumber(breakdown.balances[i]);
-    const underlyingReserves =
-      breakdown && 'underlyingBalances' in breakdown ?
-        new BigNumber(breakdown.underlyingBalances[i] || 0)
+export const selectUserLpBreakdownBalance = createSelector(
+  [
+    (
+      _state: BeefyState,
+      vault: VaultEntity,
+      _breakdown: TokenLpBreakdown,
+      _walletAddress?: string
+    ) => vault,
+    (
+      _state: BeefyState,
+      _vault: VaultEntity,
+      breakdown: TokenLpBreakdown,
+      _walletAddress?: string
+    ) => breakdown,
+    (
+      _state: BeefyState,
+      _vault: VaultEntity,
+      _breakdown: TokenLpBreakdown,
+      walletAddress?: string
+    ) => walletAddress,
+    (
+      state: BeefyState,
+      _vault: VaultEntity,
+      _breakdown: TokenLpBreakdown,
+      _walletAddress?: string
+    ) => state,
+  ],
+  (vault, breakdown, walletAddress, state): UserLpBreakdownBalance => {
+    const lpTotalSupplyDecimal = new BigNumber(breakdown.totalSupply);
+    const underlyingTotalSupplyDecimal =
+      breakdown && 'underlyingLiquidity' in breakdown ?
+        new BigNumber(breakdown.underlyingLiquidity || 0)
       : BIG_ZERO;
-    const assetToken = selectTokenByAddress(state, vault.chainId, tokenAddress);
-    const valuePerDecimal = selectTokenPriceByAddress(state, vault.chainId, tokenAddress);
-    const totalValue = reserves.multipliedBy(valuePerDecimal);
-    const totalUnderlyingValue = underlyingReserves.multipliedBy(valuePerDecimal);
+
+    const userBalanceDecimal = selectUserVaultBalanceInDepositTokenIncludingDisplaced(
+      state,
+      vault.id,
+      walletAddress
+    );
+
+    const userShareOfPool =
+      lpTotalSupplyDecimal.gt(BIG_ZERO) ?
+        userBalanceDecimal.dividedBy(lpTotalSupplyDecimal)
+      : BIG_ZERO;
+
+    const oneLpShareOfPool =
+      lpTotalSupplyDecimal.gt(BIG_ZERO) ? BIG_ONE.dividedBy(lpTotalSupplyDecimal) : BIG_ZERO;
+
+    const underlyingShareOfPool =
+      underlyingTotalSupplyDecimal.gt(BIG_ZERO) ?
+        underlyingTotalSupplyDecimal.dividedBy(underlyingTotalSupplyDecimal)
+      : BIG_ZERO;
+
+    const assets = breakdown.tokens.map((tokenAddress, i) => {
+      const reserves = new BigNumber(breakdown.balances[i]);
+      const underlyingReserves =
+        breakdown && 'underlyingBalances' in breakdown ?
+          new BigNumber(breakdown.underlyingBalances[i] || 0)
+        : BIG_ZERO;
+      const assetToken = selectTokenByAddress(state, vault.chainId, tokenAddress);
+      const valuePerDecimal = selectTokenPriceByAddress(state, vault.chainId, tokenAddress);
+      const totalValue = reserves.multipliedBy(valuePerDecimal);
+      const totalUnderlyingValue = underlyingReserves.multipliedBy(valuePerDecimal);
+
+      return {
+        ...assetToken,
+        totalAmount: reserves,
+        userAmount: userShareOfPool.multipliedBy(reserves),
+        oneAmount: oneLpShareOfPool.multipliedBy(reserves),
+        underlyingAmount: underlyingShareOfPool.multipliedBy(underlyingReserves),
+        totalValue,
+        totalUnderlyingValue,
+        userValue: userShareOfPool.multipliedBy(totalValue),
+        oneValue: oneLpShareOfPool.multipliedBy(totalValue),
+        underlyingValue: underlyingShareOfPool.multipliedBy(totalUnderlyingValue),
+        price: valuePerDecimal,
+      };
+    });
 
     return {
-      ...assetToken,
-      totalAmount: reserves,
-      userAmount: userShareOfPool.multipliedBy(reserves),
-      oneAmount: oneLpShareOfPool.multipliedBy(reserves),
-      underlyingAmount: underlyingShareOfPool.multipliedBy(underlyingReserves),
-      totalValue,
-      totalUnderlyingValue,
-      userValue: userShareOfPool.multipliedBy(totalValue),
-      oneValue: oneLpShareOfPool.multipliedBy(totalValue),
-      underlyingValue: underlyingShareOfPool.multipliedBy(totalUnderlyingValue),
-      price: valuePerDecimal,
+      assets,
+      userShareOfPool,
+      lpTotalSupplyDecimal,
+      userBalanceDecimal,
+      oneLpShareOfPool,
+      underlyingTotalSupplyDecimal,
+      underlyingShareOfPool,
     };
-  });
-
-  return {
-    assets,
-    userShareOfPool,
-    lpTotalSupplyDecimal,
-    userBalanceDecimal,
-    oneLpShareOfPool,
-    underlyingTotalSupplyDecimal,
-    underlyingShareOfPool,
-  };
-};
+  }
+);
 
 export const selectUserUnstakedClms = createSelector(
   (state: BeefyState, walletAddress?: string) => _selectWalletBalance(state, walletAddress),
