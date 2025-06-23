@@ -83,13 +83,16 @@ export const selectUserDepositedVaultIds = (state: BeefyState, walletAddress?: s
   return arrayOrStaticEmpty(walletBalance?.depositedVaultIds);
 };
 
-export const selectUserDepositedVaultIdsForAsset = (state: BeefyState, asset: string) => {
-  const vaultIds = selectUserDepositedVaultIds(state);
-  return vaultIds.filter(vaultId => {
-    const vault = selectVaultById(state, vaultId);
-    return vault.assetIds.includes(asset);
-  });
-};
+export const selectUserDepositedVaultIdsForAsset = createSelector(
+  [(state: BeefyState) => state, (_state: BeefyState, asset: string) => asset],
+  (state, asset) => {
+    const vaultIds = selectUserDepositedVaultIds(state);
+    return vaultIds.filter(vaultId => {
+      const vault = selectVaultById(state, vaultId);
+      return vault.assetIds.includes(asset);
+    });
+  }
+);
 
 export const selectHasUserDepositedOnChain = createSelector(
   (state: BeefyState, _chainId: ChainEntity['id'], walletAddress?: string) =>

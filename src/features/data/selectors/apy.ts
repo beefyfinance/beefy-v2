@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { first } from 'lodash-es';
 import { EMPTY_AVG_APY } from '../../../helpers/apy.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
@@ -271,48 +272,48 @@ export const selectIsVaultApyAvailable = (state: BeefyState, vaultId: VaultEntit
 };
 
 // TEMP: selector instead of connect/mapStateToProps
-export function selectApyVaultUIData(
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-): ApyVaultUIData {
-  const vault = selectVaultById(state, vaultId);
-  const type: 'apr' | 'apy' = vault.type === 'gov' ? 'apr' : 'apy';
+export const selectApyVaultUIData = createSelector(
+  [(state: BeefyState) => state, (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId],
+  (state, vaultId): ApyVaultUIData => {
+    const vault = selectVaultById(state, vaultId);
+    const type: 'apr' | 'apy' = vault.type === 'gov' ? 'apr' : 'apy';
 
-  const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
-  if (!shouldShowInterest) {
-    return { status: 'hidden', type };
+    const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
+    if (!shouldShowInterest) {
+      return { status: 'hidden', type };
+    }
+
+    const isLoaded = selectIsVaultApyAvailable(state, vaultId);
+    if (!isLoaded) {
+      return { status: 'loading', type };
+    }
+
+    const exists = selectDidAPIReturnValuesForVault(state, vaultId);
+    if (!exists) {
+      return { status: 'missing', type };
+    }
+
+    const values = selectVaultTotalApy(state, vaultId);
+    const boost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
+    const averages = selectVaultAvgApyOrUndefined(state, vaultId);
+
+    if (boost) {
+      return { status: 'available', type, values, boosted: boost.status, averages };
+    }
+
+    if (!isCowcentratedVault(vault) && !isCowcentratedGovVault(vault)) {
+      return { status: 'available', type, values, boosted: undefined, averages };
+    }
+
+    return {
+      status: 'available',
+      type: values.totalType,
+      values,
+      boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
+      averages,
+    };
   }
-
-  const isLoaded = selectIsVaultApyAvailable(state, vaultId);
-  if (!isLoaded) {
-    return { status: 'loading', type };
-  }
-
-  const exists = selectDidAPIReturnValuesForVault(state, vaultId);
-  if (!exists) {
-    return { status: 'missing', type };
-  }
-
-  const values = selectVaultTotalApy(state, vaultId);
-  const boost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
-  const averages = selectVaultAvgApyOrUndefined(state, vaultId);
-
-  if (boost) {
-    return { status: 'available', type, values, boosted: boost.status, averages };
-  }
-
-  if (!isCowcentratedVault(vault) && !isCowcentratedGovVault(vault)) {
-    return { status: 'available', type, values, boosted: undefined, averages };
-  }
-
-  return {
-    status: 'available',
-    type: values.totalType,
-    values,
-    boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
-    averages,
-  };
-}
+);
 
 export const selectBoostAprByRewardToken = (state: BeefyState, boostId: BoostPromoEntity['id']) => {
   return state.biz.apy.rawApy.byBoostId[boostId]?.aprByRewardToken || [];
