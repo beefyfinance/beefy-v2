@@ -1,5 +1,45 @@
 [
   {
+    "id": "curve-weth-rsup",
+    "name": "RSUP-WETH",
+    "type": "standard",
+    "token": "wethrsup",
+    "tokenAddress": "0xEe351f12EAE8C2B8B9d1B9BFd3c5dd565234578d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x65c004260Add26D87ee692992af7781A7317Bded",
+    "earnedToken": "mooCurveWETH-RSUP",
+    "earnedTokenAddress": "0x65c004260Add26D87ee692992af7781A7317Bded",
+    "oracle": "lps",
+    "oracleId": "curve-weth-rsup",
+    "status": "active",
+    "createdAt": 1750750541,
+    "platformId": "convex",
+    "assets": ["RSUP", "WETH"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/#/ethereum/pools/factory-twocrypto-119/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/#/ethereum/pools/factory-twocrypto-119/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xEe351f12EAE8C2B8B9d1B9BFd3c5dd565234578d",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0xEe351f12EAE8C2B8B9d1B9BFd3c5dd565234578d",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0x419905009e4656fdC02418C7Df35B1E61Ed5F726"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "pendle-sbold-27nov25",
     "name": "sBOLD 27Nov25",
     "type": "standard",
