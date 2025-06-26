@@ -18,7 +18,7 @@
     "platformId": "convex",
     "assets": ["RSUP", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.curve.finance/dex/#/ethereum/pools/factory-twocrypto-119/deposit",
     "removeLiquidityUrl": "https://www.curve.finance/dex/#/ethereum/pools/factory-twocrypto-119/withdraw",
