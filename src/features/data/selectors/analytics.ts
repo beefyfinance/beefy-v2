@@ -529,17 +529,23 @@ export const selectClmPnl = (
   };
 };
 
-export const selectVaultPnl = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  walletAddress?: string
-): UserVaultPnl => {
-  const vault = selectVaultById(state, vaultId);
-  if (isCowcentratedLikeVault(vault)) {
-    return selectClmPnl(state, vaultId, walletAddress);
+export const selectVaultPnl = createSelector(
+  [
+    (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
+      selectVaultById(state, vaultId),
+    (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) => ({
+      state,
+      vaultId,
+      walletAddress,
+    }),
+  ],
+  (vault, { state, vaultId, walletAddress }): UserVaultPnl => {
+    if (isCowcentratedLikeVault(vault)) {
+      return selectClmPnl(state, vaultId, walletAddress);
+    }
+    return selectStandardGovPnl(state, vaultId, walletAddress);
   }
-  return selectStandardGovPnl(state, vaultId, walletAddress);
-};
+);
 
 const EMPTY_INTERVAL_BUCKET: Readonly<AnalyticsIntervalData<unknown>> = {
   data: [],

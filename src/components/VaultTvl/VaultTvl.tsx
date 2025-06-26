@@ -1,10 +1,9 @@
-import type BigNumber from 'bignumber.js';
+import { createSelector } from '@reduxjs/toolkit';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectIsContractDataLoadedOnChain } from '../../features/data/selectors/contract-data.ts';
 import { selectIsPricesAvailable } from '../../features/data/selectors/prices.ts';
-import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types.ts';
 import { selectTvlBreakdownByVaultId } from '../../features/data/selectors/tvl.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import type { BeefyState } from '../../features/data/store/types.ts';
@@ -18,49 +17,48 @@ type VaultTvlProps = {
   vaultId: VaultEntity['id'];
 };
 
-type VaultTvlData = {
-  label: string;
-  vaultTvl: BigNumber;
-  underlyingTvl: BigNumber | null;
-  loading: boolean;
-  breakdown: TvlBreakdownUnderlying | null;
-};
+const selectVaultTvlData = createSelector(
+  [
+    selectIsPricesAvailable,
+    (state: BeefyState, vaultId: VaultEntity['id']) => {
+      const vault = selectVaultById(state, vaultId);
+      return selectIsContractDataLoadedOnChain(state, vault.chainId);
+    },
+    selectTvlBreakdownByVaultId,
+  ],
+  (isPricesAvailable, isContractDataLoadedOnChain, breakdown) => {
+    const label = 'VaultStat-TVL';
+    const isLoaded = isPricesAvailable && isContractDataLoadedOnChain;
 
-const selectVaultTvlData = (state: BeefyState, vaultId: VaultEntity['id']): VaultTvlData => {
-  const label = 'VaultStat-TVL';
-  const vault = selectVaultById(state, vaultId);
-  const isLoaded =
-    selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
+    if (!isLoaded) {
+      return {
+        label,
+        vaultTvl: BIG_ZERO,
+        underlyingTvl: null,
+        loading: true,
+        breakdown: null,
+      };
+    }
 
-  if (!isLoaded) {
-    return {
-      label,
-      vaultTvl: BIG_ZERO,
-      underlyingTvl: null,
-      loading: true,
-      breakdown: null,
-    };
-  }
+    if (!breakdown || !('underlyingTvl' in breakdown)) {
+      return {
+        label,
+        vaultTvl: breakdown.vaultTvl,
+        underlyingTvl: null,
+        loading: false,
+        breakdown: null,
+      };
+    }
 
-  const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
-  if (!breakdown || !('underlyingTvl' in breakdown)) {
     return {
       label,
       vaultTvl: breakdown.vaultTvl,
-      underlyingTvl: null,
-      loading: false,
-      breakdown: null,
+      underlyingTvl: breakdown.underlyingTvl,
+      loading: !isLoaded,
+      breakdown,
     };
   }
-
-  return {
-    label,
-    vaultTvl: breakdown.vaultTvl,
-    underlyingTvl: breakdown.underlyingTvl,
-    loading: !isLoaded,
-    breakdown,
-  };
-};
+);
 
 export const VaultTvl = memo(({ vaultId }: VaultTvlProps) => {
   const { t } = useTranslation();

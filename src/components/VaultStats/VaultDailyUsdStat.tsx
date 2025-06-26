@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { memo } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
@@ -25,12 +26,11 @@ export const VaultDailyUsdStat = memo(function ({
   const { t } = useTranslation();
   // @dev don't do this - temp migration away from connect()
   const { label, ...statProps } = useAppSelector(state =>
-    selectVaultDailyUsdStat(state, vaultId, walletAddress)
+    selectVaultDailyUsdStatMemoized(state, vaultId, walletAddress)
   );
   return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
 });
 
-// TODO better selector / hook
 function selectVaultDailyUsdStat(
   state: BeefyState,
   vaultId: VaultEntity['id'],
@@ -83,3 +83,10 @@ function selectVaultDailyUsdStat(
     tooltip: null,
   };
 }
+
+const selectVaultDailyUsdStatMemoized = createSelector(
+  (state: BeefyState) => state,
+  (_state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) => vaultId,
+  (_state: BeefyState, _vaultId: VaultEntity['id'], walletAddress?: string) => walletAddress,
+  selectVaultDailyUsdStat
+);

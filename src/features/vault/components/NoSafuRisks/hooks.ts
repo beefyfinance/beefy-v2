@@ -29,7 +29,12 @@ export const useVaultHasRisks = (
 
   return useMemo(() => {
     // handle tokens and platform risks
-    if (vaultHasAssetsWithRisks.risks && vaultHasPlatformWithRisks.risks) {
+    if (
+      vaultHasAssetsWithRisks.risks &&
+      vaultHasPlatformWithRisks.risks &&
+      vaultHasAssetsWithRisks.tokens &&
+      vaultHasPlatformWithRisks.platform
+    ) {
       const { tokens } = vaultHasAssetsWithRisks;
       const { platform } = vaultHasPlatformWithRisks;
 
@@ -86,7 +91,7 @@ export const useVaultHasRisks = (
       };
     }
     // handle only tokens risk
-    else if (vaultHasAssetsWithRisks.risks) {
+    else if (vaultHasAssetsWithRisks.risks && vaultHasAssetsWithRisks.tokens) {
       const { tokens } = vaultHasAssetsWithRisks;
       // TODO handle different risks per token and multiple risks per token
       if (tokens.length > 1) {
