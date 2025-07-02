@@ -8,9 +8,9 @@ import { styles } from './styles.ts';
 import { VaultApyStat } from './VaultApyStat.tsx';
 import { VaultAtDepositStat } from './VaultAtDepositStat.tsx';
 import { VaultDailyUsdStat } from './VaultDailyUsdStat.tsx';
-import { VaultDepositStat } from './VaultDepositStat.tsx';
 import { VaultPnlStat } from './VaultPnlStat.tsx';
 import { VaultYieldRewardsStat } from './VaultYieldRewardsStat.tsx';
+import { VaultDepositNowStat } from './VaultDepositNowStat.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -36,7 +36,8 @@ export const VaultDashboardStats = memo(function VaultStats({ vaultId, address }
           />
         </div>
         <div className={css(styles.column, styles.columnDashboard, styles.hideSm)}>
-          <VaultDepositStat
+          <VaultDepositNowStat
+            pnlData={pnlData}
             textWrap={false}
             hideLabel={true}
             vaultId={vaultId}

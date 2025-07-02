@@ -15,6 +15,9 @@ export type UserStandardPnl = {
   tokenDecimals: number;
   oraclePrice: BigNumber;
   oraclePriceAtDeposit: BigNumber;
+  depositLive: BigNumber;
+  depositLiveUsd: BigNumber;
+  pendingIndex: boolean;
 };
 
 export type UserGovPnl = {
@@ -38,6 +41,7 @@ export type TokenEntryNow = {
   token: TokenEntity;
   now: AmountPriceUsd;
   entry: AmountPriceUsd;
+  live: AmountPriceUsd;
 };
 
 export type TokenEntryNowDiff = TokenEntryNow & {
@@ -98,6 +102,8 @@ export type UserClmPnl = {
   hold: HoldCompare;
   yields: PnlYields;
   pnl: PnlBreakdown;
+  /** deposit or withdraw not indexed yet */
+  pendingIndex: boolean;
 };
 
 export type UserVaultPnl = UserStandardPnl | UserGovPnl | UserClmPnl | UserErc4626Pnl;
