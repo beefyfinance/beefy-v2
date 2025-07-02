@@ -1,5 +1,67 @@
 [
   {
+    "id": "balancerv3-ethereum-waethlidogho-usdf",
+    "name": "USDf/GHO V3",
+    "type": "standard",
+    "token": "USDf/GHO V3",
+    "tokenAddress": "0x6c5972311191097D002E804A9Bf97C96C54059ed",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerEthereumUSDf/waEthLidoGHO",
+    "earnedTokenAddress": "0x7A40C080f5fB60AcD1891581fa9414Ab31399d83",
+    "earnContractAddress": "0x7A40C080f5fB60AcD1891581fa9414Ab31399d83",
+    "oracle": "lps",
+    "oracleId": "balancerv3-ethereum-waethlidogho-usdf",
+    "createdAt": 1751182241,
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["USDf", "waEthLidoGHO"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v3/0x6c5972311191097d002e804a9bf97c96c54059ed/add-liquidity",
+    "network": "ethereum"
+  },
+  {
+    "id": "curve-weth-rsup",
+    "name": "RSUP-WETH",
+    "type": "standard",
+    "token": "wethrsup",
+    "tokenAddress": "0xEe351f12EAE8C2B8B9d1B9BFd3c5dd565234578d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x65c004260Add26D87ee692992af7781A7317Bded",
+    "earnedToken": "mooCurveWETH-RSUP",
+    "earnedTokenAddress": "0x65c004260Add26D87ee692992af7781A7317Bded",
+    "oracle": "lps",
+    "oracleId": "curve-weth-rsup",
+    "status": "active",
+    "createdAt": 1750750541,
+    "platformId": "convex",
+    "assets": ["RSUP", "WETH"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/#/ethereum/pools/factory-twocrypto-119/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/#/ethereum/pools/factory-twocrypto-119/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xEe351f12EAE8C2B8B9d1B9BFd3c5dd565234578d",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0xEe351f12EAE8C2B8B9d1B9BFd3c5dd565234578d",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0x419905009e4656fdC02418C7Df35B1E61Ed5F726"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "pendle-sbold-27nov25",
     "name": "sBOLD 27Nov25",
     "type": "standard",
@@ -1565,7 +1627,9 @@
     "earnedTokenAddress": "0x30b9a83F1A6aaf29D5F530fc59c241eeBE4Ce979",
     "oracle": "lps",
     "oracleId": "tokemak-baleth",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1749474917,
+    "retireReason": "rewards",
     "createdAt": 1729877383,
     "platformId": "tokemak",
     "assets": ["balETH"],
@@ -1587,7 +1651,9 @@
     "earnedTokenAddress": "0xfAda690840b9f90B4c1Ec054fEaD8362D49155b5",
     "oracle": "lps",
     "oracleId": "tokemak-autolrt",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1749474917,
+    "retireReason": "rewards",
     "createdAt": 1729878030,
     "platformId": "tokemak",
     "assets": ["autoLRT"],
