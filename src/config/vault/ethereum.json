@@ -1,5 +1,27 @@
 [
   {
+    "id": "balancerv3-ethereum-waethlidogho-usdf",
+    "name": "USDf/GHO V3",
+    "type": "standard",
+    "token": "USDf/GHO V3",
+    "tokenAddress": "0x6c5972311191097D002E804A9Bf97C96C54059ed",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerEthereumUSDf/waEthLidoGHO",
+    "earnedTokenAddress": "0x7A40C080f5fB60AcD1891581fa9414Ab31399d83",
+    "earnContractAddress": "0x7A40C080f5fB60AcD1891581fa9414Ab31399d83",
+    "oracle": "lps",
+    "oracleId": "balancerv3-ethereum-waethlidogho-usdf",
+    "createdAt": 1751182241,
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["USDf", "waEthLidoGHO"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v3/0x6c5972311191097d002e804a9bf97c96c54059ed/add-liquidity",
+    "network": "ethereum"
+  },
+  {
     "id": "curve-weth-rsup",
     "name": "RSUP-WETH",
     "type": "standard",
