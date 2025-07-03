@@ -1464,7 +1464,8 @@
     "twitter": "KittenSwap",
     "documentation": "https://docs.kittenswap.finance/",
     "description": "Kittenswap is a decentralized exchange (DEX) built on HyperEVM that implements the innovative ve(3,3) tokenomics model. Our platform combines the efficiency of automated market makers (AMMs) with a unique token distribution and governance system that aligns the interests of all participants.",
-    "type": "amm"
+    "type": "amm",
+    "risks": ["NO_TIMELOCK"]
   },
   {
     "id": "hyperswap",

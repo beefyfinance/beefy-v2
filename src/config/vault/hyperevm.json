@@ -1,5 +1,34 @@
 [
   {
+    "id": "kittenswap-whype-kitten",
+    "name": "KITTEN-WHYPE vLP",
+    "type": "standard",
+    "token": "KITTEN-WHYPE vLP",
+    "tokenAddress": "0xf3994B10d0E3153D99647a6Fe296102d2d6EadAF",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kittenswap",
+    "earnedToken": "mooKittenswapHyperevmKITTEN-WHYPE",
+    "earnedTokenAddress": "0x4ad02BF095B8FFB6E0aC687BEEE5610ca3EBe6b1",
+    "earnContractAddress": "0x4ad02BF095B8FFB6E0aC687BEEE5610ca3EBe6b1",
+    "oracle": "lps",
+    "oracleId": "kittenswap-whype-kitten",
+    "createdAt": 1751541061,
+    "status": "active",
+    "platformId": "kittenswap",
+    "assets": ["KITTEN", "WHYPE"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.kittenswap.finance/liquidity/manage/standard?tokenA=0x5555555555555555555555555555555555555555&tokenB=0x618275F8EFE54c2afa87bfB9F210A52F0fF89364&action=add&pool=volatile",
+    "network": "hyperevm",
+    "pointStructureIds": ["kittenswap"],
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "hyperevm-kittenswap"
+      }
+    ]
+  },
+  {
     "id": "hyperswap-cow-hyperevm-feusd-whype-rp",
     "name": "feUSD-WHYPE Reward Pool",
     "type": "gov",
