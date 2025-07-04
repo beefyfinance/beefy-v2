@@ -15,7 +15,7 @@ import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent.tsx';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 import { useTranslation } from 'react-i18next';
-import Hourglass from '../../images/icons/binary.svg?react';
+import ExclaimRoundedSquare from '../../images/icons/exclaim-rounded-square.svg?react';
 
 export type VaultDepositNowStatProps = {
   vaultId: VaultEntity['id'];
@@ -141,6 +141,6 @@ const selectVaultDepositNowStat = (
     blur: false,
     loading: !isLoaded,
     tooltip,
-    Icon: pendingIndex ? Hourglass : undefined,
+    Icon: pendingIndex ? ExclaimRoundedSquare : undefined,
   };
 };
