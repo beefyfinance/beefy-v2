@@ -170,3 +170,18 @@ export function orderByBigNumber<T>(
     : (a, b) => compareBigNumber(extractor(b), extractor(a))
   );
 }
+
+/** 0.1 = 10% */
+export function percentDifference(a: BigNumber, b: BigNumber): BigNumber {
+  return a.minus(b).abs().dividedBy(a.plus(b).dividedBy(2));
+}
+
+/** 0.1 = 10% */
+export function isEqualWithinPercent(
+  a: BigNumber,
+  b: BigNumber,
+  percent: BigNumber.Value
+): boolean {
+  const diff = percentDifference(a, b);
+  return diff.isLessThanOrEqualTo(percent);
+}

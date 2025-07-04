@@ -4,13 +4,13 @@ import { MobileVaultYieldStat } from '../../../../../../../../../components/Vaul
 import { VaultApyStat } from '../../../../../../../../../components/VaultStats/VaultApyStat.tsx';
 import { VaultAtDepositStat } from '../../../../../../../../../components/VaultStats/VaultAtDepositStat.tsx';
 import { VaultDailyUsdStat } from '../../../../../../../../../components/VaultStats/VaultDailyUsdStat.tsx';
-import { VaultDepositStat } from '../../../../../../../../../components/VaultStats/VaultDepositStat.tsx';
 import { legacyMakeStyles } from '../../../../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../../../../data/store/hooks.ts';
 import { type VaultEntity } from '../../../../../../../../data/entities/vault.ts';
 import { selectVaultPnl } from '../../../../../../../../data/selectors/analytics.ts';
 import { RowMobile } from '../../../../Row/Row.tsx';
 import { styles } from './styles.ts';
+import { VaultDepositNowStat } from '../../../../../../../../../components/VaultStats/VaultDepositNowStat.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -36,10 +36,10 @@ export const VaultDashboardMobileStats = memo(function VaultDashboardMobileStats
           align="right"
           layout="horizontal"
         />
-        <VaultDepositStat
+        <VaultDepositNowStat
+          pnlData={pnlData}
           vaultId={vaultId}
           walletAddress={address}
-          label={'VaultStat-Now'}
           align="right"
           layout="horizontal"
         />

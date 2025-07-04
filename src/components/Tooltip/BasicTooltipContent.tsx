@@ -32,5 +32,6 @@ const Text = styled('div', {
   base: {
     textStyle: 'body',
     color: 'colorPalette.text.content',
+    whiteSpace: 'pre-wrap',
   },
 });

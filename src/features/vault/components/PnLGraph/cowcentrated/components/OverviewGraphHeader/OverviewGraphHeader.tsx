@@ -17,6 +17,7 @@ import { selectClmPnl } from '../../../../../../data/selectors/analytics.ts';
 import { selectCowcentratedLikeVaultById } from '../../../../../../data/selectors/vaults.ts';
 import { Stat } from '../Stat/Stat.tsx';
 import { styles } from './styles.ts';
+import { PendingIndexNotice } from '../../../common/PendingIndexNotice.tsx';
 
 interface OverviewGraphHeaderProps {
   vaultId: VaultEntity['id'];
@@ -30,7 +31,7 @@ export const OverviewGraphHeader = memo(function OverviewGraphHeader({
   const classes = useStyles();
   const { t } = useTranslation();
   const userPnl = useAppSelector(state => selectClmPnl(state, vaultId));
-  const { underlying, tokens, pnl, hold } = userPnl;
+  const { underlying, tokens, pnl, hold, pendingIndex } = userPnl;
   const hasPnlTooltip = showClmPnlTooltip(userPnl);
   const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
   const tt = useMemo(() => {
@@ -40,103 +41,108 @@ export const OverviewGraphHeader = memo(function OverviewGraphHeader({
   }, [t, vault.type]);
 
   return (
-    <div className={classes.statsContainer}>
-      <Stat
-        tooltipText={tt('pnl-graph-tooltip-deposit')}
-        label={t('At Deposit')}
-        value0={`${formatTokenDisplayCondensed(
-          tokens[0].entry.amount,
-          tokens[0].token.decimals,
-          6
-        )} ${tokens[0].token.symbol}`}
-        value1={`${formatTokenDisplayCondensed(
-          tokens[1].entry.amount,
-          tokens[1].token.decimals,
-          6
-        )} ${tokens[1].token.symbol}`}
-        value2={formatTokenDisplayCondensed(underlying.entry.amount, 18, 6)}
-        subValue0={formatLargeUsd(tokens[0].entry.usd)}
-        subValue1={formatLargeUsd(tokens[1].entry.usd)}
-        subValue2={formatLargeUsd(underlying.entry.usd)}
-      />
-      <Stat
-        tooltipText={tt('pnl-graph-tooltip-now-clm')}
-        label={t('Now')}
-        value0={`${formatTokenDisplayCondensed(
-          tokens[0].now.amount,
-          tokens[0].token.decimals,
-          6
-        )} ${tokens[0].token.symbol}`}
-        value1={`${formatTokenDisplayCondensed(
-          tokens[1].now.amount,
-          tokens[1].token.decimals,
-          6
-        )} ${tokens[1].token.symbol}`}
-        value2={formatTokenDisplayCondensed(underlying.now.amount, 18, 6)}
-        subValue0={formatLargeUsd(tokens[0].now.usd)}
-        subValue1={formatLargeUsd(tokens[1].now.usd)}
-        subValue2={formatLargeUsd(underlying.now.usd)}
-      />
-      <Stat
-        tooltipText={tt('pnl-graph-tooltip-change-clm')}
-        label={t('Change')}
-        value0={formatPositiveOrNegative(
-          tokens[0].diff.amount,
-          formatTokenDisplayCondensed(tokens[0].diff.amount, tokens[0].token.decimals, 6),
-          tokens[0].token.symbol
-        )}
-        value1={formatPositiveOrNegative(
-          tokens[1].diff.amount,
-          formatTokenDisplayCondensed(tokens[1].diff.amount, tokens[1].token.decimals, 6),
-          tokens[1].token.symbol
-        )}
-        value2={
-          hasPnlTooltip ?
+    <>
+      {pendingIndex && <PendingIndexNotice />}
+      <div className={classes.statsContainer}>
+        <Stat
+          tooltipText={tt('pnl-graph-tooltip-deposit')}
+          label={t('At Deposit')}
+          value0={`${formatTokenDisplayCondensed(
+            tokens[0].entry.amount,
+            tokens[0].token.decimals,
+            6
+          )} ${tokens[0].token.symbol}`}
+          value1={`${formatTokenDisplayCondensed(
+            tokens[1].entry.amount,
+            tokens[1].token.decimals,
+            6
+          )} ${tokens[1].token.symbol}`}
+          value2={formatTokenDisplayCondensed(underlying.entry.amount, 18, 6)}
+          subValue0={formatLargeUsd(tokens[0].entry.usd)}
+          subValue1={formatLargeUsd(tokens[1].entry.usd)}
+          subValue2={formatLargeUsd(underlying.entry.usd)}
+        />
+        <Stat
+          tooltipText={tt('pnl-graph-tooltip-now-clm')}
+          label={t('Now')}
+          value0={`${formatTokenDisplayCondensed(
+            tokens[0].now.amount,
+            tokens[0].token.decimals,
+            6
+          )} ${tokens[0].token.symbol}`}
+          value1={`${formatTokenDisplayCondensed(
+            tokens[1].now.amount,
+            tokens[1].token.decimals,
+            6
+          )} ${tokens[1].token.symbol}`}
+          value2={formatTokenDisplayCondensed(underlying.now.amount, 18, 6)}
+          subValue0={formatLargeUsd(tokens[0].now.usd)}
+          subValue1={formatLargeUsd(tokens[1].now.usd)}
+          subValue2={formatLargeUsd(underlying.now.usd)}
+        />
+        <Stat
+          tooltipText={tt('pnl-graph-tooltip-change-clm')}
+          label={t('Change')}
+          value0={formatPositiveOrNegative(
+            tokens[0].diff.amount,
+            formatTokenDisplayCondensed(tokens[0].diff.amount, tokens[0].token.decimals, 6),
+            tokens[0].token.symbol
+          )}
+          value1={formatPositiveOrNegative(
+            tokens[1].diff.amount,
+            formatTokenDisplayCondensed(tokens[1].diff.amount, tokens[1].token.decimals, 6),
+            tokens[1].token.symbol
+          )}
+          value2={
+            hasPnlTooltip ?
+              <DivWithTooltip
+                children={
+                  <div className={classes.tooltip}>
+                    <span
+                      className={
+                        pnl.withClaimedPending.usd.gt(BIG_ZERO) ? classes.green : classes.red
+                      }
+                    >
+                      {formatLargeUsd(pnl.withClaimedPending.usd, { positivePrefix: '+$' })}
+                      {' PNL'}
+                    </span>
+                    <HelpOutline />
+                  </div>
+                }
+                tooltip={<ClmPnlTooltipContent userPnl={userPnl} />}
+                variant="dark"
+                size="compact"
+              />
+            : <span
+                className={pnl.withClaimedPending.usd.gt(BIG_ZERO) ? classes.green : classes.red}
+              >
+                {formatLargeUsd(pnl.withClaimedPending.usd, { positivePrefix: '+$' })}
+                {' PNL'}
+              </span>
+          }
+          subValue2={
             <DivWithTooltip
               children={
                 <div className={classes.tooltip}>
-                  <span
-                    className={
-                      pnl.withClaimedPending.usd.gt(BIG_ZERO) ? classes.green : classes.red
-                    }
-                  >
-                    {formatLargeUsd(pnl.withClaimedPending.usd, { positivePrefix: '+$' })}
-                    {' PNL'}
-                  </span>
-                  <HelpOutline />
+                  {`${formatLargeUsd(hold.usd)} HOLD`} <HelpOutline />
                 </div>
               }
-              tooltip={<ClmPnlTooltipContent userPnl={userPnl} />}
+              tooltip={
+                <div>
+                  <div className={classes.itemContainer}>
+                    <div className={classes.label}>{t('CLM VS HOLD')}</div>
+                    <div className={classes.value}>
+                      {formatLargeUsd(hold.diff.withClaimedPending, { positivePrefix: '+$' })}
+                    </div>
+                  </div>
+                </div>
+              }
               variant="dark"
               size="compact"
             />
-          : <span className={pnl.withClaimedPending.usd.gt(BIG_ZERO) ? classes.green : classes.red}>
-              {formatLargeUsd(pnl.withClaimedPending.usd, { positivePrefix: '+$' })}
-              {' PNL'}
-            </span>
-        }
-        subValue2={
-          <DivWithTooltip
-            children={
-              <div className={classes.tooltip}>
-                {`${formatLargeUsd(hold.usd)} HOLD`} <HelpOutline />
-              </div>
-            }
-            tooltip={
-              <div>
-                <div className={classes.itemContainer}>
-                  <div className={classes.label}>{t('CLM VS HOLD')}</div>
-                  <div className={classes.value}>
-                    {formatLargeUsd(hold.diff.withClaimedPending, { positivePrefix: '+$' })}
-                  </div>
-                </div>
-              </div>
-            }
-            variant="dark"
-            size="compact"
-          />
-        }
-      />
-    </div>
+          }
+        />
+      </div>
+    </>
   );
 });
