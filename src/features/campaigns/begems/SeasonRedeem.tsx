@@ -27,7 +27,7 @@ import {
   type AmountInputProps,
 } from '../../vault/components/Actions/Transact/AmountInput/AmountInput.tsx';
 import { AmountInputWithSlider } from '../../vault/components/Actions/Transact/AmountInputWithSlider/AmountInputWithSlider.tsx';
-import { format, fromUnixTime } from 'date-fns';
+import { getUnixNow } from '../../../helpers/date.ts';
 
 type SeasonRedeemProps = {
   season: number;
@@ -122,15 +122,22 @@ const RedeemFormDisabled = memo(function RedeemFormDisabled({
     tokenAddress ? selectTokenByAddressOrUndefined(state, 'sonic', tokenAddress) : undefined
   );
   const text = useMemo(() => {
-    const date = fromUnixTime(config.endTime);
-    return `Redeem in ${format(date, 'MMMM')}`;
+    const now = getUnixNow();
+    if (now > config.endTime) {
+      return 'Redeem soon';
+    }
+    // const date = fromUnixTime(config.endTime);
+    // return `Redeem in ${format(date, 'MMMM')}`;
+    return undefined;
   }, [config]);
 
   return (
     <>
-      <Corner>
-        <Banner>{text}</Banner>
-      </Corner>
+      {text && (
+        <Corner>
+          <Banner>{text}</Banner>
+        </Corner>
+      )}
       <RedeemForm
         input={
           inputToken && (
