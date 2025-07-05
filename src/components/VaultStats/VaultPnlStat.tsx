@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { memo } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
@@ -17,7 +18,7 @@ export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];
   pnlData: UserVaultPnl;
   walletAddress: string;
-} & Omit<VaultValueStatProps, keyof ReturnType<typeof selectVaultPnlStat>>;
+} & Omit<VaultValueStatProps, keyof ReturnType<typeof selectVaultPnlStatMemoized>>;
 
 export const VaultPnlStat = memo(function ({
   vaultId,
@@ -28,7 +29,7 @@ export const VaultPnlStat = memo(function ({
   const { t } = useTranslation();
   // @dev don't do this - temp migration away from connect()
   const { label, ...statProps } = useAppSelector(state =>
-    selectVaultPnlStat(state, vaultId, pnlData, walletAddress)
+    selectVaultPnlStatMemoized(state, vaultId, pnlData, walletAddress)
   );
   return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
 });
@@ -84,3 +85,26 @@ function selectVaultPnlStat(
     tooltip: showClmPnlTooltip(pnlData) ? <ClmPnlTooltipContent userPnl={pnlData} /> : undefined,
   };
 }
+
+const selectVaultPnlStatMemoized = createSelector(
+  (state: BeefyState) => state,
+  (
+    _state: BeefyState,
+    vaultId: VaultEntity['id'],
+    _pnlData: UserVaultPnl,
+    _walletAddress: string
+  ) => vaultId,
+  (
+    _state: BeefyState,
+    _vaultId: VaultEntity['id'],
+    pnlData: UserVaultPnl,
+    _walletAddress: string
+  ) => pnlData,
+  (
+    _state: BeefyState,
+    _vaultId: VaultEntity['id'],
+    _pnlData: UserVaultPnl,
+    walletAddress: string
+  ) => walletAddress,
+  selectVaultPnlStat
+);
