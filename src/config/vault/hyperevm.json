@@ -21,6 +21,7 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "hyperevm",
+    "pointStructureIds": ["hybra"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -52,6 +53,7 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "hyperevm",
+    "pointStructureIds": ["hybra"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -80,6 +82,7 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "hyperevm",
+    "pointStructureIds": ["hybra"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -111,6 +114,7 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "hyperevm",
+    "pointStructureIds": ["hybra"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -139,6 +143,7 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "hyperevm",
+    "pointStructureIds": ["hybra"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -170,6 +175,7 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "hyperevm",
+    "pointStructureIds": ["hybra"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
