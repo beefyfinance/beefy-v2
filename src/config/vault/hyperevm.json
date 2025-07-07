@@ -20,7 +20,7 @@
     "assets": ["USDe", "WHYPE"],
     "risks": [],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["ethena"],
+    "pointStructureIds": ["ethena", "hybra"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -52,7 +52,7 @@
     "assets": ["USDe", "WHYPE"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["ethena"],
+    "pointStructureIds": ["ethena", "hybra"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -81,6 +81,7 @@
     "assets": ["WHLP", "WHYPE"],
     "risks": [],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["hybra"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -112,6 +113,7 @@
     "assets": ["WHLP", "WHYPE"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["hybra"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -140,6 +142,7 @@
     "assets": ["LHYPE", "WHYPE"],
     "risks": [],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["hybra"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -171,6 +174,7 @@
     "assets": ["LHYPE", "WHYPE"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["hybra"],
     "network": "hyperevm",
     "zaps": [
       {
