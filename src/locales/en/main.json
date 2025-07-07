@@ -775,6 +775,7 @@
   "Transact-SwapProvider-one-inch": "1inch",
   "Transact-SwapProvider-kyber": "KyberSwap",
   "Transact-SwapProvider-odos": "Odos",
+  "Transact-SwapProvider-liquid-swap": "LiquidSwap",
   "Transact-SwapProvider-wnative": "WNative",
   "Transact-Notice-Deposit-Boost": "Make a deposit to get extra <Tokens/>",
   "Transact-Notice-Deposit-Boost_plural": "Make a deposit to get extra <Tokens/>",
