@@ -19,6 +19,7 @@ import { useAppSelector } from '../../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
 import { selectStandardGovPnl } from '../../../../../../data/selectors/analytics.ts';
 import { styles } from './styles.ts';
+import { PendingIndexNotice } from '../../../common/PendingIndexNotice.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -40,53 +41,57 @@ export const Header = memo(function Header({ vaultId }: HeaderProps) {
     yieldPercentage,
     totalPnlUsd,
     pnlPercentage,
+    pendingIndex,
   } = useAppSelector(state => selectStandardGovPnl(state, vaultId));
 
   const classes = useStyles();
 
   return (
-    <div className={classes.header}>
-      <HeaderItem
-        tooltipText={t('pnl-graph-tooltip-deposit')}
-        label={t('At Deposit')}
-        subValue={formatLargeUsd(usdBalanceAtDeposit)}
-      >
-        <SharesValue amount={balanceAtDeposit} decimals={tokenDecimals} />
-      </HeaderItem>
-      <HeaderItem
-        tooltipText={t('pnl-graph-tooltip-now-vault')}
-        label={t('Now')}
-        subValue={formatLargeUsd(depositUsd)}
-      >
-        <SharesValue amount={deposit} decimals={tokenDecimals} />
-      </HeaderItem>
-      <HeaderItem
-        tooltipText={t('pnl-graph-tooltip-yield')}
-        label={t('Yield')}
-        subValue={formatLargeUsd(totalYieldUsd)}
-      >
-        <SharesValue
-          amount={totalYield}
-          decimals={tokenDecimals}
-          css={styles.greenValue}
-          percentage={yieldPercentage}
-        />
-      </HeaderItem>
-      <HeaderItem
-        tooltipText={t('pnl-graph-tooltip-pnl')}
-        label={t('PNL')}
-        subValue={formatLargePercent(pnlPercentage)}
-      >
-        <div
-          className={css(
-            styles.value,
-            totalPnlUsd.gt(BIG_ZERO) ? styles.greenValue : styles.redValue
-          )}
+    <>
+      {pendingIndex && <PendingIndexNotice />}
+      <div className={classes.header}>
+        <HeaderItem
+          tooltipText={t('pnl-graph-tooltip-deposit')}
+          label={t('At Deposit')}
+          subValue={formatLargeUsd(usdBalanceAtDeposit)}
         >
-          {formatPositiveOrNegative(totalPnlUsd, formatLargeUsd(totalPnlUsd))}{' '}
-        </div>
-      </HeaderItem>
-    </div>
+          <SharesValue amount={balanceAtDeposit} decimals={tokenDecimals} />
+        </HeaderItem>
+        <HeaderItem
+          tooltipText={t('pnl-graph-tooltip-now-vault')}
+          label={t('Now')}
+          subValue={formatLargeUsd(depositUsd)}
+        >
+          <SharesValue amount={deposit} decimals={tokenDecimals} />
+        </HeaderItem>
+        <HeaderItem
+          tooltipText={t('pnl-graph-tooltip-yield')}
+          label={t('Yield')}
+          subValue={formatLargeUsd(totalYieldUsd)}
+        >
+          <SharesValue
+            amount={totalYield}
+            decimals={tokenDecimals}
+            css={styles.greenValue}
+            percentage={yieldPercentage}
+          />
+        </HeaderItem>
+        <HeaderItem
+          tooltipText={t('pnl-graph-tooltip-pnl')}
+          label={t('PNL')}
+          subValue={formatLargePercent(pnlPercentage)}
+        >
+          <div
+            className={css(
+              styles.value,
+              totalPnlUsd.gt(BIG_ZERO) ? styles.greenValue : styles.redValue
+            )}
+          >
+            {formatPositiveOrNegative(totalPnlUsd, formatLargeUsd(totalPnlUsd))}{' '}
+          </div>
+        </HeaderItem>
+      </div>
+    </>
   );
 });
 

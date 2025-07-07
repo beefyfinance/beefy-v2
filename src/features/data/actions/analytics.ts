@@ -86,6 +86,7 @@ import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils.ts';
 import { fetchAllBalanceAction } from './balance.ts';
 import { fetchUserOffChainRewardsForDepositedVaultsAction } from './user-rewards/user-rewards.ts';
+import { featureFlag_simulateMissingTransactions } from '../utils/feature-flags.ts';
 
 export interface FetchWalletTimelineFulfilled {
   timelines: Record<VaultEntity['id'], AnyTimelineEntity>;
@@ -254,7 +255,7 @@ function handleDatabarnTimeline(
     }
   });
 
-  return byVaultId;
+  return applyTransactionFeatureFlags(byVaultId);
 }
 
 /** Extract CLM Pool timelines from CLM Timeline */
@@ -354,7 +355,16 @@ function handleCowcentratedPoolTimeline(
     tx => tx.datetime.getTime()
   );
 
-  return groupBy(txsForPools, tx => tx.vaultId);
+  const byVaultId = groupBy(txsForPools, tx => tx.vaultId);
+  return applyTransactionFeatureFlags(byVaultId);
+}
+
+function applyTransactionFeatureFlags<T extends Record<string, unknown[]>>(byVaultId: T): T {
+  if (featureFlag_simulateMissingTransactions()) {
+    return mapValues(byVaultId, txs => (txs.length > 1 ? txs.slice(0, txs.length - 1) : txs)) as T;
+  }
+
+  return byVaultId;
 }
 
 /** CLM Vaults or ERC4626 Vaults */
@@ -475,7 +485,8 @@ function handleClassicVaultTimeline(
     tx => tx.datetime.getTime()
   );
 
-  return groupBy(vaultTxsWithId, tx => tx.vaultId);
+  const byVaultId = groupBy(vaultTxsWithId, tx => tx.vaultId);
+  return applyTransactionFeatureFlags(byVaultId);
 }
 
 export const fetchWalletTimeline = createAppAsyncThunk<

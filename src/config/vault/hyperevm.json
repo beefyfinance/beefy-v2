@@ -1,5 +1,400 @@
 [
   {
+    "id": "hybra-cow-hyperevm-whype-usde-rp",
+    "name": "USDe-WHYPE Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowHybraHyperevmUSDe-WHYPE",
+    "tokenAddress": "0xCbdBa88e24e2455b562683f8170387b264fc08Fa",
+    "tokenDecimals": 18,
+    "tokenProviderId": "hybra",
+    "earnContractAddress": "0xb4E9Aea85A2e6037E2C3c133493290915977eaE8",
+    "earnedToken": "rCowHybraHyperevmUSDe-WHYPE",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "hybra-cow-hyperevm-whype-usde",
+    "status": "active",
+    "createdAt": 1751869915,
+    "platformId": "hybra",
+    "assets": ["USDe", "WHYPE"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["ethena", "hybra"],
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "hybra-cow-hyperevm-whype-usde",
+    "name": "USDe-WHYPE",
+    "type": "cowcentrated",
+    "token": "USDe-WHYPE hybra",
+    "tokenAddress": "0x269d9787FCEFb509Ec4a420c247EadF4374B638f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "hybra",
+    "depositTokenAddresses": [
+      "0x5555555555555555555555555555555555555555",
+      "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34"
+    ],
+    "earnContractAddress": "0xCbdBa88e24e2455b562683f8170387b264fc08Fa",
+    "earnedToken": "cowHybraHyperevmUSDe-WHYPE",
+    "earnedTokenAddress": "0xCbdBa88e24e2455b562683f8170387b264fc08Fa",
+    "oracle": "lps",
+    "oracleId": "hybra-cow-hyperevm-whype-usde",
+    "status": "active",
+    "createdAt": 1751869915,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["USDe", "WHYPE"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["ethena", "hybra"],
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "hybra-cow-hyperevm-whlp-whype-rp",
+    "name": "WHLP-WHYPE Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowHybraHyperevmWHLP-WHYPE",
+    "tokenAddress": "0xfe4e34F6EdBA9B2Fba06014046690Cd558aca0fE",
+    "tokenDecimals": 18,
+    "tokenProviderId": "hybra",
+    "earnContractAddress": "0x5D9724177b596CBbABaFc6dB5CF09650d18c9cF1",
+    "earnedToken": "rCowHybraHyperevmWHLP-WHYPE",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "hybra-cow-hyperevm-whlp-whype",
+    "status": "active",
+    "createdAt": 1751869664,
+    "platformId": "hybra",
+    "assets": ["WHLP", "WHYPE"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "hybra-cow-hyperevm-whlp-whype",
+    "name": "WHLP-WHYPE",
+    "type": "cowcentrated",
+    "token": "WHLP-WHYPE hybra",
+    "tokenAddress": "0x761819512f4b156944606849B1555822B45bdaE5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "hybra",
+    "depositTokenAddresses": [
+      "0x1359b05241cA5076c9F59605214f4F84114c0dE8",
+      "0x5555555555555555555555555555555555555555"
+    ],
+    "earnContractAddress": "0xfe4e34F6EdBA9B2Fba06014046690Cd558aca0fE",
+    "earnedToken": "cowHybraHyperevmWHLP-WHYPE",
+    "earnedTokenAddress": "0xfe4e34F6EdBA9B2Fba06014046690Cd558aca0fE",
+    "oracle": "lps",
+    "oracleId": "hybra-cow-hyperevm-whlp-whype",
+    "status": "active",
+    "createdAt": 1751869664,
+    "platformId": "beefy",
+    "feeTier": "0.02",
+    "assets": ["WHLP", "WHYPE"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "hybra-cow-hyperevm-whype-lhype-rp",
+    "name": "LHYPE-WHYPE Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowHybraHyperevmLHYPE-WHYPE",
+    "tokenAddress": "0x2084839396c56BEf5A25360B0000aB40103C9Db9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "hybra",
+    "earnContractAddress": "0x9C0187d188C412266130D0Ba1D17d4977aCc7179",
+    "earnedToken": "rCowHybraHyperevmLHYPE-WHYPE",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "hybra-cow-hyperevm-whype-lhype",
+    "status": "active",
+    "createdAt": 1751869332,
+    "platformId": "hybra",
+    "assets": ["LHYPE", "WHYPE"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "hybra-cow-hyperevm-whype-lhype",
+    "name": "LHYPE-WHYPE",
+    "type": "cowcentrated",
+    "token": "WHYPE-LHYPE hybra",
+    "tokenAddress": "0xB7e650F67425e6F0DC14AEE1D11e5A365ddD94B0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "hybra",
+    "depositTokenAddresses": [
+      "0x5555555555555555555555555555555555555555",
+      "0x5748ae796AE46A4F1348a1693de4b50560485562"
+    ],
+    "earnContractAddress": "0x2084839396c56BEf5A25360B0000aB40103C9Db9",
+    "earnedToken": "cowHybraHyperevmLHYPE-WHYPE",
+    "earnedTokenAddress": "0x2084839396c56BEf5A25360B0000aB40103C9Db9",
+    "oracle": "lps",
+    "oracleId": "hybra-cow-hyperevm-whype-lhype",
+    "status": "active",
+    "createdAt": 1751869332,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["LHYPE", "WHYPE"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "hybra-cow-hyperevm-feusd-usdt0-rp",
+    "name": "feUSD-USD₮0 Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowHybraHyperevmfeUSD-USDT0",
+    "tokenAddress": "0x98312D3c6D900678Bf0667A45b2aADaD92045D78",
+    "tokenDecimals": 18,
+    "tokenProviderId": "hybra",
+    "earnContractAddress": "0x325461FFC41246817cdB0e930B405C299Fc5Fd42",
+    "earnedToken": "rCowHybraHyperevmfeUSD-USDT0",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "hybra-cow-hyperevm-feusd-usdt0",
+    "status": "active",
+    "createdAt": 1751791284,
+    "platformId": "hybra",
+    "assets": ["feUSD", "USDT0"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "pointStructureIds": ["hybra"],
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "hybra-cow-hyperevm-feusd-usdt0",
+    "name": "feUSD-USD₮0",
+    "type": "cowcentrated",
+    "token": "feUSD-USD₮0 hybra",
+    "tokenAddress": "0x4FC284144FA0D157c844D2D408eac4e2e29b479F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "hybra",
+    "depositTokenAddresses": [
+      "0x02c6a2fA58cC01A18B8D9E00eA48d65E4dF26c70",
+      "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb"
+    ],
+    "earnContractAddress": "0x98312D3c6D900678Bf0667A45b2aADaD92045D78",
+    "earnedToken": "cowHybraHyperevmfeUSD-USDT0",
+    "earnedTokenAddress": "0x98312D3c6D900678Bf0667A45b2aADaD92045D78",
+    "oracle": "lps",
+    "oracleId": "hybra-cow-hyperevm-feusd-usdt0",
+    "status": "active",
+    "createdAt": 1751791284,
+    "platformId": "beefy",
+    "feeTier": "0.02",
+    "assets": ["feUSD", "USDT0"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "pointStructureIds": ["hybra"],
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "hybra-cow-hyperevm-whype-usdt0-rp",
+    "name": "USD₮0-WHYPE Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowHybraHyperevmUSDT0-WHYPE",
+    "tokenAddress": "0xdC9d2c590145f3a006FE899D175F93E97dC3a516",
+    "tokenDecimals": 18,
+    "tokenProviderId": "hybra",
+    "earnContractAddress": "0x03c27F725DCfdD00E040Ecb7Fb89c24239Ad06b0",
+    "earnedToken": "rCowHybraHyperevmUSDT0-WHYPE",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "hybra-cow-hyperevm-whype-usdt0",
+    "status": "active",
+    "createdAt": 1751790352,
+    "platformId": "hybra",
+    "assets": ["USDT0", "WHYPE"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "pointStructureIds": ["hybra"],
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "hybra-cow-hyperevm-whype-usdt0",
+    "name": "USD₮0-WHYPE",
+    "type": "cowcentrated",
+    "token": "USD₮0-WHYPE hybra",
+    "tokenAddress": "0x3603ffEbB994CC110b4186040CaC3005B2cf4465",
+    "tokenDecimals": 18,
+    "tokenProviderId": "hybra",
+    "depositTokenAddresses": [
+      "0x5555555555555555555555555555555555555555",
+      "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb"
+    ],
+    "earnContractAddress": "0xdC9d2c590145f3a006FE899D175F93E97dC3a516",
+    "earnedToken": "cowHybraHyperevmUSDT0-WHYPE",
+    "earnedTokenAddress": "0xdC9d2c590145f3a006FE899D175F93E97dC3a516",
+    "oracle": "lps",
+    "oracleId": "hybra-cow-hyperevm-whype-usdt0",
+    "status": "active",
+    "createdAt": 1751790352,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["USDT0", "WHYPE"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "pointStructureIds": ["hybra"],
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "hybra-cow-hyperevm-feusd-whype-rp",
+    "name": "feUSD-WHYPE Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowHybraHyperevmfeUSD-WHYPE",
+    "tokenAddress": "0x76C8DaE55CD103B9865c6f056C8da915C8a98c4C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "hybra",
+    "earnContractAddress": "0xDd676F923F8a928d97F58F5ADE22c3512d2cFddb",
+    "earnedToken": "rCowHybraHyperevmfeUSD-WHYPE",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "hybra-cow-hyperevm-feusd-whype",
+    "status": "active",
+    "createdAt": 1751790074,
+    "platformId": "hybra",
+    "assets": ["feUSD", "WHYPE"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "pointStructureIds": ["hybra"],
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "hybra-cow-hyperevm-feusd-whype",
+    "name": "feUSD-WHYPE",
+    "type": "cowcentrated",
+    "token": "feUSD-WHYPE hybra",
+    "tokenAddress": "0xc04832A2d9963cb7e33B7748aBE82A574e1ABDde",
+    "tokenDecimals": 18,
+    "tokenProviderId": "hybra",
+    "depositTokenAddresses": [
+      "0x02c6a2fA58cC01A18B8D9E00eA48d65E4dF26c70",
+      "0x5555555555555555555555555555555555555555"
+    ],
+    "earnContractAddress": "0x76C8DaE55CD103B9865c6f056C8da915C8a98c4C",
+    "earnedToken": "cowHybraHyperevmfeUSD-WHYPE",
+    "earnedTokenAddress": "0x76C8DaE55CD103B9865c6f056C8da915C8a98c4C",
+    "oracle": "lps",
+    "oracleId": "hybra-cow-hyperevm-feusd-whype",
+    "status": "active",
+    "createdAt": 1751790074,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["feUSD", "WHYPE"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "pointStructureIds": ["hybra"],
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "kittenswap-whype-kitten",
+    "name": "KITTEN-WHYPE vLP",
+    "type": "standard",
+    "token": "KITTEN-WHYPE vLP",
+    "tokenAddress": "0xf3994B10d0E3153D99647a6Fe296102d2d6EadAF",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kittenswap",
+    "earnedToken": "mooKittenswapHyperevmKITTEN-WHYPE",
+    "earnedTokenAddress": "0x4ad02BF095B8FFB6E0aC687BEEE5610ca3EBe6b1",
+    "earnContractAddress": "0x4ad02BF095B8FFB6E0aC687BEEE5610ca3EBe6b1",
+    "oracle": "lps",
+    "oracleId": "kittenswap-whype-kitten",
+    "createdAt": 1751541061,
+    "status": "active",
+    "platformId": "kittenswap",
+    "assets": ["KITTEN", "WHYPE"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.kittenswap.finance/liquidity/manage/standard?tokenA=0x5555555555555555555555555555555555555555&tokenB=0x618275F8EFE54c2afa87bfB9F210A52F0fF89364&action=add&pool=volatile",
+    "network": "hyperevm",
+    "pointStructureIds": ["kittenswap"],
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "hyperevm-kittenswap"
+      }
+    ]
+  },
+  {
     "id": "hyperswap-cow-hyperevm-feusd-whype-rp",
     "name": "feUSD-WHYPE Reward Pool",
     "type": "gov",

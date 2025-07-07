@@ -1464,7 +1464,8 @@
     "twitter": "KittenSwap",
     "documentation": "https://docs.kittenswap.finance/",
     "description": "Kittenswap is a decentralized exchange (DEX) built on HyperEVM that implements the innovative ve(3,3) tokenomics model. Our platform combines the efficiency of automated market makers (AMMs) with a unique token distribution and governance system that aligns the interests of all participants.",
-    "type": "amm"
+    "type": "amm",
+    "risks": ["NO_TIMELOCK"]
   },
   {
     "id": "hyperswap",
@@ -1473,6 +1474,15 @@
     "twitter": "Hyperswap",
     "documentation": "https://docs.hyperswap.exchange/hyperswap",
     "description": "HyperSwap is the first native DEX for the HyperEVM. HyperSwap is deeply integrated across the HyperEVM with most of the top protocols, tokens, and liquidity providers in the ecosystem.",
+    "type": "amm"
+  },
+  {
+    "id": "hybra",
+    "name": "Hybra",
+    "website": "https://www.hybra.finance/",
+    "twitter": "HybraFinance",
+    "documentation": "https://hybra-foundation.gitbook.io/hybra-foundation",
+    "description": "Public liquidity layer on Hyperliquid. Upgraded ve(3,3) flywheel, CL & intent-based gasless trades.",
     "type": "amm"
   }
 ]

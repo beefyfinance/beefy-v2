@@ -1,5 +1,28 @@
 [
   {
+    "id": "moo_swapx-ichi-strike-usdc-animera",
+    "title": "Animera",
+    "vaultId": "swapx-ichi-strike-usdc",
+    "assets": ["STRIKE", "USDC"],
+    "tokenAddress": "0x3d2b3D3264C04e695883953eB34c82e946017604",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xF0Aa1D6E8Bb2e7973a31cf9B777ab9e9a1EEFcDE",
+    "tag": {
+      "text": "Animera Boost"
+    },
+    "campaign": "animera-boost",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x8Bb21B10f32a10bed94041746ffD32003bAd6534",
+        "symbol": "STRIKE",
+        "decimals": 18,
+        "oracleId": "STRIKE"
+      }
+    ]
+  },
+  {
     "id": "moo_silov2-sonic-usdc-valamore-begems1",
     "title": "Beefy",
     "vaultId": "silov2-sonic-usdc-valamore",

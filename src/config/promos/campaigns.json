@@ -1,4 +1,11 @@
 {
+  "animera-boost": {
+    "title": "Animera Boost",
+    "description": "Striker Games is An indie web3 Game Studio Focused on Building The Best PvP AAA Games.",
+    "social": {
+      "twitter": "https://twitter.com/strikergameshq"
+    }
+  },
   "begems-boost": {
     "title": "Beefy beGEMS1 Boost",
     "description": "Sonic Gems are airdrop points awarded exclusively by Sonic to apps building on its chain. They’re distributed based on various factors and are [redeemable for S tokens](/campaigns/begems/) at the end of each season. Beefy is issuing 80,000,000 beGEMS each season, representing its share of earned S tokens. beGEMS are liquid ERC-20 tokens — transferable, tradeable, and open to speculation.",
