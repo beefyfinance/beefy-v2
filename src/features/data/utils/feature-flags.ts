@@ -307,3 +307,7 @@ export function featureFlag_simulateLiveBoost(boostId: string): boolean {
   const boostIds = getSimulateLiveBoosts();
   return boostIds.has(boostId);
 }
+
+export function featureFlag_simulateMissingTransactions(): boolean {
+  return getSearchParams().has('__simulate_missing_transactions');
+}

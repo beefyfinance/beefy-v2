@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { createCachedSelector } from 're-reselect';
-import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
+import { BIG_ONE, BIG_ZERO, isEqualWithinPercent } from '../../../helpers/big-number.ts';
 import { ClmPnl, PnL } from '../../../helpers/pnl.ts';
 import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types.ts';
 import type {
@@ -39,7 +39,6 @@ import {
 import {
   selectGovVaultPendingRewardsWithPrice,
   selectUserDepositedVaultIds,
-  selectUserLpBreakdownBalance,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
 } from './balance.ts';
 import { selectIsConfigAvailable } from './config.ts';
@@ -66,6 +65,8 @@ import {
   selectVaultPricePerFullShare,
 } from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
+
+const PENDING_SHARES_PERCENT = new BigNumber(0.1 / 100); // 0.1%
 
 export const selectUserAnalytics = createSelector(
   (state: BeefyState, address?: string) => address || selectWalletAddress(state),
@@ -209,7 +210,8 @@ export const selectStandardGovPnl = (
   const balanceAtDeposit = pnl.getRemainingShares().times(pnl.getRemainingSharesAvgEntryPpfs());
   const usdBalanceAtDeposit = balanceAtDeposit.times(oraclePriceAtDeposit);
 
-  const depositNow = pnl.getRemainingShares().times(ppfs);
+  const sharesAtDeposit = pnl.getRemainingShares();
+  const depositNow = sharesAtDeposit.times(ppfs);
   const depositUsd = depositNow.times(oraclePrice);
 
   const totalYield = depositNow.minus(balanceAtDeposit);
@@ -222,6 +224,14 @@ export const selectStandardGovPnl = (
   const yieldPercentage = totalYield.dividedBy(balanceAtDeposit);
 
   const pnlPercentage = totalPnlUsd.dividedBy(usdBalanceAtDeposit);
+
+  const sharesLive = selectUserVaultBalanceInShareTokenIncludingDisplaced(
+    state,
+    vaultId,
+    walletAddress
+  );
+  const depositLive = sharesLive.times(ppfs);
+  const depositLiveUsd = depositLive.times(oraclePrice);
 
   return {
     type: vault.type,
@@ -237,6 +247,9 @@ export const selectStandardGovPnl = (
     tokenDecimals: depositToken.decimals,
     oraclePrice,
     oraclePriceAtDeposit,
+    depositLive,
+    depositLiveUsd,
+    pendingIndex: !isEqualWithinPercent(sharesLive, sharesAtDeposit, PENDING_SHARES_PERCENT),
   };
 };
 
@@ -288,33 +301,50 @@ export const selectClmPnl = (
   const vault = selectCowcentratedLikeVaultById(state, vaultId);
   const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
   const shareToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
-  const sharesNow = selectUserVaultBalanceInShareTokenIncludingDisplaced(
-    state,
-    vaultId,
-    walletAddress
-  );
   const underlyingToken = selectTokenByAddress(
     state,
     vault.chainId,
     getCowcentratedAddressFromCowcentratedLikeVault(vault)
   );
-  const underlyingNowPrice = selectTokenPriceByAddress(
+  const [token0, token1] = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
+
+  // === Now (Live, on-chain)
+  const liveSharesAmount = selectUserVaultBalanceInShareTokenIncludingDisplaced(
+    state,
+    vaultId,
+    walletAddress
+  );
+  const liveUnderlyingPrice = selectTokenPriceByAddress(
     state,
     vault.chainId,
     vault.depositTokenAddress
   );
-  const [token0, token1] = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
-  const breakdown = selectLpBreakdownForVault(state, vault);
-  const { assets, userBalanceDecimal: underlyingNow } = selectUserLpBreakdownBalance(
-    state,
-    vault,
-    breakdown,
-    walletAddress
+  const liveToken0Price = selectTokenPriceByAddress(state, token0.chainId, token0.address);
+  const liveToken1Price = selectTokenPriceByAddress(state, token1.chainId, token1.address);
+  const liveBreakdown = selectLpBreakdownForVault(state, vault);
+  const liveTotalSupply = new BigNumber(liveBreakdown.totalSupply);
+  const livePpfs = selectVaultPricePerFullShare(state, vault.id).shiftedBy(
+    18 - underlyingToken.decimals
+  );
+  const liveUnderlyingAmount = liveSharesAmount.times(livePpfs);
+  const liveUnderlyingInUsd = liveUnderlyingAmount.times(liveUnderlyingPrice);
+  const breakdownTokens = (
+    underlyingAmount: BigNumber,
+    totalSupply: BigNumber
+  ): { token0: BigNumber; token1: BigNumber } => {
+    const shareOfPool =
+      totalSupply.gt(BIG_ZERO) ? underlyingAmount.dividedBy(totalSupply) : BIG_ZERO;
+    return {
+      token0: shareOfPool.times(liveBreakdown.balances[0]),
+      token1: shareOfPool.times(liveBreakdown.balances[1]),
+    };
+  };
+  const { token0: liveToken0Amount, token1: liveToken1Amount } = breakdownTokens(
+    liveUnderlyingAmount,
+    liveTotalSupply
   );
 
-  const token0breakdown = assets[0];
-  const token1breakdown = assets[1];
-
+  // === PNL
   const clmPnl = new ClmPnl();
 
   if (isTimelineEntityCowcentrated(sortedTimeline) && sortedTimeline.current.length > 0) {
@@ -333,36 +363,50 @@ export const selectClmPnl = (
   }
 
   const {
-    remainingUnderlying: underlyingAtDeposit,
-    remainingToken0: token0AtDeposit,
-    remainingToken1: token1AtDeposit,
-    remainingShares: sharesAtDeposit,
+    remainingUnderlying: atDepositUnderlyingAmount,
+    remainingToken0: atDepositToken0Amount,
+    remainingToken1: atDepositToken1Amount,
+    remainingShares: atDepositSharesAmount,
   } = clmPnl.getRemainingShares();
 
-  const { token0EntryPrice: token0AtDepositPrice, token1EntryPrice: token1AtDepositPrice } =
+  const { token0EntryPrice: atDepositToken0Price, token1EntryPrice: atDepositToken1Price } =
     clmPnl.getRemainingSharesAvgEntryPrice();
 
-  const underlyingAtDepositInUsd = token0AtDeposit
-    .times(token0AtDepositPrice)
-    .plus(token1AtDeposit.times(token1AtDepositPrice));
-  const underlyingAtDepositPrice = underlyingAtDepositInUsd.dividedBy(underlyingAtDeposit);
-  const underlyingNowInUsd = underlyingNow.times(underlyingNowPrice);
-  const hold = token0AtDeposit
-    .times(token0breakdown.price)
-    .plus(token1AtDeposit.times(token1breakdown.price));
+  const atDepositUnderlyingInUsd = atDepositToken0Amount
+    .times(atDepositToken0Price)
+    .plus(atDepositToken1Amount.times(atDepositToken1Price));
+  const atDepositUnderlyingPrice = atDepositUnderlyingInUsd.dividedBy(atDepositUnderlyingAmount);
+  const hold = atDepositToken0Amount
+    .times(liveToken0Price)
+    .plus(atDepositToken1Amount.times(liveToken1Price));
 
+  // === Now (Indexed)
+  const pendingIndex = !isEqualWithinPercent(
+    liveSharesAmount,
+    atDepositSharesAmount,
+    PENDING_SHARES_PERCENT
+  );
+  const nowSharesAmount = pendingIndex ? atDepositSharesAmount : liveSharesAmount;
+  const nowUnderlyingAmount = nowSharesAmount.times(livePpfs);
+  const nowUnderlyingInUsd = nowUnderlyingAmount.times(liveUnderlyingPrice);
+  const { token0: nowToken0Amount, token1: nowToken1Amount } = breakdownTokens(
+    nowUnderlyingAmount,
+    liveTotalSupply.plus(liveUnderlyingAmount.minus(nowUnderlyingAmount))
+  );
+
+  // === Yield
   const compounded: Array<PnlYieldSource> = [];
   const claimed: Array<PnlYieldSource> = [];
   const pending: Array<PnlYieldSource> = [];
 
   // CLM Vault: Additional CLM tokens via vault compounding
-  if (underlyingNow.gt(BIG_ZERO) && underlyingAtDeposit.gt(BIG_ZERO)) {
-    const underlyingCompounded = underlyingNow.minus(underlyingAtDeposit);
+  if (nowUnderlyingAmount.gt(BIG_ZERO) && atDepositUnderlyingAmount.gt(BIG_ZERO)) {
+    const underlyingCompounded = nowUnderlyingAmount.minus(atDepositUnderlyingAmount);
     // TODO: fetch harvests and use usd price at time of harvest?
     compounded.push({
       token: underlyingToken,
       amount: underlyingCompounded,
-      usd: underlyingCompounded.times(underlyingNowPrice),
+      usd: underlyingCompounded.times(liveUnderlyingPrice),
       source: 'vault',
     });
   }
@@ -433,56 +477,76 @@ export const selectClmPnl = (
   const _shares = withDiff({
     token: shareToken,
     entry: {
-      amount: sharesAtDeposit,
-      price: underlyingAtDepositInUsd.dividedBy(sharesAtDeposit),
-      usd: underlyingAtDepositInUsd,
+      amount: atDepositSharesAmount,
+      price: atDepositUnderlyingInUsd.dividedBy(atDepositSharesAmount),
+      usd: atDepositUnderlyingInUsd,
     },
     now: {
-      amount: sharesNow,
-      price: underlyingNowInUsd.dividedBy(sharesNow),
-      usd: underlyingNowInUsd,
+      amount: nowSharesAmount,
+      price: liveUnderlyingPrice,
+      usd: nowUnderlyingInUsd,
+    },
+    live: {
+      amount: liveSharesAmount,
+      price: liveUnderlyingPrice,
+      usd: liveUnderlyingInUsd,
     },
   });
 
   const _underlying = withDiff({
     token: underlyingToken,
     entry: {
-      amount: underlyingAtDeposit,
-      price: underlyingAtDepositPrice,
-      usd: underlyingAtDepositInUsd,
+      amount: atDepositUnderlyingAmount,
+      price: atDepositUnderlyingPrice,
+      usd: atDepositUnderlyingInUsd,
     },
     now: {
-      amount: underlyingNow,
-      price: underlyingNowPrice,
-      usd: underlyingNowInUsd,
+      amount: nowUnderlyingAmount,
+      price: liveUnderlyingPrice,
+      usd: nowUnderlyingInUsd,
+    },
+    live: {
+      amount: liveUnderlyingAmount,
+      price: liveUnderlyingPrice,
+      usd: liveUnderlyingInUsd,
     },
   });
 
   const _token0 = withDiff({
     token: token0,
     entry: {
-      amount: token0AtDeposit,
-      price: token0AtDepositPrice,
-      usd: token0AtDeposit.times(token0AtDepositPrice),
+      amount: atDepositToken0Amount,
+      price: atDepositToken0Price,
+      usd: atDepositToken0Amount.times(atDepositToken0Price),
     },
     now: {
-      amount: token0breakdown.userAmount,
-      price: token0breakdown.price,
-      usd: token0breakdown.userValue,
+      amount: nowToken0Amount,
+      price: liveToken0Price,
+      usd: nowToken0Amount.times(liveToken0Price),
+    },
+    live: {
+      amount: liveToken0Amount,
+      price: liveToken0Price,
+      usd: liveToken0Amount.times(liveToken0Price),
     },
   });
 
   const _token1 = withDiff({
     token: token1,
     entry: {
-      amount: token1AtDeposit,
-      price: token1AtDepositPrice,
-      usd: token1AtDeposit.times(token1AtDepositPrice),
+      amount: atDepositToken1Amount,
+      price: atDepositToken1Price,
+      usd: atDepositToken1Amount.times(atDepositToken1Price),
     },
     now: {
-      amount: token1breakdown.userAmount,
-      price: token1breakdown.price,
-      usd: token1breakdown.userValue,
+      amount: nowToken1Amount,
+      price: liveToken1Price,
+      usd: nowToken1Amount.times(liveToken1Price),
+    },
+    live: {
+      amount: liveToken1Amount,
+      price: liveToken1Price,
+      usd: liveToken1Amount.times(liveToken1Price),
     },
   });
 
@@ -495,23 +559,23 @@ export const selectClmPnl = (
   yields.usd = yields.compounded.usd.plus(yields.claimed.usd).plus(yields.pending.usd);
 
   const pnl = {
-    base: makeUsdChange(underlyingAtDepositInUsd, underlyingNowInUsd),
+    base: makeUsdChange(atDepositUnderlyingInUsd, nowUnderlyingInUsd),
     withClaimed: makeUsdChange(
-      underlyingAtDepositInUsd,
-      underlyingNowInUsd.plus(yields.claimed.usd)
+      atDepositUnderlyingInUsd,
+      nowUnderlyingInUsd.plus(yields.claimed.usd)
     ),
     withClaimedPending: makeUsdChange(
-      underlyingAtDepositInUsd,
-      underlyingNowInUsd.plus(yields.claimed.usd).plus(yields.pending.usd)
+      atDepositUnderlyingInUsd,
+      nowUnderlyingInUsd.plus(yields.claimed.usd).plus(yields.pending.usd)
     ),
   };
 
   const _hold = {
     usd: hold,
     diff: {
-      compounded: underlyingNowInUsd.minus(hold),
-      withClaimed: underlyingNowInUsd.plus(yields.claimed.usd).minus(hold),
-      withClaimedPending: underlyingNowInUsd
+      compounded: nowUnderlyingInUsd.minus(hold),
+      withClaimed: nowUnderlyingInUsd.plus(yields.claimed.usd).minus(hold),
+      withClaimedPending: nowUnderlyingInUsd
         .plus(yields.claimed.usd)
         .plus(yields.pending.usd)
         .minus(hold),
@@ -526,6 +590,7 @@ export const selectClmPnl = (
     hold: _hold,
     yields,
     pnl,
+    pendingIndex,
   };
 };
 
