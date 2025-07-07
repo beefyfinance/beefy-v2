@@ -1,17 +1,19 @@
-import { EEEE_ADDRESS } from '../../../../../../helpers/addresses.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
 import type { TokenEntity } from '../../../../entities/token.ts';
 import { isTokenNative } from '../../../../entities/token.ts';
 import type { VaultEntity } from '../../../../entities/vault.ts';
 import { selectAllChainIds, selectChainById } from '../../../../selectors/chains.ts';
-import { selectSupportedSwapTokensForChainAggregatorHavingPrice } from '../../../../selectors/tokens.ts';
+import {
+  selectChainWrappedNativeToken,
+  selectSupportedSwapTokensForChainAggregatorHavingPrice,
+} from '../../../../selectors/tokens.ts';
 import { selectSwapAggregatorForChainType } from '../../../../selectors/zap.ts';
 import type { BeefyState } from '../../../../store/types.ts';
 import type { LiquidSwapSwapConfig } from '../../../config-types.ts';
 import { getLiquidSwapApi } from '../../../instances.ts';
 import type {
-  QuoteExecution,
   QuoteRequest as LiquidSwapQuoteRequest,
+  QuoteResponse as LiquidSwapQuoteResponse,
 } from '../../../liquid-swap/liquid-swap-types.ts';
 import { slipBy } from '../../helpers/amounts.ts';
 import type {
@@ -33,7 +35,7 @@ export class LiquidSwapSwapProvider implements ISwapProvider {
   async fetchQuote(
     request: QuoteRequest,
     state: BeefyState
-  ): Promise<QuoteResponse<QuoteExecution>> {
+  ): Promise<QuoteResponse<LiquidSwapQuoteResponse>> {
     const chain = selectChainById(state, request.fromToken.chainId);
     const config = this.getConfigForChain(chain.id, state);
     if (!config) {
@@ -42,8 +44,8 @@ export class LiquidSwapSwapProvider implements ISwapProvider {
     const slippage = selectTransactSlippage(state);
     const api = await getLiquidSwapApi(chain);
     const quoteRequest: LiquidSwapQuoteRequest = {
-      tokenIn: this.getTokenAddress(request.fromToken),
-      tokenOut: this.getTokenAddress(request.toToken),
+      tokenIn: this.getTokenAddress(state, request.fromToken),
+      tokenOut: this.getTokenAddress(state, request.toToken),
       amountIn: request.fromAmount.toString(10), // @dev in decimal, not converted to wei
       multiHop: true,
       slippage: slippage * 100, // 0.01 -> 1%
@@ -58,11 +60,14 @@ export class LiquidSwapSwapProvider implements ISwapProvider {
       toToken: request.toToken,
       toAmount: new BigNumber(quote.amountOut), // @dev in decimal, no need to convert from wei
       fee: config.fee,
-      extra: quote.execution,
+      extra: quote, // store whole quote so we don't need to fetch it again during swap
     };
   }
 
-  async fetchSwap(request: SwapRequest<QuoteExecution>, state: BeefyState): Promise<SwapResponse> {
+  async fetchSwap(
+    request: SwapRequest<LiquidSwapQuoteResponse>,
+    state: BeefyState
+  ): Promise<SwapResponse> {
     const { quote, fromAddress, slippage } = request;
     const chain = selectChainById(state, quote.fromToken.chainId);
     const config = this.getConfigForChain(chain.id, state);
@@ -72,6 +77,7 @@ export class LiquidSwapSwapProvider implements ISwapProvider {
     if (!quote.extra) {
       throw new Error(`No route summary found for LiquidSwap swap`);
     }
+    /*
     const api = await getLiquidSwapApi(chain);
     const swap = await api.postSwap({
       tokenIn: this.getTokenAddress(quote.fromToken),
@@ -80,6 +86,8 @@ export class LiquidSwapSwapProvider implements ISwapProvider {
       multiHop: true,
       slippage: slippage * 100, // 0.01 -> 1%
     });
+    */
+    const swap = quote.extra; // don't need to fetch again, quote includes the swap data
 
     return {
       providerId: this.getId(),
@@ -134,8 +142,12 @@ export class LiquidSwapSwapProvider implements ISwapProvider {
     return selectAllChainIds(state).filter(chainId => !!this.getConfigForChain(chainId, state));
   }
 
-  protected getTokenAddress(token: TokenEntity): string {
-    return isTokenNative(token) ? EEEE_ADDRESS : token.address;
+  protected getTokenAddress(state: BeefyState, token: TokenEntity): string {
+    if (isTokenNative(token)) {
+      const wnative = selectChainWrappedNativeToken(state, token.chainId);
+      return wnative.address;
+    }
+    return token.address;
   }
 
   protected getConfigForChain(
