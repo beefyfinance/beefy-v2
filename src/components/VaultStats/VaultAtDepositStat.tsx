@@ -1,4 +1,4 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createCachedSelector } from 're-reselect';
 import { memo, type ReactNode } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
@@ -35,95 +35,80 @@ export const VaultAtDepositStat = memo(function VaultAtDepositStat({
   const { t } = useTranslation();
   // @dev don't do this - temp migration away from connect()
   const { label, ...statProps } = useAppSelector(state =>
-    selectVaultAtDepositStatMemoized(state, vaultId, pnlData, walletAddress)
+    selectVaultAtDepositStat(state, vaultId, pnlData, walletAddress)
   );
   return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
 });
 
-const selectVaultAtDepositStat = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  pnlData: UserVaultPnl,
-  walletAddress: string
-) => {
-  const label = 'VaultStat-AtDeposit';
-  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
-  const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
-
-  if (!vaultTimeline || !vaultTimeline.current.length) {
-    return {
-      label,
-      value: '-',
-      subValue: null,
-      blur: false,
-      loading: false,
-    };
-  }
-
-  if (!isLoaded) {
-    return {
-      label,
-      value: '-',
-      subValue: null,
-      blur: false,
-      loading: true,
-      expectSubValue: true,
-    };
-  }
-
-  let value: string, subValue: string, tooltip: ReactNode;
-  if (isUserClmPnl(pnlData)) {
-    value = formatTokenDisplayCondensed(
-      pnlData.underlying.entry.amount,
-      pnlData.underlying.token.decimals,
-      6
-    );
-    subValue = formatLargeUsd(pnlData.underlying.entry.usd);
-    tooltip = (
-      <BasicTooltipContent
-        title={formatTokenDisplay(
-          pnlData.underlying.entry.amount,
-          pnlData.underlying.token.decimals
-        )}
-      />
-    );
-  } else {
-    const { balanceAtDeposit, usdBalanceAtDeposit, tokenDecimals } = pnlData;
-    value = formatTokenDisplayCondensed(balanceAtDeposit, tokenDecimals, 6);
-    subValue = formatLargeUsd(usdBalanceAtDeposit);
-    tooltip = <BasicTooltipContent title={formatTokenDisplay(balanceAtDeposit, tokenDecimals)} />;
-  }
-
-  return {
-    label,
-    value,
-    subValue,
-    blur: false,
-    loading: !isLoaded,
-    boosted: false,
-    tooltip,
-  };
-};
-
-const selectVaultAtDepositStatMemoized = createSelector(
-  (state: BeefyState) => state,
-  (
-    _state: BeefyState,
-    vaultId: VaultEntity['id'],
-    _pnlData: UserVaultPnl,
-    _walletAddress: string
-  ) => vaultId,
+const selectVaultAtDepositStat = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], _pnlData: UserVaultPnl, walletAddress: string) =>
+    selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress),
+  (state: BeefyState, _vaultId: VaultEntity['id'], _pnlData: UserVaultPnl, walletAddress: string) =>
+    selectIsAnalyticsLoadedByAddress(state, walletAddress),
   (
     _state: BeefyState,
     _vaultId: VaultEntity['id'],
     pnlData: UserVaultPnl,
     _walletAddress: string
   ) => pnlData,
-  (
-    _state: BeefyState,
-    _vaultId: VaultEntity['id'],
-    _pnlData: UserVaultPnl,
-    walletAddress: string
-  ) => walletAddress,
-  selectVaultAtDepositStat
+  (vaultTimeline, isLoaded, pnlData) => {
+    const label = 'VaultStat-AtDeposit';
+
+    if (!vaultTimeline || !vaultTimeline.current.length) {
+      return {
+        label,
+        value: '-',
+        subValue: null,
+        blur: false,
+        loading: false,
+      };
+    }
+
+    if (!isLoaded) {
+      return {
+        label,
+        value: '-',
+        subValue: null,
+        blur: false,
+        loading: true,
+        expectSubValue: true,
+      };
+    }
+
+    let value: string, subValue: string, tooltip: ReactNode;
+    if (isUserClmPnl(pnlData)) {
+      value = formatTokenDisplayCondensed(
+        pnlData.underlying.entry.amount,
+        pnlData.underlying.token.decimals,
+        6
+      );
+      subValue = formatLargeUsd(pnlData.underlying.entry.usd);
+      tooltip = (
+        <BasicTooltipContent
+          title={formatTokenDisplay(
+            pnlData.underlying.entry.amount,
+            pnlData.underlying.token.decimals
+          )}
+        />
+      );
+    } else {
+      const { balanceAtDeposit, usdBalanceAtDeposit, tokenDecimals } = pnlData;
+      value = formatTokenDisplayCondensed(balanceAtDeposit, tokenDecimals, 6);
+      subValue = formatLargeUsd(usdBalanceAtDeposit);
+      tooltip = <BasicTooltipContent title={formatTokenDisplay(balanceAtDeposit, tokenDecimals)} />;
+    }
+
+    return {
+      label,
+      value,
+      subValue,
+      blur: false,
+      loading: !isLoaded,
+      boosted: false,
+      tooltip,
+    };
+  }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], _nlData: UserVaultPnl, _walletAddress: string) =>
+    vaultId
 );

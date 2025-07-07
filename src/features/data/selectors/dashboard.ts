@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { createCachedSelector } from 're-reselect';
 import type BigNumber from 'bignumber.js';
 import { cloneDeep, orderBy } from 'lodash-es';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
@@ -385,25 +386,22 @@ const selectDashboardUserVaultChainExposure: DashboardUserExposureVaultFn<
 };
 export const selectDashboardUserExposureByChain = createSelector(
   [
-    (state: BeefyState, walletAddress?: string) => ({
-      state,
-      walletAddress: walletAddress || selectWalletAddressIfKnown(state),
-    }),
+    (state: BeefyState, walletAddress: string) =>
+      selectDashboardUserExposure(
+        state,
+        selectDashboardUserVaultChainExposure,
+        entries =>
+          getTopNArray(entries, 'percentage', 6, {
+            key: 'others',
+            label: 'Others',
+            value: BIG_ZERO,
+            percentage: 0,
+            chainId: 'others' as const,
+          }),
+        walletAddress
+      ),
   ],
-  ({ state, walletAddress }) =>
-    selectDashboardUserExposure(
-      state,
-      selectDashboardUserVaultChainExposure,
-      entries =>
-        getTopNArray(entries, 'percentage', 6, {
-          key: 'others',
-          label: 'Others',
-          value: BIG_ZERO,
-          percentage: 0,
-          chainId: 'others' as const,
-        }),
-      walletAddress
-    )
+  chainExposure => chainExposure
 );
 const selectDashboardUserVaultPlatformExposure: DashboardUserExposureVaultFn = (
   state,
@@ -417,18 +415,15 @@ const selectDashboardUserVaultPlatformExposure: DashboardUserExposureVaultFn = (
 };
 export const selectDashboardUserExposureByPlatform = createSelector(
   [
-    (state: BeefyState, walletAddress?: string) => ({
-      state,
-      walletAddress: walletAddress || selectWalletAddressIfKnown(state),
-    }),
+    (state: BeefyState, walletAddress: string) =>
+      selectDashboardUserExposure(
+        state,
+        selectDashboardUserVaultPlatformExposure,
+        top6ByPercentageSummarizer,
+        walletAddress
+      ),
   ],
-  ({ state, walletAddress }) =>
-    selectDashboardUserExposure(
-      state,
-      selectDashboardUserVaultPlatformExposure,
-      top6ByPercentageSummarizer,
-      walletAddress
-    )
+  platformExposure => platformExposure
 );
 const selectDashboardUserVaultTokenExposure: DashboardUserExposureVaultFn<
   DashboardUserTokenExposureVaultEntry
@@ -478,26 +473,23 @@ const selectDashboardUserVaultTokenExposure: DashboardUserExposureVaultFn<
 };
 export const selectDashboardUserExposureByToken = createSelector(
   [
-    (state: BeefyState, walletAddress?: string) => ({
-      state,
-      walletAddress: walletAddress || selectWalletAddressIfKnown(state),
-    }),
+    (state: BeefyState, walletAddress: string) =>
+      selectDashboardUserExposure(
+        state,
+        selectDashboardUserVaultTokenExposure,
+        entries =>
+          getTopNArray(entries, 'percentage', 6, {
+            key: 'others',
+            label: 'Others',
+            value: BIG_ZERO,
+            percentage: 0,
+            symbols: [],
+            chainId: 'ethereum',
+          }),
+        walletAddress
+      ),
   ],
-  ({ state, walletAddress }) =>
-    selectDashboardUserExposure(
-      state,
-      selectDashboardUserVaultTokenExposure,
-      entries =>
-        getTopNArray(entries, 'percentage', 6, {
-          key: 'others',
-          label: 'Others',
-          value: BIG_ZERO,
-          percentage: 0,
-          symbols: [],
-          chainId: 'ethereum',
-        }),
-      walletAddress
-    )
+  tokenExposure => tokenExposure
 );
 
 const selectDashboardUserVaultStableExposure: DashboardUserExposureVaultFn = (
@@ -530,14 +522,16 @@ const selectDashboardUserVaultStableExposure: DashboardUserExposureVaultFn = (
   return [{ key: 'other', label: 'Other', value: vaultTvl }];
 };
 export const selectDashboardUserStablecoinsExposure = createSelector(
-  [(state: BeefyState, walletAddress: string) => ({ state, walletAddress })],
-  ({ state, walletAddress }) =>
-    selectDashboardUserExposure(
-      state,
-      selectDashboardUserVaultStableExposure,
-      stableVsOthersSummarizer,
-      walletAddress
-    )
+  [
+    (state: BeefyState, walletAddress: string) =>
+      selectDashboardUserExposure(
+        state,
+        selectDashboardUserVaultStableExposure,
+        stableVsOthersSummarizer,
+        walletAddress
+      ),
+  ],
+  stableExposure => stableExposure
 );
 export const selectDashboardUserVaultsPnl = createSelector(
   [
@@ -589,20 +583,17 @@ const selectShouldInitDashboardForUserImpl = createAddressDataSelector(
   shouldLoaderLoadRecent,
   5
 );
-export const selectShouldInitDashboardForUser = createSelector(
-  [(state: BeefyState, walletAddress: string) => ({ state, walletAddress })],
-  ({ state, walletAddress }): boolean => {
-    if (!walletAddress) {
-      return false;
-    }
 
-    return (
-      selectIsConfigAvailable(state) &&
-      selectIsAddressBookLoadedGlobal(state) &&
-      selectShouldInitDashboardForUserImpl(state, walletAddress)
-    );
+export const selectShouldInitDashboardForUser = createCachedSelector(
+  (state: BeefyState, _walletAddress: string) => selectIsConfigAvailable(state),
+  (state: BeefyState, _walletAddress: string) => selectIsAddressBookLoadedGlobal(state),
+  (state: BeefyState, walletAddress: string) =>
+    selectShouldInitDashboardForUserImpl(state, walletAddress),
+  (isConfigAvailable: boolean, isAddressBookLoaded: boolean, shouldInitImpl: boolean): boolean => {
+    return isConfigAvailable && isAddressBookLoaded && shouldInitImpl;
   }
-);
+)((_state: BeefyState, walletAddress: string) => walletAddress);
+
 export const selectDashboardShouldLoadBalanceForChainUser = createAddressChainDataSelector(
   'balance',
   shouldLoaderLoadRecent,
