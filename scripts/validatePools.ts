@@ -897,6 +897,12 @@ const checkPointsStructureIds = (pool: VaultConfig) => {
             (pool.retiredAt === undefined ||
               new Date(eligibility.liveAfter) < new Date(pool.retiredAt * 1000))
         );
+      } else if (eligibility.type === 'provider') {
+        if (!('tokenProviderId' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.tokenProviderId missing`);
+        }
+
+        shouldHaveProviderArr.push(pool.tokenProviderId === eligibility.tokenProviderId);
       } else if (eligibility.type === 'token-holding') {
         if (!('tokens' in eligibility)) {
           throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);

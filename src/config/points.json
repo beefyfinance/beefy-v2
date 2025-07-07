@@ -1198,5 +1198,46 @@
         "url": "https://app.kittenswap.finance/points"
       }
     ]
+  },
+  {
+    "id": "hybra",
+    "docs": "https://www.hybra.finance/points",
+    "points": [
+      {
+        "id": "hybra-points",
+        "name": "Hybra Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "platform",
+        "platformId": "hybra",
+        "liveAfter": "2025-07-01"
+      },
+
+      {
+        "type": "provider",
+        "tokenProviderId": "hybra",
+        "liveAfter": "2025-07-01"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-lrt-subgraph",
+        "role": "Raw indexing of blockchain data, computes time weighted balances",
+        "url": "https://github.com/beefyfinance/lrt-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "hybra-points",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://www.hybra.finance/points"
+      }
+    ]
   }
 ]
