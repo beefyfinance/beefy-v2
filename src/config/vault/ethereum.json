@@ -1,5 +1,31 @@
 [
   {
+    "id": "morpho-imf-usds",
+    "name": "IMF USDS",
+    "type": "standard",
+    "token": "USDS",
+    "tokenAddress": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x72774C04C1c29e5011F0f3751fc79473D9AcFd7D",
+    "earnedToken": "mooMorphoImfUSDS",
+    "earnedTokenAddress": "0x72774C04C1c29e5011F0f3751fc79473D9AcFd7D",
+    "oracle": "tokens",
+    "oracleId": "USDS",
+    "status": "active",
+    "createdAt": 1751968712,
+    "platformId": "morpho",
+    "assets": ["USDS"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "balancerv3-ethereum-waethlidogho-usdf",
     "name": "USDf/GHO V3",
     "type": "standard",
@@ -968,7 +994,6 @@
     "token": "USDC",
     "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
     "tokenDecimals": 6,
-    "tokenProviderId": "morpho",
     "earnContractAddress": "0x16F06dE7F077A95684DBAeEdD15A5808c3E13cD0",
     "earnedToken": "mooMorphoGauntletUSDCFrontier",
     "earnedTokenAddress": "0x16F06dE7F077A95684DBAeEdD15A5808c3E13cD0",
