@@ -21,7 +21,9 @@ import {
 import type { BeefyState } from '../store/types.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
+  areArraysEqual,
   arrayOrStaticEmpty,
+  bigNumberEqualityCheck,
   bigNumberOrStaticZero,
   valueOrThrow,
 } from '../utils/selector-utils.ts';
@@ -50,6 +52,7 @@ import {
 } from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
 
+// @dev this is fine not being a cached selector, as it only calls cached selectors
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (walletAddress) {
     return selectWalletBalanceByAddress(state, walletAddress);
@@ -67,7 +70,7 @@ export const selectWalletBalanceByAddress = createCachedSelector(
   (state: BeefyState, _walletAddress: string) => state.user.balance.byAddress,
   (_state: BeefyState, walletAddress: string) => walletAddress.toLocaleLowerCase(),
   (balancesByAddress, walletAddress) => balancesByAddress[walletAddress] || undefined
-)((_state: BeefyState, walletAddress: string) => walletAddress);
+)((_state: BeefyState, walletAddress: string) => walletAddress.toLocaleLowerCase());
 
 export const selectAllTokenWhereUserCouldHaveBalance = createSelector(
   (state: BeefyState, chainId: ChainEntity['id']) => selectTokensByChainId(state, chainId),
@@ -604,7 +607,23 @@ export const selectGovVaultUserStakedBalanceInDepositToken = (
   return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.balance || BIG_ZERO;
 };
 
-export const selectBoostUserBalanceInToken = (
+/**
+ * @dev this returns a new function that only changes when .byBoostId changes for the wallet
+ * could use _selectWalletBalance(state, walletAddress)?.tokenAmount.byBoostId as a dependency directly,
+ * this just abstracts away the details
+ */
+const selectGetBoostUserBalanceInTokenFn = createSelector(
+  [
+    (state: BeefyState, walletAddress?: string) =>
+      _selectWalletBalance(state, walletAddress)?.tokenAmount.byBoostId,
+  ],
+  byBoostId => (boostId: BoostPromoEntity['id']) => {
+    return bigNumberOrStaticZero(byBoostId?.[boostId]?.balance);
+  }
+);
+
+// TODO remove original
+export const selectBoostUserBalanceInTokenOriginal = (
   state: BeefyState,
   boostId: BoostPromoEntity['id'],
   walletAddress?: string
@@ -613,8 +632,42 @@ export const selectBoostUserBalanceInToken = (
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.balance || BIG_ZERO;
 };
 
+/**
+ * v2
+ * - re-use selectGetBoostUserBalanceInTokenFn
+ * - resultEqualityCheck ensures existing reference is returned if balance has not changed
+ */
+export const selectBoostUserBalanceInToken = createSelector(
+  [
+    (state: BeefyState, _boostId: BoostPromoEntity['id'], walletAddress?: string) =>
+      selectGetBoostUserBalanceInTokenFn(state, walletAddress),
+    (_state: BeefyState, boostId: BoostPromoEntity['id']) => boostId,
+  ],
+  (getBoostUserBalanceInToken, boostId) => getBoostUserBalanceInToken(boostId),
+  {
+    memoizeOptions: {
+      resultEqualityCheck: bigNumberEqualityCheck,
+    },
+  }
+);
+
 const NO_REWARDS: BoostReward[] = [];
-export const selectBoostUserRewardsInToken = (
+
+/**
+ * @dev, this returns a new function that only changes when .byBoostId changes for the wallet
+ */
+const selectGetBoostUserRewardsInTokenFn = createSelector(
+  [
+    (state: BeefyState, walletAddress?: string) =>
+      _selectWalletBalance(state, walletAddress)?.tokenAmount.byBoostId,
+  ],
+  byBoostId => (boostId: BoostPromoEntity['id']) => {
+    return byBoostId?.[boostId]?.rewards || NO_REWARDS;
+  }
+);
+
+// TODO remove original
+export const selectBoostUserRewardsInTokenOriginal = (
   state: BeefyState,
   boostId: BoostPromoEntity['id'],
   walletAddress?: string
@@ -622,6 +675,39 @@ export const selectBoostUserRewardsInToken = (
   const walletBalance = _selectWalletBalance(state, walletAddress);
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.rewards || NO_REWARDS;
 };
+
+function boostRewardEqualityCheck(a: BoostReward, b: BoostReward): boolean {
+  return (
+    a === b ||
+    (a.amount.isEqualTo(b.amount) &&
+      a.index == b.index &&
+      a.token.chainId === b.token.chainId &&
+      a.token.address === b.token.address &&
+      a.token.oracleId === b.token.oracleId &&
+      a.token.symbol === b.token.symbol &&
+      a.token.decimals === b.token.decimals)
+  );
+}
+
+/**
+ * v2
+ * - re-use selectGetBoostUserRewardsInTokenFn
+ * - resultEqualityCheck ensures existing reference is returned if rewards have not changed
+ */
+export const selectBoostUserRewardsInToken = createSelector(
+  [
+    (state: BeefyState, _boostId: BoostPromoEntity['id'], walletAddress?: string) =>
+      selectGetBoostUserRewardsInTokenFn(state, walletAddress),
+    (_state: BeefyState, boostId: BoostPromoEntity['id']) => boostId,
+  ],
+  (getBoostUserRewardsInToken, boostId) => getBoostUserRewardsInToken(boostId),
+  {
+    memoizeOptions: {
+      resultEqualityCheck: (a: BoostReward[], b: BoostReward[]) =>
+        areArraysEqual(a, b, boostRewardEqualityCheck),
+    },
+  }
+);
 
 /**
  * Vault balance converted to USD, including in boosts and bridged tokens
@@ -930,7 +1016,47 @@ export const selectIsBalanceAvailableForChainUser = createAddressChainDataSelect
   'balance',
   hasLoaderFulfilledOnce
 );
-export const selectPastBoostIdsWithUserBalance = (
+
+/**
+ * v2
+ * @dev note as of reselect v5, createSelector uses {@link https://reselect.js.org/api/weakmapmemoize/|weakMapMemoize} by default, which caches based on inputs to `combiner`,
+ * (so if all `inputSelectors` return the same value (reference), the `combiner` will not be called again).
+ * That should mean createCachedSelector isn't needed here...
+ */
+export const selectPastBoostIdsWithUserBalance = createSelector(
+  [
+    (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
+      selectPastVaultBoostIds(state, vaultId),
+    (state: BeefyState, _vaultId: VaultEntity['id'], walletAddress?: string) =>
+      selectGetBoostUserBalanceInTokenFn(state, walletAddress),
+    (state: BeefyState, _vaultId: VaultEntity['id'], walletAddress?: string) =>
+      selectGetBoostUserRewardsInTokenFn(state, walletAddress),
+  ],
+  (expiredBoostIds, getBoostUserBalanceInToken, getBoostUserRewardsInToken) => {
+    const boostIds: string[] = [];
+    for (const eolBoostId of expiredBoostIds) {
+      const userBalance = getBoostUserBalanceInToken(eolBoostId);
+      if (userBalance.gt(0)) {
+        boostIds.push(eolBoostId);
+        continue;
+      }
+      const userRewards = getBoostUserRewardsInToken(eolBoostId);
+      if (userRewards?.some(r => r.amount.gt(0))) {
+        boostIds.push(eolBoostId);
+      }
+    }
+    return arrayOrStaticEmpty(boostIds.sort());
+  },
+  {
+    memoizeOptions: {
+      // @dev, balances/rewards objects can change, but result in no change to list of boostIds
+      resultEqualityCheck: areArraysEqual<string>,
+    },
+  }
+);
+
+// TODO remove original
+export const selectPastBoostIdsWithUserBalanceOriginal = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ) => {
