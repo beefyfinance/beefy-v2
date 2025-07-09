@@ -19591,7 +19591,7 @@
     "earnContractAddress": "0x9dbbBaecACEDf53d5Caa295b8293c1def2055Adc",
     "oracle": "lps",
     "oracleId": "gmx-arb-glp",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1666793250,
     "platformId": "gmx",
     "assets": ["WETH", "WBTC", "LINK", "UNI", "arbUSDCe", "USDT", "DAI", "FRAX"],
