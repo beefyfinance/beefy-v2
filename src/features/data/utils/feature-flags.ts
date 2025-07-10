@@ -241,13 +241,27 @@ export function featureFlag_kyberSwapSupport(): {
   return [];
 }
 
-export function featureFlag_OdosSwapSupport(): {
+export function featureFlag_odosSwapSupport(): {
   chainId: string;
   tokenAddress: string;
 }[] {
   const params = getSearchParams();
   if (params.has('__odos_support')) {
     return (params.get('__odos_support') || '').split(',').map(s => {
+      const [chainId, tokenAddress] = s.split(':');
+      return { chainId, tokenAddress };
+    });
+  }
+  return [];
+}
+
+export function featureFlag_liquidSwapSupport(): {
+  chainId: string;
+  tokenAddress: string;
+}[] {
+  const params = getSearchParams();
+  if (params.has('__liquid_support')) {
+    return (params.get('__liquid_support') || '').split(',').map(s => {
       const [chainId, tokenAddress] = s.split(':');
       return { chainId, tokenAddress };
     });
@@ -268,6 +282,11 @@ export function featureFlag_disableKyber(): boolean {
 export function featureFlag_disableOdos(): boolean {
   const params = getSearchParams();
   return params.has('__disable_odos');
+}
+
+export function featureFlag_disableLiquidSwap(): boolean {
+  const params = getSearchParams();
+  return params.has('__disable_liquid');
 }
 
 export function featureFlag_detailedTooltips(): boolean {

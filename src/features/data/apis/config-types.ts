@@ -288,7 +288,7 @@ export interface KyberSwapSwapConfig {
   fee: ZapFee;
 }
 
-export interface OdosSwapSwapConfig {
+export interface OdosSwapConfig {
   id: string;
   type: 'odos';
   chainId: ChainEntity['id'];
@@ -298,7 +298,21 @@ export interface OdosSwapSwapConfig {
   fee: ZapFee;
 }
 
-export type SwapAggregatorConfig = OneInchSwapConfig | KyberSwapSwapConfig | OdosSwapSwapConfig;
+export interface LiquidSwapSwapConfig {
+  id: string;
+  type: 'liquid-swap';
+  chainId: ChainEntity['id'];
+  priorityTokens: TokenEntity['id'][];
+  blockedTokens: TokenEntity['id'][];
+  blockedVaults: VaultEntity['id'][];
+  fee: ZapFee;
+}
+
+export type SwapAggregatorConfig =
+  | OneInchSwapConfig
+  | KyberSwapSwapConfig
+  | OdosSwapConfig
+  | LiquidSwapSwapConfig;
 
 export type SwapAggregatorConfigLoose = ChangeTypeOfKeys<
   SwapAggregatorConfig,

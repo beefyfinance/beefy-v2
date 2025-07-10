@@ -10,7 +10,8 @@ import { selectAllChainIds } from '../selectors/chains.ts';
 import { selectAllVisibleVaultIds, selectVaultById } from '../selectors/vaults.ts';
 import {
   featureFlag_kyberSwapSupport,
-  featureFlag_OdosSwapSupport,
+  featureFlag_liquidSwapSupport,
+  featureFlag_odosSwapSupport,
   featureFlag_oneInchSupport,
 } from '../utils/feature-flags.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
@@ -91,7 +92,8 @@ export const fetchZapAggregatorTokenSupportAction =
       const extraSupport = {
         'one-inch': featureFlag_oneInchSupport(),
         kyber: featureFlag_kyberSwapSupport(),
-        odos: featureFlag_OdosSwapSupport(),
+        odos: featureFlag_odosSwapSupport(),
+        'liquid-swap': featureFlag_liquidSwapSupport(),
       };
 
       for (const [key, support] of entries(extraSupport)) {
