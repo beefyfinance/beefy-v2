@@ -7698,6 +7698,7 @@
     "oracleId": "gmx-avax-glp",
     "status": "paused",
     "createdAt": 1666793249,
+    "pausedAt": 1752069360,
     "platformId": "gmx",
     "assets": ["AVAX", "USDCe", "USDC", "WBTCe", "BTCb", "USDTe", "WETHe"],
     "risks": [

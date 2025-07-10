@@ -19593,6 +19593,7 @@
     "oracleId": "gmx-arb-glp",
     "status": "paused",
     "createdAt": 1666793250,
+    "pausedAt": 1752069360,
     "platformId": "gmx",
     "assets": ["WETH", "WBTC", "LINK", "UNI", "arbUSDCe", "USDT", "DAI", "FRAX"],
     "risks": [
