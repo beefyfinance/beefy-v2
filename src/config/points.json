@@ -1144,7 +1144,12 @@
         "name": "Falcon Miles"
       }
     ],
-    "eligibility": [],
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["USDf", "sUSDf"]
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-balances-subgraph",
