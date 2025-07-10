@@ -55,12 +55,16 @@ export const selectBridgeConfigById = (state: BeefyState, id: BeefyAnyBridgeConf
   return bridge;
 };
 
-export const selectBridgeSourceChainId = (state: BeefyState) => {
+export const selectBridgeSourceToken = (state: BeefyState) => {
   const source = state.ui.bridge.source;
   if (!source) {
     throw new Error('Bridge config not loaded');
   }
   return source;
+};
+
+export const selectBridgeSourceChainId = (state: BeefyState) => {
+  return selectBridgeSourceToken(state).chainId;
 };
 
 export const selectBridgeDepositTokenForChainId = (
