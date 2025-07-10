@@ -250,7 +250,7 @@ export const bridgeSlice = createSlice({
           {} as Record<ChainEntity['id'], Record<ChainEntity['id'], BeefyAnyBridgeConfig['id'][]>>
         );
 
-        sliceState.source = config.source.chainId;
+        sliceState.source = config.source;
         sliceState.tokens = config.tokens;
         sliceState.destinations = {
           allChains,
