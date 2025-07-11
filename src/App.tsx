@@ -1,6 +1,7 @@
 import { lazy, memo } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Route, Routes } from 'react-router';
+import { ThirdwebProvider } from 'thirdweb/react'
 import { AddTokenToWallet } from './components/AddTokenToWallet/AddTokenToWallet.tsx';
 import { AppVersionCheck } from './components/AppVersionCheck/AppVersionCheck.tsx';
 import { Footer } from './components/Footer/Footer.tsx';
@@ -27,27 +28,29 @@ export const App = memo(function App() {
   return (
     <BreakpointProvider>
       <HelmetProvider>
-        <Router>
-          <ScrollRestorer />
-          <DefaultMeta />
-          <Redirects />
-          <Routes>
-            <Route element={<Layout header={<Header />} footer={<Footer />} />}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/:network/vault/:id" caseSensitive={true} element={<VaultPage />} />
-              <Route path="/vault/:id" element={<VaultPage />} />
-              <Route path="/onramp" element={<OnRampPage />} />
-              <Route path="/bridge" element={<BridgePage />} />
-              <Route path="/dashboard/:address" element={<DashboardPage mode={'url'} />} />
-              <Route path="/dashboard" element={<DashboardPage mode={'wallet'} />} />
-              <Route path="/treasury" element={<TreasuryPage />} />
-              <Route path="/campaigns/begems" element={<BeGemsPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Route>
-          </Routes>
-          <Stepper />
-          <AddTokenToWallet />
-        </Router>
+        <ThirdwebProvider>
+          <Router>
+            <ScrollRestorer />
+            <DefaultMeta />
+            <Redirects />
+            <Routes>
+              <Route element={<Layout header={<Header />} footer={<Footer />} />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/:network/vault/:id" caseSensitive={true} element={<VaultPage />} />
+                <Route path="/vault/:id" element={<VaultPage />} />
+                <Route path="/onramp" element={<OnRampPage />} />
+                <Route path="/bridge" element={<BridgePage />} />
+                <Route path="/dashboard/:address" element={<DashboardPage mode={'url'} />} />
+                <Route path="/dashboard" element={<DashboardPage mode={'wallet'} />} />
+                <Route path="/treasury" element={<TreasuryPage />} />
+                <Route path="/campaigns/begems" element={<BeGemsPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Route>
+            </Routes>
+            <Stepper />
+            <AddTokenToWallet />
+          </Router>
+        </ThirdwebProvider>
       </HelmetProvider>
       <AppVersionCheck />
       {import.meta.env.DEV ?

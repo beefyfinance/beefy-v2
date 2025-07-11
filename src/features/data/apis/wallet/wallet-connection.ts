@@ -24,11 +24,18 @@ import { isDefined } from '../../utils/array-utils.ts';
 import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url';
 import type { InjectedNameSpace } from '@web3-onboard/injected-wallets/dist/types';
 import { createWalletClient, custom, isHex, numberToHex } from 'viem';
+import { createThirdwebClient, defineChain } from 'thirdweb';
+import { mainnet, polygon } from 'thirdweb/chains';
+import { autoConnect, EIP1193, type Wallet } from 'thirdweb/wallets';
 
 declare const window: {
   [K in InjectedNameSpace]?: unknown;
 } & Window &
   typeof globalThis;
+
+export const unicornThirdwebClient = createThirdwebClient({
+  clientId: '4e8c81182c3709ee441e30d776223354',
+});
 
 const walletConnectImages: Record<string, string> = {
   '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489': fireblocksLogo,
@@ -129,12 +136,74 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     });
   }
 
+  private static createUnicornWalletModule(): WalletInit {
+    return () => ({
+      label: 'Unicorn',
+      getIcon: async () => (await import('../../../../images/wallets/crypto.png')).default,
+      getInterface: async () => {
+        const getAutoConnectWallet = async (): Promise<Wallet | null> => {
+          try {
+
+            let returningWallet = null;
+            // autoConnect returns a promise that resolves with the connected wallet.
+            // We can simply await it.
+            const isConnected = await autoConnect({
+              client: unicornThirdwebClient,
+              accountAbstraction: {
+                chain: defineChain(mainnet.id),
+                sponsorGas: true,
+                factoryAddress: '0xD771615c873ba5a2149D5312448cE01D677Ee48A',
+              },
+              onConnect: (wallet) => {
+                console.log('2-Unicorn.eth wallet auto-connected:', wallet.getAccount());
+                returningWallet = wallet
+                return wallet
+              },
+            });
+
+            console.log("2-Returning null with isConnected =", isConnected)
+            return returningWallet
+
+          } catch (error) {
+            // If autoConnect fails for any reason (e.g., no wallet to connect to, user rejection),
+            console.error("2-Auto-connect failed:", error);
+            return null; // Return null to indicate failure.
+          }
+        };
+        try {
+
+          const wallet = await getAutoConnectWallet()
+
+          console.log("2- This is the wallet returned from getAutoConnectWallet", wallet)
+
+          if (wallet === null) throw new Error("2-Auto connect wallet not available")
+
+
+          console.log("2-Reached here with this wallet", wallet)
+          // Convert the thirdweb wallet to a standard EIP-1193 provider for web3-onboard
+          const provider = EIP1193.toProvider({
+            wallet: wallet,
+            chain: polygon,
+            client: unicornThirdwebClient,
+          });
+
+          return { provider };
+        } catch (error) {
+          // We throw an error to signal to web3-onboard that this wallet is not available.
+          console.debug('Unicorn.eth auto-connect not available.', error);
+          throw new Error('Unicorn wallet not available.');
+        }
+      },
+    });
+  }
+
   /**
    * Create list of wallet modules for Onboard
    * @private
    */
   private static createOnboardWalletInitializers() {
     return [
+      WalletConnectionApi.createUnicornWalletModule(),
       WalletConnectionApi.createInjectedWalletsModule(),
       WalletConnectionApi.createWalletConnectModule(),
       WalletConnectionApi.createMetamaskModule(),
@@ -350,15 +419,36 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       return;
     }
 
-    // Must have last selected wallet set
-    const lastSelectedWallet = WalletConnectionApi.getLastConnectedWallet();
-    if (!lastSelectedWallet) {
-      console.log('tryToAutoReconnect: No lastSelectedWallet');
-      return;
-    }
-
     // Initialize onboard if needed
     const onboard = this.getOnboard();
+
+    // 1. First, attempt to autoconnect with Unicorn.eth. This is a silent, no-UI attempt.
+    try {
+      console.log('tryToAutoReconnect: Attempting Unicorn.eth auto-connection...');
+      await WalletConnectionApi.connect(onboard, {
+        autoSelect: { label: 'Unicorn', disableModals: true },
+      });
+      // If the above promise resolves, the connection was successful.
+      console.log('tryToAutoReconnect: Unicorn.eth connected successfully.');
+      // The `subscribeToOnboardEvents` handler will set the last connected wallet.
+      return;
+    } catch (err) {
+      // This is an expected failure if not in the Unicorn context.
+      // We will fall through to the standard auto-reconnect logic below.
+      console.debug('tryToAutoReconnect: Unicorn.eth not available, proceeding to next method.', err);
+    }
+
+    // 2. If Unicorn fails, try to reconnect to the last used wallet (existing logic)
+    console.log("Reache here 1")
+    const lastSelectedWallet = WalletConnectionApi.getLastConnectedWallet();
+    if (!lastSelectedWallet || lastSelectedWallet === 'Unicorn') {
+      console.log(
+        'tryToAutoReconnect: No last wallet to connect to, or it was Unicorn which already failed.'
+      );
+      return;
+    }
+    
+    console.log("Reache here 2")
 
     // Attempt to connect
     try {
@@ -422,6 +512,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   private static async connect(onboard: OnboardAPI, options?: ConnectOptions) {
     const wallets = await onboard.connectWallet(options);
 
+    console.log("Reached here 3")
     if (!wallets.length) {
       console.error('connect: No wallet connected');
       throw new Error('No wallet connected');
