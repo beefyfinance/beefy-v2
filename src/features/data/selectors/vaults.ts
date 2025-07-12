@@ -31,7 +31,10 @@ import { featureFlag_disableRedirect } from '../utils/feature-flags.ts';
 import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
 import { selectIsConfigAvailable } from './config.ts';
 
-export const selectAllVaultIdsIncludingHidden = (state: BeefyState) => state.entities.vaults.allIds;
+export const selectAllVaultIdsIncludingHidden = createSelector(
+  (state: BeefyState) => state.entities.vaults.allIds,
+  allIds => allIds
+);
 export const selectAllVisibleVaultIds = (state: BeefyState) => state.entities.vaults.allVisibleIds;
 export const selectAllCowcentratedVaultIds = (state: BeefyState) =>
   state.entities.vaults.byType.cowcentrated.allIds;

@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { memo } from 'react';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import {
@@ -33,58 +34,65 @@ export const VaultWalletStat = memo(function ({ vaultId, ...passthrough }: Vault
 });
 
 // TODO better selector / hook
-function selectVaultWalletStat(state: BeefyState, vaultId: VaultEntity['id']) {
-  const label = 'VaultStat-WALLET';
-  const vault = selectVaultById(state, vaultId);
-  const hideBalance = selectIsBalanceHidden(state);
-  const walletAddress = selectWalletAddress(state);
+const selectVaultWalletStat = createSelector(
+  [(state: BeefyState) => state, (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId],
+  (state, vaultId) => {
+    const label = 'VaultStat-WALLET';
+    const vault = selectVaultById(state, vaultId);
+    const hideBalance = selectIsBalanceHidden(state);
+    const walletAddress = selectWalletAddress(state);
 
-  if (!walletAddress) {
+    if (!walletAddress) {
+      return {
+        label,
+        value: '0',
+        subValue: null,
+        blur: hideBalance,
+        loading: false,
+      };
+    }
+
+    const isLoaded =
+      selectIsPricesAvailable(state) &&
+      selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress);
+    if (!isLoaded) {
+      return {
+        label,
+        value: '-',
+        subValue: null,
+        blur: hideBalance,
+        loading: true,
+        expectSubValue: true,
+      };
+    }
+
+    const tokensInWallet = selectUserBalanceOfToken(
+      state,
+      vault.chainId,
+      vault.depositTokenAddress
+    );
+
+    if (!tokensInWallet.gt(0)) {
+      return {
+        label,
+        value: '0',
+        subValue: null,
+        blur: hideBalance,
+        loading: false,
+      };
+    }
+
+    const price = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const totalInWallet = formatTokenDisplayCondensed(tokensInWallet, depositToken.decimals, 6);
+    const totalInWalletUsd = formatLargeUsd(tokensInWallet.times(price));
+
     return {
       label,
-      value: '0',
-      subValue: null,
+      value: totalInWallet,
+      subValue: totalInWalletUsd,
       blur: hideBalance,
       loading: false,
     };
   }
-
-  const isLoaded =
-    selectIsPricesAvailable(state) &&
-    selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress);
-  if (!isLoaded) {
-    return {
-      label,
-      value: '-',
-      subValue: null,
-      blur: hideBalance,
-      loading: true,
-      expectSubValue: true,
-    };
-  }
-
-  const tokensInWallet = selectUserBalanceOfToken(state, vault.chainId, vault.depositTokenAddress);
-
-  if (!tokensInWallet.gt(0)) {
-    return {
-      label,
-      value: '0',
-      subValue: null,
-      blur: hideBalance,
-      loading: false,
-    };
-  }
-
-  const price = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const totalInWallet = formatTokenDisplayCondensed(tokensInWallet, depositToken.decimals, 6);
-  const totalInWalletUsd = formatLargeUsd(tokensInWallet.times(price));
-
-  return {
-    label,
-    value: totalInWallet,
-    subValue: totalInWalletUsd,
-    blur: hideBalance,
-    loading: false,
-  };
-}
+);

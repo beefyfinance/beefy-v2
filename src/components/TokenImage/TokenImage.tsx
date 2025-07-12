@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { type CssStyles } from '@repo/styles/css';
 import { memo } from 'react';
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
@@ -46,95 +47,110 @@ type ChainAssets = {
   assetSymbols: string[];
 };
 
-const selectAssetsForAddressChainId = (
-  state: BeefyState,
-  { address, chainId }: AddressChainIdOptions
-): ChainAssets | undefined => {
-  // check vaults first, as not all vaults have a share token
-  const vault = selectVaultByAddressOrUndefined(state, chainId, address);
-  if (vault) {
-    return selectAssetsForVault(state, { vault });
-  }
+const selectAssetsForAddressChainId = createSelector(
+  [
+    (state: BeefyState) => state,
+    (_state: BeefyState, { address, chainId }: AddressChainIdOptions) => ({ address, chainId }),
+  ],
+  (state, { address, chainId }): ChainAssets | undefined => {
+    // check vaults first, as not all vaults have a share token
+    const vault = selectVaultByAddressOrUndefined(state, chainId, address);
+    if (vault) {
+      return selectAssetsForVault(state, { vault });
+    }
 
-  // if valid token, forward to token selector
-  const token = selectTokenByAddressOrUndefined(state, chainId, address);
-  if (token) {
-    return selectAssetsForToken(state, { token });
-  }
+    // if valid token, forward to token selector
+    const token = selectTokenByAddressOrUndefined(state, chainId, address);
+    if (token) {
+      return selectAssetsForToken(state, { token });
+    }
 
-  return undefined;
-};
-
-const selectAssetsForToken = (
-  state: BeefyState,
-  { token }: TokenOptions
-): ChainAssets | undefined => {
-  // vault share token -> use vault icon
-  const vault = selectVaultByAddressOrUndefined(state, token.chainId, token.address);
-  if (vault) {
-    return selectAssetsForVault(state, { vault });
-  }
-
-  // image exists for symbol -> use single asset icon
-  if (singleAssetExists(token.symbol, token.chainId)) {
-    return { chainId: token.chainId, assetSymbols: [token.symbol] };
-  }
-
-  // LP token for a vault -> use vault icon
-  const depositForVaultIds = selectNonGovVaultIdsByDepositTokenAddress(
-    state,
-    token.chainId,
-    token.address
-  );
-  if (depositForVaultIds?.length) {
-    return selectAssetsForVaultId(state, { vaultId: depositForVaultIds[0], assetsOnly: true });
-  }
-
-  return undefined;
-};
-
-const selectAssetsForTokens = (
-  state: BeefyState,
-  { tokens }: TokensOptions
-): ChainAssets | undefined => {
-  if (tokens.length === 0) {
     return undefined;
   }
+);
 
-  if (tokens.length === 1) {
-    return selectAssetsForToken(state, { token: tokens[0] });
+const selectAssetsForToken = createSelector(
+  [(state: BeefyState) => state, (_state: BeefyState, { token }: TokenOptions) => token],
+  (state, token): ChainAssets | undefined => {
+    // vault share token -> use vault icon
+    const vault = selectVaultByAddressOrUndefined(state, token.chainId, token.address);
+    if (vault) {
+      return selectAssetsForVault(state, { vault });
+    }
+
+    // image exists for symbol -> use single asset icon
+    if (singleAssetExists(token.symbol, token.chainId)) {
+      return { chainId: token.chainId, assetSymbols: [token.symbol] };
+    }
+
+    // LP token for a vault -> use vault icon
+    const depositForVaultIds = selectNonGovVaultIdsByDepositTokenAddress(
+      state,
+      token.chainId,
+      token.address
+    );
+    if (depositForVaultIds?.length) {
+      return selectAssetsForVaultId(state, {
+        vaultId: depositForVaultIds[0],
+        assetsOnly: true,
+      });
+    }
+
+    return undefined;
   }
+);
 
-  return {
-    chainId: tokens[0].chainId,
-    assetSymbols: tokens.map(token => token.symbol),
-  };
-};
+const selectAssetsForTokens = createSelector(
+  [(state: BeefyState) => state, (_state: BeefyState, { tokens }: TokensOptions) => tokens],
+  (state, tokens): ChainAssets | undefined => {
+    if (tokens.length === 0) {
+      return undefined;
+    }
 
-const selectAssetsForVaultId = (
-  state: BeefyState,
-  { vaultId, ...rest }: VaultIdOptions
-): ChainAssets | undefined => {
-  return selectAssetsForVault(state, { vault: selectVaultById(state, vaultId), ...rest });
-};
+    if (tokens.length === 1) {
+      return selectAssetsForToken(state, { token: tokens[0] });
+    }
 
-const selectAssetsForVault = (
-  state: BeefyState,
-  { vault, assetsOnly = false }: VaultOptions
-): ChainAssets | undefined => {
-  // Use custom icon from config if not disabled
-  if (!assetsOnly && vault.icons?.length) {
-    return { chainId: vault.chainId, assetSymbols: vault.icons };
+    return {
+      chainId: tokens[0].chainId,
+      assetSymbols: tokens.map(token => token.symbol),
+    };
   }
+);
 
-  // Make icon using symbols of all vault assets
-  const symbols = selectVaultTokenSymbols(state, vault.id);
-  if (symbols?.length) {
-    return { chainId: vault.chainId, assetSymbols: symbols };
+const selectAssetsForVaultId = createSelector(
+  [
+    (state: BeefyState) => state,
+    (_state: BeefyState, { vaultId, ...rest }: VaultIdOptions) => ({ vaultId, ...rest }),
+  ],
+  (state, { vaultId, ...rest }): ChainAssets | undefined => {
+    return selectAssetsForVault(state, {
+      vault: selectVaultById(state, vaultId),
+      ...rest,
+    });
   }
+);
 
-  return undefined;
-};
+const selectAssetsForVault = createSelector(
+  [
+    (state: BeefyState) => state,
+    (_state: BeefyState, { vault, assetsOnly = false }: VaultOptions) => ({ vault, assetsOnly }),
+  ],
+  (state, { vault, assetsOnly }): ChainAssets | undefined => {
+    // Use custom icon from config if not disabled
+    if (!assetsOnly && vault.icons?.length) {
+      return { chainId: vault.chainId, assetSymbols: vault.icons };
+    }
+
+    // Make icon using symbols of all vault assets
+    const symbols = selectVaultTokenSymbols(state, vault.id);
+    if (symbols?.length) {
+      return { chainId: vault.chainId, assetSymbols: symbols };
+    }
+
+    return undefined;
+  }
+);
 
 type CommonTokenImageProps = {
   size?: AssetsImageProps['size'];
