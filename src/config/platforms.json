@@ -1484,5 +1484,14 @@
     "documentation": "https://hybra-foundation.gitbook.io/hybra-foundation",
     "description": "Public liquidity layer on Hyperliquid. Upgraded ve(3,3) flywheel, CL & intent-based gasless trades.",
     "type": "amm"
+  },
+  {
+    "id": "imf",
+    "name": "IMF",
+    "type": "money-market",
+    "website": "https://app.imf.bz/",
+    "documentation": "https://docs.imf.bz/",
+    "description": "International Meme Fund (IMF) is a DeFi protocol (powered by Morpho) lending stablecoins against meme coin collateral.",
+    "risks": ["NO_TIMELOCK"]
   }
 ]
