@@ -1,7 +1,7 @@
 [
   {
     "id": "morpho-imf-usds",
-    "name": "IMF USDS",
+    "name": "USDS",
     "type": "standard",
     "token": "USDS",
     "tokenAddress": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
@@ -13,7 +13,7 @@
     "oracleId": "USDS",
     "status": "active",
     "createdAt": 1751968712,
-    "platformId": "morpho",
+    "platformId": "imf",
     "assets": ["USDS"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
