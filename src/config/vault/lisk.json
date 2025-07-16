@@ -19,7 +19,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -51,7 +50,6 @@
     "risks": [],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -86,7 +84,6 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -112,7 +109,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "createdAt": 1736773041,
     "updatedAt": 1752655420,
     "zaps": [
@@ -149,7 +145,6 @@
     "risks": [],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -183,7 +178,6 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "type": "cowcentrated",
     "feeTier": "0.27",
     "zaps": [
@@ -211,7 +205,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "createdAt": 1734022387,
     "zaps": [
       {
@@ -246,7 +239,6 @@
     "risks": [],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -279,7 +271,6 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "type": "cowcentrated",
     "feeTier": "0.05",
     "zaps": [
@@ -311,7 +302,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xF242275d3a6527d877f2c927a82D9b057609cc71&type=-1&factory=0x31832f2a97Fd20664D76Cc421207669b55CE4BC0&chain=1135",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -340,7 +330,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xac485391EB2d7D88253a7F1eF18C37f4242D1A24&type=-1&factory=0x31832f2a97Fd20664D76Cc421207669b55CE4BC0&chain=1135",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -367,7 +356,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "createdAt": 1733781628,
     "zaps": [
       {
@@ -402,7 +390,6 @@
     "risks": [],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -435,7 +422,6 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "type": "cowcentrated",
     "feeTier": "0.3",
     "zaps": [
@@ -463,7 +449,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "createdAt": 1733781628,
     "zaps": [
       {
@@ -498,7 +483,6 @@
     "risks": [],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -531,7 +515,6 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "type": "cowcentrated",
     "feeTier": ".01",
     "zaps": [
@@ -561,7 +544,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "createdAt": 1733781628,
     "zaps": [
       {
@@ -598,7 +580,6 @@
     "risks": [],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -633,7 +614,6 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "type": "cowcentrated",
     "feeTier": "1",
     "zaps": [
@@ -666,7 +646,6 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -699,7 +678,6 @@
     "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "type": "cowcentrated",
     "feeTier": "0.3",
     "zaps": [
@@ -734,7 +712,6 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -769,7 +746,6 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "lisk",
-    "pointStructureIds": ["lisk-points"],
     "type": "cowcentrated",
     "feeTier": "0.3",
     "zaps": [
