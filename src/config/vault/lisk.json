@@ -1,5 +1,99 @@
 [
   {
+    "id": "velodrome-cow-lisk-weth-usdt0-vault",
+    "name": "WETH-USD₮0",
+    "type": "standard",
+    "token": "WETH-USD₮0",
+    "tokenAddress": "0x38f99EF6019CfF7f2156148fFDAa2fAAbCD7ae7d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnContractAddress": "0x32F731ca56029879Cc42147Ff0B69B43dd037cBB",
+    "earnedToken": "mooCowVelodromeWETH-USDT0",
+    "earnedTokenAddress": "0x32F731ca56029879Cc42147Ff0B69B43dd037cBB",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-lisk-weth-usdt0",
+    "status": "active",
+    "createdAt": 1752655422,
+    "platformId": "velodrome",
+    "assets": ["WETH", "USDT0"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "lisk",
+    "pointStructureIds": ["lisk-points"],
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-lisk-weth-usdt0-rp",
+    "name": "WETH-USD₮0 Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowVelodromeWETH-USDT0",
+    "tokenAddress": "0x38f99EF6019CfF7f2156148fFDAa2fAAbCD7ae7d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnContractAddress": "0x227863e9f60A6015FFf56c790785FB76F66FDcD2",
+    "earnedToken": "rCowVelodromeWETH-USDT0",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x7f9AdFbd38b669F03d1d11000Bc76b9AaEA28A81"],
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-lisk-weth-usdt0",
+    "status": "active",
+    "createdAt": 1752655421,
+    "platformId": "velodrome",
+    "assets": ["WETH", "USDT0"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "lisk",
+    "pointStructureIds": ["lisk-points"],
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-lisk-weth-usdt0",
+    "name": "WETH-USD₮0",
+    "type": "cowcentrated",
+    "token": "WETH-USD₮0 velodrome",
+    "tokenAddress": "0x915e897DafFBf232991a9ac1a35240318bF7e65D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x43F2376D5D03553aE72F4A8093bbe9de4336EB08"
+    ],
+    "earnContractAddress": "0x38f99EF6019CfF7f2156148fFDAa2fAAbCD7ae7d",
+    "earnedToken": "cowVelodromeWETH-USDT0",
+    "earnedTokenAddress": "0x38f99EF6019CfF7f2156148fFDAa2fAAbCD7ae7d",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-lisk-weth-usdt0",
+    "status": "active",
+    "createdAt": 1752655421,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["WETH", "USDT0"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "lisk",
+    "pointStructureIds": ["lisk-points"],
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "velodrome-cow-lisk-weth-lsk-vault",
     "name": "WETH-LSK",
     "type": "standard",
@@ -12,9 +106,7 @@
     "earnContractAddress": "0xA2A2Eff23093461098F51f58d9Bb0A1A4d46B304",
     "oracle": "lps",
     "oracleId": "velodrome-cow-lisk-weth-lsk",
-    "status": "eol",
-    "retiredAt": 1744298354,
-    "retireReason": "tvl",
+    "status": "active",
     "platformId": "velodrome",
     "assets": ["WETH", "LSK"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -22,6 +114,7 @@
     "network": "lisk",
     "pointStructureIds": ["lisk-points"],
     "createdAt": 1736773041,
+    "updatedAt": 1752655420,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -48,10 +141,9 @@
     "earnContractAddress": "0x74BE1F8930e7547dA19eE9D9035F7A185FC4C251",
     "oracle": "lps",
     "oracleId": "velodrome-cow-lisk-weth-lsk",
-    "status": "eol",
-    "retiredAt": 1744298354,
-    "retireReason": "tvl",
+    "status": "active",
     "createdAt": 1736773040,
+    "updatedAt": 1752655420,
     "platformId": "velodrome",
     "assets": ["WETH", "LSK"],
     "risks": [],
@@ -83,10 +175,9 @@
     "earnContractAddress": "0xac763E75B02164b39A240DA60b060281BAd66a55",
     "oracle": "lps",
     "oracleId": "velodrome-cow-lisk-weth-lsk",
-    "status": "eol",
-    "retiredAt": 1744298354,
-    "retireReason": "tvl",
+    "status": "active",
     "createdAt": 1736773040,
+    "updatedAt": 1752655420,
     "platformId": "beefy",
     "assets": ["WETH", "LSK"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
