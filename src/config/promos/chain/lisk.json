@@ -1,5 +1,45 @@
 [
   {
+    "id": "moo_velodrome-cow-lisk-weth-usdt0-vault-lisk",
+    "title": "Lisk",
+    "vaultId": "velodrome-cow-lisk-weth-usdt0-vault",
+    "assets": ["ETH", "USDT0"],
+    "tokenAddress": "0x32F731ca56029879Cc42147Ff0B69B43dd037cBB",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x458644D6E797a4824fb186c8aF34736393929C05",
+    "partners": ["lisk"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xac485391EB2d7D88253a7F1eF18C37f4242D1A24",
+        "symbol": "LSK",
+        "decimals": 18,
+        "oracleId": "LSK"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-cow-lisk-weth-lsk-vault-lisk",
+    "title": "Lisk",
+    "vaultId": "velodrome-cow-lisk-weth-lsk-vault",
+    "assets": ["ETH", "LSK"],
+    "tokenAddress": "0xA2A2Eff23093461098F51f58d9Bb0A1A4d46B304",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xFc50E7FC0f1224915c96Bbc5caf890D596c52be9",
+    "partners": ["lisk"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xac485391EB2d7D88253a7F1eF18C37f4242D1A24",
+        "symbol": "LSK",
+        "decimals": 18,
+        "oracleId": "LSK"
+      }
+    ]
+  },
+  {
     "id": "moo_velodrome-cow-lisk-usdt-weth-vault-lisk",
     "title": "Lisk",
     "vaultId": "velodrome-cow-lisk-usdt-weth-vault",
