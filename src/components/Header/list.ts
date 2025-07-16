@@ -32,17 +32,18 @@ export const DaoNavItems: NavItemConfig[] = [
     Icon: ProposalsIcon,
     url: 'https://vote.beefy.finance/#/',
     Component: MainProposalsNavItem,
+    externalLink: true,
   },
   {
     title: 'Header-ProfitDistribution',
     Icon: ProfitDistributionIcon,
     url: 'https://snapshot.box/#/s:profit.beefy.eth/',
     Component: ProfitProposalsNavItem,
+    externalLink: true,
   },
 ];
 
 export const ResourcesNavItems: NavItemConfig[] = [
-  { title: 'Header-Docs', Icon: DocsIcon, url: 'https://docs.beefy.finance/' },
   {
     title: 'Header-News',
     Icon: NewsIcon,
@@ -50,10 +51,16 @@ export const ResourcesNavItems: NavItemConfig[] = [
     Component: ArticlesNavItem,
   },
   { title: 'Header-MediaKit', Icon: MediaKitIcon, url: 'https://beefy.com/media-kit/' },
-  { title: 'Header-Audit', Icon: AuditIcon, url: 'https://github.com/beefyfinance/beefy-audits' },
   { title: 'Header-Partners', Icon: PartnersIcon, url: 'https://beefy.com/partners' },
   { title: 'Header-Analytics', Icon: AnalyticsIcon, url: 'https://analytics.beefy.finance/' },
   { title: 'Header-Gems', Icon: GemsIcon, url: '/campaigns/begems' },
+  { title: 'Header-Docs', Icon: DocsIcon, url: 'https://docs.beefy.finance/', externalLink: true },
+  {
+    title: 'Header-Audit',
+    Icon: AuditIcon,
+    url: 'https://github.com/beefyfinance/beefy-audits',
+    externalLink: true,
+  },
 ];
 
 export const MobileList: NavConfig[] = [

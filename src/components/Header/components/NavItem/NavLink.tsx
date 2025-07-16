@@ -12,6 +12,7 @@ const navItemStyles = {
     color: 'text.dark',
     columnGap: '4px',
     outline: 'none',
+    padding: '2px',
   },
   variants: {
     mobile: {
@@ -19,6 +20,14 @@ const navItemStyles = {
         padding: '16px',
         display: 'flex',
         alignItems: 'center',
+      },
+    },
+    dropdownItem: {
+      true: {
+        padding: '8px 12px',
+        _hover: {
+          backgroundColor: 'background.button',
+        },
       },
     },
   },
@@ -61,11 +70,12 @@ export const DropdownNavButton = styled(DropdownTrigger.button, navLinkRecipe, {
 
 type NavLinkProps = {
   onClick?: RouterNavLinkProps['onClick'];
-
   to: RouterNavLinkProps['to'];
   children: ReactNode;
   mobile?: boolean;
   end?: boolean;
+  dropdownItem?: boolean;
+  externalLink?: boolean;
 };
 
 export const NavLink = memo<NavLinkProps>(function NavLink({
@@ -73,15 +83,31 @@ export const NavLink = memo<NavLinkProps>(function NavLink({
   children,
   onClick,
   mobile = false,
+  dropdownItem = false,
   ...rest
 }) {
   const isExternal = typeof to === 'string' && to[0] !== '/';
 
   if (isExternal) {
-    return <ExternalNavLink href={to} children={children} onClick={onClick} mobile={mobile} />;
+    return (
+      <ExternalNavLink
+        href={to}
+        children={children}
+        onClick={onClick}
+        mobile={mobile}
+        dropdownItem={dropdownItem}
+      />
+    );
   }
 
   return (
-    <InternalNavLink to={to} children={children} onClick={onClick} mobile={mobile} {...rest} />
+    <InternalNavLink
+      to={to}
+      children={children}
+      onClick={onClick}
+      mobile={mobile}
+      dropdownItem={dropdownItem}
+      {...rest}
+    />
   );
 });

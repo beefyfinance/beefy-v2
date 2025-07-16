@@ -58,8 +58,8 @@ export const TokenPrice = memo(function TokenPrice({ token, ...rest }: TokenPric
 
   return (
     <div className={tokenPriceRecipe(rest)}>
-      <Icon alt={symbol} src={icon} />
       {formatLargeUsd(price, { decimalsUnder: 2 })}
+      <Icon alt={symbol} src={icon} />
     </div>
   );
 });

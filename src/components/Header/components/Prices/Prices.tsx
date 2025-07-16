@@ -12,7 +12,6 @@ export const Prices = memo(function Prices() {
       onChange={setOpen}
       placement="bottom-end"
       variant="dark"
-      arrowEnabled={true}
       layer={1}
     >
       <PricesButton />
