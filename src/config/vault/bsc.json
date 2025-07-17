@@ -1,5 +1,64 @@
 [
   {
+    "id": "pancake-cow-bsc-usdt-rion-rp",
+    "name": "RION-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBSCRION-USDT",
+    "tokenAddress": "0x8eF114e9aF40eFD9df381907fA7094fB31285f92",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xc5714c1fCd56922EA0E17Bd8392D6954b00045a9",
+    "earnedToken": "rCowPancakeBSCRION-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdt-rion",
+    "status": "active",
+    "createdAt": 1752756948,
+    "platformId": "pancakeswap",
+    "assets": ["RION", "USDT"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-usdt-rion",
+    "name": "RION-USDT",
+    "type": "cowcentrated",
+    "token": "RION-USDT pancakeswap",
+    "tokenAddress": "0xab0e5d8bA68a6BC6f78668394FdE09B3d8371A1A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x55d398326f99059fF775485246999027B3197955",
+      "0xC0c240C870606a5Cb3150795E2D0dffF9f1F7456"
+    ],
+    "earnContractAddress": "0x8eF114e9aF40eFD9df381907fA7094fB31285f92",
+    "earnedToken": "cowPancakeBSCRION-USDT",
+    "earnedTokenAddress": "0x8eF114e9aF40eFD9df381907fA7094fB31285f92",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdt-rion",
+    "status": "active",
+    "createdAt": 1752756948,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["RION", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-bsc-b-wbnb-rp",
     "name": "B-WBNB Reward Pool",
     "type": "gov",
