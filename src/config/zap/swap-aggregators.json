@@ -574,5 +574,16 @@
     "priorityTokens": ["HYPE", "WHYPE", "feUSD", "USDT0", "LIQD"],
     "blockedTokens": [],
     "blockedVaults": []
+  },
+  {
+    "id": "kyber-hyperevm",
+    "type": "kyber",
+    "chainId": "hyperevm",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": ["HYPE", "WHYPE", "feUSD", "USDT0", "LIQD"],
+    "blockedTokens": [],
+    "blockedVaults": []
   }
 ]
