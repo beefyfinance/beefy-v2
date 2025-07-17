@@ -4,12 +4,15 @@ import { type CSSProperties, memo } from 'react';
 export const ProgressBar = memo(function ProgressBar({ progress }: { progress: number }) {
   return (
     <Sizer style={{ '--progress': `${progress}%` } as CSSProperties}>
-      <GlowCropper>
-        <GlowSizer>
-          <GlowTop />
-          <GlowBottom />
-        </GlowSizer>
-      </GlowCropper>
+      <ShadowGlowCropper>
+        <ShadowGlowSizer>
+          <GlowSizer>
+            <GlowTop />
+            <GlowBottom />
+          </GlowSizer>
+          <Shadow />
+        </ShadowGlowSizer>
+      </ShadowGlowCropper>
       <Bar />
       <DotOuter>
         <DotInner />
@@ -38,24 +41,37 @@ const Bar = styled('div', {
   },
 });
 
-const GlowCropper = styled('div', {
+const ShadowGlowCropper = styled('div', {
   base: {
     position: 'absolute',
     top: '0',
     left: '0',
-    height: '77px',
+    height: '80px',
     width: '100%',
     overflow: 'hidden',
   },
 });
 
-const GlowSizer = styled('div', {
+const ShadowGlowSizer = styled('div', {
   base: {
     position: 'absolute',
-    top: '0',
-    left: '0',
-    height: '77px',
-    width: 'calc(var(--progress, 0%) + 80px)',
+    top: '-2px',
+    left: '-40px',
+    transform: 'translateY(-50%)',
+    height: '38px',
+    width: 'calc(100% + 80px)',
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    padding: '8px',
+  },
+});
+
+const GlowSizer = styled('div', {
+  base: {
+    position: 'relative',
+    flex: '0 0 auto',
+    width: 'calc(var(--progress, 0%) + 40px - 4px)',
     transition: 'width 0.2s linear',
   },
 });
@@ -63,26 +79,28 @@ const GlowSizer = styled('div', {
 const GlowTop = styled('div', {
   base: {
     position: 'absolute',
-    top: '-33px',
-    left: '-47px',
-    right: '0',
-    height: '33px',
+    top: '0',
+    left: '0',
+    height: '100%',
+    width: '100%',
     background: 'green.40',
-    opacity: '0.1',
-    filter: 'blur(28px)',
+    filter: 'blur(15px)',
   },
 });
 
 const GlowBottom = styled('div', {
   base: {
-    position: 'absolute',
-    top: '-41px',
-    left: '-64px',
-    right: '0',
-    height: '41px',
     background: 'green.40',
-    opacity: '0.78',
-    filter: 'blur(22px)',
+    opacity: '0.5',
+    filter: 'blur(6px)',
+  },
+});
+
+const Shadow = styled('div', {
+  base: {
+    flex: '1 0 0',
+    backgroundColor: 'darkBlue.90-56a',
+    filter: 'blur(12px)',
   },
 });
 
