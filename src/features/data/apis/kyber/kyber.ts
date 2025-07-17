@@ -30,6 +30,7 @@ export const supportedChainIds: ChainConfig['id'][] = [
   'scroll',
   'sonic',
   'berachain',
+  'hyperevm',
 ];
 
 export class KyberSwapApi implements IKyberSwapApi {
