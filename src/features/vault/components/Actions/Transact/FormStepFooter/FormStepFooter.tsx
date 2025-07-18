@@ -78,23 +78,34 @@ const modeToFooters: ModeToFooters = {
   [TransactMode.Withdraw]: [selectWithdrawBoostNotice],
 };
 
-const selectFooter = (state: BeefyState) => {
-  const mode = selectTransactMode(state);
-  const footers = modeToFooters[mode];
-  if (!footers) {
+const selectFooter = createSelector(
+  [selectTransactMode, selectTransactVaultId, (state: BeefyState) => state],
+  (mode, vaultId, state) => {
+    const footers = modeToFooters[mode];
+    if (!footers) {
+      return null;
+    }
+
+    // Check each footer selector in order
+    if (mode === TransactMode.Deposit) {
+      const boostDepositNotice = selectBoostDepositNotice(state, vaultId);
+      if (boostDepositNotice) {
+        return boostDepositNotice(vaultId);
+      }
+      const depositClaimNotice = selectDepositClaimNotice(state, vaultId);
+      if (depositClaimNotice) {
+        return depositClaimNotice();
+      }
+    } else if (mode === TransactMode.Withdraw) {
+      const withdrawBoostNotice = selectWithdrawBoostNotice(state, vaultId);
+      if (withdrawBoostNotice) {
+        return withdrawBoostNotice(vaultId);
+      }
+    }
+
     return null;
   }
-
-  const vaultId = selectTransactVaultId(state);
-  for (const footer of footers) {
-    const renderer = footer(state, vaultId);
-    if (renderer) {
-      return renderer(vaultId);
-    }
-  }
-
-  return null;
-};
+);
 
 export const FormStepFooter = memo(function FormStepFooter() {
   return useAppSelector(selectFooter);
