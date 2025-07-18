@@ -341,8 +341,12 @@ export function maybeHexToNumber(input: unknown): number {
   throw new Error(`${typeof input} "${input}" is not valid hex or number.`);
 }
 
-export function formatAddressShort(addr: string): string {
-  return addr.substring(0, 4) + '...' + addr.substring(addr.length - 4);
+export function formatAddressShort(
+  addr: string,
+  prefixLen: number = 4,
+  postfixLen: number = 4
+): string {
+  return addr.substring(0, prefixLen) + '...' + addr.substring(addr.length - postfixLen);
 }
 
 export function formatDomain(domain: string, length: number = 16): string {
@@ -466,4 +470,10 @@ export function formatPositiveOrNegative(number: BigNumber, value: string, symbo
   } else {
     return `+${value} ${symbol}`;
   }
+}
+
+export function formatNumber(value: number, maxDecimals: number): string {
+  return value.toLocaleString('en-US', {
+    maximumFractionDigits: maxDecimals,
+  });
 }

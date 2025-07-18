@@ -20,6 +20,7 @@ const holderClass = css({
   overflow: 'hidden',
   whiteSpace: 'nowrap',
   textOverflow: 'ellipsis',
+  verticalAlign: 'bottom',
 });
 
 const placeholderClass = css({
@@ -33,7 +34,7 @@ const placeholderClass = css({
 
 const loaderClass = css({
   backgroundImage:
-    'linear-gradient(90deg, {colors.loaderPurple}, {colors.loaderPurpleHighlight}, {colors.loaderPurple})',
+    'linear-gradient(90deg, transparent, {colors.loaderPurpleHighlight}, transparent)',
   backgroundSize: '300% 100%',
   animationName: 'scrollBackground',
   animationDuration: '3s',

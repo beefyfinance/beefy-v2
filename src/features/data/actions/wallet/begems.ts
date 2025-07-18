@@ -6,7 +6,7 @@ import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import {
   selectBeGemsFactoryAddress,
-  selectBeGemsSeasonData,
+  selectBeGemsTokenSeasonData,
 } from '../../selectors/campaigns/begems.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectChainNativeToken, selectTokenByAddress } from '../../selectors/tokens.ts';
@@ -25,7 +25,7 @@ export function redeemGems(season: number, amount: BigNumber) {
     }
     const address = getAddress(maybeAddress);
 
-    const data = selectBeGemsSeasonData(state, season);
+    const data = selectBeGemsTokenSeasonData(state, season);
     if (!data.token || !data.priceForFullShare) {
       throw new Error('Season not redeemable.');
     }

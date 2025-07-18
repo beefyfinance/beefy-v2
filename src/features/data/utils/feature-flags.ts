@@ -330,3 +330,7 @@ export function featureFlag_simulateLiveBoost(boostId: string): boolean {
 export function featureFlag_simulateMissingTransactions(): boolean {
   return getSearchParams().has('__simulate_missing_transactions');
 }
+
+export function featureFlag_beGemsDummy(): boolean {
+  return getSearchParams().has('__begems_dummy');
+}

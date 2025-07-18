@@ -7,6 +7,7 @@ export function standardSvgrPlugin() {
     svgrOptions: {
       expandProps: 'end',
       memo: true,
+      ref: true,
     },
   });
 }
