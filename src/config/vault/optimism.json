@@ -1,9 +1,9 @@
 [
   {
     "id": "balancerv3-optimism-reth-waoptweth",
-    "name": "rETH-WETH V3",
+    "name": "rETH/WETH V3",
     "type": "standard",
-    "token": "rETH-WETH V3",
+    "token": "rETH/WETH V3",
     "tokenAddress": "0x870c0Af8A1af0B58b4b0bD31CE4fe72864ae45BE",
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
@@ -23,9 +23,9 @@
   },
   {
     "id": "balancerv3-optimism-waoptreth-waoptwsteth-sfrxeth",
-    "name": "rETH-wstETH-sfrxETH V3",
+    "name": "rETH/wstETH/sfrxETH V3",
     "type": "standard",
-    "token": "rETH-wstETH-sfrxETH V3",
+    "token": "rETH/wstETH/sfrxETH V3",
     "tokenAddress": "0x49e75c0df48aD09a0e20E8bBDeD07Ee60dD8bC03",
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
