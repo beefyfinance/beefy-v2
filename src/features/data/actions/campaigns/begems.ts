@@ -20,8 +20,6 @@ import type {
   SeasonDataToken,
 } from '../../reducers/campaigns/begems-types.ts';
 import { selectBeGemsSeason } from '../../selectors/campaigns/begems.ts';
-import { sleep } from '../../utils/async-utils.ts';
-import { featureFlag_beGemsDummy } from '../../utils/feature-flags.ts';
 
 async function fetchTokenSeason(
   state: BeGemsState,
@@ -48,13 +46,13 @@ async function fetchPointsSeason(
   _state: BeGemsState,
   config: SeasonConfig
 ): Promise<SeasonDataPoints> {
-  // TODO fetch actual data from API
-  await sleep(2000); // Simulate API delay
+  // // TODO fetch actual data from API
+  // await sleep(2000); // Simulate API delay
 
   return {
     type: 'points',
     num: config.number,
-    placeholder: !featureFlag_beGemsDummy(), // TODO remove this when real data is available
+    placeholder: true,
     totalPoints: 123_456_789,
     totalUsers: 23_456,
     top: [
@@ -164,12 +162,12 @@ export const fetchUserPointsSeasonData = createAppAsyncThunk<
   }
 
   // TODO fetch actual data from API
-  await sleep(2000); // Simulate API delay
+  // await sleep(2000); // Simulate API delay
 
   return {
     address,
     season,
-    points: featureFlag_beGemsDummy() ? 5678 : 0, // TODO remove placeholder when real data is available
-    position: featureFlag_beGemsDummy() ? 20 : 0, // TODO set position/points to zero if API returns user not found
+    points: 0, // TODO replace with actual points from API
+    position: 0, // TODO set position/points to zero if API returns user not found
   };
 });
