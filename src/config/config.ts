@@ -252,6 +252,8 @@ export const config = {
       'wUSDM',
       'Bold',
       'BOLDV2',
+      'sfrxUSD',
+      'waOptUSDCn',
     ],
   },
   arbitrum: {
