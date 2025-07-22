@@ -1,4 +1,4 @@
-import type { Abi } from 'abitype';
+import type { Abi } from 'viem';
 import type BigNumber from 'bignumber.js';
 import { uniqBy } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';

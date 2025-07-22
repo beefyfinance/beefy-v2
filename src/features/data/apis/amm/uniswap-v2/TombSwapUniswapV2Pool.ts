@@ -8,7 +8,7 @@ import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
 import BigNumber from 'bignumber.js';
 import type { SwapFeeParams } from '../types.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
-import type { Abi } from 'abitype';
+import type { Abi } from 'viem';
 
 export type FactoryDataResponse = BaseFactoryDataResponse & {
   mintFee: string;

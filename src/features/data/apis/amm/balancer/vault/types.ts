@@ -2,7 +2,7 @@ import type BigNumber from 'bignumber.js';
 import type { TokenEntity } from '../../../../entities/token.ts';
 import type { ExitPoolUserData, JoinPoolUserData } from '../common/types.ts';
 import type { Hex } from 'viem';
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 
 export type VaultConfig = {
   /** address */

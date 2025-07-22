@@ -1,4 +1,4 @@
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import type BigNumber from 'bignumber.js';
 
 export type SeasonFaq = {
