@@ -1,4 +1,3 @@
-import { css } from '@repo/styles/css';
 import { memo } from 'react';
 import { selectTokenPriceByTokenOracleId } from '../../../../features/data/selectors/tokens.ts';
 import { formatLargeUsd } from '../../../../helpers/format.ts';
@@ -9,6 +8,8 @@ import { ActionLink } from './Action.tsx';
 import { AddToWalletButton } from './AddToWalletButton.tsx';
 import { type Token, tokens } from './config.ts';
 import { Icon } from './Icon.tsx';
+import { styled } from '@repo/styles/jsx';
+import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 
 const buyPlatforms: Record<
   NonNullable<Token['buyLink']>['platform'],
@@ -19,20 +20,20 @@ const buyPlatforms: Record<
 };
 
 export const Tokens = memo(function Tokens() {
-  const className = css({
-    display: 'grid',
-    gap: '8px',
-    gridTemplateColumns: 'auto 1fr min-content min-content min-content min-content',
-    alignItems: 'center',
-  });
-
   return (
-    <div className={className}>
+    <TokensContainer>
       {tokens.map((token, i) => (
         <TokenRow key={i} token={token} />
       ))}
-    </div>
+    </TokensContainer>
   );
+});
+
+const TokensContainer = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
 });
 
 type TooltipTokenProps = {
@@ -42,29 +43,81 @@ type TooltipTokenProps = {
 const TokenRow = memo<TooltipTokenProps>(function TokenRow({ token }) {
   const { symbol, oracleId, icon, explorer, buyLink, address, walletIconUrl, chainId } = token;
   const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, oracleId));
+  const chain = useAppSelector(state => selectChainById(state, chainId));
 
   return (
-    <>
-      <Icon alt={symbol} src={icon} first />
-      <div>{symbol}</div>
-      <div>{formatLargeUsd(price, { decimalsUnder: 2 })}</div>
-      <ActionLink href={explorer.url} title={`View at ${explorer.name}`}>
-        <Icon alt={explorer.name} src={explorer.icon} />
-      </ActionLink>
-      {buyLink ?
-        <ActionLink href={buyLink.url} title={buyPlatforms[buyLink.platform].title}>
-          <Icon
-            alt={buyPlatforms[buyLink.platform].title}
-            src={buyPlatforms[buyLink.platform].icon}
-          />
-        </ActionLink>
-      : null}
-      <AddToWalletButton
-        title={`Add to Wallet`}
-        chainId={chainId}
-        tokenAddress={address}
-        customIconUrl={walletIconUrl}
-      />
-    </>
+    <TokenRowContainer>
+      <LeftContainer>
+        <Icon alt={symbol} src={icon} first />
+        <Symbol>{symbol}</Symbol>
+        <ChainLink
+          target="_blank"
+          rel="noopener"
+          href={explorer.url}
+          title={`View at ${explorer.name}`}
+        >
+          {chain.name}
+        </ChainLink>
+      </LeftContainer>
+      <RightContainer>
+        <Price>{formatLargeUsd(price, { decimalsUnder: 2 })}</Price>
+        <AddToWalletButton
+          title={`Add to Wallet`}
+          chainId={chainId}
+          tokenAddress={address}
+          customIconUrl={walletIconUrl}
+        />
+        {buyLink ?
+          <ActionLink link href={buyLink.url} title={buyPlatforms[buyLink.platform].title}>
+            Buy ↗
+          </ActionLink>
+        : null}
+      </RightContainer>
+    </TokenRowContainer>
   );
+});
+
+const Symbol = styled('div', {
+  base: {
+    textStyle: 'body',
+    color: 'text.light',
+  },
+});
+
+const Price = styled('div', {
+  base: {
+    textStyle: 'body',
+    color: 'text.light',
+  },
+});
+
+const ChainLink = styled('a', {
+  base: {
+    textStyle: 'body',
+    color: 'text.dark',
+  },
+});
+
+const TokenRowContainer = styled('div', {
+  base: {
+    display: 'flex',
+    paddingBlock: '8px',
+  },
+});
+
+const LeftContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    flexGrow: 1,
+  },
+});
+
+const RightContainer = styled('div', {
+  base: {
+    display: 'flex',
+    gap: '8px',
+    alignItems: 'center',
+  },
 });

@@ -3,8 +3,9 @@ import { TokenPrice } from './TokenPrice.tsx';
 import { styled } from '@repo/styles/jsx';
 import { tokens } from './config.ts';
 import { DropdownTrigger } from '../../../Dropdown/DropdownTrigger.tsx';
+import ArrangeArrowIcon from '../../../../images/icons/arrange-arrow.svg?react';
 
-export const PricesButton = memo(function PricesButton() {
+export const PricesButton = memo(function PricesButton({ isOpen }: { isOpen: boolean }) {
   const [current, setCurrent] = useState(0);
   const next = current < tokens.length - 1 ? current + 1 : 0;
 
@@ -30,8 +31,26 @@ export const PricesButton = memo(function PricesButton() {
           }
         />
       ))}
+
+      <ArrowIcon isOpen={isOpen} />
     </Trigger>
   );
+});
+
+const ArrowIcon = styled(ArrangeArrowIcon, {
+  base: {
+    transform: 'rotate(180deg)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  variants: {
+    isOpen: {
+      true: {
+        transform: 'rotate(0deg)',
+      },
+    },
+  },
 });
 
 const Trigger = styled(
@@ -40,9 +59,14 @@ const Trigger = styled(
     base: {
       cursor: 'pointer',
       userSelect: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100px',
+      height: '40px',
+      gap: '2px',
+      padding: '8px 12px',
       position: 'relative',
-      width: '68px',
-      height: '24px',
     },
   },
   {

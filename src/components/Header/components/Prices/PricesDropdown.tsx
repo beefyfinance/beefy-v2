@@ -4,6 +4,7 @@ import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { DropdownContent } from '../../../Dropdown/DropdownContent.tsx';
 import { PricePerFullShare } from './PricePerFullShare.tsx';
 import { Tokens } from './Tokens.tsx';
+import { styled } from '@repo/styles/jsx';
 
 type PricesDropdownProps = {
   setOpen: (setter: boolean | ((open: boolean) => boolean)) => void;
@@ -26,11 +27,39 @@ export const PricesDropdown = memo(function PricesDropdown({ setOpen }: PricesDr
   );
 
   return (
-    <DropdownContent onClick={handleClick}>
-      <Tokens />
-      {vaultLoaded ?
-        <PricePerFullShare />
-      : null}
-    </DropdownContent>
+    <Dropdown onClick={handleClick}>
+      <PricesContainer>
+        <Tokens />
+      </PricesContainer>
+      <Footer>
+        {vaultLoaded ?
+          <PricePerFullShare />
+        : null}
+      </Footer>
+    </Dropdown>
   );
+});
+
+const Footer = styled('div', {
+  base: {
+    padding: '4px 12px',
+  },
+});
+
+const PricesContainer = styled('div', {
+  base: {
+    backgroundColor: 'background.content.light',
+    borderRadius: '8px',
+    padding: '4px 12px',
+  },
+});
+
+const Dropdown = styled(DropdownContent, {
+  base: {
+    backgroundColor: 'background.content',
+    padding: 0,
+    gap: '0px',
+    borderRadius: '8px',
+    minWidth: '400px',
+  },
 });
