@@ -6,34 +6,25 @@ import { useAppSelector } from '../../data/store/hooks.ts';
 import {
   selectBeGemsSeason,
   selectBeGemsSeasonData,
+  selectBeGemsSeasonNumbers,
 } from '../../data/selectors/campaigns/begems.ts';
 import { Tab } from './components/tabs/Tab.tsx';
-import { Tabs, TabsShadow } from './components/tabs/Tabs.tsx';
+import { Tabs } from './components/tabs/Tabs.tsx';
 
 type SeasonTabsProps = {
   selected: number;
   onChange: (selected: number) => void;
-  options: number[];
 };
 
-export const SeasonTabs = memo(function SeasonTabs({
-  selected,
-  options,
-  onChange,
-}: SeasonTabsProps) {
+export const SeasonTabs = memo(function SeasonTabs({ selected, onChange }: SeasonTabsProps) {
+  const seasons = useAppSelector(selectBeGemsSeasonNumbers);
+
   return (
-    <TabsShadow>
-      <Tabs>
-        {options.map(option => (
-          <SeasonTab
-            key={option}
-            value={option}
-            onChange={onChange}
-            selected={selected === option}
-          />
-        ))}
-      </Tabs>
-    </TabsShadow>
+    <Tabs>
+      {seasons.map(option => (
+        <SeasonTab key={option} value={option} onChange={onChange} selected={selected === option} />
+      ))}
+    </Tabs>
   );
 });
 
@@ -47,12 +38,20 @@ const SeasonTab = memo(function SeasonTab({ value, onChange, selected }: SeasonT
   const config = useAppSelector(state => selectBeGemsSeason(state, value));
   const data = useAppSelector(state => selectBeGemsSeasonData(state, value));
   const subLabel = useMemo(() => {
+    if (data.type === 'points') {
+      return 'Points';
+    }
+
+    // default: tokens
     if (data.priceForFullShare?.gt(BIG_ZERO)) {
       return `beGEMS${value} \u200B=\u00A0${formatTokenDisplayCondensed(data.priceForFullShare, 18, 4)}\u00A0S`;
     }
     return `beGEMS${value}`;
   }, [data, value]);
-  const disabled = useMemo(() => !data.token && getUnixNow() < config.startTime, [config, data]);
+  const disabled = useMemo(
+    () => (data.type !== 'token' || !data.token) && getUnixNow() < config.startTime,
+    [config, data]
+  );
 
   return (
     <Tab

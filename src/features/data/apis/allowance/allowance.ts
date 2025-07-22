@@ -1,4 +1,4 @@
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import BigNumber from 'bignumber.js';
 import { chunk } from 'lodash-es';
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi.ts';

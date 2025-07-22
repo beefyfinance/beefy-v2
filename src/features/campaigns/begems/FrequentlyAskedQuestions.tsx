@@ -1,31 +1,19 @@
 import { memo } from 'react';
 import { Faqs } from './components/faqs/Faqs.tsx';
 import { styled } from '@repo/styles/jsx';
+import { useAppSelector } from '../../data/store/hooks.ts';
+import { selectBeGemsSeasonFaqs } from '../../data/selectors/campaigns/begems.ts';
 
-const faqs = [
-  {
-    question: 'How can I earn beGEMS?',
-    answer:
-      'You can earn beGEMS by boosting specific vaults, providing liquidity to Sonic lending markets, and voting on key beS trading pairs on Sonic exchanges.',
-  },
-  {
-    question: 'How much is a beGEMS worth?',
-    answer:
-      "beGEMS are redeemable for a proportional share of Beefy's Sonic Gems allocation at the end of each season. Their value depends on how many Sonic Gems Beefy earns during that season.",
-  },
-  {
-    question: 'When can I redeem beGEMS?',
-    answer:
-      'At the end of each season, the redeem module above will become active, allowing beGEMS holders to claim S tokens.',
-  },
-  {
-    question: 'When does the season end?',
-    answer:
-      'Season 1 ends in June. Start and end dates for future seasons haven’t been announced yet.',
-  },
-];
+type FrequentlyAskedQuestionsProps = {
+  season: number;
+};
 
-export const FrequentlyAskedQuestions = memo(function () {
+export const FrequentlyAskedQuestions = memo(function ({ season }: FrequentlyAskedQuestionsProps) {
+  const faqs = useAppSelector(state => selectBeGemsSeasonFaqs(state, season));
+  if (!faqs || faqs.length === 0) {
+    return null;
+  }
+
   return (
     <Layout>
       <Faqs title="Frequently Asked Questions" faqs={faqs} />

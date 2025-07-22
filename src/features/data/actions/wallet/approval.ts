@@ -10,7 +10,7 @@ import { selectChainNativeToken } from '../../selectors/tokens.ts';
 import { bigNumberToBigInt, fromWei, toWei } from '../../../../helpers/big-number.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import { uniqBy } from 'lodash-es';
 
 export const MIN_APPROVAL_AMOUNT = new BigNumber('8000000000000000000000000000'); // wei

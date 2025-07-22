@@ -20,7 +20,7 @@ import { getVaultWithdrawnFromContract } from '../../apis/transact/helpers/vault
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import { StandardVaultAbi } from '../../../../config/abi/StandardVaultAbi.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import { bigNumberToBigInt, toWei } from '../../../../helpers/big-number.ts';
 
 export const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {

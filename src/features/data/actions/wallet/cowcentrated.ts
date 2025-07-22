@@ -17,7 +17,7 @@ import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/Beefy
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import { slipAllBy } from '../../apis/transact/helpers/amounts.ts';
 import { toWeiString } from '../../../../helpers/big-number.ts';
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import { selectTokenByAddress } from '../../selectors/tokens.ts';
 
 export const v3Deposit = (

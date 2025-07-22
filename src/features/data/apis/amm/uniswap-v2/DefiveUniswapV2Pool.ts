@@ -2,7 +2,7 @@ import type { FactoryData as BaseFactoryData } from './UniswapV2Pool.ts';
 import { UniswapV2Pool } from './UniswapV2Pool.ts';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
-import type { Abi } from 'abitype';
+import type { Abi } from 'viem';
 
 const DefiveFactoryAbi = [
   {

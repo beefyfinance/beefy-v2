@@ -1,4 +1,4 @@
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import { uniqBy } from 'lodash-es';
 import { BeefyZapRouterAbi } from '../../../../config/abi/BeefyZapRouterAbi.ts';
 import { ZERO_ADDRESS } from '../../../../helpers/addresses.ts';

@@ -15,7 +15,7 @@ import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { selectTokenByAddress } from '../../selectors/tokens.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 
 export const migrateUnstake = (
   unstakeCall: (args: MigratorUnstakeProps) => Promise<Hash>,

@@ -13,7 +13,7 @@ import type { TokenEntity } from '../../data/entities/token.ts';
 import { selectUserBalanceOfToken } from '../../data/selectors/balance.ts';
 import {
   selectBeGemsSeason,
-  selectBeGemsSeasonData,
+  selectBeGemsTokenSeasonData,
 } from '../../data/selectors/campaigns/begems.ts';
 import {
   selectTokenByAddress,
@@ -28,13 +28,10 @@ import {
 } from '../../vault/components/Actions/Transact/AmountInput/AmountInput.tsx';
 import { AmountInputWithSlider } from '../../vault/components/Actions/Transact/AmountInputWithSlider/AmountInputWithSlider.tsx';
 import { getUnixNow } from '../../../helpers/date.ts';
+import type { SeasonBoxProps } from './types.ts';
 
-type SeasonRedeemProps = {
-  season: number;
-};
-
-export const SeasonRedeem = memo(function SeasonForm({ season }: SeasonRedeemProps) {
-  const data = useAppSelector(state => selectBeGemsSeasonData(state, season));
+const SeasonTokenRedeem = memo(function SeasonTokenRedeem({ season }: SeasonBoxProps) {
+  const data = useAppSelector(state => selectBeGemsTokenSeasonData(state, season));
 
   if (data.token && data.priceForFullShare?.gt(BIG_ZERO)) {
     return (
@@ -132,26 +129,20 @@ const RedeemFormDisabled = memo(function RedeemFormDisabled({
   }, [config]);
 
   return (
-    <>
-      {text && (
-        <Corner>
-          <Banner>{text}</Banner>
-        </Corner>
-      )}
-      <RedeemForm
-        input={
-          inputToken && (
-            <AmountInputWithSlider
-              value={BIG_ZERO}
-              maxValue={BIG_ZERO}
-              disabled={true}
-              tokenDecimals={18}
-              endAdornment={<TokenAdornment token={inputToken} />}
-            />
-          )
-        }
-      />
-    </>
+    <RedeemForm
+      corner={text && <Banner>{text}</Banner>}
+      input={
+        inputToken && (
+          <AmountInputWithSlider
+            value={BIG_ZERO}
+            maxValue={BIG_ZERO}
+            disabled={true}
+            tokenDecimals={18}
+            endAdornment={<TokenAdornment token={inputToken} />}
+          />
+        )
+      }
+    />
   );
 });
 
@@ -188,6 +179,7 @@ type RedeemFormProps = {
   available?: ReactNode;
   input?: ReactNode;
   output?: ReactNode;
+  corner?: ReactNode;
   onSubmit?: () => void;
 };
 
@@ -195,10 +187,12 @@ const RedeemForm = memo(function RedeemForm({
   available,
   input,
   output,
+  corner,
   onSubmit,
 }: RedeemFormProps) {
   return (
     <FormBackground>
+      {corner && <Corner>{corner}</Corner>}
       <FormLayout disabled={!available || !input || !output || !onSubmit}>
         <Controls>
           <ControlWithLabel>
@@ -356,13 +350,12 @@ const Controls = styled('div', {
 
 const FormBackground = styled('div', {
   base: {
-    background: 'darkBlue.70',
-    padding: '36px 16px 24px 16px',
     width: '100%',
-    borderRadius: 'inherit',
-    md: {
-      padding: '36px 24px 32px 24px',
-      borderRadius: '20px',
+    padding: '36px 24px 32px 24px',
+    sm: {
+      position: 'relative',
+      borderRadius: '24px',
+      background: 'darkBlue.70',
     },
   },
 });
@@ -383,3 +376,6 @@ const FormLayout = styled('div', {
     },
   },
 });
+
+// eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
+export default SeasonTokenRedeem;
