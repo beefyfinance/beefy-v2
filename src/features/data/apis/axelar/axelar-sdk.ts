@@ -15,7 +15,7 @@ import type {
 } from './axelar-sdk-types.ts';
 import { postJson } from '../../../../helpers/http/http.ts';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
-import type { Abi } from 'abitype';
+import type { Abi } from 'viem';
 import type { Hex } from 'viem';
 
 /**

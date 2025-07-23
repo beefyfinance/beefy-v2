@@ -1,4 +1,4 @@
-import type { Abi, Address } from 'abitype';
+import type { Abi, Address } from 'viem';
 import type BigNumber from 'bignumber.js';
 import type { Hash } from 'viem';
 import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number.ts';

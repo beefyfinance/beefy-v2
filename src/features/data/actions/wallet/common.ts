@@ -1,4 +1,4 @@
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import { uniqBy } from 'lodash-es';
 import { BaseError, type Chain, type Hash, type PublicClient, type TransactionReceipt } from 'viem';
 import { waitForTransactionReceipt } from 'viem/actions';

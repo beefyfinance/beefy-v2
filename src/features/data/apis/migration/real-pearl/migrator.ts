@@ -1,4 +1,4 @@
-import type { Abi, Address } from 'abitype';
+import type { Abi, Address } from 'viem';
 import type BigNumber from 'bignumber.js';
 import type { Hash } from 'viem';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi.ts';

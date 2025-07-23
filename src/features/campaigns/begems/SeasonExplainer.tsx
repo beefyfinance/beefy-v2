@@ -2,22 +2,21 @@ import { styled } from '@repo/styles/jsx';
 import { memo } from 'react';
 import beefyLogo from '../../../images/bifi-logos/header-logo.svg';
 import sonicLogo from '../../../images/campaigns/begems/sonic.svg';
+import { selectBeGemsSeasonExplainer } from '../../data/selectors/campaigns/begems.ts';
+import { useAppSelector } from '../../data/store/hooks.ts';
 
-export const Explainer = memo(function Explainer() {
+type SeasonExplainerProps = {
+  season: number;
+};
+
+export const SeasonExplainer = memo(function SeasonExplainer({ season }: SeasonExplainerProps) {
+  const { title, paragraphs } = useAppSelector(state => selectBeGemsSeasonExplainer(state, season));
   return (
     <Layout>
-      <Title>Redeem your beGEMS for S tokens</Title>
-      <Text>
-        Sonic Gems are airdrop points awarded exclusively by Sonic to apps building on its chain.
-        They’re distributed based on various factors and are redeemable for S tokens at the end of
-        each season.
-      </Text>
-      <Text>
-        Beefy is issuing 80,000,000 beGEMS each season, representing its share of earned S tokens.
-        beGEMS are liquid ERC-20 tokens — transferable, tradeable, and open to speculation. Users
-        can earn beGEMS by boosting vaults, providing liquidity in lending markets, or voting for
-        beS pairs across Sonic exchanges.
-      </Text>
+      <Title>{title}</Title>
+      {paragraphs.map((text, index) => (
+        <Text key={index}>{text}</Text>
+      ))}
       <Logos>
         <Logo src={sonicLogo} alt="Sonic Labs" />
         <Logo src={beefyLogo} alt="Beefy" />
@@ -31,14 +30,14 @@ const Layout = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     gap: '12px',
-    padding: '32px 16px 44px 16px',
-    marginBottom: '-12px',
+    padding: '32px 16px 44px 16px', // 32+12px bottom
+    marginBottom: '-12px', // -12px to get 32px space on bottom, with tabs over the top
     borderTopRadius: '20px',
     background:
       'linear-gradient(180deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.00) 100.07%), rgba(36, 40, 66, 0.40)',
-    md: {
+    sm: {
       borderRadius: '0',
-      padding: '16px 0',
+      padding: '0',
       background: 'none',
       marginBottom: '0',
     },
@@ -50,8 +49,7 @@ const Title = styled('h1', {
     textStyle: 'h1',
     color: 'text.lightest',
     width: '100%',
-    maxWidth: '445px', // for text wrapping...
-    md: {
+    lg: {
       textStyle: 'h1.accent',
     },
   },

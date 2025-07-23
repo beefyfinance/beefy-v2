@@ -1493,5 +1493,14 @@
     "documentation": "https://docs.imf.bz/",
     "description": "International Meme Fund (IMF) is a DeFi protocol (powered by Morpho) lending stablecoins against meme coin collateral.",
     "risks": ["NO_TIMELOCK"]
+  },
+  {
+    "id": "blackhole",
+    "name": "Blackhole",
+    "type": "amm",
+    "website": "https://blackhole.xyz/",
+    "documentation": "https://docs.blackhole.xyz/",
+    "description": "Blackhole is a next-generation decentralized exchange (DEX) built on the Avalanche blockchain. It serves as a specialized liquidity hub designed to support emerging blockchain projects and empower community participation in the growth of Web3 ecosystems.",
+    "risks": ["NO_TIMELOCK"]
   }
 ]

@@ -252,6 +252,8 @@ export const config = {
       'wUSDM',
       'Bold',
       'BOLDV2',
+      'sfrxUSD',
+      'waOptUSDCn',
     ],
   },
   arbitrum: {
@@ -713,6 +715,7 @@ export const config = {
   scroll: {
     name: 'Scroll',
     chainId: 534352,
+    eol: 1753131600,
     rpc: ['https://scroll-mainnet.public.blastapi.io'],
     explorerUrl: 'https://scrollscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',

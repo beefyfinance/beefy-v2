@@ -3,7 +3,7 @@ import { UniswapV2Pool } from './UniswapV2Pool.ts';
 import BigNumber from 'bignumber.js';
 import type { SwapFeeParams } from '../types.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
-import type { Abi } from 'abitype';
+import type { Abi } from 'viem';
 
 type PairData = BasePairData & {
   swapFee: BigNumber;

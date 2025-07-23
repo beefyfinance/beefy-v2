@@ -11,7 +11,7 @@ import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import { BeefyCommonBridgeAbi } from '../../../../config/abi/BeefyCommonBridgeAbi.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import { uniqBy } from 'lodash-es';
 
 export const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => {

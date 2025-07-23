@@ -1,4 +1,4 @@
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import BigNumber from 'bignumber.js';
 import { addDays } from 'date-fns';
 import { chunk, pick, sortBy } from 'lodash-es';
