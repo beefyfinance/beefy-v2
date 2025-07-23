@@ -1,4 +1,4 @@
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import type BigNumber from 'bignumber.js';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity } from '../../entities/token.ts';

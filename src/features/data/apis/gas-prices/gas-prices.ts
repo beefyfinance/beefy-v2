@@ -16,7 +16,7 @@ import {
   rpcClientManager,
 } from '../rpc-contract/rpc-manager.ts';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
-import type { Abi, Address } from 'abitype';
+import type { Abi, Address } from 'viem';
 import type { GetContractReturnType } from 'viem';
 
 export type StandardGasPrice = {

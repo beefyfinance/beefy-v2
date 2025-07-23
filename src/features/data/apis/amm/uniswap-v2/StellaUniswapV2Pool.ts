@@ -3,7 +3,7 @@ import { UniswapV2Pool } from './UniswapV2Pool.ts';
 import BigNumber from 'bignumber.js';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
-import type { Abi } from 'abitype';
+import type { Abi } from 'viem';
 
 type PairData = BasePairData & {
   devFee: BigNumber;

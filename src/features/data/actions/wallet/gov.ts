@@ -18,7 +18,7 @@ import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import { BoostAbi } from '../../../../config/abi/BoostAbi.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import { selectTokenByAddress } from '../../selectors/tokens.ts';
 import BigNumber from 'bignumber.js';
 
