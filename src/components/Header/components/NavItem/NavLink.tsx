@@ -17,7 +17,7 @@ const navItemStyles = {
   variants: {
     mobile: {
       true: {
-        padding: '16px',
+        padding: '10px 12px',
         display: 'flex',
         alignItems: 'center',
       },

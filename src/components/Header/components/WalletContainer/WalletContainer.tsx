@@ -8,6 +8,7 @@ import {
 import { useResolveAddress } from '../../../../features/data/hooks/resolver.ts';
 import { isFulfilledStatus } from '../../../../features/data/reducers/wallet/resolver-types.ts';
 import {
+  selectCurrentChainId,
   selectIsBalanceHidden,
   selectIsWalletConnected,
   selectIsWalletPending,
@@ -16,6 +17,9 @@ import {
 import { formatAddressShort, formatDomain } from '../../../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { StatLoader } from '../../../StatLoader/StatLoader.tsx';
+import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
+import { getNetworkSrc } from '../../../../helpers/networkSrc.ts';
+import iconUnsupportedChain from '../../../../images/icons/navigation/unsuported-chain.svg';
 
 const WalletContainer = memo(function WalletContainer() {
   const dispatch = useAppDispatch();
@@ -25,6 +29,7 @@ const WalletContainer = memo(function WalletContainer() {
   const walletPending = useAppSelector(selectIsWalletPending);
   const blurred = useAppSelector(selectIsBalanceHidden);
   const resolverStatus = useResolveAddress(walletAddress);
+  const currentChainId = useAppSelector(selectCurrentChainId);
 
   const handleWalletConnect = useCallback(() => {
     if (walletAddress) {
@@ -54,8 +59,28 @@ const WalletContainer = memo(function WalletContainer() {
           : t('Network-ConnectWallet')}
         </Address>
       }
+      {isWalletConnected && <ActiveChain chainId={currentChainId} />}
     </Button>
   );
+});
+
+const ActiveChain = ({ chainId }: { chainId: ChainEntity['id'] | null }) => {
+  return (
+    <Chain>
+      <img alt={chainId ?? ''} src={chainId ? getNetworkSrc(chainId) : iconUnsupportedChain} />
+    </Chain>
+  );
+};
+
+const Chain = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    textDecoration: 'none',
+    '& img': {
+      height: '24px',
+    },
+  },
 });
 
 const Address = styled('div', {
@@ -84,6 +109,7 @@ const Button = styled('button', {
     textOverflow: 'ellipsis',
     overflow: 'hidden',
     height: '40px',
+    gap: '8px',
   },
   variants: {
     status: {

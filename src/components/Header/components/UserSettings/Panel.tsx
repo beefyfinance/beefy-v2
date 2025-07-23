@@ -1,9 +1,7 @@
 import { styled } from '@repo/styles/jsx';
 
 export const Panel = styled('div', {
-  base: {
-    width: '276px',
-  },
+  base: {},
 });
 
 export const PanelHeader = styled('div', {

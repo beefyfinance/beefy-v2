@@ -55,12 +55,19 @@ export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) 
             onChange={handleSearchText}
             fullWidth={true}
             placeholder={t('RpcModal-InputPlaceholder')}
+            endAdornment={
+              <Button size="sm" onClick={onBack}>
+                Paste
+              </Button>
+            }
           />
           {isError && <InputError>{t('RpcModal-InvalidRpc')}</InputError>}
         </InputGroup>
-        <Explainer>{t('RpcModal-EmptyList')}</Explainer>
       </Top>
       <Footer>
+        <Button onClick={onBack} size="lg" fullWidth={true}>
+          {t('RpcModal-Cancel')}
+        </Button>
         <Button disabled={isDisabled} onClick={onSave} size="lg" fullWidth={true}>
           {t('RpcModal-Save')}
         </Button>
@@ -106,22 +113,13 @@ const InputError = styled('div', {
   },
 });
 
-const Explainer = styled('div', {
-  base: {
-    textStyle: 'body.sm.medium',
-    padding: '12px',
-    backgroundColor: 'background.content.light',
-    borderRadius: '8px',
-    color: 'text.middle',
-  },
-});
-
 const Footer = styled('div', {
   base: {
     display: 'flex',
     justifyContent: 'center',
-    marginTop: '24px',
+    marginTop: '12px',
     padding: `${12 - 2}px`,
     borderRadius: '0 0 8px 8px',
+    gap: '8px',
   },
 });

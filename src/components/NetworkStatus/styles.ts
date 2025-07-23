@@ -32,9 +32,9 @@ export const styles = {
   dropdown: css.raw({
     display: 'flex',
     flexDirection: 'column',
-    border: 'solid 2px {colors.background.content.dark}',
-    minWidth: '280px',
+    maxWidth: '272px',
     padding: '0px',
+    backgroundColor: 'background.content.light',
   }),
   titleContainer: css.raw({
     textStyle: 'body.medium',
@@ -42,8 +42,8 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '10px',
-    backgroundColor: 'background.content.dark',
+    padding: '10px 12px 6px 12px',
+    backgroundColor: 'inherit',
     borderTopLeftRadius: 'inherit',
     borderTopRightRadius: 'inherit',
   }),
@@ -64,9 +64,9 @@ export const styles = {
   }),
   content: css.raw({
     padding: '10px',
-    backgroundColor: 'background.content',
-    borderBottomLeftRadius: 'inherit',
-    borderBottomRightRadius: 'inherit',
+    backgroundColor: 'background.content.dark',
+    borderRadius: '8px',
+    marginInline: '2px',
   }),
   contentTitle: css.raw({
     textStyle: 'subline.sm',
@@ -91,12 +91,6 @@ export const styles = {
   popoverHelpText: css.raw({
     textStyle: 'body.sm',
     marginTop: '8px',
-  }),
-  line: css.raw({
-    height: '16px',
-    width: '2px',
-    borderRadius: '3px',
-    backgroundColor: 'background.content.light',
   }),
   chain: css.raw({
     display: 'flex',

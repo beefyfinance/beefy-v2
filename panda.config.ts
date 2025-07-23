@@ -76,7 +76,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -268,7 +268,7 @@ const config = buildConfig(
             light: { value: '#f5f5f5' },
             middle: { value: '#d0d0da' },
             dark: { value: '#999cb3' },
-            black: { value: '#111321' },
+            black: { value: '{colors.darkBlue.90}' },
             boosted: { value: '{colors.gold.30}' },
           },
           modal: { backdrop: { value: '#ffffff33' } },
@@ -438,6 +438,9 @@ const config = buildConfig(
             '100-24a': { value: '#f5f5ff3d' },
             '100-64a': { value: '#f5f5ffa3' },
           },
+          orange: {
+            '40': { value: '#FFD1A3' },
+          },
         },
         sizes: {
           defaultAssetsImageSize: { value: '48px' },
@@ -495,6 +498,7 @@ const config = buildConfig(
               dark: { value: '{colors.eclipseElixir}' },
               light: { value: '{colors.contentBackgroundLight}' },
               gray: { value: '{colors.text.dark}' },
+              darkest: { value: '{colors.darkBlue.90}' },
             },
             vaults: {
               standard: { value: '{colors.blackMarket}' },

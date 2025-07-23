@@ -6,12 +6,13 @@ import { PricePerFullShare } from './PricePerFullShare.tsx';
 import { Tokens } from './Tokens.tsx';
 import { styled } from '@repo/styles/jsx';
 
-type PricesDropdownProps = {
+type BifiPricesDropdownProps = {
   setOpen: (setter: boolean | ((open: boolean) => boolean)) => void;
 };
 
-export const PricesDropdown = memo(function PricesDropdown({ setOpen }: PricesDropdownProps) {
-  const vaultLoaded = useAppSelector(state => selectVaultExistsById(state, 'bifi-vault'));
+export const BifiPricesDropdown = memo(function BifiPricesDropdown({
+  setOpen,
+}: BifiPricesDropdownProps) {
   const handleClick = useCallback<(e: MouseEvent<HTMLDivElement>) => void>(
     e => {
       if (!e.target || !(e.target instanceof HTMLElement)) {
@@ -28,6 +29,15 @@ export const PricesDropdown = memo(function PricesDropdown({ setOpen }: PricesDr
 
   return (
     <Dropdown onClick={handleClick}>
+      <BifiPricesContent />
+    </Dropdown>
+  );
+});
+
+export const BifiPricesContent = memo(function BifiPricesContent() {
+  const vaultLoaded = useAppSelector(state => selectVaultExistsById(state, 'bifi-vault'));
+  return (
+    <>
       <PricesContainer>
         <Tokens />
       </PricesContainer>
@@ -36,7 +46,7 @@ export const PricesDropdown = memo(function PricesDropdown({ setOpen }: PricesDr
           <PricePerFullShare />
         : null}
       </Footer>
-    </Dropdown>
+    </>
   );
 });
 

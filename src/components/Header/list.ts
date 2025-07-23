@@ -1,6 +1,5 @@
 import VaultsIcon from '../../images/icons/navigation/vault.svg?react';
 import DashboardIcon from '../../images/icons/navigation/dashboard.svg?react';
-import BridgeIcon from '../../images/icons/navigation/bridge.svg?react';
 import BuyCryptoIcon from '../../images/icons/navigation/buy-crypto.svg?react';
 import ResourcesIcon from '../../images/icons/navigation/resources.svg?react';
 import ProposalsIcon from '../../images/icons/navigation/proposals.svg?react';
@@ -74,5 +73,4 @@ export const MobileList: NavConfig[] = [
   { title: 'Header-Dao', Icon: DaoIcon, items: DaoNavItems },
   { title: 'Header-Resources', Icon: ResourcesIcon, items: ResourcesNavItems },
   { title: 'Header-BuyCrypto', Icon: BuyCryptoIcon, url: '/onramp' },
-  { title: 'Header-BridgeBifi', Icon: BridgeIcon, url: '/bridge' },
 ];

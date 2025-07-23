@@ -1,0 +1,104 @@
+import { styled } from '@repo/styles/jsx';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { Drawer } from '../Modal/Drawer.tsx';
+import { css, type CssStyles } from '@repo/styles/css';
+
+interface ScrollabeDrawerProps {
+  open: boolean;
+  onClose: () => void;
+  mainChildren: React.ReactNode;
+  footerChildren: React.ReactNode;
+  layoutClass?: CssStyles;
+  hideShadow?: boolean;
+  mobileSpacingSize?: number;
+}
+
+export const ScrollableDrawer = memo<ScrollabeDrawerProps>(function ScrollableDrawer({
+  open,
+  onClose,
+  mainChildren,
+  footerChildren,
+  layoutClass,
+  hideShadow,
+  mobileSpacingSize = 28,
+}) {
+  const [shadowOpacity, setShadowOpacity] = useState(100);
+  const mainRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = useCallback(() => {
+    if (mainRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = mainRef.current;
+      const maxScroll = scrollHeight - clientHeight;
+      const scrollPercentage = scrollTop / maxScroll;
+      const opacity = Math.max(0, Math.min(100, 100 - scrollPercentage * 100));
+      setShadowOpacity(opacity);
+    }
+  }, []);
+
+  useEffect(() => {
+    const mainElement = mainRef.current;
+    if (mainElement) {
+      mainElement.addEventListener('scroll', handleScroll);
+      return () => mainElement.removeEventListener('scroll', handleScroll);
+    }
+  }, [handleScroll]);
+
+  return (
+    <Drawer scrollable={false} open={open} onClose={onClose} position="bottom">
+      <Layout className={css(layoutClass)}>
+        <Main ref={mainRef}>
+          {mainChildren}
+          <MobileSpacing style={{ height: `${mobileSpacingSize}px` }} />
+        </Main>
+        {!hideShadow && <Shadow style={{ opacity: `${shadowOpacity}%` }} />}
+        <Footer>{footerChildren}</Footer>
+      </Layout>
+    </Drawer>
+  );
+});
+
+const Layout = styled('div', {
+  base: {
+    backgroundColor: 'darkBlue.90',
+    height: '100dvh',
+    maxHeight: '100dvh',
+    width: '100vw',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+});
+
+const Main = styled('div', {
+  base: {
+    flex: '1 1 auto',
+    overflowY: 'auto',
+    position: 'relative',
+  },
+});
+
+const Footer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0px 20px 32px 20px',
+    gap: '12px',
+    justifyContent: 'space-between',
+  },
+});
+
+const Shadow = styled('div', {
+  base: {
+    position: 'absolute',
+    pointerEvents: 'none',
+    transition: 'opacity 0.2s linear',
+    left: '0',
+    right: '0',
+    bottom: '80px',
+    height: '55px',
+    background: 'linear-gradient(0deg, #111321 2.91%, rgba(17, 19, 33, 0) 100%)',
+  },
+});
+
+const MobileSpacing = styled('div', {
+  base: {},
+});
