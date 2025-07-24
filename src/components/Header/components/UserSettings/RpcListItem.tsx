@@ -1,86 +1,76 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, type MouseEventHandler, useCallback, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { restoreDefaultRpcsOnSingleChain } from '../../../../features/data/actions/chains.ts';
+import { memo, useState } from 'react';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
-import {
-  selectActiveRpcUrlForChain,
-  selectChainById,
-} from '../../../../features/data/selectors/chains.ts';
+import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
-import Refresh from '../../../../images/icons/mui/Refresh.svg?react';
 import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
-import type { ItemInnerProps } from '../../../SearchableList/Item.tsx';
-import { PanelCloseButton } from './Panel.tsx';
+
+import Edit from '../../../../images/icons/edit_pen.svg?react';
 
 export const ChainRpcItem = memo(function ChainRpcItem({
-  value,
-}: ItemInnerProps<ChainEntity['id']>) {
-  const chain = useAppSelector(state => selectChainById(state, value));
-
-  const activeChainRpc = useAppSelector(state => selectActiveRpcUrlForChain(state, chain.id));
+  id,
+  onSelect,
+}: {
+  id: ChainEntity['id'];
+  onSelect: (id: ChainEntity['id']) => void;
+}) {
+  const [isHover, setIsHover] = useState(false);
+  const chain = useAppSelector(state => selectChainById(state, id));
 
   return (
-    <div>
-      <ChainIconName>
-        <ChainIcon chainId={value} />
-        {chain.name}
-      </ChainIconName>
-      <RpcUrl>{activeChainRpc[0]}</RpcUrl>
-    </div>
+    <Container
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+      onClick={() => onSelect(id)}
+    >
+      {chain.name}
+      {isHover ?
+        <EditContainer>
+          <span>Modify RPC</span>
+          <EditIconContainer>
+            <Edit />
+          </EditIconContainer>
+        </EditContainer>
+      : <ChainIcon chainId={id} />}
+    </Container>
   );
 });
 
-const ChainIconName = styled('div', {
+const Container = styled('div', {
   base: {
+    padding: '6px 10px',
     textStyle: 'body.medium',
     display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     gap: '8px',
     color: 'text.middle',
+    _hover: {
+      cursor: 'pointer',
+      backgroundColor: 'background.button',
+    },
   },
 });
 
-const RpcUrl = styled('div', {
+const EditContainer = styled('div', {
   base: {
     textStyle: 'body.sm',
-    marginLeft: '32px',
-    color: 'text.dark',
-    width: '196px',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    textAlign: 'start',
+    color: 'text.middle',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '4px',
   },
 });
 
-export const ChainRpcReset = memo(function ChainRpcReset({
-  value: chain,
-}: ItemInnerProps<ChainEntity['id']>) {
-  const dispatch = useDispatch();
-  const activeChainRpc = useAppSelector(state => selectActiveRpcUrlForChain(state, chain));
-  const defaultRPC = useAppSelector(state => selectChainById(state, chain)).rpc;
-  const chainEntity = useAppSelector(state => selectChainById(state, chain));
-
-  const handleClick = useCallback<MouseEventHandler<HTMLButtonElement>>(
-    e => {
-      e.stopPropagation();
-      dispatch(restoreDefaultRpcsOnSingleChain(chainEntity));
-    },
-    [dispatch, chainEntity]
-  );
-
-  const rpcsAreEqual = useMemo(
-    () =>
-      activeChainRpc.length === defaultRPC.length &&
-      activeChainRpc.every((url, index) => url === defaultRPC[index]),
-    [activeChainRpc, defaultRPC]
-  );
-
-  if (rpcsAreEqual) return <></>;
-
-  return (
-    <PanelCloseButton onClick={handleClick}>
-      <Refresh />
-    </PanelCloseButton>
-  );
+const EditIconContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '24px',
+    height: '24px',
+    borderRadius: '100%',
+    backgroundColor: 'darkBlue.80',
+  },
 });

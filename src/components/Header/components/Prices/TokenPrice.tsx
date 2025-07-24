@@ -16,7 +16,7 @@ const tokenPriceRecipe = cva({
     textDecoration: 'none',
     color: 'text.light',
     position: 'absolute',
-    width: '100%',
+    width: '95%',
     height: '100%',
     backfaceVisibility: 'hidden',
     transformStyle: 'preserve-3d',

@@ -63,7 +63,6 @@ export const styles = {
     },
   }),
   content: css.raw({
-    padding: '10px',
     backgroundColor: 'background.content.dark',
     borderRadius: '8px',
     marginInline: '2px',

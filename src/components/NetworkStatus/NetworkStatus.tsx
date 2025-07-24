@@ -19,7 +19,6 @@ import { PulseHighlight } from '../../features/vault/components/PulseHighlight/P
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { entries } from '../../helpers/object.ts';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
-import CloseIcon from '../../images/icons/mui/Close.svg?react';
 import { DropdownContent } from '../Dropdown/DropdownContent.tsx';
 import { DropdownProvider } from '../Dropdown/DropdownProvider.tsx';
 import { DropdownTrigger } from '../Dropdown/DropdownTrigger.tsx';
@@ -84,6 +83,24 @@ export const NetworkStatus = memo(function NetworkStatus({
 
   const hidePulse = useMemo(() => !hasAnyError && !hasAnyLoading, [hasAnyError, hasAnyLoading]);
 
+  const titleText = useMemo(() => {
+    // only api error
+    if (rpcErrors.length === 0 && beefyErrors.length > 0) {
+      return t('NetworkStatus-ApiError');
+    }
+    // only rpc error
+    if (rpcErrors.length > 0 && beefyErrors.length === 0) {
+      return t('NetworkStatus-RpcError');
+    }
+
+    // both error
+    if (rpcErrors.length > 0 && beefyErrors.length > 0) {
+      return t('NetworkStatus-Error');
+    } else {
+      return t('NetworkStatus-Success');
+    }
+  }, [rpcErrors, beefyErrors, t]);
+
   return (
     <DropdownProvider
       open={open}
@@ -91,14 +108,19 @@ export const NetworkStatus = memo(function NetworkStatus({
       variant="dark"
       placement="bottom-end"
       reference={anchorEl}
+      closeOnClickAway={true}
     >
       <DropdownButton onClick={handleToggle}>
         <PulseHighlight variant={variant} state={hidePulse ? 'stopped' : 'playing'} />
       </DropdownButton>
       <DropdownContent css={styles.dropdown} gap="none">
         <div className={classes.titleContainer}>
-          <div className={classes.title}>{t('NetworkStatus-Status')}</div>
-          <CloseIcon onClick={handleClose} className={classes.cross} />
+          <Title variant={hasAnyError ? 'warning' : 'success'}>
+            <TextTitle>{titleText}</TextTitle>
+            <TextTitle>
+              {hasAnyError ? t('NetworkStatus-Data-Error') : t('NetworkStatus-Data-Success')}
+            </TextTitle>
+          </Title>
         </div>
         <div className={classes.content}>
           <RpcSettingsPanel />
@@ -107,6 +129,35 @@ export const NetworkStatus = memo(function NetworkStatus({
       </DropdownContent>
     </DropdownProvider>
   );
+});
+
+const Title = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    textStyle: 'body.sm',
+    color: 'text.light',
+  },
+  variants: {
+    variant: {
+      success: {
+        color: 'green.40',
+      },
+      warning: {
+        color: 'orange.40',
+      },
+    },
+  },
+  defaultVariants: {
+    variant: 'success',
+  },
+});
+
+const TextTitle = styled('div', {
+  base: {
+    textStyle: 'inherit',
+    color: 'inherit',
+  },
 });
 
 const Footer = styled('div', {

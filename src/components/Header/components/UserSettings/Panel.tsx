@@ -72,9 +72,7 @@ export const PanelCloseButton = styled(
 
 export const PanelContent = styled('div', {
   base: {
-    height: '356px',
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
+    height: '350px',
+    padding: 0,
   },
 });

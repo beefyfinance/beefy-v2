@@ -21,7 +21,7 @@ export const PricesButtonMobile = memo(function PricesButtonMobile({
   setOpen: (setter: boolean | ((open: boolean) => boolean)) => void;
 }) {
   return (
-    <MobileTrigger borderless={true} onClick={() => setOpen(true)}>
+    <MobileTrigger variant="transparent" borderless={true} onClick={() => setOpen(true)}>
       <Price />
     </MobileTrigger>
   );
@@ -59,15 +59,17 @@ const Price = memo(function Price() {
 
 const ArrowIcon = styled(ArrangeArrowIcon, {
   base: {
-    transform: 'rotate(180deg)',
+    transform: 'rotate(0deg)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'absolute',
+    right: '6px',
   },
   variants: {
     isOpen: {
       true: {
-        transform: 'rotate(0deg)',
+        transform: 'rotate(180deg)',
       },
     },
   },
@@ -103,12 +105,8 @@ const MobileTrigger = styled(Button, {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'transparent',
     border: 'none',
     padding: '0',
     position: 'relative',
-    _hover: {
-      backgroundColor: 'transparent',
-    },
   },
 });

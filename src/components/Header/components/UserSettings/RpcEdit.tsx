@@ -1,13 +1,27 @@
 import { styled } from '@repo/styles/jsx';
-import { type ChangeEvent, memo, useCallback, useMemo, useState } from 'react';
+import {
+  type ChangeEvent,
+  memo,
+  type MouseEventHandler,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
-import { updateActiveRpc } from '../../../../features/data/actions/chains.ts';
+import {
+  restoreDefaultRpcsOnSingleChain,
+  updateActiveRpc,
+} from '../../../../features/data/actions/chains.ts';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
-import { selectChainById } from '../../../../features/data/selectors/chains.ts';
+import {
+  selectActiveRpcUrlForChain,
+  selectChainById,
+} from '../../../../features/data/selectors/chains.ts';
 import { useAppDispatch, useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { Button } from '../../../Button/Button.tsx';
 import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
 import { BaseInput } from '../../../Form/Input/BaseInput.tsx';
+import type { ItemInnerProps } from '../../../SearchableList/Item.tsx';
 
 const URL_REGX = /^https:\/\//;
 
@@ -20,6 +34,7 @@ export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) 
   const { t } = useTranslation();
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const [updatedRPC, setUpdatedRPC] = useState('');
+  const activeChainRpc = useAppSelector(state => selectActiveRpcUrlForChain(state, chain.id));
 
   const isError = useMemo(() => {
     return updatedRPC.length > 7 && !URL_REGX.test(updatedRPC);
@@ -46,15 +61,15 @@ export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) 
     <>
       <Top>
         <ChainInfo>
+          {`Modify ${chain.name} RPC`}
           <ChainIcon chainId={chain.id} />
-          {chain.name}
         </ChainInfo>
         <InputGroup>
           <BaseInput
             value={updatedRPC}
             onChange={handleSearchText}
             fullWidth={true}
-            placeholder={t('RpcModal-InputPlaceholder')}
+            placeholder={activeChainRpc[0]}
             endAdornment={
               <Button size="sm" onClick={onBack}>
                 Paste
@@ -65,14 +80,50 @@ export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) 
         </InputGroup>
       </Top>
       <Footer>
-        <Button onClick={onBack} size="lg" fullWidth={true}>
-          {t('RpcModal-Cancel')}
-        </Button>
-        <Button disabled={isDisabled} onClick={onSave} size="lg" fullWidth={true}>
-          {t('RpcModal-Save')}
-        </Button>
+        <ActionButtons>
+          <Button onClick={onBack} size="lg" fullWidth={true}>
+            {t('RpcModal-Cancel')}
+          </Button>
+          <Button disabled={isDisabled} onClick={onSave} size="lg" fullWidth={true}>
+            {t('RpcModal-Save')}
+          </Button>
+        </ActionButtons>
+        <ChainRpcReset value={chainId} />
       </Footer>
     </>
+  );
+});
+
+export const ChainRpcReset = memo(function ChainRpcReset({
+  value: chain,
+}: ItemInnerProps<ChainEntity['id']>) {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const activeChainRpc = useAppSelector(state => selectActiveRpcUrlForChain(state, chain));
+  const defaultRPC = useAppSelector(state => selectChainById(state, chain)).rpc;
+  const chainEntity = useAppSelector(state => selectChainById(state, chain));
+
+  const handleClick = useCallback<MouseEventHandler<HTMLButtonElement>>(
+    e => {
+      e.stopPropagation();
+      dispatch(restoreDefaultRpcsOnSingleChain(chainEntity));
+    },
+    [dispatch, chainEntity]
+  );
+
+  const rpcsAreEqual = useMemo(
+    () =>
+      activeChainRpc.length === defaultRPC.length &&
+      activeChainRpc.every((url, index) => url === defaultRPC[index]),
+    [activeChainRpc, defaultRPC]
+  );
+
+  if (rpcsAreEqual) return <></>;
+
+  return (
+    <Button fullWidth={true} borderless={true} onClick={handleClick}>
+      {t('RpcModal-Reset')}
+    </Button>
   );
 });
 
@@ -94,6 +145,9 @@ const ChainInfo = styled('div', {
     display: 'flex',
     columnGap: '8px',
     color: 'text.middle',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '4px',
   },
 });
 
@@ -116,10 +170,19 @@ const InputError = styled('div', {
 const Footer = styled('div', {
   base: {
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     marginTop: '12px',
     padding: `${12 - 2}px`,
     borderRadius: '0 0 8px 8px',
+    gap: '8px',
+  },
+});
+
+const ActionButtons = styled('div', {
+  base: {
+    display: 'flex',
+    justifyContent: 'center',
     gap: '8px',
   },
 });

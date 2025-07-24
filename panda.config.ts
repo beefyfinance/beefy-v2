@@ -975,6 +975,21 @@ const config = buildConfig(
           color: '{colors.text.light}',
         },
       },
+      transparent: {
+        base: {
+          color: '{colors.text.light}',
+          background: 'transparent',
+          border: 'transparent',
+        },
+        hover: {
+          background: 'transparent',
+          border: 'transparent',
+        },
+        active: {
+          background: 'transparent',
+          border: 'transparent',
+        },
+      },
     },
     zIndex: {
       thumb: 10,

@@ -10,6 +10,9 @@ import { type Token, tokens } from './config.ts';
 import { Icon } from './Icon.tsx';
 import { styled } from '@repo/styles/jsx';
 import { selectChainById } from '../../../../features/data/selectors/chains.ts';
+import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
+import { getNetworkSrc } from '../../../../helpers/networkSrc.ts';
+import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 
 const buyPlatforms: Record<
   NonNullable<Token['buyLink']>['platform'],
@@ -44,6 +47,7 @@ const TokenRow = memo<TooltipTokenProps>(function TokenRow({ token }) {
   const { symbol, oracleId, icon, explorer, buyLink, address, walletIconUrl, chainId } = token;
   const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, oracleId));
   const chain = useAppSelector(state => selectChainById(state, chainId));
+  const isMobile = useBreakpoint({ to: 'xs' });
 
   return (
     <TokenRowContainer>
@@ -56,7 +60,17 @@ const TokenRow = memo<TooltipTokenProps>(function TokenRow({ token }) {
           href={explorer.url}
           title={`View at ${explorer.name}`}
         >
-          {chain.name}
+          {isMobile ?
+            <ChainMobileContainer>
+              <img
+                alt={chain.name}
+                src={getNetworkSrc(`${chainId}_square` as ChainEntity['id'])}
+                width={24}
+                height={24}
+              />
+              ↗
+            </ChainMobileContainer>
+          : chain.name}
         </ChainLink>
       </LeftContainer>
       <RightContainer>
@@ -75,6 +89,16 @@ const TokenRow = memo<TooltipTokenProps>(function TokenRow({ token }) {
       </RightContainer>
     </TokenRowContainer>
   );
+});
+
+const ChainMobileContainer = styled('div', {
+  base: {
+    textStyle: 'body',
+    color: 'text.light',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+  },
 });
 
 const Symbol = styled('div', {
