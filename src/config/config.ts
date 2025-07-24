@@ -696,7 +696,7 @@ export const config = {
       type: 'standard',
       minimum: '10000000', // 0.01 gwei
     },
-    stableCoins: ['USDC', 'USDT'],
+    stableCoins: ['USDC', 'USDT', 'USDCn'],
   },
   rootstock: {
     name: 'Rootstock',
