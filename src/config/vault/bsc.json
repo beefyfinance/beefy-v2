@@ -11957,37 +11957,6 @@
     "network": "bsc"
   },
   {
-    "id": "cakev2-xend-bnb-eol",
-    "name": "XEND-BNB LP",
-    "type": "standard",
-    "token": "XEND-BNB LP2",
-    "tokenAddress": "0xcECfC2789af72ed151589a96a59f3A1ABC65c3b5",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pancakeswap",
-    "earnedToken": "mooCakeV2XEND-BNB",
-    "earnedTokenAddress": "0x6F3ED82fbE292055D509D0200f02d8F9fE62E5D3",
-    "earnContractAddress": "0x6F3ED82fbE292055D509D0200f02d8F9fE62E5D3",
-    "oracle": "lps",
-    "oracleId": "cakev2-xend-bnb",
-    "status": "eol",
-    "createdAt": 1621868570,
-    "retireReason": "rewards",
-    "retiredAt": 1630461640,
-    "platformId": "pancakeswap",
-    "assets": ["XEND", "BNB"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://pancakeswap.finance/swap?inputCurrency=0x4a080377f83D669D7bB83B3184a8A5E61B500608&outputCurrency=BNB",
-    "addLiquidityUrl": "https://pancakeswap.finance/v2/add/0x4a080377f83D669D7bB83B3184a8A5E61B500608/BNB",
-    "removeLiquidityUrl": "https://pancakeswap.finance/v2/remove/0x4a080377f83D669D7bB83B3184a8A5E61B500608/BNB",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "bsc-pancakeswap-v2"
-      }
-    ]
-  },
-  {
     "id": "cakev2-cyc-bnb-eol",
     "name": "CYC-BNB LP",
     "type": "standard",
