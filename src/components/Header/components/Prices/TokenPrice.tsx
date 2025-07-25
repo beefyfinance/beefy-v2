@@ -16,7 +16,7 @@ const tokenPriceRecipe = cva({
     textDecoration: 'none',
     color: 'text.light',
     position: 'absolute',
-    width: '100%',
+    width: '95%',
     height: '100%',
     backfaceVisibility: 'hidden',
     transformStyle: 'preserve-3d',
@@ -58,8 +58,8 @@ export const TokenPrice = memo(function TokenPrice({ token, ...rest }: TokenPric
 
   return (
     <div className={tokenPriceRecipe(rest)}>
-      <Icon alt={symbol} src={icon} />
       {formatLargeUsd(price, { decimalsUnder: 2 })}
+      <Icon alt={symbol} src={icon} />
     </div>
   );
 });

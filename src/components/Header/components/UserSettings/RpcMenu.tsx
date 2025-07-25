@@ -3,8 +3,8 @@ import { memo, useCallback } from 'react';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import { selectAllChainIds } from '../../../../features/data/selectors/chains.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
-import { SearchableList } from '../../../SearchableList/SearchableList.tsx';
-import { ChainRpcItem, ChainRpcReset } from './RpcListItem.tsx';
+import { ChainRpcItem } from './RpcListItem.tsx';
+import { Scrollable } from '../../../Scrollable/Scrollable.tsx';
 
 export interface RpcMenuProps {
   onSelect: (chainId: ChainEntity['id']) => void;
@@ -21,24 +21,19 @@ export const RpcMenu = memo(function RpcMenu({ onSelect }: RpcMenuProps) {
   );
 
   return (
-    <RpcList>
-      <SearchableList
-        options={chainIds}
-        onSelect={handleSelect}
-        ItemInnerComponent={ChainRpcItem}
-        EndComponent={ChainRpcReset}
-        size="sm"
-        hideShadows={true}
-      />
-    </RpcList>
+    <Scrollable autoHeight={350} hideShadows>
+      <RpcList>
+        {chainIds.map(chainId => (
+          <ChainRpcItem key={chainId} id={chainId} onSelect={handleSelect} />
+        ))}
+      </RpcList>
+    </Scrollable>
   );
 });
 
 const RpcList = styled('div', {
   base: {
-    height: '100%',
-    width: '100%',
-    color: 'text.light',
-    flexGrow: '1',
+    display: 'flex',
+    flexDirection: 'column',
   },
 });

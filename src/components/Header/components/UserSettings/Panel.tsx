@@ -1,9 +1,7 @@
 import { styled } from '@repo/styles/jsx';
 
 export const Panel = styled('div', {
-  base: {
-    width: '276px',
-  },
+  base: {},
 });
 
 export const PanelHeader = styled('div', {
@@ -74,9 +72,7 @@ export const PanelCloseButton = styled(
 
 export const PanelContent = styled('div', {
   base: {
-    height: '356px',
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
+    height: '350px',
+    padding: 0,
   },
 });

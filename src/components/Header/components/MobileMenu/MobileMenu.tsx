@@ -1,16 +1,16 @@
-import { Fragment, memo, useCallback, useState } from 'react';
-import CloseIcon from '../../../../images/icons/mui/Close.svg?react';
+import { memo, useCallback, useState } from 'react';
 import MenuIcon from '../../../../images/icons/Menu.svg?react';
 import { NavLinkItem } from '../NavItem/NavLinkItem.tsx';
 import { MobileList } from '../../list.ts';
 import type { NavConfig, NavDropdownConfig } from '../DropNavItem/types.ts';
 import { isNavDropdownConfig } from '../DropNavItem/types.ts';
-import { Prices } from '../Prices/Prices.tsx';
+import { BifiPricesMobile, BridgeNavButton } from '../Prices/Prices.tsx';
 import { UnreadDots } from '../Badges/UnreadDots.tsx';
-import { Drawer } from '../../../Modal/Drawer.tsx';
 import { styled } from '@repo/styles/jsx';
 import { NavItemInner } from '../NavItem/NavItemInner.tsx';
 import { NavItem } from '../NavItem/NavLink.tsx';
+import { ScrollableDrawer } from '../../../ScrollableDrawer/ScrollableDrawer.tsx';
+import { Button } from '../../../Button/Button.tsx';
 
 export const MobileMenu = memo(function MobileMenu() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -24,37 +24,38 @@ export const MobileMenu = memo(function MobileMenu() {
         <MenuIcon fontSize="inherit" style={{ height: '32px', width: '32px' }} />
         <UnreadDots />
       </MenuButton>
-      <Drawer scrollable={false} open={mobileOpen} onClose={handleDrawerToggle}>
-        <Sidebar>
-          <Header>
-            <Prices />
-            <CloseButton onClick={handleDrawerToggle}>
-              <CloseIcon />
-            </CloseButton>
-          </Header>
-          <Divider />
-          {MobileList.map(item => {
-            return (
-              <Fragment key={item.title}>
-                <MobileItem item={item} onClick={handleDrawerToggle} />
-                <Divider />
-              </Fragment>
-            );
-          })}
-        </Sidebar>
-      </Drawer>
+      <ScrollableDrawer
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        mainChildren={
+          <Container>
+            <NavItemContainer prices={true}>
+              <BifiPricesMobile />
+              <BridgeNavButton onClick={handleDrawerToggle} to="bridge">
+                {'Bridge >'}
+              </BridgeNavButton>
+            </NavItemContainer>
+            {MobileList.map(item => {
+              return <MobileItem key={item.title} item={item} onClick={handleDrawerToggle} />;
+            })}
+          </Container>
+        }
+        footerChildren={
+          <Button fullWidth={true} borderless={true} onClick={handleDrawerToggle}>
+            Close
+          </Button>
+        }
+      />
     </>
   );
 });
 
-const Divider = styled('hr', {
+const Container = styled('div', {
   base: {
-    height: '2px',
-    backgroundColor: 'background.content.dark',
-    display: 'block',
-    margin: 0,
-    padding: 0,
-    border: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
+    padding: '8px',
   },
 });
 
@@ -73,38 +74,6 @@ const MenuButton = styled('button', {
   },
 });
 
-const Sidebar = styled('div', {
-  base: {
-    backgroundColor: 'background.header',
-    minHeight: '100vh',
-    width: '320px',
-    overflowY: 'auto',
-  },
-});
-
-const Header = styled('div', {
-  base: {
-    padding: '16px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '4px',
-  },
-});
-
-const CloseButton = styled(
-  'button',
-  {
-    base: {
-      marginLeft: 'auto',
-      color: 'text.middle',
-      _hover: {
-        color: 'text.light',
-      },
-    },
-  },
-  { defaultProps: { type: 'button' } }
-);
-
 type MobileItemProps = {
   item: NavConfig;
   onClick: () => void;
@@ -113,27 +82,31 @@ const MobileItem = memo<MobileItemProps>(function MobileItem({ item, onClick }) 
   if (isNavDropdownConfig(item)) {
     const NavComponent = item.MobileComponent ?? DropMobile;
     return (
-      <NavComponent
-        onClick={onClick}
-        title={item.title}
-        Icon={item.Icon}
-        Badge={item.Badge}
-        items={item.items}
-      />
+      <NavItemContainer>
+        <NavComponent
+          onClick={onClick}
+          title={item.title}
+          Icon={item.Icon}
+          Badge={item.Badge}
+          items={item.items}
+        />
+      </NavItemContainer>
     );
   }
 
   const NavComponent = item.MobileComponent ?? NavLinkItem;
   return (
-    <NavComponent
-      onClick={onClick}
-      title={item.title}
-      url={item.url}
-      Badge={item.Badge}
-      Icon={item.Icon}
-      end={item.end}
-      mobile={true}
-    />
+    <NavItemContainer>
+      <NavComponent
+        onClick={onClick}
+        title={item.title}
+        url={item.url}
+        Badge={item.Badge}
+        Icon={item.Icon}
+        end={item.end}
+        mobile={true}
+      />
+    </NavItemContainer>
   );
 });
 
@@ -147,7 +120,7 @@ export const DropMobile = memo<DropMobileProps>(function DropMobile({
   Badge,
 }) {
   return (
-    <>
+    <NavItemContainer sublist={items.length > 0}>
       <NavItem mobile={true}>
         <NavItemInner title={title} Icon={Icon} Badge={Badge} />
       </NavItem>
@@ -163,20 +136,42 @@ export const DropMobile = memo<DropMobileProps>(function DropMobile({
               Icon={item.Icon}
               Badge={item.Badge}
               mobile={true}
+              externalLink={item.externalLink}
             />
           );
         })}
       </SubItems>
-    </>
+    </NavItemContainer>
   );
+});
+
+const NavItemContainer = styled('div', {
+  base: {
+    backgroundColor: 'background.content',
+    borderRadius: '8px',
+  },
+  variants: {
+    sublist: {
+      true: {
+        paddingBlock: '6px',
+      },
+    },
+    prices: {
+      true: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingInline: '10px 4px',
+        paddingBlock: '4px',
+      },
+    },
+  },
 });
 
 const SubItems = styled('div', {
   base: {
-    paddingLeft: '16px',
+    paddingLeft: '12px',
     display: 'flex',
     flexDirection: 'column',
-    marginTop: '-8px',
-    paddingBottom: '8px',
   },
 });
