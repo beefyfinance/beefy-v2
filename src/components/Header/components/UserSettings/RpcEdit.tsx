@@ -51,6 +51,19 @@ export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) 
     [setUpdatedRPC]
   );
 
+  const pasteFromClipboard = useCallback(() => {
+    navigator.clipboard
+      .readText()
+      .then(clipboardText => {
+        setUpdatedRPC(clipboardText);
+      })
+      .catch(error => {
+        console.error('Failed to read from clipboard:', error);
+        // Fallback for older browsers or when clipboard access is denied
+        // You could show a toast notification here if needed
+      });
+  }, []);
+
   const dispatch = useAppDispatch();
   const onSave = useCallback(() => {
     dispatch(updateActiveRpc(chain, updatedRPC));
@@ -71,9 +84,9 @@ export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) 
             fullWidth={true}
             placeholder={activeChainRpc[0]}
             endAdornment={
-              <Button size="sm" onClick={onBack}>
+              <PasteButton variant="transparent" size="sm" onClick={pasteFromClipboard}>
                 Paste
-              </Button>
+              </PasteButton>
             }
           />
           {isError && <InputError>{t('RpcModal-InvalidRpc')}</InputError>}
@@ -125,6 +138,14 @@ export const ChainRpcReset = memo(function ChainRpcReset({
       {t('RpcModal-Reset')}
     </Button>
   );
+});
+
+const PasteButton = styled(Button, {
+  base: {
+    color: 'green.40',
+    paddingBlock: '0',
+    paddingInline: '0',
+  },
 });
 
 const Top = styled('div', {
