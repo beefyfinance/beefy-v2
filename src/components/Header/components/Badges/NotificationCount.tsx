@@ -23,6 +23,5 @@ const Badge = styled('div', {
     height: '20px',
     lineHeight: '20px',
     textAlign: 'center',
-    fontSize: '12px',
   },
 });

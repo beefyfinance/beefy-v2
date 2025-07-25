@@ -9,6 +9,7 @@ import { pluginStricterProperties } from './tools/styles/stricter-properties-plu
  */
 
 const isProduction = process.env['NODE_ENV'] === 'production';
+const hashVarsClasses = isProduction && process.env['CSS_DISABLE_HASH'] !== 'true';
 
 const sansSerifFontStack = [
   'DM Sans',
@@ -63,7 +64,7 @@ const config = buildConfig(
     // Where to look for your css declarations
     include: ['./src/**/*.{ts,tsx}'],
     // Hash classnames/variables
-    hash: isProduction ? { cssVar: true, className: true } : false,
+    hash: hashVarsClasses ? { cssVar: true, className: true } : false,
     // Minifiy output
     minify: isProduction,
     // Use lightningcss instead of postcss
@@ -150,19 +151,13 @@ const config = buildConfig(
         },
       },
       h1: {
-        fontSize: '32px',
-        lineHeight: '40px',
-        fontWeight: 'medium',
+        textStyle: 'h1',
       },
       h2: {
-        fontSize: '24px',
-        lineHeight: '32px',
-        fontWeight: 'medium',
+        textStyle: 'h2',
       },
       h3: {
-        fontSize: '21px',
-        lineHeight: '24px',
-        fontWeight: 'medium',
+        textStyle: 'h3',
       },
       button: {
         color: 'inherit',
@@ -466,28 +461,40 @@ const config = buildConfig(
           },
         },
         fontSizes: {
-          h1: { DEFAULT: { value: '32px' }, accent: { value: '45px' } },
+          h1: {
+            DEFAULT: { value: '32px' },
+            accent: { value: '40px' }, // was 45
+          },
           h2: { value: '24px' },
-          h3: { value: '21px' },
+          h3: { value: '20px' }, // was 21
           body: {
             xl: { value: '20px' },
             DEFAULT: { value: '16px' },
             md: { value: '14px' },
             sm: { value: '12px' },
           },
-          subline: { DEFAULT: { value: '15px' }, sm: { value: '12px' } },
+          subline: {
+            DEFAULT: { value: '16px' }, // was 15
+            sm: { value: '12px' },
+          },
         },
         lineHeights: {
-          h1: { DEFAULT: { value: '40px' }, accent: { value: '56px' } },
+          h1: {
+            DEFAULT: { value: '40px' },
+            accent: { value: '48px' }, // was 56
+          },
           h2: { value: '32px' },
-          h3: { value: '24px' },
+          h3: { value: '28px' }, // was 24
           body: {
-            xl: { value: '32px' },
+            xl: { value: '28px' }, // was 32
             DEFAULT: { value: '24px' },
             md: { value: '22px' },
             sm: { value: '20px' },
           },
-          subline: { DEFAULT: { value: '24px' }, sm: { value: '20px' } },
+          subline: {
+            DEFAULT: { value: '24px' },
+            sm: { value: '20px' },
+          },
         },
         fontWeights: {
           normal: { value: 400 },
@@ -496,7 +503,7 @@ const config = buildConfig(
           bold: { value: 700 },
         },
         letterSpacings: {
-          subline: { value: '0.5px' },
+          subline: { value: '0.4px' }, // was 0.5
         },
       },
       semanticTokens: {
@@ -761,7 +768,7 @@ const config = buildConfig(
       'h1.accent': {
         fontSize: '{fontSizes.h1.accent}',
         lineHeight: '{lineHeights.h1.accent}',
-        fontWeight: '{fontWeights.medium}',
+        fontWeight: '{fontWeights.bold}', // was medium
       },
       h2: {
         fontSize: '{fontSizes.h2}',
