@@ -1,9 +1,9 @@
-import type { Abi, Address, Hash } from 'viem';
+import { type Abi, type Address, type Hash } from 'viem';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
 import type { ChainId } from '../../../entities/chain.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import type { ResolverMethods } from '../types.ts';
-import { normalizeAddress, normalizeAndHashDomain } from '../utils.ts';
+import { hashDomain, normalizeAddress, normalizeAndHashDomain } from '../utils.ts';
 
 const registryAbi = [
   {
@@ -25,25 +25,39 @@ const resolverAbi = [
   },
 ] as const satisfies Abi;
 
-const reverseRecordsAbi = [
+const reverseResolverAbi = [
   {
-    inputs: [{ internalType: 'address[]', name: 'addresses', type: 'address[]' }],
-    name: 'getNames',
-    outputs: [{ internalType: 'string[]', name: 'r', type: 'string[]' }],
+    inputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
+    name: 'name',
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
     stateMutability: 'view',
     type: 'function',
   },
 ] as const satisfies Abi;
 
+type ChainParams = {
+  registryAddress: Address;
+  /** ENSIP-19 */
+  reverseDomain?: string;
+};
+
+type MakeEnsResolverParams<TChain extends ChainId> = Record<TChain, ChainParams>;
+
 export function makeEnsResolver<TChain extends ChainId>(
-  registryAddresses: Record<TChain, Address>,
-  reverseRecordsAddresses: Record<TChain, Address>
+  _chains: MakeEnsResolverParams<TChain>
 ): ResolverMethods {
-  const _registryAddresses: Partial<Record<ChainId, Address>> = registryAddresses;
-  const _reverseRecordsAddresses: Partial<Record<ChainId, Address>> = reverseRecordsAddresses;
+  const chains: Partial<MakeEnsResolverParams<ChainId>> = _chains;
+
+  function getReverseDomain(chainId: ChainId): string {
+    return chains[chainId]?.reverseDomain || 'addr.reverse';
+  }
+
+  function getRegistryAddress(chainId: ChainId): Address | undefined {
+    return chains[chainId]?.registryAddress || undefined;
+  }
 
   async function fetchResolverAddress(hash: Hash, chainId: ChainId): Promise<Address | undefined> {
-    const registryAddress = _registryAddresses[chainId];
+    const registryAddress = getRegistryAddress(chainId);
     if (!registryAddress) {
       return undefined;
     }
@@ -82,17 +96,28 @@ export function makeEnsResolver<TChain extends ChainId>(
 
   /**
    * Lookup the (first) domain name for an address
+   * @dev does not validate that the domain resolves back to the address
    */
   async function addressToDomain(address: Address, chainId: ChainId): Promise<string | undefined> {
-    const reverseRecordsAddress = _reverseRecordsAddresses[chainId];
-    if (!reverseRecordsAddress) {
+    const rootReverseDomain = getReverseDomain(chainId);
+    const reverseDomain = `${address.slice(2).toLowerCase()}.${rootReverseDomain}`;
+    const reverseHash = hashDomain(reverseDomain);
+    console.log({
+      address,
+      chainId,
+      rootReverseDomain,
+      reverseDomain,
+      reverseHash,
+    });
+    const resolverAddress = await fetchResolverAddress(reverseHash, chainId);
+    if (!resolverAddress || resolverAddress === ZERO_ADDRESS) {
       return undefined;
     }
 
-    const contract = fetchContract(reverseRecordsAddress, reverseRecordsAbi, chainId);
+    const resolverContract = fetchContract(resolverAddress, reverseResolverAbi, chainId);
     try {
-      const domains = await contract.read.getNames([[address]]);
-      return domains?.[0] || undefined;
+      const domain: string = await resolverContract.read.name([reverseHash]);
+      return domain || undefined;
     } catch {
       return undefined;
     }

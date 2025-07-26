@@ -4,13 +4,10 @@ import type { tldToChain } from './tlds.ts';
 
 const { domainToAddress, addressToDomain } = makeEnsResolver<
   AllChainsFromTldToChain<typeof tldToChain>
->(
-  {
-    ethereum: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+>({
+  ethereum: {
+    registryAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   },
-  {
-    ethereum: '0x3671aE578E63FdF66ad4F3E12CC0c0d71Ac7510C',
-  }
-);
+});
 
 export { domainToAddress, addressToDomain };
