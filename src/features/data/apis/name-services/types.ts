@@ -9,10 +9,12 @@ export type DomainToAddressFn = (domain: string, chainId: ChainId) => Promise<Ad
 
 export type AddressToDomainFn = (address: Address, chainId: ChainId) => Promise<string | undefined>;
 
+export type ResolverMethods = {
+  domainToAddress: DomainToAddressFn;
+  addressToDomain: AddressToDomainFn;
+};
+
 export type Resolver = {
   tldToChain: () => Promise<Record<string, ChainId[]>>;
-  methods: () => Promise<{
-    domainToAddress: DomainToAddressFn;
-    addressToDomain: AddressToDomainFn;
-  }>;
+  methods: () => Promise<ResolverMethods>;
 };
