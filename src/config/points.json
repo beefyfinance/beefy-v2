@@ -1028,39 +1028,6 @@
     ]
   },
   {
-    "id": "lisk-points",
-    "docs": "TODO",
-    "points": [
-      {
-        "id": "lisk-points",
-        "name": "Lisk Points"
-      }
-    ],
-    "eligibility": [
-      {
-        "type": "vault-whitelist"
-      }
-    ],
-    "accounting": [
-      {
-        "id": "beefy-lrt-subgraph",
-        "role": "Raw indexing of blockchain data, computes time weighted balances",
-        "url": "https://github.com/beefyfinance/lrt-subgraph"
-      },
-      {
-        "id": "beefy-lrt-api",
-        "role": "API for the LRT subgraph. Provides stable API.",
-        "url": "https://github.com/beefyfinance/beefy-lrt-api"
-      },
-      {
-        "id": "lisk-points",
-        "role": "Distribution of rewards",
-        "type": "airdrop",
-        "url": "TODO"
-      }
-    ]
-  },
-  {
     "id": "silo-points",
     "docs": "TODO",
     "points": [
