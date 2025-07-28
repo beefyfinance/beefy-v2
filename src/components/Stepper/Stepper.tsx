@@ -67,6 +67,7 @@ const Modal = styled('div', {
     position: 'fixed',
     top: '24px',
     left: '24px',
+    zIndex: 'modal',
   },
 });
 
