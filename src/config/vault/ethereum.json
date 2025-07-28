@@ -1,5 +1,86 @@
 [
   {
+    "id": "curve-mseth-weth",
+    "name": "msETH/WETH",
+    "type": "standard",
+    "token": "msETHWETH-f",
+    "tokenAddress": "0xa4c567c662349BeC3D0fB94C4e7f85bA95E208e4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x380E00a15c212457437454AF94B86583bc0C99f5",
+    "earnedToken": "mooCurve-msETH-WETH",
+    "earnedTokenAddress": "0x380E00a15c212457437454AF94B86583bc0C99f5",
+    "oracle": "lps",
+    "oracleId": "curve-mseth-weth",
+    "status": "active",
+    "createdAt": 1753690748,
+    "platformId": "curve",
+    "assets": ["msETH", "WETH"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-v2-331/deposit/",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-v2-331/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xa4c567c662349BeC3D0fB94C4e7f85bA95E208e4",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xa4c567c662349BeC3D0fB94C4e7f85bA95E208e4",
+            "coins": [
+              "0x64351fC9810aDAd17A690E4e1717Df5e7e085160",
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-susd-susde",
+    "name": "sUSD/sUSDe",
+    "type": "standard",
+    "token": "sUSD+sUSDe",
+    "tokenAddress": "0x4b5E827F4C0a1042272a11857a355dA1F4Ceebae",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x856c718Ac2FA2e23e99e878ea1e034194cd2BaE2",
+    "earnedToken": "mooCurve-sUSD-sUSDe",
+    "earnedTokenAddress": "0x856c718Ac2FA2e23e99e878ea1e034194cd2BaE2",
+    "oracle": "lps",
+    "oracleId": "curve-susd-susde",
+    "status": "active",
+    "createdAt": 1753690737,
+    "platformId": "curve",
+    "assets": ["sUSD", "sUSDe"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-371/deposit/",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-371/withdraw",
+    "network": "ethereum",
+    "pointStructureIds": ["ethena"],
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x4b5E827F4C0a1042272a11857a355dA1F4Ceebae",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x4b5E827F4C0a1042272a11857a355dA1F4Ceebae",
+            "coins": [
+              "0x57Ab1ec28D129707052df4dF418D58a2D46d5f51",
+              "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "pendle-usdf-29jan26",
     "name": "USDf 29Jan26",
     "type": "standard",
