@@ -8,11 +8,13 @@ import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
 import Edit from '../../../../images/icons/edit_pen.svg?react';
 
 export const ChainRpcItem = memo(function ChainRpcItem({
+  error = false,
   id,
   onSelect,
 }: {
   id: ChainEntity['id'];
   onSelect: (id: ChainEntity['id']) => void;
+  error?: boolean;
 }) {
   const [isHover, setIsHover] = useState(false);
   const chain = useAppSelector(state => selectChainById(state, id));
@@ -23,7 +25,15 @@ export const ChainRpcItem = memo(function ChainRpcItem({
       onMouseLeave={() => setIsHover(false)}
       onClick={() => onSelect(id)}
     >
-      {chain.name}
+      <NameContainer>
+        {chain.name}
+        {error && (
+          <>
+            <CircleWarning />
+            <ErrorContainer>connection failed </ErrorContainer>
+          </>
+        )}
+      </NameContainer>
       {isHover ?
         <EditContainer>
           <span>Modify RPC</span>
@@ -72,5 +82,29 @@ const EditIconContainer = styled('div', {
     height: '24px',
     borderRadius: '100%',
     backgroundColor: 'darkBlue.80',
+  },
+});
+
+const NameContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+  },
+});
+
+const ErrorContainer = styled('span', {
+  base: {
+    textStyle: 'body.sm',
+    color: 'text.warning',
+  },
+});
+
+const CircleWarning = styled('div', {
+  base: {
+    width: '4px',
+    height: '4px',
+    borderRadius: '100%',
+    backgroundColor: 'text.warning',
   },
 });

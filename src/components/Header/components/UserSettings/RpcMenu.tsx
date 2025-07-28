@@ -1,5 +1,5 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import { selectAllChainIds } from '../../../../features/data/selectors/chains.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
@@ -8,9 +8,10 @@ import { Scrollable } from '../../../Scrollable/Scrollable.tsx';
 
 export interface RpcMenuProps {
   onSelect: (chainId: ChainEntity['id']) => void;
+  rpcErrors: ChainEntity['id'][];
 }
 
-export const RpcMenu = memo(function RpcMenu({ onSelect }: RpcMenuProps) {
+export const RpcMenu = memo(function RpcMenu({ onSelect, rpcErrors }: RpcMenuProps) {
   const chainIds = useAppSelector(state => selectAllChainIds(state));
 
   const handleSelect = useCallback(
@@ -20,10 +21,14 @@ export const RpcMenu = memo(function RpcMenu({ onSelect }: RpcMenuProps) {
     [onSelect]
   );
 
+  const filteredChainIds = useMemo(() => {
+    return chainIds.filter(chainId => !rpcErrors.includes(chainId));
+  }, [chainIds, rpcErrors]);
+
   return (
     <Scrollable autoHeight={350} hideShadows>
       <RpcList>
-        {chainIds.map(chainId => (
+        {filteredChainIds.map(chainId => (
           <ChainRpcItem key={chainId} id={chainId} onSelect={handleSelect} />
         ))}
       </RpcList>

@@ -270,6 +270,7 @@ const config = buildConfig(
             dark: { value: '#999cb3' },
             black: { value: '{colors.darkBlue.90}' },
             boosted: { value: '{colors.gold.30}' },
+            warning: { value: '{colors.orange.40}' },
           },
           modal: { backdrop: { value: '#ffffff33' } },
           alertBaseBackground: { value: '#f5f5ff14' },

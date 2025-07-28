@@ -123,7 +123,7 @@ export const NetworkStatus = memo(function NetworkStatus({
           </Title>
         </div>
         <div className={classes.content}>
-          <RpcSettingsPanel />
+          <RpcSettingsPanel rpcErrors={rpcErrors} />
         </div>
         <Footer>{t('RpcModal-EmptyList')}</Footer>
       </DropdownContent>

@@ -32,7 +32,7 @@ export const styles = {
   dropdown: css.raw({
     display: 'flex',
     flexDirection: 'column',
-    maxWidth: '272px',
+    maxWidth: '320px',
     padding: '0px',
     backgroundColor: 'background.content.light',
   }),

@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import { RpcEdit } from './RpcEdit.tsx';
@@ -7,10 +7,24 @@ import { PanelContent } from './Panel.tsx';
 import { Collapsable } from '../../../Collapsable/Collapsable.tsx';
 import { css } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
+import { useAppSelector } from '../../../../features/data/store/hooks.ts';
+import { selectAllChainIds } from '../../../../features/data/selectors/chains.ts';
+import { ChainRpcItem } from './RpcListItem.tsx';
 
-export const RpcSettingsPanel = memo(function RpcSettingsPanel() {
+export const RpcSettingsPanel = memo(function RpcSettingsPanel({
+  rpcErrors,
+}: {
+  rpcErrors: ChainEntity['id'][];
+}) {
   const { t } = useTranslation();
   const [editChainId, setEditChainId] = useState<ChainEntity['id'] | null>(null);
+
+  const chainIds = useAppSelector(state => selectAllChainIds(state));
+
+  const connectedChainIds = useMemo(() => {
+    return chainIds.length - rpcErrors.length;
+  }, [chainIds, rpcErrors]);
+
   const onBack = useCallback(() => {
     setEditChainId(null);
   }, [setEditChainId]);
@@ -19,17 +33,23 @@ export const RpcSettingsPanel = memo(function RpcSettingsPanel() {
     <>
       {editChainId ?
         <RpcEdit chainId={editChainId} onBack={onBack} />
-      : <CollapsableContainer
-          titleClass={styles.title}
-          collapsableClass={styles.collapsable}
-          variant="noPadding"
-          title={t('RpcModal-Menu-Edit')}
-          openByDefault={true}
-        >
-          <PanelContent>
-            <RpcMenu onSelect={setEditChainId} />
-          </PanelContent>
-        </CollapsableContainer>
+      : <>
+          {rpcErrors.length > 0 &&
+            rpcErrors.map(chainId => (
+              <ChainRpcItem error={true} key={chainId} id={chainId} onSelect={setEditChainId} />
+            ))}
+          <CollapsableContainer
+            titleClass={styles.title}
+            collapsableClass={styles.collapsable}
+            variant="noPadding"
+            title={t('RpcModal-Menu-Edit', { count: connectedChainIds })}
+            openByDefault={true}
+          >
+            <PanelContent>
+              <RpcMenu rpcErrors={rpcErrors} onSelect={setEditChainId} />
+            </PanelContent>
+          </CollapsableContainer>
+        </>
       }
     </>
   );
