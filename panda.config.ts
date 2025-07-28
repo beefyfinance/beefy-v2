@@ -476,7 +476,7 @@ const config = buildConfig(
             md: { value: '14px' },
             sm: { value: '12px' },
           },
-          subline: { DEFAULT: { value: '15px' }, sm: { value: '12px' } },
+          subline: { DEFAULT: { value: '15px' }, sm: { value: '12px' }, xs: { value: '9px' } },
         },
         lineHeights: {
           h1: { DEFAULT: { value: '40px' }, accent: { value: '56px' } },
@@ -860,6 +860,13 @@ const config = buildConfig(
         fontSize: '{fontSizes.subline.sm}',
         lineHeight: '{lineHeights.subline.sm}',
         fontWeight: '{fontWeights.semiBold}',
+        textTransform: 'uppercase',
+        letterSpacing: '{letterSpacings.subline}',
+      },
+      'subline.xs': {
+        fontSize: '{fontSizes.subline.xs}',
+        lineHeight: '{lineHeights.subline.sm}',
+        fontWeight: '{fontWeights.bold}',
         textTransform: 'uppercase',
         letterSpacing: '{letterSpacings.subline}',
       },

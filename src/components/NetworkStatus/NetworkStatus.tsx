@@ -8,7 +8,7 @@ import type {
   LoaderState,
 } from '../../features/data/reducers/data-loader-types.ts';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader.ts';
-import { selectEolChainIds } from '../../features/data/selectors/chains.ts';
+import { selectAllChainIds, selectEolChainIds } from '../../features/data/selectors/chains.ts';
 import {
   isLoaderPending,
   isLoaderRejected,
@@ -24,6 +24,10 @@ import { DropdownProvider } from '../Dropdown/DropdownProvider.tsx';
 import { DropdownTrigger } from '../Dropdown/DropdownTrigger.tsx';
 import { styles } from './styles.ts';
 import { RpcSettingsPanel } from '../Header/components/UserSettings/RpcSettingsPanel.tsx';
+import { Button } from '../Button/Button.tsx';
+import ArrowExpand from '../../images/icons/arrow-expand.svg?react';
+import { ChainIcon } from '../ChainIcon/ChainIcon.tsx';
+import { selectChainById } from '../../features/data/selectors/chains.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -38,10 +42,10 @@ export const NetworkStatus = memo(function NetworkStatus({
   onOpen: () => void;
   onClose: () => void;
 }) {
+  const isAutoOpen = useAppSelector(state => state.ui.dataLoader.statusIndicator.open);
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const isAutoOpen = useAppSelector(state => state.ui.dataLoader.statusIndicator.open);
   const open = isUserOpen || isAutoOpen;
   const handleClose = useCallback(() => {
     if (isAutoOpen) {
@@ -49,6 +53,7 @@ export const NetworkStatus = memo(function NetworkStatus({
     }
     onClose();
   }, [dispatch, onClose, isAutoOpen]);
+
   const handleToggle = useCallback(() => {
     if (open) {
       handleClose();
@@ -56,6 +61,7 @@ export const NetworkStatus = memo(function NetworkStatus({
       onOpen();
     }
   }, [open, handleClose, onOpen]);
+
   const setOpen = useCallback(
     (shouldOpen: boolean) =>
       dispatch(shouldOpen ? dataLoaderActions.openIndicator() : dataLoaderActions.closeIndicator()),
@@ -122,13 +128,81 @@ export const NetworkStatus = memo(function NetworkStatus({
             </TextTitle>
           </Title>
         </div>
-        <div className={classes.content}>
-          <RpcSettingsPanel rpcErrors={rpcErrors} />
-        </div>
-        <Footer>{t('RpcModal-EmptyList')}</Footer>
+
+        {isAutoOpen && !isUserOpen ?
+          <PopOutContent setIsPopupOpen={onOpen} rpcErrors={rpcErrors} />
+        : <>
+            <div className={classes.content}>
+              <RpcSettingsPanel rpcErrors={rpcErrors} />
+            </div>
+            <Footer>{t('RpcModal-EmptyList')}</Footer>
+          </>
+        }
       </DropdownContent>
     </DropdownProvider>
   );
+});
+
+const PopOutContent = function PopOutContent({
+  setIsPopupOpen,
+  rpcErrors,
+}: {
+  setIsPopupOpen: (isPopupOpen: boolean) => void;
+  rpcErrors: ChainEntity['id'][];
+}) {
+  const showChainNames = rpcErrors.length > 0 && rpcErrors.length <= 3;
+  const showChainsConnectedError = rpcErrors.length > 7;
+  const chainIds = useAppSelector(selectAllChainIds);
+
+  // Get chain data for all error chains
+  const errorChains = useAppSelector(state =>
+    rpcErrors.map(chainId => selectChainById(state, chainId))
+  );
+
+  return (
+    <PopOutContainer>
+      <Chains>
+        {rpcErrors.length > 0 ?
+          <>
+            <ChainNamesContainer>
+              {errorChains.map(chain => (
+                <ChainNameItem key={chain.id}>
+                  <ChainIcon chainId={chain.id} />
+                  {showChainNames && <span>{chain.name}</span>}
+                </ChainNameItem>
+              ))}
+            </ChainNamesContainer>
+            {showChainsConnectedError && <ChainsConnected>{rpcErrors.length - 7}</ChainsConnected>}
+          </>
+        : <>
+            <ChainsConnected>{chainIds.length}</ChainsConnected>
+            <span>Rpc Connected</span>
+          </>
+        }
+      </Chains>
+      <Button variant="transparent" onClick={() => setIsPopupOpen(false)}>
+        <ArrowExpand />
+      </Button>
+    </PopOutContainer>
+  );
+};
+
+const Chains = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  },
+});
+const PopOutContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '10px',
+    paddingInline: '12px',
+    minWidth: '272px',
+  },
 });
 
 const Title = styled('div', {
@@ -180,6 +254,38 @@ const DropdownButton = styled(DropdownTrigger.button, {
     justifyContent: 'center',
     cursor: 'pointer',
     backgroundColor: 'transparent',
+  },
+});
+
+const ChainsConnected = styled('div', {
+  base: {
+    textStyle: 'subline.xs',
+    color: 'text.light',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '20px',
+    width: '20px',
+    borderRadius: '100%',
+    backgroundColor: 'background.content.darkest',
+  },
+});
+
+const ChainNamesContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+  },
+});
+
+const ChainNameItem = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    textStyle: 'body.sm',
+    color: 'text.light',
   },
 });
 
