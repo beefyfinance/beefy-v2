@@ -19,9 +19,9 @@ export const styles = {
     },
   }),
   marketMakerAnnotation: css.raw({
+    textStyle: 'body.sm',
     position: 'relative',
     bottom: '0.5em',
-    fontSize: '0.5em',
   }),
   icon: css.raw({
     height: '32px',

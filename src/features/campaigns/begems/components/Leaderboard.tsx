@@ -121,7 +121,7 @@ const Address = styled(Cell, {
 
 const Points = styled(Cell, {
   base: {
-    textStyle: 'body.lg.medium',
+    textStyle: 'body.medium',
     flex: '1 1 auto',
     textAlign: 'right',
     color: 'text.middle',
