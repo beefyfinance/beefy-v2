@@ -48,25 +48,20 @@ export const NetworkStatus = memo(function NetworkStatus({
   const { t } = useTranslation();
   const open = isUserOpen || isAutoOpen;
   const handleClose = useCallback(() => {
-    if (isAutoOpen) {
-      dispatch(dataLoaderActions.closeIndicator());
-    }
+    dispatch(dataLoaderActions.closeIndicator());
+
     onClose();
-  }, [dispatch, onClose, isAutoOpen]);
+  }, [dispatch, onClose]);
 
   const handleToggle = useCallback(() => {
     if (open) {
       handleClose();
+      dataLoaderActions.openIndicator();
     } else {
       onOpen();
+      dataLoaderActions.closeIndicator();
     }
   }, [open, handleClose, onOpen]);
-
-  const setOpen = useCallback(
-    (shouldOpen: boolean) =>
-      dispatch(shouldOpen ? dataLoaderActions.openIndicator() : dataLoaderActions.closeIndicator()),
-    [dispatch]
-  );
 
   const rpcErrors = useNetStatus<ChainEntity['id'][]>(findChainIdMatching, isLoaderRejected);
   const rpcPending = useNetStatus<ChainEntity['id'][]>(findChainIdMatching, isLoaderPending);
@@ -75,9 +70,14 @@ export const NetworkStatus = memo(function NetworkStatus({
   const configErrors = useNetStatus(findConfigMatching, isLoaderRejected);
   const configPending = useNetStatus(findConfigMatching, isLoaderPending);
 
-  const hasAnyError = rpcErrors.length > 0 || beefyErrors.length > 0 || configErrors.length > 0;
-  const hasAnyLoading =
-    rpcPending.length > 0 || beefyPending.length > 0 || configPending.length > 0;
+  const hasAnyError = useMemo(
+    () => rpcErrors.length > 0 || beefyErrors.length > 0 || configErrors.length > 0,
+    [rpcErrors, beefyErrors, configErrors]
+  );
+  const hasAnyLoading = useMemo(
+    () => rpcPending.length > 0 || beefyPending.length > 0 || configPending.length > 0,
+    [rpcPending, beefyPending, configPending]
+  );
 
   const variant = useMemo(
     () =>
@@ -110,11 +110,11 @@ export const NetworkStatus = memo(function NetworkStatus({
   return (
     <DropdownProvider
       open={open}
-      onChange={setOpen}
+      onChange={handleToggle}
       variant="dark"
       placement="bottom-end"
       reference={anchorEl}
-      closeOnClickAway={true}
+      layer={1}
     >
       <DropdownButton onClick={handleToggle}>
         <PulseHighlight variant={variant} state={hidePulse ? 'stopped' : 'playing'} />
@@ -202,6 +202,7 @@ const PopOutContainer = styled('div', {
     gap: '10px',
     paddingInline: '12px',
     minWidth: '272px',
+    paddingBlock: '6px 12px',
   },
 });
 
