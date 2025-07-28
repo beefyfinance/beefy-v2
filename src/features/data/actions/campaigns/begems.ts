@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { beGemsFactoryAbi } from '../../../../config/abi/BeGemsFactoryAbi.ts';
-import { BIG_ZERO } from '../../../../helpers/big-number.ts';
+import { BIG_ZERO, fromWei } from '../../../../helpers/big-number.ts';
 import { isFulfilledResult } from '../../../../helpers/promises.ts';
 import { fetchContract } from '../../apis/rpc-contract/viem-contract.ts';
 import type { TokenEntity } from '../../entities/token.ts';
@@ -37,7 +37,9 @@ async function fetchTokenSeason(
     num: config.number,
     token: (isFulfilledResult(data) && data.value.gems) || undefined,
     priceForFullShare: bigNumberOrStaticZero(
-      isFulfilledResult(ppfs) && ppfs ? new BigNumber(ppfs.value) : BIG_ZERO
+      isFulfilledResult(ppfs) && ppfs.value ?
+        fromWei(new BigNumber(ppfs.value.toString()), 18)
+      : BIG_ZERO
     ),
   } satisfies SeasonDataToken;
 }
