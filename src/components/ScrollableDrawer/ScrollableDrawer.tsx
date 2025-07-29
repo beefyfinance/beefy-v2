@@ -9,6 +9,7 @@ interface ScrollabeDrawerProps {
   mainChildren: React.ReactNode;
   footerChildren: React.ReactNode;
   layoutClass?: CssStyles;
+  footerClass?: CssStyles;
   hideShadow?: boolean;
   mobileSpacingSize?: number;
 }
@@ -19,6 +20,7 @@ export const ScrollableDrawer = memo<ScrollabeDrawerProps>(function ScrollableDr
   mainChildren,
   footerChildren,
   layoutClass,
+  footerClass,
   hideShadow,
   mobileSpacingSize = 28,
 }) {
@@ -51,7 +53,7 @@ export const ScrollableDrawer = memo<ScrollabeDrawerProps>(function ScrollableDr
           <MobileSpacing style={{ height: `${mobileSpacingSize}px` }} />
         </Main>
         {!hideShadow && <Shadow style={{ opacity: `${shadowOpacity}%` }} />}
-        <Footer>{footerChildren}</Footer>
+        <Footer className={css(footerClass)}>{footerChildren}</Footer>
       </Layout>
     </Drawer>
   );
