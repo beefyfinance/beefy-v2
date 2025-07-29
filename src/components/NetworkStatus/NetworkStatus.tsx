@@ -1,6 +1,6 @@
 import { styled } from '@repo/styles/jsx';
 import { isEqual, sortedUniq, uniq } from 'lodash-es';
-import { memo, type RefObject, useCallback, useMemo } from 'react';
+import { memo, type RefObject, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import type {
@@ -41,6 +41,7 @@ export const NetworkStatus = memo(function NetworkStatus({
   onOpen: () => void;
   onClose: () => void;
 }) {
+  const [editChainId, setEditChainId] = useState<ChainEntity['id'] | null>(null);
   const isAutoOpen = useAppSelector(state => state.ui.dataLoader.statusIndicator.open);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -144,15 +145,26 @@ export const NetworkStatus = memo(function NetworkStatus({
           mainChildren={
             <div>
               <TitleComponent hasAnyError={hasAnyError} text={titleText} />
-              <RpcSettingsPanel rpcErrors={rpcErrors} />
+              <ListMobile>
+                <RpcSettingsPanel
+                  rpcErrors={rpcErrors}
+                  editChainId={editChainId}
+                  setEditChainId={setEditChainId}
+                />
+              </ListMobile>
             </div>
           }
           footerChildren={
             <>
               <div>{t('RpcModal-EmptyList')}</div>
-              <Button fullWidth={true} borderless={true} onClick={handleClose}>
-                Close
-              </Button>
+              {editChainId ?
+                <Button fullWidth={true} borderless={true} onClick={() => setEditChainId(null)}>
+                  Cancel
+                </Button>
+              : <Button fullWidth={true} borderless={true} onClick={handleClose}>
+                  Close
+                </Button>
+              }
             </>
           }
         />
@@ -162,7 +174,11 @@ export const NetworkStatus = memo(function NetworkStatus({
             <PopOutContent setIsPopupOpen={onOpen} rpcErrors={rpcErrors} />
           : <>
               <Content>
-                <RpcSettingsPanel rpcErrors={rpcErrors} />
+                <RpcSettingsPanel
+                  rpcErrors={rpcErrors}
+                  editChainId={editChainId}
+                  setEditChainId={setEditChainId}
+                />
               </Content>
               <Footer>{t('RpcModal-EmptyList')}</Footer>
             </>
@@ -201,8 +217,8 @@ const PopOutContent = function PopOutContent({
   setIsPopupOpen: (isPopupOpen: boolean) => void;
   rpcErrors: ChainEntity['id'][];
 }) {
-  const showChainNames = rpcErrors.length > 0 && rpcErrors.length <= 3;
-  const showChainsConnectedError = rpcErrors.length > 7;
+  const showChainNames = useMemo(() => rpcErrors.length > 0 && rpcErrors.length <= 3, [rpcErrors]);
+  const showChainsConnectedError = useMemo(() => rpcErrors.length > 7, [rpcErrors]);
   const chainIds = useAppSelector(selectAllChainIds);
 
   // Get chain data for all error chains
@@ -360,6 +376,15 @@ const ChainNameItem = styled('div', {
     gap: '4px',
     textStyle: 'body.sm',
     color: 'text.light',
+  },
+});
+
+const ListMobile = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: '8px',
+    backgroundColor: 'background.content.dark',
   },
 });
 

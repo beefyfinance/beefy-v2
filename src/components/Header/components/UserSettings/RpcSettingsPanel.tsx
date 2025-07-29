@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import { RpcEdit } from './RpcEdit.tsx';
@@ -13,11 +13,14 @@ import { ChainRpcItem } from './RpcListItem.tsx';
 
 export const RpcSettingsPanel = memo(function RpcSettingsPanel({
   rpcErrors,
+  editChainId,
+  setEditChainId,
 }: {
   rpcErrors: ChainEntity['id'][];
+  editChainId: ChainEntity['id'] | null;
+  setEditChainId: (chainId: ChainEntity['id'] | null) => void;
 }) {
   const { t } = useTranslation();
-  const [editChainId, setEditChainId] = useState<ChainEntity['id'] | null>(null);
 
   const chainIds = useAppSelector(state => selectAllChainIds(state));
 

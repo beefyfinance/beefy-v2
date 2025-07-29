@@ -61,7 +61,7 @@ export const ScrollableDrawer = memo<ScrollabeDrawerProps>(function ScrollableDr
 
 const Layout = styled('div', {
   base: {
-    backgroundColor: 'darkBlue.90',
+    backgroundColor: 'background.content.darkest',
     height: '100dvh',
     maxHeight: '100dvh',
     width: '100vw',

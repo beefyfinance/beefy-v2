@@ -22,6 +22,7 @@ import { Button } from '../../../Button/Button.tsx';
 import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
 import { BaseInput } from '../../../Form/Input/BaseInput.tsx';
 import type { ItemInnerProps } from '../../../SearchableList/Item.tsx';
+import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
 
 const URL_REGX = /^https:\/\//;
 
@@ -35,6 +36,8 @@ export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) 
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const [updatedRPC, setUpdatedRPC] = useState('');
   const activeChainRpc = useAppSelector(state => selectActiveRpcUrlForChain(state, chain.id));
+
+  const isMobile = useBreakpoint({ to: 'xs' });
 
   const isError = useMemo(() => {
     return updatedRPC.length > 7 && !URL_REGX.test(updatedRPC);
@@ -94,9 +97,11 @@ export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) 
       </Top>
       <Footer>
         <ActionButtons>
-          <Button onClick={onBack} size="lg" fullWidth={true}>
-            {t('RpcModal-Cancel')}
-          </Button>
+          {!isMobile && (
+            <Button onClick={onBack} size="lg" fullWidth={true}>
+              {t('RpcModal-Cancel')}
+            </Button>
+          )}
           <Button disabled={isDisabled} onClick={onSave} size="lg" fullWidth={true}>
             {t('RpcModal-Save')}
           </Button>
