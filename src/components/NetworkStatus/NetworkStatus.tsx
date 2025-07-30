@@ -1,91 +1,70 @@
-import { css, cx } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import { isEqual, sortedUniq, uniq } from 'lodash-es';
-import { memo, type RefObject, useCallback, useMemo } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { memo, type RefObject, useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import type {
   DataLoaderState,
   LoaderState,
 } from '../../features/data/reducers/data-loader-types.ts';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader.ts';
-import { selectChainById, selectEolChainIds } from '../../features/data/selectors/chains.ts';
+import { selectAllChainIds, selectEolChainIds } from '../../features/data/selectors/chains.ts';
 import {
   isLoaderPending,
   isLoaderRejected,
 } from '../../features/data/selectors/data-loader-helpers.ts';
-import {
-  selectCurrentChainId,
-  selectIsWalletConnected,
-  selectWalletAddressIfKnown,
-} from '../../features/data/selectors/wallet.ts';
+import { selectWalletAddressIfKnown } from '../../features/data/selectors/wallet.ts';
 import type { BeefyState } from '../../features/data/store/types.ts';
 import { PulseHighlight } from '../../features/vault/components/PulseHighlight/PulseHighlight.tsx';
-import { legacyMakeStyles } from '../../helpers/mui.ts';
-import { getNetworkSrc } from '../../helpers/networkSrc.ts';
 import { entries } from '../../helpers/object.ts';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
-import CloseIcon from '../../images/icons/mui/Close.svg?react';
-import iconUnsupportedChain from '../../images/icons/navigation/unsuported-chain.svg';
 import { DropdownContent } from '../Dropdown/DropdownContent.tsx';
 import { DropdownProvider } from '../Dropdown/DropdownProvider.tsx';
 import { DropdownTrigger } from '../Dropdown/DropdownTrigger.tsx';
-import { styles } from './styles.ts';
-
-const useStyles = legacyMakeStyles(styles);
-
-const ActiveChain = ({ chainId }: { chainId: ChainEntity['id'] | null }) => {
-  const classes = useStyles();
-
-  return (
-    <>
-      <div className={classes.line} />
-      <div className={classes.chain} style={{ textDecoration: 'none' }}>
-        <img alt={chainId ?? ''} src={chainId ? getNetworkSrc(chainId) : iconUnsupportedChain} />
-      </div>
-    </>
-  );
-};
+import { RpcSettingsPanel } from '../Header/components/UserSettings/RpcSettingsPanel.tsx';
+import { Button } from '../Button/Button.tsx';
+import ArrowExpand from '../../images/icons/arrow-expand.svg?react';
+import { ChainIcon } from '../ChainIcon/ChainIcon.tsx';
+import { selectChainById } from '../../features/data/selectors/chains.ts';
+import { ScrollableDrawer } from '../ScrollableDrawer/ScrollableDrawer.tsx';
+import { useBreakpoint } from '../MediaQueries/useBreakpoint.ts';
+import { css } from '@repo/styles/css';
+import { ChainRpcReset } from '../Header/components/UserSettings/RpcEdit.tsx';
 
 export const NetworkStatus = memo(function NetworkStatus({
   anchorEl,
   isOpen: isUserOpen,
-  isOtherOpen,
   onOpen,
   onClose,
 }: {
   anchorEl: RefObject<HTMLElement>;
   isOpen: boolean;
-  isOtherOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
 }) {
-  const classes = useStyles();
+  const [editChainId, setEditChainId] = useState<ChainEntity['id'] | null>(null);
+  const isAutoOpen = useAppSelector(state => state.ui.dataLoader.statusIndicator.open);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const isAutoOpen = useAppSelector(state => state.ui.dataLoader.statusIndicator.open);
-  const open = isUserOpen || (isAutoOpen && !isOtherOpen);
-  const chainsById = useAppSelector(state => state.entities.chains.byId);
+  const open = useMemo(() => isUserOpen || isAutoOpen, [isUserOpen, isAutoOpen]);
+
+  const isMobile = useBreakpoint({ to: 'xs' });
+
   const handleClose = useCallback(() => {
-    if (isAutoOpen) {
-      dispatch(dataLoaderActions.closeIndicator());
-    }
+    dispatch(dataLoaderActions.closeIndicator());
+
     onClose();
-  }, [dispatch, onClose, isAutoOpen]);
+  }, [dispatch, onClose]);
+
   const handleToggle = useCallback(() => {
     if (open) {
       handleClose();
+      dataLoaderActions.openIndicator();
     } else {
       onOpen();
+      dataLoaderActions.closeIndicator();
     }
   }, [open, handleClose, onOpen]);
-  const setOpen = useCallback(
-    (shouldOpen: boolean) =>
-      dispatch(shouldOpen ? dataLoaderActions.openIndicator() : dataLoaderActions.closeIndicator()),
-    [dispatch]
-  );
-  const isWalletConnected = useAppSelector(selectIsWalletConnected);
-  const currentChainId = useAppSelector(selectCurrentChainId);
 
   const rpcErrors = useNetStatus<ChainEntity['id'][]>(findChainIdMatching, isLoaderRejected);
   const rpcPending = useNetStatus<ChainEntity['id'][]>(findChainIdMatching, isLoaderPending);
@@ -94,9 +73,14 @@ export const NetworkStatus = memo(function NetworkStatus({
   const configErrors = useNetStatus(findConfigMatching, isLoaderRejected);
   const configPending = useNetStatus(findConfigMatching, isLoaderPending);
 
-  const hasAnyError = rpcErrors.length > 0 || beefyErrors.length > 0 || configErrors.length > 0;
-  const hasAnyLoading =
-    rpcPending.length > 0 || beefyPending.length > 0 || configPending.length > 0;
+  const hasAnyError = useMemo(
+    () => rpcErrors.length > 0 || beefyErrors.length > 0 || configErrors.length > 0,
+    [rpcErrors, beefyErrors, configErrors]
+  );
+  const hasAnyLoading = useMemo(
+    () => rpcPending.length > 0 || beefyPending.length > 0 || configPending.length > 0,
+    [rpcPending, beefyPending, configPending]
+  );
 
   const variant = useMemo(
     () =>
@@ -108,73 +92,273 @@ export const NetworkStatus = memo(function NetworkStatus({
 
   const hidePulse = useMemo(() => !hasAnyError && !hasAnyLoading, [hasAnyError, hasAnyLoading]);
 
+  const titleText = useMemo(() => {
+    // only api error
+    if (rpcErrors.length === 0 && beefyErrors.length > 0) {
+      return t('NetworkStatus-ApiError');
+    }
+    // only rpc error
+    if (rpcErrors.length > 0 && beefyErrors.length === 0) {
+      return t('NetworkStatus-RpcError');
+    }
+
+    // both error
+    if (rpcErrors.length > 0 && beefyErrors.length > 0) {
+      return t('NetworkStatus-Error');
+    } else {
+      return t('NetworkStatus-Success');
+    }
+  }, [rpcErrors, beefyErrors, t]);
+
   return (
     <DropdownProvider
       open={open}
-      onChange={setOpen}
+      onChange={handleToggle}
       variant="dark"
       placement="bottom-end"
       reference={anchorEl}
+      layer={1}
+      closeOnClickAway={!isMobile}
     >
       <DropdownButton onClick={handleToggle}>
         <PulseHighlight variant={variant} state={hidePulse ? 'stopped' : 'playing'} />
-        {isWalletConnected && <ActiveChain chainId={currentChainId} />}
       </DropdownButton>
-      <DropdownContent css={styles.dropdown} gap="none">
-        <div className={classes.titleContainer}>
-          <div className={classes.title}>
-            {isWalletConnected ?
-              currentChainId ?
-                <Trans
-                  t={t}
-                  i18nKey="NetworkStatus-Connected-To"
-                  components={{ chain: <ConnectedChain chainId={currentChainId} /> }}
-                />
-              : t('Network-Unsupported')
-            : t('NetworkStatus-NoWallet')}
-          </div>
-          <CloseIcon onClick={handleClose} className={classes.cross} />
-        </div>
-        <div className={classes.content}>
-          <div className={classes.contentTitle}>{t('NetworkStatus-Status')}</div>
-          <div className={classes.contentDetail}>
-            {hasAnyError ?
+
+      {isMobile ?
+        isAutoOpen && !isUserOpen ?
+          <StyledDropdownContent gap="none">
+            <TitleComponent hasAnyError={hasAnyError} text={titleText} />
+            <PopOutContent setIsPopupOpen={onOpen} rpcErrors={rpcErrors} />
+          </StyledDropdownContent>
+        : <ScrollableDrawer
+            layoutClass={css.raw({
+              backgroundColor: 'background.content',
+              height: '90dvh',
+              borderTopRadius: '12px',
+            })}
+            mainClass={css.raw({
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+              paddingInline: '12px',
+            })}
+            footerClass={css.raw({
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '20px',
+              borderTopRadius: '12px',
+              paddingInline: '12px',
+              paddingBlock: '16px',
+            })}
+            mobileSpacingSize={0}
+            open={open}
+            onClose={handleClose}
+            hideShadow={true}
+            mainChildren={
               <>
-                {rpcErrors.map(chainId => (
-                  <div className={classes.popoverLine} key={chainId}>
-                    <div className={cx(classes.circle, 'warning', 'circle')} />
-                    <div>{t('NetworkStatus-RpcError', { chain: chainsById[chainId]!.name })}</div>
-                  </div>
-                ))}
-                {(beefyErrors.length > 0 || configErrors.length > 0) && (
-                  <div className={classes.popoverLine}>
-                    <div className={cx(classes.circle, 'warning', 'circle')} />
-                    <div>{t('NetworkStatus-BeefyError')}</div>
-                  </div>
-                )}
-                <div className={css(styles.popoverLine, styles.popoverHelpText)}>
-                  {t('NetworkStatus-HelpText-Error')}
-                </div>
-              </>
-            : hasAnyLoading ?
-              <>
-                <div className={classes.popoverLine}>
-                  <div className={cx(classes.circle, 'loading', 'circle')} />
-                  {t('NetworkStatus-Title-Loading')}
-                </div>
-              </>
-            : <>
-                <div className={classes.popoverLine}>
-                  <div className={cx(classes.circle, 'success', 'circle')} />
-                  {t('NetworkStatus-Title-OK')}
-                </div>
+                <TitleComponent hasAnyError={hasAnyError} text={titleText} />
+                <ListMobile>
+                  <RpcSettingsPanel
+                    rpcErrors={rpcErrors}
+                    editChainId={editChainId}
+                    setEditChainId={setEditChainId}
+                  />
+                </ListMobile>
               </>
             }
-          </div>
-        </div>
-      </DropdownContent>
+            footerChildren={
+              <>
+                <div>{t('RpcModal-EmptyList')}</div>
+                {editChainId ?
+                  <ActionButtons>
+                    <ChainRpcReset value={editChainId} />
+                    <Button
+                      variant="dark"
+                      fullWidth={true}
+                      borderless={true}
+                      onClick={() => setEditChainId(null)}
+                    >
+                      Cancel
+                    </Button>
+                  </ActionButtons>
+                : <Button variant="dark" fullWidth={true} borderless={true} onClick={handleClose}>
+                    Close Menu
+                  </Button>
+                }
+              </>
+            }
+          />
+
+      : <StyledDropdownContent gap="none">
+          <TitleComponent hasAnyError={hasAnyError} text={titleText} />
+          {isAutoOpen && !isUserOpen ?
+            <PopOutContent setIsPopupOpen={onOpen} rpcErrors={rpcErrors} />
+          : <>
+              <Content>
+                <RpcSettingsPanel
+                  rpcErrors={rpcErrors}
+                  editChainId={editChainId}
+                  setEditChainId={setEditChainId}
+                />
+              </Content>
+              <Footer>{t('RpcModal-EmptyList')}</Footer>
+            </>
+          }
+        </StyledDropdownContent>
+      }
     </DropdownProvider>
   );
+});
+
+const TitleComponent = function TitleComponent({
+  hasAnyError,
+  text,
+}: {
+  hasAnyError: boolean;
+  text: string;
+}) {
+  const { t } = useTranslation();
+
+  return (
+    <TitleContainer>
+      <Title variant={hasAnyError ? 'warning' : 'success'}>
+        <TextTitle>{text}</TextTitle>
+        <TextTitle>
+          {hasAnyError ? t('NetworkStatus-Data-Error') : t('NetworkStatus-Data-Success')}
+        </TextTitle>
+      </Title>
+    </TitleContainer>
+  );
+};
+
+const PopOutContent = function PopOutContent({
+  setIsPopupOpen,
+  rpcErrors,
+}: {
+  setIsPopupOpen: (isPopupOpen: boolean) => void;
+  rpcErrors: ChainEntity['id'][];
+}) {
+  const showChainNames = useMemo(() => rpcErrors.length > 0 && rpcErrors.length <= 3, [rpcErrors]);
+  const showChainsConnectedError = useMemo(() => rpcErrors.length > 7, [rpcErrors]);
+  const chainIds = useAppSelector(selectAllChainIds);
+
+  // Get chain data for all error chains
+  const errorChains = useAppSelector(state =>
+    rpcErrors.map(chainId => selectChainById(state, chainId))
+  );
+
+  return (
+    <PopOutContainer>
+      <Chains>
+        {rpcErrors.length > 0 ?
+          <>
+            <ChainNamesContainer>
+              {errorChains.map(chain => (
+                <ChainNameItem key={chain.id}>
+                  <ChainIcon chainId={chain.id} size={20} />
+                  {showChainNames && <span>{chain.name}</span>}
+                </ChainNameItem>
+              ))}
+            </ChainNamesContainer>
+            {showChainsConnectedError && <ChainsConnected>{rpcErrors.length - 7}</ChainsConnected>}
+          </>
+        : <>
+            <ChainsConnected>{chainIds.length}</ChainsConnected>
+            <span>Rpc Connected</span>
+          </>
+        }
+      </Chains>
+      <Button variant="transparent" onClick={() => setIsPopupOpen(false)}>
+        <ArrowExpand />
+      </Button>
+    </PopOutContainer>
+  );
+};
+
+const Chains = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  },
+});
+
+const PopOutContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '10px',
+    paddingInline: '12px',
+    minWidth: '272px',
+    paddingBlock: '6px 12px',
+  },
+});
+
+const TitleContainer = styled('div', {
+  base: {
+    textStyle: 'body.medium',
+    color: 'text.light',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'inherit',
+    borderTopLeftRadius: 'inherit',
+    borderTopRightRadius: 'inherit',
+    paddingTop: '16px',
+    sm: {
+      padding: '10px 12px 6px 12px',
+    },
+  },
+});
+
+const Title = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    color: 'text.light',
+    textStyle: 'body',
+    lg: {
+      textStyle: 'body.medium',
+    },
+  },
+  variants: {
+    variant: {
+      success: {
+        color: 'green.40',
+      },
+      warning: {
+        color: 'orange.40',
+      },
+    },
+  },
+  defaultVariants: {
+    variant: 'success',
+  },
+});
+
+const TextTitle = styled('div', {
+  base: {
+    textStyle: 'inherit',
+    color: 'inherit',
+  },
+});
+
+const Content = styled('div', {
+  base: {
+    backgroundColor: 'background.content.dark',
+    borderRadius: '8px',
+    marginInline: '2px',
+  },
+});
+
+const Footer = styled('div', {
+  base: {
+    textStyle: 'body.md',
+    color: 'text.middle',
+    padding: '10px 12px 12px 12px',
+    textAlign: 'left',
+  },
 });
 
 const DropdownButton = styled(DropdownTrigger.button, {
@@ -191,14 +375,64 @@ const DropdownButton = styled(DropdownTrigger.button, {
   },
 });
 
-const ConnectedChain = memo(function ConnectedChain({ chainId }: { chainId: ChainEntity['id'] }) {
-  const chain = useAppSelector(state => selectChainById(state, chainId));
-  return (
-    <>
-      <img alt={chainId} src={getNetworkSrc(chainId)} />
-      {chain.name}
-    </>
-  );
+const ChainsConnected = styled('div', {
+  base: {
+    textStyle: 'subline.xs',
+    color: 'text.light',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '20px',
+    width: '20px',
+    borderRadius: '100%',
+    backgroundColor: 'background.content.darkest',
+  },
+});
+
+const ChainNamesContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+  },
+});
+
+const ChainNameItem = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    textStyle: 'body.sm',
+    color: 'text.light',
+  },
+});
+
+const ListMobile = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: '8px',
+    backgroundColor: 'background.content.dark',
+  },
+});
+
+const StyledDropdownContent = styled(DropdownContent, {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    maxWidth: '320px',
+    padding: '0px',
+    backgroundColor: 'background.content',
+  },
+});
+
+const ActionButtons = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+    width: '100%',
+  },
 });
 
 function useNetStatus<

@@ -77,7 +77,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -263,8 +263,9 @@ const config = buildConfig(
             light: { value: '#f5f5f5' },
             middle: { value: '#d0d0da' },
             dark: { value: '#999cb3' },
-            black: { value: '#111321' },
+            black: { value: '{colors.darkBlue.90}' },
             boosted: { value: '{colors.gold.30}' },
+            warning: { value: '{colors.orange.40}' },
           },
           modal: { backdrop: { value: '#ffffff33' } },
           alertBaseBackground: { value: '#f5f5ff14' },
@@ -476,6 +477,7 @@ const config = buildConfig(
           subline: {
             DEFAULT: { value: '16px' }, // was 15
             sm: { value: '12px' },
+            xs: { value: '9px' },
           },
         },
         lineHeights: {
@@ -519,6 +521,7 @@ const config = buildConfig(
               dark: { value: '{colors.eclipseElixir}' },
               light: { value: '{colors.contentBackgroundLight}' },
               gray: { value: '{colors.text.dark}' },
+              darkest: { value: '{colors.darkBlue.90}' },
             },
             vaults: {
               standard: { value: '{colors.blackMarket}' },
@@ -868,6 +871,13 @@ const config = buildConfig(
         textTransform: 'uppercase',
         letterSpacing: '{letterSpacings.subline}',
       },
+      'subline.xs': {
+        fontSize: '{fontSizes.subline.xs}',
+        lineHeight: '{lineHeights.subline.sm}',
+        fontWeight: '{fontWeights.bold}',
+        textTransform: 'uppercase',
+        letterSpacing: '{letterSpacings.subline}',
+      },
       inherit: {
         fontSize: 'inherit',
         lineHeight: 'inherit',
@@ -979,6 +989,21 @@ const config = buildConfig(
         active: {
           background: '{colors.blackMarket}',
           color: '{colors.text.light}',
+        },
+      },
+      transparent: {
+        base: {
+          color: '{colors.text.light}',
+          background: 'transparent',
+          border: 'transparent',
+        },
+        hover: {
+          background: 'transparent',
+          border: 'transparent',
+        },
+        active: {
+          background: 'transparent',
+          border: 'transparent',
         },
       },
     },

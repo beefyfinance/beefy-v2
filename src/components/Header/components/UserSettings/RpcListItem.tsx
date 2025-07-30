@@ -1,86 +1,115 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, type MouseEventHandler, useCallback, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { restoreDefaultRpcsOnSingleChain } from '../../../../features/data/actions/chains.ts';
+import { memo, useState } from 'react';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
-import {
-  selectActiveRpcUrlForChain,
-  selectChainById,
-} from '../../../../features/data/selectors/chains.ts';
+import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
-import Refresh from '../../../../images/icons/mui/Refresh.svg?react';
 import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
-import type { ItemInnerProps } from '../../../SearchableList/Item.tsx';
-import { PanelCloseButton } from './Panel.tsx';
+
+import Edit from '../../../../images/icons/edit_pen.svg?react';
 
 export const ChainRpcItem = memo(function ChainRpcItem({
-  value,
-}: ItemInnerProps<ChainEntity['id']>) {
-  const chain = useAppSelector(state => selectChainById(state, value));
-
-  const activeChainRpc = useAppSelector(state => selectActiveRpcUrlForChain(state, chain.id));
+  error = false,
+  id,
+  onSelect,
+}: {
+  id: ChainEntity['id'];
+  onSelect: (id: ChainEntity['id']) => void;
+  error?: boolean;
+}) {
+  const [isHover, setIsHover] = useState(false);
+  const chain = useAppSelector(state => selectChainById(state, id));
 
   return (
-    <div>
-      <ChainIconName>
-        <ChainIcon chainId={value} />
+    <Container
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+      onClick={() => onSelect(id)}
+    >
+      <NameContainer>
         {chain.name}
-      </ChainIconName>
-      <RpcUrl>{activeChainRpc[0]}</RpcUrl>
-    </div>
+        {error && (
+          <>
+            <CircleWarning />
+            <ErrorContainer>connection failed </ErrorContainer>
+          </>
+        )}
+      </NameContainer>
+      {isHover ?
+        <EditContainer>
+          <span>Modify RPC</span>
+          <EditIconContainer>
+            <Edit />
+          </EditIconContainer>
+        </EditContainer>
+      : <ChainIcon size={20} chainId={id} />}
+    </Container>
   );
 });
 
-const ChainIconName = styled('div', {
+const Container = styled('div', {
   base: {
+    paddingInline: '10px',
+    paddingBlock: '8px',
     textStyle: 'body.medium',
     display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     gap: '8px',
     color: 'text.middle',
+    lg: {
+      paddingBlock: '6px',
+    },
+    _hover: {
+      cursor: 'pointer',
+      backgroundColor: 'background.button',
+    },
   },
 });
 
-const RpcUrl = styled('div', {
+const EditContainer = styled('div', {
   base: {
     textStyle: 'body.sm',
-    marginLeft: '32px',
-    color: 'text.dark',
-    width: '196px',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    textAlign: 'start',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '4px',
+    color: 'text.light',
   },
 });
 
-export const ChainRpcReset = memo(function ChainRpcReset({
-  value: chain,
-}: ItemInnerProps<ChainEntity['id']>) {
-  const dispatch = useDispatch();
-  const activeChainRpc = useAppSelector(state => selectActiveRpcUrlForChain(state, chain));
-  const defaultRPC = useAppSelector(state => selectChainById(state, chain)).rpc;
-  const chainEntity = useAppSelector(state => selectChainById(state, chain));
+const EditIconContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '24px',
+    height: '24px',
+    borderRadius: '100%',
+    backgroundColor: 'darkBlue.80',
+  },
+});
 
-  const handleClick = useCallback<MouseEventHandler<HTMLButtonElement>>(
-    e => {
-      e.stopPropagation();
-      dispatch(restoreDefaultRpcsOnSingleChain(chainEntity));
-    },
-    [dispatch, chainEntity]
-  );
+const NameContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    color: 'text.light',
+  },
+});
 
-  const rpcsAreEqual = useMemo(
-    () =>
-      activeChainRpc.length === defaultRPC.length &&
-      activeChainRpc.every((url, index) => url === defaultRPC[index]),
-    [activeChainRpc, defaultRPC]
-  );
+const ErrorContainer = styled('span', {
+  base: {
+    textStyle: 'body.sm',
+    color: 'text.warning',
+  },
+});
 
-  if (rpcsAreEqual) return <></>;
-
-  return (
-    <PanelCloseButton onClick={handleClick}>
-      <Refresh />
-    </PanelCloseButton>
-  );
+const CircleWarning = styled('div', {
+  base: {
+    width: '4px',
+    height: '4px',
+    borderRadius: '100%',
+    backgroundColor: 'text.warning',
+  },
 });

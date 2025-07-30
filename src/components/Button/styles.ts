@@ -84,6 +84,9 @@ export const buttonRecipe = cva({
       dark: {
         colorPalette: 'buttons.dark',
       },
+      transparent: {
+        colorPalette: 'buttons.transparent',
+      },
     },
   },
   compoundVariants: [

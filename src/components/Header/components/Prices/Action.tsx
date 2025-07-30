@@ -9,14 +9,23 @@ const actionRecipe = cva({
     padding: '4px',
     borderRadius: '4px',
     border: `none`,
-    color: 'text.light',
+    color: 'text.dark',
     textDecoration: 'none',
-    backgroundColor: 'background.border',
+    backgroundColor: 'background.content.dark',
     boxShadow: 'none',
     outline: 'none',
     cursor: 'pointer',
-    width: '32px',
-    height: '32px',
+    height: '28px',
+    width: '28px',
+  },
+  variants: {
+    link: {
+      true: {
+        color: 'text.black',
+        width: '62px',
+        backgroundColor: 'green.40',
+      },
+    },
   },
 });
 

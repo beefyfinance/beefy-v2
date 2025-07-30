@@ -12,14 +12,24 @@ export const NavLinkItem = memo<NavItemProps>(function NavLinkItem({
   onClick,
   end = true,
   mobile = false,
+  dropdownItem = false,
+  externalLink = false,
 }) {
   return (
-    <NavLink end={end} key={url} to={url} onClick={onClick} mobile={mobile}>
+    <NavLink
+      end={end}
+      key={url}
+      to={url}
+      onClick={onClick}
+      mobile={mobile}
+      dropdownItem={dropdownItem}
+    >
       <NavItemInner
         title={title}
         Icon={Icon}
         Badge={Badge}
         Arrow={mobile ? RightArrow : undefined}
+        externalLink={externalLink}
       />
     </NavLink>
   );
