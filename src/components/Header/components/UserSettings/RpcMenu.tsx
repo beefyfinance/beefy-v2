@@ -5,6 +5,7 @@ import { selectAllChainIds } from '../../../../features/data/selectors/chains.ts
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { ChainRpcItem } from './RpcListItem.tsx';
 import { Scrollable } from '../../../Scrollable/Scrollable.tsx';
+import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
 
 export interface RpcMenuProps {
   onSelect: (chainId: ChainEntity['id']) => void;
@@ -13,6 +14,8 @@ export interface RpcMenuProps {
 
 export const RpcMenu = memo(function RpcMenu({ onSelect, rpcErrors }: RpcMenuProps) {
   const chainIds = useAppSelector(state => selectAllChainIds(state));
+
+  const isMobile = useBreakpoint({ to: 'xs' });
 
   const handleSelect = useCallback(
     (chainId: ChainEntity['id']) => {
@@ -26,7 +29,7 @@ export const RpcMenu = memo(function RpcMenu({ onSelect, rpcErrors }: RpcMenuPro
   }, [chainIds, rpcErrors]);
 
   return (
-    <Scrollable autoHeight={350} hideShadows>
+    <Scrollable autoHeight={isMobile ? 500 : 350} hideShadows>
       <RpcList>
         {filteredChainIds.map(chainId => (
           <ChainRpcItem key={chainId} id={chainId} onSelect={handleSelect} />

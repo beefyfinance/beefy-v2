@@ -1,7 +1,7 @@
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Drawer } from '../Modal/Drawer.tsx';
-import { css, type CssStyles } from '@repo/styles/css';
+import { type CssStyles } from '@repo/styles/css';
 
 interface ScrollabeDrawerProps {
   open: boolean;
@@ -49,13 +49,13 @@ export const ScrollableDrawer = memo<ScrollabeDrawerProps>(function ScrollableDr
 
   return (
     <Drawer scrollable={false} open={open} onClose={onClose} position="bottom">
-      <Layout className={layoutClass ? css(layoutClass) : undefined}>
-        <Main className={mainClass ? css(mainClass) : undefined} ref={mainRef}>
+      <Layout css={layoutClass}>
+        <Main css={mainClass} ref={mainRef}>
           {mainChildren}
           <MobileSpacing style={{ height: `${mobileSpacingSize}px` }} />
         </Main>
         {!hideShadow && <Shadow style={{ opacity: `${shadowOpacity}%` }} />}
-        <Footer className={footerClass ? css(footerClass) : undefined}>{footerChildren}</Footer>
+        <Footer css={footerClass}>{footerChildren}</Footer>
       </Layout>
     </Drawer>
   );

@@ -28,7 +28,7 @@ export const BifiPricesDropdown = memo(function BifiPricesDropdown({
   );
 
   return (
-    <Dropdown onClick={handleClick}>
+    <Dropdown padding="none" onClick={handleClick}>
       <BifiPricesContent />
     </Dropdown>
   );
@@ -67,7 +67,6 @@ const PricesContainer = styled('div', {
 const Dropdown = styled(DropdownContent, {
   base: {
     backgroundColor: 'background.content',
-    padding: 0,
     gap: '0px',
     borderRadius: '8px',
     minWidth: '400px',

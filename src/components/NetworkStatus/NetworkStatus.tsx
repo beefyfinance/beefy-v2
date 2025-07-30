@@ -123,65 +123,72 @@ export const NetworkStatus = memo(function NetworkStatus({
       <DropdownButton onClick={handleToggle}>
         <PulseHighlight variant={variant} state={hidePulse ? 'stopped' : 'playing'} />
       </DropdownButton>
+
       {isMobile ?
-        <ScrollableDrawer
-          layoutClass={css.raw({
-            background: 'background.content !important',
-            maxHeight: '90dvh',
-            borderTopRadius: '12px',
-            padding: '16px 12px',
-          })}
-          mainClass={css.raw({
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '10px',
-          })}
-          footerClass={css.raw({
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '20px',
-            borderTopRadius: '12px',
-            paddingInline: '0px',
-            paddingBlock: '0px',
-          })}
-          mobileSpacingSize={0}
-          open={open}
-          onClose={handleClose}
-          hideShadow={true}
-          mainChildren={
-            <>
-              <TitleComponent hasAnyError={hasAnyError} text={titleText} />
-              <ListMobile>
-                <RpcSettingsPanel
-                  rpcErrors={rpcErrors}
-                  editChainId={editChainId}
-                  setEditChainId={setEditChainId}
-                />
-              </ListMobile>
-            </>
-          }
-          footerChildren={
-            <>
-              <div>{t('RpcModal-EmptyList')}</div>
-              {editChainId ?
-                <ActionButtons>
-                  <ChainRpcReset value={editChainId} />
-                  <Button
-                    variant="dark"
-                    fullWidth={true}
-                    borderless={true}
-                    onClick={() => setEditChainId(null)}
-                  >
-                    Cancel
+        isAutoOpen && !isUserOpen ?
+          <StyledDropdownContent gap="none">
+            <TitleComponent hasAnyError={hasAnyError} text={titleText} />
+            <PopOutContent setIsPopupOpen={onOpen} rpcErrors={rpcErrors} />
+          </StyledDropdownContent>
+        : <ScrollableDrawer
+            layoutClass={css.raw({
+              background: 'background.content !important',
+              height: '90dvh',
+              borderTopRadius: '12px',
+            })}
+            mainClass={css.raw({
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+              paddingInline: '12px',
+            })}
+            footerClass={css.raw({
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '20px',
+              borderTopRadius: '12px',
+              paddingInline: '12px',
+              paddingBlock: '16px',
+            })}
+            mobileSpacingSize={0}
+            open={open}
+            onClose={handleClose}
+            hideShadow={true}
+            mainChildren={
+              <>
+                <TitleComponent hasAnyError={hasAnyError} text={titleText} />
+                <ListMobile>
+                  <RpcSettingsPanel
+                    rpcErrors={rpcErrors}
+                    editChainId={editChainId}
+                    setEditChainId={setEditChainId}
+                  />
+                </ListMobile>
+              </>
+            }
+            footerChildren={
+              <>
+                <div>{t('RpcModal-EmptyList')}</div>
+                {editChainId ?
+                  <ActionButtons>
+                    <ChainRpcReset value={editChainId} />
+                    <Button
+                      variant="dark"
+                      fullWidth={true}
+                      borderless={true}
+                      onClick={() => setEditChainId(null)}
+                    >
+                      Cancel
+                    </Button>
+                  </ActionButtons>
+                : <Button variant="dark" fullWidth={true} borderless={true} onClick={handleClose}>
+                    Close Menu
                   </Button>
-                </ActionButtons>
-              : <Button variant="dark" fullWidth={true} borderless={true} onClick={handleClose}>
-                  Close
-                </Button>
-              }
-            </>
-          }
-        />
+                }
+              </>
+            }
+          />
+
       : <StyledDropdownContent gap="none">
           <TitleComponent hasAnyError={hasAnyError} text={titleText} />
           {isAutoOpen && !isUserOpen ?
@@ -275,6 +282,7 @@ const Chains = styled('div', {
     gap: '10px',
   },
 });
+
 const PopOutContainer = styled('div', {
   base: {
     display: 'flex',
@@ -297,8 +305,8 @@ const TitleContainer = styled('div', {
     backgroundColor: 'inherit',
     borderTopLeftRadius: 'inherit',
     borderTopRightRadius: 'inherit',
-    padding: '0',
-    lg: {
+    paddingTop: '16px',
+    sm: {
       padding: '10px 12px 6px 12px',
     },
   },
