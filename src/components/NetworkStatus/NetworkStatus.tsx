@@ -132,7 +132,7 @@ export const NetworkStatus = memo(function NetworkStatus({
           </StyledDropdownContent>
         : <ScrollableDrawer
             layoutClass={css.raw({
-              background: 'background.content !important',
+              backgroundColor: 'background.content',
               height: '90dvh',
               borderTopRadius: '12px',
             })}
