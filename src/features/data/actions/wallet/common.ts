@@ -3,6 +3,7 @@ import { uniqBy } from 'lodash-es';
 import { BaseError, type Chain, type Hash, type PublicClient, type TransactionReceipt } from 'viem';
 import { waitForTransactionReceipt } from 'viem/actions';
 import { errorToString } from '../../../../helpers/format.ts';
+import { refTxConfirmedCallback, refTxRevertedCallback } from '../../apis/divvi/callbacks.ts';
 import type { GasPricing } from '../../apis/gas-prices/gas-prices.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { MinterEntity } from '../../entities/minter.ts';
@@ -157,12 +158,22 @@ function txMined(dispatch: BeefyDispatchFn, context: TxContext, receipt: Transac
       }, 60 * 1000);
     }
   }
+
+  if (receipt.transactionHash) {
+    refTxConfirmedCallback(receipt.transactionHash);
+  }
 }
 
 /**
  * Called when tx fails
  */
-function txError(dispatch: BeefyDispatchFn, context: TxContext, error: unknown, from?: string) {
+function txError(
+  dispatch: BeefyDispatchFn,
+  context: TxContext,
+  error: unknown,
+  txHash?: Hash,
+  from?: string
+) {
   const { additionalData } = context;
   const txError = getWalletErrorMessage(error);
   if (from) {
@@ -170,6 +181,9 @@ function txError(dispatch: BeefyDispatchFn, context: TxContext, error: unknown, 
   }
   dispatch(createWalletActionErrorAction(txError, additionalData));
   dispatch(stepperSetStepContent({ stepContent: StepContent.ErrorTx }));
+  if (txHash) {
+    refTxRevertedCallback(txHash);
+  }
 }
 
 export const resetWallet = () => {
@@ -198,7 +212,7 @@ export function captureWalletErrors<T extends BeefyThunk>(func: T): BeefyThunk {
     try {
       return await func(dispatch, getState, extraArgument);
     } catch (error) {
-      txError(dispatch, {}, error, 'captureWalletErrors');
+      txError(dispatch, {}, error, undefined, 'captureWalletErrors');
     }
   };
 }
@@ -221,17 +235,23 @@ export function bindTransactionEvents(
           if (success) {
             txMined(dispatch, context, receipt);
           } else {
-            txError(dispatch, context, 'Transaction failed.', 'bindTransactionEvents::reverted');
+            txError(
+              dispatch,
+              context,
+              'Transaction failed.',
+              hash,
+              'bindTransactionEvents::reverted'
+            );
           }
         })
         .catch(error => {
           // error mining transaction
-          txError(dispatch, context, error, 'bindTransactionEvents::receipt');
+          txError(dispatch, context, error, hash, 'bindTransactionEvents::receipt');
         });
     })
     .catch(error => {
       // error submitting transaction
-      txError(dispatch, context, error, 'bindTransactionEvents::submit');
+      txError(dispatch, context, error, undefined, 'bindTransactionEvents::submit');
     });
 }
 
