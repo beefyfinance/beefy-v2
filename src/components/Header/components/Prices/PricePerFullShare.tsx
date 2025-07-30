@@ -6,6 +6,7 @@ import {
 } from '../../../../features/data/selectors/vaults.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { styled } from '@repo/styles/jsx';
+import { AssetsImage } from '../../../AssetsImage/AssetsImage.tsx';
 
 export const PricePerFullShare = memo(function PricePerFullShare() {
   const vault = useAppSelector(state => selectVaultById(state, 'bifi-vault'));
@@ -19,18 +20,22 @@ export const PricePerFullShare = memo(function PricePerFullShare() {
 
   return (
     <Container>
-      1 {earnedToken.symbol} {'→'} {ppfs.toString(10)} {depositToken.symbol}
+      <AssetsImage assetSymbols={[earnedToken.symbol]} chainId={vault.chainId} size={24} />1{' '}
+      {earnedToken.symbol} {'='}{' '}
+      <AssetsImage assetSymbols={[depositToken.symbol]} chainId={vault.chainId} size={24} />{' '}
+      {ppfs.toString(10)} {depositToken.symbol}
     </Container>
   );
 });
 
 const Container = styled('div', {
   base: {
-    textStyle: 'subline',
+    textStyle: 'body',
     textTransform: 'none',
-    textAlign: 'center',
-    lineHeight: '1.1',
     whiteSpace: 'nowrap',
     paddingBlock: '8px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
   },
 });
