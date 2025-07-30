@@ -106,7 +106,7 @@ export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) 
             {t('RpcModal-Save')}
           </Button>
         </ActionButtons>
-        <ChainRpcReset value={chainId} />
+        {!isMobile && <ChainRpcReset value={chainId} />}
       </Footer>
     </>
   );

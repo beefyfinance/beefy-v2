@@ -48,13 +48,17 @@ export const ChainRpcItem = memo(function ChainRpcItem({
 
 const Container = styled('div', {
   base: {
-    padding: '6px 10px',
+    paddingInline: '10px',
+    paddingBlock: '8px',
     textStyle: 'body.medium',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: '8px',
     color: 'text.middle',
+    lg: {
+      paddingBlock: '6px',
+    },
     _hover: {
       cursor: 'pointer',
       backgroundColor: 'background.button',

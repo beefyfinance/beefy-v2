@@ -29,6 +29,7 @@ import { selectChainById } from '../../features/data/selectors/chains.ts';
 import { ScrollableDrawer } from '../ScrollableDrawer/ScrollableDrawer.tsx';
 import { useBreakpoint } from '../MediaQueries/useBreakpoint.ts';
 import { css } from '@repo/styles/css';
+import { ChainRpcReset } from '../Header/components/UserSettings/RpcEdit.tsx';
 
 export const NetworkStatus = memo(function NetworkStatus({
   anchorEl,
@@ -125,10 +126,15 @@ export const NetworkStatus = memo(function NetworkStatus({
       {isMobile ?
         <ScrollableDrawer
           layoutClass={css.raw({
-            backgroundColor: 'background.content',
-            maxHeight: '95dvh',
+            background: 'background.content !important',
+            maxHeight: '90dvh',
             borderTopRadius: '12px',
             padding: '16px 12px',
+          })}
+          mainClass={css.raw({
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px',
           })}
           footerClass={css.raw({
             display: 'flex',
@@ -138,12 +144,12 @@ export const NetworkStatus = memo(function NetworkStatus({
             paddingInline: '0px',
             paddingBlock: '0px',
           })}
-          mobileSpacingSize={12}
+          mobileSpacingSize={0}
           open={open}
           onClose={handleClose}
           hideShadow={true}
           mainChildren={
-            <div>
+            <>
               <TitleComponent hasAnyError={hasAnyError} text={titleText} />
               <ListMobile>
                 <RpcSettingsPanel
@@ -152,16 +158,24 @@ export const NetworkStatus = memo(function NetworkStatus({
                   setEditChainId={setEditChainId}
                 />
               </ListMobile>
-            </div>
+            </>
           }
           footerChildren={
             <>
               <div>{t('RpcModal-EmptyList')}</div>
               {editChainId ?
-                <Button fullWidth={true} borderless={true} onClick={() => setEditChainId(null)}>
-                  Cancel
-                </Button>
-              : <Button fullWidth={true} borderless={true} onClick={handleClose}>
+                <ActionButtons>
+                  <ChainRpcReset value={editChainId} />
+                  <Button
+                    variant="dark"
+                    fullWidth={true}
+                    borderless={true}
+                    onClick={() => setEditChainId(null)}
+                  >
+                    Cancel
+                  </Button>
+                </ActionButtons>
+              : <Button variant="dark" fullWidth={true} borderless={true} onClick={handleClose}>
                   Close
                 </Button>
               }
@@ -280,10 +294,13 @@ const TitleContainer = styled('div', {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '10px 12px 6px 12px',
     backgroundColor: 'inherit',
     borderTopLeftRadius: 'inherit',
     borderTopRightRadius: 'inherit',
+    padding: '0',
+    lg: {
+      padding: '10px 12px 6px 12px',
+    },
   },
 });
 
@@ -291,8 +308,11 @@ const Title = styled('div', {
   base: {
     display: 'flex',
     flexDirection: 'column',
-    textStyle: 'body.md',
     color: 'text.light',
+    textStyle: 'body',
+    lg: {
+      textStyle: 'body.medium',
+    },
   },
   variants: {
     variant: {
@@ -395,6 +415,15 @@ const StyledDropdownContent = styled(DropdownContent, {
     maxWidth: '320px',
     padding: '0px',
     backgroundColor: 'background.content',
+  },
+});
+
+const ActionButtons = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+    width: '100%',
   },
 });
 
