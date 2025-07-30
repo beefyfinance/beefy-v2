@@ -291,7 +291,7 @@ const Title = styled('div', {
   base: {
     display: 'flex',
     flexDirection: 'column',
-    textStyle: 'body.sm',
+    textStyle: 'body.md',
     color: 'text.light',
   },
   variants: {
@@ -326,8 +326,8 @@ const Content = styled('div', {
 
 const Footer = styled('div', {
   base: {
-    textStyle: 'body.sm',
-    color: 'text.light',
+    textStyle: 'body.md',
+    color: 'text.middle',
     padding: '10px 12px 12px 12px',
     textAlign: 'left',
   },
@@ -394,7 +394,7 @@ const StyledDropdownContent = styled(DropdownContent, {
     flexDirection: 'column',
     maxWidth: '320px',
     padding: '0px',
-    backgroundColor: 'background.content.light',
+    backgroundColor: 'background.content',
   },
 });
 

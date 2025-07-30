@@ -31,7 +31,14 @@ export const DropNavItem = memo<DropNavItemProps>(function DropNavItem({
   }, [setIsOpen]);
 
   return (
-    <DropdownProvider open={isOpen} onChange={setIsOpen}>
+    <DropdownProvider
+      open={isOpen}
+      onChange={setIsOpen}
+      openOnHover={true}
+      openOnClick={false}
+      hoverOpenDelay={0}
+      hoverCloseDelay={100}
+    >
       <DropdownNavButton>
         <NavItemInner
           title={title}

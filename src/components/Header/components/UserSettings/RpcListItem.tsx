@@ -41,7 +41,7 @@ export const ChainRpcItem = memo(function ChainRpcItem({
             <Edit />
           </EditIconContainer>
         </EditContainer>
-      : <ChainIcon chainId={id} />}
+      : <ChainIcon size={20} chainId={id} />}
     </Container>
   );
 });
@@ -65,11 +65,11 @@ const Container = styled('div', {
 const EditContainer = styled('div', {
   base: {
     textStyle: 'body.sm',
-    color: 'text.middle',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     gap: '4px',
+    color: 'text.light',
   },
 });
 
@@ -90,6 +90,7 @@ const NameContainer = styled('div', {
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
+    color: 'text.light',
   },
 });
 

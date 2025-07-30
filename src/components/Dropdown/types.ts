@@ -13,6 +13,9 @@ export type DropdownOptions = {
   placement?: Placement;
   offset?: number;
   openOnClick?: boolean;
+  openOnHover?: boolean;
+  hoverOpenDelay?: number;
+  hoverCloseDelay?: number;
   closeOnClickAway?: boolean;
   arrowEnabled?: boolean;
   arrowWidth?: number;
