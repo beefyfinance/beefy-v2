@@ -64,7 +64,7 @@ const ArrowIcon = styled(ArrangeArrowIcon, {
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    right: '6px',
+    right: '12px',
   },
   variants: {
     isOpen: {
@@ -86,8 +86,8 @@ const Trigger = styled(
       justifyContent: 'center',
       width: '100px',
       height: '40px',
-      gap: '2px',
-      padding: '8px 12px',
+      paddingBlock: '8px',
+      paddingInline: '10px 12px',
       position: 'relative',
     },
   },
