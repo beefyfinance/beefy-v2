@@ -1,5 +1,6 @@
 import { isAfter } from 'date-fns';
 import { orderBy } from 'lodash-es';
+import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { BeefyOffChainRewardsCampaignType } from '../apis/beefy/beefy-api-types.ts';
@@ -138,9 +139,15 @@ export const selectBoostContractState = (state: BeefyState, boostId: BoostPromoE
   );
 };
 
-export const selectBoostPartnerById = (state: BeefyState, partnerId: string) => {
-  return state.entities.promos.partners.byId[partnerId];
-};
+export const selectBoostPartnerById = createSelector(
+  [
+    (state: BeefyState) => state.entities.promos.partners.byId,
+    (_state: BeefyState, partnerId: string) => partnerId,
+  ],
+  (partnersById, partnerId) => {
+    return partnersById[partnerId];
+  }
+);
 
 export const selectBoostCampaignById = (state: BeefyState, campaignId: string) => {
   return state.entities.promos.campaigns.byId[campaignId];

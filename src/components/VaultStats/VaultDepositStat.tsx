@@ -1,4 +1,5 @@
 import type BigNumber from 'bignumber.js';
+import { createSelector } from '@reduxjs/toolkit';
 import { memo } from 'react';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
@@ -56,57 +57,61 @@ type SelectDataReturn =
     };
 
 // TODO better selector / hook
-function selectVaultDepositStat(
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  maybeWalletAddress?: string
-): SelectDataReturn {
-  const vault = selectVaultById(state, vaultId);
-  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
-  if (!walletAddress) {
-    return { loading: false, totalDeposit: BIG_ZERO };
+const selectVaultDepositStat = createSelector(
+  [
+    (state: BeefyState) => state,
+    (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+    (_state: BeefyState, _vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+      maybeWalletAddress,
+  ],
+  (state, vaultId, maybeWalletAddress): SelectDataReturn => {
+    const vault = selectVaultById(state, vaultId);
+    const walletAddress = maybeWalletAddress || selectWalletAddress(state);
+    if (!walletAddress) {
+      return { loading: false, totalDeposit: BIG_ZERO };
+    }
+
+    const isLoaded =
+      selectIsPricesAvailable(state) &&
+      selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress);
+    if (!isLoaded) {
+      return { loading: true };
+    }
+
+    const totalDeposit = selectUserVaultBalanceInDepositTokenIncludingDisplaced(
+      state,
+      vault.id,
+      walletAddress
+    );
+    if (!totalDeposit.gt(0)) {
+      return { loading: false, totalDeposit: BIG_ZERO };
+    }
+
+    const hideBalance = selectIsBalanceHidden(state);
+    const notEarning = selectUserVaultBalanceNotInActiveBoostInDepositToken(
+      state,
+      vault.id,
+      walletAddress
+    );
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const totalDepositUsd = selectUserVaultBalanceInUsdIncludingDisplaced(
+      state,
+      vaultId,
+      walletAddress
+    );
+    const vaultDeposit = selectUserVaultBalanceInDepositToken(state, vault.id, walletAddress);
+
+    return {
+      loading: false,
+      hideBalance,
+      depositToken,
+      totalDeposit,
+      totalDepositUsd,
+      vaultDeposit,
+      notEarning,
+    };
   }
-
-  const isLoaded =
-    selectIsPricesAvailable(state) &&
-    selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress);
-  if (!isLoaded) {
-    return { loading: true };
-  }
-
-  const totalDeposit = selectUserVaultBalanceInDepositTokenIncludingDisplaced(
-    state,
-    vault.id,
-    walletAddress
-  );
-  if (!totalDeposit.gt(0)) {
-    return { loading: false, totalDeposit: BIG_ZERO };
-  }
-
-  const hideBalance = selectIsBalanceHidden(state);
-  const notEarning = selectUserVaultBalanceNotInActiveBoostInDepositToken(
-    state,
-    vault.id,
-    walletAddress
-  );
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const totalDepositUsd = selectUserVaultBalanceInUsdIncludingDisplaced(
-    state,
-    vaultId,
-    walletAddress
-  );
-  const vaultDeposit = selectUserVaultBalanceInDepositToken(state, vault.id, walletAddress);
-
-  return {
-    loading: false,
-    hideBalance,
-    depositToken,
-    totalDeposit,
-    totalDepositUsd,
-    vaultDeposit,
-    notEarning,
-  };
-}
+);
 
 export const VaultDepositStat = memo(function VaultDepositStat({
   vaultId,
