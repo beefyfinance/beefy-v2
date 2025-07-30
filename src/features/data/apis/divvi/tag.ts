@@ -9,7 +9,8 @@ const DIVVI_MAGIC_PREFIX = '6decb85d';
  */
 const REFERRAL_TAG_FORMAT_1_BYTE = '01';
 
-const BEEFY_REFERRAL_ADDRESS = '0x4ABa01FB8E1f6BFE80c56Deb367f19F35Df0f4aE'; // TODO
+/** OP treasury safe */
+const BEEFY_REFERRAL_ADDRESS = '0x4ABa01FB8E1f6BFE80c56Deb367f19F35Df0f4aE';
 
 /**
  * @see https://github.com/divvi-xyz/divvi-referral-sdk/blob/137a16d7f8fadc11431917f8a6d78439d1c6dbf9/src/index.ts#L49
