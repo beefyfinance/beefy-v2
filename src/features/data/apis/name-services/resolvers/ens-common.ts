@@ -102,13 +102,7 @@ export function makeEnsResolver<TChain extends ChainId>(
     const rootReverseDomain = getReverseDomain(chainId);
     const reverseDomain = `${address.slice(2).toLowerCase()}.${rootReverseDomain}`;
     const reverseHash = hashDomain(reverseDomain);
-    console.log({
-      address,
-      chainId,
-      rootReverseDomain,
-      reverseDomain,
-      reverseHash,
-    });
+
     const resolverAddress = await fetchResolverAddress(reverseHash, chainId);
     if (!resolverAddress || resolverAddress === ZERO_ADDRESS) {
       return undefined;
