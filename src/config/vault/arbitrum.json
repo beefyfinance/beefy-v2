@@ -498,7 +498,7 @@
   },
   {
     "id": "compound-arbitrum-usdt",
-    "name": "USDT",
+    "name": "USD₮0",
     "type": "standard",
     "token": "USDT",
     "tokenAddress": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
@@ -1871,7 +1871,7 @@
   },
   {
     "id": "mim-arb-usdt",
-    "name": "MIM-USDT",
+    "name": "MIM-USD₮0",
     "type": "standard",
     "token": "MagicLP",
     "tokenAddress": "0x236b9eE6F185Dc8B70d8bD3649F40ec37688C1Ab",
@@ -1895,7 +1895,7 @@
   },
   {
     "id": "sushi-cow-arb-usdc-usdt-vault",
-    "name": "USDC-USDT",
+    "name": "USDC-USD₮0",
     "type": "standard",
     "token": "USDC-USDT",
     "tokenAddress": "0x72De2f1F9c2d8Ffd001a42C3121d6B4455738Da9",
@@ -1924,7 +1924,7 @@
   },
   {
     "id": "sushi-cow-arb-usdc-usdt-rp",
-    "name": "USDC-USDT Reward Pool",
+    "name": "USDC-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowSushiArbUSDC-USDT",
@@ -1955,7 +1955,7 @@
   },
   {
     "id": "sushi-cow-arb-usdc-usdt",
-    "name": "USDC-USDT",
+    "name": "USDC-USD₮0",
     "type": "cowcentrated",
     "token": "USDC-USDT",
     "tokenAddress": "0xD1E1Ac29B31B35646EaBD77163E212b76fE3b6A2",
@@ -2420,7 +2420,7 @@
   },
   {
     "id": "uniswap-cow-arb-usd+-usdt-vault",
-    "name": "USD+-USDT",
+    "name": "USD+-USD₮0",
     "type": "standard",
     "token": "USD+-USDT",
     "tokenAddress": "0xf22Aa165a474f5108Dee823abF444737d15e61C6",
@@ -2449,7 +2449,7 @@
   },
   {
     "id": "uniswap-cow-arb-usd+-usdt-rp",
-    "name": "USD+-USDT Reward Pool",
+    "name": "USD+-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapArbUSD+-USDT",
@@ -2479,7 +2479,7 @@
   },
   {
     "id": "uniswap-cow-arb-usd+-usdt",
-    "name": "USD+-USDT",
+    "name": "USD+-USD₮0",
     "type": "cowcentrated",
     "token": "USD+-USDT",
     "tokenAddress": "0x67ab7DC903A10838a0de8861dfDFF3287cF98e5c",
@@ -3933,7 +3933,7 @@
   },
   {
     "id": "pancake-cow-arb-usdc-usdt-vault",
-    "name": "USDC-USDT",
+    "name": "USDC-USD₮0",
     "type": "standard",
     "token": "USDC-USDT",
     "tokenAddress": "0x784a14a4034e490efeff1638dC30Ea5bA440156F",
@@ -3962,7 +3962,7 @@
   },
   {
     "id": "pancake-cow-arb-usdc-usdt-rp",
-    "name": "USDC-USDT Reward Pool",
+    "name": "USDC-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowPancakeUSDC-USDT",
@@ -3996,7 +3996,7 @@
   },
   {
     "id": "pancake-cow-arb-usdc-usdt",
-    "name": "USDC-USDT",
+    "name": "USDC-USD₮0",
     "type": "cowcentrated",
     "token": "USDC-USDT Cake",
     "tokenAddress": "0x7e928afb59f5dE9D2f4d162f754C6eB40c88aA8E",
@@ -4121,7 +4121,7 @@
   },
   {
     "id": "pancake-cow-arb-weth-usdt-500-vault",
-    "name": "WETH-USDT",
+    "name": "WETH-USD₮0",
     "type": "standard",
     "token": "WETH-USDT",
     "tokenAddress": "0x0481ad5b536139472af5ce692330dbF00bbd8672",
@@ -4150,7 +4150,7 @@
   },
   {
     "id": "pancake-cow-arb-weth-usdt-500-rp",
-    "name": "WETH-USDT Reward Pool",
+    "name": "WETH-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowPancakeWETH-USDT",
@@ -4184,7 +4184,7 @@
   },
   {
     "id": "pancake-cow-arb-weth-usdt-500",
-    "name": "WETH-USDT",
+    "name": "WETH-USD₮0",
     "type": "cowcentrated",
     "token": "WETH-USDT Cake",
     "tokenAddress": "0x0BaCc7a9717e70EA0DA5Ac075889Bd87d4C81197",
@@ -5575,7 +5575,7 @@
   },
   {
     "id": "uniswap-cow-arb-usdc-usdt-vault",
-    "name": "USDC-USDT",
+    "name": "USDC-USD₮0",
     "type": "standard",
     "token": "USDC-USDT",
     "tokenAddress": "0xFBebeDa38450bBf12aFe5B64df9aC507380C0Cca",
@@ -5722,7 +5722,7 @@
   },
   {
     "id": "uniswap-cow-arb-uni-usdt-vault",
-    "name": "UNI-USDT",
+    "name": "UNI-USD₮0",
     "type": "standard",
     "token": "UNI-USDT",
     "tokenAddress": "0xA2EaE1B5b33FD14Ad54bA53fF3799678a84552a4",
@@ -5809,7 +5809,7 @@
   },
   {
     "id": "uniswap-cow-arb-link-usdt-vault",
-    "name": "LINK-USDT",
+    "name": "LINK-USD₮0",
     "type": "standard",
     "token": "LINK-USDT",
     "tokenAddress": "0x13CAF44396293d99F157fe85E0Fc395AcfBA2eF2",
@@ -5870,7 +5870,7 @@
   },
   {
     "id": "uniswap-cow-arb-frax-usdt-vault",
-    "name": "FRAX-USDT",
+    "name": "FRAX-USD₮0",
     "type": "standard",
     "token": "FRAX-USDT",
     "tokenAddress": "0x92058bF6685A73D96c3919a8431fC3f4E348B0af",
@@ -7601,7 +7601,7 @@
   },
   {
     "id": "pancake-cow-arb-weth-usdt-rp",
-    "name": "WETH-USDT Reward Pool",
+    "name": "WETH-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowPancakeArbWETH-USDT",
@@ -7777,7 +7777,7 @@
   },
   {
     "id": "camelot-usdc-usdt-rp",
-    "name": "USDC-USDT Reward Pool",
+    "name": "USDC-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowCamelotUSDC-USDT",
@@ -8060,7 +8060,7 @@
   },
   {
     "id": "camelot-weth-usdt-rp",
-    "name": "USDT-WETH Reward Pool",
+    "name": "USD₮0-WETH Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowCamelotUSDT-WETH",
@@ -8310,7 +8310,7 @@
   },
   {
     "id": "uniswap-cow-arb-zro-usdt-rp",
-    "name": "ZRO-USDT Reward Pool",
+    "name": "ZRO-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapArbZRO-USDT",
@@ -8637,7 +8637,7 @@
   },
   {
     "id": "uniswap-cow-arb-uni-usdt-rp",
-    "name": "UNI-USDT Reward Pool",
+    "name": "UNI-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapArbUNI-USDT",
@@ -8756,7 +8756,7 @@
   },
   {
     "id": "uniswap-cow-arb-link-usdt-rp",
-    "name": "LINK-USDT Reward Pool",
+    "name": "LINK-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapArbLINK-USDT",
@@ -8878,7 +8878,7 @@
   },
   {
     "id": "uniswap-cow-arb-usdc-usdt-rp",
-    "name": "USDC-USDT Reward Pool",
+    "name": "USDC-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapArbUSDC-USDT",
@@ -8908,7 +8908,7 @@
   },
   {
     "id": "uniswap-cow-arb-frax-usdt-rp",
-    "name": "FRAX-USDT Reward Pool",
+    "name": "FRAX-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapArbFRAX-USDT",
@@ -8994,7 +8994,7 @@
   },
   {
     "id": "uniswap-cow-arb-arb-usdt-rp",
-    "name": "ARB-USDT Reward Pool",
+    "name": "ARB-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapArbARB-USDT",
@@ -9247,7 +9247,7 @@
   },
   {
     "id": "uniswap-cow-arb-weth-usdt-rp",
-    "name": "USDT-WETH Reward Pool",
+    "name": "USD₮0-WETH Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapArbWETH-USDT",
@@ -9301,7 +9301,7 @@
   },
   {
     "id": "uniswap-cow-arb-wbtc-usdt-rp",
-    "name": "WBTC-USDT Reward Pool",
+    "name": "WBTC-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapArbWBTC-USDT",
@@ -9899,7 +9899,7 @@
   },
   {
     "id": "pancake-cow-arb-weth-usdt",
-    "name": "WETH-USDT",
+    "name": "WETH-USD₮0",
     "type": "cowcentrated",
     "token": "WETH-USDT",
     "tokenAddress": "0x389938CF14Be379217570D8e4619E51fBDafaa21",
@@ -10338,7 +10338,7 @@
   },
   {
     "id": "camelot-usdc-usdt",
-    "name": "USDC-USDT",
+    "name": "USDC-USD₮0",
     "type": "cowcentrated",
     "token": "USDC-USDT",
     "tokenAddress": "0xa17aFCAb059F3C6751F5B64347b5a503C3291868",
@@ -10762,7 +10762,7 @@
   },
   {
     "id": "camelot-weth-usdt",
-    "name": "USDT-WETH",
+    "name": "USD₮0-WETH",
     "type": "cowcentrated",
     "token": "USDT-WETH",
     "tokenAddress": "0x7CcCBA38E2D959fe135e79AEBB57CCb27B128358",
@@ -11072,7 +11072,7 @@
   },
   {
     "id": "uniswap-cow-arb-zro-usdt",
-    "name": "ZRO-USDT",
+    "name": "ZRO-USD₮0",
     "type": "cowcentrated",
     "token": "ZRO-USDT",
     "tokenAddress": "0xc868f85196fACFBBc08B44975f83788Dd922E482",
@@ -11462,7 +11462,7 @@
   },
   {
     "id": "uniswap-cow-arb-uni-usdt",
-    "name": "UNI-USDT",
+    "name": "UNI-USD₮0",
     "type": "cowcentrated",
     "token": "UNI-USDT",
     "tokenAddress": "0xD97c8EE1C1e47f50A66E69d5aD155f882E38b0e5",
@@ -11588,7 +11588,7 @@
   },
   {
     "id": "uniswap-cow-arb-link-usdt",
-    "name": "LINK-USDT",
+    "name": "LINK-USD₮0",
     "type": "cowcentrated",
     "token": "LINK-USDT",
     "tokenAddress": "0x32A5746bA6826828716Cc1A394bC33301eBC7656",
@@ -11717,7 +11717,7 @@
   },
   {
     "id": "uniswap-cow-arb-usdc-usdt",
-    "name": "USDC-USDT",
+    "name": "USDC-USD₮0",
     "type": "cowcentrated",
     "token": "USDC-USDT",
     "tokenAddress": "0xbE3aD6a5669Dc0B8b12FeBC03608860C31E2eef6",
@@ -11748,7 +11748,7 @@
   },
   {
     "id": "uniswap-cow-arb-frax-usdt",
-    "name": "FRAX-USDT",
+    "name": "FRAX-USD₮0",
     "type": "cowcentrated",
     "token": "FRAX-USDT",
     "tokenAddress": "0x1EbCF8831b93450eA81b0619c5e05b98751c8322",
@@ -11872,7 +11872,7 @@
   },
   {
     "id": "uniswap-cow-arb-arb-usdt",
-    "name": "ARB-USDT",
+    "name": "ARB-USD₮0",
     "type": "cowcentrated",
     "token": "ARB-USDT",
     "tokenAddress": "0x97bca422Ec0Ee4851F2110eA743C1cd0a14835a1",
@@ -12155,7 +12155,7 @@
   },
   {
     "id": "uniswap-cow-arb-weth-usdt",
-    "name": "USDT-WETH",
+    "name": "USD₮0-WETH",
     "type": "cowcentrated",
     "token": "USDT-WETH",
     "tokenAddress": "0x641C00A822e8b671738d32a431a4Fb6074E5c79d",
@@ -12217,7 +12217,7 @@
   },
   {
     "id": "uniswap-cow-arb-wbtc-usdt",
-    "name": "WBTC-USDT",
+    "name": "WBTC-USD₮0",
     "type": "cowcentrated",
     "token": "WBTC-USDT",
     "tokenAddress": "0x5969EFddE3cF5C0D9a88aE51E47d721096A97203",
@@ -12851,7 +12851,7 @@
   },
   {
     "id": "stargate-v2-arb-usdt",
-    "name": "USDT",
+    "name": "USD₮0",
     "type": "standard",
     "token": "USDT",
     "tokenAddress": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
@@ -14673,7 +14673,7 @@
   },
   {
     "id": "curve-arb-crvusd-usdt",
-    "name": "crvUSD/USDT",
+    "name": "crvUSD/USD₮0",
     "type": "standard",
     "token": "crvUSDT",
     "tokenAddress": "0x73aF1150F265419Ef8a5DB41908B700C32D49135",

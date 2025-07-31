@@ -119,17 +119,19 @@ function searchTextToFuzzyTokenMatchers(searchText: string) {
 
 export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchText: string) {
   // Empty text matches all
-  if (searchText.length === 0) {
+
+  const normalizedSearchText = searchText.toLowerCase();
+  if (normalizedSearchText.length === 0) {
     return true;
   }
 
   // Match if: search text is in vault name
-  if (vaultNameMatches(vault, searchText)) {
+  if (vaultNameMatches(vault, normalizedSearchText)) {
     return true;
   }
 
   // Split search text in to possible tokens
-  const fuzzySearchTokens = searchTextToFuzzyTokenMatchers(searchText);
+  const fuzzySearchTokens = searchTextToFuzzyTokenMatchers(normalizedSearchText);
 
   // No token names in search string
   if (fuzzySearchTokens.length === 0) {
@@ -138,9 +140,14 @@ export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, se
 
   // All tokens must match
   const tokenSymbols = selectVaultTokenSymbols(state, vault.id);
+
   return fuzzySearchTokens.every(token => {
     // In vault assets
-    if (tokenSymbols.some(symbol => symbol.match(token))) {
+    if (
+      tokenSymbols.some(
+        symbol => symbol.match(token) || symbol.toLowerCase().includes(normalizedSearchText)
+      )
+    ) {
       return true;
     }
 
