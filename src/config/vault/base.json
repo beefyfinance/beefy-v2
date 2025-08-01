@@ -1,5 +1,369 @@
 [
   {
+    "id": "aerodrome-cow-base-mamo-usdc-vault",
+    "name": "MAMO-USDC",
+    "type": "standard",
+    "token": "MAMO-USDC",
+    "tokenAddress": "0x7AFED8e73eF4D3dE91A06c33B5159B7a373bC6C5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x7C673F447137D50F379A053D744BC9ae2b26bADB",
+    "earnedToken": "mooCowAerodromeMAMO-USDC",
+    "earnedTokenAddress": "0x7C673F447137D50F379A053D744BC9ae2b26bADB",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-mamo-usdc",
+    "status": "active",
+    "createdAt": 1754049796,
+    "platformId": "aerodrome",
+    "assets": ["MAMO", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-mamo-usdc-rp",
+    "name": "MAMO-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeMAMO-USDC",
+    "tokenAddress": "0x7AFED8e73eF4D3dE91A06c33B5159B7a373bC6C5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x98387f5cE804d0c50fD7A6397Aa1B7042bbd58cd",
+    "earnedToken": "rCowAerodromeMAMO-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x98387f5cE804d0c50fD7A6397Aa1B7042bbd58cd"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-mamo-usdc",
+    "status": "active",
+    "createdAt": 1754049795,
+    "platformId": "aerodrome",
+    "assets": ["MAMO", "USDC"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-mamo-usdc",
+    "name": "MAMO-USDC",
+    "type": "cowcentrated",
+    "token": "MAMO-USDC aerodrome",
+    "tokenAddress": "0x678F431DA2aBb9B5726bbf5CCDbaEEBB60dA9813",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x7300B37DfdfAb110d83290A29DfB31B1740219fE",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0x7AFED8e73eF4D3dE91A06c33B5159B7a373bC6C5",
+    "earnedToken": "cowAerodromeMAMO-USDC",
+    "earnedTokenAddress": "0x7AFED8e73eF4D3dE91A06c33B5159B7a373bC6C5",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-mamo-usdc",
+    "status": "active",
+    "createdAt": 1754049795,
+    "platformId": "beefy",
+    "feeTier": "0.28",
+    "assets": ["MAMO", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-mamo-cbbtc-vault",
+    "name": "MAMO-cbBTC",
+    "type": "standard",
+    "token": "MAMO-cbBTC",
+    "tokenAddress": "0xAcdD5f6678B2B31924B962EE26FC0B0619f18bE7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x3b892fBBa7FEf2E74d941Be207FB3AE1C3f45848",
+    "earnedToken": "mooCowAerodromeMAMO-cbBTC",
+    "earnedTokenAddress": "0x3b892fBBa7FEf2E74d941Be207FB3AE1C3f45848",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-mamo-cbbtc",
+    "status": "active",
+    "createdAt": 1754049796,
+    "platformId": "aerodrome",
+    "assets": ["MAMO", "cbBTC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-mamo-cbbtc-rp",
+    "name": "MAMO-cbBTC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeMAMO-cbBTC",
+    "tokenAddress": "0xAcdD5f6678B2B31924B962EE26FC0B0619f18bE7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x17E0efb55d7F7AcBF184A93247671B7D85658f61",
+    "earnedToken": "rCowAerodromeMAMO-cbBTC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x17E0efb55d7F7AcBF184A93247671B7D85658f61"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-mamo-cbbtc",
+    "status": "active",
+    "createdAt": 1754049795,
+    "platformId": "aerodrome",
+    "assets": ["MAMO", "cbBTC"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-mamo-cbbtc",
+    "name": "MAMO-cbBTC",
+    "type": "cowcentrated",
+    "token": "MAMO-cbBTC aerodrome",
+    "tokenAddress": "0xE2B3aA806e56603a244bFc111c9474F7DeDD03db",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x7300B37DfdfAb110d83290A29DfB31B1740219fE",
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    ],
+    "earnContractAddress": "0xAcdD5f6678B2B31924B962EE26FC0B0619f18bE7",
+    "earnedToken": "cowAerodromeMAMO-cbBTC",
+    "earnedTokenAddress": "0xAcdD5f6678B2B31924B962EE26FC0B0619f18bE7",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-mamo-cbbtc",
+    "status": "active",
+    "createdAt": 1754049795,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["MAMO", "cbBTC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-virtual-mamo-vault",
+    "name": "VIRTUAL-MAMO",
+    "type": "standard",
+    "token": "VIRTUAL-MAMO",
+    "tokenAddress": "0xFa70946E468C1F0981495F3c57Af5825b8c087Ae",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x8B40482552E84369e1854F531598F1361336a44A",
+    "earnedToken": "mooCowAerodromeVIRTUAL-MAMO",
+    "earnedTokenAddress": "0x8B40482552E84369e1854F531598F1361336a44A",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-virtual-mamo",
+    "status": "active",
+    "createdAt": 1754049796,
+    "platformId": "aerodrome",
+    "assets": ["VIRTUAL", "MAMO"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-virtual-mamo-rp",
+    "name": "VIRTUAL-MAMO Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeVIRTUAL-MAMO",
+    "tokenAddress": "0xFa70946E468C1F0981495F3c57Af5825b8c087Ae",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x5e5fEA76758E984100c464DF4775Eb323CffF8ED",
+    "earnedToken": "rCowAerodromeVIRTUAL-MAMO",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x5e5fEA76758E984100c464DF4775Eb323CffF8ED"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-virtual-mamo",
+    "status": "active",
+    "createdAt": 1754049795,
+    "platformId": "aerodrome",
+    "assets": ["VIRTUAL", "MAMO"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-virtual-mamo",
+    "name": "VIRTUAL-MAMO",
+    "type": "cowcentrated",
+    "token": "VIRTUAL-MAMO aerodrome",
+    "tokenAddress": "0x4A021bA3ab1F0121e7DF76f345C547db86Cb3468",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b",
+      "0x7300B37DfdfAb110d83290A29DfB31B1740219fE"
+    ],
+    "earnContractAddress": "0xFa70946E468C1F0981495F3c57Af5825b8c087Ae",
+    "earnedToken": "cowAerodromeVIRTUAL-MAMO",
+    "earnedTokenAddress": "0xFa70946E468C1F0981495F3c57Af5825b8c087Ae",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-virtual-mamo",
+    "status": "active",
+    "createdAt": 1754049795,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["VIRTUAL", "MAMO"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-virtual-weth-vault",
+    "name": "VIRTUAL-WETH",
+    "type": "standard",
+    "token": "VIRTUAL-WETH",
+    "tokenAddress": "0xd27b3C4f44256f36e25cc394484F530712F367a5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xB4b395D5ee3516f24Ac06153C72076758AeE7f00",
+    "earnedToken": "mooCowAerodromeVIRTUAL-WETH",
+    "earnedTokenAddress": "0xB4b395D5ee3516f24Ac06153C72076758AeE7f00",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-virtual-weth",
+    "status": "active",
+    "createdAt": 1754049796,
+    "platformId": "aerodrome",
+    "assets": ["VIRTUAL", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-virtual-weth-rp",
+    "name": "VIRTUAL-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeVIRTUAL-WETH",
+    "tokenAddress": "0xd27b3C4f44256f36e25cc394484F530712F367a5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x458D26c7D2E76F2398Da4424ff299c3969f5aB6a",
+    "earnedToken": "rCowAerodromeVIRTUAL-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x458D26c7D2E76F2398Da4424ff299c3969f5aB6a"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-virtual-weth",
+    "status": "active",
+    "createdAt": 1754049795,
+    "platformId": "aerodrome",
+    "assets": ["VIRTUAL", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-virtual-weth",
+    "name": "VIRTUAL-WETH",
+    "type": "cowcentrated",
+    "token": "VIRTUAL-WETH aerodrome",
+    "tokenAddress": "0xC200F21EfE67c7F41B81A854c26F9cdA80593065",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "earnContractAddress": "0xd27b3C4f44256f36e25cc394484F530712F367a5",
+    "earnedToken": "cowAerodromeVIRTUAL-WETH",
+    "earnedTokenAddress": "0xd27b3C4f44256f36e25cc394484F530712F367a5",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-virtual-weth",
+    "status": "active",
+    "createdAt": 1754049795,
+    "platformId": "beefy",
+    "feeTier": "0.06",
+    "assets": ["VIRTUAL", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-weth-aave-vault",
     "name": "AAVE-WETH",
     "type": "standard",
