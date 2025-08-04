@@ -37,7 +37,12 @@ async function vaultData(chain: AppChainId, vaultAddress: Address, id: string): 
 
   let provider =
     mooToken.startsWith('mooCurveLend') ? 'curve-lend'
-    : mooToken.startsWith('mooCurve') || mooToken.startsWith('mooConvex') ? 'curve'
+    : (
+      mooToken.startsWith('mooCurve') ||
+      mooToken.startsWith('mooConvex') ||
+      mooToken.startsWith('mooStakeDao')
+    ) ?
+      'curve'
     : mooToken.startsWith('mooCake') ? 'pancakeswap'
     : mooToken.startsWith('mooThena') ? 'thena'
     : mooToken.startsWith('mooSwapX') ? 'swapx'
@@ -45,6 +50,7 @@ async function vaultData(chain: AppChainId, vaultAddress: Address, id: string): 
     : id.substring(0, id.indexOf('-'));
   let platform =
     mooToken.startsWith('mooConvex') ? 'convex'
+    : mooToken.startsWith('mooStakeDao') ? 'stakedao'
     : provider === 'swapx' ? 'ichi'
     : mooToken.startsWith('mooBeraPaw') ? 'berapaw'
     : provider === 'kodiak' ? 'infrared'
@@ -72,6 +78,7 @@ async function vaultData(chain: AppChainId, vaultAddress: Address, id: string): 
   }
   let oracleId = id;
   if (id.startsWith('pendle-eqb')) oracleId = id.replace('pendle-eqb', 'pendle');
+  if (id.startsWith('stakedao')) oracleId = id.replace('stakedao-', 'curve-');
 
   const addLiquidityUrl =
     provider === 'pendle' ? `https://app.pendle.finance/trade/pools/${want}/zap/in?chain=${chain}`
