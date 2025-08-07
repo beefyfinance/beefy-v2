@@ -1501,5 +1501,15 @@
     "website": "https://blackhole.xyz/",
     "documentation": "https://docs.blackhole.xyz/",
     "description": "Blackhole is a next-generation decentralized exchange (DEX) built on the Avalanche blockchain. It serves as a specialized liquidity hub designed to support emerging blockchain projects and empower community participation in the growth of Web3 ecosystems."
+  },
+  {
+    "id": "etherex",
+    "name": "Etherex",
+    "website": "https://www.etherex.finance/",
+    "twitter": "Etherex",
+    "documentation": "https://docs.etherex.finance/",
+    "description": "Etherex is a concentrated liquidity layer and exchange built on the Linea network, powered by the latest metaDEX x(3,3) methodology—a more fluid and accessible version of the popular ve(3,3) model.",
+    "type": "amm",
+    "risks": ["NO_TIMELOCK"]
   }
 ]
