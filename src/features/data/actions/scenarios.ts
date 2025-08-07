@@ -27,6 +27,7 @@ import {
   fetchZapConfigsAction,
   fetchZapSwapAggregatorsAction,
 } from './zap.ts';
+import { initCampaignBeGems } from './campaigns/begems.ts';
 
 declare const window: {
   __manual_poll?: () => unknown;
@@ -220,6 +221,9 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
     }, 60 * 1000 /* every 60s */);
     pollStopFns.push(pollStop);
   }
+
+  // fetch beGems data
+  dispatch(initCampaignBeGems());
 }
 
 export function manualPoll(): BeefyThunk {
