@@ -16,7 +16,7 @@ export const BannerBeGems = memo(function BannerBeGems({ address }: { address?: 
       text={
         <>
           {`Sonic Season 1 beGEMS redemptions are now open! `}
-          <InternalLink to="/be-gems">Redeem your tokens for S</InternalLink>{' '}
+          <InternalLink to="/campaigns/begems">Redeem your tokens for S</InternalLink>{' '}
           {'before 24 October 2025.'}
         </>
       }
