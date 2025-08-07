@@ -19,28 +19,18 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
 
   return (
     <Holder ref={anchorEl}>
-      <Icons>
-        <NetworkStatus
-          anchorEl={anchorEl}
-          isOpen={open}
-          onOpen={handleOpenStatus}
-          onClose={handleClose}
-        />
-      </Icons>
+      <NetworkStatus
+        anchorEl={anchorEl}
+        isOpen={open}
+        onOpen={handleOpenStatus}
+        onClose={handleClose}
+      />
+
       <Suspense>
         <WalletContainer />
       </Suspense>
     </Holder>
   );
-});
-
-const Icons = styled('div', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    paddingInline: '8px',
-    gap: '8px',
-  },
 });
 
 const Holder = styled('div', {

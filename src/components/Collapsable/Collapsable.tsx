@@ -186,4 +186,6 @@ const Header = memo(function Header({
 
 const iconStyles = css({
   fill: 'text.middle',
+  height: '20px',
+  width: '20px',
 });

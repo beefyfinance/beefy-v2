@@ -963,16 +963,16 @@ const config = buildConfig(
       },
       dark: {
         base: {
-          color: '{colors.text.middle}',
-          background: '{colors.purpleDarkest}',
+          color: '{colors.text.dark}',
+          background: '{colors.eclipseElixir}',
           border: 'none',
         },
         hover: {
-          background: '{colors.purpleDarkest}',
+          background: '{colors.eclipseElixir}',
           color: '{colors.text.middle}',
         },
         active: {
-          background: '{colors.purpleDarkest}',
+          background: '{colors.eclipseElixir}',
           color: '{colors.text.light}',
         },
       },

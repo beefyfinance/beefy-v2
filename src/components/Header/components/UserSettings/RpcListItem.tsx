@@ -4,8 +4,10 @@ import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
+import ForwardArrowIcon from '../../../../images/icons/forward-arrow.svg?react';
 
 import Edit from '../../../../images/icons/edit_pen.svg?react';
+import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
 
 export const ChainRpcItem = memo(function ChainRpcItem({
   error = false,
@@ -18,6 +20,7 @@ export const ChainRpcItem = memo(function ChainRpcItem({
 }) {
   const [isHover, setIsHover] = useState(false);
   const chain = useAppSelector(state => selectChainById(state, id));
+  const isMobile = useBreakpoint({ to: 'xs' });
 
   return (
     <Container
@@ -26,8 +29,13 @@ export const ChainRpcItem = memo(function ChainRpcItem({
       onClick={() => onSelect(id)}
     >
       <NameContainer>
-        {chain.name}
-        {error && (
+        <Name>
+          {isMobile ?
+            <ChainIcon size={20} chainId={id} />
+          : null}
+          {chain.name}
+        </Name>
+        {error && !isHover && (
           <>
             <CircleWarning />
             <ErrorContainer>connection failed </ErrorContainer>
@@ -41,6 +49,8 @@ export const ChainRpcItem = memo(function ChainRpcItem({
             <Edit />
           </EditIconContainer>
         </EditContainer>
+      : isMobile ?
+        <ForwardArrowIcon />
       : <ChainIcon size={20} chainId={id} />}
     </Container>
   );
@@ -62,6 +72,10 @@ const Container = styled('div', {
     _hover: {
       cursor: 'pointer',
       backgroundColor: 'background.button',
+      '&:last-child': {
+        borderBottomLeftRadius: '8px',
+        borderBottomRightRadius: '8px',
+      },
     },
   },
 });
@@ -86,6 +100,15 @@ const EditIconContainer = styled('div', {
     height: '24px',
     borderRadius: '100%',
     backgroundColor: 'darkBlue.80',
+  },
+});
+
+const Name = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    color: 'inherit',
   },
 });
 

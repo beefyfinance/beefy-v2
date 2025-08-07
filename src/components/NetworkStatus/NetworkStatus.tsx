@@ -30,6 +30,7 @@ import { ScrollableDrawer } from '../ScrollableDrawer/ScrollableDrawer.tsx';
 import { useBreakpoint } from '../MediaQueries/useBreakpoint.ts';
 import { css } from '@repo/styles/css';
 import { ChainRpcReset } from '../Header/components/UserSettings/RpcEdit.tsx';
+import type { DropdownOptions } from '../Dropdown/types.ts';
 
 export const NetworkStatus = memo(function NetworkStatus({
   anchorEl,
@@ -110,6 +111,20 @@ export const NetworkStatus = memo(function NetworkStatus({
     }
   }, [rpcErrors, beefyErrors, t]);
 
+  const openOnHoverProps: DropdownOptions = useMemo(() => {
+    if (!isMobile) {
+      return {
+        openOnHover: true,
+        openOnClick: false,
+        hoverOpenDelay: 0,
+        hoverCloseDelay: 100,
+        closeOnClickAway: false,
+      };
+    }
+
+    return {};
+  }, [isMobile]);
+
   return (
     <DropdownProvider
       open={open}
@@ -119,6 +134,7 @@ export const NetworkStatus = memo(function NetworkStatus({
       reference={anchorEl}
       layer={1}
       closeOnClickAway={!isMobile}
+      {...openOnHoverProps}
     >
       <DropdownButton onClick={handleToggle}>
         <PulseHighlight variant={variant} state={hidePulse ? 'stopped' : 'playing'} />
@@ -133,7 +149,7 @@ export const NetworkStatus = memo(function NetworkStatus({
         : <ScrollableDrawer
             layoutClass={css.raw({
               backgroundColor: 'background.content',
-              height: '90dvh',
+              height: 'calc(100dvh - 64px)',
               borderTopRadius: '12px',
             })}
             mainClass={css.raw({
@@ -171,7 +187,7 @@ export const NetworkStatus = memo(function NetworkStatus({
                 <div>{t('RpcModal-EmptyList')}</div>
                 {editChainId ?
                   <ActionButtons>
-                    <ChainRpcReset value={editChainId} />
+                    <ChainRpcReset onBack={() => setEditChainId(null)} value={editChainId} />
                     <Button
                       variant="dark"
                       fullWidth={true}
@@ -268,12 +284,20 @@ const PopOutContent = function PopOutContent({
           </>
         }
       </Chains>
-      <Button variant="transparent" onClick={() => setIsPopupOpen(false)}>
+      <ArrowExpandButton variant="transparent" onClick={() => setIsPopupOpen(false)}>
         <ArrowExpand />
-      </Button>
+      </ArrowExpandButton>
     </PopOutContainer>
   );
 };
+
+const ArrowExpandButton = styled(Button, {
+  base: {
+    color: 'text.dark',
+    paddingBlock: '0px',
+    paddingInline: '0px',
+  },
+});
 
 const Chains = styled('div', {
   base: {
@@ -297,7 +321,6 @@ const PopOutContainer = styled('div', {
 
 const TitleContainer = styled('div', {
   base: {
-    textStyle: 'body.medium',
     color: 'text.light',
     display: 'flex',
     alignItems: 'center',
@@ -317,10 +340,7 @@ const Title = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     color: 'text.light',
-    textStyle: 'body',
-    lg: {
-      textStyle: 'body.medium',
-    },
+    textStyle: 'body.md',
   },
   variants: {
     variant: {
@@ -366,12 +386,12 @@ const DropdownButton = styled(DropdownTrigger.button, {
     height: '40px',
     border: 'none',
     borderRadius: '8px',
-    columnGap: '8px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
     backgroundColor: 'transparent',
+    paddingInline: '12px',
   },
 });
 

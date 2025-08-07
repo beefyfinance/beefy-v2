@@ -18,6 +18,10 @@ export const BifiPricesDesktop = memo(function BifiPricesDesktop() {
       placement="bottom-start"
       variant="dark"
       layer={1}
+      openOnHover={true}
+      openOnClick={false}
+      hoverOpenDelay={0}
+      hoverCloseDelay={100}
     >
       <Container>
         <PricesButtonDesktop isOpen={open} />

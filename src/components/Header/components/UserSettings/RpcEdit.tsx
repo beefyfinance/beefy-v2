@@ -21,7 +21,6 @@ import { useAppDispatch, useAppSelector } from '../../../../features/data/store/
 import { Button } from '../../../Button/Button.tsx';
 import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
 import { BaseInput } from '../../../Form/Input/BaseInput.tsx';
-import type { ItemInnerProps } from '../../../SearchableList/Item.tsx';
 import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
 
 const URL_REGX = /^https:\/\//;
@@ -106,7 +105,7 @@ export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) 
             {t('RpcModal-Save')}
           </Button>
         </ActionButtons>
-        {!isMobile && <ChainRpcReset value={chainId} />}
+        {!isMobile && <ChainRpcReset onBack={onBack} value={chainId} />}
       </Footer>
     </>
   );
@@ -114,7 +113,11 @@ export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) 
 
 export const ChainRpcReset = memo(function ChainRpcReset({
   value: chain,
-}: ItemInnerProps<ChainEntity['id']>) {
+  onBack,
+}: {
+  onBack: () => void;
+  value: ChainEntity['id'];
+}) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const activeChainRpc = useAppSelector(state => selectActiveRpcUrlForChain(state, chain));
@@ -125,8 +128,9 @@ export const ChainRpcReset = memo(function ChainRpcReset({
     e => {
       e.stopPropagation();
       dispatch(restoreDefaultRpcsOnSingleChain(chainEntity));
+      onBack();
     },
-    [dispatch, chainEntity]
+    [dispatch, chainEntity, onBack]
   );
 
   const rpcsAreEqual = useMemo(

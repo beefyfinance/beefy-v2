@@ -3,6 +3,7 @@ import { styled } from '@repo/styles/jsx';
 
 const actionRecipe = cva({
   base: {
+    textStyle: 'body',
     display: 'flex',
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
