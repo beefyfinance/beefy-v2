@@ -1500,7 +1500,6 @@
     "type": "amm",
     "website": "https://blackhole.xyz/",
     "documentation": "https://docs.blackhole.xyz/",
-    "description": "Blackhole is a next-generation decentralized exchange (DEX) built on the Avalanche blockchain. It serves as a specialized liquidity hub designed to support emerging blockchain projects and empower community participation in the growth of Web3 ecosystems.",
-    "risks": ["NO_TIMELOCK"]
+    "description": "Blackhole is a next-generation decentralized exchange (DEX) built on the Avalanche blockchain. It serves as a specialized liquidity hub designed to support emerging blockchain projects and empower community participation in the growth of Web3 ecosystems."
   }
 ]
