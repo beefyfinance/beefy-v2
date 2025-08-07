@@ -652,6 +652,7 @@ export const config = {
   mode: {
     name: 'Mode',
     chainId: 34443,
+    eol: 1754382440,
     rpc: ['https://mainnet.mode.network'],
     explorerUrl: 'https://explorer.mode.network',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
