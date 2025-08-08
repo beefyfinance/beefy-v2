@@ -23,6 +23,7 @@ import { UserExposure } from './components/UserExposure/UserExposure.tsx';
 import { UserVaults } from './components/UserVaults/UserVaults.tsx';
 import { useInitDashboard } from './hooks.ts';
 import { styles } from './styles.ts';
+import { BeGemsBanner } from '../../components/Banners/BeGemsBanner/BeGemsBanner.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -125,6 +126,7 @@ const DashboardForAddress = memo(function DashboardForAddress({
     <DashboardContainer>
       <DashboardMeta wallet={addressLabel || address} />
       <UnstakedClmBannerDashboard address={address} />
+      <BeGemsBanner address={address} dashboard={true} />
       <Header address={address} addressLabel={addressLabel}>
         {loading ?
           <DepositSummaryPlaceholder />

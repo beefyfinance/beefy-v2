@@ -44,7 +44,7 @@ export const selectIsBeGemsCampaignAvailable = createGlobalDataSelector(
 );
 export const selectHasBeGemsCampaignDispatchedRecently = createGlobalDataSelector(
   'beGemsCampaign',
-  createHasLoaderDispatchedRecentlyEvaluator(15),
+  createHasLoaderDispatchedRecentlyEvaluator(300),
   5
 );
 
