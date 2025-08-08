@@ -3,8 +3,31 @@ import { TokenPrice } from './TokenPrice.tsx';
 import { styled } from '@repo/styles/jsx';
 import { tokens } from './config.ts';
 import { DropdownTrigger } from '../../../Dropdown/DropdownTrigger.tsx';
+import ArrangeArrowIcon from '../../../../images/icons/arrange-arrow.svg?react';
+import { Button } from '../../../Button/Button.tsx';
 
-export const PricesButton = memo(function PricesButton() {
+export const PricesButtonDesktop = memo(function PricesButton({ isOpen }: { isOpen: boolean }) {
+  return (
+    <Trigger>
+      <Price />
+      <ArrowIcon isOpen={isOpen} />
+    </Trigger>
+  );
+});
+
+export const PricesButtonMobile = memo(function PricesButtonMobile({
+  setOpen,
+}: {
+  setOpen: (setter: boolean | ((open: boolean) => boolean)) => void;
+}) {
+  return (
+    <MobileTrigger variant="transparent" borderless={true} onClick={() => setOpen(true)}>
+      <Price />
+    </MobileTrigger>
+  );
+});
+
+const Price = memo(function Price() {
   const [current, setCurrent] = useState(0);
   const next = current < tokens.length - 1 ? current + 1 : 0;
 
@@ -17,7 +40,7 @@ export const PricesButton = memo(function PricesButton() {
   }, [setCurrent]);
 
   return (
-    <Trigger>
+    <>
       {tokens.map((token, i) => (
         <TokenPrice
           key={i}
@@ -30,8 +53,26 @@ export const PricesButton = memo(function PricesButton() {
           }
         />
       ))}
-    </Trigger>
+    </>
   );
+});
+
+const ArrowIcon = styled(ArrangeArrowIcon, {
+  base: {
+    transform: 'rotate(0deg)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    right: '12px',
+  },
+  variants: {
+    isOpen: {
+      true: {
+        transform: 'rotate(180deg)',
+      },
+    },
+  },
 });
 
 const Trigger = styled(
@@ -40,9 +81,14 @@ const Trigger = styled(
     base: {
       cursor: 'pointer',
       userSelect: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100px',
+      height: '40px',
+      paddingBlock: '8px',
+      paddingInline: '10px 12px',
       position: 'relative',
-      width: '68px',
-      height: '24px',
     },
   },
   {
@@ -51,3 +97,16 @@ const Trigger = styled(
     },
   }
 );
+
+const MobileTrigger = styled(Button, {
+  base: {
+    cursor: 'pointer',
+    userSelect: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: 'none',
+    padding: '0',
+    position: 'relative',
+  },
+});

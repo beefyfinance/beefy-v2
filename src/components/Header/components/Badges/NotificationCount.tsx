@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { styled } from '@repo/styles/jsx';
+import { Count } from '../../../Count/Count.tsx';
 
 type NotificationCountProps = {
   count: number;
@@ -8,20 +9,14 @@ type NotificationCountProps = {
 export const NotificationCount = memo<NotificationCountProps>(function NotificationCount({
   count,
 }) {
-  return <Badge>{count}</Badge>;
+  return <Badge data-count={count} />;
 });
 
-const Badge = styled('div', {
+const Badge = styled(Count, {
   base: {
-    textStyle: 'body.sm',
-    backgroundColor: 'indicators.warning',
-    color: 'text.light',
-    pointerEvents: 'none',
     marginLeft: '6px',
-    borderRadius: '100%',
-    width: '20px',
-    height: '20px',
-    lineHeight: '20px',
-    textAlign: 'center',
+    lg: {
+      marginLeft: 'auto',
+    },
   },
 });

@@ -3,20 +3,30 @@ import { styled } from '@repo/styles/jsx';
 
 const actionRecipe = cva({
   base: {
+    textStyle: 'body',
     display: 'flex',
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
     padding: '4px',
     borderRadius: '4px',
     border: `none`,
-    color: 'text.light',
+    color: 'text.dark',
     textDecoration: 'none',
-    backgroundColor: 'background.border',
+    backgroundColor: 'background.content.dark',
     boxShadow: 'none',
     outline: 'none',
     cursor: 'pointer',
-    width: '32px',
-    height: '32px',
+    height: '28px',
+    width: '28px',
+  },
+  variants: {
+    link: {
+      true: {
+        color: 'text.black',
+        width: '62px',
+        backgroundColor: 'green.40',
+      },
+    },
   },
 });
 

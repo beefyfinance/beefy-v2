@@ -12,7 +12,9 @@ import { ConnectionStatus } from './components/ConnectionStatus/ConnectionStatus
 import { LogoLink } from './components/LogoLink/LogoLink.tsx';
 import { MainMenu } from './components/MainMenu/MainMenu.tsx';
 import { MobileMenu } from './components/MobileMenu/MobileMenu.tsx';
-import { RightMenu } from './components/RightMenu/RightMenu.tsx';
+import { NavLinkItem } from './components/NavItem/NavLinkItem.tsx';
+import BuyCryptoIcon from '../../images/icons/navigation/buy-crypto.svg?react';
+import { BifiPricesDesktop } from './components/Prices/Prices.tsx';
 
 export const Header = memo(function Header() {
   const dispatch = useAppDispatch();
@@ -39,11 +41,16 @@ export const Header = memo(function Header() {
           <MainMenu />
         </Visible>
       </Side>
-      <Side>
+      <Side spacing="sm">
         <Visible from="lg">
-          <RightMenu />
+          <NavLinkItem title={'Header-BuyCrypto'} url="/onramp" Icon={BuyCryptoIcon} />
         </Visible>
-        <ConnectionStatus />
+        <RightSide>
+          <Visible from="lg">
+            <BifiPricesDesktop />
+          </Visible>
+          <ConnectionStatus />
+        </RightSide>
         <Hidden from="lg">
           <MobileMenu />
         </Hidden>
@@ -73,6 +80,27 @@ const Side = styled('div', {
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
-    columnGap: '16px',
+  },
+  variants: {
+    spacing: {
+      sm: {
+        columnGap: '20px',
+      },
+      md: {
+        columnGap: '24px',
+      },
+    },
+  },
+  defaultVariants: {
+    spacing: 'md',
+  },
+});
+
+const RightSide = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    alignContent: 'center',
+    columnGap: '10px',
   },
 });

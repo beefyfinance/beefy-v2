@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.
 import { styled } from '@repo/styles/jsx';
 import ClearIcon from '../../../../../../images/icons/clear.svg?react';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
-import { Count } from '../ClearFiltersButton/ClearFiltersButton.tsx';
+import { Count } from '../../../../../../components/Count/Count.tsx';
 
 export const ExtendedFiltersButtonMobileFilters = memo(
   function ExtendedFiltersButtonMobileFilters() {
