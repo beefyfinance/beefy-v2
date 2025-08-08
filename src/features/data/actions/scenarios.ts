@@ -89,11 +89,14 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
     dispatch(fetchZapAmmsAction());
   });
 
-  // create the wallet instance as soon as we get the chain list
   setTimeout(() => {
     chainListPromise
       .then(() => {
+        // create the wallet instance as soon as we get the chain list
         dispatch(initWallet());
+        // fetch beGems data so we can show the claim time limit banner
+        // TODO remove after claims closed
+        dispatch(initCampaignBeGems());
       })
       .catch(console.error);
   });
@@ -221,9 +224,6 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
     }, 60 * 1000 /* every 60s */);
     pollStopFns.push(pollStop);
   }
-
-  // fetch beGems data
-  dispatch(initCampaignBeGems());
 }
 
 export function manualPoll(): BeefyThunk {

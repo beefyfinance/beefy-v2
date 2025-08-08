@@ -1,8 +1,10 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useState } from 'react';
-import { useAppSelector } from '../../data/store/hooks.ts';
+import { memo, useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../data/store/hooks.ts';
+import { initCampaignBeGems } from '../../data/actions/campaigns/begems.ts';
 import {
   selectBeGemsDefaultSeason,
+  selectHasBeGemsCampaignDispatchedRecently,
   selectIsBeGemsCampaignAvailable,
 } from '../../data/selectors/campaigns/begems.ts';
 import { Loading } from '../../home/components/Loading/Loading.tsx';
@@ -10,7 +12,15 @@ import { FrequentlyAskedQuestions } from './FrequentlyAskedQuestions.tsx';
 import { Seasons } from './Seasons.tsx';
 
 const BeGemsPageLoader = memo(() => {
+  const dispatch = useAppDispatch();
+  const loadingStarted = useAppSelector(selectHasBeGemsCampaignDispatchedRecently);
   const isAvailable = useAppSelector(selectIsBeGemsCampaignAvailable);
+
+  useEffect(() => {
+    if (!isAvailable && !loadingStarted) {
+      dispatch(initCampaignBeGems());
+    }
+  }, [dispatch, loadingStarted, isAvailable]);
 
   return isAvailable ? <BeGemsPage /> : <Loading />;
 });
