@@ -24,9 +24,16 @@ export const SeasonPointsLeaderboard = memo(function SeasonPointsLeaderboard({
   const data = useAppSelector(state => selectBeGemsPointsSeasonData(state, season));
   const user = useAppSelector(state => selectBeGemsPointsUserSeasonData(state, address, season));
   const isPlaceholder = !!data.placeholder;
-  const entries = useMemo(() => {
+  const entries = useMemo((): LeaderboardEntry[] => {
     const items: LeaderboardEntry[] = [...data.top, ...data.bottom];
-    if (!address || !user || user.position <= 0 || user.points <= 0) {
+    if (
+      !address ||
+      !user ||
+      !user.position ||
+      !user.points ||
+      user.position <= 0 ||
+      user.points <= 0
+    ) {
       return items;
     }
 
