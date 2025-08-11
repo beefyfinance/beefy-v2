@@ -1,6 +1,5 @@
 import { addressBook } from 'blockchain-addressbook';
 import BigNumber from 'bignumber.js';
-import logUpdate from 'log-update';
 import chalk from 'chalk';
 import { isValidChecksumAddress, maybeChecksumAddress } from './common/utils.ts';
 import { getVaultsIntegrity } from './common/exclude.ts';
@@ -198,11 +197,11 @@ const validatePools = async () => {
   const promises = chainIds.map(chainId =>
     validateSingleChain(chainId, uniquePoolId).finally(() => {
       validated.push(chainId);
-      logUpdate(chalk.gray(`Validating: ${chainIds.filter(c => !validated.includes(c))}...`));
+      const toValidate = chainIds.filter(c => !validated.includes(c));
+      if (toValidate.length > 0) console.log(chalk.gray(`Validating: ${toValidate}...`));
     })
   );
   const results = await Promise.all(promises);
-  logUpdate.clear();
 
   exitCode = results.reduce((acum, cur) => (acum + cur.exitCode > 0 ? 1 : 0), exitCode);
   results.forEach(res => {
