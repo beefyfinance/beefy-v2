@@ -1,5 +1,61 @@
 [
   {
+    "id": "etherex-usdc-usdt",
+    "name": "USDC-USDT sLP",
+    "type": "standard",
+    "token": "USDC-USDT sLP",
+    "tokenAddress": "0x8418e91cf8Cbf7Dd37B6492e23Bec75D0F4D81D8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "etherex",
+    "earnedToken": "mooEtherexLineaUSDC-USDT",
+    "earnedTokenAddress": "0x5eF29a6d2dFA626ddA507BE605DEa43C6AEA34F9",
+    "earnContractAddress": "0x5eF29a6d2dFA626ddA507BE605DEa43C6AEA34F9",
+    "oracle": "lps",
+    "oracleId": "etherex-usdc-usdt",
+    "createdAt": 1754603201,
+    "status": "active",
+    "platformId": "etherex",
+    "assets": ["USDC", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://www.etherex.finance/liquidity/0x8418e91cf8Cbf7Dd37B6492e23Bec75D0F4D81D8",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "linea-solidly-etherex"
+      }
+    ]
+  },
+  {
+    "id": "etherex-weth-rex",
+    "name": "REX-WETH vLP",
+    "type": "standard",
+    "token": "REX-WETH vLP",
+    "tokenAddress": "0x5C1Bf4B7563C460282617a0304E3cDE133200f70",
+    "tokenDecimals": 18,
+    "tokenProviderId": "etherex",
+    "earnedToken": "mooEtherexLineaWETH-REX",
+    "earnedTokenAddress": "0x8BE38D01D3ea1adFc943f700A8e26c2728D3519d",
+    "earnContractAddress": "0x8BE38D01D3ea1adFc943f700A8e26c2728D3519d",
+    "oracle": "lps",
+    "oracleId": "etherex-weth-rex",
+    "createdAt": 1754603202,
+    "status": "active",
+    "platformId": "etherex",
+    "assets": ["REX", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://www.etherex.finance/liquidity/0x5c1bf4b7563c460282617a0304e3cde133200f70",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "linea-solidly-etherex"
+      }
+    ]
+  },
+  {
     "id": "stargate-v2-linea-weth",
     "name": "WETH",
     "type": "standard",

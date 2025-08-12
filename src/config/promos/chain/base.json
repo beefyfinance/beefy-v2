@@ -287,29 +287,6 @@
     ]
   },
   {
-    "id": "moo_pendle-eqb-base-susdz-27mar25",
-    "title": "Beefy",
-    "vaultId": "pendle-eqb-base-susdz-27mar25",
-    "assets": ["sUSDz"],
-    "tokenAddress": "0xf829483E7E7d813137f160B2C1bC4155D15A39C4",
-    "type": "boost",
-    "version": 2,
-    "contractAddress": "0xAf15AC5b663Dc72c178970fD1876AD62339e319F",
-    "tag": {
-      "text": "DAO Boost"
-    },
-    "campaign": "dao-rewards",
-    "rewards": [
-      {
-        "type": "token",
-        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
-        "symbol": "mooBIFI",
-        "decimals": 18,
-        "oracleId": "basemooBIFI"
-      }
-    ]
-  },
-  {
     "id": "moo_aerodrome-cow-base-weth-usei-vault",
     "title": "Beefy",
     "vaultId": "aerodrome-cow-base-weth-usei-vault",

@@ -80,3 +80,17 @@ export type FetchUserPointsSeasonDataPayload = {
   points: number;
   position: number;
 };
+
+export type ApiUserDetails = {
+  address: Address;
+  points: number;
+  rank: number;
+};
+
+export type ApiSeasonSummary = {
+  topUsers: ApiUserDetails[];
+  bottomUser: ApiUserDetails;
+  totalPoints: number;
+  totalUsers: number;
+  lastUpdated: number;
+};

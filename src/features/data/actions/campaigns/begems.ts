@@ -11,6 +11,8 @@ import { bigNumberOrStaticZero } from '../../utils/selector-utils.ts';
 import { createAppAsyncThunk } from '../../utils/store-utils.ts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../tokens.ts';
 import type {
+  ApiSeasonSummary,
+  ApiUserDetails,
   BeGemsState,
   FetchUserPointsSeasonDataParams,
   FetchUserPointsSeasonDataPayload,
@@ -20,6 +22,8 @@ import type {
   SeasonDataToken,
 } from '../../reducers/campaigns/begems-types.ts';
 import { selectBeGemsSeason } from '../../selectors/campaigns/begems.ts';
+import { getJson } from '../../../../helpers/http/http.ts';
+import { getAddress } from 'viem';
 
 async function fetchTokenSeason(
   state: BeGemsState,
@@ -48,8 +52,27 @@ async function fetchPointsSeason(
   _state: BeGemsState,
   config: SeasonConfig
 ): Promise<SeasonDataPoints> {
-  // // TODO fetch actual data from API
-  // await sleep(2000); // Simulate API delay
+  if (config.number === 2) {
+    const summary = await getJson<ApiSeasonSummary>({
+      url: 'https://lrt.beefy.finance/api/v2/beefy/begems/summary',
+    });
+
+    return {
+      type: 'points',
+      num: config.number,
+      placeholder: false,
+      totalPoints: summary.totalPoints,
+      totalUsers: summary.totalUsers,
+      top: summary.topUsers.map(u => ({ address: u.address, points: u.points, position: u.rank })),
+      bottom: [
+        {
+          address: summary.bottomUser.address,
+          points: summary.bottomUser.points,
+          position: summary.bottomUser.rank,
+        },
+      ],
+    };
+  }
 
   return {
     type: 'points',
@@ -163,13 +186,26 @@ export const fetchUserPointsSeasonData = createAppAsyncThunk<
     throw new Error(`Season ${season} is not a points season`);
   }
 
-  // TODO fetch actual data from API
-  // await sleep(2000); // Simulate API delay
+  if (config.number === 2) {
+    try {
+      const data = await getJson<ApiUserDetails>({
+        url: `https://lrt.beefy.finance/api/v2/beefy/begems/user/${getAddress(address)}`,
+      });
+      return {
+        address,
+        season,
+        points: data.points,
+        position: data.rank,
+      };
+    } catch (e) {
+      console.error(`Failed to fetch user points for address ${address} in season ${season}:`, e);
+    }
+  }
 
   return {
     address,
     season,
-    points: 0, // TODO replace with actual points from API
-    position: 0, // TODO set position/points to zero if API returns user not found
+    points: 0,
+    position: 0,
   };
 });

@@ -44,7 +44,7 @@ export const selectIsBeGemsCampaignAvailable = createGlobalDataSelector(
 );
 export const selectHasBeGemsCampaignDispatchedRecently = createGlobalDataSelector(
   'beGemsCampaign',
-  createHasLoaderDispatchedRecentlyEvaluator(15),
+  createHasLoaderDispatchedRecentlyEvaluator(300),
   5
 );
 
@@ -78,8 +78,8 @@ export const selectBeGemsUserSeasonData = (
 
 const EMPTY_POINTS_DATA = {
   type: 'points',
-  points: 0,
-  position: 0,
+  points: undefined,
+  position: undefined,
 };
 
 export const selectBeGemsPointsUserSeasonData = (

@@ -28,5 +28,17 @@
     "swapFeeNumerator": "5",
     "swapFeeDenominator": "10000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "linea-solidly-etherex",
+    "name": "Etherex",
+    "type": "solidly",
+    "routerAddress": "0x32dB39c56C171b4c96e974dDeDe8E42498929c54",
+    "factoryAddress": "0xC0b920f6f1d6122B8187c031554dc8194F644592",
+    "pairInitHash": "0x48dedf148702735269e26de62b67fb89299dc49995e66cb30907d529711d08c9",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "3000",
+    "swapFeeDenominator": "1000000",
+    "getAmountOutMode": "getAmountOut"
   }
 ]

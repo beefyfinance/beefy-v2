@@ -21,6 +21,8 @@ import { refTxSentCallback } from './callbacks.ts';
 import { getReferralTag } from './tag.ts';
 
 const supportedChains = new Set([1, 10, 137, 1135, 8453, 42161, 42220, 80094]);
+/** @dev ledger erc20_plugin causes error to be thrown if there is extra calldata, even if blind signing is enabled */
+const disabledFunctions = new Set(['approve', '0x095ea7b3']);
 
 function getAccountAddress(account: Account | Address | null | undefined) {
   if (account === null || account === undefined) {
@@ -53,6 +55,10 @@ function getDataSuffix<chain extends Chain | undefined, account extends Account 
   }
   if (!supportedChains.has(chainId)) {
     // silently ignore unsupported chains
+    return undefined;
+  }
+  if (disabledFunctions.has(parameters.functionName)) {
+    // silently ignore unsupported functions
     return undefined;
   }
   const address = getAccountAddress(parameters.account) || getAccountAddress(client.account);
