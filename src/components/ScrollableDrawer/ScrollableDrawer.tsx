@@ -3,6 +3,10 @@ import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Drawer } from '../Modal/Drawer.tsx';
 import { type CssStyles } from '@repo/styles/css';
 
+interface ContentComponents {
+  css?: CssStyles;
+}
+
 interface ScrollabeDrawerProps {
   open: boolean;
   onClose: () => void;
@@ -13,6 +17,9 @@ interface ScrollabeDrawerProps {
   mainClass?: CssStyles;
   hideShadow?: boolean;
   mobileSpacingSize?: number;
+  MainComponent?: React.FC<ContentComponents & { ref: React.RefObject<HTMLDivElement> }>;
+  LayoutComponent?: React.FC<ContentComponents>;
+  FooterComponent?: React.FC<ContentComponents>;
 }
 
 export const ScrollableDrawer = memo<ScrollabeDrawerProps>(function ScrollableDrawer({
@@ -22,9 +29,12 @@ export const ScrollableDrawer = memo<ScrollabeDrawerProps>(function ScrollableDr
   footerChildren,
   layoutClass,
   footerClass,
-  hideShadow,
   mainClass,
+  hideShadow,
   mobileSpacingSize = 28,
+  MainComponent = Main,
+  LayoutComponent = Layout,
+  FooterComponent = Footer,
 }) {
   const [shadowOpacity, setShadowOpacity] = useState(100);
   const mainRef = useRef<HTMLDivElement>(null);
@@ -49,19 +59,19 @@ export const ScrollableDrawer = memo<ScrollabeDrawerProps>(function ScrollableDr
 
   return (
     <Drawer scrollable={false} open={open} onClose={onClose} position="bottom">
-      <Layout css={layoutClass}>
-        <Main css={mainClass} ref={mainRef}>
+      <LayoutComponent css={layoutClass}>
+        <MainComponent css={mainClass} ref={mainRef}>
           {mainChildren}
           <MobileSpacing style={{ height: `${mobileSpacingSize}px` }} />
-        </Main>
+        </MainComponent>
         {!hideShadow && <Shadow style={{ opacity: `${shadowOpacity}%` }} />}
-        <Footer css={footerClass}>{footerChildren}</Footer>
-      </Layout>
+        <FooterComponent css={footerClass}>{footerChildren}</FooterComponent>
+      </LayoutComponent>
     </Drawer>
   );
 });
 
-const Layout = styled('div', {
+export const Layout = styled('div', {
   base: {
     backgroundColor: 'background.content.darkest',
     height: '100dvh',
@@ -72,7 +82,7 @@ const Layout = styled('div', {
   },
 });
 
-const Main = styled('div', {
+export const Main = styled('div', {
   base: {
     flex: '1 1 auto',
     overflowY: 'auto',
@@ -80,7 +90,7 @@ const Main = styled('div', {
   },
 });
 
-const Footer = styled('div', {
+export const Footer = styled('div', {
   base: {
     display: 'flex',
     alignItems: 'center',

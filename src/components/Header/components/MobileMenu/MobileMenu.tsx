@@ -21,7 +21,7 @@ export const MobileMenu = memo(function MobileMenu() {
   return (
     <>
       <MenuButton aria-label="menu" onClick={handleDrawerToggle}>
-        <MenuIcon fontSize="inherit" style={{ height: '32px', width: '32px' }} />
+        <MenuIcon fontSize="inherit" style={{ height: '28px', width: '28px' }} />
         <UnreadDots />
       </MenuButton>
       <ScrollableDrawer
@@ -71,6 +71,8 @@ const MenuButton = styled('button', {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    height: '40px',
+    width: '40px',
   },
 });
 

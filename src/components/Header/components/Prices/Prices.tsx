@@ -23,7 +23,7 @@ export const BifiPricesDesktop = memo(function BifiPricesDesktop() {
       hoverOpenDelay={0}
       hoverCloseDelay={100}
     >
-      <Container>
+      <Container open={open}>
         <PricesButtonDesktop isOpen={open} />
         <BridgeNavButton to="bridge">Bridge</BridgeNavButton>
       </Container>
@@ -48,7 +48,7 @@ export const BifiPricesMobile = memo(function BifiPricesMobile() {
         }
         footerChildren={
           <FooterButton fullWidth={true} borderless={true} onClick={() => setOpen(false)}>
-            Close
+            Cancel
           </FooterButton>
         }
         layoutClass={css.raw({ height: '360px', borderTopRadius: '12px', padding: '12px' })}
@@ -87,9 +87,16 @@ export const BridgeNavButton = styled(RouterNavLink, {
 
 const Container = styled('div', {
   base: {
-    backgroundColor: 'background.content',
+    backgroundColor: 'background.content.dark',
     display: 'flex',
     borderRadius: '8px',
+  },
+  variants: {
+    open: {
+      true: {
+        backgroundColor: 'background.content',
+      },
+    },
   },
 });
 

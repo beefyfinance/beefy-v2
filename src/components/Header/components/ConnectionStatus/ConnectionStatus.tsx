@@ -18,7 +18,7 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
   }, [setOpen]);
 
   return (
-    <Holder ref={anchorEl}>
+    <Holder ref={anchorEl} open={open}>
       <NetworkStatus
         anchorEl={anchorEl}
         isOpen={open}
@@ -39,5 +39,12 @@ const Holder = styled('div', {
     backgroundColor: 'background.content.dark',
     alignItems: 'center',
     borderRadius: '8px',
+  },
+  variants: {
+    open: {
+      true: {
+        backgroundColor: 'background.content',
+      },
+    },
   },
 });

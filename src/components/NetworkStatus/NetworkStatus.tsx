@@ -118,12 +118,13 @@ export const NetworkStatus = memo(function NetworkStatus({
         openOnClick: false,
         hoverOpenDelay: 0,
         hoverCloseDelay: 100,
-        closeOnClickAway: false,
       };
     }
 
     return {};
   }, [isMobile]);
+
+  const DropdownLayer = useMemo(() => (isMobile ? 0 : 1), [isMobile]);
 
   return (
     <DropdownProvider
@@ -132,7 +133,7 @@ export const NetworkStatus = memo(function NetworkStatus({
       variant="dark"
       placement="bottom-end"
       reference={anchorEl}
-      layer={1}
+      layer={DropdownLayer}
       closeOnClickAway={!isMobile}
       {...openOnHoverProps}
     >
@@ -264,30 +265,32 @@ const PopOutContent = function PopOutContent({
   );
 
   return (
-    <PopOutContainer>
-      <Chains>
-        {rpcErrors.length > 0 ?
-          <>
-            <ChainNamesContainer>
-              {errorChains.map(chain => (
-                <ChainNameItem key={chain.id}>
-                  <ChainIcon chainId={chain.id} size={20} />
-                  {showChainNames && <span>{chain.name}</span>}
-                </ChainNameItem>
-              ))}
-            </ChainNamesContainer>
-            {showChainsConnectedError && <ChainsConnected>{rpcErrors.length - 7}</ChainsConnected>}
-          </>
-        : <>
-            <ChainsConnected>{chainIds.length}</ChainsConnected>
-            <span>Rpc Connected</span>
-          </>
-        }
-      </Chains>
-      <ArrowExpandButton variant="transparent" onClick={() => setIsPopupOpen(false)}>
+    <ArrowExpandButton variant="transparent" onClick={() => setIsPopupOpen(false)}>
+      <PopOutContainer>
+        <Chains>
+          {rpcErrors.length > 0 ?
+            <>
+              <ChainNamesContainer>
+                {errorChains.map(chain => (
+                  <ChainNameItem key={chain.id}>
+                    <ChainIcon chainId={chain.id} size={20} />
+                    {showChainNames && <span>{chain.name}</span>}
+                  </ChainNameItem>
+                ))}
+              </ChainNamesContainer>
+              {showChainsConnectedError && (
+                <ChainsConnected>{rpcErrors.length - 7}</ChainsConnected>
+              )}
+            </>
+          : <>
+              <ChainsConnected>{chainIds.length}</ChainsConnected>
+              <span>Rpc Connected</span>
+            </>
+          }
+        </Chains>
         <ArrowExpand />
-      </ArrowExpandButton>
-    </PopOutContainer>
+      </PopOutContainer>
+    </ArrowExpandButton>
   );
 };
 
@@ -328,7 +331,8 @@ const TitleContainer = styled('div', {
     backgroundColor: 'inherit',
     borderTopLeftRadius: 'inherit',
     borderTopRightRadius: 'inherit',
-    paddingTop: '16px',
+    paddingBlock: '10px 6px',
+    paddingInline: '12px',
     sm: {
       padding: '10px 12px 6px 12px',
     },
@@ -413,7 +417,7 @@ const ChainNamesContainer = styled('div', {
   base: {
     display: 'flex',
     alignItems: 'center',
-    gap: '4px',
+    gap: '8px',
   },
 });
 

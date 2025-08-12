@@ -17,7 +17,7 @@ const tokenPriceRecipe = cva({
     color: 'text.light',
     position: 'absolute',
     left: '12px',
-    width: 'calc(100% - 22px - 20px)',
+    width: '100%',
     height: '100%',
     backfaceVisibility: 'hidden',
     transformStyle: 'preserve-3d',
@@ -25,6 +25,7 @@ const tokenPriceRecipe = cva({
     transition: 'transform 0.5s ease-in-out',
     lg: {
       justifyContent: 'center',
+      width: 'calc(100% - 22px - 20px)',
     },
   },
   variants: {

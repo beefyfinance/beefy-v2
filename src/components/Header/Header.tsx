@@ -84,7 +84,10 @@ const Side = styled('div', {
   variants: {
     spacing: {
       sm: {
-        columnGap: '20px',
+        columnGap: '10px',
+        lg: {
+          columnGap: '20px',
+        },
       },
       md: {
         columnGap: '24px',
