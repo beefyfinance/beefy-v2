@@ -1,5 +1,46 @@
 [
   {
+    "id": "curve-frxusd-usdf",
+    "name": "frxUSD/USDf",
+    "type": "standard",
+    "token": "frxUSDUSDf",
+    "tokenAddress": "0x98E9599dab3A936C35DE48E13E026Ef4eA20B5e6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xd781450b90230c5844D3147CA9836019E3EE9792",
+    "earnedToken": "mooCurve-frxUSD-USDf",
+    "earnedTokenAddress": "0xd781450b90230c5844D3147CA9836019E3EE9792",
+    "oracle": "lps",
+    "oracleId": "curve-frxusd-usdf",
+    "status": "active",
+    "createdAt": 1755075497,
+    "platformId": "convex",
+    "assets": ["frxUSD", "USDf"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-485/deposit/",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-485/withdraw",
+    "pointStructureIds": ["falcon-miles"],
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x98E9599dab3A936C35DE48E13E026Ef4eA20B5e6",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x98E9599dab3A936C35DE48E13E026Ef4eA20B5e6",
+            "coins": [
+              "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+              "0xFa2B947eEc368f42195f24F36d2aF29f7c24CeC2"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curve-mseth-weth",
     "name": "msETH/WETH",
     "type": "standard",
@@ -14,7 +55,7 @@
     "oracleId": "curve-mseth-weth",
     "status": "active",
     "createdAt": 1753690748,
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["msETH", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -54,7 +95,7 @@
     "oracleId": "curve-susd-susde",
     "status": "active",
     "createdAt": 1753690737,
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["sUSD", "sUSDe"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
