@@ -13,6 +13,7 @@ import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
 import { getNetworkSrc } from '../../../../helpers/networkSrc.ts';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
+import ExternalArrowIcon from '../../../../images/icons/external-arrow.svg?react';
 
 const buyPlatforms: Record<
   NonNullable<Token['buyLink']>['platform'],
@@ -83,7 +84,7 @@ const TokenRow = memo<TooltipTokenProps>(function TokenRow({ token }) {
         />
         {buyLink ?
           <ActionLink link href={buyLink.url} title={buyPlatforms[buyLink.platform].title}>
-            Buy ↗
+            Buy <ExternalArrowIcon />
           </ActionLink>
         : null}
       </RightContainer>

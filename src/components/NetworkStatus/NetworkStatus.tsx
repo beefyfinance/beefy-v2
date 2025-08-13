@@ -85,10 +85,10 @@ export const NetworkStatus = memo(function NetworkStatus({
 
   const variant = useMemo(
     () =>
-      !hasAnyError && !hasAnyLoading ? 'success'
-      : hasAnyError ? 'warning'
-      : 'loading',
-    [hasAnyError, hasAnyLoading]
+      rpcErrors.length > 0 && beefyErrors.length === 0 && configErrors.length === 0 ? 'rpcError'
+      : hasAnyError ? 'error'
+      : 'success',
+    [beefyErrors.length, configErrors.length, hasAnyError, rpcErrors.length]
   );
 
   const hidePulse = useMemo(() => !hasAnyError && !hasAnyLoading, [hasAnyError, hasAnyLoading]);
@@ -317,7 +317,7 @@ const PopOutContainer = styled('div', {
     justifyContent: 'space-between',
     gap: '10px',
     paddingInline: '12px',
-    minWidth: '272px',
+    minWidth: '320px',
     paddingBlock: '6px 12px',
   },
 });

@@ -26,6 +26,7 @@ const tokenPriceRecipe = cva({
     lg: {
       justifyContent: 'center',
       width: 'calc(100% - 22px - 20px)',
+      flexDirection: 'row-reverse',
     },
   },
   variants: {

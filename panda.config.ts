@@ -354,6 +354,7 @@ const config = buildConfig(
           zapDiscountedFeesBackground: { value: '#59a662' },
           yellow: {
             '40': { value: '#d6d05d' },
+            '40-12': { value: '#3F3C4E' },
             '80': { value: '#D6CE2B' },
             '80-40a': { value: '#D6CE2B66' },
           },
@@ -411,7 +412,8 @@ const config = buildConfig(
             '10': { value: '#ffe9e3' },
             '20': { value: '#ffd5c8' },
             '30': { value: '#ffc1ae' },
-            '40': { value: '#ffa98f' },
+            '40': { value: '#FFAD9E' },
+            '40-12a': { value: '#3F384D' },
             '50': { value: '#ff9269' },
             '60': { value: '#ee784c' },
             '70': { value: '#e66e42' },
@@ -586,7 +588,12 @@ const config = buildConfig(
             error: {
               DEFAULT: { value: '{colors.redError}' },
               fg: { value: '{colors.red.40}' },
-              bg: { value: '{colors.red.80-40a}' },
+              bg: { value: '{colors.red.40-12a}' },
+            },
+            rpcError: {
+              DEFAULT: { value: '{colors.redError}' },
+              fg: { value: '{colors.yellow.40}' },
+              bg: { value: '{colors.yellow.40-12}' },
             },
             info: {
               DEFAULT: { value: '{colors.cornflower}' },
