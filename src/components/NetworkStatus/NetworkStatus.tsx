@@ -101,8 +101,6 @@ export const NetworkStatus = memo(function NetworkStatus({
       return {
         openOnHover: true,
         openOnClick: false,
-        hoverOpenDelay: 0,
-        hoverCloseDelay: 100,
       };
     }
 

@@ -63,14 +63,14 @@ const ArrowIcon = styled(ExpandMore, {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: 'inherit',
+    color: 'text.dark',
     height: '16px',
     width: '16px',
   },
   variants: {
     isOpen: {
       true: {
-        transform: 'rotate(180deg)',
+        color: 'text.light',
       },
     },
   },

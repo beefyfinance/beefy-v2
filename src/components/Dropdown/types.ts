@@ -43,6 +43,10 @@ export type DropdownData<TRef extends ReferenceType = Element> = {
     onMouseEnter: (e: React.MouseEvent) => void;
     onMouseLeave: (e: React.MouseEvent) => void;
   };
+  contentHoverHandlers?: {
+    onMouseEnter: () => void;
+    onMouseLeave: () => void;
+  };
 } & UseInteractionsReturn &
   UseFloatingReturn<TRef> &
   Pick<DropdownOptions, 'variant'> &

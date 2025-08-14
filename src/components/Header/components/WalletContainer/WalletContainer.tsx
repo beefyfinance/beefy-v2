@@ -53,17 +53,16 @@ const WalletContainer = memo(function WalletContainer() {
     }
   }, [dispatch, walletAddress]);
 
+  const status = useMemo(() => {
+    if (walletAddress) {
+      return hasAnyError ? 'error' : 'connected';
+    }
+
+    return 'disconnected';
+  }, [hasAnyError, walletAddress]);
+
   return (
-    <Button
-      onClick={handleWalletConnect}
-      status={
-        isWalletConnected ?
-          hasAnyError ?
-            'error'
-          : 'connected'
-        : 'disconnected'
-      }
-    >
+    <Button onClick={handleWalletConnect} status={status}>
       {walletPending && !walletAddress ?
         <StatLoader width={116} foregroundColor="#68BE71" backgroundColor="#004708" />
       : <Address blurred={blurred}>
@@ -130,6 +129,9 @@ const Button = styled('button', {
     overflow: 'hidden',
     height: '40px',
     gap: '8px',
+    _hover: {
+      backgroundColor: 'background.content.light',
+    },
   },
   variants: {
     status: {

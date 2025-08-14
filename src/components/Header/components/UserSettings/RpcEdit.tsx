@@ -143,10 +143,16 @@ export const ChainRpcReset = memo(function ChainRpcReset({
   if (rpcsAreEqual) return <></>;
 
   return (
-    <Button fullWidth={true} borderless={true} onClick={handleClick}>
+    <ResetButton fullWidth={true} borderless={true} onClick={handleClick}>
       {t('RpcModal-Reset')}
-    </Button>
+    </ResetButton>
   );
+});
+
+const ResetButton = styled(Button, {
+  base: {
+    height: '40px',
+  },
 });
 
 const PasteButton = styled(Button, {
