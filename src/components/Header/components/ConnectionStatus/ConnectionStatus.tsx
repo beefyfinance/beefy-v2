@@ -1,4 +1,4 @@
-import { lazy, memo, Suspense, useCallback, useRef, useState } from 'react';
+import { lazy, memo, Suspense, useCallback, useState } from 'react';
 import { styled } from '@repo/styles/jsx';
 import { NetworkStatus } from '../../../NetworkStatus/NetworkStatus.tsx';
 
@@ -6,7 +6,6 @@ import { NetworkStatus } from '../../../NetworkStatus/NetworkStatus.tsx';
 const WalletContainer = lazy(() => import('../WalletContainer/WalletContainer.tsx'));
 
 export const ConnectionStatus = memo(function ConnectionStatus() {
-  const anchorEl = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<boolean>(false);
 
   const handleOpenStatus = useCallback(() => {
@@ -18,14 +17,8 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
   }, [setOpen]);
 
   return (
-    <Holder ref={anchorEl} open={open}>
-      <NetworkStatus
-        anchorEl={anchorEl}
-        isOpen={open}
-        onOpen={handleOpenStatus}
-        onClose={handleClose}
-      />
-
+    <Holder open={open}>
+      <NetworkStatus isOpen={open} onOpen={handleOpenStatus} onClose={handleClose} />
       <Suspense>
         <WalletContainer />
       </Suspense>

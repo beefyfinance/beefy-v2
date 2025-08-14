@@ -80,7 +80,7 @@ export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) 
           <ChainIcon chainId={chain.id} />
         </ChainInfo>
         <InputGroup>
-          <BaseInput
+          <Input
             value={updatedRPC}
             onChange={handleSearchText}
             fullWidth={true}
@@ -90,8 +90,8 @@ export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) 
                 Paste
               </PasteButton>
             }
+            error={isError}
           />
-          {isError && <InputError>{t('RpcModal-InvalidRpc')}</InputError>}
         </InputGroup>
       </Top>
       <Footer>
@@ -188,15 +188,6 @@ const InputGroup = styled('div', {
   },
 });
 
-const InputError = styled('div', {
-  base: {
-    textStyle: 'body.sm',
-    color: 'indicators.error',
-    marginLeft: '16px',
-    transition: 'ease-in-out 2s',
-  },
-});
-
 const Footer = styled('div', {
   base: {
     display: 'flex',
@@ -213,5 +204,18 @@ const ActionButtons = styled('div', {
     display: 'flex',
     justifyContent: 'center',
     gap: '8px',
+  },
+});
+
+const Input = styled(BaseInput, {
+  base: {},
+  variants: {
+    error: {
+      true: {
+        paddingBlock: '6px',
+        border: '2px solid',
+        borderColor: 'red.40-40a',
+      },
+    },
   },
 });

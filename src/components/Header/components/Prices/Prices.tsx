@@ -3,9 +3,8 @@ import { BifiPricesContent, BifiPricesDropdown } from './BifiPricesDropdown.tsx'
 import { PricesButtonDesktop, PricesButtonMobile } from './PricesButton.tsx';
 import { DropdownProvider } from '../../../Dropdown/DropdownProvider.tsx';
 import { styled } from '@repo/styles/jsx';
-import { ScrollableDrawer } from '../../../ScrollableDrawer/ScrollableDrawer.tsx';
+import { ScrollableDrawer, Layout } from '../../../ScrollableDrawer/ScrollableDrawer.tsx';
 import { Button } from '../../../Button/Button.tsx';
-import { css } from '@repo/styles/css';
 import { NavLink as RouterNavLink } from 'react-router';
 
 export const BifiPricesDesktop = memo(function BifiPricesDesktop() {
@@ -51,12 +50,20 @@ export const BifiPricesMobile = memo(function BifiPricesMobile() {
             Cancel
           </FooterButton>
         }
-        layoutClass={css.raw({ height: '360px', borderTopRadius: '12px', padding: '12px' })}
+        LayoutComponent={CustomLayout}
         hideShadow={true}
         mobileSpacingSize={12}
       />
     </BifiPricesMobileContainer>
   );
+});
+
+const CustomLayout = styled(Layout, {
+  base: {
+    height: '360px',
+    borderTopRadius: '12px',
+    padding: '12px',
+  },
 });
 
 const BifiPricesMobileContainer = styled('div', {
@@ -68,7 +75,7 @@ const BifiPricesMobileContainer = styled('div', {
 export const BridgeNavButton = styled(RouterNavLink, {
   base: {
     color: 'text.middle',
-    textStyle: 'body.bold',
+    textStyle: 'body.medium',
     paddingBlock: '6px',
     paddingInline: '16px',
     textDecoration: 'none',

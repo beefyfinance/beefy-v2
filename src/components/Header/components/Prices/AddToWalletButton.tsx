@@ -44,15 +44,15 @@ const IconContainer = styled('div', {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '8px',
-    width: '8px',
+    height: '14px',
+    width: '14px',
   },
 });
 
 const AddToWallet = styled(AddToWalletIcon, {
   base: {
-    width: '6.72px',
-    height: '6.72px',
+    width: '8px',
+    height: '8px',
     fill: 'currentColor',
   },
 });

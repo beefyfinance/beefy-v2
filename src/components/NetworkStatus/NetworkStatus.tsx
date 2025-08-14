@@ -1,6 +1,6 @@
 import { styled } from '@repo/styles/jsx';
 import { isEqual, sortedUniq, uniq } from 'lodash-es';
-import { memo, type RefObject, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import type {
@@ -8,7 +8,7 @@ import type {
   LoaderState,
 } from '../../features/data/reducers/data-loader-types.ts';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader.ts';
-import { selectAllChainIds, selectEolChainIds } from '../../features/data/selectors/chains.ts';
+import { selectEolChainIds } from '../../features/data/selectors/chains.ts';
 import {
   isLoaderPending,
   isLoaderRejected,
@@ -22,23 +22,17 @@ import { DropdownContent } from '../Dropdown/DropdownContent.tsx';
 import { DropdownProvider } from '../Dropdown/DropdownProvider.tsx';
 import { DropdownTrigger } from '../Dropdown/DropdownTrigger.tsx';
 import { RpcSettingsPanel } from '../Header/components/UserSettings/RpcSettingsPanel.tsx';
-import { Button } from '../Button/Button.tsx';
-import ArrowExpand from '../../images/icons/arrow-expand.svg?react';
-import { ChainIcon } from '../ChainIcon/ChainIcon.tsx';
-import { selectChainById } from '../../features/data/selectors/chains.ts';
-import { ScrollableDrawer } from '../ScrollableDrawer/ScrollableDrawer.tsx';
 import { useBreakpoint } from '../MediaQueries/useBreakpoint.ts';
-import { css } from '@repo/styles/css';
-import { ChainRpcReset } from '../Header/components/UserSettings/RpcEdit.tsx';
 import type { DropdownOptions } from '../Dropdown/types.ts';
+import { TitleComponent } from './Title.tsx';
+import { MobileDrawer } from './MobileDrawer.tsx';
+import { ErrorPopOut } from './ErrorPopOut.tsx';
 
 export const NetworkStatus = memo(function NetworkStatus({
-  anchorEl,
   isOpen: isUserOpen,
   onOpen,
   onClose,
 }: {
-  anchorEl: RefObject<HTMLElement>;
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -83,13 +77,7 @@ export const NetworkStatus = memo(function NetworkStatus({
     [rpcPending, beefyPending, configPending]
   );
 
-  const variant = useMemo(
-    () =>
-      rpcErrors.length > 0 && beefyErrors.length === 0 && configErrors.length === 0 ? 'rpcError'
-      : hasAnyError ? 'error'
-      : 'success',
-    [beefyErrors.length, configErrors.length, hasAnyError, rpcErrors.length]
-  );
+  const variant = useMemo(() => (hasAnyError ? 'warning' : 'success'), [hasAnyError]);
 
   const hidePulse = useMemo(() => !hasAnyError && !hasAnyLoading, [hasAnyError, hasAnyLoading]);
 
@@ -132,7 +120,6 @@ export const NetworkStatus = memo(function NetworkStatus({
       onChange={handleToggle}
       variant="dark"
       placement="bottom-end"
-      reference={anchorEl}
       layer={DropdownLayer}
       closeOnClickAway={!isMobile}
       {...openOnHoverProps}
@@ -145,71 +132,22 @@ export const NetworkStatus = memo(function NetworkStatus({
         isAutoOpen && !isUserOpen ?
           <StyledDropdownContent gap="none">
             <TitleComponent hasAnyError={hasAnyError} text={titleText} />
-            <PopOutContent setIsPopupOpen={onOpen} rpcErrors={rpcErrors} />
+            <ErrorPopOut setIsPopupOpen={onOpen} rpcErrors={rpcErrors} />
           </StyledDropdownContent>
-        : <ScrollableDrawer
-            layoutClass={css.raw({
-              backgroundColor: 'background.content',
-              height: 'calc(100dvh - 64px)',
-              borderTopRadius: '12px',
-            })}
-            mainClass={css.raw({
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px',
-              paddingInline: '12px',
-            })}
-            footerClass={css.raw({
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '20px',
-              borderTopRadius: '12px',
-              paddingInline: '12px',
-              paddingBlock: '16px',
-            })}
-            mobileSpacingSize={0}
-            open={open}
-            onClose={handleClose}
-            hideShadow={true}
-            mainChildren={
-              <>
-                <TitleComponent hasAnyError={hasAnyError} text={titleText} />
-                <ListMobile>
-                  <RpcSettingsPanel
-                    rpcErrors={rpcErrors}
-                    editChainId={editChainId}
-                    setEditChainId={setEditChainId}
-                  />
-                </ListMobile>
-              </>
-            }
-            footerChildren={
-              <>
-                <div>{t('RpcModal-EmptyList')}</div>
-                {editChainId ?
-                  <ActionButtons>
-                    <ChainRpcReset onBack={() => setEditChainId(null)} value={editChainId} />
-                    <Button
-                      variant="dark"
-                      fullWidth={true}
-                      borderless={true}
-                      onClick={() => setEditChainId(null)}
-                    >
-                      Cancel
-                    </Button>
-                  </ActionButtons>
-                : <Button variant="dark" fullWidth={true} borderless={true} onClick={handleClose}>
-                    Close Menu
-                  </Button>
-                }
-              </>
-            }
+        : <MobileDrawer
+            open={isAutoOpen && !isUserOpen}
+            handleClose={handleClose}
+            titleText={titleText}
+            editChainId={editChainId}
+            setEditChainId={setEditChainId}
+            rpcErrors={rpcErrors}
+            hasAnyError={hasAnyError}
           />
 
       : <StyledDropdownContent gap="none">
           <TitleComponent hasAnyError={hasAnyError} text={titleText} />
           {isAutoOpen && !isUserOpen ?
-            <PopOutContent setIsPopupOpen={onOpen} rpcErrors={rpcErrors} />
+            <ErrorPopOut setIsPopupOpen={onOpen} rpcErrors={rpcErrors} />
           : <>
               <Content>
                 <RpcSettingsPanel
@@ -225,147 +163,6 @@ export const NetworkStatus = memo(function NetworkStatus({
       }
     </DropdownProvider>
   );
-});
-
-const TitleComponent = function TitleComponent({
-  hasAnyError,
-  text,
-}: {
-  hasAnyError: boolean;
-  text: string;
-}) {
-  const { t } = useTranslation();
-
-  return (
-    <TitleContainer>
-      <Title variant={hasAnyError ? 'warning' : 'success'}>
-        <TextTitle>{text}</TextTitle>
-        <TextTitle>
-          {hasAnyError ? t('NetworkStatus-Data-Error') : t('NetworkStatus-Data-Success')}
-        </TextTitle>
-      </Title>
-    </TitleContainer>
-  );
-};
-
-const PopOutContent = function PopOutContent({
-  setIsPopupOpen,
-  rpcErrors,
-}: {
-  setIsPopupOpen: (isPopupOpen: boolean) => void;
-  rpcErrors: ChainEntity['id'][];
-}) {
-  const showChainNames = useMemo(() => rpcErrors.length > 0 && rpcErrors.length <= 3, [rpcErrors]);
-  const showChainsConnectedError = useMemo(() => rpcErrors.length > 7, [rpcErrors]);
-  const chainIds = useAppSelector(selectAllChainIds);
-
-  // Get chain data for all error chains
-  const errorChains = useAppSelector(state =>
-    rpcErrors.map(chainId => selectChainById(state, chainId))
-  );
-
-  return (
-    <ArrowExpandButton variant="transparent" onClick={() => setIsPopupOpen(false)}>
-      <PopOutContainer>
-        <Chains>
-          {rpcErrors.length > 0 ?
-            <>
-              <ChainNamesContainer>
-                {errorChains.map(chain => (
-                  <ChainNameItem key={chain.id}>
-                    <ChainIcon chainId={chain.id} size={20} />
-                    {showChainNames && <span>{chain.name}</span>}
-                  </ChainNameItem>
-                ))}
-              </ChainNamesContainer>
-              {showChainsConnectedError && (
-                <ChainsConnected>{rpcErrors.length - 7}</ChainsConnected>
-              )}
-            </>
-          : <>
-              <ChainsConnected>{chainIds.length}</ChainsConnected>
-              <span>Rpc Connected</span>
-            </>
-          }
-        </Chains>
-        <ArrowExpand />
-      </PopOutContainer>
-    </ArrowExpandButton>
-  );
-};
-
-const ArrowExpandButton = styled(Button, {
-  base: {
-    color: 'text.dark',
-    paddingBlock: '0px',
-    paddingInline: '0px',
-  },
-});
-
-const Chains = styled('div', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-  },
-});
-
-const PopOutContainer = styled('div', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: '10px',
-    paddingInline: '12px',
-    minWidth: '320px',
-    paddingBlock: '6px 12px',
-  },
-});
-
-const TitleContainer = styled('div', {
-  base: {
-    color: 'text.light',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: 'inherit',
-    borderTopLeftRadius: 'inherit',
-    borderTopRightRadius: 'inherit',
-    paddingBlock: '10px 6px',
-    paddingInline: '12px',
-    sm: {
-      padding: '10px 12px 6px 12px',
-    },
-  },
-});
-
-const Title = styled('div', {
-  base: {
-    display: 'flex',
-    flexDirection: 'column',
-    color: 'text.light',
-    textStyle: 'body.md',
-  },
-  variants: {
-    variant: {
-      success: {
-        color: 'green.40',
-      },
-      warning: {
-        color: 'orange.40',
-      },
-    },
-  },
-  defaultVariants: {
-    variant: 'success',
-  },
-});
-
-const TextTitle = styled('div', {
-  base: {
-    textStyle: 'inherit',
-    color: 'inherit',
-  },
 });
 
 const Content = styled('div', {
@@ -399,47 +196,6 @@ const DropdownButton = styled(DropdownTrigger.button, {
   },
 });
 
-const ChainsConnected = styled('div', {
-  base: {
-    textStyle: 'subline.xs',
-    color: 'text.light',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '20px',
-    width: '20px',
-    borderRadius: '100%',
-    backgroundColor: 'background.content.darkest',
-  },
-});
-
-const ChainNamesContainer = styled('div', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-  },
-});
-
-const ChainNameItem = styled('div', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '4px',
-    textStyle: 'body.sm',
-    color: 'text.light',
-  },
-});
-
-const ListMobile = styled('div', {
-  base: {
-    display: 'flex',
-    flexDirection: 'column',
-    borderRadius: '8px',
-    backgroundColor: 'background.content.dark',
-  },
-});
-
 const StyledDropdownContent = styled(DropdownContent, {
   base: {
     display: 'flex',
@@ -447,15 +203,6 @@ const StyledDropdownContent = styled(DropdownContent, {
     maxWidth: '320px',
     padding: '0px',
     backgroundColor: 'background.content',
-  },
-});
-
-const ActionButtons = styled('div', {
-  base: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-    width: '100%',
   },
 });
 

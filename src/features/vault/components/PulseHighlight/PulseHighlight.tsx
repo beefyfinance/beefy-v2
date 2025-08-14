@@ -49,9 +49,6 @@ const Sizer = styled('div', {
       error: {
         colorPalette: 'indicators.error',
       },
-      rpcError: {
-        colorPalette: 'indicators.rpcError',
-      },
     },
   },
   defaultVariants: {

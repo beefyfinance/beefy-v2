@@ -414,6 +414,7 @@ const config = buildConfig(
             '30': { value: '#ffc1ae' },
             '40': { value: '#FFAD9E' },
             '40-12a': { value: '#3F384D' },
+            '40-40a': { value: '#FFAD9E66' },
             '50': { value: '#ff9269' },
             '60': { value: '#ee784c' },
             '70': { value: '#e66e42' },
@@ -444,6 +445,7 @@ const config = buildConfig(
             '30': { value: '#FFDEBD' },
             '40': { value: '#FFD1A3' },
             '40-12': { value: '#3F3C4E' },
+            '40-12a': { value: '#FFD1A319' },
             '50': { value: '#FFC386' },
             '50-20a': { value: '#FFC38633' },
             '60': { value: '#FFAD5A' },
@@ -577,23 +579,18 @@ const config = buildConfig(
             },
             warning: {
               DEFAULT: { value: '{colors.orangeWarning}' },
-              fg: { value: '{colors.gold.30}' },
-              bg: { value: '{colors.gold.80-40a}' },
+              fg: { value: '{colors.orange.40}' },
+              bg: { value: '{colors.orange.40-12a}' },
             },
             success: {
               DEFAULT: { value: '{colors.green}' },
-              fg: { value: '{colors.green.40}' },
+              fg: { value: '{colors.green.30}' },
               bg: { value: '{colors.green.80-40a}' },
             },
             error: {
               DEFAULT: { value: '{colors.redError}' },
               fg: { value: '{colors.red.40}' },
               bg: { value: '{colors.red.40-12a}' },
-            },
-            rpcError: {
-              DEFAULT: { value: '{colors.redError}' },
-              fg: { value: '{colors.yellow.40}' },
-              bg: { value: '{colors.yellow.40-12}' },
             },
             info: {
               DEFAULT: { value: '{colors.cornflower}' },

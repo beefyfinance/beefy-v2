@@ -12,9 +12,7 @@ interface ScrollabeDrawerProps {
   onClose: () => void;
   mainChildren: React.ReactNode;
   footerChildren: React.ReactNode;
-  layoutClass?: CssStyles;
-  footerClass?: CssStyles;
-  mainClass?: CssStyles;
+
   hideShadow?: boolean;
   mobileSpacingSize?: number;
   MainComponent?: React.FC<ContentComponents & { ref: React.RefObject<HTMLDivElement> }>;
@@ -27,9 +25,6 @@ export const ScrollableDrawer = memo<ScrollabeDrawerProps>(function ScrollableDr
   onClose,
   mainChildren,
   footerChildren,
-  layoutClass,
-  footerClass,
-  mainClass,
   hideShadow,
   mobileSpacingSize = 28,
   MainComponent = Main,
@@ -59,13 +54,13 @@ export const ScrollableDrawer = memo<ScrollabeDrawerProps>(function ScrollableDr
 
   return (
     <Drawer scrollable={false} open={open} onClose={onClose} position="bottom">
-      <LayoutComponent css={layoutClass}>
-        <MainComponent css={mainClass} ref={mainRef}>
+      <LayoutComponent>
+        <MainComponent ref={mainRef}>
           {mainChildren}
           <MobileSpacing style={{ height: `${mobileSpacingSize}px` }} />
         </MainComponent>
         {!hideShadow && <Shadow style={{ opacity: `${shadowOpacity}%` }} />}
-        <FooterComponent css={footerClass}>{footerChildren}</FooterComponent>
+        <FooterComponent>{footerChildren}</FooterComponent>
       </LayoutComponent>
     </Drawer>
   );

@@ -3,7 +3,8 @@ import { styled } from '@repo/styles/jsx';
 
 const actionRecipe = cva({
   base: {
-    textStyle: 'body',
+    textStyle: 'body.md.medium',
+    letterSpacing: '0',
     display: 'flex',
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
@@ -17,14 +18,15 @@ const actionRecipe = cva({
     outline: 'none',
     cursor: 'pointer',
     height: '28px',
-    width: '28px',
+    width: '30px',
   },
   variants: {
     link: {
       true: {
         color: 'text.black',
-        width: '62px',
+        width: 'auto',
         backgroundColor: 'green.40',
+        padding: '3px 12px',
       },
     },
   },

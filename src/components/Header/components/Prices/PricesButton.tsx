@@ -3,7 +3,7 @@ import { TokenPrice } from './TokenPrice.tsx';
 import { styled } from '@repo/styles/jsx';
 import { tokens } from './config.ts';
 import { DropdownTrigger } from '../../../Dropdown/DropdownTrigger.tsx';
-import ArrangeArrowIcon from '../../../../images/icons/arrange-arrow.svg?react';
+import ExpandMore from '../../../../images/icons/mui/ExpandMore.svg?react';
 import { Button } from '../../../Button/Button.tsx';
 
 export const PricesButtonDesktop = memo(function PricesButton({ isOpen }: { isOpen: boolean }) {
@@ -40,7 +40,7 @@ const Price = memo(function Price() {
   }, [setCurrent]);
 
   return (
-    <>
+    <PriceContainer>
       {tokens.map((token, i) => (
         <TokenPrice
           key={i}
@@ -53,18 +53,19 @@ const Price = memo(function Price() {
           }
         />
       ))}
-    </>
+    </PriceContainer>
   );
 });
 
-const ArrowIcon = styled(ArrangeArrowIcon, {
+const ArrowIcon = styled(ExpandMore, {
   base: {
     transform: 'rotate(0deg)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
-    right: '12px',
+    color: 'inherit',
+    height: '16px',
+    width: '16px',
   },
   variants: {
     isOpen: {
@@ -84,11 +85,10 @@ const Trigger = styled(
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      width: '100px',
       height: '40px',
       paddingBlock: '8px',
-      paddingInline: '10px 12px',
-      position: 'relative',
+      paddingInline: '10px',
+      color: 'text.dark',
     },
   },
   {
@@ -106,7 +106,18 @@ const MobileTrigger = styled(Button, {
     alignItems: 'center',
     justifyContent: 'center',
     border: 'none',
-    padding: '0',
+    paddingBlock: '0',
+    paddingInline: '0',
+  },
+});
+
+const PriceContainer = styled('div', {
+  base: {
+    display: 'grid',
+    gridTemplateAreas: '"content"',
+    placeItems: 'center',
+    width: '100%',
+    height: '100%',
     position: 'relative',
   },
 });

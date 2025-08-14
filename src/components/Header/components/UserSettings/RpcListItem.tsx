@@ -35,7 +35,7 @@ export const ChainRpcItem = memo(function ChainRpcItem({
           : null}
           {chain.name}
         </Name>
-        {error && !isHover && (
+        {error && (
           <>
             <CircleWarning />
             <ErrorContainer>connection failed </ErrorContainer>
@@ -72,6 +72,10 @@ const Container = styled('div', {
     _hover: {
       cursor: 'pointer',
       backgroundColor: 'background.button',
+      '&:first-child': {
+        borderTopLeftRadius: '8px',
+        borderTopRightRadius: '8px',
+      },
       '&:last-child': {
         borderBottomLeftRadius: '8px',
         borderBottomRightRadius: '8px',

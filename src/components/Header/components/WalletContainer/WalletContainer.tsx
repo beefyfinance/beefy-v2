@@ -67,7 +67,12 @@ const WalletContainer = memo(function WalletContainer() {
 const ActiveChain = ({ chainId }: { chainId: ChainEntity['id'] | null }) => {
   return (
     <Chain>
-      <img alt={chainId ?? ''} src={chainId ? getNetworkSrc(chainId) : iconUnsupportedChain} />
+      <img
+        height={20}
+        width={20}
+        alt={chainId ?? ''}
+        src={chainId ? getNetworkSrc(chainId) : iconUnsupportedChain}
+      />
     </Chain>
   );
 };
@@ -110,6 +115,7 @@ const Button = styled('button', {
     overflow: 'hidden',
     height: '40px',
     gap: '8px',
+    minWidth: '151px',
   },
   variants: {
     status: {

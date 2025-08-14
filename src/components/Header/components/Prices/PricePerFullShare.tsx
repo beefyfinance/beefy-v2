@@ -17,13 +17,14 @@ export const PricePerFullShare = memo(function PricePerFullShare() {
   const earnedToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.contractAddress)
   );
+  console.log(ppfs);
 
   return (
     <Container>
       <AssetsImage assetSymbols={[earnedToken.symbol]} chainId={vault.chainId} size={24} />1{' '}
       {earnedToken.symbol} {'='}{' '}
       <AssetsImage assetSymbols={[depositToken.symbol]} chainId={vault.chainId} size={24} />{' '}
-      {ppfs.toString(10)} {depositToken.symbol}
+      {ppfs.toFixed(6)} {depositToken.symbol}
     </Container>
   );
 });
