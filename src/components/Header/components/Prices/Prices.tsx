@@ -7,15 +7,20 @@ import { ScrollableDrawer, Layout } from '../../../ScrollableDrawer/ScrollableDr
 import { Button } from '../../../Button/Button.tsx';
 import { NavLink as RouterNavLink } from 'react-router';
 
-export const BifiPricesDesktop = memo(function BifiPricesDesktop() {
+export const BifiPricesDesktop = memo(function BifiPricesDesktop({
+  anchorEl,
+}: {
+  anchorEl: React.RefObject<HTMLDivElement>;
+}) {
   const [open, setOpen] = useState(false);
 
   return (
     <DropdownProvider
       open={open}
       onChange={setOpen}
-      placement="bottom-start"
+      placement="bottom-end"
       variant="dark"
+      reference={anchorEl}
       layer={1}
       openOnHover={true}
       openOnClick={false}

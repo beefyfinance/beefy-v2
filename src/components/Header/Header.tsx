@@ -1,5 +1,5 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { fetchLastArticle } from '../../features/data/actions/articles.ts';
 import { fetchActiveProposals } from '../../features/data/actions/proposal.ts';
 import { selectShouldInitArticles } from '../../features/data/selectors/articles.ts';
@@ -20,6 +20,7 @@ export const Header = memo(function Header() {
   const dispatch = useAppDispatch();
   const shouldLoadProposals = useAppSelector(selectShouldInitProposals);
   const shouldLoadArticles = useAppSelector(selectShouldInitArticles);
+  const anchorEl = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (shouldLoadProposals) {
@@ -45,9 +46,9 @@ export const Header = memo(function Header() {
         <Visible from="lg">
           <NavLinkItem title={'Header-BuyCrypto'} url="/onramp" Icon={BuyCryptoIcon} />
         </Visible>
-        <RightSide>
+        <RightSide ref={anchorEl}>
           <Visible from="lg">
-            <BifiPricesDesktop />
+            <BifiPricesDesktop anchorEl={anchorEl} />
           </Visible>
           <ConnectionStatus />
         </RightSide>

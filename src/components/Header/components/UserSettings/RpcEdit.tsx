@@ -208,13 +208,18 @@ const ActionButtons = styled('div', {
 });
 
 const Input = styled(BaseInput, {
-  base: {},
+  base: {
+    height: '40px',
+    outline: '2px solid transparent',
+    outlineOffset: '-2px',
+  },
   variants: {
     error: {
       true: {
         paddingBlock: '6px',
         border: '2px solid',
         borderColor: 'red.40-40a',
+        outline: '2px solid red.40-40a',
       },
     },
   },

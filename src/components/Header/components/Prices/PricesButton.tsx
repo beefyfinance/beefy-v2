@@ -87,7 +87,7 @@ const Trigger = styled(
       justifyContent: 'center',
       height: '40px',
       paddingBlock: '8px',
-      paddingInline: '10px',
+      paddingInline: '12px',
       color: 'text.dark',
     },
   },

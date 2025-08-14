@@ -1,4 +1,3 @@
-import { styled } from '@repo/styles/jsx';
 import { memo, useCallback } from 'react';
 import { addTokenToWalletAction } from '../../../../features/data/actions/add-to-wallet.ts';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
@@ -32,27 +31,7 @@ export const AddToWalletButton = memo<AddToWalletButtonProps>(function AddToWall
 
   return (
     <ActionButton title={title} onClick={handleAddToken}>
-      <IconContainer>
-        <AddToWallet />
-      </IconContainer>
+      <AddToWalletIcon />
     </ActionButton>
   );
-});
-
-const IconContainer = styled('div', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '14px',
-    width: '14px',
-  },
-});
-
-const AddToWallet = styled(AddToWalletIcon, {
-  base: {
-    width: '8px',
-    height: '8px',
-    fill: 'currentColor',
-  },
 });

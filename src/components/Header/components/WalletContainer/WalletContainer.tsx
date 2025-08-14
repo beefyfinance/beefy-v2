@@ -1,5 +1,5 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   askForWalletConnection,
@@ -20,6 +20,11 @@ import { StatLoader } from '../../../StatLoader/StatLoader.tsx';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import { getNetworkSrc } from '../../../../helpers/networkSrc.ts';
 import iconUnsupportedChain from '../../../../images/icons/navigation/unsuported-chain.svg';
+import {
+  selectBeefyApiKeysWithRejectedData,
+  selectChainIdsWithRejectedData,
+  selectConfigKeysWithRejectedData,
+} from '../../../../features/data/selectors/data-loader-helpers.ts';
 
 const WalletContainer = memo(function WalletContainer() {
   const dispatch = useAppDispatch();
@@ -30,6 +35,15 @@ const WalletContainer = memo(function WalletContainer() {
   const blurred = useAppSelector(selectIsBalanceHidden);
   const resolverStatus = useResolveAddress(walletAddress);
   const currentChainId = useAppSelector(selectCurrentChainId);
+
+  const rpcErrors = useAppSelector(state => selectChainIdsWithRejectedData(state));
+  const beefyErrors = useAppSelector(state => selectBeefyApiKeysWithRejectedData(state));
+  const configErrors = useAppSelector(state => selectConfigKeysWithRejectedData(state));
+
+  const hasAnyError = useMemo(
+    () => rpcErrors.length > 0 || beefyErrors.length > 0 || configErrors.length > 0,
+    [rpcErrors, beefyErrors, configErrors]
+  );
 
   const handleWalletConnect = useCallback(() => {
     if (walletAddress) {
@@ -43,14 +57,15 @@ const WalletContainer = memo(function WalletContainer() {
     <Button
       onClick={handleWalletConnect}
       status={
-        isWalletConnected ? 'connected'
-        : walletAddress ?
-          'known'
-        : 'unknown'
+        isWalletConnected ?
+          hasAnyError ?
+            'error'
+          : 'connected'
+        : 'disconnected'
       }
     >
       {walletPending && !walletAddress ?
-        <StatLoader foregroundColor="#68BE71" backgroundColor="#004708" />
+        <StatLoader width={116} foregroundColor="#68BE71" backgroundColor="#004708" />
       : <Address blurred={blurred}>
           {walletAddress ?
             isFulfilledStatus(resolverStatus) ?
@@ -115,16 +130,15 @@ const Button = styled('button', {
     overflow: 'hidden',
     height: '40px',
     gap: '8px',
-    minWidth: '151px',
   },
   variants: {
     status: {
-      unknown: {
+      disconnected: {
         borderColor: 'green',
         backgroundColor: 'green',
       },
-      known: {
-        borderColor: 'indicators.warning',
+      error: {
+        borderColor: 'orange.40-12',
         _hover: {
           borderColor: 'background.content.light',
         },
@@ -135,7 +149,7 @@ const Button = styled('button', {
     },
   },
   defaultVariants: {
-    status: 'unknown',
+    status: 'disconnected',
   },
 });
 

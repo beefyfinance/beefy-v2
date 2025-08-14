@@ -1,22 +1,17 @@
 import { styled } from '@repo/styles/jsx';
-import { isEqual, sortedUniq, uniq } from 'lodash-es';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
-import type {
-  DataLoaderState,
-  LoaderState,
-} from '../../features/data/reducers/data-loader-types.ts';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader.ts';
-import { selectEolChainIds } from '../../features/data/selectors/chains.ts';
 import {
-  isLoaderPending,
-  isLoaderRejected,
+  selectBeefyApiKeysWithPendingData,
+  selectBeefyApiKeysWithRejectedData,
+  selectChainIdsWithPendingData,
+  selectChainIdsWithRejectedData,
+  selectConfigKeysWithPendingData,
+  selectConfigKeysWithRejectedData,
 } from '../../features/data/selectors/data-loader-helpers.ts';
-import { selectWalletAddressIfKnown } from '../../features/data/selectors/wallet.ts';
-import type { BeefyState } from '../../features/data/store/types.ts';
 import { PulseHighlight } from '../../features/vault/components/PulseHighlight/PulseHighlight.tsx';
-import { entries } from '../../helpers/object.ts';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
 import { DropdownContent } from '../Dropdown/DropdownContent.tsx';
 import { DropdownProvider } from '../Dropdown/DropdownProvider.tsx';
@@ -29,10 +24,12 @@ import { MobileDrawer } from './MobileDrawer.tsx';
 import { ErrorPopOut } from './ErrorPopOut.tsx';
 
 export const NetworkStatus = memo(function NetworkStatus({
+  anchorEl,
   isOpen: isUserOpen,
   onOpen,
   onClose,
 }: {
+  anchorEl: React.RefObject<HTMLDivElement>;
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -61,12 +58,12 @@ export const NetworkStatus = memo(function NetworkStatus({
     }
   }, [open, handleClose, onOpen]);
 
-  const rpcErrors = useNetStatus<ChainEntity['id'][]>(findChainIdMatching, isLoaderRejected);
-  const rpcPending = useNetStatus<ChainEntity['id'][]>(findChainIdMatching, isLoaderPending);
-  const beefyErrors = useNetStatus(findBeefyApiMatching, isLoaderRejected);
-  const beefyPending = useNetStatus(findBeefyApiMatching, isLoaderPending);
-  const configErrors = useNetStatus(findConfigMatching, isLoaderRejected);
-  const configPending = useNetStatus(findConfigMatching, isLoaderPending);
+  const rpcErrors = useAppSelector(state => selectChainIdsWithRejectedData(state));
+  const rpcPending = useAppSelector(state => selectChainIdsWithPendingData(state));
+  const beefyErrors = useAppSelector(state => selectBeefyApiKeysWithRejectedData(state));
+  const beefyPending = useAppSelector(state => selectBeefyApiKeysWithPendingData(state));
+  const configErrors = useAppSelector(state => selectConfigKeysWithRejectedData(state));
+  const configPending = useAppSelector(state => selectConfigKeysWithPendingData(state));
 
   const hasAnyError = useMemo(
     () => rpcErrors.length > 0 || beefyErrors.length > 0 || configErrors.length > 0,
@@ -116,6 +113,7 @@ export const NetworkStatus = memo(function NetworkStatus({
 
   return (
     <DropdownProvider
+      reference={anchorEl}
       open={open}
       onChange={handleToggle}
       variant="dark"
@@ -205,77 +203,3 @@ const StyledDropdownContent = styled(DropdownContent, {
     backgroundColor: 'background.content',
   },
 });
-
-function useNetStatus<
-  R extends string[],
-  S extends (state: BeefyState, matcher: (state: LoaderState) => boolean) => R = (
-    state: BeefyState,
-    matcher: (state: LoaderState) => boolean
-  ) => R,
-  M extends (state: LoaderState) => boolean = (state: LoaderState) => boolean,
->(selector: S, matcher: M) {
-  return useAppSelector<BeefyState, R>(
-    state => selector(state, matcher),
-    // since we are returning a new array each time we select
-    // use a comparator to avoid useless re-renders
-    stringArrCompare
-  );
-}
-
-const stringArrCompare = (left: string[], right: string[]) => {
-  return isEqual(sortedUniq(left), sortedUniq(right));
-};
-
-const findChainIdMatching = (state: BeefyState, matcher: (loader: LoaderState) => boolean) => {
-  const chainIds: ChainEntity['id'][] = [];
-  const eolChains = selectEolChainIds(state);
-  const walletAddress = selectWalletAddressIfKnown(state);
-  const chainsToCheck = entries(state.ui.dataLoader.byChainId).filter(
-    ([chainId, _]) => !eolChains.includes(chainId)
-  );
-
-  for (const [chainId, loader] of chainsToCheck) {
-    if (loader) {
-      if (matcher(loader.addressBook) || matcher(loader.contractData)) {
-        chainIds.push(chainId);
-      }
-    }
-  }
-
-  if (walletAddress && state.ui.dataLoader.byAddress[walletAddress]) {
-    const userDataToCheck = entries(state.ui.dataLoader.byAddress[walletAddress].byChainId).filter(
-      ([chainId, _]) => !eolChains.includes(chainId)
-    );
-    for (const [chainId, loader] of userDataToCheck) {
-      if (loader) {
-        if (matcher(loader.balance) || matcher(loader.allowance)) {
-          chainIds.push(chainId);
-        }
-      }
-    }
-  }
-
-  return uniq(chainIds);
-};
-
-const findBeefyApiMatching = (state: BeefyState, matcher: (loader: LoaderState) => boolean) => {
-  const matchingKeys: (keyof DataLoaderState['global'])[] = [];
-  const beefyKeys: (keyof DataLoaderState['global'])[] = ['apy', 'prices', 'analytics'];
-  for (const key of beefyKeys) {
-    if (matcher(state.ui.dataLoader.global[key])) {
-      matchingKeys.push(key);
-    }
-  }
-  return matchingKeys;
-};
-
-const findConfigMatching = (state: BeefyState, matcher: (loader: LoaderState) => boolean) => {
-  const matchingKeys: (keyof DataLoaderState['global'])[] = [];
-  const configKeys: (keyof DataLoaderState['global'])[] = ['chainConfig', 'promos', 'vaults'];
-  for (const key of configKeys) {
-    if (matcher(state.ui.dataLoader.global[key])) {
-      matchingKeys.push(key);
-    }
-  }
-  return matchingKeys;
-};

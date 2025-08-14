@@ -16,8 +16,15 @@ export const ErrorPopOut = memo(function ErrorPopOut({
   rpcErrors: ChainEntity['id'][];
 }) {
   const showChainNames = useMemo(() => rpcErrors.length > 0 && rpcErrors.length <= 3, [rpcErrors]);
-  const showChainsConnectedError = useMemo(() => rpcErrors.length > 7, [rpcErrors]);
+  const showChainsConnectedError = useMemo(() => rpcErrors.length > 8, [rpcErrors]);
   const chainIds = useAppSelector(selectAllChainIds);
+
+  const chainsToShow = useMemo(() => {
+    if (showChainsConnectedError) {
+      return rpcErrors.slice(0, 8);
+    }
+    return rpcErrors;
+  }, [rpcErrors, showChainsConnectedError]);
 
   return (
     <ArrowExpandButton variant="transparent" onClick={() => setIsPopupOpen(false)}>
@@ -26,12 +33,12 @@ export const ErrorPopOut = memo(function ErrorPopOut({
           {rpcErrors.length > 0 ?
             <>
               <ChainNamesContainer>
-                {rpcErrors.map(chainId => (
+                {chainsToShow.map(chainId => (
                   <Chain key={chainId} chainId={chainId} showChainNames={showChainNames} />
                 ))}
               </ChainNamesContainer>
               {showChainsConnectedError && (
-                <ChainsConnected>{rpcErrors.length - 7}</ChainsConnected>
+                <ChainsConnected>{rpcErrors.length - 8}</ChainsConnected>
               )}
             </>
           : <>

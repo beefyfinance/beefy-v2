@@ -8,7 +8,6 @@ const actionRecipe = cva({
     display: 'flex',
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
-    padding: '4px',
     borderRadius: '4px',
     border: `none`,
     color: 'text.dark',

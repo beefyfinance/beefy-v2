@@ -414,7 +414,7 @@ const config = buildConfig(
             '30': { value: '#ffc1ae' },
             '40': { value: '#FFAD9E' },
             '40-12a': { value: '#3F384D' },
-            '40-40a': { value: '#FFAD9E66' },
+            '40-40a': { value: '#EA4E2866' },
             '50': { value: '#ff9269' },
             '60': { value: '#ee784c' },
             '70': { value: '#e66e42' },
