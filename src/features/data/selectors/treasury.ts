@@ -4,7 +4,7 @@ import { BIG_ZERO, compareBigNumber, isFiniteBigNumber } from '../../../helpers/
 import { entries, keys } from '../../../helpers/object.ts';
 import { explorerAddressUrl } from '../../../helpers/url.ts';
 import type { ChainEntity, ChainId } from '../entities/chain.ts';
-import type { TokenHoldingEntity, TreasuryHoldingEntity } from '../entities/treasury.ts';
+import type { TreasuryHoldingEntity } from '../entities/treasury.ts';
 import { isTokenHoldingEntity, isVaultHoldingEntity } from '../entities/treasury.ts';
 import type { BeefyState } from '../store/types.ts';
 import { selectLpBreakdownBalance } from './balance.ts';
@@ -494,14 +494,12 @@ export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
 
     return Object.values(treasury).map(wallet => {
       if (wallet.name.includes('validator')) {
+        // since pectra upgrade on ethereum we can have up to 2048 eth in a single validator
         if (chain.id === 'ethereum') {
-          const allValidatorsIds = Object.values(wallet.balances)
-            .filter((v): v is TokenHoldingEntity => v.assetType === 'validator' && !!v.numberId)
-            .map(validator => validator.numberId);
           return {
             address: wallet.address,
-            name: 'validators',
-            url: 'https://beaconcha.in/dashboard?validators=' + allValidatorsIds.join(','),
+            name: 'Beefy validator',
+            url: 'https://beaconcha.in/dashboard?validators=402418',
           };
         }
         return {
