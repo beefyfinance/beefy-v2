@@ -1,9 +1,17 @@
 import { memo, useState } from 'react';
-import { PricesDropdown } from './PricesDropdown.tsx';
-import { PricesButton } from './PricesButton.tsx';
+import { BifiPricesContent, BifiPricesDropdown } from './BifiPricesDropdown.tsx';
+import { PricesButtonDesktop, PricesButtonMobile } from './PricesButton.tsx';
 import { DropdownProvider } from '../../../Dropdown/DropdownProvider.tsx';
+import { styled } from '@repo/styles/jsx';
+import { ScrollableDrawer, Layout } from '../../../ScrollableDrawer/ScrollableDrawer.tsx';
+import { Button } from '../../../Button/Button.tsx';
+import { NavLink as RouterNavLink } from 'react-router';
 
-export const Prices = memo(function Prices() {
+export const BifiPricesDesktop = memo(function BifiPricesDesktop({
+  anchorEl,
+}: {
+  anchorEl: React.RefObject<HTMLDivElement>;
+}) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -12,11 +20,108 @@ export const Prices = memo(function Prices() {
       onChange={setOpen}
       placement="bottom-end"
       variant="dark"
-      arrowEnabled={true}
+      reference={anchorEl}
       layer={1}
+      openOnHover={true}
+      openOnClick={false}
     >
-      <PricesButton />
-      {open && <PricesDropdown setOpen={setOpen} />}
+      <Container open={open}>
+        <PricesButtonDesktop isOpen={open} />
+        <BridgeNavButton to="bridge">Bridge</BridgeNavButton>
+      </Container>
+      {open && <BifiPricesDropdown setOpen={setOpen} />}
     </DropdownProvider>
   );
+});
+
+export const BifiPricesMobile = memo(function BifiPricesMobile() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <BifiPricesMobileContainer>
+      <PricesButtonMobile setOpen={setOpen} />
+      <ScrollableDrawer
+        open={open}
+        onClose={() => setOpen(false)}
+        mainChildren={
+          <ContentContainer>
+            <BifiPricesContent />
+          </ContentContainer>
+        }
+        footerChildren={
+          <FooterButton fullWidth={true} borderless={true} onClick={() => setOpen(false)}>
+            Cancel
+          </FooterButton>
+        }
+        LayoutComponent={CustomLayout}
+        hideShadow={true}
+        mobileSpacingSize={12}
+      />
+    </BifiPricesMobileContainer>
+  );
+});
+
+const CustomLayout = styled(Layout, {
+  base: {
+    height: '360px',
+    borderTopRadius: '12px',
+    padding: '12px',
+  },
+});
+
+const BifiPricesMobileContainer = styled('div', {
+  base: {
+    position: 'relative',
+  },
+});
+
+export const BridgeNavButton = styled(RouterNavLink, {
+  base: {
+    color: 'text.middle',
+    textStyle: 'body.medium',
+    paddingBlock: '6px',
+    paddingInline: '16px',
+    textDecoration: 'none',
+    outline: 'none',
+    backgroundColor: 'background.button',
+    borderRadius: '8px',
+    _hover: {
+      color: 'text.light',
+      cursor: 'pointer',
+    },
+    lg: {
+      paddingBlock: '8px',
+    },
+  },
+});
+
+const Container = styled('div', {
+  base: {
+    backgroundColor: 'background.content.dark',
+    display: 'flex',
+    borderRadius: '8px',
+  },
+  variants: {
+    open: {
+      true: {
+        backgroundColor: 'background.content',
+      },
+    },
+  },
+});
+
+const ContentContainer = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: 'background.content',
+    borderRadius: '12px',
+  },
+});
+
+const FooterButton = styled(Button, {
+  base: {
+    backgroundColor: 'darkBlue.80',
+    color: 'text.dark',
+  },
 });

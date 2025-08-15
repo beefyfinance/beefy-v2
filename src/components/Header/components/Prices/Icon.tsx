@@ -18,7 +18,7 @@ const iconRecipe = cva({
 
 export const Icon = styled('img', iconRecipe, {
   defaultProps: {
-    height: '24',
-    width: '24',
+    height: '20',
+    width: '20',
   },
 });

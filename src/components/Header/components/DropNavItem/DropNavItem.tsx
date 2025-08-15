@@ -31,7 +31,14 @@ export const DropNavItem = memo<DropNavItemProps>(function DropNavItem({
   }, [setIsOpen]);
 
   return (
-    <DropdownProvider open={isOpen} onChange={setIsOpen}>
+    <DropdownProvider
+      open={isOpen}
+      onChange={setIsOpen}
+      openOnHover={true}
+      openOnClick={false}
+      hoverOpenDelay={0}
+      hoverCloseDelay={100}
+    >
       <DropdownNavButton>
         <NavItemInner
           title={title}
@@ -40,7 +47,7 @@ export const DropNavItem = memo<DropNavItemProps>(function DropNavItem({
           Arrow={isOpen ? UpArrow : DownArrow}
         />
       </DropdownNavButton>
-      <DropdownItems padding="small">
+      <DropdownItems>
         {items.map(item => {
           const NavItemComponent = item.Component ?? NavLinkItem;
           return (
@@ -51,6 +58,8 @@ export const DropNavItem = memo<DropNavItemProps>(function DropNavItem({
               Icon={item.Icon}
               Badge={item.Badge}
               onClick={handleClose}
+              dropdownItem={true}
+              externalLink={item.externalLink}
             />
           );
         })}
@@ -61,11 +70,12 @@ export const DropNavItem = memo<DropNavItemProps>(function DropNavItem({
 
 const DropdownItems = styled(DropdownContent, {
   base: {
-    borderWidth: '2px',
-    borderStyle: 'solid',
-    borderColor: 'background.content.dark',
-    backgroundColor: 'searchInput.background',
-    borderRadius: '4px',
+    minWidth: '172px',
+    backgroundColor: 'background.cardBody',
+    borderRadius: '8px',
+    paddingInline: '0px',
+    paddingBlock: '6px',
+    gap: '0px',
   },
 });
 

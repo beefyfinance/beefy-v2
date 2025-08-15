@@ -14,10 +14,13 @@ type BaseNavItemProps = {
 export type NavItemProps = BaseNavItemProps & {
   url: string;
   mobile?: boolean;
+  dropdownItem?: boolean;
+  externalLink?: boolean;
 };
 
 export type NavItemInnerProps = Pick<NavItemProps, 'title' | 'Icon' | 'Badge'> & {
   Arrow?: FunctionComponent<SvgProps<SVGSVGElement>>;
+  externalLink?: boolean;
 };
 
 export type NavDropdownProps = BaseNavItemProps & {

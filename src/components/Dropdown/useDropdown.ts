@@ -18,6 +18,7 @@ import {
   useClick,
   useDismiss,
   useFloating,
+  useHover,
   useInteractions,
   useRole,
 } from '@floating-ui/react';
@@ -28,8 +29,11 @@ export function useDropdown<TRef extends ReferenceType = Element>({
   open: controlledOpen,
   onChange: controlledOnChange,
   placement = 'bottom-start',
-  offset = 4,
+  offset = 8,
   openOnClick = true,
+  openOnHover = false,
+  hoverOpenDelay = 0,
+  hoverCloseDelay = 100,
   closeOnClickAway = true,
   variant = undefined,
   arrowEnabled = false,
@@ -84,15 +88,28 @@ export function useDropdown<TRef extends ReferenceType = Element>({
     middleware,
   });
   const { context } = data;
+
+  const hover = useHover(context, {
+    move: false,
+    enabled: !disabled && openOnHover,
+    mouseOnly: openOnClick,
+    delay: {
+      open: hoverOpenDelay,
+      close: hoverCloseDelay,
+    },
+  });
+
   const click = useClick(context, {
     enabled: !disabled && openOnClick,
     stickIfOpen: true,
+    ignoreMouse: openOnHover,
   });
+
   const dismiss = useDismiss(context, {
     enabled: !disabled && closeOnClickAway,
   });
   const role = useRole(context, { role: 'dialog' });
-  const interactions = useInteractions([click, dismiss, role]);
+  const interactions = useInteractions([click, hover, dismiss, role]);
   const arrow = useMemo(
     () =>
       arrowEnabled ?

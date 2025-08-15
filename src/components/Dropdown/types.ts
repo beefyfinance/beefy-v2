@@ -13,6 +13,9 @@ export type DropdownOptions = {
   placement?: Placement;
   offset?: number;
   openOnClick?: boolean;
+  openOnHover?: boolean;
+  hoverOpenDelay?: number;
+  hoverCloseDelay?: number;
   closeOnClickAway?: boolean;
   arrowEnabled?: boolean;
   arrowWidth?: number;
@@ -36,6 +39,14 @@ export type DropdownData<TRef extends ReferenceType = Element> = {
         height: number;
       };
   manualReference: boolean;
+  hoverHandlers?: {
+    onMouseEnter: (e: React.MouseEvent) => void;
+    onMouseLeave: (e: React.MouseEvent) => void;
+  };
+  contentHoverHandlers?: {
+    onMouseEnter: () => void;
+    onMouseLeave: () => void;
+  };
 } & UseInteractionsReturn &
   UseFloatingReturn<TRef> &
   Pick<DropdownOptions, 'variant'> &

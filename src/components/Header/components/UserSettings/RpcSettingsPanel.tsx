@@ -1,49 +1,61 @@
-import { memo, useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { memo, useCallback } from 'react';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
-import BackArrow from '../../../../images/back-arrow.svg?react';
-import CloseIcon from '../../../../images/icons/mui/Close.svg?react';
 import { RpcEdit } from './RpcEdit.tsx';
 import { RpcMenu } from './RpcMenu.tsx';
-import {
-  PanelBackButton,
-  PanelCloseButton,
-  Panel,
-  PanelContent,
-  PanelHeader,
-  PanelTitle,
-} from './Panel.tsx';
+import { styled } from '@repo/styles/jsx';
 
-export const RpcSettingsPanel = memo(function RpcSettingsModal({
-  handleClose,
+export const RpcSettingsPanel = memo(function RpcSettingsPanel({
+  rpcErrors,
+  editChainId,
+  setEditChainId,
 }: {
-  handleClose: () => void;
+  rpcErrors: ChainEntity['id'][];
+  editChainId: ChainEntity['id'] | null;
+  setEditChainId: (chainId: ChainEntity['id'] | null) => void;
 }) {
-  const { t } = useTranslation();
-  const [editChainId, setEditChainId] = useState<ChainEntity['id'] | null>(null);
   const onBack = useCallback(() => {
     setEditChainId(null);
   }, [setEditChainId]);
-  const showStepBack = editChainId !== null;
 
   return (
-    <Panel>
-      <PanelHeader>
-        {showStepBack && (
-          <PanelBackButton onClick={onBack}>
-            <BackArrow width={12} height={9} />
-          </PanelBackButton>
-        )}
-        <PanelTitle>{t('RpcModal-Menu-Edit')}</PanelTitle>
-        <PanelCloseButton onClick={handleClose}>
-          <CloseIcon />
-        </PanelCloseButton>
-      </PanelHeader>
-      <PanelContent>
-        {editChainId ?
-          <RpcEdit chainId={editChainId} onBack={onBack} />
-        : <RpcMenu onSelect={setEditChainId} />}
-      </PanelContent>
-    </Panel>
+    <>
+      {editChainId ?
+        <RpcEdit chainId={editChainId} onBack={onBack} />
+      : <PanelContent>
+          <RpcMenu rpcErrors={rpcErrors} onSelect={setEditChainId} />
+        </PanelContent>
+      }
+    </>
   );
 });
+
+export const PanelContent = styled('div', {
+  base: {
+    height: '500px',
+    padding: 0,
+    sm: {
+      height: '350px',
+    },
+  },
+});
+
+// const CollapsableContainer = styled(Collapsable, {
+//   base: {
+//     paddingBlock: '6px',
+//     paddingInline: '10px',
+//   },
+// });
+
+// const styles = {
+//   title: css.raw({
+//     paddingBlock: '6px',
+//     paddingInline: '10px',
+//   }),
+//   collapsable: css.raw({
+//     height: '100%',
+//     gap: 0,
+//     lg: {
+//       height: 'auto',
+//     },
+//   }),
+// };

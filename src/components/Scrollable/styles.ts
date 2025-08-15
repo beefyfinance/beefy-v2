@@ -11,6 +11,7 @@ export const styles = {
   }),
   track: css.raw({
     borderRadius: '4',
+    width: '4px',
   }),
   horizontalTrack: css.raw({
     right: '0',
