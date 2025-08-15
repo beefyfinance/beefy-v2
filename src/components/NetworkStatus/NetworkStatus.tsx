@@ -120,7 +120,7 @@ export const NetworkStatus = memo(function NetworkStatus({
       closeOnClickAway={!isMobile}
       {...openOnHoverProps}
     >
-      <DropdownButton onClick={handleToggle}>
+      <DropdownButton onClick={handleToggle} open={open}>
         <PulseHighlight variant={variant} state={hidePulse ? 'stopped' : 'playing'} />
       </DropdownButton>
 
@@ -131,7 +131,7 @@ export const NetworkStatus = memo(function NetworkStatus({
             <ErrorPopOut setIsPopupOpen={onOpen} rpcErrors={rpcErrors} />
           </StyledDropdownContent>
         : <MobileDrawer
-            open={isAutoOpen && !isUserOpen}
+            open={open}
             handleClose={handleClose}
             titleText={titleText}
             editChainId={editChainId}
@@ -182,13 +182,23 @@ const DropdownButton = styled(DropdownTrigger.button, {
   base: {
     height: '40px',
     border: 'none',
-    borderRadius: '8px',
+    borderLeftRadius: '8px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
-    backgroundColor: 'transparent',
+    backgroundColor: 'background.content.dark',
     paddingInline: '12px',
+    _hover: {
+      backgroundColor: 'background.content.light',
+    },
+  },
+  variants: {
+    open: {
+      true: {
+        backgroundColor: 'background.content.light',
+      },
+    },
   },
 });
 

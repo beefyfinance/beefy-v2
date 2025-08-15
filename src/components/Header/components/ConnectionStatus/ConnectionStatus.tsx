@@ -18,7 +18,7 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
   }, [setOpen]);
 
   return (
-    <Holder ref={anchorEl} open={open}>
+    <Holder ref={anchorEl} open={true}>
       <NetworkStatus
         anchorEl={anchorEl}
         isOpen={open}

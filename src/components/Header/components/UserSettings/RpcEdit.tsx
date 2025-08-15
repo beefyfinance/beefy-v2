@@ -22,6 +22,7 @@ import { Button } from '../../../Button/Button.tsx';
 import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
 import { BaseInput } from '../../../Form/Input/BaseInput.tsx';
 import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
+import { checkClipboardPermissions } from '../../../../helpers/clipboard.ts';
 
 const URL_REGX = /^https:\/\//;
 
@@ -54,15 +55,24 @@ export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) 
   );
 
   const pasteFromClipboard = useCallback(() => {
-    navigator.clipboard
-      .readText()
-      .then(clipboardText => {
-        setUpdatedRPC(clipboardText);
+    // Check permissions then read clipboard
+    checkClipboardPermissions()
+      .then(hasPermission => {
+        if (hasPermission) {
+          navigator.clipboard
+            .readText()
+            .then(clipboardText => {
+              setUpdatedRPC(clipboardText);
+            })
+            .catch(error => {
+              console.error('Failed to read from clipboard:', error);
+              // Fallback for older browsers or when clipboard access is denied
+              // You could show a toast notification here if needed
+            });
+        }
       })
       .catch(error => {
-        console.error('Failed to read from clipboard:', error);
-        // Fallback for older browsers or when clipboard access is denied
-        // You could show a toast notification here if needed
+        console.error('Error in permission check:', error);
       });
   }, []);
 

@@ -29,7 +29,7 @@ export function useDropdown<TRef extends ReferenceType = Element>({
   open: controlledOpen,
   onChange: controlledOnChange,
   placement = 'bottom-start',
-  offset = 4,
+  offset = 8,
   openOnClick = true,
   openOnHover = false,
   hoverOpenDelay = 0,

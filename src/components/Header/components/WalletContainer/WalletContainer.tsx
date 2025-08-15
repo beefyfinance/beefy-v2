@@ -129,6 +129,7 @@ const Button = styled('button', {
     overflow: 'hidden',
     height: '40px',
     gap: '8px',
+    backgroundColor: 'background.content.dark',
     _hover: {
       backgroundColor: 'background.content.light',
     },
@@ -136,14 +137,16 @@ const Button = styled('button', {
   variants: {
     status: {
       disconnected: {
+        color: 'text.black',
         borderColor: 'green',
         backgroundColor: 'green',
+        _hover: {
+          borderColor: 'green.20',
+          backgroundColor: 'green.20',
+        },
       },
       error: {
         borderColor: 'orange.40-12',
-        _hover: {
-          borderColor: 'background.content.light',
-        },
       },
       connected: {
         borderColor: 'green',
