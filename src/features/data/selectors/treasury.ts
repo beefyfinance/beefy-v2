@@ -498,7 +498,7 @@ export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
         if (chain.id === 'ethereum') {
           return {
             address: wallet.address,
-            name: 'Beefy validator',
+            name: 'beefy-validator',
             url: 'https://beaconcha.in/dashboard?validators=402418',
           };
         }

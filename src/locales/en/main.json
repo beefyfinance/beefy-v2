@@ -788,6 +788,7 @@
   "Treasury-treasury": "Treasury",
   "Treasury-validator": "Validator",
   "Treasury-validators": "Validators",
+  "Treasury-beefy-validator": "Beefy Validator",
   "pnl-graph-legend-amount-lp": "LP Amount",
   "pnl-graph-legend-amount-single": "{{token}} Amount",
   "pnl-graph-legend-usd": "Deposit Value (USD)",
