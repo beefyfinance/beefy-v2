@@ -1,3 +1,4 @@
+import { createCachedSelector } from 're-reselect';
 import { memo, type ReactNode } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
@@ -39,68 +40,75 @@ export const VaultAtDepositStat = memo(function VaultAtDepositStat({
   return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
 });
 
-// TODO better selector / hook
-const selectVaultAtDepositStat = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  pnlData: UserVaultPnl,
-  walletAddress: string
-) => {
-  const label = 'VaultStat-AtDeposit';
-  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
-  const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
+const selectVaultAtDepositStat = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], _pnlData: UserVaultPnl, walletAddress: string) =>
+    selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress),
+  (state: BeefyState, _vaultId: VaultEntity['id'], _pnlData: UserVaultPnl, walletAddress: string) =>
+    selectIsAnalyticsLoadedByAddress(state, walletAddress),
+  (
+    _state: BeefyState,
+    _vaultId: VaultEntity['id'],
+    pnlData: UserVaultPnl,
+    _walletAddress: string
+  ) => pnlData,
+  (vaultTimeline, isLoaded, pnlData) => {
+    const label = 'VaultStat-AtDeposit';
 
-  if (!vaultTimeline || !vaultTimeline.current.length) {
+    if (!vaultTimeline || !vaultTimeline.current.length) {
+      return {
+        label,
+        value: '-',
+        subValue: null,
+        blur: false,
+        loading: false,
+      };
+    }
+
+    if (!isLoaded) {
+      return {
+        label,
+        value: '-',
+        subValue: null,
+        blur: false,
+        loading: true,
+        expectSubValue: true,
+      };
+    }
+
+    let value: string, subValue: string, tooltip: ReactNode;
+    if (isUserClmPnl(pnlData)) {
+      value = formatTokenDisplayCondensed(
+        pnlData.underlying.entry.amount,
+        pnlData.underlying.token.decimals,
+        6
+      );
+      subValue = formatLargeUsd(pnlData.underlying.entry.usd);
+      tooltip = (
+        <BasicTooltipContent
+          title={formatTokenDisplay(
+            pnlData.underlying.entry.amount,
+            pnlData.underlying.token.decimals
+          )}
+        />
+      );
+    } else {
+      const { balanceAtDeposit, usdBalanceAtDeposit, tokenDecimals } = pnlData;
+      value = formatTokenDisplayCondensed(balanceAtDeposit, tokenDecimals, 6);
+      subValue = formatLargeUsd(usdBalanceAtDeposit);
+      tooltip = <BasicTooltipContent title={formatTokenDisplay(balanceAtDeposit, tokenDecimals)} />;
+    }
+
     return {
       label,
-      value: '-',
-      subValue: null,
+      value,
+      subValue,
       blur: false,
-      loading: false,
+      loading: !isLoaded,
+      boosted: false,
+      tooltip,
     };
   }
-
-  if (!isLoaded) {
-    return {
-      label,
-      value: '-',
-      subValue: null,
-      blur: false,
-      loading: true,
-      expectSubValue: true,
-    };
-  }
-
-  let value: string, subValue: string, tooltip: ReactNode;
-  if (isUserClmPnl(pnlData)) {
-    value = formatTokenDisplayCondensed(
-      pnlData.underlying.entry.amount,
-      pnlData.underlying.token.decimals,
-      6
-    );
-    subValue = formatLargeUsd(pnlData.underlying.entry.usd);
-    tooltip = (
-      <BasicTooltipContent
-        title={formatTokenDisplay(
-          pnlData.underlying.entry.amount,
-          pnlData.underlying.token.decimals
-        )}
-      />
-    );
-  } else {
-    const { balanceAtDeposit, usdBalanceAtDeposit, tokenDecimals } = pnlData;
-    value = formatTokenDisplayCondensed(balanceAtDeposit, tokenDecimals, 6);
-    subValue = formatLargeUsd(usdBalanceAtDeposit);
-    tooltip = <BasicTooltipContent title={formatTokenDisplay(balanceAtDeposit, tokenDecimals)} />;
-  }
-
-  return {
-    label,
-    value,
-    subValue,
-    blur: false,
-    loading: !isLoaded,
-    boosted: false,
-    tooltip,
-  };
-};
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], _nlData: UserVaultPnl, _walletAddress: string) =>
+    vaultId
+);

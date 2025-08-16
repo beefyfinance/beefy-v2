@@ -24,3 +24,32 @@ export function bigNumberOrStaticZero(value: BigNumber | undefined | null): BigN
   }
   return value;
 }
+
+type CompareFn<T> = (a: T, b: T) => boolean;
+
+function referenceEqualityCheck<T>(a: T, b: T): boolean {
+  return a === b;
+}
+
+export function bigNumberEqualityCheck(a: BigNumber, b: BigNumber): boolean {
+  if (a === b) return true;
+  return a.isEqualTo(b);
+}
+
+/** @dev sort before calling if you don't need array to be in same order */
+export function areArraysEqual<T>(
+  a: T[],
+  b: T[],
+  compareFn: CompareFn<T> = referenceEqualityCheck
+): boolean {
+  if (a === b) return true;
+  if (a.length !== b.length) return false;
+
+  for (let i = 0; i < a.length; i++) {
+    if (!compareFn(a[i], b[i])) {
+      return false;
+    }
+  }
+
+  return true;
+}
