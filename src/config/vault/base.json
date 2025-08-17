@@ -22568,5 +22568,34 @@
     "addLiquidityUrl": "https://balancer.fi/pools/base/v2/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/remove-liquidity",
     "network": "base"
+  },
+{
+     "id": "zaero-cow-weth-keycat-vault",
+    "name": "KEYCAT-WETH",
+    "type": "standard",
+    "token": "KEYCAT-WETH",
+    "tokenAddress": "0x5b65953661ff39819C58bE3BC25Fe983B59F0729",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooCowAeroWETH-KEYCAT",
+    "earnedTokenAddress": "0xd82403772cB858219cfb58bFab46Ba7a31073474",
+    "earnContractAddress": "0xd82403772cB858219cfb58bFab46Ba7a31073474",
+    "oracle": "lps",
+    "oracleId": "aero-cow-weth-keycat",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["KEYCAT", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1755450008,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
   }
 ]
