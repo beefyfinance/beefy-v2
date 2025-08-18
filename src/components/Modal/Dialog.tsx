@@ -9,7 +9,6 @@ const dialogRecipe = cva({
     minHeight: '0',
     minWidth: '0',
     maxWidth: '100%',
-    backgroundColor: 'background.content.dark',
   },
   variants: {
     scrollable: {

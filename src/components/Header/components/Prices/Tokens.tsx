@@ -7,12 +7,10 @@ import shadowSwapIcon from '../../../../images/platforms/shadow.svg';
 import { ActionLink } from './Action.tsx';
 import { AddToWalletButton } from './AddToWalletButton.tsx';
 import { type Token, tokens } from './config.ts';
-import { Icon } from './Icon.tsx';
+import { ChainSquareIcon, Icon } from './Icon.tsx';
 import { styled } from '@repo/styles/jsx';
 import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
-import { getNetworkSrc } from '../../../../helpers/networkSrc.ts';
-import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 
 const buyPlatforms: Record<
   NonNullable<Token['buyLink']>['platform'],
@@ -62,13 +60,7 @@ const TokenRow = memo<TooltipTokenProps>(function TokenRow({ token }) {
         >
           {isMobile ?
             <ChainMobileContainer>
-              <img
-                alt={chain.name}
-                src={getNetworkSrc(`${chainId}_square` as ChainEntity['id'])}
-                width={24}
-                height={24}
-              />
-              ↗
+              <ChainSquareIcon chainId={chainId} /> ↗
             </ChainMobileContainer>
           : `${chain.name} ↗`}
         </ChainLink>

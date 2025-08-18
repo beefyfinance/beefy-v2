@@ -149,13 +149,13 @@ export const DropMobile = memo<DropMobileProps>(function DropMobile({
 
 const NavItemContainer = styled('div', {
   base: {
-    backgroundColor: 'background.content',
+    backgroundColor: 'background.content.dark',
     borderRadius: '8px',
   },
   variants: {
     sublist: {
       true: {
-        paddingBlock: '6px',
+        paddingBlock: '8px',
       },
     },
     prices: {

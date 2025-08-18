@@ -64,7 +64,7 @@ export const BifiPricesMobile = memo(function BifiPricesMobile() {
 const CustomLayout = styled(Layout, {
   base: {
     height: '360px',
-    borderTopRadius: '12px',
+    borderTopRadius: '16px',
     padding: '12px',
   },
 });
@@ -115,7 +115,7 @@ const ContentContainer = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: 'background.content',
-    borderRadius: '12px',
+    borderRadius: '8px',
   },
 });
 

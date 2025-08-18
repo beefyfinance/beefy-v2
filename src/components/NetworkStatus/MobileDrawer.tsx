@@ -38,7 +38,7 @@ export const MobileDrawer = memo(function MobileDrawer({
       hideShadow={true}
       mainChildren={
         <>
-          <TitleComponent hasAnyError={hasAnyError} text={titleText} />
+          <TitleComponent mobilelist={true} hasAnyError={hasAnyError} text={titleText} />
           <ListMobile>
             <RpcSettingsPanel
               rpcErrors={rpcErrors}
@@ -77,7 +77,7 @@ const CustomLayout = styled(Layout, {
   base: {
     backgroundColor: 'background.content',
     height: 'calc(100dvh - 64px)',
-    borderTopRadius: '12px',
+    borderTopRadius: '16px',
   },
 });
 
