@@ -499,7 +499,7 @@ export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
           return {
             address: wallet.address,
             name: 'beefy-validator',
-            url: 'https://beaconcha.in/dashboard?validators=402418',
+            url: 'https://beaconcha.in/validator/402418',
           };
         }
         return {
