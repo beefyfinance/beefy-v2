@@ -170,7 +170,7 @@ const NavItemContainer = styled('div', {
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingInline: '10px 4px',
-        paddingBlock: '4px',
+        paddingBlock: '12px 4px',
       },
     },
   },
