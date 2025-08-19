@@ -97,7 +97,6 @@ const CustomMain = styled(Main, {
     flexDirection: 'column',
     gap: '10px',
     paddingInline: '12px',
-    overflowY: 'hidden',
   },
 });
 
