@@ -921,7 +921,7 @@
   "RpcModal-Add": "Add new RPC",
   "RpcModal-Save": "Save",
   "RpcModal-Cancel": "Cancel",
-  "RpcModal-Close": "Close Menu",
+  "RpcModal-Close": "Close",
   "RpcModal-Reset": "Restore Default RPC",
   "RpcModal-InputPlaceholder": "Enter the RPC URL",
   "RpcModal-InvalidRpc": "Please insert a valid RPC",

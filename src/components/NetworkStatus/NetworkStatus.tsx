@@ -163,8 +163,6 @@ export const NetworkStatus = memo(function NetworkStatus({
 
 const Content = styled('div', {
   base: {
-    backgroundColor: 'background.content.dark',
-    borderRadius: '8px',
     marginInline: '2px',
   },
 });

@@ -5,7 +5,6 @@ import { selectAllChainIds } from '../../../../features/data/selectors/chains.ts
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { ChainRpcItem } from './RpcListItem.tsx';
 import { Scrollable } from '../../../Scrollable/Scrollable.tsx';
-import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
 import { useTranslation } from 'react-i18next';
 
 export interface RpcMenuProps {
@@ -16,8 +15,6 @@ export interface RpcMenuProps {
 export const RpcMenu = memo(function RpcMenu({ onSelect, rpcErrors }: RpcMenuProps) {
   const { t } = useTranslation();
   const chainIds = useAppSelector(state => selectAllChainIds(state));
-
-  const isMobile = useBreakpoint({ to: 'xs' });
 
   const handleSelect = useCallback(
     (chainId: ChainEntity['id']) => {
@@ -35,7 +32,7 @@ export const RpcMenu = memo(function RpcMenu({ onSelect, rpcErrors }: RpcMenuPro
   }, [chainIds, rpcErrors]);
 
   return (
-    <Scrollable autoHeight={isMobile ? 500 : 350} hideShadows>
+    <Scrollable scrollContainer={false} hideShadows>
       <RpcList>
         {rpcErrors.length > 0 &&
           rpcErrors.map(chainId => (

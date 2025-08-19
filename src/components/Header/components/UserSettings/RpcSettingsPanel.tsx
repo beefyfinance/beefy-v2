@@ -18,21 +18,32 @@ export const RpcSettingsPanel = memo(function RpcSettingsPanel({
   }, [setEditChainId]);
 
   return (
-    <>
+    <Container>
       {editChainId ?
         <RpcEdit chainId={editChainId} onBack={onBack} />
       : <PanelContent>
           <RpcMenu rpcErrors={rpcErrors} onSelect={setEditChainId} />
         </PanelContent>
       }
-    </>
+    </Container>
   );
+});
+
+const Container = styled('div', {
+  base: {
+    borderRadius: '8px',
+    backgroundColor: 'background.content.dark',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
 });
 
 export const PanelContent = styled('div', {
   base: {
-    height: '500px',
+    flex: '1 1 auto',
     padding: 0,
+    overflow: 'hidden',
     sm: {
       height: '350px',
     },

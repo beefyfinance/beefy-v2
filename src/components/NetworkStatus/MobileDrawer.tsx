@@ -38,14 +38,16 @@ export const MobileDrawer = memo(function MobileDrawer({
       hideShadow={true}
       mainChildren={
         <>
-          <TitleComponent mobilelist={true} hasAnyError={hasAnyError} text={titleText} />
-          <ListMobile>
+          <TitleWrapper>
+            <TitleComponent mobilelist={true} hasAnyError={hasAnyError} text={titleText} />
+          </TitleWrapper>
+          <ScrollableRpcSettingsPanel>
             <RpcSettingsPanel
               rpcErrors={rpcErrors}
               editChainId={editChainId}
               setEditChainId={setEditChainId}
             />
-          </ListMobile>
+          </ScrollableRpcSettingsPanel>
         </>
       }
       footerChildren={
@@ -77,6 +79,8 @@ const CustomLayout = styled(Layout, {
   base: {
     backgroundColor: 'background.content',
     borderTopRadius: '16px',
+    height: '100dvh',
+    maxHeight: '100dvh',
     overflow: 'hidden',
   },
 });
@@ -89,6 +93,7 @@ const CustomFooter = styled(Footer, {
     borderTopRadius: '12px',
     paddingInline: '12px',
     paddingBlock: '16px',
+    flexShrink: 0,
   },
 });
 
@@ -99,15 +104,21 @@ const CustomMain = styled(Main, {
     gap: '10px',
     paddingInline: '12px',
     overflow: 'hidden',
+    flex: '1 1 auto',
   },
 });
 
-const ListMobile = styled('div', {
+const TitleWrapper = styled('div', {
   base: {
-    display: 'flex',
-    flexDirection: 'column',
-    borderRadius: '8px',
-    backgroundColor: 'background.content.dark',
+    flexShrink: 0,
+  },
+});
+
+const ScrollableRpcSettingsPanel = styled('div', {
+  base: {
+    flex: '1 1 auto',
+    overflowY: 'auto',
+    minHeight: 0,
   },
 });
 

@@ -57,7 +57,7 @@ export const ScrollableDrawer = memo<ScrollabeDrawerProps>(function ScrollableDr
       <LayoutComponent>
         <MainComponent ref={mainRef}>
           {mainChildren}
-          <MobileSpacing style={{ height: `${mobileSpacingSize}px` }} />
+          {mobileSpacingSize > 0 && <MobileSpacing style={{ height: `${mobileSpacingSize}px` }} />}
         </MainComponent>
         {!hideShadow && <Shadow style={{ opacity: `${shadowOpacity}%` }} />}
         <FooterComponent>{footerChildren}</FooterComponent>
