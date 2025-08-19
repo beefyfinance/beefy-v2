@@ -28369,5 +28369,34 @@
     "addLiquidityUrl": "https://ellipsis.finance/pool/0xBcA6E25937B0F7E0FD8130076b6B218F595E32e2",
     "removeLiquidityUrl": "https://ellipsis.finance/pool/0xBcA6E25937B0F7E0FD8130076b6B218F595E32e2",
     "network": "bsc"
+  },
+  {
+    "id": "bscWBNB",
+    "name": "WBNB",
+    "type": "standard",
+    "token": "WBNB",
+    "tokenDecimals": 18,
+    "earnedToken": "moocbscWBNB",
+    "earnedTokenAddress": "0x0979eB1741c8Ddd905A9228522f61c8748b4C509",
+    "earnContractAddress": "0x0979eB1741c8Ddd905A9228522f61c8748b4C509",
+    "oracle": "tokens",
+    "oracleId": "WBNB",
+    "status": "active",
+    "createdAt": 1755627503,
+    "platformId": "compound",
+    "assets": ["WBNB"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "PLATFORM_ESTABLISHED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
+    }
   }
 ]
