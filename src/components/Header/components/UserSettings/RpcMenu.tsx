@@ -61,6 +61,6 @@ const Title = styled('div', {
   base: {
     paddingBlock: '6px',
     paddingInline: '10px',
-    color: 'text.dark',
+    color: 'text.light',
   },
 });

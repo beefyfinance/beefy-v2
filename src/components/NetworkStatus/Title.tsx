@@ -38,7 +38,6 @@ const TitleContainer = styled('div', {
   variants: {
     mobilelist: {
       true: {
-        paddingInline: '12px',
         paddingTop: '16px',
       },
       false: {

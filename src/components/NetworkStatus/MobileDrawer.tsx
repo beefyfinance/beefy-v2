@@ -76,7 +76,6 @@ export const MobileDrawer = memo(function MobileDrawer({
 const CustomLayout = styled(Layout, {
   base: {
     backgroundColor: 'background.content',
-    height: 'calc(100dvh - 64px)',
     borderTopRadius: '16px',
   },
 });

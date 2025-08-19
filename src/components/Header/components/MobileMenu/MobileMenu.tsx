@@ -11,9 +11,11 @@ import { NavItemInner } from '../NavItem/NavItemInner.tsx';
 import { NavItem } from '../NavItem/NavLink.tsx';
 import { ScrollableDrawer } from '../../../ScrollableDrawer/ScrollableDrawer.tsx';
 import { Button } from '../../../Button/Button.tsx';
+import { useTranslation } from 'react-i18next';
 
 export const MobileMenu = memo(function MobileMenu() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { t } = useTranslation();
   const handleDrawerToggle = useCallback(() => {
     setMobileOpen(open => !open);
   }, [setMobileOpen]);
@@ -42,7 +44,7 @@ export const MobileMenu = memo(function MobileMenu() {
         }
         footerChildren={
           <Button fullWidth={true} borderless={true} onClick={handleDrawerToggle}>
-            Close
+            {t('RpcModal-Close')}
           </Button>
         }
       />

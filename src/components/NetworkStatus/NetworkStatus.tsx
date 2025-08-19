@@ -190,13 +190,13 @@ const DropdownButton = styled(DropdownTrigger.button, {
     backgroundColor: 'background.content.dark',
     paddingInline: '12px',
     _hover: {
-      backgroundColor: 'background.content.light',
+      backgroundColor: 'background.content',
     },
   },
   variants: {
     open: {
       true: {
-        backgroundColor: 'background.content.light',
+        backgroundColor: 'background.content',
       },
     },
   },

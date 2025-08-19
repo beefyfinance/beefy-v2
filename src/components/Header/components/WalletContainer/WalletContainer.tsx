@@ -131,7 +131,7 @@ const Button = styled('button', {
     gap: '8px',
     backgroundColor: 'background.content.dark',
     _hover: {
-      backgroundColor: 'background.content.light',
+      backgroundColor: 'background.content',
     },
   },
   variants: {

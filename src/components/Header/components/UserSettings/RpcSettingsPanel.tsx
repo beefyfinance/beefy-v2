@@ -38,24 +38,3 @@ export const PanelContent = styled('div', {
     },
   },
 });
-
-// const CollapsableContainer = styled(Collapsable, {
-//   base: {
-//     paddingBlock: '6px',
-//     paddingInline: '10px',
-//   },
-// });
-
-// const styles = {
-//   title: css.raw({
-//     paddingBlock: '6px',
-//     paddingInline: '10px',
-//   }),
-//   collapsable: css.raw({
-//     height: '100%',
-//     gap: 0,
-//     lg: {
-//       height: 'auto',
-//     },
-//   }),
-// };

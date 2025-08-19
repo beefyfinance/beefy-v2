@@ -24,7 +24,6 @@ const tokenPriceRecipe = cva({
     gridArea: 'content',
     lg: {
       justifyContent: 'center',
-      flexDirection: 'row-reverse',
     },
   },
   variants: {
@@ -59,8 +58,8 @@ export const TokenPrice = memo(function TokenPrice({ token, ...rest }: TokenPric
 
   return (
     <div className={tokenPriceRecipe(rest)}>
-      {formatLargeUsd(price, { decimalsUnder: 2 })}
       <Icon alt={symbol} src={icon} />
+      {formatLargeUsd(price, { decimalsUnder: 2 })}
     </div>
   );
 });
