@@ -22569,33 +22569,41 @@
     "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/remove-liquidity",
     "network": "base"
   },
-{
-    "id": "zaero-cow-weth-keycat-vault",
-    "name": "KEYCAT-WETH",
+  {
+    "id": "compWETH",
+    "name": "McSmithWETH",
     "type": "standard",
-    "token": "KEYCAT-WETH",
-    "tokenAddress": "0x5b65953661ff39819C58bE3BC25Fe983B59F0729",
+    "token": "ETH",
     "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnedToken": "mooCowAeroWETH-KEYCAT",
-    "earnedTokenAddress": "0x8e0B63846ebEFf857EE35eF3BD3A2df9EF7D6456",
-    "earnContractAddress": "0x8e0B63846ebEFf857EE35eF3BD3A2df9EF7D6456",
-    "oracle": "lps",
-    "oracleId": "aero-cow-weth-keycat",
+    "earnedToken": "moocompWETH",
+    "earnedTokenAddress": "0xd08DA45f9B201ce0Ec5c82316D9b1a59896965f3",
+    "earnContractAddress": "0xd08DA45f9B201ce0Ec5c82316D9b1a59896965f3",
+    "oracle": "tokens",
+    "oracleId": "ETH",
     "status": "active",
-    "platformId": "aerodrome",
-    "assets": ["KEYCAT", "WETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "createdAt": 1702482381,
+    "platformId": "compound",
+    "assets": ["ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=base&from=0x0000000000000000000000000000000000000000&to=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
     "network": "base",
-    "createdAt": 1755478893,
     "zaps": [
       {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
+        "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
+    }
   }
 ]
