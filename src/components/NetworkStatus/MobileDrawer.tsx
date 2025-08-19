@@ -77,6 +77,7 @@ const CustomLayout = styled(Layout, {
   base: {
     backgroundColor: 'background.content',
     borderTopRadius: '16px',
+    overflow: 'hidden',
   },
 });
 
