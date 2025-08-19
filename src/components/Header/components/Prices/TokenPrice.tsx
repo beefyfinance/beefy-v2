@@ -9,7 +9,7 @@ import { Icon } from './Icon.tsx';
 const tokenPriceRecipe = cva({
   base: {
     display: 'flex',
-    gap: '4px',
+    gap: '8px',
     justifyContent: 'flex-start',
     alignItems: 'center',
     whiteSpace: 'nowrap',
@@ -22,8 +22,10 @@ const tokenPriceRecipe = cva({
     transform: 'rotateX(0deg)',
     transition: 'transform 0.5s ease-in-out',
     gridArea: 'content',
+    paddingBlock: '2px',
     lg: {
       justifyContent: 'center',
+      gap: '4px',
     },
   },
   variants: {

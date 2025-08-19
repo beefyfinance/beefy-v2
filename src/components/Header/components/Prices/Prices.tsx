@@ -77,6 +77,9 @@ const BifiPricesMobileContainer = styled('div', {
 
 export const BridgeNavButton = styled(RouterNavLink, {
   base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
     color: 'text.middle',
     textStyle: 'body.medium',
     paddingBlock: '6px',

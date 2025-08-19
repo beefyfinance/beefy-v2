@@ -12,6 +12,7 @@ import { NavItem } from '../NavItem/NavLink.tsx';
 import { ScrollableDrawer } from '../../../ScrollableDrawer/ScrollableDrawer.tsx';
 import { Button } from '../../../Button/Button.tsx';
 import { useTranslation } from 'react-i18next';
+import ForwardArrowIcon from '../../../../images/icons/forward-arrow.svg?react';
 
 export const MobileMenu = memo(function MobileMenu() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -34,7 +35,10 @@ export const MobileMenu = memo(function MobileMenu() {
             <NavItemContainer prices={true}>
               <BifiPricesMobile />
               <BridgeNavButton onClick={handleDrawerToggle} to="bridge">
-                {'Bridge >'}
+                <span>{t('Bridge')}</span>
+                <FowardArrowContainer>
+                  <ForwardArrowIcon />
+                </FowardArrowContainer>
               </BridgeNavButton>
             </NavItemContainer>
             {MobileList.map(item => {
@@ -177,5 +181,19 @@ const SubItems = styled('div', {
     paddingLeft: '12px',
     display: 'flex',
     flexDirection: 'column',
+  },
+});
+
+const FowardArrowContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '20px',
+    width: '20px',
+    '& > svg': {
+      color: 'inherit',
+      height: '12px',
+    },
   },
 });

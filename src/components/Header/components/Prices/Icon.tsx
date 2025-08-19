@@ -8,8 +8,8 @@ import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 const iconRecipe = cva({
   base: {
     display: 'block',
-    height: '24px',
-    width: '24px',
+    height: '20px',
+    width: '20px',
   },
   variants: {
     first: {
@@ -22,8 +22,8 @@ const iconRecipe = cva({
 
 export const Icon = styled('img', iconRecipe, {
   defaultProps: {
-    height: '24px',
-    width: '24px',
+    height: '20px',
+    width: '20px',
   },
 });
 
