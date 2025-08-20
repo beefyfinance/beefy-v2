@@ -120,7 +120,7 @@ const config = buildConfig(
         '--onboard-wallet-button-color-hover': '{colors.text.lightest}',
         '--onboard-wallet-app-icon-border-color': '{colors.text.lightest}',
         '--onboard-wallet-app-icon-background-transparent': '{colors.text.lightest}',
-        '--onboard-connect-sidebar-background': '{colors.background.header}',
+        '--onboard-connect-sidebar-background': '{colors.darkBlue.90}',
         '--onboard-connect-sidebar-color': '{colors.text.light}',
         '--onboard-connect-sidebar-progress-color': '{colors.greenLight}',
         '--onboard-connect-sidebar-progress-background': '{colors.green}',
