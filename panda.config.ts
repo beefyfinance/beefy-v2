@@ -77,7 +77,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -266,7 +266,8 @@ const config = buildConfig(
             black: { value: '#111321' },
             boosted: { value: '{colors.gold.30}' },
           },
-          modal: { backdrop: { value: '#ffffff33' } },
+          //darkBlue100-64a
+          modal: { backdrop: { value: '#020203A3' } },
           alertBaseBackground: { value: '#f5f5ff14' },
           bayOfMany: { value: '#363b63', description: 'border + button bg' },
           birdgeQuoteButtonSelectedHoverBackground: { value: '#232741' },
