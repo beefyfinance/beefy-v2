@@ -53,22 +53,24 @@ export const MobileDrawer = memo(function MobileDrawer({
       footerChildren={
         <>
           <div>{t('RpcModal-EmptyList')}</div>
-          {editChainId ?
-            <ActionButtons>
-              <ChainRpcReset onBack={() => setEditChainId(null)} value={editChainId} />
-              <Button
-                variant="dark"
-                fullWidth={true}
-                borderless={true}
-                onClick={() => setEditChainId(null)}
-              >
-                {t('RpcModal-Cancel')}
+          <ActionButtons>
+            {editChainId ?
+              <>
+                <ChainRpcReset onBack={() => setEditChainId(null)} value={editChainId} />
+                <Button
+                  variant="dark"
+                  fullWidth={true}
+                  borderless={true}
+                  onClick={() => setEditChainId(null)}
+                >
+                  {t('RpcModal-Cancel')}
+                </Button>
+              </>
+            : <Button variant="dark" fullWidth={true} borderless={true} onClick={handleClose}>
+                {t('RpcModal-Close')}
               </Button>
-            </ActionButtons>
-          : <Button variant="dark" fullWidth={true} borderless={true} onClick={handleClose}>
-              {t('RpcModal-Close')}
-            </Button>
-          }
+            }
+          </ActionButtons>
         </>
       }
     />
@@ -92,7 +94,7 @@ const CustomFooter = styled(Footer, {
     gap: '20px',
     borderTopRadius: '12px',
     paddingInline: '12px',
-    paddingBlock: '16px',
+    paddingBlock: '16px 24px',
     flexShrink: 0,
   },
 });
@@ -128,5 +130,6 @@ const ActionButtons = styled('div', {
     flexDirection: 'column',
     gap: '8px',
     width: '100%',
+    paddingInline: '8px',
   },
 });

@@ -18,7 +18,7 @@ export const RpcSettingsPanel = memo(function RpcSettingsPanel({
   }, [setEditChainId]);
 
   return (
-    <Container>
+    <Container edit={!!editChainId}>
       {editChainId ?
         <RpcEdit chainId={editChainId} onBack={onBack} />
       : <PanelContent>
@@ -36,6 +36,13 @@ const Container = styled('div', {
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+  },
+  variants: {
+    edit: {
+      true: {
+        height: 'auto',
+      },
+    },
   },
 });
 

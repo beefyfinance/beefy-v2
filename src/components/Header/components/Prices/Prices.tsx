@@ -3,9 +3,10 @@ import { BifiPricesContent, BifiPricesDropdown } from './BifiPricesDropdown.tsx'
 import { PricesButtonDesktop, PricesButtonMobile } from './PricesButton.tsx';
 import { DropdownProvider } from '../../../Dropdown/DropdownProvider.tsx';
 import { styled } from '@repo/styles/jsx';
-import { ScrollableDrawer, Layout } from '../../../ScrollableDrawer/ScrollableDrawer.tsx';
+import { ScrollableDrawer, Layout, Main } from '../../../ScrollableDrawer/ScrollableDrawer.tsx';
 import { Button } from '../../../Button/Button.tsx';
 import { NavLink as RouterNavLink } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 export const BifiPricesDesktop = memo(function BifiPricesDesktop({
   anchorEl,
@@ -36,13 +37,14 @@ export const BifiPricesDesktop = memo(function BifiPricesDesktop({
 
 export const BifiPricesMobile = memo(function BifiPricesMobile() {
   const [open, setOpen] = useState(false);
-
+  const { t } = useTranslation();
   return (
     <BifiPricesMobileContainer>
       <PricesButtonMobile setOpen={setOpen} />
       <ScrollableDrawer
         open={open}
         onClose={() => setOpen(false)}
+        MainComponent={CustomMain}
         mainChildren={
           <ContentContainer>
             <BifiPricesContent />
@@ -50,7 +52,7 @@ export const BifiPricesMobile = memo(function BifiPricesMobile() {
         }
         footerChildren={
           <FooterButton fullWidth={true} borderless={true} onClick={() => setOpen(false)}>
-            Cancel
+            {t('Filter-Cancel')}
           </FooterButton>
         }
         LayoutComponent={CustomLayout}
@@ -65,7 +67,13 @@ const CustomLayout = styled(Layout, {
   base: {
     height: '360px',
     borderTopRadius: '16px',
-    padding: '12px',
+  },
+});
+
+const CustomMain = styled(Main, {
+  base: {
+    paddingInline: '12px',
+    paddingBlock: '12px 0px',
   },
 });
 

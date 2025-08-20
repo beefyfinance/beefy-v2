@@ -151,7 +151,10 @@ export const ChainRpcReset = memo(function ChainRpcReset({
 
 const ResetButton = styled(Button, {
   base: {
-    height: '40px',
+    height: '48px',
+    sm: {
+      height: '40px',
+    },
   },
 });
 

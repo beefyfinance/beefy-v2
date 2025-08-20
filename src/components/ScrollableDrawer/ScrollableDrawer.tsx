@@ -53,7 +53,7 @@ export const ScrollableDrawer = memo<ScrollabeDrawerProps>(function ScrollableDr
   }, [handleScroll]);
 
   return (
-    <Drawer scrollable={false} open={open} onClose={onClose} position="bottom">
+    <Drawer layer={1} scrollable={false} open={open} onClose={onClose} position="bottom">
       <LayoutComponent>
         <MainComponent ref={mainRef}>
           {mainChildren}
@@ -89,7 +89,7 @@ export const Footer = styled('div', {
   base: {
     display: 'flex',
     alignItems: 'center',
-    padding: '0px 20px 32px 20px',
+    padding: '0px 20px 24px 20px',
     gap: '12px',
     justifyContent: 'space-between',
   },
@@ -102,7 +102,7 @@ const Shadow = styled('div', {
     transition: 'opacity 0.2s linear',
     left: '0',
     right: '0',
-    bottom: '80px',
+    bottom: '72px',
     height: '55px',
     background: 'linear-gradient(0deg, #111321 2.91%, rgba(17, 19, 33, 0) 100%)',
   },
