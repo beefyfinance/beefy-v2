@@ -5410,7 +5410,7 @@
   },
   {
     "id": "morpho-ionic-usdc",
-    "name": "Ionic USDC",
+    "name": "Extrafi USDC",
     "token": "USDC",
     "tokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
     "tokenDecimals": 6,
@@ -5460,7 +5460,7 @@
   },
   {
     "id": "morpho-ionic-weth",
-    "name": "Ionic WETH",
+    "name": "Extrafi WETH",
     "token": "WETH",
     "tokenAddress": "0x4200000000000000000000000000000000000006",
     "tokenDecimals": 18,
