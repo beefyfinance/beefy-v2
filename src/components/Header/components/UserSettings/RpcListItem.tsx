@@ -59,7 +59,7 @@ export const ChainRpcItem = memo(function ChainRpcItem({
 const Container = styled('div', {
   base: {
     paddingInline: '10px',
-    paddingBlock: '8px',
+    paddingBlock: '10px',
     textStyle: 'body.medium',
     display: 'flex',
     alignItems: 'center',

@@ -56,8 +56,11 @@ const RpcList = styled('div', {
 
 const Title = styled('div', {
   base: {
-    paddingBlock: '6px',
+    paddingBlock: '8px',
     paddingInline: '10px',
-    color: 'text.light',
+    color: 'text.dark',
+    sm: {
+      paddingBlock: '6px',
+    },
   },
 });

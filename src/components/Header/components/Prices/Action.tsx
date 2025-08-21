@@ -16,7 +16,7 @@ const actionRecipe = cva({
     boxShadow: 'none',
     outline: 'none',
     cursor: 'pointer',
-    height: '28px',
+    height: '32px',
     width: '30px',
   },
   variants: {

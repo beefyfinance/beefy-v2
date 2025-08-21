@@ -57,7 +57,7 @@ export const BifiPricesMobile = memo(function BifiPricesMobile() {
         }
         LayoutComponent={CustomLayout}
         hideShadow={true}
-        mobileSpacingSize={12}
+        mobileSpacingSize={0}
       />
     </BifiPricesMobileContainer>
   );
@@ -65,7 +65,8 @@ export const BifiPricesMobile = memo(function BifiPricesMobile() {
 
 const CustomLayout = styled(Layout, {
   base: {
-    height: '360px',
+    height: 'auto',
+    gap: '24px',
     borderTopRadius: '16px',
   },
 });
@@ -90,8 +91,8 @@ export const BridgeNavButton = styled(RouterNavLink, {
     gap: '4px',
     color: 'text.middle',
     textStyle: 'body.medium',
-    paddingBlock: '6px',
-    paddingInline: '16px',
+    paddingBlock: '10px',
+    paddingInline: '16px 8px',
     textDecoration: 'none',
     outline: 'none',
     backgroundColor: 'background.button',
@@ -102,6 +103,7 @@ export const BridgeNavButton = styled(RouterNavLink, {
     },
     lg: {
       paddingBlock: '8px',
+      paddingInline: '16px',
     },
   },
 });

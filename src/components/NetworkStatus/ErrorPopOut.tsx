@@ -1,12 +1,9 @@
 import { styled } from '@repo/styles/jsx';
 import { Button } from '../Button/Button.tsx';
-import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { memo, useMemo } from 'react';
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
-import { selectAllChainIds, selectChainById } from '../../features/data/selectors/chains.ts';
 import { ChainIcon } from '../ChainIcon/ChainIcon.tsx';
-
-import ArrowExpand from '../../images/icons/arrow-expand.svg?react';
+import ForwardArrowIcon from '../../images/icons/forward-arrow.svg?react';
 
 export const ErrorPopOut = memo(function ErrorPopOut({
   setIsPopupOpen,
@@ -15,77 +12,70 @@ export const ErrorPopOut = memo(function ErrorPopOut({
   setIsPopupOpen: (isPopupOpen: boolean) => void;
   rpcErrors: ChainEntity['id'][];
 }) {
-  const showChainNames = useMemo(() => rpcErrors.length > 0 && rpcErrors.length <= 3, [rpcErrors]);
-  const showChainsConnectedError = useMemo(() => rpcErrors.length > 8, [rpcErrors]);
-  const chainIds = useAppSelector(selectAllChainIds);
+  const showChainsConnectedError = useMemo(() => rpcErrors.length > 4, [rpcErrors]);
 
   const chainsToShow = useMemo(() => {
     if (showChainsConnectedError) {
-      return rpcErrors.slice(0, 8);
+      return rpcErrors.slice(0, 4);
     }
     return rpcErrors;
   }, [rpcErrors, showChainsConnectedError]);
 
+  if (rpcErrors.length === 0) {
+    return null;
+  }
+
   return (
-    <ArrowExpandButton variant="transparent" onClick={() => setIsPopupOpen(false)}>
-      <PopOutContainer>
+    <Container>
+      <ArrowExpandButton
+        variant="dark"
+        borderless={true}
+        fullWidth={true}
+        onClick={() => setIsPopupOpen(false)}
+      >
+        <DisconnectedChains>{`${rpcErrors.length} RPC disconnected`}</DisconnectedChains>
         <Chains>
-          {rpcErrors.length > 0 ?
-            <>
-              <ChainNamesContainer>
-                {chainsToShow.map(chainId => (
-                  <Chain key={chainId} chainId={chainId} showChainNames={showChainNames} />
-                ))}
-              </ChainNamesContainer>
-              {showChainsConnectedError && (
-                <ChainsConnected>{rpcErrors.length - 8}</ChainsConnected>
-              )}
-            </>
-          : <>
-              <ChainsConnected>{chainIds.length}</ChainsConnected>
-              <span>RPC connected</span>
-            </>
-          }
+          <ChainsContainer>
+            {chainsToShow.map(chainId => (
+              <ChainIcon key={chainId} chainId={chainId} size={20} />
+            ))}
+            {showChainsConnectedError && (
+              <ChainsConnected>{`+ ${rpcErrors.length - 4}`}</ChainsConnected>
+            )}
+          </ChainsContainer>
+          <IconContainer>
+            <ForwardArrowIcon />
+          </IconContainer>
         </Chains>
-        <ArrowExpand />
-      </PopOutContainer>
-    </ArrowExpandButton>
+      </ArrowExpandButton>
+    </Container>
   );
 });
 
-const Chain = memo(function Chain({
-  chainId,
-  showChainNames,
-}: {
-  chainId: ChainEntity['id'];
-  showChainNames: boolean;
-}) {
-  const chain = useAppSelector(state => selectChainById(state, chainId));
-  return (
-    <ChainNameItem key={chain.id}>
-      <ChainIcon chainId={chain.id} size={20} />
-      {showChainNames && <span>{chain.name}</span>}
-    </ChainNameItem>
-  );
+const DisconnectedChains = styled('div', {
+  base: {
+    textStyle: 'body.md',
+    color: 'text.light',
+  },
+});
+
+const Container = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '2px',
+    minWidth: '320px',
+  },
 });
 
 const ArrowExpandButton = styled(Button, {
   base: {
-    color: 'text.dark',
-    paddingBlock: '0px',
-    paddingInline: '0px',
-  },
-});
-
-const PopOutContainer = styled('div', {
-  base: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: '10px',
-    paddingInline: '12px',
-    minWidth: '320px',
-    paddingBlock: '6px 12px',
+    paddingBlock: '8px',
+    paddingInline: '10px',
+    borderRadius: '8px',
   },
 });
 
@@ -93,11 +83,7 @@ const Chains = styled('div', {
   base: {
     display: 'flex',
     alignItems: 'center',
-    gap: '10px',
-    '& span': {
-      textStyle: 'body.small',
-      color: 'text.light',
-    },
+    gap: '4px',
   },
 });
 
@@ -115,7 +101,7 @@ const ChainsConnected = styled('div', {
   },
 });
 
-const ChainNamesContainer = styled('div', {
+const ChainsContainer = styled('div', {
   base: {
     display: 'flex',
     alignItems: 'center',
@@ -123,16 +109,15 @@ const ChainNamesContainer = styled('div', {
   },
 });
 
-const ChainNameItem = styled('div', {
+const IconContainer = styled('div', {
   base: {
     display: 'flex',
     alignItems: 'center',
-    gap: '4px',
-    textStyle: 'body.sm',
-    color: 'text.light',
-    '& span': {
-      textStyle: 'inherit',
-      color: 'inherit',
+    justifyContent: 'center',
+    height: '20px',
+    width: '20px',
+    '& svg': {
+      transform: 'rotate(90deg)',
     },
   },
 });

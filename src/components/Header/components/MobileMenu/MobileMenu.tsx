@@ -157,6 +157,7 @@ const NavItemContainer = styled('div', {
   base: {
     backgroundColor: 'background.content.dark',
     borderRadius: '8px',
+    paddingBlock: '4px',
   },
   variants: {
     sublist: {

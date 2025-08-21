@@ -81,7 +81,7 @@ const CustomLayout = styled(Layout, {
   base: {
     backgroundColor: 'background.content',
     borderTopRadius: '16px',
-    height: '100dvh',
+    height: 'calc(100dvh - 64px)',
     maxHeight: '100dvh',
     overflow: 'hidden',
   },

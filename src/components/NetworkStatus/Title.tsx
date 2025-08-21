@@ -31,9 +31,6 @@ const TitleContainer = styled('div', {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: 'inherit',
-    borderTopLeftRadius: 'inherit',
-    borderTopRightRadius: 'inherit',
   },
   variants: {
     mobilelist: {
@@ -44,7 +41,7 @@ const TitleContainer = styled('div', {
         paddingBlock: '10px 6px',
         paddingInline: '12px',
         sm: {
-          padding: '10px 12px 6px 12px',
+          padding: '10px 12px',
         },
       },
     },

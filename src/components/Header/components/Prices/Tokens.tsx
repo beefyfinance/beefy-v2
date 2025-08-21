@@ -120,7 +120,7 @@ const ChainLink = styled('a', {
 const TokenRowContainer = styled('div', {
   base: {
     display: 'flex',
-    paddingBlock: '8px',
+    paddingBlock: '6px',
   },
 });
 
