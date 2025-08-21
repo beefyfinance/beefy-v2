@@ -22568,5 +22568,42 @@
     "addLiquidityUrl": "https://balancer.fi/pools/base/v2/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/remove-liquidity",
     "network": "base"
+  },
+  {
+    "id": "compWETH",
+    "name": "McSmithWETH",
+    "type": "standard",
+    "token": "ETH",
+    "tokenDecimals": 18,
+    "earnedToken": "moocompWETH",
+    "earnedTokenAddress": "0xe600a8FA020f6228C149c532838C16F39C73fFc5",
+    "earnContractAddress": "0xe600a8FA020f6228C149c532838C16F39C73fFc5",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "createdAt": 1755687479,
+    "platformId": "compound",
+    "assets": ["ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=base&from=0x0000000000000000000000000000000000000000&to=0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
+    }
   }
 ]
