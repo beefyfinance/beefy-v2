@@ -50,7 +50,7 @@ const Backdrop = styled('div', {
     display: 'flex',
     position: 'fixed',
     backgroundColor: 'modal.backdrop',
-    backdropFilter: 'blur(8px)',
+    // backdropFilter: 'blur(8px)',
     width: '100%',
     height: '100%',
     inset: 0,
