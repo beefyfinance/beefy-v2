@@ -60,7 +60,7 @@ const Container = styled('div', {
   base: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '4px',
+    gap: '8px',
     padding: '8px',
   },
 });
