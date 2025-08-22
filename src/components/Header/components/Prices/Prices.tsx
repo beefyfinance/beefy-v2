@@ -91,8 +91,7 @@ export const BridgeNavButton = styled(RouterNavLink, {
     gap: '4px',
     color: 'text.middle',
     textStyle: 'body.medium',
-    paddingBlock: '10px',
-    paddingInline: '16px 8px',
+    padding: '10px 8px 10px 16px',
     textDecoration: 'none',
     outline: 'none',
     backgroundColor: 'background.button',
@@ -101,7 +100,7 @@ export const BridgeNavButton = styled(RouterNavLink, {
       color: 'text.light',
       cursor: 'pointer',
     },
-    sm: {
+    lg: {
       paddingBlock: '8px',
       paddingInline: '16px',
     },
