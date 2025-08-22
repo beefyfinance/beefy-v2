@@ -1511,5 +1511,14 @@
     "description": "Etherex is a concentrated liquidity layer and exchange built on the Linea network, powered by the latest metaDEX x(3,3) methodology—a more fluid and accessible version of the popular ve(3,3) model.",
     "type": "amm",
     "risks": ["NO_TIMELOCK"]
+  },
+  {
+    "id": "projectx",
+    "name": "ProjectX",
+    "website": "https://www.prjx.com/",
+    "twitter": "projectx",
+    "documentation": "https://prjxdocs.notion.site/",
+    "description": "Project X is built on the belief that tech is becoming increasingly commoditized and the next era of DeFi will be won by innovating on distribution, incentive design and UX.",
+    "type": "amm"
   }
 ]
