@@ -3,7 +3,7 @@ import { TokenPrice } from './TokenPrice.tsx';
 import { styled } from '@repo/styles/jsx';
 import { tokens } from './config.ts';
 import { DropdownTrigger } from '../../../Dropdown/DropdownTrigger.tsx';
-import ExpandMore from '../../../../images/icons/mui/ExpandMore.svg?react';
+import ForwardArrowIcon from '../../../../images/icons/forward-arrow.svg?react';
 import { Button } from '../../../Button/Button.tsx';
 
 export const PricesButtonDesktop = memo(function PricesButton({ isOpen }: { isOpen: boolean }) {
@@ -16,13 +16,16 @@ export const PricesButtonDesktop = memo(function PricesButton({ isOpen }: { isOp
 });
 
 export const PricesButtonMobile = memo(function PricesButtonMobile({
+  isOpen,
   setOpen,
 }: {
+  isOpen: boolean;
   setOpen: (setter: boolean | ((open: boolean) => boolean)) => void;
 }) {
   return (
     <MobileTrigger variant="transparent" borderless={true} onClick={() => setOpen(true)}>
       <Price />
+      <ArrowIcon isOpen={isOpen} />
     </MobileTrigger>
   );
 });
@@ -57,20 +60,34 @@ const Price = memo(function Price() {
   );
 });
 
-const ArrowIcon = styled(ExpandMore, {
+const ArrowIcon = memo(function ArrowIcon({ isOpen }: { isOpen: boolean }) {
+  return (
+    <ArrowIconContainer>
+      <FowardArrow isOpen={isOpen} />
+    </ArrowIconContainer>
+  );
+});
+
+const ArrowIconContainer = styled('div', {
   base: {
-    transform: 'rotate(0deg)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    height: '20px',
+    width: '20px',
+  },
+});
+
+const FowardArrow = styled(ForwardArrowIcon, {
+  base: {
+    transform: 'rotate(90deg)',
     color: 'text.dark',
-    height: '16px',
-    width: '16px',
   },
   variants: {
     isOpen: {
       true: {
         color: 'text.light',
+        transform: 'rotate(270deg)',
       },
     },
   },
@@ -89,6 +106,7 @@ const Trigger = styled(
       paddingBlock: '8px',
       paddingInline: '12px',
       color: 'text.dark',
+      gap: '3px',
     },
   },
   {
@@ -108,6 +126,7 @@ const MobileTrigger = styled(Button, {
     border: 'none',
     paddingBlock: '0',
     paddingInline: '0',
+    gap: '2px',
   },
 });
 

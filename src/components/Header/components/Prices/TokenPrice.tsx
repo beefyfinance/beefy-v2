@@ -40,7 +40,7 @@ const TokenPriceContainer = styled('div', {
     paddingBlock: '2px',
     lg: {
       justifyContent: 'center',
-      gap: '4px',
+      gap: '5px',
     },
   },
   variants: {

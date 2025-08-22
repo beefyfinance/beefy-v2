@@ -1,7 +1,10 @@
 import { styled } from '@repo/styles/jsx';
 import { memo, useState } from 'react';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
-import { selectChainById } from '../../../../features/data/selectors/chains.ts';
+import {
+  selectChainById,
+  selectChainHasModifiedRpc,
+} from '../../../../features/data/selectors/chains.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
 import ForwardArrowIcon from '../../../../images/icons/forward-arrow.svg?react';
@@ -21,6 +24,7 @@ export const ChainRpcItem = memo(function ChainRpcItem({
   const [isHover, setIsHover] = useState(false);
   const chain = useAppSelector(state => selectChainById(state, id));
   const isMobile = useBreakpoint({ to: 'xs' });
+  const hasModifiedRpc = useAppSelector(state => selectChainHasModifiedRpc(state, id));
 
   return (
     <Container
@@ -38,7 +42,7 @@ export const ChainRpcItem = memo(function ChainRpcItem({
         {error && (
           <>
             <CircleWarning />
-            <ErrorContainer>connection failed </ErrorContainer>
+            <ErrorContainer>RPC failed</ErrorContainer>
           </>
         )}
       </NameContainer>
@@ -50,8 +54,17 @@ export const ChainRpcItem = memo(function ChainRpcItem({
           </EditIconContainer>
         </EditContainer>
       : isMobile ?
-        <ForwardArrowIcon />
-      : <ChainIcon size={20} chainId={id} />}
+        <ModifiedContainer>
+          {hasModifiedRpc && <span>Modified RPC</span>}
+          <FowardIconContainer>
+            <ForwardArrowIcon />
+          </FowardIconContainer>
+        </ModifiedContainer>
+      : <ModifiedContainer>
+          {hasModifiedRpc && <span>Modified RPC</span>}
+          <ChainIcon size={20} chainId={id} />
+        </ModifiedContainer>
+      }
     </Container>
   );
 });
@@ -138,5 +151,27 @@ const CircleWarning = styled('div', {
     height: '4px',
     borderRadius: '100%',
     backgroundColor: 'text.warning',
+  },
+});
+
+const FowardIconContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '20px',
+    height: '20px',
+  },
+});
+
+const ModifiedContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    '& span': {
+      textStyle: 'body.sm',
+      color: 'text.dark',
+    },
   },
 });

@@ -61,7 +61,7 @@ const Container = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     gap: '8px',
-    padding: '8px',
+    padding: '10px 12px',
   },
 });
 
@@ -90,15 +90,13 @@ const MobileItem = memo<MobileItemProps>(function MobileItem({ item, onClick }) 
   if (isNavDropdownConfig(item)) {
     const NavComponent = item.MobileComponent ?? DropMobile;
     return (
-      <NavItemContainer>
-        <NavComponent
-          onClick={onClick}
-          title={item.title}
-          Icon={item.Icon}
-          Badge={item.Badge}
-          items={item.items}
-        />
-      </NavItemContainer>
+      <NavComponent
+        onClick={onClick}
+        title={item.title}
+        Icon={item.Icon}
+        Badge={item.Badge}
+        items={item.items}
+      />
     );
   }
 
@@ -157,12 +155,12 @@ const NavItemContainer = styled('div', {
   base: {
     backgroundColor: 'background.content.dark',
     borderRadius: '8px',
-    paddingBlock: '4px',
+    paddingBlock: '6px',
   },
   variants: {
     sublist: {
       true: {
-        paddingBlock: '8px',
+        paddingBlock: '6px',
       },
     },
     prices: {

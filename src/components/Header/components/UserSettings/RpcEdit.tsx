@@ -16,6 +16,7 @@ import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import {
   selectActiveRpcUrlForChain,
   selectChainById,
+  selectChainHasModifiedRpc,
 } from '../../../../features/data/selectors/chains.ts';
 import { useAppDispatch, useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { Button } from '../../../Button/Button.tsx';
@@ -120,9 +121,8 @@ export const ChainRpcReset = memo(function ChainRpcReset({
 }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const activeChainRpc = useAppSelector(state => selectActiveRpcUrlForChain(state, chain));
-  const defaultRPC = useAppSelector(state => selectChainById(state, chain)).rpc;
   const chainEntity = useAppSelector(state => selectChainById(state, chain));
+  const hasModifiedRpc = useAppSelector(state => selectChainHasModifiedRpc(state, chain));
 
   const handleClick = useCallback<MouseEventHandler<HTMLButtonElement>>(
     e => {
@@ -133,14 +133,7 @@ export const ChainRpcReset = memo(function ChainRpcReset({
     [dispatch, chainEntity, onBack]
   );
 
-  const rpcsAreEqual = useMemo(
-    () =>
-      activeChainRpc.length === defaultRPC.length &&
-      activeChainRpc.every((url, index) => url === defaultRPC[index]),
-    [activeChainRpc, defaultRPC]
-  );
-
-  if (rpcsAreEqual) return <></>;
+  if (hasModifiedRpc) return <></>;
 
   return (
     <ResetButton fullWidth={true} borderless={true} onClick={handleClick}>

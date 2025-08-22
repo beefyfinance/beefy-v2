@@ -40,7 +40,7 @@ export const BifiPricesMobile = memo(function BifiPricesMobile() {
   const { t } = useTranslation();
   return (
     <BifiPricesMobileContainer>
-      <PricesButtonMobile setOpen={setOpen} />
+      <PricesButtonMobile isOpen={open} setOpen={setOpen} />
       <ScrollableDrawer
         open={open}
         onClose={() => setOpen(false)}
