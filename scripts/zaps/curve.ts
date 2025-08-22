@@ -94,6 +94,7 @@ const chainIdToCurveChainId: ChainMap<string> = {
   optimism: 'optimism',
   polygon: 'polygon',
   fraxtal: 'fraxtal',
+  sonic: 'sonic',
 };
 
 const curveEndpoints = [
