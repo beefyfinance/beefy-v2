@@ -120,7 +120,7 @@ const config = buildConfig(
         '--onboard-wallet-button-color-hover': '{colors.text.lightest}',
         '--onboard-wallet-app-icon-border-color': '{colors.text.lightest}',
         '--onboard-wallet-app-icon-background-transparent': '{colors.text.lightest}',
-        '--onboard-connect-sidebar-background': '{colors.background.header}',
+        '--onboard-connect-sidebar-background': '{colors.darkBlue.90}',
         '--onboard-connect-sidebar-color': '{colors.text.light}',
         '--onboard-connect-sidebar-progress-color': '{colors.greenLight}',
         '--onboard-connect-sidebar-progress-background': '{colors.green}',
@@ -267,7 +267,8 @@ const config = buildConfig(
             boosted: { value: '{colors.gold.30}' },
             warning: { value: '{colors.orange.40}' },
           },
-          modal: { backdrop: { value: '#ffffff33' } },
+          //darkBlue100-64a
+          modal: { backdrop: { value: '#020203A3' } },
           alertBaseBackground: { value: '#f5f5ff14' },
           bayOfMany: { value: '#363b63', description: 'border + button bg' },
           birdgeQuoteButtonSelectedHoverBackground: { value: '#232741' },
