@@ -133,13 +133,15 @@ export const ChainRpcReset = memo(function ChainRpcReset({
     [dispatch, chainEntity, onBack]
   );
 
-  if (hasModifiedRpc) return <></>;
+  if (hasModifiedRpc) {
+    return (
+      <ResetButton fullWidth={true} borderless={true} onClick={handleClick}>
+        {t('RpcModal-Reset')}
+      </ResetButton>
+    );
+  }
 
-  return (
-    <ResetButton fullWidth={true} borderless={true} onClick={handleClick}>
-      {t('RpcModal-Reset')}
-    </ResetButton>
-  );
+  return null;
 });
 
 const ResetButton = styled(Button, {
