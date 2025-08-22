@@ -916,7 +916,7 @@
   "Details-Platform-Type-Description-farm": "A 'Farming Protocol' is a DeFi system that enables users to earn rewards by providing liquidity or staking assets.",
   "Details-Platform-Description-pending": "Pending platform description",
   "Details-Platform-Link-Twitter": "Twitter",
-  "RpcModal-Menu-Edit": "{{count}} RPC connected",
+  "RpcModal-Menu-Edit": "{{count}} RPCs connected",
   "RpcModal-List": "Select Chain",
   "RpcModal-Add": "Add new RPC",
   "RpcModal-Save": "Save",
