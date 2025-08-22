@@ -116,8 +116,6 @@ const PriceContainer = styled('div', {
     display: 'grid',
     gridTemplateAreas: '"content"',
     placeItems: 'center',
-    width: '100%',
-    height: '100%',
     position: 'relative',
   },
 });
