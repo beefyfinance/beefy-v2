@@ -1,7 +1,6 @@
 import { NavLink as RouterNavLink, type NavLinkProps as RouterNavLinkProps } from 'react-router';
 import { memo } from 'react';
 import { styled } from '@repo/styles/jsx';
-import { DropdownTrigger } from '../../../Dropdown/DropdownTrigger.tsx';
 import { cva } from '@repo/styles/css';
 import type { ReactNode } from 'react';
 
@@ -61,12 +60,6 @@ const ExternalNavLink = styled('a', navLinkRecipe, {
 });
 
 const InternalNavLink = styled(RouterNavLink, navLinkRecipe);
-
-export const DropdownNavButton = styled(DropdownTrigger.button, navLinkRecipe, {
-  defaultProps: {
-    type: 'button',
-  },
-});
 
 type NavLinkProps = {
   onClick?: RouterNavLinkProps['onClick'];

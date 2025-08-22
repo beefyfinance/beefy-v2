@@ -17,7 +17,6 @@ export const PricePerFullShare = memo(function PricePerFullShare() {
   const earnedToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.contractAddress)
   );
-  console.log(ppfs);
 
   return (
     <Container>
