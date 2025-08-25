@@ -32,7 +32,7 @@ export const ContractsDropdown = memo(function ContractsDropdown({
     <DropdownProvider variant="button" placement="bottom-end" open={open} onChange={setOpen}>
       <DropdownTrigger borderless={true}>
         {t('Contracts')}
-        <ExpandMore />
+        <Arrow open={open} />
       </DropdownTrigger>
       <DropdownContent padding="small" gap="small">
         {links.map(({ label, link }) => (
@@ -41,6 +41,17 @@ export const ContractsDropdown = memo(function ContractsDropdown({
       </DropdownContent>
     </DropdownProvider>
   );
+});
+
+const Arrow = styled(ExpandMore, {
+  base: {},
+  variants: {
+    open: {
+      true: {
+        transform: 'rotate(180deg)',
+      },
+    },
+  },
 });
 
 const linkClass = css({

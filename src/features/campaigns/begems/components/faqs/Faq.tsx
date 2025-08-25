@@ -1,4 +1,3 @@
-import { css } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback, useId } from 'react';
 import AnimateHeight from 'react-animate-height';
@@ -22,7 +21,7 @@ export const Faq = memo(function Faq({ question, answer, open, onChange, index }
     <Box type="button" onClick={handleClick} aria-controls={id} aria-expanded={open}>
       <Header>
         <Title>{question}</Title>
-        <ChevronDown className={iconClass} />
+        <Arrow open={open} />
       </Header>
       <AnimateHeight id={id} duration={300} height={open ? 'auto' : 0}>
         <Answer>
@@ -31,6 +30,20 @@ export const Faq = memo(function Faq({ question, answer, open, onChange, index }
       </AnimateHeight>
     </Box>
   );
+});
+
+const Arrow = styled(ChevronDown, {
+  base: {
+    width: '12px',
+    height: '8px',
+  },
+  variants: {
+    open: {
+      true: {
+        transform: 'rotate(180deg)',
+      },
+    },
+  },
 });
 
 const Box = styled('button', {
@@ -67,11 +80,6 @@ const Title = styled('h3', {
       textStyle: 'body.xl.medium',
     },
   },
-});
-
-const iconClass = css({
-  width: '12px',
-  height: '8px',
 });
 
 const Answer = styled('div', {
