@@ -1,5 +1,61 @@
 [
   {
+    "id": "etherex-usdc-rex33",
+    "name": "REX33-USDC vLP",
+    "type": "standard",
+    "token": "REX33-USDC vLP",
+    "tokenAddress": "0xeacD56565aB642FB0Dc2820b51547fE416EE8697",
+    "tokenDecimals": 18,
+    "tokenProviderId": "etherex",
+    "earnedToken": "mooEtherexLineaREX33-USDC",
+    "earnedTokenAddress": "0xCB66c807c6c9044eaD222E62B3C7e4CD83242CB4",
+    "earnContractAddress": "0xCB66c807c6c9044eaD222E62B3C7e4CD83242CB4",
+    "oracle": "lps",
+    "oracleId": "etherex-usdc-rex33",
+    "createdAt": 1756144824,
+    "status": "active",
+    "platformId": "etherex",
+    "assets": ["REX33", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://www.etherex.finance/liquidity/0xeacD56565aB642FB0Dc2820b51547fE416EE8697",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "linea-solidly-etherex"
+      }
+    ]
+  },
+  {
+    "id": "etherex-usdc-asusd",
+    "name": "asUSD-USDC sLP",
+    "type": "standard",
+    "token": "asUSD-USDC sLP",
+    "tokenAddress": "0x7b930713103A964c12E8b808c83F57E40d9ad495",
+    "tokenDecimals": 18,
+    "tokenProviderId": "etherex",
+    "earnedToken": "mooEtherexLineaasUSD-USDC",
+    "earnedTokenAddress": "0xfe141edF8714adE34607d7f9f97f5A6dE6d4e083",
+    "earnContractAddress": "0xfe141edF8714adE34607d7f9f97f5A6dE6d4e083",
+    "oracle": "lps",
+    "oracleId": "etherex-usdc-asusd",
+    "createdAt": 1756144583,
+    "status": "active",
+    "platformId": "etherex",
+    "assets": ["asUSD", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://www.etherex.finance/liquidity/0x7b930713103A964c12E8b808c83F57E40d9ad495",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "linea-solidly-etherex"
+      }
+    ]
+  },
+  {
     "id": "etherex-usdc-usdt",
     "name": "USDC-USDT sLP",
     "type": "standard",

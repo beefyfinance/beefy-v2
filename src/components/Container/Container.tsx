@@ -27,7 +27,7 @@ export const Container = styled('div', {
     },
     noPadding: {
       true: {
-        padding: 0,
+        paddingInline: 0,
       },
     },
   },
