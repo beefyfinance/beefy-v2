@@ -33,7 +33,7 @@ export const UserStats = memo(function UserStats() {
           blurred={hideBalance}
         />
       </Visible>
-      <VisibleAbove width={430}>
+      <VisibleAbove width={140 * 3 + 8 * 2 + 12 * 2}>
         <Stat
           label={t('Portfolio-AvgAPY')}
           value={formatLargePercent(stats.apy, 2, '0%')}
