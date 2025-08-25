@@ -1,5 +1,87 @@
 [
   {
+    "id": "stakedao-sonic-sceth-frxeth",
+    "name": "scETH/frxETH",
+    "type": "standard",
+    "token": "xfrxETH",
+    "tokenAddress": "0x346704605c72d9f5f9F02D651e5A3DccE6964F3d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xAF6AC77d8e40035f9879eA6bE48c3DA1F7A84120",
+    "earnedToken": "mooStakeDaoxfrxETH",
+    "earnedTokenAddress": "0xAF6AC77d8e40035f9879eA6bE48c3DA1F7A84120",
+    "oracle": "lps",
+    "oracleId": "curve-sonic-sceth-frxeth",
+    "status": "active",
+    "createdAt": 1755850437,
+    "platformId": "stakedao",
+    "assets": ["scETH", "frxETH"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/sonic/pools/factory-stable-ng-26/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/sonic/pools/factory-stable-ng-26/withdraw",
+    "pointStructureIds": ["rings"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x346704605c72d9f5f9F02D651e5A3DccE6964F3d",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x346704605c72d9f5f9F02D651e5A3DccE6964F3d",
+            "coins": [
+              "0x3bcE5CB273F0F148010BbEa2470e7b5df84C7812",
+              "0x43eDD7f3831b08FE70B7555ddD373C8bF65a9050"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "stakedao-sonic-scusd-frxusd",
+    "name": "scUSD/frxUSD",
+    "type": "standard",
+    "token": "xfrxUSD",
+    "tokenAddress": "0xF1232a1aB5661aBdD6E02c6D8Ac9940a23Bb0b84",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x6B739eb6118a6b0b802Cb9d7159992a6Fce722d1",
+    "earnedToken": "mooStakeDaoxfrxUSD",
+    "earnedTokenAddress": "0x6B739eb6118a6b0b802Cb9d7159992a6Fce722d1",
+    "oracle": "lps",
+    "oracleId": "curve-sonic-scusd-frxusd",
+    "status": "active",
+    "createdAt": 1755850417,
+    "platformId": "stakedao",
+    "assets": ["scUSD", "frxUSD"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/sonic/pools/factory-stable-ng-25/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/sonic/pools/factory-stable-ng-25/withdraw",
+    "pointStructureIds": ["rings"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xF1232a1aB5661aBdD6E02c6D8Ac9940a23Bb0b84",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xF1232a1aB5661aBdD6E02c6D8Ac9940a23Bb0b84",
+            "coins": [
+              "0xd3DCe716f3eF535C5Ff8d041c1A41C3bd89b97aE",
+              "0x80Eede496655FB9047dd39d9f418d5483ED600df"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "pendle-sonic-wos-18dec25",
     "name": "wOS 18Dec25",
     "type": "standard",
