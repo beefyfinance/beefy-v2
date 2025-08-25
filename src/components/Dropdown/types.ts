@@ -9,7 +9,10 @@ import type { MutableRefObject } from 'react';
 export type DropdownOptions = {
   open?: boolean;
   onChange?: (open: boolean) => void;
+  /** Manually set element for events and position */
   reference?: MutableRefObject<Element | null>;
+  /** Manually set element for position  */
+  positionReference?: MutableRefObject<Element | null>;
   placement?: Placement;
   offset?: number;
   openOnClick?: boolean;
@@ -39,14 +42,7 @@ export type DropdownData<TRef extends ReferenceType = Element> = {
         height: number;
       };
   manualReference: boolean;
-  hoverHandlers?: {
-    onMouseEnter: (e: React.MouseEvent) => void;
-    onMouseLeave: (e: React.MouseEvent) => void;
-  };
-  contentHoverHandlers?: {
-    onMouseEnter: () => void;
-    onMouseLeave: () => void;
-  };
+  manualPositionReference: boolean;
 } & UseInteractionsReturn &
   UseFloatingReturn<TRef> &
   Pick<DropdownOptions, 'variant'> &

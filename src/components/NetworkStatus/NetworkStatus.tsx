@@ -1,5 +1,5 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, type RefObject, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader.ts';
@@ -18,18 +18,17 @@ import { DropdownProvider } from '../Dropdown/DropdownProvider.tsx';
 import { DropdownTrigger } from '../Dropdown/DropdownTrigger.tsx';
 import { RpcSettingsPanel } from '../Header/components/UserSettings/RpcSettingsPanel.tsx';
 import { useBreakpoint } from '../MediaQueries/useBreakpoint.ts';
-import type { DropdownOptions } from '../Dropdown/types.ts';
 import { TitleComponent } from './Title.tsx';
 import { MobileDrawer } from './MobileDrawer.tsx';
 import { ErrorPopOut } from './ErrorPopOut.tsx';
 
 export const NetworkStatus = memo(function NetworkStatus({
-  anchorEl,
+  positionRef,
   isOpen: isUserOpen,
   onOpen,
   onClose,
 }: {
-  anchorEl: React.RefObject<HTMLDivElement>;
+  positionRef: RefObject<HTMLDivElement>;
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -96,29 +95,17 @@ export const NetworkStatus = memo(function NetworkStatus({
     }
   }, [rpcErrors, beefyErrors, t]);
 
-  const openOnHoverProps: DropdownOptions = useMemo(() => {
-    if (!isMobile) {
-      return {
-        openOnHover: true,
-        openOnClick: false,
-      };
-    }
-
-    return {};
-  }, [isMobile]);
-
-  const DropdownLayer = useMemo(() => (isMobile ? 0 : 1), [isMobile]);
-
   return (
     <DropdownProvider
-      reference={anchorEl}
+      positionReference={positionRef}
       open={open}
       onChange={handleToggle}
       variant="dark"
       placement="bottom-end"
-      layer={DropdownLayer}
+      layer={isMobile ? 0 : 1}
       closeOnClickAway={!isMobile}
-      {...openOnHoverProps}
+      openOnHover={!isMobile}
+      openOnClick={isMobile}
     >
       <DropdownButton onClick={handleToggle} open={open}>
         <PulseHighlight variant={variant} state={hidePulse ? 'stopped' : 'playing'} />

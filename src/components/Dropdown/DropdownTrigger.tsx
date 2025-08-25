@@ -8,16 +8,12 @@ type HtmlTag = keyof ReactHTML;
 
 function createDropdownTrigger<T extends HtmlTag>(tag: T) {
   const Component = function DropdownTrigger({ ref, ...props }: ComponentProps<T>) {
-    const { getReferenceProps, refs, manualReference, hoverHandlers } = useDropdownContext();
+    const { getReferenceProps, refs, manualReference } = useDropdownContext();
     const mergedRef = useMergeRefs([
       manualReference ? undefined : refs.setReference,
       ref as Ref<HTMLElement>,
     ]);
-
-    // Use custom hover handlers if available, otherwise fall back to default
-    const triggerProps = hoverHandlers ? { ...props, ...hoverHandlers } : getReferenceProps(props);
-
-    return createElement(tag, { ...triggerProps, ref: mergedRef });
+    return createElement(tag, { ...getReferenceProps(props), ref: mergedRef });
   };
 
   Component.displayName = `DropdownTrigger.${tag}`;

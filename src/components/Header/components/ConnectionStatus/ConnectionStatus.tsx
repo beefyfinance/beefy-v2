@@ -20,7 +20,7 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
   return (
     <Holder ref={anchorEl} open={open}>
       <NetworkStatus
-        anchorEl={anchorEl}
+        positionRef={anchorEl}
         isOpen={open}
         onOpen={handleOpenStatus}
         onClose={handleClose}

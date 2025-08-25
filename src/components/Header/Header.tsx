@@ -48,7 +48,7 @@ export const Header = memo(function Header() {
         </Visible>
         <RightSide ref={anchorEl}>
           <Visible from="lg">
-            <BifiPricesDesktop anchorEl={anchorEl} />
+            <BifiPricesDesktop positionRef={anchorEl} />
           </Visible>
           <ConnectionStatus />
         </RightSide>

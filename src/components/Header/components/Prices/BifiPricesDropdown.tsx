@@ -7,13 +7,13 @@ import { Tokens } from './Tokens.tsx';
 import { styled } from '@repo/styles/jsx';
 
 type BifiPricesDropdownProps = {
-  setOpen: (setter: boolean | ((open: boolean) => boolean)) => void;
+  onClose: () => void;
 };
 
 export const BifiPricesDropdown = memo(function BifiPricesDropdown({
-  setOpen,
+  onClose,
 }: BifiPricesDropdownProps) {
-  const handleClick = useCallback<(e: MouseEvent<HTMLDivElement>) => void>(
+  const handleClose = useCallback<(e: MouseEvent<HTMLDivElement>) => void>(
     e => {
       if (!e.target || !(e.target instanceof HTMLElement)) {
         return;
@@ -21,14 +21,14 @@ export const BifiPricesDropdown = memo(function BifiPricesDropdown({
 
       // this is a hack to make the dropdown close when a button/link is clicked
       if (['a', 'button', 'path', 'svg', 'img'].includes(e.target.tagName.toLowerCase())) {
-        setOpen(false);
+        onClose();
       }
     },
-    [setOpen]
+    [onClose]
   );
 
   return (
-    <Dropdown padding="none" onClick={handleClick}>
+    <Dropdown padding="none" onClick={handleClose}>
       <BifiPricesContent />
     </Dropdown>
   );

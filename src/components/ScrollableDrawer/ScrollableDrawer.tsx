@@ -1,5 +1,14 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  type FC,
+  memo,
+  type ReactNode,
+  type RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Drawer } from '../Modal/Drawer.tsx';
 import { type CssStyles } from '@repo/styles/css';
 
@@ -10,14 +19,14 @@ interface ContentComponents {
 interface ScrollabeDrawerProps {
   open: boolean;
   onClose: () => void;
-  mainChildren: React.ReactNode;
-  footerChildren: React.ReactNode;
+  mainChildren: ReactNode;
+  footerChildren: ReactNode;
 
   hideShadow?: boolean;
   mobileSpacingSize?: number;
-  MainComponent?: React.FC<ContentComponents & { ref: React.RefObject<HTMLDivElement> }>;
-  LayoutComponent?: React.FC<ContentComponents>;
-  FooterComponent?: React.FC<ContentComponents>;
+  MainComponent?: FC<ContentComponents & { ref: RefObject<HTMLDivElement> }>;
+  LayoutComponent?: FC<ContentComponents>;
+  FooterComponent?: FC<ContentComponents>;
 }
 
 export const ScrollableDrawer = memo<ScrollabeDrawerProps>(function ScrollableDrawer({

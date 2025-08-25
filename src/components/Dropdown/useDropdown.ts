@@ -43,6 +43,7 @@ export function useDropdown<TRef extends ReferenceType = Element>({
   disabled = false,
   layer = 0,
   reference,
+  positionReference,
   autoWidth = false,
   autoHeight = false,
 }: DropdownOptions = {}): DropdownData<TRef> {
@@ -117,6 +118,7 @@ export function useDropdown<TRef extends ReferenceType = Element>({
       : false,
     [arrowEnabled, arrowWidth, arrowHeight, arrowRef, arrowOffset]
   );
+
   const baseGetReferenceProps = interactions.getReferenceProps;
   const getReferenceProps = useCallback(
     (userProps?: HTMLProps<Element>): Record<string, unknown> => {
@@ -131,13 +133,19 @@ export function useDropdown<TRef extends ReferenceType = Element>({
     [baseGetReferenceProps]
   );
 
-  const referenceElement = reference?.current;
-  const { setReference } = data.refs;
+  const currentReferenceElement = reference?.current;
+  const currentPositionReferenceElement = positionReference?.current;
+  const { setReference, setPositionReference } = data.refs;
   useLayoutEffect(() => {
-    if (reference && referenceElement !== undefined) {
-      setReference(referenceElement);
+    if (reference && currentReferenceElement !== undefined) {
+      setReference(currentReferenceElement);
     }
-  }, [setReference, reference, referenceElement]);
+  }, [reference, currentReferenceElement, setReference]);
+  useLayoutEffect(() => {
+    if (positionReference && currentPositionReferenceElement !== undefined) {
+      setPositionReference(currentPositionReferenceElement);
+    }
+  }, [positionReference, currentPositionReferenceElement, setPositionReference]);
 
   useEffect(() => {
     if (disabled && open) {
@@ -156,7 +164,19 @@ export function useDropdown<TRef extends ReferenceType = Element>({
       ...data,
       layer,
       manualReference: !!reference,
+      manualPositionReference: !!positionReference,
     }),
-    [open, onOpenChange, variant, arrow, data, interactions, getReferenceProps, layer, reference]
+    [
+      open,
+      onOpenChange,
+      variant,
+      arrow,
+      data,
+      interactions,
+      getReferenceProps,
+      layer,
+      reference,
+      positionReference,
+    ]
   );
 }

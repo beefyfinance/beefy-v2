@@ -9,7 +9,7 @@ interface FloatingErrorProps {
   isAddressValid: boolean;
   isDomainValid: boolean;
   isDomainResolving: boolean;
-  anchorRef: RefObject<HTMLInputElement> | MutableRefObject<HTMLInputElement>;
+  reference: RefObject<HTMLInputElement> | MutableRefObject<HTMLInputElement>;
 }
 
 export const FloatingError = memo(function FloatingError({
@@ -18,7 +18,7 @@ export const FloatingError = memo(function FloatingError({
   isAddressValid,
   isDomainValid,
   isDomainResolving,
-  anchorRef,
+  reference,
 }: FloatingErrorProps) {
   const { t } = useTranslation();
 
@@ -27,7 +27,7 @@ export const FloatingError = memo(function FloatingError({
       <DropdownProvider
         open={!isDomainValid}
         placement="bottom-start"
-        reference={anchorRef}
+        reference={reference}
         arrowEnabled={true}
         variant="dark"
         autoWidth={true}
@@ -43,7 +43,7 @@ export const FloatingError = memo(function FloatingError({
       <DropdownProvider
         open={!isAddressValid}
         placement="bottom-start"
-        reference={anchorRef}
+        reference={reference}
         arrowEnabled={true}
         variant="dark"
         autoWidth={true}

@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, type RefObject, useCallback, useState } from 'react';
 import { BifiPricesContent, BifiPricesDropdown } from './BifiPricesDropdown.tsx';
 import { PricesButtonDesktop, PricesButtonMobile } from './PricesButton.tsx';
 import { DropdownProvider } from '../../../Dropdown/DropdownProvider.tsx';
@@ -9,11 +9,12 @@ import { NavLink as RouterNavLink } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 export const BifiPricesDesktop = memo(function BifiPricesDesktop({
-  anchorEl,
+  positionRef,
 }: {
-  anchorEl: React.RefObject<HTMLDivElement>;
+  positionRef: RefObject<HTMLDivElement>;
 }) {
   const [open, setOpen] = useState(false);
+  const handleClose = useCallback(() => setOpen(false), [setOpen]);
 
   return (
     <DropdownProvider
@@ -21,7 +22,7 @@ export const BifiPricesDesktop = memo(function BifiPricesDesktop({
       onChange={setOpen}
       placement="bottom-end"
       variant="dark"
-      reference={anchorEl}
+      positionReference={positionRef}
       layer={1}
       openOnHover={true}
       openOnClick={false}
@@ -30,20 +31,22 @@ export const BifiPricesDesktop = memo(function BifiPricesDesktop({
         <PricesButtonDesktop isOpen={open} />
         <BridgeNavButton to="bridge">Bridge</BridgeNavButton>
       </Container>
-      {open && <BifiPricesDropdown setOpen={setOpen} />}
+      {open && <BifiPricesDropdown onClose={handleClose} />}
     </DropdownProvider>
   );
 });
 
 export const BifiPricesMobile = memo(function BifiPricesMobile() {
-  const [open, setOpen] = useState(false);
   const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const handleClose = useCallback(() => setOpen(false), [setOpen]);
+
   return (
     <BifiPricesMobileContainer>
       <PricesButtonMobile isOpen={open} setOpen={setOpen} />
       <ScrollableDrawer
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={handleClose}
         MainComponent={CustomMain}
         mainChildren={
           <ContentContainer>
@@ -51,7 +54,7 @@ export const BifiPricesMobile = memo(function BifiPricesMobile() {
           </ContentContainer>
         }
         footerChildren={
-          <FooterButton fullWidth={true} borderless={true} onClick={() => setOpen(false)}>
+          <FooterButton fullWidth={true} borderless={true} onClick={handleClose}>
             {t('Filter-Cancel')}
           </FooterButton>
         }
