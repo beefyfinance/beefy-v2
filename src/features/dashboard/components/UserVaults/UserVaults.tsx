@@ -18,7 +18,6 @@ import { Filter } from './components/Filter/Filter.tsx';
 import { NoVaults } from './components/NoVaults/NoVaults.tsx';
 import { Vault } from './components/Vault/Vault.tsx';
 import { useSortedDashboardVaults } from './hook.ts';
-import { Container } from '../../../../components/Container/Container.tsx';
 
 export type UserVaultsProps = {
   address: string;
@@ -34,22 +33,24 @@ export const UserVaults = memo(function UserVaults({ address }: UserVaultsProps)
     mdDown ? 'Dashboard-Your-Vaults-Subtitle-Mobile' : 'Dashboard-Your-Vaults-Subtitle';
 
   return (
-    <>
-      <Section children={<></>} title={t('Dashboard-Your-Vaults-Title')} subTitle={t(subTitle)} />
-      <Container maxWidth={isMobile ? 'xl' : 'lg'} noPadding={isMobile}>
-        <div className={containerClass}>
-          <Filter
-            sortOptions={sortedOptions}
-            handleSort={handleSort}
-            handleSearchText={setSearchText}
-            searchText={searchText}
-          />
-          {sortedFilteredVaults.length === 0 ?
-            <NoVaults />
-          : <VirtualList address={address} vaultIds={sortedFilteredVaults} />}
-        </div>
-      </Container>
-    </>
+    <Section
+      title={t('Dashboard-Your-Vaults-Title')}
+      subTitle={t(subTitle)}
+      maxWidth={isMobile ? 'xl' : 'lg'}
+      noPadding={isMobile}
+    >
+      <div className={containerClass}>
+        <Filter
+          sortOptions={sortedOptions}
+          handleSort={handleSort}
+          handleSearchText={setSearchText}
+          searchText={searchText}
+        />
+        {sortedFilteredVaults.length === 0 ?
+          <NoVaults />
+        : <VirtualList address={address} vaultIds={sortedFilteredVaults} />}
+      </div>
+    </Section>
   );
 });
 
