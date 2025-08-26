@@ -11,6 +11,7 @@ import { selectTokenByAddress } from '../../../../../data/selectors/tokens.ts';
 import { selectTransactVaultId } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { styles } from './styles.ts';
+import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -42,14 +43,7 @@ export const WithdrawnInWalletNotice = memo(function WithdrawnInWalletNotice({
         t={t}
         i18nKey="Transact-Notice-WithdrawnInWallet"
         components={{
-          platformLink: (
-            <a
-              href={vault.removeLiquidityUrl}
-              className={classes.link}
-              target={'_blank'}
-              rel={'noopener'}
-            />
-          ),
+          platformLink: <ExternalLink href={vault.removeLiquidityUrl} className={classes.link} />,
           amount: <TokenAmountFromEntity amount={balance} token={depositToken} />,
         }}
         values={{ token: depositToken.symbol }}

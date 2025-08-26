@@ -7,6 +7,7 @@ import { isStandardVault, type VaultEntity } from '../../../../data/entities/vau
 import { selectChainById } from '../../../../data/selectors/chains.ts';
 import { selectVaultById } from '../../../../data/selectors/vaults.ts';
 import { styles } from './styles.ts';
+import { ExternalLink } from '../../../../../components/Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -39,13 +40,12 @@ export const LendingOracle = memo(function LendingOracle({ vaultId }: LendingOra
         <div>
           <div className={classes.apyLabel}>{t('Oracle')}</div>
           {vault.lendingOracle.address ?
-            <a
+            <ExternalLink
               className={classes.oracleLink}
-              target="_blank"
               href={explorerAddressUrl(chain, vault.lendingOracle.address)}
             >
               {oraclesMapToText[vault.lendingOracle.provider]}
-            </a>
+            </ExternalLink>
           : <div className={classes.apyValue}>{oraclesMapToText[vault.lendingOracle.provider]}</div>
           }
         </div>

@@ -8,6 +8,7 @@
 # Secrets
 .env
 .env.*
+!.env.example
 
 # Logs
 *.log

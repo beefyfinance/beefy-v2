@@ -7,6 +7,7 @@ import { explorerTxUrl } from '../../../../helpers/url.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import OpenInNewRoundedIcon from '../../../../images/icons/mui/OpenInNewRounded.svg?react';
 import { styles } from './styles.ts';
+import { ExternalLink } from '../../../Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -31,8 +32,8 @@ export function TransactionLink() {
   }
 
   return (
-    <a className={classes.redirectLinkSuccess} href={explorerTxUrl(chain, hash)} target="_blank">
+    <ExternalLink className={classes.redirectLinkSuccess} href={explorerTxUrl(chain, hash)}>
       {t('Transactn-View')} <OpenInNewRoundedIcon className={css({ fontSize: '16px' })} />
-    </a>
+    </ExternalLink>
   );
 }

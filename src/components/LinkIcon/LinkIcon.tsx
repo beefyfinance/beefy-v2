@@ -1,6 +1,7 @@
 import type { FC, SVGProps } from 'react';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { styles } from './styles.ts';
+import { ExternalLink } from '../Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -15,10 +16,10 @@ export const LinkIcon: FC<LinkIconProps> = ({ href, logo, alt }) => {
   const IconComponent = typeof logo === 'string' ? 'img' : logo;
 
   return (
-    <a className={classes.link} href={href} target="_blank">
+    <ExternalLink className={classes.link} href={href}>
       {typeof logo === 'string' ?
         <img alt={alt} src={logo} />
       : <IconComponent className={classes.svgIcon} />}
-    </a>
+    </ExternalLink>
   );
 };

@@ -1,5 +1,6 @@
 import { cva } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
+import { ExternalLink } from '../../../Links/ExternalLink.tsx';
 
 const actionRecipe = cva({
   base: {
@@ -26,9 +27,4 @@ export const ActionButton = styled('button', actionRecipe, {
   },
 });
 
-export const ActionLink = styled('a', actionRecipe, {
-  defaultProps: {
-    target: '_blank',
-    rel: 'noopener',
-  },
-});
+export const ActionLink = styled(ExternalLink, actionRecipe);

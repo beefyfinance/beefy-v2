@@ -31,6 +31,7 @@ import { MobileStat } from '../../../MobileStat/MobileStat.tsx';
 import { Row, RowMobile } from '../../../Row/Row.tsx';
 import { InfoGrid } from '../InfoGrid/InfoGrid.tsx';
 import { styles } from './styles.ts';
+import { ExternalLink } from '../../../../../../../../components/Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -182,14 +183,9 @@ export const Transaction = memo(function Transaction({ tx }: TransactionProps) {
           className={classes.network}
         />
         {transactionHash ?
-          <a
-            href={explorerTxUrl(chain, transactionHash)}
-            target={'_blank'}
-            rel={'noopener'}
-            className={classes.link}
-          >
+          <ExternalLink href={explorerTxUrl(chain, transactionHash)} className={classes.link}>
             {formatISO9075(datetime)}
-          </a>
+          </ExternalLink>
         : formatISO9075(datetime)}
       </div>
       <InfoGrid>
@@ -240,14 +236,9 @@ export const TransactionMobile = memo(function TransactionMobile({ tx }: Transac
         {/* Date */}
         <div className={classes.statMobile}>
           {transactionHash ?
-            <a
-              href={explorerTxUrl(chain, transactionHash)}
-              target={'_blank'}
-              rel={'noopener'}
-              className={classes.link}
-            >
+            <ExternalLink href={explorerTxUrl(chain, transactionHash)} className={classes.link}>
               {formatISO9075(datetime, { representation: 'date' })}
-            </a>
+            </ExternalLink>
           : formatISO9075(datetime, { representation: 'date' })}
         </div>
         <div className={css(styles.statMobile, styles.textDark)}>

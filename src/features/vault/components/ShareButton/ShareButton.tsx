@@ -38,6 +38,7 @@ import type {
   ShareServiceItemProps,
   VaultDetails,
 } from './types.ts';
+import { useOpenExternalUrl } from '../../../../components/MiniApp/hooks.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -174,6 +175,7 @@ const ShareTrigger = styled(DropdownButtonTrigger, {
 
 const TwitterItem = memo(function TwitterItem({ details }: ShareServiceItemProps) {
   const { t } = useTranslation();
+  const openExternalUrl = useOpenExternalUrl();
   const onClick = useCallback(() => {
     const message = t(`Vault-Share-Message-${details.kind}`, details);
 
@@ -183,14 +185,15 @@ const TwitterItem = memo(function TwitterItem({ details }: ShareServiceItemProps
       url: details.vaultUrl,
     });
 
-    window.open(`https://x.com/intent/tweet?${params}`, '_blank');
-  }, [details, t]);
+    openExternalUrl(`https://x.com/intent/tweet?${params}`);
+  }, [details, t, openExternalUrl]);
 
   return <ShareItem text={t('Vault-Share-Twitter')} onClick={onClick} icon={twitterIcon} />;
 });
 
 const LensterItem = memo(function LensterItem({ details }: ShareServiceItemProps) {
   const { t } = useTranslation();
+  const openExternalUrl = useOpenExternalUrl();
   const onClick = useCallback(() => {
     const message = t(`Vault-Share-Message-${details.kind}`, details);
 
@@ -200,14 +203,15 @@ const LensterItem = memo(function LensterItem({ details }: ShareServiceItemProps
       url: details.vaultUrl,
     });
 
-    window.open(`https://lenster.xyz/?${params}`, '_blank');
-  }, [details, t]);
+    openExternalUrl(`https://lenster.xyz/?${params}`);
+  }, [details, t, openExternalUrl]);
 
   return <ShareItem text={t('Vault-Share-Lenster')} onClick={onClick} icon={lensterIcon} />;
 });
 
 const TelegramItem = memo(function TelegramItem({ details }: ShareServiceItemProps) {
   const { t } = useTranslation();
+  const openExternalUrl = useOpenExternalUrl();
   const onClick = useCallback(() => {
     const message = t(`Vault-Share-Message-${details.kind}`, details);
 
@@ -217,8 +221,8 @@ const TelegramItem = memo(function TelegramItem({ details }: ShareServiceItemPro
       url: details.vaultUrl,
     });
 
-    window.open(`https://t.me/share/url?${params}`, '_blank');
-  }, [details, t]);
+    openExternalUrl(`https://t.me/share/url?${params}`);
+  }, [details, t, openExternalUrl]);
 
   return <ShareItem text={t('Vault-Share-Telegram')} onClick={onClick} icon={telegramIcon} />;
 });

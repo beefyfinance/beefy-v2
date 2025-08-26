@@ -31,6 +31,7 @@ import { ListJoin } from '../../../ListJoin.tsx';
 import { Title } from '../Title/Title.tsx';
 import { TransactionLink } from '../TransactionLink/TransactionLink.tsx';
 import { styles } from './styles.ts';
+import { ExternalLink } from '../../../Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -225,9 +226,7 @@ const BridgeSuccessContent = memo<SuccessContentProps>(function BridgeSuccessCon
               : 'Stepper-bridge-Success-Track-Outgoing'
             }
             components={{
-              Link: (
-                <a href={explorerUrl} className={classes.link} target={'_blank'} rel={'noopener'} />
-              ),
+              Link: <ExternalLink href={explorerUrl} className={classes.link} />,
             }}
             values={{ to: toChain.name, from: fromChain.name, provider: quote.config.title }}
           />
