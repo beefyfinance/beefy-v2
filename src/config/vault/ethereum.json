@@ -1,5 +1,31 @@
 [
   {
+    "id": "sky-sky",
+    "name": "SKY",
+    "type": "standard",
+    "token": "SKY",
+    "tokenAddress": "0x56072C95FAA701256059aa122697B133aDEd9279",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x30368EC9B8827c68754E4C41ff7678ed784DaAc2",
+    "earnedToken": "mooSky",
+    "earnedTokenAddress": "0x30368EC9B8827c68754E4C41ff7678ed784DaAc2",
+    "oracle": "tokens",
+    "oracleId": "SKY",
+    "status": "active",
+    "createdAt": 1756186900,
+    "platformId": "sky",
+    "assets": ["SKY"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "curve-frxusd-usdf",
     "name": "frxUSD/USDf",
     "type": "standard",
