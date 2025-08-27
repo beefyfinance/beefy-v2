@@ -36,7 +36,6 @@ import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useIsOverflowingHorizontally } from '../../../../helpers/overflow.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import BoostIcon from '../../../../images/icons/boost.svg?react';
-import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
 import { useMediaQuery } from '../../../MediaQueries/useMediaQuery.ts';
 import { BasicTooltipContent } from '../../../Tooltip/BasicTooltipContent.tsx';
 import { VaultPlatform } from '../../../VaultPlatform/VaultPlatform.tsx';
@@ -325,7 +324,6 @@ export const VaultTags = memo(function VaultTags({ vaultId }: VaultTagsProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const promo = useAppSelector(state => selectActivePromoForVault(state, vaultId));
-  const isMobile = useBreakpoint({ to: 'xs' });
   const isGov = isGovVault(vault);
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
   const isSmallDevice = useMediaQuery('(max-width: 450px)', false);
@@ -338,14 +336,7 @@ export const VaultTags = memo(function VaultTags({ vaultId }: VaultTagsProps) {
   return (
     <div className={css(styles.vaultTags)}>
       <VaultPlatformTag vaultId={vaultId} />
-      {isCowcentratedLike && (
-        <VaultClmLikeTag
-          vault={vault}
-          hideFee={isMobile || !isVaultActive(vault)}
-          hideLabel={isMobile}
-          onlyIcon={onlyShowIcon}
-        />
-      )}
+      {isCowcentratedLike && <VaultClmLikeTag vault={vault} hideFee={!isVaultActive(vault)} />}
       {isVaultRetired(vault) ?
         <VaultTag css={styles.vaultTagRetired} text={t('VaultTag-Retired')} />
       : isVaultPaused(vault) ?
