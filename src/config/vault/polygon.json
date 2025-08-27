@@ -51,7 +51,7 @@
   },
   {
     "id": "morpho-compound-usdt",
-    "name": "Compound USDT",
+    "name": "Compound USD₮0",
     "token": "USDT",
     "tokenAddress": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "tokenDecimals": 6,
@@ -76,7 +76,7 @@
   },
   {
     "id": "compound-polygon-usdt",
-    "name": "USDT",
+    "name": "USD₮0",
     "type": "standard",
     "token": "USDT",
     "tokenAddress": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -232,7 +232,7 @@
   },
   {
     "id": "uniswap-cow-poly-usdt-lcd-rp",
-    "name": "LCD-USDT Reward Pool",
+    "name": "LCD-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapPolyUSDT-LCD",
@@ -423,7 +423,7 @@
   },
   {
     "id": "uniswap-cow-poly-weth-usdt-rp",
-    "name": "WETH-USDT Reward Pool",
+    "name": "WETH-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapPolyWETH-USDT",
@@ -531,7 +531,7 @@
   },
   {
     "id": "uniswap-cow-poly-wmatic-usdt-rp",
-    "name": "WPOL-USDT Reward Pool",
+    "name": "WPOL-USD₮0 Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapPolyWMATIC-USDT",
@@ -792,7 +792,7 @@
   },
   {
     "id": "balancer-polygon-usdc-dai-usdt",
-    "name": "USDC/DAI/USDT",
+    "name": "USDC/DAI/USD₮0",
     "type": "standard",
     "token": "USDC/DAI/USDT Poly",
     "tokenAddress": "0x4B7586A4F49841447150D3d92d9E9e000f766c30",
@@ -938,7 +938,7 @@
   },
   {
     "id": "uniswap-cow-poly-usdt-lcd",
-    "name": "LCD-USDT",
+    "name": "LCD-USD₮0",
     "type": "cowcentrated",
     "token": "LCD-USDT",
     "tokenAddress": "0xc7cfD91eE811E1Fc981A07Cf6890eA3db1b4e542",
@@ -1157,7 +1157,7 @@
   },
   {
     "id": "uniswap-cow-poly-weth-usdt",
-    "name": "WETH-USDT",
+    "name": "WETH-USD₮0",
     "type": "cowcentrated",
     "token": "WETH-USDT",
     "tokenAddress": "0x4CcD010148379ea531D6C587CfDd60180196F9b1",
@@ -1281,7 +1281,7 @@
   },
   {
     "id": "uniswap-cow-poly-wmatic-usdt",
-    "name": "WPOL-USDT",
+    "name": "WPOL-USD₮0",
     "type": "cowcentrated",
     "token": "WMATIC-USDT",
     "tokenAddress": "0x9B08288C3Be4F62bbf8d1C20Ac9C5e6f9467d8B7",
@@ -1611,7 +1611,7 @@
   },
   {
     "id": "stargate-v2-polygon-usdt",
-    "name": "USDT",
+    "name": "USD₮0",
     "type": "standard",
     "token": "USDT",
     "tokenAddress": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -1710,7 +1710,7 @@
   },
   {
     "id": "uniswap-gamma-polygon-usdc-usdt",
-    "name": "USDC-USDT LP",
+    "name": "USDC-USD₮0 LP",
     "type": "standard",
     "token": "xUSDC-USDT",
     "tokenAddress": "0x8c6FE430cf06e56BE7c092AD3A249BF0BcB388B9",
@@ -1847,7 +1847,7 @@
   },
   {
     "id": "quick-gamma-wmatic-usdt-narrow",
-    "name": "USDT-POL Narrow LP",
+    "name": "USD₮0-POL Narrow LP",
     "type": "standard",
     "token": "aWMATIC-USDT",
     "tokenAddress": "0x598cA33b7F5FAB560ddC8E76D94A4b4AA52566d7",
@@ -1953,7 +1953,7 @@
   },
   {
     "id": "curve-poly-crvusd-usdt",
-    "name": "crvUSD/USDT",
+    "name": "crvUSD/USD₮0",
     "type": "standard",
     "token": "crvusdusdt",
     "tokenAddress": "0xA70Af99bFF6b168327f9D1480e29173e757c7904",
@@ -2186,7 +2186,7 @@
   },
   {
     "id": "quick-gamma-weth-usdt",
-    "name": "ETH-USDT Narrow LP",
+    "name": "ETH-USD₮0 Narrow LP",
     "type": "standard",
     "token": "aWETH-USDT",
     "tokenAddress": "0x5928f9f61902b139e1c40cBa59077516734ff09f",
@@ -2737,7 +2737,7 @@
   },
   {
     "id": "retro-gamma-usdc-usdt",
-    "name": "USDC.e-USDT LP",
+    "name": "USDC.e-USD₮0 LP",
     "type": "standard",
     "token": "USDC.e-USDT rLP",
     "tokenAddress": "0xA7565DFeb16010153D3368E002Ec53CBfaf96e05",
@@ -2989,7 +2989,7 @@
   },
   {
     "id": "pearl-usdrv3-usdt",
-    "name": "USDR-USDT sLP",
+    "name": "USDR-USD₮0 sLP",
     "type": "standard",
     "token": "sAMM-USDRv3/USDT",
     "tokenAddress": "0x3f69055F203861abFd5D986dC81a2eFa7c915b0c",
@@ -3365,7 +3365,7 @@
   },
   {
     "id": "quick-gamma-usdc-usdt-narrow",
-    "name": "USDC.e-USDT Stable LP",
+    "name": "USDC.e-USD₮0 Stable LP",
     "type": "standard",
     "token": "aUSDC.e-USDT",
     "tokenAddress": "0x795f8c9B0A0Da9Cd8dea65Fc10f9B57AbC532E58",
@@ -3781,7 +3781,7 @@
   },
   {
     "id": "curve-poly-usdr",
-    "name": "USDR/DAI/USDC.e/USDT",
+    "name": "USDR/DAI/USDC.e/USD₮0",
     "type": "standard",
     "token": "USDR3CRV-f",
     "tokenAddress": "0xa138341185a9D0429B0021A11FB717B225e13e1F",
@@ -4704,7 +4704,7 @@
   },
   {
     "id": "stargate-polygon-usdt",
-    "name": "USDT LP",
+    "name": "USD₮0 LP",
     "type": "standard",
     "token": "S*USDT",
     "tokenAddress": "0x29e38769f23701A2e4A8Ef0492e19dA4604Be62c",
@@ -5234,7 +5234,7 @@
   },
   {
     "id": "mai-curve-mai-3pool",
-    "name": "MAI/DAI/USDC.e/USDT",
+    "name": "MAI/DAI/USDC.e/USD₮0",
     "type": "standard",
     "token": "mai+am3CRV",
     "tokenAddress": "0x447646e84498552e62eCF097Cc305eaBFFF09308",
@@ -5388,7 +5388,7 @@
   },
   {
     "id": "curve-am3crv",
-    "name": "DAI/USDC.e/USDT",
+    "name": "DAI/USDC.e/USD₮0",
     "type": "standard",
     "token": "am3CRV",
     "tokenAddress": "0xE7a24EF0C5e95Ffb0f6684b813A78F2a3AD7D171",
@@ -5903,7 +5903,7 @@
   },
   {
     "id": "quick-mai-usdt",
-    "name": "MAI-USDT LP",
+    "name": "MAI-USD₮0 LP",
     "type": "standard",
     "token": "MAI-USDT LP",
     "tokenAddress": "0xE89faE1B4AdA2c869f05a0C96C87022DaDC7709a",
@@ -5983,7 +5983,7 @@
   },
   {
     "id": "quick-usdt-matic",
-    "name": "USDT-MATIC LP",
+    "name": "USD₮0-MATIC LP",
     "type": "standard",
     "token": "USDT-MATIC LP",
     "tokenAddress": "0x604229c960e5CACF2aaEAc8Be68Ac07BA9dF81c3",
@@ -6144,7 +6144,7 @@
   },
   {
     "id": "ironswap-iron",
-    "name": "IRON/USDC.e/USDT/DAI",
+    "name": "IRON/USDC.e/USD₮0/DAI",
     "type": "standard",
     "token": "IRON-IS3USD",
     "tokenAddress": "0x985D40feDAA3208DAbaCDFDCA00CbeAAc9543949",
@@ -6708,7 +6708,7 @@
   },
   {
     "id": "jetswap-poly-usdc-usdt",
-    "name": "USDC.e-USDT LP",
+    "name": "USDC.e-USD₮0 LP",
     "type": "standard",
     "token": "USDC.e-USDT LP",
     "tokenAddress": "0x20BF018FDDBa3b352f3d913FE1c81b846fE0F490",
@@ -7110,7 +7110,7 @@
   },
   {
     "id": "ironswap-3usd",
-    "name": "USDC.e/USDT/DAI",
+    "name": "USDC.e/USD₮0/DAI",
     "type": "standard",
     "token": "IS3USD",
     "tokenAddress": "0xb4d09ff3dA7f9e9A2BA029cb0A81A989fd7B8f17",
@@ -7750,7 +7750,7 @@
   },
   {
     "id": "ape-matic-usdt",
-    "name": "MATIC-USDT ALP",
+    "name": "MATIC-USD₮0 ALP",
     "type": "standard",
     "token": "MATIC-USDT ALP",
     "tokenAddress": "0x65D43B64E3B31965Cd5EA367D4c2b94c03084797",
@@ -9145,7 +9145,7 @@
   },
   {
     "id": "sushi-poly-usdc-usdt",
-    "name": "USDC.e-USDT LP",
+    "name": "USDC.e-USD₮0 LP",
     "type": "standard",
     "token": "USDC.e-USDT SLP",
     "tokenAddress": "0x4B1F1e2435A9C96f7330FAea190Ef6A7C8D70001",
@@ -9339,7 +9339,7 @@
   },
   {
     "id": "sushi-poly-eth-usdt",
-    "name": "ETH-USDT LP",
+    "name": "ETH-USD₮0 LP",
     "type": "standard",
     "token": "ETH-USDT SLP",
     "tokenAddress": "0xc2755915a85C6f6c1C0F3a86ac8C058F11Caa9C9",
@@ -9521,7 +9521,7 @@
   },
   {
     "id": "quick-usdc-usdt",
-    "name": "USDC.e-USDT LP",
+    "name": "USDC.e-USD₮0 LP",
     "type": "standard",
     "token": "USDC.e-USDT QLP",
     "tokenAddress": "0x2cF7252e74036d1Da831d11089D326296e64a728",
@@ -9771,7 +9771,7 @@
   },
   {
     "id": "quick-eth-usdt",
-    "name": "ETH-USDT LP",
+    "name": "ETH-USD₮0 LP",
     "type": "standard",
     "token": "ETH-USDT QLP",
     "tokenAddress": "0xF6422B997c7F54D1c6a6e103bcb1499EeA0a7046",
@@ -10374,7 +10374,7 @@
   },
   {
     "id": "wexpoly-usdc-usdt-eol",
-    "name": "USDC.e-USDT LP",
+    "name": "USDC.e-USD₮0 LP",
     "type": "standard",
     "token": "USDC.e-USDT WLP",
     "tokenAddress": "0x7242e19A0937ac33472febD69462668a4cf5bbC5",
@@ -10569,7 +10569,7 @@
   },
   {
     "id": "curve-poly-eurt",
-    "name": "EURt/DAI/USDC.e/USDT",
+    "name": "EURt/DAI/USDC.e/USD₮0",
     "type": "standard",
     "token": "crvEURT",
     "tokenAddress": "0x600743B1d8A96438bD46836fD34977a00293f6Aa",
@@ -11107,7 +11107,7 @@
   },
   {
     "id": "dinoswap-dfyn-ust-usdt-eol",
-    "name": "UST-USDT LP",
+    "name": "UST-USD₮0 LP",
     "type": "standard",
     "token": "UST-USDT LP",
     "tokenAddress": "0x39BEd7f1C412ab64443196A6fEcb2ac20C707224",
@@ -12934,7 +12934,7 @@
   },
   {
     "id": "quick-dai-usdt-eol",
-    "name": "DAI-USDT LP",
+    "name": "DAI-USD₮0 LP",
     "type": "standard",
     "token": "DAI-USDT QLP",
     "tokenAddress": "0x59153f27eeFE07E5eCE4f9304EBBa1DA6F53CA88",
@@ -13255,7 +13255,7 @@
   },
   {
     "id": "quick-ixt-usdt",
-    "name": "IXT-USDT LP",
+    "name": "IXT-USD₮0 LP",
     "type": "standard",
     "token": "IXT-USDT LP",
     "tokenAddress": "0x304e57c752E854E9A233Ae82fcC42F7568b81180",
