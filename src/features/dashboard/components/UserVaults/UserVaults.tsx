@@ -28,11 +28,17 @@ export const UserVaults = memo(function UserVaults({ address }: UserVaultsProps)
   const { sortedFilteredVaults, sortedOptions, handleSort, searchText, setSearchText } =
     useSortedDashboardVaults(address);
   const mdDown = useBreakpoint({ to: 'sm' });
+  const isMobile = useBreakpoint({ to: 'xs' });
   const subTitle =
     mdDown ? 'Dashboard-Your-Vaults-Subtitle-Mobile' : 'Dashboard-Your-Vaults-Subtitle';
 
   return (
-    <Section title={t('Dashboard-Your-Vaults-Title')} subTitle={t(subTitle)}>
+    <Section
+      title={t('Dashboard-Your-Vaults-Title')}
+      subTitle={t(subTitle)}
+      maxWidth={isMobile ? 'xl' : 'lg'}
+      noPadding={isMobile}
+    >
       <div className={containerClass}>
         <Filter
           sortOptions={sortedOptions}
