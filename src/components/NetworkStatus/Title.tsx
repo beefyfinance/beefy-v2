@@ -16,7 +16,7 @@ export const TitleComponent = memo(function TitleComponent({
   return (
     <TitleContainer mobilelist={mobilelist}>
       <Title mobilelist={mobilelist} variant={hasAnyError ? 'warning' : 'success'}>
-        <TextTitle>{text}</TextTitle>
+        <TextTitle>{t(text)}</TextTitle>
         <TextTitle>
           {hasAnyError ? t('NetworkStatus-Data-Error') : t('NetworkStatus-Data-Success')}
         </TextTitle>

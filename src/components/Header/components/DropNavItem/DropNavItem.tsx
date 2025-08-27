@@ -4,12 +4,12 @@ import ExpandLess from '../../../../images/icons/mui/ExpandLess.svg?react';
 import { NavLinkItem } from '../NavItem/NavLinkItem.tsx';
 import type { BadgeComponent } from '../Badges/types.ts';
 import type { NavItemConfig } from './types.ts';
-import { DropdownTrigger } from '../../../Dropdown/DropdownTrigger.tsx';
 import { styled } from '@repo/styles/jsx';
 import type { RecipeVariantRecord } from '@repo/styles/types';
 import { NavItemInner } from '../NavItem/NavItemInner.tsx';
 import { DropdownProvider } from '../../../Dropdown/DropdownProvider.tsx';
 import { DropdownContent } from '../../../Dropdown/DropdownContent.tsx';
+import { DropdownNavButton } from '../NavItem/NavLink.tsx';
 
 interface DropNavItemProps {
   title: string;
@@ -40,14 +40,15 @@ export const DropNavItem = memo<DropNavItemProps>(function DropNavItem({
         hoverOpenDelay={0}
         hoverCloseDelay={100}
       >
-        <StyledDropdownTrigger>
+        <DropdownNavButton>
           <NavItemInner
             title={title}
             Icon={Icon}
             Badge={Badge}
             Arrow={isOpen ? UpArrow : DownArrow}
           />
-        </StyledDropdownTrigger>
+        </DropdownNavButton>
+
         <DropdownItems>
           {items.map(item => {
             const NavItemComponent = item.Component ?? NavLinkItem;
@@ -75,31 +76,6 @@ const DropdownContainer = styled('div', {
     position: 'relative',
     display: 'flex',
     alignItems: 'center',
-  },
-});
-
-const StyledDropdownTrigger = styled(DropdownTrigger.button, {
-  base: {
-    display: 'flex',
-    textDecoration: 'none',
-    color: 'text.dark',
-    columnGap: '4px',
-    outline: 'none',
-    padding: '2px 6px',
-    //this is to create a deadzone for the hover state when we have two items in the same row
-    margin: '0 -4px',
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    _hover: {
-      color: 'text.light',
-    },
-    _focus: {
-      color: 'text.light',
-    },
-    _active: {
-      color: 'text.light',
-    },
   },
 });
 

@@ -3,6 +3,7 @@ import { memo } from 'react';
 import { styled } from '@repo/styles/jsx';
 import { cva } from '@repo/styles/css';
 import type { ReactNode } from 'react';
+import { DropdownTrigger } from '../../../Dropdown/DropdownTrigger.tsx';
 
 const navItemStyles = {
   base: {
@@ -51,6 +52,12 @@ const navLinkRecipe = cva({
 });
 
 export const NavItem = styled('div', navItemRecipe);
+
+export const DropdownNavButton = styled(DropdownTrigger.button, navLinkRecipe, {
+  defaultProps: {
+    type: 'button',
+  },
+});
 
 const ExternalNavLink = styled('a', navLinkRecipe, {
   defaultProps: {

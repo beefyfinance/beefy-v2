@@ -252,7 +252,10 @@ export function useNetStatus<
 }
 
 const stringArrCompare = (left: string[], right: string[]) => {
-  return isEqual(sortedUniq(left), sortedUniq(right));
+  if (left.length !== right.length) {
+    return false;
+  }
+  return isEqual(sortedUniq(left.sort()), sortedUniq(right.sort()));
 };
 
 export const findChainIdMatching = (
@@ -295,7 +298,23 @@ export const findBeefyApiMatching = (
   matcher: (loader: LoaderState) => boolean
 ) => {
   const matchingKeys: (keyof DataLoaderState['global'])[] = [];
-  const beefyKeys: (keyof DataLoaderState['global'])[] = ['apy', 'prices', 'analytics'];
+  const beefyKeys: (keyof DataLoaderState['global'])[] = [
+    'analytics',
+    'apy',
+    'beGemsCampaign',
+    'currentCowcentratedRanges',
+    'merklCampaigns',
+    'merklRewards',
+    'onRamp',
+    'prices',
+    'proposals',
+    'stellaSwapRewards',
+    'treasury',
+    'zapAggregatorTokenSupport',
+    'zapAmms',
+    'zapConfigs',
+    'zapSwapAggregators',
+  ];
   for (const key of beefyKeys) {
     if (matcher(state.ui.dataLoader.global[key])) {
       matchingKeys.push(key);
@@ -309,7 +328,13 @@ export const findConfigMatching = (
   matcher: (loader: LoaderState) => boolean
 ) => {
   const matchingKeys: (keyof DataLoaderState['global'])[] = [];
-  const configKeys: (keyof DataLoaderState['global'])[] = ['chainConfig', 'promos', 'vaults'];
+  const configKeys: (keyof DataLoaderState['global'])[] = [
+    'addressBook',
+    'chainConfig',
+    'platforms',
+    'promos',
+    'vaults',
+  ];
   for (const key of configKeys) {
     if (matcher(state.ui.dataLoader.global[key])) {
       matchingKeys.push(key);

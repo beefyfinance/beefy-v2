@@ -64,36 +64,33 @@ export const NetworkStatus = memo(function NetworkStatus({
   const configErrors = useAppSelector(state => selectConfigKeysWithRejectedData(state));
   const configPending = useAppSelector(state => selectConfigKeysWithPendingData(state));
 
-  const hasAnyError = useMemo(
-    () => rpcErrors.length > 0 || beefyErrors.length > 0 || configErrors.length > 0,
-    [rpcErrors, beefyErrors, configErrors]
-  );
-  const hasAnyLoading = useMemo(
-    () => rpcPending.length > 0 || beefyPending.length > 0 || configPending.length > 0,
-    [rpcPending, beefyPending, configPending]
-  );
+  const hasRpcError = rpcErrors.length > 0;
+  const hasBeefyError = beefyErrors.length > 0;
+  const hasConfigError = configErrors.length > 0;
 
-  const variant = useMemo(() => (hasAnyError ? 'warning' : 'success'), [hasAnyError]);
-
-  const hidePulse = useMemo(() => !hasAnyError && !hasAnyLoading, [hasAnyError, hasAnyLoading]);
+  const hasAnyError = hasRpcError || hasBeefyError || hasConfigError;
+  const hasAnyLoading =
+    rpcPending.length > 0 || beefyPending.length > 0 || configPending.length > 0;
+  const variant = hasAnyError ? 'warning' : 'success';
+  const hidePulse = !hasAnyError && !hasAnyLoading;
 
   const titleText = useMemo(() => {
     // only api error
-    if (rpcErrors.length === 0 && beefyErrors.length > 0) {
-      return t('NetworkStatus-ApiError');
+    if (!hasRpcError && hasBeefyError) {
+      return 'NetworkStatus-ApiError';
     }
     // only rpc error
-    if (rpcErrors.length > 0 && beefyErrors.length === 0) {
-      return t('NetworkStatus-RpcError');
+    if (hasRpcError && !hasBeefyError) {
+      return 'NetworkStatus-RpcError';
     }
 
     // both error
-    if (rpcErrors.length > 0 && beefyErrors.length > 0) {
-      return t('NetworkStatus-Error');
+    if (hasRpcError && hasBeefyError) {
+      return 'NetworkStatus-Error';
     } else {
-      return t('NetworkStatus-Success');
+      return 'NetworkStatus-Success';
     }
-  }, [rpcErrors, beefyErrors, t]);
+  }, [hasRpcError, hasBeefyError]);
 
   return (
     <DropdownProvider

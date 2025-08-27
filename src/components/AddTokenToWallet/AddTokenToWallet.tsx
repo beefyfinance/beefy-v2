@@ -103,7 +103,7 @@ export const AddTokenToWallet = memo(function AddTokenToWallet() {
   }, [dispatch]);
 
   return (
-    <Modal open={isOpen} onClose={handleClose}>
+    <Modal scrollable={false} layer={1} open={isOpen} onClose={handleClose}>
       <Card>
         <CardHeader>
           {status === 'fulfilled' ?
@@ -127,6 +127,9 @@ const StyledCardContent = styled(CardContent, {
   base: {
     minHeight: '200px',
     flexShrink: 1,
-    width: '510px',
+    width: '100%',
+    sm: {
+      width: '510px',
+    },
   },
 });

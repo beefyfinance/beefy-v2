@@ -2,7 +2,6 @@ import { memo } from 'react';
 import type { NavItemInnerProps } from '../DropNavItem/types.ts';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@repo/styles/jsx';
-import ExternalArrowIcon from '../../../../images/icons/external-arrow.svg?react';
 
 export const NavItemInner = memo<NavItemInnerProps>(function NavItemInner({
   title,
@@ -19,10 +18,7 @@ export const NavItemInner = memo<NavItemInnerProps>(function NavItemInner({
           <Icon />
         </IconWrapper>
         <Title>
-          {t(title)}
-          {externalLink ?
-            <ExternalArrowIcon />
-          : null}
+          {`${t(title)}${externalLink ? ' ↗' : ''}`}
           {Badge ?
             <Badge />
           : null}
