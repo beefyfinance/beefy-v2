@@ -3,6 +3,7 @@ import { mnemonicToAccount } from 'viem/accounts';
 import type { PluginContext } from 'rollup';
 import { readFile } from 'node:fs/promises';
 import { basename } from 'node:path';
+import type { Address } from 'viem';
 
 type UnsignedAccountAssociation = {
   /** Farcaster ID of the account */
@@ -57,6 +58,8 @@ export type MiniAppPluginOptions = {
   capabilities?: MiniAppManifest['requiredCapabilities'];
   /** Farcaster account association */
   account: UnsignedAccountAssociation | SignedAccountAssociation;
+  /** Base builder rewards */
+  baseBuilderAddresses: Address[];
 };
 
 /** @see https://github.com/farcasterxyz/miniapps/blob/main/packages/miniapp-core/src/types.ts#L48 */
@@ -459,10 +462,17 @@ export default function (options: MiniAppPluginOptions): Plugin {
         );
       }
 
+      if (!options.baseBuilderAddresses.length) {
+        throw new Error(`Base builder addresses must be provided.`);
+      }
+      const baseBuilder = {
+        allowedAddresses: options.baseBuilderAddresses,
+      };
+
       this.emitFile({
         fileName: '.well-known/farcaster.json',
         type: 'asset',
-        source: JSON.stringify({ accountAssociation, miniapp: manifest }, null, 2),
+        source: JSON.stringify({ accountAssociation, miniapp: manifest, baseBuilder }, null, 2),
       });
     },
     async transformIndexHtml(_html, _ctx) {
