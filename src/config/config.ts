@@ -398,6 +398,7 @@ export const config = {
   moonbeam: {
     name: 'Moonbeam',
     chainId: 1284,
+    eol: 1756396225,
     rpc: ['https://rpc.api.moonbeam.network'],
     explorerUrl: 'https://moonscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
