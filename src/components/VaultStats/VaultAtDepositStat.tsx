@@ -1,10 +1,7 @@
 import { memo, type ReactNode } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
-import {
-  selectIsAnalyticsLoadedByAddress,
-  selectUserDepositedTimelineByVaultId,
-} from '../../features/data/selectors/analytics.ts';
+import { selectUserDepositedTimelineByVaultId } from '../../features/data/selectors/analytics.ts';
 import type { BeefyState } from '../../features/data/store/types.ts';
 import {
   formatLargeUsd,
@@ -15,6 +12,7 @@ import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent.tsx';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 import { useTranslation } from 'react-i18next';
+import { selectIsAnalyticsLoadedByAddress } from '../../features/data/selectors/data-loader/analytics.ts';
 
 export type VaultAtDepositStatProps = {
   vaultId: VaultEntity['id'];

@@ -146,7 +146,7 @@ export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?:
       ) ?
         <FloatingError
           userInput={userInput}
-          anchorRef={anchorEl}
+          reference={anchorEl}
           inputMode={inputMode}
           isAddressValid={isAddressValid}
           isDomainValid={isDomainValid}

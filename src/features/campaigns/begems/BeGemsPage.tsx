@@ -2,14 +2,14 @@ import { styled } from '@repo/styles/jsx';
 import { memo, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../data/store/hooks.ts';
 import { initCampaignBeGems } from '../../data/actions/campaigns/begems.ts';
-import {
-  selectBeGemsDefaultSeason,
-  selectHasBeGemsCampaignDispatchedRecently,
-  selectIsBeGemsCampaignAvailable,
-} from '../../data/selectors/campaigns/begems.ts';
+import { selectBeGemsDefaultSeason } from '../../data/selectors/campaigns/begems.ts';
 import { Loading } from '../../home/components/Loading/Loading.tsx';
 import { FrequentlyAskedQuestions } from './FrequentlyAskedQuestions.tsx';
 import { Seasons } from './Seasons.tsx';
+import {
+  selectHasBeGemsCampaignDispatchedRecently,
+  selectIsBeGemsCampaignAvailable,
+} from '../../data/selectors/data-loader/begems.ts';
 
 const BeGemsPageLoader = memo(() => {
   const dispatch = useAppDispatch();

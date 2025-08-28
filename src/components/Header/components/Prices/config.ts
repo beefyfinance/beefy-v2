@@ -46,7 +46,7 @@ export const tokens: Token[] = [
     chainId: 'optimism',
     icon: mooIcon,
     explorer: {
-      name: 'Etherscan',
+      name: 'Op Mainnet',
       icon: opIcon,
       url: 'https://optimistic.etherscan.io/token/0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
     },
@@ -63,7 +63,7 @@ export const tokens: Token[] = [
     chainId: 'base',
     icon: mooIcon,
     explorer: {
-      name: 'Etherscan',
+      name: 'BaseScan',
       icon: baseIcon,
       url: 'https://basescan.org/token/0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
     },
@@ -80,14 +80,14 @@ export const tokens: Token[] = [
     chainId: 'sonic',
     icon: mooIcon,
     explorer: {
-      name: 'Etherscan',
+      name: 'SonicScan',
       icon: sonicIcon,
       url: 'https://sonicscan.org/token/0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
     },
     walletIconUrl: 'https://beefy.com/icons/128/mooBIFI.png',
     buyLink: {
-      url: 'https://www.shadow.so/trade?inputCurrency=0x29219dd400f2Bf60E5a23d13Be72B486D4038894&outputCurrency=0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
-      platform: 'shadow',
+      url: 'https://swap.defillama.com/?chain=sonic&from=0x0000000000000000000000000000000000000000&to=0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
+      platform: 'llama',
     },
   },
 ];

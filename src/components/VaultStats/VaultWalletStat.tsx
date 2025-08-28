@@ -1,11 +1,8 @@
 import { memo } from 'react';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
-import {
-  selectIsBalanceAvailableForChainUser,
-  selectUserBalanceOfToken,
-} from '../../features/data/selectors/balance.ts';
+import { selectUserBalanceOfToken } from '../../features/data/selectors/balance.ts';
 
-import { selectIsPricesAvailable } from '../../features/data/selectors/prices.ts';
+import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
 import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
@@ -20,6 +17,7 @@ import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/forma
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 import { useTranslation } from 'react-i18next';
+import { selectIsBalanceAvailableForChainUser } from '../../features/data/selectors/data-loader/balance.ts';
 
 export type VaultWalletStatProps = {
   vaultId: VaultEntity['id'];

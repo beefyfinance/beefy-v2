@@ -15,12 +15,7 @@ import type { TokenEntity } from '../../../data/entities/token.ts';
 import { isTokenErc20, isTokenNative } from '../../../data/entities/token.ts';
 import { selectBridgeByIdIfKnown } from '../../../data/selectors/bridges.ts';
 import { selectChainById } from '../../../data/selectors/chains.ts';
-import {
-  selectIsAddressBookLoaded,
-  selectIsTokenLoaded,
-  selectShouldInitAddressBook,
-  selectTokenById,
-} from '../../../data/selectors/tokens.ts';
+import { selectIsTokenLoaded, selectTokenById } from '../../../data/selectors/tokens.ts';
 import { BridgeTag, NativeTag } from '../BridgeTag/BridgeTag.tsx';
 import {
   AssetIconSymbol,
@@ -32,6 +27,10 @@ import {
   styles,
   TitleContainer,
 } from './styles.ts';
+import {
+  selectIsAddressBookLoaded,
+  selectShouldInitAddressBook,
+} from '../../../data/selectors/data-loader/tokens.ts';
 
 function TokenCardDisplay({ token }: { token: TokenEntity }) {
   const { t } = useTranslation();

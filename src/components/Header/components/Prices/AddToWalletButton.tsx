@@ -1,9 +1,8 @@
-import { styled } from '@repo/styles/jsx';
 import { memo, useCallback } from 'react';
 import { addTokenToWalletAction } from '../../../../features/data/actions/add-to-wallet.ts';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import { useAppDispatch } from '../../../../features/data/store/hooks.ts';
-import AccountBalanceWallet from '../../../../images/icons/mui/AccountBalanceWallet.svg?react';
+import AddToWalletIcon from '../../../../images/icons/union.svg?react';
 import { ActionButton } from './Action.tsx';
 
 type AddToWalletButtonProps = {
@@ -13,7 +12,7 @@ type AddToWalletButtonProps = {
   chainId: ChainEntity['id'];
 };
 
-export const AddToWalletButton = memo<AddToWalletButtonProps>(function AddToWallet({
+export const AddToWalletButton = memo<AddToWalletButtonProps>(function AddToWalletButton({
   tokenAddress,
   customIconUrl,
   title,
@@ -35,13 +34,4 @@ export const AddToWalletButton = memo<AddToWalletButtonProps>(function AddToWall
       <AddToWalletIcon />
     </ActionButton>
   );
-});
-
-const AddToWalletIcon = styled(AccountBalanceWallet, {
-  base: {
-    fontSize: '20px',
-    width: '20px',
-    height: '20px',
-    fill: 'currentColor',
-  },
 });

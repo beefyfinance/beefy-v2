@@ -65,12 +65,6 @@ import {
 } from '../selectors/analytics.ts';
 import { selectUserDepositedVaultIds } from '../selectors/balance.ts';
 import { selectAllChainIds, selectChainById } from '../selectors/chains.ts';
-import {
-  selectDashboardShouldLoadBalanceForChainUser,
-  selectIsClmHarvestsForUserChainPending,
-  selectIsClmHarvestsForUserPending,
-  selectIsWalletTimelineForUserPending,
-} from '../selectors/dashboard.ts';
 import { selectCowcentratedLikeVaultDepositTokens } from '../selectors/tokens.ts';
 import {
   selectAllVaultsWithBridgedVersion,
@@ -87,6 +81,12 @@ import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-
 import { fetchAllBalanceAction } from './balance.ts';
 import { fetchUserOffChainRewardsForDepositedVaultsAction } from './user-rewards/user-rewards.ts';
 import { featureFlag_simulateMissingTransactions } from '../utils/feature-flags.ts';
+import {
+  selectDashboardShouldLoadBalanceForChainUser,
+  selectIsClmHarvestsForUserChainPending,
+  selectIsClmHarvestsForUserPending,
+  selectIsWalletTimelineForUserPending,
+} from '../selectors/data-loader/dashboard.ts';
 
 export interface FetchWalletTimelineFulfilled {
   timelines: Record<VaultEntity['id'], AnyTimelineEntity>;

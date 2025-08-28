@@ -12,15 +12,13 @@ import { useInputForm } from '../../../../../data/hooks/input.ts';
 import { selectBoostById } from '../../../../../data/selectors/boosts.ts';
 import { isLoaderFulfilled } from '../../../../../data/selectors/data-loader-helpers.ts';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
-import {
-  selectErc20TokenByAddress,
-  selectIsAddressBookLoaded,
-} from '../../../../../data/selectors/tokens.ts';
+import { selectErc20TokenByAddress } from '../../../../../data/selectors/tokens.ts';
 import { selectVaultByIdWithReceipt } from '../../../../../data/selectors/vaults.ts';
 import { selectIsWalletKnown, selectWalletAddress } from '../../../../../data/selectors/wallet.ts';
 import { AmountInput } from '../../Transact/AmountInput/AmountInput.tsx';
 import { ActionButton } from '../ActionButton/ActionButton.tsx';
 import { styles } from './styles.ts';
+import { selectIsAddressBookLoaded } from '../../../../../data/selectors/data-loader/tokens.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

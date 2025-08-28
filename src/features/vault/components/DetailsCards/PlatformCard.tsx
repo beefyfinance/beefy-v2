@@ -8,7 +8,7 @@ import Link from '../../../../images/icons/mui/Link.svg?react';
 import Twitter from '../../../../images/icons/mui/Twitter.svg?react';
 import DocsIcon from '../../../../images/icons/navigation/docs.svg?react';
 import type { PlatformEntity } from '../../../data/entities/platform.ts';
-import { selectIsPlatformsAvailable } from '../../../data/selectors/config.ts';
+import { selectIsPlatformsAvailable } from '../../../data/selectors/data-loader/config.ts';
 import { selectPlatformById } from '../../../data/selectors/platforms.ts';
 import { TagTooltip, TagWithTooltip } from '../BridgeTag/BridgeTag.tsx';
 import {

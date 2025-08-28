@@ -8,15 +8,6 @@ import type { BeefyState } from '../store/types.ts';
 import { isNonEmptyArray } from '../utils/array-utils.ts';
 import { selectGovVaultPendingRewards, selectGovVaultPendingRewardsWithPrice } from './balance.ts';
 import {
-  createAddressDataSelector,
-  createGlobalDataSelector,
-  createHasLoaderDispatchedRecentlyEvaluator,
-  createShouldLoaderLoadRecentEvaluator,
-  hasLoaderFulfilledOnce,
-  isLoaderPending,
-  isLoaderRejected,
-} from './data-loader-helpers.ts';
-import {
   selectVaultActiveGovRewards,
   selectVaultActiveMerklCampaigns,
   selectVaultActiveStellaSwapCampaigns,
@@ -24,6 +15,18 @@ import {
 } from './rewards.ts';
 import { selectTokenByAddressOrUndefined, selectTokenPriceByTokenOracleId } from './tokens.ts';
 import { selectWalletAddress } from './wallet.ts';
+import {
+  selectHasMerklRewardsDispatchedRecentlyForAnyUser,
+  selectHasStellaSwapRewardsDispatchedRecentlyForAnyUser,
+  selectMerklRewardsForUserHasFulfilledOnce,
+  selectMerklRewardsForUserIsPending,
+  selectMerklRewardsForUserIsRejected,
+  selectMerklRewardsForUserShouldLoad,
+  selectStellaSwapRewardsForUserHasFulfilledOnce,
+  selectStellaSwapRewardsForUserIsPending,
+  selectStellaSwapRewardsForUserIsRejected,
+  selectStellaSwapRewardsForUserShouldLoad,
+} from './data-loader/user-rewards.ts';
 
 export type UnifiedReward = {
   active: boolean;
@@ -260,32 +263,6 @@ export const selectUserGovVaultUnifiedRewards = createSelector(
     return rewards.filter(r => r.amount.gt(BIG_ZERO) || (r.active && r.apr));
   }
 );
-export const selectHasMerklRewardsDispatchedRecentlyForAnyUser = createGlobalDataSelector(
-  'merklRewards',
-  createHasLoaderDispatchedRecentlyEvaluator(15),
-  5
-);
-export const selectFetchMerklRewardsLastDispatched = createGlobalDataSelector(
-  'merklRewards',
-  loader => loader?.lastDispatched || 0
-);
-export const selectMerklRewardsForUserShouldLoad = createAddressDataSelector(
-  'merklRewards',
-  createShouldLoaderLoadRecentEvaluator(30 * 60),
-  5
-);
-export const selectMerklRewardsForUserHasFulfilledOnce = createAddressDataSelector(
-  'merklRewards',
-  hasLoaderFulfilledOnce
-);
-export const selectMerklRewardsForUserIsRejected = createAddressDataSelector(
-  'merklRewards',
-  isLoaderRejected
-);
-export const selectMerklRewardsForUserIsPending = createAddressDataSelector(
-  'merklRewards',
-  isLoaderPending
-);
 export const selectMerklUserRewardsStatus = createSelector(
   selectMerklRewardsForUserHasFulfilledOnce,
   selectMerklRewardsForUserShouldLoad,
@@ -298,32 +275,6 @@ export const selectMerklUserRewardsStatus = createSelector(
     isLoading: userPending,
     isError: !userFulfilled && userRejected,
   })
-);
-export const selectHasStellaSwapRewardsDispatchedRecentlyForAnyUser = createGlobalDataSelector(
-  'stellaSwapRewards',
-  createHasLoaderDispatchedRecentlyEvaluator(15),
-  5
-);
-export const selectFetchStellaSwapRewardsLastDispatched = createGlobalDataSelector(
-  'stellaSwapRewards',
-  loader => loader?.lastDispatched || 0
-);
-export const selectStellaSwapRewardsForUserShouldLoad = createAddressDataSelector(
-  'stellaSwapRewards',
-  createShouldLoaderLoadRecentEvaluator(30 * 60),
-  5
-);
-export const selectStellaSwapRewardsForUserHasFulfilledOnce = createAddressDataSelector(
-  'stellaSwapRewards',
-  hasLoaderFulfilledOnce
-);
-export const selectStellaSwapRewardsForUserIsRejected = createAddressDataSelector(
-  'stellaSwapRewards',
-  isLoaderRejected
-);
-export const selectStellaSwapRewardsForUserIsPending = createAddressDataSelector(
-  'stellaSwapRewards',
-  isLoaderPending
 );
 export const selectStellaSwapUserRewardsStatus = createSelector(
   selectStellaSwapRewardsForUserHasFulfilledOnce,

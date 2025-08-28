@@ -49,6 +49,13 @@ export type ScrollableProps = {
   rightShadowCss?: CssStyles;
   thumbCss?: CssStyles;
   hideShadows?: boolean;
+  scrollContainer?: boolean;
+};
+type ShadowsType = {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
 };
 
 export const Scrollable = memo(function Scrollable({
@@ -62,8 +69,9 @@ export const Scrollable = memo(function Scrollable({
   thumbCss,
   autoHeight = false,
   hideShadows = false,
+  scrollContainer = true,
 }: ScrollableProps) {
-  const [shadows, setShadows] = useState({
+  const [shadows, setShadows] = useState<ShadowsType>({
     top: 0,
     left: 0,
     right: 0,
@@ -88,6 +96,31 @@ export const Scrollable = memo(function Scrollable({
     (props: DivProps) => <div {...props} className={cx(props.className, thumbClassName)} />,
     [thumbClassName]
   );
+
+  // When scrollContainer is false, use native browser scrolling
+  // This is useful when you want the component to act as a container
+  // but let the browser handle scrolling naturally
+  // Note: Shadows are not rendered in native scroll mode since we don't have scroll events
+  if (!scrollContainer) {
+    const containerHeight =
+      autoHeight ?
+        typeof autoHeight === 'number' ?
+          `${autoHeight}px`
+        : '100%'
+      : '100%';
+
+    return (
+      <div
+        className={css(styles.shadowContainer, styles.nativeScrollContainer, cssProp)}
+        style={{
+          height: containerHeight,
+          maxHeight: containerHeight,
+        }}
+      >
+        <div className={css(styles.nativeScrollContent)}>{children}</div>
+      </div>
+    );
+  }
 
   return (
     <div className={css(styles.shadowContainer, cssProp)}>

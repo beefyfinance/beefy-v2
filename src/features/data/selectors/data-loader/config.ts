@@ -3,7 +3,7 @@ import {
   createGlobalDataSelector,
   type GlobalDataSelectorFn,
   hasLoaderFulfilledOnce,
-} from './data-loader-helpers.ts';
+} from '../data-loader-helpers.ts';
 
 export const selectIsChainConfigAvailable = createGlobalDataSelector(
   'chainConfig',

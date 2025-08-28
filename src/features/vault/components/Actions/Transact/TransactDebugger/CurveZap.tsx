@@ -10,14 +10,14 @@ import type { ISwapAggregator } from '../../../../../data/apis/transact/swap/ISw
 import { isTokenEqual, type TokenEntity } from '../../../../../data/entities/token.ts';
 import { isStandardVault, type VaultStandard } from '../../../../../data/entities/vault.ts';
 import {
-  selectIsAddressBookLoaded,
   selectTokenByAddressOrUndefined,
   selectTokenPriceByTokenOracleId,
 } from '../../../../../data/selectors/tokens.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import { selectIsZapLoaded } from '../../../../../data/selectors/zap.ts';
 import { useAppStore } from '../../../../../data/store/store.ts';
 import { styles } from './styles.ts';
+import { selectIsZapLoaded } from '../../../../../data/selectors/data-loader/zap.ts';
+import { selectIsAddressBookLoaded } from '../../../../../data/selectors/data-loader/tokens.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

@@ -9,11 +9,6 @@ import { isTokenHoldingEntity, isVaultHoldingEntity } from '../entities/treasury
 import type { BeefyState } from '../store/types.ts';
 import { selectLpBreakdownBalance } from './balance.ts';
 import { selectChainById } from './chains.ts';
-import {
-  createGlobalDataSelector,
-  hasLoaderFulfilledOnce,
-  shouldLoaderLoadOnce,
-} from './data-loader-helpers.ts';
 import { selectIsVaultStable } from './filtered-vaults.ts';
 import {
   selectHasBreakdownDataByOracleId,
@@ -23,10 +18,6 @@ import {
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens.ts';
 import { selectVaultPricePerFullShare } from './vaults.ts';
-
-export const selectIsTreasuryLoaded = createGlobalDataSelector('treasury', hasLoaderFulfilledOnce);
-
-export const selectShouldInitTreasury = createGlobalDataSelector('treasury', shouldLoaderLoadOnce);
 
 export const selectTreasury = (state: BeefyState) => {
   return state.ui.treasury.byChainId;

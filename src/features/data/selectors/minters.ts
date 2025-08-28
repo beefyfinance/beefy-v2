@@ -2,7 +2,6 @@ import type { MinterEntity } from '../entities/minter.ts';
 import { isGovVault, isStandardVault, type VaultEntity } from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
-import { createGlobalDataSelector, shouldLoaderLoadOnce } from './data-loader-helpers.ts';
 import { selectVaultById } from './vaults.ts';
 
 export const selectMinterById = (state: BeefyState, minterId: MinterEntity['id']) => {
@@ -28,8 +27,6 @@ export const selectMinterReserves = (state: BeefyState, minterId: MinterEntity['
 export const selectMinterTotalSupply = (state: BeefyState, minterId: MinterEntity['id']) => {
   return state.entities.minters.totalSupplyById[minterId];
 };
-
-export const selectShouldInitMinters = createGlobalDataSelector('minters', shouldLoaderLoadOnce);
 
 export const selectMinterVaultsType = (state: BeefyState, minterId: MinterEntity['id']) => {
   const minter = selectMinterById(state, minterId);

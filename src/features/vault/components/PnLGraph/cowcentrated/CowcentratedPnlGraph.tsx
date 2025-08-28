@@ -14,11 +14,8 @@ import {
   selectClmAutocompoundedFeesEnabledByVaultId,
   selectHasDataToShowGraphByVaultId,
 } from '../../../../data/selectors/analytics.ts';
-import { selectIsContractDataLoadedOnChain } from '../../../../data/selectors/contract-data.ts';
-import {
-  selectHasBreakdownDataForVaultId,
-  selectIsAddressBookLoaded,
-} from '../../../../data/selectors/tokens.ts';
+import { selectIsContractDataLoadedOnChain } from '../../../../data/selectors/data-loader/contract-data.ts';
+import { selectHasBreakdownDataForVaultId } from '../../../../data/selectors/tokens.ts';
 import { selectCowcentratedLikeVaultById } from '../../../../data/selectors/vaults.ts';
 import { selectWalletAddress } from '../../../../data/selectors/wallet.ts';
 import { Card } from '../../Card/Card.tsx';
@@ -34,6 +31,7 @@ import { useVaultPeriodsOverviewGraph } from './components/OverviewGraph/hooks.t
 import { CLMOverviewGraph } from './components/OverviewGraph/OverviewGraph.tsx';
 import { OverviewGraphHeader } from './components/OverviewGraphHeader/OverviewGraphHeader.tsx';
 import { styles } from './styles.ts';
+import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loader/tokens.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

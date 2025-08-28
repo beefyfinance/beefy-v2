@@ -16,7 +16,6 @@ import { getTopNArray } from '../utils/array-utils.ts';
 import { isUserClmPnl, type PnlYieldSource, type UserVaultPnl } from './analytics-types.ts';
 import {
   selectClmPnl,
-  selectIsAnalyticsLoadedByAddress,
   selectStandardGovPnl,
   selectUserDepositedTimelineByVaultId,
   selectVaultPnl,
@@ -33,19 +32,11 @@ import {
 } from './balance.ts';
 import { selectAllVaultBoostIds } from './boosts.ts';
 import { selectChainById } from './chains.ts';
-import { selectIsConfigAvailable } from './config.ts';
-import {
-  createAddressChainDataSelector,
-  createAddressDataSelector,
-  hasLoaderFulfilledRecently,
-  isLoaderPending,
-  shouldLoaderLoadRecent,
-} from './data-loader-helpers.ts';
+import { selectIsConfigAvailable } from './data-loader/config.ts';
 import { selectIsVaultStable } from './filtered-vaults.ts';
 import { selectPlatformById } from './platforms.ts';
 import {
   selectHasBreakdownDataForVault,
-  selectIsAddressBookLoadedGlobal,
   selectIsTokenStable,
   selectLpBreakdownForVault,
   selectTokenByAddress,
@@ -56,6 +47,9 @@ import {
 } from './tokens.ts';
 import { selectVaultById } from './vaults.ts';
 import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet.ts';
+import { selectIsAddressBookLoadedGlobal } from './data-loader/tokens.ts';
+import { selectIsAnalyticsLoadedByAddress } from './data-loader/analytics.ts';
+import { selectShouldInitDashboardForUserImpl } from './data-loader/dashboard.ts';
 
 export enum DashboardDataStatus {
   Loading,
@@ -521,28 +515,6 @@ export const selectDashboardUserVaultsDailyYield = (state: BeefyState, walletAdd
   }
   return vaults;
 };
-export const selectIsClmHarvestsForUserChainPending = createAddressChainDataSelector(
-  'clmHarvests',
-  isLoaderPending
-);
-export const selectIsClmHarvestsForUserPending = createAddressDataSelector(
-  'clmHarvests',
-  isLoaderPending
-);
-export const selectIsWalletTimelineForUserPending = createAddressDataSelector(
-  'timeline',
-  isLoaderPending
-);
-export const selectIsWalletTimelineForUserRecent = createAddressDataSelector(
-  'timeline',
-  hasLoaderFulfilledRecently,
-  5
-);
-const selectShouldInitDashboardForUserImpl = createAddressDataSelector(
-  'dashboard',
-  shouldLoaderLoadRecent,
-  5
-);
 export const selectShouldInitDashboardForUser = (state: BeefyState, walletAddress: string) => {
   if (!walletAddress) {
     return false;
@@ -554,8 +526,3 @@ export const selectShouldInitDashboardForUser = (state: BeefyState, walletAddres
     selectShouldInitDashboardForUserImpl(state, walletAddress)
   );
 };
-export const selectDashboardShouldLoadBalanceForChainUser = createAddressChainDataSelector(
-  'balance',
-  shouldLoaderLoadRecent,
-  5
-);

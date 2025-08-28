@@ -4,13 +4,16 @@ import { TechLoader } from '../../components/TechLoader/TechLoader.tsx';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../data/store/hooks.ts';
 import { fetchTreasury } from '../data/actions/treasury.ts';
-import { selectIsVaultsAvailable } from '../data/selectors/config.ts';
-import { selectIsAddressBookLoadedGlobal } from '../data/selectors/tokens.ts';
-import { selectIsTreasuryLoaded, selectShouldInitTreasury } from '../data/selectors/treasury.ts';
+import { selectIsVaultsAvailable } from '../data/selectors/data-loader/config.ts';
 import { DaoExposure } from './components/DaoExposure/DaoExposure.tsx';
 import { DaoHoldings } from './components/DaoHoldings/DaoHoldings.tsx';
 import { DaoSummary } from './components/DaoSummary/DaoSummary.tsx';
 import { styles } from './styles.ts';
+import {
+  selectIsTreasuryLoaded,
+  selectShouldInitTreasury,
+} from '../data/selectors/data-loader/treasury.ts';
+import { selectIsAddressBookLoadedGlobal } from '../data/selectors/data-loader/tokens.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

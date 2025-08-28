@@ -18,14 +18,8 @@ import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
 import { valueOrThrow } from '../utils/selector-utils.ts';
 import { selectAllChainIds, selectChainById } from './chains.ts';
-import {
-  createChainDataSelector,
-  createGlobalDataSelector,
-  hasLoaderFulfilledOnce,
-  shouldLoaderLoadOnce,
-} from './data-loader-helpers.ts';
 import { selectHistoricalPriceBucketDispatchedRecently } from './historical.ts';
-import { selectIsPricesAvailable } from './prices.ts';
+import { selectIsPricesAvailable } from './data-loader/prices.ts';
 import {
   selectCowcentratedLikeVaultById,
   selectGovVaultById,
@@ -33,6 +27,7 @@ import {
   selectVaultByIdWithReceiptOrUndefined,
   selectVaultPricePerFullShare,
 } from './vaults.ts';
+import { selectIsAddressBookLoaded } from './data-loader/tokens.ts';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -246,26 +241,6 @@ export const selectLpBreakdownForVaultId = (state: BeefyState, vaultId: VaultEnt
   return selectLpBreakdownForVault(state, selectVaultById(state, vaultId));
 };
 
-const selectShouldInitAddressBookGlobal = createGlobalDataSelector(
-  'addressBook',
-  shouldLoaderLoadOnce
-);
-export const selectIsAddressBookLoadedGlobal = createGlobalDataSelector(
-  'addressBook',
-  hasLoaderFulfilledOnce
-);
-const selectShouldInitAddressBookChain = createChainDataSelector(
-  'addressBook',
-  shouldLoaderLoadOnce
-);
-const selectIsAddressBookLoadedChain = createChainDataSelector(
-  'addressBook',
-  hasLoaderFulfilledOnce
-);
-export const selectShouldInitAddressBook = (state: BeefyState, chainId: ChainEntity['id']) =>
-  selectShouldInitAddressBookGlobal(state) || selectShouldInitAddressBookChain(state, chainId);
-export const selectIsAddressBookLoaded = (state: BeefyState, chainId: ChainEntity['id']) =>
-  selectIsAddressBookLoadedGlobal(state) || selectIsAddressBookLoadedChain(state, chainId);
 export const selectHasBreakdownDataByOracleId = (
   state: BeefyState,
   oracleId: TokenEntity['oracleId'],

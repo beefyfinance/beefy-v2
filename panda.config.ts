@@ -263,8 +263,9 @@ const config = buildConfig(
             light: { value: '#f5f5f5' },
             middle: { value: '#d0d0da' },
             dark: { value: '#999cb3' },
-            black: { value: '#111321' },
+            black: { value: '{colors.darkBlue.90}' },
             boosted: { value: '{colors.gold.30}' },
+            warning: { value: '{colors.orange.40}' },
           },
           //darkBlue100-64a
           modal: { backdrop: { value: '#020203A3' } },
@@ -354,6 +355,7 @@ const config = buildConfig(
           zapDiscountedFeesBackground: { value: '#59a662' },
           yellow: {
             '40': { value: '#d6d05d' },
+            '40-12': { value: '#3F3C4E' },
             '80': { value: '#D6CE2B' },
             '80-40a': { value: '#D6CE2B66' },
           },
@@ -411,7 +413,9 @@ const config = buildConfig(
             '10': { value: '#ffe9e3' },
             '20': { value: '#ffd5c8' },
             '30': { value: '#ffc1ae' },
-            '40': { value: '#ffa98f' },
+            '40': { value: '#FFAD9E' },
+            '40-12a': { value: '#3F384D' },
+            '40-40a': { value: '#EA4E2866' },
             '50': { value: '#ff9269' },
             '60': { value: '#ee784c' },
             '70': { value: '#e66e42' },
@@ -442,6 +446,7 @@ const config = buildConfig(
             '30': { value: '#FFDEBD' },
             '40': { value: '#FFD1A3' },
             '40-12': { value: '#3F3C4E' },
+            '40-12a': { value: '#FFD1A319' },
             '50': { value: '#FFC386' },
             '50-20a': { value: '#FFC38633' },
             '60': { value: '#FFAD5A' },
@@ -477,6 +482,7 @@ const config = buildConfig(
           subline: {
             DEFAULT: { value: '16px' }, // was 15
             sm: { value: '12px' },
+            xs: { value: '9px' },
           },
         },
         lineHeights: {
@@ -520,6 +526,7 @@ const config = buildConfig(
               dark: { value: '{colors.eclipseElixir}' },
               light: { value: '{colors.contentBackgroundLight}' },
               gray: { value: '{colors.text.dark}' },
+              darkest: { value: '{colors.darkBlue.90}' },
             },
             vaults: {
               standard: { value: '{colors.blackMarket}' },
@@ -573,18 +580,18 @@ const config = buildConfig(
             },
             warning: {
               DEFAULT: { value: '{colors.orangeWarning}' },
-              fg: { value: '{colors.gold.30}' },
-              bg: { value: '{colors.gold.80-40a}' },
+              fg: { value: '{colors.orange.40}' },
+              bg: { value: '{colors.orange.40-12a}' },
             },
             success: {
               DEFAULT: { value: '{colors.green}' },
-              fg: { value: '{colors.green.40}' },
+              fg: { value: '{colors.green.30}' },
               bg: { value: '{colors.green.80-40a}' },
             },
             error: {
               DEFAULT: { value: '{colors.redError}' },
               fg: { value: '{colors.red.40}' },
-              bg: { value: '{colors.red.80-40a}' },
+              bg: { value: '{colors.red.40-12a}' },
             },
             info: {
               DEFAULT: { value: '{colors.cornflower}' },
@@ -869,6 +876,13 @@ const config = buildConfig(
         textTransform: 'uppercase',
         letterSpacing: '{letterSpacings.subline}',
       },
+      'subline.xs': {
+        fontSize: '{fontSizes.subline.xs}',
+        lineHeight: '{lineHeights.subline.sm}',
+        fontWeight: '{fontWeights.bold}',
+        textTransform: 'uppercase',
+        letterSpacing: '{letterSpacings.subline}',
+      },
       inherit: {
         fontSize: 'inherit',
         lineHeight: 'inherit',
@@ -954,16 +968,16 @@ const config = buildConfig(
       },
       dark: {
         base: {
-          color: '{colors.text.middle}',
-          background: '{colors.purpleDarkest}',
+          color: '{colors.text.dark}',
+          background: '{colors.eclipseElixir}',
           border: 'none',
         },
         hover: {
-          background: '{colors.purpleDarkest}',
+          background: '{colors.eclipseElixir}',
           color: '{colors.text.middle}',
         },
         active: {
-          background: '{colors.purpleDarkest}',
+          background: '{colors.eclipseElixir}',
           color: '{colors.text.light}',
         },
       },
@@ -980,6 +994,21 @@ const config = buildConfig(
         active: {
           background: '{colors.blackMarket}',
           color: '{colors.text.light}',
+        },
+      },
+      transparent: {
+        base: {
+          color: '{colors.text.light}',
+          background: 'transparent',
+          border: 'transparent',
+        },
+        hover: {
+          background: 'transparent',
+          border: 'transparent',
+        },
+        active: {
+          background: 'transparent',
+          border: 'transparent',
         },
       },
     },

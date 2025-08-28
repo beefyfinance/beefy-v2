@@ -2,12 +2,9 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
 import type { VaultGov } from '../../features/data/entities/vault.ts';
-import {
-  selectGovVaultPendingRewardsWithPrice,
-  selectIsBalanceAvailableForChainUser,
-} from '../../features/data/selectors/balance.ts';
+import { selectGovVaultPendingRewardsWithPrice } from '../../features/data/selectors/balance.ts';
 
-import { selectIsPricesAvailable } from '../../features/data/selectors/prices.ts';
+import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
 import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
 import { selectGovVaultById } from '../../features/data/selectors/vaults.ts';
 import {
@@ -18,6 +15,7 @@ import type { BeefyState } from '../../features/data/store/types.ts';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
+import { selectIsBalanceAvailableForChainUser } from '../../features/data/selectors/data-loader/balance.ts';
 
 type GovVaultRewardsProps = {
   vaultId: string;

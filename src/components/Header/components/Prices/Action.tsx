@@ -4,20 +4,31 @@ import { ExternalLink } from '../../../Links/ExternalLink.tsx';
 
 const actionRecipe = cva({
   base: {
+    textStyle: 'body.md.medium',
+    letterSpacing: '0',
     display: 'flex',
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
-    padding: '4px',
     borderRadius: '4px',
     border: `none`,
-    color: 'text.light',
+    color: 'text.dark',
     textDecoration: 'none',
-    backgroundColor: 'background.border',
+    backgroundColor: 'background.content.dark',
     boxShadow: 'none',
     outline: 'none',
     cursor: 'pointer',
-    width: '32px',
     height: '32px',
+    width: '30px',
+  },
+  variants: {
+    link: {
+      true: {
+        color: 'text.black',
+        width: 'auto',
+        backgroundColor: 'green.40',
+        padding: '3px 12px',
+      },
+    },
   },
 });
 

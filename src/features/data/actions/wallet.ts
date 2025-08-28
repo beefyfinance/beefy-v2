@@ -8,15 +8,12 @@ import {
   walletHasDisconnected,
 } from '../reducers/wallet/wallet.ts';
 import { selectAllChains } from '../selectors/chains.ts';
-import {
-  selectHasWalletInitialized,
-  selectIsInMiniApp,
-  selectIsWalletConnected,
-} from '../selectors/wallet.ts';
+import { selectIsInMiniApp, selectIsWalletConnected } from '../selectors/wallet.ts';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { stepperReset } from './wallet/stepper.ts';
 import { createWalletActionResetAction } from './wallet/wallet-action.ts';
+import { selectHasWalletInitialized } from '../selectors/data-loader/wallet.ts';
 
 export const initWallet = createAppAsyncThunk(
   'wallet/initWallet',

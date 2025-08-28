@@ -45,6 +45,17 @@ export const selectActiveRpcUrlForChain = (state: BeefyState, chainId: ChainId) 
   return activeRpcsForChain.rpcs;
 };
 
+export const selectChainHasModifiedRpc = createSelector(
+  selectActiveRpcUrlForChain,
+  (state: BeefyState, chainId: ChainId) => selectChainById(state, chainId).rpc,
+  (activeRpcUrl, defaultRpc) => {
+    return (
+      activeRpcUrl.length !== defaultRpc.length ||
+      activeRpcUrl.some((url, index) => url !== defaultRpc[index])
+    );
+  }
+);
+
 export const selectAllChains = makeChainSelector(selectAllChainIds);
 export const selectActiveChains = makeChainSelector(selectActiveChainIds);
 export const selectEolChains = makeChainSelector(selectEolChainIds);
