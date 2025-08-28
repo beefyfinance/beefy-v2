@@ -296,7 +296,7 @@
   },
   {
     "id": "projectx-cow-hyperevm-usdt0-khype-rp",
-    "name": "USDT0-kHYPE Reward Pool",
+    "name": "USD₮0-kHYPE Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowProjectXHyperevmUSDT0-kHYPE",
@@ -324,7 +324,7 @@
   },
   {
     "id": "projectx-cow-hyperevm-usdt0-khype",
-    "name": "USDT0-kHYPE",
+    "name": "USD₮0-kHYPE",
     "type": "cowcentrated",
     "token": "USDT0-kHYPE projectx",
     "tokenAddress": "0x09dE938d3e788aF06fD6D0819Db9226150D4a0F3",
@@ -414,7 +414,7 @@
   },
   {
     "id": "projectx-cow-hyperevm-whype-usdt0-rp",
-    "name": "USDT0-WHYPE Reward Pool",
+    "name": "USD₮0-WHYPE Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowProjectXHyperevmUSDT0-HYPE",
@@ -442,7 +442,7 @@
   },
   {
     "id": "projectx-cow-hyperevm-whype-usdt0",
-    "name": "USDT0-WHYPE",
+    "name": "USD₮0-WHYPE",
     "type": "cowcentrated",
     "token": "USDT0-WHYPE projectx",
     "tokenAddress": "0xBd19E19E4b70eB7F248695a42208bc1EdBBFb57D",
