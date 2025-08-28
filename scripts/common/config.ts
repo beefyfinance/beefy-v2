@@ -1,6 +1,6 @@
 import { sample } from 'lodash-es';
 import { ChainId } from 'blockchain-addressbook';
-import { chains, config } from '../../src/config/config.ts';
+import { config } from '../../src/config/config.ts';
 import type {
   AmmConfig,
   ChainConfig,
@@ -10,16 +10,18 @@ import type {
 import type { PromoConfig } from '../../src/features/data/apis/promos/types.ts';
 
 /** Harmony->One to match addressbook */
-const chainConfigs = chains.reduce(
-  (acc, id) => {
-    acc[appToAddressBookId(id)] = {
-      id,
-      ...config[id],
-    };
-    return acc;
-  },
-  {} as Record<AddressBookChainId, ChainConfig>
-);
+const chainConfigs = Object.entries(config)
+  .filter(([_, chainConfig]) => !('disabled' in chainConfig) || !chainConfig.disabled)
+  .reduce(
+    (acc, [id, chainConfig]) => {
+      acc[appToAddressBookId(id)] = {
+        id: id as ChainConfig['id'],
+        ...chainConfig,
+      };
+      return acc;
+    },
+    {} as Record<AddressBookChainId, ChainConfig>
+  );
 
 export type AddressBookChainId = keyof typeof ChainId;
 export type AppChainId = keyof typeof config;

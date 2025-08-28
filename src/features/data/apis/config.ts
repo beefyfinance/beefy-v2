@@ -29,7 +29,11 @@ const ammsChainPathToImportFn = import.meta.glob<AmmConfig[]>('../../../config/z
  */
 export class ConfigAPI {
   public async fetchChainConfigs(): Promise<ChainConfig[]> {
-    return entries(chainConfigs).map(([id, chain]) => ({ id, ...chain }));
+    return entries(chainConfigs).map(([id, chain]) => ({
+      id,
+      disabled: 'disabled' in chain && chain.disabled,
+      ...chain,
+    }));
   }
 
   public async fetchPartnersConfig(): Promise<PartnersConfig> {

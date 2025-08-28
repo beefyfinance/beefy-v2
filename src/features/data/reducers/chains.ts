@@ -29,6 +29,10 @@ export const chainsSlice = createSlice({
       const timestampNow = Date.now() / 1000;
       const { chainConfigs, localRpcs } = action.payload;
       for (const chainConfig of chainConfigs) {
+        // completely skip disabled chains that we can't interact with
+        if (chainConfig.disabled) {
+          continue;
+        }
         // we already know this chain
         if (chainConfig.id in sliceState.byId) {
           continue;
