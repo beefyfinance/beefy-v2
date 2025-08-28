@@ -6,6 +6,7 @@ import { styles } from './styles.ts';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { css, type CssStyles } from '@repo/styles/css';
 import { useVaultHasRisks } from './hooks.ts';
+import { ExternalLink } from '../../../../components/Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -67,11 +68,9 @@ const WarningText = memo(function WarningText({
         values={values}
         components={{
           Link: (
-            <a
+            <ExternalLink
               href={'https://docs.beefy.finance/safu-protocol/beefy-safu-practices'}
               className={classes.link}
-              target={'_blank'}
-              rel={'noopener'}
             />
           ),
           DetailsBtn: <span className={classes.link} onClick={handleClickScroll} />,

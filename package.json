@@ -49,6 +49,7 @@
   "dependencies": {
     "@coinbase/wallet-sdk": "^4.3.7",
     "@deficonnect/web3-connector": "^2.0.3",
+    "@farcaster/miniapp-sdk": "^0.1.9",
     "@floating-ui/react": "^0.27.13",
     "@reduxjs/toolkit": "^2.8.2",
     "@web3-onboard/coinbase": "^2.4.2",

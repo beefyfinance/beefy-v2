@@ -20,6 +20,7 @@ import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import type { ListItemProps } from './components/ListItem/ListItem.tsx';
 import { ListItem } from './components/ListItem/ListItem.tsx';
 import { styles } from './styles.ts';
+import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 const DUST_HIDDEN_THRESHOLD = new BigNumber('0.01');
@@ -129,12 +130,12 @@ const BuildLpManually = memo(function BuildLpManually({ vaultId }: { vaultId: Va
   }
 
   return (
-    <a className={classes.buildLp} href={vault.addLiquidityUrl} target="_blank">
+    <ExternalLink className={classes.buildLp} href={vault.addLiquidityUrl}>
       <div className={classes.buildLpContent}>
         <img src={buildLpIcon} alt="buildLp" />
         {t('Build LP Manually')}
       </div>
       <OpenInNewRoundedIcon fontSize="inherit" className={classes.icon} />
-    </a>
+    </ExternalLink>
   );
 });

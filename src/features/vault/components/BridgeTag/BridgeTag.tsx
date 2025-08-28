@@ -12,6 +12,7 @@ import {
   DivWithTooltip,
   type DivWithTooltipProps,
 } from '../../../../components/Tooltip/DivWithTooltip.tsx';
+import { ExternalLink } from '../../../../components/Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -87,13 +88,7 @@ const BridgeTooltip = memo(function BridgeTooltip({ bridge, chain }: BridgeToolt
           values={{ chain: chain.name, bridge: bridge.name }}
           components={{
             website: (
-              <a
-                href={bridge.website}
-                className={classes.link}
-                target={'_blank'}
-                rel={'noopener'}
-                onClick={onClick}
-              />
+              <ExternalLink href={bridge.website} className={classes.link} onClick={onClick} />
             ),
           }}
         />

@@ -5,6 +5,7 @@ import { AlertWarning } from '../../../../components/Alerts/Alerts.tsx';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import { isGovVault, type VaultEntity } from '../../../data/entities/vault.ts';
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
+import { ExternalLink } from '../../../../components/Links/ExternalLink.tsx';
 
 export type RetirePauseReasonProps = {
   vaultId: VaultEntity['id'];
@@ -50,11 +51,7 @@ export const RetirePauseReason = memo(function RetirePauseReason({
                 i18nKey={isGovVault(vault) ? `${maybeKey}-gov` : maybeKey}
                 components={{
                   info: (
-                    <a
-                      href="https://snapshot.org/#/beefydao.eth/proposal/0x55e6ad9dd3ebcca3334e23872fa8e2ab1e926466b3d2d0af6f462cc45b1541a2"
-                      target={'_blank'}
-                      rel={'noopener'}
-                    />
+                    <ExternalLink href="https://snapshot.org/#/beefydao.eth/proposal/0x55e6ad9dd3ebcca3334e23872fa8e2ab1e926466b3d2d0af6f462cc45b1541a2" />
                   ),
                 }}
               />
@@ -65,13 +62,9 @@ export const RetirePauseReason = memo(function RetirePauseReason({
                 t={t}
                 i18nKey={maybeKey}
                 components={{
-                  tx: <a href={ScreamTx[vaultId]} target={'_blank'} rel={'noopener'} />,
+                  tx: <ExternalLink href={ScreamTx[vaultId]} />,
                   plan: (
-                    <a
-                      href="https://snapshot.org/#/screamsh.eth/proposal/0xcbf4a9d1c951a141a2fa806f7c7e6c4b2fea7db5952aee9e1dcc68b1c11adff9"
-                      target={'_blank'}
-                      rel={'noopener'}
-                    />
+                    <ExternalLink href="https://snapshot.org/#/screamsh.eth/proposal/0xcbf4a9d1c951a141a2fa806f7c7e6c4b2fea7db5952aee9e1dcc68b1c11adff9" />
                   ),
                 }}
               />
@@ -83,11 +76,7 @@ export const RetirePauseReason = memo(function RetirePauseReason({
                 i18nKey={maybeKey}
                 components={{
                   pool: (
-                    <a
-                      href="https://app.beefy.com/vault/beefy-bevelo-v2-earnings"
-                      target={'_blank'}
-                      rel={'noopener'}
-                    />
+                    <ExternalLink href="https://app.beefy.com/vault/beefy-bevelo-v2-earnings" />
                   ),
                 }}
               />

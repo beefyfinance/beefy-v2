@@ -4,6 +4,7 @@ import { styled } from '@repo/styles/jsx';
 import { DropdownTrigger } from '../../../Dropdown/DropdownTrigger.tsx';
 import { cva } from '@repo/styles/css';
 import type { ReactNode } from 'react';
+import { ExternalLink } from '../../../Links/ExternalLink.tsx';
 
 const navItemStyles = {
   base: {
@@ -44,12 +45,7 @@ const navLinkRecipe = cva({
 
 export const NavItem = styled('div', navItemRecipe);
 
-const ExternalNavLink = styled('a', navLinkRecipe, {
-  defaultProps: {
-    target: '_blank',
-    rel: 'noopener',
-  },
-});
+const ExternalNavLink = styled(ExternalLink, navLinkRecipe);
 
 const InternalNavLink = styled(RouterNavLink, navLinkRecipe);
 

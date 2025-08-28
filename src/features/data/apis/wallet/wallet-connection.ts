@@ -6,7 +6,10 @@ import type { EIP1193Provider, OnboardAPI } from '@web3-onboard/core';
 import Onboard from '@web3-onboard/core';
 import type { ConnectOptions } from '@web3-onboard/core/dist/types';
 import createInjectedWallets from '@web3-onboard/injected-wallets';
-import type { InjectedNameSpace } from '@web3-onboard/injected-wallets/dist/types';
+import type {
+  EIP6963AnnounceProviderEvent,
+  InjectedNameSpace,
+} from '@web3-onboard/injected-wallets/dist/types';
 import standardInjectedWallets from '@web3-onboard/injected-wallets/dist/wallets';
 import createMetamaskModule from '@web3-onboard/metamask';
 import createTrustDesktopModule from '@web3-onboard/trust';
@@ -35,15 +38,51 @@ const walletConnectImages: Record<string, string> = {
   '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489': fireblocksLogo,
 };
 
+function isEip6963Event(e: Event): e is EIP6963AnnounceProviderEvent {
+  return (
+    e.type === 'eip6963:announceProvider' &&
+    typeof (e as EIP6963AnnounceProviderEvent).detail?.info?.rdns === 'string' &&
+    typeof (e as EIP6963AnnounceProviderEvent).detail?.provider === 'object'
+  );
+}
+
+const eip6936WalletPriority = ['xyz.farcaster.', 'com.coinbase.'];
+
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | undefined;
   protected onboardWalletInitializers: WalletInit[] | undefined;
   protected ignoreDisconnectFromAutoConnect = false;
   protected providerWrapper: ((provider: EIP1193Provider) => EIP1193Provider) | undefined;
+  protected tryToAutoConnectToEip6936: boolean = false;
+  protected eip6963Wallets = new Map<string, string>();
 
   constructor(protected options: WalletConnectionOptions) {
     this.onboard = undefined;
     this.onboardWalletInitializers = undefined;
+    this.listenForEip6963Wallets();
+  }
+
+  protected listenForEip6963Wallets() {
+    if (typeof window !== 'undefined') {
+      window.addEventListener(
+        'eip6963:announceProvider',
+        this.onEip6963AnnounceProvider.bind(this)
+      );
+      window.dispatchEvent(new CustomEvent('eip6963:requestProvider'));
+    }
+  }
+
+  protected onEip6963AnnounceProvider(e: Event): void {
+    if (!isEip6963Event(e)) {
+      return;
+    }
+
+    this.eip6963Wallets.set(e.detail.info.rdns, e.detail.info.name);
+  }
+
+  /** set whether next tryToAutoConnect will try to automatically connect to EIP6936 wallet */
+  public setAutoConnectToEip6936(value: boolean = true) {
+    this.tryToAutoConnectToEip6936 = value;
   }
 
   private static createWalletConnectModule(
@@ -266,20 +305,53 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     }
   }
 
+  protected getEip6963Wallet() {
+    if (this.eip6963Wallets.size === 0) {
+      return undefined;
+    }
+
+    for (const rdns of eip6936WalletPriority) {
+      const wallet = this.eip6963Wallets.get(rdns);
+      if (wallet) {
+        return wallet;
+      }
+    }
+
+    return sample(Array.from(this.eip6963Wallets.values()));
+  }
+
+  protected async getWalletForAutoConnect() {
+    // Use last connected wallet if set
+    const lastConnectedWallet = WalletConnectionApi.getLastConnectedWallet();
+    if (lastConnectedWallet) {
+      // wait for injected wallet to be available in case last connected was an injected wallet
+      await this.waitForInjectedWallet();
+      return lastConnectedWallet;
+    }
+
+    // Try to auto connect if wallet announced via EIP-6963
+    if (this.tryToAutoConnectToEip6936 && this.eip6963Wallets.size > 0) {
+      this.tryToAutoConnectToEip6936 = false;
+      return this.getEip6963Wallet();
+    }
+
+    return undefined;
+  }
+
   /**
    * Attempt to reconnect to cached provider
    */
   public async tryToAutoReconnect() {
     // Skip if already connected
     if (this.isConnected()) {
-      console.log('tryToAutoReconnect: Already connected');
+      console.debug('tryToAutoReconnect: Already connected');
       return;
     }
 
     // Must have last selected wallet set
-    const lastSelectedWallet = WalletConnectionApi.getLastConnectedWallet();
-    if (!lastSelectedWallet) {
-      console.log('tryToAutoReconnect: No lastSelectedWallet');
+    const autoConnectWallet = await this.getWalletForAutoConnect();
+    if (!autoConnectWallet) {
+      console.debug('tryToAutoReconnect: No autoConnectWallet');
       return;
     }
 
@@ -288,10 +360,10 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     // Attempt to connect
     try {
-      await this.waitForInjectedWallet();
+      console.debug(`tryToAutoReconnect: Trying ${autoConnectWallet}`);
       this.ignoreDisconnectFromAutoConnect = true;
       await WalletConnectionApi.connect(onboard, {
-        autoSelect: { label: lastSelectedWallet, disableModals: true },
+        autoSelect: { label: autoConnectWallet, disableModals: true },
       });
     } catch (err) {
       // We clear last connected wallet here so that attempting to reconnect opens the modal
@@ -345,22 +417,22 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    */
   public async askUserToConnectIfNeeded() {
     if (this.isConnected()) {
-      console.log('askUserToConnectIfNeeded: Already connected');
+      console.debug('askUserToConnectIfNeeded: Already connected');
       throw new Error('Already connected');
     }
 
     // initialize onboard if needed
     const onboard = this.getOnboard();
 
-    // Get last wallet used and make sure it is still supported
-    const lastSelectedWallet = WalletConnectionApi.getLastConnectedWallet();
+    // Automatically pick last connected wallet if available
+    const autoConnectWallet = await this.getWalletForAutoConnect();
 
     // Connect
     try {
       await WalletConnectionApi.connect(
         onboard,
-        lastSelectedWallet ?
-          { autoSelect: { label: lastSelectedWallet, disableModals: false } }
+        autoConnectWallet ?
+          { autoSelect: { label: autoConnectWallet, disableModals: false } }
         : undefined
       );
     } catch (err) {
@@ -429,6 +501,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     // Clear wallet connect storage or else it will try to reconnect to same session
     WalletConnectionApi.clearWalletConnectStorage();
+
+    // Don't try to auto connect next time
+    this.tryToAutoConnectToEip6936 = false;
 
     // Raise events
     this.options.onWalletDisconnected();
@@ -506,7 +581,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     return wallets.subscribe(wallets => {
       if (wallets.length === 0) {
         if (this.ignoreDisconnectFromAutoConnect) {
-          console.log('Ignoring disconnect event from auto reconnect wallet attempt');
+          console.debug('Ignoring disconnect event from auto reconnect wallet attempt');
           return (this.ignoreDisconnectFromAutoConnect = false);
         }
         this.options.onWalletDisconnected();
@@ -546,9 +621,15 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     return this.onboard;
   }
 
-  private async waitForInjectedWallet(): Promise<boolean> {
-    const checkInterval = 200;
-    const maxWait = 5000;
+  private async waitForInjectedWallet(
+    maxWait: number = 3000,
+    checkInterval: number = 200
+  ): Promise<boolean> {
+    if (this.eip6963Wallets.size > 0) {
+      console.debug('wallet: eip6963 already present');
+      return true;
+    }
+
     const injectedNamespaces = uniq(
       [...customInjectedWallets, ...standardInjectedWallets].map(wallet => wallet.injectedNamespace)
     ).filter(isDefined);
@@ -565,7 +646,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     };
 
     if (anyNamespaceExists()) {
-      console.log('wallet: exists at start');
+      console.debug('wallet: exists at start');
       return true;
     }
 
@@ -573,13 +654,13 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       const startTime = Date.now();
       const handle = setInterval(() => {
         if (Date.now() - startTime > maxWait) {
-          console.log('wallet: max wait');
+          console.debug('wallet: max wait');
           clearInterval(handle);
           return resolve(false);
         }
 
         if (anyNamespaceExists()) {
-          console.log('wallet: exists now');
+          console.debug('wallet: exists now');
           clearInterval(handle);
           return resolve(true);
         }
