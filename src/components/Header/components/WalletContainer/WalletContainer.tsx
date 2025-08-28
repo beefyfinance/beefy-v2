@@ -62,9 +62,19 @@ const WalletContainer = memo(function WalletContainer() {
   }, [hasAnyError, walletAddress]);
 
   return (
-    <Button onClick={handleWalletConnect} status={status}>
+    <Button onClick={handleWalletConnect} status={status} disabled={!walletInitialized}>
       {!walletInitialized ?
-        <StatLoader width={116} foregroundColor="#68BE71" backgroundColor="#004708" />
+        <StatLoader
+          width={
+            walletAddress ?
+              isWalletConnected ?
+                113
+              : 85
+            : 116
+          }
+          foregroundColor="#68BE71"
+          backgroundColor="#004708"
+        />
       : <Address blurred={blurred}>
           {walletAddress ?
             isFulfilledStatus(resolverStatus) ?

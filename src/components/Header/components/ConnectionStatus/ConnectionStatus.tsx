@@ -25,11 +25,17 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
         onOpen={handleOpenStatus}
         onClose={handleClose}
       />
-      <Suspense>
+      <Suspense fallback={<WalletFallback />}>
         <WalletContainer />
       </Suspense>
     </Holder>
   );
+});
+
+const WalletFallback = styled('div', {
+  base: {
+    width: '120px', // address only
+  },
 });
 
 const Holder = styled('div', {
