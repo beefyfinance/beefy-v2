@@ -1,4 +1,5 @@
 import { memo, useMemo } from 'react';
+import { createSelector } from '@reduxjs/toolkit';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectIsContractDataLoadedOnChain } from '../../features/data/selectors/contract-data.ts';
 import { selectPlatformById } from '../../features/data/selectors/platforms.ts';
@@ -25,43 +26,46 @@ export const VaultTvlStat = memo(function ({ vaultId, ...passthrough }: VaultTvl
 });
 
 // TODO better selector / hook
-function selectVaultTvlStat(state: BeefyState, vaultId: VaultEntity['id']) {
-  const label = 'VaultStat-TVL';
-  const vault = selectVaultById(state, vaultId);
-  const isLoaded =
-    selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
+const selectVaultTvlStat = createSelector(
+  [(state: BeefyState) => state, (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId],
+  (state, vaultId) => {
+    const label = 'VaultStat-TVL';
+    const vault = selectVaultById(state, vaultId);
+    const isLoaded =
+      selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
 
-  if (!isLoaded) {
-    return {
-      label,
-      value: '-',
-      subValue: null,
-      blur: false,
-      loading: true,
-      expectSubValue: true,
-    };
-  }
+    if (!isLoaded) {
+      return {
+        label,
+        value: '-',
+        subValue: null,
+        blur: false,
+        loading: true,
+        expectSubValue: true,
+      };
+    }
 
-  const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
-  if (!breakdown || !('underlyingTvl' in breakdown)) {
+    const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
+    if (!breakdown || !('underlyingTvl' in breakdown)) {
+      return {
+        label,
+        value: formatLargeUsd(breakdown.vaultTvl),
+        subValue: null,
+        blur: false,
+        loading: false,
+      };
+    }
+
     return {
       label,
       value: formatLargeUsd(breakdown.vaultTvl),
-      subValue: null,
+      subValue: formatLargeUsd(breakdown.underlyingTvl),
       blur: false,
       loading: false,
+      tooltip: <TvlShareTooltip breakdown={breakdown} />,
     };
   }
-
-  return {
-    label,
-    value: formatLargeUsd(breakdown.vaultTvl),
-    subValue: formatLargeUsd(breakdown.underlyingTvl),
-    blur: false,
-    loading: false,
-    tooltip: <TvlShareTooltip breakdown={breakdown} />,
-  };
-}
+);
 
 type TvlShareTooltipProps = {
   breakdown: TvlBreakdownUnderlying;

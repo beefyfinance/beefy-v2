@@ -1,3 +1,4 @@
+import { createCachedSelector } from 're-reselect';
 import { memo } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
@@ -33,54 +34,65 @@ export const VaultPnlStat = memo(function ({
   return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
 });
 
-// TODO better selector / hook
-function selectVaultPnlStat(
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  pnlData: UserVaultPnl,
-  walletAddress: string
-) {
-  const label = 'VaultStat-Pnl';
-  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
-  const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
+const selectVaultPnlStat = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], _pnlData: UserVaultPnl, walletAddress: string) =>
+    selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress),
+  (state: BeefyState, _vaultId: VaultEntity['id'], _pnlData: UserVaultPnl, walletAddress: string) =>
+    selectIsAnalyticsLoadedByAddress(state, walletAddress),
+  (
+    _state: BeefyState,
+    _vaultId: VaultEntity['id'],
+    pnlData: UserVaultPnl,
+    _walletAddress: string
+  ) => pnlData,
+  (vaultTimeline, isLoaded, pnlData) => {
+    const label = 'VaultStat-Pnl';
 
-  if (!isLoaded) {
+    if (!isLoaded) {
+      return {
+        label,
+        value: '-',
+        subValue: null,
+        blur: false,
+        loading: true,
+      };
+    }
+
+    if (!vaultTimeline || !vaultTimeline.current.length) {
+      return {
+        label,
+        value: '-',
+        subValue: null,
+        blur: false,
+        loading: false,
+      };
+    }
+
+    let value: string, subValue: string | null;
+    if (isUserClmPnl(pnlData)) {
+      value = formatLargeUsd(pnlData.pnl.withClaimedPending.usd);
+      subValue = formatLargePercent(pnlData.pnl.withClaimedPending.percentage);
+    } else {
+      const { totalPnlUsd, pnlPercentage } = pnlData;
+      value = formatLargeUsd(totalPnlUsd);
+      subValue = formatLargePercent(pnlPercentage);
+    }
+
     return {
       label,
-      value: '-',
-      subValue: null,
+      value,
+      subValue,
       blur: false,
-      loading: true,
+      loading: !isLoaded,
+      boosted: false,
+      tooltip: showClmPnlTooltip(pnlData) ? <ClmPnlTooltipContent userPnl={pnlData} /> : undefined,
     };
   }
-
-  if (!vaultTimeline || !vaultTimeline.current.length) {
-    return {
-      label,
-      value: '-',
-      subValue: null,
-      blur: false,
-      loading: false,
-    };
-  }
-
-  let value: string, subValue: string | null;
-  if (isUserClmPnl(pnlData)) {
-    value = formatLargeUsd(pnlData.pnl.withClaimedPending.usd);
-    subValue = formatLargePercent(pnlData.pnl.withClaimedPending.percentage);
-  } else {
-    const { totalPnlUsd, pnlPercentage } = pnlData;
-    value = formatLargeUsd(totalPnlUsd);
-    subValue = formatLargePercent(pnlPercentage);
-  }
-
-  return {
-    label,
-    value,
-    subValue,
-    blur: false,
-    loading: !isLoaded,
-    boosted: false,
-    tooltip: showClmPnlTooltip(pnlData) ? <ClmPnlTooltipContent userPnl={pnlData} /> : undefined,
-  };
-}
+)(
+  (
+    _state: BeefyState,
+    vaultId: VaultEntity['id'],
+    _pnlData: UserVaultPnl,
+    _walletAddress: string
+  ) => vaultId
+);

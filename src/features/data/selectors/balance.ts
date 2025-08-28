@@ -21,7 +21,9 @@ import {
 import type { BeefyState } from '../store/types.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
+  areArraysEqual,
   arrayOrStaticEmpty,
+  bigNumberEqualityCheck,
   bigNumberOrStaticZero,
   valueOrThrow,
 } from '../utils/selector-utils.ts';
@@ -50,6 +52,7 @@ import {
 } from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
 
+// @dev this is fine not being a cached selector, as it only calls cached selectors
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (walletAddress) {
     return selectWalletBalanceByAddress(state, walletAddress);
@@ -67,7 +70,7 @@ export const selectWalletBalanceByAddress = createCachedSelector(
   (state: BeefyState, _walletAddress: string) => state.user.balance.byAddress,
   (_state: BeefyState, walletAddress: string) => walletAddress.toLocaleLowerCase(),
   (balancesByAddress, walletAddress) => balancesByAddress[walletAddress] || undefined
-)((_state: BeefyState, walletAddress: string) => walletAddress);
+)((_state: BeefyState, walletAddress: string) => walletAddress.toLocaleLowerCase());
 
 export const selectAllTokenWhereUserCouldHaveBalance = createSelector(
   (state: BeefyState, chainId: ChainEntity['id']) => selectTokensByChainId(state, chainId),
@@ -83,13 +86,16 @@ export const selectUserDepositedVaultIds = (state: BeefyState, walletAddress?: s
   return arrayOrStaticEmpty(walletBalance?.depositedVaultIds);
 };
 
-export const selectUserDepositedVaultIdsForAsset = (state: BeefyState, asset: string) => {
-  const vaultIds = selectUserDepositedVaultIds(state);
-  return vaultIds.filter(vaultId => {
-    const vault = selectVaultById(state, vaultId);
-    return vault.assetIds.includes(asset);
-  });
-};
+export const selectUserDepositedVaultIdsForAsset = createSelector(
+  [(state: BeefyState) => state, (_state: BeefyState, asset: string) => asset],
+  (state, asset) => {
+    const vaultIds = selectUserDepositedVaultIds(state);
+    return vaultIds.filter(vaultId => {
+      const vault = selectVaultById(state, vaultId);
+      return vault.assetIds.includes(asset);
+    });
+  }
+);
 
 export const selectHasUserDepositedOnChain = createSelector(
   (state: BeefyState, _chainId: ChainEntity['id'], walletAddress?: string) =>
@@ -490,105 +496,107 @@ export type UserVaultBalanceBreakdown = {
   entries: UserVaultBalanceBreakdownEntry[];
 };
 
-export const selectVaultUserBalanceInDepositTokenBreakdown = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  walletAddress?: string
-): UserVaultBalanceBreakdown => {
-  const vault = selectVaultById(state, vaultId);
-  const shareData = selectVaultSharesToDepositTokenData(state, vaultId);
-  const vaultBalance = selectUserVaultBalanceInDepositToken(state, vaultId);
-  const balances: UserVaultBalanceBreakdown = {
-    depositToken: shareData.depositToken,
-    entries: [],
-  };
+export const selectVaultUserBalanceInDepositTokenBreakdown = createSelector(
+  [
+    selectVaultById,
+    selectVaultSharesToDepositTokenData,
+    selectUserVaultBalanceInDepositToken,
+    (_state: BeefyState, _vaultId: VaultEntity['id'], walletAddress?: string) => walletAddress,
+    (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) => state,
+  ],
+  (vault, shareData, vaultBalance, walletAddress, state) => {
+    const balances: UserVaultBalanceBreakdown = {
+      depositToken: shareData.depositToken,
+      entries: [],
+    };
 
-  if (vaultBalance.gt(BIG_ZERO)) {
-    balances.entries.push({
-      type: 'vault',
-      id: `vault-${vaultId}`,
-      vaultId,
-      amount: vaultBalance,
-    });
-  }
-
-  // gov vaults do not have balances elsewhere
-  if (isGovVault(vault) || !shareData.shareToken) {
-    return balances;
-  }
-
-  // only erc4626 vaults may have pending withdrawals
-  if (isErc4626Vault(vault)) {
-    const pendingWithdrawal = selectUserVaultBalanceInShareTokenPendingWithdrawal(
-      state,
-      vaultId,
-      walletAddress
-    );
-    if (pendingWithdrawal.gt(BIG_ZERO)) {
+    if (vaultBalance.gt(BIG_ZERO)) {
       balances.entries.push({
-        type: 'pending-withdrawal',
-        id: `pending-withdrawal-${vaultId}`,
-        vaultId,
-        amount: mooAmountToOracleAmount(
-          shareData.shareToken,
-          shareData.depositToken,
-          shareData.ppfs,
-          pendingWithdrawal
-        ),
+        type: 'vault',
+        id: `vault-${vault.id}`,
+        vaultId: vault.id,
+        amount: vaultBalance,
       });
     }
-  }
 
-  // deposits in boost (even those expired)
-  if (isVaultWithReceipt(vault)) {
-    const boostIds = selectAllVaultBoostIds(state, vaultId);
-    for (const boostId of boostIds) {
-      const boostShareBalance = selectBoostUserBalanceInToken(state, boostId, walletAddress);
-      if (boostShareBalance.gt(BIG_ZERO)) {
+    // gov vaults do not have balances elsewhere
+    if (isGovVault(vault) || !shareData.shareToken) {
+      return balances;
+    }
+
+    // only erc4626 vaults may have pending withdrawals
+    if (isErc4626Vault(vault)) {
+      const pendingWithdrawal = selectUserVaultBalanceInShareTokenPendingWithdrawal(
+        state,
+        vault.id,
+        walletAddress
+      );
+      if (pendingWithdrawal.gt(BIG_ZERO)) {
         balances.entries.push({
-          type: 'boost',
-          id: `boost-${boostId}`,
-          boostId,
+          type: 'pending-withdrawal',
+          id: `pending-withdrawal-${vault.id}`,
+          vaultId: vault.id,
           amount: mooAmountToOracleAmount(
             shareData.shareToken,
             shareData.depositToken,
             shareData.ppfs,
-            boostShareBalance
+            pendingWithdrawal
           ),
         });
       }
     }
-  }
 
-  // bridged mooToken
-  if (isStandardVault(vault)) {
-    if (vault.bridged) {
-      for (const [chainId, tokenAddress] of entries(vault.bridged)) {
-        const bridgedShareBalance = selectUserBalanceOfToken(
-          state,
-          chainId,
-          tokenAddress,
-          walletAddress
-        );
-        if (bridgedShareBalance.gt(BIG_ZERO)) {
+    // deposits in boost (even those expired)
+    if (isVaultWithReceipt(vault)) {
+      const boostIds = selectAllVaultBoostIds(state, vault.id);
+      for (const boostId of boostIds) {
+        const boostShareBalance = selectBoostUserBalanceInToken(state, boostId, walletAddress);
+        if (boostShareBalance.gt(BIG_ZERO)) {
           balances.entries.push({
-            type: 'bridged',
-            id: `bridged-${chainId}`,
-            chainId,
+            type: 'boost',
+            id: `boost-${boostId}`,
+            boostId,
             amount: mooAmountToOracleAmount(
               shareData.shareToken,
               shareData.depositToken,
               shareData.ppfs,
-              bridgedShareBalance
+              boostShareBalance
             ),
           });
         }
       }
     }
-  }
 
-  return balances;
-};
+    // bridged mooToken
+    if (isStandardVault(vault)) {
+      if (vault.bridged) {
+        for (const [chainId, tokenAddress] of entries(vault.bridged)) {
+          const bridgedShareBalance = selectUserBalanceOfToken(
+            state,
+            chainId,
+            tokenAddress,
+            walletAddress
+          );
+          if (bridgedShareBalance.gt(BIG_ZERO)) {
+            balances.entries.push({
+              type: 'bridged',
+              id: `bridged-${chainId}`,
+              chainId,
+              amount: mooAmountToOracleAmount(
+                shareData.shareToken,
+                shareData.depositToken,
+                shareData.ppfs,
+                bridgedShareBalance
+              ),
+            });
+          }
+        }
+      }
+    }
+
+    return balances;
+  }
+);
 
 export const selectGovVaultUserStakedBalanceInDepositToken = (
   state: BeefyState,
@@ -599,7 +607,23 @@ export const selectGovVaultUserStakedBalanceInDepositToken = (
   return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.balance || BIG_ZERO;
 };
 
-export const selectBoostUserBalanceInToken = (
+/**
+ * @dev this returns a new function that only changes when .byBoostId changes for the wallet
+ * could use _selectWalletBalance(state, walletAddress)?.tokenAmount.byBoostId as a dependency directly,
+ * this just abstracts away the details
+ */
+const selectGetBoostUserBalanceInTokenFn = createSelector(
+  [
+    (state: BeefyState, walletAddress?: string) =>
+      _selectWalletBalance(state, walletAddress)?.tokenAmount.byBoostId,
+  ],
+  byBoostId => (boostId: BoostPromoEntity['id']) => {
+    return bigNumberOrStaticZero(byBoostId?.[boostId]?.balance);
+  }
+);
+
+// TODO remove original
+export const selectBoostUserBalanceInTokenOriginal = (
   state: BeefyState,
   boostId: BoostPromoEntity['id'],
   walletAddress?: string
@@ -608,8 +632,42 @@ export const selectBoostUserBalanceInToken = (
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.balance || BIG_ZERO;
 };
 
+/**
+ * v2
+ * - re-use selectGetBoostUserBalanceInTokenFn
+ * - resultEqualityCheck ensures existing reference is returned if balance has not changed
+ */
+export const selectBoostUserBalanceInToken = createSelector(
+  [
+    (state: BeefyState, _boostId: BoostPromoEntity['id'], walletAddress?: string) =>
+      selectGetBoostUserBalanceInTokenFn(state, walletAddress),
+    (_state: BeefyState, boostId: BoostPromoEntity['id']) => boostId,
+  ],
+  (getBoostUserBalanceInToken, boostId) => getBoostUserBalanceInToken(boostId),
+  {
+    memoizeOptions: {
+      resultEqualityCheck: bigNumberEqualityCheck,
+    },
+  }
+);
+
 const NO_REWARDS: BoostReward[] = [];
-export const selectBoostUserRewardsInToken = (
+
+/**
+ * @dev, this returns a new function that only changes when .byBoostId changes for the wallet
+ */
+const selectGetBoostUserRewardsInTokenFn = createSelector(
+  [
+    (state: BeefyState, walletAddress?: string) =>
+      _selectWalletBalance(state, walletAddress)?.tokenAmount.byBoostId,
+  ],
+  byBoostId => (boostId: BoostPromoEntity['id']) => {
+    return byBoostId?.[boostId]?.rewards || NO_REWARDS;
+  }
+);
+
+// TODO remove original
+export const selectBoostUserRewardsInTokenOriginal = (
   state: BeefyState,
   boostId: BoostPromoEntity['id'],
   walletAddress?: string
@@ -617,6 +675,39 @@ export const selectBoostUserRewardsInToken = (
   const walletBalance = _selectWalletBalance(state, walletAddress);
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.rewards || NO_REWARDS;
 };
+
+function boostRewardEqualityCheck(a: BoostReward, b: BoostReward): boolean {
+  return (
+    a === b ||
+    (a.amount.isEqualTo(b.amount) &&
+      a.index == b.index &&
+      a.token.chainId === b.token.chainId &&
+      a.token.address === b.token.address &&
+      a.token.oracleId === b.token.oracleId &&
+      a.token.symbol === b.token.symbol &&
+      a.token.decimals === b.token.decimals)
+  );
+}
+
+/**
+ * v2
+ * - re-use selectGetBoostUserRewardsInTokenFn
+ * - resultEqualityCheck ensures existing reference is returned if rewards have not changed
+ */
+export const selectBoostUserRewardsInToken = createSelector(
+  [
+    (state: BeefyState, _boostId: BoostPromoEntity['id'], walletAddress?: string) =>
+      selectGetBoostUserRewardsInTokenFn(state, walletAddress),
+    (_state: BeefyState, boostId: BoostPromoEntity['id']) => boostId,
+  ],
+  (getBoostUserRewardsInToken, boostId) => getBoostUserRewardsInToken(boostId),
+  {
+    memoizeOptions: {
+      resultEqualityCheck: (a: BoostReward[], b: BoostReward[]) =>
+        areArraysEqual(a, b, boostRewardEqualityCheck),
+    },
+  }
+);
 
 /**
  * Vault balance converted to USD, including in boosts and bridged tokens
@@ -771,73 +862,96 @@ export const selectTreasuryV3PositionBreakdown = (
   return { assets };
 };
 
-export const selectUserLpBreakdownBalance = (
-  state: BeefyState,
-  vault: VaultEntity,
-  breakdown: TokenLpBreakdown,
-  walletAddress?: string
-): UserLpBreakdownBalance => {
-  const lpTotalSupplyDecimal = new BigNumber(breakdown.totalSupply);
-  const underlyingTotalSupplyDecimal =
-    breakdown && 'underlyingLiquidity' in breakdown ?
-      new BigNumber(breakdown.underlyingLiquidity || 0)
-    : BIG_ZERO;
-
-  const userBalanceDecimal = selectUserVaultBalanceInDepositTokenIncludingDisplaced(
-    state,
-    vault.id,
-    walletAddress
-  );
-
-  const userShareOfPool =
-    lpTotalSupplyDecimal.gt(BIG_ZERO) ?
-      userBalanceDecimal.dividedBy(lpTotalSupplyDecimal)
-    : BIG_ZERO;
-
-  const oneLpShareOfPool =
-    lpTotalSupplyDecimal.gt(BIG_ZERO) ? BIG_ONE.dividedBy(lpTotalSupplyDecimal) : BIG_ZERO;
-
-  const underlyingShareOfPool =
-    underlyingTotalSupplyDecimal.gt(BIG_ZERO) ?
-      underlyingTotalSupplyDecimal.dividedBy(underlyingTotalSupplyDecimal)
-    : BIG_ZERO;
-
-  const assets = breakdown.tokens.map((tokenAddress, i) => {
-    const reserves = new BigNumber(breakdown.balances[i]);
-    const underlyingReserves =
-      breakdown && 'underlyingBalances' in breakdown ?
-        new BigNumber(breakdown.underlyingBalances[i] || 0)
+export const selectUserLpBreakdownBalance = createSelector(
+  [
+    (
+      _state: BeefyState,
+      vault: VaultEntity,
+      _breakdown: TokenLpBreakdown,
+      _walletAddress?: string
+    ) => vault,
+    (
+      _state: BeefyState,
+      _vault: VaultEntity,
+      breakdown: TokenLpBreakdown,
+      _walletAddress?: string
+    ) => breakdown,
+    (
+      _state: BeefyState,
+      _vault: VaultEntity,
+      _breakdown: TokenLpBreakdown,
+      walletAddress?: string
+    ) => walletAddress,
+    (
+      state: BeefyState,
+      _vault: VaultEntity,
+      _breakdown: TokenLpBreakdown,
+      _walletAddress?: string
+    ) => state,
+  ],
+  (vault, breakdown, walletAddress, state): UserLpBreakdownBalance => {
+    const lpTotalSupplyDecimal = new BigNumber(breakdown.totalSupply);
+    const underlyingTotalSupplyDecimal =
+      breakdown && 'underlyingLiquidity' in breakdown ?
+        new BigNumber(breakdown.underlyingLiquidity || 0)
       : BIG_ZERO;
-    const assetToken = selectTokenByAddress(state, vault.chainId, tokenAddress);
-    const valuePerDecimal = selectTokenPriceByAddress(state, vault.chainId, tokenAddress);
-    const totalValue = reserves.multipliedBy(valuePerDecimal);
-    const totalUnderlyingValue = underlyingReserves.multipliedBy(valuePerDecimal);
+
+    const userBalanceDecimal = selectUserVaultBalanceInDepositTokenIncludingDisplaced(
+      state,
+      vault.id,
+      walletAddress
+    );
+
+    const userShareOfPool =
+      lpTotalSupplyDecimal.gt(BIG_ZERO) ?
+        userBalanceDecimal.dividedBy(lpTotalSupplyDecimal)
+      : BIG_ZERO;
+
+    const oneLpShareOfPool =
+      lpTotalSupplyDecimal.gt(BIG_ZERO) ? BIG_ONE.dividedBy(lpTotalSupplyDecimal) : BIG_ZERO;
+
+    const underlyingShareOfPool =
+      underlyingTotalSupplyDecimal.gt(BIG_ZERO) ?
+        underlyingTotalSupplyDecimal.dividedBy(underlyingTotalSupplyDecimal)
+      : BIG_ZERO;
+
+    const assets = breakdown.tokens.map((tokenAddress, i) => {
+      const reserves = new BigNumber(breakdown.balances[i]);
+      const underlyingReserves =
+        breakdown && 'underlyingBalances' in breakdown ?
+          new BigNumber(breakdown.underlyingBalances[i] || 0)
+        : BIG_ZERO;
+      const assetToken = selectTokenByAddress(state, vault.chainId, tokenAddress);
+      const valuePerDecimal = selectTokenPriceByAddress(state, vault.chainId, tokenAddress);
+      const totalValue = reserves.multipliedBy(valuePerDecimal);
+      const totalUnderlyingValue = underlyingReserves.multipliedBy(valuePerDecimal);
+
+      return {
+        ...assetToken,
+        totalAmount: reserves,
+        userAmount: userShareOfPool.multipliedBy(reserves),
+        oneAmount: oneLpShareOfPool.multipliedBy(reserves),
+        underlyingAmount: underlyingShareOfPool.multipliedBy(underlyingReserves),
+        totalValue,
+        totalUnderlyingValue,
+        userValue: userShareOfPool.multipliedBy(totalValue),
+        oneValue: oneLpShareOfPool.multipliedBy(totalValue),
+        underlyingValue: underlyingShareOfPool.multipliedBy(totalUnderlyingValue),
+        price: valuePerDecimal,
+      };
+    });
 
     return {
-      ...assetToken,
-      totalAmount: reserves,
-      userAmount: userShareOfPool.multipliedBy(reserves),
-      oneAmount: oneLpShareOfPool.multipliedBy(reserves),
-      underlyingAmount: underlyingShareOfPool.multipliedBy(underlyingReserves),
-      totalValue,
-      totalUnderlyingValue,
-      userValue: userShareOfPool.multipliedBy(totalValue),
-      oneValue: oneLpShareOfPool.multipliedBy(totalValue),
-      underlyingValue: underlyingShareOfPool.multipliedBy(totalUnderlyingValue),
-      price: valuePerDecimal,
+      assets,
+      userShareOfPool,
+      lpTotalSupplyDecimal,
+      userBalanceDecimal,
+      oneLpShareOfPool,
+      underlyingTotalSupplyDecimal,
+      underlyingShareOfPool,
     };
-  });
-
-  return {
-    assets,
-    userShareOfPool,
-    lpTotalSupplyDecimal,
-    userBalanceDecimal,
-    oneLpShareOfPool,
-    underlyingTotalSupplyDecimal,
-    underlyingShareOfPool,
-  };
-};
+  }
+);
 
 export const selectUserUnstakedClms = createSelector(
   (state: BeefyState, walletAddress?: string) => _selectWalletBalance(state, walletAddress),
@@ -902,7 +1016,47 @@ export const selectIsBalanceAvailableForChainUser = createAddressChainDataSelect
   'balance',
   hasLoaderFulfilledOnce
 );
-export const selectPastBoostIdsWithUserBalance = (
+
+/**
+ * v2
+ * @dev note as of reselect v5, createSelector uses {@link https://reselect.js.org/api/weakmapmemoize/|weakMapMemoize} by default, which caches based on inputs to `combiner`,
+ * (so if all `inputSelectors` return the same value (reference), the `combiner` will not be called again).
+ * That should mean createCachedSelector isn't needed here...
+ */
+export const selectPastBoostIdsWithUserBalance = createSelector(
+  [
+    (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
+      selectPastVaultBoostIds(state, vaultId),
+    (state: BeefyState, _vaultId: VaultEntity['id'], walletAddress?: string) =>
+      selectGetBoostUserBalanceInTokenFn(state, walletAddress),
+    (state: BeefyState, _vaultId: VaultEntity['id'], walletAddress?: string) =>
+      selectGetBoostUserRewardsInTokenFn(state, walletAddress),
+  ],
+  (expiredBoostIds, getBoostUserBalanceInToken, getBoostUserRewardsInToken) => {
+    const boostIds: string[] = [];
+    for (const eolBoostId of expiredBoostIds) {
+      const userBalance = getBoostUserBalanceInToken(eolBoostId);
+      if (userBalance.gt(0)) {
+        boostIds.push(eolBoostId);
+        continue;
+      }
+      const userRewards = getBoostUserRewardsInToken(eolBoostId);
+      if (userRewards?.some(r => r.amount.gt(0))) {
+        boostIds.push(eolBoostId);
+      }
+    }
+    return arrayOrStaticEmpty(boostIds.sort());
+  },
+  {
+    memoizeOptions: {
+      // @dev, balances/rewards objects can change, but result in no change to list of boostIds
+      resultEqualityCheck: areArraysEqual<string>,
+    },
+  }
+);
+
+// TODO remove original
+export const selectPastBoostIdsWithUserBalanceOriginal = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ) => {

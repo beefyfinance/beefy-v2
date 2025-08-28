@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { first } from 'lodash-es';
 import { EMPTY_AVG_APY } from '../../../helpers/apy.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
@@ -35,33 +36,45 @@ const EMPTY_TOTAL_APY: TotalApy = {
   totalType: 'apy',
 };
 
-export const selectVaultTotalApyOrUndefined = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-): Readonly<TotalApy> | undefined => {
-  return state.biz.apy.totalApy.byVaultId[vaultId] || undefined;
-};
+export const selectVaultTotalApyOrUndefined = createSelector(
+  [
+    (state: BeefyState) => state.biz.apy.totalApy.byVaultId,
+    (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  ],
+  (totalApyByVaultId, vaultId) => {
+    return totalApyByVaultId[vaultId] || undefined;
+  }
+);
 
-export const selectVaultTotalApy = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-): Readonly<TotalApy> => {
-  return selectVaultTotalApyOrUndefined(state, vaultId) || EMPTY_TOTAL_APY;
-};
+export const selectVaultTotalApy = createSelector(
+  [
+    selectVaultTotalApyOrUndefined,
+    (_state: BeefyState, _vaultId: VaultEntity['id']) => EMPTY_TOTAL_APY,
+  ],
+  (totalApyOrUndefined, emptyTotalApy) => {
+    return totalApyOrUndefined || emptyTotalApy;
+  }
+);
 
-export const selectVaultAvgApyOrUndefined = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-): Readonly<AvgApy> | undefined => {
-  return state.biz.apy.avgApy.byVaultId[vaultId] || undefined;
-};
+export const selectVaultAvgApyOrUndefined = createSelector(
+  [
+    (state: BeefyState) => state.biz.apy.avgApy.byVaultId,
+    (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  ],
+  (avgApyByVaultId, vaultId) => {
+    return avgApyByVaultId[vaultId] || undefined;
+  }
+);
 
-export const selectVaultAvgApy = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-): Readonly<AvgApy> => {
-  return selectVaultAvgApyOrUndefined(state, vaultId) || EMPTY_AVG_APY;
-};
+export const selectVaultAvgApy = createSelector(
+  [
+    selectVaultAvgApyOrUndefined,
+    (_state: BeefyState, _vaultId: VaultEntity['id']) => EMPTY_AVG_APY,
+  ],
+  (avgApyOrUndefined, emptyAvgApy) => {
+    return avgApyOrUndefined || emptyAvgApy;
+  }
+);
 
 export const selectDidAPIReturnValuesForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
   return state.biz.apy.totalApy.byVaultId[vaultId] !== undefined;
@@ -79,74 +92,81 @@ const EMPTY_GLOBAL_STATS = {
 /**
  * Ignores boost component of APY
  */
-export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
-  const walletAddress = address || selectWalletAddress(state);
-  if (!walletAddress) {
-    return EMPTY_GLOBAL_STATS;
-  }
-
-  if (!selectIsUserBalanceAvailable(state, walletAddress)) {
-    return EMPTY_GLOBAL_STATS;
-  }
-
-  const userVaultIds = selectUserDepositedVaultIds(state, walletAddress);
-
-  if (userVaultIds.length === 0) {
-    return EMPTY_GLOBAL_STATS;
-  }
-
-  const newGlobalStats = {
-    ...EMPTY_GLOBAL_STATS,
-    depositedVaults: userVaultIds.length,
-  };
-
-  const userVaults = userVaultIds.map(vaultId => selectVaultById(state, vaultId));
-
-  for (const vault of userVaults) {
-    const vaultUsdBalance = selectUserVaultBalanceInUsdIncludingDisplaced(
-      state,
-      vault.id,
-      walletAddress
-    ).toNumber();
-
-    if (vaultUsdBalance <= 0) {
-      continue;
+export const selectUserGlobalStats = createSelector(
+  [
+    (state: BeefyState, address?: string) => {
+      const walletAddress = address || selectWalletAddress(state);
+      return { state, walletAddress };
+    },
+  ],
+  ({ state, walletAddress }) => {
+    if (!walletAddress) {
+      return EMPTY_GLOBAL_STATS;
     }
 
-    // Add vault balance to total
-    newGlobalStats.deposited += vaultUsdBalance;
-
-    if (!isVaultActive(vault)) {
-      continue;
+    if (!selectIsUserBalanceAvailable(state, walletAddress)) {
+      return EMPTY_GLOBAL_STATS;
     }
 
-    // Add period totals for each vault
-    const apyData = selectVaultTotalApy(state, vault.id);
+    const userVaultIds = selectUserDepositedVaultIds(state, walletAddress);
 
-    if (isEmpty(apyData)) {
-      continue;
+    if (userVaultIds.length === 0) {
+      return EMPTY_GLOBAL_STATS;
     }
-    const { dailyUsd, monthlyUsd, yearlyUsd } = selectYieldStatsByVaultId(
-      state,
-      vault.id,
-      walletAddress
-    );
 
-    newGlobalStats.daily += dailyUsd.toNumber();
-    newGlobalStats.monthly += monthlyUsd.toNumber();
-    newGlobalStats.yearly += yearlyUsd.toNumber();
-  }
+    const newGlobalStats = {
+      ...EMPTY_GLOBAL_STATS,
+      depositedVaults: userVaultIds.length,
+    };
 
-  // Skip yield calc if user has no deposits
-  if (newGlobalStats.deposited <= 0) {
+    const userVaults = userVaultIds.map(vaultId => selectVaultById(state, vaultId));
+
+    for (const vault of userVaults) {
+      const vaultUsdBalance = selectUserVaultBalanceInUsdIncludingDisplaced(
+        state,
+        vault.id,
+        walletAddress
+      ).toNumber();
+
+      if (vaultUsdBalance <= 0) {
+        continue;
+      }
+
+      // Add vault balance to total
+      newGlobalStats.deposited += vaultUsdBalance;
+
+      if (!isVaultActive(vault)) {
+        continue;
+      }
+
+      // Add period totals for each vault
+      const apyData = selectVaultTotalApy(state, vault.id);
+
+      if (isEmpty(apyData)) {
+        continue;
+      }
+      const { dailyUsd, monthlyUsd, yearlyUsd } = selectYieldStatsByVaultId(
+        state,
+        vault.id,
+        walletAddress
+      );
+
+      newGlobalStats.daily += dailyUsd.toNumber();
+      newGlobalStats.monthly += monthlyUsd.toNumber();
+      newGlobalStats.yearly += yearlyUsd.toNumber();
+    }
+
+    // Skip yield calc if user has no deposits
+    if (newGlobalStats.deposited <= 0) {
+      return newGlobalStats;
+    }
+
+    // Compute average apy
+    newGlobalStats.apy = newGlobalStats.yearly / newGlobalStats.deposited;
+
     return newGlobalStats;
   }
-
-  // Compute average apy
-  newGlobalStats.apy = newGlobalStats.yearly / newGlobalStats.deposited;
-
-  return newGlobalStats;
-};
+);
 
 export const selectYieldStatsByVaultId = (
   state: BeefyState,
@@ -271,48 +291,48 @@ export const selectIsVaultApyAvailable = (state: BeefyState, vaultId: VaultEntit
 };
 
 // TEMP: selector instead of connect/mapStateToProps
-export function selectApyVaultUIData(
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-): ApyVaultUIData {
-  const vault = selectVaultById(state, vaultId);
-  const type: 'apr' | 'apy' = vault.type === 'gov' ? 'apr' : 'apy';
+export const selectApyVaultUIData = createSelector(
+  [(state: BeefyState) => state, (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId],
+  (state, vaultId): ApyVaultUIData => {
+    const vault = selectVaultById(state, vaultId);
+    const type: 'apr' | 'apy' = vault.type === 'gov' ? 'apr' : 'apy';
 
-  const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
-  if (!shouldShowInterest) {
-    return { status: 'hidden', type };
+    const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
+    if (!shouldShowInterest) {
+      return { status: 'hidden', type };
+    }
+
+    const isLoaded = selectIsVaultApyAvailable(state, vaultId);
+    if (!isLoaded) {
+      return { status: 'loading', type };
+    }
+
+    const exists = selectDidAPIReturnValuesForVault(state, vaultId);
+    if (!exists) {
+      return { status: 'missing', type };
+    }
+
+    const values = selectVaultTotalApy(state, vaultId);
+    const boost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
+    const averages = selectVaultAvgApyOrUndefined(state, vaultId);
+
+    if (boost) {
+      return { status: 'available', type, values, boosted: boost.status, averages };
+    }
+
+    if (!isCowcentratedVault(vault) && !isCowcentratedGovVault(vault)) {
+      return { status: 'available', type, values, boosted: undefined, averages };
+    }
+
+    return {
+      status: 'available',
+      type: values.totalType,
+      values,
+      boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
+      averages,
+    };
   }
-
-  const isLoaded = selectIsVaultApyAvailable(state, vaultId);
-  if (!isLoaded) {
-    return { status: 'loading', type };
-  }
-
-  const exists = selectDidAPIReturnValuesForVault(state, vaultId);
-  if (!exists) {
-    return { status: 'missing', type };
-  }
-
-  const values = selectVaultTotalApy(state, vaultId);
-  const boost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
-  const averages = selectVaultAvgApyOrUndefined(state, vaultId);
-
-  if (boost) {
-    return { status: 'available', type, values, boosted: boost.status, averages };
-  }
-
-  if (!isCowcentratedVault(vault) && !isCowcentratedGovVault(vault)) {
-    return { status: 'available', type, values, boosted: undefined, averages };
-  }
-
-  return {
-    status: 'available',
-    type: values.totalType,
-    values,
-    boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
-    averages,
-  };
-}
+);
 
 export const selectBoostAprByRewardToken = (state: BeefyState, boostId: BoostPromoEntity['id']) => {
   return state.biz.apy.rawApy.byBoostId[boostId]?.aprByRewardToken || [];
