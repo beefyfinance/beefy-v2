@@ -190,6 +190,7 @@ export type ChainConfig = {
   id: ChainId;
   name: string;
   eol?: number;
+  disabled?: boolean;
   chainId: number;
   rpc: string[];
   explorerUrl: string;

@@ -672,6 +672,7 @@ export const config = {
     name: 'Re.al',
     chainId: 111188,
     eol: 1731964599,
+    disabled: true, // no rpcs available
     rpc: ['https://rpc.realforreal.gelato.digital'],
     explorerUrl: 'https://explorer.re.al',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -968,5 +969,3 @@ export const config = {
     stableCoins: ['USDC', 'USDT', 'DOLA'],
   },
 } satisfies Record<ChainConfig['id'], Omit<ChainConfig, 'id'>>;
-
-export const chains: ChainConfig['id'][] = Object.keys(config) as ChainConfig['id'][];
