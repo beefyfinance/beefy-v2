@@ -1,5 +1,5 @@
 import type { BeefyState } from '../store/types.ts';
-import { selectIsConfigAvailable } from './config.ts';
+import { selectIsConfigAvailable } from './data-loader/config.ts';
 
 export const selectLastViewedVaultsVaultId = (state: BeefyState) => state.ui.vaultsList.vaultsLast;
 export const selectLastViewedDashboardVaultId = (state: BeefyState) =>

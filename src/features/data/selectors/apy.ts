@@ -21,12 +21,12 @@ import {
   selectVaultSharesToDepositTokenData,
 } from './balance.ts';
 import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from './boosts.ts';
-import { selectIsConfigAvailable } from './config.ts';
-import { selectIsContractDataLoadedOnChain } from './contract-data.ts';
-import { createGlobalDataSelector, hasLoaderFulfilledOnce } from './data-loader-helpers.ts';
+import { selectIsConfigAvailable } from './data-loader/config.ts';
+import { selectIsContractDataLoadedOnChain } from './data-loader/contract-data.ts';
 import { selectTokenPriceByAddress } from './tokens.ts';
 import { selectVaultById, selectVaultShouldShowInterest } from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
+import { selectIsApyAvailable } from './data-loader/apy.ts';
 
 const EMPTY_TOTAL_APY: TotalApy = {
   totalApy: 0,
@@ -321,5 +321,3 @@ export const selectBoostAprByRewardToken = (state: BeefyState, boostId: BoostPro
 export const selectBoostApr = (state: BeefyState, boostId: string): number => {
   return state.biz.apy.rawApy.byBoostId[boostId]?.apr || 0;
 };
-export const selectIsApyAvailable = createGlobalDataSelector('apy', hasLoaderFulfilledOnce);
-export const selectIsAvgApyAvailable = createGlobalDataSelector('avgApy', hasLoaderFulfilledOnce);

@@ -1,8 +1,8 @@
 import { memo, useMemo } from 'react';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
-import { selectIsContractDataLoadedOnChain } from '../../features/data/selectors/contract-data.ts';
+import { selectIsContractDataLoadedOnChain } from '../../features/data/selectors/data-loader/contract-data.ts';
 import { selectPlatformById } from '../../features/data/selectors/platforms.ts';
-import { selectIsPricesAvailable } from '../../features/data/selectors/prices.ts';
+import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
 import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types.ts';
 import { selectTvlBreakdownByVaultId } from '../../features/data/selectors/tvl.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';

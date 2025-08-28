@@ -41,12 +41,8 @@ import {
   selectUserDepositedVaultIds,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
 } from './balance.ts';
-import { selectIsConfigAvailable } from './config.ts';
-import {
-  createAddressDataSelector,
-  hasLoaderFulfilledOnce,
-  isLoaderIdle,
-} from './data-loader-helpers.ts';
+import { selectIsConfigAvailable } from './data-loader/config.ts';
+import { hasLoaderFulfilledOnce } from './data-loader-helpers.ts';
 import { selectFeesByVaultId } from './fees.ts';
 import {
   selectCowcentratedLikeVaultDepositTokens,
@@ -65,6 +61,10 @@ import {
   selectVaultPricePerFullShare,
 } from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
+import {
+  selectIsAnalyticsIdleByAddress,
+  selectIsAnalyticsLoadedByAddress,
+} from './data-loader/analytics.ts';
 
 const PENDING_SHARES_PERCENT = new BigNumber(0.1 / 100); // 0.1%
 
@@ -163,18 +163,6 @@ export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAd
 
   return selectIsAnalyticsLoadedByAddress(state, addressLower);
 };
-
-export const selectIsAnalyticsLoadedByAddress = createAddressDataSelector(
-  'timeline',
-  hasLoaderFulfilledOnce
-);
-
-export const selectIsAnalyticsIdleByAddress = createAddressDataSelector('timeline', isLoaderIdle);
-
-export const selectIsClmHarvestsLoadedByAddress = createAddressDataSelector(
-  'clmHarvests',
-  hasLoaderFulfilledOnce
-);
 
 export const selectStandardGovPnl = (
   state: BeefyState,

@@ -2,11 +2,6 @@ import { createCachedSelector } from 're-reselect';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { VaultFee } from '../reducers/fees-types.ts';
 import type { BeefyState } from '../store/types.ts';
-import {
-  createGlobalDataSelector,
-  hasLoaderFulfilledOnce,
-  shouldLoaderLoadOnce,
-} from './data-loader-helpers.ts';
 import { selectIsVaultGov, selectVaultDepositFee } from './vaults.ts';
 
 const GOV_FEES: Readonly<VaultFee> = {
@@ -19,10 +14,6 @@ const GOV_FEES: Readonly<VaultFee> = {
   deposit: 0,
   treasury: 0,
 };
-
-export const selectAreFeesLoaded = createGlobalDataSelector('fees', hasLoaderFulfilledOnce);
-
-export const selectShouldInitFees = createGlobalDataSelector('fees', shouldLoaderLoadOnce);
 
 export const selectFeesByVaultId = createCachedSelector(
   selectVaultDepositFee,

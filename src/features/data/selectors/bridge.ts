@@ -7,26 +7,11 @@ import { StepContent } from '../reducers/wallet/stepper-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
 import {
-  createGlobalDataSelector,
-  hasLoaderFulfilledOnce,
-  shouldLoaderLoadOnce,
-} from './data-loader-helpers.ts';
-import {
   selectStepperCurrentStepData,
   selectStepperItems,
   selectStepperStepContent,
 } from './stepper.ts';
 import { selectErc20TokenByAddress } from './tokens.ts';
-
-export const selectIsBridgeConfigLoaded = createGlobalDataSelector(
-  'bridgeConfig',
-  hasLoaderFulfilledOnce
-);
-
-export const selectShouldLoadBridgeConfig = createGlobalDataSelector(
-  'bridgeConfig',
-  shouldLoaderLoadOnce
-);
 
 export const selectBridgeSupportedChainIds = (state: BeefyState) =>
   state.ui.bridge.destinations.allChains;

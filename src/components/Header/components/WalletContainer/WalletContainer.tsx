@@ -11,7 +11,6 @@ import {
   selectCurrentChainId,
   selectIsBalanceHidden,
   selectIsWalletConnected,
-  selectIsWalletPending,
   selectWalletAddress,
 } from '../../../../features/data/selectors/wallet.ts';
 import { formatAddressShort, formatDomain } from '../../../../helpers/format.ts';
@@ -25,13 +24,14 @@ import {
   selectChainIdsWithRejectedData,
   selectConfigKeysWithRejectedData,
 } from '../../../../features/data/selectors/data-loader-helpers.ts';
+import { selectHasWalletInitialized } from '../../../../features/data/selectors/data-loader/wallet.ts';
 
 const WalletContainer = memo(function WalletContainer() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const walletAddress = useAppSelector(selectWalletAddress);
-  const walletPending = useAppSelector(selectIsWalletPending);
+  const walletInitialized = useAppSelector(selectHasWalletInitialized);
   const blurred = useAppSelector(selectIsBalanceHidden);
   const resolverStatus = useResolveAddress(walletAddress);
   const currentChainId = useAppSelector(selectCurrentChainId);
@@ -63,7 +63,7 @@ const WalletContainer = memo(function WalletContainer() {
 
   return (
     <Button onClick={handleWalletConnect} status={status}>
-      {walletPending && !walletAddress ?
+      {!walletInitialized ?
         <StatLoader width={116} foregroundColor="#68BE71" backgroundColor="#004708" />
       : <Address blurred={blurred}>
           {walletAddress ?

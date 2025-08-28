@@ -4,11 +4,7 @@ import { LoadingStep } from '../../../../components/LoadingStep/LoadingStep.tsx'
 import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
 import { fetchOnRampSupportedProviders } from '../../../data/actions/on-ramp.ts';
 import { FormStep } from '../../../data/reducers/on-ramp-types.ts';
-import {
-  selectIsOnRampLoaded,
-  selectShouldInitOnRamp,
-  selectStep,
-} from '../../../data/selectors/on-ramp.ts';
+import { selectStep } from '../../../data/selectors/on-ramp.ts';
 import { AmountStep } from './components/AmountStep/AmountStep.tsx';
 import { FiatStep } from './components/FiatStep/FiatStep.tsx';
 import { FormValidator } from './components/FormValidator/FormValidator.tsx';
@@ -17,6 +13,10 @@ import { NetworkStep } from './components/NetworkStep/NetworkStep.tsx';
 import { SelectProviderStep } from './components/SelectProviderStep/SelectProviderStep.tsx';
 import { TokenStep } from './components/TokenStep/TokenStep.tsx';
 import { UnsupportedCountryStep } from './components/UnsupportedCountryStep/UnsupportedCountryStep.tsx';
+import {
+  selectIsOnRampLoaded,
+  selectShouldInitOnRamp,
+} from '../../../data/selectors/data-loader/on-ramp.ts';
 
 const stepToComponent: Record<FormStep, ComponentType> = {
   [FormStep.UnsupportedCountry]: UnsupportedCountryStep,

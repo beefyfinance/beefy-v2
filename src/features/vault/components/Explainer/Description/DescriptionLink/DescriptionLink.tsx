@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { css, type CssStyles } from '@repo/styles/css';
 import { styles } from './styles.ts';
+import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
 
 export type DescriptionLinkProps = {
   href: string;
@@ -14,8 +15,8 @@ export const DescriptionLink = memo(function DescriptionLink({
   css: cssProp,
 }: DescriptionLinkProps) {
   return (
-    <a className={css(styles.link, cssProp)} target="_blank" href={href}>
+    <ExternalLink className={css(styles.link, cssProp)} href={href}>
       {label}
-    </a>
+    </ExternalLink>
   );
 });

@@ -42,6 +42,7 @@ import { TokenAmountIcon, TokenAmountIconLoader } from '../TokenAmountIcon/Token
 import { ZapRoute } from '../ZapRoute/ZapRoute.tsx';
 import { ZapSlippage } from '../ZapSlippage/ZapSlippage.tsx';
 import { styles } from './styles.ts';
+import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -170,10 +171,9 @@ const QuoteError = memo(function QuoteError() {
             i18nKey={`Transact-Quote-Error-Calm-${error.action}`}
             components={{
               LinkCalm: (
-                <a
+                <ExternalLink
                   className={classes.link}
                   href={'https://docs.beefy.finance/beefy-products/clm#calmness-check'}
-                  target="_blank"
                 />
               ),
             }}

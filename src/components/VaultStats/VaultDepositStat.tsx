@@ -3,14 +3,13 @@ import { memo } from 'react';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
-  selectIsBalanceAvailableForChainUser,
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInDepositTokenIncludingDisplaced,
   selectUserVaultBalanceInUsdIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInDepositToken,
 } from '../../features/data/selectors/balance.ts';
 
-import { selectIsPricesAvailable } from '../../features/data/selectors/prices.ts';
+import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
 import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import {
@@ -31,6 +30,7 @@ import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTo
 import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
 import { useTranslation } from 'react-i18next';
+import { selectIsBalanceAvailableForChainUser } from '../../features/data/selectors/data-loader/balance.ts';
 export type VaultDepositStatProps = {
   vaultId: VaultEntity['id'];
   walletAddress?: string;

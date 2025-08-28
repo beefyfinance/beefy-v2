@@ -9,7 +9,6 @@ import { isCowcentratedLikeVault, type VaultEntity } from '../../../data/entitie
 import {
   selectHasBreakdownDataForVault,
   selectLpBreakdownForVault,
-  selectShouldInitAddressBook,
 } from '../../../data/selectors/tokens.ts';
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
 import { Card } from '../Card/Card.tsx';
@@ -21,6 +20,7 @@ import { BreakdownTable } from './components/BreakdownTable/BreakdownTable.tsx';
 import { ChartWithLegend } from './components/ChartWithLegend/ChartWithLegend.tsx';
 import { useCalculatedBreakdown } from './hooks.ts';
 import type { BreakdownMode } from './types.ts';
+import { selectShouldInitAddressBook } from '../../../data/selectors/data-loader/tokens.ts';
 
 export type LiquidityPoolBreakdownProps = {
   vaultId: VaultEntity['id'];

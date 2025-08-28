@@ -3,6 +3,7 @@ import { legacyMakeStyles } from '../../../helpers/mui.ts';
 import { styles } from './styles.ts';
 import { css, type CssStyles } from '@repo/styles/css';
 import OpenInNewRoundedIcon from '../../../images/icons/mui/OpenInNewRounded.svg?react';
+import { ExternalLink as BaseExternalLink } from '../../Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -21,11 +22,11 @@ export const ExternalLink = memo(function ExternalLink({
 }: ExternalLinkProps) {
   const classes = useStyles();
   return (
-    <a className={css(styles.link, cssProp)} href={href} target="_blank">
+    <BaseExternalLink className={css(styles.link, cssProp)} href={href}>
       {children}
       {icon ?
         <OpenInNewRoundedIcon width={16} height={16} className={classes.icon} />
       : null}
-    </a>
+    </BaseExternalLink>
   );
 });

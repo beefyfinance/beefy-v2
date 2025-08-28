@@ -1,11 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../store/types.ts';
 import { valueOrThrow } from '../../utils/selector-utils.ts';
-import {
-  createGlobalDataSelector,
-  createHasLoaderDispatchedRecentlyEvaluator,
-  hasLoaderFulfilledOnce,
-} from '../data-loader-helpers.ts';
 import type { SeasonConfig } from '../../reducers/campaigns/begems-types.ts';
 import { getUnixNow } from '../../../../helpers/date.ts';
 
@@ -37,15 +32,6 @@ export const selectBeGemsSeasons = createSelector(
   selectBeGemsSeasonNumbers,
   (state: BeefyState) => state.ui.campaigns.begems.seasons.configByNumber,
   (seasonNumbers, seasons) => seasonNumbers.map(number => seasons[number])
-);
-export const selectIsBeGemsCampaignAvailable = createGlobalDataSelector(
-  'beGemsCampaign',
-  hasLoaderFulfilledOnce
-);
-export const selectHasBeGemsCampaignDispatchedRecently = createGlobalDataSelector(
-  'beGemsCampaign',
-  createHasLoaderDispatchedRecentlyEvaluator(300),
-  5
 );
 
 export const selectBeGemsSeasonFaqs = (state: BeefyState, seasonNumber: number) =>

@@ -8,11 +8,6 @@ import type { VaultEntity } from '../entities/vault.ts';
 import type { AmmEntity, SwapAggregatorEntity } from '../entities/zap.ts';
 import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
-import {
-  createGlobalDataSelector,
-  hasLoaderFulfilledOnce,
-  shouldLoaderLoadOnce,
-} from './data-loader-helpers.ts';
 import { selectPlatformByIdOrUndefined } from './platforms.ts';
 
 export const selectZapByChainId = (state: BeefyState, chainId: ChainEntity['id']) =>
@@ -145,33 +140,3 @@ export const selectZapQuoteTitle = (state: BeefyState, steps: ZapQuoteStep[], t:
     };
   }
 };
-const selectIsZapConfigsLoaded = createGlobalDataSelector('zapConfigs', hasLoaderFulfilledOnce);
-const selectIsZapSwapAggregatorsLoaded = createGlobalDataSelector(
-  'zapSwapAggregators',
-  hasLoaderFulfilledOnce
-);
-const selectIsZapAggregatorTokenSupportLoaded = createGlobalDataSelector(
-  'zapAggregatorTokenSupport',
-  hasLoaderFulfilledOnce
-);
-const selectIsZapAmmsLoaded = createGlobalDataSelector('zapAmms', hasLoaderFulfilledOnce);
-export const selectIsZapLoaded = createSelector(
-  selectIsZapConfigsLoaded,
-  selectIsZapSwapAggregatorsLoaded,
-  selectIsZapAggregatorTokenSupportLoaded,
-  selectIsZapAmmsLoaded,
-  (...availables) => availables.every(available => available === true)
-);
-export const selectShouldInitZapConfigs = createGlobalDataSelector(
-  'zapConfigs',
-  shouldLoaderLoadOnce
-);
-export const selectShouldInitZapSwapAggregators = createGlobalDataSelector(
-  'zapSwapAggregators',
-  shouldLoaderLoadOnce
-);
-export const selectShouldInitZapAggregatorTokenSupport = createGlobalDataSelector(
-  'zapAggregatorTokenSupport',
-  shouldLoaderLoadOnce
-);
-export const selectShouldInitZapAmms = createGlobalDataSelector('zapAmms', shouldLoaderLoadOnce);

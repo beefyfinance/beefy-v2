@@ -2,8 +2,6 @@ import { styled } from '@repo/styles/jsx';
 import { memo, useEffect, useRef } from 'react';
 import { fetchLastArticle } from '../../features/data/actions/articles.ts';
 import { fetchActiveProposals } from '../../features/data/actions/proposal.ts';
-import { selectShouldInitArticles } from '../../features/data/selectors/articles.ts';
-import { selectShouldInitProposals } from '../../features/data/selectors/proposals.ts';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
 import { Container } from '../Container/Container.tsx';
 import { Hidden } from '../MediaQueries/Hidden.tsx';
@@ -15,6 +13,8 @@ import { MobileMenu } from './components/MobileMenu/MobileMenu.tsx';
 import { NavLinkItem } from './components/NavItem/NavLinkItem.tsx';
 import BuyCryptoIcon from '../../images/icons/navigation/buy-crypto.svg?react';
 import { BifiPricesDesktop } from './components/Prices/Prices.tsx';
+import { selectShouldInitArticles } from '../../features/data/selectors/data-loader/articles.ts';
+import { selectShouldInitProposals } from '../../features/data/selectors/data-loader/proposals.ts';
 
 export const Header = memo(function Header() {
   const dispatch = useAppDispatch();

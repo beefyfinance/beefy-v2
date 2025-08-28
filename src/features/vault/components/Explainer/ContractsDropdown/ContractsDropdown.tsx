@@ -7,6 +7,7 @@ import { DropdownProvider } from '../../../../../components/Dropdown/DropdownPro
 import { DropdownButtonTrigger } from '../../../../../components/Dropdown/DropdownTrigger.tsx';
 import { DropdownContent } from '../../../../../components/Dropdown/DropdownContent.tsx';
 import { styled } from '@repo/styles/jsx';
+import { ExternalLink } from '../../../../../components/Links/ExternalLink.tsx';
 
 interface ContractsDropdownProps {
   links: {
@@ -76,9 +77,9 @@ const iconClass = css({
 
 const DropdownLink = memo(function DropdownLink({ label, link }: { label: string; link: string }) {
   return (
-    <a className={linkClass} href={link} target="_blank">
+    <ExternalLink className={linkClass} href={link}>
       {label}
       <OpenInNewRounded className={iconClass} />
-    </a>
+    </ExternalLink>
   );
 });

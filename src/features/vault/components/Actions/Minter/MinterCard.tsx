@@ -8,13 +8,13 @@ import type { MinterEntity } from '../../../../data/entities/minter.ts';
 import type { VaultEntity } from '../../../../data/entities/vault.ts';
 import { isLoaderFulfilled } from '../../../../data/selectors/data-loader-helpers.ts';
 import { selectMinterById } from '../../../../data/selectors/minters.ts';
-import {
-  selectIsAddressBookLoaded,
-  selectShouldInitAddressBook,
-} from '../../../../data/selectors/tokens.ts';
 import { selectIsWalletKnown, selectWalletAddress } from '../../../../data/selectors/wallet.ts';
 import { Card } from '../../Card/Card.tsx';
 import { MintBurnCard } from './MintBurnCard/MintBurnCard.tsx';
+import {
+  selectIsAddressBookLoaded,
+  selectShouldInitAddressBook,
+} from '../../../../data/selectors/data-loader/tokens.ts';
 
 export interface MinterCardParams {
   vaultId: VaultEntity['id'];

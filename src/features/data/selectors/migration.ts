@@ -4,12 +4,8 @@ import type { VaultEntity } from '../entities/vault.ts';
 import type { MigrationConfig } from '../reducers/wallet/migration-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
-import { isLoaderIdle } from './data-loader-helpers.ts';
 import { selectVaultById } from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
-
-export const selectShouldInitMigration = (state: BeefyState) =>
-  isLoaderIdle(state.ui.dataLoader.global.migrators);
 
 export const selectUserBalanceToMigrateByVaultId = createSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], _migrationId: MigrationConfig['id']) =>

@@ -3,7 +3,6 @@ import { pushOrSet } from '../../../../helpers/object.ts';
 import { getStellaSwapRewardsApi } from '../../apis/instances.ts';
 import { getCowcentratedPool } from '../../entities/vault.ts';
 import type { StellaSwapVaultReward } from '../../reducers/wallet/user-rewards-types.ts';
-import { selectStellaSwapRewardsForUserShouldLoad } from '../../selectors/user-rewards.ts';
 import {
   selectAllCowcentratedVaults,
   selectGovCowcentratedVaultById,
@@ -14,6 +13,7 @@ import type {
   FetchUserStellaSwapRewardsActionParams,
   FetchUserStellaSwapRewardsFulfilledPayload,
 } from './stellaswap-user-rewards-types.ts';
+import { selectStellaSwapRewardsForUserShouldLoad } from '../../selectors/data-loader/user-rewards.ts';
 
 export const fetchUserStellaSwapRewardsAction = createAppAsyncThunk<
   FetchUserStellaSwapRewardsFulfilledPayload,

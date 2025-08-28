@@ -5,16 +5,6 @@ import type { ChainEntity } from '../entities/chain.ts';
 import { InputMode } from '../reducers/on-ramp-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { valueOrThrow } from '../utils/selector-utils.ts';
-import {
-  createGlobalDataSelector,
-  hasLoaderFulfilledOnce,
-  isLoaderIdle,
-} from './data-loader-helpers.ts';
-
-export const selectIsOnRampLoaded = createGlobalDataSelector('onRamp', hasLoaderFulfilledOnce);
-
-export const selectShouldInitOnRamp = (state: BeefyState) =>
-  isLoaderIdle(state.ui.dataLoader.global.onRamp);
 
 export const selectToken = (state: BeefyState) =>
   valueOrThrow(state.ui.onRamp.token.value, 'Token value is not set');

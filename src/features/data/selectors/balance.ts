@@ -34,9 +34,9 @@ import {
   selectPastVaultBoostIds,
   selectVaultCurrentBoostId,
 } from './boosts.ts';
-import { selectIsConfigAvailable } from './config.ts';
-import { createAddressChainDataSelector, hasLoaderFulfilledOnce } from './data-loader-helpers.ts';
-import { selectIsPricesAvailable } from './prices.ts';
+import { selectIsConfigAvailable } from './data-loader/config.ts';
+import { hasLoaderFulfilledOnce } from './data-loader-helpers.ts';
+import { selectIsPricesAvailable } from './data-loader/prices.ts';
 import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
@@ -897,10 +897,6 @@ export const selectIsUserBalanceAvailable = createSelector(
     // then balance data is unavailable
     return false;
   }
-);
-export const selectIsBalanceAvailableForChainUser = createAddressChainDataSelector(
-  'balance',
-  hasLoaderFulfilledOnce
 );
 export const selectPastBoostIdsWithUserBalance = (
   state: BeefyState,

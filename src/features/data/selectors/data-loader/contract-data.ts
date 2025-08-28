@@ -1,4 +1,4 @@
-import { createChainDataSelector, hasLoaderFulfilledOnce } from './data-loader-helpers.ts';
+import { createChainDataSelector, hasLoaderFulfilledOnce } from '../data-loader-helpers.ts';
 
 export const selectIsContractDataLoadedOnChain = createChainDataSelector(
   'contractData',
