@@ -87,6 +87,7 @@ export const config = {
       'mEDGE',
       'mMEV',
       'frxUSD',
+      'scrvUSD',
     ],
   },
   polygon: {
@@ -371,6 +372,7 @@ export const config = {
       'aavUSDT',
       'aavUSDC',
       'EURC',
+      'savUSD',
     ],
   },
   cronos: {
