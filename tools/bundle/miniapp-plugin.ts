@@ -131,6 +131,7 @@ type MiniAppEmbed = {
   button: {
     title: string;
     action: {
+      name: string;
       type: 'launch_miniapp';
       url: string;
     };
@@ -475,6 +476,7 @@ export default function (options: MiniAppPluginOptions): Plugin {
         button: {
           title: options.tagline || options.subtitle,
           action: {
+            name: options.name,
             type: 'launch_miniapp',
             url: baseUrl,
           },
