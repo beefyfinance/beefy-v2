@@ -80,6 +80,7 @@ export default defineConfig({
         signature:
           'AHvDs-1ibYdkLHy8GTKN8CWECX-K4f3ekxVt04mMfANQruE3RT7_hwoviz62-4H3UZPWC6uCb7fci9pd9yDi4Rs',
       },
+      baseBuilderAddresses: ['0xd7Ec5766a06500e71e6695E579e4001A73Ed76A4']
     }),
     versionPlugin(),
     ...optionalPlugins,
