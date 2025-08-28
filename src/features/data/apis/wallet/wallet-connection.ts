@@ -46,6 +46,8 @@ function isEip6963Event(e: Event): e is EIP6963AnnounceProviderEvent {
   );
 }
 
+const eip6936WalletPriority = ['xyz.farcaster.', 'com.coinbase.'];
+
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | undefined;
   protected onboardWalletInitializers: WalletInit[] | undefined;
@@ -303,6 +305,21 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     }
   }
 
+  protected getEip6963Wallet() {
+    if (this.eip6963Wallets.size === 0) {
+      return undefined;
+    }
+
+    for (const rdns of eip6936WalletPriority) {
+      const wallet = this.eip6963Wallets.get(rdns);
+      if (wallet) {
+        return wallet;
+      }
+    }
+
+    return sample(Array.from(this.eip6963Wallets.values()));
+  }
+
   protected async getWalletForAutoConnect() {
     // Use last connected wallet if set
     const lastConnectedWallet = WalletConnectionApi.getLastConnectedWallet();
@@ -315,7 +332,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     // Try to auto connect if wallet announced via EIP-6963
     if (this.tryToAutoConnectToEip6936 && this.eip6963Wallets.size > 0) {
       this.tryToAutoConnectToEip6936 = false;
-      return sample(Array.from(this.eip6963Wallets.values()));
+      return this.getEip6963Wallet();
     }
 
     return undefined;
