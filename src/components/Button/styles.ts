@@ -118,6 +118,14 @@ export const buttonRecipe = cva({
         padding: '8px 12px',
       },
     },
+    {
+      variant: 'cta',
+      css: {
+        _disabled: {
+          opacity: '1',
+        },
+      },
+    },
   ],
   defaultVariants: {
     size: 'lg',

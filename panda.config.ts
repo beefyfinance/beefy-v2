@@ -266,6 +266,7 @@ const config = buildConfig(
             black: { value: '{colors.darkBlue.90}' },
             boosted: { value: '{colors.gold.30}' },
             warning: { value: '{colors.orange.40}' },
+            disabled: { value: '{colors.darkBlue.90-56a}' },
           },
           //darkBlue100-64a
           modal: { backdrop: { value: '#020203A3' } },
@@ -382,7 +383,8 @@ const config = buildConfig(
             '20': { value: '#baf0ca' },
             '30': { value: '#95e2a8' },
             '40': { value: '#72d286' },
-            '40-12': { value: '#72d2861f' },
+            '40-12': { value: '#354D56' },
+            '40-12a': { value: '#72d2861f' },
             '50': { value: '#53be64' },
             '50-20a': { value: '#53be6433' },
             '60': { value: '#449a4d' },
@@ -919,6 +921,11 @@ const config = buildConfig(
         hover: {
           background: '{colors.green.20}',
           border: '{colors.green.20}',
+        },
+        disabled: {
+          color: '{colors.text.disabled}',
+          background: '{colors.green.40-12}',
+          border: '{colors.green.40-12}',
         },
       },
       boost: {
