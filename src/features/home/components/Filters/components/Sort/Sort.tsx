@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState, useEffect } from 'react';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { useTranslation } from 'react-i18next';
 import { Drawer } from '../../../../../../components/Modal/Drawer.tsx';
@@ -39,6 +39,14 @@ export const Sort = memo(function Sort() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [tempSortField, setTempSortField] = useState<SortKey>(sortField);
   const [tempSubSortKey, setTempSubSortKey] = useState<'default' | 7 | 30 | 90>(subSortApy || 7);
+
+  // Reset temp states when sortField or subSortApy changes (e.g., when filters are cleared)
+  useEffect(() => {
+    if (isOpen) {
+      setTempSortField(sortField);
+      setTempSubSortKey(subSortApy || 7);
+    }
+  }, [isOpen, sortField, subSortApy]);
 
   const handleSort = useCallback(() => {
     if (tempSortField !== 'avgApy') {
@@ -89,12 +97,16 @@ export const Sort = memo(function Sort() {
     [tempSortField, tempSubSortKey]
   );
 
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
   return (
     <>
       <Button variant="filter" size="sm" onClick={handleOpen} fullWidth={true}>
         {t('Filter-Sort-Btn')}
       </Button>
-      <Drawer open={isOpen} onClose={() => setIsOpen(false)} position="bottom">
+      <Drawer open={isOpen} onClose={handleClose} position="bottom">
         <Layout>
           <Main>
             <SortListContainer>
@@ -168,6 +180,6 @@ const Footer = styled('div', {
   base: {
     display: 'flex',
     alignItems: 'center',
-    padding: '0px 20px 32px 20px',
+    padding: '0px 20px 24px 20px',
   },
 });
