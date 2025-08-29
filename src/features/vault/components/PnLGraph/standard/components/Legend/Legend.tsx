@@ -47,7 +47,7 @@ export const Legend = memo(function Legend({ vaultId }: LegendProps) {
   return (
     <div className={classes.items}>
       <LegendItem
-        color="#4DB258"
+        color="#72D286"
         text={t(
           isSingleAssetVault ? 'pnl-graph-legend-amount-single' : 'pnl-graph-legend-amount-lp',
           {

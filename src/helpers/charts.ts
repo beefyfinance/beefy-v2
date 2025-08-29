@@ -8,4 +8,4 @@ export const CHART_COLORS = [
   '#1e9c05',
 ];
 
-export const LINE_COLORS = ['#5C70D6', '#4DB258'];
+export const LINE_COLORS = ['#5C70D6', '#72D286'];

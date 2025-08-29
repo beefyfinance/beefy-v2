@@ -157,7 +157,7 @@ export const Graph = memo(function Graph<TStat extends ChartStat>({
             <Area dataKey="ma" stroke="#5C70D6" strokeWidth={1.5} fill="none" />
           : null}
           {!isClm && toggles.average ?
-            <ReferenceLine y={avg} stroke="#4DB258" strokeWidth={1.5} strokeDasharray="3 3" />
+            <ReferenceLine y={avg} stroke="#72D286" strokeWidth={1.5} strokeDasharray="3 3" />
           : null}
           <YAxis
             dataKey="v"

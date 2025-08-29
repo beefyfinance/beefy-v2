@@ -377,7 +377,7 @@ const config = buildConfig(
             '100': { value: '#5f412e' },
           },
           green: {
-            DEFAULT: { value: '#4db258', description: 'primary main + indicators.success' },
+            DEFAULT: { value: '#72d286', description: 'primary main + indicators.success' },
             '10': { value: '#e3faeb' },
             '20': { value: '#baf0ca' },
             '30': { value: '#95e2a8' },

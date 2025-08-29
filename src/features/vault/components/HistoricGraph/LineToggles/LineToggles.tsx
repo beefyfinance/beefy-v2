@@ -34,7 +34,7 @@ export const LineToggles = memo(function LineToggles({
       <div>
         <LineToggle
           checked={toggles.average}
-          color="#4DB258"
+          color="#72D286"
           label={t('Average')}
           onChange={handleChange}
           toggle={'average'}
