@@ -10,6 +10,7 @@ import {
   type ChainMap,
   excludeChains,
   excludedChainIds,
+  getChain,
   getPromosForChain,
   getVaultsForChain,
 } from './common/config.ts';
@@ -218,6 +219,9 @@ const validatePools = async () => {
 };
 
 const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Set<string>) => {
+  if (getChain(chainId).eol || 0 > 0) {
+    console.log(`${chainId} is EOL, consider exclude`);
+  }
   const vaultsAndPromos = await Promise.all([
     getVaultsForChain(chainId),
     getPromosForChain(chainId),

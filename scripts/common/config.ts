@@ -99,6 +99,10 @@ export const excludeChains: ChainMap<{ count: number; hash: string }> = {
     count: 27,
     hash: '2134d0db2850cb4d25ed3aa79c34461696bd278db4e4ab1b9bb470ee94bf7868',
   },
+  moonbeam: {
+    count: 89,
+    hash: 'b6d134311bd02b9e832a1de816fe0d785b55226ce710fd9a85e68d10cea82a43',
+  },
 };
 
 export const allChainIds = Object.keys(chainConfigs) as AddressBookChainId[];
