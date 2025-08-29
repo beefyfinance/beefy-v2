@@ -912,13 +912,13 @@ const config = buildConfig(
       },
       success: {
         base: {
-          color: '{colors.text.light}',
+          color: '{colors.text.black}',
           background: '{colors.green}',
           border: '{colors.green}',
         },
         hover: {
-          background: '{colors.greenLight}',
-          border: '{colors.greenLight}',
+          background: '{colors.green.20}',
+          border: '{colors.green.20}',
         },
       },
       boost: {
