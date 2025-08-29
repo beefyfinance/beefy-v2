@@ -24,7 +24,7 @@ const NotFoundPage = memo(() => {
         <img src={image} alt="404" className={classes.image} />
         <div className={classes.textContainer}>
           <div className={classes.text}>{t('Page-Not-Found')}</div>
-          <Button variant="success" css={styles.button} onClick={handleOpen}>
+          <Button variant="cta" css={styles.button} onClick={handleOpen}>
             {t('View-All')}
           </Button>
         </div>

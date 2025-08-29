@@ -84,7 +84,7 @@ export const Graph = memo(function Graph({ vaultId, period, address }: GraphProp
             yAxisId="underlying"
             strokeWidth={1.5}
             dataKey="underlyingBalance"
-            stroke="#4DB258"
+            stroke="#72D286"
             dot={false}
             type="linear"
           />
@@ -97,7 +97,7 @@ export const Graph = memo(function Graph({ vaultId, period, address }: GraphProp
             type="linear"
           />
           <YAxis
-            stroke="#4DB258"
+            stroke="#72D286"
             strokeWidth={1.5}
             tickFormatter={underlyingAxis.formatter}
             yAxisId="underlying"

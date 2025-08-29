@@ -131,14 +131,14 @@ const Actions = memo(function Actions({ connectedAction }: ActionProps) {
       <div className={classes.center}>
         {connectedAddress ?
           connectedAction === 'dashboard' ?
-            <ButtonLink css={styles.btn} to={`/dashboard/${connectedAddress}`} variant="success">
+            <ButtonLink css={styles.btn} to={`/dashboard/${connectedAddress}`} variant="cta">
               {t('NoResults-ViewConnectedDashboard')}
             </ButtonLink>
-          : <ButtonLink css={styles.btn} to="/" variant="success">
+          : <ButtonLink css={styles.btn} to="/" variant="cta">
               {t('NoResults-ViewAllVaults')}
             </ButtonLink>
 
-        : <Button css={styles.btn} onClick={handleWalletConnect} variant="success">
+        : <Button css={styles.btn} onClick={handleWalletConnect} variant="cta">
             {t('NoResults-ConnectWallet')}
           </Button>
         }

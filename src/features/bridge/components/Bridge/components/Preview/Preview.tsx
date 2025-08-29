@@ -70,27 +70,17 @@ function PreviewImpl() {
             <Button
               onClick={handleStep}
               disabled={isConfirmDisabled}
-              variant="success"
+              variant="cta"
               fullWidth={true}
               borderless={true}
             >
               {t('Bridge-Review')}
             </Button>
-          : <Button
-              onClick={handleNetworkChange}
-              variant="success"
-              fullWidth={true}
-              borderless={true}
-            >
+          : <Button onClick={handleNetworkChange} variant="cta" fullWidth={true} borderless={true}>
               {t('Network-Change', { network: fromChain.name })}
             </Button>
 
-        : <Button
-            onClick={handleConnectWallet}
-            variant="success"
-            fullWidth={true}
-            borderless={true}
-          >
+        : <Button onClick={handleConnectWallet} variant="cta" fullWidth={true} borderless={true}>
             {t('Network-ConnectWallet')}
           </Button>
         }

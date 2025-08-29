@@ -64,7 +64,7 @@ export const Claim = memo(function Claim({ chainId, vaultId, withChain }: ClaimP
       <ActionConnectSwitch chainId={chainId}>
         <Button
           fullWidth={true}
-          variant="success"
+          variant="cta"
           onClick={handleClaim}
           disabled={disable}
           css={styles.claim}

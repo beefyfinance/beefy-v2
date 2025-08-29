@@ -157,27 +157,17 @@ const ConfirmReady = memo(function ConfirmReady() {
             <Button
               onClick={handleBridge}
               disabled={isStepping}
-              variant="success"
+              variant="cta"
               fullWidth={true}
               borderless={true}
             >
               {t('Confirm')}
             </Button>
-          : <Button
-              onClick={handleNetworkChange}
-              variant="success"
-              fullWidth={true}
-              borderless={true}
-            >
+          : <Button onClick={handleNetworkChange} variant="cta" fullWidth={true} borderless={true}>
               {t('Network-Change', { network: fromChain.name })}
             </Button>
 
-        : <Button
-            onClick={handleConnectWallet}
-            variant="success"
-            fullWidth={true}
-            borderless={true}
-          >
+        : <Button onClick={handleConnectWallet} variant="cta" fullWidth={true} borderless={true}>
             {t('Network-ConnectWallet')}
           </Button>
         }

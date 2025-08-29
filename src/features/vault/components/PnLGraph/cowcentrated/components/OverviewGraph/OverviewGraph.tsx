@@ -92,7 +92,7 @@ export const CLMOverviewGraph = memo(function CLMOverviewGraph({
               yAxisId="underlying"
               strokeWidth={1.5}
               dataKey="underlying"
-              stroke="#4DB258"
+              stroke="#72D286"
               dot={false}
               type="linear"
             />
@@ -115,7 +115,7 @@ export const CLMOverviewGraph = memo(function CLMOverviewGraph({
           />
           {type === 'vault' && (
             <YAxis
-              stroke="#4DB258"
+              stroke="#72D286"
               strokeWidth={1.5}
               tickFormatter={underlyingAxis.formatter}
               yAxisId="underlying"

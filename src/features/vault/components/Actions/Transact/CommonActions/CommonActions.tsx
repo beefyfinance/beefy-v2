@@ -26,7 +26,7 @@ export const ActionConnect = memo(function ActionConnect(props: ActionButtonProp
   return (
     <Button
       {...props}
-      variant="success"
+      variant="cta"
       fullWidth={props.fullWidth !== undefined ? props.fullWidth : true}
       borderless={props.fullWidth !== undefined ? props.borderless : true}
       onClick={handleClick}
@@ -52,7 +52,7 @@ export const ActionSwitch = memo(function ActionSwitch({ chainId, ...props }: Ac
   return (
     <Button
       {...props}
-      variant="success"
+      variant="cta"
       fullWidth={props.fullWidth !== undefined ? props.fullWidth : true}
       borderless={props.fullWidth !== undefined ? props.borderless : true}
       onClick={handleClick}

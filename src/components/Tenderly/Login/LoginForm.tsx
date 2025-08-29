@@ -176,7 +176,7 @@ export const LoginForm = memo(function LoginForm() {
         helpLink={tokenHelpLink}
       />
       <Button
-        variant="success"
+        variant="cta"
         onClick={handleSave}
         disabled={
           status === 'pending' ||

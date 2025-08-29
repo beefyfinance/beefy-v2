@@ -28,7 +28,7 @@ export const QuoteContinue = memo(function QuoteContinue({ css: cssProp }: Quote
         <QuoteBest />
       : null}
       <Button
-        variant="success"
+        variant="cta"
         disabled={!canQuote || !haveQuote}
         fullWidth={true}
         borderless={true}

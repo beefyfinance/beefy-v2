@@ -37,7 +37,7 @@ export const ActionConnect = memo(function ActionConnect({
       css={cssProp}
       onClick={handleClick}
       disabled={disabled || isStepping}
-      variant="success"
+      variant="cta"
     >
       {t('Network-ConnectWallet')}
     </Button>
@@ -68,7 +68,7 @@ export const ActionSwitch = memo(function ActionSwitch({
       css={cssProp}
       onClick={handleClick}
       disabled={disabled || isStepping}
-      variant="success"
+      variant="cta"
     >
       {t('Network-Change', { network: chain.name })}
     </Button>

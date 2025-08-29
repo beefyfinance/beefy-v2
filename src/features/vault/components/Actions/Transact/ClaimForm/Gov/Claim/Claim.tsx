@@ -37,7 +37,7 @@ export const Claim = memo(function Claim({ vaultId }: ClaimProps) {
 
   return (
     <ActionConnectSwitch chainId={vault.chainId}>
-      <Button fullWidth={true} variant="success" onClick={handleClaim} disabled={isStepping}>
+      <Button fullWidth={true} variant="cta" onClick={handleClaim} disabled={isStepping}>
         {t('Rewards-Claim-gov')}
       </Button>
     </ActionConnectSwitch>

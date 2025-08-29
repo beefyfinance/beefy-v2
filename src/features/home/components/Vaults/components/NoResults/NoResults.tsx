@@ -51,7 +51,7 @@ const NotConnectedMessage = memo(function NotConnectedMessage({ title, text }: M
 
   return (
     <Message title={title} text={text}>
-      <Button onClick={handleWalletConnect} variant="success">
+      <Button onClick={handleWalletConnect} variant="cta">
         {t('NoResults-ConnectWallet')}
       </Button>
     </Message>
@@ -67,7 +67,7 @@ const NotDepositedMessage = memo(function NotDepositedMessage({ title, text }: M
 
   return (
     <Message title={title} text={text}>
-      <Button onClick={handleViewAll} variant="success">
+      <Button onClick={handleViewAll} variant="cta">
         {t('NoResults-ViewAllVaults')}
       </Button>
     </Message>
