@@ -37,7 +37,7 @@ export const Transaction = memo(function Transaction() {
         />
       </div>
       <div className={classes.buttonsContainer}>
-        <Button onClick={handleStartOver} variant="success" fullWidth={true} borderless={true}>
+        <Button onClick={handleStartOver} variant="cta" fullWidth={true} borderless={true}>
           {t('Bridge-Transaction-StartOver')}
         </Button>
       </div>

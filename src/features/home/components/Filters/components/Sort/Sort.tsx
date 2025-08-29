@@ -120,7 +120,7 @@ export const Sort = memo(function Sort() {
             </SortListContainer>
           </Main>
           <Footer>
-            <Button variant="success" fullWidth={true} borderless={true} onClick={handleSort}>
+            <Button variant="cta" fullWidth={true} borderless={true} onClick={handleSort}>
               {t('Apply')}
             </Button>
           </Footer>

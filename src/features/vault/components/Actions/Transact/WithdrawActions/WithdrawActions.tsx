@@ -120,7 +120,7 @@ const ActionWithdrawDisabled = memo(function ActionWithdrawDisabled() {
   return (
     <div className={classes.feesContainer}>
       <ActionConnectSwitch chainId={vault.chainId}>
-        <Button variant="success" disabled={true} fullWidth={true} borderless={true}>
+        <Button variant="cta" disabled={true} fullWidth={true} borderless={true}>
           {t('Transact-Withdraw')}
         </Button>
       </ActionConnectSwitch>
@@ -176,7 +176,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
       <div className={classes.feesContainer}>
         <ActionConnectSwitch chainId={option.chainId}>
           <Button
-            variant="success"
+            variant="cta"
             disabled={isDisabled}
             fullWidth={true}
             borderless={true}
@@ -242,7 +242,7 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
           chainId={option.chainId}
         >
           <Button
-            variant="success"
+            variant="cta"
             disabled={isDisabled}
             fullWidth={true}
             borderless={true}
@@ -291,7 +291,7 @@ const ActionClaim = memo(function ActionClaim({ vault }: ActionClaimProps) {
 
   return (
     <Button
-      variant="success"
+      variant="cta"
       disabled={isDisabled}
       fullWidth={true}
       borderless={true}

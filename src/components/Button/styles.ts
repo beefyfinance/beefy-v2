@@ -72,8 +72,8 @@ export const buttonRecipe = cva({
       filter: {
         colorPalette: 'buttons.filter',
       },
-      success: {
-        colorPalette: 'buttons.success',
+      cta: {
+        colorPalette: 'buttons.cta',
       },
       boost: {
         colorPalette: 'buttons.boost',

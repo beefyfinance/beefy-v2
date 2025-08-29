@@ -7,7 +7,7 @@ type ActionButtonProps = {
   onClick: () => void;
   children: ReactNode;
   disabled?: boolean;
-  variant?: 'boost' | 'default' | 'success';
+  variant?: 'boost' | 'default' | 'cta';
 };
 
 export const ActionButton = memo(function ActionButton({

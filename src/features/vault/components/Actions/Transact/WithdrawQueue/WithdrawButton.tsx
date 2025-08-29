@@ -23,15 +23,15 @@ export const WithdrawButton = memo(function WithdrawButton({
   const connectedChainId = useAppSelector(selectCurrentChainId);
 
   if (!isWalletConnected) {
-    return <ActionConnect variant="success" size="xs" />;
+    return <ActionConnect variant="cta" size="xs" />;
   }
 
   if (chainId !== connectedChainId) {
-    return <ActionSwitch variant="success" size="xs" chainId={chainId} />;
+    return <ActionSwitch variant="cta" size="xs" chainId={chainId} />;
   }
 
   return (
-    <Button variant="success" size="xs" onClick={onClick}>
+    <Button variant="cta" size="xs" onClick={onClick}>
       {t('Transact-Withdraw')}
     </Button>
   );

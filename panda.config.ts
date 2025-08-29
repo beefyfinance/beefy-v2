@@ -910,7 +910,7 @@ const config = buildConfig(
           border: '{colors.contentBackgroundLight}',
         },
       },
-      success: {
+      cta: {
         base: {
           color: '{colors.text.black}',
           background: '{colors.green}',
