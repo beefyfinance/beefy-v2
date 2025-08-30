@@ -10,6 +10,7 @@ import {
   selectChainIdsWithRejectedData,
   selectConfigKeysWithPendingData,
   selectConfigKeysWithRejectedData,
+  selectIsStatusIndicatorOpen,
 } from '../../features/data/selectors/data-loader-helpers.ts';
 import { PulseHighlight } from '../../features/vault/components/PulseHighlight/PulseHighlight.tsx';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
@@ -34,7 +35,7 @@ export const NetworkStatus = memo(function NetworkStatus({
   onClose: () => void;
 }) {
   const [editChainId, setEditChainId] = useState<ChainEntity['id'] | null>(null);
-  const isAutoOpen = useAppSelector(state => state.ui.dataLoader.statusIndicator.open);
+  const isAutoOpen = useAppSelector(selectIsStatusIndicatorOpen);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const open = useMemo(() => isUserOpen || isAutoOpen, [isUserOpen, isAutoOpen]);

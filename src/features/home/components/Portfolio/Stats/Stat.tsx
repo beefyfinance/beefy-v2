@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { styled } from '@repo/styles/jsx';
-import infoIcon from '../../../../../images/icons/i.svg';
+import InfoIcon from '../../../../../images/icons/navigation/resources.svg?react';
 import { StatLoader } from '../../../../../components/StatLoader/StatLoader.tsx';
 
 export type StatProps = {
@@ -21,12 +21,12 @@ export const Stat = memo<StatProps>(function UserStat({
   return (
     <StatContainer>
       <Label>
-        {label}{' '}
         {onInfo && (
           <button type="button" onClick={onInfo}>
-            <img src={infoIcon} alt="More Info" />
+            <InfoIcon />
           </button>
         )}
+        {label}{' '}
       </Label>
       <Value blurred={!loading && blurred}>
         {loading ?
