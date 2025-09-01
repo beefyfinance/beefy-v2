@@ -19,6 +19,7 @@
     "migrationIds": ["magpie"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "pointStructureIds": ["cap-caps"],
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xCC781b043933c10a04409b22aaDa3a3D1A7f29D4/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xCC781b043933c10a04409b22aaDa3a3D1A7f29D4/zap/out?chain=ethereum",
     "network": "ethereum"
@@ -43,6 +44,7 @@
     "migrationIds": ["magpie"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "pointStructureIds": ["cap-caps"],
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xCC781b043933c10a04409b22aaDa3a3D1A7f29D4/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xCC781b043933c10a04409b22aaDa3a3D1A7f29D4/zap/out?chain=ethereum",
     "network": "ethereum"
