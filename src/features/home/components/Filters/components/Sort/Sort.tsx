@@ -1,4 +1,4 @@
-import { memo, useCallback, useState, useEffect } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { useTranslation } from 'react-i18next';
 import { Drawer } from '../../../../../../components/Modal/Drawer.tsx';
@@ -35,7 +35,7 @@ const COLUMNS: {
 
 const OPTIONS = [
   { label: '7d', value: '7' },
-  // { label: '30d', value: '30' },
+  { label: '30d', value: '30' },
   // { label: '90d', value: '90' },
 ];
 
@@ -49,27 +49,51 @@ const parseApyValue = (val: string): AvgApySortType => {
 
 export const Sort = memo(function Sort() {
   const { t } = useTranslation();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const handleOpen = useCallback(() => {
+    setIsOpen(true);
+  }, [setIsOpen]);
+
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+  }, [setIsOpen]);
+
+  return (
+    <>
+      <Button variant="filter" size="sm" onClick={handleOpen} fullWidth={true}>
+        {t('Filter-Sort-Btn')}
+      </Button>
+      <Drawer open={isOpen} onClose={handleClose} position="bottom">
+        {isOpen && <SortContent onClose={handleClose} />}
+      </Drawer>
+    </>
+  );
+});
+
+type SortContentProps = {
+  onClose: () => void;
+};
+
+const SortContent = memo<SortContentProps>(function SortContent({ onClose }) {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const sortField = useAppSelector(selectFilterSearchSortField);
   const subSortApy = useAppSelector(selectFilterAvgApySort);
+  const [tempSortField, setTempSortField] = useState<SortKey>(
+    subSortApy === 'default' ? sortField : 'avgApy'
+  );
+  const [tempSubSortKey, setTempSubSortKeyState] = useState<AvgApySortType>(subSortApy || 7);
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [tempSortField, setTempSortField] = useState<SortKey>(sortField);
-  const [tempSubSortKey, setTempSubSortKey] = useState<AvgApySortType>(subSortApy || 7);
-
-  // Reset temp states when sortField or subSortApy changes (e.g., when filters are cleared)
-  useEffect(() => {
-    if (isOpen) {
-      // If subSortApy is not 'default', we're in avgApy mode
-      if (subSortApy !== 'default') {
-        setTempSortField('avgApy');
-        setTempSubSortKey(subSortApy);
-      } else {
-        setTempSortField(sortField);
-        setTempSubSortKey('default');
+  const setTempSubSortKey = useCallback(
+    (val: AvgApySortType) => {
+      setTempSubSortKeyState(val);
+      if (val === 'default') {
+        setTempSortField('apy');
       }
-    }
-  }, [isOpen, sortField, subSortApy]);
+    },
+    [setTempSortField]
+  );
 
   const handleSort = useCallback(() => {
     if (tempSortField !== 'avgApy') {
@@ -80,22 +104,8 @@ export const Sort = memo(function Sort() {
       dispatch(filteredVaultsActions.setSort('apy'));
     }
 
-    setIsOpen(false);
-  }, [dispatch, tempSortField, tempSubSortKey]);
-
-  const handleOpen = useCallback(() => {
-    setIsOpen(open => !open);
-  }, []);
-
-  const handleChange = useCallback((sortKey: SortKey) => {
-    if (sortKey === 'avgApy') {
-      setTempSubSortKey(7);
-      setTempSortField('avgApy');
-    } else {
-      setTempSubSortKey('default');
-      setTempSortField(sortKey);
-    }
-  }, []);
+    onClose();
+  }, [dispatch, onClose, tempSortField, tempSubSortKey]);
 
   const isChecked = useCallback(
     (sortKey: SortKey) => {
@@ -112,41 +122,45 @@ export const Sort = memo(function Sort() {
     [tempSortField, tempSubSortKey]
   );
 
-  const handleClose = useCallback(() => {
-    setIsOpen(false);
-  }, []);
+  const handleChange = useCallback(
+    (val: SortKey) => {
+      if (val === 'avgApy') {
+        // If avgApy is already selected, untoggle it and switch to regular apy
+        setTempSubSortKey(tempSubSortKey);
+        setTempSortField('avgApy');
+      } else {
+        setTempSubSortKey('default');
+        setTempSortField(val);
+      }
+    },
+    [setTempSubSortKey, tempSubSortKey]
+  );
 
+  console.log(tempSortField, tempSubSortKey);
   return (
-    <>
-      <Button variant="filter" size="sm" onClick={handleOpen} fullWidth={true}>
-        {t('Filter-Sort-Btn')}
-      </Button>
-      <Drawer open={isOpen} onClose={handleClose} position="bottom">
-        <Layout>
-          <Main>
-            <SortListContainer>
-              {COLUMNS.map(({ label, sortKey, toggleButtons }) => (
-                <SortItem
-                  key={sortKey}
-                  label={label}
-                  sortKey={sortKey}
-                  toggleButtons={toggleButtons}
-                  checked={isChecked(sortKey)}
-                  onChange={handleChange}
-                  subValue={tempSubSortKey}
-                  onSubValueChange={setTempSubSortKey}
-                />
-              ))}
-            </SortListContainer>
-          </Main>
-          <Footer>
-            <Button variant="success" fullWidth={true} borderless={true} onClick={handleSort}>
-              {t('Apply')}
-            </Button>
-          </Footer>
-        </Layout>
-      </Drawer>
-    </>
+    <Layout>
+      <Main>
+        <SortListContainer>
+          {COLUMNS.map(({ label, sortKey, toggleButtons }) => (
+            <SortItem
+              key={sortKey}
+              label={label}
+              sortKey={sortKey}
+              toggleButtons={toggleButtons}
+              checked={isChecked(sortKey)}
+              onChange={handleChange}
+              subValue={tempSubSortKey}
+              onSubValueChange={setTempSubSortKey}
+            />
+          ))}
+        </SortListContainer>
+      </Main>
+      <Footer>
+        <Button variant="success" fullWidth={true} borderless={true} onClick={handleSort}>
+          {t('Apply')}
+        </Button>
+      </Footer>
+    </Layout>
   );
 });
 
@@ -181,9 +195,14 @@ const SortItem = memo(function SortItem({
   const handleToggleChange = useCallback(
     (val: string) => {
       const parsedValue = parseApyValue(val);
+
+      if (parsedValue !== 'default') {
+        onChange('avgApy');
+      }
+
       onSubValueChange(parsedValue);
     },
-    [onSubValueChange]
+    [onChange, onSubValueChange]
   );
 
   return (
