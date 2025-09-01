@@ -14,26 +14,39 @@ import { ToggleButtons } from '../../../../../../components/ToggleButtons/Toggle
 import type {
   AvgApySortType,
   FilteredVaultsState,
+  SubSortsState,
 } from '../../../../../data/reducers/filtered-vaults-types.ts';
 
-type SortKey = FilteredVaultsState['sort'] | 'avgApy';
-
-const COLUMNS: {
+type SortKey = FilteredVaultsState['sort'];
+type SortKeysWithSubSort = keyof SubSortsState;
+type SubSortValuesOf<T extends SortKey> =
+  T extends SortKeysWithSubSort ? SubSortsState[T] : 'default';
+type SortOptionKey = SortKey | 'avgApy';
+type SortOption = {
   label: string;
-  sortKey: SortKey;
-  toggleButtons?: boolean;
-}[] = [
-  { label: 'Filter-SortDate', sortKey: 'default' },
-  { label: 'Filter-SortWallet', sortKey: 'walletValue' },
-  { label: 'Filter-SortDeposited', sortKey: 'depositValue' },
-  { label: 'Filter-SortApy', sortKey: 'apy' },
-  { label: 'Filter-SortAvgApy', sortKey: 'avgApy', toggleButtons: true },
-  { label: 'Filter-SortDaily', sortKey: 'daily' },
-  { label: 'Filter-SortTvl', sortKey: 'tvl' },
-  { label: 'Filter-SortSafety', sortKey: 'safetyScore' },
+  optionKey: SortOptionKey;
+  subSortOf?: SortKeysWithSubSort;
+};
+type PendingSort = {
+  [K in SortKey]: {
+    changed: boolean;
+    sort: K;
+    subSort: SubSortValuesOf<K>;
+  };
+}[SortKey];
+
+const SORT_OPTIONS: SortOption[] = [
+  { label: 'Filter-SortDate', optionKey: 'default' },
+  { label: 'Filter-SortWallet', optionKey: 'walletValue' },
+  { label: 'Filter-SortDeposited', optionKey: 'depositValue' },
+  { label: 'Filter-SortApy', optionKey: 'apy' },
+  { label: 'Filter-SortAvgApy', optionKey: 'avgApy', subSortOf: 'apy' },
+  { label: 'Filter-SortDaily', optionKey: 'daily' },
+  { label: 'Filter-SortTvl', optionKey: 'tvl' },
+  { label: 'Filter-SortSafety', optionKey: 'safetyScore' },
 ];
 
-const OPTIONS = [
+const AVG_APY_OPTIONS = [
   { label: '7d', value: '7' },
   { label: '30d', value: '30' },
   // { label: '90d', value: '90' },
@@ -80,86 +93,62 @@ const SortContent = memo<SortContentProps>(function SortContent({ onClose }) {
   const dispatch = useAppDispatch();
   const sortField = useAppSelector(selectFilterSearchSortField);
   const subSortApy = useAppSelector(selectFilterAvgApySort);
-  const [tempSortField, setTempSortField] = useState<SortKey>(
-    subSortApy === 'default' ? sortField : 'avgApy'
+  const [pendingState, setPendingState] = useState<PendingSort>(() =>
+    sortField === 'apy' ?
+      { changed: false, sort: 'apy', subSort: subSortApy }
+    : { changed: false, sort: sortField, subSort: 'default' }
   );
-  const [tempSubSortKey, setTempSubSortKeyState] = useState<AvgApySortType>(subSortApy || 7);
+  const selectedOption =
+    pendingState.sort === 'apy' && pendingState.subSort !== 'default' ?
+      'avgApy'
+    : pendingState.sort;
 
-  const setTempSubSortKey = useCallback(
-    (val: AvgApySortType) => {
-      setTempSubSortKeyState(val);
-      if (val === 'default') {
-        setTempSortField('apy');
+  const handleChange = useCallback(
+    <T extends SortKey>(sort: T, subSort?: SubSortValuesOf<T>) => {
+      if (sort === 'apy') {
+        setPendingState({ changed: true, sort, subSort: subSort || 'default' });
+      } else {
+        setPendingState({ changed: true, sort, subSort: 'default' });
       }
     },
-    [setTempSortField]
+    [setPendingState]
   );
 
-  const handleSort = useCallback(() => {
-    if (tempSortField !== 'avgApy') {
-      dispatch(filteredVaultsActions.setSort(tempSortField));
-      dispatch(filteredVaultsActions.setSubSort({ column: 'apy', value: 'default' }));
-    } else {
-      dispatch(filteredVaultsActions.setSubSort({ column: 'apy', value: tempSubSortKey }));
-      dispatch(filteredVaultsActions.setSort('apy'));
+  const handleApply = useCallback(() => {
+    if (pendingState.changed) {
+      dispatch(filteredVaultsActions.setSort(pendingState.sort));
+      if (pendingState.sort === 'apy') {
+        dispatch(
+          filteredVaultsActions.setSubSort({
+            column: pendingState.sort,
+            value: pendingState.subSort || 'default',
+          })
+        );
+      }
     }
 
     onClose();
-  }, [dispatch, onClose, tempSortField, tempSubSortKey]);
-
-  const isChecked = useCallback(
-    (sortKey: SortKey) => {
-      if (sortKey === 'avgApy') {
-        return tempSubSortKey !== 'default';
-      }
-
-      if (sortKey === 'apy') {
-        return sortKey === tempSortField && tempSubSortKey === 'default';
-      }
-
-      return sortKey === tempSortField;
-    },
-    [tempSortField, tempSubSortKey]
-  );
-
-  const handleChange = useCallback(
-    (val: SortKey) => {
-      if (val === 'avgApy') {
-        // If avgApy is already selected, untoggle it and switch to regular apy
-        if (tempSubSortKey === 'default') {
-          setTempSubSortKey(7);
-        } else {
-          setTempSubSortKey(tempSubSortKey);
-        }
-        setTempSortField('avgApy');
-      } else {
-        setTempSubSortKey('default');
-        setTempSortField(val);
-      }
-    },
-    [setTempSubSortKey, tempSubSortKey]
-  );
+  }, [dispatch, onClose, pendingState]);
 
   return (
     <Layout>
       <Main>
         <SortListContainer>
-          {COLUMNS.map(({ label, sortKey, toggleButtons }) => (
+          {SORT_OPTIONS.map(({ label, optionKey, subSortOf }) => (
             <SortItem
-              key={sortKey}
+              key={optionKey}
               label={label}
-              sortKey={sortKey}
-              toggleButtons={toggleButtons}
-              checked={isChecked(sortKey)}
+              optionKey={optionKey}
+              subSortOf={subSortOf}
+              checked={selectedOption === optionKey}
               onChange={handleChange}
-              subValue={tempSubSortKey}
-              onSubValueChange={setTempSubSortKey}
+              subValue={pendingState.subSort}
             />
           ))}
         </SortListContainer>
       </Main>
       <Footer>
-        <Button variant="success" fullWidth={true} borderless={true} onClick={handleSort}>
+        <Button variant="success" fullWidth={true} borderless={true} onClick={handleApply}>
           {t('Apply')}
         </Button>
       </Footer>
@@ -167,45 +156,43 @@ const SortContent = memo<SortContentProps>(function SortContent({ onClose }) {
   );
 });
 
-type SortItemProps = {
-  sortKey: SortKey;
-  toggleButtons?: boolean;
-  label: string;
+type SortItemProps = SortOption & {
   checked: boolean;
-  onChange: (sortKey: SortKey) => void;
+  onChange: <T extends SortKey>(sort: T, subSort?: SubSortValuesOf<T>) => void;
   subValue: AvgApySortType;
-  onSubValueChange: (value: AvgApySortType) => void;
 };
 
 const SortItem = memo(function SortItem({
-  sortKey,
-  toggleButtons,
+  optionKey,
+  subSortOf,
   label,
   checked,
   onChange,
   subValue,
-  onSubValueChange,
 }: SortItemProps) {
   const { t } = useTranslation();
 
   const handleCheckboxChange = useCallback(
     (_checked: boolean) => {
-      onChange(sortKey);
+      if (optionKey === 'avgApy') {
+        onChange('apy', 7); // default to 7d when selecting avgApy
+      } else {
+        onChange(optionKey);
+      }
     },
-    [onChange, sortKey]
+    [onChange, optionKey]
   );
 
   const handleToggleChange = useCallback(
     (val: string) => {
-      const parsedValue = parseApyValue(val);
-
-      if (parsedValue !== 'default') {
-        onChange('avgApy');
+      if (optionKey === 'avgApy') {
+        const parsedValue = parseApyValue(val);
+        onChange('apy', parsedValue);
+      } else {
+        throw new Error(`Not expecting toggle change for optionKey: ${optionKey}`);
       }
-
-      onSubValueChange(parsedValue);
     },
-    [onChange, onSubValueChange]
+    [onChange, optionKey]
   );
 
   return (
@@ -216,11 +203,11 @@ const SortItem = memo(function SortItem({
         label={t(label)}
         checkVariant="circle"
       />
-      {toggleButtons && (
+      {subSortOf && (
         <ToggleButtons
           value={String(subValue)}
           onChange={handleToggleChange}
-          options={OPTIONS}
+          options={AVG_APY_OPTIONS}
           variant="filter"
           untoggleValue="default"
         />
