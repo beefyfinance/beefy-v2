@@ -1210,5 +1210,40 @@
         "url": "https://www.hybra.finance/points"
       }
     ]
+  },
+  {
+    "id": "cap-caps",
+    "docs": "https://cap.app/caps",
+    "points": [
+      {
+        "id": "cap-caps",
+        "name": "Caps"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["stcUSD-29JAN26"],
+        "liveAfter": "2025-08-01"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-balances-subgraph",
+        "role": "Raw indexing of blockchain data, computes time weighted balances",
+        "url": "https://github.com/beefyfinance/lrt-subgraph"
+      },
+      {
+        "id": "beefy-balances-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "caps",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://cap.app/caps"
+      }
+    ]
   }
 ]
