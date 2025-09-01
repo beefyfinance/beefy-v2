@@ -11,7 +11,10 @@ import {
 } from '../../../../../data/selectors/filtered-vaults.ts';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
 import { ToggleButtons } from '../../../../../../components/ToggleButtons/ToggleButtons.tsx';
-import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults-types.ts';
+import type {
+  AvgApySortType,
+  FilteredVaultsState,
+} from '../../../../../data/reducers/filtered-vaults-types.ts';
 
 type SortKey = FilteredVaultsState['sort'] | 'avgApy';
 
@@ -36,6 +39,14 @@ const OPTIONS = [
   // { label: '90d', value: '90' },
 ];
 
+// Helper to convert string to number or 'default'
+const parseApyValue = (val: string): AvgApySortType => {
+  if (val === 'default') return 'default';
+  const num = Number(val);
+  if (num === 7 || num === 30 || num === 90) return num as AvgApySortType;
+  return 'default';
+};
+
 export const Sort = memo(function Sort() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -44,7 +55,7 @@ export const Sort = memo(function Sort() {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [tempSortField, setTempSortField] = useState<SortKey>(sortField);
-  const [tempSubSortKey, setTempSubSortKey] = useState<'default' | 7 | 30 | 90>(subSortApy || 7);
+  const [tempSubSortKey, setTempSubSortKey] = useState<AvgApySortType>(subSortApy || 7);
 
   // Reset temp states when sortField or subSortApy changes (e.g., when filters are cleared)
   useEffect(() => {
@@ -75,14 +86,6 @@ export const Sort = memo(function Sort() {
   const handleOpen = useCallback(() => {
     setIsOpen(open => !open);
   }, []);
-
-  // Helper to convert string to number or 'default'
-  const parseApyValue = (val: string): 'default' | 7 | 30 | 90 => {
-    if (val === 'default') return 'default';
-    const num = Number(val);
-    if (num === 7 || num === 30 || num === 90) return num;
-    return 'default';
-  };
 
   const handleChange = useCallback(
     (sortKey: SortKey) => (checked: boolean) => {
@@ -118,10 +121,6 @@ export const Sort = memo(function Sort() {
     setIsOpen(false);
   }, []);
 
-  const handleToggleButtons = useCallback((val: string) => {
-    setTempSubSortKey(parseApyValue(val));
-  }, []);
-
   return (
     <>
       <Button variant="filter" size="sm" onClick={handleOpen} fullWidth={true}>
@@ -132,23 +131,16 @@ export const Sort = memo(function Sort() {
           <Main>
             <SortListContainer>
               {COLUMNS.map(({ label, sortKey, toggleButtons }) => (
-                <ColumnContainer key={sortKey}>
-                  <StyledLabelledCheckBox
-                    checked={isChecked(sortKey)}
-                    onChange={handleChange(sortKey)}
-                    label={t(label)}
-                    checkVariant="circle"
-                  />
-                  {toggleButtons && (
-                    <ToggleButtons
-                      value={String(tempSubSortKey)}
-                      onChange={handleToggleButtons}
-                      options={OPTIONS}
-                      variant="filter"
-                      untoggleValue="default"
-                    />
-                  )}
-                </ColumnContainer>
+                <SortItem
+                  key={sortKey}
+                  label={label}
+                  sortKey={sortKey}
+                  toggleButtons={toggleButtons}
+                  checked={isChecked(sortKey)}
+                  onChange={handleChange}
+                  subValue={tempSubSortKey}
+                  onSubValueChange={setTempSubSortKey}
+                />
               ))}
             </SortListContainer>
           </Main>
@@ -163,7 +155,64 @@ export const Sort = memo(function Sort() {
   );
 });
 
-const ColumnContainer = styled('div', {
+type SortItemProps = {
+  sortKey: SortKey;
+  toggleButtons?: boolean;
+  label: string;
+  checked: boolean;
+  onChange: (sortKey: SortKey) => void;
+  subValue: AvgApySortType;
+  onSubValueChange: (value: AvgApySortType) => void;
+};
+
+const SortItem = memo(function SortItem({
+  sortKey,
+  toggleButtons,
+  label,
+  checked,
+  onChange,
+  subValue,
+  onSubValueChange,
+}: SortItemProps) {
+  const { t } = useTranslation();
+
+  const handleCheckboxChange = useCallback(
+    (_checked: boolean) => {
+      onChange(sortKey);
+    },
+    [onChange, sortKey]
+  );
+
+  const handleToggleChange = useCallback(
+    (val: string) => {
+      const parsedValue = parseApyValue(val);
+      onSubValueChange(parsedValue);
+    },
+    [onSubValueChange]
+  );
+
+  return (
+    <SortItemContainer>
+      <StyledLabelledCheckBox
+        checked={checked}
+        onChange={handleCheckboxChange}
+        label={t(label)}
+        checkVariant="circle"
+      />
+      {toggleButtons && (
+        <ToggleButtons
+          value={String(subValue)}
+          onChange={handleToggleChange}
+          options={OPTIONS}
+          variant="filter"
+          untoggleValue="default"
+        />
+      )}
+    </SortItemContainer>
+  );
+});
+
+const SortItemContainer = styled('div', {
   base: {
     display: 'flex',
     alignItems: 'center',
