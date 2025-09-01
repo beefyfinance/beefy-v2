@@ -16,7 +16,7 @@ import { createCachedFactory, createFactory } from '../features/data/utils/facto
 import { fromKeysMapper } from './object.ts';
 import { ucFirstLetter } from './string.ts';
 
-export const AVG_APY_PERIODS = [7 /*, 30, 90*/] as const satisfies Omit<
+export const AVG_APY_PERIODS = [7, 30 /*, 90*/] as const satisfies Omit<
   AvgApySortType,
   'default'
 >[];

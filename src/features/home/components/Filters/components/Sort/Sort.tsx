@@ -136,7 +136,6 @@ const SortContent = memo<SortContentProps>(function SortContent({ onClose }) {
     [setTempSubSortKey, tempSubSortKey]
   );
 
-  console.log(tempSortField, tempSubSortKey);
   return (
     <Layout>
       <Main>
