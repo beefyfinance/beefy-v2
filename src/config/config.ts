@@ -88,6 +88,8 @@ export const config = {
       'mMEV',
       'frxUSD',
       'scrvUSD',
+      'cUSD',
+      'stcUSD',
     ],
   },
   polygon: {
