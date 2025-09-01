@@ -87,20 +87,15 @@ export const Sort = memo(function Sort() {
     setIsOpen(open => !open);
   }, []);
 
-  const handleChange = useCallback(
-    (sortKey: SortKey) => (checked: boolean) => {
-      if (checked) {
-        if (sortKey === 'avgApy') {
-          setTempSubSortKey(7);
-          setTempSortField('avgApy');
-        } else {
-          setTempSubSortKey('default');
-          setTempSortField(sortKey);
-        }
-      }
-    },
-    []
-  );
+  const handleChange = useCallback((sortKey: SortKey) => {
+    if (sortKey === 'avgApy') {
+      setTempSubSortKey(7);
+      setTempSortField('avgApy');
+    } else {
+      setTempSubSortKey('default');
+      setTempSortField(sortKey);
+    }
+  }, []);
 
   const isChecked = useCallback(
     (sortKey: SortKey) => {
