@@ -126,7 +126,11 @@ const SortContent = memo<SortContentProps>(function SortContent({ onClose }) {
     (val: SortKey) => {
       if (val === 'avgApy') {
         // If avgApy is already selected, untoggle it and switch to regular apy
-        setTempSubSortKey(tempSubSortKey);
+        if (tempSubSortKey === 'default') {
+          setTempSubSortKey(7);
+        } else {
+          setTempSubSortKey(tempSubSortKey);
+        }
         setTempSortField('avgApy');
       } else {
         setTempSubSortKey('default');
