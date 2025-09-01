@@ -43,8 +43,14 @@ export const Sort = memo(function Sort() {
   // Reset temp states when sortField or subSortApy changes (e.g., when filters are cleared)
   useEffect(() => {
     if (isOpen) {
-      setTempSortField(sortField);
-      setTempSubSortKey(subSortApy || 7);
+      // If subSortApy is not 'default', we're in avgApy mode
+      if (subSortApy !== 'default') {
+        setTempSortField('avgApy');
+        setTempSubSortKey(subSortApy);
+      } else {
+        setTempSortField(sortField);
+        setTempSubSortKey('default');
+      }
     }
   }, [isOpen, sortField, subSortApy]);
 
