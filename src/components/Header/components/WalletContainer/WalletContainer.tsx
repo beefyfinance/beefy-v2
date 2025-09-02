@@ -15,7 +15,6 @@ import {
 } from '../../../../features/data/selectors/wallet.ts';
 import { formatAddressShort, formatDomain } from '../../../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../../../features/data/store/hooks.ts';
-import { StatLoader } from '../../../StatLoader/StatLoader.tsx';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import { getNetworkSrc } from '../../../../helpers/networkSrc.ts';
 import iconUnsupportedChain from '../../../../images/icons/navigation/unsuported-chain.svg';
@@ -25,6 +24,7 @@ import {
   selectConfigKeysWithRejectedData,
 } from '../../../../features/data/selectors/data-loader-helpers.ts';
 import { selectHasWalletInitialized } from '../../../../features/data/selectors/data-loader/wallet.ts';
+import { WalletButton } from './WalletButton.tsx';
 
 const WalletContainer = memo(function WalletContainer() {
   const dispatch = useAppDispatch();
@@ -35,6 +35,7 @@ const WalletContainer = memo(function WalletContainer() {
   const blurred = useAppSelector(selectIsBalanceHidden);
   const resolverStatus = useResolveAddress(walletAddress);
   const currentChainId = useAppSelector(selectCurrentChainId);
+  const isWalletKnown = !!walletAddress;
 
   const rpcErrors = useAppSelector(state => selectChainIdsWithRejectedData(state));
   const beefyErrors = useAppSelector(state => selectBeefyApiKeysWithRejectedData(state));
@@ -53,38 +54,28 @@ const WalletContainer = memo(function WalletContainer() {
     }
   }, [dispatch, walletAddress]);
 
-  const status = useMemo(() => {
-    if (walletAddress) {
-      return hasAnyError ? 'error' : 'connected';
+  const label = useMemo(() => {
+    if (!walletInitialized || !walletAddress) {
+      return t('Network-ConnectWallet');
     }
-
-    return 'disconnected';
-  }, [hasAnyError, walletAddress]);
+    if (isFulfilledStatus(resolverStatus)) {
+      return formatDomain(resolverStatus.value);
+    }
+    return formatAddressShort(walletAddress);
+  }, [walletInitialized, walletAddress, resolverStatus, t]);
 
   return (
-    <Button onClick={handleWalletConnect} status={status} disabled={!walletInitialized}>
-      {!walletInitialized ?
-        <StatLoader
-          width={
-            walletAddress ?
-              isWalletConnected ?
-                113
-              : 85
-            : 116
-          }
-          foregroundColor="#68BE71"
-          backgroundColor="#004708"
-        />
-      : <Address blurred={blurred}>
-          {walletAddress ?
-            isFulfilledStatus(resolverStatus) ?
-              formatDomain(resolverStatus.value)
-            : formatAddressShort(walletAddress)
-          : t('Network-ConnectWallet')}
-        </Address>
-      }
+    <WalletButton
+      initializing={!walletInitialized}
+      connected={isWalletConnected}
+      known={isWalletKnown}
+      error={hasAnyError}
+      onClick={handleWalletConnect}
+      disabled={!walletInitialized}
+    >
+      <Address blurred={isWalletKnown && blurred}>{label}</Address>
       {isWalletConnected && <ActiveChain chainId={currentChainId} />}
-    </Button>
+    </WalletButton>
   );
 });
 
@@ -120,51 +111,6 @@ const Address = styled('div', {
         filter: 'blur(0.5rem)',
       },
     },
-  },
-});
-
-const Button = styled('button', {
-  base: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: '8px',
-    padding: '8px 16px',
-    borderStyle: 'solid',
-    borderWidth: '2px',
-    color: 'text.light',
-    textStyle: 'body.medium',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-    height: '40px',
-    gap: '8px',
-    backgroundColor: 'background.content.dark',
-    _hover: {
-      backgroundColor: 'background.content',
-    },
-  },
-  variants: {
-    status: {
-      disconnected: {
-        color: 'text.black',
-        borderColor: 'green.40',
-        backgroundColor: 'green.40',
-        _hover: {
-          borderColor: 'green.20',
-          backgroundColor: 'green.20',
-        },
-      },
-      error: {
-        borderColor: 'orange.40-12',
-      },
-      connected: {
-        borderColor: 'green.40',
-      },
-    },
-  },
-  defaultVariants: {
-    status: 'disconnected',
   },
 });
 

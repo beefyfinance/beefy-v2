@@ -106,7 +106,7 @@ const config = buildConfig(
         '--onboard-modal-backdrop': '{colors.modal.backdrop}',
         '--onboard-modal-border-radius': '20px',
         '--onboard-wallet-button-border-radius': '8px',
-        '--onboard-connect-header-background': '{colors.eclipseElixir}',
+        '--onboard-connect-header-background': '{colors.darkBlue.80}',
         '--onboard-connect-header-color': '{colors.text.light}',
         '--onboard-modal-color': '{colors.text.light}',
         '--onboard-modal-background': '{colors.blackMarket}',
@@ -290,11 +290,6 @@ const config = buildConfig(
             description: 'dashboard summary icon bg',
           },
           dashboardVaultText: { value: '#9595b2' },
-          eclipseElixir: {
-            value: '#1c1e32',
-            description:
-              'light tooltip text title/content/label/link + contentDark + tooltip dark bg',
-          },
           explorerLinkBorder: { value: '#363a61' },
           exposureOther: { value: '#c2d65c' },
           exposureStable: { value: '#3d5cf5' },
@@ -383,7 +378,6 @@ const config = buildConfig(
             '30': { value: '#95e2a8' },
             '40': { value: '#72d286' },
             '40-12': { value: '#354D56' },
-            '40-12a': { value: '#72d2861f' },
             '50': { value: '#53be64' },
             '50-20a': { value: '#53be6433' },
             '60': { value: '#449a4d' },
@@ -524,7 +518,7 @@ const config = buildConfig(
             button: { value: '{colors.bayOfMany}' },
             content: {
               DEFAULT: { value: '{colors.blackMarket}' },
-              dark: { value: '{colors.eclipseElixir}' },
+              dark: { value: '{colors.darkBlue.80}' },
               light: { value: '{colors.contentBackgroundLight}' },
               gray: { value: '{colors.text.dark}' },
               darkest: { value: '{colors.darkBlue.90}' },
@@ -542,7 +536,7 @@ const config = buildConfig(
             cardBody: { value: '{colors.darkBlue.70}' },
           },
           scrollbar: {
-            thumb: { value: '{colors.eclipseElixir}' },
+            thumb: { value: '{colors.darkBlue.80}' },
             track: { value: 'transparent' },
           },
           tags: {
@@ -633,7 +627,7 @@ const config = buildConfig(
               },
             },
             dark: {
-              background: { value: '{colors.eclipseElixir}' },
+              background: { value: '{colors.darkBlue.80}' },
               text: {
                 DEFAULT: { value: '{colors.text.light}' },
                 title: { value: '{colors.white}' },
@@ -660,7 +654,7 @@ const config = buildConfig(
               },
             },
             dark: {
-              background: { value: '{colors.eclipseElixir}' },
+              background: { value: '{colors.darkBlue.80}' },
               text: {
                 DEFAULT: { value: '{colors.text.light}' },
               },
@@ -995,15 +989,15 @@ const config = buildConfig(
       dark: {
         base: {
           color: '{colors.text.dark}',
-          background: '{colors.eclipseElixir}',
+          background: '{colors.darkBlue.80}',
           border: 'none',
         },
         hover: {
-          background: '{colors.eclipseElixir}',
+          background: '{colors.darkBlue.80}',
           color: '{colors.text.middle}',
         },
         active: {
-          background: '{colors.eclipseElixir}',
+          background: '{colors.darkBlue.80}',
           color: '{colors.text.light}',
         },
       },
