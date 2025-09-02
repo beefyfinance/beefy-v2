@@ -27,7 +27,7 @@ export const styles = {
     },
   }),
   textGreen: css.raw({
-    color: 'green',
+    color: 'green.40',
   }),
   rowDashboard: css.raw({
     display: 'grid',

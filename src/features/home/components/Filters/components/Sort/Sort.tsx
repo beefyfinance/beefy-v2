@@ -148,7 +148,7 @@ const SortContent = memo<SortContentProps>(function SortContent({ onClose }) {
         </SortListContainer>
       </Main>
       <Footer>
-        <Button variant="success" fullWidth={true} borderless={true} onClick={handleApply}>
+        <Button variant="cta" fullWidth={true} borderless={true} onClick={handleApply}>
           {t('Apply')}
         </Button>
       </Footer>

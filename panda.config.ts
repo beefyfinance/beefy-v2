@@ -77,7 +77,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -106,7 +106,7 @@ const config = buildConfig(
         '--onboard-modal-backdrop': '{colors.modal.backdrop}',
         '--onboard-modal-border-radius': '20px',
         '--onboard-wallet-button-border-radius': '8px',
-        '--onboard-connect-header-background': '{colors.eclipseElixir}',
+        '--onboard-connect-header-background': '{colors.darkBlue.80}',
         '--onboard-connect-header-color': '{colors.text.light}',
         '--onboard-modal-color': '{colors.text.light}',
         '--onboard-modal-background': '{colors.blackMarket}',
@@ -123,7 +123,7 @@ const config = buildConfig(
         '--onboard-connect-sidebar-background': '{colors.darkBlue.90}',
         '--onboard-connect-sidebar-color': '{colors.text.light}',
         '--onboard-connect-sidebar-progress-color': '{colors.greenLight}',
-        '--onboard-connect-sidebar-progress-background': '{colors.green}',
+        '--onboard-connect-sidebar-progress-background': '{colors.green.40}',
         '--onboard-link-color': '{colors.text.dark}',
         // Tooltips
         '--tooltip-content-vertical-padding': '12px',
@@ -266,6 +266,7 @@ const config = buildConfig(
             black: { value: '{colors.darkBlue.90}' },
             boosted: { value: '{colors.gold.30}' },
             warning: { value: '{colors.orange.40}' },
+            disabled: { value: '{colors.darkBlue.90-56a}' },
           },
           //darkBlue100-64a
           modal: { backdrop: { value: '#020203A3' } },
@@ -289,11 +290,6 @@ const config = buildConfig(
             description: 'dashboard summary icon bg',
           },
           dashboardVaultText: { value: '#9595b2' },
-          eclipseElixir: {
-            value: '#1c1e32',
-            description:
-              'light tooltip text title/content/label/link + contentDark + tooltip dark bg',
-          },
           explorerLinkBorder: { value: '#363a61' },
           exposureOther: { value: '#c2d65c' },
           exposureStable: { value: '#3d5cf5' },
@@ -377,12 +373,11 @@ const config = buildConfig(
             '100': { value: '#5f412e' },
           },
           green: {
-            DEFAULT: { value: '#4db258', description: 'primary main + indicators.success' },
             '10': { value: '#e3faeb' },
             '20': { value: '#baf0ca' },
             '30': { value: '#95e2a8' },
             '40': { value: '#72d286' },
-            '40-12': { value: '#72d2861f' },
+            '40-12': { value: '#354D56' },
             '50': { value: '#53be64' },
             '50-20a': { value: '#53be6433' },
             '60': { value: '#449a4d' },
@@ -523,7 +518,7 @@ const config = buildConfig(
             button: { value: '{colors.bayOfMany}' },
             content: {
               DEFAULT: { value: '{colors.blackMarket}' },
-              dark: { value: '{colors.eclipseElixir}' },
+              dark: { value: '{colors.darkBlue.80}' },
               light: { value: '{colors.contentBackgroundLight}' },
               gray: { value: '{colors.text.dark}' },
               darkest: { value: '{colors.darkBlue.90}' },
@@ -541,7 +536,7 @@ const config = buildConfig(
             cardBody: { value: '{colors.darkBlue.70}' },
           },
           scrollbar: {
-            thumb: { value: '{colors.eclipseElixir}' },
+            thumb: { value: '{colors.darkBlue.80}' },
             track: { value: 'transparent' },
           },
           tags: {
@@ -584,7 +579,7 @@ const config = buildConfig(
               bg: { value: '{colors.orange.40-12a}' },
             },
             success: {
-              DEFAULT: { value: '{colors.green}' },
+              DEFAULT: { value: '{colors.green.40}' },
               fg: { value: '{colors.green.30}' },
               bg: { value: '{colors.green.80-40a}' },
             },
@@ -632,7 +627,7 @@ const config = buildConfig(
               },
             },
             dark: {
-              background: { value: '{colors.eclipseElixir}' },
+              background: { value: '{colors.darkBlue.80}' },
               text: {
                 DEFAULT: { value: '{colors.text.light}' },
                 title: { value: '{colors.white}' },
@@ -659,7 +654,7 @@ const config = buildConfig(
               },
             },
             dark: {
-              background: { value: '{colors.eclipseElixir}' },
+              background: { value: '{colors.darkBlue.80}' },
               text: {
                 DEFAULT: { value: '{colors.text.light}' },
               },
@@ -675,6 +670,26 @@ const config = buildConfig(
           searchInput: {
             background: { value: '{colors.purpleDarkest}' },
             text: { value: '{colors.text.middle}' },
+          },
+          graph: {
+            grid: { value: '{colors.darkBlue.50}' },
+            axis: { value: '{colors.darkBlue.50}' },
+            line: {
+              underlying: { value: '{colors.green.40}' },
+              usd: { value: '{colors.cornflower}' },
+              heldUsd: { value: '{colors.white.70}' },
+              average: { value: '{colors.green.40}' },
+              movingAverage: { value: '{colors.cornflower}' },
+            },
+            area: {
+              amount: {
+                line: { value: '{colors.white.100}' },
+                fill: { value: 'rgba(255, 255, 255, 0.05)' },
+              },
+            },
+            bar: {
+              range: { value: '#6A71AE4C' },
+            },
           },
         },
         sizes: {
@@ -910,15 +925,20 @@ const config = buildConfig(
           border: '{colors.contentBackgroundLight}',
         },
       },
-      success: {
+      cta: {
         base: {
-          color: '{colors.text.light}',
-          background: '{colors.green}',
-          border: '{colors.green}',
+          color: '{colors.text.black}',
+          background: '{colors.green.40}',
+          border: '{colors.green.40}',
         },
         hover: {
-          background: '{colors.greenLight}',
-          border: '{colors.greenLight}',
+          background: '{colors.green.20}',
+          border: '{colors.green.20}',
+        },
+        disabled: {
+          color: '{colors.text.disabled}',
+          background: '{colors.green.40-12}',
+          border: '{colors.green.40-12}',
         },
       },
       boost: {
@@ -969,15 +989,15 @@ const config = buildConfig(
       dark: {
         base: {
           color: '{colors.text.dark}',
-          background: '{colors.eclipseElixir}',
+          background: '{colors.darkBlue.80}',
           border: 'none',
         },
         hover: {
-          background: '{colors.eclipseElixir}',
+          background: '{colors.darkBlue.80}',
           color: '{colors.text.middle}',
         },
         active: {
-          background: '{colors.eclipseElixir}',
+          background: '{colors.darkBlue.80}',
           color: '{colors.text.light}',
         },
       },

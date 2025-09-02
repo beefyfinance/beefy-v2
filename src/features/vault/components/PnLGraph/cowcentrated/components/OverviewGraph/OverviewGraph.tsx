@@ -77,13 +77,13 @@ export const CLMOverviewGraph = memo(function CLMOverviewGraph({
           margin={chartMargin}
           className={classes.graph}
         >
-          <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />
+          <CartesianGrid strokeDasharray="2 2" stroke={token('colors.graph.grid')} />
           <XAxis
             tickFormatter={dateAxis.formatter}
             dataKey="timestamp"
             padding="no-gap"
             tickMargin={10}
-            stroke="#363B63"
+            stroke={token('colors.graph.axis')}
             interval={dateAxis.interval}
             tick={XAxisTick}
           />
@@ -92,7 +92,7 @@ export const CLMOverviewGraph = memo(function CLMOverviewGraph({
               yAxisId="underlying"
               strokeWidth={1.5}
               dataKey="underlying"
-              stroke="#4DB258"
+              stroke={token('colors.graph.line.underlying')}
               dot={false}
               type="linear"
             />
@@ -101,7 +101,7 @@ export const CLMOverviewGraph = memo(function CLMOverviewGraph({
             yAxisId="usd"
             strokeWidth={1.5}
             dataKey="heldUsd"
-            stroke="#999CB3"
+            stroke={token('colors.graph.line.heldUsd')}
             dot={false}
             type="linear"
           />
@@ -109,13 +109,13 @@ export const CLMOverviewGraph = memo(function CLMOverviewGraph({
             yAxisId="usd"
             strokeWidth={1.5}
             dataKey="underlyingUsd"
-            stroke="#5C70D6"
+            stroke={token('colors.graph.line.usd')}
             dot={false}
             type="linear"
           />
           {type === 'vault' && (
             <YAxis
-              stroke="#4DB258"
+              stroke={token('colors.graph.line.underlying')}
               strokeWidth={1.5}
               tickFormatter={underlyingAxis.formatter}
               yAxisId="underlying"
@@ -125,7 +125,7 @@ export const CLMOverviewGraph = memo(function CLMOverviewGraph({
             />
           )}
           <YAxis
-            stroke="#5C70D6"
+            stroke={token('colors.graph.line.usd')}
             orientation="right"
             strokeWidth={1.5}
             tickFormatter={usdAxis.formatter}

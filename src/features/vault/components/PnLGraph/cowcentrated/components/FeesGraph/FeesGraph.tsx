@@ -76,13 +76,13 @@ export const CLMFeesGraph = memo(function CLMFeesGraph({
           margin={{ top: 14, right: xMargin, bottom: 0, left: xMargin }}
           className={classes.graph}
         >
-          <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />
+          <CartesianGrid strokeDasharray="2 2" stroke={token('colors.graph.grid')} />
           <XAxis
             tickFormatter={dateAxis.formatter}
             dataKey="t"
             padding="no-gap"
             tickMargin={10}
-            stroke="#363B63"
+            stroke={token('colors.graph.axis')}
             interval={dateAxis.interval}
             tick={XAxisTick}
           />
@@ -98,7 +98,7 @@ export const CLMFeesGraph = memo(function CLMFeesGraph({
             />
           ))}
           <YAxis
-            stroke="#363B63"
+            stroke={token('colors.graph.axis')}
             strokeWidth={1.5}
             tickFormatter={usdAxis.formatter}
             yAxisId="usd"

@@ -53,7 +53,7 @@ export const styles = {
     color: 'indicators.error',
   }),
   textGreen: css.raw({
-    color: 'green',
+    color: 'green.40',
   }),
   textDark: css.raw({
     color: 'text.dark',
@@ -99,7 +99,7 @@ export const styles = {
     textStyle: 'body.sm',
   }),
   tokenIconAmountPositive: css.raw({
-    color: 'green',
+    color: 'green.40',
   }),
   tokenIconAmountNegative: css.raw({
     color: 'indicators.error',

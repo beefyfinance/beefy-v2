@@ -70,13 +70,13 @@ export const Graph = memo(function Graph({ vaultId, period, address }: GraphProp
           margin={chartMargin}
           className={classes.graph}
         >
-          <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />
+          <CartesianGrid strokeDasharray="2 2" stroke={token('colors.graph.grid')} />
           <XAxis
             tickFormatter={dateAxis.formatter}
             dataKey="datetime"
             padding="no-gap"
             tickMargin={10}
-            stroke="#363B63"
+            stroke={token('colors.graph.axis')}
             interval={dateAxis.interval}
             tick={XAxisTick}
           />
@@ -84,7 +84,7 @@ export const Graph = memo(function Graph({ vaultId, period, address }: GraphProp
             yAxisId="underlying"
             strokeWidth={1.5}
             dataKey="underlyingBalance"
-            stroke="#4DB258"
+            stroke={token('colors.graph.line.underlying')}
             dot={false}
             type="linear"
           />
@@ -92,12 +92,12 @@ export const Graph = memo(function Graph({ vaultId, period, address }: GraphProp
             yAxisId="usd"
             strokeWidth={1.5}
             dataKey="usdBalance"
-            stroke="#5C70D6"
+            stroke={token('colors.graph.line.usd')}
             dot={false}
             type="linear"
           />
           <YAxis
-            stroke="#4DB258"
+            stroke={token('colors.graph.line.underlying')}
             strokeWidth={1.5}
             tickFormatter={underlyingAxis.formatter}
             yAxisId="underlying"
@@ -106,7 +106,7 @@ export const Graph = memo(function Graph({ vaultId, period, address }: GraphProp
             mirror={true}
           />
           <YAxis
-            stroke="#5C70D6"
+            stroke={token('colors.graph.line.usd')}
             orientation="right"
             strokeWidth={1.5}
             tickFormatter={usdAxis.formatter}

@@ -94,7 +94,7 @@ export const MobileFilters = memo<MobileFiltersProps>(function MobileFilters({ o
               </>
             }
           </ClearButton>
-          <Button style={{ width: '70%' }} variant="success" borderless={true} onClick={handleShow}>
+          <Button style={{ width: '70%' }} variant="cta" borderless={true} onClick={handleShow}>
             {t('Filter-ShownVaults', { number: filteredVaultCount })}
           </Button>
         </>

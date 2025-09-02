@@ -35,7 +35,7 @@ export const styles = {
     transition: 'background-color 0.4s ease, left 0.4s ease',
   }),
   dotChecked: css.raw({
-    backgroundColor: 'green',
+    backgroundColor: 'green.40',
     left: '22px',
   }),
 };

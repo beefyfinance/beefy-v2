@@ -220,7 +220,7 @@ const RedeemForm = memo(function RedeemForm({
         </Controls>
         <ActionConnectSwitch chainId={'sonic'}>
           <Button
-            variant="success"
+            variant="cta"
             fullWidth={true}
             borderless={true}
             onClick={onSubmit}

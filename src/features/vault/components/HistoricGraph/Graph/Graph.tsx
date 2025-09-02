@@ -129,42 +129,56 @@ export const Graph = memo(function Graph<TStat extends ChartStat>({
           margin={chartMargin}
           barCategoryGap={'30%'}
         >
-          <CartesianGrid strokeDasharray="2 2" vertical={!isClm} stroke="#363B63" />
+          <CartesianGrid
+            strokeDasharray="2 2"
+            vertical={!isClm}
+            stroke={token('colors.graph.grid')}
+          />
           <XAxis
             dataKey="t"
             tickMargin={10}
             tickFormatter={xTickFormatter}
             interval={xTickInterval}
-            stroke="#363B63"
+            stroke={token('colors.graph.axis')}
             tick={XAxisTick}
             padding="no-gap"
           />
           <Area
             dataKey="v"
-            stroke="#F5F5FF"
+            stroke={token('colors.graph.area.amount.line')}
             strokeWidth={1.5}
-            fill="rgba(255, 255, 255, 0.05)"
+            fill={token('colors.graph.area.amount.fill')}
             fillOpacity={isClm ? 0 : 100}
           />
           {isClm ?
-            <Bar dataKey="ranges" fill="#6A71AE4C" />
+            <Bar dataKey="ranges" fill={token('colors.graph.bar.range')} />
           : null}
           <Tooltip
             content={tooltipContentCreator}
             wrapperStyle={{ outline: 'none', zIndex: token('zIndex.tooltip') }}
           />
           {!isClm && toggles.movingAverage ?
-            <Area dataKey="ma" stroke="#5C70D6" strokeWidth={1.5} fill="none" />
+            <Area
+              dataKey="ma"
+              stroke={token('colors.graph.line.movingAverage')}
+              strokeWidth={1.5}
+              fill="none"
+            />
           : null}
           {!isClm && toggles.average ?
-            <ReferenceLine y={avg} stroke="#4DB258" strokeWidth={1.5} strokeDasharray="3 3" />
+            <ReferenceLine
+              y={avg}
+              stroke={token('colors.graph.line.average')}
+              strokeWidth={1.5}
+              strokeDasharray="3 3"
+            />
           : null}
           <YAxis
             dataKey="v"
             tickFormatter={yTickFormatter}
             domain={yDomain}
             mirror={true}
-            stroke="#363B63"
+            stroke={token('colors.graph.axis')}
             ticks={yTicks}
           />
         </ComposedChart>

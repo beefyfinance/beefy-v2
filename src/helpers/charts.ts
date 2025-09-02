@@ -1,3 +1,5 @@
+import { token } from '@repo/styles/tokens';
+
 export const CHART_COLORS = [
   '#5C70D6',
   '#5C99D6',
@@ -8,4 +10,4 @@ export const CHART_COLORS = [
   '#1e9c05',
 ];
 
-export const LINE_COLORS = ['#5C70D6', '#4DB258'];
+export const LINE_COLORS = [token('colors.graph.line.underlying'), token('colors.graph.line.usd')];

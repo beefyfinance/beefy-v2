@@ -89,7 +89,7 @@ export const AddTokenForm = memo(function AddTokenForm() {
         <CopyText value={token.decimals.toString()} />
       </div>
       <div className={classes.buttons}>
-        <Button variant="success" fullWidth={true} borderless={true} onClick={handleClick}>
+        <Button variant="cta" fullWidth={true} borderless={true} onClick={handleClick}>
           {isWalletConnectedCorrectChain ?
             t('Add-To-Wallet')
           : isWalletConnected ?

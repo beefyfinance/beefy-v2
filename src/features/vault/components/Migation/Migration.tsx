@@ -113,7 +113,7 @@ const Migrator = memo(function Migrator({
           {!isWalletConnected ?
             <ActionConnect />
           : isWalletOnVaultChain ?
-            <Button onClick={handleMigrateAll} variant="success" fullWidth={true} borderless={true}>
+            <Button onClick={handleMigrateAll} variant="cta" fullWidth={true} borderless={true}>
               {t('Migration-Action')}
             </Button>
           : <ActionSwitch chainId={vault.chainId} />}

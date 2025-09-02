@@ -16,14 +16,14 @@ export const styles = {
   }),
   progressBar: css.raw({
     borderRadius: '4px 0 0 0',
-    backgroundColor: 'green',
+    backgroundColor: 'green.40',
   }),
   errorBar: css.raw({
     backgroundColor: 'red',
     borderRadius: '4px 4px 0 0',
   }),
   successBar: css.raw({
-    backgroundColor: 'green',
+    backgroundColor: 'green.40',
     borderRadius: '4px 4px 0 0',
   }),
 };

@@ -36,25 +36,25 @@ export const styles = {
   positionReferenceLine: css.raw({
     height: '2px',
     width: '12px',
-    backgroundColor: 'green',
+    backgroundColor: 'graph.line.underlying',
     borderRadius: '4px',
   }),
   usdReferenceLine: css.raw({
     height: '2px',
     width: '12px',
-    backgroundColor: 'graphLegendUsd',
-    borderRadius: '4px',
-  }),
-  token1ReferenceLine: css.raw({
-    height: '2px',
-    width: '12px',
-    backgroundColor: 'green',
+    backgroundColor: 'graph.line.usd',
     borderRadius: '4px',
   }),
   holdReferenceLine: css.raw({
     height: '2px',
     width: '12px',
-    backgroundColor: 'text.dark',
+    backgroundColor: 'graph.line.heldUsd',
+    borderRadius: '4px',
+  }),
+  tokenReferenceLine: css.raw({
+    height: '2px',
+    width: '12px',
+    backgroundColor: 'red',
     borderRadius: '4px',
   }),
 };
