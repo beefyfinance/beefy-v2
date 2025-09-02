@@ -71,7 +71,7 @@ const MenuButton = styled('button', {
     padding: '0',
     border: 0,
     boxShadow: 'none',
-    color: 'text.light',
+    color: 'text.dark',
     fontSize: '30px',
     position: 'relative',
     display: 'flex',
