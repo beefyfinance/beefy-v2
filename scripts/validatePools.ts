@@ -878,9 +878,8 @@ const checkPointsStructureIds = (pool: VaultConfig) => {
           throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
         }
 
-        shouldHaveProviderArr.push(
-          pool.assets?.some(a => eligibility?.tokens?.includes(a)) ?? false
-        );
+        const poolTokens = (pool.assets ?? []).concat(pool.token ? [pool.token] : []);
+        shouldHaveProviderArr.push(poolTokens.some(a => eligibility?.tokens?.includes(a)) ?? false);
       } else if (eligibility.type === 'on-chain-lp') {
         if (!('chain' in eligibility)) {
           throw new Error(`Error: ${pointProvider.id} : eligibility.chain missing`);
