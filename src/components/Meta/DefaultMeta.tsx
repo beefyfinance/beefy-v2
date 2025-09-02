@@ -2,6 +2,7 @@ import { memo, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
+import ogImageUrl from '../../images/miniapp/hero.png';
 
 export const DefaultMeta = memo(function DefaultMeta() {
   const location = useLocation();
@@ -21,18 +22,15 @@ export const DefaultMeta = memo(function DefaultMeta() {
       <meta property="og:type" content="website" />
       <meta property="og:description" content={t('Meta-Default-Description')} />
       <meta property="og:url" content={canonical} />
-      <meta property="og:image" content="https://app.beefy.com/assets/meta/social20220521.png" />
+      <meta property="og:image" content={ogImageUrl} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:site" content="@beefyfinance" />
-      <meta property="twitter:creator" content="@beefyfinance" />
-      <meta property="twitter:title" content={t('Meta-Default-Title')} />
-      <meta property="twitter:description" content={t('Meta-Default-Description')} />
-      <meta
-        property="twitter:image"
-        content="https://app.beefy.com/assets/meta/social20220521.png"
-      />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content="@beefyfinance" />
+      <meta name="twitter:creator" content="@beefyfinance" />
+      <meta name="twitter:title" content={t('Meta-Default-Title')} />
+      <meta name="twitter:description" content={t('Meta-Default-Description')} />
+      <meta name="twitter:image" content={ogImageUrl} />
     </Helmet>
   );
 });
