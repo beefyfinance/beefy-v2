@@ -100,6 +100,7 @@ export const BridgeNavButton = styled(RouterNavLink, {
     backgroundColor: 'background.button',
     borderRadius: '8px',
     _hover: {
+      backgroundColor: 'darkBlue.40',
       color: 'text.light',
       cursor: 'pointer',
     },
