@@ -77,7 +77,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -261,7 +261,7 @@ const config = buildConfig(
           text: {
             lightest: { value: '#fff' },
             light: { value: '#f5f5f5' },
-            middle: { value: '#d0d0da' },
+            middle: { value: '#DADCE8' },
             dark: { value: '#999cb3' },
             black: { value: '{colors.darkBlue.90}' },
             boosted: { value: '{colors.gold.30}' },

@@ -19,6 +19,10 @@ const actionRecipe = cva({
     cursor: 'pointer',
     height: '32px',
     width: '30px',
+    _hover: {
+      color: 'text.light',
+      backgroundColor: 'background.content',
+    },
   },
   variants: {
     link: {
@@ -28,6 +32,7 @@ const actionRecipe = cva({
         backgroundColor: 'green.40',
         padding: '3px 12px',
         _hover: {
+          color: 'text.black',
           backgroundColor: 'green.20',
         },
       },

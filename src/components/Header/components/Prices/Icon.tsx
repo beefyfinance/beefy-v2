@@ -17,6 +17,15 @@ export const Icon = styled('img', {
         gridColumnStart: 1,
       },
     },
+    price: {
+      true: {
+        height: '20px',
+        width: '20px',
+      },
+    },
+  },
+  defaultVariants: {
+    price: false,
   },
 });
 
