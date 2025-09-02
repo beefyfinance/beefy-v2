@@ -678,18 +678,18 @@ const config = buildConfig(
             text: { value: '{colors.text.middle}' },
           },
           graph: {
-            grid: { value: '{colors.darkBlue.50}' }, // 363B63
-            axis: { value: '{colors.darkBlue.50}' }, // 363B63
+            grid: { value: '{colors.darkBlue.50}' },
+            axis: { value: '{colors.darkBlue.50}' },
             line: {
-              underlying: { value: '{colors.green.40}' }, // 72D286
-              usd: { value: '{colors.cornflower}' }, // 5C70D6
-              heldUsd: { value: '{colors.white.70}' }, // 999CB3
-              average: { value: '{colors.green.40}' }, // 72D286
-              movingAverage: { value: '{colors.cornflower}' }, // 5C70D6
+              underlying: { value: '{colors.green.40}' },
+              usd: { value: '{colors.cornflower}' },
+              heldUsd: { value: '{colors.white.70}' },
+              average: { value: '{colors.green.40}' },
+              movingAverage: { value: '{colors.cornflower}' },
             },
             area: {
               amount: {
-                line: { value: '{colors.white.100}' }, // F5F5FF
+                line: { value: '{colors.white.100}' },
                 fill: { value: 'rgba(255, 255, 255, 0.05)' },
               },
             },
