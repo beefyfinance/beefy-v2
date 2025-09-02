@@ -40,7 +40,7 @@ export const styles = {
     },
   }),
   greenValue: css.raw({
-    color: 'green',
+    color: 'green.40',
   }),
   redValue: css.raw({
     color: 'indicators.error',

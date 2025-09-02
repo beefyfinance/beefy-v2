@@ -37,7 +37,7 @@ const Bar = styled('div', {
     height: '100%',
     width: 'var(--progress, 0%)',
     transition: 'width 0.2s linear',
-    background: 'green',
+    background: 'green.40',
   },
 });
 

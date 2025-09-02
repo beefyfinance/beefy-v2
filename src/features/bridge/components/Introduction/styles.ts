@@ -12,6 +12,6 @@ export const styles = {
   }),
   link: css.raw({
     textDecoration: 'none',
-    color: 'green',
+    color: 'green.40',
   }),
 };

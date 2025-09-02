@@ -5,7 +5,7 @@ import { ExternalLink } from '../../../components/Links/ExternalLink.tsx';
 
 const linkClass = css({
   textDecoration: 'none',
-  color: 'green',
+  color: 'green.40',
   cursor: 'pointer',
 });
 

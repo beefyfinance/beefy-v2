@@ -7,6 +7,7 @@ import { useAppSelector } from '../../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
 import { selectCowcentratedLikeVaultDepositTokens } from '../../../../../../data/selectors/tokens.ts';
 import { styles } from './styles.ts';
+import { LINE_COLORS } from '../../../../../../../helpers/charts.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -85,9 +86,7 @@ export const FeesFooter = memo(function Footer({
   css: cssProp,
 }: FooterProps) {
   const classes = useStyles();
-  const [token0, token1] = useAppSelector(state =>
-    selectCowcentratedLikeVaultDepositTokens(state, vaultId)
-  );
+  const tokens = useAppSelector(state => selectCowcentratedLikeVaultDepositTokens(state, vaultId));
   const options = useMemo(
     () => labels.map((label, index) => ({ value: index.toString(), label })),
     [labels]
@@ -102,14 +101,15 @@ export const FeesFooter = memo(function Footer({
   return (
     <div className={css(styles.footer, cssProp)}>
       <div className={classes.legendContainer}>
-        <div className={classes.legendItem}>
-          <div className={classes.usdReferenceLine} />
-          {token0.symbol}
-        </div>
-        <div className={classes.legendItem}>
-          <div className={classes.token1ReferenceLine} />
-          {token1.symbol}
-        </div>
+        {tokens.map((token, i) => (
+          <div key={token.address} className={classes.legendItem}>
+            <div
+              className={classes.tokenReferenceLine}
+              style={{ backgroundColor: LINE_COLORS[i % LINE_COLORS.length] }}
+            />
+            {token.symbol}
+          </div>
+        ))}
       </div>
       <ToggleButtons
         value={period.toString()}

@@ -43,7 +43,7 @@ export const styles = {
     textTransform: 'uppercase',
   }),
   inRange: css.raw({
-    color: 'green',
+    color: 'green.40',
   }),
   outOfRange: css.raw({
     color: 'text.boosted',

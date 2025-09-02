@@ -69,7 +69,7 @@ export const styles = {
     color: 'text.light',
   }),
   up: css.raw({
-    fill: 'green',
+    fill: 'green.40',
   }),
   down: css.raw({
     fill: 'indicators.error',

@@ -148,8 +148,8 @@ const Button = styled('button', {
     status: {
       disconnected: {
         color: 'text.black',
-        borderColor: 'green',
-        backgroundColor: 'green',
+        borderColor: 'green.40',
+        backgroundColor: 'green.40',
         _hover: {
           borderColor: 'green.20',
           backgroundColor: 'green.20',
@@ -159,7 +159,7 @@ const Button = styled('button', {
         borderColor: 'orange.40-12',
       },
       connected: {
-        borderColor: 'green',
+        borderColor: 'green.40',
       },
     },
   },

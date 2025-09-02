@@ -36,11 +36,11 @@ export const styles = {
   line: css.raw({
     height: '2px',
     width: '12px',
-    backgroundColor: 'white',
+    backgroundColor: 'graph.area.amount.line',
   }),
   range: css.raw({
     height: '12px',
     width: '12px',
-    backgroundColor: 'graphLegendRange',
+    backgroundColor: 'graph.bar.range',
   }),
 };

@@ -2,7 +2,7 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   positive: css.raw({
-    color: 'green',
+    color: 'green.40',
   }),
   negative: css.raw({
     color: 'indicators.error',

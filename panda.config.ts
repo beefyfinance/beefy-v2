@@ -77,7 +77,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -123,7 +123,7 @@ const config = buildConfig(
         '--onboard-connect-sidebar-background': '{colors.darkBlue.90}',
         '--onboard-connect-sidebar-color': '{colors.text.light}',
         '--onboard-connect-sidebar-progress-color': '{colors.greenLight}',
-        '--onboard-connect-sidebar-progress-background': '{colors.green}',
+        '--onboard-connect-sidebar-progress-background': '{colors.green.40}',
         '--onboard-link-color': '{colors.text.dark}',
         // Tooltips
         '--tooltip-content-vertical-padding': '12px',
@@ -378,7 +378,6 @@ const config = buildConfig(
             '100': { value: '#5f412e' },
           },
           green: {
-            DEFAULT: { value: '#72d286', description: 'primary main + indicators.success' },
             '10': { value: '#e3faeb' },
             '20': { value: '#baf0ca' },
             '30': { value: '#95e2a8' },
@@ -586,7 +585,7 @@ const config = buildConfig(
               bg: { value: '{colors.orange.40-12a}' },
             },
             success: {
-              DEFAULT: { value: '{colors.green}' },
+              DEFAULT: { value: '{colors.green.40}' },
               fg: { value: '{colors.green.30}' },
               bg: { value: '{colors.green.80-40a}' },
             },
@@ -677,6 +676,26 @@ const config = buildConfig(
           searchInput: {
             background: { value: '{colors.purpleDarkest}' },
             text: { value: '{colors.text.middle}' },
+          },
+          graph: {
+            grid: { value: '{colors.darkBlue.50}' }, // 363B63
+            axis: { value: '{colors.darkBlue.50}' }, // 363B63
+            line: {
+              underlying: { value: '{colors.green.40}' }, // 72D286
+              usd: { value: '{colors.cornflower}' }, // 5C70D6
+              heldUsd: { value: '{colors.white.70}' }, // 999CB3
+              average: { value: '{colors.green.40}' }, // 72D286
+              movingAverage: { value: '{colors.cornflower}' }, // 5C70D6
+            },
+            area: {
+              amount: {
+                line: { value: '{colors.white.100}' }, // F5F5FF
+                fill: { value: 'rgba(255, 255, 255, 0.05)' },
+              },
+            },
+            bar: {
+              range: { value: '#6A71AE4C' },
+            },
           },
         },
         sizes: {
@@ -915,8 +934,8 @@ const config = buildConfig(
       cta: {
         base: {
           color: '{colors.text.black}',
-          background: '{colors.green}',
-          border: '{colors.green}',
+          background: '{colors.green.40}',
+          border: '{colors.green.40}',
         },
         hover: {
           background: '{colors.green.20}',
