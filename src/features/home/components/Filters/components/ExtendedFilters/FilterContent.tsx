@@ -159,7 +159,7 @@ export const MobileContentContainer = styled('div', {
     padding: '12px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '12px',
+    rowGap: '12px',
   },
 });
 

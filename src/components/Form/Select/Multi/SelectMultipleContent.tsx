@@ -21,6 +21,7 @@ interface SelectMultipleContentProps<TItem extends SelectItem = SelectItem>
   searchEnabled?: boolean;
   searchFunction?: SearchFunction<TItem>;
   placeholder?: string;
+  autoFocus?: boolean;
 }
 
 export const SelectMultipleContent = memo(function SelectMultipleContent<
@@ -42,6 +43,7 @@ export const SelectMultipleContent = memo(function SelectMultipleContent<
   OptionBadgeComponent = OptionBadge,
   OptionEndAdornmentComponent,
   placeholder,
+  autoFocus = false,
 }: SelectMultipleContentProps<TItem>) {
   const [searchText, setSearchText] = useState<string>('');
   const deferredSearchText = useDeferredValue(searchText);
@@ -63,7 +65,12 @@ export const SelectMultipleContent = memo(function SelectMultipleContent<
   return (
     <>
       {searchEnabled && (
-        <SearchInput placeholder={placeholder} value={searchText} onValueChange={setSearchText} />
+        <SearchInput
+          placeholder={placeholder}
+          value={searchText}
+          onValueChange={setSearchText}
+          autoFocus={autoFocus}
+        />
       )}
       <div>
         {noSearchMatches ?
