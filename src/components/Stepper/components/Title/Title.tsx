@@ -22,7 +22,7 @@ export const Title = memo(function Title({ text }: TitleProps) {
     <div className={classes.titleContainer}>
       <div className={classes.title}>{text}</div>
       <button type="button" className={classes.closeIcon} onClick={handleClose}>
-        <CloseRoundedIcon fontSize="small" color="#D0D0DA" />
+        <CloseRoundedIcon fontSize="small" color="#dadce8" />
       </button>
     </div>
   );
