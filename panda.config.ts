@@ -261,7 +261,7 @@ const config = buildConfig(
           text: {
             lightest: { value: '#fff' },
             light: { value: '#f5f5f5' },
-            middle: { value: '#d0d0da' },
+            middle: { value: '#dadce8' },
             dark: { value: '#999cb3' },
             black: { value: '{colors.darkBlue.90}' },
             boosted: { value: '{colors.gold.30}' },
