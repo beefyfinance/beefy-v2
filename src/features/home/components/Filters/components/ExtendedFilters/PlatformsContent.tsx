@@ -1,15 +1,15 @@
 import { PlatformChecklist } from '../PlatformFilters/PlatformCheckList.tsx';
+import { type FilterContentProps } from './FilterContent.tsx';
 import {
-  ArrowBack,
   ButtonFilter,
+  Label,
   ButtonLabelContainer,
   ContentHeader,
-  Label,
-  MobileContentContainer,
-  Title,
   IconContainer,
-  type FilterContentProps,
-} from './FilterContent.tsx';
+  Title,
+  ArrowBack,
+  MobileContentContainer,
+} from './FilterContainers.tsx';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FilterContent } from '../../../../../data/reducers/filtered-vaults-types.ts';
@@ -74,30 +74,13 @@ export const Platforms = memo<FilterContentProps>(function Platforms({ handleCon
           <Title>{t('Platforms')}</Title>
         </ContentHeader>
       : null}
-      {isDesktop ?
-        <DesktopPlatformsContent />
-      : <MobilePlatformsContent />}
+
+      <Scrollable autoHeight={isDesktop ? 340 : true}>
+        <ScrollableContainer>
+          <PlatformChecklist />
+        </ScrollableContainer>
+      </Scrollable>
     </>
-  );
-});
-
-export const MobilePlatformsContent = memo(function MobilePlatformsContent() {
-  return (
-    <Scrollable autoHeight={true}>
-      <MobileContentContainer>
-        <PlatformChecklist />
-      </MobileContentContainer>
-    </Scrollable>
-  );
-});
-
-export const DesktopPlatformsContent = memo(function DesktopPlatformsContent() {
-  return (
-    <Scrollable autoHeight={340}>
-      <ScrollableContainer>
-        <PlatformChecklist />
-      </ScrollableContainer>
-    </Scrollable>
   );
 });
 
@@ -113,12 +96,15 @@ const BackButton = styled('button', {
   },
 });
 
-const ScrollableContainer = styled('div', {
+const ScrollableContainer = styled(MobileContentContainer, {
   base: {
-    display: 'flex',
-    flexDirection: 'column',
-    rowGap: '8px',
-    overflowY: 'auto',
-    paddingBottom: '16px',
+    lg: {
+      overflowY: 'auto',
+      rowGap: '8px',
+      backgroundColor: 'transparent',
+      paddingBottom: '16px',
+      borderRadius: '0px',
+      padding: '0px',
+    },
   },
 });
