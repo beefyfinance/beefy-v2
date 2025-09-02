@@ -98,11 +98,17 @@ export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) 
       <Footer>
         <ActionButtons>
           {!isMobile && (
-            <Button onClick={onBack} size="lg" fullWidth={true}>
+            <Button borderless={true} onClick={onBack} size="md" fullWidth={true}>
               {t('RpcModal-Cancel')}
             </Button>
           )}
-          <Button disabled={isDisabled} onClick={onSave} size="lg" fullWidth={true}>
+          <Button
+            borderless={true}
+            disabled={isDisabled}
+            onClick={onSave}
+            size="md"
+            fullWidth={true}
+          >
             {t('RpcModal-Save')}
           </Button>
         </ActionButtons>
