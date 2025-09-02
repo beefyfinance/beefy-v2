@@ -192,5 +192,8 @@ const StyledDropdownContent = styled(DropdownContent, {
     maxWidth: '320px',
     padding: '0px',
     backgroundColor: 'background.content',
+    sm: {
+      width: '320px',
+    },
   },
 });
