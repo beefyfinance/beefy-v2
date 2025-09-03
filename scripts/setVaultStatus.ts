@@ -75,14 +75,38 @@ function getRunArgs() {
 type VaultWithTokenAddress = Omit<VaultConfig, 'tokenAddress'> & { tokenAddress: string };
 
 function findRelatedVaults(
-  allVaults: VaultConfig[],
-  earnedTokenAddress: string
+  vault: VaultConfig,
+  allVaults: VaultConfig[]
 ): Array<VaultWithTokenAddress> {
-  const lowerEarnedTokenAddress = earnedTokenAddress.toLowerCase();
-  return allVaults.filter(
-    (vault): vault is VaultWithTokenAddress =>
-      !!vault.tokenAddress && vault.tokenAddress.toLowerCase() === lowerEarnedTokenAddress
+  let allRelatedVaults: Array<VaultWithTokenAddress> = [];
+
+  // all vaults that have the input as their underlying token
+  // ie: fetches the rp vaults, given a cow vault
+  allRelatedVaults = allRelatedVaults.concat(
+    allVaults.filter(
+      (v): v is VaultWithTokenAddress =>
+        !!v.tokenAddress &&
+        !!vault.earnedTokenAddress &&
+        v.tokenAddress.toLowerCase() === vault.earnedTokenAddress.toLowerCase()
+    )
   );
+
+  // all the vault with the same underlying token and
+  // where the type of one is "gov" and the other is "standard"
+  // ie: fetches the rp vaults, given a classic vault
+  allRelatedVaults = allRelatedVaults.concat(
+    allVaults.filter(
+      (v): v is VaultWithTokenAddress =>
+        !!v.tokenAddress &&
+        !!vault.tokenAddress &&
+        v.tokenAddress.toLowerCase() === vault.tokenAddress.toLowerCase() &&
+        v.type !== vault.type &&
+        (v.type === 'gov' || vault.type === 'gov') &&
+        (v.type === 'standard' || vault.type === 'standard')
+    )
+  );
+
+  return allRelatedVaults;
 }
 
 function applyChange(vault: VaultConfig, args: RunArgs, now: number): VaultConfig {
@@ -177,7 +201,7 @@ async function main() {
       modifiedVaults.push(newVault);
 
       if (args.includeRelated && vault.earnedTokenAddress) {
-        const relatedVaults = findRelatedVaults(allVaults, vault.earnedTokenAddress);
+        const relatedVaults = findRelatedVaults(vault, allVaults);
         for (const relatedVault of relatedVaults) {
           modifiedVaults.push(applyChange(relatedVault, args, timestamp));
         }
