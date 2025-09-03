@@ -47,10 +47,10 @@ const ActiveShapeComponent = function ({
     <g>
       {payload && (
         <>
-          <text x={cx} y={cy} dy={-8} textAnchor="middle" alignmentBaseline="middle" fill="#D0D0DA">
+          <text x={cx} y={cy} dy={-8} textAnchor="middle" alignmentBaseline="middle" fill="#dadce8">
             {payload.symbol}
           </text>
-          <text x={cx} y={cy} dy={8} textAnchor="middle" alignmentBaseline="middle" fill="#D0D0DA">
+          <text x={cx} y={cy} dy={8} textAnchor="middle" alignmentBaseline="middle" fill="#dadce8">
             {formatLargePercent(payload[dataKey])}
           </text>
         </>
