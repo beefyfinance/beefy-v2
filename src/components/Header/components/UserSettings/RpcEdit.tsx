@@ -223,7 +223,7 @@ const Input = styled(BaseInput, {
         paddingBlock: '6px',
         border: '2px solid',
         borderColor: 'red.40-40a',
-        outline: '2px solid red.40-40a',
+        outline: '2px solid {colors.red.40-40a}',
       },
     },
   },
