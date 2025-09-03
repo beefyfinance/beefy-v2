@@ -234,6 +234,28 @@
     ]
   },
   {
+    "id": "balancerv3-arbitrum-waarbweth-reth",
+    "name": "WETH/rETH V3",
+    "type": "standard",
+    "token": "WETH/rETH V3",
+    "tokenAddress": "0x5418a64e0cdb20548ACB394f5D00a089BAf02161",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerArbitrumwaArbWETH/rETH",
+    "earnedTokenAddress": "0x03F1aA37749D1226B2F147e00f8e219d1179C9c5",
+    "earnContractAddress": "0x03F1aA37749D1226B2F147e00f8e219d1179C9c5",
+    "oracle": "lps",
+    "oracleId": "balancerv3-arbitrum-waarbweth-reth",
+    "createdAt": 1756747503,
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["waArbWETH", "rETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0x5418a64e0cdb20548acb394f5d00a089baf02161",
+    "network": "arbitrum"
+  },
+  {
     "id": "balancerv3-arbitrum-waarbweth-waarbwsteth",
     "name": "WETH/wstETH V3",
     "type": "standard",
