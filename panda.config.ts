@@ -258,16 +258,6 @@ const config = buildConfig(
           },
         },
         colors: {
-          text: {
-            lightest: { value: '#fff' },
-            light: { value: '#f5f5f5' },
-            middle: { value: '#d0d0da' },
-            dark: { value: '#999cb3' },
-            black: { value: '{colors.darkBlue.90}' },
-            boosted: { value: '{colors.gold.30}' },
-            warning: { value: '{colors.orange.40}' },
-            disabled: { value: '{colors.darkBlue.90-56a}' },
-          },
           //darkBlue100-64a
           modal: { backdrop: { value: '#020203A3' } },
           alertBaseBackground: { value: '#f5f5ff14' },
@@ -426,13 +416,13 @@ const config = buildConfig(
             '70-24a': { value: '#999cb33d' },
             '70-64a': { value: '#999cb3a3' },
             '80': { value: '#bcbecd' },
-            '90': { value: '#d0d0da' },
-            '90-4a': { value: '#d0d0da0a' },
-            '90-24a': { value: '#d0d0da3d' },
-            '90-64a': { value: '#d0d0daa3' },
+            '90': { value: '#dadce8' },
+            '90-4a': { value: '#dadce80a' },
+            '90-24a': { value: '#dadce833' },
+            '90-64a': { value: '#dadce8a3' },
             '100': { value: '#f5f5ff' },
             '100-4a': { value: '#f5f5ff0a' },
-            '100-24a': { value: '#f5f5ff3d' },
+            '100-24a': { value: '#f5f5ff33' },
             '100-64a': { value: '#f5f5ffa3' },
           },
           orange: {
@@ -510,6 +500,16 @@ const config = buildConfig(
       },
       semanticTokens: {
         colors: {
+          text: {
+            lightest: { value: '#fff' },
+            light: { value: '#f5f5f5' },
+            middle: { value: '{colors.white.90}' },
+            dark: { value: '{colors.white.70}' },
+            black: { value: '{colors.darkBlue.90}' },
+            boosted: { value: '{colors.gold.30}' },
+            warning: { value: '{colors.orange.40}' },
+            disabled: { value: '{colors.darkBlue.90-56a}' },
+          },
           background: {
             header: { value: '{colors.headerFooterBackground}' },
             body: { value: '{colors.purpleDarkest}' },
