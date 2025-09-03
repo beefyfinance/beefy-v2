@@ -1,15 +1,15 @@
-import { css, cva } from '@repo/styles/css';
+import { css } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import { getNetworkSrc } from '../../../../helpers/networkSrc.ts';
 import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 
-const iconRecipe = cva({
+export const Icon = styled('img', {
   base: {
     display: 'block',
-    height: '20px',
-    width: '20px',
+    height: '24px',
+    width: '24px',
   },
   variants: {
     first: {
@@ -17,13 +17,15 @@ const iconRecipe = cva({
         gridColumnStart: 1,
       },
     },
+    price: {
+      true: {
+        height: '20px',
+        width: '20px',
+      },
+    },
   },
-});
-
-export const Icon = styled('img', iconRecipe, {
-  defaultProps: {
-    height: '20px',
-    width: '20px',
+  defaultVariants: {
+    price: false,
   },
 });
 

@@ -7,6 +7,8 @@ import type { PlatformEntity } from '../../../../../data/entities/platform.ts';
 import { SelectMultipleContent } from '../../../../../../components/Form/Select/Multi/SelectMultipleContent.tsx';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'lodash-es';
+import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
+
 export const PlatformChecklist = memo(function PlatformChecklist() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -23,6 +25,8 @@ export const PlatformChecklist = memo(function PlatformChecklist() {
     ],
     [platforms]
   );
+
+  const isDesktop = useBreakpoint({ from: 'lg' });
 
   const platformsIds = useAppSelector(selectFilterPlatformIds);
   const [activeIndex] = useState<number | null>(null);
@@ -80,6 +84,7 @@ export const PlatformChecklist = memo(function PlatformChecklist() {
       setListRefs={setListRefs}
       searchEnabled={true}
       placeholder={t('Filter-Platforms-Search-Placeholder')}
+      autoFocus={isDesktop}
     />
   );
 });

@@ -17,7 +17,7 @@ export const TokenPrice = memo(function TokenPrice({ token, mode }: TokenPricePr
 
   return (
     <TokenPriceContainer mode={mode}>
-      <Icon alt={symbol} src={icon} />
+      <Icon price={true} alt={symbol} src={icon} />
       {formatLargeUsd(price, { decimalsUnder: 2 })}
     </TokenPriceContainer>
   );
