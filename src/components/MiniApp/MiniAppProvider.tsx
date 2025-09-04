@@ -20,7 +20,7 @@ export function MiniAppProvider({ children }: { children: ReactNode }) {
       }
     }
 
-    async function markReady() {
+    async function hideSplash() {
       try {
         await sdk.actions.ready();
         return true;
@@ -30,21 +30,51 @@ export function MiniAppProvider({ children }: { children: ReactNode }) {
       }
     }
 
-    fetchContext()
-      .then(sdkContext => {
-        if (sdkContext) {
-          setContext(sdkContext);
-          dispatch(tryToAutoConnectToEip6936Wallet());
-          return markReady();
+    async function askToAdd(sdkContext: MiniAppSdkContext) {
+      try {
+        const alreadyAdded = sdkContext.client.added || false;
+        if (alreadyAdded) {
+          console.debug('MiniApp already added');
+          return;
         }
-        return false;
-      })
-      .then(sdkReady => {
-        setIsReady(sdkReady);
-      })
-      .catch(err => {
-        console.error('Error in MiniAppProvider effect:', err);
-      });
+
+        const alreadyAsked = window.localStorage.getItem('miniapp:askedToAdd') === '1';
+        if (alreadyAsked) {
+          console.debug('Already asked to add MiniApp');
+          return;
+        }
+
+        // we set flag before asking, so we don't ask at all if set throws and the flag can not be set
+        window.localStorage.setItem('miniapp:askedToAdd', '1');
+
+        const result = await sdk.actions.addMiniApp();
+        console.debug('Add MiniApp result:', result);
+      } catch (err) {
+        console.error('Error auto-adding MiniApp:', err);
+      }
+    }
+
+    async function init() {
+      const sdkContext = await fetchContext();
+      if (!sdkContext) {
+        return;
+      }
+      setContext(sdkContext);
+
+      dispatch(tryToAutoConnectToEip6936Wallet());
+
+      const sdkReady = await hideSplash();
+      if (!sdkReady) {
+        return;
+      }
+      setIsReady(true);
+
+      await askToAdd(sdkContext);
+    }
+
+    init().catch(err => {
+      console.error('Error in MiniAppProvider effect:', err);
+    });
   }, [setContext, setIsReady, dispatch]);
 
   const data = useMemo((): MiniAppContextData => {
