@@ -1,31 +1,4 @@
 {
-  "venice": {
-    "title": "Venice",
-    "text": "Venice.ai is a company that offers AI-powered tools and services, including image generation, document analysis, and more.",
-    "website": "https://venice.ai/",
-    "social": {
-      "discord": "hhttps://discord.gg/askvenice",
-      "twitter": "https://x.com/askvenice"
-    }
-  },
-  "definitive": {
-    "title": "Definitive",
-    "text": "Definitive is the future of onchain trade execution. It delivers a CeFi-like experience on DeFi rails via a fully non-custodial platform & API that is live across Solana, Base and other major EVM chains.",
-    "website": "https://www.definitive.fi/",
-    "social": {
-      "discord": "https://discord.com/invite/definitive",
-      "twitter": "https://x.com/definitivefi"
-    }
-  },
-  "moonwell": {
-    "title": "Moonwell",
-    "text": "Moonwell is a decentralized, non-custodial lending and borrowing protocol. The protocol is powered by the $WELL token allowing users to earn high APRs in their different markets.",
-    "website": "https://moonwell.fi/",
-    "social": {
-      "discord": "https://discord.com/invite/moonwellfi",
-      "twitter": "https://twitter.com/MoonwellDeFi"
-    }
-  },
   "rocket-pool": {
     "title": "Rocket Pool",
     "text": "Rocket Pool is a decentralised staking protocol providing liquid & node staking products for the Ethereum (ETH) ecosystem.",
