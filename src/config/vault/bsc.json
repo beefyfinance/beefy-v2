@@ -6184,38 +6184,6 @@
     ]
   },
   {
-    "id": "thena-btcb-wbnb",
-    "name": "BTCB-BNB vLP",
-    "type": "standard",
-    "token": "BTCB-BNB vLP",
-    "tokenAddress": "0xD328D129E46f9B978416599913102e8CD64593F3",
-    "tokenDecimals": 18,
-    "tokenProviderId": "thena",
-    "earnedToken": "mooThenaBTCB-BNB",
-    "earnedTokenAddress": "0x17b2230E40E4D886A98cFC7f02495810Ae3A691A",
-    "earnContractAddress": "0x17b2230E40E4D886A98cFC7f02495810Ae3A691A",
-    "oracle": "lps",
-    "oracleId": "thena-btcb-wbnb",
-    "status": "eol",
-    "createdAt": 1673571556,
-    "retireReason": "rewards",
-    "retiredAt": 1682019887,
-    "platformId": "thena",
-    "assets": ["BTCB", "BNB"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "bsc-thena"
-      }
-    ]
-  },
-  {
     "id": "thena-eth-wbnb",
     "name": "ETH-BNB vLP",
     "type": "standard",

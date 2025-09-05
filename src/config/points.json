@@ -1225,6 +1225,11 @@
         "type": "token-holding",
         "tokens": ["stcUSD-29JAN26"],
         "liveAfter": "2025-08-01"
+      },
+      {
+        "type": "token-holding",
+        "tokens": ["cUSD-29JAN26"],
+        "liveAfter": "2025-09-04"
       }
     ],
     "accounting": [
