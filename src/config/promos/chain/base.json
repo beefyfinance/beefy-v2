@@ -1,5 +1,65 @@
 [
   {
+    "id": "moo_aerodrome-weth-bwell-axlop",
+    "title": "Beefy",
+    "vaultId": "aerodrome-weth-bwell",
+    "assets": ["WETH", "bWELL"],
+    "tokenAddress": "0xacDBb7c90C0F764cA7BB5307d18C5b211Fbd9C00",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x85A094A4ffC3B1cE0C7aB45e89ed25dDa2faE6f3",
+    "partners": ["moonwell"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x994ac01750047B9d35431a7Ae4Ed312ee955E030",
+        "symbol": "axlOP",
+        "decimals": 18,
+        "oracleId": "axlOP"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cbbtc-edge-axlop",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cbbtc-edge",
+    "assets": ["cbBTC", "EDGE"],
+    "tokenAddress": "0xb0fbF668CDd01548973B74dA2001B2f78B6da99e",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x85A094A4ffC3B1cE0C7aB45e89ed25dDa2faE6f3",
+    "partners": ["definitive"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x994ac01750047B9d35431a7Ae4Ed312ee955E030",
+        "symbol": "axlOP",
+        "decimals": 18,
+        "oracleId": "axlOP"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-weth-vvv-axlop",
+    "title": "Beefy",
+    "vaultId": "aerodrome-weth-vvv",
+    "assets": ["WETH", "VVV"],
+    "tokenAddress": "0x4794158d7587961B1C462c0774A06C95018a854B",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x0AAC3280351Ad20776218453fF288C40A025Eace",
+    "partners": ["venice"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x994ac01750047B9d35431a7Ae4Ed312ee955E030",
+        "symbol": "axlOP",
+        "decimals": 18,
+        "oracleId": "axlOP"
+      }
+    ]
+  },
+  {
     "id": "moo_aerodrome-cow-base-usdc-reth-vault-rocket-pool",
     "title": "Rocket Pool",
     "vaultId": "aerodrome-cow-base-usdc-reth-vault",
