@@ -1,5 +1,54 @@
 [
   {
+    "id": "curve-msusd-fraxbp",
+    "name": "msUSD/FRAX/USDC",
+    "type": "standard",
+    "token": "msUSDFRAX3CRV-f",
+    "tokenAddress": "0xc3b19502F8c02be75F3f77fd673503520DEB51dD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xD3368E8E2A44a219CEa95868C337429E7328dea1",
+    "earnedToken": "mooCurve-msUSD-FRAXBP",
+    "earnedTokenAddress": "0xD3368E8E2A44a219CEa95868C337429E7328dea1",
+    "oracle": "lps",
+    "oracleId": "curve-msusd-fraxbp",
+    "status": "active",
+    "createdAt": 1757313703,
+    "platformId": "curve",
+    "assets": ["msUSD", "FRAX", "USDC"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-v2-251/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-v2-251/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xc3b19502F8c02be75F3f77fd673503520DEB51dD",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xc3b19502F8c02be75F3f77fd673503520DEB51dD",
+            "coins": [
+              "0xab5eB14c09D416F0aC63661E57EDB7AEcDb9BEfA",
+              "0x3175Df0976dFA876431C2E9eE6Bc45b65d3473CC"
+            ]
+          },
+          {
+            "type": "pool-fixed-deposit",
+            "target": "0x08780fb7e580e492c1935bee4fa5920b94aa95da",
+            "coins": [
+              "0xab5eB14c09D416F0aC63661E57EDB7AEcDb9BEfA",
+              "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "pendle-cusd-29jan26",
     "name": "cUSD 29Jan26",
     "type": "standard",
