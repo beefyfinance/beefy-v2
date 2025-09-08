@@ -19,6 +19,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "linea",
+    "pointStructureIds": ["linea-ignition"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -50,6 +51,7 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "linea",
+    "pointStructureIds": ["linea-ignition"],
     "zaps": [
       {
         "strategyId": "gov-composer"
