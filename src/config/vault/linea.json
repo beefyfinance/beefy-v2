@@ -110,6 +110,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "linea",
+    "pointStructureIds": ["linea-ignition"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -141,6 +142,7 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "linea",
+    "pointStructureIds": ["linea-ignition"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -201,6 +203,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "linea",
+    "pointStructureIds": ["linea-ignition"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -232,6 +235,7 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "linea",
+    "pointStructureIds": ["linea-ignition"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -349,6 +353,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://www.etherex.finance/liquidity/0x8418e91cf8Cbf7Dd37B6492e23Bec75D0F4D81D8",
     "network": "linea",
+    "pointStructureIds": ["linea-ignition"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -377,6 +382,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://www.etherex.finance/liquidity/0x5c1bf4b7563c460282617a0304e3cde133200f70",
     "network": "linea",
+    "pointStructureIds": ["linea-ignition"],
     "zaps": [
       {
         "strategyId": "solidly",

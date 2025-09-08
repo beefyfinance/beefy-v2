@@ -59,6 +59,10 @@ export const styles = {
   vaultTagPoints: css.raw({
     backgroundColor: 'tags.earnings.background',
   }),
+  vaultTagLineaIgnition: css.raw({
+    backgroundColor: 'tags.earnings.background',
+    flexDirection: 'row-reverse',
+  }),
   vaultTagRetired: css.raw({
     backgroundColor: 'tags.retired.background',
   }),
