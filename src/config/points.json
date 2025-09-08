@@ -1250,5 +1250,27 @@
         "url": "https://cap.app/caps"
       }
     ]
+  },
+  {
+    "id": "linea-ignition",
+    "docs": "https://linea.ignition.xyz/",
+    "points": [
+      {
+        "id": "linea-ignition",
+        "name": "Linea Ignition"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "linea-ignition",
+        "role": "Linea Ignition points",
+        "url": ""
+      }
+    ]
   }
 ]
