@@ -41,7 +41,7 @@ import { useMediaQuery } from '../../../MediaQueries/useMediaQuery.ts';
 import { BasicTooltipContent } from '../../../Tooltip/BasicTooltipContent.tsx';
 import { VaultPlatform } from '../../../VaultPlatform/VaultPlatform.tsx';
 import { styles } from './styles.ts';
-import { VaultTag, VaultTagWithTooltip } from './VaultTag.tsx';
+import { VaultTag, VaultTagWithTooltip, type VaultTagWithTooltipProps } from './VaultTag.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -304,36 +304,45 @@ export const VaultClmLikeTag = memo(function VaultClmLikeTag({
 });
 
 const PointsTag = memo(function PointsTag({ vault }: { vault: VaultEntity }) {
-  const { t } = useTranslation();
-  const { isOverflowing, ref } = useIsOverflowingHorizontally<HTMLDivElement>();
-
   if (vault.pointStructureIds.includes('linea-ignition')) {
-    return <LineaIgnitionTag />;
+    return <PointsTagLineaIgnition />;
   }
 
+  return <PointsTagBase />;
+});
+
+type PointsTagDefaultProps = Partial<
+  Omit<VaultTagWithTooltipProps, 'placement' | 'disabled' | 'ref'>
+>;
+
+const PointsTagBase = memo(function PointsTagDefault({
+  tooltip,
+  css: cssProp,
+  text,
+  ...rest
+}: PointsTagDefaultProps) {
+  const { t } = useTranslation();
+  const { isOverflowing, ref } = useIsOverflowingHorizontally<HTMLDivElement>();
   return (
     <VaultTagWithTooltip
-      tooltip={<BasicTooltipContent title={t('VaultTag-Points')} />}
       placement="bottom"
-      disabled={!isOverflowing}
-      css={styles.vaultTagPoints}
       ref={ref}
-      text={t('VaultTag-Points')}
+      disabled={!isOverflowing}
+      text={text ?? t('VaultTag-Points')}
+      tooltip={tooltip ?? <BasicTooltipContent title={t('VaultTag-Points')} />}
+      css={cssProp ?? styles.vaultTagPoints}
+      {...rest}
     />
   );
 });
 
-const LineaIgnitionTag = memo(function LineaIgnitionTag() {
+const PointsTagLineaIgnition = memo(function PointsTagLineaIgnition() {
   const { t } = useTranslation();
-  const { isOverflowing, ref } = useIsOverflowingHorizontally<HTMLDivElement>();
   return (
-    <VaultTagWithTooltip
-      tooltip={<BasicTooltipContent title={t('VaultTag-LineaIgnition-Tooltip')} />}
-      placement="bottom"
-      disabled={!isOverflowing}
-      css={styles.vaultTagLineaIgnition}
-      ref={ref}
+    <PointsTagBase
       text={t('VaultTag-LineaIgnition')}
+      tooltip={<BasicTooltipContent title={t('VaultTag-LineaIgnition-Tooltip')} />}
+      css={styles.vaultTagLineaIgnition}
       icon={<LineaIgnitionIcon style={{ width: '12px', height: '12px' }} />}
     />
   );
@@ -368,7 +377,7 @@ export const VaultTags = memo(function VaultTags({ vaultId }: VaultTagsProps) {
       : isGov && !isCowcentratedLike ?
         <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO support multiple earned tokens [empty = ok, not used when clm-like]
       : null}
-      {isVaultEarningPoints(vault) && <PointsTag vault={vault as VaultEntity} />}
+      {isVaultEarningPoints(vault) && <PointsTag vault={vault} />}
     </div>
   );
 });
