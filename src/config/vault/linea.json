@@ -353,7 +353,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://www.etherex.finance/liquidity/0x8418e91cf8Cbf7Dd37B6492e23Bec75D0F4D81D8",
     "network": "linea",
-    "pointStructureIds": ["linea-ignition"],
     "zaps": [
       {
         "strategyId": "solidly",
