@@ -594,7 +594,7 @@ export const config = {
   linea: {
     name: 'Linea',
     chainId: 59144,
-    rpc: ['https://rpc.linea.build'],
+    rpc: ['https://1rpc.io/linea', 'https://rpc.linea.build'],
     explorerUrl: 'https://lineascan.build',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x74037AEe034D2bD5cD2eEc043FE5ad9cE2e90275',
@@ -606,7 +606,18 @@ export const config = {
       baseMinimum: '7',
       baseSafetyMargin: 0.2,
     },
-    stableCoins: ['USDT', 'USDC', 'DAI', 'MAI', 'USDT+', 'USD+', 'LUSD', 'DUSD', 'asUSD', 'aLinUSDC'],
+    stableCoins: [
+      'USDT',
+      'USDC',
+      'DAI',
+      'MAI',
+      'USDT+',
+      'USD+',
+      'LUSD',
+      'DUSD',
+      'asUSD',
+      'aLinUSDC',
+    ],
   },
   mantle: {
     name: 'Mantle',
