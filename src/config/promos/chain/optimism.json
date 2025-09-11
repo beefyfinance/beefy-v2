@@ -1,4 +1,20 @@
 [
+    {
+    "id": "pool_uniswap-cow-op-usdc-wbtc-rp",
+    "title": "where this goes???",
+    "vaultId": "uniswap-cow-op-usdc-wbtc-rp",
+    "type": "pool",
+    "campaign": "optimism-grant",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
   {
     "id": "moo_curve-op-tbtc",
     "title": "Beefy",
