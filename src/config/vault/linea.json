@@ -1,5 +1,187 @@
 [
   {
+    "id": "etherex-cow-linea-usdc-linea-vault",
+    "name": "LINEA-USDC",
+    "type": "standard",
+    "token": "LINEA-USDC",
+    "tokenAddress": "0x65803a0351CF4555122bf81405438758229701CD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "etherex",
+    "earnContractAddress": "0x7E95891566d937C49CB64fb272A47419b21098b6",
+    "earnedToken": "mooCowEtherexLineaLINEA-USDC",
+    "earnedTokenAddress": "0x7E95891566d937C49CB64fb272A47419b21098b6",
+    "oracle": "lps",
+    "oracleId": "etherex-cow-linea-usdc-linea",
+    "status": "active",
+    "createdAt": 1757547652,
+    "platformId": "etherex",
+    "assets": ["LINEA", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "etherex-cow-linea-usdc-linea-rp",
+    "name": "LINEA-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowEtherexLineaLINEA-USDC",
+    "tokenAddress": "0x65803a0351CF4555122bf81405438758229701CD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "etherex",
+    "earnContractAddress": "0x7090ac65Aa5B4afb768C44E29C561847d4E922cE",
+    "earnedToken": "rCowEtherexLineaLINEA-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "etherex-cow-linea-usdc-linea",
+    "status": "active",
+    "createdAt": 1757547651,
+    "platformId": "etherex",
+    "assets": ["LINEA", "USDC"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "etherex-cow-linea-usdc-linea",
+    "name": "LINEA-USDC",
+    "type": "cowcentrated",
+    "token": "LINEA-USDC etherex",
+    "tokenAddress": "0x74Db4a53cc14eF8594C971c3DC61Ac21C9A2eA86",
+    "tokenDecimals": 18,
+    "tokenProviderId": "etherex",
+    "depositTokenAddresses": [
+      "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
+      "0x1789e0043623282D5DCc7F213d703C6D8BAfBB04"
+    ],
+    "earnContractAddress": "0x65803a0351CF4555122bf81405438758229701CD",
+    "earnedToken": "cowEtherexLineaLINEA-USDC",
+    "earnedTokenAddress": "0x65803a0351CF4555122bf81405438758229701CD",
+    "oracle": "lps",
+    "oracleId": "etherex-cow-linea-usdc-linea",
+    "status": "active",
+    "createdAt": 1757547651,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "assets": ["LINEA", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "etherex-cow-linea-linea-weth-vault",
+    "name": "LINEA-WETH",
+    "type": "standard",
+    "token": "LINEA-WETH",
+    "tokenAddress": "0xbCA33EF858AC847282798AE1f392455a8a1Fe0dB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "etherex",
+    "earnContractAddress": "0xDdBba73410c726A811aC4c659a6CD752b199845E",
+    "earnedToken": "mooCowEtherexLineaLINEA-WETH",
+    "earnedTokenAddress": "0xDdBba73410c726A811aC4c659a6CD752b199845E",
+    "oracle": "lps",
+    "oracleId": "etherex-cow-linea-linea-weth",
+    "status": "active",
+    "createdAt": 1757547652,
+    "platformId": "etherex",
+    "assets": ["LINEA", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "etherex-cow-linea-linea-weth-rp",
+    "name": "LINEA-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowEtherexLineaLINEA-WETH",
+    "tokenAddress": "0xbCA33EF858AC847282798AE1f392455a8a1Fe0dB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "etherex",
+    "earnContractAddress": "0xCa80925463d639C152733D4dC2E26C7045C1Db77",
+    "earnedToken": "rCowEtherexLineaLINEA-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "etherex-cow-linea-linea-weth",
+    "status": "active",
+    "createdAt": 1757547444,
+    "platformId": "etherex",
+    "assets": ["LINEA", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "etherex-cow-linea-linea-weth",
+    "name": "LINEA-WETH",
+    "type": "cowcentrated",
+    "token": "LINEA-WETH etherex",
+    "tokenAddress": "0x73045fe421F1F1719946cc664cf6020b0c183854",
+    "tokenDecimals": 18,
+    "tokenProviderId": "etherex",
+    "depositTokenAddresses": [
+      "0x1789e0043623282D5DCc7F213d703C6D8BAfBB04",
+      "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
+    ],
+    "earnContractAddress": "0xbCA33EF858AC847282798AE1f392455a8a1Fe0dB",
+    "earnedToken": "cowEtherexLineaLINEA-WETH",
+    "earnedTokenAddress": "0xbCA33EF858AC847282798AE1f392455a8a1Fe0dB",
+    "oracle": "lps",
+    "oracleId": "etherex-cow-linea-linea-weth",
+    "status": "active",
+    "createdAt": 1757547444,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "assets": ["LINEA", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "etherex-cow-linea-usdt-weth-vault",
     "name": "USDT-WETH",
     "type": "standard",
