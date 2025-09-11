@@ -339,10 +339,11 @@ const PointsTagBase = memo(function PointsTagDefault({
 const PointsTagLineaIgnition = memo(function PointsTagLineaIgnition() {
   const { t } = useTranslation();
   return (
-    <PointsTagBase
+    <VaultTagWithTooltip
+      order="text-icon"
       text={t('VaultTag-LineaIgnition')}
       tooltip={<BasicTooltipContent title={t('VaultTag-LineaIgnition-Tooltip')} />}
-      css={styles.vaultTagLineaIgnition}
+      css={styles.vaultTagPoints}
       icon={<LineaIgnitionIcon style={{ width: '12px', height: '12px' }} />}
     />
   );
