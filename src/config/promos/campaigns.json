@@ -120,6 +120,14 @@
       "twitter": "https://x.com/beefyfinance"
     }
   },
+  "pool-optimism-grant": {
+    "title": "Beefy × Optimism",
+    "description": "Earn extra incentives awarded to Beefy products on the Superchain through the Beefy Optimism Governance Fund grant. Beefy users earn additional $OP tokens for trying out selected products. Rewards accrue linearly over time, depending on the user's TVL. Simply click the 'Claim' tab to find details of all onchain and offchain rewards, and then manually claim your rewards whenever you're ready.",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://x.com/beefyfinance"
+    }
+  },
   "airdrop-gnosis-safe": {
     "title": "Beefy × Safe",
     "tag": {
