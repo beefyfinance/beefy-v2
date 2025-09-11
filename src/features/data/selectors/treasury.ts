@@ -210,22 +210,21 @@ export const selectTreasuryStats = (state: BeefyState) => {
                   holdingAssets.add(symbol);
                 }
               }
-            }
+            } else {
+              if (isVaultHoldingEntity(token)) {
+                if (token.usdValue.gt(10)) {
+                  const { vaultId } = token;
 
-            if (isVaultHoldingEntity(token)) {
-              if (token.usdValue.gt(10)) {
-                const { vaultId } = token;
+                  const vaultTokenSymbols = selectVaultTokenSymbols(state, vaultId);
 
-                const vaultTokenSymbols = selectVaultTokenSymbols(state, vaultId);
-
-                for (const tokenSymbol of vaultTokenSymbols) {
-                  const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, tokenSymbol);
-                  holdingAssets.add(symbol);
+                  for (const tokenSymbol of vaultTokenSymbols) {
+                    const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, tokenSymbol);
+                    holdingAssets.add(symbol);
+                  }
                 }
-              }
-
-              if (selectIsVaultStable(state, token.vaultId)) {
-                stables = stables.plus(token.usdValue);
+                if (selectIsVaultStable(state, token.vaultId)) {
+                  stables = stables.plus(token.usdValue);
+                }
               }
             }
           }
