@@ -1,5 +1,123 @@
 [
   {
+    "id": "uniswap-cow-base-avnt-usdc-rp",
+    "name": "AVNT-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseAVNT-USDC",
+    "tokenAddress": "0xBf7B9a9B9Bb8e3B421c9f637543eA972f7e934cB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x906c791e57C6D72d8539617853cA7876D3af314C",
+    "earnedToken": "rCowUniswapBaseAVNT-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-avnt-usdc",
+    "status": "active",
+    "createdAt": 1757705912,
+    "platformId": "uniswap",
+    "assets": ["AVNT", "USDC"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-avnt-usdc",
+    "name": "AVNT-USDC",
+    "type": "cowcentrated",
+    "token": "AVNT-USDC uniswap",
+    "tokenAddress": "0x9144A6e8ad6f56db96daC444eB173831660Ba3e5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x696F9436B67233384889472Cd7cD58A6fB5DF4f1",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0xBf7B9a9B9Bb8e3B421c9f637543eA972f7e934cB",
+    "earnedToken": "cowUniswapBaseAVNT-USDC",
+    "earnedTokenAddress": "0xBf7B9a9B9Bb8e3B421c9f637543eA972f7e934cB",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-avnt-usdc",
+    "status": "active",
+    "createdAt": 1757705912,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["AVNT", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-avnt-rp",
+    "name": "AVNT-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseAVNT-WETH",
+    "tokenAddress": "0xDb2b928AAAc60B83165E130B73a41c5014b01815",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x63b7a7f1522A5C6682a289b4DE7924e82b37DB44",
+    "earnedToken": "rCowUniswapBaseAVNT-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-avnt",
+    "status": "active",
+    "createdAt": 1757705882,
+    "platformId": "uniswap",
+    "assets": ["AVNT", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-avnt-weth",
+    "name": "AVNT-WETH",
+    "type": "cowcentrated",
+    "token": "AVNT-WETH uniswap",
+    "tokenAddress": "0x04f0C5d0e2fc9329F08E0112a37d7D9B7CfF1043",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x696F9436B67233384889472Cd7cD58A6fB5DF4f1"
+    ],
+    "earnContractAddress": "0xDb2b928AAAc60B83165E130B73a41c5014b01815",
+    "earnedToken": "cowUniswapBaseAVNT-WETH",
+    "earnedTokenAddress": "0xDb2b928AAAc60B83165E130B73a41c5014b01815",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-avnt",
+    "status": "active",
+    "createdAt": 1757705882,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["WETH", "AVNT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "stakedao-base-superoethb",
     "name": "superOETHb/WETH",
     "type": "standard",
