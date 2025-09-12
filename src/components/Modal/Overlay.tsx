@@ -52,7 +52,7 @@ const Backdrop = styled('div', {
     backgroundColor: 'modal.backdrop',
     // backdropFilter: 'blur(8px)',
     width: '100%',
-    height: '100%',
+    height: '100dvh',
     inset: 0,
     touchAction: 'none',
   },

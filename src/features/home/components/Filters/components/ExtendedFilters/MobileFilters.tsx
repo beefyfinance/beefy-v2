@@ -76,11 +76,7 @@ export const MobileFilters = memo<MobileFiltersProps>(function MobileFilters({ o
     <ScrollableDrawer
       open={open}
       onClose={onClose}
-      mainChildren={
-        <>
-          <ExtendedFilters />
-        </>
-      }
+      mainChildren={<ExtendedFilters />}
       footerChildren={
         <>
           <ClearButton borderless={true} onClick={handleReset}>

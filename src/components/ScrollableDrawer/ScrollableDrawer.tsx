@@ -62,7 +62,7 @@ export const ScrollableDrawer = memo<ScrollabeDrawerProps>(function ScrollableDr
   }, [handleScroll]);
 
   return (
-    <Drawer layer={1} scrollable={false} open={open} onClose={onClose} position="bottom">
+    <Drawer layer={1} open={open} onClose={onClose} position="bottom">
       <LayoutComponent>
         <MainComponent ref={mainRef}>
           {mainChildren}
@@ -79,10 +79,13 @@ export const Layout = styled('div', {
   base: {
     backgroundColor: 'background.content.darkest',
     height: '100dvh',
-    maxHeight: '100dvh',
     width: '100vw',
     display: 'flex',
     flexDirection: 'column',
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });
 

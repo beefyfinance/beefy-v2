@@ -1,7 +1,6 @@
 import { memo, useCallback, useState } from 'react';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { useTranslation } from 'react-i18next';
-import { Drawer } from '../../../../../../components/Modal/Drawer.tsx';
 import { styled } from '@repo/styles/jsx';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
@@ -16,6 +15,11 @@ import type {
   FilteredVaultsState,
   SubSortsState,
 } from '../../../../../data/reducers/filtered-vaults-types.ts';
+import {
+  Layout,
+  Main,
+  ScrollableDrawer,
+} from '../../../../../../components/ScrollableDrawer/ScrollableDrawer.tsx';
 
 type SortKey = FilteredVaultsState['sort'];
 type SortKeysWithSubSort = keyof SubSortsState;
@@ -77,18 +81,17 @@ export const Sort = memo(function Sort() {
       <Button variant="filter" size="sm" onClick={handleOpen} fullWidth={true}>
         {t('Filter-Sort-Btn')}
       </Button>
-      <Drawer open={isOpen} onClose={handleClose} position="bottom">
-        {isOpen && <SortContent onClose={handleClose} />}
-      </Drawer>
+      {isOpen && <SortContent onClose={handleClose} open={isOpen} />}
     </>
   );
 });
 
 type SortContentProps = {
   onClose: () => void;
+  open: boolean;
 };
 
-const SortContent = memo<SortContentProps>(function SortContent({ onClose }) {
+const SortContent = memo<SortContentProps>(function SortContent({ onClose, open }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const sortField = useAppSelector(selectFilterSearchSortField);
@@ -131,8 +134,11 @@ const SortContent = memo<SortContentProps>(function SortContent({ onClose }) {
   }, [dispatch, onClose, pendingState]);
 
   return (
-    <Layout>
-      <Main>
+    <ScrollableDrawer
+      open={open}
+      onClose={onClose}
+      MainComponent={CustomMain}
+      mainChildren={
         <SortListContainer>
           {SORT_OPTIONS.map(({ label, optionKey, subSortOf }) => (
             <SortItem
@@ -146,13 +152,16 @@ const SortContent = memo<SortContentProps>(function SortContent({ onClose }) {
             />
           ))}
         </SortListContainer>
-      </Main>
-      <Footer>
+      }
+      footerChildren={
         <Button variant="cta" fullWidth={true} borderless={true} onClick={handleApply}>
           {t('Apply')}
         </Button>
-      </Footer>
-    </Layout>
+      }
+      LayoutComponent={CustomLayout}
+      hideShadow={true}
+      mobileSpacingSize={0}
+    />
   );
 });
 
@@ -241,27 +250,17 @@ const SortListContainer = styled('div', {
   },
 });
 
-const Layout = styled('div', {
+const CustomLayout = styled(Layout, {
   base: {
     backgroundColor: 'darkBlue.90',
-    width: '100vw',
-    display: 'flex',
-    flexDirection: 'column',
+    height: 'auto',
     gap: '24px',
-    justifyContent: 'space-between',
     borderRadius: '16px 16px 0px 0px',
   },
 });
-const Main = styled('div', {
+
+const CustomMain = styled(Main, {
   base: {
     padding: '12px 12px 0px 12px',
-  },
-});
-
-const Footer = styled('div', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0px 20px 24px 20px',
   },
 });
