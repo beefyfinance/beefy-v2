@@ -87,6 +87,14 @@ const DropdownItems = styled(DropdownContent, {
     paddingInline: '0px',
     paddingBlock: '6px',
     gap: '0px',
+    '& > :first-child': {
+      borderTopLeftRadius: '0.7px',
+      borderTopRightRadius: '0.7px',
+    },
+    '& >:last-child': {
+      borderBottomLeftRadius: '0.7px',
+      borderBottomRightRadius: '0.7px',
+    },
   },
 });
 
