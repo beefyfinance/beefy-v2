@@ -1,5 +1,45 @@
 [
   {
+    "id": "fx-reusd-fxusd",
+    "name": "reUSD/fxUSD",
+    "type": "standard",
+    "token": "reusdfxusd",
+    "tokenAddress": "0xb0ef04ACE97d350E24Efa5139d2590D26a61A8Dc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xAB6D619Ea03b2413547289E905a2f18b59A6B951",
+    "earnedToken": "mooFxConvex-reUSD-fxUSD",
+    "earnedTokenAddress": "0xAB6D619Ea03b2413547289E905a2f18b59A6B951",
+    "oracle": "lps",
+    "oracleId": "fx-reusd-fxusd",
+    "status": "active",
+    "createdAt": 1757929456,
+    "platformId": "fx",
+    "assets": ["reUSD", "fxUSD"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-414/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-414/deposit",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xb0ef04ACE97d350E24Efa5139d2590D26a61A8Dc",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xb0ef04ACE97d350E24Efa5139d2590D26a61A8Dc",
+            "coins": [
+              "0x57aB1E0003F623289CD798B1824Be09a793e4Bec",
+              "0x085780639CC2cACd35E474e71f4d000e2405d8f6"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "pendle-susdf-29jan26",
     "name": "sUSDf 29Jan26",
     "type": "standard",
