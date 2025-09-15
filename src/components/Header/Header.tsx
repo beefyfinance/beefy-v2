@@ -1,11 +1,9 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useEffect, useRef } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { fetchLastArticle } from '../../features/data/actions/articles.ts';
 import { fetchActiveProposals } from '../../features/data/actions/proposal.ts';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
 import { Container } from '../Container/Container.tsx';
-import { Hidden } from '../MediaQueries/Hidden.tsx';
-import { Visible } from '../MediaQueries/Visible.tsx';
 import { ConnectionStatus } from './components/ConnectionStatus/ConnectionStatus.tsx';
 import { LogoLink } from './components/LogoLink/LogoLink.tsx';
 import { MainMenu } from './components/MainMenu/MainMenu.tsx';
@@ -21,6 +19,8 @@ export const Header = memo(function Header() {
   const shouldLoadProposals = useAppSelector(selectShouldInitProposals);
   const shouldLoadArticles = useAppSelector(selectShouldInitArticles);
   const anchorEl = useRef<HTMLDivElement>(null);
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (shouldLoadProposals) {
@@ -38,23 +38,19 @@ export const Header = memo(function Header() {
     <HeaderContainer maxWidth="lg">
       <Side>
         <LogoLink />
-        <Visible from="lg">
-          <MainMenu />
-        </Visible>
+        <MainMenu mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
       </Side>
       <Side spacing="sm">
-        <Visible from="lg">
+        <OnRampContainer>
           <NavLinkItem title={'Header-BuyCrypto'} url="/onramp" Icon={BuyCryptoIcon} />
-        </Visible>
+        </OnRampContainer>
         <RightSide ref={anchorEl}>
-          <Visible from="lg">
+          <BifiPricesContainer>
             <BifiPricesDesktop positionRef={anchorEl} />
-          </Visible>
+          </BifiPricesContainer>
           <ConnectionStatus />
         </RightSide>
-        <Hidden from="lg">
-          <MobileMenu />
-        </Hidden>
+        <MobileMenu mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
       </Side>
     </HeaderContainer>
   );
@@ -92,6 +88,9 @@ const Side = styled('div', {
       },
       md: {
         columnGap: '24px',
+        '@media (max-width: 960px)': {
+          columnGap: '12px',
+        },
       },
     },
   },
@@ -106,5 +105,21 @@ const RightSide = styled('div', {
     alignItems: 'center',
     alignContent: 'center',
     columnGap: '10px',
+  },
+});
+
+const OnRampContainer = styled('div', {
+  base: {
+    '@media (max-width: 1044px)': {
+      display: 'none',
+    },
+  },
+});
+
+const BifiPricesContainer = styled('div', {
+  base: {
+    '@media (max-width: 580px)': {
+      display: 'none',
+    },
   },
 });

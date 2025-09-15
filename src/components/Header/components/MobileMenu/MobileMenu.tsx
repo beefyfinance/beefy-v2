@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback } from 'react';
 import MenuIcon from '../../../../images/icons/Menu.svg?react';
 import { NavLinkItem } from '../NavItem/NavLinkItem.tsx';
 import { MobileList } from '../../list.ts';
@@ -14,21 +14,27 @@ import { Button } from '../../../Button/Button.tsx';
 import { useTranslation } from 'react-i18next';
 import ForwardArrowIcon from '../../../../images/icons/forward-arrow.svg?react';
 
-export const MobileMenu = memo(function MobileMenu() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const { t } = useTranslation();
+export const MobileMenu = memo(function MobileMenu({
+  mobileMenuOpen,
+  setMobileMenuOpen,
+}: {
+  mobileMenuOpen: boolean;
+  setMobileMenuOpen: (open: boolean) => void;
+}) {
   const handleDrawerToggle = useCallback(() => {
-    setMobileOpen(open => !open);
-  }, [setMobileOpen]);
+    setMobileMenuOpen(!mobileMenuOpen);
+  }, [mobileMenuOpen, setMobileMenuOpen]);
+
+  const { t } = useTranslation();
 
   return (
-    <>
+    <MenuContainer>
       <MenuButton aria-label="menu" onClick={handleDrawerToggle}>
         <MenuIcon fontSize="inherit" style={{ height: '28px', width: '28px' }} />
         <UnreadDots />
       </MenuButton>
       <ScrollableDrawer
-        open={mobileOpen}
+        open={mobileMenuOpen}
         onClose={handleDrawerToggle}
         mainChildren={
           <Container>
@@ -52,8 +58,15 @@ export const MobileMenu = memo(function MobileMenu() {
           </Button>
         }
       />
-    </>
+    </MenuContainer>
   );
+});
+const MenuContainer = styled('div', {
+  base: {
+    '@media (min-width: 1044px)': {
+      display: 'none',
+    },
+  },
 });
 
 const Container = styled('div', {

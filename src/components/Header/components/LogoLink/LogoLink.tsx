@@ -1,19 +1,28 @@
-import headerLogoDesktop from '../../../../images/bifi-logos/header-logo.svg';
-import headerLogoMobile from '../../../../images/bifi-logos/header-logo-notext.svg';
+import HeaderLogoDesktop from '../../../../images/bifi-logos/header-logo.svg?react';
+import HeaderLogoMobile from '../../../../images/bifi-logos/header-logo-notext.svg?react';
 import { Link } from 'react-router';
 import { memo } from 'react';
-import { css } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
+import { useMediaQuery } from '../../../MediaQueries/useMediaQuery.ts';
 
 export const LogoLink = memo(function LogoLink() {
-  const linkClass = css({ display: 'block' });
-  const imgClass = css({ height: '40px', display: 'block' });
+  const showSmallLogo = useMediaQuery('(max-width: 380px)', false);
 
   return (
-    <Link className={linkClass} to="/">
-      <picture>
-        <source media="(min-width: 500px)" srcSet={headerLogoDesktop} />
-        <img alt="Beefy" src={headerLogoMobile} height={40} className={imgClass} />
-      </picture>
-    </Link>
+    <StyledLink to="/">
+      {showSmallLogo ?
+        <HeaderLogoMobile />
+      : <HeaderLogoDesktop />}
+    </StyledLink>
   );
+});
+
+const StyledLink = styled(Link, {
+  base: {
+    display: 'block',
+    '& >svg': {
+      height: '40px',
+      display: 'block',
+    },
+  },
 });

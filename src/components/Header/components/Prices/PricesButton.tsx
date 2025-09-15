@@ -73,8 +73,8 @@ const ArrowIconContainer = styled('div', {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '20px',
-    width: '20px',
+    height: '16px',
+    width: '16px',
   },
 });
 
@@ -82,6 +82,8 @@ const FowardArrow = styled(ForwardArrowIcon, {
   base: {
     transform: 'rotate(90deg)',
     color: 'text.dark',
+    height: '8.9px',
+    minWidth: '12px',
   },
   variants: {
     isOpen: {

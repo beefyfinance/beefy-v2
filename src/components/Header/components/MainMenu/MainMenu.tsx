@@ -2,29 +2,102 @@ import { NavLinkItem } from '../NavItem/NavLinkItem.tsx';
 import { DropNavItem } from '../DropNavItem/DropNavItem.tsx';
 import { DaoNavItems, ResourcesNavItems } from '../../list.ts';
 import { UnreadArticleDot, UnreadProposalDot } from '../Badges/UnreadDots.tsx';
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import VaultsIcon from '../../../../images/icons/navigation/vault.svg?react';
 import DashboardIcon from '../../../../images/icons/navigation/dashboard.svg?react';
 import DaoIcon from '../../../../images/icons/navigation/dao.svg?react';
 import ResourcesIcon from '../../../../images/icons/navigation/resources.svg?react';
+import { styled } from '@repo/styles/jsx';
+import MenuButton from '../../../../images/icons/navigation/3dots.svg?react';
 
-export const MainMenu = memo(function MainMenu() {
+export const MainMenu = memo(function MainMenu({
+  mobileMenuOpen,
+  setMobileMenuOpen,
+}: {
+  mobileMenuOpen: boolean;
+  setMobileMenuOpen: (open: boolean) => void;
+}) {
+  const handleDrawerToggle = useCallback(() => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  }, [mobileMenuOpen, setMobileMenuOpen]);
+
   return (
     <>
-      <NavLinkItem title={'Header-Vaults'} url="/" Icon={VaultsIcon} />
-      <NavLinkItem end={false} title={'Header-Dashboard'} url="/dashboard" Icon={DashboardIcon} />
-      <DropNavItem
-        title={'Header-Dao'}
-        Icon={DaoIcon}
-        items={DaoNavItems}
-        Badge={UnreadProposalDot}
-      />
-      <DropNavItem
-        title={'Header-Resources'}
-        Icon={ResourcesIcon}
-        items={ResourcesNavItems}
-        Badge={UnreadArticleDot}
-      />
+      <VaultsAndMenuContainer>
+        <NavLinkItem title={'Header-Vaults'} url="/" Icon={VaultsIcon} />
+      </VaultsAndMenuContainer>
+      <DashboardContainer>
+        <NavLinkItem end={false} title={'Header-Dashboard'} url="/dashboard" Icon={DashboardIcon} />
+      </DashboardContainer>
+      <DaoContainer>
+        <DropNavItem
+          title={'Header-Dao'}
+          Icon={DaoIcon}
+          items={DaoNavItems}
+          Badge={UnreadProposalDot}
+        />
+      </DaoContainer>
+      <ResourcesContainer>
+        <DropNavItem
+          title={'Header-Resources'}
+          Icon={ResourcesIcon}
+          items={ResourcesNavItems}
+          Badge={UnreadArticleDot}
+        />
+      </ResourcesContainer>
+      <VaultsAndMenuContainer>
+        <MenuButtonContainer>
+          <MenuButton onClick={handleDrawerToggle} />
+        </MenuButtonContainer>
+      </VaultsAndMenuContainer>
     </>
   );
+});
+
+const VaultsAndMenuContainer = styled('div', {
+  base: {
+    '@media (max-width: 700px)': {
+      display: 'none',
+    },
+  },
+});
+
+const DashboardContainer = styled('div', {
+  base: {
+    '@media (max-width: 701px)': {
+      display: 'none',
+    },
+  },
+});
+
+const DaoContainer = styled('div', {
+  base: {
+    '@media (max-width: 819px)': {
+      display: 'none',
+    },
+  },
+});
+
+const ResourcesContainer = styled('div', {
+  base: {
+    '@media (max-width: 1044px)': {
+      display: 'none',
+    },
+  },
+});
+
+const MenuButtonContainer = styled('div', {
+  base: {
+    height: '40px',
+    width: '40px',
+    padding: '12px 20px 12px 4px',
+    color: 'text.dark',
+    _hover: {
+      cursor: 'pointer',
+      color: 'text.light',
+    },
+    '@media (min-width: 910px)': {
+      display: 'none',
+    },
+  },
 });
