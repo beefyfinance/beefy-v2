@@ -19,9 +19,15 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "XXX",
-    "removeLiquidityUrl": "XXX",
-    "network": "avax"
+    "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0x152b9d0FdC40C096757F570A51E494bd4b943E50&token1=0xcd94a87696FAC69Edae3a70fE5725307Ae1c43f6&pair=0xae93B851E2e526A46aB91bB9b045f0D41D45BD4e&type=Basic%20Volatile",
+    "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0xae93B851E2e526A46aB91bB9b045f0D41D45BD4e&position=0",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
   },
   {
     "id": "black-usdt-black",
@@ -43,9 +49,15 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "XXX",
-    "removeLiquidityUrl": "XXX",
-    "network": "avax"
+    "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7&token1=0xcd94a87696FAC69Edae3a70fE5725307Ae1c43f6&pair=0x64D05ECC2cDc3e80D45BD1b25b0e8A7f7bf15cFc&type=Basic%20Volatile",
+    "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x64D05ECC2cDc3e80D45BD1b25b0e8A7f7bf15cFc&position=0",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
   },
   {
     "id": "black-avax-rsavax",
@@ -69,7 +81,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7&token1=0xDf788AD40181894dA035B827cDF55C523bf52F67&pair=0xd299699e69aDC03fC65e14ec605286758facF1D8&type=Basic%20Stable",
     "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0xd299699e69aDC03fC65e14ec605286758facF1D8&position=0",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
   },
   {
     "id": "black-savusd-usdc",
@@ -93,7 +111,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0x06d47F3fb376649c3A9Dafe069B3D6E35572219E&token1=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&pair=0x4f80724E5f2d2Af81cb2A1eeb2cC049ab2A33089&type=Basic%20Stable",
     "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x4f80724E5f2d2Af81cb2A1eeb2cC049ab2A33089&position=0",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
   },
   {
     "id": "black-avax-black",
@@ -117,7 +141,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7&token1=0xcd94a87696FAC69Edae3a70fE5725307Ae1c43f6&pair=0x14e4A5beD2e5E688EE1A5Ca3a4914250D1aBD573&type=Basic%20Volatile",
     "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x14e4A5beD2e5E688EE1A5Ca3a4914250D1aBD573&position=0",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
   },
   {
     "id": "black-super-usdc",
@@ -141,7 +171,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0x09Fa58228bB791ea355c90DA1e4783452b9Bd8C3&token1=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&pair=0x9d848CF080c46b92B797218835aE7E89e04c1515&type=Basic%20Volatile",
     "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x9d848CF080c46b92B797218835aE7E89e04c1515&position=0",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
   },
   {
     "id": "black-usdc-black",
@@ -165,7 +201,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&token1=0xcd94a87696FAC69Edae3a70fE5725307Ae1c43f6&pair=0x0D9Fd6dd9b1FF55fB0A9bB0e5f1B6a2D65b741A3&type=Basic%20Volatile",
     "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x0D9Fd6dd9b1FF55fB0A9bB0e5f1B6a2D65b741A3&position=0",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
   },
   {
     "id": "black-weth-wavax",
@@ -189,7 +231,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB&token1=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7&pair=0x737F1cab9CD97c40BBe4D59c85b0d2C1fdBaA37D&type=Basic%20Volatile",
     "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x737F1cab9CD97c40BBe4D59c85b0d2C1fdBaA37D&position=0",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
   },
   {
     "id": "black-btcb-wavax",
@@ -213,7 +261,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0x152b9d0FdC40C096757F570A51E494bd4b943E50&token1=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7&pair=0x7c0781874f5F0E78A920b7a8C840813C69C6E746&type=Basic%20Volatile",
     "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x7c0781874f5F0E78A920b7a8C840813C69C6E746&position=0",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
   },
   {
     "id": "black-usdc-eurc",
@@ -237,7 +291,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&token1=0xC891EB4cbdEFf6e073e859e987815Ed1505c2ACD&pair=0x65f83CCacaBaAC4eD2f80289A02dF4D35d744aE8&type=Basic%20Stable",
     "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x65f83CCacaBaAC4eD2f80289A02dF4D35d744aE8&position=0",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
   },
   {
     "id": "euler-avax-re7labs-usdc",
