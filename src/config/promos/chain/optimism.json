@@ -1,5 +1,5 @@
 [
-    {
+  {
     "id": "pool_uniswap-cow-op-op-weth-rp",
     "title": "Beefy",
     "vaultId": "uniswap-cow-op-op-weth-rp",
@@ -15,7 +15,7 @@
       }
     ]
   },
-    {
+  {
     "id": "pool_uniswap-cow-op-usdc-wbtc-rp",
     "title": "Beefy",
     "vaultId": "uniswap-cow-op-usdc-wbtc-rp",
