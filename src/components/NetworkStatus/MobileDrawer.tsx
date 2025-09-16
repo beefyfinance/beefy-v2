@@ -106,7 +106,6 @@ const CustomMain = styled(Main, {
     gap: '10px',
     paddingInline: '12px',
     overflow: 'hidden',
-    flex: '1 1 auto',
   },
 });
 
