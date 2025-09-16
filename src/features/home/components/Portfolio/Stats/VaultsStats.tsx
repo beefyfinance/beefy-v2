@@ -8,6 +8,7 @@ import { selectTotalActiveVaults } from '../../../../data/selectors/vaults.ts';
 import { ModalTvl } from '../ModalTvl/ModalTvl.tsx';
 import { Stat } from './Stat.tsx';
 import { Stats } from './Stats.tsx';
+import { useBreakpoint } from '../../../../../components/MediaQueries/useBreakpoint.ts';
 
 export const VaultsStats = memo(function VaultStats() {
   const [isTvlModalOpen, setIsTvlModalOpen] = useState<boolean>(false);
@@ -23,6 +24,8 @@ export const VaultsStats = memo(function VaultStats() {
     setIsTvlModalOpen(false);
   }, [setIsTvlModalOpen]);
 
+  const isMobile = useBreakpoint({ to: 'xs' });
+
   return (
     <Stats>
       <Stat
@@ -36,7 +39,12 @@ export const VaultsStats = memo(function VaultStats() {
         value={totalActiveVaults.toString()}
         loading={!totalActiveVaults}
       />
-      <Modal open={isTvlModalOpen} onClose={handleTvlModalClose} scrollable={false}>
+      <Modal
+        position={isMobile ? 'bottom' : 'center'}
+        open={isTvlModalOpen}
+        onClose={handleTvlModalClose}
+        scrollable={false}
+      >
         <ModalTvl close={handleTvlModalClose} />
       </Modal>
     </Stats>

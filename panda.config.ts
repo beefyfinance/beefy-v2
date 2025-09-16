@@ -201,6 +201,9 @@ const config = buildConfig(
         position: 'relative!',
         zIndex: 'layer2.modal!',
       },
+      'w3m-modal': {
+        zIndex: 'layer2.modal!',
+      },
       '.mui-svg': {
         width: '1em',
         height: '1em',

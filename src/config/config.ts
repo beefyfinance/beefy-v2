@@ -4,7 +4,7 @@ export const config = {
   ethereum: {
     name: 'Ethereum',
     chainId: 1,
-    rpc: ['https://eth.drpc.org', 'https://eth.llamarpc.com', 'https://eth-pokt.nodies.app'],
+    rpc: ['https://ethereum-rpc.publicnode.com', 'https://0xrpc.io/eth', 'https://1rpc.io/eth'],
     explorerUrl: 'https://etherscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x47bec05dC291e61cd4360322eA44882cA468dD54',
@@ -712,7 +712,7 @@ export const config = {
   sei: {
     name: 'Sei',
     chainId: 1329,
-    rpc: ['https://sei-public.nodies.app'],
+    rpc: ['https://evm-rpc.sei-apis.com', 'https://sei.therpc.io'],
     explorerUrl: 'https://seitrace.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeC1253CC6AB22680B3A3C35EA696dD0A6FC4B0D9',
@@ -741,7 +741,11 @@ export const config = {
     name: 'Scroll',
     chainId: 534352,
     eol: 1753131600,
-    rpc: ['https://scroll.drpc.org', 'https://scroll-mainnet.public.blastapi.io'],
+    rpc: [
+      'https://rpc.scroll.io',
+      'https://scroll-mainnet.public.blastapi.io',
+      'https://scroll.therpc.io',
+    ],
     explorerUrl: 'https://scrollscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xB58AD63989237E962F3E618eEeb43c30574c6F72',
@@ -888,6 +892,7 @@ export const config = {
   heco: {
     name: 'HECO',
     eol: 1681913494,
+    disabled: true,
     chainId: 128,
     rpc: ['https://128.rpc.thirdweb.com'],
     explorerUrl: 'https://hecoinfo.com',
@@ -905,6 +910,7 @@ export const config = {
   harmony: {
     name: 'Harmony',
     eol: 1681913494,
+    disabled: true,
     chainId: 1666600000,
     rpc: ['https://api.s0.t.hmny.io'],
     explorerUrl: 'https://explorer.harmony.one',
@@ -962,7 +968,7 @@ export const config = {
     name: 'Kava',
     chainId: 2222,
     eol: 1734101117,
-    rpc: ['https://evm.kava.io'],
+    rpc: ['https://kava-evm-rpc.publicnode.com', 'https://evm.kava.io', 'https://evm.kava-rpc.com'],
     explorerUrl: 'https://explorer.kava.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x41D44B276904561Ac51855159516FD4cB2c90968',
