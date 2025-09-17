@@ -54,6 +54,8 @@ const StyledCard = styled(Card, {
     right: 0,
     sm: {
       position: 'static',
+      height: 'auto',
+      borderRadius: '12px',
     },
   },
 });
