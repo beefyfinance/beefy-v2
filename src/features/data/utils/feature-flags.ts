@@ -269,24 +269,29 @@ export function featureFlag_liquidSwapSupport(): {
   return [];
 }
 
+export function featureFlag_disableSwapAggregators(): boolean {
+  const params = getSearchParams();
+  return params.has('__disable_swap_aggregators');
+}
+
 export function featureFlag_disableOneInch(): boolean {
   const params = getSearchParams();
-  return params.has('__disable_one_inch');
+  return featureFlag_disableSwapAggregators() || params.has('__disable_one_inch');
 }
 
 export function featureFlag_disableKyber(): boolean {
   const params = getSearchParams();
-  return params.has('__disable_kyber');
+  return featureFlag_disableSwapAggregators() || params.has('__disable_kyber');
 }
 
 export function featureFlag_disableOdos(): boolean {
   const params = getSearchParams();
-  return params.has('__disable_odos');
+  return featureFlag_disableSwapAggregators() || params.has('__disable_odos');
 }
 
 export function featureFlag_disableLiquidSwap(): boolean {
   const params = getSearchParams();
-  return params.has('__disable_liquid');
+  return featureFlag_disableSwapAggregators() || params.has('__disable_liquid');
 }
 
 export function featureFlag_detailedTooltips(): boolean {
