@@ -29,22 +29,24 @@ export const MainMenu = memo(function MainMenu({
       <DashboardContainer>
         <NavLinkItem end={false} title={'Header-Dashboard'} url="/dashboard" Icon={DashboardIcon} />
       </DashboardContainer>
-      <DaoContainer>
-        <DropNavItem
-          title={'Header-Dao'}
-          Icon={DaoIcon}
-          items={DaoNavItems}
-          Badge={UnreadProposalDot}
-        />
-      </DaoContainer>
-      <ResourcesContainer>
-        <DropNavItem
-          title={'Header-Resources'}
-          Icon={ResourcesIcon}
-          items={ResourcesNavItems}
-          Badge={UnreadArticleDot}
-        />
-      </ResourcesContainer>
+      <DaoResourcesContainer>
+        <DaoContainer>
+          <DropNavItem
+            title={'Header-Dao'}
+            Icon={DaoIcon}
+            items={DaoNavItems}
+            Badge={UnreadProposalDot}
+          />
+        </DaoContainer>
+        <ResourcesContainer>
+          <DropNavItem
+            title={'Header-Resources'}
+            Icon={ResourcesIcon}
+            items={ResourcesNavItems}
+            Badge={UnreadArticleDot}
+          />
+        </ResourcesContainer>
+      </DaoResourcesContainer>
       <VaultsAndMenuContainer>
         <MenuButtonContainer>
           <MenuButton onClick={handleDrawerToggle} />
@@ -52,6 +54,17 @@ export const MainMenu = memo(function MainMenu({
       </VaultsAndMenuContainer>
     </>
   );
+});
+
+const DaoResourcesContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    columnGap: '20px',
+    '@media (max-width: 1082px)': {
+      columnGap: '16px',
+    },
+  },
 });
 
 const VaultsAndMenuContainer = styled('div', {
@@ -64,7 +77,7 @@ const VaultsAndMenuContainer = styled('div', {
 
 const DashboardContainer = styled('div', {
   base: {
-    '@media (max-width: 701px)': {
+    '@media (max-width: 819px)': {
       display: 'none',
     },
   },
@@ -72,7 +85,7 @@ const DashboardContainer = styled('div', {
 
 const DaoContainer = styled('div', {
   base: {
-    '@media (max-width: 819px)': {
+    '@media (max-width: 910px)': {
       display: 'none',
     },
   },
@@ -96,7 +109,7 @@ const MenuButtonContainer = styled('div', {
       cursor: 'pointer',
       color: 'text.light',
     },
-    '@media (min-width: 910px)': {
+    '@media (min-width: 1044px)': {
       display: 'none',
     },
   },

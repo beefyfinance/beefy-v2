@@ -59,7 +59,6 @@ export const Header = memo(function Header() {
 const HeaderContainer = styled(Container, {
   base: {
     textStyle: 'body.medium',
-    paddingBlock: '4px',
     minHeight: '64px',
     display: 'flex',
     alignItems: 'center',
@@ -67,7 +66,7 @@ const HeaderContainer = styled(Container, {
     justifyContent: 'space-between',
     sm: {
       minHeight: 'auto',
-      paddingBlock: '22px',
+      paddingBlock: '24px',
     },
   },
 });
@@ -81,9 +80,12 @@ const Side = styled('div', {
   variants: {
     spacing: {
       sm: {
-        columnGap: '10px',
-        lg: {
-          columnGap: '20px',
+        columnGap: '20px',
+        '@media (max-width: 1082px)': {
+          columnGap: '16px',
+        },
+        '@media (max-width: 1044px)': {
+          columnGap: '10px',
         },
       },
       md: {

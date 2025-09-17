@@ -18,10 +18,10 @@ import { DropdownContent } from '../Dropdown/DropdownContent.tsx';
 import { DropdownProvider } from '../Dropdown/DropdownProvider.tsx';
 import { DropdownTrigger } from '../Dropdown/DropdownTrigger.tsx';
 import { RpcSettingsPanel } from '../Header/components/UserSettings/RpcSettingsPanel.tsx';
-import { useBreakpoint } from '../MediaQueries/useBreakpoint.ts';
 import { TitleComponent } from './Title.tsx';
 import { MobileDrawer } from './MobileDrawer.tsx';
 import { ErrorPopOut } from './ErrorPopOut.tsx';
+import { useMediaQuery } from '../MediaQueries/useMediaQuery.ts';
 
 export const NetworkStatus = memo(function NetworkStatus({
   positionRef,
@@ -40,7 +40,7 @@ export const NetworkStatus = memo(function NetworkStatus({
   const { t } = useTranslation();
   const open = useMemo(() => isUserOpen || isAutoOpen, [isUserOpen, isAutoOpen]);
 
-  const isMobile = useBreakpoint({ to: 'xs' });
+  const isMobile = useMediaQuery('(max-width: 768px)', false);
 
   const handleClose = useCallback(() => {
     dispatch(dataLoaderActions.closeIndicator());
@@ -93,6 +93,36 @@ export const NetworkStatus = memo(function NetworkStatus({
     }
   }, [hasRpcError, hasBeefyError]);
 
+  const openOnHover = useMemo(() => {
+    // If mobile, never open on hover
+    if (isMobile) {
+      return false;
+    }
+
+    // For desktop: if isAutoOpen is true, open on click (not hover)
+    if (isAutoOpen) {
+      return false;
+    }
+
+    // For desktop: if isAutoOpen is false, open on hover
+    return true;
+  }, [isMobile, isAutoOpen]);
+
+  const openOnClick = useMemo(() => {
+    // If mobile, always open on click
+    if (isMobile) {
+      return true;
+    }
+
+    // For desktop: if isAutoOpen is true, open on click
+    if (isAutoOpen) {
+      return true;
+    }
+
+    // For desktop: if isAutoOpen is false, don't open on click (use hover instead)
+    return false;
+  }, [isMobile, isAutoOpen]);
+
   return (
     <DropdownProvider
       positionReference={positionRef}
@@ -102,8 +132,8 @@ export const NetworkStatus = memo(function NetworkStatus({
       placement="bottom-end"
       layer={isMobile ? 0 : 1}
       closeOnClickAway={!isMobile}
-      openOnHover={!isMobile}
-      openOnClick={isMobile}
+      openOnHover={openOnHover}
+      openOnClick={openOnClick}
     >
       <DropdownButton onClick={handleToggle} open={open}>
         <PulseHighlight variant={variant} state={hidePulse ? 'stopped' : 'playing'} />
