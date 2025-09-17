@@ -871,37 +871,6 @@
     ]
   },
   {
-    "id": "thena-usdt-the",
-    "name": "THE-USDT vLP",
-    "token": "vAMM-USDT/THE",
-    "tokenAddress": "0xA051eF9A6FBea340Bb734d022e7B6a3aD9fD9B06",
-    "tokenDecimals": 18,
-    "tokenProviderId": "thena",
-    "earnContractAddress": "0x1725B090Cb494946276654009C53E033669C596f",
-    "earnedToken": "mooThena-USDT-THE",
-    "earnedTokenAddress": "0x1725B090Cb494946276654009C53E033669C596f",
-    "oracle": "lps",
-    "oracleId": "thena-usdt-the",
-    "status": "eol",
-    "retiredAt": 1752239317,
-    "retireReason": "rewards",
-    "createdAt": 1733135686,
-    "platformId": "thena",
-    "assets": ["THE", "USDT"],
-    "migrationIds": [],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://thena.fi/pools/0xA051eF9A6FBea340Bb734d022e7B6a3aD9fD9B06",
-    "removeLiquidityUrl": "https://thena.fi/pools/0xA051eF9A6FBea340Bb734d022e7B6a3aD9fD9B06",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "bsc-thena"
-      }
-    ]
-  },
-  {
     "id": "thena-wbnb-the",
     "name": "THE-WBNB vLP",
     "token": "vAMM-WBNB/THE",
