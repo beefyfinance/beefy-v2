@@ -597,6 +597,28 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
     }
   });
 
+  // All
+  allVaults.forEach(vault => {
+    if (vault.tokenAddress) {
+      const abToken = addressBook[chainId].tokenAddressMap[vault.tokenAddress];
+      if (abToken) {
+        // Decimals not matching is probably an error in addressbook or vault config, and it breaks things if wrong
+        if (vault.tokenDecimals !== abToken.decimals) {
+          console.error(
+            `Error: ${vault.id} : tokenDecimals "${vault.tokenDecimals}" does not match addressbook "${abToken.decimals}" for ${vault.token} (${vault.tokenAddress})`
+          );
+          exitCode = 1;
+          // Also warn about symbol not matching if decimals don't match
+          if (vault.token !== abToken.symbol) {
+            console.warn(
+              `Warn: ${vault.id} : token "${vault.token}" does not match addressbook "${abToken.symbol}"`
+            );
+          }
+        }
+      }
+    }
+  });
+
   if (!isEmpty(updates)) {
     exitCode = 1;
   }
