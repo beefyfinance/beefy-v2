@@ -8,8 +8,6 @@ import { ConnectionStatus } from './components/ConnectionStatus/ConnectionStatus
 import { LogoLink } from './components/LogoLink/LogoLink.tsx';
 import { MainMenu } from './components/MainMenu/MainMenu.tsx';
 import { MobileMenu } from './components/MobileMenu/MobileMenu.tsx';
-import { NavLinkItem } from './components/NavItem/NavLinkItem.tsx';
-import BuyCryptoIcon from '../../images/icons/navigation/buy-crypto.svg?react';
 import { BifiPricesDesktop } from './components/Prices/Prices.tsx';
 import { selectShouldInitArticles } from '../../features/data/selectors/data-loader/articles.ts';
 import { selectShouldInitProposals } from '../../features/data/selectors/data-loader/proposals.ts';
@@ -41,9 +39,6 @@ export const Header = memo(function Header() {
         <MainMenu mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
       </Side>
       <Side spacing="sm">
-        <OnRampContainer>
-          <NavLinkItem title={'Header-BuyCrypto'} url="/onramp" Icon={BuyCryptoIcon} />
-        </OnRampContainer>
         <RightSide ref={anchorEl}>
           <BifiPricesContainer>
             <BifiPricesDesktop positionRef={anchorEl} />
@@ -107,14 +102,6 @@ const RightSide = styled('div', {
     alignItems: 'center',
     alignContent: 'center',
     columnGap: '10px',
-  },
-});
-
-const OnRampContainer = styled('div', {
-  base: {
-    '@media (max-width: 1044px)': {
-      display: 'none',
-    },
   },
 });
 
