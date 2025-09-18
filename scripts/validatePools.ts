@@ -920,6 +920,8 @@ const checkPointsStructureIds = (pool: VaultConfig) => {
     // bool or
     const shouldHaveProvider = shouldHaveProviderArr.some(Boolean);
 
+    if (pointProvider.id === 'silo-points') continue;
+
     if (shouldHaveProvider && !hasProvider) {
       console.error(
         `Error: ${pool.id} : pointStructureId ${pointProvider.id} should be present in pointStructureIds`
@@ -1195,7 +1197,7 @@ const populateVaultsData = async (
           return await Promise.all([
             pool.type === 'erc4626' ?
               Promise.resolve(pool.earnContractAddress as Address)
-            : await vaultContract.read.strategy(),
+            : vaultContract.read.strategy(),
             vaultContract.read.owner().catch(e => catchRevertErrorIntoUndefined(e)),
             vaultContract.read.totalSupply(),
           ]);
@@ -1245,7 +1247,7 @@ const populateStrategyData = async (
           abi: StratAbi,
           address: pool.strategy as Address,
         });
-        return Promise.all([
+        return await Promise.all([
           stratContract.read.keeper().catch(e => catchRevertErrorIntoUndefined(e)),
           stratContract.read.beefyFeeRecipient().catch(e => catchRevertErrorIntoUndefined(e)),
           stratContract.read.beefyFeeConfig().catch(e => catchRevertErrorIntoUndefined(e)),
