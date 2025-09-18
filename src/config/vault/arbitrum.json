@@ -31,7 +31,7 @@
   },
   {
     "id": "silov2-arbitrum-usdc-valamore",
-    "name": "USDC (Valamore)",
+    "name": "USDC (Varlamore)",
     "type": "standard",
     "token": "USDC",
     "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
