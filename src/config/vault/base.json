@@ -1,5 +1,155 @@
 [
   {
+    "id": "aerodrome-cow-base-synd-weth-vault",
+    "name": "SYND-WETH",
+    "type": "standard",
+    "token": "SYND-WETH",
+    "tokenAddress": "0x0382FbaBd1d26a187EA1efCa3aEf05a09982Bf73",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x5CeD4d9F7f0AfA3461D132F105dFB2a04379BE81",
+    "earnedToken": "mooCowAerodromeSYND-WETH",
+    "earnedTokenAddress": "0x5CeD4d9F7f0AfA3461D132F105dFB2a04379BE81",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-synd-weth",
+    "status": "active",
+    "createdAt": 1758200550,
+    "platformId": "aerodrome",
+    "assets": ["SYND", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-synd-weth-rp",
+    "name": "SYND-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeSYND-WETH",
+    "tokenAddress": "0x0382FbaBd1d26a187EA1efCa3aEf05a09982Bf73",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xC9c6d748D712E49E88e392b71F61F17770Dd04ee",
+    "earnedToken": "rCowAerodromeSYND-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-synd-weth",
+    "status": "active",
+    "createdAt": 1758200549,
+    "platformId": "aerodrome",
+    "assets": ["SYND", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-synd-weth",
+    "name": "SYND-WETH",
+    "type": "cowcentrated",
+    "token": "SYND-WETH aerodrome",
+    "tokenAddress": "0x50F8F7fFBD70c6C87b1668EEe4E03F5AC057DE3F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x11dC28D01984079b7efE7763b533e6ed9E3722B9",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "earnContractAddress": "0x0382FbaBd1d26a187EA1efCa3aEf05a09982Bf73",
+    "earnedToken": "cowAerodromeSYND-WETH",
+    "earnedTokenAddress": "0x0382FbaBd1d26a187EA1efCa3aEf05a09982Bf73",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-synd-weth",
+    "status": "active",
+    "createdAt": 1758200549,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["SYND", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-synd-weth-rp",
+    "name": "SYND-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseSYND-WETH",
+    "tokenAddress": "0xE4AB6913e7330118Eae72c0D34DD2b4f8a2688Ee",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x2BF9B5537c4197253F8fb1ef37c57dc4B3DFf82e",
+    "earnedToken": "rCowUniswapBaseSYND-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-synd-weth",
+    "status": "active",
+    "createdAt": 1758200506,
+    "platformId": "uniswap",
+    "assets": ["SYND", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-synd-weth",
+    "name": "SYND-WETH",
+    "type": "cowcentrated",
+    "token": "SYND-WETH uniswap",
+    "tokenAddress": "0x27c9dCd8EAB8015eFA86040026be8Ae034782F0c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x11dC28D01984079b7efE7763b533e6ed9E3722B9",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "earnContractAddress": "0xE4AB6913e7330118Eae72c0D34DD2b4f8a2688Ee",
+    "earnedToken": "cowUniswapBaseSYND-WETH",
+    "earnedTokenAddress": "0xE4AB6913e7330118Eae72c0D34DD2b4f8a2688Ee",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-synd-weth",
+    "status": "active",
+    "createdAt": 1758200506,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["SYND", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-usdc-avail-vault",
     "name": "AVAIL-USDC",
     "type": "standard",
