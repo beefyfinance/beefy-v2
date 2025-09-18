@@ -1,7 +1,7 @@
 [
   {
     "id": "silov2-avalanche-ausd-valamore",
-    "name": "AUSD (Valamore)",
+    "name": "AUSD (Varlamore)",
     "type": "standard",
     "token": "AUSD (Valamore)",
     "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
@@ -62,7 +62,7 @@
   },
   {
     "id": "silov2-avalanche-usdt-valamore",
-    "name": "USDT (Valamore)",
+    "name": "USDT (Varlamore)",
     "type": "standard",
     "token": "USDT (Valamore)",
     "tokenAddress": "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
