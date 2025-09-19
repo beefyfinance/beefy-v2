@@ -218,7 +218,7 @@ function setGlobalRejected(
     sliceState.global[stateKey],
     errorToString(error)
   );
-  if (openModal) {
+  if (openModal && !sliceState.statusIndicator.open) {
     sliceState.statusIndicator.open = true;
   }
 }
