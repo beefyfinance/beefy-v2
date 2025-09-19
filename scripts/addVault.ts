@@ -11,7 +11,24 @@ import { loadJson, saveJson } from './common/files.ts';
 
 let vaultsFile = './src/config/vault/$chain.json';
 
-async function vaultData(chain: AppChainId, vaultAddress: Address, id: string): Promise<any> {
+async function vaultData(
+  chain: AppChainId,
+  vaultAddress: Address,
+  id: string
+): Promise<{
+  mooToken: string;
+  want: Address;
+  tokenName: string;
+  token: string;
+  tokenDecimals: number;
+  provider: string;
+  platform: string;
+  migrationIds: string[];
+  oracleId: string;
+  addLiquidityUrl: string;
+  removeLiquidityUrl: string;
+  points: string[];
+}> {
   const viemClient = getViemClient(chain);
   const abi = [...StandardVaultAbi, ...StratAbi] as const satisfies Abi;
 

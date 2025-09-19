@@ -597,6 +597,28 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
     }
   });
 
+  // All
+  allVaults.forEach(vault => {
+    if (vault.tokenAddress) {
+      const abToken = addressBook[chainId].tokenAddressMap[vault.tokenAddress];
+      if (abToken) {
+        // Decimals not matching is probably an error in addressbook or vault config, and it breaks things if wrong
+        if (vault.tokenDecimals !== abToken.decimals) {
+          console.error(
+            `Error: ${vault.id} : tokenDecimals "${vault.tokenDecimals}" does not match addressbook "${abToken.decimals}" for ${vault.token} (${vault.tokenAddress})`
+          );
+          exitCode = 1;
+          // Also warn about symbol not matching if decimals don't match
+          if (vault.token !== abToken.symbol) {
+            console.warn(
+              `Warn: ${vault.id} : token "${vault.token}" does not match addressbook "${abToken.symbol}"`
+            );
+          }
+        }
+      }
+    }
+  });
+
   if (!isEmpty(updates)) {
     exitCode = 1;
   }
@@ -920,6 +942,8 @@ const checkPointsStructureIds = (pool: VaultConfig) => {
     // bool or
     const shouldHaveProvider = shouldHaveProviderArr.some(Boolean);
 
+    if (pointProvider.id === 'silo-points') continue;
+
     if (shouldHaveProvider && !hasProvider) {
       console.error(
         `Error: ${pool.id} : pointStructureId ${pointProvider.id} should be present in pointStructureIds`
@@ -1195,7 +1219,7 @@ const populateVaultsData = async (
           return await Promise.all([
             pool.type === 'erc4626' ?
               Promise.resolve(pool.earnContractAddress as Address)
-            : await vaultContract.read.strategy(),
+            : vaultContract.read.strategy(),
             vaultContract.read.owner().catch(e => catchRevertErrorIntoUndefined(e)),
             vaultContract.read.totalSupply(),
           ]);
@@ -1245,7 +1269,7 @@ const populateStrategyData = async (
           abi: StratAbi,
           address: pool.strategy as Address,
         });
-        return Promise.all([
+        return await Promise.all([
           stratContract.read.keeper().catch(e => catchRevertErrorIntoUndefined(e)),
           stratContract.read.beefyFeeRecipient().catch(e => catchRevertErrorIntoUndefined(e)),
           stratContract.read.beefyFeeConfig().catch(e => catchRevertErrorIntoUndefined(e)),

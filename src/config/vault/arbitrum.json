@@ -1,5 +1,65 @@
 [
   {
+    "id": "silov2-arbitrum-usdc-optima",
+    "name": "USDC (Optima)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    "tokenDecimals": 6,
+    "tokenProviderId": "silo",
+    "earnedToken": "mooSiloV2ArbitrumUSDC (Optima)",
+    "earnedTokenAddress": "0xFDcBb497c3F944bc8E2cddD83e67Da21A7cC0CC3",
+    "earnContractAddress": "0xFDcBb497c3F944bc8E2cddD83e67Da21A7cC0CC3",
+    "oracle": "lps",
+    "oracleId": "silov2-arbitrum-usdc-optima",
+    "createdAt": 1758154645,
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["USDC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3"
+    }
+  },
+  {
+    "id": "silov2-arbitrum-usdc-valamore",
+    "name": "USDC (Varlamore)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    "tokenDecimals": 6,
+    "tokenProviderId": "silo",
+    "earnedToken": "mooSiloV2ArbitrumUSDC (Valamore)",
+    "earnedTokenAddress": "0x0C0846C5D8194BC327669763aC6af9b788edB409",
+    "earnContractAddress": "0x0C0846C5D8194BC327669763aC6af9b788edB409",
+    "oracle": "lps",
+    "oracleId": "silov2-arbitrum-usdc-valamore",
+    "createdAt": 1758154516,
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["USDC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3"
+    }
+  },
+  {
     "id": "pendle-arb-wsteth-25jun26",
     "name": "wstETH 25Jun26",
     "type": "standard",
