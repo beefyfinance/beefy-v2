@@ -615,6 +615,21 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
             );
           }
         }
+        // oracleId not matching is probably an error in addressbook or vault config, and it breaks things if wrong
+        if (vault.oracleId !== abToken.oracleId) {
+          const isWNative = vault.tokenAddress === addressBook[chainId].tokens.WNATIVE.address;
+          const wnativeOracleIds = [
+            addressBook[chainId].tokens.WNATIVE.oracleId,
+            addressBook[chainId].native.oracleId,
+          ];
+          // allow ETH or WETH
+          if (!isWNative || !wnativeOracleIds.includes(vault.oracleId)) {
+            console.error(
+              `Error: ${vault.id} : oracleId "${vault.oracleId}" does not match addressbook "${abToken.oracleId}" for ${vault.token} (${vault.tokenAddress})`
+            );
+            exitCode = 1;
+          }
+        }
       }
     }
   });
