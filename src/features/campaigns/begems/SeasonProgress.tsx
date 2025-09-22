@@ -47,5 +47,6 @@ const Layout = styled('div', {
     height: '2px',
     width: '100%',
     zIndex: '[1]',
+    pointerEvents: 'none',
   },
 });

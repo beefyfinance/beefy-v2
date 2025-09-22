@@ -2,7 +2,7 @@ import type { GlpLikeConfig, UnlockTimeResult } from './types.ts';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import BigNumber from 'bignumber.js';
 import { fetchContract } from '../../../../../data/apis/rpc-contract/viem-contract.ts';
-import type { Abi, Address } from 'abitype';
+import type { Abi, Address } from 'viem';
 import { readContract } from 'viem/actions';
 import { rpcClientManager } from '../../../../../data/apis/rpc-contract/rpc-manager.ts';
 
@@ -70,7 +70,7 @@ export async function getUnlockTime(
 
   const managerContract = fetchContract(manager, managerAbi, chain.id);
   const [lastAddedAtResult, cooldownDurationResult] = await Promise.all([
-    userAddress ? managerContract.read.lastAddedAt([userAddress as Address]) : 0n,
+    userAddress ? managerContract.read.lastAddedAt([userAddress as Address]) : Promise.resolve(0n),
     managerContract.read.cooldownDuration(),
   ]);
 

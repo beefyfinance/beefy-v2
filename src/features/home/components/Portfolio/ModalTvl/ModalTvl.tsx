@@ -18,21 +18,46 @@ export const ModalTvl = memo<ModalTvlProps>(function ModalTvl({ close }: ModalTv
   const { t } = useTranslation();
 
   return (
-    <Card width="lg">
-      <CardHeader>
+    <StyledCard width="lg">
+      <StyledCardHeader>
         <CardTitle>{t('TVL-bychain')}</CardTitle>
         <CardIconButton onClick={close}>
           <CloseIcon />
         </CardIconButton>
-      </CardHeader>
+      </StyledCardHeader>
       <StyledCardContent>
         <Chains />
         <Button onClick={close} fullWidth={true}>
           {t('Close')}
         </Button>
       </StyledCardContent>
-    </Card>
+    </StyledCard>
   );
+});
+
+const StyledCardHeader = styled(CardHeader, {
+  base: {
+    borderTopRadius: '0',
+    sm: {
+      borderTopRadius: '12px',
+    },
+  },
+});
+
+const StyledCard = styled(Card, {
+  base: {
+    height: '100dvh',
+    position: 'fixed',
+    borderRadius: '0',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    sm: {
+      position: 'static',
+      height: 'auto',
+      borderRadius: '12px',
+    },
+  },
 });
 
 const StyledCardContent = styled(CardContent, {

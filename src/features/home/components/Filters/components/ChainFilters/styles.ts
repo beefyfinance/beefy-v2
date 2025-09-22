@@ -58,10 +58,10 @@ export const styles = {
       borderStyle: 'solid',
       borderWidth: '2px', // =Buttons borderWidth
       borderRadius: 'inherit',
-      top: '-1px', // -Buttons borderWidth
+      top: '-2px', // -Buttons borderWidth
       left: '-1px',
       right: '-1px',
-      bottom: '-1px',
+      bottom: '-2px',
       zIndex: '[1]',
     },
   }),

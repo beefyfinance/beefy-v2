@@ -1,5 +1,17 @@
 [
   {
+    "id": "avax-blackhole",
+    "name": "Blackhole",
+    "type": "solidly",
+    "routerAddress": "0xCaD684775d7879E63f5d319dAcC8086EeCC01B01",
+    "factoryAddress": "0xfE926062Fb99CA5653080d6C14fE945Ad68c265C",
+    "pairInitHash": "0x87b2d661db12ce27ece6305198fcb950a2522c8e43e3b90e93256b71a6db5899 ",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "2",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
+  },
+  {
     "id": "avax-solisnek",
     "name": "SoliSnek",
     "type": "solidly",

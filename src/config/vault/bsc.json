@@ -1,5 +1,64 @@
 [
   {
+    "id": "pancake-cow-bsc-usdt-rion-rp",
+    "name": "RION-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBSCRION-USDT",
+    "tokenAddress": "0x8eF114e9aF40eFD9df381907fA7094fB31285f92",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xc5714c1fCd56922EA0E17Bd8392D6954b00045a9",
+    "earnedToken": "rCowPancakeBSCRION-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdt-rion",
+    "status": "active",
+    "createdAt": 1752756948,
+    "platformId": "pancakeswap",
+    "assets": ["RION", "USDT"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-usdt-rion",
+    "name": "RION-USDT",
+    "type": "cowcentrated",
+    "token": "RION-USDT pancakeswap",
+    "tokenAddress": "0xab0e5d8bA68a6BC6f78668394FdE09B3d8371A1A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x55d398326f99059fF775485246999027B3197955",
+      "0xC0c240C870606a5Cb3150795E2D0dffF9f1F7456"
+    ],
+    "earnContractAddress": "0x8eF114e9aF40eFD9df381907fA7094fB31285f92",
+    "earnedToken": "cowPancakeBSCRION-USDT",
+    "earnedTokenAddress": "0x8eF114e9aF40eFD9df381907fA7094fB31285f92",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdt-rion",
+    "status": "active",
+    "createdAt": 1752756948,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["RION", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-bsc-b-wbnb-rp",
     "name": "B-WBNB Reward Pool",
     "type": "gov",
@@ -668,7 +727,9 @@
     "earnedTokenAddress": "0x3776b18836FAE9Ee4f7A204298E2B60045bD8467",
     "oracle": "lps",
     "oracleId": "thena-btcb-mbtc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1752239317,
+    "retireReason": "rewards",
     "createdAt": 1733822307,
     "platformId": "thena",
     "assets": ["mBTC", "BTCB"],
@@ -728,7 +789,9 @@
     "earnedTokenAddress": "0x3A199F4719a96644286CA020c1AE8AB5F67930df",
     "oracle": "lps",
     "oracleId": "thena-qthe-the",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1752239317,
+    "retireReason": "rewards",
     "createdAt": 1733387499,
     "platformId": "thena",
     "assets": ["qTHE", "THE"],
@@ -788,7 +851,9 @@
     "earnedTokenAddress": "0x23BD4615598C854D13384ec59d8eE40AfA2eaD52",
     "oracle": "lps",
     "oracleId": "thena-usdt-tarot",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1752239317,
+    "retireReason": "rewards",
     "createdAt": 1733136461,
     "platformId": "thena",
     "assets": ["TAROT", "USDT"],
@@ -797,35 +862,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://thena.fi/pools/0x2C4166641d5293551190c9F01aC50d0b6abd7086",
     "removeLiquidityUrl": "https://thena.fi/pools/0x2C4166641d5293551190c9F01aC50d0b6abd7086",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "bsc-thena"
-      }
-    ]
-  },
-  {
-    "id": "thena-usdt-the",
-    "name": "THE-USDT vLP",
-    "token": "vAMM-USDT/THE",
-    "tokenAddress": "0xA051eF9A6FBea340Bb734d022e7B6a3aD9fD9B06",
-    "tokenDecimals": 18,
-    "tokenProviderId": "thena",
-    "earnContractAddress": "0x1725B090Cb494946276654009C53E033669C596f",
-    "earnedToken": "mooThena-USDT-THE",
-    "earnedTokenAddress": "0x1725B090Cb494946276654009C53E033669C596f",
-    "oracle": "lps",
-    "oracleId": "thena-usdt-the",
-    "status": "active",
-    "createdAt": 1733135686,
-    "platformId": "thena",
-    "assets": ["THE", "USDT"],
-    "migrationIds": [],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://thena.fi/pools/0xA051eF9A6FBea340Bb734d022e7B6a3aD9fD9B06",
-    "removeLiquidityUrl": "https://thena.fi/pools/0xA051eF9A6FBea340Bb734d022e7B6a3aD9fD9B06",
     "network": "bsc",
     "zaps": [
       {
@@ -846,7 +882,9 @@
     "earnedTokenAddress": "0x6A57cB0177eED64986093c6C5f43922d34dC03C2",
     "oracle": "lps",
     "oracleId": "thena-wbnb-the",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1752239317,
+    "retireReason": "rewards",
     "createdAt": 1732882676,
     "platformId": "thena",
     "assets": ["THE", "BNB"],
@@ -3087,8 +3125,10 @@
     "earnedTokenAddress": "0xdA4a807f365f8B09251e7ecfba773Bfe3d93E0D9",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-eth-pxeth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1723051091,
+    "retiredAt": 1744298354,
+    "retireReason": "tvl",
     "platformId": "pancakeswap",
     "assets": ["pxETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -3118,8 +3158,10 @@
     "earnedOracleIds": ["Cake"],
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-eth-pxeth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1723051090,
+    "retiredAt": 1744298354,
+    "retireReason": "tvl",
     "platformId": "pancakeswap",
     "assets": ["pxETH", "ETH"],
     "risks": ["IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
@@ -6102,38 +6144,6 @@
     "buyTokenUrl": "https://thena.fi/swap",
     "addLiquidityUrl": "https://thena.fi/pools/0x483653bcF3a10d9a1c334CE16a19471a614F4385",
     "removeLiquidityUrl": "https://thena.fi/pools/0x483653bcF3a10d9a1c334CE16a19471a614F4385",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "bsc-thena"
-      }
-    ]
-  },
-  {
-    "id": "thena-btcb-wbnb",
-    "name": "BTCB-BNB vLP",
-    "type": "standard",
-    "token": "BTCB-BNB vLP",
-    "tokenAddress": "0xD328D129E46f9B978416599913102e8CD64593F3",
-    "tokenDecimals": 18,
-    "tokenProviderId": "thena",
-    "earnedToken": "mooThenaBTCB-BNB",
-    "earnedTokenAddress": "0x17b2230E40E4D886A98cFC7f02495810Ae3A691A",
-    "earnContractAddress": "0x17b2230E40E4D886A98cFC7f02495810Ae3A691A",
-    "oracle": "lps",
-    "oracleId": "thena-btcb-wbnb",
-    "status": "eol",
-    "createdAt": 1673571556,
-    "retireReason": "rewards",
-    "retiredAt": 1682019887,
-    "platformId": "thena",
-    "assets": ["BTCB", "BNB"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
     "network": "bsc",
     "zaps": [
       {
@@ -11882,37 +11892,6 @@
     "addLiquidityUrl": "https://dopple.finance/Deposit/dolly-lps",
     "removeLiquidityUrl": "https://dopple.finance/Deposit/dolly-lps",
     "network": "bsc"
-  },
-  {
-    "id": "cakev2-xend-bnb-eol",
-    "name": "XEND-BNB LP",
-    "type": "standard",
-    "token": "XEND-BNB LP2",
-    "tokenAddress": "0xcECfC2789af72ed151589a96a59f3A1ABC65c3b5",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pancakeswap",
-    "earnedToken": "mooCakeV2XEND-BNB",
-    "earnedTokenAddress": "0x6F3ED82fbE292055D509D0200f02d8F9fE62E5D3",
-    "earnContractAddress": "0x6F3ED82fbE292055D509D0200f02d8F9fE62E5D3",
-    "oracle": "lps",
-    "oracleId": "cakev2-xend-bnb",
-    "status": "eol",
-    "createdAt": 1621868570,
-    "retireReason": "rewards",
-    "retiredAt": 1630461640,
-    "platformId": "pancakeswap",
-    "assets": ["XEND", "BNB"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://pancakeswap.finance/swap?inputCurrency=0x4a080377f83D669D7bB83B3184a8A5E61B500608&outputCurrency=BNB",
-    "addLiquidityUrl": "https://pancakeswap.finance/v2/add/0x4a080377f83D669D7bB83B3184a8A5E61B500608/BNB",
-    "removeLiquidityUrl": "https://pancakeswap.finance/v2/remove/0x4a080377f83D669D7bB83B3184a8A5E61B500608/BNB",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "bsc-pancakeswap-v2"
-      }
-    ]
   },
   {
     "id": "cakev2-cyc-bnb-eol",
@@ -27300,7 +27279,9 @@
     "earnContractAddress": "0x56ec6031dC969CfA035F6D65e65D8595d5660fB4",
     "oracle": "lps",
     "oracleId": "ellipsis-bnb-bnbx-crypto",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1754691689,
+    "retireReason": "rewards",
     "createdAt": 1663829572,
     "platformId": "dotdot",
     "assets": ["BNBx", "BNB"],

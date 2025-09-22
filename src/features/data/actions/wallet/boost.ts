@@ -1,4 +1,4 @@
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import BigNumber from 'bignumber.js';
 import type { TFunction } from 'react-i18next';
 import { BoostAbi } from '../../../../config/abi/BoostAbi.ts';

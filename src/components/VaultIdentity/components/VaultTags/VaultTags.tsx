@@ -36,12 +36,12 @@ import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useIsOverflowingHorizontally } from '../../../../helpers/overflow.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import BoostIcon from '../../../../images/icons/boost.svg?react';
-import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
+import LineaIgnitionIcon from '../../../../images/icons/linea-ignition.svg?react';
 import { useMediaQuery } from '../../../MediaQueries/useMediaQuery.ts';
 import { BasicTooltipContent } from '../../../Tooltip/BasicTooltipContent.tsx';
 import { VaultPlatform } from '../../../VaultPlatform/VaultPlatform.tsx';
 import { styles } from './styles.ts';
-import { VaultTag, VaultTagWithTooltip } from './VaultTag.tsx';
+import { VaultTag, VaultTagWithTooltip, type VaultTagWithTooltipProps } from './VaultTag.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -303,17 +303,48 @@ export const VaultClmLikeTag = memo(function VaultClmLikeTag({
   return null;
 });
 
-const PointsTag = memo(function PointsTag() {
+const PointsTag = memo(function PointsTag({ vault }: { vault: VaultEntity }) {
+  if (vault.pointStructureIds.includes('linea-ignition')) {
+    return <PointsTagLineaIgnition />;
+  }
+
+  return <PointsTagBase />;
+});
+
+type PointsTagDefaultProps = Partial<
+  Omit<VaultTagWithTooltipProps, 'placement' | 'disabled' | 'ref'>
+>;
+
+const PointsTagBase = memo(function PointsTagDefault({
+  tooltip,
+  css: cssProp,
+  text,
+  ...rest
+}: PointsTagDefaultProps) {
   const { t } = useTranslation();
   const { isOverflowing, ref } = useIsOverflowingHorizontally<HTMLDivElement>();
   return (
     <VaultTagWithTooltip
-      tooltip={<BasicTooltipContent title={t('VaultTag-Points')} />}
       placement="bottom"
-      disabled={!isOverflowing}
-      css={styles.vaultTagPoints}
       ref={ref}
-      text={t('VaultTag-Points')}
+      disabled={!isOverflowing}
+      text={text ?? t('VaultTag-Points')}
+      tooltip={tooltip ?? <BasicTooltipContent title={t('VaultTag-Points')} />}
+      css={cssProp ?? styles.vaultTagPoints}
+      {...rest}
+    />
+  );
+});
+
+const PointsTagLineaIgnition = memo(function PointsTagLineaIgnition() {
+  const { t } = useTranslation();
+  return (
+    <VaultTagWithTooltip
+      order="text-icon"
+      text={t('VaultTag-LineaIgnition')}
+      tooltip={<BasicTooltipContent title={t('VaultTag-LineaIgnition-Tooltip')} />}
+      css={styles.vaultTagPoints}
+      icon={<LineaIgnitionIcon style={{ width: '12px', height: '12px' }} />}
     />
   );
 });
@@ -325,7 +356,6 @@ export const VaultTags = memo(function VaultTags({ vaultId }: VaultTagsProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const promo = useAppSelector(state => selectActivePromoForVault(state, vaultId));
-  const isMobile = useBreakpoint({ to: 'xs' });
   const isGov = isGovVault(vault);
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
   const isSmallDevice = useMediaQuery('(max-width: 450px)', false);
@@ -338,14 +368,7 @@ export const VaultTags = memo(function VaultTags({ vaultId }: VaultTagsProps) {
   return (
     <div className={css(styles.vaultTags)}>
       <VaultPlatformTag vaultId={vaultId} />
-      {isCowcentratedLike && (
-        <VaultClmLikeTag
-          vault={vault}
-          hideFee={isMobile || !isVaultActive(vault)}
-          hideLabel={isMobile}
-          onlyIcon={onlyShowIcon}
-        />
-      )}
+      {isCowcentratedLike && <VaultClmLikeTag vault={vault} hideFee={!isVaultActive(vault)} />}
       {isVaultRetired(vault) ?
         <VaultTag css={styles.vaultTagRetired} text={t('VaultTag-Retired')} />
       : isVaultPaused(vault) ?
@@ -355,7 +378,7 @@ export const VaultTags = memo(function VaultTags({ vaultId }: VaultTagsProps) {
       : isGov && !isCowcentratedLike ?
         <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO support multiple earned tokens [empty = ok, not used when clm-like]
       : null}
-      {isVaultEarningPoints(vault) && <PointsTag />}
+      {isVaultEarningPoints(vault) && <PointsTag vault={vault} />}
     </div>
   );
 });

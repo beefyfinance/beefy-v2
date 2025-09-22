@@ -1,14 +1,15 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../data/store/hooks.ts';
 import { initCampaignBeGems } from '../../data/actions/campaigns/begems.ts';
-import {
-  selectHasBeGemsCampaignDispatchedRecently,
-  selectIsBeGemsCampaignAvailable,
-} from '../../data/selectors/campaigns/begems.ts';
+import { selectBeGemsDefaultSeason } from '../../data/selectors/campaigns/begems.ts';
 import { Loading } from '../../home/components/Loading/Loading.tsx';
 import { FrequentlyAskedQuestions } from './FrequentlyAskedQuestions.tsx';
 import { Seasons } from './Seasons.tsx';
+import {
+  selectHasBeGemsCampaignDispatchedRecently,
+  selectIsBeGemsCampaignAvailable,
+} from '../../data/selectors/data-loader/begems.ts';
 
 const BeGemsPageLoader = memo(() => {
   const dispatch = useAppDispatch();
@@ -25,10 +26,13 @@ const BeGemsPageLoader = memo(() => {
 });
 
 const BeGemsPage = memo(() => {
+  const defaultSeason = useAppSelector(selectBeGemsDefaultSeason);
+  const [season, setSeason] = useState(defaultSeason);
+
   return (
     <Layout>
-      <Seasons />
-      <FrequentlyAskedQuestions />
+      <Seasons season={season} setSeason={setSeason} />
+      <FrequentlyAskedQuestions season={season} />
     </Layout>
   );
 });
@@ -38,11 +42,16 @@ const Layout = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    gap: '40px',
+    maxWidth: '100%',
+    overflowX: 'hidden',
+    gap: '32px',
     paddingBlock: '24px 104px',
-    md: {
-      paddingBlock: '150px',
-      gap: '64px',
+    sm: {
+      paddingBlock: '32px 64px',
+      gap: '136px',
+    },
+    lg: {
+      paddingBlock: '152px 184px',
     },
   },
 });

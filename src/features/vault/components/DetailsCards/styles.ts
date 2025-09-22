@@ -34,7 +34,7 @@ export const AssetIconSymbol = styled('div', {
 
 export const AssetSymbol = styled('div', {
   base: {
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     flexGrow: '1',
   },
 });

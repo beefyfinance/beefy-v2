@@ -4,16 +4,11 @@ import { BIG_ZERO, compareBigNumber, isFiniteBigNumber } from '../../../helpers/
 import { entries, keys } from '../../../helpers/object.ts';
 import { explorerAddressUrl } from '../../../helpers/url.ts';
 import type { ChainEntity, ChainId } from '../entities/chain.ts';
-import type { TokenHoldingEntity, TreasuryHoldingEntity } from '../entities/treasury.ts';
+import type { TreasuryHoldingEntity } from '../entities/treasury.ts';
 import { isTokenHoldingEntity, isVaultHoldingEntity } from '../entities/treasury.ts';
 import type { BeefyState } from '../store/types.ts';
 import { selectLpBreakdownBalance } from './balance.ts';
 import { selectChainById } from './chains.ts';
-import {
-  createGlobalDataSelector,
-  hasLoaderFulfilledOnce,
-  shouldLoaderLoadOnce,
-} from './data-loader-helpers.ts';
 import { selectIsVaultStable } from './filtered-vaults.ts';
 import {
   selectHasBreakdownDataByOracleId,
@@ -23,10 +18,6 @@ import {
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens.ts';
 import { selectVaultPricePerFullShare } from './vaults.ts';
-
-export const selectIsTreasuryLoaded = createGlobalDataSelector('treasury', hasLoaderFulfilledOnce);
-
-export const selectShouldInitTreasury = createGlobalDataSelector('treasury', shouldLoaderLoadOnce);
 
 export const selectTreasury = (state: BeefyState) => {
   return state.ui.treasury.byChainId;
@@ -219,22 +210,21 @@ export const selectTreasuryStats = (state: BeefyState) => {
                   holdingAssets.add(symbol);
                 }
               }
-            }
+            } else {
+              if (isVaultHoldingEntity(token)) {
+                if (token.usdValue.gt(10)) {
+                  const { vaultId } = token;
 
-            if (isVaultHoldingEntity(token)) {
-              if (token.usdValue.gt(10)) {
-                const { vaultId } = token;
+                  const vaultTokenSymbols = selectVaultTokenSymbols(state, vaultId);
 
-                const vaultTokenSymbols = selectVaultTokenSymbols(state, vaultId);
-
-                for (const tokenSymbol of vaultTokenSymbols) {
-                  const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, tokenSymbol);
-                  holdingAssets.add(symbol);
+                  for (const tokenSymbol of vaultTokenSymbols) {
+                    const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, tokenSymbol);
+                    holdingAssets.add(symbol);
+                  }
                 }
-              }
-
-              if (selectIsVaultStable(state, token.vaultId)) {
-                stables = stables.plus(token.usdValue);
+                if (selectIsVaultStable(state, token.vaultId)) {
+                  stables = stables.plus(token.usdValue);
+                }
               }
             }
           }
@@ -494,14 +484,12 @@ export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
 
     return Object.values(treasury).map(wallet => {
       if (wallet.name.includes('validator')) {
+        // since pectra upgrade on ethereum we can have up to 2048 eth in a single validator
         if (chain.id === 'ethereum') {
-          const allValidatorsIds = Object.values(wallet.balances)
-            .filter((v): v is TokenHoldingEntity => v.assetType === 'validator' && !!v.numberId)
-            .map(validator => validator.numberId);
           return {
             address: wallet.address,
-            name: 'validators',
-            url: 'https://beaconcha.in/dashboard?validators=' + allValidatorsIds.join(','),
+            name: 'beefy-validator',
+            url: 'https://beaconcha.in/validator/402418',
           };
         }
         return {

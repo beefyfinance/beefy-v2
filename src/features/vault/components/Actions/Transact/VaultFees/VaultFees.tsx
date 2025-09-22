@@ -5,7 +5,7 @@ import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.t
 import { formatLargePercent } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
-import { selectAreFeesLoaded, selectFeesByVaultId } from '../../../../../data/selectors/fees.ts';
+import { selectFeesByVaultId } from '../../../../../data/selectors/fees.ts';
 import { selectTransactVaultId } from '../../../../../data/selectors/transact.ts';
 import { Label } from './Label.tsx';
 import { LabelCustomTooltip, LabelTooltip } from './LabelTooltip.tsx';
@@ -13,6 +13,7 @@ import { PerformanceFees } from './PerformanceFees.tsx';
 import { styles } from './styles.ts';
 import { Value } from './Value.tsx';
 import { MaybeZapFees } from './ZapFees.tsx';
+import { selectAreFeesLoaded } from '../../../../../data/selectors/data-loader/fees.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

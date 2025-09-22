@@ -1,6 +1,6 @@
 import { sample } from 'lodash-es';
 import { ChainId } from 'blockchain-addressbook';
-import { chains, config } from '../../src/config/config.ts';
+import { config } from '../../src/config/config.ts';
 import type {
   AmmConfig,
   ChainConfig,
@@ -10,16 +10,18 @@ import type {
 import type { PromoConfig } from '../../src/features/data/apis/promos/types.ts';
 
 /** Harmony->One to match addressbook */
-const chainConfigs = chains.reduce(
-  (acc, id) => {
-    acc[appToAddressBookId(id)] = {
-      id,
-      ...config[id],
-    };
-    return acc;
-  },
-  {} as Record<AddressBookChainId, ChainConfig>
-);
+const chainConfigs = Object.entries(config)
+  .filter(([_, chainConfig]) => !('disabled' in chainConfig) || !chainConfig.disabled)
+  .reduce(
+    (acc, [id, chainConfig]) => {
+      acc[appToAddressBookId(id)] = {
+        id: id as ChainConfig['id'],
+        ...chainConfig,
+      };
+      return acc;
+    },
+    {} as Record<AddressBookChainId, ChainConfig>
+  );
 
 export type AddressBookChainId = keyof typeof ChainId;
 export type AppChainId = keyof typeof config;
@@ -84,6 +86,22 @@ export const excludeChains: ChainMap<{ count: number; hash: string }> = {
   cronos: {
     count: 49,
     hash: 'ab8d548370e2613888ce97a8fa50211f169851a04d32a927f33c773bfa2ca0de',
+  },
+  fantom: {
+    count: 335,
+    hash: 'b279b76f4af675fb863ee6ed0ce3717403994c7759022262700d5570ee212f28',
+  },
+  scroll: {
+    count: 35,
+    hash: 'f493066ad95ca04e5f53f3b97bb6fdeec7190148c4fd8e6db05f019c89fa1a9f',
+  },
+  mode: {
+    count: 27,
+    hash: '2134d0db2850cb4d25ed3aa79c34461696bd278db4e4ab1b9bb470ee94bf7868',
+  },
+  moonbeam: {
+    count: 89,
+    hash: 'b6d134311bd02b9e832a1de816fe0d785b55226ce710fd9a85e68d10cea82a43',
   },
 };
 

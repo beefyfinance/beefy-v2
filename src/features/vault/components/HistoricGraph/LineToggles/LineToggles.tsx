@@ -4,6 +4,7 @@ import type { LabelledCheckboxProps } from '../../../../../components/LabelledCh
 import { LabelledCheckbox } from '../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
 import { css, type CssStyles } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
+import { token } from '@repo/styles/tokens';
 
 export type LineTogglesState = {
   average: boolean;
@@ -34,7 +35,7 @@ export const LineToggles = memo(function LineToggles({
       <div>
         <LineToggle
           checked={toggles.average}
-          color="#4DB258"
+          color={token('colors.graph.line.average')}
           label={t('Average')}
           onChange={handleChange}
           toggle={'average'}
@@ -43,7 +44,7 @@ export const LineToggles = memo(function LineToggles({
       <div>
         <LineToggle
           checked={toggles.movingAverage}
-          color="#5C70D6"
+          color={token('colors.graph.line.movingAverage')}
           label={t('Moving-Average')}
           onChange={handleChange}
           toggle={'movingAverage'}

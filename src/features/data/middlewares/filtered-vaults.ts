@@ -24,7 +24,7 @@ import {
   userDidConnect,
   walletHasDisconnected,
 } from '../reducers/wallet/wallet.ts';
-import { selectIsConfigAvailable } from '../selectors/config.ts';
+import { selectIsConfigAvailable } from '../selectors/data-loader/config.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
 import { startAppListening } from './listener-middleware.ts';
 

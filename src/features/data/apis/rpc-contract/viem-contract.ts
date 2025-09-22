@@ -1,4 +1,4 @@
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import type { ChainId } from '../../entities/chain.ts';
 import { rpcClientManager } from './rpc-manager.ts';
 import { type Abi, getContract, type PublicClient, type WalletClient } from 'viem';

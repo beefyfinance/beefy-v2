@@ -72,8 +72,8 @@ export const buttonRecipe = cva({
       filter: {
         colorPalette: 'buttons.filter',
       },
-      success: {
-        colorPalette: 'buttons.success',
+      cta: {
+        colorPalette: 'buttons.cta',
       },
       boost: {
         colorPalette: 'buttons.boost',
@@ -83,6 +83,9 @@ export const buttonRecipe = cva({
       },
       dark: {
         colorPalette: 'buttons.dark',
+      },
+      transparent: {
+        colorPalette: 'buttons.transparent',
       },
     },
   },
@@ -113,6 +116,14 @@ export const buttonRecipe = cva({
       borderless: false,
       css: {
         padding: '8px 12px',
+      },
+    },
+    {
+      variant: 'cta',
+      css: {
+        _disabled: {
+          opacity: '1',
+        },
       },
     },
   ],

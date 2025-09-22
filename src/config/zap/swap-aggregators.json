@@ -540,7 +540,7 @@
     },
     "priorityTokens": ["WETH", "USDC", "USDT", "WBTC"],
     "blockedTokens": [],
-    "blockedVaults": [""]
+    "blockedVaults": []
   },
   {
     "id": "odos-sonic",
@@ -551,7 +551,7 @@
     },
     "priorityTokens": ["S", "WS", "USDCe", "WETH"],
     "blockedTokens": [],
-    "blockedVaults": [""]
+    "blockedVaults": []
   },
   {
     "id": "one-inch-sonic",
@@ -562,6 +562,28 @@
     },
     "priorityTokens": ["S", "WS", "USDCe", "WETH"],
     "blockedTokens": [],
-    "blockedVaults": [""]
+    "blockedVaults": []
+  },
+  {
+    "id": "liquid-swap-hyperevm",
+    "type": "liquid-swap",
+    "chainId": "hyperevm",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": ["HYPE", "WHYPE", "feUSD", "USDT0", "LIQD"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "kyber-hyperevm",
+    "type": "kyber",
+    "chainId": "hyperevm",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": ["HYPE", "WHYPE", "feUSD", "USDT0", "LIQD"],
+    "blockedTokens": [],
+    "blockedVaults": []
   }
 ]

@@ -1,22 +1,42 @@
 import { cva } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
+import { ExternalLink } from '../../../Links/ExternalLink.tsx';
 
 const actionRecipe = cva({
   base: {
+    textStyle: 'body.md.medium',
+    letterSpacing: '0',
     display: 'flex',
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
-    padding: '4px',
     borderRadius: '4px',
     border: `none`,
-    color: 'text.light',
+    color: 'text.dark',
     textDecoration: 'none',
-    backgroundColor: 'background.border',
+    backgroundColor: 'background.content.dark',
     boxShadow: 'none',
     outline: 'none',
     cursor: 'pointer',
-    width: '32px',
     height: '32px',
+    width: '30px',
+    _hover: {
+      color: 'text.light',
+      backgroundColor: 'background.content',
+    },
+  },
+  variants: {
+    link: {
+      true: {
+        color: 'text.black',
+        width: 'auto',
+        backgroundColor: 'green.40',
+        padding: '3px 12px',
+        _hover: {
+          color: 'text.black',
+          backgroundColor: 'green.20',
+        },
+      },
+    },
   },
 });
 
@@ -26,9 +46,4 @@ export const ActionButton = styled('button', actionRecipe, {
   },
 });
 
-export const ActionLink = styled('a', actionRecipe, {
-  defaultProps: {
-    target: '_blank',
-    rel: 'noopener',
-  },
-});
+export const ActionLink = styled(ExternalLink, actionRecipe);

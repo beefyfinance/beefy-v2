@@ -23,6 +23,7 @@ export const styles = {
     whiteSpace: 'nowrap',
     display: 'flex',
     flexShrink: '0',
+    height: '24px',
     '&:not(:first-child)': {
       flexShrink: '1',
       minWidth: '0',

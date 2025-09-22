@@ -38,12 +38,7 @@ import { fetchTreasury } from '../actions/treasury.ts';
 import { fetchUserMerklRewardsAction } from '../actions/user-rewards/merkl-user-rewards.ts';
 import { fetchUserStellaSwapRewardsAction } from '../actions/user-rewards/stellaswap-user-rewards.ts';
 import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults.ts';
-import {
-  askForNetworkChange,
-  askForWalletConnection,
-  doDisconnectWallet,
-  initWallet,
-} from '../actions/wallet.ts';
+import { initWallet } from '../actions/wallet.ts';
 import {
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
@@ -510,10 +505,10 @@ export const dataLoaderSlice = createSlice({
   },
   extraReducers: builder => {
     addGlobalAsyncThunkActions(builder, fetchChainConfigs, 'chainConfig', true);
-    addGlobalAsyncThunkActions(builder, askForWalletConnection, 'wallet', false);
+    // addGlobalAsyncThunkActions(builder, askForWalletConnection, 'wallet', false);
     addGlobalAsyncThunkActions(builder, initWallet, 'wallet', false);
-    addGlobalAsyncThunkActions(builder, doDisconnectWallet, 'wallet', false);
-    addGlobalAsyncThunkActions(builder, askForNetworkChange, 'wallet', false);
+    // addGlobalAsyncThunkActions(builder, doDisconnectWallet, 'wallet', false);
+    // addGlobalAsyncThunkActions(builder, askForNetworkChange, 'wallet', false);
     addGlobalAsyncThunkActions(builder, fetchAllPricesAction, 'prices', true);
     addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy', true);
     addGlobalAsyncThunkActions(builder, fetchAvgApyAction, 'avgApy', true);

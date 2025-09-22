@@ -1,4 +1,6 @@
-import { styled } from '@repo/styles/jsx';
+import { type HTMLStyledProps, styled } from '@repo/styles/jsx';
+
+export type ContainerProps = HTMLStyledProps<typeof Container>;
 
 export const Container = styled('div', {
   base: {
@@ -27,7 +29,7 @@ export const Container = styled('div', {
     },
     noPadding: {
       true: {
-        padding: 0,
+        paddingInline: 0,
       },
     },
   },

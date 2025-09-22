@@ -8,7 +8,7 @@ import { selectSupportedSwapTokensForChainAggregatorHavingPrice } from '../../..
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
 import { selectSwapAggregatorForChainType, selectZapByChainId } from '../../../../selectors/zap.ts';
 import type { BeefyState } from '../../../../store/types.ts';
-import type { OdosSwapSwapConfig } from '../../../config-types.ts';
+import type { OdosSwapConfig } from '../../../config-types.ts';
 import { getOdosApi } from '../../../instances.ts';
 import { slipBy } from '../../helpers/amounts.ts';
 import type {
@@ -31,8 +31,8 @@ export class OdosSwapProvider implements ISwapProvider {
   protected getConfigForChain(
     chainId: ChainEntity['id'],
     state: BeefyState
-  ): OdosSwapSwapConfig | undefined {
-    return selectSwapAggregatorForChainType<OdosSwapSwapConfig['type']>(state, chainId, 'odos');
+  ): OdosSwapConfig | undefined {
+    return selectSwapAggregatorForChainType<OdosSwapConfig['type']>(state, chainId, 'odos');
   }
 
   async fetchQuote(request: QuoteRequest, state: BeefyState): Promise<QuoteResponse> {

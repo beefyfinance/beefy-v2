@@ -1,4 +1,4 @@
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import BigNumber from 'bignumber.js';
 import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi.ts';
 import { toWei } from '../../../../../helpers/big-number.ts';

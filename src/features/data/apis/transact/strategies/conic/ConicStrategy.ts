@@ -1,4 +1,4 @@
-import type { Abi, Address } from 'abitype';
+import type { Abi, Address } from 'viem';
 import { first, uniqBy } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';
 import { encodeFunctionData, getAbiItem } from 'viem';

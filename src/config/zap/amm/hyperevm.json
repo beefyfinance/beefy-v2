@@ -1,0 +1,14 @@
+[
+  {
+    "id": "hyperevm-kittenswap",
+    "name": "Kittenswap",
+    "type": "solidly",
+    "routerAddress": "0xD6EeFfbDAF6503Ad6539CF8f337D79BEbbd40802",
+    "factoryAddress": "not-used",
+    "pairInitHash": "not-used",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "2",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
+  }
+]

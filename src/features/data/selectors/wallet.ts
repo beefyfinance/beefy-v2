@@ -1,7 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../store/types.ts';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags.ts';
-import { createGlobalDataSelector, isLoaderPending } from './data-loader-helpers.ts';
 
 export const selectWalletAddress = createSelector(
   (state: BeefyState) => state.user.wallet.address,
@@ -29,4 +28,4 @@ export const selectWalletAddressIfKnown = selectWalletAddress;
 
 export const selectCurrentChainId = (state: BeefyState) => state.user.wallet.selectedChainId;
 export const selectIsBalanceHidden = (state: BeefyState) => state.user.wallet.hideBalance;
-export const selectIsWalletPending = createGlobalDataSelector('wallet', isLoaderPending);
+export const selectIsInMiniApp = (state: BeefyState) => state.user.wallet.isInMiniApp;

@@ -8,17 +8,22 @@ export const NavItemInner = memo<NavItemInnerProps>(function NavItemInner({
   Icon,
   Badge,
   Arrow,
+  externalLink,
 }) {
   const { t } = useTranslation();
   return (
     <>
-      <Icon />
-      <Title>
-        {t(title)}
-        {Badge ?
-          <Badge />
-        : null}
-      </Title>
+      <IconTitleContainer>
+        <IconWrapper>
+          <Icon />
+        </IconWrapper>
+        <Title>
+          {`${t(title)}${externalLink ? ' ↗' : ''}`}
+          {Badge ?
+            <Badge />
+          : null}
+        </Title>
+      </IconTitleContainer>
       {Arrow ?
         <Arrow />
       : null}
@@ -26,8 +31,31 @@ export const NavItemInner = memo<NavItemInnerProps>(function NavItemInner({
   );
 });
 
+const IconTitleContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    paddingBlock: '2px',
+    sm: {
+      gap: '4px',
+    },
+  },
+});
+
+const IconWrapper = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '20px',
+    height: '20px',
+  },
+});
+
 const Title = styled('div', {
   base: {
+    textStyle: 'body.medium',
     position: 'relative',
     lineHeight: '1',
     display: 'flex',

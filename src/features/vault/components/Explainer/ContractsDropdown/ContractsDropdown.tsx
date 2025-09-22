@@ -7,6 +7,7 @@ import { DropdownProvider } from '../../../../../components/Dropdown/DropdownPro
 import { DropdownButtonTrigger } from '../../../../../components/Dropdown/DropdownTrigger.tsx';
 import { DropdownContent } from '../../../../../components/Dropdown/DropdownContent.tsx';
 import { styled } from '@repo/styles/jsx';
+import { ExternalLink } from '../../../../../components/Links/ExternalLink.tsx';
 
 interface ContractsDropdownProps {
   links: {
@@ -32,7 +33,7 @@ export const ContractsDropdown = memo(function ContractsDropdown({
     <DropdownProvider variant="button" placement="bottom-end" open={open} onChange={setOpen}>
       <DropdownTrigger borderless={true}>
         {t('Contracts')}
-        <ExpandMore />
+        <Arrow open={open} />
       </DropdownTrigger>
       <DropdownContent padding="small" gap="small">
         {links.map(({ label, link }) => (
@@ -41,6 +42,17 @@ export const ContractsDropdown = memo(function ContractsDropdown({
       </DropdownContent>
     </DropdownProvider>
   );
+});
+
+const Arrow = styled(ExpandMore, {
+  base: {},
+  variants: {
+    open: {
+      true: {
+        transform: 'rotate(180deg)',
+      },
+    },
+  },
 });
 
 const linkClass = css({
@@ -65,9 +77,9 @@ const iconClass = css({
 
 const DropdownLink = memo(function DropdownLink({ label, link }: { label: string; link: string }) {
   return (
-    <a className={linkClass} href={link} target="_blank">
+    <ExternalLink className={linkClass} href={link}>
       {label}
       <OpenInNewRounded className={iconClass} />
-    </a>
+    </ExternalLink>
   );
 });

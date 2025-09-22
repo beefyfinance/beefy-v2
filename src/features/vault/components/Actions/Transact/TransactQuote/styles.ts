@@ -67,5 +67,6 @@ export const styles = {
   }),
   link: css.raw({
     color: 'text.lightest',
+    textDecoration: 'underline',
   }),
 };

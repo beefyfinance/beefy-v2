@@ -1464,7 +1464,8 @@
     "twitter": "KittenSwap",
     "documentation": "https://docs.kittenswap.finance/",
     "description": "Kittenswap is a decentralized exchange (DEX) built on HyperEVM that implements the innovative ve(3,3) tokenomics model. Our platform combines the efficiency of automated market makers (AMMs) with a unique token distribution and governance system that aligns the interests of all participants.",
-    "type": "amm"
+    "type": "amm",
+    "risks": ["NO_TIMELOCK"]
   },
   {
     "id": "hyperswap",
@@ -1473,6 +1474,51 @@
     "twitter": "Hyperswap",
     "documentation": "https://docs.hyperswap.exchange/hyperswap",
     "description": "HyperSwap is the first native DEX for the HyperEVM. HyperSwap is deeply integrated across the HyperEVM with most of the top protocols, tokens, and liquidity providers in the ecosystem.",
+    "type": "amm"
+  },
+  {
+    "id": "hybra",
+    "name": "Hybra",
+    "website": "https://www.hybra.finance/",
+    "twitter": "HybraFinance",
+    "documentation": "https://hybra-foundation.gitbook.io/hybra-foundation",
+    "description": "Public liquidity layer on Hyperliquid. Upgraded ve(3,3) flywheel, CL & intent-based gasless trades.",
+    "type": "amm"
+  },
+  {
+    "id": "imf",
+    "name": "IMF",
+    "type": "money-market",
+    "website": "https://app.imf.bz/",
+    "documentation": "https://docs.imf.bz/",
+    "description": "International Meme Fund (IMF) is a DeFi protocol (powered by Morpho) lending stablecoins against meme coin collateral.",
+    "risks": ["NO_TIMELOCK"]
+  },
+  {
+    "id": "blackhole",
+    "name": "Blackhole",
+    "type": "amm",
+    "website": "https://blackhole.xyz/",
+    "documentation": "https://docs.blackhole.xyz/",
+    "description": "Blackhole is a next-generation decentralized exchange (DEX) built on the Avalanche blockchain. It serves as a specialized liquidity hub designed to support emerging blockchain projects and empower community participation in the growth of Web3 ecosystems."
+  },
+  {
+    "id": "etherex",
+    "name": "Etherex",
+    "website": "https://www.etherex.finance/",
+    "twitter": "etherexfi",
+    "documentation": "https://docs.etherex.finance/",
+    "description": "Etherex is a concentrated liquidity layer and exchange built on the Linea network, powered by the latest metaDEX x(3,3) methodology—a more fluid and accessible version of the popular ve(3,3) model.",
+    "type": "amm",
+    "risks": ["NO_TIMELOCK"]
+  },
+  {
+    "id": "projectx",
+    "name": "ProjectX",
+    "website": "https://www.prjx.com/",
+    "twitter": "projectx",
+    "documentation": "https://prjxdocs.notion.site/",
+    "description": "Project X is built on the belief that tech is becoming increasingly commoditized and the next era of DeFi will be won by innovating on distribution, incentive design and UX.",
     "type": "amm"
   }
 ]

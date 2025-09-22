@@ -29,7 +29,7 @@ import {
 import type { BeefyState } from '../store/types.ts';
 import { featureFlag_disableRedirect } from '../utils/feature-flags.ts';
 import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
-import { selectIsConfigAvailable } from './config.ts';
+import { selectIsConfigAvailable } from './data-loader/config.ts';
 
 export const selectAllVaultIdsIncludingHidden = (state: BeefyState) => state.entities.vaults.allIds;
 export const selectAllVisibleVaultIds = (state: BeefyState) => state.entities.vaults.allVisibleIds;

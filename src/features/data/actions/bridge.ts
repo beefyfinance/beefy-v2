@@ -21,7 +21,6 @@ import {
   selectBridgeQuoteSelectedId,
   selectBridgeSourceChainId,
   selectBridgeSupportedChainIds,
-  selectShouldLoadBridgeConfig,
 } from '../selectors/bridge.ts';
 import { selectChainById } from '../selectors/chains.ts';
 import { selectCurrentChainId, selectWalletAddress } from '../selectors/wallet.ts';
@@ -31,6 +30,7 @@ import { fetchAllowanceAction } from './allowance.ts';
 import { fetchBalanceAction } from './balance.ts';
 import { stepperStartWithSteps } from './wallet/stepper.ts';
 import { approve } from './wallet/approval.ts';
+import { selectShouldLoadBridgeConfig } from '../selectors/data-loader/bridge.ts';
 
 function getLimits(quotes: IBridgeQuote<BeefyAnyBridgeConfig>[]) {
   const current = BigNumber.max(

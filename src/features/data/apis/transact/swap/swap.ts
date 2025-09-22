@@ -4,3 +4,4 @@ export { OneInchSwapProvider } from './one-inch/OneInchSwapProvider.ts';
 export { KyberSwapProvider } from './kyber/KyberSwapProvider.ts';
 export { WNativeSwapProvider } from './wnative/WNativeSwapProvider.ts';
 export { OdosSwapProvider } from './odos/OdosSwapProvider.ts';
+export { LiquidSwapSwapProvider } from './liquid-swap/LiquidSwapSwapProvider.ts';

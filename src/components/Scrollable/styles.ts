@@ -4,6 +4,24 @@ export const styles = {
   shadowContainer: css.raw({
     position: 'relative',
   }),
+  nativeScrollContainer: css.raw({
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    maxHeight: '100%',
+    position: 'relative',
+  }),
+  nativeScrollContent: css.raw({
+    flex: '1 1 auto',
+    overflow: 'auto',
+    minHeight: 0,
+    position: 'relative',
+    width: '100%',
+    // Ensure proper scrolling on webkit browsers
+    WebkitOverflowScrolling: 'touch',
+    // Prevent horizontal scrollbar unless needed
+    overflowX: 'hidden',
+  }),
   thumb: css.raw({
     background: 'background.content.dark',
     borderRadius: '4',
@@ -11,6 +29,7 @@ export const styles = {
   }),
   track: css.raw({
     borderRadius: '4',
+    width: '4px',
   }),
   horizontalTrack: css.raw({
     right: '0',

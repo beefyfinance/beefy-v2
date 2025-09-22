@@ -18,7 +18,7 @@ import { MinterAbi } from '../../../../config/abi/MinterAbi.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import { convertAmountToRawNumber } from '../../../../helpers/format.ts';
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import { uniqBy } from 'lodash-es';
 import { toWei } from '../../../../helpers/big-number.ts';
 import { selectOneInchSwapAggregatorForChain } from '../../selectors/zap.ts';

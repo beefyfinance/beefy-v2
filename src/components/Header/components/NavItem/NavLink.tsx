@@ -1,9 +1,10 @@
 import { NavLink as RouterNavLink, type NavLinkProps as RouterNavLinkProps } from 'react-router';
 import { memo } from 'react';
 import { styled } from '@repo/styles/jsx';
-import { DropdownTrigger } from '../../../Dropdown/DropdownTrigger.tsx';
 import { cva } from '@repo/styles/css';
 import type { ReactNode } from 'react';
+import { DropdownTrigger } from '../../../Dropdown/DropdownTrigger.tsx';
+import { ExternalLink } from '../../../Links/ExternalLink.tsx';
 
 const navItemStyles = {
   base: {
@@ -12,13 +13,22 @@ const navItemStyles = {
     color: 'text.dark',
     columnGap: '4px',
     outline: 'none',
+    padding: '2px',
   },
   variants: {
     mobile: {
       true: {
-        padding: '16px',
+        padding: '10px 12px',
         display: 'flex',
         alignItems: 'center',
+      },
+    },
+    dropdownItem: {
+      true: {
+        padding: '8px 12px',
+        _hover: {
+          backgroundColor: 'background.button',
+        },
       },
     },
   },
@@ -44,28 +54,24 @@ const navLinkRecipe = cva({
 
 export const NavItem = styled('div', navItemRecipe);
 
-const ExternalNavLink = styled('a', navLinkRecipe, {
-  defaultProps: {
-    target: '_blank',
-    rel: 'noopener',
-  },
-});
-
-const InternalNavLink = styled(RouterNavLink, navLinkRecipe);
-
 export const DropdownNavButton = styled(DropdownTrigger.button, navLinkRecipe, {
   defaultProps: {
     type: 'button',
   },
 });
 
+const ExternalNavLink = styled(ExternalLink, navLinkRecipe);
+
+const InternalNavLink = styled(RouterNavLink, navLinkRecipe);
+
 type NavLinkProps = {
   onClick?: RouterNavLinkProps['onClick'];
-
   to: RouterNavLinkProps['to'];
   children: ReactNode;
   mobile?: boolean;
   end?: boolean;
+  dropdownItem?: boolean;
+  externalLink?: boolean;
 };
 
 export const NavLink = memo<NavLinkProps>(function NavLink({
@@ -73,15 +79,31 @@ export const NavLink = memo<NavLinkProps>(function NavLink({
   children,
   onClick,
   mobile = false,
+  dropdownItem = false,
   ...rest
 }) {
   const isExternal = typeof to === 'string' && to[0] !== '/';
 
   if (isExternal) {
-    return <ExternalNavLink href={to} children={children} onClick={onClick} mobile={mobile} />;
+    return (
+      <ExternalNavLink
+        href={to}
+        children={children}
+        onClick={onClick}
+        mobile={mobile}
+        dropdownItem={dropdownItem}
+      />
+    );
   }
 
   return (
-    <InternalNavLink to={to} children={children} onClick={onClick} mobile={mobile} {...rest} />
+    <InternalNavLink
+      to={to}
+      children={children}
+      onClick={onClick}
+      mobile={mobile}
+      dropdownItem={dropdownItem}
+      {...rest}
+    />
   );
 });

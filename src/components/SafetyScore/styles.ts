@@ -26,7 +26,7 @@ export const styles = {
     height: '19px',
   }),
   green: css.raw({
-    backgroundColor: 'green',
+    backgroundColor: 'green.40',
   }),
   withSizeMedium: css.raw({
     alignItems: 'center',

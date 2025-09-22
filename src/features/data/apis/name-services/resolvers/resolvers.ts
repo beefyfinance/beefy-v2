@@ -6,6 +6,10 @@ export const resolvers: Resolver[] = [
     methods: async () => await import('./ens/resolver.ts'),
   },
   {
+    tldToChain: async () => (await import('./basenames/tlds.ts')).tldToChain,
+    methods: async () => await import('./basenames/resolver.ts'),
+  },
+  {
     tldToChain: async () => (await import('./space-id/tlds.ts')).tldToChain,
     methods: async () => await import('./space-id/resolver.ts'),
   },

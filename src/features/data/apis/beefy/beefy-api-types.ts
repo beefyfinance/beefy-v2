@@ -48,6 +48,7 @@ export interface ApyStandard {
   liquidStakingApr?: number;
   rewardPoolApr?: number;
   rewardPoolTradingApr?: number;
+  lineaIgnitionApr?: number;
   totalApy: number;
 }
 
@@ -55,6 +56,7 @@ export interface ApyCLM {
   clmApr: number;
   merklApr?: number;
   stellaSwapApr?: number;
+  lineaIgnitionApr?: number;
   totalApy: number;
 }
 

@@ -100,7 +100,7 @@ export const RequestForm = memo(function RequestForm() {
         />
       </div>
       <Button
-        variant="success"
+        variant="cta"
         onClick={handleSimulate}
         disabled={status === 'pending'}
         fullWidth={true}

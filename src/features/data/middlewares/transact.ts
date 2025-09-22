@@ -15,10 +15,8 @@ import { TransactMode, TransactStep } from '../reducers/wallet/transact-types.ts
 import { selectUserVaultBalanceInShareTokenInBoosts } from '../selectors/balance.ts';
 import { selectBoostById, selectIsVaultPreStakedOrBoosted } from '../selectors/boosts.ts';
 import { selectAllChainIds } from '../selectors/chains.ts';
-import { selectIsConfigAvailable } from '../selectors/config.ts';
-import { selectAreFeesLoaded, selectShouldInitFees } from '../selectors/fees.ts';
-import { selectIsPricesAvailable } from '../selectors/prices.ts';
-import { selectIsAddressBookLoaded } from '../selectors/tokens.ts';
+import { selectIsConfigAvailable } from '../selectors/data-loader/config.ts';
+import { selectIsPricesAvailable } from '../selectors/data-loader/prices.ts';
 import {
   selectTransactMode,
   selectTransactPendingVaultIdOrUndefined,
@@ -28,14 +26,16 @@ import {
 import { selectMayHaveOffchainUserRewards } from '../selectors/user-rewards.ts';
 import { selectVaultById } from '../selectors/vaults.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
+import { startAppListening } from './listener-middleware.ts';
+import { selectAreFeesLoaded, selectShouldInitFees } from '../selectors/data-loader/fees.ts';
 import {
   selectIsZapLoaded,
   selectShouldInitZapAggregatorTokenSupport,
   selectShouldInitZapAmms,
   selectShouldInitZapConfigs,
   selectShouldInitZapSwapAggregators,
-} from '../selectors/zap.ts';
-import { startAppListening } from './listener-middleware.ts';
+} from '../selectors/data-loader/zap.ts';
+import { selectIsAddressBookLoaded } from '../selectors/data-loader/tokens.ts';
 
 export function addTransactListeners() {
   /** calculate zap availability after all needed data is loaded */

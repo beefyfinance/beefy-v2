@@ -9,13 +9,13 @@ import {
 import { recalculateDepositedVaultsAction } from '../actions/balance.ts';
 import { selectUserDepositedTimelineByVaultId } from '../selectors/analytics.ts';
 import { selectIsUserBalanceAvailable } from '../selectors/balance.ts';
-import { selectIsConfigAvailable } from '../selectors/config.ts';
+import { selectIsConfigAvailable } from '../selectors/data-loader/config.ts';
+import { startAppListening } from './listener-middleware.ts';
+import { selectIsAddressBookLoadedGlobal } from '../selectors/data-loader/tokens.ts';
 import {
   selectIsWalletTimelineForUserPending,
   selectIsWalletTimelineForUserRecent,
-} from '../selectors/dashboard.ts';
-import { selectIsAddressBookLoadedGlobal } from '../selectors/tokens.ts';
-import { startAppListening } from './listener-middleware.ts';
+} from '../selectors/data-loader/dashboard.ts';
 
 export function addAnalyticsListeners() {
   const timelineDebouncer = createWalletDebouncer(100);

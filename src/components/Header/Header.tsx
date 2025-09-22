@@ -1,9 +1,7 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { fetchLastArticle } from '../../features/data/actions/articles.ts';
 import { fetchActiveProposals } from '../../features/data/actions/proposal.ts';
-import { selectShouldInitArticles } from '../../features/data/selectors/articles.ts';
-import { selectShouldInitProposals } from '../../features/data/selectors/proposals.ts';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
 import { Container } from '../Container/Container.tsx';
 import { Hidden } from '../MediaQueries/Hidden.tsx';
@@ -12,12 +10,17 @@ import { ConnectionStatus } from './components/ConnectionStatus/ConnectionStatus
 import { LogoLink } from './components/LogoLink/LogoLink.tsx';
 import { MainMenu } from './components/MainMenu/MainMenu.tsx';
 import { MobileMenu } from './components/MobileMenu/MobileMenu.tsx';
-import { RightMenu } from './components/RightMenu/RightMenu.tsx';
+import { NavLinkItem } from './components/NavItem/NavLinkItem.tsx';
+import BuyCryptoIcon from '../../images/icons/navigation/buy-crypto.svg?react';
+import { BifiPricesDesktop } from './components/Prices/Prices.tsx';
+import { selectShouldInitArticles } from '../../features/data/selectors/data-loader/articles.ts';
+import { selectShouldInitProposals } from '../../features/data/selectors/data-loader/proposals.ts';
 
 export const Header = memo(function Header() {
   const dispatch = useAppDispatch();
   const shouldLoadProposals = useAppSelector(selectShouldInitProposals);
   const shouldLoadArticles = useAppSelector(selectShouldInitArticles);
+  const anchorEl = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (shouldLoadProposals) {
@@ -39,11 +42,16 @@ export const Header = memo(function Header() {
           <MainMenu />
         </Visible>
       </Side>
-      <Side>
+      <Side spacing="sm">
         <Visible from="lg">
-          <RightMenu />
+          <NavLinkItem title={'Header-BuyCrypto'} url="/onramp" Icon={BuyCryptoIcon} />
         </Visible>
-        <ConnectionStatus />
+        <RightSide ref={anchorEl}>
+          <Visible from="lg">
+            <BifiPricesDesktop positionRef={anchorEl} />
+          </Visible>
+          <ConnectionStatus />
+        </RightSide>
         <Hidden from="lg">
           <MobileMenu />
         </Hidden>
@@ -73,6 +81,30 @@ const Side = styled('div', {
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
-    columnGap: '16px',
+  },
+  variants: {
+    spacing: {
+      sm: {
+        columnGap: '10px',
+        lg: {
+          columnGap: '20px',
+        },
+      },
+      md: {
+        columnGap: '24px',
+      },
+    },
+  },
+  defaultVariants: {
+    spacing: 'md',
+  },
+});
+
+const RightSide = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    alignContent: 'center',
+    columnGap: '10px',
   },
 });

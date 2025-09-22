@@ -2,13 +2,12 @@ import { memo } from 'react';
 import { BusdBannerHome } from '../../../../components/Banners/BusdBanner/BusdBannerHome.tsx';
 import { UnstakedClmBanner } from '../../../../components/Banners/UnstakedClmBanner/UnstakedClmBanner.tsx';
 import { styled } from '@repo/styles/jsx';
-import { FraxBannerHome } from '../../../../components/Banners/FraxBanner/FraxBannerHome.tsx';
+import { BeGemsBanner } from '../../../../components/Banners/BeGemsBanner/BeGemsBanner.tsx';
 
 export const Banners = memo(function Banners() {
   return (
     <BannerList>
-      {/* <AnnouncementBanner /> */}
-      <FraxBannerHome />
+      <BeGemsBanner />
       <UnstakedClmBanner />
       <BusdBannerHome />
     </BannerList>

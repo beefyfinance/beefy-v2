@@ -241,7 +241,7 @@ export function featureFlag_kyberSwapSupport(): {
   return [];
 }
 
-export function featureFlag_OdosSwapSupport(): {
+export function featureFlag_odosSwapSupport(): {
   chainId: string;
   tokenAddress: string;
 }[] {
@@ -255,19 +255,43 @@ export function featureFlag_OdosSwapSupport(): {
   return [];
 }
 
+export function featureFlag_liquidSwapSupport(): {
+  chainId: string;
+  tokenAddress: string;
+}[] {
+  const params = getSearchParams();
+  if (params.has('__liquid_support')) {
+    return (params.get('__liquid_support') || '').split(',').map(s => {
+      const [chainId, tokenAddress] = s.split(':');
+      return { chainId, tokenAddress };
+    });
+  }
+  return [];
+}
+
+export function featureFlag_disableSwapAggregators(): boolean {
+  const params = getSearchParams();
+  return params.has('__disable_swap_aggregators');
+}
+
 export function featureFlag_disableOneInch(): boolean {
   const params = getSearchParams();
-  return params.has('__disable_one_inch');
+  return featureFlag_disableSwapAggregators() || params.has('__disable_one_inch');
 }
 
 export function featureFlag_disableKyber(): boolean {
   const params = getSearchParams();
-  return params.has('__disable_kyber');
+  return featureFlag_disableSwapAggregators() || params.has('__disable_kyber');
 }
 
 export function featureFlag_disableOdos(): boolean {
   const params = getSearchParams();
-  return params.has('__disable_odos');
+  return featureFlag_disableSwapAggregators() || params.has('__disable_odos');
+}
+
+export function featureFlag_disableLiquidSwap(): boolean {
+  const params = getSearchParams();
+  return featureFlag_disableSwapAggregators() || params.has('__disable_liquid');
 }
 
 export function featureFlag_detailedTooltips(): boolean {
@@ -306,4 +330,8 @@ const getSimulateLiveBoosts = createFactory((): Set<string> => {
 export function featureFlag_simulateLiveBoost(boostId: string): boolean {
   const boostIds = getSimulateLiveBoosts();
   return boostIds.has(boostId);
+}
+
+export function featureFlag_simulateMissingTransactions(): boolean {
+  return getSearchParams().has('__simulate_missing_transactions');
 }

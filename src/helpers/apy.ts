@@ -16,7 +16,7 @@ import { createCachedFactory, createFactory } from '../features/data/utils/facto
 import { fromKeysMapper } from './object.ts';
 import { ucFirstLetter } from './string.ts';
 
-export const AVG_APY_PERIODS = [7 /*, 30, 90*/] as const satisfies Omit<
+export const AVG_APY_PERIODS = [7, 30 /*, 90*/] as const satisfies Omit<
   AvgApySortType,
   'default'
 >[];
@@ -41,6 +41,7 @@ const DISPLAY_ORDER = ((i = 0) =>
     trading: i++,
     merkl: i++,
     stellaSwap: i++,
+    lineaIgnition: i++,
     liquidStaking: i++,
     composablePool: i++,
     boost: i++,
@@ -116,6 +117,7 @@ export const getApiApyDataComponents = createFactory(() => {
     'trading',
     'merkl',
     'stellaSwap',
+    'lineaIgnition',
     'liquidStaking',
     'composablePool',
     'rewardPool',

@@ -5,6 +5,7 @@ import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
 import { selectVaultById } from '../../../../../../data/selectors/vaults.ts';
+import { token } from '@repo/styles/tokens';
 
 const useStyles = legacyMakeStyles({
   items: css.raw({
@@ -47,7 +48,7 @@ export const Legend = memo(function Legend({ vaultId }: LegendProps) {
   return (
     <div className={classes.items}>
       <LegendItem
-        color="#4DB258"
+        color={token('colors.graph.line.underlying')}
         text={t(
           isSingleAssetVault ? 'pnl-graph-legend-amount-single' : 'pnl-graph-legend-amount-lp',
           {
@@ -55,7 +56,7 @@ export const Legend = memo(function Legend({ vaultId }: LegendProps) {
           }
         )}
       />
-      <LegendItem color="#5C70D6" text={t('pnl-graph-legend-usd')} />
+      <LegendItem color={token('colors.graph.line.usd')} text={t('pnl-graph-legend-usd')} />
     </div>
   );
 });

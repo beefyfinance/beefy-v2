@@ -3,11 +3,9 @@ import { memo, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../data/store/hooks.ts';
 import { fetchAllMinters } from '../../../../data/actions/minters.ts';
 import type { VaultEntity } from '../../../../data/entities/vault.ts';
-import {
-  selectMintersByVaultId,
-  selectShouldInitMinters,
-} from '../../../../data/selectors/minters.ts';
+import { selectMintersByVaultId } from '../../../../data/selectors/minters.ts';
 import { MinterCard } from './MinterCard.tsx';
+import { selectShouldInitMinters } from '../../../../data/selectors/data-loader/minters.ts';
 
 export type MinterCardsParams = PropsWithChildren<{
   vaultId: VaultEntity['id'];

@@ -91,7 +91,7 @@ export const AppVersionCheck = memo(function AppVersionCheck() {
         <div className={classes.message}>{message}</div>
         {!app.reloadFailed ?
           <div className={classes.action}>
-            <Button onClick={handleReload} size={'sm'} variant={'success'} css={styles.button}>
+            <Button onClick={handleReload} size={'sm'} variant={'cta'} css={styles.button}>
               {t('Update-Reload')}
             </Button>
           </div>

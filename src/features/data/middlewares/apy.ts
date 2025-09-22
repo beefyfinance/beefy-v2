@@ -13,14 +13,14 @@ import type { FetchAllContractDataResult } from '../apis/contract-data/contract-
 import type { BoostAprData, RawAprByBoostId } from '../reducers/apy-types.ts';
 import { setApyContractState } from '../reducers/apy.ts';
 import { getBoostStatusFromContractState } from '../reducers/promos.ts';
-import { selectIsApyAvailable, selectIsAvgApyAvailable } from '../selectors/apy.ts';
 import { selectBoostById } from '../selectors/boosts.ts';
-import { selectIsVaultsAvailable } from '../selectors/config.ts';
+import { selectIsVaultsAvailable } from '../selectors/data-loader/config.ts';
 import { selectTokenPriceByAddress, selectVaultReceiptTokenPrice } from '../selectors/tokens.ts';
 import { selectVaultWithReceiptByAddressOrUndefined } from '../selectors/vaults.ts';
 import type { BeefyState } from '../store/types.ts';
 import { createIdMap } from '../utils/array-utils.ts';
 import { startAppListening } from './listener-middleware.ts';
+import { selectIsApyAvailable, selectIsAvgApyAvailable } from '../selectors/data-loader/apy.ts';
 
 const contractDataChanged = isAnyOf(
   fetchAllContractDataByChainAction.fulfilled.match,

@@ -15,6 +15,10 @@ import type {
 } from '../reducers/data-loader-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { createCachedFactory } from '../utils/factory-utils.ts';
+import { entries, isEqual, sortedUniq, uniq } from 'lodash-es';
+import { useAppSelector } from '../store/hooks.ts';
+import { selectEolChainIds } from './chains.ts';
+import { selectWalletAddressIfKnown } from './wallet.ts';
 
 // time since a loader was last dispatched before it is allowed to be dispatched again
 const DEFAULT_DISPATCHED_RECENT_SECONDS = 30;
@@ -218,15 +222,157 @@ export function createAddressChainDataSelector<T>(
   )((_, walletAddress) => walletAddress.toLowerCase());
 }
 
-// export function createAddressVaultDataSelector<T>(
-//   key: keyof ByAddressByVaultDataEntity,
-//   evaluateFn: LoaderEvaluatorFn<T>,
-//   invalidateCacheAfterSeconds?: number
-// ): AddressVaultDataSelectorFn<T> {
-//   return createCachedSelector(
-//     (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
-//       state.ui.dataLoader.byAddress[walletAddress.toLowerCase()]?.byVaultId[vaultId]?.[key],
-//     createTimeCacheInvalidator(invalidateCacheAfterSeconds),
-//     evaluateFn
-//   )((_, walletAddress) => walletAddress.toLowerCase());
-// }
+// Base selector function that can be used anywhere
+export function selectNetStatus<
+  R extends string[],
+  S extends (state: BeefyState, matcher: (state: LoaderState) => boolean) => R = (
+    state: BeefyState,
+    matcher: (state: LoaderState) => boolean
+  ) => R,
+  M extends (state: LoaderState) => boolean = (state: LoaderState) => boolean,
+>(state: BeefyState, selector: S, matcher: M): R {
+  return selector(state, matcher);
+}
+
+// Hook for React components (maintains backward compatibility)
+export function useNetStatus<
+  R extends string[],
+  S extends (state: BeefyState, matcher: (state: LoaderState) => boolean) => R = (
+    state: BeefyState,
+    matcher: (state: LoaderState) => boolean
+  ) => R,
+  M extends (state: LoaderState) => boolean = (state: LoaderState) => boolean,
+>(selector: S, matcher: M) {
+  return useAppSelector<BeefyState, R>(
+    state => selectNetStatus(state, selector, matcher),
+    // since we are returning a new array each time we select
+    // use a comparator to avoid useless re-renders
+    stringArrCompare
+  );
+}
+
+const stringArrCompare = (left: string[], right: string[]) => {
+  if (left.length !== right.length) {
+    return false;
+  }
+  return isEqual(sortedUniq(left.sort()), sortedUniq(right.sort()));
+};
+
+export const findChainIdMatching = (
+  state: BeefyState,
+  matcher: (loader: LoaderState) => boolean
+) => {
+  const chainIds: ChainEntity['id'][] = [];
+  const eolChains = selectEolChainIds(state);
+  const walletAddress = selectWalletAddressIfKnown(state);
+  const chainsToCheck = entries(state.ui.dataLoader.byChainId).filter(
+    ([chainId, _]) => !eolChains.includes(chainId as ChainEntity['id'])
+  );
+
+  for (const [chainId, loader] of chainsToCheck) {
+    if (loader) {
+      if (matcher(loader.addressBook) || matcher(loader.contractData)) {
+        chainIds.push(chainId as ChainEntity['id']);
+      }
+    }
+  }
+
+  if (walletAddress && state.ui.dataLoader.byAddress[walletAddress]) {
+    const userDataToCheck = entries(state.ui.dataLoader.byAddress[walletAddress].byChainId).filter(
+      ([chainId, _]) => !eolChains.includes(chainId as ChainEntity['id'])
+    );
+    for (const [chainId, loader] of userDataToCheck) {
+      if (loader) {
+        if (matcher(loader.balance) || matcher(loader.allowance)) {
+          chainIds.push(chainId as ChainEntity['id']);
+        }
+      }
+    }
+  }
+
+  return uniq(chainIds);
+};
+
+export const findBeefyApiMatching = (
+  state: BeefyState,
+  matcher: (loader: LoaderState) => boolean
+) => {
+  const matchingKeys: (keyof DataLoaderState['global'])[] = [];
+  const beefyKeys: (keyof DataLoaderState['global'])[] = [
+    'analytics',
+    'apy',
+    'beGemsCampaign',
+    'currentCowcentratedRanges',
+    'merklCampaigns',
+    'merklRewards',
+    'onRamp',
+    'prices',
+    'proposals',
+    'stellaSwapRewards',
+    'treasury',
+    'zapAggregatorTokenSupport',
+    'zapAmms',
+    'zapConfigs',
+    'zapSwapAggregators',
+  ];
+  for (const key of beefyKeys) {
+    if (matcher(state.ui.dataLoader.global[key])) {
+      matchingKeys.push(key);
+    }
+  }
+  return matchingKeys;
+};
+
+export const findConfigMatching = (
+  state: BeefyState,
+  matcher: (loader: LoaderState) => boolean
+) => {
+  const matchingKeys: (keyof DataLoaderState['global'])[] = [];
+  const configKeys: (keyof DataLoaderState['global'])[] = [
+    'addressBook',
+    'chainConfig',
+    'platforms',
+    'promos',
+    'vaults',
+  ];
+  for (const key of configKeys) {
+    if (matcher(state.ui.dataLoader.global[key])) {
+      matchingKeys.push(key);
+    }
+  }
+  return matchingKeys;
+};
+
+// Convenience selectors for common use cases
+export const selectChainIdsWithPendingData = (state: BeefyState) =>
+  selectNetStatus<ChainEntity['id'][]>(state, findChainIdMatching, isLoaderPending);
+
+export const selectChainIdsWithRejectedData = (state: BeefyState) =>
+  selectNetStatus<ChainEntity['id'][]>(state, findChainIdMatching, isLoaderRejected);
+
+export const selectChainIdsWithFulfilledData = (state: BeefyState) =>
+  selectNetStatus<ChainEntity['id'][]>(state, findChainIdMatching, isLoaderFulfilled);
+
+export const selectChainIdsWithIdleData = (state: BeefyState) =>
+  selectNetStatus(state, findChainIdMatching, isLoaderIdle);
+
+export const selectBeefyApiKeysWithPendingData = (state: BeefyState) =>
+  selectNetStatus(state, findBeefyApiMatching, isLoaderPending);
+
+export const selectBeefyApiKeysWithRejectedData = (state: BeefyState) =>
+  selectNetStatus(state, findBeefyApiMatching, isLoaderRejected);
+
+export const selectBeefyApiKeysWithFulfilledData = (state: BeefyState) =>
+  selectNetStatus(state, findBeefyApiMatching, isLoaderFulfilled);
+
+export const selectConfigKeysWithPendingData = (state: BeefyState) =>
+  selectNetStatus(state, findConfigMatching, isLoaderPending);
+
+export const selectConfigKeysWithRejectedData = (state: BeefyState) =>
+  selectNetStatus(state, findConfigMatching, isLoaderRejected);
+
+export const selectConfigKeysWithFulfilledData = (state: BeefyState) =>
+  selectNetStatus(state, findConfigMatching, isLoaderFulfilled);
+
+export const selectIsStatusIndicatorOpen = (state: BeefyState) =>
+  state.ui.dataLoader.statusIndicator.open;

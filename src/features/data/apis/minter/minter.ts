@@ -27,7 +27,7 @@ export class MinterApi implements IMinterApi {
         fetchContract(minter.burnerAddress!, MinterAbi, this.chain.id).read[
           minter.reserveBalanceMethod!
         ]()
-      : 0n,
+      : Promise.resolve(0n),
     ]);
 
     return {

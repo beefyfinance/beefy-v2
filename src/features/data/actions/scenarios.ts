@@ -1,8 +1,7 @@
 import type { Action } from 'redux';
-import { chains as chainsConfig } from '../../../config/config.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import { recalculatePromoStatuses } from '../reducers/promos.ts';
-import { selectAllChainIds } from '../selectors/chains.ts';
+import { selectAllChainIds, selectAllChains } from '../selectors/chains.ts';
 import { selectIsWalletKnown, selectWalletAddress } from '../selectors/wallet.ts';
 import type { BeefyDispatchFn, BeefyStateFn, BeefyThunk } from '../store/types.ts';
 import type { PollStop } from '../utils/async-utils.ts';
@@ -27,6 +26,7 @@ import {
   fetchZapConfigsAction,
   fetchZapSwapAggregatorsAction,
 } from './zap.ts';
+import { initCampaignBeGems } from './campaigns/begems.ts';
 
 declare const window: {
   __manual_poll?: () => unknown;
@@ -45,8 +45,6 @@ export interface CapturedFulfilledActions {
 }
 
 let pollStopFns: PollStop[] = [];
-
-export const chains = chainsConfig.map(id => ({ id }));
 
 /**
  * Fetch all necessary information for the home page
@@ -88,17 +86,22 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
     dispatch(fetchZapAmmsAction());
   });
 
-  // create the wallet instance as soon as we get the chain list
   setTimeout(() => {
     chainListPromise
       .then(() => {
+        // create the wallet instance as soon as we get the chain list
         dispatch(initWallet());
+        // fetch beGems data so we can show the claim time limit banner
+        // TODO remove after claims closed
+        dispatch(initCampaignBeGems());
       })
       .catch(console.error);
   });
 
   // we need config data (for contract addresses) to start querying the rest
   await chainListPromise;
+  const chains = selectAllChains(getState());
+
   // pre-load the addressbook
   const addressBookPromise = dispatch(fetchAllAddressBookAction());
   // we need the chain list to handle the vault list

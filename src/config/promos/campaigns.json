@@ -1,4 +1,11 @@
 {
+  "animera-boost": {
+    "title": "Animera Boost",
+    "description": "Striker Games is An indie web3 Game Studio Focused on Building The Best PvP AAA Games.",
+    "social": {
+      "twitter": "https://twitter.com/strikergameshq"
+    }
+  },
   "begems-boost": {
     "title": "Beefy beGEMS1 Boost",
     "description": "Sonic Gems are airdrop points awarded exclusively by Sonic to apps building on its chain. They’re distributed based on various factors and are [redeemable for S tokens](/campaigns/begems/) at the end of each season. Beefy is issuing 80,000,000 beGEMS each season, representing its share of earned S tokens. beGEMS are liquid ERC-20 tokens — transferable, tradeable, and open to speculation.",
@@ -108,6 +115,14 @@
     "title": "Beefy × Optimism Governance Fund",
     "description": "Earn extra incentives awarded to Beefy products on the Superchain through the first Beefy Optimism Governance Fund grant. Beefy users earn additional $OP tokens for trying out selected products. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your $OP rewards whenever you're ready.",
     "learn": "https://beefy.com/articles/beefy-helps-grow-the-optimism-community-with-a-650-000-op-grant/",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://x.com/beefyfinance"
+    }
+  },
+  "pool-optimism-grant": {
+    "title": "Beefy × Optimism",
+    "description": "Earn extra incentives awarded to Beefy products on the Superchain through the Beefy Optimism Governance Fund grant. Beefy users earn additional $OP tokens for trying out selected products. Rewards accrue linearly over time, depending on the user's TVL. Simply click the 'Claim' tab to find details of all onchain and offchain rewards, and then manually claim your rewards whenever you're ready.",
     "social": {
       "discord": "https://beefy.com/discord",
       "twitter": "https://x.com/beefyfinance"

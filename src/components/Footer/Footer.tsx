@@ -8,6 +8,7 @@ import IconDiscord from '../../images/socials/discord.svg?react';
 import IconTwitter from '../../images/socials/twitter.svg?react';
 import IconReddit from '../../images/socials/reddit.svg?react';
 import IconDebank from '../../images/socials/debank.svg?react';
+import { ExternalLink } from '../Links/ExternalLink.tsx';
 
 // Re-using header translations, allowing overwrite with footer specific ones
 const navLinks = [
@@ -81,18 +82,18 @@ export const Footer = memo(function Footer() {
       <ul className={classes.nav}>
         {navLinks.map(({ title, path }) => (
           <li key={path} className={classes.navItem}>
-            <a href={path} target="_blank" className={classes.navLink}>
+            <ExternalLink href={path} className={classes.navLink}>
               {t(title)}
-            </a>
+            </ExternalLink>
           </li>
         ))}
       </ul>
       <ul className={classes.nav}>
         {socialLinks.map(({ title, path, Icon }) => (
           <li key={path} className={classes.navItem}>
-            <a href={path} target="_blank" className={classes.navLink} title={t(title)}>
+            <ExternalLink href={path} className={classes.navLink} title={t(title)}>
               <Icon />
-            </a>
+            </ExternalLink>
           </li>
         ))}
       </ul>

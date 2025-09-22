@@ -1,4 +1,4 @@
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import BigNumber from 'bignumber.js';
 import { chunk, partition, pick } from 'lodash-es';
 import { getAddress, type PublicClient } from 'viem';

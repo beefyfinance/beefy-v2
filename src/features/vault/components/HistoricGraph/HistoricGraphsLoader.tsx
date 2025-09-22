@@ -6,9 +6,9 @@ import type { VaultEntity } from '../../../data/entities/vault.ts';
 import {
   selectHistoricalHasAnyChart,
   selectHistoricalRangesStatus,
-  selectShouldLoadAllCurrentCowcentratedRanges,
 } from '../../../data/selectors/historical.ts';
 import { HistoricGraphs } from './HistoricGraphs.tsx';
+import { selectShouldLoadAllCurrentCowcentratedRanges } from '../../../data/selectors/data-loader/historical.ts';
 
 export type HistoricGraphsLoaderProps = {
   vaultId: VaultEntity['id'];

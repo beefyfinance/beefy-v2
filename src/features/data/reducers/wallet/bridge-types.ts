@@ -1,7 +1,11 @@
 import type { SerializedError } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types.ts';
-import type { BeefyAnyBridgeConfig, BeefyBridgeIdToConfig } from '../../apis/config-types.ts';
+import type {
+  BeefyAnyBridgeConfig,
+  BeefyBridgeConfig,
+  BeefyBridgeIdToConfig,
+} from '../../apis/config-types.ts';
 import type { InputTokenAmount } from '../../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { TokenErc20 } from '../../entities/token.ts';
@@ -68,7 +72,7 @@ export type BridgesMap = {
   [K in BeefyAnyBridgeConfig['id']]?: BeefyBridgeIdToConfig<K>;
 };
 export type BridgeState = {
-  source: ChainEntity['id'] | undefined;
+  source: BeefyBridgeConfig['source'] | undefined;
   tokens: Partial<Record<ChainEntity['id'], string>>;
   destinations: {
     allChains: ChainEntity['id'][];

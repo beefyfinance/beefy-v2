@@ -1,5 +1,6 @@
 import { addressBook } from 'blockchain-addressbook';
 import BigNumber from 'bignumber.js';
+import chalk from 'chalk';
 import { isValidChecksumAddress, maybeChecksumAddress } from './common/utils.ts';
 import { getVaultsIntegrity } from './common/exclude.ts';
 import {
@@ -9,6 +10,7 @@ import {
   type ChainMap,
   excludeChains,
   excludedChainIds,
+  getChain,
   getPromosForChain,
   getVaultsForChain,
 } from './common/config.ts';
@@ -32,7 +34,6 @@ import {
   type Address,
   ContractFunctionExecutionError,
   ContractFunctionRevertedError,
-  getAddress,
   getContract,
   type PublicClient,
 } from 'viem';
@@ -45,23 +46,10 @@ const overrides: Record<
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
   'bifi-maxi': { stratOwner: undefined }, // harvester 0xDe30
   'beltv2-4belt': { vaultOwner: undefined }, // moonpot deployer
-  'baseswap-axlwbtc-usdbc': { harvestOnDeposit: undefined },
-  'kinetix-klp': { harvestOnDeposit: undefined },
   'bifi-vault': { beefyFeeRecipient: undefined }, // TODO: remove
-  'png-wbtc.e-usdc': { harvestOnDeposit: undefined },
-  'gmx-arb-glp': { harvestOnDeposit: undefined },
-  'gmx-arb-gmx': { harvestOnDeposit: undefined },
-  'swapbased-usd+-usdbc': { harvestOnDeposit: undefined },
-  'swapbased-dai+-usd+': { harvestOnDeposit: undefined },
   'aero-cow-eurc-cbbtc-vault': { harvestOnDeposit: undefined },
-  'pendle-eqb-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
-  'pendle-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
   'compound-base-eth': { harvestOnDeposit: undefined },
-  'compound-polygon-usdc': { harvestOnDeposit: undefined },
   'beefy-besonic': { vaultOwner: undefined }, // temp disabled while waiting for rewards to refill
-  'shadow-cow-sonic-wbtc-usdc.e-vault': { harvestOnDeposit: undefined },
-  'shadow-cow-sonic-wbtc-weth-vault': { harvestOnDeposit: undefined },
-  'shadow-cow-sonic-ws-bes-vault': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
@@ -70,29 +58,16 @@ const oldValidOwners = [
   addressBook.arbitrum.platforms.beefyfinance.devMultisig,
 ];
 
-const oldValidFeeRecipients: ChainMap<Address[]> = {
-  canto: ['0xF09d213EE8a8B159C884b276b86E08E26B3bfF75'],
-  kava: ['0x07F29FE11FbC17876D9376E3CD6F2112e81feA6F'],
-  moonriver: ['0x617f12E04097F16e73934e84f35175a1B8196551'],
-  moonbeam: [
-    '0x00aec34489a7ade91a0507b6b9dbb0a50938b7c0',
-    '0x3E7F60B442CEAE0FE5e48e07EB85Cfb1Ed60e81A',
-  ],
-};
+const oldValidFeeRecipients: ChainMap<Address[]> = {};
 
 const oldValidRewardPoolOwners: ChainMap<Address[]> = {
   polygon: [
     '0x7313533ed72D2678bFD9393480D0A30f9AC45c1f',
     '0x97bfa4b212A153E15dCafb799e733bc7d1b70E72',
   ],
-  kava: ['0xF0d26842c3935A618e6980C53fDa3A2D10A02eb7'],
   metis: ['0x2cC364255206A7e14bF59ADB1fc5770DbA48CB3f'],
   cronos: ['0xF9eBb381dC153D0966B2BaEe776de2F400405755'],
-  celo: ['0x32C82EE8Fca98ce5114D2060c5715AEc714152FB'],
-  canto: ['0xeD7b88EDd899d578581DCcfce80F43D1F395b93f'],
-  moonriver: ['0xD5e8D34dE3B1A6fd54e87B5d4a857CBB762d0C8A'],
   moonbeam: ['0x00AeC34489A7ADE91A0507B6b9dBb0a50938B7c0'],
-  aurora: ['0x9dA9f3C6c45F1160b53D395b0A982aEEE1D212fE'],
   ethereum: [
     '0x1c9270ac5C42E51611d7b97b1004313D52c80293',
     '0x8237f3992526036787E8178Def36291Ab94638CD',
@@ -103,22 +78,14 @@ const oldValidRewardPoolOwners: ChainMap<Address[]> = {
   ],
   arbitrum: ['0xFEd99885fE647dD44bEA2B375Bd8A81490bF6E0f'],
   bsc: ['0xAb4e8665E7b0E6D83B65b8FF6521E347ca93E4F8', '0x0000000000000000000000000000000000000000'],
-  fantom: ['0x35F43b181957824f2b5C0EF9856F85c90fECb3c8'],
   optimism: [
     '0xEDFBeC807304951785b581dB401fDf76b4bAd1b0',
     '0x3Cd5Ae887Ddf78c58c9C1a063EB343F942DbbcE8',
-    getAddress(addressBook.optimism.platforms.beefyfinance.strategyOwner),
   ],
 };
 
 const nonHarvestOnDepositChains = ['ethereum', 'avax', 'rootstock'];
 const nonHarvestOnDepositPools = [
-  'venus-bnb',
-  'pendle-eqb-base-lbtc-29may25',
-  'silo-eth-pendle-weeth',
-  'silo-op-tbtc-tbtc',
-  'sushi-cow-arb-wbtc-tbtc-vault',
-  'pancake-cow-arb-usdt+-usd+-vault',
   'aero-cow-weth-cbbtc-vault',
   'aero-cow-usdc-cbbtc-vault',
   'compound-op-usdt',
@@ -126,11 +93,7 @@ const nonHarvestOnDepositPools = [
   'compound-op-eth',
   'compound-base-usdc',
   'compound-base-aero',
-  'nuri-cow-scroll-usdc-scr-vault',
-  'tokan-wbtc-weth',
-  'aero-cow-usdz-cbbtc-vault',
   'aero-cow-eurc-usdc-vault',
-  'silov2-sonic-usdce-ws',
   'compound-polygon-usdc',
   'shadow-cow-sonic-wbtc-usdc.e-vault',
   'shadow-cow-sonic-wbtc-weth-vault',
@@ -231,7 +194,14 @@ const validatePools = async () => {
     exitCode = platformExitCode;
   }
 
-  const promises = chainIds.map(chainId => validateSingleChain(chainId, uniquePoolId));
+  const validated: AddressBookChainId[] = [];
+  const promises = chainIds.map(chainId =>
+    validateSingleChain(chainId, uniquePoolId).finally(() => {
+      validated.push(chainId);
+      const toValidate = chainIds.filter(c => !validated.includes(c));
+      if (toValidate.length > 0) console.log(chalk.gray(`Validating: ${toValidate}...`));
+    })
+  );
   const results = await Promise.all(promises);
 
   exitCode = results.reduce((acum, cur) => (acum + cur.exitCode > 0 ? 1 : 0), exitCode);
@@ -245,14 +215,13 @@ const validatePools = async () => {
   console.log('Required updates:', JSON.stringify(updates));
   console.log('Valid:', exitCode === 0 && Object.keys(updates).length === 0);
 
-  if (excludedChainIds.length > 0) {
-    console.warn(`*** Excluded chains: ${excludedChainIds.join(', ')} ***`);
-  }
-
   return exitCode;
 };
 
 const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Set<string>) => {
+  if (getChain(chainId).eol || 0 > 0) {
+    console.log(`${chainId} is EOL, consider exclude`);
+  }
   const vaultsAndPromos = await Promise.all([
     getVaultsForChain(chainId),
     getPromosForChain(chainId),
@@ -261,7 +230,7 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
   const poolIds = new Set(allVaults.map(pool => pool.id));
   const promos = vaultsAndPromos[1];
 
-  console.log(`Validating ${allVaults.length} vaults in ${chainId}...`);
+  // console.log(`Validating ${allVaults.length} vaults in ${chainId}...`);
 
   let updates: Updates = {};
   let exitCode = 0;
@@ -483,7 +452,7 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
   });
 
   // Boosts
-  console.log(`Validating ${promos.length} promos in ${chainId}...`);
+  // console.log(`Validating ${promos.length} promos in ${chainId}...`);
   const seenPromoIds = new Set();
   promos.forEach(promo => {
     if (seenPromoIds.has(promo.id)) {
@@ -628,11 +597,49 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
     }
   });
 
+  // All
+  allVaults.forEach(vault => {
+    if (vault.tokenAddress) {
+      const abToken = addressBook[chainId].tokenAddressMap[vault.tokenAddress];
+      if (abToken) {
+        // Decimals not matching is probably an error in addressbook or vault config, and it breaks things if wrong
+        if (vault.tokenDecimals !== abToken.decimals) {
+          console.error(
+            `Error: ${vault.id} : tokenDecimals "${vault.tokenDecimals}" does not match addressbook "${abToken.decimals}" for ${vault.token} (${vault.tokenAddress})`
+          );
+          exitCode = 1;
+          // Also warn about symbol not matching if decimals don't match
+          if (vault.token !== abToken.symbol) {
+            console.warn(
+              `Warn: ${vault.id} : token "${vault.token}" does not match addressbook "${abToken.symbol}"`
+            );
+          }
+        }
+        // oracleId not matching is probably an error in addressbook or vault config, and it breaks things if wrong
+        if (vault.oracleId !== abToken.oracleId) {
+          const isWNative = vault.tokenAddress === addressBook[chainId].tokens.WNATIVE.address;
+          const wnativeOracleIds = [
+            addressBook[chainId].tokens.WNATIVE.oracleId,
+            addressBook[chainId].native.oracleId,
+          ];
+          // allow ETH or WETH
+          if (!isWNative || !wnativeOracleIds.includes(vault.oracleId)) {
+            console.error(
+              `Error: ${vault.id} : oracleId "${vault.oracleId}" does not match addressbook "${abToken.oracleId}" for ${vault.token} (${vault.tokenAddress})`
+            );
+            exitCode = 1;
+          }
+        }
+      }
+    }
+  });
+
   if (!isEmpty(updates)) {
     exitCode = 1;
   }
 
-  console.log(`${chainId} active pools: ${activePools}/${nonGovVaults.length}\n`);
+  // console.log(`${chainId} active pools: ${activePools}/${nonGovVaults.length}\n`);
+  if (activePools === 0) console.log(`${chainId} 0 active pools, consider exclude\n`);
 
   return { chainId, exitCode, updates };
 };
@@ -881,7 +888,7 @@ const checkPointsStructureIds = (pool: VaultConfig) => {
 
         shouldHaveProviderArr.push(
           (eligibility.platformId === pool.platformId &&
-            pool.assets?.some(a => eligibility.tokens.includes(a))) ??
+            pool.assets?.some(a => eligibility.tokens?.includes(a))) ??
             false
         );
       } else if (eligibility.type === 'platform') {
@@ -897,14 +904,19 @@ const checkPointsStructureIds = (pool: VaultConfig) => {
             (pool.retiredAt === undefined ||
               new Date(eligibility.liveAfter) < new Date(pool.retiredAt * 1000))
         );
+      } else if (eligibility.type === 'provider') {
+        if (!('tokenProviderId' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.tokenProviderId missing`);
+        }
+
+        shouldHaveProviderArr.push(pool.tokenProviderId === eligibility.tokenProviderId);
       } else if (eligibility.type === 'token-holding') {
         if (!('tokens' in eligibility)) {
           throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
         }
 
-        shouldHaveProviderArr.push(
-          pool.assets?.some(a => eligibility?.tokens?.includes(a)) ?? false
-        );
+        const poolTokens = (pool.assets ?? []).concat(pool.token ? [pool.token] : []);
+        shouldHaveProviderArr.push(poolTokens.some(a => eligibility?.tokens?.includes(a)) ?? false);
       } else if (eligibility.type === 'on-chain-lp') {
         if (!('chain' in eligibility)) {
           throw new Error(`Error: ${pointProvider.id} : eligibility.chain missing`);
@@ -944,6 +956,8 @@ const checkPointsStructureIds = (pool: VaultConfig) => {
 
     // bool or
     const shouldHaveProvider = shouldHaveProviderArr.some(Boolean);
+
+    if (pointProvider.id === 'silo-points') continue;
 
     if (shouldHaveProvider && !hasProvider) {
       console.error(
@@ -1220,7 +1234,7 @@ const populateVaultsData = async (
           return await Promise.all([
             pool.type === 'erc4626' ?
               Promise.resolve(pool.earnContractAddress as Address)
-            : await vaultContract.read.strategy(),
+            : vaultContract.read.strategy(),
             vaultContract.read.owner().catch(e => catchRevertErrorIntoUndefined(e)),
             vaultContract.read.totalSupply(),
           ]);
@@ -1270,7 +1284,7 @@ const populateStrategyData = async (
           abi: StratAbi,
           address: pool.strategy as Address,
         });
-        return Promise.all([
+        return await Promise.all([
           stratContract.read.keeper().catch(e => catchRevertErrorIntoUndefined(e)),
           stratContract.read.beefyFeeRecipient().catch(e => catchRevertErrorIntoUndefined(e)),
           stratContract.read.beefyFeeConfig().catch(e => catchRevertErrorIntoUndefined(e)),
@@ -1405,6 +1419,7 @@ const allowOldInvalidIds = new Set([
   'cakev2-arpa-bnb=eol',
   'cakev2-perl-bnb=eol',
 ]);
+
 /** vault ids should not require %-encoded urls */
 function isValidVaultId(vaultId: string) {
   // same as encodeURIComponent (but allows + which strictly speaking doesn't need % encoding)

@@ -18,7 +18,6 @@ import { isVaultActive } from '../../../data/entities/vault.ts';
 import {
   selectMigrationIdsByVaultId,
   selectMigratorById,
-  selectShouldInitMigration,
   selectUserBalanceToMigrateByVaultId,
 } from '../../../data/selectors/migration.ts';
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
@@ -30,6 +29,7 @@ import {
 } from '../../../data/selectors/wallet.ts';
 import { ActionConnect, ActionSwitch } from '../Actions/Transact/CommonActions/CommonActions.tsx';
 import { styles } from './styles.ts';
+import { selectShouldInitMigration } from '../../../data/selectors/data-loader/migration.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -113,7 +113,7 @@ const Migrator = memo(function Migrator({
           {!isWalletConnected ?
             <ActionConnect />
           : isWalletOnVaultChain ?
-            <Button onClick={handleMigrateAll} variant="success" fullWidth={true} borderless={true}>
+            <Button onClick={handleMigrateAll} variant="cta" fullWidth={true} borderless={true}>
               {t('Migration-Action')}
             </Button>
           : <ActionSwitch chainId={vault.chainId} />}

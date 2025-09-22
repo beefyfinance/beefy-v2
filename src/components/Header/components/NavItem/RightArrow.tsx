@@ -1,14 +1,21 @@
 import { styled } from '@repo/styles/jsx';
-import type { FunctionComponent, SVGProps } from 'react';
-import type { RecipeVariantRecord } from '@repo/styles/types';
-import ArrowForwardIosRounded from '../../../../images/icons/mui/ArrowForwardIosRounded.svg?react';
+import ForwardArrowIcon from '../../../../images/icons/forward-arrow.svg?react';
 
-export const RightArrow = styled<FunctionComponent<SVGProps<SVGSVGElement>>, RecipeVariantRecord>(
-  ArrowForwardIosRounded,
-  {
-    base: {
-      height: '12px',
-      marginLeft: 'auto',
-    },
-  }
-);
+export const RightArrow = function RightArrow() {
+  return (
+    <ArrowContainer>
+      <ForwardArrowIcon />
+    </ArrowContainer>
+  );
+};
+
+const ArrowContainer = styled('div', {
+  base: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '20px',
+    width: '20px',
+    marginLeft: 'auto',
+  },
+});

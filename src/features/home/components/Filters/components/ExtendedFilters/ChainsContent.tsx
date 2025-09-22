@@ -1,14 +1,14 @@
-import { ButtonLabelContainer } from './FilterContent.tsx';
-import { ChainCheckList } from '../ChainFilters/ChainCheckList.tsx';
-import { memo, useMemo } from 'react';
-import { selectFilterChainIds } from '../../../../../data/selectors/filtered-vaults.ts';
 import {
+  ButtonLabelContainer,
   ButtonFilter,
   Label,
   MobileContentContainer,
   IconContainer,
-  type FilterContentProps,
-} from './FilterContent.tsx';
+} from './FilterContainers.tsx';
+import { ChainCheckList } from '../ChainFilters/ChainCheckList.tsx';
+import { memo, useMemo } from 'react';
+import { selectFilterChainIds } from '../../../../../data/selectors/filtered-vaults.ts';
+import { type FilterContentProps } from './FilterContent.tsx';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { selectAllChains } from '../../../../../data/selectors/chains.ts';

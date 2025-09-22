@@ -1,19 +1,22 @@
-import { Fragment, memo, useCallback, useState } from 'react';
-import CloseIcon from '../../../../images/icons/mui/Close.svg?react';
+import { memo, useCallback, useState } from 'react';
 import MenuIcon from '../../../../images/icons/Menu.svg?react';
 import { NavLinkItem } from '../NavItem/NavLinkItem.tsx';
 import { MobileList } from '../../list.ts';
 import type { NavConfig, NavDropdownConfig } from '../DropNavItem/types.ts';
 import { isNavDropdownConfig } from '../DropNavItem/types.ts';
-import { Prices } from '../Prices/Prices.tsx';
+import { BifiPricesMobile, BridgeNavButton } from '../Prices/Prices.tsx';
 import { UnreadDots } from '../Badges/UnreadDots.tsx';
-import { Drawer } from '../../../Modal/Drawer.tsx';
 import { styled } from '@repo/styles/jsx';
 import { NavItemInner } from '../NavItem/NavItemInner.tsx';
 import { NavItem } from '../NavItem/NavLink.tsx';
+import { ScrollableDrawer } from '../../../ScrollableDrawer/ScrollableDrawer.tsx';
+import { Button } from '../../../Button/Button.tsx';
+import { useTranslation } from 'react-i18next';
+import ForwardArrowIcon from '../../../../images/icons/forward-arrow.svg?react';
 
 export const MobileMenu = memo(function MobileMenu() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { t } = useTranslation();
   const handleDrawerToggle = useCallback(() => {
     setMobileOpen(open => !open);
   }, [setMobileOpen]);
@@ -21,40 +24,44 @@ export const MobileMenu = memo(function MobileMenu() {
   return (
     <>
       <MenuButton aria-label="menu" onClick={handleDrawerToggle}>
-        <MenuIcon fontSize="inherit" style={{ height: '32px', width: '32px' }} />
+        <MenuIcon fontSize="inherit" style={{ height: '28px', width: '28px' }} />
         <UnreadDots />
       </MenuButton>
-      <Drawer scrollable={false} open={mobileOpen} onClose={handleDrawerToggle}>
-        <Sidebar>
-          <Header>
-            <Prices />
-            <CloseButton onClick={handleDrawerToggle}>
-              <CloseIcon />
-            </CloseButton>
-          </Header>
-          <Divider />
-          {MobileList.map(item => {
-            return (
-              <Fragment key={item.title}>
-                <MobileItem item={item} onClick={handleDrawerToggle} />
-                <Divider />
-              </Fragment>
-            );
-          })}
-        </Sidebar>
-      </Drawer>
+      <ScrollableDrawer
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        mainChildren={
+          <Container>
+            <NavItemContainer prices={true}>
+              <BifiPricesMobile />
+              <BridgeNavButton onClick={handleDrawerToggle} to="bridge">
+                <span>{t('Bridge')}</span>
+                <FowardArrowContainer>
+                  <ForwardArrowIcon />
+                </FowardArrowContainer>
+              </BridgeNavButton>
+            </NavItemContainer>
+            {MobileList.map(item => {
+              return <MobileItem key={item.title} item={item} onClick={handleDrawerToggle} />;
+            })}
+          </Container>
+        }
+        footerChildren={
+          <Button fullWidth={true} borderless={true} onClick={handleDrawerToggle}>
+            {t('RpcModal-Close')}
+          </Button>
+        }
+      />
     </>
   );
 });
 
-const Divider = styled('hr', {
+const Container = styled('div', {
   base: {
-    height: '2px',
-    backgroundColor: 'background.content.dark',
-    display: 'block',
-    margin: 0,
-    padding: 0,
-    border: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+    padding: '10px 12px',
   },
 });
 
@@ -64,46 +71,16 @@ const MenuButton = styled('button', {
     padding: '0',
     border: 0,
     boxShadow: 'none',
-    color: 'text.light',
+    color: 'text.dark',
     fontSize: '30px',
     position: 'relative',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    height: '40px',
+    width: '40px',
   },
 });
-
-const Sidebar = styled('div', {
-  base: {
-    backgroundColor: 'background.header',
-    minHeight: '100vh',
-    width: '320px',
-    overflowY: 'auto',
-  },
-});
-
-const Header = styled('div', {
-  base: {
-    padding: '16px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '4px',
-  },
-});
-
-const CloseButton = styled(
-  'button',
-  {
-    base: {
-      marginLeft: 'auto',
-      color: 'text.middle',
-      _hover: {
-        color: 'text.light',
-      },
-    },
-  },
-  { defaultProps: { type: 'button' } }
-);
 
 type MobileItemProps = {
   item: NavConfig;
@@ -125,15 +102,17 @@ const MobileItem = memo<MobileItemProps>(function MobileItem({ item, onClick }) 
 
   const NavComponent = item.MobileComponent ?? NavLinkItem;
   return (
-    <NavComponent
-      onClick={onClick}
-      title={item.title}
-      url={item.url}
-      Badge={item.Badge}
-      Icon={item.Icon}
-      end={item.end}
-      mobile={true}
-    />
+    <NavItemContainer>
+      <NavComponent
+        onClick={onClick}
+        title={item.title}
+        url={item.url}
+        Badge={item.Badge}
+        Icon={item.Icon}
+        end={item.end}
+        mobile={true}
+      />
+    </NavItemContainer>
   );
 });
 
@@ -147,7 +126,7 @@ export const DropMobile = memo<DropMobileProps>(function DropMobile({
   Badge,
 }) {
   return (
-    <>
+    <NavItemContainer sublist={items.length > 0}>
       <NavItem mobile={true}>
         <NavItemInner title={title} Icon={Icon} Badge={Badge} />
       </NavItem>
@@ -163,20 +142,57 @@ export const DropMobile = memo<DropMobileProps>(function DropMobile({
               Icon={item.Icon}
               Badge={item.Badge}
               mobile={true}
+              externalLink={item.externalLink}
             />
           );
         })}
       </SubItems>
-    </>
+    </NavItemContainer>
   );
+});
+
+const NavItemContainer = styled('div', {
+  base: {
+    backgroundColor: 'background.content.dark',
+    borderRadius: '8px',
+    paddingBlock: '4px',
+  },
+  variants: {
+    sublist: {
+      true: {
+        paddingBlock: '6px',
+      },
+    },
+    prices: {
+      true: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingInline: '12px 4px',
+        paddingBlock: '4px',
+      },
+    },
+  },
 });
 
 const SubItems = styled('div', {
   base: {
-    paddingLeft: '16px',
+    paddingLeft: '12px',
     display: 'flex',
     flexDirection: 'column',
-    marginTop: '-8px',
-    paddingBottom: '8px',
+  },
+});
+
+const FowardArrowContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '20px',
+    width: '20px',
+    '& > svg': {
+      color: 'inherit',
+      height: '12px',
+    },
   },
 });

@@ -6,10 +6,6 @@ import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
-import {
-  createGlobalDataSelector,
-  createShouldLoaderLoadRecentEvaluator,
-} from './data-loader-helpers.ts';
 
 import { selectVaultShouldShowInterest } from './vaults.ts';
 
@@ -500,9 +496,3 @@ export function selectHistoricalBucketData<TStat extends ChartStat>(
 
   throw new Error(`Unknown stat: ${stat}`);
 }
-
-export const selectShouldLoadAllCurrentCowcentratedRanges = createGlobalDataSelector(
-  'currentCowcentratedRanges',
-  createShouldLoaderLoadRecentEvaluator(3 * 60),
-  5
-);

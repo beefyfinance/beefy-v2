@@ -14,7 +14,6 @@ import type {
   MerklVaultReward,
 } from '../../reducers/wallet/user-rewards-types.ts';
 import { selectChainById, selectChainByNetworkChainId } from '../../selectors/chains.ts';
-import { selectMerklRewardsForUserShouldLoad } from '../../selectors/user-rewards.ts';
 import { selectVaultByAddressOrUndefined } from '../../selectors/vaults.ts';
 import { isDefined } from '../../utils/array-utils.ts';
 import { createAppAsyncThunk } from '../../utils/store-utils.ts';
@@ -22,6 +21,7 @@ import type {
   FetchUserMerklRewardsActionParams,
   FetchUserMerklRewardsFulfilledPayload,
 } from './merkl-user-rewards-types.ts';
+import { selectMerklRewardsForUserShouldLoad } from '../../selectors/data-loader/user-rewards.ts';
 
 // ChainId -> Merkl Distributor contract address
 // https://app.merkl.xyz/status

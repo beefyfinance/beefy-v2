@@ -30,7 +30,7 @@ export const styles = {
   refreshIcon: css.raw({
     width: '24px',
     height: '24px',
-    fill: 'green',
+    fill: 'green.40',
     position: 'relative',
   }),
 };

@@ -13,7 +13,7 @@ import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import { AngleMerklDistributorAbi } from '../../../../config/abi/AngleMerklDistributor.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
-import type { Address } from 'abitype';
+import type { Address } from 'viem';
 import { isDefined } from '../../utils/array-utils.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
 import { fetchUserStellaSwapRewardsAction } from '../user-rewards/stellaswap-user-rewards.ts';

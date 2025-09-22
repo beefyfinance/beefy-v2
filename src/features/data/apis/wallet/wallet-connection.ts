@@ -1,29 +1,33 @@
-import type { ChainEntity } from '../../entities/chain.ts';
-import { find, sample, uniq } from 'lodash-es';
-import type { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types.ts';
-import { maybeHexToNumber } from '../../../../helpers/format.ts';
-import type { EIP1193Provider, OnboardAPI } from '@web3-onboard/core';
-import Onboard from '@web3-onboard/core';
-import createInjectedWallets from '@web3-onboard/injected-wallets';
-import standardInjectedWallets from '@web3-onboard/injected-wallets/dist/wallets';
 import createCoinbaseWalletModule from '@web3-onboard/coinbase';
-import createWalletConnectModule from '@web3-onboard/walletconnect';
-import createMetamaskModule from '@web3-onboard/metamask';
-import createTrustDesktopModule from '@web3-onboard/trust';
-import type { ConnectOptions } from '@web3-onboard/core/dist/types';
 import type { WalletInit } from '@web3-onboard/common';
 import { createEIP1193Provider } from '@web3-onboard/common';
-import { customInjectedWallets } from './custom-injected-wallets.ts';
+import type { ChainListener, WalletHelpers } from '@web3-onboard/common/dist/types';
+import type { EIP1193Provider, OnboardAPI } from '@web3-onboard/core';
+import Onboard from '@web3-onboard/core';
+import type { ConnectOptions } from '@web3-onboard/core/dist/types';
+import createInjectedWallets from '@web3-onboard/injected-wallets';
+import type {
+  EIP6963AnnounceProviderEvent,
+  InjectedNameSpace,
+} from '@web3-onboard/injected-wallets/dist/types';
+import standardInjectedWallets from '@web3-onboard/injected-wallets/dist/wallets';
+import createMetamaskModule from '@web3-onboard/metamask';
+import createTrustDesktopModule from '@web3-onboard/trust';
+import createWalletConnectModule from '@web3-onboard/walletconnect';
+import type { WalletConnectOptions } from '@web3-onboard/walletconnect/dist/types';
+import { find, sample, uniq } from 'lodash-es';
+import { createWalletClient, custom, isHex, numberToHex } from 'viem';
+import { maybeHexToNumber } from '../../../../helpers/format.ts';
+import { getNetworkSrc } from '../../../../helpers/networkSrc.ts';
 import appIcon from '../../../../images/bifi-logos/header-logo-notext.svg';
 import appLogo from '../../../../images/bifi-logos/header-logo.svg';
-import { getNetworkSrc } from '../../../../helpers/networkSrc.ts';
-import { featureFlag_walletConnectChainId } from '../../utils/feature-flags.ts';
-import type { ChainListener, WalletHelpers } from '@web3-onboard/common/dist/types';
-import type { WalletConnectOptions } from '@web3-onboard/walletconnect/dist/types';
-import { isDefined } from '../../utils/array-utils.ts';
 import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url';
-import type { InjectedNameSpace } from '@web3-onboard/injected-wallets/dist/types';
-import { createWalletClient, custom, isHex, numberToHex } from 'viem';
+import type { ChainEntity } from '../../entities/chain.ts';
+import { isDefined } from '../../utils/array-utils.ts';
+import { featureFlag_walletConnectChainId } from '../../utils/feature-flags.ts';
+import { withDivvi } from '../divvi/client.ts';
+import { customInjectedWallets } from './custom-injected-wallets.ts';
+import type { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types.ts';
 
 declare const window: {
   [K in InjectedNameSpace]?: unknown;
@@ -34,22 +38,51 @@ const walletConnectImages: Record<string, string> = {
   '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489': fireblocksLogo,
 };
 
+function isEip6963Event(e: Event): e is EIP6963AnnounceProviderEvent {
+  return (
+    e.type === 'eip6963:announceProvider' &&
+    typeof (e as EIP6963AnnounceProviderEvent).detail?.info?.rdns === 'string' &&
+    typeof (e as EIP6963AnnounceProviderEvent).detail?.provider === 'object'
+  );
+}
+
+const eip6936WalletPriority = ['xyz.farcaster.', 'com.coinbase.'];
+
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | undefined;
   protected onboardWalletInitializers: WalletInit[] | undefined;
   protected ignoreDisconnectFromAutoConnect = false;
   protected providerWrapper: ((provider: EIP1193Provider) => EIP1193Provider) | undefined;
+  protected tryToAutoConnectToEip6936: boolean = false;
+  protected eip6963Wallets = new Map<string, string>();
 
   constructor(protected options: WalletConnectionOptions) {
     this.onboard = undefined;
     this.onboardWalletInitializers = undefined;
+    this.listenForEip6963Wallets();
   }
 
-  private getOnboardWalletInitializers(): WalletInit[] {
-    if (this.onboardWalletInitializers === undefined) {
-      this.onboardWalletInitializers = WalletConnectionApi.createOnboardWalletInitializers();
+  protected listenForEip6963Wallets() {
+    if (typeof window !== 'undefined') {
+      window.addEventListener(
+        'eip6963:announceProvider',
+        this.onEip6963AnnounceProvider.bind(this)
+      );
+      window.dispatchEvent(new CustomEvent('eip6963:requestProvider'));
     }
-    return this.onboardWalletInitializers;
+  }
+
+  protected onEip6963AnnounceProvider(e: Event): void {
+    if (!isEip6963Event(e)) {
+      return;
+    }
+
+    this.eip6963Wallets.set(e.detail.info.rdns, e.detail.info.name);
+  }
+
+  /** set whether next tryToAutoConnect will try to automatically connect to EIP6936 wallet */
+  public setAutoConnectToEip6936(value: boolean = true) {
+    this.tryToAutoConnectToEip6936 = value;
   }
 
   private static createWalletConnectModule(
@@ -215,99 +248,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     });
   }
 
-  /**
-   * Create instance of Onboard
-   * @private
-   */
-  private createOnboard() {
-    const onboard = Onboard({
-      disableFontDownload: true,
-      connect: {
-        showSidebar: true,
-        removeWhereIsMyWalletWarning: true,
-        autoConnectAllPreviousWallet: false,
-        autoConnectLastWallet: false,
-      },
-      wallets: this.getOnboardWalletInitializers(),
-      theme: {
-        '--w3o-background-color': '#1A1D26',
-        '--w3o-foreground-color': '#242835',
-        '--w3o-text-color': '#EFF1FC',
-        '--w3o-border-color': 'transparent',
-        '--w3o-action-color': '#59A662',
-        '--w3o-border-radius': '8px',
-      },
-      appMetadata: {
-        name: 'Beefy',
-        icon: appIcon,
-        logo: appLogo,
-        description:
-          'Beefy is a Decentralized, Multichain Yield Optimizer that allows its users to earn compound interest on their crypto holdings. Beefy earns you the highest APYs with safety and efficiency in mind.',
-        gettingStartedGuide: 'https://docs.beefy.finance/',
-        explore: 'https://beefy.com/',
-      },
-      chains: this.options.chains.map(chain => ({
-        id: numberToHex(chain.networkChainId),
-        token: chain.native.symbol,
-        label: chain.name,
-        rpcUrl: sample(chain.rpc),
-        blockExplorerUrl: chain.explorerUrl,
-        icon: getNetworkSrc(chain.id),
-      })),
-      accountCenter: {
-        hideTransactionProtectionBtn: true,
-        desktop: {
-          enabled: false,
-        },
-        mobile: {
-          enabled: false,
-        },
-      },
-    });
-
-    this.subscribeToOnboardEvents(onboard);
-
-    return onboard;
-  }
-
-  /**
-   * Subscribe to events so we can notify app on chain/account change + disconnect
-   * @param onboard
-   * @private
-   */
-  private subscribeToOnboardEvents(onboard: OnboardAPI) {
-    const wallets = onboard.state.select('wallets');
-    return wallets.subscribe(wallets => {
-      if (wallets.length === 0) {
-        if (this.ignoreDisconnectFromAutoConnect) {
-          console.log('Ignoring disconnect event from auto reconnect wallet attempt');
-          return (this.ignoreDisconnectFromAutoConnect = false);
-        }
-        this.options.onWalletDisconnected();
-      } else {
-        const wallet = wallets[0];
-
-        if (wallet.accounts.length === 0 || wallet.chains.length === 0) {
-          this.options.onWalletDisconnected();
-        } else {
-          // Save last connected wallet
-          WalletConnectionApi.setLastConnectedWallet(wallet.label);
-
-          // Raise events
-          const account = wallet.accounts[0];
-          const networkChainId = maybeHexToNumber(wallet.chains[0].id);
-          const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
-
-          if (chain) {
-            this.options.onChainChanged(chain.id, account.address);
-          } else {
-            this.options.onUnsupportedChainSelected(networkChainId, account.address);
-          }
-        }
-      }
-    });
-  }
-
   private static setLastConnectedWallet(wallet: string | undefined) {
     try {
       if (wallet) {
@@ -326,97 +266,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     } catch {
       return undefined;
     }
-  }
-
-  /**
-   * Lazy-init onboard instance
-   * @private
-   */
-  private getOnboard() {
-    if (this.onboard === undefined) {
-      this.onboard = this.createOnboard();
-    }
-
-    return this.onboard;
-  }
-
-  /**
-   * Attempt to reconnect to cached provider
-   */
-  public async tryToAutoReconnect() {
-    // Skip if already connected
-    if (this.isConnected()) {
-      console.log('tryToAutoReconnect: Already connected');
-      return;
-    }
-
-    // Must have last selected wallet set
-    const lastSelectedWallet = WalletConnectionApi.getLastConnectedWallet();
-    if (!lastSelectedWallet) {
-      console.log('tryToAutoReconnect: No lastSelectedWallet');
-      return;
-    }
-
-    // Initialize onboard if needed
-    const onboard = this.getOnboard();
-
-    // Attempt to connect
-    try {
-      await this.waitForInjectedWallet();
-      this.ignoreDisconnectFromAutoConnect = true;
-      await WalletConnectionApi.connect(onboard, {
-        autoSelect: { label: lastSelectedWallet, disableModals: true },
-      });
-    } catch (err) {
-      // We clear last connected wallet here so that attempting to reconnect opens the modal
-      // rather than trying to reconnect to previous wallet that just failed/was rejected.
-      WalletConnectionApi.setLastConnectedWallet(undefined);
-      // Rethrow so called knows connection failed
-      throw err;
-    } finally {
-      this.ignoreDisconnectFromAutoConnect = false;
-    }
-  }
-
-  private async waitForInjectedWallet(): Promise<boolean> {
-    const checkInterval = 200;
-    const maxWait = 5000;
-    const injectedNamespaces = uniq(
-      [...customInjectedWallets, ...standardInjectedWallets].map(wallet => wallet.injectedNamespace)
-    ).filter(isDefined);
-    const anyNamespaceExists = () => {
-      if (window) {
-        for (const namespace of injectedNamespaces) {
-          if (window[namespace]) {
-            return true;
-          }
-        }
-      }
-
-      return false;
-    };
-
-    if (anyNamespaceExists()) {
-      console.log('wallet: exists at start');
-      return true;
-    }
-
-    return new Promise<boolean>(resolve => {
-      const startTime = Date.now();
-      const handle = setInterval(() => {
-        if (Date.now() - startTime > maxWait) {
-          console.log('wallet: max wait');
-          clearInterval(handle);
-          return resolve(false);
-        }
-
-        if (anyNamespaceExists()) {
-          console.log('wallet: exists now');
-          clearInterval(handle);
-          return resolve(true);
-        }
-      }, checkInterval);
-    });
   }
 
   private static async connect(onboard: OnboardAPI, options?: ConnectOptions) {
@@ -439,6 +288,94 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     }
   }
 
+  private static clearWalletConnectStorage() {
+    try {
+      const toRemove: string[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('wc@2:')) {
+          toRemove.push(key);
+        }
+      }
+      for (const key of toRemove) {
+        localStorage.removeItem(key);
+      }
+    } catch {
+      // ignored
+    }
+  }
+
+  protected getEip6963Wallet() {
+    if (this.eip6963Wallets.size === 0) {
+      return undefined;
+    }
+
+    for (const rdns of eip6936WalletPriority) {
+      const wallet = this.eip6963Wallets.get(rdns);
+      if (wallet) {
+        return wallet;
+      }
+    }
+
+    return sample(Array.from(this.eip6963Wallets.values()));
+  }
+
+  protected async getWalletForAutoConnect() {
+    // Use last connected wallet if set
+    const lastConnectedWallet = WalletConnectionApi.getLastConnectedWallet();
+    if (lastConnectedWallet) {
+      // wait for injected wallet to be available in case last connected was an injected wallet
+      await this.waitForInjectedWallet();
+      return lastConnectedWallet;
+    }
+
+    // Try to auto connect if wallet announced via EIP-6963
+    if (this.tryToAutoConnectToEip6936 && this.eip6963Wallets.size > 0) {
+      this.tryToAutoConnectToEip6936 = false;
+      return this.getEip6963Wallet();
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Attempt to reconnect to cached provider
+   */
+  public async tryToAutoReconnect() {
+    // Skip if already connected
+    if (this.isConnected()) {
+      console.debug('tryToAutoReconnect: Already connected');
+      return;
+    }
+
+    // Must have last selected wallet set
+    const autoConnectWallet = await this.getWalletForAutoConnect();
+    if (!autoConnectWallet) {
+      console.debug('tryToAutoReconnect: No autoConnectWallet');
+      return;
+    }
+
+    // Initialize onboard if needed
+    const onboard = this.getOnboard();
+
+    // Attempt to connect
+    try {
+      console.debug(`tryToAutoReconnect: Trying ${autoConnectWallet}`);
+      this.ignoreDisconnectFromAutoConnect = true;
+      await WalletConnectionApi.connect(onboard, {
+        autoSelect: { label: autoConnectWallet, disableModals: true },
+      });
+    } catch (err) {
+      // We clear last connected wallet here so that attempting to reconnect opens the modal
+      // rather than trying to reconnect to previous wallet that just failed/was rejected.
+      WalletConnectionApi.setLastConnectedWallet(undefined);
+      // Rethrow so called knows connection failed
+      throw err;
+    } finally {
+      this.ignoreDisconnectFromAutoConnect = false;
+    }
+  }
+
   public async getConnectedViemClient() {
     if (!this.isConnected()) {
       throw new Error(`Wallet not connected.`);
@@ -456,9 +393,11 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     const wrappedProvider =
       this.providerWrapper ? this.providerWrapper(realProvider) : realProvider;
 
-    return createWalletClient({
-      transport: custom(wrappedProvider),
-    });
+    return withDivvi(
+      createWalletClient({
+        transport: custom(wrappedProvider),
+      })
+    );
   }
 
   public async withProviderWrapper<T>(
@@ -478,22 +417,22 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    */
   public async askUserToConnectIfNeeded() {
     if (this.isConnected()) {
-      console.log('askUserToConnectIfNeeded: Already connected');
+      console.debug('askUserToConnectIfNeeded: Already connected');
       throw new Error('Already connected');
     }
 
     // initialize onboard if needed
     const onboard = this.getOnboard();
 
-    // Get last wallet used and make sure it is still supported
-    const lastSelectedWallet = WalletConnectionApi.getLastConnectedWallet();
+    // Automatically pick last connected wallet if available
+    const autoConnectWallet = await this.getWalletForAutoConnect();
 
     // Connect
     try {
       await WalletConnectionApi.connect(
         onboard,
-        lastSelectedWallet ?
-          { autoSelect: { label: lastSelectedWallet, disableModals: false } }
+        autoConnectWallet ?
+          { autoSelect: { label: autoConnectWallet, disableModals: false } }
         : undefined
       );
     } catch (err) {
@@ -563,24 +502,169 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     // Clear wallet connect storage or else it will try to reconnect to same session
     WalletConnectionApi.clearWalletConnectStorage();
 
+    // Don't try to auto connect next time
+    this.tryToAutoConnectToEip6936 = false;
+
     // Raise events
     this.options.onWalletDisconnected();
   }
 
-  private static clearWalletConnectStorage() {
-    try {
-      const toRemove: string[] = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key && key.startsWith('wc@2:')) {
-          toRemove.push(key);
+  private getOnboardWalletInitializers(): WalletInit[] {
+    if (this.onboardWalletInitializers === undefined) {
+      this.onboardWalletInitializers = WalletConnectionApi.createOnboardWalletInitializers();
+    }
+    return this.onboardWalletInitializers;
+  }
+
+  /**
+   * Create instance of Onboard
+   * @private
+   */
+  private createOnboard() {
+    const onboard = Onboard({
+      disableFontDownload: true,
+      connect: {
+        showSidebar: true,
+        removeWhereIsMyWalletWarning: true,
+        autoConnectAllPreviousWallet: false,
+        autoConnectLastWallet: false,
+      },
+      wallets: this.getOnboardWalletInitializers(),
+      theme: {
+        '--w3o-background-color': '#1A1D26',
+        '--w3o-foreground-color': '#242835',
+        '--w3o-text-color': '#EFF1FC',
+        '--w3o-border-color': 'transparent',
+        '--w3o-action-color': '#59A662',
+        '--w3o-border-radius': '8px',
+      },
+      appMetadata: {
+        name: 'Beefy',
+        icon: appIcon,
+        logo: appLogo,
+        description:
+          'Beefy is a Decentralized, Multichain Yield Optimizer that allows its users to earn compound interest on their crypto holdings. Beefy earns you the highest APYs with safety and efficiency in mind.',
+        gettingStartedGuide: 'https://docs.beefy.finance/',
+        explore: 'https://beefy.com/',
+      },
+      chains: this.options.chains.map(chain => ({
+        id: numberToHex(chain.networkChainId),
+        token: chain.native.symbol,
+        label: chain.name,
+        rpcUrl: sample(chain.rpc),
+        blockExplorerUrl: chain.explorerUrl,
+        icon: getNetworkSrc(chain.id),
+      })),
+      accountCenter: {
+        hideTransactionProtectionBtn: true,
+        desktop: {
+          enabled: false,
+        },
+        mobile: {
+          enabled: false,
+        },
+      },
+    });
+
+    this.subscribeToOnboardEvents(onboard);
+
+    return onboard;
+  }
+
+  /**
+   * Subscribe to events so we can notify app on chain/account change + disconnect
+   * @param onboard
+   * @private
+   */
+  private subscribeToOnboardEvents(onboard: OnboardAPI) {
+    const wallets = onboard.state.select('wallets');
+    return wallets.subscribe(wallets => {
+      if (wallets.length === 0) {
+        if (this.ignoreDisconnectFromAutoConnect) {
+          console.debug('Ignoring disconnect event from auto reconnect wallet attempt');
+          return (this.ignoreDisconnectFromAutoConnect = false);
+        }
+        this.options.onWalletDisconnected();
+      } else {
+        const wallet = wallets[0];
+
+        if (wallet.accounts.length === 0 || wallet.chains.length === 0) {
+          this.options.onWalletDisconnected();
+        } else {
+          // Save last connected wallet
+          WalletConnectionApi.setLastConnectedWallet(wallet.label);
+
+          // Raise events
+          const account = wallet.accounts[0];
+          const networkChainId = maybeHexToNumber(wallet.chains[0].id);
+          const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
+
+          if (chain) {
+            this.options.onChainChanged(chain.id, account.address);
+          } else {
+            this.options.onUnsupportedChainSelected(networkChainId, account.address);
+          }
         }
       }
-      for (const key of toRemove) {
-        localStorage.removeItem(key);
-      }
-    } catch {
-      // ignored
+    });
+  }
+
+  /**
+   * Lazy-init onboard instance
+   * @private
+   */
+  private getOnboard() {
+    if (this.onboard === undefined) {
+      this.onboard = this.createOnboard();
     }
+
+    return this.onboard;
+  }
+
+  private async waitForInjectedWallet(
+    maxWait: number = 3000,
+    checkInterval: number = 200
+  ): Promise<boolean> {
+    if (this.eip6963Wallets.size > 0) {
+      console.debug('wallet: eip6963 already present');
+      return true;
+    }
+
+    const injectedNamespaces = uniq(
+      [...customInjectedWallets, ...standardInjectedWallets].map(wallet => wallet.injectedNamespace)
+    ).filter(isDefined);
+    const anyNamespaceExists = () => {
+      if (window) {
+        for (const namespace of injectedNamespaces) {
+          if (window[namespace]) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    };
+
+    if (anyNamespaceExists()) {
+      console.debug('wallet: exists at start');
+      return true;
+    }
+
+    return new Promise<boolean>(resolve => {
+      const startTime = Date.now();
+      const handle = setInterval(() => {
+        if (Date.now() - startTime > maxWait) {
+          console.debug('wallet: max wait');
+          clearInterval(handle);
+          return resolve(false);
+        }
+
+        if (anyNamespaceExists()) {
+          console.debug('wallet: exists now');
+          clearInterval(handle);
+          return resolve(true);
+        }
+      }, checkInterval);
+    });
   }
 }

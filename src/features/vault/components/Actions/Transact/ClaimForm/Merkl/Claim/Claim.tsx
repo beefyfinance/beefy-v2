@@ -8,10 +8,10 @@ import { claimMerkl } from '../../../../../../../data/actions/wallet/offchain.ts
 import type { ChainEntity } from '../../../../../../../data/entities/chain.ts';
 import { selectChainById } from '../../../../../../../data/selectors/chains.ts';
 import { selectIsStepperStepping } from '../../../../../../../data/selectors/stepper.ts';
-import { selectFetchMerklRewardsLastDispatched } from '../../../../../../../data/selectors/user-rewards.ts';
 import { ActionConnectSwitch } from '../../../CommonActions/CommonActions.tsx';
 import { TimeCountdown } from '../../TimeCountdown/TimeCountdown.tsx';
 import { styles } from './styles.ts';
+import { selectFetchMerklRewardsLastDispatched } from '../../../../../../../data/selectors/data-loader/user-rewards.ts';
 
 const MERKL_MIN_TIME_BETWEEN_REQUESTS_MS = 15000;
 
@@ -62,7 +62,7 @@ export const Claim = memo(function Claim({ chainId, withChain }: ClaimProps) {
       <ActionConnectSwitch chainId={chainId}>
         <Button
           fullWidth={true}
-          variant="success"
+          variant="cta"
           onClick={handleClaim}
           disabled={disable}
           css={styles.claim}

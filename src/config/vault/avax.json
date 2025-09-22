@@ -1,5 +1,456 @@
 [
   {
+    "id": "silov2-avalanche-ausd-valamore",
+    "name": "AUSD (Varlamore)",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "tokenProviderId": "silo",
+    "earnedToken": "mooSiloV2AvalancheAUSD (Valamore)",
+    "earnedTokenAddress": "0x79A8D2Cbdcb651013DAE6BE25A3813ca70f35732",
+    "earnContractAddress": "0x79A8D2Cbdcb651013DAE6BE25A3813ca70f35732",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "createdAt": 1758153869,
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["AUSD"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x5C2d58627Fbe746f5ea24Ef6D618f09f8e3f0122"
+    }
+  },
+  {
+    "id": "silov2-avalanche-susde",
+    "name": "sUSDe",
+    "type": "standard",
+    "token": "sUSDe",
+    "tokenAddress": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "silo",
+    "earnedToken": "mooSiloV2AvalanchesUSDe",
+    "earnedTokenAddress": "0xd49A6335F514978b638050D5164d6444Ed01B17F",
+    "earnContractAddress": "0xd49A6335F514978b638050D5164d6444Ed01B17F",
+    "oracle": "tokens",
+    "oracleId": "sUSDe",
+    "createdAt": 1758153298,
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["sUSDe"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "pointStructureIds": ["ethena"],
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "redstone",
+      "address": "0x5708d924Fc996EDee46962CdB6815f90639974e1"
+    }
+  },
+  {
+    "id": "silov2-avalanche-usdt-valamore",
+    "name": "USDT (Varlamore)",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+    "tokenDecimals": 6,
+    "tokenProviderId": "silo",
+    "earnedToken": "mooSiloV2AvalancheUSDT-Valamore",
+    "earnedTokenAddress": "0x7e74446ee441A8dA46F61F9ADa7f8368d26e0eEa",
+    "earnContractAddress": "0x7e74446ee441A8dA46F61F9ADa7f8368d26e0eEa",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "createdAt": 1758152721,
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["USDT"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xEBE676ee90Fe1112671f19b6B7459bC678B67e8a"
+    }
+  },
+  {
+    "id": "silov2-avalanche-btcb-mev",
+    "name": "BTC.b (MEV Capital)",
+    "type": "standard",
+    "token": "BTC.b",
+    "tokenAddress": "0x152b9d0FdC40C096757F570A51E494bd4b943E50",
+    "tokenDecimals": 8,
+    "tokenProviderId": "silo",
+    "earnedToken": "mooSiloV2AvalancheBTC.b-MEV",
+    "earnedTokenAddress": "0x59071e4ee919b4FFB9D550253d2dD45d85c44548",
+    "earnContractAddress": "0x59071e4ee919b4FFB9D550253d2dD45d85c44548",
+    "oracle": "tokens",
+    "oracleId": "BTCb",
+    "createdAt": 1758152296,
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["BTCb"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x2779D32d5166BAaa2B2b658333bA7e6Ec0C65743"
+    }
+  },
+  {
+    "id": "silov2-avalanche-usdc-mev",
+    "name": "USDC (MEV Capital)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    "tokenDecimals": 6,
+    "tokenProviderId": "silo",
+    "earnedToken": "mooSiloV2AvalancheUSDC MEV",
+    "earnedTokenAddress": "0xd1Fec8530a8E824f051D80Ce17D238e96A75BCB2",
+    "earnContractAddress": "0xd1Fec8530a8E824f051D80Ce17D238e96A75BCB2",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "createdAt": 1758139373,
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["USDC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xF096872672F44d6EBA71458D74fe67F9a77a23B9"
+    }
+  },
+  {
+    "id": "black-btcb-black",
+    "name": "BLACK-BTC.b vLP",
+    "type": "standard",
+    "token": "vAMM-BTC.b/BLACK",
+    "tokenAddress": "0xae93B851E2e526A46aB91bB9b045f0D41D45BD4e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "blackhole",
+    "earnContractAddress": "0xe8a8B37eEAB862AEadCBb749F9ffa1741a53C8c1",
+    "earnedToken": "mooBlackholeBTCb-BLACK",
+    "earnedTokenAddress": "0xe8a8B37eEAB862AEadCBb749F9ffa1741a53C8c1",
+    "oracle": "lps",
+    "oracleId": "black-btcb-black",
+    "status": "active",
+    "createdAt": 1757486713,
+    "platformId": "blackhole",
+    "assets": ["BLACK", "BTCb"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0x152b9d0FdC40C096757F570A51E494bd4b943E50&token1=0xcd94a87696FAC69Edae3a70fE5725307Ae1c43f6&pair=0xae93B851E2e526A46aB91bB9b045f0D41D45BD4e&type=Basic%20Volatile",
+    "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0xae93B851E2e526A46aB91bB9b045f0D41D45BD4e&position=0",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
+  },
+  {
+    "id": "black-usdt-black",
+    "name": "BLACK-USDt vLP",
+    "type": "standard",
+    "token": "vAMM-USDt/BLACK",
+    "tokenAddress": "0x64D05ECC2cDc3e80D45BD1b25b0e8A7f7bf15cFc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "blackhole",
+    "earnContractAddress": "0x8583b5B368C846f7c05feddC0086EB1054749Cb4",
+    "earnedToken": "mooBlackholeUSDT-BLACK",
+    "earnedTokenAddress": "0x8583b5B368C846f7c05feddC0086EB1054749Cb4",
+    "oracle": "lps",
+    "oracleId": "black-usdt-black",
+    "status": "active",
+    "createdAt": 1757486703,
+    "platformId": "blackhole",
+    "assets": ["BLACK", "USDT"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7&token1=0xcd94a87696FAC69Edae3a70fE5725307Ae1c43f6&pair=0x64D05ECC2cDc3e80D45BD1b25b0e8A7f7bf15cFc&type=Basic%20Volatile",
+    "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x64D05ECC2cDc3e80D45BD1b25b0e8A7f7bf15cFc&position=0",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
+  },
+  {
+    "id": "black-avax-rsavax",
+    "name": "rsAVAX-AVAX sLP",
+    "type": "standard",
+    "token": "sAMM-WAVAX/rsAVAX",
+    "tokenAddress": "0xd299699e69aDC03fC65e14ec605286758facF1D8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "blackhole",
+    "earnContractAddress": "0xEce17085CedeAc9414ab7Da38e5175e882c4F483",
+    "earnedToken": "mooBlackholeAVAX-rsAVAX",
+    "earnedTokenAddress": "0xEce17085CedeAc9414ab7Da38e5175e882c4F483",
+    "oracle": "lps",
+    "oracleId": "black-avax-rsavax",
+    "status": "active",
+    "createdAt": 1754382664,
+    "platformId": "blackhole",
+    "assets": ["rsAVAX", "WAVAX"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7&token1=0xDf788AD40181894dA035B827cDF55C523bf52F67&pair=0xd299699e69aDC03fC65e14ec605286758facF1D8&type=Basic%20Stable",
+    "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0xd299699e69aDC03fC65e14ec605286758facF1D8&position=0",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
+  },
+  {
+    "id": "black-savusd-usdc",
+    "name": "savUSD-USDC sLP",
+    "type": "standard",
+    "token": "sAMM-savUSD/USDC",
+    "tokenAddress": "0x4f80724E5f2d2Af81cb2A1eeb2cC049ab2A33089",
+    "tokenDecimals": 18,
+    "tokenProviderId": "blackhole",
+    "earnContractAddress": "0x1F58be57008f3D8bC577aF8b1148760d2BC7CBc7",
+    "earnedToken": "mooBlackholesavUSD-USDC",
+    "earnedTokenAddress": "0x1F58be57008f3D8bC577aF8b1148760d2BC7CBc7",
+    "oracle": "lps",
+    "oracleId": "black-savusd-usdc",
+    "status": "active",
+    "createdAt": 1754382650,
+    "platformId": "blackhole",
+    "assets": ["savUSD", "USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0x06d47F3fb376649c3A9Dafe069B3D6E35572219E&token1=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&pair=0x4f80724E5f2d2Af81cb2A1eeb2cC049ab2A33089&type=Basic%20Stable",
+    "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x4f80724E5f2d2Af81cb2A1eeb2cC049ab2A33089&position=0",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
+  },
+  {
+    "id": "black-avax-black",
+    "name": "BLACK-AVAX vLP",
+    "type": "standard",
+    "token": "vAMM-WAVAX/BLACK",
+    "tokenAddress": "0x14e4A5beD2e5E688EE1A5Ca3a4914250D1aBD573",
+    "tokenDecimals": 18,
+    "tokenProviderId": "blackhole",
+    "earnContractAddress": "0x9BC2E29B910a9D9C2c876cad74B15C35303d27cc",
+    "earnedToken": "mooBlackholeAVAX-BLACK",
+    "earnedTokenAddress": "0x9BC2E29B910a9D9C2c876cad74B15C35303d27cc",
+    "oracle": "lps",
+    "oracleId": "black-avax-black",
+    "status": "active",
+    "createdAt": 1753337484,
+    "platformId": "blackhole",
+    "assets": ["BLACK", "AVAX"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7&token1=0xcd94a87696FAC69Edae3a70fE5725307Ae1c43f6&pair=0x14e4A5beD2e5E688EE1A5Ca3a4914250D1aBD573&type=Basic%20Volatile",
+    "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x14e4A5beD2e5E688EE1A5Ca3a4914250D1aBD573&position=0",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
+  },
+  {
+    "id": "black-super-usdc",
+    "name": "SUPER-USDC vLP",
+    "type": "standard",
+    "token": "vAMM-SUPER/USDC",
+    "tokenAddress": "0x9d848CF080c46b92B797218835aE7E89e04c1515",
+    "tokenDecimals": 18,
+    "tokenProviderId": "blackhole",
+    "earnContractAddress": "0x4795f1f280eB9D64D0415196408764a2f1E65A87",
+    "earnedToken": "mooBlackholeSUPER-USDC",
+    "earnedTokenAddress": "0x4795f1f280eB9D64D0415196408764a2f1E65A87",
+    "oracle": "lps",
+    "oracleId": "black-super-usdc",
+    "status": "active",
+    "createdAt": 1753337468,
+    "platformId": "blackhole",
+    "assets": ["SUPER", "USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0x09Fa58228bB791ea355c90DA1e4783452b9Bd8C3&token1=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&pair=0x9d848CF080c46b92B797218835aE7E89e04c1515&type=Basic%20Volatile",
+    "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x9d848CF080c46b92B797218835aE7E89e04c1515&position=0",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
+  },
+  {
+    "id": "black-usdc-black",
+    "name": "BLACK-USDC vLP",
+    "type": "standard",
+    "token": "vAMM-USDC/BLACK",
+    "tokenAddress": "0x0D9Fd6dd9b1FF55fB0A9bB0e5f1B6a2D65b741A3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "blackhole",
+    "earnContractAddress": "0x98D1dd4C6c74F43dB2AA3D826138EEf98973c37e",
+    "earnedToken": "mooBlackholeUSDC-BLACK",
+    "earnedTokenAddress": "0x98D1dd4C6c74F43dB2AA3D826138EEf98973c37e",
+    "oracle": "lps",
+    "oracleId": "black-usdc-black",
+    "status": "active",
+    "createdAt": 1753094761,
+    "platformId": "blackhole",
+    "assets": ["BLACK", "USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&token1=0xcd94a87696FAC69Edae3a70fE5725307Ae1c43f6&pair=0x0D9Fd6dd9b1FF55fB0A9bB0e5f1B6a2D65b741A3&type=Basic%20Volatile",
+    "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x0D9Fd6dd9b1FF55fB0A9bB0e5f1B6a2D65b741A3&position=0",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
+  },
+  {
+    "id": "black-weth-wavax",
+    "name": "WETH-WAVAX vLP",
+    "type": "standard",
+    "token": "vAMM-WETH.e/WAVAX",
+    "tokenAddress": "0x737F1cab9CD97c40BBe4D59c85b0d2C1fdBaA37D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "blackhole",
+    "earnContractAddress": "0x424E9a7D393adFCfc1EEA03731f56F26e42eB27C",
+    "earnedToken": "mooBlackholeWETH-WAVAX",
+    "earnedTokenAddress": "0x424E9a7D393adFCfc1EEA03731f56F26e42eB27C",
+    "oracle": "lps",
+    "oracleId": "black-weth-wavax",
+    "status": "active",
+    "createdAt": 1753094742,
+    "platformId": "blackhole",
+    "assets": ["WETHe", "WAVAX"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB&token1=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7&pair=0x737F1cab9CD97c40BBe4D59c85b0d2C1fdBaA37D&type=Basic%20Volatile",
+    "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x737F1cab9CD97c40BBe4D59c85b0d2C1fdBaA37D&position=0",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
+  },
+  {
+    "id": "black-btcb-wavax",
+    "name": "BTC.b-WAVAX vLP",
+    "type": "standard",
+    "token": "vAMM-BTC.b/WAVAX",
+    "tokenAddress": "0x7c0781874f5F0E78A920b7a8C840813C69C6E746",
+    "tokenDecimals": 18,
+    "tokenProviderId": "blackhole",
+    "earnContractAddress": "0x0483130D4EFBC2e082653F88Bd52adF987545455",
+    "earnedToken": "mooBlackholeBTCb-WAVAX",
+    "earnedTokenAddress": "0x0483130D4EFBC2e082653F88Bd52adF987545455",
+    "oracle": "lps",
+    "oracleId": "black-btcb-wavax",
+    "status": "active",
+    "createdAt": 1753093757,
+    "platformId": "blackhole",
+    "assets": ["BTCb", "WAVAX"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0x152b9d0FdC40C096757F570A51E494bd4b943E50&token1=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7&pair=0x7c0781874f5F0E78A920b7a8C840813C69C6E746&type=Basic%20Volatile",
+    "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x7c0781874f5F0E78A920b7a8C840813C69C6E746&position=0",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
+  },
+  {
+    "id": "black-usdc-eurc",
+    "name": "USDC-EURC sLP",
+    "type": "standard",
+    "token": "sAMM-USDC/EURC",
+    "tokenAddress": "0x65f83CCacaBaAC4eD2f80289A02dF4D35d744aE8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "blackhole",
+    "earnContractAddress": "0xc362A8C03505790c40d908Ae7C0B4293aD9B9d54",
+    "earnedToken": "mooBlackholeUSDC-EURC",
+    "earnedTokenAddress": "0xc362A8C03505790c40d908Ae7C0B4293aD9B9d54",
+    "oracle": "lps",
+    "oracleId": "black-usdc-eurc",
+    "status": "active",
+    "createdAt": 1753093560,
+    "platformId": "blackhole",
+    "assets": ["USDC", "EURC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&token1=0xC891EB4cbdEFf6e073e859e987815Ed1505c2ACD&pair=0x65f83CCacaBaAC4eD2f80289A02dF4D35d744aE8&type=Basic%20Stable",
+    "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x65f83CCacaBaAC4eD2f80289A02dF4D35d744aE8&position=0",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "avax-blackhole"
+      }
+    ]
+  },
+  {
     "id": "euler-avax-re7labs-usdc",
     "name": "USDC (Re7 Labs)",
     "token": "USDC",
@@ -61,7 +512,9 @@
     "oracle": "lps",
     "oracleId": "balancerv3-avalanche-waavaweth-waavawavax",
     "createdAt": 1745082043,
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1757948167,
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["waAvaWAVAX", "waAvaWETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -2008,7 +2461,7 @@
     "earnedTokenAddress": "0x7E47541114db3addD074EB5aAD3A2318671FD91D",
     "earnContractAddress": "0x7E47541114db3addD074EB5aAD3A2318671FD91D",
     "oracle": "tokens",
-    "oracleId": "WETHe",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1636468072,
     "retireReason": "rewards",
@@ -6941,7 +7394,7 @@
     "earnedTokenAddress": "0xDc5e537764F5Ad0f51Bf52CCF0767083bb4565EC",
     "earnContractAddress": "0xDc5e537764F5Ad0f51Bf52CCF0767083bb4565EC",
     "oracle": "tokens",
-    "oracleId": "WETHe",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1651836383,
     "retireReason": "rewards",
@@ -7158,7 +7611,7 @@
     "earnedTokenAddress": "0x6cBaEBC1333E72206FC326e810972D28f8250485",
     "earnContractAddress": "0x6cBaEBC1333E72206FC326e810972D28f8250485",
     "oracle": "tokens",
-    "oracleId": "WETHe",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1637587754,
     "retireReason": "default",
@@ -7691,13 +8144,15 @@
     "tokenAddress": "0xaE64d55a6f09E4263421737397D1fdFA71896a69",
     "tokenDecimals": 18,
     "tokenProviderId": "gmx",
+    "earnContractAddress": "0x22EafB9C7E2858cfDA712940896464DdAA83d053",
     "earnedToken": "mooGmxGLP",
     "earnedTokenAddress": "0x22EafB9C7E2858cfDA712940896464DdAA83d053",
-    "earnContractAddress": "0x22EafB9C7E2858cfDA712940896464DdAA83d053",
     "oracle": "lps",
     "oracleId": "gmx-avax-glp",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1666793249,
+    "retireReason": "exploit",
+    "retiredAt": 1756238702,
     "platformId": "gmx",
     "assets": ["AVAX", "USDCe", "USDC", "WBTCe", "BTCb", "USDTe", "WETHe"],
     "risks": [
