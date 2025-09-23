@@ -49,7 +49,7 @@
     "platformId": "beefy",
     "feeTier": "1",
     "assets": ["GIGGLE", "WBNB"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
     "zaps": [
@@ -106,7 +106,7 @@
     "status": "active",
     "createdAt": 1758640204,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "0.25",
     "assets": ["ASTER", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
