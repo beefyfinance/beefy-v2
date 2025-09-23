@@ -376,6 +376,8 @@ export const config = {
       'aavUSDC',
       'EURC',
       'savUSD',
+      'AUSD',
+      'sUSDe',
     ],
   },
   cronos: {

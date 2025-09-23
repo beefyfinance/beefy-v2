@@ -8,7 +8,7 @@
     "pairInitHash": "0x87b2d661db12ce27ece6305198fcb950a2522c8e43e3b90e93256b71a6db5899 ",
     "minimumLiquidity": "1000",
     "swapFeeNumerator": "2",
-    "swapFeeDenominator": "1000",
+    "swapFeeDenominator": "10000",
     "getAmountOutMode": "getAmountOut"
   },
   {

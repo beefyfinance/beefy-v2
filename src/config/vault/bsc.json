@@ -1,5 +1,123 @@
 [
   {
+    "id": "pancake-cow-bsc-giggle-wbnb-rp",
+    "name": "GIGGLE-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBscGIGGLE-WBNB",
+    "tokenAddress": "0xd3626020484C10c19F0b51F80993BF6890f5ab50",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x620b4aF0B9BF565b75F296E2015Dccfd3583FdFA",
+    "earnedToken": "rCowPancakeBscGIGGLE-WBNB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-giggle-wbnb",
+    "status": "active",
+    "createdAt": 1758640238,
+    "platformId": "pancakeswap",
+    "assets": ["GIGGLE", "WBNB"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-giggle-wbnb",
+    "name": "GIGGLE-WBNB",
+    "type": "cowcentrated",
+    "token": "GIGGLE-WBNB pancakeswap",
+    "tokenAddress": "0xD9704DabEFd6500B9b469eE02E00A0b3B0aB6F8a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x20d6015660b3fe52e6690a889b5C51F69902cE0e",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnContractAddress": "0xd3626020484C10c19F0b51F80993BF6890f5ab50",
+    "earnedToken": "cowPancakeBscGIGGLE-WBNB",
+    "earnedTokenAddress": "0xd3626020484C10c19F0b51F80993BF6890f5ab50",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-giggle-wbnb",
+    "status": "active",
+    "createdAt": 1758640238,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["GIGGLE", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-aster-usdt-rp",
+    "name": "ASTER-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBscASTER-USDT",
+    "tokenAddress": "0xFCC901D1a2dcEE294A40387B67dd7b52De537a84",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x19517a9a229E3cac7fD082823945545f425f544b",
+    "earnedToken": "rCowPancakeBscASTER-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-aster-usdt",
+    "status": "active",
+    "createdAt": 1758640204,
+    "platformId": "pancakeswap",
+    "assets": ["ASTER", "USDT"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-aster-usdt",
+    "name": "ASTER-USDT",
+    "type": "cowcentrated",
+    "token": "ASTER-USDT pancakeswap",
+    "tokenAddress": "0xaeaD6bd31dd66Eb3A6216aAF271D0E661585b0b1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x000Ae314E2A2172a039B26378814C252734f556A",
+      "0x55d398326f99059fF775485246999027B3197955"
+    ],
+    "earnContractAddress": "0xFCC901D1a2dcEE294A40387B67dd7b52De537a84",
+    "earnedToken": "cowPancakeBscASTER-USDT",
+    "earnedTokenAddress": "0xFCC901D1a2dcEE294A40387B67dd7b52De537a84",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-aster-usdt",
+    "status": "active",
+    "createdAt": 1758640204,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["ASTER", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-bsc-usdt-rion-rp",
     "name": "RION-USDT Reward Pool",
     "type": "gov",
@@ -862,37 +980,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://thena.fi/pools/0x2C4166641d5293551190c9F01aC50d0b6abd7086",
     "removeLiquidityUrl": "https://thena.fi/pools/0x2C4166641d5293551190c9F01aC50d0b6abd7086",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "bsc-thena"
-      }
-    ]
-  },
-  {
-    "id": "thena-usdt-the",
-    "name": "THE-USDT vLP",
-    "token": "vAMM-USDT/THE",
-    "tokenAddress": "0xA051eF9A6FBea340Bb734d022e7B6a3aD9fD9B06",
-    "tokenDecimals": 18,
-    "tokenProviderId": "thena",
-    "earnContractAddress": "0x1725B090Cb494946276654009C53E033669C596f",
-    "earnedToken": "mooThena-USDT-THE",
-    "earnedTokenAddress": "0x1725B090Cb494946276654009C53E033669C596f",
-    "oracle": "lps",
-    "oracleId": "thena-usdt-the",
-    "status": "eol",
-    "retiredAt": 1752239317,
-    "retireReason": "rewards",
-    "createdAt": 1733135686,
-    "platformId": "thena",
-    "assets": ["THE", "USDT"],
-    "migrationIds": [],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://thena.fi/pools/0xA051eF9A6FBea340Bb734d022e7B6a3aD9fD9B06",
-    "removeLiquidityUrl": "https://thena.fi/pools/0xA051eF9A6FBea340Bb734d022e7B6a3aD9fD9B06",
     "network": "bsc",
     "zaps": [
       {
