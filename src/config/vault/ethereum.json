@@ -1986,7 +1986,6 @@
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x58aadfb1afac0ad7fca1148f3cde6aedf5236b6d00000000000000000000067f/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x58aadfb1afac0ad7fca1148f3cde6aedf5236b6d00000000000000000000067f/remove-liquidity",
-    "pointStructureIds": ["kelp"],
     "network": "ethereum",
     "zaps": [
       {
@@ -3442,7 +3441,7 @@
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x848a5564158d84b8a8fb68ab5d004fae11619a5400000000000000000000066a/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x848a5564158d84b8a8fb68ab5d004fae11619a5400000000000000000000066a/remove-liquidity",
-    "pointStructureIds": ["kelp", "etherfi", "swell"],
+    "pointStructureIds": ["etherfi"],
     "network": "ethereum",
     "zaps": [
       {
@@ -3552,7 +3551,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-70/deposit",
     "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-70/withdraw",
-    "pointStructureIds": ["vector-reserve"],
     "network": "ethereum",
     "zaps": [
       {

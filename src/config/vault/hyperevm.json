@@ -860,7 +860,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.kittenswap.finance/liquidity/manage/standard?tokenA=0x5555555555555555555555555555555555555555&tokenB=0x618275F8EFE54c2afa87bfB9F210A52F0fF89364&action=add&pool=volatile",
     "network": "hyperevm",
-    "pointStructureIds": ["kittenswap"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1185,7 +1184,6 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "hyperevm",
-    "pointStructureIds": ["kittenswap"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -1242,7 +1240,7 @@
     "createdAt": 1749225434,
     "platformId": "kittenswap",
     "assets": ["USDe", "WHYPE"],
-    "pointStructureIds": ["ethena", "kittenswap"],
+    "pointStructureIds": ["ethena"],
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -1306,7 +1304,6 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "hyperevm",
-    "pointStructureIds": ["kittenswap"],
     "zaps": [
       {
         "strategyId": "gov-composer"
