@@ -75,18 +75,12 @@ const Side = styled('div', {
   variants: {
     spacing: {
       sm: {
-        columnGap: '20px',
-        '@media (max-width: 1082px)': {
-          columnGap: '16px',
-        },
-        '@media (max-width: 1044px)': {
-          columnGap: '10px',
-        },
+        columnGap: '10px',
       },
       md: {
         columnGap: '24px',
-        '@media (max-width: 960px)': {
-          columnGap: '12px',
+        '@media (max-width: 1002px)': {
+          columnGap: '16px',
         },
       },
     },

@@ -22,7 +22,7 @@ export const MainMenu = memo(function MainMenu({
   }, [mobileMenuOpen, setMobileMenuOpen]);
 
   return (
-    <>
+    <Container>
       <VaultsAndMenuContainer>
         <NavLinkItem title={'Header-Vaults'} url="/" Icon={VaultsIcon} />
       </VaultsAndMenuContainer>
@@ -52,8 +52,19 @@ export const MainMenu = memo(function MainMenu({
           <MenuButton onClick={handleDrawerToggle} />
         </MenuButtonContainer>
       </VaultsAndMenuContainer>
-    </>
+    </Container>
   );
+});
+
+const Container = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    columnGap: '20px',
+    '@media (max-width: 1002px)': {
+      columnGap: '16px',
+    },
+  },
 });
 
 const DaoResourcesContainer = styled('div', {
@@ -61,15 +72,15 @@ const DaoResourcesContainer = styled('div', {
     display: 'flex',
     alignItems: 'center',
     columnGap: '20px',
-    '@media (max-width: 1082px)': {
-      columnGap: '16px',
+    '@media (max-width: 1002px)': {
+      columnGap: '8px',
     },
   },
 });
 
 const VaultsAndMenuContainer = styled('div', {
   base: {
-    '@media (max-width: 700px)': {
+    '@media (max-width: 712px)': {
       display: 'none',
     },
   },
@@ -77,7 +88,7 @@ const VaultsAndMenuContainer = styled('div', {
 
 const DashboardContainer = styled('div', {
   base: {
-    '@media (max-width: 819px)': {
+    '@media (max-width: 800px)': {
       display: 'none',
     },
   },
@@ -85,7 +96,7 @@ const DashboardContainer = styled('div', {
 
 const DaoContainer = styled('div', {
   base: {
-    '@media (max-width: 910px)': {
+    '@media (max-width: 919px)': {
       display: 'none',
     },
   },
@@ -93,7 +104,7 @@ const DaoContainer = styled('div', {
 
 const ResourcesContainer = styled('div', {
   base: {
-    '@media (max-width: 1044px)': {
+    '@media (max-width: 919px)': {
       display: 'none',
     },
   },

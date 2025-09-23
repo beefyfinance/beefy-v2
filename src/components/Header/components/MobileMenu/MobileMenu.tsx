@@ -63,7 +63,7 @@ export const MobileMenu = memo(function MobileMenu({
 });
 const MenuContainer = styled('div', {
   base: {
-    '@media (min-width: 1044px)': {
+    '@media (min-width: 996px)': {
       display: 'none',
     },
   },
