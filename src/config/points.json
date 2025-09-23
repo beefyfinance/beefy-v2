@@ -319,8 +319,7 @@
     ],
     "eligibility": [
       {
-        "type": "token-holding",
-        "tokens": ["STONE"]
+        "type": "vault-whitelist"
       }
     ],
     "accounting": [
@@ -351,8 +350,7 @@
     ],
     "eligibility": [
       {
-        "type": "token-holding",
-        "tokens": ["USDe", "sUSDe"]
+        "type": "vault-whitelist"
       }
     ],
     "accounting": [
