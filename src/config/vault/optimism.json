@@ -104,7 +104,6 @@
     "status": "active",
     "platformId": "beethovenx",
     "assets": ["wrsETH", "waOptWETH"],
-    "pointStructureIds": ["kelp"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/optimism/v3/0xe0d0b607539fdb647c4e87eff89588c6bb669c03/add-liquidity",
@@ -3382,7 +3381,6 @@
     "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "optimism",
-    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -4540,7 +4538,6 @@
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.05",
-    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -4601,7 +4598,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x73a7fe27fe9545d53924e529acf11f3073841b9e000000000000000000000133",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x73a7fe27fe9545d53924e529acf11f3073841b9e000000000000000000000133",
-    "pointStructureIds": ["kelp"],
     "network": "optimism",
     "zaps": [
       {
@@ -4873,7 +4869,6 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x87eEE96D50Fb761AD85B1c982d28A042169d61b1&type=-1&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xE48b4E392E4FC29aC2600c3C8EFe0404A15D60D9",
     "network": "optimism",
-    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "solidly",

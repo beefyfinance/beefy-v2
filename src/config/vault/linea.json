@@ -623,7 +623,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
-    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "single"
@@ -753,7 +752,6 @@
     "assets": ["wrsETH", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["kelp"],
     "network": "linea",
     "zaps": [
       {
@@ -787,7 +785,6 @@
     "assets": ["wrsETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["kelp"],
     "network": "linea",
     "zaps": [
       {
@@ -824,7 +821,6 @@
     "assets": ["wrsETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["kelp"],
     "network": "linea",
     "zaps": [
       {
@@ -1698,7 +1694,6 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ineth-wsteth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ineth-wsteth-pegged-price",
     "network": "linea",
-    "pointStructureIds": ["inception"],
     "zaps": [
       {
         "strategyId": "gamma",
@@ -1832,8 +1827,7 @@
     "strategyTypeId": "ichi-solidly",
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0xa219439258ca9da29e9cc4ce5596924745e12b93&strategy=Yield%20IQ%20(USDT)",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0xa219439258ca9da29e9cc4ce5596924745e12b93&strategy=Yield%20IQ%20(USDT)",
-    "network": "linea",
-    "pointStructureIds": ["linea-voyage"]
+    "network": "linea"
   },
   {
     "id": "lynex-ichi-stone-lynx",
@@ -2111,8 +2105,7 @@
     "strategyTypeId": "ichi-solidly",
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x176211869ca2b568f2a7d4ee941e073a821ee1ff&currency1=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&strategy=Yield%20IQ%20(USDC)",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x176211869ca2b568f2a7d4ee941e073a821ee1ff&currency1=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&strategy=Yield%20IQ%20(USDC)",
-    "network": "linea",
-    "pointStructureIds": ["linea-voyage"]
+    "network": "linea"
   },
   {
     "id": "lynex-ichi-weth-lynx",
@@ -2135,8 +2128,7 @@
     "strategyTypeId": "ichi-solidly",
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f&strategy=Yield%20IQ%20(wETH)",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f&strategy=Yield%20IQ%20(wETH)",
-    "network": "linea",
-    "pointStructureIds": ["linea-voyage"]
+    "network": "linea"
   },
   {
     "id": "lynex-ichi-wbtc-weth",
@@ -2159,8 +2151,7 @@
     "strategyTypeId": "ichi-solidly",
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x3aab2285ddcddad8edf438c1bab47e1a9d05a9b4&currency1=0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f&strategy=Yield%20IQ%20(wBTC)",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x3aab2285ddcddad8edf438c1bab47e1a9d05a9b4&currency1=0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f&strategy=Yield%20IQ%20(wBTC)",
-    "network": "linea",
-    "pointStructureIds": ["linea-voyage"]
+    "network": "linea"
   },
   {
     "id": "mendi-linea-lev-wsteth",
