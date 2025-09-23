@@ -120,7 +120,7 @@ const MenuButtonContainer = styled('div', {
       cursor: 'pointer',
       color: 'text.light',
     },
-    '@media (min-width: 1044px)': {
+    '@media (min-width: 996px)': {
       display: 'none',
     },
   },
