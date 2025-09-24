@@ -373,7 +373,7 @@ function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBas
     addLiquidityUrl: config.addLiquidityUrl || undefined,
     removeLiquidityUrl: config.removeLiquidityUrl || undefined,
     assetType: config.assets?.length === 1 ? 'single' : 'lps',
-    earningPoints: (config.pointStructureIds || []).length > 0,
+    earningPoints: config.status === 'active' && (config.pointStructureIds || []).length > 0,
     pointStructureIds: config.pointStructureIds || [],
     platformId: config.platformId,
     strategyTypeId: config.strategyTypeId,

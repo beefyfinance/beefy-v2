@@ -1240,7 +1240,6 @@
     "createdAt": 1749225434,
     "platformId": "kittenswap",
     "assets": ["USDe", "WHYPE"],
-    "pointStructureIds": ["ethena"],
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "hyperevm",

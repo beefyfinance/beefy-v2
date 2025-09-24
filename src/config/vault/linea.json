@@ -1850,8 +1850,7 @@
     "strategyTypeId": "ichi-solidly",
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0x93f4d0ab6a8b4271f4a28db399b5e30612d21116&strategy=Yield%20IQ%20(STONE)",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0x93f4d0ab6a8b4271f4a28db399b5e30612d21116&strategy=Yield%20IQ%20(STONE)",
-    "network": "linea",
-    "pointStructureIds": ["manta-stakestone"]
+    "network": "linea"
   },
   {
     "id": "lynex-gamma-wsteth-weth",
@@ -2172,7 +2171,6 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
-    "pointStructureIds": ["mendi-loyalty"],
     "zaps": [
       {
         "strategyId": "single"
@@ -2202,7 +2200,6 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
-    "pointStructureIds": ["mendi-loyalty"],
     "zaps": [
       {
         "strategyId": "single"
@@ -2231,7 +2228,6 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
-    "pointStructureIds": ["mendi-loyalty"],
     "zaps": [
       {
         "strategyId": "single"
@@ -2260,7 +2256,6 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
-    "pointStructureIds": ["mendi-loyalty"],
     "zaps": [
       {
         "strategyId": "single"
@@ -2289,7 +2284,6 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
-    "pointStructureIds": ["mendi-loyalty"],
     "zaps": [
       {
         "strategyId": "single"
