@@ -89,6 +89,7 @@ export const config = {
       'frxUSD',
       'scrvUSD',
       'msUSD',
+      'USDaf',
       'cUSD',
       'stcUSD',
     ],
