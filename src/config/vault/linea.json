@@ -1936,7 +1936,6 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/stone-weth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/stone-weth-pegged-price",
     "network": "linea",
-    "pointStructureIds": ["manta-stakestone"],
     "zaps": [
       {
         "strategyId": "gamma",
@@ -1970,7 +1969,6 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x8f3e0a2378b0b5838e0e0d99fcecc167d47bc9a7",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x8f3e0a2378b0b5838e0e0d99fcecc167d47bc9a7",
     "network": "linea",
-    "pointStructureIds": ["manta-stakestone"],
     "zaps": [
       {
         "strategyId": "solidly",
