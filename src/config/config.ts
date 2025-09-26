@@ -90,6 +90,7 @@ export const config = {
       'scrvUSD',
       'msUSD',
       'USDaf',
+      'ysyBOLD',
       'cUSD',
       'stcUSD',
     ],
