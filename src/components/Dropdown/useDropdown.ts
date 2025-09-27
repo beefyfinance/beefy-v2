@@ -25,6 +25,9 @@ import {
 import type { DropdownData, DropdownOptions } from './types.ts';
 import { isDefined } from '../../features/data/utils/array-utils.ts';
 
+/** @dev must be <= Container padding */
+const placementPadding = 12;
+
 export function useDropdown<TRef extends ReferenceType = Element>({
   open: controlledOpen,
   onChange: controlledOnChange,
@@ -59,13 +62,13 @@ export function useDropdown<TRef extends ReferenceType = Element>({
       flipMiddleware({
         crossAxis: placement.includes('-'),
         fallbackAxisSideDirection: 'start',
-        padding: 16,
+        padding: placementPadding,
       }),
-      shiftMiddleware({ padding: 16 }),
-      arrowEnabled ? arrowMiddleware({ element: arrowRef, padding: 16 }) : undefined,
+      shiftMiddleware({ padding: placementPadding }),
+      arrowEnabled ? arrowMiddleware({ element: arrowRef, padding: placementPadding }) : undefined,
       autoWidth || autoHeight ?
         sizeMiddleware({
-          padding: 16,
+          padding: placementPadding,
           apply({ availableWidth, availableHeight, elements }) {
             if (autoWidth) {
               elements.floating.style.width =
