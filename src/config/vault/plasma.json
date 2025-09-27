@@ -1,5 +1,83 @@
 [
   {
+    "id": "euler-plasma-telosc-usdt0",
+    "name": "USD₮0 (TelosC)",
+    "type": "standard",
+    "token": "USD₮0",
+    "tokenAddress": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xb58E4B1f4ba8E0c6a9f26262EE76Ea1D417E3228",
+    "earnedToken": "mooEulerPlasmaUSDT0 (TelosC)",
+    "earnedTokenAddress": "0xb58E4B1f4ba8E0c6a9f26262EE76Ea1D417E3228",
+    "oracle": "tokens",
+    "oracleId": "USDT0",
+    "status": "active",
+    "createdAt": 1758942529,
+    "platformId": "euler",
+    "assets": ["USDT0"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "euler-plasma-re7labs-usdt0",
+    "name": "USD₮0 (Re7Labs)",
+    "type": "standard",
+    "token": "USD₮0",
+    "tokenAddress": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x7b196460708DEd32eeCAc6A6946983cf6D3c4491",
+    "earnedToken": "mooEulerPlasmaUSDT0 (Re7Labs)",
+    "earnedTokenAddress": "0x7b196460708DEd32eeCAc6A6946983cf6D3c4491",
+    "oracle": "tokens",
+    "oracleId": "USDT0",
+    "status": "active",
+    "createdAt": 1758942529,
+    "platformId": "euler",
+    "assets": ["USDT0"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "euler-plasma-k3capital-usdt0",
+    "name": "USD₮0 (K3Capital)",
+    "type": "standard",
+    "token": "USD₮0",
+    "tokenAddress": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x5aF45b3A8cB44B444dDf9cCEB90F5998EAc0FC97",
+    "earnedToken": "mooEulerPlasmaUSDT0 (K3Capital)",
+    "earnedTokenAddress": "0x5aF45b3A8cB44B444dDf9cCEB90F5998EAc0FC97",
+    "oracle": "tokens",
+    "oracleId": "USDT0",
+    "status": "active",
+    "createdAt": 1758942529,
+    "platformId": "euler",
+    "assets": ["USDT0"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "aavev3-plasma-weth",
     "name": "WETH",
     "type": "standard",
