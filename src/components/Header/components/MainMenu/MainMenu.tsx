@@ -104,7 +104,7 @@ const DaoContainer = styled('div', {
 
 const ResourcesContainer = styled('div', {
   base: {
-    '@media (max-width: 919px)': {
+    '@media (max-width: 996px)': {
       display: 'none',
     },
   },
@@ -120,7 +120,7 @@ const MenuButtonContainer = styled('div', {
       cursor: 'pointer',
       color: 'text.light',
     },
-    '@media (min-width: 996px)': {
+    '@media (max-width: 996px)': {
       display: 'none',
     },
   },
