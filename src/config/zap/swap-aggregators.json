@@ -375,6 +375,18 @@
     "blockedVaults": []
   },
   {
+    "id": "kyber-plasma",
+    "type": "kyber",
+    "chainId": "plasma",
+    "fee": {
+      "value": 0.0005,
+      "recipient": "0xA55e75C4815Ff39eFD76C257857441d9FD99b45b"
+    },
+    "priorityTokens": ["XPL", "WXPL", "USDT0"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
     "id": "odos-ethereum",
     "type": "odos",
     "chainId": "ethereum",

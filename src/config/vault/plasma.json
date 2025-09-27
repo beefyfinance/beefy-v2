@@ -1,0 +1,179 @@
+[
+  {
+    "id": "uniswap-cow-plasma-xaut0-usdt0-rp",
+    "name": "XAUt0-USD₮0 Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPlasmaXAUt0-USDT0",
+    "tokenAddress": "0x8BF038A30D3E5e16cE35973A75a3ac65d888Cc81",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x17c9feF2d672694853D12f6A976437eEE674fC16",
+    "earnedToken": "rCowUniswapPlasmaXAUt0-USDT0",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-plasma-xaut0-usdt0",
+    "status": "active",
+    "createdAt": 1758937740,
+    "platformId": "uniswap",
+    "assets": ["XAUt0", "USDT0"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-plasma-xaut0-usdt0",
+    "name": "XAUt0-USD₮0",
+    "type": "cowcentrated",
+    "token": "XAUt0-USD₮0 uniswap",
+    "tokenAddress": "0x21d5a075073e631A85Ab9C02E4b703460C572B4B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x1B64B9025EEbb9A6239575dF9Ea4b9Ac46D4d193",
+      "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb"
+    ],
+    "earnContractAddress": "0x8BF038A30D3E5e16cE35973A75a3ac65d888Cc81",
+    "earnedToken": "cowUniswapPlasmaXAUt0-USDT0",
+    "earnedTokenAddress": "0x8BF038A30D3E5e16cE35973A75a3ac65d888Cc81",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-plasma-xaut0-usdt0",
+    "status": "active",
+    "createdAt": 1758937740,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["XAUt0", "USDT0"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-plasma-weth-usdt0-rp",
+    "name": "WETH-USD₮0 Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPlasmaWETH-USDT0",
+    "tokenAddress": "0xa6186c6F879eDC2a6Fc268E4Ddd71869195C3856",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x71C193aF5DA5cc943Dbe50aeC4fCCa47711Cf990",
+    "earnedToken": "rCowUniswapPlasmaWETH-USDT0",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-plasma-weth-usdt0",
+    "status": "active",
+    "createdAt": 1758937416,
+    "platformId": "uniswap",
+    "assets": ["WETH", "USDT0"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-plasma-weth-usdt0",
+    "name": "WETH-USD₮0",
+    "type": "cowcentrated",
+    "token": "WETH-USD₮0 uniswap",
+    "tokenAddress": "0xCe4Ac514CA6a9db357CcCc105B7848d7fd37445d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x9895D81bB462A195b4922ED7De0e3ACD007c32CB",
+      "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb"
+    ],
+    "earnContractAddress": "0xa6186c6F879eDC2a6Fc268E4Ddd71869195C3856",
+    "earnedToken": "cowUniswapPlasmaWETH-USDT0",
+    "earnedTokenAddress": "0xa6186c6F879eDC2a6Fc268E4Ddd71869195C3856",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-plasma-weth-usdt0",
+    "status": "active",
+    "createdAt": 1758937416,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["WETH", "USDT0"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-plasma-wxpl-usdt0-rp",
+    "name": "USD₮0-WXPL Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPlasmaUSDT0-WXPL",
+    "tokenAddress": "0x60242b3c90a3F477a0FC5B4095f5946583Fbd6ce",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x79b9bCf5CFc70b8FAED5648212dB2E6e4bD9E4B7",
+    "earnedToken": "rCowUniswapPlasmaUSDT0-WXPL",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-plasma-wxpl-usdt0",
+    "status": "active",
+    "createdAt": 1758935249,
+    "platformId": "uniswap",
+    "assets": ["USDT0", "WXPL"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-plasma-wxpl-usdt0",
+    "name": "USD₮0-WXPL",
+    "type": "cowcentrated",
+    "token": "USD₮0-WXPL uniswap",
+    "tokenAddress": "0x8603C67B7Cc056ef6981a9C709854c53b699Fa66",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x6100E367285b01F48D07953803A2d8dCA5D19873",
+      "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb"
+    ],
+    "earnContractAddress": "0x60242b3c90a3F477a0FC5B4095f5946583Fbd6ce",
+    "earnedToken": "cowUniswapPlasmaUSDT0-WXPL",
+    "earnedTokenAddress": "0x60242b3c90a3F477a0FC5B4095f5946583Fbd6ce",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-plasma-wxpl-usdt0",
+    "status": "active",
+    "createdAt": 1758935249,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["USDT0", "WXPL"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  }
+]

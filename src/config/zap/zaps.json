@@ -153,5 +153,10 @@
     "chainId": "hyperevm",
     "router": "0xF08cc9422a43Be7c1d6663DF2890Cf7E36E79307",
     "manager": "0x455891384DE7A55E34C748461ef91433D6Ed0d09"
+  },
+  {
+    "chainId": "plasma",
+    "router": "0x03C2E2e84031d913d45B1F5b5dDC8E50Fcb28652",
+    "manager": "0x5B8F906E9E3355155F05A9c46c5bF3e6D1dEBE5E"
   }
 ]
