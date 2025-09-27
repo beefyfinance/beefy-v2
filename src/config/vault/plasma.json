@@ -1,5 +1,57 @@
 [
   {
+    "id": "aavev3-plasma-weth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0x9895D81bB462A195b4922ED7De0e3ACD007c32CB",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0xa725c4F6f7DCa3148D372deA1d0e92945256De2E",
+    "earnedToken": "mooAaveV3PlasmaWETH",
+    "earnedTokenAddress": "0xa725c4F6f7DCa3148D372deA1d0e92945256De2E",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1758942529,
+    "platformId": "aave",
+    "assets": ["WETH"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev3-plasma-usdt0",
+    "name": "USD₮0",
+    "type": "standard",
+    "token": "USD₮0",
+    "tokenAddress": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x4ad02BF095B8FFB6E0aC687BEEE5610ca3EBe6b1",
+    "earnedToken": "mooAaveV3PlasmaUSDT0",
+    "earnedTokenAddress": "0x4ad02BF095B8FFB6E0aC687BEEE5610ca3EBe6b1",
+    "oracle": "tokens",
+    "oracleId": "USDT0",
+    "status": "active",
+    "createdAt": 1758942529,
+    "platformId": "aave",
+    "assets": ["USDT0"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-plasma-xaut0-usdt0-rp",
     "name": "XAUt0-USD₮0 Reward Pool",
     "type": "gov",
