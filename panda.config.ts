@@ -77,7 +77,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -1074,7 +1074,7 @@ const config = buildConfig(
       moonbeam: { primary: '#958fdc', header: 0.4 },
       moonriver: { primary: '#06353d', header: 0.4 },
       optimism: { primary: '#ff0420', header: 0.2 },
-      plasma: { primary: '#2a5a4f', header: 0.2 },
+      plasma: { primary: '#162F29', header: 0.2 },
       polygon: { primary: '#f5f0fd', header: 0.3 },
       real: { primary: '#ffffff', header: '#1c122c66' },
       rootstock: { primary: '#000000', header: '#1c122c66' },
