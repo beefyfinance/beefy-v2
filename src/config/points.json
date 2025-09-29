@@ -295,41 +295,6 @@
     ]
   },
   {
-    "id": "manta-stakestone",
-    "docs": "https://renewparadigm.manta.network/about",
-    "points": [
-      {
-        "id": "stakestone",
-        "name": "Stakestone Points"
-      },
-      {
-        "id": "eigenlayer",
-        "name": "Eigenlayer Restaked Points"
-      }
-    ],
-    "eligibility": [
-      {
-        "type": "vault-whitelist"
-      }
-    ],
-    "accounting": [
-      {
-        "id": "beefy-lrt-subgraph",
-        "role": "Raw indexing of blockchain data, computes time weighted balances",
-        "url": "https://github.com/beefyfinance/lrt-subgraph"
-      },
-      {
-        "id": "beefy-lrt-api",
-        "role": "API for the LRT subgraph. Provides stable API.",
-        "url": "https://github.com/beefyfinance/beefy-lrt-api"
-      },
-      {
-        "id": "manta",
-        "role": "Distribution of rewards"
-      }
-    ]
-  },
-  {
     "id": "ethena",
     "docs": "https://ethena.notion.site/Sats-Campaign-FAQ-3ae1f067ff834efc95b12148a434f668",
     "points": [
