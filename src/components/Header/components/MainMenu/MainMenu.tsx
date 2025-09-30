@@ -75,7 +75,7 @@ const DaoResourcesContainer = styled('div', {
     '@media (max-width: 1002px)': {
       columnGap: '8px',
     },
-    '@media (max-width: 919px)': {
+    '@media (max-width: 920px)': {
       display: 'none',
     },
   },
@@ -99,7 +99,7 @@ const DashboardContainer = styled('div', {
 
 const DaoContainer = styled('div', {
   base: {
-    '@media (max-width: 919px)': {
+    '@media (max-width: 920px)': {
       display: 'none',
     },
   },
@@ -107,7 +107,7 @@ const DaoContainer = styled('div', {
 
 const ResourcesContainer = styled('div', {
   base: {
-    '@media (max-width: 1001px)': {
+    '@media (max-width: 1002px)': {
       display: 'none',
     },
   },
