@@ -75,6 +75,9 @@ const DaoResourcesContainer = styled('div', {
     '@media (max-width: 1002px)': {
       columnGap: '8px',
     },
+    '@media (max-width: 919px)': {
+      display: 'none',
+    },
   },
 });
 
