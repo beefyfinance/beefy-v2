@@ -47,7 +47,7 @@ const initialState: BeGemsState = {
         number: 2,
         type: 'points',
         startTime: 1750248000,
-        endTime: 1758196800, // Thu Sep 18 2025 12:00:00 UTC,
+        endTime: 1766059200, // Thu Dec 18 2025 12:00:00
         explainer: {
           title: 'Track your beGEMS points and climb the leaderboard',
           paragraphs: [
@@ -81,7 +81,7 @@ const initialState: BeGemsState = {
       3: {
         number: 3,
         type: 'points',
-        startTime: 1758196800, // Thu Sep 18 2025 12:00:00 UTC,
+        startTime: 1766059200, // Thu Dec 18 2025 12:00:00
         endTime: 1766059200, // Thu Dec 18 2025 12:00:00 UTC
         explainer: {
           title: 'Season 3 is coming soon',

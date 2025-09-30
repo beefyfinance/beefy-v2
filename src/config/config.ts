@@ -89,6 +89,8 @@ export const config = {
       'frxUSD',
       'scrvUSD',
       'msUSD',
+      'USDaf',
+      'ysyBOLD',
       'cUSD',
       'stcUSD',
     ],
@@ -836,7 +838,6 @@ export const config = {
     stableCoins: ['USDC', 'USDT'],
   },
   hyperevm: {
-    new: true,
     name: 'HyperEVM',
     chainId: 999,
     rpc: ['https://rpc.hyperliquid.xyz/evm'],
@@ -848,6 +849,24 @@ export const config = {
       type: 'standard',
     },
     stableCoins: ['USDT0', 'USDe', 'feUSD', 'WHLP'],
+  },
+  plasma: {
+    new: true,
+    name: 'Plasma',
+    chainId: 9745,
+    rpc: ['https://rpc.plasma.to'],
+    explorerUrl: 'https://plasmascan.to/',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x25B6B1a6e7948a983f8e0999FFB4E68Bc7385520',
+    native: { symbol: 'XPL', oracleId: 'WXPL', decimals: 18 },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.7,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '10000000', // 0.01 gwei
+    },
+    stableCoins: ['USDT0'],
   },
   aurora: {
     name: 'Aurora',

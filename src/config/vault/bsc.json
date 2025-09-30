@@ -1,5 +1,64 @@
 [
   {
+    "id": "pancake-cow-bsc-xpl-usdt-rp",
+    "name": "XPL-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBscXPL-USDT",
+    "tokenAddress": "0x68486c17CeD7e7449d23C9b98f642A728d51fc51",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xEf2cE374459b6F3542f45deC4a937D1F981Fa029",
+    "earnedToken": "rCowPancakeBscXPL-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-xpl-usdt",
+    "status": "active",
+    "createdAt": 1758816621,
+    "platformId": "pancakeswap",
+    "assets": ["XPL", "USDT"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-xpl-usdt",
+    "name": "XPL-USDT",
+    "type": "cowcentrated",
+    "token": "XPL-USDT pancakeswap",
+    "tokenAddress": "0x567af8053d49034062E8F7182b324C1f1AA2189B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x405FBc9004D857903bFD6b3357792D71a50726b0",
+      "0x55d398326f99059fF775485246999027B3197955"
+    ],
+    "earnContractAddress": "0x68486c17CeD7e7449d23C9b98f642A728d51fc51",
+    "earnedToken": "cowPancakeBscXPL-USDT",
+    "earnedTokenAddress": "0x68486c17CeD7e7449d23C9b98f642A728d51fc51",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-xpl-usdt",
+    "status": "active",
+    "createdAt": 1758816621,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["XPL", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-bsc-giggle-wbnb-rp",
     "name": "GIGGLE-WBNB Reward Pool",
     "type": "gov",

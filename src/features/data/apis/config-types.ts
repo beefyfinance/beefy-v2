@@ -184,7 +184,8 @@ type ChainId =
   | 'heco'
   | 'harmony'
   | 'saga'
-  | 'hyperevm';
+  | 'hyperevm'
+  | 'plasma';
 
 export type ChainConfig = {
   id: ChainId;

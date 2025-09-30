@@ -878,7 +878,8 @@ const checkPointsStructureIds = (pool: VaultConfig) => {
             pool.assets?.some(a => eligibility.tokens?.includes(a))) ??
             false
         );
-      } else if (eligibility.type === 'token-on-platform') {
+      } /* TS can't narrow type as there is no eligibility in points.json with both tokens and platformId
+        else if (eligibility.type === 'token-on-platform') {
         if (!('tokens' in eligibility)) {
           throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
         }
@@ -891,7 +892,7 @@ const checkPointsStructureIds = (pool: VaultConfig) => {
             pool.assets?.some(a => eligibility.tokens?.includes(a))) ??
             false
         );
-      } else if (eligibility.type === 'platform') {
+      }*/ else if (eligibility.type === 'platform') {
         if (!('platformId' in eligibility)) {
           throw new Error(`Error: ${pointProvider.id} : eligibility.platformId missing`);
         }

@@ -49,6 +49,7 @@ export const MERKL_SUPPORTED_CHAINS = new Map<ChainEntity['id'], Address>([
   ['saga', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['lisk', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['hyperevm', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['plasma', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
 ]);
 
 function parseReasonId(reasonId: string):

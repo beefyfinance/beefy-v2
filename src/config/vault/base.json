@@ -12631,7 +12631,6 @@
     "oracleId": "aerodrome-cow-wsteth-wrseth",
     "status": "active",
     "platformId": "aerodrome",
-    "pointStructureIds": ["kelp"],
     "assets": ["wstETH", "wrsETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
@@ -12673,7 +12672,6 @@
     "assets": ["wstETH", "wrsETH"],
     "risks": [],
     "strategyTypeId": "pool",
-    "pointStructureIds": ["kelp"],
     "network": "base",
     "zaps": [
       {
@@ -12703,7 +12701,6 @@
     "status": "active",
     "createdAt": 1729017466,
     "platformId": "beefy",
-    "pointStructureIds": ["kelp"],
     "assets": ["wstETH", "wrsETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
@@ -16257,7 +16254,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x04D5ddf5f3a8939889F11E97f8c4BB48317F1938&token1=0x4200000000000000000000000000000000000006&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
-    "pointStructureIds": ["anzen"],
     "network": "base",
     "zaps": [
       {
@@ -16318,7 +16314,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x04D5ddf5f3a8939889F11E97f8c4BB48317F1938&token1=0xe31eE12bDFDD0573D634124611e85338e2cBF0cF&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
-    "pointStructureIds": ["anzen"],
     "network": "base",
     "zaps": [
       {
@@ -18050,7 +18045,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x04D5ddf5f3a8939889F11E97f8c4BB48317F1938&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
-    "pointStructureIds": ["anzen"],
     "network": "base",
     "zaps": [
       {
@@ -18271,7 +18265,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xEDfa23602D0EC14714057867A78d01e94176BEA0&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -23533,13 +23526,15 @@
     "tokenAddress": "0x07CFA5Df24fB17486AF0CBf6C910F24253a674D3",
     "tokenDecimals": 18,
     "tokenProviderId": "baseswap",
+    "earnContractAddress": "0x6Dd2abBBbbf494dd2454aEd67880B9533E2b3DA1",
     "earnedToken": "mooBaseSwapcbETH-WETH",
     "earnedTokenAddress": "0x6Dd2abBBbbf494dd2454aEd67880B9533E2b3DA1",
-    "earnContractAddress": "0x6Dd2abBBbbf494dd2454aEd67880B9533E2b3DA1",
     "oracle": "lps",
     "oracleId": "baseswap-cbeth-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1693580890,
+    "retireReason": "rewards",
+    "retiredAt": 1758546805,
     "platformId": "baseswap",
     "assets": ["cbETH", "ETH"],
     "risks": [

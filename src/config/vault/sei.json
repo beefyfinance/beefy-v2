@@ -521,7 +521,6 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://oku.trade/app/sei/swap/0x3894085Ef7Ff0f0aeDf52E2A2704928d1Ec074F1/0x5Cf6826140C1C56Ff49C808A1A75407Cd1DF9423",
     "network": "sei",
-    "pointStructureIds": ["yei"],
     "lendingOracle": {
       "provider": "redstone",
       "address": "0xF708DB0C6352d012AA093d71d407Cec1250A4CB3"
@@ -561,7 +560,6 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://oku.trade/app/sei/swap/0x0000000000000000000000000000000000000000/0xb75d0b03c06a926e488e2659df1a861f860bd3d1",
     "network": "sei",
-    "pointStructureIds": ["yei"],
     "lendingOracle": {
       "provider": "pyth",
       "address": "0xb4B0a33487baFbb9b90b084AC2A2A150956F4658"
@@ -640,7 +638,6 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://oku.trade/app/sei/swap/0x3894085Ef7Ff0f0aeDf52E2A2704928d1Ec074F1/0xE30feDd158A2e3b13e9badaeABaFc5516e95e8C7",
     "network": "sei",
-    "pointStructureIds": ["yei"],
     "lendingOracle": {
       "provider": "pyth",
       "address": "0x752Df241a4abafe90aA46ec25D2c2701a3d35598"
