@@ -109,6 +109,7 @@ const Trigger = styled(
       paddingInline: '12px',
       color: 'text.dark',
       gap: '3px',
+      minWidth: '110px',
     },
   },
   {
