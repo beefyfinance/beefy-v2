@@ -62,7 +62,7 @@ const Container = styled('div', {
     alignItems: 'center',
     columnGap: '20px',
     '@media (max-width: 1002px)': {
-      columnGap: '16px',
+      columnGap: '12px',
     },
   },
 });
@@ -104,7 +104,7 @@ const DaoContainer = styled('div', {
 
 const ResourcesContainer = styled('div', {
   base: {
-    '@media (max-width: 996px)': {
+    '@media (max-width: 1001px)': {
       display: 'none',
     },
   },
@@ -120,7 +120,7 @@ const MenuButtonContainer = styled('div', {
       cursor: 'pointer',
       color: 'text.light',
     },
-    '@media (max-width: 996px)': {
+    '@media (min-width: 1002px)': {
       display: 'none',
     },
   },
