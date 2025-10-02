@@ -91,7 +91,7 @@ const VaultsAndMenuContainer = styled('div', {
 
 const DashboardContainer = styled('div', {
   base: {
-    '@media (max-width: 800px)': {
+    '@media (max-width: 830px)': {
       display: 'none',
     },
   },
@@ -123,7 +123,7 @@ const MenuButtonContainer = styled('div', {
       cursor: 'pointer',
       color: 'text.light',
     },
-    '@media (min-width: 1002px)': {
+    '@media (min-width: 1003px)': {
       display: 'none',
     },
   },

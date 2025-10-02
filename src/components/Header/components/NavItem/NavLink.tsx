@@ -11,7 +11,7 @@ const navItemStyles = {
     display: 'flex',
     textDecoration: 'none',
     color: 'text.dark',
-    columnGap: '4px',
+    columnGap: '2px',
     outline: 'none',
     padding: '2px',
   },

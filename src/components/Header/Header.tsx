@@ -54,13 +54,12 @@ export const Header = memo(function Header() {
 const HeaderContainer = styled(Container, {
   base: {
     textStyle: 'body.medium',
-    minHeight: '64px',
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
     justifyContent: 'space-between',
-    sm: {
-      minHeight: 'auto',
+    paddingBlock: '16px',
+    md: {
       paddingBlock: '24px',
     },
   },
