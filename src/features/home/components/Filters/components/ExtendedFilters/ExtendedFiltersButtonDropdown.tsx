@@ -14,7 +14,7 @@ import {
   FloatingPortal,
   offset,
   shift,
-  useClick,
+  useHover,
   useDismiss,
   useFloating,
   type UseFloatingOptions,
@@ -54,10 +54,13 @@ export const ExtendedFiltersButtonDropdown = memo(function ExtendedFiltersButton
       shift({ padding: 12 }),
     ],
   });
-  const click = useClick(context);
+  const hover = useHover(context, {
+    delay: { open: 100, close: 100 },
+    restMs: 100,
+  });
   const dismiss = useDismiss(context);
   const role = useRole(context, { role: 'dialog' });
-  const { getFloatingProps, getReferenceProps } = useInteractions([click, dismiss, role]);
+  const { getFloatingProps, getReferenceProps } = useInteractions([hover, dismiss, role]);
 
   return (
     <>

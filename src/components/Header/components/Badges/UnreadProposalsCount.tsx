@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import { selectUnreadActiveProposalsBySpace } from '../../../../features/data/selectors/proposals.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
-import { NotificationCount } from './NotificationCount.tsx';
 import type { BadgeComponentProps } from './types.ts';
+import { Count } from '../../../Count/Count.tsx';
 
 type UnreadSpaceProposalsCountProps = BadgeComponentProps & {
   space: string;
@@ -17,7 +17,7 @@ const UnreadSpaceProposalsCount = memo(function UnreadProposalsCount({
     return null;
   }
 
-  return <NotificationCount count={proposals.length} />;
+  return <Count data-count={proposals.length} />;
 });
 
 export const UnreadMainProposalsCount = memo(function UnreadMainProposalsCount() {
