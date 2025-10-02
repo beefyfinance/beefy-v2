@@ -60,7 +60,7 @@ const Container = styled('div', {
   base: {
     display: 'flex',
     alignItems: 'center',
-    columnGap: '20px',
+    columnGap: '24px',
     '@media (max-width: 1002px)': {
       columnGap: '12px',
     },

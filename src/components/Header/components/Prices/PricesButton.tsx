@@ -3,13 +3,13 @@ import { TokenPrice } from './TokenPrice.tsx';
 import { styled } from '@repo/styles/jsx';
 import { tokens } from './config.ts';
 import { DropdownTrigger } from '../../../Dropdown/DropdownTrigger.tsx';
-import ForwardArrowIcon from '../../../../images/icons/forward-arrow.svg?react';
+import ArrowIconImage from '../../../../images/icons/arrow.svg?react';
 import { Button } from '../../../Button/Button.tsx';
 
 export const PricesButtonDesktop = memo(function PricesButton({ isOpen }: { isOpen: boolean }) {
   return (
     <Trigger>
-      <Price />
+      <Price spacing="desktop" />
       <ArrowIcon isOpen={isOpen} />
     </Trigger>
   );
@@ -24,13 +24,13 @@ export const PricesButtonMobile = memo(function PricesButtonMobile({
 }) {
   return (
     <MobileTrigger variant="transparent" borderless={true} onClick={() => setOpen(true)}>
-      <Price />
+      <Price spacing="mobile" />
       <ArrowIcon isOpen={isOpen} />
     </MobileTrigger>
   );
 });
 
-const Price = memo(function Price() {
+const Price = memo(function Price({ spacing }: { spacing: 'desktop' | 'mobile' }) {
   const [current, setCurrent] = useState(0);
   const next = current < tokens.length - 1 ? current + 1 : 0;
 
@@ -46,6 +46,7 @@ const Price = memo(function Price() {
     <PriceContainer>
       {tokens.map((token, i) => (
         <TokenPrice
+          spacing={spacing}
           key={i}
           token={token}
           mode={
@@ -60,36 +61,15 @@ const Price = memo(function Price() {
   );
 });
 
-const ArrowIcon = memo(function ArrowIcon({ isOpen }: { isOpen: boolean }) {
-  return (
-    <ArrowIconContainer>
-      <FowardArrow isOpen={isOpen} />
-    </ArrowIconContainer>
-  );
-});
-
-const ArrowIconContainer = styled('div', {
+const ArrowIcon = styled(ArrowIconImage, {
   base: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '16px',
-    width: '16px',
-  },
-});
-
-const FowardArrow = styled(ForwardArrowIcon, {
-  base: {
-    transform: 'rotate(90deg)',
     color: 'text.dark',
-    height: '8.9px',
-    minWidth: '12px',
   },
   variants: {
     isOpen: {
       true: {
         color: 'text.light',
-        transform: 'rotate(270deg)',
+        transform: 'rotate(180deg)',
       },
     },
   },
