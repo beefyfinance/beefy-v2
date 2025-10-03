@@ -156,7 +156,7 @@
     "earnedTokenAddress": "0x79b2dAeDd1640302cb800c5097e910b85F77B0b0",
     "earnContractAddress": "0x79b2dAeDd1640302cb800c5097e910b85F77B0b0",
     "oracle": "lps",
-    "oracleId": "aerodrome-vvv-ddiem",
+    "oracleId": "aerodrome-vvv-diem",
     "status": "active",
     "createdAt": 1759433978,
     "platformId": "aerodrome",
