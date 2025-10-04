@@ -29,7 +29,9 @@ export const BifiPricesDesktop = memo(function BifiPricesDesktop({
     >
       <Container open={open}>
         <PricesButtonDesktop isOpen={open} />
-        <BridgeNavButton to="bridge">Bridge</BridgeNavButton>
+        <BridgeNavButton desktop={true} to="bridge">
+          Bridge
+        </BridgeNavButton>
       </Container>
       {open && <BifiPricesDropdown onClose={handleClose} />}
     </DropdownProvider>
@@ -104,9 +106,13 @@ export const BridgeNavButton = styled(RouterNavLink, {
       color: 'text.light',
       cursor: 'pointer',
     },
-    lg: {
-      paddingBlock: '8px',
-      paddingInline: '16px',
+  },
+  variants: {
+    desktop: {
+      true: {
+        paddingBlock: '8px',
+        paddingInline: '16px',
+      },
     },
   },
 });

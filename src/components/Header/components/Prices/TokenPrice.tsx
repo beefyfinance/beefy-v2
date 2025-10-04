@@ -9,14 +9,15 @@ import { styled } from '@repo/styles/jsx';
 type TokenPriceProps = {
   token: Token;
   mode: 'current' | 'next' | 'hidden';
+  spacing: 'desktop' | 'mobile';
 };
 
-export const TokenPrice = memo(function TokenPrice({ token, mode }: TokenPriceProps) {
+export const TokenPrice = memo(function TokenPrice({ token, mode, spacing }: TokenPriceProps) {
   const { symbol, oracleId, icon } = token;
   const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, oracleId));
 
   return (
-    <TokenPriceContainer mode={mode}>
+    <TokenPriceContainer mode={mode} spacing={spacing}>
       <Icon price={true} alt={symbol} src={icon} />
       {formatLargeUsd(price, { decimalsUnder: 2 })}
     </TokenPriceContainer>
@@ -26,7 +27,7 @@ export const TokenPrice = memo(function TokenPrice({ token, mode }: TokenPricePr
 const TokenPriceContainer = styled('div', {
   base: {
     display: 'flex',
-    gap: '8px',
+    gap: '5px',
     justifyContent: 'flex-start',
     alignItems: 'center',
     whiteSpace: 'nowrap',
@@ -38,10 +39,6 @@ const TokenPriceContainer = styled('div', {
     transition: 'transform 0.5s ease-in-out',
     gridArea: 'content',
     paddingBlock: '2px',
-    lg: {
-      justifyContent: 'center',
-      gap: '5px',
-    },
   },
   variants: {
     mode: {
@@ -57,8 +54,18 @@ const TokenPriceContainer = styled('div', {
         transform: 'rotateX(90deg)',
       },
     },
+    spacing: {
+      desktop: {
+        justifyContent: 'center',
+        gap: '5px',
+      },
+      mobile: {
+        gap: '8px',
+      },
+    },
   },
   defaultVariants: {
     mode: 'hidden',
+    spacing: 'desktop',
   },
 });

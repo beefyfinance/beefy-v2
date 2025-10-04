@@ -14,7 +14,6 @@ import { feesSlice } from './fees.ts';
 import { bigNumberTransform, filteredVaultsSlice } from './filtered-vaults.ts';
 import { historicalSlice } from './historical.ts';
 import { mintersSlice } from './minters.ts';
-import { onRamp } from './on-ramp.ts';
 import { partnersSlice } from './partners.ts';
 import { platformsSlice } from './platforms.ts';
 import { promosReducer } from './promos.ts';
@@ -95,7 +94,6 @@ const uiReducer = combineReducers({
     },
     filteredVaultsSlice.reducer
   ),
-  onRamp: onRamp.reducer,
   savedVaults: persistReducer({ key: 'savedVaults', storage }, savedVaultsSlice.reducer),
   stepperState: stepperSlice.reducer,
   tenderly:

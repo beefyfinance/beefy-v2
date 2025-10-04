@@ -31,7 +31,7 @@ export const DropdownContent = memo(function DropdownContent(innerProps: Dropdow
   );
 });
 
-const DropdownOuter = styled('div', {
+export const DropdownOuter = styled('div', {
   base: {
     colorPalette: 'dropdown.base',
     minWidth: '36px',
@@ -72,7 +72,7 @@ const DropdownArrow = styled(FloatingArrow, {
   },
 });
 
-const DropdownInner = styled('div', {
+export const DropdownInner = styled('div', {
   base: {
     background: 'colorPalette.background',
     color: 'colorPalette.text',

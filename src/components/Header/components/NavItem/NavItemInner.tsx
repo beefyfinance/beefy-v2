@@ -17,13 +17,11 @@ export const NavItemInner = memo<NavItemInnerProps>(function NavItemInner({
         <IconWrapper>
           <Icon />
         </IconWrapper>
-        <Title>
-          {`${t(title)}${externalLink ? ' ↗' : ''}`}
-          {Badge ?
-            <Badge />
-          : null}
-        </Title>
+        <Title>{`${t(title)}${externalLink ? ' ↗' : ''}`}</Title>
       </IconTitleContainer>
+      {Badge ?
+        <Badge />
+      : null}
       {Arrow ?
         <Arrow />
       : null}
@@ -37,6 +35,7 @@ const IconTitleContainer = styled('div', {
     alignItems: 'center',
     gap: '8px',
     paddingBlock: '2px',
+    width: '100%',
     sm: {
       gap: '4px',
     },
