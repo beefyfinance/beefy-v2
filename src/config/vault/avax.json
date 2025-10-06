@@ -1,5 +1,83 @@
 [
   {
+    "id": "euler-avax-re7labs-ausd-earn",
+    "name": "AUSD (Re7) Earn",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x64a8a26257B6F72107c311840243c40c64DEc0DB",
+    "earnedToken": "mooEulerPlasmaAUSD (Re7)",
+    "earnedTokenAddress": "0x64a8a26257B6F72107c311840243c40c64DEc0DB",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1759753279,
+    "platformId": "euler",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "euler-avax-k3capital-usdt-earn",
+    "name": "USDT (K3) Earn",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x8aF90aFc5De01D4443Fc942Af70eF2C74a15b6FD",
+    "earnedToken": "mooEulerPlasmaUSDT (K3)",
+    "earnedTokenAddress": "0x8aF90aFc5De01D4443Fc942Af70eF2C74a15b6FD",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1759753279,
+    "platformId": "euler",
+    "assets": ["USDT"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "euler-avax-re7labs-usdc-earn",
+    "name": "USDC (Re7) Earn",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x836a154C396fc93E683707DECEc2dC49104C7465",
+    "earnedToken": "mooEulerPlasmaUSDC (Re7)",
+    "earnedTokenAddress": "0x836a154C396fc93E683707DECEc2dC49104C7465",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1759753279,
+    "platformId": "euler",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "silov2-avalanche-ausd-valamore",
     "name": "AUSD (Varlamore)",
     "type": "standard",
