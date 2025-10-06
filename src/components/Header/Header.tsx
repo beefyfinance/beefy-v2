@@ -100,7 +100,7 @@ const RightSide = styled('div', {
 
 const BifiPricesContainer = styled('div', {
   base: {
-    '@media (max-width: 580px)': {
+    '@media (max-width: 600px)': {
       display: 'none',
     },
   },
