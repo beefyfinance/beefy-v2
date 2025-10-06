@@ -1,5 +1,57 @@
 [
   {
+    "id": "euler-plasma-hyperithm-usdt0",
+    "name": "USD₮0 (Hyperithm)",
+    "type": "standard",
+    "token": "USD₮0",
+    "tokenAddress": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x54d91365cB1eA8F454DaA43af91f9198d32b62FD",
+    "earnedToken": "mooEulerPlasmaUSDT0 (Hyperithm)",
+    "earnedTokenAddress": "0x54d91365cB1eA8F454DaA43af91f9198d32b62FD",
+    "oracle": "tokens",
+    "oracleId": "USDT0",
+    "status": "active",
+    "createdAt": 1759753279,
+    "platformId": "euler",
+    "assets": ["USDT0"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "euler-plasma-246clubtelosc-usdt0",
+    "name": "USD₮0 (246Club TelosC)",
+    "type": "standard",
+    "token": "USD₮0",
+    "tokenAddress": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x43c4a608f6Cfa2348D568f77a14389688788e8EE",
+    "earnedToken": "mooEulerPlasmaUSDT0 (246Club TelosC)",
+    "earnedTokenAddress": "0x43c4a608f6Cfa2348D568f77a14389688788e8EE",
+    "oracle": "tokens",
+    "oracleId": "USDT0",
+    "status": "active",
+    "createdAt": 1759753279,
+    "platformId": "euler",
+    "assets": ["USDT0"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "euler-plasma-telosc-usdt0",
     "name": "USD₮0 (TelosC)",
     "type": "standard",

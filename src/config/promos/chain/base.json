@@ -1,4 +1,24 @@
 [
+    {
+    "id": "moo_aerodrome-synd-weth",
+    "title": "Beefy",
+    "vaultId": "aerodrome-synd-weth",
+    "assets": ["WETH", "SYND"],
+    "tokenAddress": "0xeE9DE934e0273556A3b4585abf6fCc29fE365dd6",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xA997BD919064C38610AA97a5513331ddbEe31f31",
+    "campaign": "optimism-grant",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x994ac01750047B9d35431a7Ae4Ed312ee955E030",
+        "symbol": "axlOP",
+        "decimals": 18,
+        "oracleId": "axlOP"
+      }
+    ]
+  },
   {
     "id": "moo_aerodrome-weth-bwell-axlop",
     "title": "Beefy",
