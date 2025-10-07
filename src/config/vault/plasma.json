@@ -71,6 +71,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "plasma",
+    "pointStructureIds": ["resolv"],
     "zaps": [
       {
         "strategyId": "single"
@@ -97,6 +98,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "plasma",
+    "pointStructureIds": ["resolv"],
     "zaps": [
       {
         "strategyId": "single"
@@ -123,6 +125,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "plasma",
+    "pointStructureIds": ["resolv"],
     "zaps": [
       {
         "strategyId": "single"
