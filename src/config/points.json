@@ -77,8 +77,7 @@
     ],
     "eligibility": [
       {
-        "type": "token-holding",
-        "tokens": ["wstUSR", "USR"]
+        "type": "vault-whitelist"
       }
     ],
     "accounting": [
