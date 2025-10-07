@@ -2,6 +2,7 @@ import { memo } from 'react';
 import type { NavItemInnerProps } from '../DropNavItem/types.ts';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@repo/styles/jsx';
+import ExternalLinkRegularIcon from '../../../../images/icons/externalLinkRegular.svg?react';
 
 export const NavItemInner = memo<NavItemInnerProps>(function NavItemInner({
   title,
@@ -17,7 +18,12 @@ export const NavItemInner = memo<NavItemInnerProps>(function NavItemInner({
         <IconWrapper>
           <Icon />
         </IconWrapper>
-        <Title>{`${t(title)}${externalLink ? ' ↗' : ''}`}</Title>
+        <Title>
+          {t(title)}
+          {externalLink ?
+            <ExternalLinkRegularIcon />
+          : null}
+        </Title>
       </IconTitleContainer>
       {Badge ?
         <Badge />

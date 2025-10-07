@@ -31,6 +31,7 @@ const actionRecipe = cva({
         width: 'auto',
         backgroundColor: 'green.40',
         padding: '3px 12px',
+        gap: '2px',
         _hover: {
           color: 'text.black',
           backgroundColor: 'green.20',
