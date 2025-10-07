@@ -3,6 +3,7 @@ import { BusdBannerHome } from '../../../../components/Banners/BusdBanner/BusdBa
 import { UnstakedClmBanner } from '../../../../components/Banners/UnstakedClmBanner/UnstakedClmBanner.tsx';
 import { styled } from '@repo/styles/jsx';
 import { BeGemsBanner } from '../../../../components/Banners/BeGemsBanner/BeGemsBanner.tsx';
+import { BirthdayBanner } from '../../../../components/Banners/BirthdayBanner/BirthdayBanner.tsx';
 
 export const Banners = memo(function Banners() {
   return (
@@ -10,6 +11,7 @@ export const Banners = memo(function Banners() {
       <BeGemsBanner />
       <UnstakedClmBanner />
       <BusdBannerHome />
+      <BirthdayBanner />
     </BannerList>
   );
 });
