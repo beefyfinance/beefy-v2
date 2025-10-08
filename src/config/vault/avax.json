@@ -3904,45 +3904,6 @@
     ]
   },
   {
-    "id": "joe-syn-wavax-eol",
-    "name": "SYN-AVAX LP",
-    "type": "standard",
-    "token": "SYN-AVAX JLP",
-    "tokenAddress": "0x20ABdC20758990b6afc90dA2f2D30CD0aa3F73c6",
-    "tokenDecimals": 18,
-    "tokenProviderId": "traderjoe",
-    "earnedToken": "mooJoeSYN-WAVAX",
-    "earnedTokenAddress": "0x9b50B06B81f033ca86D70F0a44F30BD7E0155737",
-    "earnContractAddress": "0x9b50B06B81f033ca86D70F0a44F30BD7E0155737",
-    "oracle": "lps",
-    "oracleId": "joe-syn-wavax",
-    "status": "eol",
-    "createdAt": 1630670690,
-    "retireReason": "rewards",
-    "retiredAt": 1641206004,
-    "platformId": "traderjoe",
-    "assets": ["SYN", "AVAX"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MEDIUM",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.traderjoexyz.com/trade",
-    "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x1f1E7c893855525b303f99bDF5c3c05Be09ca251",
-    "removeLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x1f1E7c893855525b303f99bDF5c3c05Be09ca251",
-    "network": "avax",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "avax-joe"
-      }
-    ]
-  },
-  {
     "id": "joe-awool-wavax-eol",
     "name": "aWOOL-AVAX LP",
     "type": "standard",
