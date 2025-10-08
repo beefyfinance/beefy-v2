@@ -22,7 +22,6 @@ import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { fetchFees } from '../actions/fees.ts';
 import { fetchAllMigrators } from '../actions/migrator.ts';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters.ts';
-import { fetchOnRampSupportedProviders } from '../actions/on-ramp.ts';
 import { fetchPlatforms } from '../actions/platforms.ts';
 import { fetchAllPricesAction } from '../actions/prices.ts';
 import { initPromos } from '../actions/promos.ts';
@@ -218,7 +217,7 @@ function setGlobalRejected(
     sliceState.global[stateKey],
     errorToString(error)
   );
-  if (openModal) {
+  if (openModal && !sliceState.statusIndicator.open) {
     sliceState.statusIndicator.open = true;
   }
 }
@@ -533,7 +532,6 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
     addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms', true);
     addGlobalAsyncThunkActions(builder, fetchBridges, 'bridges', true);
-    addGlobalAsyncThunkActions(builder, fetchOnRampSupportedProviders, 'onRamp', true);
     addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury', true);
     addGlobalAsyncThunkActions(builder, fetchActiveProposals, 'proposals', false);
     addGlobalAsyncThunkActions(builder, fetchLastArticle, 'articles', false);

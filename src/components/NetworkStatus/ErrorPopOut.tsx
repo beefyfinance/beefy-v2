@@ -64,7 +64,7 @@ const Container = styled('div', {
     display: 'flex',
     alignItems: 'center',
     padding: '2px',
-    minWidth: '320px',
+    maxWidth: '320px',
   },
 });
 
