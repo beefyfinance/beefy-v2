@@ -1,5 +1,6 @@
-import HeaderLogoDesktop from '../../../../images/bifi-logos/header-logo.svg?react';
-import HeaderLogoMobile from '../../../../images/bifi-logos/header-logo-notext.svg?react';
+import headerLogoDesktop from '../../../../images/bifi-logos/header-logo.png';
+import headerLogoMobile from '../../../../images/bifi-logos/header-logo-notext.png';
+
 import { Link } from 'react-router';
 import { memo } from 'react';
 import { styled } from '@repo/styles/jsx';
@@ -11,8 +12,8 @@ export const LogoLink = memo(function LogoLink() {
   return (
     <StyledLink to="/">
       {showSmallLogo ?
-        <HeaderLogoMobile />
-      : <HeaderLogoDesktop />}
+        <img src={headerLogoMobile} alt="Beefy" />
+      : <img src={headerLogoDesktop} alt="Beefy" />}
     </StyledLink>
   );
 });
@@ -20,7 +21,7 @@ export const LogoLink = memo(function LogoLink() {
 const StyledLink = styled(Link, {
   base: {
     display: 'block',
-    '& >svg': {
+    '& >svg, & >img': {
       height: '40px',
       display: 'block',
     },
