@@ -7,7 +7,7 @@ export const BirthdayBanner = memo(function BirthdayBanner() {
     <DismissibleBanner
       id="birthday-banner"
       icon={<img src={birthdayIcon} alt="" width={24} height={24} />}
-      text="Celebrate Beefy’s 5th birthday! Discover our story and share your #IUsedBeefy moment for a chance to join the Hall of Fame."
+      text="Celebrate Beefy’s 5th birthday! Discover our journey of autocompounding, growth, and innovation — and share your #IUsedBeefy story for a chance to join the Hall of Fame."
     />
   );
 });
