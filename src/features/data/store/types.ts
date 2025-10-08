@@ -12,7 +12,6 @@ import type { FeesState } from '../reducers/fees-types.ts';
 import type { FilteredVaultsState } from '../reducers/filtered-vaults-types.ts';
 import type { HistoricalState } from '../reducers/historical-types.ts';
 import type { MintersState } from '../reducers/minters-types.ts';
-import type { OnRampTypes } from '../reducers/on-ramp-types.ts';
 import type { PartnersState } from '../reducers/partners-types.ts';
 import type { PlatformsState } from '../reducers/platforms.ts';
 import type { PromosState } from '../reducers/promos-types.ts';
@@ -74,7 +73,6 @@ export interface BeefyState {
     bridge: BridgeState;
     dataLoader: DataLoaderState;
     filteredVaults: FilteredVaultsState;
-    onRamp: OnRampTypes;
     savedVaults: SavedVaultsState;
     stepperState: StepperState;
     tenderly?: TenderlyState | undefined;

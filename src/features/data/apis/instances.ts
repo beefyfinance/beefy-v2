@@ -47,11 +47,6 @@ export const getBridgeApi = createDependencyFactory(
   () => import('./bridge/bridge-api.ts')
 );
 
-export const getOnRampApi = createDependencyFactory(
-  async ({ OnRampApi }) => new OnRampApi(),
-  () => import('./on-ramp/on-ramp.ts')
-);
-
 export const getTransactApi = createDependencyFactory(
   async ({ TransactApi }) => new TransactApi(),
   () => import('./transact/transact.ts')

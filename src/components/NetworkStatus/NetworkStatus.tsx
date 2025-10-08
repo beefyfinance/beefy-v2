@@ -1,5 +1,5 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, type RefObject, useCallback, useMemo, useState } from 'react';
+import { memo, type RefObject, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader.ts';
@@ -18,10 +18,10 @@ import { DropdownContent } from '../Dropdown/DropdownContent.tsx';
 import { DropdownProvider } from '../Dropdown/DropdownProvider.tsx';
 import { DropdownTrigger } from '../Dropdown/DropdownTrigger.tsx';
 import { RpcSettingsPanel } from '../Header/components/UserSettings/RpcSettingsPanel.tsx';
-import { useBreakpoint } from '../MediaQueries/useBreakpoint.ts';
 import { TitleComponent } from './Title.tsx';
 import { MobileDrawer } from './MobileDrawer.tsx';
 import { ErrorPopOut } from './ErrorPopOut.tsx';
+import { useMediaQuery } from '../MediaQueries/useMediaQuery.ts';
 
 export const NetworkStatus = memo(function NetworkStatus({
   positionRef,
@@ -38,13 +38,14 @@ export const NetworkStatus = memo(function NetworkStatus({
   const isAutoOpen = useAppSelector(selectIsStatusIndicatorOpen);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const open = useMemo(() => isUserOpen || isAutoOpen, [isUserOpen, isAutoOpen]);
-
-  const isMobile = useBreakpoint({ to: 'xs' });
+  const isMobile = useMediaQuery('(max-width: 768px)', false);
+  const open = isUserOpen || isAutoOpen;
+  const openOnClick = isMobile || isAutoOpen;
+  const openOnHover = !openOnClick;
+  const isNotification = isAutoOpen && !isUserOpen;
 
   const handleClose = useCallback(() => {
     dispatch(dataLoaderActions.closeIndicator());
-
     onClose();
   }, [dispatch, onClose]);
 
@@ -75,23 +76,11 @@ export const NetworkStatus = memo(function NetworkStatus({
   const variant = hasAnyError ? 'warning' : 'success';
   const hidePulse = !hasAnyError && !hasAnyLoading;
 
-  const titleText = useMemo(() => {
-    // only api error
-    if (!hasRpcError && hasBeefyError) {
-      return 'NetworkStatus-ApiError';
-    }
-    // only rpc error
-    if (hasRpcError && !hasBeefyError) {
-      return 'NetworkStatus-RpcError';
-    }
-
-    // both error
-    if (hasRpcError && hasBeefyError) {
-      return 'NetworkStatus-Error';
-    } else {
-      return 'NetworkStatus-Success';
-    }
-  }, [hasRpcError, hasBeefyError]);
+  const titleText =
+    hasRpcError && hasBeefyError ? 'NetworkStatus-Error'
+    : hasBeefyError ? 'NetworkStatus-ApiError'
+    : hasRpcError ? 'NetworkStatus-RpcError'
+    : 'NetworkStatus-Success';
 
   return (
     <DropdownProvider
@@ -102,44 +91,40 @@ export const NetworkStatus = memo(function NetworkStatus({
       placement="bottom-end"
       layer={isMobile ? 0 : 1}
       closeOnClickAway={!isMobile}
-      openOnHover={!isMobile}
-      openOnClick={isMobile}
+      openOnHover={openOnHover}
+      openOnClick={openOnClick}
     >
       <DropdownButton onClick={handleToggle} open={open}>
         <PulseHighlight variant={variant} state={hidePulse ? 'stopped' : 'playing'} />
       </DropdownButton>
 
-      {isMobile ?
-        isAutoOpen && !isUserOpen ?
-          <StyledDropdownContent gap="none">
-            <TitleComponent hasAnyError={hasAnyError} text={titleText} />
-            <ErrorPopOut setIsPopupOpen={onOpen} rpcErrors={rpcErrors} />
-          </StyledDropdownContent>
-        : <MobileDrawer
-            open={open}
-            handleClose={handleClose}
-            titleText={titleText}
-            editChainId={editChainId}
-            setEditChainId={setEditChainId}
-            rpcErrors={rpcErrors}
-            hasAnyError={hasAnyError}
-          />
-
+      {!open ?
+        null
+      : isNotification ?
+        <StyledDropdownContent gap="none">
+          <TitleComponent hasAnyError={hasAnyError} text={titleText} />
+          <ErrorPopOut setIsPopupOpen={onOpen} rpcErrors={rpcErrors} />
+        </StyledDropdownContent>
+      : isMobile ?
+        <MobileDrawer
+          open={open}
+          handleClose={handleClose}
+          titleText={titleText}
+          editChainId={editChainId}
+          setEditChainId={setEditChainId}
+          rpcErrors={rpcErrors}
+          hasAnyError={hasAnyError}
+        />
       : <StyledDropdownContent gap="none">
           <TitleComponent hasAnyError={hasAnyError} text={titleText} />
-          {isAutoOpen && !isUserOpen ?
-            <ErrorPopOut setIsPopupOpen={onOpen} rpcErrors={rpcErrors} />
-          : <>
-              <Content>
-                <RpcSettingsPanel
-                  rpcErrors={rpcErrors}
-                  editChainId={editChainId}
-                  setEditChainId={setEditChainId}
-                />
-              </Content>
-              <Footer>{t('RpcModal-EmptyList')}</Footer>
-            </>
-          }
+          <Content>
+            <RpcSettingsPanel
+              rpcErrors={rpcErrors}
+              editChainId={editChainId}
+              setEditChainId={setEditChainId}
+            />
+          </Content>
+          <Footer>{t('RpcModal-EmptyList')}</Footer>
         </StyledDropdownContent>
       }
     </DropdownProvider>

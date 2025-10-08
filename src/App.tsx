@@ -16,7 +16,6 @@ import { Tenderly } from './components/Tenderly/Tenderly.tsx';
 
 const HomePage = lazy(() => import('./features/home/HomePage.tsx'));
 const VaultPage = lazy(() => import('./features/vault/VaultPage.tsx'));
-const OnRampPage = lazy(() => import('./features/on-ramp/OnRampPage.tsx'));
 const BridgePage = lazy(() => import('./features/bridge/BridgePage.tsx'));
 const DashboardPage = lazy(() => import('./features/dashboard/DashboardPage.tsx'));
 const TreasuryPage = lazy(() => import('./features/treasury/TreasuryPage.tsx'));
@@ -36,7 +35,6 @@ export const App = memo(function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/:network/vault/:id" caseSensitive={true} element={<VaultPage />} />
               <Route path="/vault/:id" element={<VaultPage />} />
-              <Route path="/onramp" element={<OnRampPage />} />
               <Route path="/bridge" element={<BridgePage />} />
               <Route path="/dashboard/:address" element={<DashboardPage mode={'url'} />} />
               <Route path="/dashboard" element={<DashboardPage mode={'wallet'} />} />

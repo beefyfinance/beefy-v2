@@ -11,7 +11,7 @@ import { ChainSquareIcon, Icon } from './Icon.tsx';
 import { styled } from '@repo/styles/jsx';
 import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
-
+import ExternalLinkRegularIcon from '../../../../images/icons/externalLinkRegular.svg?react';
 const buyPlatforms: Record<
   NonNullable<Token['buyLink']>['platform'],
   { icon: string; title: string }
@@ -60,9 +60,10 @@ const TokenRow = memo<TooltipTokenProps>(function TokenRow({ token }) {
         >
           {isMobile ?
             <ChainMobileContainer>
-              <ChainSquareIcon chainId={chainId} /> ↗
+              <ChainSquareIcon chainId={chainId} />
             </ChainMobileContainer>
-          : `${chain.name} ↗`}
+          : `${chain.name}`}
+          <ExternalLinkRegularIcon />
         </ChainLink>
       </LeftContainer>
       <RightContainer>
@@ -75,7 +76,8 @@ const TokenRow = memo<TooltipTokenProps>(function TokenRow({ token }) {
         />
         {buyLink ?
           <ActionLink link href={buyLink.url} title={buyPlatforms[buyLink.platform].title}>
-            Buy ↗
+            Buy
+            <ExternalLinkRegularIcon />
           </ActionLink>
         : null}
       </RightContainer>
@@ -111,6 +113,9 @@ const ChainLink = styled('a', {
   base: {
     textStyle: 'body',
     color: 'text.dark',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
     _hover: {
       color: 'text.light',
     },
