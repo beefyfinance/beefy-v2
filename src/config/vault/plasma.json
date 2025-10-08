@@ -1,5 +1,85 @@
 [
   {
+    "id": "curve-plasma-usdt0-susde",
+    "name": "USD₮0/sUSDe",
+    "type": "standard",
+    "token": "sUSDeUSDT0",
+    "tokenAddress": "0x1E8D78e9b3f0152D54d32904B7933f1cFE439Df1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x19D1F0A1a2FE5807958b34ADBc0d0569A93727C7",
+    "earnedToken": "mooCurve-USDT0-sUSDe",
+    "earnedTokenAddress": "0x19D1F0A1a2FE5807958b34ADBc0d0569A93727C7",
+    "oracle": "lps",
+    "oracleId": "curve-plasma-usdt0-susde",
+    "status": "active",
+    "createdAt": 1759903438,
+    "platformId": "curve",
+    "assets": ["USDT0", "sUSDe"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/plasma/pools/factory-stable-ng-1/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/plasma/pools/factory-stable-ng-1/withdraw",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x1E8D78e9b3f0152D54d32904B7933f1cFE439Df1",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x1E8D78e9b3f0152D54d32904B7933f1cFE439Df1",
+            "coins": [
+              "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+              "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-plasma-usdt0-usde",
+    "name": "USD₮0/USDe",
+    "type": "standard",
+    "token": "USDT0-USDe",
+    "tokenAddress": "0x2D84D79C852f6842AbE0304b70bBaA1506AdD457",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x42f1A7795083eeE1f804DD4D33C5e69A0F32Bca4",
+    "earnedToken": "mooCurve-USDT0-USDe",
+    "earnedTokenAddress": "0x42f1A7795083eeE1f804DD4D33C5e69A0F32Bca4",
+    "oracle": "lps",
+    "oracleId": "curve-plasma-usdt0-usde",
+    "status": "active",
+    "createdAt": 1759903438,
+    "platformId": "curve",
+    "assets": ["USDT0", "USDe"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/plasma/pools/factory-stable-ng-0/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/plasma/pools/factory-stable-ng-0/withdraw",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x2D84D79C852f6842AbE0304b70bBaA1506AdD457",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x2D84D79C852f6842AbE0304b70bBaA1506AdD457",
+            "coins": [
+              "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+              "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "euler-plasma-hyperithm-usdt0",
     "name": "USD₮0 (Hyperithm)",
     "type": "standard",

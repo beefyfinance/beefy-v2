@@ -95,6 +95,7 @@ const chainIdToCurveChainId: ChainMap<string> = {
   polygon: 'polygon',
   fraxtal: 'fraxtal',
   sonic: 'sonic',
+  plasma: 'plasma',
 };
 
 const curveEndpoints = [
@@ -246,6 +247,7 @@ async function fetchCurvePools(
   }
 
   const url = `https://api.curve.finance/api/getPools/${curveChainId}/${endpoint}`;
+  // const url = `https://api-core.curve.finance/v1/getPools/${curveChainId}/${endpoint}`;
   if (!quiet) {
     console.log(`Fetching ${url}...`);
   }
