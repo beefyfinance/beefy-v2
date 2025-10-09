@@ -33,6 +33,39 @@
     ]
   },
   {
+    "id": "dtrinity",
+    "docs": "https://docs.dtrinity.org/key-concepts/points-program",
+    "points": [
+      {
+        "id": "dtrinity",
+        "name": "dT Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-balances-subgraph",
+        "role": "Indexing of all balances of all beefy products",
+        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "dtrinity",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://app.dtrinity.org/dlend/points/"
+      }
+    ]
+  },
+  {
     "id": "level",
     "docs": "https://level-money.gitbook.io/docs/rewards/what-is-level-xp",
     "points": [
@@ -596,7 +629,6 @@
         "platformId": "hybra",
         "liveAfter": "2025-07-01"
       },
-
       {
         "type": "provider",
         "tokenProviderId": "hybra",

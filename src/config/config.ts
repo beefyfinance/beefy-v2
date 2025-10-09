@@ -674,6 +674,8 @@ export const config = {
       'FXB20291231',
       'FXB20551231',
       'FXB_20261231',
+      'dUSD',
+      'sdUSD',
     ],
   },
   mode: {
