@@ -1,5 +1,64 @@
 [
   {
+    "id": "pancake-cow-bsc-usdt-form-rp",
+    "name": "FORM-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBSCFORM-USDT",
+    "tokenAddress": "0x2A9A781B4d48E3A48457e2fEA8f266C4C26AfdE4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xe808FEd8E5669B3d1819b37f3CB8F1bE1Cd72e7e",
+    "earnedToken": "rCowPancakeBSCFORM-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdt-form",
+    "status": "active",
+    "createdAt": 1760025594,
+    "platformId": "pancakeswap",
+    "assets": ["FORM", "USDT"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-usdt-form",
+    "name": "FORM-USDT",
+    "type": "cowcentrated",
+    "token": "FORM-USDT pancakeswap",
+    "tokenAddress": "0x7Cb113B487e025b3a69537fcA579559433240cb5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x55d398326f99059fF775485246999027B3197955",
+      "0x5b73A93b4E5e4f1FD27D8b3F8C97D69908b5E284"
+    ],
+    "earnContractAddress": "0x2A9A781B4d48E3A48457e2fEA8f266C4C26AfdE4",
+    "earnedToken": "cowPancakeBSCFORM-USDT",
+    "earnedTokenAddress": "0x2A9A781B4d48E3A48457e2fEA8f266C4C26AfdE4",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdt-form",
+    "status": "active",
+    "createdAt": 1760025594,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["FORM", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-bsc-palu-wbnb-rp",
     "name": "PALU-WBNB Reward Pool",
     "type": "gov",
