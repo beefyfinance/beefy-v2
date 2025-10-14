@@ -99,16 +99,43 @@ type BaseVault = {
   chainId: ChainId;
 };
 
+type BeefyProduct = {
+  type: 'vault' | 'boost';
+  chainId: ChainId;
+  address: string;
+};
+
+function parseProductKey(productKey: string): BeefyProduct {
+  const parts = productKey.split(':');
+  if (parts.length !== 4 || parts[0] !== 'beefy') {
+    throw new Error(`Invalid product key: ${productKey}`);
+  }
+  const [_, type, chainId, address] = parts;
+  if (type !== 'vault' && type !== 'boost') {
+    throw new Error(`Invalid product key type: ${type}`);
+  }
+  if (!chainId || address.length !== 42 || !address.startsWith('0x')) {
+    throw new Error(`Invalid product key: ${productKey}`);
+  }
+  return {
+    type,
+    chainId: chainId as ChainId,
+    address: address.toLowerCase(),
+  };
+}
+
 function makeTransactionId(
   config: DatabarnTimelineEntry | ClmTimelineEntryClm | ClmTimelineEntryClassic
 ): string {
+  const { chainId, address } = parseProductKey(config.product_key);
+
   if (config.transaction_hash) {
-    return `${config.chain}:${config.transaction_hash}`;
+    return `${chainId}:${address}:${config.transaction_hash}`;
   }
 
   // old data doesn't have transaction_hash so we try to make an id that is the same for a given vault/boost tx
   const shareDiff = new BigNumber(config.share_diff);
-  return `${config.chain}-${config.datetime}-${shareDiff.absoluteValue().toString(10)}`;
+  return `${chainId}:${address}:${config.datetime}:${shareDiff.absoluteValue().toString(10)}`;
 }
 
 /**
