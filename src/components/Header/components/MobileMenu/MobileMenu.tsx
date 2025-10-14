@@ -31,7 +31,7 @@ export const MobileMenu = memo(function MobileMenu({
     <MenuContainer>
       <MenuButton aria-label="menu" onClick={handleDrawerToggle}>
         <MenuIcon fontSize="inherit" style={{ height: '28px', width: '28px' }} />
-        <UnreadDots />
+        <UnreadDots mobileMenu={true} />
       </MenuButton>
       <ScrollableDrawer
         open={mobileMenuOpen}

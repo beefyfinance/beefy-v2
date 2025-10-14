@@ -23,11 +23,12 @@ export const NavItemInner = memo<NavItemInnerProps>(function NavItemInner({
           {externalLink ?
             <ExternalLinkRegularIcon />
           : null}
+          {Badge ?
+            <Badge />
+          : null}
         </Title>
       </IconTitleContainer>
-      {Badge ?
-        <Badge />
-      : null}
+
       {Arrow ?
         <Arrow />
       : null}
@@ -66,5 +67,6 @@ const Title = styled('div', {
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
+    width: '100%',
   },
 });

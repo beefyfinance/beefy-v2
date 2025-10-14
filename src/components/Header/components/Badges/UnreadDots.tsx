@@ -4,11 +4,13 @@ import { useHaveUnreadArticle, useHaveUnreadProposal } from './hooks.ts';
 import { styled } from '@repo/styles/jsx';
 import { Count } from '../../../Count/Count.tsx';
 
-export const UnreadDots = memo(function UnreadDots() {
+export const UnreadDots = memo(function UnreadDots({ mobileMenu }: { mobileMenu?: boolean }) {
   const haveUnreadArticle = useHaveUnreadArticle();
   const haveUnreadProposal = useHaveUnreadProposal();
 
-  return haveUnreadArticle || haveUnreadProposal ? <CustomNotificationDot /> : null;
+  return haveUnreadArticle || haveUnreadProposal ?
+      <CustomNotificationDot mobileMenu={mobileMenu} />
+    : null;
 });
 
 export const UnreadArticleDot = memo(function UnreadArticleDot() {
@@ -32,6 +34,14 @@ const CustomNotificationDot = styled(NotificationDot, {
   base: {
     top: '-5px',
     right: '-5px',
+  },
+  variants: {
+    mobileMenu: {
+      true: {
+        top: '1px',
+        right: '1px',
+      },
+    },
   },
 });
 
