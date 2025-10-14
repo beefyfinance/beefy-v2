@@ -439,7 +439,11 @@ export const config = {
     name: 'Fantom',
     eol: 1736182577,
     chainId: 250,
-    rpc: ['https://fantom-mainnet.public.blastapi.io'],
+    rpc: [
+      'https://rpc.fantom.network',
+      'https://rpc2.fantom.network',
+      'https://rpc3.fantom.network',
+    ],
     explorerUrl: 'https://ftmscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xdd54c53d169aCFC53cAf08F1778A492Ff5Aea258',
@@ -585,7 +589,7 @@ export const config = {
   gnosis: {
     name: 'Gnosis',
     chainId: 100,
-    rpc: ['https://rpc.gnosischain.com'],
+    rpc: ['https://rpc.gnosischain.com', 'https://gnosis-rpc.publicnode.com'],
     explorerUrl: 'https://gnosisscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xdAaD0085e5D301Cb5721466e600606AB5158862b',
