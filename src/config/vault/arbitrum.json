@@ -334,7 +334,7 @@
     "assets": ["waArbWETH", "waArbwstETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0xc072880e1bc0bcdcc99db882c7f3e7a839281cf4",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0xc072880e1bc0bcddc99db882c7f3e7a839281cf4",
     "network": "arbitrum"
   },
   {
