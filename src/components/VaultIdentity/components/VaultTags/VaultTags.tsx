@@ -42,6 +42,7 @@ import { BasicTooltipContent } from '../../../Tooltip/BasicTooltipContent.tsx';
 import { VaultPlatform } from '../../../VaultPlatform/VaultPlatform.tsx';
 import { styles } from './styles.ts';
 import { VaultTag, VaultTagWithTooltip, type VaultTagWithTooltipProps } from './VaultTag.tsx';
+import { styled } from '@repo/styles/jsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -351,8 +352,10 @@ const PointsTagLineaIgnition = memo(function PointsTagLineaIgnition() {
 
 export type VaultTagsProps = {
   vaultId: VaultEntity['id'];
+  isVaultPaused?: boolean;
+  hidePlatform?: boolean;
 };
-export const VaultTags = memo(function VaultTags({ vaultId }: VaultTagsProps) {
+export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: VaultTagsProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const promo = useAppSelector(state => selectActivePromoForVault(state, vaultId));
@@ -366,8 +369,8 @@ export const VaultTags = memo(function VaultTags({ vaultId }: VaultTagsProps) {
   // Tag 3: Retired -> Paused -> Promo -> none
   // Tag 4: Points -> none
   return (
-    <div className={css(styles.vaultTags)}>
-      <VaultPlatformTag vaultId={vaultId} />
+    <VaultTagsContainer>
+      {!hidePlatform && <VaultPlatformTag vaultId={vaultId} />}
       {isCowcentratedLike && <VaultClmLikeTag vault={vault} hideFee={!isVaultActive(vault)} />}
       {isVaultRetired(vault) ?
         <VaultTag css={styles.vaultTagRetired} text={t('VaultTag-Retired')} />
@@ -379,6 +382,20 @@ export const VaultTags = memo(function VaultTags({ vaultId }: VaultTagsProps) {
         <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO support multiple earned tokens [empty = ok, not used when clm-like]
       : null}
       {isVaultEarningPoints(vault) && <PointsTag vault={vault} />}
-    </div>
+    </VaultTagsContainer>
   );
+});
+
+const VaultTagsContainer = styled('div', {
+  base: {
+    marginTop: '4px',
+    display: 'flex',
+    flexWrap: 'nowrap',
+    flexDirection: 'row',
+    columnGap: '8px',
+    rowGap: '8px',
+    '@media (max-width: 400px)': {
+      flexWrap: 'wrap',
+    },
+  },
 });

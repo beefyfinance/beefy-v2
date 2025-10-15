@@ -1,78 +1,128 @@
-import { css } from '@repo/styles/css';
 import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { VaultIdImage } from '../../../../components/TokenImage/TokenImage.tsx';
-import { VaultClmLikeTag } from '../../../../components/VaultIdentity/components/VaultTags/VaultTags.tsx';
-import { VaultPlatform } from '../../../../components/VaultPlatform/VaultPlatform.tsx';
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { punctuationWrap } from '../../../../helpers/string.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
-import {
-  isCowcentratedGovVault,
-  isCowcentratedLikeVault,
-  type VaultEntity,
-} from '../../../data/entities/vault.ts';
-import { selectChainById } from '../../../data/selectors/chains.ts';
+import { type VaultEntity } from '../../../data/entities/vault.ts';
 import { selectVaultIsBoostedForFilter } from '../../../data/selectors/filtered-vaults.ts';
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
 import { SaveButton } from '../SaveButton/SaveButton.tsx';
 import { ShareButton } from '../ShareButton/ShareButton.tsx';
-import { styles } from './styles.ts';
-
-const useStyles = legacyMakeStyles(styles);
+import { ChainTag, PlatformTag } from './Tags.tsx';
+import { styled } from '@repo/styles/jsx';
+import { VaultTags } from '../../../../components/VaultIdentity/components/VaultTags/VaultTags.tsx';
 
 export type VaultHeaderProps = {
   vaultId: VaultEntity['id'];
 };
 export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderProps) {
-  const { t } = useTranslation();
-  const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
-  const isCowcentratedLike = isCowcentratedLikeVault(vault);
   const isBoosted = useAppSelector(state => selectVaultIsBoostedForFilter(state, vaultId));
 
   return (
-    <div className={classes.header}>
-      <div className={css(styles.titleHolder, !!isCowcentratedLike && styles.titleHolderClm)}>
-        <div
-          className={css(
-            styles.title,
-            !!isCowcentratedLike && styles.titleClm,
-            isBoosted && styles.titleBoost
-          )}
-        >
+    <HeaderContent>
+      <TitleAndLabelsHolder>
+        <Title isBoosted={isBoosted}>
           {punctuationWrap(vault.names.list)}
-        </div>
-        <VaultIdImage
-          vaultId={vaultId}
-          size={48}
-          css={!!isCowcentratedLike && styles.titleAssetClm}
-        />
-        {isCowcentratedLike ?
-          <VaultClmLikeTag
-            vault={vault}
-            hideFee={isCowcentratedGovVault(vault) ? true : undefined}
-          />
-        : null}
-      </div>
-      <div className={classes.labelsHolder}>
-        <div className={classes.platformLabel}>
-          {t('Chain')} <span>{chain.name}</span>
-        </div>
-        <div className={classes.platformLabel}>
-          {t('Platform')}{' '}
-          <span>
-            <VaultPlatform vaultId={vaultId} />
-          </span>
-        </div>
-        <div className={classes.shareHolder}>
-          <SaveButton vaultId={vaultId} />
+          <VaultIdImage vaultId={vaultId} size={40} css={{ flexShrink: 0 }} />
+        </Title>
+
+        <LabelsHolder>
+          <ChainTag chainId={vault.chainId} />
+          <PlatformTag platformId={vault.platformId} />
+        </LabelsHolder>
+      </TitleAndLabelsHolder>
+      <VaultTagsAndShareHolder>
+        <VaultTags vaultId={vaultId} hidePlatform={true} />
+        <ShareHolder>
           {vault.status === 'active' ?
             <ShareButton hideText={true} vaultId={vaultId} mobileAlternative={true} />
           : null}
-        </div>
-      </div>
-    </div>
+          <SaveButton vaultId={vaultId} />
+        </ShareHolder>
+      </VaultTagsAndShareHolder>
+    </HeaderContent>
   );
+});
+
+const HeaderContent = styled('div', {
+  base: {
+    display: 'block',
+    md: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+  },
+});
+
+const LabelsHolder = styled('div', {
+  base: {
+    display: 'flex',
+    gap: '6px',
+    order: 0,
+    alignItems: 'center',
+    md: {
+      order: 1,
+    },
+  },
+});
+
+const TitleAndLabelsHolder = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+    md: {
+      flexDirection: 'row',
+      gap: '4px',
+    },
+  },
+});
+
+const Title = styled('div', {
+  base: {
+    textStyle: 'h1',
+    color: 'text.middle',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '4px',
+    flexWrap: 'wrap',
+    whiteSpace: 'normal',
+    overflowWrap: 'break-word',
+    flex: '1 1 auto',
+    minWidth: 0,
+    maxWidth: '100%',
+    order: 1,
+    md: {
+      order: 0,
+    },
+  },
+  variants: {
+    isBoosted: {
+      true: {
+        color: 'text.boosted',
+      },
+    },
+  },
+});
+
+const VaultTagsAndShareHolder = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '8px',
+  },
+});
+
+const ShareHolder = styled('div', {
+  base: {
+    display: 'flex',
+    columnGap: '8px',
+    alignItems: 'center',
+    paddingBlock: '6px',
+    sm: {
+      paddingBlock: '2px',
+    },
+  },
 });

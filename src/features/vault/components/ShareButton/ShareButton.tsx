@@ -128,7 +128,7 @@ export const ShareButton = memo(function ShareButton({
 
   return (
     <DropdownProvider variant="dark" placement={placement || 'bottom-end'}>
-      <ShareTrigger borderless={true} mobile={true}>
+      <ShareTrigger borderless={true}>
         {!hideText && !mobileAlternative && <span>{t('Vault-Share')}</span>}
         <ShareIcon className={classes.shareIcon} />
       </ShareTrigger>
@@ -155,20 +155,15 @@ const ShareTrigger = styled(DropdownButtonTrigger, {
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: '8px',
+    paddingBlock: '6px',
+    paddingInline: '16px',
     outline: 'none',
     '&:focus-visible, &.active': {
       outline: 'none',
       backgroundColor: 'bayOfMany',
     },
-  },
-  variants: {
-    mobile: {
-      true: {
-        lgDown: {
-          padding: '10px',
-        },
-      },
+    md: {
+      paddingBlock: '8px',
     },
   },
 });

@@ -8,12 +8,14 @@ export const styles = {
     justifyContent: 'center',
     gap: '8px',
     outline: 'none',
+    paddingBlock: '6px',
+    paddingInline: '16px',
     '&:focus-visible, &.active': {
       outline: 'none',
       backgroundColor: 'bayOfMany',
     },
-    lgDown: {
-      padding: '10px',
+    md: {
+      paddingBlock: '8px',
     },
   }),
   icon: css.raw({
