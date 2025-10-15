@@ -1,5 +1,45 @@
 [
   {
+    "id": "curve-paypool",
+    "name": "PYUSD/USDC",
+    "type": "standard",
+    "token": "PYUSDUSDC",
+    "tokenAddress": "0x383E6b4437b59fff47B619CBA855CA29342A8559",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xdA19C56DcDf4fB333acBE9aA18024DD2e4A864Bc",
+    "earnedToken": "mooCurvePayPool",
+    "earnedTokenAddress": "0xdA19C56DcDf4fB333acBE9aA18024DD2e4A864Bc",
+    "oracle": "lps",
+    "oracleId": "curve-paypool",
+    "status": "active",
+    "createdAt": 1760511024,
+    "platformId": "curve",
+    "assets": ["PYUSD", "USDC"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-43/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-43/deposit",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x383E6b4437b59fff47B619CBA855CA29342A8559",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x383E6b4437b59fff47B619CBA855CA29342A8559",
+            "coins": [
+              "0x6c3ea9036406852006290770BEdFcAbA0e23A0e8",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "pendle-ysybold-27nov25",
     "name": "ysyBOLD 27Nov25",
     "type": "standard",

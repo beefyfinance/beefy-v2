@@ -91,6 +91,7 @@ export const config = {
       'msUSD',
       'USDaf',
       'ysyBOLD',
+      'PYUSD',
       'cUSD',
       'stcUSD',
     ],
