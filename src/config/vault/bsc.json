@@ -1,5 +1,123 @@
 [
   {
+    "id": "uniswap-cow-bsc-coai-usdt-rp",
+    "name": "COAI-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBscCOAI-USDT",
+    "tokenAddress": "0xa4129B1d5f5e9d74A5Bf6CEA038bd39e3086ccAb",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x80281fb4aD2E1af9BB927B95C016987B063B6878",
+    "earnedToken": "rCowUniswapBscCOAI-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-coai-usdt",
+    "status": "active",
+    "createdAt": 1760558657,
+    "platformId": "uniswap",
+    "assets": ["COAI", "USDT"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-coai-usdt",
+    "name": "COAI-USDT",
+    "type": "cowcentrated",
+    "token": "COAI-USDT uniswap",
+    "tokenAddress": "0x4610464356ba6BbA15Eec558619d84b72FEA260F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0A8D6C86e1bcE73fE4D0bD531e1a567306836EA5",
+      "0x55d398326f99059fF775485246999027B3197955"
+    ],
+    "earnContractAddress": "0xa4129B1d5f5e9d74A5Bf6CEA038bd39e3086ccAb",
+    "earnedToken": "cowUniswapBscCOAI-USDT",
+    "earnedTokenAddress": "0xa4129B1d5f5e9d74A5Bf6CEA038bd39e3086ccAb",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-coai-usdt",
+    "status": "active",
+    "createdAt": 1760558657,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["COAI", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-coai-usdt-rp",
+    "name": "COAI-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBSCCOAI-USDT",
+    "tokenAddress": "0x1f0747be5eD45102bfa6fDe53b12EC4F6e240422",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x601606E00B89f88437220Ef162dd5E421Fa2c5e1",
+    "earnedToken": "rCowPancakeBSCCOAI-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-coai-usdt",
+    "status": "active",
+    "createdAt": 1760558657,
+    "platformId": "pancakeswap",
+    "assets": ["COAI", "USDT"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-coai-usdt",
+    "name": "COAI-USDT",
+    "type": "cowcentrated",
+    "token": "COAI-USDT pancakeswap",
+    "tokenAddress": "0xbc0E5A205D729299D93973d634E2507CD8b625A3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x0A8D6C86e1bcE73fE4D0bD531e1a567306836EA5",
+      "0x55d398326f99059fF775485246999027B3197955"
+    ],
+    "earnContractAddress": "0x1f0747be5eD45102bfa6fDe53b12EC4F6e240422",
+    "earnedToken": "cowPancakeBSCCOAI-USDT",
+    "earnedTokenAddress": "0x1f0747be5eD45102bfa6fDe53b12EC4F6e240422",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-coai-usdt",
+    "status": "active",
+    "createdAt": 1760558657,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["COAI", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-bsc-usdt-form-rp",
     "name": "FORM-USDT Reward Pool",
     "type": "gov",
