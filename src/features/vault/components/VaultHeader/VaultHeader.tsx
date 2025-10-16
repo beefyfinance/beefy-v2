@@ -18,14 +18,33 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isBoosted = useAppSelector(state => selectVaultIsBoostedForFilter(state, vaultId));
 
+  // Split vault name to get the last part (after last space, / or -)
+  const vaultName = vault.names.list;
+
+  // Find the last breakable character (space, /, or -)
+  const breakChars = [' ', '/', '-'];
+  let lastBreakIndex = -1;
+  for (let i = vaultName.length - 1; i >= 0; i--) {
+    if (breakChars.includes(vaultName[i])) {
+      lastBreakIndex = i;
+      break;
+    }
+  }
+
+  const beforeLastToken = lastBreakIndex >= 0 ? vaultName.substring(0, lastBreakIndex + 1) : '';
+  const lastToken = lastBreakIndex >= 0 ? vaultName.substring(lastBreakIndex + 1) : vaultName;
+
   return (
     <HeaderContent>
       <TitleAndLabelsHolder>
         <Title isBoosted={isBoosted}>
-          {punctuationWrap(vault.names.list)}
-          <VaultImageHolder>
-            <VaultIdImage vaultId={vaultId} size={33} css={{ flexShrink: 0 }} />
-          </VaultImageHolder>
+          {beforeLastToken && <span>{punctuationWrap(beforeLastToken)}</span>}
+          <LastTokenWithImage>
+            {punctuationWrap(lastToken)}
+            <VaultImageHolder css={{ flexShrink: 0 }}>
+              <VaultIdImage vaultId={vaultId} size={33} />
+            </VaultImageHolder>
+          </LastTokenWithImage>
         </Title>
         <LabelsHolder>
           <ChainTag chainId={vault.chainId} />
@@ -96,18 +115,17 @@ const Title = styled('div', {
   base: {
     textStyle: 'h1',
     color: 'text.middle',
-    display: 'inline-flex',
+    display: 'flex',
+    flexWrap: 'wrap',
     alignItems: 'center',
     gap: '4px',
-    flexWrap: 'wrap',
-    whiteSpace: 'normal',
-    overflowWrap: 'break-word',
     flex: '1 1 auto',
     minWidth: 0,
     maxWidth: '100%',
     order: 1,
     md: {
       order: 0,
+      display: 'inline-flex',
     },
   },
   variants: {
@@ -116,6 +134,15 @@ const Title = styled('div', {
         color: 'text.boosted',
       },
     },
+  },
+});
+
+const LastTokenWithImage = styled('span', {
+  base: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '4px',
+    whiteSpace: 'nowrap',
   },
 });
 
