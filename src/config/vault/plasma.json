@@ -1,5 +1,65 @@
 [
   {
+    "id": "lithos-usde-usdt0",
+    "name": "USDe-USDT0 sLP",
+    "type": "standard",
+    "token": "sAMM-USDe/USDT0",
+    "tokenAddress": "0x01b968C1b663C3921Da5BE3C99Ee3c9B89a40B54",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lithos",
+    "earnContractAddress": "0xd8d8aA7c6c5a42C788A04C2d168a46654A7EbB54",
+    "earnedToken": "mooLithosUSDe-USDT0",
+    "earnedTokenAddress": "0xd8d8aA7c6c5a42C788A04C2d168a46654A7EbB54",
+    "oracle": "lps",
+    "oracleId": "lithos-usde-usdt0",
+    "status": "active",
+    "createdAt": 1760593437,
+    "platformId": "lithos",
+    "assets": ["USDe", "USDT0"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://lithos.to/pools/deposit?token0=0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34&token1=0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb&pool=0x01b968c1b663c3921da5be3c99ee3c9b89a40b54&stable=1&type=-1",
+    "removeLiquidityUrl": "https://lithos.to/dash",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "plasma-lithos"
+      }
+    ]
+  },
+  {
+    "id": "lithos-wxpl-usdt0",
+    "name": "WXPL-USDT0 vLP",
+    "type": "standard",
+    "token": "vAMM-WXPL/USDT0",
+    "tokenAddress": "0xA0926801A2abC718822a60d8Fa1bc2A51Fa09F1e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lithos",
+    "earnContractAddress": "0x94A3725124d2E71028Ee488b88566f1fb11A90C3",
+    "earnedToken": "mooLithosWXPL-USDT0",
+    "earnedTokenAddress": "0x94A3725124d2E71028Ee488b88566f1fb11A90C3",
+    "oracle": "lps",
+    "oracleId": "lithos-wxpl-usdt0",
+    "status": "active",
+    "createdAt": 1760593428,
+    "platformId": "lithos",
+    "assets": ["WXPL", "USDT0"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://lithos.to/pools/deposit?token0=0x6100e367285b01f48d07953803a2d8dca5d19873&token1=0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb&pool=0xa0926801a2abc718822a60d8fa1bc2a51fa09f1e&stable=-1&type=-1",
+    "removeLiquidityUrl": "https://lithos.to/dash",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "plasma-lithos"
+      }
+    ]
+  },
+  {
     "id": "pendle-plasma-plasmausd-29jan26",
     "name": "PlasmaUSD 29Jan26",
     "type": "standard",

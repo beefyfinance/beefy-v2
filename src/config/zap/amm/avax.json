@@ -1,5 +1,17 @@
 [
   {
+    "id": "plasma-lithos",
+    "name": "Lithos",
+    "type": "solidly",
+    "routerAddress": "0xD70962bd7C6B3567a8c893b55a8aBC1E151759f3",
+    "factoryAddress": "0x71a870D1c935C2146b87644DF3B5316e8756aE18",
+    "pairInitHash": "0x666e89f59bff7899240a763a34a5bdb22c0a4ab798644bc46312dc0561a9754e ",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "2",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
+  },
+  {
     "id": "avax-blackhole",
     "name": "Blackhole",
     "type": "solidly",

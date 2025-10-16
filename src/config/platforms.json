@@ -1519,5 +1519,14 @@
     "documentation": "https://prjxdocs.notion.site/",
     "description": "Project X is built on the belief that tech is becoming increasingly commoditized and the next era of DeFi will be won by innovating on distribution, incentive design and UX.",
     "type": "amm"
+  },
+  {
+    "id": "lithos",
+    "name": "Lithos",
+    "website": "https://lithos.to/pools",
+    "twitter": "Lithos_to",
+    "documentation": "https://docs.lithos.to/",
+    "description": "Lithos is a 3,3 DEX built on the Plasma blockchain.",
+    "type": "amm"
   }
 ]
