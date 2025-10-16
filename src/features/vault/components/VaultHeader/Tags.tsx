@@ -4,8 +4,8 @@ import { memo } from 'react';
 import { selectChainById } from '../../../data/selectors/chains.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import { ChainIcon } from '../../../../components/ChainIcon/ChainIcon.tsx';
-import { selectPlatformById } from '../../../data/selectors/platforms.ts';
-import type { PlatformEntity } from '../../../data/entities/platform.ts';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
+import { VaultPlatform } from '../../../../components/VaultPlatform/VaultPlatform.tsx';
 
 export const ChainTag = memo(function ChainTag({ chainId }: { chainId: ChainEntity['id'] }) {
   const chain = useAppSelector(state => selectChainById(state, chainId));
@@ -18,13 +18,12 @@ export const ChainTag = memo(function ChainTag({ chainId }: { chainId: ChainEnti
   );
 });
 
-export const PlatformTag = memo(function PlatformTag({
-  platformId,
-}: {
-  platformId: PlatformEntity['id'];
-}) {
-  const platform = useAppSelector(state => selectPlatformById(state, platformId));
-  return <Tag>{platform.name}</Tag>;
+export const PlatformTag = memo(function PlatformTag({ vaultId }: { vaultId: VaultEntity['id'] }) {
+  return (
+    <Tag>
+      <VaultPlatform vaultId={vaultId} />
+    </Tag>
+  );
 });
 
 export const Tag = styled('div', {

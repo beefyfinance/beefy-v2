@@ -369,7 +369,7 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
   // Tag 3: Retired -> Paused -> Promo -> none
   // Tag 4: Points -> none
   return (
-    <VaultTagsContainer>
+    <VaultTagsContainer isVaultPage={hidePlatform}>
       {!hidePlatform && <VaultPlatformTag vaultId={vaultId} />}
       {isCowcentratedLike && <VaultClmLikeTag vault={vault} hideFee={!isVaultActive(vault)} />}
       {isVaultRetired(vault) ?
@@ -381,6 +381,9 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
       : isGov && !isCowcentratedLike ?
         <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO support multiple earned tokens [empty = ok, not used when clm-like]
       : null}
+      {!isCowcentratedLike && !isGov && (
+        <VaultTag css={styles.vaultTagVault} text={t('VaultTag-Vault')} />
+      )}
       {isVaultEarningPoints(vault) && <PointsTag vault={vault} />}
     </VaultTagsContainer>
   );
@@ -396,6 +399,13 @@ const VaultTagsContainer = styled('div', {
     rowGap: '8px',
     '@media (max-width: 400px)': {
       flexWrap: 'wrap',
+    },
+  },
+  variants: {
+    isVaultPage: {
+      true: {
+        marginTop: '0',
+      },
     },
   },
 });

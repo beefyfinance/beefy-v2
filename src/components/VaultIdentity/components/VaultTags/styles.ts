@@ -54,6 +54,9 @@ export const styles = {
   vaultTagPaused: css.raw({
     backgroundColor: 'tags.paused.background',
   }),
+  vaultTagVault: css.raw({
+    backgroundColor: 'tags.vault.background',
+  }),
   vaultTagClm: css.raw({
     display: 'flex',
     alignItems: 'center',

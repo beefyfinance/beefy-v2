@@ -164,6 +164,7 @@
   "VaultTag-PlatformWithProvider": "{{provider}} ({{platform}})",
   "VaultTag-LineaIgnition": "Ignition",
   "VaultTag-LineaIgnition-Tooltip": "Users earn extra LINEA tokens through the Linea Ignition program",
+  "VaultTag-Vault": "Vault",
   "Vault-Daily": "DAILY",
   "Vault-Breakdown-DailyAPY": "Daily APY",
   "Vault-Chart": "Week's APY",
