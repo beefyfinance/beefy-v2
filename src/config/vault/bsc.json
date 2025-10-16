@@ -873,7 +873,7 @@
     "status": "active",
     "createdAt": 1759881699,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "0.25",
     "assets": ["FOUR", "USDT"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
