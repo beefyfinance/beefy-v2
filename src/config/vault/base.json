@@ -1,5 +1,123 @@
 [
   {
+    "id": "uniswap-cow-base-zora-weth-rp",
+    "name": "ZORA-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseZORA-WETH",
+    "tokenAddress": "0x9Ca7cC997F072ddFbEDd0fa8E810Aa670c977d70",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x2A99AfC17502FABe082f02ac24040100f1Cc1615",
+    "earnedToken": "rCowUniswapBaseZORA-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-zora-weth",
+    "status": "active",
+    "createdAt": 1760640876,
+    "platformId": "uniswap",
+    "assets": ["ZORA", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-zora-weth",
+    "name": "ZORA-WETH",
+    "type": "cowcentrated",
+    "token": "ZORA-WETH uniswap",
+    "tokenAddress": "0xA0Ca5bEbC42cDbf3623B1C09206Ae4e3975B0FC7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x1111111111166b7FE7bd91427724B487980aFc69",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "earnContractAddress": "0x9Ca7cC997F072ddFbEDd0fa8E810Aa670c977d70",
+    "earnedToken": "cowUniswapBaseZORA-WETH",
+    "earnedTokenAddress": "0x9Ca7cC997F072ddFbEDd0fa8E810Aa670c977d70",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-zora-weth",
+    "status": "active",
+    "createdAt": 1760640876,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["ZORA", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-virtual-usdc-rp",
+    "name": "VIRTUAL-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseVIRTUAL-USDC",
+    "tokenAddress": "0xAc28E58b82F72E54A263C7523ccD149De34f157F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xa33a2B947FA0c7FC10D17665AE473AF8c6a6CD59",
+    "earnedToken": "rCowUniswapBaseVIRTUAL-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-virtual-usdc",
+    "status": "active",
+    "createdAt": 1760640876,
+    "platformId": "uniswap",
+    "assets": ["VIRTUAL", "USDC"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-virtual-usdc",
+    "name": "VIRTUAL-USDC",
+    "type": "cowcentrated",
+    "token": "VIRTUAL-USDC uniswap",
+    "tokenAddress": "0x529d2863a1521d0b57db028168fdE2E97120017C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0xAc28E58b82F72E54A263C7523ccD149De34f157F",
+    "earnedToken": "cowUniswapBaseVIRTUAL-USDC",
+    "earnedTokenAddress": "0xAc28E58b82F72E54A263C7523ccD149De34f157F",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-virtual-usdc",
+    "status": "active",
+    "createdAt": 1760640876,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["VIRTUAL", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-synd-weth",
     "name": "SYND-WETH vLP",
     "type": "standard",
