@@ -23,7 +23,9 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
       <TitleAndLabelsHolder>
         <Title isBoosted={isBoosted}>
           {punctuationWrap(vault.names.list)}
-          <VaultIdImage vaultId={vaultId} size={40} css={{ flexShrink: 0 }} />
+          <VaultImageHolder>
+            <VaultIdImage vaultId={vaultId} size={33} css={{ flexShrink: 0 }} />
+          </VaultImageHolder>
         </Title>
         <LabelsHolder>
           <ChainTag chainId={vault.chainId} />
@@ -41,6 +43,16 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
       </VaultTagsAndShareHolder>
     </HeaderContent>
   );
+});
+
+const VaultImageHolder = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '40px',
+    height: '40px',
+  },
 });
 
 const HeaderContent = styled('div', {

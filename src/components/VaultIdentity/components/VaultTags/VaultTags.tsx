@@ -372,6 +372,9 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
     <VaultTagsContainer isVaultPage={hidePlatform}>
       {!hidePlatform && <VaultPlatformTag vaultId={vaultId} />}
       {isCowcentratedLike && <VaultClmLikeTag vault={vault} hideFee={!isVaultActive(vault)} />}
+      {!isCowcentratedLike && !isGov && (
+        <VaultTag css={styles.vaultTagVault} text={t('VaultTag-Vault')} />
+      )}
       {isVaultRetired(vault) ?
         <VaultTag css={styles.vaultTagRetired} text={t('VaultTag-Retired')} />
       : isVaultPaused(vault) ?
@@ -381,9 +384,6 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
       : isGov && !isCowcentratedLike ?
         <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO support multiple earned tokens [empty = ok, not used when clm-like]
       : null}
-      {!isCowcentratedLike && !isGov && (
-        <VaultTag css={styles.vaultTagVault} text={t('VaultTag-Vault')} />
-      )}
       {isVaultEarningPoints(vault) && <PointsTag vault={vault} />}
     </VaultTagsContainer>
   );
