@@ -77,7 +77,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -444,6 +444,11 @@ const config = buildConfig(
             '90': { value: '#FF8D29' },
             '100': { value: '#FF8317' },
           },
+          vaultTints: {
+            default: {
+              '70': { value: '#3C4484' },
+            },
+          },
         },
         sizes: {
           defaultAssetsImageSize: { value: '48px' },
@@ -543,6 +548,9 @@ const config = buildConfig(
             track: { value: 'transparent' },
           },
           tags: {
+            vault: {
+              background: { value: '{colors.vaultTints.default.70}' },
+            },
             clm: {
               background: { value: '{colors.tagClmBackground}' },
               text: { value: '{colors.text.light}' },

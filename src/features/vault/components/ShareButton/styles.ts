@@ -22,6 +22,9 @@ export const styles = {
     flexShrink: '0',
     flexGrow: '0',
     fontSize: '16px',
+    md: {
+      fontSize: '20px',
+    },
   }),
   dropdown: css.raw({
     width: 'auto',

@@ -1,17 +1,6 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  vaultTags: css.raw({
-    marginTop: '4px',
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-    columnGap: '8px',
-    rowGap: '8px',
-    '@media (max-width: 400px)': {
-      flexWrap: 'wrap',
-    },
-  }),
   vaultTag: css.raw({
     textStyle: 'subline.sm',
     fontWeight: 600,
@@ -64,6 +53,9 @@ export const styles = {
   }),
   vaultTagPaused: css.raw({
     backgroundColor: 'tags.paused.background',
+  }),
+  vaultTagVault: css.raw({
+    backgroundColor: 'tags.vault.background',
   }),
   vaultTagClm: css.raw({
     display: 'flex',
