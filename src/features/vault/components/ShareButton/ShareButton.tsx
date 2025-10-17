@@ -156,11 +156,15 @@ const ShareTrigger = styled(DropdownButtonTrigger, {
     alignItems: 'center',
     justifyContent: 'center',
     paddingBlock: '8px',
-    paddingInline: '16px',
+    paddingInline: '14px',
     outline: 'none',
     '&:focus-visible, &.active': {
       outline: 'none',
       backgroundColor: 'bayOfMany',
+    },
+    md: {
+      paddingBlock: '10px',
+      paddingInline: '20px',
     },
   },
 });

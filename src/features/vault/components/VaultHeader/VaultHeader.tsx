@@ -42,7 +42,7 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
           <LastTokenWithImage>
             {punctuationWrap(lastToken)}
             <VaultImageHolder css={{ flexShrink: 0 }}>
-              <VaultIdImage vaultId={vaultId} size={33} />
+              <VaultIdImage vaultId={vaultId} size={36} />
             </VaultImageHolder>
           </LastTokenWithImage>
         </Title>
