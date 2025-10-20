@@ -283,7 +283,7 @@
     ],
     "accounting": [
       {
-        "id": "beefy-balances-subgraph",
+        "id": "beefy-lrt-subgraph",
         "role": "Indexing of all balances of all beefy products",
         "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
       },
