@@ -32,14 +32,20 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
     }
   }
 
-  const beforeLastToken = lastBreakIndex >= 0 ? vaultName.substring(0, lastBreakIndex + 1) : '';
+  const beforeLastToken = lastBreakIndex >= 0 ? vaultName.substring(0, lastBreakIndex) : '';
+  const breakChar = lastBreakIndex >= 0 ? vaultName[lastBreakIndex] : '';
   const lastToken = lastBreakIndex >= 0 ? vaultName.substring(lastBreakIndex + 1) : vaultName;
 
   return (
     <HeaderContent>
       <TitleAndLabelsHolder>
         <Title isBoosted={isBoosted}>
-          {beforeLastToken && <span>{punctuationWrap(beforeLastToken)}</span>}
+          {beforeLastToken && (
+            <span>
+              {punctuationWrap(beforeLastToken)}
+              {breakChar === ' ' ? '\u00A0' : breakChar}
+            </span>
+          )}
           <LastTokenWithImage>
             {punctuationWrap(lastToken)}
             <VaultIdImage css={css.raw({ marginLeft: '5px' })} vaultId={vaultId} size={40} />

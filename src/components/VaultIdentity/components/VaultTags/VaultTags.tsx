@@ -1,9 +1,7 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import type { PromoEntity } from '../../../../features/data/entities/promo.ts';
-import type { TokenEntity } from '../../../../features/data/entities/token.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedLikeVault,
@@ -71,27 +69,6 @@ const VaultPromoTag = memo(function VaultBoostTag({ promoId, onlyIcon }: VaultPr
         : <BoostIcon style={{ width: '12px', height: '12px' }} />
       }
       text={!onlyIcon && tag.text}
-    />
-  );
-});
-
-type VaultEarnTagProps = {
-  chainId: ChainEntity['id'];
-  earnedTokenAddress: TokenEntity['address'];
-};
-const VaultEarnTag = memo(function VaultEarnTag({
-  chainId,
-  earnedTokenAddress,
-}: VaultEarnTagProps) {
-  const { t } = useTranslation();
-  const earnedToken = useAppSelector(state =>
-    selectTokenByAddress(state, chainId, earnedTokenAddress)
-  );
-
-  return (
-    <VaultTag
-      css={styles.vaultTagEarn}
-      text={t('VaultTag-EarnToken', { token: earnedToken.symbol })}
     />
   );
 });
@@ -382,8 +359,6 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
         <VaultTag css={styles.vaultTagPaused} text={t('VaultTag-Paused')} />
       : promo ?
         <VaultPromoTag onlyIcon={onlyShowIcon} promoId={promo.id} />
-      : isGov && !isCowcentratedLike ?
-        <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO support multiple earned tokens [empty = ok, not used when clm-like]
       : null}
       {isVaultEarningPoints(vault) && <PointsTag vault={vault} />}
     </VaultTagsContainer>
