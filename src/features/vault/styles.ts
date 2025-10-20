@@ -5,9 +5,12 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
-    paddingBlock: '32px',
+    paddingBlock: '20px',
     sm: {
       gap: '24px',
+    },
+    md: {
+      paddingBlock: '32px',
     },
   }),
   contentColumns: css.raw({

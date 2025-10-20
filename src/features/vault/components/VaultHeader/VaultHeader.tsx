@@ -152,7 +152,10 @@ const VaultTagsAndShareHolder = styled('div', {
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: '8px',
-    height: '44px',
+    height: '40px',
+    sm: {
+      height: '44px',
+    },
   },
 });
 
