@@ -91,6 +91,7 @@ export const config = {
       'msUSD',
       'USDaf',
       'ysyBOLD',
+      'PYUSD',
       'cUSD',
       'stcUSD',
     ],
@@ -872,7 +873,7 @@ export const config = {
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
-    stableCoins: ['USDT0', 'USDe', 'sUSDe', 'PlasmaUSD'],
+    stableCoins: ['USDT0', 'USDe', 'sUSDe', 'PlasmaUSD', 'msUSD'],
   },
   aurora: {
     name: 'Aurora',

@@ -1,5 +1,155 @@
 [
   {
+    "id": "lithos-wxpl-lith",
+    "name": "LITH-WXPL vLP",
+    "type": "standard",
+    "token": "vAMM-WXPL/LITH",
+    "tokenAddress": "0x7dAB98CC51835Beae6dEE43BbdA84cDb96896fb5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lithos",
+    "earnContractAddress": "0x573F85C231a382Fa749E5Dae729dC09C36f71bA4",
+    "earnedToken": "mooLithosWXPL-LITH",
+    "earnedTokenAddress": "0x573F85C231a382Fa749E5Dae729dC09C36f71bA4",
+    "oracle": "lps",
+    "oracleId": "lithos-wxpl-lith",
+    "status": "active",
+    "createdAt": 1760678819,
+    "platformId": "lithos",
+    "assets": ["LITH", "WXPL"],
+    "migrationIds": ["plasma-lithos"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://lithos.to/pools/deposit?token0=0x6100e367285b01f48d07953803a2d8dca5d19873&token1=0xabb48792a3161e81b47ca084c0b7a22a50324a44&pool=0x7dab98cc51835beae6dee43bbda84cdb96896fb5&stable=-1&type=-1",
+    "removeLiquidityUrl": "https://lithos.to/dash",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "plasma-lithos"
+      }
+    ]
+  },
+  {
+    "id": "lithos-msusd-usdt0",
+    "name": "msUSD-USDT0 sLP",
+    "type": "standard",
+    "token": "sAMM-msUSD/USDT0",
+    "tokenAddress": "0xaa1605fbd9c2Cd3854337dB654471a45B2276c12",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lithos",
+    "earnContractAddress": "0xFF37EBCA7B998fd39b2C7867e06e1D283bAB69b8",
+    "earnedToken": "mooLithosMsUSD-USDT0",
+    "earnedTokenAddress": "0xFF37EBCA7B998fd39b2C7867e06e1D283bAB69b8",
+    "oracle": "lps",
+    "oracleId": "lithos-msusd-usdt0",
+    "status": "active",
+    "createdAt": 1760678810,
+    "platformId": "lithos",
+    "assets": ["msUSD", "USDT0"],
+    "migrationIds": ["plasma-lithos"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://lithos.to/pools/deposit?token0=0x29ad7fe4516909b9e498b5a65339e54791293234&token1=0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb&pool=0xaa1605fbd9c2cd3854337db654471a45b2276c12&stable=1&type=-1",
+    "removeLiquidityUrl": "https://lithos.to/dash",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "plasma-lithos"
+      }
+    ]
+  },
+  {
+    "id": "lithos-weth-weeth",
+    "name": "WETH-weETH sLP",
+    "type": "standard",
+    "token": "sAMM-WETH/weETH",
+    "tokenAddress": "0x82862237F37e8495D88287d72A4C0073250487E0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lithos",
+    "earnContractAddress": "0x6Dd2abBBbbf494dd2454aEd67880B9533E2b3DA1",
+    "earnedToken": "mooLithosWETH-weETH",
+    "earnedTokenAddress": "0x6Dd2abBBbbf494dd2454aEd67880B9533E2b3DA1",
+    "oracle": "lps",
+    "oracleId": "lithos-weth-weeth",
+    "status": "active",
+    "createdAt": 1760678802,
+    "platformId": "lithos",
+    "assets": ["WETH", "weETH"],
+    "migrationIds": ["plasma-lithos"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://lithos.to/pools/deposit?token0=0x9895d81bb462a195b4922ed7de0e3acd007c32cb&token1=0xa3d68b74bf0528fdd07263c60d6488749044914b&pool=0x82862237f37e8495d88287d72a4c0073250487e0&stable=1&type=-1",
+    "removeLiquidityUrl": "https://lithos.to/dash",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "plasma-lithos"
+      }
+    ]
+  },
+  {
+    "id": "lithos-usde-usdt0",
+    "name": "USDe-USDT0 sLP",
+    "type": "standard",
+    "token": "sAMM-USDe/USDT0",
+    "tokenAddress": "0x01b968C1b663C3921Da5BE3C99Ee3c9B89a40B54",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lithos",
+    "earnContractAddress": "0xd8d8aA7c6c5a42C788A04C2d168a46654A7EbB54",
+    "earnedToken": "mooLithosUSDe-USDT0",
+    "earnedTokenAddress": "0xd8d8aA7c6c5a42C788A04C2d168a46654A7EbB54",
+    "oracle": "lps",
+    "oracleId": "lithos-usde-usdt0",
+    "status": "active",
+    "createdAt": 1760593437,
+    "platformId": "lithos",
+    "assets": ["USDe", "USDT0"],
+    "migrationIds": ["plasma-lithos"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://lithos.to/pools/deposit?token0=0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34&token1=0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb&pool=0x01b968c1b663c3921da5be3c99ee3c9b89a40b54&stable=1&type=-1",
+    "removeLiquidityUrl": "https://lithos.to/dash",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "plasma-lithos"
+      }
+    ]
+  },
+  {
+    "id": "lithos-wxpl-usdt0",
+    "name": "WXPL-USDT0 vLP",
+    "type": "standard",
+    "token": "vAMM-WXPL/USDT0",
+    "tokenAddress": "0xA0926801A2abC718822a60d8Fa1bc2A51Fa09F1e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lithos",
+    "earnContractAddress": "0x94A3725124d2E71028Ee488b88566f1fb11A90C3",
+    "earnedToken": "mooLithosWXPL-USDT0",
+    "earnedTokenAddress": "0x94A3725124d2E71028Ee488b88566f1fb11A90C3",
+    "oracle": "lps",
+    "oracleId": "lithos-wxpl-usdt0",
+    "status": "active",
+    "createdAt": 1760593428,
+    "platformId": "lithos",
+    "assets": ["WXPL", "USDT0"],
+    "migrationIds": ["plasma-lithos"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://lithos.to/pools/deposit?token0=0x6100e367285b01f48d07953803a2d8dca5d19873&token1=0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb&pool=0xa0926801a2abc718822a60d8fa1bc2a51fa09f1e&stable=-1&type=-1",
+    "removeLiquidityUrl": "https://lithos.to/dash",
+    "network": "plasma",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "plasma-lithos"
+      }
+    ]
+  },
+  {
     "id": "pendle-plasma-plasmausd-29jan26",
     "name": "PlasmaUSD 29Jan26",
     "type": "standard",
