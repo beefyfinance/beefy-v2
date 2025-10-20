@@ -52,4 +52,16 @@ export const styles = {
       marginTop: '0',
     },
   }),
+
+  header: css.raw({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+    sm: {
+      gap: '8px',
+    },
+    md: {
+      gap: '12px',
+    },
+  }),
 };
