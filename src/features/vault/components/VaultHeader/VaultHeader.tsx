@@ -41,9 +41,7 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
           {beforeLastToken && <span>{punctuationWrap(beforeLastToken)}</span>}
           <LastTokenWithImage>
             {punctuationWrap(lastToken)}
-            <VaultImageHolder css={{ flexShrink: 0 }}>
-              <VaultIdImage vaultId={vaultId} size={36} />
-            </VaultImageHolder>
+            <VaultIdImage vaultId={vaultId} size={40} />
           </LastTokenWithImage>
         </Title>
         <LabelsHolder>
@@ -64,16 +62,6 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
   );
 });
 
-const VaultImageHolder = styled('div', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '40px',
-    height: '40px',
-  },
-});
-
 const HeaderContent = styled('div', {
   base: {
     display: 'flex',
@@ -90,7 +78,7 @@ const HeaderContent = styled('div', {
 const LabelsHolder = styled('div', {
   base: {
     display: 'flex',
-    gap: '6px',
+    gap: '8px',
     order: 0,
     alignItems: 'center',
     md: {
@@ -106,7 +94,7 @@ const TitleAndLabelsHolder = styled('div', {
     gap: '8px',
     md: {
       flexDirection: 'row',
-      gap: '4px',
+      gap: '10px',
     },
   },
 });
@@ -141,7 +129,7 @@ const LastTokenWithImage = styled('span', {
   base: {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '4px',
+    gap: '5px',
     whiteSpace: 'nowrap',
   },
 });
