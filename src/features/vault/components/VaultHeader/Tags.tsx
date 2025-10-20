@@ -11,7 +11,7 @@ export const ChainTag = memo(function ChainTag({ chainId }: { chainId: ChainEnti
   const chain = useAppSelector(state => selectChainById(state, chainId));
 
   return (
-    <Tag chain={true}>
+    <Tag>
       <Label>Chain</Label>
       <ChainContainer>
         {chain.name}
@@ -33,6 +33,7 @@ export const PlatformTag = memo(function PlatformTag({ vaultId }: { vaultId: Vau
 export const Tag = styled('div', {
   base: {
     textStyle: 'subline.sm',
+    fontWeight: 'semiBold',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
@@ -42,20 +43,13 @@ export const Tag = styled('div', {
     color: 'text.light',
     textTransform: 'uppercase',
   },
-  variants: {
-    chain: {
-      true: {
-        paddingBlock: 2,
-        paddingInline: '6px 8px',
-      },
-    },
-  },
 });
 
 const Label = styled('div', {
   base: {
     color: 'text.dark',
     textStyle: 'subline.sm',
+    fontWeight: 'normal',
   },
 });
 

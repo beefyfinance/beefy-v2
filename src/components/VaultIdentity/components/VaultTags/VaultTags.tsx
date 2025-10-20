@@ -365,16 +365,17 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
   const onlyShowIcon = isSmallDevice && isCowcentratedLike && !!promo;
 
   // Tag 1: Platform
-  // Tag 2: CLM -> CLM Pool -> none
+  // Tag 2: CLM -> CLM Pool -> CLM Vault --> Vault --> Pool
   // Tag 3: Retired -> Paused -> Promo -> none
   // Tag 4: Points -> none
   return (
     <VaultTagsContainer isVaultPage={hidePlatform}>
       {!hidePlatform && <VaultPlatformTag vaultId={vaultId} />}
-      {isCowcentratedLike && <VaultClmLikeTag vault={vault} hideFee={!isVaultActive(vault)} />}
-      {!isCowcentratedLike && !isGov && (
-        <VaultTag css={styles.vaultTagVault} text={t('VaultTag-Vault')} />
-      )}
+      {isCowcentratedLike ?
+        <VaultClmLikeTag vault={vault} hideFee={!isVaultActive(vault)} />
+      : isGov ?
+        <VaultTag css={styles.vaultTagPool} text={t('VaultTag-Pool')} />
+      : <VaultTag css={styles.vaultTagVault} text={t('VaultTag-Vault')} />}
       {isVaultRetired(vault) ?
         <VaultTag css={styles.vaultTagRetired} text={t('VaultTag-Retired')} />
       : isVaultPaused(vault) ?

@@ -3,7 +3,7 @@ import { css } from '@repo/styles/css';
 export const styles = {
   vaultTag: css.raw({
     textStyle: 'subline.sm',
-    fontWeight: 600,
+    fontWeight: 'semiBold',
     color: 'text.middle',
     backgroundColor: 'bayOfMany',
     padding: '2px 8px',
@@ -61,10 +61,9 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
-    fontWeight: 'bold',
     backgroundColor: 'tags.clm.background',
     '& span': {
-      fontWeight: 'medium',
+      fontWeight: 'semiBold',
     },
   }),
   vaultTagClmIcon: css.raw({
@@ -82,6 +81,9 @@ export const styles = {
   }),
   platformTagClm: css.raw({
     backgroundColor: 'tags.platform.clm.background',
+  }),
+  vaultTagPool: css.raw({
+    backgroundColor: 'tags.pool.background',
   }),
   divider: css.raw({
     height: '8px',

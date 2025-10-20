@@ -448,6 +448,9 @@ const config = buildConfig(
             default: {
               '70': { value: '#3C4484' },
             },
+            pool: {
+              '70': { value: '#4C2CDE' },
+            }
           },
         },
         sizes: {
@@ -548,6 +551,9 @@ const config = buildConfig(
             track: { value: 'transparent' },
           },
           tags: {
+            pool: {
+              background: { value: '{colors.vaultTints.pool.70}' },
+            },
             vault: {
               background: { value: '{colors.vaultTints.default.70}' },
             },
