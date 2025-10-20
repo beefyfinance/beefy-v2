@@ -34,7 +34,12 @@ export const Legend = memo(function Legend({
       {assets.map(asset => (
         <div key={asset.address} className={classes.item}>
           <div className={classes.key} style={{ backgroundColor: asset.color }} />
-          <AssetsImage chainId={chainId} assetSymbols={[asset.symbol]} css={styles.icon} />
+          <AssetsImage
+            size={24}
+            chainId={chainId}
+            assetSymbols={[asset.symbol]}
+            css={styles.icon}
+          />
           {formatLargePercent(asset[percentKey])}
         </div>
       ))}

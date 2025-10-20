@@ -10,6 +10,7 @@ import { ShareButton } from '../ShareButton/ShareButton.tsx';
 import { ChainTag, PlatformTag } from './Tags.tsx';
 import { styled } from '@repo/styles/jsx';
 import { VaultTags } from '../../../../components/VaultIdentity/components/VaultTags/VaultTags.tsx';
+import { css } from '@repo/styles/css';
 
 export type VaultHeaderProps = {
   vaultId: VaultEntity['id'];
@@ -41,7 +42,7 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
           {beforeLastToken && <span>{punctuationWrap(beforeLastToken)}</span>}
           <LastTokenWithImage>
             {punctuationWrap(lastToken)}
-            <VaultIdImage vaultId={vaultId} size={40} />
+            <VaultIdImage css={css.raw({ marginLeft: '5px' })} vaultId={vaultId} size={40} />
           </LastTokenWithImage>
         </Title>
         <LabelsHolder>
@@ -106,7 +107,6 @@ const Title = styled('div', {
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
-    gap: '4px',
     flex: '1 1 auto',
     minWidth: 0,
     maxWidth: '100%',
@@ -129,7 +129,6 @@ const LastTokenWithImage = styled('span', {
   base: {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '5px',
     whiteSpace: 'nowrap',
   },
 });

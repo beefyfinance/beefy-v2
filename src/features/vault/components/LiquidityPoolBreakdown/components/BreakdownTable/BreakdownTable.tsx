@@ -37,7 +37,12 @@ export const BreakdownTable = memo(function BreakdownTable({
       {assets.map(asset => (
         <div key={asset.address} className={classes.row}>
           <div className={css(styles.cell, styles.asset)}>
-            <AssetsImage css={styles.icon} chainId={chainId} assetSymbols={[asset.symbol]} />{' '}
+            <AssetsImage
+              size={32}
+              css={styles.icon}
+              chainId={chainId}
+              assetSymbols={[asset.symbol]}
+            />{' '}
             {asset.symbol}
           </div>
           <div className={classes.cell}>
@@ -53,6 +58,7 @@ export const BreakdownTable = memo(function BreakdownTable({
       <div className={css(styles.row, styles.footer)}>
         <div className={css(styles.cell, styles.asset)}>
           <AssetsImage
+            size={32}
             css={styles.icon}
             chainId={chainId}
             assetSymbols={assets.map(asset => asset.symbol)}

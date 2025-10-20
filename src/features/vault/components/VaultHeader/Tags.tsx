@@ -14,8 +14,8 @@ export const ChainTag = memo(function ChainTag({ chainId }: { chainId: ChainEnti
     <Tag chain={true}>
       <Label>Chain</Label>
       <ChainContainer>
-        <ChainIcon size={16} chainId={chainId} />
         {chain.name}
+        <ChainIcon size={16} chainId={chainId} />
       </ChainContainer>
     </Tag>
   );
