@@ -1,4 +1,4 @@
-import { orderBy, sortBy } from 'lodash-es';
+import { groupBy, mapValues, orderBy, sortBy } from 'lodash-es';
 import { simplifySearchText } from '../../../helpers/string.ts';
 import {
   isCowcentratedLikeVault,
@@ -202,6 +202,11 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
           return false;
         }
 
+        // Temp Underlying TVL
+        if (selectVaultUnderlyingTvlUsd(state, vault.id).gt(50_000)) {
+          return false;
+        }
+
         // Default: Show
         return true;
       });
@@ -210,6 +215,13 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
         selectVaultById(state, id)
       );
     }
+
+    console.debug(
+      mapValues(
+        groupBy(filteredVaults, v => v.chainId),
+        vs => vs.map(v => v.id).sort()
+      )
+    );
 
     // Recalculate sort?
     let sortedVaultIds = state.ui.filteredVaults.sortedFilteredVaultIds;
