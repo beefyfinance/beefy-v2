@@ -773,7 +773,7 @@ export const config = {
   lisk: {
     name: 'Lisk',
     chainId: 1135,
-    rpc: ['https://rpc.api.lisk.com'],
+    rpc: ['https://rpc.api.lisk.com', 'https://lisk.gateway.tenderly.co'],
     explorerUrl: 'https://blockscout.lisk.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x00fe0b8a136549b2bb99BBa9a7ee1eAB55234571',
