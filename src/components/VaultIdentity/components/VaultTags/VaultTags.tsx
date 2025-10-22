@@ -1,9 +1,7 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import type { PromoEntity } from '../../../../features/data/entities/promo.ts';
-import type { TokenEntity } from '../../../../features/data/entities/token.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedLikeVault,
@@ -42,6 +40,7 @@ import { BasicTooltipContent } from '../../../Tooltip/BasicTooltipContent.tsx';
 import { VaultPlatform } from '../../../VaultPlatform/VaultPlatform.tsx';
 import { styles } from './styles.ts';
 import { VaultTag, VaultTagWithTooltip, type VaultTagWithTooltipProps } from './VaultTag.tsx';
+import { styled } from '@repo/styles/jsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -70,27 +69,6 @@ const VaultPromoTag = memo(function VaultBoostTag({ promoId, onlyIcon }: VaultPr
         : <BoostIcon style={{ width: '12px', height: '12px' }} />
       }
       text={!onlyIcon && tag.text}
-    />
-  );
-});
-
-type VaultEarnTagProps = {
-  chainId: ChainEntity['id'];
-  earnedTokenAddress: TokenEntity['address'];
-};
-const VaultEarnTag = memo(function VaultEarnTag({
-  chainId,
-  earnedTokenAddress,
-}: VaultEarnTagProps) {
-  const { t } = useTranslation();
-  const earnedToken = useAppSelector(state =>
-    selectTokenByAddress(state, chainId, earnedTokenAddress)
-  );
-
-  return (
-    <VaultTag
-      css={styles.vaultTagEarn}
-      text={t('VaultTag-EarnToken', { token: earnedToken.symbol })}
     />
   );
 });
@@ -351,8 +329,10 @@ const PointsTagLineaIgnition = memo(function PointsTagLineaIgnition() {
 
 export type VaultTagsProps = {
   vaultId: VaultEntity['id'];
+  isVaultPaused?: boolean;
+  hidePlatform?: boolean;
 };
-export const VaultTags = memo(function VaultTags({ vaultId }: VaultTagsProps) {
+export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: VaultTagsProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const promo = useAppSelector(state => selectActivePromoForVault(state, vaultId));
@@ -362,23 +342,46 @@ export const VaultTags = memo(function VaultTags({ vaultId }: VaultTagsProps) {
   const onlyShowIcon = isSmallDevice && isCowcentratedLike && !!promo;
 
   // Tag 1: Platform
-  // Tag 2: CLM -> CLM Pool -> none
+  // Tag 2: CLM -> CLM Pool -> CLM Vault --> Vault --> Pool
   // Tag 3: Retired -> Paused -> Promo -> none
   // Tag 4: Points -> none
   return (
-    <div className={css(styles.vaultTags)}>
-      <VaultPlatformTag vaultId={vaultId} />
-      {isCowcentratedLike && <VaultClmLikeTag vault={vault} hideFee={!isVaultActive(vault)} />}
+    <VaultTagsContainer isVaultPage={hidePlatform}>
+      {!hidePlatform && <VaultPlatformTag vaultId={vaultId} />}
+      {isCowcentratedLike ?
+        <VaultClmLikeTag vault={vault} hideFee={!isVaultActive(vault)} />
+      : isGov ?
+        <VaultTag css={styles.vaultTagPool} text={t('VaultTag-Pool')} />
+      : <VaultTag css={styles.vaultTagVault} text={t('VaultTag-Vault')} />}
       {isVaultRetired(vault) ?
         <VaultTag css={styles.vaultTagRetired} text={t('VaultTag-Retired')} />
       : isVaultPaused(vault) ?
         <VaultTag css={styles.vaultTagPaused} text={t('VaultTag-Paused')} />
       : promo ?
         <VaultPromoTag onlyIcon={onlyShowIcon} promoId={promo.id} />
-      : isGov && !isCowcentratedLike ?
-        <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO support multiple earned tokens [empty = ok, not used when clm-like]
       : null}
       {isVaultEarningPoints(vault) && <PointsTag vault={vault} />}
-    </div>
+    </VaultTagsContainer>
   );
+});
+
+const VaultTagsContainer = styled('div', {
+  base: {
+    marginTop: '4px',
+    display: 'flex',
+    flexWrap: 'nowrap',
+    flexDirection: 'row',
+    columnGap: '8px',
+    rowGap: '8px',
+    '@media (max-width: 400px)': {
+      flexWrap: 'wrap',
+    },
+  },
+  variants: {
+    isVaultPage: {
+      true: {
+        marginTop: '0',
+      },
+    },
+  },
 });

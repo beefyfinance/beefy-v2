@@ -5,9 +5,12 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
-    paddingBlock: '32px',
+    paddingBlock: '20px',
     sm: {
       gap: '24px',
+    },
+    md: {
+      paddingBlock: '32px',
     },
   }),
   contentColumns: css.raw({
@@ -47,6 +50,18 @@ export const styles = {
     },
     md: {
       marginTop: '0',
+    },
+  }),
+
+  header: css.raw({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+    sm: {
+      gap: '8px',
+    },
+    md: {
+      gap: '12px',
     },
   }),
 };

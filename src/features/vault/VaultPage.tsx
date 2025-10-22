@@ -55,8 +55,10 @@ const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) 
     <Container maxWidth="lg" className={classes.page}>
       <VaultMeta vaultId={vaultId} />
       <VaultBanners vaultId={vaultId} />
-      <VaultHeader vaultId={vaultId} />
-      <VaultsStats vaultId={vaultId} />
+      <div className={classes.header}>
+        <VaultHeader vaultId={vaultId} />
+        <VaultsStats vaultId={vaultId} />
+      </div>
       <div className={classes.contentColumns}>
         <div className={classes.columnActions}>
           <Actions vaultId={vaultId} />
