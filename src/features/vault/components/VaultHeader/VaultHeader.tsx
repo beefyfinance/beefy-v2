@@ -1,6 +1,6 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { VaultIdImage } from '../../../../components/TokenImage/TokenImage.tsx';
-import { punctuationWrap } from '../../../../helpers/string.ts';
+import { splitLastWrap } from '../../../../helpers/string.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import { type VaultEntity } from '../../../data/entities/vault.ts';
 import { selectVaultIsBoostedForFilter } from '../../../data/selectors/filtered-vaults.ts';
@@ -10,7 +10,6 @@ import { ShareButton } from '../ShareButton/ShareButton.tsx';
 import { ChainTag, PlatformTag } from './Tags.tsx';
 import { styled } from '@repo/styles/jsx';
 import { VaultTags } from '../../../../components/VaultIdentity/components/VaultTags/VaultTags.tsx';
-import { css } from '@repo/styles/css';
 
 export type VaultHeaderProps = {
   vaultId: VaultEntity['id'];
@@ -18,37 +17,17 @@ export type VaultHeaderProps = {
 export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isBoosted = useAppSelector(state => selectVaultIsBoostedForFilter(state, vaultId));
-
-  // Split vault name to get the last part (after last space, / or -)
   const vaultName = vault.names.list;
-
-  // Find the last breakable character (space, /, or -)
-  const breakChars = [' ', '/', '-'];
-  let lastBreakIndex = -1;
-  for (let i = vaultName.length - 1; i >= 0; i--) {
-    if (breakChars.includes(vaultName[i])) {
-      lastBreakIndex = i;
-      break;
-    }
-  }
-
-  const beforeLastToken = lastBreakIndex >= 0 ? vaultName.substring(0, lastBreakIndex) : '';
-  const breakChar = lastBreakIndex >= 0 ? vaultName[lastBreakIndex] : '';
-  const lastToken = lastBreakIndex >= 0 ? vaultName.substring(lastBreakIndex + 1) : vaultName;
+  const [nameNoWrap, nameWrap] = useMemo(() => splitLastWrap(vaultName, true), [vaultName]);
 
   return (
     <HeaderContent>
       <TitleAndLabelsHolder>
         <Title isBoosted={isBoosted}>
-          {beforeLastToken && (
-            <span>
-              {punctuationWrap(beforeLastToken)}
-              {breakChar === ' ' ? '\u00A0' : breakChar}
-            </span>
-          )}
+          {nameWrap && <span>{nameWrap}</span>}
           <LastTokenWithImage>
-            {punctuationWrap(lastToken)}
-            <VaultIdImage css={css.raw({ marginLeft: '5px' })} vaultId={vaultId} size={40} />
+            {nameNoWrap}
+            <VaultIdImage vaultId={vaultId} size={40} />
           </LastTokenWithImage>
         </Title>
         <LabelsHolder>
@@ -136,6 +115,7 @@ const LastTokenWithImage = styled('span', {
     display: 'inline-flex',
     alignItems: 'center',
     whiteSpace: 'nowrap',
+    columnGap: '5px',
   },
 });
 
