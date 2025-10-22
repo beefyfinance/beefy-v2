@@ -25,15 +25,11 @@ export function splitLastWrap(text: string, nbsp: boolean = false): [string, str
   if (lastIndex === -1) {
     return [text];
   }
-  const lastMatch = text[lastIndex];
-  return [
-    text.substring(lastIndex + 1),
-    punctuationWrap(text.substring(0, lastIndex)) +
-      (lastMatch === ' ' ?
-        nbsp ? '\u00A0'
-        : ' '
-      : ''),
-  ];
+  let lastMatch = text[lastIndex];
+  if (nbsp && lastMatch === ' ') {
+    lastMatch = '\u00A0';
+  }
+  return [text.substring(lastIndex + 1), punctuationWrap(text.substring(0, lastIndex)) + lastMatch];
 }
 
 /**
