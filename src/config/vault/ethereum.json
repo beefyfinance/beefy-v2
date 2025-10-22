@@ -1,5 +1,45 @@
 [
   {
+    "id": "curve-pyusd-crvusd",
+    "name": "PYUSD/crvUSD",
+    "type": "standard",
+    "token": "PYcrvUSD",
+    "tokenAddress": "0x625E92624Bc2D88619ACCc1788365A69767f6200",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x869cf8a46C70c59aAFe7258fa824a0179168E8b8",
+    "earnedToken": "mooCurvePYUSD-crvUSD",
+    "earnedTokenAddress": "0x869cf8a46C70c59aAFe7258fa824a0179168E8b8",
+    "oracle": "lps",
+    "oracleId": "curve-pyusd-crvusd",
+    "status": "active",
+    "createdAt": 1761032266,
+    "platformId": "curve",
+    "assets": ["PYUSD", "crvUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-42/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-42/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x625E92624Bc2D88619ACCc1788365A69767f6200",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x625E92624Bc2D88619ACCc1788365A69767f6200",
+            "coins": [
+              "0x6c3ea9036406852006290770BEdFcAbA0e23A0e8",
+              "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curve-paypool",
     "name": "PYUSD/USDC",
     "type": "standard",

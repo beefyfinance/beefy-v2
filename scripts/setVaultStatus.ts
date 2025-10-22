@@ -3,7 +3,7 @@ import { getAllVaultConfigsByChainId, getVaultsForChain } from './common/config.
 import { sortVaultKeys } from './common/vault-fields.ts';
 import { saveJson } from './common/files.ts';
 import { type VaultConfig } from '../src/features/data/apis/config-types.ts';
-import { cloneDeep, keyBy } from 'lodash-es';
+import { cloneDeep, keyBy, uniqBy } from 'lodash-es';
 
 type RunArgs = {
   help?: boolean;
@@ -80,6 +80,28 @@ function findRelatedVaults(
 ): Array<VaultWithTokenAddress> {
   let allRelatedVaults: Array<VaultWithTokenAddress> = [];
 
+  // all vaults that have the underlying token as their deposit token
+  // ie: fetches the vaults, given a rp vault
+  allRelatedVaults = allRelatedVaults.concat(
+    allVaults.filter(
+      (v): v is VaultWithTokenAddress =>
+        !!v.tokenAddress &&
+        !!vault.tokenAddress &&
+        v.tokenAddress.toLowerCase() === vault.tokenAddress.toLowerCase()
+    )
+  );
+
+  // fetch the vaults that have the same earn contract address
+  // ie: fetches the clm vault, given a rp vault
+  allRelatedVaults = allRelatedVaults.concat(
+    allVaults.filter(
+      (v): v is VaultWithTokenAddress =>
+        !!v.earnedTokenAddress &&
+        !!vault.tokenAddress &&
+        v.earnedTokenAddress.toLowerCase() === vault.tokenAddress.toLowerCase()
+    )
+  );
+
   // all vaults that have the input as their underlying token
   // ie: fetches the rp vaults, given a cow vault
   allRelatedVaults = allRelatedVaults.concat(
@@ -105,6 +127,9 @@ function findRelatedVaults(
         (v.type === 'standard' || vault.type === 'standard')
     )
   );
+
+  // unique by id:
+  allRelatedVaults = uniqBy(allRelatedVaults, v => v.id);
 
   return allRelatedVaults;
 }
@@ -191,6 +216,7 @@ async function main() {
   const timestamp = Math.floor(Date.now() / 1000);
 
   const vaultsToUpdate = await getVaultsByIds(args.vaults);
+
   console.log(vaultsToUpdate.length);
   for (const chainId in vaultsToUpdate) {
     const modifiedVaults: VaultConfig[] = [];
@@ -200,7 +226,7 @@ async function main() {
       const newVault = applyChange(vault, args, timestamp);
       modifiedVaults.push(newVault);
 
-      if (args.includeRelated && vault.earnedTokenAddress) {
+      if (args.includeRelated) {
         const relatedVaults = findRelatedVaults(vault, allVaults);
         for (const relatedVault of relatedVaults) {
           modifiedVaults.push(applyChange(relatedVault, args, timestamp));
