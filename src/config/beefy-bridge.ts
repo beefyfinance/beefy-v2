@@ -134,6 +134,7 @@ export const beefyBridgeConfig = {
         },
         sonic: {
           bridge: '0xdddaEc9c267dF24aD66Edc3B2cBe25dB86422051',
+          receiveDisabled: true,
           time: {
             outgoing: 1,
             incoming: 4,

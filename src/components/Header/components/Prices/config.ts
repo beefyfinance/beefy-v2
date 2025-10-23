@@ -4,7 +4,6 @@ import ethIcon from '../../../../images/networks/ethereum.svg';
 import mooIcon from '../../../../images/single-assets/mooBIFI.svg';
 import opIcon from '../../../../images/networks/optimism.svg';
 import baseIcon from '../../../../images/networks/base.svg';
-import sonicIcon from '../../../../images/networks/sonic.svg';
 
 export type Token = {
   symbol: string;
@@ -72,7 +71,7 @@ export const tokens: Token[] = [
       url: 'https://swap.defillama.com/?chain=base&from=0x0000000000000000000000000000000000000000&to=0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
       platform: 'llama',
     },
-  },
+  } /*,
   {
     symbol: 'mooBIFI',
     address: '0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
@@ -89,5 +88,5 @@ export const tokens: Token[] = [
       url: 'https://swap.defillama.com/?chain=sonic&from=0x0000000000000000000000000000000000000000&to=0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
       platform: 'llama',
     },
-  },
+  },*/,
 ];
