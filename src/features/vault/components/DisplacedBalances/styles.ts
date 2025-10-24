@@ -21,8 +21,6 @@ export const styles = {
     gap: '8px',
   }),
   icon: css.raw({
-    width: '24px',
-    height: '24px',
     flexGrow: '0',
     flexShrink: '0',
   }),
