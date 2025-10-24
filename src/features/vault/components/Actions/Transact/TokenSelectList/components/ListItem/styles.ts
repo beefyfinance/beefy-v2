@@ -36,10 +36,6 @@ export const styles = {
     flexShrink: '1',
     minWidth: '0',
   }),
-  icon: css.raw({
-    width: '24px',
-    height: '24px',
-  }),
   symbol: css.raw({
     whiteSpace: 'nowrap',
   }),
