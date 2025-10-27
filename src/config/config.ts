@@ -87,6 +87,7 @@ export const config = {
       'mEDGE',
       'mMEV',
       'frxUSD',
+      'sfrxUSD',
       'scrvUSD',
       'msUSD',
       'USDaf',

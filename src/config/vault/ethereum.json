@@ -1,5 +1,45 @@
 [
   {
+    "id": "curve-reusd-sfrxusd",
+    "name": "reUSD/sfrxUSD",
+    "type": "standard",
+    "token": "reusdsfrx",
+    "tokenAddress": "0xed785Af60bEd688baa8990cD5c4166221599A441",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x1A3eAb69E4149848768Fd843d86859c033Ae842E",
+    "earnedToken": "mooCurveReUSD-sfrxUSD",
+    "earnedTokenAddress": "0x1A3eAb69E4149848768Fd843d86859c033Ae842E",
+    "oracle": "lps",
+    "oracleId": "curve-reusd-sfrxusd",
+    "status": "active",
+    "createdAt": 1761549290,
+    "platformId": "convex",
+    "assets": ["reUSD", "sfrxUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-393/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-393/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xed785Af60bEd688baa8990cD5c4166221599A441",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xed785Af60bEd688baa8990cD5c4166221599A441",
+            "coins": [
+              "0x57aB1E0003F623289CD798B1824Be09a793e4Bec",
+              "0xcf62F905562626CfcDD2261162a51fd02Fc9c5b6"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curve-pyusd-crvusd",
     "name": "PYUSD/crvUSD",
     "type": "standard",
