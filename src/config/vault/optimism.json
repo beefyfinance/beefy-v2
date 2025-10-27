@@ -9552,38 +9552,6 @@
     ]
   },
   {
-    "id": "beets-overnight-pulse-v2",
-    "name": "Overnight Pulse Act II",
-    "type": "standard",
-    "token": "Overnight Pulse Act II",
-    "tokenAddress": "0x43da214fab3315aA6c02e0B8f2BfB7Ef2E3C60A5",
-    "tokenDecimals": 18,
-    "tokenProviderId": "beethovenx",
-    "earnedToken": "mooBeetsOvernightPulseActII",
-    "earnedTokenAddress": "0xA7E013F0C2AFBc837d2A5965cc73046A994167b4",
-    "earnContractAddress": "0xA7E013F0C2AFBc837d2A5965cc73046A994167b4",
-    "oracle": "lps",
-    "oracleId": "beets-overnight-pulse-v2",
-    "status": "eol",
-    "createdAt": 1680283578,
-    "retireReason": "rewards",
-    "retiredAt": 1690624926,
-    "platformId": "beethovenx",
-    "assets": ["bbUSD+", "bbDAI+"],
-    "risks": [
-      "COMPLEXITY_MID",
-      "IL_NONE",
-      "MCAP_SMALL",
-      "AUDIT",
-      "OVER_COLLAT_ALGO_STABLECOIN",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://op.beets.fi/pool/0x43da214fab3315aa6c02e0b8f2bfb7ef2e3c60a50000000000000000000000ae",
-    "removeLiquidityUrl": "https://op.beets.fi/pool/0x43da214fab3315aa6c02e0b8f2bfb7ef2e3c60a50000000000000000000000ae",
-    "network": "optimism"
-  },
-  {
     "id": "mmy-op-mlp",
     "name": "MLP",
     "type": "standard",

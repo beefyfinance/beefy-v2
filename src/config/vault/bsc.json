@@ -6715,45 +6715,6 @@
     ]
   },
   {
-    "id": "thena-dola-wbnb",
-    "name": "DOLA-BNB vLP",
-    "type": "standard",
-    "token": "DOLA-BNB vLP",
-    "tokenAddress": "0xc5856601712E8a74d57cdc7a47fB1B41C1a6Fae2",
-    "tokenDecimals": 18,
-    "tokenProviderId": "thena",
-    "earnedToken": "mooThenaDOLA-ANKR",
-    "earnedTokenAddress": "0x7106250C2E35ad2d0BC5Baf523Cf4A364372B5F4",
-    "earnContractAddress": "0x7106250C2E35ad2d0BC5Baf523Cf4A364372B5F4",
-    "oracle": "lps",
-    "oracleId": "thena-dola-wbnb",
-    "status": "eol",
-    "createdAt": 1677122554,
-    "retireReason": "tvl",
-    "retiredAt": 1680336147,
-    "platformId": "thena",
-    "assets": ["DOLA", "BNB"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_SMALL",
-      "OVER_COLLAT_ALGO_STABLECOIN",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "bsc-thena"
-      }
-    ]
-  },
-  {
     "id": "thena-ankrbnb-ankr",
     "name": "ankrBNB-ANKR vLP",
     "type": "standard",
