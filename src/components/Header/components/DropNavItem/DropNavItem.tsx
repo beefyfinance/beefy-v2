@@ -88,6 +88,7 @@ const DropdownItems = styled(DropdownContent, {
     paddingBlock: '6px',
     gap: '0px',
     contain: 'paint',
+    marginLeft: '-12px',
   },
 });
 
