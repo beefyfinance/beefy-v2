@@ -15,6 +15,10 @@ import { GovRewards } from './Gov/GovRewards.tsx';
 import { MerklRewards } from './Merkl/MerklRewards.tsx';
 import { StellaSwapRewards } from './StellaSwap/StellaSwapRewards.tsx';
 import { styles } from './styles.ts';
+import {
+  maybeHasMerklRewards,
+  maybeHasStellaSwapRewards,
+} from '../../../../../data/actions/user-rewards/helpers.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -62,18 +66,22 @@ const ClaimFormLoader = memo(function ClaimFormLoader() {
           deposited={deposited}
         />
       : null}
-      <MerklRewards
-        vaultId={vault.id}
-        chainId={vault.chainId}
-        walletAddress={walletAddress}
-        deposited={deposited}
-      />
-      <StellaSwapRewards
-        vaultId={vault.id}
-        chainId={vault.chainId}
-        walletAddress={walletAddress}
-        deposited={deposited}
-      />
+      {maybeHasMerklRewards(vault) && (
+        <MerklRewards
+          vaultId={vault.id}
+          chainId={vault.chainId}
+          walletAddress={walletAddress}
+          deposited={deposited}
+        />
+      )}
+      {maybeHasStellaSwapRewards(vault) && (
+        <StellaSwapRewards
+          vaultId={vault.id}
+          chainId={vault.chainId}
+          walletAddress={walletAddress}
+          deposited={deposited}
+        />
+      )}
     </div>
   );
 });

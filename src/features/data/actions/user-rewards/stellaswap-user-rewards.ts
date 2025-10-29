@@ -1,11 +1,11 @@
 import { fromWei } from '../../../../helpers/big-number.ts';
 import { pushOrSet } from '../../../../helpers/object.ts';
 import { getStellaSwapRewardsApi } from '../../apis/instances.ts';
-import { getCowcentratedPool } from '../../entities/vault.ts';
+import { getCowcentratedPool, isCowcentratedLikeVault } from '../../entities/vault.ts';
 import type { StellaSwapVaultReward } from '../../reducers/wallet/user-rewards-types.ts';
 import {
-  selectAllCowcentratedVaults,
   selectGovCowcentratedVaultById,
+  selectVaultByIdOrUndefined,
 } from '../../selectors/vaults.ts';
 import { isDefined } from '../../utils/array-utils.ts';
 import { createAppAsyncThunk } from '../../utils/store-utils.ts';
@@ -15,6 +15,7 @@ import type {
 } from './stellaswap-user-rewards-types.ts';
 import { selectStellaSwapRewardsForUserShouldLoad } from '../../selectors/data-loader/user-rewards.ts';
 import { maybeHasStellaSwapRewards } from './helpers.ts';
+import { selectUserDepositedVaultIds } from '../../selectors/balance.ts';
 
 export const fetchUserStellaSwapRewardsAction = createAppAsyncThunk<
   FetchUserStellaSwapRewardsFulfilledPayload,
@@ -24,8 +25,12 @@ export const fetchUserStellaSwapRewardsAction = createAppAsyncThunk<
   async ({ walletAddress }, { getState }) => {
     const state = getState();
     const byVaultId: Record<string, StellaSwapVaultReward[]> = {};
+    const depositedVaultIds = selectUserDepositedVaultIds(state, walletAddress);
     const poolAddressToClmPoolId: Record<string, string> = Object.fromEntries(
-      selectAllCowcentratedVaults(state)
+      depositedVaultIds
+        .map(id => selectVaultByIdOrUndefined(state, id))
+        .filter(isDefined)
+        .filter(isCowcentratedLikeVault)
         .map(vault => {
           const poolId = getCowcentratedPool(vault);
           if (!poolId) {
