@@ -38,7 +38,7 @@ export const ListItem = memo(function ListItem({
   return (
     <button type="button" className={css(styles.item, cssProp)} onClick={handleClick}>
       <div className={css(styles.side)}>
-        <TokensImage tokens={tokens} css={styles.icon} />
+        <TokensImage tokens={tokens} size={24} />
         <div className={classes.symbol}>
           <ListJoin items={tokenSymbols} />
         </div>

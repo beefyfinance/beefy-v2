@@ -1329,25 +1329,6 @@
     ]
   },
   {
-    "id": "moo_beets-overnight-pulse-v2-overnight",
-    "title": "Overnight",
-    "vaultId": "beets-overnight-pulse-v2",
-    "assets": ["bbUSD+", "bbDAI+"],
-    "tokenAddress": "0xA7E013F0C2AFBc837d2A5965cc73046A994167b4",
-    "type": "boost",
-    "contractAddress": "0x6E4d1e6B78F536dB6868c80d8735b4bf1551E927",
-    "partners": ["overnight"],
-    "rewards": [
-      {
-        "type": "token",
-        "address": "0x4200000000000000000000000000000000000042",
-        "symbol": "OP",
-        "decimals": 18,
-        "oracleId": "OP"
-      }
-    ]
-  },
-  {
     "id": "moo_velodrome-weth-wsteth-lido",
     "title": "Lido",
     "vaultId": "velodrome-weth-wsteth",

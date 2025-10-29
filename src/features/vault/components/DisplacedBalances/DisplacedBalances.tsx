@@ -35,7 +35,12 @@ const BridgedEntry = memo(function BridgedEntry({
 
   return (
     <div className={classes.entry}>
-      <TokenImage chainId={depositToken.chainId} address={depositToken.address} css={styles.icon} />
+      <TokenImage
+        size={24}
+        chainId={depositToken.chainId}
+        address={depositToken.address}
+        css={styles.icon}
+      />
       <div className={classes.text}>
         <Trans
           t={t}
