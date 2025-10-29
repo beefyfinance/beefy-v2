@@ -1,17 +1,10 @@
-import { isCowcentratedLikeVault, type VaultEntity } from '../../entities/vault.ts';
+import { type VaultEntity } from '../../entities/vault.ts';
 import { selectUserDepositedVaultIds } from '../../selectors/balance.ts';
 import { selectVaultById } from '../../selectors/vaults.ts';
 import type { BeefyDispatchFn, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
 import { fetchUserMerklRewardsAction } from './merkl-user-rewards.ts';
 import { fetchUserStellaSwapRewardsAction } from './stellaswap-user-rewards.ts';
-
-function maybeHasStellaSwapRewards(vault: VaultEntity): boolean {
-  return vault.chainId === 'moonbeam' && vault.platformId === 'stellaswap';
-}
-
-function maybeHasMerklRewards(vault: VaultEntity): boolean {
-  return isCowcentratedLikeVault(vault) || vault.chainId === 'mode';
-}
+import { maybeHasMerklRewards, maybeHasStellaSwapRewards } from './helpers.ts';
 
 export function fetchUserOffChainRewardsForVaultAction(
   vaultId: VaultEntity['id'],

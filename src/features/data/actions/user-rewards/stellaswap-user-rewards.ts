@@ -14,6 +14,7 @@ import type {
   FetchUserStellaSwapRewardsFulfilledPayload,
 } from './stellaswap-user-rewards-types.ts';
 import { selectStellaSwapRewardsForUserShouldLoad } from '../../selectors/data-loader/user-rewards.ts';
+import { maybeHasStellaSwapRewards } from './helpers.ts';
 
 export const fetchUserStellaSwapRewardsAction = createAppAsyncThunk<
   FetchUserStellaSwapRewardsFulfilledPayload,
@@ -22,25 +23,40 @@ export const fetchUserStellaSwapRewardsAction = createAppAsyncThunk<
   'rewards/fetchUserStellaSwapRewardsAction',
   async ({ walletAddress }, { getState }) => {
     const state = getState();
-    const api = await getStellaSwapRewardsApi();
-
-    const response = await api.fetchRewards({
-      user: walletAddress,
-    });
-
-    if (!response || response.status !== 'success' || !response.data) {
-      throw new Error('Failed to fetch StellaSwap rewards');
-    }
-
     const byVaultId: Record<string, StellaSwapVaultReward[]> = {};
     const poolAddressToClmPoolId: Record<string, string> = Object.fromEntries(
       selectAllCowcentratedVaults(state)
         .map(vault => {
           const poolId = getCowcentratedPool(vault);
-          return poolId ? [vault.poolAddress.toLowerCase(), poolId] : undefined;
+          if (!poolId) {
+            return undefined;
+          }
+          const pool = selectGovCowcentratedVaultById(state, poolId);
+          if (!pool) {
+            return undefined;
+          }
+          if (!maybeHasStellaSwapRewards(pool)) {
+            return undefined;
+          }
+          return [vault.poolAddress.toLowerCase(), poolId];
         })
         .filter(isDefined)
     );
+
+    if (Object.keys(poolAddressToClmPoolId).length === 0) {
+      return {
+        walletAddress,
+        byVaultId,
+      };
+    }
+
+    const api = await getStellaSwapRewardsApi();
+    const response = await api.fetchRewards({
+      user: walletAddress,
+    });
+    if (!response || response.status !== 'success' || !response.data) {
+      throw new Error('Failed to fetch StellaSwap rewards');
+    }
 
     for (const poolData of response.data.pools) {
       const vaultId = poolAddressToClmPoolId[poolData.pool.toLowerCase()];
