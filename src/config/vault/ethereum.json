@@ -1,5 +1,45 @@
 [
   {
+    "id": "curve-crvusd-yb",
+    "name": "YB/crvUSD",
+    "type": "standard",
+    "token": "YB-crvUSD",
+    "tokenAddress": "0xec977F46467a3021785Cff88894886E617abd65b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x0B1b34677B80F499D2f03Bf335Ed6A2Db9f2a376",
+    "earnedToken": "mooCurveCrvUSD-YB",
+    "earnedTokenAddress": "0x0B1b34677B80F499D2f03Bf335Ed6A2Db9f2a376",
+    "oracle": "lps",
+    "oracleId": "curve-crvusd-yb",
+    "status": "active",
+    "createdAt": 1761809824,
+    "platformId": "curve",
+    "assets": ["YB", "crvUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-twocrypto-271/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-twocrypto-271/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xec977F46467a3021785Cff88894886E617abd65b",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0xec977F46467a3021785Cff88894886E617abd65b",
+            "coins": [
+              "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
+              "0x01791F726B4103694969820be083196cC7c045fF"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curve-reusd-sfrxusd",
     "name": "reUSD/sfrxUSD",
     "type": "standard",
