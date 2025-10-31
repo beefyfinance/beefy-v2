@@ -3,7 +3,7 @@ import { selectUnreadActiveProposalsBySpace } from '../../../../features/data/se
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import type { BadgeComponentProps } from './types.ts';
 import { Count } from '../../../Count/Count.tsx';
-
+import { styled } from '@repo/styles/jsx';
 type UnreadSpaceProposalsCountProps = BadgeComponentProps & {
   space: string;
 };
@@ -17,7 +17,7 @@ const UnreadSpaceProposalsCount = memo(function UnreadProposalsCount({
     return null;
   }
 
-  return <Count data-count={proposals.length} />;
+  return <CustomCount data-count={proposals.length} />;
 });
 
 export const UnreadMainProposalsCount = memo(function UnreadMainProposalsCount() {
@@ -26,4 +26,10 @@ export const UnreadMainProposalsCount = memo(function UnreadMainProposalsCount()
 
 export const UnreadProfitProposalsCount = memo(function UnreadProfitProposalsCount() {
   return <UnreadSpaceProposalsCount space="profit.beefy.eth" />;
+});
+
+const CustomCount = styled(Count, {
+  base: {
+    marginLeft: 'auto',
+  },
 });
