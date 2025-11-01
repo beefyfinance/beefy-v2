@@ -480,16 +480,6 @@
     ],
     "accounting": [
       {
-        "id": "beefy-lrt-subgraph",
-        "role": "Raw indexing of blockchain data, computes time weighted balances",
-        "url": "https://github.com/beefyfinance/lrt-subgraph"
-      },
-      {
-        "id": "beefy-lrt-api",
-        "role": "API for the LRT subgraph. Provides stable API.",
-        "url": "https://github.com/beefyfinance/beefy-lrt-api"
-      },
-      {
         "id": "silo-points",
         "role": "Distribution of rewards",
         "type": "claim-rewards",
