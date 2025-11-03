@@ -257,6 +257,7 @@
   "Vault-PauseReason-viability": "This vault is paused while it's future viability is being investigated. New deposits are temporarily unavailable.",
   "Vault-PauseReason-ren-sunset": "This vault is paused to new deposits due to the sunsetting of Ren 1.0",
   "Vault-PauseReason-default": "This vault is paused. New deposits are temporarily unavailable.",
+  "Vault-PauseReason-balancer-exploit-2025-11-03": "All Beefy Balancer V2 products are paused. Our team is monitoring the situation closely. Please follow <balancer>Balancer</balancer> for updates.",
   "Vault-LpBreakdown-YourDeposit": "Your Deposit",
   "Vault-LpBreakdown-1LP": "1 LP",
   "Vault-LpBreakdown-TotalPool": "Total Pool",
