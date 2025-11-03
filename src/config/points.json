@@ -15,16 +15,6 @@
     ],
     "accounting": [
       {
-        "id": "beefy-balances-subgraph",
-        "role": "Indexing of all balances of all beefy products",
-        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
-      },
-      {
-        "id": "beefy-lrt-api",
-        "role": "API for the LRT subgraph. Provides stable API.",
-        "url": "https://github.com/beefyfinance/beefy-lrt-api"
-      },
-      {
         "id": "spark",
         "role": "Distribution of rewards",
         "type": "claim-rewards",
@@ -47,16 +37,6 @@
       }
     ],
     "accounting": [
-      {
-        "id": "beefy-balances-subgraph",
-        "role": "Indexing of all balances of all beefy products",
-        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
-      },
-      {
-        "id": "beefy-lrt-api",
-        "role": "API for the LRT subgraph. Provides stable API.",
-        "url": "https://github.com/beefyfinance/beefy-lrt-api"
-      },
       {
         "id": "dtrinity",
         "role": "Distribution of rewards",
@@ -81,16 +61,6 @@
       }
     ],
     "accounting": [
-      {
-        "id": "beefy-balances-subgraph",
-        "role": "Indexing of all balances of all beefy products",
-        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
-      },
-      {
-        "id": "beefy-lrt-api",
-        "role": "API for the LRT subgraph. Provides stable API.",
-        "url": "https://github.com/beefyfinance/beefy-lrt-api"
-      },
       {
         "id": "level",
         "role": "Distribution of rewards",
@@ -178,16 +148,6 @@
       }
     ],
     "accounting": [
-      {
-        "id": "beefy-balances-subgraph",
-        "role": "Indexing of all balances of all beefy products",
-        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
-      },
-      {
-        "id": "beefy-lrt-api",
-        "role": "API for the LRT subgraph. Provides stable API.",
-        "url": "https://github.com/beefyfinance/beefy-lrt-api"
-      },
       {
         "id": "solv",
         "role": "Distribution of rewards",
@@ -370,39 +330,6 @@
     ]
   },
   {
-    "id": "mendi-loyalty",
-    "docs": "https://docs.mendi.finance/points-systems/mendi-loyalty-program",
-    "points": [
-      {
-        "id": "mendi-loyalty",
-        "name": "Mendi Loyalty Points"
-      }
-    ],
-    "eligibility": [
-      {
-        "type": "vault-whitelist"
-      }
-    ],
-    "accounting": [
-      {
-        "id": "beefy-lrt-subgraph",
-        "role": "Raw indexing of blockchain data, computes time weighted balances",
-        "url": "https://github.com/beefyfinance/lrt-subgraph"
-      },
-      {
-        "id": "beefy-lrt-api",
-        "role": "API for the LRT subgraph. Provides stable API.",
-        "url": "https://github.com/beefyfinance/beefy-lrt-api"
-      },
-      {
-        "id": "mendi-loyalty",
-        "role": "Distribution of rewards",
-        "type": "claim-rewards",
-        "url": "https://mendi.finance/points/"
-      }
-    ]
-  },
-  {
     "id": "rings",
     "docs": "https://x.com/Rings_Protocol/status/1869027802155983085?t=1S3IsVivc-QA5YK0yaj4wA&s=19",
     "points": [
@@ -418,16 +345,6 @@
       }
     ],
     "accounting": [
-      {
-        "id": "beefy-balances-subgraph",
-        "role": "Indexing of all balances of all beefy products",
-        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
-      },
-      {
-        "id": "beefy-lrt-api",
-        "role": "API for the LRT subgraph. Provides stable API.",
-        "url": "https://github.com/beefyfinance/beefy-lrt-api"
-      },
       {
         "id": "rings",
         "role": "Distribution of rewards",
@@ -504,6 +421,11 @@
         "url": "https://app.openblocklabs.com/app/sonic-points/protocols/Beefy-Automated-Liquidity-Management"
       },
       {
+        "id": "openblock-labs-beefy-clm-sonic",
+        "role": "Run queries on sentio to get accounting data",
+        "url": "https://app.openblocklabs.com/app/sonic-points/protocols/Beefy-beS-LST"
+      },
+      {
         "id": "sonic-points",
         "role": "Distribution of rewards",
         "type": "claim-rewards",
@@ -532,16 +454,6 @@
       }
     ],
     "accounting": [
-      {
-        "id": "beefy-lrt-subgraph",
-        "role": "Raw indexing of blockchain data, computes time weighted balances",
-        "url": "https://github.com/beefyfinance/lrt-subgraph"
-      },
-      {
-        "id": "beefy-lrt-api",
-        "role": "API for the LRT subgraph. Provides stable API.",
-        "url": "https://github.com/beefyfinance/beefy-lrt-api"
-      },
       {
         "id": "silo-points",
         "role": "Distribution of rewards",
@@ -602,16 +514,6 @@
     ],
     "accounting": [
       {
-        "id": "beefy-balances-subgraph",
-        "role": "Indexing of all balances of all beefy products",
-        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
-      },
-      {
-        "id": "beefy-lrt-api",
-        "role": "API for the LRT subgraph. Provides stable API.",
-        "url": "https://github.com/beefyfinance/beefy-lrt-api"
-      },
-      {
         "id": "falcon-miles",
         "role": "Distribution of rewards",
         "type": "claim-rewards",
@@ -641,16 +543,6 @@
       }
     ],
     "accounting": [
-      {
-        "id": "beefy-lrt-subgraph",
-        "role": "Raw indexing of blockchain data, computes time weighted balances",
-        "url": "https://github.com/beefyfinance/lrt-subgraph"
-      },
-      {
-        "id": "beefy-lrt-api",
-        "role": "API for the LRT subgraph. Provides stable API.",
-        "url": "https://github.com/beefyfinance/beefy-lrt-api"
-      },
       {
         "id": "hybra-points",
         "role": "Distribution of rewards",
@@ -683,13 +575,13 @@
     "accounting": [
       {
         "id": "beefy-balances-subgraph",
-        "role": "Raw indexing of blockchain data, computes time weighted balances",
-        "url": "https://github.com/beefyfinance/lrt-subgraph"
+        "role": "Indexing of all balances of all beefy products",
+        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
       },
       {
         "id": "beefy-balances-api",
-        "role": "API for the LRT subgraph. Provides stable API.",
-        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+        "role": "API for the balances subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-balances-api"
       },
       {
         "id": "caps",
