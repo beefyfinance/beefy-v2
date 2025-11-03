@@ -10149,8 +10149,10 @@
     "earnedTokenAddress": "0x764e4e75e3738615CDBFAeaE0C8527b1616e1123",
     "oracle": "lps",
     "oracleId": "aura-arb-rseth-weth",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1719486776,
+    "pauseReason": "balancer-exploit-2025-11-03",
+    "pausedAt": 1762166887,
     "platformId": "aura",
     "assets": ["rsETH", "ETH"],
     "risks": [
@@ -14324,8 +14326,10 @@
     "earnedTokenAddress": "0x81FdC9a8a233519D00f8eDFa0f8bFB7618dBf26b",
     "oracle": "lps",
     "oracleId": "aura-arb-weth-reth-v2",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1709368857,
+    "pauseReason": "balancer-exploit-2025-11-03",
+    "pausedAt": 1762166887,
     "platformId": "aura",
     "assets": ["rETH", "ETH"],
     "risks": [

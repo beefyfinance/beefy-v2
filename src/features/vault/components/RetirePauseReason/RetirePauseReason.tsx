@@ -1,4 +1,4 @@
-import { type CssStyles } from '@repo/styles/css';
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertWarning } from '../../../../components/Alerts/Alerts.tsx';
@@ -18,6 +18,10 @@ const ScreamTx: Record<string, string> = {
   'scream-frax':
     'https://ftmscan.com/tx/0x6bcb68dd92e1500e82a7f22ea7c17858a68c065eb4b4402d273885ccc8a6dc0f',
 };
+
+const linkClass = css({
+  textDecoration: 'underline',
+});
 
 export const RetirePauseReason = memo(function RetirePauseReason({
   vaultId,
@@ -51,7 +55,10 @@ export const RetirePauseReason = memo(function RetirePauseReason({
                 i18nKey={isGovVault(vault) ? `${maybeKey}-gov` : maybeKey}
                 components={{
                   info: (
-                    <ExternalLink href="https://snapshot.org/#/beefydao.eth/proposal/0x55e6ad9dd3ebcca3334e23872fa8e2ab1e926466b3d2d0af6f462cc45b1541a2" />
+                    <ExternalLink
+                      className={linkClass}
+                      href="https://snapshot.org/#/beefydao.eth/proposal/0x55e6ad9dd3ebcca3334e23872fa8e2ab1e926466b3d2d0af6f462cc45b1541a2"
+                    />
                   ),
                 }}
               />
@@ -62,9 +69,12 @@ export const RetirePauseReason = memo(function RetirePauseReason({
                 t={t}
                 i18nKey={maybeKey}
                 components={{
-                  tx: <ExternalLink href={ScreamTx[vaultId]} />,
+                  tx: <ExternalLink className={linkClass} href={ScreamTx[vaultId]} />,
                   plan: (
-                    <ExternalLink href="https://snapshot.org/#/screamsh.eth/proposal/0xcbf4a9d1c951a141a2fa806f7c7e6c4b2fea7db5952aee9e1dcc68b1c11adff9" />
+                    <ExternalLink
+                      className={linkClass}
+                      href="https://snapshot.org/#/screamsh.eth/proposal/0xcbf4a9d1c951a141a2fa806f7c7e6c4b2fea7db5952aee9e1dcc68b1c11adff9"
+                    />
                   ),
                 }}
               />
@@ -76,7 +86,25 @@ export const RetirePauseReason = memo(function RetirePauseReason({
                 i18nKey={maybeKey}
                 components={{
                   pool: (
-                    <ExternalLink href="https://app.beefy.com/vault/beefy-bevelo-v2-earnings" />
+                    <ExternalLink
+                      className={linkClass}
+                      href="https://app.beefy.com/vault/beefy-bevelo-v2-earnings"
+                    />
+                  ),
+                }}
+              />
+            );
+          } else if (reasonCode === 'balancer-exploit-2025-11-03') {
+            return (
+              <Trans
+                t={t}
+                i18nKey={maybeKey}
+                components={{
+                  balancer: (
+                    <ExternalLink
+                      className={linkClass}
+                      href="https://x.com/Balancer/status/1985283356582453588"
+                    />
                   ),
                 }}
               />
