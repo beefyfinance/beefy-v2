@@ -4,7 +4,11 @@ import escapeStringRegexp from 'escape-string-regexp';
 import { differenceWith, isEqual } from 'lodash-es';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
-import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string.ts';
+import {
+  safeSearchRegex,
+  simplifySearchText,
+  stringFoundAnywhere,
+} from '../../../helpers/string.ts';
 import type { PlatformEntity } from '../entities/platform.ts';
 import { type VaultEntity } from '../entities/vault.ts';
 import type { FilteredVaultsState, SortWithSubSort } from '../reducers/filtered-vaults-types.ts';
@@ -106,7 +110,18 @@ function fuzzyTokenRegex(token: string) {
 }
 
 function vaultNameMatches(vault: VaultEntity, searchText: string) {
-  return stringFoundAnywhere(simplifySearchText(vault.names.list), searchText);
+  // phrase match
+  if (stringFoundAnywhere(simplifySearchText(vault.names.list), searchText)) {
+    return true;
+  }
+
+  // word match
+  const words = searchText
+    .split(/[- /,]/g)
+    .map(t => t.trim())
+    .filter(t => t.length > 1)
+    .map(t => safeSearchRegex(t, true));
+  return words.every(word => vault.names.list.match(word));
 }
 
 function searchTextToFuzzyTokenMatchers(searchText: string) {
