@@ -22281,9 +22281,11 @@
     "earnedTokenAddress": "0x77B3B76A68B89541Cbb60d3609988376290Cb929",
     "oracle": "lps",
     "oracleId": "balancer-base-weth-reth",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1694110890,
     "updatedAt": 1718744992,
+    "pauseReason": "exploit",
+    "pausedAt": 1762165956,
     "platformId": "aura",
     "assets": ["rETH", "ETH"],
     "risks": [
