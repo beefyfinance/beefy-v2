@@ -16447,10 +16447,8 @@
     "earnedTokenAddress": "0x93981d31ADE2C84882a9A1ABA9Cb49978C83389a",
     "oracle": "lps",
     "oracleId": "aura-rdnt-weth",
-    "status": "paused",
+    "status": "active",
     "createdAt": 1692957284,
-    "pauseReason": "balancer-exploit-2025-11-03",
-    "pausedAt": 1762169993,
     "platformId": "aura",
     "assets": ["RDNT", "WETH"],
     "risks": [
@@ -16587,10 +16585,8 @@
     "earnedTokenAddress": "0x3bAa857646e5A0B475E75a1dbD38E7f0a6742058",
     "oracle": "lps",
     "oracleId": "aura-aurabal-wsteth",
-    "status": "paused",
+    "status": "active",
     "createdAt": 1691593745,
-    "pauseReason": "balancer-exploit-2025-11-03",
-    "pausedAt": 1762169993,
     "platformId": "aura",
     "assets": ["auraBAL", "wstETH"],
     "risks": [
