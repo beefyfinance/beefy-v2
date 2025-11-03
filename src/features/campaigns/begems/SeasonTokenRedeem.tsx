@@ -121,7 +121,7 @@ const RedeemFormDisabled = memo(function RedeemFormDisabled({
   const text = useMemo(() => {
     const now = getUnixNow();
     if (now > config.endTime) {
-      return 'Redeem soon';
+      return 'Redemptions closed';
     }
     // const date = fromUnixTime(config.endTime);
     // return `Redeem in ${format(date, 'MMMM')}`;

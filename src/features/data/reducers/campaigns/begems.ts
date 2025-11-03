@@ -6,7 +6,7 @@ import type { BeGemsState } from './begems-types.ts';
 const initialState: BeGemsState = {
   factory: '0x9d9cC601aD926F870220590d22179540566E6722',
   seasons: {
-    allNumbers: [1, 2, 3],
+    allNumbers: [1, 2],
     configByNumber: {
       1: {
         number: 1,
@@ -59,7 +59,7 @@ const initialState: BeGemsState = {
           {
             question: 'How can I earn beGEMS points?',
             answer:
-              'Deposit into any eligible vault or pool on the Sonic chain, and you’ll start accruing beGEMS points the following day. Your points will be visible on this page.',
+              'Points were earned by depositing into eligible vaults and pools on the Sonic chain. However, Season 2 ended on 31 October 2025, and points are no longer accruing.',
           },
           {
             question: 'How much are beGEMS points worth?',
@@ -74,20 +74,9 @@ const initialState: BeGemsState = {
           {
             question: 'When does Season 2 end?',
             answer:
-              'The end of Season 2 hasn’t been announced yet. It will be decided by Sonic. Follow Sonic and Beefy socials for updates.',
+              'Season 2 ended on 31 October 2025, and points stopped accruing from that date.',
           },
         ],
-      },
-      3: {
-        number: 3,
-        type: 'points',
-        startTime: 1761998400, // Sat Nov 01 2025 12:00:00 UTC
-        endTime: 1766059200, // Thu Dec 18 2025 12:00:00 UTC
-        explainer: {
-          title: 'Season 3 is coming soon',
-          paragraphs: ['Check back later for details on Season 3 of Beefy Gems.'],
-        },
-        faqs: [],
       },
     },
     dataByNumber: {
@@ -119,8 +108,6 @@ export const beGemsSlice = createSlice({
                 existing.token !== season.token ||
                 (existing.priceForFullShare === undefined &&
                   season.priceForFullShare !== undefined) ||
-                (season.priceForFullShare === undefined &&
-                  existing.priceForFullShare !== undefined) ||
                 !(existing.priceForFullShare || BIG_ZERO).eq(season.priceForFullShare || BIG_ZERO)
               ) {
                 sliceState.seasons.dataByNumber[season.num] = {
