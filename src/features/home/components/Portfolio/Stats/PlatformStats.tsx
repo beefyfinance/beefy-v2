@@ -7,10 +7,10 @@ import { selectTotalTvl } from '../../../../data/selectors/tvl.ts';
 import { selectTotalActiveVaults } from '../../../../data/selectors/vaults.ts';
 import { ModalTvl } from '../ModalTvl/ModalTvl.tsx';
 import { Stat } from './Stat.tsx';
-import { Stats } from './Stats.tsx';
+import { PlatformStatsContainer } from './Stats.tsx';
 import { useBreakpoint } from '../../../../../components/MediaQueries/useBreakpoint.ts';
 
-export const VaultsStats = memo(function VaultStats() {
+export const PlatformStats = memo(function PlatformStats() {
   const [isTvlModalOpen, setIsTvlModalOpen] = useState<boolean>(false);
   const { t } = useTranslation();
   const totalTvl = useAppSelector(selectTotalTvl);
@@ -27,15 +27,30 @@ export const VaultsStats = memo(function VaultStats() {
   const isMobile = useBreakpoint({ to: 'xs' });
 
   return (
-    <Stats>
+    <PlatformStatsContainer>
       <Stat
-        label={t('TVL')}
+        label={t('Platform-Vaults')}
+        value={totalActiveVaults.toString()}
+        loading={!totalActiveVaults}
+      />
+      <Stat
+        label={t('Platform-TVL')}
         value={formatLargeUsd(totalTvl)}
         onInfo={handleTvlModalOpen}
         loading={!totalTvl}
       />
       <Stat
-        label={t('Vaults-Title')}
+        label={t('Platform-TotalYield')}
+        value={totalActiveVaults.toString()}
+        loading={!totalActiveVaults}
+      />
+      <Stat
+        label={t('Platform-7DaysRevenue')}
+        value={totalActiveVaults.toString()}
+        loading={!totalActiveVaults}
+      />
+      <Stat
+        label={t('Platform-7DaysBuyback')}
         value={totalActiveVaults.toString()}
         loading={!totalActiveVaults}
       />
@@ -47,6 +62,6 @@ export const VaultsStats = memo(function VaultStats() {
       >
         <ModalTvl close={handleTvlModalClose} />
       </Modal>
-    </Stats>
+    </PlatformStatsContainer>
   );
 });

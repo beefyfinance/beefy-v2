@@ -20,14 +20,6 @@ export const Stat = memo<StatProps>(function UserStat({
 }) {
   return (
     <StatContainer>
-      <Label>
-        {onInfo && (
-          <button type="button" onClick={onInfo}>
-            <InfoIcon />
-          </button>
-        )}
-        {label}{' '}
-      </Label>
       <Value blurred={!loading && blurred}>
         {loading ?
           <StatLoader />
@@ -35,22 +27,37 @@ export const Stat = memo<StatProps>(function UserStat({
           '$100'
         : value}
       </Value>
+      <Label>
+        {label}
+        {onInfo && (
+          <button type="button" onClick={onInfo}>
+            <InfoIconComponent />
+          </button>
+        )}
+      </Label>
     </StatContainer>
   );
 });
 
+const InfoIconComponent = styled(InfoIcon, {
+  base: {
+    width: '12px',
+    height: '12px',
+  },
+});
+
 const StatContainer = styled('div', {
   base: {
-    minWidth: '140px',
-    sm: {
-      minWidth: 'auto',
-    },
+    backgroundColor: 'background.content.dark',
+    padding: '8px 18px',
+    borderRadius: '8px',
+    width: '100%',
   },
 });
 
 const Label = styled('div', {
   base: {
-    textStyle: 'subline',
+    textStyle: 'subline.sm.semiBold',
     color: 'text.dark',
     display: 'inline-flex',
     gap: '4px',
@@ -59,7 +66,7 @@ const Label = styled('div', {
 
 const Value = styled('div', {
   base: {
-    textStyle: 'h2',
+    textStyle: 'h4',
     color: 'text.light',
   },
   variants: {
