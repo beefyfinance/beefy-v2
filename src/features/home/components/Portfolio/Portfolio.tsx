@@ -8,19 +8,20 @@ import { setToggleHideBalance } from '../../../data/reducers/wallet/wallet.ts';
 import { selectIsBalanceHidden } from '../../../data/selectors/wallet.ts';
 import { PortfolioStats } from './Stats/PortfolioStats.tsx';
 import { PlatformStats } from './Stats/PlatformStats.tsx';
+import { cva } from '@repo/styles/css';
 
-const modeToComponent: Record<'portfolio' | 'vaults', ComponentType> = {
+const modeToComponent: Record<'portfolio' | 'platform', ComponentType> = {
   portfolio: PortfolioStats,
-  vaults: PlatformStats,
+  platform: PlatformStats,
 };
 
 export const Portfolio = memo(function Portfolio() {
   const { t } = useTranslation();
-  const [mode, setMode] = useState<'portfolio' | 'vaults'>('portfolio');
+  const [mode, setMode] = useState<'portfolio' | 'platform'>('portfolio');
 
   const Component = modeToComponent[mode];
   const handleModeChange = useCallback(
-    (newMode: 'portfolio' | 'vaults') => {
+    (newMode: 'portfolio' | 'platform') => {
       setMode(newMode);
     },
     [setMode]
@@ -30,7 +31,7 @@ export const Portfolio = memo(function Portfolio() {
     <Container>
       <Stats>
         <ToggleButtons>
-          <ToggleButton active={mode === 'vaults'} onClick={() => handleModeChange('vaults')}>
+          <ToggleButton active={mode === 'platform'} onClick={() => handleModeChange('platform')}>
             {t('Vault-platform')}
           </ToggleButton>
           /
@@ -47,6 +48,7 @@ export const Portfolio = memo(function Portfolio() {
 });
 
 const VisibilityToggle = memo(function VisibilityToggle() {
+  const [isHovered, setIsHovered] = useState(false);
   const dispatch = useAppDispatch();
   const hideBalance = useAppSelector(selectIsBalanceHidden);
 
@@ -54,11 +56,27 @@ const VisibilityToggle = memo(function VisibilityToggle() {
     dispatch(setToggleHideBalance());
   }, [dispatch]);
 
+  const handleMouseEnter = useCallback(() => {
+    setIsHovered(true);
+  }, [setIsHovered]);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false);
+  }, [setIsHovered]);
+
+  // Show preview of next state on hover, otherwise show current state
+  const showIcon = isHovered ? !hideBalance : hideBalance;
+
   return (
-    <ToggleButton onClick={updateHideBalance}>
-      {hideBalance ?
-        <VisibilityOffOutlinedIcon />
-      : <VisibilityOutlinedIcon />}
+    <ToggleButton
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={updateHideBalance}
+    >
+      {isHovered && !hideBalance ? 'Hide sensitive data' : null}
+      {showIcon ?
+        <VisibilityOffIcon active={true} />
+      : <VisibilityOnIcon active={isHovered} />}
     </ToggleButton>
   );
 });
@@ -89,7 +107,7 @@ const ToggleButtons = styled('div', {
     alignItems: 'center',
     gap: '8px',
     textStyle: 'subline.sm.semiBold',
-    color: 'text.middle',
+    color: 'text.dark',
   },
 });
 
@@ -98,9 +116,10 @@ const ToggleButton = styled('button', {
     textStyle: 'subline.sm.semiBold',
     border: 'none',
     backgroundColor: 'transparent',
-    color: 'text.middle',
+    color: 'text.dark',
     padding: 0,
     margin: 0,
+    gap: '4px',
     '& svg': {
       height: '20px',
       width: '20px',
@@ -114,3 +133,17 @@ const ToggleButton = styled('button', {
     },
   },
 });
+
+const recipe = cva({
+  base: {},
+  variants: {
+    active: {
+      true: {
+        color: 'text.light',
+      },
+    },
+  },
+});
+
+const VisibilityOffIcon = styled(VisibilityOffOutlinedIcon, recipe);
+const VisibilityOnIcon = styled(VisibilityOutlinedIcon, recipe);
