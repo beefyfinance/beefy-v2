@@ -62,6 +62,7 @@ jobs:
           # Optionally include includeRelated argument
           INCLUDE_RELATED_ARG=$(if [ "${{ github.event.inputs.includeRelated }}" = "true" ]; then echo "--includeRelated" ; fi)
           # Optionally include reason argument
+          # TODO don't pass --reason if input is "noReason"/"default"
           REASON_ARG=$(if [ -n "${{ github.event.inputs.reason }}" ]; then echo "--reason ${{ github.event.inputs.reason }}" ; fi)
           # Convert comma-separated vault IDs into multiple --vault arguments
           VAULT_ARGS=$(echo "${{ github.event.inputs.vaults }}" | tr ',' '\n' | xargs -I {} echo "--vaults {}" | tr '\n' ' ')
