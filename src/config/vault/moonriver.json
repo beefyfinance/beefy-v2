@@ -473,7 +473,6 @@
     "oracleId": "FINN",
     "status": "eol",
     "createdAt": 1638057114,
-    "retireReason": "noReason",
     "retiredAt": 1641245437,
     "platformId": "huckleberry",
     "assets": ["FINN"],
