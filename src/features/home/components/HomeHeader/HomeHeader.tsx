@@ -5,19 +5,24 @@ import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
 import VisibilityOffOutlinedIcon from '../../../../images/icons/eyeOff.svg?react';
 import VisibilityOutlinedIcon from '../../../../images/icons/eyeOn.svg?react';
 import { setToggleHideBalance } from '../../../data/reducers/wallet/wallet.ts';
-import { selectIsBalanceHidden } from '../../../data/selectors/wallet.ts';
+import { selectIsBalanceHidden, selectIsWalletKnown } from '../../../data/selectors/wallet.ts';
 import { PortfolioStats } from './Stats/PortfolioStats.tsx';
 import { PlatformStats } from './Stats/PlatformStats.tsx';
 import { cva } from '@repo/styles/css';
+import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
 
 const modeToComponent: Record<'portfolio' | 'platform', ComponentType> = {
   portfolio: PortfolioStats,
   platform: PlatformStats,
 };
 
-export const Portfolio = memo(function Portfolio() {
+export const HomeHeader = memo(function HomeHeader() {
+  const isWalletConnected = useAppSelector(selectIsWalletKnown);
+
   const { t } = useTranslation();
-  const [mode, setMode] = useState<'portfolio' | 'platform'>('portfolio');
+  const [mode, setMode] = useState<'portfolio' | 'platform'>(
+    isWalletConnected ? 'portfolio' : 'platform'
+  );
 
   const Component = modeToComponent[mode];
   const handleModeChange = useCallback(
@@ -52,6 +57,8 @@ const VisibilityToggle = memo(function VisibilityToggle() {
   const dispatch = useAppDispatch();
   const hideBalance = useAppSelector(selectIsBalanceHidden);
 
+  const isDesktop = useBreakpoint({ from: 'md' });
+
   const updateHideBalance = useCallback(() => {
     dispatch(setToggleHideBalance());
   }, [dispatch]);
@@ -73,7 +80,7 @@ const VisibilityToggle = memo(function VisibilityToggle() {
       onMouseLeave={handleMouseLeave}
       onClick={updateHideBalance}
     >
-      {isHovered && !hideBalance ? 'Hide sensitive data' : null}
+      {isDesktop && isHovered && !hideBalance ? 'Hide sensitive data' : null}
       {showIcon ?
         <VisibilityOffIcon active={true} />
       : <VisibilityOnIcon active={isHovered} />}

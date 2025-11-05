@@ -99,5 +99,6 @@ const StyledSwitchButton = styled('button', {
     textStyle: 'subline.sm.semiBold',
     color: 'text.dark',
     textDecoration: 'underline',
+    textUnderlineOffset: '3px',
   },
 });

@@ -7,7 +7,7 @@ import { selectIsVaultListAvailable } from '../data/selectors/vaults-list.ts';
 import { Banners } from './components/Banners/Banners.tsx';
 import { Filters } from './components/Filters/Filters.tsx';
 import { Loading } from './components/Loading/Loading.tsx';
-import { Portfolio } from './components/Portfolio/Portfolio.tsx';
+import { HomeHeader } from './components/HomeHeader/HomeHeader.tsx';
 import { Vaults } from './components/Vaults/Vaults.tsx';
 
 const HomePage = memo(function HomePage() {
@@ -28,7 +28,7 @@ const HomePage = memo(function HomePage() {
       <Header>
         <Container maxWidth="lg">
           <Banners />
-          <Portfolio />
+          <HomeHeader />
         </Container>
       </Header>
       <Content>
