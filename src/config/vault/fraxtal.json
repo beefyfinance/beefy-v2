@@ -490,7 +490,6 @@
     "token": "cvxFXS",
     "tokenAddress": "0xEFb4B26FC242478c9008274F9e81db89Fa6adAB9",
     "tokenDecimals": 18,
-    "tokenProviderId": "convex",
     "earnContractAddress": "0x215886A8DBF3eB528a95A21eF3bbeac18f2b2fE3",
     "earnedToken": "mooConvexCvxFXS",
     "earnedTokenAddress": "0x215886A8DBF3eB528a95A21eF3bbeac18f2b2fE3",
