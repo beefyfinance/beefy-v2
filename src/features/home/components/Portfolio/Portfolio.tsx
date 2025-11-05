@@ -38,9 +38,8 @@ export const Portfolio = memo(function Portfolio() {
             {t('Portfolio-Portfolio')}
           </ToggleButton>
         </ToggleButtons>
-        <div>
-          <VisibilityToggle />
-        </div>
+
+        <VisibilityToggle />
       </Stats>
       <Component />
     </Container>
@@ -102,6 +101,10 @@ const ToggleButton = styled('button', {
     color: 'text.middle',
     padding: 0,
     margin: 0,
+    '& svg': {
+      height: '20px',
+      width: '20px',
+    },
   },
   variants: {
     active: {

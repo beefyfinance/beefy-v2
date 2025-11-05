@@ -1,26 +1,30 @@
-import { memo } from 'react';
+import { memo, type ReactNode } from 'react';
 import { styled } from '@repo/styles/jsx';
 import InfoIcon from '../../../../../images/icons/navigation/resources.svg?react';
 import { StatLoader } from '../../../../../components/StatLoader/StatLoader.tsx';
+import { DivWithTooltip } from '../../../../../components/Tooltip/DivWithTooltip.tsx';
 
 export type StatProps = {
-  label: string;
-  value: string;
+  label: string | ReactNode;
+  value: string | ReactNode;
+  tooltip?: string;
   blurred?: boolean;
   loading?: boolean;
   onInfo?: () => void;
+  onClick?: () => void;
 };
 
 export const Stat = memo<StatProps>(function UserStat({
   label,
   value,
-  onInfo,
+  tooltip,
+  onClick,
   loading = false,
   blurred = false,
 }) {
   return (
     <StatContainer>
-      <Value blurred={!loading && blurred}>
+      <Value onClick={onClick} blurred={!loading && blurred}>
         {loading ?
           <StatLoader />
         : blurred ?
@@ -29,14 +33,25 @@ export const Stat = memo<StatProps>(function UserStat({
       </Value>
       <Label>
         {label}
-        {onInfo && (
-          <button type="button" onClick={onInfo}>
+        {tooltip && (
+          <Tooltip tooltip={tooltip}>
             <InfoIconComponent />
-          </button>
+          </Tooltip>
         )}
       </Label>
     </StatContainer>
   );
+});
+
+const Tooltip = styled(DivWithTooltip, {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    _hover: {
+      cursor: 'pointer',
+    },
+  },
 });
 
 const InfoIconComponent = styled(InfoIcon, {
@@ -66,7 +81,7 @@ const Label = styled('div', {
 
 const Value = styled('div', {
   base: {
-    textStyle: 'h4',
+    textStyle: 'h3',
     color: 'text.light',
   },
   variants: {

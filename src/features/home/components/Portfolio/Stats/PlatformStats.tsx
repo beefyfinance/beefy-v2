@@ -9,6 +9,8 @@ import { ModalTvl } from '../ModalTvl/ModalTvl.tsx';
 import { Stat } from './Stat.tsx';
 import { PlatformStatsContainer } from './Stats.tsx';
 import { useBreakpoint } from '../../../../../components/MediaQueries/useBreakpoint.ts';
+import ExpandMore from '../../../../../images/icons/mui/ExpandMore.svg?react';
+import { styled } from '@repo/styles/jsx';
 
 export const PlatformStats = memo(function PlatformStats() {
   const [isTvlModalOpen, setIsTvlModalOpen] = useState<boolean>(false);
@@ -35,24 +37,27 @@ export const PlatformStats = memo(function PlatformStats() {
       />
       <Stat
         label={t('Platform-TVL')}
-        value={formatLargeUsd(totalTvl)}
-        onInfo={handleTvlModalOpen}
+        value={<ValueTvlStat totalTvl={totalTvl} />}
+        onClick={handleTvlModalOpen}
         loading={!totalTvl}
       />
       <Stat
         label={t('Platform-TotalYield')}
         value={totalActiveVaults.toString()}
         loading={!totalActiveVaults}
+        tooltip={t('Platform-TotalYield-Tooltip')}
       />
       <Stat
         label={t('Platform-7DaysRevenue')}
         value={totalActiveVaults.toString()}
         loading={!totalActiveVaults}
+        tooltip={t('Platform-7DaysRevenue-Tooltip')}
       />
       <Stat
         label={t('Platform-7DaysBuyback')}
         value={totalActiveVaults.toString()}
         loading={!totalActiveVaults}
+        tooltip={t('Platform-7DaysBuyback-Tooltip')}
       />
       <Modal
         position={isMobile ? 'bottom' : 'center'}
@@ -64,4 +69,33 @@ export const PlatformStats = memo(function PlatformStats() {
       </Modal>
     </PlatformStatsContainer>
   );
+});
+
+const ValueTvlStat = memo(function ValueTvlStat({ totalTvl }: { totalTvl: BigNumber }) {
+  return (
+    <ValueTvlStatContainer>
+      {formatLargeUsd(totalTvl)} <ExpandMoreIcon />
+    </ValueTvlStatContainer>
+  );
+});
+
+const ValueTvlStatContainer = styled('div', {
+  base: {
+    textStyle: 'h3',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '2px',
+    _hover: {
+      cursor: 'pointer',
+    },
+  },
+});
+
+const ExpandMoreIcon = styled(ExpandMore, {
+  base: {
+    transform: 'rotate(270deg)',
+    width: '20px',
+    height: '20px',
+    color: 'text.light',
+  },
 });
