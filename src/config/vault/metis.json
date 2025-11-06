@@ -6,7 +6,6 @@
     "token": "WMETIS",
     "tokenAddress": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
     "tokenDecimals": 18,
-    "tokenProviderId": "aave",
     "earnContractAddress": "0x18c10E2c181999EEdf855d2F61eC3755aAB96f70",
     "earnedToken": "mooAaveMETIS",
     "earnedTokenAddress": "0x18c10E2c181999EEdf855d2F61eC3755aAB96f70",
