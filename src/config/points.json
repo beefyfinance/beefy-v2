@@ -248,9 +248,9 @@
         "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
       },
       {
-        "id": "beefy-lrt-subgraph",
+        "id": "beefy-lrt-hyperindex",
         "role": "Raw indexing of blockchain data, computes time weighted balances",
-        "url": "https://github.com/beefyfinance/lrt-subgraph"
+        "url": "https://github.com/beefyfinance/beefy-lrt-hyperindex"
       },
       {
         "id": "beefy-lrt-api",
