@@ -25,31 +25,38 @@ const HomePage = memo(function HomePage() {
   return (
     <>
       <HomeMeta />
-      <Header>
+      <Background>
         <Container maxWidth="lg">
           <Banners />
           <HomeHeader />
         </Container>
-      </Header>
-      <Content>
-        <Container maxWidth="lg">
-          <Filters />
-        </Container>
-        <Vaults />
-      </Content>
+
+        <Content>
+          <Container maxWidth="lg">
+            <Filters />
+          </Container>
+          <Vaults />
+        </Content>
+      </Background>
     </>
   );
 });
 
-const Header = styled('div', {
+const Background = styled('div', {
   base: {
     backgroundColor: 'background.header',
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
   },
 });
 
 const Content = styled('div', {
   base: {
     paddingBlock: '20px',
+    backgroundColor: 'background.body',
+    borderRadius: '24px',
+    flexGrow: 1,
     sm: {
       paddingBlock: '32px',
     },

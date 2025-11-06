@@ -100,5 +100,8 @@ const StyledSwitchButton = styled('button', {
     color: 'text.dark',
     textDecoration: 'underline',
     textUnderlineOffset: '3px',
+    _hover: {
+      color: 'text.middle',
+    },
   },
 });

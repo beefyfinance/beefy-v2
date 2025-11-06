@@ -6,9 +6,8 @@ export const PortfolioStatsContainer = styled('div', {
     gap: '2px',
     // Mobile (0-600px): 3 items stacked vertically
     gridTemplateColumns: '1fr',
-    // Desktop (600px+): 3 items in one line with 6px gap
+    // Desktop (600px+): 3 items in one line
     sm: {
-      gap: '6px',
       gridTemplateColumns: 'repeat(3, 1fr)',
     },
   },

@@ -93,9 +93,9 @@ const Container = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     gap: '6px',
-    marginBottom: '16px',
+    paddingBlock: '12px 16px',
     sm: {
-      marginBottom: '24px',
+      paddingBlock: '0px 24px',
     },
   },
 });
@@ -105,15 +105,16 @@ const Stats = styled('div', {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingInline: '4px 8px',
   },
 });
 
 const ToggleButtons = styled('div', {
   base: {
+    textStyle: 'subline.sm.semiBold',
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    textStyle: 'subline.sm.semiBold',
     color: 'text.dark',
   },
 });
@@ -121,12 +122,13 @@ const ToggleButtons = styled('div', {
 const ToggleButton = styled('button', {
   base: {
     textStyle: 'subline.sm.semiBold',
+    fontWeight: 500,
     border: 'none',
     backgroundColor: 'transparent',
     color: 'text.dark',
     padding: 0,
     margin: 0,
-    gap: '4px',
+    gap: '8px',
     '& svg': {
       height: '20px',
       width: '20px',
