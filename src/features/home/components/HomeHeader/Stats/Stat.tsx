@@ -68,6 +68,8 @@ const StatContainer = styled('div', {
     paddingInline: '12px',
     borderRadius: '8px',
     width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
     gap: '1px',
     sm: {
       paddingInline: '18px',

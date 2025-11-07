@@ -59,7 +59,7 @@ const SortButton = styled('button', {
     color: 'text.dark',
     display: 'flex',
     textDecoration: 'underline',
-    textDecorationColor: 'text.dark',
+    textDecorationColor: 'text.underline',
     textUnderlineOffset: '3px',
     _hover: {
       color: 'text.light',

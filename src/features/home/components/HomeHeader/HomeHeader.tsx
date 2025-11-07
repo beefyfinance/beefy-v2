@@ -111,7 +111,7 @@ const Stats = styled('div', {
 
 const ToggleButtons = styled('div', {
   base: {
-    textStyle: 'subline.sm.semiBold',
+    textStyle: 'label',
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
@@ -121,7 +121,7 @@ const ToggleButtons = styled('div', {
 
 const ToggleButton = styled('button', {
   base: {
-    textStyle: 'subline.sm.semiBold',
+    textStyle: 'label',
     fontWeight: 500,
     border: 'none',
     backgroundColor: 'transparent',
@@ -138,6 +138,7 @@ const ToggleButton = styled('button', {
     active: {
       true: {
         color: 'text.light',
+        pointerEvents: 'none',
       },
     },
   },

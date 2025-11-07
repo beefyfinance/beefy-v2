@@ -507,6 +507,7 @@ const config = buildConfig(
         },
         letterSpacings: {
           subline: { value: '0.4px' }, // was 0.5
+          label: { value: '0.8px' },
         },
       },
       semanticTokens: {
@@ -520,6 +521,7 @@ const config = buildConfig(
             boosted: { value: '{colors.gold.30}' },
             warning: { value: '{colors.orange.40}' },
             disabled: { value: '{colors.darkBlue.90-56a}' },
+            underline: { value: '{colors.white.70-64a}' }
           },
           background: {
             header: { value: '{colors.headerFooterBackground}' },
@@ -879,6 +881,14 @@ const config = buildConfig(
         fontSize: '{fontSizes.body.xl}',
         lineHeight: '{lineHeights.body.xl}',
         fontWeight: '{fontWeights.bold}',
+      },
+
+      label: {
+        fontSize: '{fontSizes.subline.sm}',
+        lineHeight: '{lineHeights.subline.sm}',
+        fontWeight: '{fontWeights.medium}',
+        textTransform: 'uppercase',
+        letterSpacing: '{letterSpacings.label}',
       },
       subline: {
         fontSize: '{fontSizes.subline}',
