@@ -110,6 +110,14 @@ export const SCORED_RISKS: Record<string, ScoredRisk> = {
     condition: 'OverCollatAlgoStable-Cond',
   },
 
+  OFFCHAIN_COLLAT_SYNTH_STABLE: {
+    category: 'Categry-Asset',
+    score: 0.25,
+    title: 'OffChainCollatSynthStable-Titl',
+    explanation: 'OffChainCollatSynthStable-Expl',
+    condition: 'OffChainCollatSynthStable-Cond',
+  },
+
   LIQ_HIGH: {
     category: 'Categry-Asset',
     score: 0,
