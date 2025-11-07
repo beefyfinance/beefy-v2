@@ -19,6 +19,7 @@ import { fetchBridges } from '../actions/bridges.ts';
 import { initCampaignBeGems } from '../actions/campaigns/begems.ts';
 import { fetchChainConfigs } from '../actions/chains.ts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
+import { fetchCurators } from '../actions/curators.ts';
 import { fetchFees } from '../actions/fees.ts';
 import { fetchAllMigrators } from '../actions/migrator.ts';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters.ts';
@@ -123,6 +124,7 @@ export const initialDataLoaderState: DataLoaderState = {
     minters: dataLoaderStateInit,
     minterForm: dataLoaderStateInit,
     bridgeConfig: dataLoaderStateInit,
+    curators: dataLoaderStateInit,
     platforms: dataLoaderStateInit,
     onRamp: dataLoaderStateInit,
     treasury: dataLoaderStateInit,
@@ -530,6 +532,7 @@ export const dataLoaderSlice = createSlice({
     );
     addGlobalAsyncThunkActions(builder, fetchZapAmmsAction, 'zapAmms', true);
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
+    addGlobalAsyncThunkActions(builder, fetchCurators, 'curators', true);
     addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms', true);
     addGlobalAsyncThunkActions(builder, fetchBridges, 'bridges', true);
     addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury', true);

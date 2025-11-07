@@ -923,6 +923,7 @@
   "Details-Platform-Type-Description-yield-boost": "A 'Yield Boost Protocol' is a DeFi platform that aims to boost the yields available through other DeFi protocols by aggregating voting power to direct incentives and efforts towards the products it builds on top of.",
   "Details-Platform-Type-Description-farm": "A 'Farming Protocol' is a DeFi system that enables users to earn rewards by providing liquidity or staking assets.",
   "Details-Platform-Description-pending": "Pending platform description",
+  "Details-Curator-Description-pending": "Pending curator description",
   "Details-Platform-Link-Twitter": "Twitter",
   "RpcModal-Menu-Edit": "{{count}} RPCs connected",
   "RpcModal-List": "Select Chain",

@@ -6,6 +6,7 @@ import type {
   BeefyBridgeConfig,
   BridgeConfig,
   ChainConfig,
+  CuratorConfig,
   MinterConfig,
   PartnersConfig,
   PlatformConfig,
@@ -123,6 +124,10 @@ export class ConfigAPI {
       ...platform,
       type: platform.type as PlatformType | undefined,
     }));
+  }
+
+  public async fetchCurators(): Promise<CuratorConfig[]> {
+    return (await import('../../../config/curators.json')).default as CuratorConfig[];
   }
 
   public async fetchBridges(): Promise<BridgeConfig[]> {

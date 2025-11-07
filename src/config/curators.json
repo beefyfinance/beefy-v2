@@ -1,0 +1,65 @@
+[
+  {
+    "id": "k3-capital",
+    "name": "K3 Capital",
+    "description": "K3 Capital provide leading institutional asset and risk management in decentralized finance.",
+    "website": "https://k3.capital",
+    "twitter": "https://twitter.com/k3_capital"
+  },
+  {
+    "id": "hyperithm",
+    "name": "Hyperithm",
+    "description": "Hyperithm maximizes yield by swiftly integrating unique collaterals, providing borrowers with high-return opportunities through active optimization while ensuring effective risk management.",
+    "website": "https://www.hyperithm.com/",
+    "twitter": "https://twitter.com/hyperithm"
+  },
+  {
+    "id": "telosc",
+    "name": "TelosC",
+    "description": "Engineered growth for crypto. Incentives, risk frameworks, and GTM for DeFi. Driving real users, TVL & revenue.",
+    "website": "https://telosc.com",
+    "twitter": "https://twitter.com/TelosConsilium"
+  },
+  {
+    "id": "varlamore",
+    "name": "Varlamore",
+    "description": "",
+    "website": "https://varlamore.capital",
+    "twitter": "https://twitter.com/VarlamoreCap"
+  },
+  {
+    "id": "mev-capital",
+    "name": "MEV Capital",
+    "description": "MEV Capital is a digital asset manager that focuses on finding and extracting value from the nascent DeFi markets.",
+    "website": "https://mevcapital.com",
+    "twitter": "https://twitter.com/MEVCapital"
+  },
+  {
+    "id": "optima",
+    "name": "Optima",
+    "description": "",
+    "website": "https://optima.financial",
+    "twitter": "https://twitter.com/Optima_Fi"
+  },
+  {
+    "id": "re7-labs",
+    "name": "Re7 Labs",
+    "description": "Re7 Labs is the innovation arm of digital asset investment firm Re7 Capital, taking the practical experience of DeFi risk management to on-chain vaults.",
+    "website": "https://re7labs.xyz",
+    "twitter": "https://twitter.com/Re7Labs"
+  },
+  {
+    "id": "gauntlet",
+    "name": "Gauntlet",
+    "description": "Gauntlet's applied research and optimization teams model market risk, economic incentives, and drive sustainable growth for crypto's top protocols, chains, and onchain treasuries.",
+    "website": "https://www.gauntlet.xyz/",
+    "twitter": "https://twitter.com/gauntlet_xyz"
+  },
+  {
+    "id": "steakhouse",
+    "name": "Steakhouse",
+    "description": "",
+    "website": "https://www.steakhouse.financial/",
+    "twitter": "https://twitter.com/SteakhouseFi"
+  }
+]

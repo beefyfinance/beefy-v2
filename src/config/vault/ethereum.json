@@ -1367,7 +1367,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "gauntlet"
   },
   {
     "id": "pendle-usd0++-26jun25",
