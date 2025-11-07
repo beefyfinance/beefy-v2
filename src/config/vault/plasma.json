@@ -306,7 +306,7 @@
   },
   {
     "id": "euler-plasma-246clubtelosc-usdt0",
-    "name": "USD₮0 (246Club TelosC)",
+    "name": "USD₮0 (Hyperithm)",
     "type": "standard",
     "token": "USD₮0",
     "tokenAddress": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
@@ -333,7 +333,7 @@
   },
   {
     "id": "euler-plasma-telosc-usdt0",
-    "name": "USD₮0 (TelosC)",
+    "name": "USD₮0 (TelosC, Surge)",
     "type": "standard",
     "token": "USD₮0",
     "tokenAddress": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
@@ -361,7 +361,7 @@
   },
   {
     "id": "euler-plasma-re7labs-usdt0",
-    "name": "USD₮0 (Re7Labs)",
+    "name": "USD₮0 (Re7 Labs, Core)",
     "type": "standard",
     "token": "USD₮0",
     "tokenAddress": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
@@ -389,7 +389,7 @@
   },
   {
     "id": "euler-plasma-k3capital-usdt0",
-    "name": "USD₮0 (K3Capital)",
+    "name": "USD₮0 (K3 Capital)",
     "type": "standard",
     "token": "USD₮0",
     "tokenAddress": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
