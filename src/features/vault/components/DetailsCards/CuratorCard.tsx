@@ -50,7 +50,9 @@ function CuratorCardDisplay({ curator }: { curator: CuratorEntity }) {
           )}
         </Links>
         <AssetsBridgePrice>
-          <TagWithTooltip tooltip={<TagTooltip content={t(`Curator-Description`)} />}>
+          <TagWithTooltip
+            tooltip={<TagTooltip content={t(`Details-Curator-Description-tooltip`)} />}
+          >
             {t(`Curator`)}
           </TagWithTooltip>
         </AssetsBridgePrice>
