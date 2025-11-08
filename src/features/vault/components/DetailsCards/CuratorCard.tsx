@@ -5,7 +5,6 @@ import { IconButtonLink } from '../../../../components/IconButtonLink/IconButton
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import Link from '../../../../images/icons/mui/Link.svg?react';
 import Twitter from '../../../../images/icons/mui/Twitter.svg?react';
-import { selectIsCuratorsAvailable } from '../../../data/selectors/data-loader/config.ts';
 
 import {
   AssetIconSymbol,
@@ -65,15 +64,7 @@ function CuratorCardDisplay({ curator }: { curator: CuratorEntity }) {
 }
 
 function CuratorCardComponent({ curatorId }: { curatorId: CuratorEntity['id'] }) {
-  const curatorsLoaded = useAppSelector(selectIsCuratorsAvailable);
-  const curator = useAppSelector(state =>
-    curatorsLoaded ? selectCuratorById(state, curatorId) : null
-  );
-
-  if (!curatorsLoaded || !curator) {
-    return <></>;
-  }
-
+  const curator = useAppSelector(state => selectCuratorById(state, curatorId));
   return <CuratorCardDisplay curator={curator} />;
 }
 
