@@ -47,7 +47,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "gauntlet"
   },
   {
     "id": "morpho-compound-usdt",
@@ -72,7 +73,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "gauntlet"
   },
   {
     "id": "compound-polygon-usdt",
