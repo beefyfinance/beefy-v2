@@ -32,9 +32,9 @@ export const PlatformStatsContainer = styled('div', {
         gridColumn: 'span 3',
       },
     },
-    // Desktop (960px+): All 5 in one line with 6px gap
+    // Desktop (960px+): All 5 in one line with 2px gap
     md: {
-      gap: '6px',
+      gap: '2px',
       gridTemplateColumns: 'repeat(5, 1fr)',
       '& > *:nth-child(-n+3)': {
         gridColumn: 'span 1',
