@@ -18,6 +18,7 @@ import { getStrategyIds } from './common/strategies.ts';
 import { StratAbi } from '../src/config/abi/StrategyAbi.ts';
 import { StandardVaultAbi } from '../src/config/abi/StandardVaultAbi.ts';
 import platforms from '../src/config/platforms.json';
+import curators from '../src/config/curators.json';
 import partners from '../src/config/promos/partners.json';
 import campaigns from '../src/config/promos/campaigns.json';
 import pointProviders from '../src/config/points.json';
@@ -112,6 +113,7 @@ const addressFields: Array<keyof VaultConfig> = [
 ];
 
 const validPlatformIds = platforms.map(platform => platform.id);
+const validCuratorIds = curators.map(curator => curator.id);
 const validStrategyIds = getStrategyIds();
 const validPointProviderIds = pointProviders.map(pointProvider => pointProvider.id);
 const validRisks = new Set(Object.keys(SCORED_RISKS));
@@ -301,6 +303,15 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
         `Error: ${pool.id} : platformId ${pool.platformId} not present in platforms.json`
       );
       exitCode = 1;
+    }
+
+    if (pool.curatorId) {
+      if (!validCuratorIds.includes(pool.curatorId)) {
+        console.error(
+          `Error: ${pool.id} : curatorId ${pool.curatorId} not present in curators.json`
+        );
+        exitCode = 1;
+      }
     }
 
     if (!checkRisks(pool, pool.type === 'standard')) {

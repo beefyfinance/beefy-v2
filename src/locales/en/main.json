@@ -923,6 +923,8 @@
   "Details-Platform-Type-Description-yield-boost": "A 'Yield Boost Protocol' is a DeFi platform that aims to boost the yields available through other DeFi protocols by aggregating voting power to direct incentives and efforts towards the products it builds on top of.",
   "Details-Platform-Type-Description-farm": "A 'Farming Protocol' is a DeFi system that enables users to earn rewards by providing liquidity or staking assets.",
   "Details-Platform-Description-pending": "Pending platform description",
+  "Details-Curator-Description-pending": "Pending curator description",
+  "Details-Curator-Description-tooltip": "A 'Curator' is an issuer of vault products on permissionless lending protocols. They are responsible for configuring, monitoring and adjusting asset, oracles and risk parameters for their products, and are the only party with access to privileged functions. Curators are also responsible for conducting due diligence on all aspects of their products. Beefy is not a curator, and relies on curator diligence developing compounding strategies that work on top of curated products.",
   "Details-Platform-Link-Twitter": "Twitter",
   "RpcModal-Menu-Edit": "{{count}} RPCs connected",
   "RpcModal-List": "Select Chain",

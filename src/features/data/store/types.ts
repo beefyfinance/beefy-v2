@@ -7,6 +7,7 @@ import type { ArticlesState } from '../reducers/articles-types.ts';
 import type { BridgesState } from '../reducers/bridges-types.ts';
 import type { BeGemsState } from '../reducers/campaigns/begems-types.ts';
 import type { ChainsState } from '../reducers/chains-types.ts';
+import type { CuratorsState } from '../reducers/curators.ts';
 import type { DataLoaderState } from '../reducers/data-loader-types.ts';
 import type { FeesState } from '../reducers/fees-types.ts';
 import type { FilteredVaultsState } from '../reducers/filtered-vaults-types.ts';
@@ -42,6 +43,7 @@ export interface BeefyState {
     articles: ArticlesState;
     bridges: BridgesState;
     chains: ChainsState;
+    curators: CuratorsState;
     fees: FeesState;
     minters: MintersState;
     platforms: PlatformsState;

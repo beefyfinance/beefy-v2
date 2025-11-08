@@ -7,6 +7,7 @@ import type { ChangeTypeOfKeys } from '../utils/types-utils.ts';
 import type BigNumber from 'bignumber.js';
 import type { Address } from 'viem';
 import type { ZapStrategyConfig } from './transact/strategies/strategy-configs.ts';
+import type { CuratorEntity } from '../entities/curator.ts';
 
 export interface VaultConfig {
   id: string;
@@ -74,6 +75,7 @@ export interface VaultConfig {
   /** tmp: exclude from being loaded */
   hidden?: boolean;
   poolTogether?: string;
+  curatorId?: CuratorEntity['id'];
 }
 
 export interface PartnersConfig {
@@ -373,6 +375,14 @@ export type PlatformConfig = {
   readonly documentation?: string;
   readonly type?: PlatformType;
 };
+
+export interface CuratorConfig {
+  readonly id: string;
+  readonly name: string;
+  readonly description?: string;
+  readonly twitter?: string;
+  readonly website?: string;
+}
 
 export interface TokenHoldingConfig {
   id: string;
