@@ -5094,7 +5094,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "gauntlet"
   },
   {
     "id": "aerodrome-cow-base-ushib-weth-vault",
@@ -5553,7 +5554,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "gauntlet"
   },
   {
     "id": "uniswap-cow-base-weth-b3-rp",
@@ -5818,7 +5820,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "gauntlet"
   },
   {
     "id": "aerodrome-weth-vvv",
@@ -7303,7 +7306,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "gauntlet"
   },
   {
     "id": "morpho-morpho-eusd",
@@ -7328,7 +7332,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "re7-labs"
   },
   {
     "id": "morpho-ionic-weth",
@@ -7353,7 +7358,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "gauntlet"
   },
   {
     "id": "aerodrome-weth-champ",

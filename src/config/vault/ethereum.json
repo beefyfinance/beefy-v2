@@ -1577,7 +1577,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "steakhouse"
   },
   {
     "id": "morpho-smokehouse-usdc",
@@ -1602,7 +1603,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "steakhouse"
   },
   {
     "id": "morpho-steakhouse-wbtc",
@@ -1654,7 +1656,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "steakhouse"
   },
   {
     "id": "morpho-steakhouse-usdc",
@@ -1679,7 +1682,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "steakhouse"
   },
   {
     "id": "fx-usdc-fxusd",

@@ -302,7 +302,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "hyperithm"
   },
   {
     "id": "euler-plasma-246clubtelosc-usdt0",
@@ -329,7 +330,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "hyperithm"
   },
   {
     "id": "euler-plasma-telosc-usdt0",
@@ -357,7 +359,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "telosc"
   },
   {
     "id": "euler-plasma-re7labs-usdt0",
@@ -385,7 +388,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "re7-labs"
   },
   {
     "id": "euler-plasma-k3capital-usdt0",
@@ -412,7 +416,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "k3-capital"
   },
   {
     "id": "aavev3-plasma-weth",

@@ -26,7 +26,8 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3"
-    }
+    },
+    "curatorId": "optima"
   },
   {
     "id": "silov2-arbitrum-usdc-valamore",
@@ -56,7 +57,8 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3"
-    }
+    },
+    "curatorId": "varlamore"
   },
   {
     "id": "pendle-arb-wsteth-25jun26",

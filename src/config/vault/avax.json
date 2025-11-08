@@ -24,7 +24,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "re7-labs"
   },
   {
     "id": "euler-avax-k3capital-usdt-earn",
@@ -51,7 +52,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "k3-capital"
   },
   {
     "id": "euler-avax-re7labs-usdc-earn",
@@ -78,7 +80,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "re7-labs"
   },
   {
     "id": "silov2-avalanche-ausd-valamore",
@@ -108,7 +111,8 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x5C2d58627Fbe746f5ea24Ef6D618f09f8e3f0122"
-    }
+    },
+    "curatorId": "varlamore"
   },
   {
     "id": "silov2-avalanche-susde",
@@ -170,7 +174,8 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0xEBE676ee90Fe1112671f19b6B7459bC678B67e8a"
-    }
+    },
+    "curatorId": "varlamore"
   },
   {
     "id": "silov2-avalanche-btcb-mev",
@@ -200,7 +205,8 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x2779D32d5166BAaa2B2b658333bA7e6Ec0C65743"
-    }
+    },
+    "curatorId": "mev-capital"
   },
   {
     "id": "silov2-avalanche-usdc-mev",
@@ -230,7 +236,8 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0xF096872672F44d6EBA71458D74fe67F9a77a23B9"
-    }
+    },
+    "curatorId": "mev-capital"
   },
   {
     "id": "black-btcb-black",
@@ -557,7 +564,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "re7-labs"
   },
   {
     "id": "euler-avax-k3capital-usdt",
@@ -582,7 +590,8 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "curatorId": "k3-capital"
   },
   {
     "id": "balancerv3-avalanche-waavaweth-waavawavax",
