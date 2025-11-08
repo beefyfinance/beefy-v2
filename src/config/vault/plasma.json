@@ -290,9 +290,10 @@
     "oracle": "tokens",
     "oracleId": "USDT0",
     "status": "paused",
-    "pausedAt": 1761205953,
     "createdAt": 1759753279,
+    "pausedAt": 1761205953,
     "platformId": "euler",
+    "curatorId": "hyperithm",
     "assets": ["USDT0"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -302,8 +303,7 @@
       {
         "strategyId": "single"
       }
-    ],
-    "curatorId": "hyperithm"
+    ]
   },
   {
     "id": "euler-plasma-246clubtelosc-usdt0",
@@ -318,9 +318,10 @@
     "oracle": "tokens",
     "oracleId": "USDT0",
     "status": "paused",
-    "pausedAt": 1761205953,
     "createdAt": 1759753279,
+    "pausedAt": 1761205953,
     "platformId": "euler",
+    "curatorId": "hyperithm",
     "assets": ["USDT0"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -330,8 +331,7 @@
       {
         "strategyId": "single"
       }
-    ],
-    "curatorId": "hyperithm"
+    ]
   },
   {
     "id": "euler-plasma-telosc-usdt0",
@@ -346,21 +346,21 @@
     "oracle": "tokens",
     "oracleId": "USDT0",
     "status": "paused",
-    "pausedAt": 1761205953,
     "createdAt": 1758942529,
+    "pausedAt": 1761205953,
     "platformId": "euler",
+    "curatorId": "telosc",
     "assets": ["USDT0"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
-    "network": "plasma",
     "pointStructureIds": ["resolv"],
+    "network": "plasma",
     "zaps": [
       {
         "strategyId": "single"
       }
-    ],
-    "curatorId": "telosc"
+    ]
   },
   {
     "id": "euler-plasma-re7labs-usdt0",
@@ -375,21 +375,21 @@
     "oracle": "tokens",
     "oracleId": "USDT0",
     "status": "paused",
-    "pausedAt": 1762359873,
     "createdAt": 1758942529,
+    "pausedAt": 1762359873,
     "platformId": "euler",
+    "curatorId": "re7-labs",
     "assets": ["USDT0"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
-    "network": "plasma",
     "pointStructureIds": ["resolv"],
+    "network": "plasma",
     "zaps": [
       {
         "strategyId": "single"
       }
-    ],
-    "curatorId": "re7-labs"
+    ]
   },
   {
     "id": "euler-plasma-k3capital-usdt0",
@@ -406,18 +406,18 @@
     "status": "active",
     "createdAt": 1758942529,
     "platformId": "euler",
+    "curatorId": "k3-capital",
     "assets": ["USDT0"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
-    "network": "plasma",
     "pointStructureIds": ["resolv"],
+    "network": "plasma",
     "zaps": [
       {
         "strategyId": "single"
       }
-    ],
-    "curatorId": "k3-capital"
+    ]
   },
   {
     "id": "aavev3-plasma-weth",

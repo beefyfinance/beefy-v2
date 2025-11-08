@@ -38,6 +38,7 @@
     "status": "active",
     "createdAt": 1741890013,
     "platformId": "morpho",
+    "curatorId": "gauntlet",
     "assets": ["USDC"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -47,8 +48,7 @@
       {
         "strategyId": "single"
       }
-    ],
-    "curatorId": "gauntlet"
+    ]
   },
   {
     "id": "morpho-compound-usdt",
@@ -64,6 +64,7 @@
     "status": "active",
     "createdAt": 1741890013,
     "platformId": "morpho",
+    "curatorId": "gauntlet",
     "assets": ["USDT"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -73,8 +74,7 @@
       {
         "strategyId": "single"
       }
-    ],
-    "curatorId": "gauntlet"
+    ]
   },
   {
     "id": "compound-polygon-usdt",

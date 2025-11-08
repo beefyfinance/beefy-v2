@@ -5085,6 +5085,7 @@
     "status": "active",
     "createdAt": 1739890880,
     "platformId": "morpho",
+    "curatorId": "gauntlet",
     "assets": ["WETH"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -5094,8 +5095,7 @@
       {
         "strategyId": "single"
       }
-    ],
-    "curatorId": "gauntlet"
+    ]
   },
   {
     "id": "aerodrome-cow-base-ushib-weth-vault",
@@ -5545,6 +5545,7 @@
     "status": "active",
     "createdAt": 1739442737,
     "platformId": "morpho",
+    "curatorId": "gauntlet",
     "assets": ["cbBTC"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -5554,8 +5555,7 @@
       {
         "strategyId": "single"
       }
-    ],
-    "curatorId": "gauntlet"
+    ]
   },
   {
     "id": "uniswap-cow-base-weth-b3-rp",
@@ -5811,6 +5811,7 @@
     "status": "active",
     "createdAt": 1738578011,
     "platformId": "morpho",
+    "curatorId": "gauntlet",
     "assets": ["USDC"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -5820,8 +5821,7 @@
       {
         "strategyId": "single"
       }
-    ],
-    "curatorId": "gauntlet"
+    ]
   },
   {
     "id": "aerodrome-weth-vvv",
@@ -7297,6 +7297,7 @@
     "status": "active",
     "createdAt": 1737542790,
     "platformId": "morpho",
+    "curatorId": "gauntlet",
     "assets": ["USDC"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -7306,8 +7307,7 @@
       {
         "strategyId": "single"
       }
-    ],
-    "curatorId": "gauntlet"
+    ]
   },
   {
     "id": "morpho-morpho-eusd",
@@ -7323,6 +7323,7 @@
     "status": "active",
     "createdAt": 1737542790,
     "platformId": "morpho",
+    "curatorId": "re7-labs",
     "assets": ["eUSD"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -7332,8 +7333,7 @@
       {
         "strategyId": "single"
       }
-    ],
-    "curatorId": "re7-labs"
+    ]
   },
   {
     "id": "morpho-ionic-weth",
@@ -7349,6 +7349,7 @@
     "status": "active",
     "createdAt": 1737542790,
     "platformId": "morpho",
+    "curatorId": "gauntlet",
     "assets": ["WETH"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -7358,8 +7359,7 @@
       {
         "strategyId": "single"
       }
-    ],
-    "curatorId": "gauntlet"
+    ]
   },
   {
     "id": "aerodrome-weth-champ",

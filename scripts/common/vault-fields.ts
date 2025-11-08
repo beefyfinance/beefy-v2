@@ -29,6 +29,7 @@ const FIELD_ORDER = [
   'pausedAt',
   'platformId',
   'feeTier',
+  'curatorId',
   'assets',
   'migrationIds',
   'risks',
