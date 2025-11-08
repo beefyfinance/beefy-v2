@@ -1,7 +1,7 @@
 [
   {
     "id": "euler-avax-re7labs-ausd-earn",
-    "name": "AUSD (Re7) Earn",
+    "name": "AUSD (Re7 Labs)",
     "type": "standard",
     "token": "AUSD",
     "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
@@ -28,7 +28,7 @@
   },
   {
     "id": "euler-avax-k3capital-usdt-earn",
-    "name": "USDT (K3) Earn",
+    "name": "USDT (K3 Capital)",
     "type": "standard",
     "token": "USDT",
     "tokenAddress": "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
@@ -55,7 +55,7 @@
   },
   {
     "id": "euler-avax-re7labs-usdc-earn",
-    "name": "USDC (Re7) Earn",
+    "name": "USDC (Re7 Labs)",
     "type": "standard",
     "token": "USDC",
     "tokenAddress": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
@@ -82,7 +82,7 @@
   },
   {
     "id": "silov2-avalanche-ausd-valamore",
-    "name": "AUSD (Varlamore)",
+    "name": "AUSD (Varlamore, Growth)",
     "type": "standard",
     "token": "AUSD",
     "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
@@ -144,7 +144,7 @@
   },
   {
     "id": "silov2-avalanche-usdt-valamore",
-    "name": "USDT (Varlamore)",
+    "name": "USDT (Varlamore, Growth)",
     "type": "standard",
     "token": "USDT",
     "tokenAddress": "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
@@ -536,7 +536,7 @@
   },
   {
     "id": "euler-avax-re7labs-usdc",
-    "name": "USDC (Re7 Labs)",
+    "name": "USDC (Re7 Labs, Cluster)",
     "token": "USDC",
     "tokenAddress": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "tokenDecimals": 6,
@@ -561,7 +561,7 @@
   },
   {
     "id": "euler-avax-k3capital-usdt",
-    "name": "USDT (K3 Capital)",
+    "name": "USDT (K3 Capital, Cluster)",
     "token": "USDT",
     "tokenAddress": "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
     "tokenDecimals": 6,

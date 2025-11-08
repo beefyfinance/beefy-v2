@@ -1,7 +1,7 @@
 [
   {
     "id": "morpho-compound-weth",
-    "name": "Compound WETH",
+    "name": "WETH (Gauntlet, Compound)",
     "token": "WETH",
     "tokenAddress": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "tokenDecimals": 18,
@@ -26,7 +26,7 @@
   },
   {
     "id": "morpho-compound-usdc",
-    "name": "Compound USDC",
+    "name": "USDC (Gauntlet, Compound)",
     "token": "USDC",
     "tokenAddress": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
     "tokenDecimals": 6,
@@ -51,7 +51,7 @@
   },
   {
     "id": "morpho-compound-usdt",
-    "name": "Compound USD₮0",
+    "name": "USD₮0 (Gauntlet, Compound)",
     "token": "USDT",
     "tokenAddress": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "tokenDecimals": 6,

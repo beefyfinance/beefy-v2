@@ -1345,7 +1345,7 @@
   },
   {
     "id": "morpho-gauntlet-usdc",
-    "name": "Gauntlet USDC Frontier",
+    "name": "USDC (Gauntlet, Frontier)",
     "type": "standard",
     "token": "USDC",
     "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -1555,7 +1555,7 @@
   },
   {
     "id": "morpho-smokehouse-wsteth",
-    "name": "wstETH",
+    "name": "wstETH (Steakhouse, Smokehouse)",
     "token": "wstETH",
     "tokenAddress": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
     "tokenDecimals": 18,
@@ -1580,7 +1580,7 @@
   },
   {
     "id": "morpho-smokehouse-usdc",
-    "name": "USDC",
+    "name": "USDC (Steakhouse, Smokehouse)",
     "token": "USDC",
     "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
     "tokenDecimals": 6,
@@ -1632,7 +1632,7 @@
   },
   {
     "id": "morpho-steakhouse-weth",
-    "name": "WETH",
+    "name": "WETH (Steakhouse, Steakhouse)",
     "token": "WETH",
     "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     "tokenDecimals": 18,
@@ -1657,7 +1657,7 @@
   },
   {
     "id": "morpho-steakhouse-usdc",
-    "name": "USDC",
+    "name": "USDC (Steakhouse, Steakhouse)",
     "token": "USDC",
     "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
     "tokenDecimals": 6,
