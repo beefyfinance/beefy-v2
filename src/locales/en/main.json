@@ -398,6 +398,7 @@
   "Strat-PoolContract": "Pool",
   "Strat-CLMPoolContract": "CLM Pool",
   "Boost-Contract": "Boost",
+  "Curator-Link": "Curator",
   "Asset-Detail": "Asset Details",
   "Token-Site": "Website",
   "Token-Docs": "Docs",

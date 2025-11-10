@@ -32,7 +32,7 @@ export const ContractsDropdown = memo(function ContractsDropdown({
   return (
     <DropdownProvider variant="button" placement="bottom-end" open={open} onChange={setOpen}>
       <DropdownTrigger borderless={true}>
-        {t('Contracts')}
+        {t('Review')}
         <Arrow open={open} />
       </DropdownTrigger>
       <DropdownContent padding="small" gap="small">

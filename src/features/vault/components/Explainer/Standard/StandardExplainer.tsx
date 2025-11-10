@@ -55,8 +55,14 @@ const StandardExplainer = memo(function StandardExplainer({ vaultId }: StandardE
         label: t('Boost-Contract'),
       });
     }
+    if (vault.curatorLink) {
+      urls.push({
+        link: vault.curatorLink,
+        label: t('Curator-Link'),
+      });
+    }
     return urls;
-  }, [boost, chain, strategyAddress, t, vault.contractAddress]);
+  }, [boost, chain, strategyAddress, t, vault.contractAddress, vault.curatorLink]);
 
   return (
     <ExplainerCard

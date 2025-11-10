@@ -122,6 +122,7 @@ export type VaultStandardBaseOnly = {
     loops?: number;
   };
   curatorId?: CuratorEntity['id'];
+  curatorLink?: string;
 };
 
 type VaultStandardOnly = VaultStandardBaseOnly & {
