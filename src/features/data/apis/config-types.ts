@@ -76,7 +76,7 @@ export interface VaultConfig {
   hidden?: boolean;
   poolTogether?: string;
   curatorId?: CuratorEntity['id'];
-  underlyingPlatformLink?: string;
+  underlyingPlatformUrl?: string;
 }
 
 export interface PartnersConfig {

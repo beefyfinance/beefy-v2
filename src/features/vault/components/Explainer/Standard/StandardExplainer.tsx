@@ -56,14 +56,14 @@ const StandardExplainer = memo(function StandardExplainer({ vaultId }: StandardE
         label: t('Boost-Contract'),
       });
     }
-    if (vault.underlyingPlatformLink) {
+    if (vault.underlyingPlatformUrl) {
       urls.push({
-        link: vault.underlyingPlatformLink,
+        link: vault.underlyingPlatformUrl,
         label: t('UnderlyingPlatform-Link'),
       });
     }
     return urls;
-  }, [boost, chain, strategyAddress, t, vault.contractAddress, vault.underlyingPlatformLink]);
+  }, [boost, chain, strategyAddress, t, vault.contractAddress, vault.underlyingPlatformUrl]);
 
   return (
     <ExplainerCard
