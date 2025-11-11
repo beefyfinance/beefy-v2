@@ -100,6 +100,7 @@ function getStandardVault(
     bridged: config.bridged || undefined,
     lendingOracle: config.lendingOracle || undefined,
     curatorId: config.curatorId || undefined,
+    underlyingPlatformUrl: config.underlyingPlatformUrl || undefined,
   };
 
   if (clmBase) {

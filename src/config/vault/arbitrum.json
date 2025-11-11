@@ -18,6 +18,7 @@
     "assets": ["USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.silo.finance/vaults/arbitrum/0x2514A2Ce842705EAD703d02fABFd8250BfCfb8bd",
     "network": "arbitrum",
     "zaps": [
       {
@@ -49,6 +50,7 @@
     "assets": ["USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.silo.finance/vaults/arbitrum/0x2BA39e5388aC6C702Cb29AEA78d52aa66832f1ee",
     "network": "arbitrum",
     "zaps": [
       {

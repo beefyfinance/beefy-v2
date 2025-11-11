@@ -298,6 +298,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0x66bE42a0BdA425A8C3b3c2cF4F4Cb9EDfcAEd21d?network=plasma",
     "network": "plasma",
     "zaps": [
       {
@@ -326,6 +327,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0x66bE42a0BdA425A8C3b3c2cF4F4Cb9EDfcAEd21d?network=plasma",
     "network": "plasma",
     "zaps": [
       {
@@ -354,6 +356,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0xa9C251F8304b1B3Fc2b9e8fcae78D94Eff82Ac66?network=plasma",
     "pointStructureIds": ["resolv"],
     "network": "plasma",
     "zaps": [
@@ -383,6 +386,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0xa5EeD1615cd883dD6883ca3a385F525e3bEB4E79?network=plasma",
     "pointStructureIds": ["resolv"],
     "network": "plasma",
     "zaps": [
@@ -411,6 +415,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0xe818ad0D20D504C55601b9d5e0E137314414dec4?network=plasma",
     "pointStructureIds": ["resolv"],
     "network": "plasma",
     "zaps": [

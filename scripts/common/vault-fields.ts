@@ -40,6 +40,7 @@ const FIELD_ORDER = [
   'buyTokenUrl',
   'addLiquidityUrl',
   'removeLiquidityUrl',
+  'underlyingPlatformUrl',
   'refund',
   'refundContractAddress',
   'showWarning',

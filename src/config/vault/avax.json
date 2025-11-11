@@ -20,6 +20,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0x70c329D6F06b33fa6b75E335B35168B1de84217b?network=avalanche",
     "network": "avax",
     "zaps": [
       {
@@ -48,6 +49,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0xE1A62FDcC6666847d5EA752634E45e134B2F824B?network=avalanche",
     "network": "avax",
     "zaps": [
       {
@@ -76,6 +78,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0xEAF77Df5D03306bCA4EE8b58B6821E6acA76309d?network=avalanche",
     "network": "avax",
     "zaps": [
       {
@@ -103,6 +106,7 @@
     "assets": ["AUSD"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.silo.finance/vaults/avalanche/0x3d7B0c3997E48fA3FC96cd057d1fb4E5F891835B",
     "network": "avax",
     "zaps": [
       {
@@ -166,6 +170,7 @@
     "assets": ["USDT"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.silo.finance/vaults/avalanche/0x6c09bfdc1df45D6c4Ff78Dc9F1C13aF29eB335d4",
     "network": "avax",
     "zaps": [
       {
@@ -197,6 +202,7 @@
     "assets": ["BTCb"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.silo.finance/vaults/avalanche/0x1f8E769B5B6010B2C2BBCd68629EA1a0a0Eda7E3",
     "network": "avax",
     "zaps": [
       {
@@ -228,6 +234,7 @@
     "assets": ["USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.silo.finance/vaults/avalanche/0x4dc1ce9b9f9EF00c144BfAD305f16c62293dC0E8",
     "network": "avax",
     "zaps": [
       {
@@ -560,6 +567,7 @@
     "assets": ["USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.euler.finance/vault/0x39dE0f00189306062D79eDEC6DcA5bb6bFd108f9?network=avalanche",
     "network": "avax",
     "zaps": [
       {
@@ -586,6 +594,7 @@
     "assets": ["USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.euler.finance/vault/0xa446938b0204Aa4055cdFEd68Ddf0E0d1BAB3E9E?network=avalanche",
     "network": "avax",
     "zaps": [
       {

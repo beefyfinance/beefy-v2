@@ -94,7 +94,7 @@ const CowcentratedExplainer = memo(function CowcentratedExplainer({
       details={
         showApy ?
           <ApyDetails type={getApyLabelsTypeForVault(vault, apys.totalType)} values={apys} />
-        : undefined
+        : null
       }
     />
   );
