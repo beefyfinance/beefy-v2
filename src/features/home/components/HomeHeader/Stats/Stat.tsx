@@ -34,7 +34,7 @@ export const Stat = memo<StatProps>(function UserStat({
       <Label>
         {label}
         {tooltip && (
-          <Tooltip tooltip={tooltip}>
+          <Tooltip placement="bottom-start" tooltip={tooltip}>
             <InfoIconComponent />
           </Tooltip>
         )}
@@ -50,6 +50,7 @@ const Tooltip = styled(DivWithTooltip, {
     justifyContent: 'center',
     _hover: {
       cursor: 'pointer',
+      color: 'text.middle',
     },
   },
 });

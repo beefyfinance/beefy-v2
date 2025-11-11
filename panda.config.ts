@@ -633,7 +633,7 @@ const config = buildConfig(
           },
           tooltip: {
             light: {
-              background: { value: '{colors.white}' },
+              background: { value: '{colors.white.90}' },
               text: {
                 DEFAULT: { value: '{colors.darkBlue.90}' },
                 title: { value: '{colors.darkBlue.90}' },

@@ -28,9 +28,10 @@ const HomePage = memo(function HomePage() {
       <Background>
         <Container maxWidth="lg">
           <Banners />
-          <HomeHeader />
         </Container>
-
+        <HeaderContainer maxWidth="lg">
+          <HomeHeader />
+        </HeaderContainer>
         <Content>
           <Container maxWidth="lg">
             <Filters />
@@ -40,6 +41,15 @@ const HomePage = memo(function HomePage() {
       </Background>
     </>
   );
+});
+
+const HeaderContainer = styled(Container, {
+  base: {
+    //base padding is 12px, need to ad 14px only for desktop
+    md: {
+      paddingInline: '26px',
+    },
+  },
 });
 
 const Background = styled('div', {
@@ -53,12 +63,13 @@ const Background = styled('div', {
 
 const Content = styled('div', {
   base: {
-    paddingBlock: '20px',
+    paddingBlock: '12px 20px',
     backgroundColor: 'background.body',
-    borderRadius: '24px',
+    borderRadius: '20px',
     flexGrow: 1,
     sm: {
-      paddingBlock: '32px',
+      paddingBlock: '14px 32px',
+      borderRadius: '24px',
     },
   },
 });
