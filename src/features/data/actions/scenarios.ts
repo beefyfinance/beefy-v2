@@ -12,6 +12,7 @@ import { fetchAllBalanceAction } from './balance.ts';
 import { fetchBridges } from './bridges.ts';
 import { fetchChainConfigs } from './chains.ts';
 import { fetchAllContractDataByChainAction } from './contract-data.ts';
+import { fetchCurators } from './curators.ts';
 import { fetchPartnersConfig } from './partners.ts';
 import { fetchPlatforms } from './platforms.ts';
 import { fetchAllPricesAction } from './prices.ts';
@@ -70,6 +71,8 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
     dispatch(fetchPartnersConfig());
 
     dispatch(fetchPlatforms());
+
+    dispatch(fetchCurators());
 
     dispatch(fetchBridges());
 

@@ -1345,7 +1345,7 @@
   },
   {
     "id": "morpho-gauntlet-usdc",
-    "name": "Gauntlet USDC Frontier",
+    "name": "USDC (Gauntlet, Frontier)",
     "type": "standard",
     "token": "USDC",
     "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -1358,10 +1358,12 @@
     "status": "active",
     "createdAt": 1744107759,
     "platformId": "morpho",
+    "curatorId": "gauntlet",
     "assets": ["USDC"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/base/vault/0x236919F11ff9eA9550A4287696C2FC9e18E6e890/gauntlet-usdc-frontier",
     "network": "ethereum",
     "zaps": [
       {
@@ -1555,7 +1557,7 @@
   },
   {
     "id": "morpho-smokehouse-wsteth",
-    "name": "wstETH",
+    "name": "wstETH (Steakhouse, Smokehouse)",
     "token": "wstETH",
     "tokenAddress": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
     "tokenDecimals": 18,
@@ -1567,10 +1569,12 @@
     "status": "active",
     "createdAt": 1738747669,
     "platformId": "morpho",
+    "curatorId": "steakhouse",
     "assets": ["wstETH"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/ethereum/vault/0x833AdaeF212c5cD3f78906B44bBfb18258F238F0/smokehouse-wsteth",
     "network": "ethereum",
     "zaps": [
       {
@@ -1580,7 +1584,7 @@
   },
   {
     "id": "morpho-smokehouse-usdc",
-    "name": "USDC",
+    "name": "USDC (Steakhouse, Smokehouse)",
     "token": "USDC",
     "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
     "tokenDecimals": 6,
@@ -1592,10 +1596,12 @@
     "status": "active",
     "createdAt": 1738747657,
     "platformId": "morpho",
+    "curatorId": "steakhouse",
     "assets": ["USDC"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/ethereum/vault/0xBEeFFF209270748ddd194831b3fa287a5386f5bC/smokehouse-usdc",
     "network": "ethereum",
     "zaps": [
       {
@@ -1632,7 +1638,7 @@
   },
   {
     "id": "morpho-steakhouse-weth",
-    "name": "WETH",
+    "name": "WETH (Steakhouse, Steakhouse)",
     "token": "WETH",
     "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     "tokenDecimals": 18,
@@ -1644,10 +1650,12 @@
     "status": "active",
     "createdAt": 1738747637,
     "platformId": "morpho",
+    "curatorId": "steakhouse",
     "assets": ["WETH"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/ethereum/vault/0xBEEf050ecd6a16c4e7bfFbB52Ebba7846C4b8cD4/steakhouse-eth",
     "network": "ethereum",
     "zaps": [
       {
@@ -1657,7 +1665,7 @@
   },
   {
     "id": "morpho-steakhouse-usdc",
-    "name": "USDC",
+    "name": "USDC (Steakhouse, Steakhouse)",
     "token": "USDC",
     "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
     "tokenDecimals": 6,
@@ -1669,10 +1677,12 @@
     "status": "active",
     "createdAt": 1738747621,
     "platformId": "morpho",
+    "curatorId": "steakhouse",
     "assets": ["USDC"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/ethereum/vault/0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB/steakhouse-usdc",
     "network": "ethereum",
     "zaps": [
       {

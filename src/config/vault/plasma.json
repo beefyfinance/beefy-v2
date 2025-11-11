@@ -290,13 +290,15 @@
     "oracle": "tokens",
     "oracleId": "USDT0",
     "status": "paused",
-    "pausedAt": 1761205953,
     "createdAt": 1759753279,
+    "pausedAt": 1761205953,
     "platformId": "euler",
+    "curatorId": "hyperithm",
     "assets": ["USDT0"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0x66bE42a0BdA425A8C3b3c2cF4F4Cb9EDfcAEd21d?network=plasma",
     "network": "plasma",
     "zaps": [
       {
@@ -306,7 +308,7 @@
   },
   {
     "id": "euler-plasma-246clubtelosc-usdt0",
-    "name": "USD₮0 (246Club TelosC)",
+    "name": "USD₮0 (Hyperithm)",
     "type": "standard",
     "token": "USD₮0",
     "tokenAddress": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
@@ -317,13 +319,15 @@
     "oracle": "tokens",
     "oracleId": "USDT0",
     "status": "paused",
-    "pausedAt": 1761205953,
     "createdAt": 1759753279,
+    "pausedAt": 1761205953,
     "platformId": "euler",
+    "curatorId": "hyperithm",
     "assets": ["USDT0"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0x66bE42a0BdA425A8C3b3c2cF4F4Cb9EDfcAEd21d?network=plasma",
     "network": "plasma",
     "zaps": [
       {
@@ -333,7 +337,7 @@
   },
   {
     "id": "euler-plasma-telosc-usdt0",
-    "name": "USD₮0 (TelosC)",
+    "name": "USD₮0 (TelosC, Surge)",
     "type": "standard",
     "token": "USD₮0",
     "tokenAddress": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
@@ -344,15 +348,17 @@
     "oracle": "tokens",
     "oracleId": "USDT0",
     "status": "paused",
-    "pausedAt": 1761205953,
     "createdAt": 1758942529,
+    "pausedAt": 1761205953,
     "platformId": "euler",
+    "curatorId": "telosc",
     "assets": ["USDT0"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
-    "network": "plasma",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0xa9C251F8304b1B3Fc2b9e8fcae78D94Eff82Ac66?network=plasma",
     "pointStructureIds": ["resolv"],
+    "network": "plasma",
     "zaps": [
       {
         "strategyId": "single"
@@ -361,7 +367,7 @@
   },
   {
     "id": "euler-plasma-re7labs-usdt0",
-    "name": "USD₮0 (Re7Labs)",
+    "name": "USD₮0 (Re7 Labs, Core)",
     "type": "standard",
     "token": "USD₮0",
     "tokenAddress": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
@@ -372,15 +378,17 @@
     "oracle": "tokens",
     "oracleId": "USDT0",
     "status": "paused",
-    "pausedAt": 1762359873,
     "createdAt": 1758942529,
+    "pausedAt": 1762359873,
     "platformId": "euler",
+    "curatorId": "re7-labs",
     "assets": ["USDT0"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
-    "network": "plasma",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0xa5EeD1615cd883dD6883ca3a385F525e3bEB4E79?network=plasma",
     "pointStructureIds": ["resolv"],
+    "network": "plasma",
     "zaps": [
       {
         "strategyId": "single"
@@ -389,7 +397,7 @@
   },
   {
     "id": "euler-plasma-k3capital-usdt0",
-    "name": "USD₮0 (K3Capital)",
+    "name": "USD₮0 (K3 Capital)",
     "type": "standard",
     "token": "USD₮0",
     "tokenAddress": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
@@ -402,12 +410,14 @@
     "status": "active",
     "createdAt": 1758942529,
     "platformId": "euler",
+    "curatorId": "k3-capital",
     "assets": ["USDT0"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
-    "network": "plasma",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0xe818ad0D20D504C55601b9d5e0E137314414dec4?network=plasma",
     "pointStructureIds": ["resolv"],
+    "network": "plasma",
     "zaps": [
       {
         "strategyId": "single"

@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ExpandMore from '../../../../../images/icons/mui/ExpandMore.svg?react';
-import OpenInNewRounded from '../../../../../images/icons/mui/OpenInNewRounded.svg?react';
+import ExternalLinkIcon from '../../../../../images/icons/externalLinkRegular.svg?react';
 import { css } from '@repo/styles/css';
 import { DropdownProvider } from '../../../../../components/Dropdown/DropdownProvider.tsx';
 import { DropdownButtonTrigger } from '../../../../../components/Dropdown/DropdownTrigger.tsx';
@@ -32,7 +32,7 @@ export const ContractsDropdown = memo(function ContractsDropdown({
   return (
     <DropdownProvider variant="button" placement="bottom-end" open={open} onChange={setOpen}>
       <DropdownTrigger borderless={true}>
-        {t('Contracts')}
+        {t('Review')}
         <Arrow open={open} />
       </DropdownTrigger>
       <DropdownContent padding="small" gap="small">
@@ -79,7 +79,7 @@ const DropdownLink = memo(function DropdownLink({ label, link }: { label: string
   return (
     <ExternalLink className={linkClass} href={link}>
       {label}
-      <OpenInNewRounded className={iconClass} />
+      <ExternalLinkIcon className={iconClass} />
     </ExternalLink>
   );
 });

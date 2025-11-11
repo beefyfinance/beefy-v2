@@ -65,6 +65,7 @@ export interface DataLoaderState {
     bridgeConfig: LoaderState;
     bridges: LoaderState;
     chainConfig: LoaderState;
+    curators: LoaderState;
     currentCowcentratedRanges: LoaderState;
     depositForm: LoaderState;
     fees: LoaderState;

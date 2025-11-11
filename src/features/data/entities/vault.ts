@@ -2,6 +2,7 @@ import type { ChainEntity } from './chain.ts';
 import type { PlatformEntity } from './platform.ts';
 import type { TokenEntity } from './token.ts';
 import type { ZapStrategyConfig } from '../apis/transact/strategies/strategy-configs.ts';
+import type { CuratorEntity } from './curator.ts';
 
 // maybe a RiskAnalysis type would be better
 
@@ -120,6 +121,8 @@ export type VaultStandardBaseOnly = {
     address?: string;
     loops?: number;
   };
+  curatorId?: CuratorEntity['id'];
+  underlyingPlatformUrl?: string;
 };
 
 type VaultStandardOnly = VaultStandardBaseOnly & {

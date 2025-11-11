@@ -15,10 +15,15 @@ export const selectIsPlatformsAvailable = createGlobalDataSelector(
   'platforms',
   hasLoaderFulfilledOnce
 );
+export const selectIsCuratorsAvailable = createGlobalDataSelector(
+  'curators',
+  hasLoaderFulfilledOnce
+);
 export const selectIsConfigAvailable: GlobalDataSelectorFn = createSelector(
   selectIsChainConfigAvailable,
   selectIsVaultsAvailable,
   selectIsPromosAvailable,
   selectIsPlatformsAvailable,
+  selectIsCuratorsAvailable,
   (...availables) => availables.every(available => available === true)
 );

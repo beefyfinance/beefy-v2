@@ -9,6 +9,7 @@ import { articlesSlice } from './articles.ts';
 import { bridgesSlice } from './bridges.ts';
 import { beGemsReducer } from './campaigns/begems.ts';
 import { chainsSlice } from './chains.ts';
+import { curatorsSlice } from './curators.ts';
 import { dataLoaderSlice } from './data-loader.ts';
 import { feesSlice } from './fees.ts';
 import { bigNumberTransform, filteredVaultsSlice } from './filtered-vaults.ts';
@@ -48,6 +49,7 @@ const entitiesReducer = combineReducers({
   ),
   bridges: bridgesSlice.reducer,
   chains: chainsSlice.reducer,
+  curators: curatorsSlice.reducer,
   fees: feesSlice.reducer,
   minters: mintersSlice.reducer,
   platforms: platformsSlice.reducer,
