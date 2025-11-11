@@ -5,7 +5,7 @@ import { DropdownProvider } from '../../../../components/Dropdown/DropdownProvid
 import { DropdownTrigger } from '../../../../components/Dropdown/DropdownTrigger.tsx';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
-import iconExternalLink from '../../../../images/icons/external-link.svg';
+import IconExternalLink from '../../../../images/icons/externalLinkRegular.svg?react';
 import type { ChainEntity } from '../../../data/entities/chain.ts';
 import { selectTreasuryWalletAddressesByChainId } from '../../../data/selectors/treasury.ts';
 import { styles } from './styles.ts';
@@ -25,13 +25,13 @@ export const ExplorerLinks = memo(function ExplorerLinks({ chainId }: ExplorerLi
   return (
     <DropdownProvider variant="dark" arrowEnabled={true}>
       <DropdownTrigger.button>
-        <img className={classes.icon} src={iconExternalLink} alt="external link" />
+        <IconExternalLink className={classes.icon} />
       </DropdownTrigger.button>
       <DropdownContent>
         {wallets.map(wallet => (
           <ExternalLink key={wallet.address} href={wallet.url} className={classes.item}>
             {t(`Treasury-${wallet.name}`)}
-            <img src={iconExternalLink} alt="external link" />
+            <IconExternalLink />
           </ExternalLink>
         ))}
       </DropdownContent>

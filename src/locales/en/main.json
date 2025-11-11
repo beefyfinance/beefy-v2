@@ -398,7 +398,7 @@
   "Strat-PoolContract": "Pool contract",
   "Strat-CLMPoolContract": "CLM Pool contract",
   "Boost-Contract": "Boost contract",
-  "Curator-Link": "Underlying platform",
+  "UnderlyingPlatform-Link": "Underlying platform",
   "Asset-Detail": "Asset Details",
   "Token-Site": "Website",
   "Token-Docs": "Docs",

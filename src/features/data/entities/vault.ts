@@ -122,7 +122,7 @@ export type VaultStandardBaseOnly = {
     loops?: number;
   };
   curatorId?: CuratorEntity['id'];
-  curatorLink?: string;
+  underlyingPlatformLink?: string;
 };
 
 type VaultStandardOnly = VaultStandardBaseOnly & {
