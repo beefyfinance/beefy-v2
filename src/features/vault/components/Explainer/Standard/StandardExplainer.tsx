@@ -27,11 +27,12 @@ const StandardExplainer = memo(function StandardExplainer({ vaultId }: StandardE
   const vault = useAppSelector(state => selectStandardVaultById(state, vaultId));
   const boost = useAppSelector(state => selectCurrentBoostByVaultIdOrUndefined(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
-  const apys = useAppSelector(state => selectVaultTotalApyOrUndefined(state, vaultId));
   const strategyAddress = useAppSelector(state =>
     selectVaultStrategyAddressOrUndefined(state, vaultId)
   );
-  const showApy = apys && shouldVaultShowInterest(vault);
+
+  const apys = useAppSelector(state => selectVaultTotalApyOrUndefined(state, vaultId));
+  const showApy = apys && apys.totalApy > 0 && shouldVaultShowInterest(vault);
   const showLendingOracle = !!vault.lendingOracle;
 
   const links = useMemo(() => {
@@ -55,31 +56,48 @@ const StandardExplainer = memo(function StandardExplainer({ vaultId }: StandardE
         label: t('Boost-Contract'),
       });
     }
-    if (vault.curatorLink) {
+    if (vault.underlyingPlatformLink) {
       urls.push({
-        link: vault.curatorLink,
-        label: t('Curator-Link'),
+        link: vault.underlyingPlatformLink,
+        label: t('UnderlyingPlatform-Link'),
       });
     }
     return urls;
-  }, [boost, chain, strategyAddress, t, vault.contractAddress, vault.curatorLink]);
+  }, [boost, chain, strategyAddress, t, vault.contractAddress, vault.underlyingPlatformLink]);
 
   return (
     <ExplainerCard
       title={<CardTitle>{t('Vault-Strategy')}</CardTitle>}
       links={links}
       description={<StandardDescription vaultId={vaultId} />}
-      details={
-        <>
-          {showApy ?
-            <ApyDetails type={getApyLabelsTypeForVault(vault, apys.totalType)} values={apys} />
-          : null}
-          {showLendingOracle ?
-            <LendingOracle vaultId={vault.id} />
-          : null}
-        </>
-      }
+      details={showApy || showLendingOracle ? <StandardExplainerDetails vaultId={vaultId} /> : null}
     />
+  );
+});
+
+const StandardExplainerDetails = memo(function StandardExplainerDetails({
+  vaultId,
+}: StandardExplainerProps) {
+  const vault = useAppSelector(state => selectStandardVaultById(state, vaultId));
+  const apys = useAppSelector(state => selectVaultTotalApyOrUndefined(state, vaultId));
+  const showApy = apys && apys.totalApy > 0 && shouldVaultShowInterest(vault);
+  const showLendingOracle = !!vault.lendingOracle;
+
+  if (!showApy && showLendingOracle) {
+    return <LendingOracle vaultId={vault.id} />;
+  }
+
+  if (showApy && !showLendingOracle) {
+    return <ApyDetails type={getApyLabelsTypeForVault(vault, apys.totalType)} values={apys} />;
+  }
+
+  return (
+    <>
+      {showApy && (
+        <ApyDetails type={getApyLabelsTypeForVault(vault, apys.totalType)} values={apys} />
+      )}
+      {showLendingOracle && <LendingOracle vaultId={vault.id} />}
+    </>
   );
 });
 

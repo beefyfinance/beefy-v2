@@ -30,7 +30,7 @@ const FIELD_ORDER = [
   'platformId',
   'feeTier',
   'curatorId',
-  'curatorLink',
+  'underlyingPlatformLink',
   'assets',
   'migrationIds',
   'risks',

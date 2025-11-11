@@ -636,7 +636,7 @@
     "createdAt": 1746096273,
     "status": "active",
     "platformId": "silo",
-    "curatorLink": "https://app.silo.finance/markets/sonic/bes-s-52",
+    "underlyingPlatformLink": "https://app.silo.finance/markets/sonic/bes-s-52",
     "assets": ["S"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
