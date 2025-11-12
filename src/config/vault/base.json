@@ -8,8 +8,8 @@
     "tokenDecimals": 18,
     "tokenProviderId": "aerodrome",
     "earnedToken": "mooAerodromeBaseUSDC-SEND",
-    "earnedTokenAddress": "MOO",
-    "earnContractAddress": "MOOO",
+    "earnedTokenAddress": "0xA8c718CdFD58B3A33e7d29Cff8aa459A4aBd8472",
+    "earnContractAddress": "0xA8c718CdFD58B3A33e7d29Cff8aa459A4aBd8472",
     "oracle": "lps",
     "oracleId": "aerodrome-usdc-send",
     "status": "active",
@@ -30,15 +30,15 @@
   },
   {
     "id": "aerodrome-kvcm-usdc",
-    "name": "kVCM-USDDC vLP",
+    "name": "kVCM-USDC vLP",
     "type": "standard",
     "token": "vAMM-kVCM/USDC",
     "tokenAddress": "0x5C0D76fab1822bDeb47308eD6028231761ED723E",
     "tokenDecimals": 18,
     "tokenProviderId": "aerodrome",
     "earnedToken": "mooAerodromeBasekVCM-USDC",
-    "earnedTokenAddress": "MOOO",
-    "earnContractAddress": "MOOO",
+    "earnedTokenAddress": "0x2A2AB863222754F8CAae31beed6b27a50246Dc02",
+    "earnContractAddress": "0x2A2AB863222754F8CAae31beed6b27a50246Dc02",
     "oracle": "lps",
     "oracleId": "aerodrome-kvcm-usdc",
     "status": "active",
@@ -66,8 +66,8 @@
     "tokenDecimals": 18,
     "tokenProviderId": "aerodrome",
     "earnedToken": "mooAerodromeBasekVCM-WETH",
-    "earnedTokenAddress": "MOO",
-    "earnContractAddress": "MOO",
+    "earnedTokenAddress": "0x8375c72118155548D1e197C76bc20691764320b2",
+    "earnContractAddress": "0x8375c72118155548D1e197C76bc20691764320b2",
     "oracle": "lps",
     "oracleId": "aerodrome-kvcm-weth",
     "status": "active",
@@ -86,8 +86,6 @@
       }
     ]
   },
-
-
   {
     "id": "aerodrome-cow-base-weth-litkey-vault",
     "name": "LITKEY-WETH",
