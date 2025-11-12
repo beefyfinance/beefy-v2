@@ -27,6 +27,31 @@ export const selectBoostById = createCachedSelector(
   requireBoost
 )((_: BeefyState, boostId: BoostPromoEntity['id']) => boostId);
 
+export const selectBoostByIdOrUndefined = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  boostId: string
+) => {
+  const promo = state.entities.promos.byId[boostId];
+  if (promo === undefined || promo.type !== 'boost' || promo.chainId !== chainId) {
+    return undefined;
+  }
+  return promo;
+};
+
+export const selectBoostByContractAddressOrUndefined = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  contractAddress: string
+) => {
+  const boostId =
+    state.entities.promos.byChainId[chainId]?.byContractAddress[contractAddress.toLowerCase()];
+  if (!boostId) {
+    return undefined;
+  }
+  return selectBoostByIdOrUndefined(state, chainId, boostId);
+};
+
 export const selectCurrentBoostByVaultIdOrUndefined = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultCurrentBoostId(state, vaultId),
   (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.promos.byId,

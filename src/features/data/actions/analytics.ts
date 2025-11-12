@@ -87,6 +87,10 @@ import {
   selectIsClmHarvestsForUserPending,
   selectIsWalletTimelineForUserPending,
 } from '../selectors/data-loader/dashboard.ts';
+import {
+  selectBoostByContractAddressOrUndefined,
+  selectBoostByIdOrUndefined,
+} from '../selectors/boosts.ts';
 
 export interface FetchWalletTimelineFulfilled {
   timelines: Record<VaultEntity['id'], AnyTimelineEntity>;
@@ -194,18 +198,97 @@ function handleDatabarnTimeline(
   // Separate out all boost txs
   const [boostTxs, vaultTxs] = partition(timeline, tx => tx.productKey.startsWith('beefy:boost'));
 
-  // Grab all the tx hashes from the boost txs, and filter out any vault txs that have the same hash
-  const boostTxIds = new Set(boostTxs.map(tx => tx.transactionId));
+  // Find which vault each boost tx belongs to
+  const boostTxsByVaultId = boostTxs.reduce(
+    (byVaultId, tx) => {
+      // find by boost contract address
+      const { address } = parseProductKey(tx.productKey);
+      let boost = selectBoostByContractAddressOrUndefined(state, tx.chain, address);
+      // find by boost id
+      if (!boost) {
+        boost = selectBoostByIdOrUndefined(state, tx.chain, tx.displayName);
+      }
+      let vaultId = boost ? boost.vaultId : undefined;
+      // find by matching vault tx and share diff
+      if (!vaultId) {
+        const vaultTx = vaultTxs.find(
+          vtx =>
+            vtx.transactionHash === tx.transactionHash &&
+            vtx.chain === tx.chain &&
+            vtx.shareDiff.eq(tx.shareDiff.negated())
+        );
+        if (vaultTx) {
+          // @dev this probably means the boost was removed from config
+          console.warn(
+            `Using tx hash/chain/shareDiff matching to find vault for boost tx`,
+            tx,
+            vaultTx
+          );
+          vaultId = vaultTx.displayName;
+        } else {
+          vaultId = 'unknown';
+        }
+      }
+      byVaultId[vaultId] ??= new Set();
+      byVaultId[vaultId].add(tx);
+      return byVaultId;
+    },
+    {} as Record<string, Set<UnprocessedTimelineEntryStandard>>
+  );
+
+  if (boostTxsByVaultId['unknown']) {
+    // @dev should not happen
+    console.warn(
+      `Could not match some boost timeline entries to vaults`,
+      boostTxsByVaultId['unknown']
+    );
+  }
+
+  const setFind = <TValue>(set: Set<TValue>, predicate: (value: TValue) => boolean) => {
+    for (const value of set) {
+      if (predicate(value)) {
+        return value;
+      }
+    }
+    return undefined;
+  };
+
   const vaultIdsWithMerges = new Set<string>();
   const vaultTxsIgnoringBoosts = vaultTxs
     .map(tx => ({ ...tx, vaultId: tx.displayName, timeline: 'current' as const }))
     .filter(tx => {
-      if (boostTxIds.has(tx.transactionId)) {
+      const boostTxsForVault = boostTxsByVaultId[tx.vaultId];
+      if (!boostTxsForVault || boostTxsForVault.size === 0) {
+        return true;
+      }
+
+      const matchingBoostTx = setFind(
+        boostTxsForVault,
+        btx =>
+          tx.transactionHash === btx.transactionHash &&
+          tx.chain === btx.chain &&
+          tx.shareDiff.eq(btx.shareDiff.negated())
+      );
+
+      // @dev drop both boost and vault txs if we found a match so they don't appear on dashboard
+      if (matchingBoostTx) {
+        boostTxsForVault.delete(matchingBoostTx);
         vaultIdsWithMerges.add(tx.vaultId);
         return false;
       }
+
       return true;
     });
+
+  for (const [vaultId, remainingBoostTxs] of Object.entries(boostTxsByVaultId)) {
+    if (remainingBoostTxs.size > 0 && vaultId !== 'unknown') {
+      // @dev should not happen, it would mean we have boost txs but no corresponding vault txs
+      console.warn(
+        `Some boost timeline entries for vault ${vaultId} were not matched to vault transactions`,
+        remainingBoostTxs
+      );
+    }
+  }
 
   // Build a map of bridge vaults to their base vaults
   const bridgeVaultIds = selectAllVaultsWithBridgedVersion(state);
