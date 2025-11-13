@@ -14,7 +14,7 @@
     "oracleId": "curve-crvusd-yb",
     "status": "active",
     "createdAt": 1761809824,
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["YB", "crvUSD"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
