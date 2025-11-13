@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import CloseRounded from '../../../images/icons/mui/CloseRounded.svg?react';
+import CloseRounded from '../../../images/icons/clear.svg?react';
 import SearchIcon from '../../../images/icons/search.svg?react';
 import { css, cx } from '@repo/styles/css';
 import { BaseInput, type BaseInputProps } from './BaseInput.tsx';
