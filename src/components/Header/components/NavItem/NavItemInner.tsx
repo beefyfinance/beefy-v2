@@ -73,7 +73,7 @@ const Title = styled('div', {
     lineHeight: '1',
     display: 'flex',
     alignItems: 'center',
-    gap: '4px',
+    gap: '2px',
     width: '100%',
   },
 });

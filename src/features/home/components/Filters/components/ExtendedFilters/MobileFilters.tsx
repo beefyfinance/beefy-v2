@@ -84,7 +84,6 @@ export const MobileFilters = memo<MobileFiltersProps>(function MobileFilters({ o
               <>{t('Filter-Cancel')}</>
             : <>
                 {t('Filter-Clear')}
-
                 <ClearIcon />
               </>
             }
