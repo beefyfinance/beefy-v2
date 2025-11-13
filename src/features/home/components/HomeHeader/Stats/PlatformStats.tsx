@@ -42,10 +42,10 @@ export const PlatformStats = memo(function PlatformStats() {
         loading={!totalTvl}
       />
       <Stat
-        label={t('Platform-TotalYield')}
+        label={t('Platform-7DaysYield')}
         value={totalActiveVaults.toString()}
         loading={!totalActiveVaults}
-        tooltip={t('Platform-TotalYield-Tooltip')}
+        tooltip={t('Platform-7DaysYield-Tooltip')}
       />
       <Stat
         label={t('Platform-7DaysRevenue')}

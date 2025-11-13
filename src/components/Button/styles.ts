@@ -21,7 +21,7 @@ export const buttonRecipe = cva({
       color: 'colorPalette.disabled.color',
       backgroundColor: 'colorPalette.disabled.background',
       borderColor: 'colorPalette.disabled.border',
-      opacity: '0.4',
+      opacity: '0.24',
     },
     _primaryHover: {
       _active: activeStyles,

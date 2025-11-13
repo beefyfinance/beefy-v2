@@ -71,9 +71,9 @@ const StatContainer = styled('div', {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    gap: '1px',
     sm: {
       paddingInline: '18px',
+      gap: '1px',
     },
   },
 });

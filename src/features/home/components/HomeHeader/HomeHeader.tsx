@@ -79,7 +79,6 @@ const VisibilityToggle = memo(function VisibilityToggle() {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={updateHideBalance}
-      isHideToggle={true}
     >
       {isDesktop && isHovered && !hideBalance ? 'Hide sensitive data' : null}
       {showIcon ?
@@ -136,16 +135,6 @@ const ToggleButton = styled('button', {
     },
   },
   variants: {
-    isHideToggle: {
-      true: {
-        height: '40px',
-        width: '40px',
-        md: {
-          height: 'auto',
-          width: 'auto',
-        },
-      },
-    },
     active: {
       true: {
         color: 'text.light',

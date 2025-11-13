@@ -48,6 +48,6 @@ const ClearFilter = styled(Button, {
     paddingInline: '16px 10px',
     paddingBlock: '8px',
     marginLeft: 'auto',
-    gap: '8px',
+    gap: '4px',
   },
 });

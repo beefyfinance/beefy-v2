@@ -45,9 +45,14 @@ const HomePage = memo(function HomePage() {
 
 const HeaderContainer = styled(Container, {
   base: {
-    //base padding is 12px, need to ad 14px only for desktop
+    // base padding is 12px
+    md: {
+      //  need to ad 12px for desktop
+      paddingInline: `${12 + 12}px`,
+    },
     lg: {
-      paddingInline: '26px',
+      //  need to ad 14px for desktop
+      paddingInline: `${12 + 14}px`,
     },
   },
 });
