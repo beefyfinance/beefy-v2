@@ -79,6 +79,7 @@ const VisibilityToggle = memo(function VisibilityToggle() {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={updateHideBalance}
+      isHideToggle={true}
     >
       {isDesktop && isHovered && !hideBalance ? 'Hide sensitive data' : null}
       {showIcon ?
@@ -95,7 +96,7 @@ const Container = styled('div', {
     gap: '6px',
     paddingBlock: '12px 16px',
     sm: {
-      paddingBlock: '0px 24px',
+      paddingBlock: '8px 24px',
     },
   },
 });
@@ -105,7 +106,7 @@ const Stats = styled('div', {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingInline: '4px 8px',
+    paddingInline: '4px 10px',
   },
 });
 
@@ -135,6 +136,16 @@ const ToggleButton = styled('button', {
     },
   },
   variants: {
+    isHideToggle: {
+      true: {
+        height: '40px',
+        width: '40px',
+        md: {
+          height: 'auto',
+          width: 'auto',
+        },
+      },
+    },
     active: {
       true: {
         color: 'text.light',

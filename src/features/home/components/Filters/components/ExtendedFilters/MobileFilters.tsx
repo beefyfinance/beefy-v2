@@ -84,9 +84,8 @@ export const MobileFilters = memo<MobileFiltersProps>(function MobileFilters({ o
               <>{t('Filter-Cancel')}</>
             : <>
                 {t('Filter-Clear')}
-                <CloseContainer>
-                  <ClearIcon />
-                </CloseContainer>
+
+                <ClearIcon />
               </>
             }
           </ClearButton>
@@ -103,19 +102,5 @@ const ClearButton = styled(Button, {
   base: {
     gap: '4px',
     width: '30%',
-  },
-});
-
-const CloseContainer = styled('div', {
-  base: {
-    height: '20px',
-    width: '20px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    '& svg': {
-      height: '15px',
-      width: '15px',
-    },
   },
 });

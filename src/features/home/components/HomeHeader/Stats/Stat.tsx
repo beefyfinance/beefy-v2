@@ -1,6 +1,6 @@
 import { memo, type ReactNode } from 'react';
 import { styled } from '@repo/styles/jsx';
-import InfoIcon from '../../../../../images/icons/navigation/resources.svg?react';
+import InfoIcon from '../../../../../images/icons/i.svg?react';
 import { StatLoader } from '../../../../../components/StatLoader/StatLoader.tsx';
 import { DivWithTooltip } from '../../../../../components/Tooltip/DivWithTooltip.tsx';
 
@@ -57,8 +57,8 @@ const Tooltip = styled(DivWithTooltip, {
 
 const InfoIconComponent = styled(InfoIcon, {
   base: {
-    width: '12px',
-    height: '12px',
+    width: '10px',
+    height: '10px',
   },
 });
 

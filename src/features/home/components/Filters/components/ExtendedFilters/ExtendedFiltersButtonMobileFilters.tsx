@@ -53,9 +53,7 @@ export const ExtendedFiltersButtonMobileFilters = memo(
               borderless={true}
               onClick={handleReset}
             >
-              <ClearContainer>
-                <Clear />
-              </ClearContainer>
+              <ClearIcon />
             </FilterButton>
           </ActiveFilterContainer>
         : <Button size="sm" variant="filter" fullWidth={true} onClick={handleOpen}>
@@ -67,23 +65,6 @@ export const ExtendedFiltersButtonMobileFilters = memo(
     );
   }
 );
-
-const ClearContainer = styled('div', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '24px',
-    height: '24px',
-  },
-});
-
-const Clear = styled(ClearIcon, {
-  base: {
-    width: '16px',
-    height: '16px',
-  },
-});
 
 const ActiveFilterContainer = styled('div', {
   base: {
@@ -109,6 +90,7 @@ const FilterButton = styled(Button, {
       borderColor: 'background.content',
       width: '30%',
       borderRadius: '0px 6px 6px 0px',
+      height: '100%',
     },
   },
 });

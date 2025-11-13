@@ -38,26 +38,9 @@ export const ClearFiltersButton = memo(function ClearFiltersButton({
       {t('Filter-ClearAll')}
       {count > 0 ?
         <Count data-count={count} />
-      : <ClearContainer>
-          <Clear />
-        </ClearContainer>
-      }
+      : <Clear />}
     </ClearFilter>
   );
-});
-
-const ClearContainer = styled('div', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '20px',
-    width: '20px',
-    '& svg': {
-      width: '14px',
-      height: '14px',
-    },
-  },
 });
 
 const ClearFilter = styled(Button, {
