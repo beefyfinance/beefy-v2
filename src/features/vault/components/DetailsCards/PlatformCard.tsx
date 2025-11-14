@@ -96,5 +96,5 @@ export const PlatformCard = memo(PlatformCardComponent);
 const PlatformImage = memo(function PlatformImage({ platformId }: { platformId: string }) {
   const src = getPlatformSrc(platformId);
 
-  return src && <Image src={getPlatformSrc(platformId)} alt={platformId} />;
+  return src && <Image src={src} alt={platformId} />;
 });

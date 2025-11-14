@@ -15,10 +15,12 @@ import {
   Links,
   styles,
   TitleContainer,
+  Image,
 } from './styles.ts';
 import type { CuratorEntity } from '../../../data/entities/curator.ts';
 import { selectCuratorById } from '../../../data/selectors/curators.ts';
 import { TagTooltip, TagWithTooltip } from '../BridgeTag/BridgeTag.tsx';
+import { getCuratorSrc } from '../../../../helpers/curatorsSrc.ts';
 
 function CuratorCardDisplay({ curator }: { curator: CuratorEntity }) {
   const { t } = useTranslation();
@@ -27,6 +29,7 @@ function CuratorCardDisplay({ curator }: { curator: CuratorEntity }) {
     <Container>
       <TitleContainer>
         <AssetIconSymbol>
+          <CuratorImage curatorId={curator.id} />
           <AssetSymbol>{curator.name}</AssetSymbol>
         </AssetIconSymbol>
         <Links>
@@ -62,6 +65,12 @@ function CuratorCardDisplay({ curator }: { curator: CuratorEntity }) {
     </Container>
   );
 }
+
+const CuratorImage = memo(function CuratorImage({ curatorId }: { curatorId: string }) {
+  const src = getCuratorSrc(curatorId);
+
+  return src && <Image src={src} alt={curatorId} />;
+});
 
 function CuratorCardComponent({ curatorId }: { curatorId: CuratorEntity['id'] }) {
   const curator = useAppSelector(state => selectCuratorById(state, curatorId));
