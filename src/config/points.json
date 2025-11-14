@@ -612,5 +612,48 @@
         "url": ""
       }
     ]
+  },
+  {
+    "id": "orbiter",
+    "docs": "https://docs.orbiter.finance/welcome/quest/task-verification-specification",
+    "points": [
+      {
+        "id": "orbiter-points",
+        "name": "Orbiter Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-balances-subgraph",
+        "role": "Indexing of all balances of all beefy products",
+        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
+      },
+      {
+        "id": "beefy-balances-api",
+        "role": "API for the balances subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-balances-api"
+      },
+      {
+        "id": "beefy-api",
+        "role": "Latest LP prices",
+        "url": "https://github.com/beefyfinance/beefy-lrt-hyperindex"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "orbiter-points",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://docs.orbiter.finance/welcome/quest/task-verification-specification"
+      }
+    ]
   }
 ]

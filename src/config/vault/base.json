@@ -9579,6 +9579,7 @@
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "base",
+    "pointStructureIds": ["orbiter"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -9610,6 +9611,7 @@
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "base",
+    "pointStructureIds": ["orbiter"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
