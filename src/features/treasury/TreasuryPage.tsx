@@ -14,6 +14,7 @@ import {
   selectShouldInitTreasury,
 } from '../data/selectors/data-loader/treasury.ts';
 import { selectIsAddressBookLoadedGlobal } from '../data/selectors/data-loader/tokens.ts';
+import { Meta } from '../../components/Meta/Meta.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -25,6 +26,7 @@ const TreasuryPage = memo(function TreasuryPage() {
   const isLoaded = useAppSelector(selectIsTreasuryLoaded);
   const isAddressBookLoaded = useAppSelector(selectIsAddressBookLoadedGlobal);
   const vaultsLoaded = useAppSelector(selectIsVaultsAvailable);
+  const isLoading = !isLoaded || !isAddressBookLoaded || !vaultsLoaded;
 
   useEffect(() => {
     if (shouldInit && isAddressBookLoaded && vaultsLoaded) {
@@ -32,16 +34,18 @@ const TreasuryPage = memo(function TreasuryPage() {
     }
   }, [dispatch, shouldInit, isAddressBookLoaded, vaultsLoaded]);
 
-  if (!isLoaded || !isAddressBookLoaded || !vaultsLoaded) {
-    return <TechLoader text={t('Treasury-Loading')} />;
-  }
-
   return (
-    <div className={classes.treasury}>
-      <DaoSummary />
-      <DaoExposure />
-      <DaoHoldings />
-    </div>
+    <>
+      <Meta title="Treasury" />
+      {isLoading ?
+        <TechLoader text={t('Treasury-Loading')} />
+      : <div className={classes.treasury}>
+          <DaoSummary />
+          <DaoExposure />
+          <DaoHoldings />
+        </div>
+      }
+    </>
   );
 });
 

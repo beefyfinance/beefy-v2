@@ -794,6 +794,17 @@ const config = buildConfig(
           '50%': { strokeDasharray: '100px, 200px', strokeDashoffset: '-15px' },
           '100%': { strokeDasharray: '100px, 200px', strokeDashoffset: '-127px' },
         },
+        fadeOutLoop: {
+          '0%': {
+            opacity: '1',
+          },
+          '50%': {
+            opacity: '0.5',
+          },
+          '100%': {
+            opacity: '1',
+          }
+        },
       },
     },
   },

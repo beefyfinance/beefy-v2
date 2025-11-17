@@ -29,6 +29,7 @@ export const VaultName = memo(function VaultName({ vaultId, isLink }: VaultNameP
       <Link
         to={`/vault/${vaultId}`}
         className={css(styles.vaultName, isBoosted && styles.vaultNameBoosted)}
+        viewTransition={true}
       >
         {punctuationWrap(vault.names.list)}
       </Link>

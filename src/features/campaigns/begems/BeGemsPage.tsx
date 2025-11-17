@@ -10,6 +10,7 @@ import {
   selectHasBeGemsCampaignDispatchedRecently,
   selectIsBeGemsCampaignAvailable,
 } from '../../data/selectors/data-loader/begems.ts';
+import { Meta } from '../../../components/Meta/Meta.tsx';
 
 const BeGemsPageLoader = memo(() => {
   const dispatch = useAppDispatch();
@@ -22,7 +23,14 @@ const BeGemsPageLoader = memo(() => {
     }
   }, [dispatch, loadingStarted, isAvailable]);
 
-  return isAvailable ? <BeGemsPage /> : <Loading />;
+  return (
+    <>
+      <Meta title="beGEMS" />
+      {isAvailable ?
+        <BeGemsPage />
+      : <Loading />}
+    </>
+  );
 });
 
 const BeGemsPage = memo(() => {
