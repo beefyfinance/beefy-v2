@@ -1,7 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { IBridgeQuote } from '../apis/bridge/providers/provider-types.ts';
 import type { BeefyAnyBridgeConfig } from '../apis/config-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import { FormStep } from '../reducers/wallet/bridge-types.ts';
 import { StepContent } from '../reducers/wallet/stepper-types.ts';
 import type { BeefyState } from '../store/types.ts';
@@ -12,6 +11,7 @@ import {
   selectStepperStepContent,
 } from './stepper.ts';
 import { selectErc20TokenByAddress } from './tokens.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export const selectBridgeSupportedChainIds = (state: BeefyState) =>
   state.ui.bridge.destinations.allChains;

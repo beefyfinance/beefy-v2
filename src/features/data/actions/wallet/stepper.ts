@@ -1,9 +1,9 @@
 import { createAction } from '@reduxjs/toolkit';
 import { isEmpty } from '../../../../helpers/utils.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
 import { type Step, StepContent } from '../../reducers/wallet/stepper-types.ts';
 import type { BeefyThunk } from '../../store/types.ts';
 import { createAppAsyncThunk } from '../../utils/store-utils.ts';
+import type { ChainEntity } from '../../apis/chains/entity-types.ts';
 
 export const stepperReset = createAction('stepper/reset');
 export const stepperAddStep = createAction<{ step: Step }>('stepper/addStep');

@@ -1,6 +1,5 @@
 import type BigNumber from 'bignumber.js';
 import { fromWei } from '../../../../../helpers/big-number.ts';
-import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenErc20, TokenNative } from '../../../entities/token.ts';
 import { selectChainNativeToken } from '../../../selectors/tokens.ts';
 import type { BeefyState } from '../../../store/types.ts';
@@ -9,6 +8,7 @@ import type { BeefyAxelarBridgeConfig } from '../../config-types.ts';
 import type { InputTokenAmount, TokenAmount } from '../../transact/transact-types.ts';
 import { estimateArbitrumSequencerGas } from '../helpers/arbitrum.ts';
 import { CommonBridgeProvider } from './CommonBridgeProvider.ts';
+import type { ChainEntity } from '../../chains/entity-types.ts';
 
 export class AxelarProvider extends CommonBridgeProvider<BeefyAxelarBridgeConfig> {
   public readonly id = 'axelar';

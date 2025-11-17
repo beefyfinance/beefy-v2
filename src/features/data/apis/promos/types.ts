@@ -1,4 +1,4 @@
-import type { ChainEntity } from '../../entities/chain.ts';
+import type { ChainEntity } from '../chains/entity-types.ts';
 
 export type PinnedConfigConditionTime = {
   type: 'time';

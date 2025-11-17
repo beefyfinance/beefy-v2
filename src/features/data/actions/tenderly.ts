@@ -1,11 +1,8 @@
-import type { EIP1193Provider } from '@web3-onboard/core';
 import type { TFunction } from 'react-i18next';
 import { ZERO_ADDRESS } from '../../../helpers/addresses.ts';
-import { getWalletConnectionApi } from '../apis/instances.ts';
 import { TenderlyApi } from '../apis/tenderly/tenderly-api.ts';
 import type { TenderlySimulateRequest, TenderlySimulateResponse } from '../apis/tenderly/types.ts';
 import type { TransactOption, TransactQuote } from '../apis/transact/transact-types.ts';
-import type { ChainId } from '../entities/chain.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { Step } from '../reducers/wallet/stepper-types.ts';
 import { selectChainById } from '../selectors/chains.ts';
@@ -18,6 +15,9 @@ import { sleep, withTimeoutSignal } from '../utils/async-utils.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { claimMerkl, claimStellaSwap } from './wallet/offchain.ts';
 import { getTransactSteps } from './wallet/transact.ts';
+import type { EIP1193Provider } from 'viem';
+import { getWalletConnectionApi } from '../apis/wallet/instance.ts';
+import type { ChainId } from '../apis/chains/entity-types.ts';
 
 export type TenderlyTxCallRequest = {
   data: string;
@@ -59,7 +59,7 @@ type MockReceipt = {
 };
 
 export async function captureTransactionsFromSteps(steps: Step[], dispatch: BeefyDispatchFn) {
-  const api = await getWalletConnectionApi();
+  const api = getWalletConnectionApi();
   const mockReceipts = new Map<string, MockReceipt>();
   const inProgress = new Set<string>();
   const mockTxReceipt = {

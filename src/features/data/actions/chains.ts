@@ -1,13 +1,12 @@
 import { createAction } from '@reduxjs/toolkit';
 import { isObject, isPlainObject } from 'lodash-es';
-import type { ChainConfig } from '../apis/config-types.ts';
 import { getConfigApi } from '../apis/instances.ts';
 import { rpcClientManager } from '../apis/rpc-contract/rpc-manager.ts';
-import type { ChainEntity, ChainId } from '../entities/chain.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
+import type { ChainEntity, ChainId } from '../apis/chains/entity-types.ts';
 
 export interface FulfilledPayload {
-  chainConfigs: ChainConfig[];
+  chainConfigs: ChainEntity[];
   localRpcs: Partial<Record<ChainEntity['id'], string[]>>;
 }
 
@@ -70,7 +69,7 @@ export const fetchChainConfigs = createAppAsyncThunk<FulfilledPayload>(
     for (const chain of chainConfigs) {
       rpcClientManager.setClients(chain, localRpcs[chain.id] || chain.rpc);
     }
-    return { chainConfigs, localRpcs };
+    return { chainConfigs: [...chainConfigs], localRpcs };
   }
 );
 

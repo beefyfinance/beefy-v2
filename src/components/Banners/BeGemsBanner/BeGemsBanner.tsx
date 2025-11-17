@@ -6,7 +6,7 @@ import { selectUserBalanceOfToken } from '../../../features/data/selectors/balan
 import { useAppSelector } from '../../../features/data/store/hooks.ts';
 import { css } from '@repo/styles/css/css';
 import { Container } from '../../Container/Container.tsx';
-import { selectWalletAddressIfKnown } from '../../../features/data/selectors/wallet.ts';
+import { selectWalletAddress } from '../../../features/data/selectors/wallet.ts';
 
 export const BannerBeGems = memo(function BannerBeGems({ address }: { address?: string }) {
   return (
@@ -31,7 +31,7 @@ export const BeGemsBanner = memo(function BeGemsBanner({
   address?: string;
   dashboard?: boolean;
 }) {
-  const walletAddress = useAppSelector(state => selectWalletAddressIfKnown(state));
+  const walletAddress = useAppSelector(state => selectWalletAddress(state));
 
   const maybeAddress = useMemo(() => address || walletAddress, [address, walletAddress]);
 

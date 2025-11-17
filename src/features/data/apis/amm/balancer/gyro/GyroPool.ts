@@ -9,7 +9,6 @@ import { BIG_ONE, bigNumberToStringDeep } from '../../../../../../helpers/big-nu
 import { FixedPoint } from '../common/FixedPoint.ts';
 import type { ZapStep } from '../../../transact/zap/types.ts';
 import { WeightedMath } from '../weighted/WeightedMath.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import { BalancerGyroEPoolAbi } from '../../../../../../config/abi/BalancerGyroEPoolAbi.ts';
 import { AllPool } from '../common/AllPool.ts';
 import { BalancerFeature, type IBalancerAllPool } from '../types.ts';
@@ -19,6 +18,7 @@ import {
   poolJoinKindToGyroPoolJoinKind,
 } from './join-exit-kinds.ts';
 import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 const SUPPORTED_FEATURES = new Set<BalancerFeature>([
   BalancerFeature.AddRemoveAll,

@@ -7,7 +7,6 @@ import { isFulfilledResult } from '../../../helpers/promises.ts';
 import type { IBridgeQuote } from '../apis/bridge/providers/provider-types.ts';
 import type { BeefyAnyBridgeConfig, BeefyBridgeConfig } from '../apis/config-types.ts';
 import { getBridgeApi, getConfigApi } from '../apis/instances.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import { type BridgeFormState, FormStep } from '../reducers/wallet/bridge-types.ts';
 import type { Step } from '../reducers/wallet/stepper-types.ts';
 import { selectAllowanceByTokenAddress } from '../selectors/allowances.ts';
@@ -31,6 +30,7 @@ import { fetchBalanceAction } from './balance.ts';
 import { stepperStartWithSteps } from './wallet/stepper.ts';
 import { approve } from './wallet/approval.ts';
 import { selectShouldLoadBridgeConfig } from '../selectors/data-loader/bridge.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 function getLimits(quotes: IBridgeQuote<BeefyAnyBridgeConfig>[]) {
   const current = BigNumber.max(

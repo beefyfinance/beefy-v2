@@ -8,7 +8,6 @@ import type {
   TenderlySimulateRequest,
   TenderlySimulateResponse,
 } from '../../../features/data/apis/tenderly/types.ts';
-import type { ChainId } from '../../../features/data/entities/chain.ts';
 import {
   selectTenderlyCredentialsOrUndefined,
   selectTenderlyResultOrUndefined,
@@ -23,6 +22,7 @@ import { ExternalLink } from '../Links/ExternalLink.tsx';
 import type { StackEntry } from './StackEntry.ts';
 import { stackRecipe, styles, transactionRecipe } from './styles.ts';
 import { TenderlySimulateResponseProcessor } from './TenderlySimulateResponseProcessor.ts';
+import type { ChainId } from '../../../features/data/apis/chains/entity-types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

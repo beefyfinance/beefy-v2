@@ -1,409 +1,559 @@
-import createCoinbaseWalletModule from '@web3-onboard/coinbase';
-import type { WalletInit } from '@web3-onboard/common';
-import { createEIP1193Provider } from '@web3-onboard/common';
-import type { ChainListener, WalletHelpers } from '@web3-onboard/common/dist/types';
-import type { EIP1193Provider, OnboardAPI } from '@web3-onboard/core';
-import Onboard from '@web3-onboard/core';
-import type { ConnectOptions } from '@web3-onboard/core/dist/types';
-import createInjectedWallets from '@web3-onboard/injected-wallets';
-import type {
-  EIP6963AnnounceProviderEvent,
-  InjectedNameSpace,
-} from '@web3-onboard/injected-wallets/dist/types';
-import standardInjectedWallets from '@web3-onboard/injected-wallets/dist/wallets';
-import createMetamaskModule from '@web3-onboard/metamask';
-import createTrustDesktopModule from '@web3-onboard/trust';
-import createWalletConnectModule from '@web3-onboard/walletconnect';
-import type { WalletConnectOptions } from '@web3-onboard/walletconnect/dist/types';
-import { find, sample, uniq } from 'lodash-es';
-import { createWalletClient, custom, isHex, numberToHex } from 'viem';
-import { maybeHexToNumber } from '../../../../helpers/format.ts';
-import { getNetworkSrc } from '../../../../helpers/networkSrc.ts';
-import appIcon from '../../../../images/bifi-logos/header-logo-notext.svg';
-import appLogo from '../../../../images/bifi-logos/header-logo.svg';
-import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url';
-import type { ChainEntity } from '../../entities/chain.ts';
-import { isDefined } from '../../utils/array-utils.ts';
-import { featureFlag_walletConnectChainId } from '../../utils/feature-flags.ts';
+import { debounce, find } from 'lodash-es';
+import { type Address, type EIP1193Provider, type WalletClient } from 'viem';
 import { withDivvi } from '../divvi/client.ts';
-import { customInjectedWallets } from './custom-injected-wallets.ts';
-import type { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types.ts';
+import type {
+  ConnectOptions,
+  IWalletConnectionApi,
+  ReconnectOptions,
+  WalletConnectionOptions,
+  WalletEvents,
+  WalletOption,
+} from './wallet-connection-types.ts';
+import {
+  connect,
+  type Connector,
+  disconnect,
+  getAccount,
+  type GetAccountReturnType,
+  getConnectors,
+  type GetConnectorsReturnType,
+  getWalletClient,
+  reconnect,
+  type Register,
+  switchChain,
+  watchAccount,
+  watchConnectors,
+} from '@wagmi/core';
+import type { Wallet } from './wallet-types.ts';
+import type {
+  AccountConnected,
+  AccountConnecting,
+  AccountDisconnected,
+  AccountReconnecting,
+  WalletAccount,
+} from '../../reducers/wallet/wallet-types.ts';
+import {
+  isWalletConnectionUserAbortedError,
+  isWalletDuplicateRequestAbortedError,
+  WalletConnectionUserAbortedError,
+  WalletDuplicateRequestAbortedError,
+} from './errors.ts';
+import { AsyncRequests } from './AsyncRequests.ts';
+import { areWalletOptionsEqual, compareWalletOptionForSort, normalizeRdns } from './helpers.ts';
+import { SORT_PRIORITY_EIP6963 } from './constants.ts';
+import { isDefined } from '../../utils/array-utils.ts';
+import type { ChainEntity } from '../chains/entity-types.ts';
+import defaultIcon from '../../../../images/wallets/browser-wallet.svg';
 
-declare const window: {
-  [K in InjectedNameSpace]?: unknown;
-} & Window &
-  typeof globalThis;
-
-const walletConnectImages: Record<string, string> = {
-  '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489': fireblocksLogo,
+const eip6963Prefix = 'eip6963:';
+const accountDisconnected: AccountDisconnected = {
+  address: undefined,
+  addresses: undefined,
+  chainId: undefined,
+  networkChainId: undefined,
+  connector: undefined,
+  isConnected: false,
+  isReconnecting: false,
+  isConnecting: false,
+  isDisconnected: true,
+  status: 'disconnected',
 };
 
-function isEip6963Event(e: Event): e is EIP6963AnnounceProviderEvent {
-  return (
-    e.type === 'eip6963:announceProvider' &&
-    typeof (e as EIP6963AnnounceProviderEvent).detail?.info?.rdns === 'string' &&
-    typeof (e as EIP6963AnnounceProviderEvent).detail?.provider === 'object'
-  );
-}
-
-const eip6936WalletPriority = ['xyz.farcaster.', 'com.coinbase.'];
+type UnsubscribeFn = () => void;
 
 export class WalletConnectionApi implements IWalletConnectionApi {
-  protected onboard: OnboardAPI | undefined;
-  protected onboardWalletInitializers: WalletInit[] | undefined;
-  protected ignoreDisconnectFromAutoConnect = false;
+  protected readonly chains: readonly ChainEntity[];
+  protected readonly wagmi: Register['config'];
+  protected readonly walletsById: Record<string, Wallet>;
+  protected readonly walletToConnector: Map<string, Connector> = new Map();
+  protected readonly connectorIdToWalletId: Map<string, string> = new Map();
+  protected readonly events: WalletEvents;
+  protected readonly connectionRequests = new AsyncRequests();
+  protected readonly autoConnectRdns: Set<string> = new Set();
+  protected unsubscribers: UnsubscribeFn[] = [];
   protected providerWrapper: ((provider: EIP1193Provider) => EIP1193Provider) | undefined;
-  protected tryToAutoConnectToEip6936: boolean = false;
-  protected eip6963Wallets = new Map<string, string>();
+  protected walletOptions: WalletOption[] = [];
+  protected lastClient:
+    | { account: Address; connectionId: string; client: WalletClient }
+    | undefined;
 
-  constructor(protected options: WalletConnectionOptions) {
-    this.onboard = undefined;
-    this.onboardWalletInitializers = undefined;
-    this.listenForEip6963Wallets();
-  }
-
-  protected listenForEip6963Wallets() {
-    if (typeof window !== 'undefined') {
-      window.addEventListener(
-        'eip6963:announceProvider',
-        this.onEip6963AnnounceProvider.bind(this)
-      );
-      window.dispatchEvent(new CustomEvent('eip6963:requestProvider'));
-    }
-  }
-
-  protected onEip6963AnnounceProvider(e: Event): void {
-    if (!isEip6963Event(e)) {
-      return;
-    }
-
-    this.eip6963Wallets.set(e.detail.info.rdns, e.detail.info.name);
-  }
-
-  /** set whether next tryToAutoConnect will try to automatically connect to EIP6936 wallet */
-  public setAutoConnectToEip6936(value: boolean = true) {
-    this.tryToAutoConnectToEip6936 = value;
-  }
-
-  private static createWalletConnectModule(
-    modalOptions?: WalletConnectOptions['qrModalOptions']
-  ): WalletInit {
-    const requiredChainId = featureFlag_walletConnectChainId();
-    const options: WalletConnectOptions = {
-      dappUrl: 'https://app.beefy.com',
-      projectId: 'af38b343e1be64b27c3e4a272cb453b9',
-      requiredChains: requiredChainId ? [requiredChainId] : [],
-    };
-
-    if (modalOptions) {
-      options.qrModalOptions = modalOptions;
-    } else {
-      options.qrModalOptions = {
-        walletImages: walletConnectImages,
-      };
-    }
-
-    return createWalletConnectModule(options);
-  }
-
-  private static createWalletConnectFireblocksModule(): WalletInit {
-    const walletConnectInit = WalletConnectionApi.createWalletConnectModule({
-      mobileWallets: [
-        {
-          id: '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489',
-          name: 'Fireblocks',
-          links: {
-            native: 'fireblocks-wc://',
-            universal: 'https://console.fireblocks.io/v2/',
-          },
-        },
-      ],
-      desktopWallets: [
-        {
-          id: '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489',
-          name: 'Fireblocks',
-          links: {
-            native: 'fireblocks-wc://',
-            universal: 'https://console.fireblocks.io/v2/',
-          },
-        },
-      ],
-      enableExplorer: false,
-      walletImages: walletConnectImages,
-    });
-
-    return (helpers: WalletHelpers) => {
-      const module = walletConnectInit(helpers);
-      if (!module || Array.isArray(module)) {
-        throw new Error('createWalletConnectModule returned invalid module');
-      }
-
-      module.label = 'Fireblocks';
-      module.getIcon = async () =>
-        (await import('../../../../images/wallets/fireblocks-transparent.svg')).default;
-
-      return module;
-    };
-  }
-
-  private static createMetamaskModule(): WalletInit {
-    return createMetamaskModule({
-      options: {
-        enableAnalytics: false,
-        checkInstallationImmediately: false,
-        extensionOnly: false,
-        dappMetadata: {
-          name: 'Beefy',
-          url: 'https://app.beefy.com',
-          base64Icon:
-            'data:image/png;base64,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',
-        },
+  constructor({
+    chains,
+    wagmi,
+    wallets,
+    initialWalletIds,
+    autoConnect,
+    events,
+  }: WalletConnectionOptions) {
+    this.chains = chains;
+    this.wagmi = wagmi;
+    this.walletsById = wallets.reduce(
+      (acc, wallet) => {
+        acc[wallet.id] = wallet;
+        return acc;
       },
+      {} as Record<string, Wallet>
+    );
+    this.events = events;
+    if (autoConnect?.injected) {
+      for (const rdns of normalizeRdns(autoConnect.injected)) {
+        this.autoConnectRdns.add(rdns);
+      }
+    }
+    this.resolveAccountChanges = debounce(this.resolveAccountChanges.bind(this), 100, {
+      leading: false,
+      trailing: true,
+      maxWait: 1000,
     });
+    this.resolveConnectorChanges = debounce(this.resolveConnectorChanges.bind(this), 100, {
+      leading: false,
+      trailing: true,
+      maxWait: 1000,
+    });
+
+    this.registerConnectorsForWallets(
+      initialWalletIds.map(id => this.walletsById[id]).filter(isDefined)
+    );
+    this.buildInitialWalletOptions();
+    this.subscribe();
+    this.resolveAccountChanges(getAccount(this.wagmi));
+    this.resolveConnectorChanges(getConnectors(this.wagmi));
+  }
+
+  /** subscribe to wagmi state changes */
+  protected subscribe() {
+    this.unsubscribers.push(
+      watchAccount(this.wagmi, {
+        onChange: this.resolveAccountChanges,
+      }),
+      watchConnectors(this.wagmi, {
+        onChange: this.resolveConnectorChanges,
+      })
+    );
+  }
+
+  /** unsubscribe from wagmi state changes */
+  protected unsubscribe() {
+    for (let i = this.unsubscribers.length - 1; i >= 0; i--) {
+      this.unsubscribers[i]();
+    }
+    this.unsubscribers = [];
   }
 
   /**
-   * Create list of wallet modules for Onboard
-   * @private
-   */
-  private static createOnboardWalletInitializers() {
-    return [
-      WalletConnectionApi.createInjectedWalletsModule(),
-      WalletConnectionApi.createWalletConnectModule(),
-      WalletConnectionApi.createMetamaskModule(),
-      createCoinbaseWalletModule(),
-      WalletConnectionApi.createCDCWalletModule(),
-      createTrustDesktopModule(),
-      WalletConnectionApi.createWalletConnectFireblocksModule(),
-    ];
+   * resolve account changes and emit events as needed (debounced)
+   * wagmi subscription handler
+   **/
+  protected resolveAccountChanges(account: GetAccountReturnType) {
+    let walletAccount: WalletAccount;
+
+    if (account.status === 'disconnected') {
+      walletAccount = accountDisconnected;
+    } else {
+      const chain = this.chains.find(c => c.networkChainId === account.chainId);
+      walletAccount = {
+        address: account.address,
+        addresses: account.addresses,
+        chainId: chain?.id,
+        networkChainId: account.chainId,
+        connector: account.connector,
+        isConnected: account.isConnected,
+        isReconnecting: account.isReconnecting,
+        isConnecting: account.isConnecting,
+        isDisconnected: account.isDisconnected,
+        status: account.status,
+      } as AccountConnected | AccountReconnecting | AccountConnecting;
+    }
+
+    this.emitAccountChanged(walletAccount);
   }
 
-  private static createInjectedWalletsModule() {
-    return createInjectedWallets({
-      custom: customInjectedWallets,
-      disable6963Support: false,
-    });
+  protected emitAccountChanged(account: WalletAccount) {
+    this.events.onAccountChange(account);
   }
 
-  private static createCDCWalletModule(): WalletInit {
-    return () => ({
-      label: 'CDC Connect',
-      getIcon: async () => (await import('../../../../images/wallets/crypto.png')).default,
-      getInterface: async ({ chains }) => {
-        const { DeFiWeb3Connector } = await import('@deficonnect/web3-connector');
-        const cronosChainId = 25;
+  protected emitOptionsChanged(options: WalletOption[]) {
+    this.events.onOptionsChange(options);
+  }
 
-        const connector = new DeFiWeb3Connector({
-          appName: 'Beefy',
-          chainType: 'eth',
-          chainId: cronosChainId.toString(),
-          supportedChainIds: chains.map(chain => maybeHexToNumber(chain.id)),
-          rpcUrls: Object.fromEntries(
-            chains.map(chain => {
-              if (!chain.rpcUrl) {
-                throw new Error(`Chain ${chain.id} is missing rpcUrl`);
-              }
-              return [chain.id.toString(), chain.rpcUrl];
-            })
-          ),
+  public cancelConnect() {
+    this.connectionRequests.abortAll(new WalletConnectionUserAbortedError());
+  }
+
+  /** attempt to connect to wallet {id}, optionally on {chainId} */
+  async connect({ requestId, walletId, chainId }: ConnectOptions) {
+    console.log(`Connecting to wallet ${walletId} on chain ${chainId ?? 'default'}`);
+    const chain = chainId ? this.chains.find(chain => chain.id === chainId) : undefined;
+    const networkChainId = chain?.networkChainId || undefined;
+
+    const option = this.walletOptions.find(w => w.id === walletId);
+    if (!option) {
+      throw new Error(`No wallet option with id ${walletId} found`);
+    }
+
+    const connector = this.getConnectorForWallet(walletId);
+    if (!connector) {
+      throw new Error(`No connector for wallet option with id ${walletId}`);
+    }
+
+    type ConnectorMessage = { uid: string; type: string; data?: unknown };
+    type ConnectorMessageDisplayUri = { uid: string; type: 'display_uri'; data: string };
+    const isDisplayUriMessage = (msg: ConnectorMessage): msg is ConnectorMessageDisplayUri =>
+      msg.type === 'display_uri';
+    const handleMessage = (message: ConnectorMessage) => {
+      console.debug('handleMessage', walletId, requestId, option.id, message.data);
+      if (isDisplayUriMessage(message)) {
+        this.events.onConnectDisplayQr({
+          requestId,
+          status: 'qr',
+          wallet: option,
+          chainId,
+          uri: message.data,
         });
+      }
+    };
 
-        const { provider } = await connector.activate();
-
-        // Patch missing/non-conforming methods
-        const patchedProvider = createEIP1193Provider(provider, {
-          eth_requestAccounts: async ({ baseRequest }) => {
-            return await baseRequest({ method: 'eth_accounts' });
-          },
-          eth_chainId: async ({ baseRequest }) => {
-            const value = await baseRequest({ method: 'eth_chainId' });
-            return isHex(value, { strict: true }) ? value : (
-                `0x${parseInt(value + '', 10).toString(16)}`
-              );
-          },
-        });
-
-        // Patch non-conforming events
-        const originalOn = patchedProvider.on.bind(patchedProvider);
-        patchedProvider.on = (event, listener) => {
-          if (event === 'chainChanged') {
-            originalOn(event, value => {
-              // call original handler with modified value -- chainId: Dec->Hex
-              (listener as ChainListener)(
-                isHex(value, { strict: true }) ? value : (
-                  `0x${parseInt(value + '', 10).toString(16)}`
-                )
+    try {
+      // abort any pending
+      this.connectionRequests.abortAll(new WalletDuplicateRequestAbortedError());
+      // subscribe to connector messages
+      connector.emitter.on('message', handleMessage);
+      // try to connect
+      await this.connectionRequests.create(
+        walletId,
+        async () => {
+          this.events.onConnectConnecting({
+            requestId,
+            status: 'pending',
+            wallet: option,
+            chainId,
+          });
+          await connect(this.wagmi, {
+            connector,
+            chainId: networkChainId,
+          });
+        },
+        async () => {
+          const walletId = this.connectorIdToWalletId.get(connector.uid);
+          const wallet = walletId ? this.walletsById[walletId] : undefined;
+          if (wallet?.abortAction === 'disconnect') {
+            await connector.disconnect().catch(err => {
+              console.warn(
+                'Error during disconnect after aborted connect:',
+                walletId,
+                requestId,
+                err
               );
             });
-          } else {
-            originalOn(event as never, listener as never);
           }
-        };
+        }
+      );
 
-        // DeFiConnectorProvider type is missing EventEmitter type
-        return {
-          provider: patchedProvider,
-        };
-      },
-    });
-  }
-
-  private static setLastConnectedWallet(wallet: string | undefined) {
-    try {
-      if (wallet) {
-        window?.localStorage?.setItem('lastConnectedWallet', wallet);
-      } else {
-        window?.localStorage?.removeItem('lastConnectedWallet');
+      // successful connection
+      this.events.onConnectSuccess({
+        requestId,
+        status: 'success',
+        wallet: option,
+        chainId,
+      });
+      return true;
+    } catch (error) {
+      console.debug('error', walletId, requestId, error);
+      if (
+        isWalletDuplicateRequestAbortedError(error) ||
+        isWalletConnectionUserAbortedError(error)
+      ) {
+        console.debug(`Connection attempt to wallet ${walletId} aborted:`, error);
+        // unsuccessful connection due to user abort
+        this.events.onConnectCancelled({
+          requestId,
+          status: 'cancelled',
+          wallet: option,
+          chainId,
+        });
+        return false;
       }
-    } catch {
-      // silently ignore
+      // bubble
+      throw error;
+    } finally {
+      // unsubscribe from connector messages
+      connector.emitter.off('message', handleMessage);
     }
   }
 
-  private static getLastConnectedWallet(): string | undefined {
-    try {
-      return window?.localStorage?.getItem('lastConnectedWallet') || undefined;
-    } catch {
-      return undefined;
-    }
+  public async disconnect() {
+    this.cancelConnect();
+    await disconnect(this.wagmi);
   }
 
-  private static async connect(onboard: OnboardAPI, options?: ConnectOptions) {
-    const wallets = await onboard.connectWallet(options);
-
-    if (!wallets.length) {
-      console.error('connect: No wallet connected');
-      throw new Error('No wallet connected');
-    }
-
-    const wallet = wallets[0];
-    if (!wallet.accounts.length) {
-      console.error('connect: No account connected');
-      throw new Error('No account connected');
-    }
-
-    if (!wallet.provider) {
-      console.error('connect: No provider for wallet');
-      throw new Error('No provider for wallet');
-    }
+  /** Every injected connector that isn't already a known wallet must be an EIP-6963 wallet */
+  protected isEip6963Connector(connector: Connector) {
+    return connector.type === 'injected' && !this.walletsById[connector.id];
   }
 
-  private static clearWalletConnectStorage() {
-    try {
-      const toRemove: string[] = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key && key.startsWith('wc@2:')) {
-          toRemove.push(key);
+  /** when connectors change, either an eip6963 wallet was registered, or one of ours was turned in to a connector */
+  protected resolveConnectorChanges(connectors: GetConnectorsReturnType) {
+    const previousOptions = this.walletOptions;
+
+    console.debug({
+      previousOptions,
+      connectorIdToWalletId: this.connectorIdToWalletId,
+      walletToConnector: this.walletToConnector,
+      connectors,
+    });
+
+    // calculate added and removed connectors
+    const removed = new Set(this.connectorIdToWalletId.keys());
+    const added = new Set<GetConnectorsReturnType[number]>();
+    for (const connector of connectors) {
+      if (!removed.delete(connector.uid)) {
+        added.add(connector);
+      }
+    }
+
+    // remove wallets for removed connectors
+    for (const connectorUid of removed) {
+      const walletId = this.connectorIdToWalletId.get(connectorUid);
+      if (walletId) {
+        this.walletToConnector.delete(walletId);
+        this.connectorIdToWalletId.delete(connectorUid);
+      }
+    }
+
+    // add wallets for added eip6963 connectors or connectors with same id as wallet
+    for (const connector of added) {
+      let walletId = connector.id;
+
+      if (!this.walletsById[walletId]) {
+        if (this.isEip6963Connector(connector)) {
+          walletId = `${eip6963Prefix}${connector.id}`;
+        } else {
+          // @dev make sure the wallet and connector id match, or only lazy-init the wallet
+          throw new Error(
+            `No wallet with connector id "${connector.id}" and connector is not EIP-6963`
+          );
         }
       }
-      for (const key of toRemove) {
-        localStorage.removeItem(key);
+
+      if (this.walletToConnector.has(walletId)) {
+        console.warn(`Connector for wallet ${walletId} already registered`, connector);
       }
-    } catch {
-      // ignored
+      if (this.connectorIdToWalletId.has(connector.uid)) {
+        console.warn(
+          `Connector uid ${connector.uid} already registered for wallet ${this.connectorIdToWalletId.get(
+            connector.uid
+          )}`,
+          connector
+        );
+      }
+
+      this.walletToConnector.set(walletId, connector);
+      this.connectorIdToWalletId.set(connector.uid, walletId);
+    }
+
+    // Create options for any eip6963 connectors we don't already have a wallet for
+    const eip6963Wallets: WalletOption[] = connectors
+      .filter(c => this.isEip6963Connector(c))
+      .map(c => ({
+        id: `${eip6963Prefix}${c.id}`,
+        name: c.name,
+        iconUrl: c.icon || defaultIcon,
+        iconBackground: '#fff',
+        rdns: normalizeRdns(c.rdns || c.id),
+        type: c.type,
+        ui: 'external',
+        priority: SORT_PRIORITY_EIP6963,
+      }));
+    const eip6963Rnds = new Set<string>(eip6963Wallets.flatMap(w => w.rdns));
+
+    // Prefer eip6963 wallets - deduplicate by rdns
+    const wallets: WalletOption[] = Object.values(this.walletsById)
+      .filter(w => !w.hidden && !w.rdns.some(rdns => eip6963Rnds.has(rdns)))
+      .map(this.createWalletOption);
+
+    const options = wallets.concat(eip6963Wallets).sort(compareWalletOptionForSort);
+
+    // only update if changed
+    if (!areWalletOptionsEqual(previousOptions, options)) {
+      this.walletOptions = options;
+      this.emitOptionsChanged(options);
     }
   }
 
-  protected getEip6963Wallet() {
-    if (this.eip6963Wallets.size === 0) {
+  /** build a WalletOption from a Wallet */
+  protected createWalletOption(wallet: Wallet): WalletOption {
+    return {
+      id: wallet.id,
+      name: wallet.name,
+      iconUrl: wallet.iconUrl,
+      iconBackground: wallet.iconBackground || '#fff',
+      rdns: wallet.rdns,
+      ui: wallet.ui,
+      type: 'wallet',
+      priority: wallet.priority,
+    };
+  }
+
+  /** build initial wallet options from configured wallets */
+  protected buildInitialWalletOptions() {
+    const options = Object.values(this.walletsById)
+      .filter(w => !w.hidden)
+      .map(this.createWalletOption)
+      .sort(compareWalletOptionForSort);
+    this.walletOptions = options;
+    this.emitOptionsChanged(options);
+  }
+
+  /**
+   * create a connector from a wallet, and register it with wagmi
+   **/
+  protected registerWalletConnector(wallet: Wallet): Connector {
+    console.debug(
+      'registerWalletConnector',
+      wallet.id,
+      Array.from(this.walletToConnector.entries())
+    );
+    const connector = this.wagmi._internal.connectors.setup(wallet.createConnector);
+    this.walletToConnector.set(wallet.id, connector);
+    this.connectorIdToWalletId.set(connector.uid, wallet.id);
+    this.wagmi._internal.connectors.setState((existing: Connector[]) => [...existing, connector]);
+    return connector;
+  }
+
+  /**
+   * registerWalletConnector for multiple wallets, only generates one state update
+   **/
+  protected registerConnectorsForWallets(wallets: Wallet[]): void {
+    const newConnectors: Connector[] = [];
+    for (const wallet of wallets) {
+      if (this.walletToConnector.has(wallet.id)) {
+        console.warn(`Connector for wallet ${wallet.id} already initialized`);
+        continue;
+      }
+      const connector = this.wagmi._internal.connectors.setup(wallet.createConnector);
+      this.walletToConnector.set(wallet.id, connector);
+      this.connectorIdToWalletId.set(connector.uid, wallet.id);
+      newConnectors.push(connector);
+    }
+    if (newConnectors.length) {
+      this.wagmi._internal.connectors.setState((existing: Connector[]) => [
+        ...existing,
+        ...newConnectors,
+      ]);
+    }
+  }
+
+  protected getConnectorForWallet(walletId: string): Connector | undefined {
+    const connector = this.walletToConnector.get(walletId);
+    if (connector) {
+      return connector;
+    }
+
+    if (walletId.startsWith(eip6963Prefix)) {
+      console.debug(`No connector for EIP-6963 wallet with id ${walletId}`);
       return undefined;
     }
 
-    for (const rdns of eip6936WalletPriority) {
-      const wallet = this.eip6963Wallets.get(rdns);
-      if (wallet) {
-        return wallet;
+    const wallet = this.walletsById[walletId];
+    if (!wallet) {
+      console.debug(`No wallet with id ${walletId} found`);
+      return undefined;
+    }
+
+    return this.registerWalletConnector(wallet);
+  }
+
+  public dispose() {
+    this.unsubscribe();
+    this.emitAccountChanged(accountDisconnected);
+  }
+
+  /**
+   * Attempt to reconnect
+   */
+  public async reconnect(options: ReconnectOptions = {}) {
+    // Skip if already connected
+    if (this.wagmi.state.status !== 'disconnected') {
+      console.debug('reconnect: not disconnected, skipping');
+      return;
+    }
+
+    const { walletId, connectorId, autoConnect } = options;
+    const availableConnectors = getConnectors(this.wagmi);
+    const autoConnectWallets: string[] = [];
+
+    if (autoConnect) {
+      for (const wallet of this.walletOptions) {
+        if (wallet.rdns.some(rdns => this.autoConnectRdns.has(rdns))) {
+          autoConnectWallets.push(wallet.id);
+        }
       }
     }
 
-    return sample(Array.from(this.eip6963Wallets.values()));
-  }
+    const autoConnectConnectors = autoConnectWallets
+      .map(walletId => this.getConnectorForWallet(walletId))
+      .filter(isDefined);
 
-  protected async getWalletForAutoConnect() {
-    // Use last connected wallet if set
-    const lastConnectedWallet = WalletConnectionApi.getLastConnectedWallet();
-    if (lastConnectedWallet) {
-      // wait for injected wallet to be available in case last connected was an injected wallet
-      await this.waitForInjectedWallet();
-      return lastConnectedWallet;
+    if (walletId) {
+      const connector = this.getConnectorForWallet(walletId);
+      if (connector) {
+        return await reconnect(this.wagmi, { connectors: [connector, ...autoConnectConnectors] });
+      }
+      console.debug(`reconnect: no connector for walletId ${walletId}`);
     }
 
-    // Try to auto connect if wallet announced via EIP-6963
-    if (this.tryToAutoConnectToEip6936 && this.eip6963Wallets.size > 0) {
-      this.tryToAutoConnectToEip6936 = false;
-      return this.getEip6963Wallet();
+    if (connectorId) {
+      const connector = availableConnectors.find(c => c.id === connectorId);
+      if (connector) {
+        return await reconnect(this.wagmi, { connectors: [connector, ...autoConnectConnectors] });
+      }
+      console.debug(`reconnect: no connector with id ${connectorId}`);
     }
 
+    if (autoConnectConnectors.length) {
+      return await reconnect(this.wagmi, { connectors: autoConnectConnectors });
+    }
+
+    console.debug(
+      `reconnect: no connectors available for autoConnect`,
+      options,
+      autoConnectConnectors,
+      availableConnectors,
+      this.autoConnectRdns,
+      autoConnectWallets,
+      this.walletOptions.map(w => [w.id, ...w.rdns])
+    );
     return undefined;
   }
 
-  /**
-   * Attempt to reconnect to cached provider
-   */
-  public async tryToAutoReconnect() {
-    // Skip if already connected
-    if (this.isConnected()) {
-      console.debug('tryToAutoReconnect: Already connected');
-      return;
-    }
-
-    // Must have last selected wallet set
-    const autoConnectWallet = await this.getWalletForAutoConnect();
-    if (!autoConnectWallet) {
-      console.debug('tryToAutoReconnect: No autoConnectWallet');
-      return;
-    }
-
-    // Initialize onboard if needed
-    const onboard = this.getOnboard();
-
-    // Attempt to connect
-    try {
-      console.debug(`tryToAutoReconnect: Trying ${autoConnectWallet}`);
-      this.ignoreDisconnectFromAutoConnect = true;
-      await WalletConnectionApi.connect(onboard, {
-        autoSelect: { label: autoConnectWallet, disableModals: true },
-      });
-    } catch (err) {
-      // We clear last connected wallet here so that attempting to reconnect opens the modal
-      // rather than trying to reconnect to previous wallet that just failed/was rejected.
-      WalletConnectionApi.setLastConnectedWallet(undefined);
-      // Rethrow so called knows connection failed
-      throw err;
-    } finally {
-      this.ignoreDisconnectFromAutoConnect = false;
-    }
-  }
-
-  public async getConnectedViemClient() {
-    if (!this.isConnected()) {
+  public async getConnectedViemClient(forAccount?: Address) {
+    const connectionId = this.wagmi.state.current;
+    const connection = connectionId ? this.wagmi.state.connections.get(connectionId) : undefined;
+    if (!connection || this.wagmi.state.status !== 'connected') {
       throw new Error(`Wallet not connected.`);
     }
+    const account = forAccount ?? connection.accounts[0];
 
-    const onboard = this.getOnboard();
-    const wallet = onboard.state.get().wallets[0];
-    const realProvider: EIP1193Provider = wallet.provider;
+    // return same instance if connection and address match
+    if (this.lastClient?.account === account && this.lastClient?.connectionId === connectionId) {
+      return this.lastClient.client;
+    }
 
-    /*
-     * this is a hack to extract calls to the provider for use in Tenderly simulations
-     * withProviderWrapper(), which sets providerWrapper, is only called from Tenderly actions
-     * otherwise providerWrapper is undefined and the original unmodified provider is used
-     */
-    const wrappedProvider =
-      this.providerWrapper ? this.providerWrapper(realProvider) : realProvider;
-
-    return withDivvi(
-      createWalletClient({
-        transport: custom(wrappedProvider),
+    // TODO wrap for tenderly
+    const client = withDivvi(
+      await getWalletClient(this.wagmi, {
+        account,
       })
     );
+    this.lastClient = { account, connectionId: connection.connector.uid, client };
+    return client;
   }
 
   public async withProviderWrapper<T>(
     wrapFn: (provider: EIP1193Provider) => EIP1193Provider,
     callback: () => Promise<T>
   ) {
+    throw new Error(`Not implemented yet`);
     try {
       this.providerWrapper = wrapFn;
       return await callback();
@@ -412,53 +562,20 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     }
   }
 
-  /**
-   * Ask the user to connect if he isn't already
-   */
-  public async askUserToConnectIfNeeded() {
-    if (this.isConnected()) {
-      console.debug('askUserToConnectIfNeeded: Already connected');
-      throw new Error('Already connected');
-    }
-
-    // initialize onboard if needed
-    const onboard = this.getOnboard();
-
-    // Automatically pick last connected wallet if available
-    const autoConnectWallet = await this.getWalletForAutoConnect();
-
-    // Connect
-    try {
-      await WalletConnectionApi.connect(
-        onboard,
-        autoConnectWallet ?
-          { autoSelect: { label: autoConnectWallet, disableModals: false } }
-        : undefined
-      );
-    } catch (err) {
-      // We clear last connected wallet here so that attempting to reconnect opens the modal
-      // rather than trying to reconnect to previous wallet that just failed/was rejected.
-      WalletConnectionApi.setLastConnectedWallet(undefined);
-      // Rethrow so called knows connection failed
-      throw err;
-    }
-  }
-
-  /**
-   * Whether wallet is currently connected + address available
-   */
-  public isConnected(): boolean {
-    if (!this.onboard) {
+  protected isConnected() {
+    if (this.wagmi.state.status !== 'connected') {
       return false;
     }
+    const connection = this.getConnection();
+    return !!(connection && connection.accounts.length);
+  }
 
-    const { wallets } = this.onboard.state.get();
-    return (
-      wallets.length > 0 &&
-      wallets[0].accounts.length > 0 &&
-      wallets[0].chains.length > 0 &&
-      !!wallets[0].provider
-    );
+  protected getConnection() {
+    const connectionId = this.wagmi.state.current;
+    if (!connectionId) {
+      return false;
+    }
+    return this.wagmi.state.connections.get(connectionId);
   }
 
   /**
@@ -466,205 +583,30 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    * @param chainId
    */
   public async askUserForChainChange(chainId: ChainEntity['id']) {
-    const chain = find(this.options.chains, chain => chain.id === chainId);
+    const chain = find(this.chains, chain => chain.id === chainId);
     if (!chain) {
       console.error(`askUserForChainChange: Couldn't find chain by id ${chainId}`);
       throw new Error(`Couldn't find chain by id ${chainId}`);
     }
 
-    // Onboard must already be connected
     if (!this.isConnected()) {
       console.error('askUserForChainChange: Not connected');
       throw new Error(`Wallet must be connected before switching chains`);
     }
 
     // Change chain
-    const onboard = this.getOnboard();
-    const success = await onboard.setChain({ chainId: numberToHex(chain.networkChainId) });
-    if (!success) {
-      console.error('askUserForChainChange: Failed to switch chain');
-      throw new Error(`Failed to switch chain`);
-    }
-  }
-
-  public async disconnect() {
-    // Disconnect Wallet
-    if (this.onboard) {
-      const { wallets } = this.onboard.state.get();
-      if (wallets.length) {
-        await this.onboard.disconnectWallet({ label: wallets[0].label });
-      }
-    }
-
-    // Clear last wallet
-    WalletConnectionApi.setLastConnectedWallet(undefined);
-
-    // Clear wallet connect storage or else it will try to reconnect to same session
-    WalletConnectionApi.clearWalletConnectStorage();
-
-    // Don't try to auto connect next time
-    this.tryToAutoConnectToEip6936 = false;
-
-    // Raise events
-    this.options.onWalletDisconnected();
-  }
-
-  private getOnboardWalletInitializers(): WalletInit[] {
-    if (this.onboardWalletInitializers === undefined) {
-      this.onboardWalletInitializers = WalletConnectionApi.createOnboardWalletInitializers();
-    }
-    return this.onboardWalletInitializers;
-  }
-
-  /**
-   * Create instance of Onboard
-   * @private
-   */
-  private createOnboard() {
-    const onboard = Onboard({
-      disableFontDownload: true,
-      connect: {
-        showSidebar: true,
-        removeWhereIsMyWalletWarning: true,
-        autoConnectAllPreviousWallet: false,
-        autoConnectLastWallet: false,
-      },
-      wallets: this.getOnboardWalletInitializers(),
-      theme: {
-        '--w3o-background-color': '#1A1D26',
-        '--w3o-foreground-color': '#242835',
-        '--w3o-text-color': '#EFF1FC',
-        '--w3o-border-color': 'transparent',
-        '--w3o-action-color': '#59A662',
-        '--w3o-border-radius': '8px',
-      },
-      appMetadata: {
-        name: 'Beefy',
-        icon: appIcon,
-        logo: appLogo,
-        description:
-          'Beefy is a Decentralized, Multichain Yield Optimizer that allows its users to earn compound interest on their crypto holdings. Beefy earns you the highest APYs with safety and efficiency in mind.',
-        gettingStartedGuide: 'https://docs.beefy.finance/',
-        explore: 'https://beefy.com/',
-      },
-      chains: this.options.chains.map(chain => ({
-        id: numberToHex(chain.networkChainId),
-        token: chain.native.symbol,
-        label: chain.name,
-        rpcUrl: sample(chain.rpc),
-        blockExplorerUrl: chain.explorerUrl,
-        icon: getNetworkSrc(chain.id),
-      })),
-      accountCenter: {
-        hideTransactionProtectionBtn: true,
-        desktop: {
-          enabled: false,
+    await switchChain(this.wagmi, {
+      chainId: chain.networkChainId,
+      addEthereumChainParameter: {
+        chainName: chain.name,
+        nativeCurrency: {
+          name: chain.native.symbol,
+          symbol: chain.native.symbol,
+          decimals: chain.native.decimals,
         },
-        mobile: {
-          enabled: false,
-        },
+        rpcUrls: chain.rpc,
+        blockExplorerUrls: [chain.explorerUrl],
       },
-    });
-
-    this.subscribeToOnboardEvents(onboard);
-
-    return onboard;
-  }
-
-  /**
-   * Subscribe to events so we can notify app on chain/account change + disconnect
-   * @param onboard
-   * @private
-   */
-  private subscribeToOnboardEvents(onboard: OnboardAPI) {
-    const wallets = onboard.state.select('wallets');
-    return wallets.subscribe(wallets => {
-      if (wallets.length === 0) {
-        if (this.ignoreDisconnectFromAutoConnect) {
-          console.debug('Ignoring disconnect event from auto reconnect wallet attempt');
-          return (this.ignoreDisconnectFromAutoConnect = false);
-        }
-        this.options.onWalletDisconnected();
-      } else {
-        const wallet = wallets[0];
-
-        if (wallet.accounts.length === 0 || wallet.chains.length === 0) {
-          this.options.onWalletDisconnected();
-        } else {
-          // Save last connected wallet
-          WalletConnectionApi.setLastConnectedWallet(wallet.label);
-
-          // Raise events
-          const account = wallet.accounts[0];
-          const networkChainId = maybeHexToNumber(wallet.chains[0].id);
-          const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
-
-          if (chain) {
-            this.options.onChainChanged(chain.id, account.address);
-          } else {
-            this.options.onUnsupportedChainSelected(networkChainId, account.address);
-          }
-        }
-      }
-    });
-  }
-
-  /**
-   * Lazy-init onboard instance
-   * @private
-   */
-  private getOnboard() {
-    if (this.onboard === undefined) {
-      this.onboard = this.createOnboard();
-    }
-
-    return this.onboard;
-  }
-
-  private async waitForInjectedWallet(
-    maxWait: number = 3000,
-    checkInterval: number = 200
-  ): Promise<boolean> {
-    if (this.eip6963Wallets.size > 0) {
-      console.debug('wallet: eip6963 already present');
-      return true;
-    }
-
-    const injectedNamespaces = uniq(
-      [...customInjectedWallets, ...standardInjectedWallets].map(wallet => wallet.injectedNamespace)
-    ).filter(isDefined);
-    const anyNamespaceExists = () => {
-      if (window) {
-        for (const namespace of injectedNamespaces) {
-          if (window[namespace]) {
-            return true;
-          }
-        }
-      }
-
-      return false;
-    };
-
-    if (anyNamespaceExists()) {
-      console.debug('wallet: exists at start');
-      return true;
-    }
-
-    return new Promise<boolean>(resolve => {
-      const startTime = Date.now();
-      const handle = setInterval(() => {
-        if (Date.now() - startTime > maxWait) {
-          console.debug('wallet: max wait');
-          clearInterval(handle);
-          return resolve(false);
-        }
-
-        if (anyNamespaceExists()) {
-          console.debug('wallet: exists now');
-          clearInterval(handle);
-          return resolve(true);
-        }
-      }, checkInterval);
     });
   }
 }

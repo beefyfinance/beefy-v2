@@ -1,9 +1,9 @@
 import { styled } from '@repo/styles/jsx';
 import { Button } from '../Button/Button.tsx';
 import { memo, useMemo } from 'react';
-import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import { ChainIcon } from '../ChainIcon/ChainIcon.tsx';
 import ForwardArrowIcon from '../../images/icons/forward-arrow.svg?react';
+import type { ChainEntity } from '../../features/data/apis/chains/entity-types.ts';
 
 export const ErrorPopOut = memo(function ErrorPopOut({
   setIsPopupOpen,

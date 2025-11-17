@@ -1,8 +1,8 @@
-import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import { memo, useMemo } from 'react';
 import { getSingleAssetSrc } from '../../helpers/singleAssetSrc.ts';
 import missingAssetUrl from '../../images/single-assets/missing-asset.svg';
 import { AssetImg } from './AssetImg.tsx';
+import type { ChainEntity } from '../../features/data/apis/chains/entity-types.ts';
 
 type SymbolAssetImgProps = {
   symbol: string;

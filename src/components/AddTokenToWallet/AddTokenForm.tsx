@@ -1,8 +1,7 @@
 import { sva } from '@repo/styles/css';
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { askForNetworkChange, askForWalletConnection } from '../../features/data/actions/wallet.ts';
-import { getWalletConnectionApi } from '../../features/data/apis/instances.ts';
+import { walletChangeNetwork, walletSelectOpen } from '../../features/data/actions/wallet.ts';
 import {
   selectAddToWalletIconUrl,
   selectAddToWalletToken,
@@ -15,6 +14,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
 import { Button } from '../Button/Button.tsx';
 import { CopyText } from './CopyText.tsx';
+import { getWalletConnectionApi } from '../../features/data/apis/wallet/instance.ts';
 
 const addTokenFormRecipe = sva({
   slots: ['details', 'label', 'buttons'],
@@ -47,7 +47,7 @@ export const AddTokenForm = memo(function AddTokenForm() {
 
   const handleAddToken = useCallback(() => {
     const perform = async () => {
-      const walletApi = await getWalletConnectionApi();
+      const walletApi = getWalletConnectionApi();
       const client = await walletApi.getConnectedViemClient();
 
       await client.watchAsset({
@@ -65,12 +65,12 @@ export const AddTokenForm = memo(function AddTokenForm() {
 
   const handleConnect = useCallback(() => {
     if (!isWalletConnected) {
-      dispatch(askForWalletConnection());
+      dispatch(walletSelectOpen());
     }
   }, [dispatch, isWalletConnected]);
 
   const handleNetworkChange = useCallback(() => {
-    dispatch(askForNetworkChange({ chainId }));
+    dispatch(walletChangeNetwork({ chainId }));
   }, [dispatch, chainId]);
 
   const handleClick =

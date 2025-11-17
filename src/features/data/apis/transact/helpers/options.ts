@@ -1,9 +1,9 @@
 import type { VaultEntity, VaultGov, VaultStandard } from '../../../entities/vault.ts';
-import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenEntity } from '../../../entities/token.ts';
 import { nanoid } from '@reduxjs/toolkit';
 import { sortTokens } from './tokens.ts';
 import type { InputTokenAmount, TokenAmount } from '../transact-types.ts';
+import type { ChainEntity } from '../../chains/entity-types.ts';
 
 export function createQuoteId(optionId: string): string {
   return `${optionId}-${nanoid()}`;

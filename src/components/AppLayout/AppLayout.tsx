@@ -10,6 +10,7 @@ import { AddTokenToWallet } from '../AddTokenToWallet/AddTokenToWallet.tsx';
 import { AppVersionCheck } from '../AppVersionCheck/AppVersionCheck.tsx';
 import { Tenderly } from '../Tenderly/Tenderly.tsx';
 import { NavigationStatus } from './NavigationStatus.tsx';
+import { WalletSelect } from '../Wallet/WalletSelect.tsx';
 
 export const AppLayout = memo(() => {
   const classes = layoutRecipe();
@@ -31,6 +32,7 @@ export const AppLayout = memo(() => {
       <ScrollRestorer />
       <DefaultMeta />
       <Stepper />
+      <WalletSelect />
       <AddTokenToWallet />
       <AppVersionCheck />
       {import.meta.env.DEV && <Tenderly />}

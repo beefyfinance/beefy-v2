@@ -1,4 +1,3 @@
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import {
   type BatchSwapArgs,
   type ExitPoolArgs,
@@ -34,6 +33,7 @@ import { getAddress, type Address, encodeFunctionData } from 'viem';
 import { PoolExitKind, PoolJoinKind } from '../common/types.ts';
 import { JoinExitEncoder } from '../common/JoinExitEncoder.ts';
 import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 const queryFunds: FundManagement = {
   sender: ZERO_ADDRESS as Address,

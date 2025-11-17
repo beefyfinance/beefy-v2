@@ -12,7 +12,6 @@ import {
   selectGovVaultUserStakedBalanceInDepositToken,
 } from '../../selectors/balance.ts';
 import { BIG_ZERO, bigNumberToBigInt, toWei } from '../../../../helpers/big-number.ts';
-import { getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import { BoostAbi } from '../../../../config/abi/BoostAbi.ts';
@@ -21,6 +20,7 @@ import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import type { Address } from 'viem';
 import { selectTokenByAddress } from '../../selectors/tokens.ts';
 import BigNumber from 'bignumber.js';
+import { getWalletConnectionApi } from '../../apis/wallet/instance.ts';
 
 export const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -31,7 +31,7 @@ export const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
       return;
     }
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const inputToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
@@ -74,7 +74,7 @@ export const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
       return;
     }
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
@@ -126,7 +126,7 @@ export const claimGovVault = (vault: VaultGov) => {
 
     const { amount, token } = pendingRewards[0];
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
     const walletClient = await walletApi.getConnectedViemClient();
 
@@ -171,7 +171,7 @@ export const exitGovVault = (vault: VaultGov) => {
     const balanceAmount = selectGovVaultUserStakedBalanceInDepositToken(state, vault.id);
     const token = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const contractAddr = vault.contractAddress;

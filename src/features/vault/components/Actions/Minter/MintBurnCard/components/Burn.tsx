@@ -10,10 +10,7 @@ import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../../data/store/hooks.ts';
 import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
 import { stepperStart, stepperAddStep } from '../../../../../../data/actions/wallet/stepper.ts';
-import {
-  askForNetworkChange,
-  askForWalletConnection,
-} from '../../../../../../data/actions/wallet.ts';
+import { walletChangeNetwork, walletSelectOpen } from '../../../../../../data/actions/wallet.ts';
 import { approve } from '../../../../../../data/actions/wallet/approval.ts';
 import { burnWithdraw } from '../../../../../../data/actions/wallet/minters.ts';
 import { isTokenErc20 } from '../../../../../../data/entities/token.ts';
@@ -91,20 +88,20 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   }, [minter.canBurn, formData.amount, reserves, totalSupply, depositToken, mintedToken]);
 
   const handleNetworkChange = useCallback(() => {
-    dispatch(askForNetworkChange({ chainId: vault.chainId }));
+    dispatch(walletChangeNetwork({ chainId: vault.chainId }));
   }, [dispatch, vault]);
 
   const handleConnectWallet = useCallback(() => {
-    dispatch(askForWalletConnection());
+    dispatch(walletSelectOpen());
   }, [dispatch]);
 
   const handleWithdraw = () => {
     if (!isWalletConnected) {
-      dispatch(askForWalletConnection());
+      dispatch(walletSelectOpen());
       return;
     }
     if (!isWalletOnVaultChain) {
-      dispatch(askForNetworkChange({ chainId: vault.chainId }));
+      dispatch(walletChangeNetwork({ chainId: vault.chainId }));
       return;
     }
 

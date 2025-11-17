@@ -1,8 +1,8 @@
-import type { ChainId } from '../../entities/chain.ts';
 import type {
   MerklTokenReward,
   MerklVaultReward,
 } from '../../reducers/wallet/user-rewards-types.ts';
+import type { ChainId } from '../../apis/chains/entity-types.ts';
 
 export type FetchUserMerklRewardsActionParams = {
   walletAddress: string;

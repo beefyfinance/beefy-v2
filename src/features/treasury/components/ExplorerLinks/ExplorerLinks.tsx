@@ -6,10 +6,10 @@ import { DropdownTrigger } from '../../../../components/Dropdown/DropdownTrigger
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import IconExternalLink from '../../../../images/icons/externalLinkRegular.svg?react';
-import type { ChainEntity } from '../../../data/entities/chain.ts';
 import { selectTreasuryWalletAddressesByChainId } from '../../../data/selectors/treasury.ts';
 import { styles } from './styles.ts';
 import { ExternalLink } from '../../../../components/Links/ExternalLink.tsx';
+import type { ChainEntity } from '../../../data/apis/chains/entity-types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

@@ -1,9 +1,9 @@
 import { memo, useCallback } from 'react';
 import { addTokenToWalletAction } from '../../../../../features/data/actions/add-to-wallet.ts';
-import type { ChainEntity } from '../../../../../features/data/entities/chain.ts';
 import { useAppDispatch } from '../../../../../features/data/store/hooks.ts';
 import AddToWalletIcon from '../../../../../images/icons/union.svg?react';
 import { ActionButton } from './Action.tsx';
+import type { ChainEntity } from '../../../../../features/data/apis/chains/entity-types.ts';
 
 type AddToWalletButtonProps = {
   title: string;

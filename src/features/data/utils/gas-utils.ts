@@ -1,5 +1,5 @@
-import type { ChainEntity } from '../entities/chain.ts';
 import { getGasPricer } from '../apis/instances.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export async function getGasPriceOptions(chain: ChainEntity) {
   const api = await getGasPricer(chain);

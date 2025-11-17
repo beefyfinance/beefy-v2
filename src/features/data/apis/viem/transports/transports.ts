@@ -2,26 +2,29 @@ import { http } from 'viem';
 import { customFallback, type CustomFallbackTransport } from './fallbackTransport.ts';
 import { createCachedFactory } from '../../../utils/factory-utils.ts';
 
-const domainToBatchSize: Record<string, number> = {
-  '1rpc.io': 1,
+type BatchOptions = boolean | { batchSize: number; wait: number };
+
+const DEFAULT_BATCH_OPTIONS: BatchOptions = { batchSize: 3, wait: 0 };
+const domainToBatchOptions: Record<string, BatchOptions> = {
+  '1rpc.io': false,
 };
 
-const getBatchSizeForRpc = createCachedFactory(
-  (rpcUrl: string): number => {
+export const getBatchOptionsForRpc = createCachedFactory(
+  (rpcUrl: string): BatchOptions => {
     const url = new URL(rpcUrl);
     const domain = url.hostname;
-    let maybeBatchSize: number | undefined = domainToBatchSize[domain];
-    if (maybeBatchSize) {
-      return maybeBatchSize;
+    let maybeBatchOptions: BatchOptions | undefined = domainToBatchOptions[domain];
+    if (maybeBatchOptions) {
+      return maybeBatchOptions;
     }
 
     const rootDomain = domain.split('.').slice(-2).join('.');
-    maybeBatchSize = domainToBatchSize[rootDomain];
-    if (maybeBatchSize) {
-      return maybeBatchSize;
+    maybeBatchOptions = domainToBatchOptions[rootDomain];
+    if (maybeBatchOptions) {
+      return maybeBatchOptions;
     }
 
-    return 3;
+    return DEFAULT_BATCH_OPTIONS;
   },
   url => url
 );
@@ -35,9 +38,7 @@ export function makeCustomFallbackTransport(
       timeout: 10000,
       retryCount: rpcUrls.length > 1 ? 0 : retries,
       retryDelay: 350,
-      batch: {
-        batchSize: getBatchSizeForRpc(url),
-      },
+      batch: getBatchOptionsForRpc(url),
     })
   );
 

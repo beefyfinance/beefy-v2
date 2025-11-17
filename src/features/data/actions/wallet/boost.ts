@@ -3,7 +3,6 @@ import BigNumber from 'bignumber.js';
 import type { TFunction } from 'react-i18next';
 import { BoostAbi } from '../../../../config/abi/BoostAbi.ts';
 import { BIG_ZERO, bigNumberToBigInt } from '../../../../helpers/big-number.ts';
-import { getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
@@ -25,6 +24,7 @@ import {
   txStart,
   txWallet,
 } from './common.ts';
+import { getWalletConnectionApi } from '../../apis/wallet/instance.ts';
 
 export const claimBoost = (boostId: BoostPromoEntity['id']) => {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -38,7 +38,7 @@ export const claimBoost = (boostId: BoostPromoEntity['id']) => {
     const vault = selectVaultByIdWithReceipt(state, boost.vaultId);
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const contractAddr = boost.contractAddress;
@@ -90,7 +90,7 @@ export const exitBoost = (boostId: BoostPromoEntity['id']) => {
     const vault = selectVaultByIdWithReceipt(state, boost.vaultId);
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const contractAddr = boost.contractAddress;
@@ -186,7 +186,7 @@ export const stakeBoost = (boostId: BoostPromoEntity['id'], amount: BigNumber) =
     const vault = selectVaultByIdWithReceipt(state, boost.vaultId);
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(boost.chainId);
     const walletClient = await walletApi.getConnectedViemClient();
 
@@ -263,7 +263,7 @@ export const unstakeBoost = (boostId: BoostPromoEntity['id'], amount: BigNumber)
     const vault = selectVaultByIdWithReceipt(state, boost.vaultId);
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(boost.chainId);
     const walletClient = await walletApi.getConnectedViemClient();
 

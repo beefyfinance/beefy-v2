@@ -10,7 +10,6 @@ import {
 } from '../../../../../../helpers/big-number.ts';
 import { tokenInList } from '../../../../../../helpers/tokens.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import type { TokenEntity, TokenErc20, TokenNative } from '../../../../entities/token.ts';
 import { isTokenEqual, isTokenErc20 } from '../../../../entities/token.ts';
 import { isStandardVault, type VaultStandard } from '../../../../entities/vault.ts';
@@ -84,6 +83,7 @@ import type {
 import { QuoteChangedError } from '../error.ts';
 import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy.ts';
 import type { GammaStrategyConfig } from '../strategy-configs.ts';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;

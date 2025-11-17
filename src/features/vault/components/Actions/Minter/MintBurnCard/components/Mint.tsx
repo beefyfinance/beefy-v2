@@ -7,10 +7,7 @@ import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../../data/store/hooks.ts';
 import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
 import { stepperStart, stepperAddStep } from '../../../../../../data/actions/wallet/stepper.ts';
-import {
-  askForNetworkChange,
-  askForWalletConnection,
-} from '../../../../../../data/actions/wallet.ts';
+import { walletChangeNetwork, walletSelectOpen } from '../../../../../../data/actions/wallet.ts';
 import { approve } from '../../../../../../data/actions/wallet/approval.ts';
 import { mintDeposit } from '../../../../../../data/actions/wallet/minters.ts';
 import { useInputForm } from '../../../../../../data/hooks/input.ts';
@@ -88,20 +85,20 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   );
 
   const handleNetworkChange = useCallback(() => {
-    dispatch(askForNetworkChange({ chainId: vault.chainId }));
+    dispatch(walletChangeNetwork({ chainId: vault.chainId }));
   }, [dispatch, vault]);
 
   const handleConnectWallet = useCallback(() => {
-    dispatch(askForWalletConnection());
+    dispatch(walletSelectOpen());
   }, [dispatch]);
 
   const handleDeposit = () => {
     if (!isWalletConnected) {
-      dispatch(askForWalletConnection());
+      dispatch(walletSelectOpen());
       return;
     }
     if (!isWalletOnVaultChain) {
-      dispatch(askForNetworkChange({ chainId: vault.chainId }));
+      dispatch(walletChangeNetwork({ chainId: vault.chainId }));
       return;
     }
 

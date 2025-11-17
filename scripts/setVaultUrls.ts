@@ -8,7 +8,7 @@ import { getTokenById } from './common/tokens.ts';
 import { type TokenEntity } from '../src/features/data/entities/token.ts';
 import { type CurveApiPoolWithMetadata, getCurvePools } from './zaps/curve.ts';
 import { mapValuesAsync } from './common/utils.ts';
-import { type ChainEntity } from '../src/features/data/entities/chain.ts';
+import { type ChainEntity } from '../src/features/data/apis/chains/entity-types.ts';
 import { entries } from '../src/helpers/object.ts';
 
 const WARN_MISSING_ASSET_ON_ACTIVE_VAULTS_ONLY: boolean = true;

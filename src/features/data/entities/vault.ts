@@ -1,8 +1,8 @@
-import type { ChainEntity } from './chain.ts';
 import type { PlatformEntity } from './platform.ts';
 import type { TokenEntity } from './token.ts';
 import type { ZapStrategyConfig } from '../apis/transact/strategies/strategy-configs.ts';
 import type { CuratorEntity } from './curator.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 // maybe a RiskAnalysis type would be better
 

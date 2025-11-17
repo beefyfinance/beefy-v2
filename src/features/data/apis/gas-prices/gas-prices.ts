@@ -1,4 +1,3 @@
-import type { ChainEntity } from '../../entities/chain.ts';
 import type { EIP1559GasConfig, GasConfig, StandardGasConfig } from '../config-types.ts';
 import BigNumber from 'bignumber.js';
 import {
@@ -18,6 +17,7 @@ import {
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
 import type { Abi, Address } from 'viem';
 import type { GetContractReturnType } from 'viem';
+import type { ChainEntity } from '../chains/entity-types.ts';
 
 export type StandardGasPrice = {
   gasPrice: bigint;

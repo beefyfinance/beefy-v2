@@ -1,5 +1,5 @@
-import type { ChainId } from '../../entities/chain.ts';
 import type { Address } from 'viem';
+import type { ChainId } from '../chains/entity-types.ts';
 
 export type AllChainsFromTldToChain<T extends Record<string, ChainId[]>> = {
   [K in keyof T]: T[K] extends (infer U)[] ? U : never;

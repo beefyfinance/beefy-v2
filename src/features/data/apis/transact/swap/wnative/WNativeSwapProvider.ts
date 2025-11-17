@@ -1,6 +1,5 @@
 import { type Abi, encodeFunctionData } from 'viem';
 import { toWeiString } from '../../../../../../helpers/big-number.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import type { TokenEntity } from '../../../../entities/token.ts';
 import { isTokenNative } from '../../../../entities/token.ts';
 import type { VaultEntity } from '../../../../entities/vault.ts';
@@ -20,6 +19,7 @@ import type {
   SwapRequest,
   SwapResponse,
 } from '../ISwapProvider.ts';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 export class WNativeSwapProvider implements ISwapProvider {
   getId(): string {

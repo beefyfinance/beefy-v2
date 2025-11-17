@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../../../../data/store/hooks.ts';
 import { stepperStartWithSteps } from '../../../../../data/actions/wallet/stepper.ts';
 import { claimBoost } from '../../../../../data/actions/wallet/boost.ts';
-import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
 import type { Step } from '../../../../../data/reducers/wallet/stepper-types.ts';
 import { ActionButton } from './ActionButton.tsx';
+import type { ChainEntity } from '../../../../../data/apis/chains/entity-types.ts';
 
 type ClaimProps = {
   boostId: BoostPromoEntity['id'];

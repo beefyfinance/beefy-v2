@@ -1,12 +1,19 @@
-import { transformWithEsbuild, type Plugin } from 'vite';
+import { type Plugin, transformWithEsbuild } from 'vite';
 import { exec } from 'node:child_process';
 import type { OutputBundle } from 'rollup';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import type {
+  HeadersFilePlugin,
+  HeadersFilePluginApi,
+  Header,
+} from './headers-file-plugin.ts';
 
 // eslint-disable-next-line no-restricted-syntax -- required for Vite plugin
 export default function (): Plugin {
+  let headersApi: HeadersFilePluginApi | undefined;
+
   type BuildVersion = {
     content: string;
     timestamp: number;
@@ -36,11 +43,27 @@ export default function (): Plugin {
   }
 
   function getCloudflareHeaders(version: BuildVersion) {
-    return `/*
-  X-Git-Commit: ${version.git || 'undefined'}
-  X-Build-Timestamp: ${version.timestamp}
-  X-Content-Hash: ${version.content}
-`;
+    const headers: Header[] = [
+      {
+        key: 'X-Build-Timestamp',
+        value: version.timestamp.toString(),
+      },
+      {
+        key: 'X-Content-Hash',
+        value: version.content,
+      },
+    ];
+    if (version.git) {
+      headers.push({
+        key: 'X-Git-Commit',
+        value: version.git,
+      });
+    }
+
+    return {
+      path: '/*',
+      headers,
+    };
   }
 
   async function getCheckerScript(version: BuildVersion) {
@@ -65,6 +88,15 @@ export default function (): Plugin {
     name: 'version-plugin',
     enforce: 'post',
     apply: 'build',
+    buildStart({ plugins }) {
+      const headersPlugin = plugins.find(
+        (p): p is HeadersFilePlugin => p.name === 'headers-file-plugin'
+      );
+      headersApi = headersPlugin?.api || undefined;
+      if (!headersApi) {
+        throw new Error('headers-file-plugin not found, required by version-plugin');
+      }
+    },
     async generateBundle(_options, bundle) {
       const content = getContentHash(bundle);
       const timestamp = Math.floor(Date.now() / 1000);
@@ -77,11 +109,12 @@ export default function (): Plugin {
         source: JSON.stringify(version),
       });
 
-      this.emitFile({
-        fileName: '_headers',
-        type: 'asset',
-        source: getCloudflareHeaders(version),
-      });
+      if (headersApi) {
+        const pathHeaders = getCloudflareHeaders(version);
+        headersApi.addHeaders(pathHeaders.path, pathHeaders.headers);
+      } else {
+        throw new Error('headers-file-plugin not found, required by version-plugin');
+      }
 
       const index = bundle['index.html'];
       if (index && index.type === 'asset' && typeof index.source === 'string') {

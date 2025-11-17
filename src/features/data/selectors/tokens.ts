@@ -10,7 +10,6 @@ import {
   getDataApiBucketsLongerThan,
 } from '../apis/beefy/beefy-data-api-helpers.ts';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import { isTokenErc20, isTokenNative } from '../entities/token.ts';
 import { isStandardVault, type VaultEntity } from '../entities/vault.ts';
@@ -28,6 +27,7 @@ import {
   selectVaultPricePerFullShare,
 } from './vaults.ts';
 import { selectIsAddressBookLoaded } from './data-loader/tokens.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,

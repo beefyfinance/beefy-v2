@@ -2,7 +2,7 @@ import { uniq } from 'lodash-es';
 import { type Address, getAddress, type Hash, isAddress, numberToHex } from 'viem';
 import { namehash, normalize } from 'viem/ens';
 import { ZERO_ADDRESS } from '../../../../helpers/addresses.ts';
-import type { ChainId } from '../../entities/chain.ts';
+import type { ChainId } from '../chains/entity-types.ts';
 
 export function hashDomain(domain: string): Hash {
   return namehash(domain);

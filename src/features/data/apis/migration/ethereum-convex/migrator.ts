@@ -7,10 +7,10 @@ import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults.ts';
 import type { BeefyState } from '../../../store/types.ts';
-import { getWalletConnectionApi } from '../../instances.ts';
 import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
 import { buildExecute, buildFetchBalance } from '../utils.ts';
+import { getWalletConnectionApi } from '../../wallet/instance.ts';
 
 const id = 'ethereum-convex';
 
@@ -47,7 +47,7 @@ async function unstakeCall(
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const amountInWei = toWei(amount, depositToken.decimals);
   const stakingAddress = await getStakingAddress(vault, state);
-  const walletApi = await getWalletConnectionApi();
+  const walletApi = getWalletConnectionApi();
   const walletClient = await walletApi.getConnectedViemClient();
   const contract = fetchWalletContract(stakingAddress, ConvexAbi, walletClient);
 

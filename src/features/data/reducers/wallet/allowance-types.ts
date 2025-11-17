@@ -1,6 +1,6 @@
 import type BigNumber from 'bignumber.js';
-import type { ChainEntity } from '../../entities/chain.ts';
 import type { TokenEntity } from '../../entities/token.ts';
+import type { ChainEntity } from '../../apis/chains/entity-types.ts';
 
 /**
  * State containing user allowances state

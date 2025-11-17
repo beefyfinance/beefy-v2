@@ -5,7 +5,6 @@ import { chunk, pick, sortBy } from 'lodash-es';
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi.ts';
 import { BIG_ZERO, fromWei } from '../../../../helpers/big-number.ts';
 import { isFiniteNumber } from '../../../../helpers/number.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type {
   VaultCowcentrated,
@@ -42,6 +41,7 @@ import type {
   StandardVaultContractData,
   StandardVaultRawContractData,
 } from './contract-data-types.ts';
+import type { ChainEntity } from '../chains/entity-types.ts';
 
 export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi {
   constructor(protected chain: T) {}

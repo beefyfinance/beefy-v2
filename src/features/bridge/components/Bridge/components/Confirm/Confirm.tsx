@@ -17,7 +17,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.
 import MonetizationOn from '../../../../../../images/icons/mui/MonetizationOn.svg?react';
 import Timer from '../../../../../../images/icons/mui/Timer.svg?react';
 import { performBridge } from '../../../../../data/actions/bridge.ts';
-import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet.ts';
+import { walletChangeNetwork, walletSelectOpen } from '../../../../../data/actions/wallet.ts';
 import {
   selectBridgeConfirmQuote,
   selectBridgeConfirmStatus,
@@ -73,11 +73,11 @@ const ConfirmReady = memo(function ConfirmReady() {
   }, [dispatch, t]);
 
   const handleConnectWallet = useCallback(() => {
-    dispatch(askForWalletConnection());
+    dispatch(walletSelectOpen());
   }, [dispatch]);
 
   const handleNetworkChange = useCallback(() => {
-    dispatch(askForNetworkChange({ chainId: fromChain.id }));
+    dispatch(walletChangeNetwork({ chainId: fromChain.id }));
   }, [dispatch, fromChain]);
 
   return (

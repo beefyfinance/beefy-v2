@@ -1,6 +1,5 @@
 import { ZERO_ADDRESS } from '../../../../../../helpers/addresses.ts';
 import { fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import { isTokenNative, type TokenEntity } from '../../../../entities/token.ts';
 import type { VaultEntity } from '../../../../entities/vault.ts';
 import { selectAllChainIds, selectChainById } from '../../../../selectors/chains.ts';
@@ -18,6 +17,7 @@ import type {
   SwapRequest,
   SwapResponse,
 } from '../ISwapProvider.ts';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 export class OdosSwapProvider implements ISwapProvider {
   getId(): string {

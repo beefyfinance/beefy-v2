@@ -3,7 +3,6 @@ import { SCORED_RISKS } from '../../../config/risk.ts';
 import { safetyScoreNum } from '../../../helpers/safetyScore.ts';
 import type { VaultConfig } from '../apis/config-types.ts';
 import { getBeefyApi, getConfigApi } from '../apis/instances.ts';
-import type { ChainEntity, ChainId } from '../entities/chain.ts';
 import {
   type VaultBase,
   type VaultCowcentrated,
@@ -20,6 +19,7 @@ import {
 import { isDefined } from '../utils/array-utils.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { getVaultNames } from '../utils/vault-utils.ts';
+import type { ChainEntity, ChainId } from '../apis/chains/entity-types.ts';
 
 export interface FulfilledAllVaultsPayload {
   byChainId: {

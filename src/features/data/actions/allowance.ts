@@ -1,6 +1,5 @@
 import type { FetchAllAllowanceResult } from '../apis/allowance/allowance-types.ts';
 import { getAllowanceApi } from '../apis/instances.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenErc20 } from '../entities/token.ts';
 import type { VaultGov, VaultStandard } from '../entities/vault.ts';
 import { isGovVault, isStandardVault } from '../entities/vault.ts';
@@ -9,6 +8,7 @@ import { selectChainById } from '../selectors/chains.ts';
 import { selectVaultById, selectVaultIdsByChainIdIncludingHidden } from '../selectors/vaults.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 interface ActionParams {
   chainId: ChainEntity['id'];

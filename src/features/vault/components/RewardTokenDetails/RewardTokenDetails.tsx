@@ -9,11 +9,11 @@ import { explorerTokenUrl } from '../../../../helpers/url.ts';
 import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
 import PlusIcon from '../../../../images/icons/plus.svg?react';
 import { addTokenToWalletAction } from '../../../data/actions/add-to-wallet.ts';
-import type { ChainEntity } from '../../../data/entities/chain.ts';
 import type { TokenEntity } from '../../../data/entities/token.ts';
 import { selectChainById } from '../../../data/selectors/chains.ts';
 import { selectTokenByAddress } from '../../../data/selectors/tokens.ts';
 import { styles } from './styles.ts';
+import type { ChainEntity } from '../../../data/apis/chains/entity-types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

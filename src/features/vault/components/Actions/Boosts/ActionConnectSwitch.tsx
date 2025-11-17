@@ -3,14 +3,14 @@ import { memo, type ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../components/Button/Button.tsx';
 import { useAppDispatch, useAppSelector } from '../../../../data/store/hooks.ts';
-import { askForNetworkChange, askForWalletConnection } from '../../../../data/actions/wallet.ts';
-import type { ChainEntity } from '../../../../data/entities/chain.ts';
+import { walletChangeNetwork, walletSelectOpen } from '../../../../data/actions/wallet.ts';
 import { selectChainById } from '../../../../data/selectors/chains.ts';
 import { selectIsStepperStepping } from '../../../../data/selectors/stepper.ts';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../../../data/selectors/wallet.ts';
+import type { ChainEntity } from '../../../../data/apis/chains/entity-types.ts';
 
 type ActionButtonProps = {
   css?: CssStyles;
@@ -27,7 +27,7 @@ export const ActionConnect = memo(function ActionConnect({
   const dispatch = useAppDispatch();
   const isStepping = useAppSelector(selectIsStepperStepping);
   const handleClick = useCallback(() => {
-    dispatch(askForWalletConnection());
+    dispatch(walletSelectOpen());
   }, [dispatch]);
 
   return (
@@ -58,7 +58,7 @@ export const ActionSwitch = memo(function ActionSwitch({
   const isStepping = useAppSelector(selectIsStepperStepping);
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const handleClick = useCallback(() => {
-    dispatch(askForNetworkChange({ chainId }));
+    dispatch(walletChangeNetwork({ chainId }));
   }, [dispatch, chainId]);
 
   return (

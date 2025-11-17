@@ -1,7 +1,6 @@
 import { orderBy } from 'lodash-es';
 import { memo, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import type { ChainEntity } from '../../../features/data/entities/chain.ts';
 import {
   isCowcentratedLikeVault,
   type VaultEntity,
@@ -28,6 +27,7 @@ import { useAppSelector } from '../../../features/data/store/hooks.ts';
 import { ListJoin } from '../../ListJoin.tsx';
 import { DismissibleBanner } from '../Banner/DismissibleBanner.tsx';
 import { InternalLink } from '../Links/InternalLink.tsx';
+import type { ChainEntity } from '../../../features/data/apis/chains/entity-types.ts';
 
 type RetiredSuggestClmBannerProps = {
   vaultId: VaultEntity['id'];

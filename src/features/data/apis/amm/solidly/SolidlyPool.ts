@@ -1,6 +1,5 @@
 import BigNumber from 'bignumber.js';
 import { SolidlyPairAbi } from '../../../../../config/abi/SolidlyPairAbi.ts';
-import type { ChainEntity } from '../../../entities/chain.ts';
 import {
   BIG_ONE,
   BIG_ZERO,
@@ -25,6 +24,7 @@ import type { AmmEntitySolidly } from '../../../entities/zap.ts';
 import { onlyOneTokenAmount } from '../../transact/helpers/options.ts';
 import { encodeFunctionData, type Abi, type Address } from 'viem';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
+import type { ChainEntity } from '../../chains/entity-types.ts';
 
 export enum MetadataKeys {
   decimals0,

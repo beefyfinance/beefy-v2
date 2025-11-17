@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { UniswapV2FactoryAbi } from '../../../../../config/abi/UniswapV2FactoryAbi.ts';
 import { UniswapV2PairAbi } from '../../../../../config/abi/UniswapV2PairAbi.ts';
-import type { ChainEntity } from '../../../entities/chain.ts';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
 import { BIG_ZERO, bigNumberToBigInt, toWei } from '../../../../../helpers/big-number.ts';
 import type {
@@ -22,6 +21,7 @@ import type { AmmEntityUniswapV2 } from '../../../entities/zap.ts';
 import { onlyOneTokenAmount } from '../../transact/helpers/options.ts';
 import { encodeFunctionData, type Abi, type Address } from 'viem';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
+import type { ChainEntity } from '../../chains/entity-types.ts';
 
 export type PairDataResponse = {
   totalSupply: string;

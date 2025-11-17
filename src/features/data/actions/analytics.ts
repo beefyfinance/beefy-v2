@@ -45,7 +45,6 @@ import {
   type UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart,
   type UnprocessedTimelineEntryStandard,
 } from '../entities/analytics.ts';
-import type { ChainEntity, ChainId } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import {
   getCowcentratedPool,
@@ -91,6 +90,7 @@ import {
   selectBoostByContractAddressOrUndefined,
   selectBoostByIdOrUndefined,
 } from '../selectors/boosts.ts';
+import type { ChainEntity, ChainId } from '../apis/chains/entity-types.ts';
 
 export interface FetchWalletTimelineFulfilled {
   timelines: Record<VaultEntity['id'], AnyTimelineEntity>;

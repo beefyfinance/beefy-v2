@@ -5,7 +5,7 @@ import {
   getVaultsForChain,
 } from './config.ts';
 import { chainsByAppId } from './chains.ts';
-import type { ChainEntity } from '../../src/features/data/entities/chain.ts';
+import type { ChainEntity } from '../../src/features/data/apis/chains/entity-types.ts';
 import {
   isTokenErc20,
   isTokenNative,

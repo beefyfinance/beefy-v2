@@ -1,8 +1,8 @@
 import { memo, useCallback } from 'react';
-import type { ChainEntity } from '../../../../../features/data/entities/chain.ts';
 import { RpcEdit } from './RpcEdit.tsx';
 import { RpcMenu } from './RpcMenu.tsx';
 import { styled } from '@repo/styles/jsx';
+import type { ChainEntity } from '../../../../../features/data/apis/chains/entity-types.ts';
 
 export const RpcSettingsPanel = memo(function RpcSettingsPanel({
   rpcErrors,

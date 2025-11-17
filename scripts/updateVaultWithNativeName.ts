@@ -1,6 +1,7 @@
 import { config } from '../src/config/config.ts';
 import { loadJson, saveJson } from './common/files.ts';
-import type { ChainConfig, VaultConfig } from '../src/features/data/apis/config-types.ts';
+import type { VaultConfig } from '../src/features/data/apis/config-types.ts';
+import type { ChainConfig } from '../src/features/data/apis/chains/config-types.ts';
 import pc from 'picocolors';
 
 const vaultsDir = './src/config/vault';

@@ -8,10 +8,10 @@ import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults.ts';
 import type { BeefyState } from '../../../store/types.ts';
-import { getWalletConnectionApi } from '../../instances.ts';
 import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
 import { buildExecute, buildFetchBalance } from '../utils.ts';
+import { getWalletConnectionApi } from '../../wallet/instance.ts';
 
 const id = 'ethereum-curve';
 
@@ -56,7 +56,7 @@ async function unstakeCall(
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const amountInWei = toWei(amount, depositToken.decimals);
   const stakingAddress = await getStakingAddress(vault, state);
-  const walletClient = await (await getWalletConnectionApi()).getConnectedViemClient();
+  const walletClient = await getWalletConnectionApi().getConnectedViemClient();
   const contract = fetchWalletContract(stakingAddress, abi, walletClient);
   return (args: MigratorUnstakeProps) =>
     contract.write.withdraw([bigNumberToBigInt(amountInWei)], args);

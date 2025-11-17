@@ -1,11 +1,11 @@
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback, useMemo } from 'react';
-import type { ChainEntity } from '../../../../../features/data/entities/chain.ts';
 import { selectAllChainIds } from '../../../../../features/data/selectors/chains.ts';
 import { useAppSelector } from '../../../../../features/data/store/hooks.ts';
 import { ChainRpcItem } from './RpcListItem.tsx';
 import { Scrollable } from '../../../../Scrollable/Scrollable.tsx';
 import { useTranslation } from 'react-i18next';
+import type { ChainEntity } from '../../../../../features/data/apis/chains/entity-types.ts';
 
 export interface RpcMenuProps {
   onSelect: (chainId: ChainEntity['id']) => void;

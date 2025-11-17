@@ -1,4 +1,3 @@
-import type { ChainEntity } from '../../entities/chain.ts';
 import { bindTransactionEvents, captureWalletErrors, txStart, txWallet } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import {
@@ -8,7 +7,6 @@ import {
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectChainNativeToken, selectTokenByAddressOrUndefined } from '../../selectors/tokens.ts';
 import { BIG_ZERO, toWeiString } from '../../../../helpers/big-number.ts';
-import { getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import { AngleMerklDistributorAbi } from '../../../../config/abi/AngleMerklDistributor.ts';
@@ -19,6 +17,8 @@ import type { VaultEntity } from '../../entities/vault.ts';
 import { fetchUserStellaSwapRewardsAction } from '../user-rewards/stellaswap-user-rewards.ts';
 import { first, groupBy } from 'lodash-es';
 import { stellaswapRewarderAbi } from '../../../../config/abi/StellaSwapRewarder.ts';
+import { getWalletConnectionApi } from '../../apis/wallet/instance.ts';
+import type { ChainEntity } from '../../apis/chains/entity-types.ts';
 
 export const claimMerkl = (chainId: ChainEntity['id']) => {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -53,7 +53,7 @@ export const claimMerkl = (chainId: ChainEntity['id']) => {
     const amounts = unclaimedRewards.map(reward => reward.amount);
     const proofs = unclaimedRewards.map(reward => reward.proof);
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const contract = fetchWalletContract(
@@ -140,7 +140,7 @@ export const claimStellaSwap = (chainId: ChainEntity['id'], vaultId: VaultEntity
       claims: rewards.map(({ claim }) => claim),
     }));
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const gasPrices = await getGasPriceOptions(chain);

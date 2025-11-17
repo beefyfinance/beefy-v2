@@ -4,7 +4,6 @@ import type {
   GovVaultMultiContractData,
 } from '../apis/contract-data/contract-data-types.ts';
 import type { PinnedConfig } from '../apis/promos/types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type {
   BoostPromoEntity,
   PromoCampaignEntity,
@@ -13,6 +12,7 @@ import type {
 } from '../entities/promo.ts';
 import type { VaultEntity, VaultGov } from '../entities/vault.ts';
 import type { NormalizedEntity } from '../utils/normalized-entity.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export type OffchainRewardData = Pick<
   BeefyOffChainRewardsCampaign,

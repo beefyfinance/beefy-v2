@@ -10,7 +10,6 @@ import Code from '../../../../images/icons/mui/Code.svg?react';
 import Link from '../../../../images/icons/mui/Link.svg?react';
 import DocsIcon from '../../../../images/icons/navigation/docs.svg?react';
 import { fetchAddressBookAction } from '../../../data/actions/tokens.ts';
-import type { ChainEntity } from '../../../data/entities/chain.ts';
 import type { TokenEntity } from '../../../data/entities/token.ts';
 import { isTokenErc20, isTokenNative } from '../../../data/entities/token.ts';
 import { selectBridgeByIdIfKnown } from '../../../data/selectors/bridges.ts';
@@ -31,6 +30,7 @@ import {
   selectIsAddressBookLoaded,
   selectShouldInitAddressBook,
 } from '../../../data/selectors/data-loader/tokens.ts';
+import type { ChainEntity } from '../../../data/apis/chains/entity-types.ts';
 
 function TokenCardDisplay({ token }: { token: TokenEntity }) {
   const { t } = useTranslation();

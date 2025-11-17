@@ -9,7 +9,6 @@ import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc.ts';
 import { getPartnerSrc } from '../../../../../../helpers/partnerSrc.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
-import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { selectChainById } from '../../../../../data/selectors/chains.ts';
 import {
   selectTreasuryBalanceByChainId,
@@ -18,6 +17,7 @@ import {
 import { ExplorerLinks } from '../../../ExplorerLinks/ExplorerLinks.tsx';
 import { Assets, MMAssets } from '../Assets/Assets.tsx';
 import { styles } from './styles.ts';
+import type { ChainEntity } from '../../../../../data/apis/chains/entity-types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

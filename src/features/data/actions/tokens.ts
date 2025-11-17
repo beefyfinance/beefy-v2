@@ -9,7 +9,6 @@ import {
   getBeefyApi,
   getContractDataApi,
 } from '../apis/instances.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
 import type { CurrentCowcentratedRangeData, TokenEntity } from '../entities/token.ts';
 import { isTokenErc20 } from '../entities/token.ts';
@@ -24,6 +23,7 @@ import { selectBoostById } from '../selectors/boosts.ts';
 import { selectAllChains, selectChainById } from '../selectors/chains.ts';
 import { selectGovVaultById, selectVaultById } from '../selectors/vaults.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 interface ActionParams {
   chainId: ChainEntity['id'];

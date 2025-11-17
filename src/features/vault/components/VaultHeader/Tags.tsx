@@ -1,11 +1,11 @@
 import { styled } from '@repo/styles/jsx';
-import type { ChainEntity } from '../../../data/entities/chain.ts';
 import { memo } from 'react';
 import { selectChainById } from '../../../data/selectors/chains.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import { ChainIcon } from '../../../../components/ChainIcon/ChainIcon.tsx';
 import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { VaultPlatform } from '../../../../components/VaultPlatform/VaultPlatform.tsx';
+import type { ChainEntity } from '../../../data/apis/chains/entity-types.ts';
 
 export const ChainTag = memo(function ChainTag({ chainId }: { chainId: ChainEntity['id'] }) {
   const chain = useAppSelector(state => selectChainById(state, chainId));

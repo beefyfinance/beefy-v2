@@ -1,9 +1,9 @@
 import { css } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
-import type { ChainEntity } from '../../../../../features/data/entities/chain.ts';
 import { getNetworkSrc } from '../../../../../helpers/networkSrc.ts';
 import { selectChainById } from '../../../../../features/data/selectors/chains.ts';
 import { useAppSelector } from '../../../../../features/data/store/hooks.ts';
+import type { ChainEntity } from '../../../../../features/data/apis/chains/entity-types.ts';
 
 export const Icon = styled('img', {
   base: {

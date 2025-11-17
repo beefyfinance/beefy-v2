@@ -5,9 +5,9 @@ import type {
 } from '../../apis/transact/transact-types.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
 import type { TokenEntity } from '../../entities/token.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
 import type BigNumber from 'bignumber.js';
 import type { SerializedError } from '../../apis/transact/strategies/error-types.ts';
+import type { ChainEntity } from '../../apis/chains/entity-types.ts';
 
 export enum TransactStep {
   Loading,

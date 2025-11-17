@@ -1,8 +1,8 @@
 import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token.ts';
 import { isTokenEqual, isTokenNative } from '../../../entities/token.ts';
 import { sortBy, uniqBy } from 'lodash-es';
-import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenAmount } from '../transact-types.ts';
+import type { ChainEntity } from '../../chains/entity-types.ts';
 
 /**
  * Returns wnative if token is native

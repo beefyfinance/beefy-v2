@@ -1,7 +1,7 @@
 import type BigNumber from 'bignumber.js';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
 import type { VaultEntity } from '../entities/vault.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 type VaultTvl = {
   tvl: BigNumber;

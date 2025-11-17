@@ -1,9 +1,7 @@
 import {
   createDependencyFactory,
   createDependencyFactoryWithCacheByChain,
-  createDependencyInitializerFactory,
 } from '../utils/factory-utils.ts';
-import type { WalletConnectionOptions } from './wallet/wallet-connection-types.ts';
 import type { ISwapProvider } from './transact/swap/ISwapProvider.ts';
 import {
   featureFlag_disableKyber,
@@ -92,12 +90,6 @@ export const getSwapAggregator = createDependencyFactory(
     return new SwapAggregator(providers);
   },
   () => import('./transact/swap/swap.ts')
-);
-
-export const getWalletConnectionApi = createDependencyInitializerFactory(
-  async (options: WalletConnectionOptions, { WalletConnectionApi }) =>
-    new WalletConnectionApi(options),
-  () => import('./wallet/wallet-connection.ts')
 );
 
 export const getGasPricer = createDependencyFactoryWithCacheByChain(

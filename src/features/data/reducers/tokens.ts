@@ -18,7 +18,6 @@ import { fetchAllVaults } from '../actions/vaults.ts';
 import type { LpData } from '../apis/beefy/beefy-api-types.ts';
 import type { MinterConfig, VaultConfig } from '../apis/config-types.ts';
 import type { PromoTokenRewardConfig } from '../apis/promos/types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity, TokenErc20, TokenNative } from '../entities/token.ts';
 import { isTokenErc20, isTokenNative } from '../entities/token.ts';
 import {
@@ -29,6 +28,7 @@ import {
 } from '../entities/vault.ts';
 import { getDepositTokenFromLegacyVaultConfig } from '../utils/config-hacks.ts';
 import type { TokensState } from './tokens-types.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export const initialTokensState: TokensState = {
   byChainId: {},

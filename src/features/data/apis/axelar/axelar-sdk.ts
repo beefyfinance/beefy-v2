@@ -1,6 +1,5 @@
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO, toWeiFromString } from '../../../../helpers/big-number.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
 import type {
   AxelarChain,
   AxelarGasToken,
@@ -17,6 +16,7 @@ import { postJson } from '../../../../helpers/http/http.ts';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
 import type { Abi } from 'viem';
 import type { Hex } from 'viem';
+import type { ChainEntity } from '../chains/entity-types.ts';
 
 /**
  * Slimmed down copy of the Axelar SDK with only a estimateGasFee analog implemented.

@@ -8,7 +8,7 @@ import DashboardIcon from '../../../../../images/icons/navigation/dashboard.svg?
 import DaoIcon from '../../../../../images/icons/navigation/dao.svg?react';
 import ResourcesIcon from '../../../../../images/icons/navigation/resources.svg?react';
 import { styled } from '@repo/styles/jsx';
-import MenuButton from '../../../../images/icons/navigation/3dots.svg?react';
+import MenuButton from '../../../../../images/icons/navigation/3dots.svg?react';
 
 export const MainMenu = memo(function MainMenu({
   mobileMenuOpen,

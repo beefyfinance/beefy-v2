@@ -6,7 +6,6 @@ import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
-
 import { selectVaultShouldShowInterest } from './vaults.ts';
 
 const unavailableBuckets = fromKeys(allDataApiBuckets, false);

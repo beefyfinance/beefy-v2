@@ -1,4 +1,3 @@
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import type { TokenEntity } from '../../../../entities/token.ts';
 import { isTokenNative } from '../../../../entities/token.ts';
 import type { VaultEntity } from '../../../../entities/vault.ts';
@@ -26,6 +25,7 @@ import type {
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
 import { toWeiString } from '../../../../../../helpers/big-number.ts';
 import BigNumber from 'bignumber.js';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 export class LiquidSwapSwapProvider implements ISwapProvider {
   getId(): string {

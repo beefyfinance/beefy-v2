@@ -2,13 +2,13 @@ import { memo, useCallback, useMemo } from 'react';
 import { legacyMakeStyles } from '../../../../../../../../helpers/mui.ts';
 import { styles } from './styles.ts';
 import { formatTokenDisplayCondensed } from '../../../../../../../../helpers/format.ts';
-import type { ChainEntity } from '../../../../../../../data/entities/chain.ts';
 import { css, type CssStyles, cx } from '@repo/styles/css';
 import type { TokenEntity } from '../../../../../../../data/entities/token.ts';
 import type BigNumber from 'bignumber.js';
 import { TokensImage } from '../../../../../../../../components/TokenImage/TokenImage.tsx';
 import { ListJoin } from '../../../../../../../../components/ListJoin.tsx';
 import ChevronRight from '../../../../../../../../images/icons/chevron-right.svg?react';
+import type { ChainEntity } from '../../../../../../../data/apis/chains/entity-types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

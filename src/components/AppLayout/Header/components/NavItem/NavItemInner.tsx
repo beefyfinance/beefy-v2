@@ -2,7 +2,7 @@ import { memo } from 'react';
 import type { NavItemInnerProps } from '../DropNavItem/types.ts';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@repo/styles/jsx';
-import ExternalLinkRegularIcon from '../../../../images/icons/externalLinkRegular.svg?react';
+import ExternalLinkRegularIcon from '../../../../../images/icons/externalLinkRegular.svg?react';
 
 export const NavItemInner = memo<NavItemInnerProps>(function NavItemInner({
   title,

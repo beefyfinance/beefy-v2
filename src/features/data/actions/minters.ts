@@ -4,7 +4,6 @@ import type { FetchAllBalancesResult } from '../apis/balance/balance-types.ts';
 import type { MinterConfig } from '../apis/config-types.ts';
 import { getAllowanceApi, getBalanceApi, getConfigApi, getMintersApi } from '../apis/instances.ts';
 import type { FetchMinterReservesResult } from '../apis/minter/minter-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { MinterEntity } from '../entities/minter.ts';
 import { isTokenErc20 } from '../entities/token.ts';
 import { selectChainById } from '../selectors/chains.ts';
@@ -12,6 +11,7 @@ import { selectMinterById } from '../selectors/minters.ts';
 import { selectTokenByAddress } from '../selectors/tokens.ts';
 import type { BeefyState } from '../store/types.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export interface FulfilledAllMintersPayload {
   byChainId: {
