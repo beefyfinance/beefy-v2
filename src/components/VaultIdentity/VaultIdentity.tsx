@@ -1,7 +1,6 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import { memo } from 'react';
 import { Link } from 'react-router';
-import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectChainById } from '../../features/data/selectors/chains.ts';
 import { selectVaultIsBoostedForFilter } from '../../features/data/selectors/filtered-vaults.ts';
@@ -13,6 +12,7 @@ import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { VaultIcon } from './components/VaultIcon/VaultIcon.tsx';
 import { VaultTags } from './components/VaultTags/VaultTags.tsx';
 import { styles } from './styles.ts';
+import type { ChainEntity } from '../../features/data/apis/chains/entity-types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

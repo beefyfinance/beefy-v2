@@ -8,10 +8,10 @@ import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults.ts';
 import { selectWalletAddress } from '../../../selectors/wallet.ts';
 import type { BeefyState } from '../../../store/types.ts';
-import { getWalletConnectionApi } from '../../instances.ts';
 import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
 import { buildExecute, buildFetchBalance } from '../utils.ts';
+import { getWalletConnectionApi } from '../../wallet/instance.ts';
 
 const id = 'ethereum-prisma';
 
@@ -78,7 +78,7 @@ async function unstakeCall(
       }
     }
   }
-  const walletClient = await (await getWalletConnectionApi()).getConnectedViemClient();
+  const walletClient = await getWalletConnectionApi().getConnectedViemClient();
   const contract = fetchWalletContract(stakingAddress, StakingAbi, walletClient);
   return (args: MigratorUnstakeProps) =>
     contract.write.withdraw([wallet as Address, bigNumberToBigInt(amountInWei)], args);

@@ -1,11 +1,11 @@
 import { memo } from 'react';
-import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import missingAssetUrl from '../../images/single-assets/missing-asset.svg';
 import { AssetArrangement } from './AssetArrangement.tsx';
 import { AssetImg } from './AssetImg.tsx';
 import { SymbolAssetImg } from './SymbolAssetImg.tsx';
 import { defaultSize, maxSupportedAssets } from './config.ts';
 import type { CssStyles } from '@repo/styles/css';
+import type { ChainEntity } from '../../features/data/apis/chains/entity-types.ts';
 
 type CommonProps = {
   size?: number;

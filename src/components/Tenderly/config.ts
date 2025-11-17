@@ -1,4 +1,4 @@
-import type { ChainId } from '../../features/data/entities/chain.ts';
+import type { ChainId } from '../../features/data/apis/chains/entity-types.ts';
 
 export const tenderlyChains = new Set<ChainId>([
   'ethereum',

@@ -4,7 +4,6 @@ import { isFulfilledResult } from '../../../helpers/promises.ts';
 import type { ZapAggregatorTokenSupportResponse } from '../apis/beefy/beefy-api-types.ts';
 import type { AmmConfig, SwapAggregatorConfig, ZapConfig } from '../apis/config-types.ts';
 import { getBeefyApi, getConfigApi, getTransactApi } from '../apis/instances.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import { selectAllChainIds } from '../selectors/chains.ts';
 import { selectAllVisibleVaultIds, selectVaultById } from '../selectors/vaults.ts';
@@ -15,6 +14,7 @@ import {
   featureFlag_oneInchSupport,
 } from '../utils/feature-flags.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 interface FetchAllZapsFulfilledPayload {
   zaps: ZapConfig[];

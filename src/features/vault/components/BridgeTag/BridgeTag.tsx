@@ -5,7 +5,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import type { BridgeEntity } from '../../../data/entities/bridge.ts';
 import { css, type CssStyles } from '@repo/styles/css';
 import { getAssetBridgeIcon } from '../../../../helpers/assetBridgeSrc.ts';
-import type { ChainEntity } from '../../../data/entities/chain.ts';
 import { getNetworkSrc } from '../../../../helpers/networkSrc.ts';
 import { styles } from './styles.ts';
 import {
@@ -13,6 +12,7 @@ import {
   type DivWithTooltipProps,
 } from '../../../../components/Tooltip/DivWithTooltip.tsx';
 import { ExternalLink } from '../../../../components/Links/ExternalLink.tsx';
+import type { ChainEntity } from '../../../data/apis/chains/entity-types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

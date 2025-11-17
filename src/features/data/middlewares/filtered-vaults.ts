@@ -17,13 +17,7 @@ import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/t
 import { fetchAllVaults } from '../actions/vaults.ts';
 import { calculateZapAvailabilityAction } from '../actions/zap.ts';
 import { filteredVaultsActions } from '../reducers/filtered-vaults.ts';
-import {
-  accountHasChanged,
-  chainHasChanged,
-  chainHasChangedToUnsupported,
-  userDidConnect,
-  walletHasDisconnected,
-} from '../reducers/wallet/wallet.ts';
+import { walletUserChanged } from '../actions/wallet.ts';
 import { selectIsConfigAvailable } from '../selectors/data-loader/config.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
 import { startAppListening } from './listener-middleware.ts';
@@ -76,13 +70,7 @@ const hasSortChanged = isAnyOf(
   filteredVaultsActions.setSubSort
 );
 
-const hasWalletChanged = isAnyOf(
-  userDidConnect,
-  accountHasChanged,
-  walletHasDisconnected,
-  chainHasChanged,
-  chainHasChangedToUnsupported
-);
+const hasWalletChanged = isAnyOf(walletUserChanged);
 
 const hasAnyChanged = isAnyOf(hasFiltersChanged, hasSortChanged);
 

@@ -1,31 +1,33 @@
-import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../store/types.ts';
-import { featureFlag_walletAddressOverride } from '../utils/feature-flags.ts';
+import { valueOrThrow } from '../utils/selector-utils.ts';
 
-export const selectWalletAddress = createSelector(
-  (state: BeefyState) => state.user.wallet.address,
-  address => {
-    return address ? featureFlag_walletAddressOverride(address) : undefined;
-  }
-);
+/** wallet address or undefined (does not necessarily mean wallet is connected) */
+export const selectWalletAddress = (state: BeefyState) => state.user.wallet.address;
+/** wallet address or throw (does not necessarily mean wallet is connected) */
+export const selectWalletAddressOrThrow = (state: BeefyState) =>
+  valueOrThrow(state.user.wallet.address);
+/** true if wallet address or false if undefined (does not necessarily mean wallet is connected) */
+export const selectIsWalletKnown = (state: BeefyState) => !!selectWalletAddress(state);
+/** if we have wallet connection (not just address known) */
+export const selectIsWalletConnected = (state: BeefyState) => state.user.wallet.account.isConnected;
 
-export const selectIsWalletKnown = createSelector(selectWalletAddress, address => !!address);
-
-// If address is actually connected
-export const selectIsWalletConnected = createSelector(
-  selectWalletAddress,
-  (state: BeefyState) => state.user.wallet.connectedAddress,
-  (address, connectedAddress) => !!connectedAddress && connectedAddress === address
-);
-
-export const selectWalletAddressOrThrow = createSelector(selectWalletAddress, (address): string => {
-  if (!address) throw new Error('Wallet address not known');
-  return address;
-});
-
-// TODO: remove later
-export const selectWalletAddressIfKnown = selectWalletAddress;
-
-export const selectCurrentChainId = (state: BeefyState) => state.user.wallet.selectedChainId;
+export const selectCurrentChainId = (state: BeefyState) => state.user.wallet.account.chainId;
 export const selectIsBalanceHidden = (state: BeefyState) => state.user.wallet.hideBalance;
 export const selectIsInMiniApp = (state: BeefyState) => state.user.wallet.isInMiniApp;
+
+export const selectWalletAccount = (state: BeefyState) => state.user.wallet.account;
+
+export const selectWalletRecent = (state: BeefyState) => state.user.wallet.recent;
+
+export const selectWalletOptions = (state: BeefyState) => state.user.wallet.options;
+export const selectWalletSelect = (state: BeefyState) => state.user.wallet.select;
+export const selectWalletSelectOpen = (state: BeefyState) => state.user.wallet.select.open;
+export const selectWalletSelectActive = (state: BeefyState) => {
+  if (
+    !state.user.wallet.select.open ||
+    (state.user.wallet.select.step !== 'connecting' && state.user.wallet.select.step !== 'error')
+  ) {
+    return undefined;
+  }
+  return state.user.wallet.select.wallet.id;
+};

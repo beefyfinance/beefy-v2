@@ -1,9 +1,9 @@
 import type BigNumber from 'bignumber.js';
-import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenEntity } from '../../../entities/token.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import type { ZapFee } from '../transact-types.ts';
+import type { ChainEntity } from '../../chains/entity-types.ts';
 
 export type QuoteRequest = {
   fromToken: TokenEntity;

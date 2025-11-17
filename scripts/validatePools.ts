@@ -1446,7 +1446,8 @@ async function validatePlatformTypes(): Promise<number> {
 function catchRevertErrorIntoUndefined(e: unknown) {
   if (
     e &&
-    (e instanceof ContractFunctionRevertedError || e instanceof ContractFunctionExecutionError)
+    (e instanceof ContractFunctionRevertedError || e instanceof ContractFunctionExecutionError) &&
+    e.shortMessage.includes('reverted')
   ) {
     return undefined;
   }

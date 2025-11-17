@@ -1,6 +1,5 @@
 import { styled } from '@repo/styles/jsx';
 import { memo, useState } from 'react';
-import type { ChainEntity } from '../../../../../features/data/entities/chain.ts';
 import {
   selectChainById,
   selectChainHasModifiedRpc,
@@ -8,9 +7,9 @@ import {
 import { useAppSelector } from '../../../../../features/data/store/hooks.ts';
 import { ChainIcon } from '../../../../ChainIcon/ChainIcon.tsx';
 import ForwardArrowIcon from '../../../../../images/icons/forward-arrow.svg?react';
-
 import Edit from '../../../../../images/icons/edit_pen.svg?react';
 import { useBreakpoint } from '../../../../MediaQueries/useBreakpoint.ts';
+import type { ChainEntity } from '../../../../../features/data/apis/chains/entity-types.ts';
 
 export const ChainRpcItem = memo(function ChainRpcItem({
   error = false,

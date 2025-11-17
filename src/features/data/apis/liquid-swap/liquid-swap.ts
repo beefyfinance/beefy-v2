@@ -5,11 +5,11 @@ import type {
   SwapRequest,
   SwapResponse,
 } from './liquid-swap-types.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
 import { API_ZAP_URL } from '../beefy/beefy-api.ts';
 import { getErrorMessageFromResponse } from '../transact/helpers/fetch.ts';
 import { getJson, postJson } from '../../../../helpers/http/http.ts';
 import { isFetchResponseError } from '../../../../helpers/http/errors.ts';
+import type { ChainEntity } from '../chains/entity-types.ts';
 
 export const supportedChainIds = new Set<ChainEntity['id']>(['hyperevm']);
 

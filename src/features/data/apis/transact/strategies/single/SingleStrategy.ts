@@ -2,7 +2,6 @@ import { first, uniqBy } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';
 import { BIG_ZERO, fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import {
   isTokenEqual,
   isTokenErc20,
@@ -77,6 +76,7 @@ import type {
   ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { SingleStrategyConfig } from '../strategy-configs.ts';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;

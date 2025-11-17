@@ -6,13 +6,13 @@ import { selectChainById } from '../../selectors/chains.ts';
 import { selectChainNativeToken } from '../../selectors/tokens.ts';
 import { toWeiString } from '../../../../helpers/big-number.ts';
 import { isTokenEqual } from '../../entities/token.ts';
-import { getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import { BeefyCommonBridgeAbi } from '../../../../config/abi/BeefyCommonBridgeAbi.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import type { Address } from 'viem';
 import { uniqBy } from 'lodash-es';
+import { getWalletConnectionApi } from '../../apis/wallet/instance.ts';
 
 export const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -43,7 +43,7 @@ export const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfi
       throw new Error(`Only native fee token is supported`);
     }
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(fromChainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const contract = fetchWalletContract(viaBeefyBridgeAddress, BeefyCommonBridgeAbi, walletClient);

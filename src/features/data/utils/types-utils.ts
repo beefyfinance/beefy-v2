@@ -27,24 +27,8 @@ export type ChangeTypeOfKeys<T extends object, Keys extends keyof T, NewType> = 
   [K in keyof T]: K extends Keys ? NewType : T[K];
 };
 
-export type NullToUndefined<T> = T extends null ? Exclude<T | undefined, null> : T;
-
 export type Rest<TPicked, TFull extends Record<keyof TPicked, unknown>> = TPicked &
   Omit<TFull, keyof TPicked>;
-
-export type MapNullToUndefined<T extends object> = {
-  [K in keyof T]: NullToUndefined<T[K]>;
-};
-
-type Web3KeepTypes = boolean;
-type Web3ConvertType<T> =
-  T extends Array<infer U> ? Web3ConvertType<U>[]
-  : T extends Web3KeepTypes ? T
-  : string;
-
-export type AsWeb3Result<T extends object> = Prettify<{
-  [key in keyof T]: Web3ConvertType<T[key]>;
-}>;
 
 export type KeysOfUnion<T> = T extends unknown ? keyof T : never;
 
@@ -92,4 +76,16 @@ export type MergeObjectUnion<T> = {
       P[K]
     : never
   : never;
+};
+
+/** Like Omit but doesn't error if keys don't exist on type */
+export type LooseOmit<TObj, TKeys extends string> = Pick<TObj, Exclude<keyof TObj, TKeys>>;
+
+/** LooseOmit applied to each member of a union type */
+export type UnionLooseOmit<TObj, TKeys extends string> =
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- needed for distributive conditional types
+  TObj extends any ? LooseOmit<TObj, TKeys> : never;
+
+export type OptionalKeysOf<TObj> = keyof {
+  [TKey in keyof TObj as Omit<TObj, TKey> extends TObj ? TKey : never]: TObj[TKey];
 };

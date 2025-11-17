@@ -8,7 +8,7 @@ import type {
   PromoPartnerConfig,
   PromoTokenRewardConfig,
 } from '../apis/promos/types.ts';
-import type { ChainEntity } from './chain.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export type PromoTokenReward = Override<
   PromoTokenRewardConfig,

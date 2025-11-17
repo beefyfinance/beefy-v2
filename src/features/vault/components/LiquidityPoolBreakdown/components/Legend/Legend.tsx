@@ -2,10 +2,10 @@ import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { memo, useMemo } from 'react';
 import type { CalculatedAsset } from '../../types.ts';
 import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
-import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { formatLargePercent } from '../../../../../../helpers/format.ts';
 import { styles } from './styles.ts';
 import { css, type CssStyles } from '@repo/styles/css';
+import type { ChainEntity } from '../../../../../data/apis/chains/entity-types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

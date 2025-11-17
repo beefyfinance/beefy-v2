@@ -1,8 +1,8 @@
 import { memo, useMemo } from 'react';
 import { orderBy } from 'lodash-es';
-import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { styled } from '@repo/styles/jsx';
 import { RewardItem, type RewardItemProps } from './RewardItem.tsx';
+import type { ChainEntity } from '../../../../../data/apis/chains/entity-types.ts';
 
 type RewardListProps = {
   chainId: ChainEntity['id'];

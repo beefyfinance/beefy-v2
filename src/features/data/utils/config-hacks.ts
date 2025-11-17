@@ -1,6 +1,6 @@
-import type { ChainId } from '../entities/chain.ts';
 import type { TokenErc20 } from '../entities/token.ts';
 import type { BoostConfig, VaultConfig } from '../apis/config-types.ts';
+import type { ChainId } from '../apis/chains/entity-types.ts';
 
 export function getBoostTokenIdFromLegacyConfig(apiBoost: BoostConfig) {
   let tokenId = apiBoost.earnedToken;

@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { keys } from '../../../../../../helpers/object.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
-import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import {
   selectTreasuryAssetsByChainId,
   selectTreasuryHoldingsByMMId,
@@ -11,6 +10,7 @@ import {
 import { AssetInfo, AssetInfoMM } from '../AssetInfo/AssetInfo.tsx';
 import { useSortedAssets, useSortedMMHoldings } from './hooks.ts';
 import { styles } from './styles.ts';
+import type { ChainEntity } from '../../../../../data/apis/chains/entity-types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

@@ -1,11 +1,11 @@
 import { memo } from 'react';
-import type { ChainId } from '../../../features/data/entities/chain.ts';
 import { selectTenderlyMode } from '../../../features/data/selectors/tenderly.ts';
 import { useAppSelector } from '../../../features/data/store/hooks.ts';
 import { Button } from '../../Button/Button.tsx';
 import { tenderlyChains } from '../config.ts';
 import logoUrl from '../logo.svg';
 import { styles } from './styles.ts';
+import type { ChainId } from '../../../features/data/apis/chains/entity-types.ts';
 
 export type TenderlyButtonProps = {
   chainId: ChainId;

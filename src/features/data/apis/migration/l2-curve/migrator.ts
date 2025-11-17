@@ -4,14 +4,14 @@ import type { Hash } from 'viem';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi.ts';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
 import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number.ts';
-import type { ChainEntity } from '../../../entities/chain.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import type { BeefyState } from '../../../store/types.ts';
-import { getWalletConnectionApi } from '../../instances.ts';
 import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
 import { buildExecute, buildFetchBalance } from '../utils.ts';
+import { getWalletConnectionApi } from '../../wallet/instance.ts';
+import type { ChainEntity } from '../../chains/entity-types.ts';
 
 const id = 'l2-curve';
 
@@ -50,7 +50,7 @@ async function unstakeCall(
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const amountInWei = toWei(amount, depositToken.decimals);
   const stakingAddress = await getStakingAddress(vault, state);
-  const walletClient = await (await getWalletConnectionApi()).getConnectedViemClient();
+  const walletClient = await getWalletConnectionApi().getConnectedViemClient();
   const contract = fetchWalletContract(stakingAddress, CurveAbi, walletClient);
   return (args: MigratorUnstakeProps) =>
     contract.write.withdraw([bigNumberToBigInt(amountInWei)], args);

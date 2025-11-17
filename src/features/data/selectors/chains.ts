@@ -1,13 +1,14 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
-import type { ChainEntity, ChainId } from '../entities/chain.ts';
 import type { BeefyState } from '../store/types.ts';
+import { isDefined } from '../utils/array-utils.ts';
+import type { ChainEntity, ChainId } from '../apis/chains/entity-types.ts';
 
 function makeChainSelector(idsSelector: (state: BeefyState) => ChainEntity['id'][]) {
   return createSelector(
     idsSelector,
     (state: BeefyState) => state.entities.chains.byId,
-    (allIds, byId) => allIds.map(id => byId[id]).filter((c): c is ChainEntity => !!c)
+    (allIds, byId) => allIds.map(id => byId[id]).filter(isDefined)
   ) as (state: BeefyState) => ChainEntity[];
 }
 

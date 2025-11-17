@@ -1,4 +1,3 @@
-import type { ChainEntity } from '../../entities/chain.ts';
 import { isTokenNative, type TokenEntity } from '../../entities/token.ts';
 import BigNumber from 'bignumber.js';
 import type { MinterEntity } from '../../entities/minter.ts';
@@ -11,7 +10,7 @@ import {
 } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import { selectChainNativeToken, selectChainWrappedNativeToken } from '../../selectors/tokens.ts';
-import { getOneInchApi, getWalletConnectionApi } from '../../apis/instances.ts';
+import { getOneInchApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import { MinterAbi } from '../../../../config/abi/MinterAbi.ts';
@@ -22,6 +21,8 @@ import type { Address } from 'viem';
 import { uniqBy } from 'lodash-es';
 import { toWei } from '../../../../helpers/big-number.ts';
 import { selectOneInchSwapAggregatorForChain } from '../../selectors/zap.ts';
+import { getWalletConnectionApi } from '../../apis/wallet/instance.ts';
+import type { ChainEntity } from '../../apis/chains/entity-types.ts';
 
 export const mintDeposit = (
   minter: MinterEntity,
@@ -41,7 +42,7 @@ export const mintDeposit = (
 
     const { minterAddress, chainId, canZapInWithOneInch } = minter;
     const gasToken = selectChainNativeToken(state, chainId);
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const contract = fetchWalletContract(minterAddress, MinterAbi, walletClient);
@@ -155,7 +156,7 @@ export const burnWithdraw = (
     }
 
     const gasToken = selectChainNativeToken(state, chainId);
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const contract = fetchWalletContract(contractAddr, MinterAbi, walletClient);

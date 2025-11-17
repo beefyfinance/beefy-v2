@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
-import type { ChainEntity } from '../../../entities/chain.ts';
 import { ArbitrumNodeInterfaceAbi } from '../../../../../config/abi/ArbitrumNodeInterfaceAbi.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
+import type { ChainEntity } from '../../chains/entity-types.ts';
 
 const fallbackSequencerGasPerByte = new BigNumber('5000');
 const gasContractAddress = '0x00000000000000000000000000000000000000C8';

@@ -1,4 +1,4 @@
-import type { ChainId } from '../../../../entities/chain.ts';
+import type { ChainId } from '../../../chains/entity-types.ts';
 
 export const tldToChain = {
   // .base.eth

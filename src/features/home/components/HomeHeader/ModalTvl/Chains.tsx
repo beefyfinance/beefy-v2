@@ -4,10 +4,10 @@ import { orderBy } from 'lodash-es';
 import { memo, useMemo } from 'react';
 import { entries } from '../../../../../helpers/object.ts';
 import { useAppSelector } from '../../../../data/store/hooks.ts';
-import type { ChainEntity } from '../../../../data/entities/chain.ts';
 import { selectActiveChainIds } from '../../../../data/selectors/chains.ts';
 import { selectTvlByChain } from '../../../../data/selectors/tvl.ts';
 import { Chain } from './Chain.tsx';
+import type { ChainEntity } from '../../../../data/apis/chains/entity-types.ts';
 
 export const Chains = memo(function Chains() {
   const tvls = useAppSelector(selectTvlByChain);

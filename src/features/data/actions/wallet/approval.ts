@@ -2,7 +2,6 @@ import type { TokenErc20 } from '../../entities/token.ts';
 import BigNumber from 'bignumber.js';
 import { bindTransactionEvents, captureWalletErrors, txStart, txWallet } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
-import { getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import { ERC20Abi } from '../../../../config/abi/ERC20Abi.ts';
@@ -12,6 +11,7 @@ import { selectChainById } from '../../selectors/chains.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import type { Address } from 'viem';
 import { uniqBy } from 'lodash-es';
+import { getWalletConnectionApi } from '../../apis/wallet/instance.ts';
 
 export const MIN_APPROVAL_AMOUNT = new BigNumber('8000000000000000000000000000'); // wei
 
@@ -24,7 +24,7 @@ export const approve = (token: TokenErc20, spenderAddress: string, amount: BigNu
       return;
     }
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(token.chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const viemContract = fetchWalletContract(token.address, ERC20Abi, walletClient);

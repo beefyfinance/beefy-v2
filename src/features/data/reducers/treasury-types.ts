@@ -1,5 +1,5 @@
-import type { ChainEntity } from '../entities/chain.ts';
 import type { MarketMakerHoldingEntity, TreasuryHoldingEntity } from '../entities/treasury.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export interface AddressHolding {
   address: string;

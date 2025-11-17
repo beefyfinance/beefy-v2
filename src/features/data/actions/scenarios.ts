@@ -1,5 +1,5 @@
 import type { Action } from 'redux';
-import type { ChainEntity } from '../entities/chain.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 import { recalculatePromoStatuses } from '../reducers/promos.ts';
 import { selectAllChainIds, selectAllChains } from '../selectors/chains.ts';
 import { selectIsWalletKnown, selectWalletAddress } from '../selectors/wallet.ts';

@@ -8,7 +8,6 @@ import {
   txWallet,
 } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
-import { getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import {
@@ -22,6 +21,7 @@ import { StandardVaultAbi } from '../../../../config/abi/StandardVaultAbi.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import type { Address } from 'viem';
 import { bigNumberToBigInt, toWei } from '../../../../helpers/big-number.ts';
+import { getWalletConnectionApi } from '../../apis/wallet/instance.ts';
 
 export const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -32,7 +32,7 @@ export const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => 
       return;
     }
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const viemClient = await walletApi.getConnectedViemClient();
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
 
@@ -98,7 +98,7 @@ export const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boo
       return;
     }
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const chain = selectChainById(state, vault.chainId);

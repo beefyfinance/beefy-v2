@@ -1,5 +1,4 @@
 import type { BalancerFeature, IBalancerPool } from '../types.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import type { PoolConfig, VaultConfig } from '../vault/types.ts';
 import { createFactory } from '../../../../utils/factory-utils.ts';
 import { Vault } from '../vault/Vault.ts';
@@ -7,6 +6,7 @@ import { checkAddressOrder } from '../../../../../../helpers/tokens.ts';
 import type BigNumber from 'bignumber.js';
 import { FixedPoint } from './FixedPoint.ts';
 import type { GetContractReturnType } from 'viem';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 export abstract class CommonPool implements IBalancerPool {
   public readonly type = 'balancer';

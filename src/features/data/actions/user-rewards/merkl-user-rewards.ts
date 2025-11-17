@@ -2,7 +2,6 @@ import { type Address, getAddress } from 'viem';
 import { BIG_ZERO, fromWei } from '../../../../helpers/big-number.ts';
 import { pushOrSet } from '../../../../helpers/object.ts';
 import { getMerklRewardsApi } from '../../apis/instances.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
 import {
   getCowcentratedPool,
   isCowcentratedLikeVault,
@@ -22,6 +21,7 @@ import type {
   FetchUserMerklRewardsFulfilledPayload,
 } from './merkl-user-rewards-types.ts';
 import { selectMerklRewardsForUserShouldLoad } from '../../selectors/data-loader/user-rewards.ts';
+import type { ChainEntity } from '../../apis/chains/entity-types.ts';
 
 // ChainId -> Merkl Distributor contract address
 // https://app.merkl.xyz/status

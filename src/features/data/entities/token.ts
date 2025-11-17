@@ -1,7 +1,7 @@
-import type { ChainEntity } from './chain.ts';
 import type { PlatformEntity } from './platform.ts';
 import type BigNumber from 'bignumber.js';
 import type { LpData } from '../apis/beefy/beefy-api-types.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 /**
  * A token can be anything erc20-like

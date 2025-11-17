@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
 import type { VaultGov } from '../../features/data/entities/vault.ts';
 import { selectGovVaultPendingRewardsWithPrice } from '../../features/data/selectors/balance.ts';
-
 import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
 import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
 import { selectGovVaultById } from '../../features/data/selectors/vaults.ts';

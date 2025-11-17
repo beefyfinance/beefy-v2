@@ -11,7 +11,6 @@ import {
   txStart,
 } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
-import { getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectErc20TokenByAddress, selectTokenByAddress } from '../../selectors/tokens.ts';
@@ -34,6 +33,7 @@ import { selectVaultById } from '../../selectors/vaults.ts';
 import { formatTokenDisplay } from '../../../../helpers/format.ts';
 import { bigintRange } from '../../../../helpers/bigint.ts';
 import { readContract } from 'viem/actions';
+import { getWalletConnectionApi } from '../../apis/wallet/instance.ts';
 
 export const deposit = (vault: VaultEntity, amount: BigNumber) => {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -49,7 +49,7 @@ export const deposit = (vault: VaultEntity, amount: BigNumber) => {
     }
 
     const account = getAddress(address);
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const walletClient = await walletApi.getConnectedViemClient();
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
 
@@ -141,7 +141,7 @@ export const requestRedeem = (vault: VaultEntity, oracleAmount: BigNumber, max: 
     }
 
     const account = getAddress(address);
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const walletClient = await walletApi.getConnectedViemClient();
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
     const contractAddress = getAddress(vault.contractAddress);
@@ -213,7 +213,7 @@ export const fulfillRedeem = (vaultId: VaultEntity['id'], requestId: bigint) => 
     const depositToken = selectErc20TokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const expectedAssets = toWeiBigInt(request.assets, depositToken.decimals);
     const account = getAddress(address);
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const walletClient = await walletApi.getConnectedViemClient();
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
     const contractAddress = getAddress(vault.contractAddress);

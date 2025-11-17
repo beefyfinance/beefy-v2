@@ -1,7 +1,7 @@
 import { createPublicClient } from 'viem';
 import { createCachedFactory } from '../../src/features/data/utils/factory-utils.ts';
 import { type AppChainId, getChain, getChainRpc } from './config.ts';
-import type { ChainConfig } from '../../src/features/data/apis/config-types.ts';
+import type { ChainConfig } from '../../src/features/data/apis/chains/config-types.ts';
 import { uniq } from 'lodash-es';
 import { makeCustomFallbackTransport } from '../../src/features/data/apis/viem/transports/transports.ts';
 

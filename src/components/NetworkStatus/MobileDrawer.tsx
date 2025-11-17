@@ -4,9 +4,9 @@ import { ScrollableDrawer, Layout, Main, Footer } from '../ScrollableDrawer/Scro
 import { styled } from '@repo/styles/jsx';
 import { ChainRpcReset } from '../AppLayout/Header/components/UserSettings/RpcEdit.tsx';
 import { Button } from '../Button/Button.tsx';
-import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import { RpcSettingsPanel } from '../AppLayout/Header/components/UserSettings/RpcSettingsPanel.tsx';
 import { TitleComponent } from './Title.tsx';
+import type { ChainEntity } from '../../features/data/apis/chains/entity-types.ts';
 
 export const MobileDrawer = memo(function MobileDrawer({
   open,

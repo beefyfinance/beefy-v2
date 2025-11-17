@@ -1,7 +1,6 @@
 import { partition } from 'lodash-es';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types.ts';
 import { getContractDataApi } from '../apis/instances.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import {
   isCowcentratedVault,
   isErc4626Vault,
@@ -24,6 +23,7 @@ import {
 } from '../selectors/vaults.ts';
 import { featureFlag_simulateRpcError } from '../utils/feature-flags.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 interface ActionParams {
   chainId: ChainEntity['id'];

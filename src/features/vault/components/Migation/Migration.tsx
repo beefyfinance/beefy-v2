@@ -25,7 +25,6 @@ import {
   selectCurrentChainId,
   selectIsWalletConnected,
   selectWalletAddress,
-  selectWalletAddressIfKnown,
 } from '../../../data/selectors/wallet.ts';
 import { ActionConnect, ActionSwitch } from '../Actions/Transact/CommonActions/CommonActions.tsx';
 import { styles } from './styles.ts';
@@ -40,7 +39,7 @@ interface MigrationProps {
 export const Migration = memo(function Migration({ vaultId }: MigrationProps) {
   const dispatch = useAppDispatch();
   const shouldInitMigration = useAppSelector(selectShouldInitMigration);
-  const walletAddress = useAppSelector(selectWalletAddressIfKnown);
+  const walletAddress = useAppSelector(selectWalletAddress);
   const migrationIds = useAppSelector(state => selectMigrationIdsByVaultId(state, vaultId));
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 

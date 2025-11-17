@@ -4,11 +4,11 @@ import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { BeefyOffChainRewardsCampaignType } from '../apis/beefy/beefy-api-types.ts';
 import type { BoostRewardContractData } from '../apis/contract-data/contract-data-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { BoostPromoEntity, PromoEntity } from '../entities/promo.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 function requireBoost(
   promosById: { [id: string]: PromoEntity | undefined },

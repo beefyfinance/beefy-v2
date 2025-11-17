@@ -5,7 +5,6 @@ import { IconButtonLink } from '../../../../components/IconButtonLink/IconButton
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import Link from '../../../../images/icons/mui/Link.svg?react';
 import Twitter from '../../../../images/icons/mui/Twitter.svg?react';
-
 import {
   AssetIconSymbol,
   AssetsBridgePrice,

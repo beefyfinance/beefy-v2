@@ -1,13 +1,12 @@
 import type { VaultEntity } from '../entities/vault.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import type { PlatformEntity } from '../entities/platform.ts';
 import type { ZapFee } from './transact/transact-types.ts';
 import type { ChangeTypeOfKeys } from '../utils/types-utils.ts';
 import type BigNumber from 'bignumber.js';
-import type { Address } from 'viem';
 import type { ZapStrategyConfig } from './transact/strategies/strategy-configs.ts';
 import type { CuratorEntity } from '../entities/curator.ts';
+import type { ChainEntity } from './chains/entity-types.ts';
 
 export type VaultRisksConfig = {
   /** when risks were last updated, defaults to vault.createdAt */
@@ -162,74 +161,6 @@ export interface GaslessGasConfig {
 }
 
 export type GasConfig = StandardGasConfig | EIP1559GasConfig | CeloGasConfig | GaslessGasConfig;
-
-type ChainId =
-  | 'ethereum'
-  | 'polygon'
-  | 'bsc'
-  | 'optimism'
-  | 'fantom'
-  | 'arbitrum'
-  | 'avax'
-  | 'cronos'
-  | 'moonbeam'
-  | 'moonriver'
-  | 'metis'
-  | 'fuse'
-  | 'kava'
-  | 'canto'
-  | 'zksync'
-  | 'zkevm'
-  | 'base'
-  | 'gnosis'
-  | 'linea'
-  | 'mantle'
-  | 'fraxtal'
-  | 'mode'
-  | 'manta'
-  | 'real'
-  | 'sei'
-  | 'rootstock'
-  | 'scroll'
-  | 'lisk'
-  | 'sonic'
-  | 'aurora'
-  | 'emerald'
-  | 'berachain'
-  | 'celo'
-  | 'heco'
-  | 'harmony'
-  | 'saga'
-  | 'hyperevm'
-  | 'plasma'
-  | 'monad';
-
-export type ChainConfig = {
-  id: ChainId;
-  name: string;
-  eol?: number;
-  disabled?: boolean;
-  chainId: number;
-  rpc: string[];
-  explorerUrl: string;
-  explorerAddressUrlTemplate?: string;
-  explorerTokenUrlTemplate?: string;
-  explorerTxUrlTemplate?: string;
-  multicall3Address: Address;
-  appMulticallContractAddress: string;
-  native: {
-    symbol: string;
-    oracleId: string;
-    decimals: number;
-  };
-  gas: GasConfig;
-  stableCoins: string[];
-  new?: boolean;
-  brand?: {
-    icon?: 'solid' | 'gradient';
-    header?: 'solid' | 'gradient';
-  };
-};
 
 export interface AmmConfigBase {
   id: string;

@@ -6,7 +6,6 @@ import { readContract } from 'viem/actions';
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi.ts';
 import { Erc4626VaultAbi } from '../../../../config/abi/Erc4626VaultAbi.ts';
 import { BIG_ZERO, fromWei, isFiniteBigNumber } from '../../../../helpers/big-number.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity, TokenErc20, TokenNative } from '../../entities/token.ts';
 import { isTokenErc20, isTokenNative } from '../../entities/token.ts';
@@ -42,6 +41,7 @@ import type {
   IBalanceApi,
   TokenBalance,
 } from './balance-types.ts';
+import type { ChainEntity } from '../chains/entity-types.ts';
 
 export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   constructor(protected chain: T) {}

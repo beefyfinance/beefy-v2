@@ -1,7 +1,7 @@
 import { first, keyBy, mapValues } from 'lodash-es';
 import type { VaultConfig } from '../apis/config-types.ts';
 import { getBeefyApi, getConfigApi } from '../apis/instances.ts';
-import type { ChainEntity, ChainId } from '../entities/chain.ts';
+import type { ChainEntity, ChainId } from '../apis/chains/entity-types.ts';
 import {
   type VaultBase,
   type VaultCowcentrated,

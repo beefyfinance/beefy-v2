@@ -8,7 +8,6 @@ import {
   selectUserVaultBalanceInUsdIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInDepositToken,
 } from '../../features/data/selectors/balance.ts';
-
 import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
 import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';

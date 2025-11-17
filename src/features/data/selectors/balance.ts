@@ -5,7 +5,6 @@ import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import { getUnixNow } from '../../../helpers/date.ts';
 import { entries, keys } from '../../../helpers/object.ts';
 import type { BoostReward } from '../apis/balance/balance-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token.ts';
 import {
@@ -49,6 +48,7 @@ import {
   selectVaultIdsByChainIdIncludingHidden,
 } from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (walletAddress) {

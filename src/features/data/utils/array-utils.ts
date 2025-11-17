@@ -99,3 +99,10 @@ export function getMostCommon<T extends string>(arr: T[]): T {
   );
   return [...counts.entries()].reduce((a, b) => (b[1] > a[1] ? b : a))[0];
 }
+export function freezeArray<T>(input: T[]): readonly [T, ...T[]] {
+  if (!isNonEmptyArray(input)) {
+    throw new Error(`Must be non-empty array`);
+  }
+  Object.freeze(input);
+  return input;
+}

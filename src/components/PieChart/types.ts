@@ -1,5 +1,5 @@
 import type BigNumber from 'bignumber.js';
-import type { ChainEntity } from '../../features/data/entities/chain.ts';
+import type { ChainEntity } from '../../features/data/apis/chains/entity-types.ts';
 
 export type TokenExposurePayloadData = {
   key: string;

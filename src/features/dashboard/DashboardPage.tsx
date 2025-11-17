@@ -1,13 +1,13 @@
 import { memo } from 'react';
 import { DashboardMeta } from '../../components/Meta/DashboardMeta.tsx';
 import { useAppSelector } from '../data/store/hooks.ts';
-import { selectWalletAddressIfKnown } from '../data/selectors/wallet.ts';
+import { selectWalletAddress } from '../data/selectors/wallet.ts';
 import { Navigate } from 'react-router';
 import { NotConnected } from './components/NoResults/NoResults.tsx';
 import { NoticeLayout } from './Layouts.tsx';
 
 const DashboardFromWallet = memo(function DashboardFromWallet() {
-  const address = useAppSelector(state => selectWalletAddressIfKnown(state));
+  const address = useAppSelector(state => selectWalletAddress(state));
 
   if (address) {
     return <Navigate to={`/dashboard/${address}`} replace={true} />;

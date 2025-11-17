@@ -10,7 +10,6 @@ import {
   toWeiString,
 } from '../../../../../../helpers/big-number.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../../entities/token.ts';
 import { isCowcentratedVault, type VaultCowcentrated } from '../../../../entities/vault.ts';
 import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
@@ -70,6 +69,7 @@ import type {
   ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { CowcentratedStrategyConfig } from '../strategy-configs.ts';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;

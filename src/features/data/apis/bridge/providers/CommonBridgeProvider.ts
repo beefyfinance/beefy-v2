@@ -6,7 +6,6 @@ import { XErc20Abi } from '../../../../../config/abi/XErc20Abi.ts';
 import { BIG_ZERO, fromWei, toWeiString } from '../../../../../helpers/big-number.ts';
 import { isFiniteNumber } from '../../../../../helpers/number.ts';
 import { bridgeViaCommonInterface } from '../../../actions/wallet/bridge.ts';
-import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenErc20, TokenNative } from '../../../entities/token.ts';
 import type { Step } from '../../../reducers/wallet/stepper-types.ts';
 import {
@@ -28,6 +27,7 @@ import type {
   TokenAmount,
 } from '../../transact/transact-types.ts';
 import type { IBridgeProvider, IBridgeQuote } from './provider-types.ts';
+import type { ChainEntity } from '../../chains/entity-types.ts';
 
 export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
   implements IBridgeProvider<T>

@@ -1,9 +1,48 @@
-import type { ChainConfig } from '../features/data/apis/config-types.ts';
+import {
+  arbitrum,
+  aurora,
+  avalanche,
+  base,
+  berachain,
+  bsc,
+  canto,
+  celo,
+  cronos,
+  fantom,
+  fraxtal,
+  fuse,
+  gnosis,
+  harmonyOne,
+  kava,
+  linea,
+  lisk,
+  mainnet,
+  manta,
+  mantle,
+  metis,
+  mode,
+  moonbeam,
+  moonriver,
+  optimism,
+  plasma,
+  polygon,
+  polygonZkEvm,
+  real,
+  rootstock,
+  saga,
+  scroll,
+  sei,
+  sonic,
+  zksync,
+} from 'viem/chains';
+import type { ChainConfig } from '../features/data/apis/chains/config-types.ts';
 
-export const config = {
-  ethereum: {
+export const config = [
+  {
+    id: 'ethereum',
     name: 'Ethereum',
     chainId: 1,
+    viem: mainnet,
     rpc: ['https://ethereum-rpc.publicnode.com', 'https://0xrpc.io/eth', 'https://1rpc.io/eth'],
     explorerUrl: 'https://etherscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -100,9 +139,11 @@ export const config = {
       'reUSDe',
     ],
   },
-  polygon: {
+  {
+    id: 'polygon',
     name: 'Polygon PoS',
     chainId: 137,
+    viem: polygon,
     rpc: ['https://polygon.drpc.org', 'https://polygon-rpc.com'],
     explorerUrl: 'https://polygonscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -157,9 +198,11 @@ export const config = {
       'pUSDCe',
     ],
   },
-  bsc: {
+  {
+    id: 'bsc',
     name: 'BNB Chain',
     chainId: 56,
+    viem: bsc,
     rpc: [
       'https://bsc-dataseed.binance.org',
       'https://bsc-dataseed1.defibit.io',
@@ -211,9 +254,11 @@ export const config = {
       'axlUSDC',
     ],
   },
-  optimism: {
+  {
+    id: 'optimism',
     name: 'OP Mainnet',
     chainId: 10,
+    viem: optimism,
     rpc: ['https://mainnet.optimism.io'],
     explorerUrl: 'https://optimistic.etherscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -268,9 +313,11 @@ export const config = {
       'waOptUSDCn',
     ],
   },
-  arbitrum: {
+  {
+    id: 'arbitrum',
     name: 'Arbitrum',
     chainId: 42161,
+    viem: arbitrum,
     rpc: ['https://arb1.arbitrum.io/rpc'],
     explorerUrl: 'https://arbiscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -339,9 +386,11 @@ export const config = {
       'waArbGHO',
     ],
   },
-  avax: {
+  {
+    id: 'avax',
     name: 'Avalanche',
     chainId: 43114,
+    viem: avalanche,
     rpc: [
       'https://1rpc.io/avax/c',
       'https://avalanche.drpc.org',
@@ -387,9 +436,11 @@ export const config = {
       'sUSDe',
     ],
   },
-  cronos: {
+  {
+    id: 'cronos',
     name: 'Cronos',
     chainId: 25,
+    viem: cronos,
     eol: 1764838421,
     rpc: [
       'https://evm.cronos.org',
@@ -408,9 +459,11 @@ export const config = {
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD'],
   },
-  moonbeam: {
+  {
+    id: 'moonbeam',
     name: 'Moonbeam',
     chainId: 1284,
+    viem: moonbeam,
     eol: 1756396225,
     rpc: ['https://rpc.api.moonbeam.network'],
     explorerUrl: 'https://moonscan.io',
@@ -441,10 +494,12 @@ export const config = {
       'axlUSDC',
     ],
   },
-  fantom: {
+  {
+    id: 'fantom',
     name: 'Fantom',
-    eol: 1736182577,
     chainId: 250,
+    viem: fantom,
+    eol: 1736182577,
     rpc: [
       'https://rpc.fantom.network',
       'https://rpc2.fantom.network',
@@ -487,9 +542,11 @@ export const config = {
       'fUSDCe',
     ],
   },
-  moonriver: {
+  {
+    id: 'moonriver',
     name: 'Moonriver',
     chainId: 1285,
+    viem: moonriver,
     eol: 1715594061,
     rpc: ['https://rpc.api.moonriver.moonbeam.network'],
     explorerUrl: 'https://moonriver.moonscan.io',
@@ -504,9 +561,11 @@ export const config = {
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD', 'MAI', 'MIM', 'FRAX', 'USDCm'],
   },
-  metis: {
+  {
+    id: 'metis',
     name: 'Metis',
     chainId: 1088,
+    viem: metis,
     rpc: ['https://andromeda.metis.io/?owner=1088'],
     explorerUrl: 'https://andromeda-explorer.metis.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -517,9 +576,11 @@ export const config = {
     },
     stableCoins: ['mUSDT', 'mUSDC', 'mDAI', 'USDT', 'USDC'],
   },
-  zksync: {
+  {
+    id: 'zksync',
     name: 'zkSync',
     chainId: 324,
+    viem: zksync,
     rpc: ['https://mainnet.era.zksync.io'],
     explorerUrl: 'https://explorer.zksync.io',
     explorerTokenUrlTemplate: 'https://explorer.zksync.io/address/{address}',
@@ -531,9 +592,11 @@ export const config = {
     },
     stableCoins: ['USDC', 'BUSD', 'wTBT', 'USDCe', 'USDT'],
   },
-  base: {
+  {
+    id: 'base',
     name: 'Base',
     chainId: 8453,
+    viem: base,
     rpc: [
       'https://base-mainnet.public.blastapi.io',
       'https://base.drpc.org',
@@ -592,9 +655,11 @@ export const config = {
       'BOLDV2',
     ],
   },
-  gnosis: {
+  {
+    id: 'gnosis',
     name: 'Gnosis',
     chainId: 100,
+    viem: gnosis,
     rpc: ['https://gnosis-rpc.publicnode.com', 'https://gnosis.drpc.org'],
     explorerUrl: 'https://gnosisscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -605,9 +670,11 @@ export const config = {
     },
     stableCoins: ['xDAI', 'EURe', 'USDC', 'USDT', 'sDAI', 'crvUSD', 'stEUR', 'USDCe'],
   },
-  linea: {
+  {
+    id: 'linea',
     name: 'Linea',
     chainId: 59144,
+    viem: linea,
     rpc: [
       'https://rpc.linea.build',
       'https://1rpc.io/linea',
@@ -638,9 +705,11 @@ export const config = {
       'aLinUSDC',
     ],
   },
-  mantle: {
+  {
+    id: 'mantle',
     name: 'Mantle',
     chainId: 5000,
+    viem: mantle,
     rpc: ['https://rpc.mantle.xyz'],
     explorerUrl: 'https://mantlescan.xyz',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -651,9 +720,11 @@ export const config = {
     },
     stableCoins: ['USDT', 'USDC', 'DAI', 'USDe'],
   },
-  fraxtal: {
+  {
+    id: 'fraxtal',
     name: 'Fraxtal',
     chainId: 252,
+    viem: fraxtal,
     rpc: ['https://rpc.frax.com'],
     explorerUrl: 'https://fraxscan.com',
     multicall3Address: '0x0955479C61B37074d689319fCaA84ffE1E9e8CF5',
@@ -688,9 +759,11 @@ export const config = {
       'sdUSD',
     ],
   },
-  mode: {
+  {
+    id: 'mode',
     name: 'Mode',
     chainId: 34443,
+    viem: mode,
     eol: 1754382440,
     rpc: ['https://mainnet.mode.network'],
     explorerUrl: 'https://explorer.mode.network',
@@ -706,9 +779,11 @@ export const config = {
     },
     stableCoins: ['USDC', 'USDT', 'DOLA'],
   },
-  real: {
+  {
+    id: 'real',
     name: 'Re.al',
     chainId: 111188,
+    viem: real,
     eol: 1731964599,
     disabled: true, // no rpcs available
     rpc: ['https://rpc.realforreal.gelato.digital'],
@@ -725,9 +800,11 @@ export const config = {
     },
     stableCoins: ['MORE', 'USTB', 'arcUSD', 'USDC', 'DAI', 'USDT', 'USDR'],
   },
-  sei: {
+  {
+    id: 'sei',
     name: 'Sei',
     chainId: 1329,
+    viem: sei,
     rpc: ['https://sei.drpc.org', 'https://sei-public.nodies.app'],
     explorerUrl: 'https://seitrace.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -739,23 +816,26 @@ export const config = {
     },
     stableCoins: ['USDC', 'USDT', 'USDCn'],
   },
-  rootstock: {
+  {
+    id: 'rootstock',
     name: 'Rootstock',
     chainId: 30,
+    viem: rootstock,
     rpc: ['https://public-node.rsk.co'],
     explorerUrl: 'https://rootstock.blockscout.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x8EfD3599488542Ec1719567c698a97Fb4e3751a1',
     native: { symbol: 'RBTC', oracleId: 'WBTC', decimals: 18 },
-    new: false,
     gas: {
       type: 'standard',
     },
     stableCoins: ['rUSDT', 'DOC'],
   },
-  scroll: {
+  {
+    id: 'scroll',
     name: 'Scroll',
     chainId: 534352,
+    viem: scroll,
     eol: 1753131600,
     rpc: [
       'https://rpc.scroll.io',
@@ -775,9 +855,11 @@ export const config = {
     },
     stableCoins: ['USDT', 'USDC', 'loreUSD'],
   },
-  lisk: {
+  {
+    id: 'lisk',
     name: 'Lisk',
     chainId: 1135,
+    viem: lisk,
     rpc: ['https://rpc.api.lisk.com', 'https://lisk.gateway.tenderly.co'],
     explorerUrl: 'https://blockscout.lisk.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -792,9 +874,11 @@ export const config = {
     },
     stableCoins: ['USDT', 'USDCe'],
   },
-  sonic: {
+  {
+    id: 'sonic',
     name: 'Sonic',
     chainId: 146,
+    viem: sonic,
     rpc: ['https://rpc.soniclabs.com'],
     explorerUrl: 'https://sonicscan.org',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -823,9 +907,11 @@ export const config = {
       header: 'gradient',
     },
   },
-  berachain: {
+  {
+    id: 'berachain',
     name: 'Berachain',
     chainId: 80094,
+    viem: berachain,
     rpc: ['https://rpc.berachain.com'],
     explorerUrl: 'https://berascan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -836,9 +922,11 @@ export const config = {
     },
     stableCoins: ['HONEY', 'USDCe', 'BYUSD', 'USDbr', 'USDe', 'sUSDe'],
   },
-  saga: {
+  {
+    id: 'saga',
     name: 'Saga',
     chainId: 5464,
+    viem: saga,
     eol: 1764838421,
     rpc: ['https://sagaevm.jsonrpc.sagarpc.io'],
     explorerUrl: 'https://sagaevm-5464-1.sagaexplorer.io',
@@ -850,9 +938,11 @@ export const config = {
     },
     stableCoins: ['USDC', 'USDT'],
   },
-  hyperevm: {
+  {
+    id: 'hyperevm',
     name: 'HyperEVM',
     chainId: 999,
+    viem: undefined,
     rpc: ['https://rpc.hyperliquid.xyz/evm'],
     explorerUrl: 'https://hyperevmscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -863,9 +953,11 @@ export const config = {
     },
     stableCoins: ['USDT0', 'USDe', 'feUSD', 'WHLP'],
   },
-  plasma: {
+  {
+    id: 'plasma',
     name: 'Plasma',
     chainId: 9745,
+    viem: plasma,
     rpc: ['https://rpc.plasma.to'],
     explorerUrl: 'https://plasmascan.to/',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -880,10 +972,12 @@ export const config = {
     },
     stableCoins: ['USDT0', 'USDe', 'sUSDe', 'PlasmaUSD', 'msUSD', 'splUSD'],
   },
-  monad: {
-    new: true,
+  {
+    id: 'monad',
     name: 'Monad',
     chainId: 143,
+    viem: undefined,
+    new: true,
     rpc: ['https://rpc.monad.xyz'],
     explorerUrl: 'https://monadscan.com/',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -894,9 +988,11 @@ export const config = {
     },
     stableCoins: ['USDC', 'AUSD', 'USDT0', 'muBOND', 'AZND', 'loAZND', 'USD1'],
   },
-  aurora: {
+  {
+    id: 'aurora',
     name: 'Aurora',
     chainId: 1313161554,
+    viem: aurora,
     eol: 1691085875,
     rpc: ['https://mainnet.aurora.dev'],
     explorerUrl: 'https://aurorascan.dev',
@@ -908,9 +1004,11 @@ export const config = {
     },
     stableCoins: ['USDC', 'USDT', 'MAI', 'DAI', 'UST', 'aUSDO', 'USN'],
   },
-  emerald: {
+  {
+    id: 'emerald',
     name: 'Emerald',
     chainId: 42262,
+    viem: undefined,
     eol: 1691085875,
     rpc: ['https://emerald.oasis.dev'],
     explorerUrl: 'https://explorer.emerald.oasis.dev',
@@ -922,9 +1020,11 @@ export const config = {
     },
     stableCoins: ['ceUSDC', 'USDT'],
   },
-  celo: {
+  {
+    id: 'celo',
     name: 'Celo',
     chainId: 42220,
+    viem: celo,
     eol: 1691085875,
     rpc: ['https://forno.celo.org'],
     explorerUrl: 'https://celoscan.io',
@@ -936,11 +1036,13 @@ export const config = {
     },
     stableCoins: ['cUSD', 'cEUR', 'DAI', 'USDC', 'USDT'],
   },
-  heco: {
+  {
+    id: 'heco',
     name: 'HECO',
+    chainId: 128,
+    viem: undefined,
     eol: 1681913494,
     disabled: true,
-    chainId: 128,
     rpc: ['https://128.rpc.thirdweb.com'],
     explorerUrl: 'https://hecoinfo.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -954,11 +1056,13 @@ export const config = {
     },
     stableCoins: ['USDT', 'HUSD'],
   },
-  harmony: {
+  {
+    id: 'harmony',
     name: 'Harmony',
-    eol: 1681913494,
-    disabled: true,
     chainId: 1666600000,
+    disabled: true,
+    viem: harmonyOne,
+    eol: 1681913494,
     rpc: ['https://api.s0.t.hmny.io'],
     explorerUrl: 'https://explorer.harmony.one',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -969,10 +1073,12 @@ export const config = {
     },
     stableCoins: ['BUSD', 'bscBUSD', 'USDC', 'USDT', 'UST', 'DAI', 'FRAX'],
   },
-  fuse: {
+  {
+    id: 'fuse',
     name: 'Fuse',
-    eol: 1722901359,
     chainId: 122,
+    viem: fuse,
+    eol: 1722901359,
     rpc: ['https://rpc.fuse.io'],
     explorerUrl: 'https://explorer.fuse.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -983,10 +1089,12 @@ export const config = {
     },
     stableCoins: ['fUSD', 'BUSD', 'USDC', 'USDT'],
   },
-  zkevm: {
+  {
+    id: 'zkevm',
     name: 'Polygon zkEVM',
-    eol: 1729771090,
     chainId: 1101,
+    viem: polygonZkEvm,
+    eol: 1729771090,
     rpc: ['https://rpc.ankr.com/polygon_zkevm'],
     explorerUrl: 'https://zkevm.polygonscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -997,9 +1105,11 @@ export const config = {
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'FRAX'],
   },
-  canto: {
+  {
+    id: 'canto',
     name: 'Canto',
     chainId: 7700,
+    viem: canto,
     eol: 1734101117,
     rpc: ['https://canto-rpc.ansybl.io'],
     explorerUrl: 'https://tuber.build',
@@ -1011,9 +1121,11 @@ export const config = {
     },
     stableCoins: ['USDC', 'NOTE', 'USDT', 'BUSD'],
   },
-  kava: {
+  {
+    id: 'kava',
     name: 'Kava',
     chainId: 2222,
+    viem: kava,
     eol: 1734101117,
     rpc: ['https://kava-evm-rpc.publicnode.com', 'https://evm.kava.io', 'https://evm.kava-rpc.com'],
     explorerUrl: 'https://explorer.kava.io',
@@ -1025,9 +1137,11 @@ export const config = {
     },
     stableCoins: ['USDC', 'DAI', 'USDT', 'axlDAI', 'axlUSDC', 'axlUSDT', 'MAI', 'USDt', 'MIM'],
   },
-  manta: {
+  {
+    id: 'manta',
     name: 'Manta',
     chainId: 169,
+    viem: manta,
     eol: 1734101117,
     rpc: ['https://pacific-rpc.manta.network/http'],
     explorerUrl: 'https://pacific-explorer.manta.network',
@@ -1043,4 +1157,4 @@ export const config = {
     },
     stableCoins: ['USDC', 'USDT', 'DOLA'],
   },
-} satisfies Record<ChainConfig['id'], Omit<ChainConfig, 'id'>>;
+] as const satisfies readonly [ChainConfig, ...ChainConfig[]];

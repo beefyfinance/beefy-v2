@@ -2,12 +2,12 @@ import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
 import { useAppSelector } from '../../../../../../data/store/hooks.ts';
-import type { ChainEntity } from '../../../../../../data/entities/chain.ts';
 import { type VaultEntity } from '../../../../../../data/entities/vault.ts';
 import { selectUserGovVaultUnifiedRewards } from '../../../../../../data/selectors/user-rewards.ts';
 import { RewardList } from '../RewardList.tsx';
 import { Source } from '../Source/Source.tsx';
 import { Claim } from './Claim/Claim.tsx';
+import type { ChainEntity } from '../../../../../../data/apis/chains/entity-types.ts';
 
 type GovRewardsProps = {
   vaultId: VaultEntity['id'];

@@ -7,8 +7,8 @@ import type {
   BeefyBridgeIdToConfig,
 } from '../../apis/config-types.ts';
 import type { InputTokenAmount } from '../../apis/transact/transact-types.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
 import type { TokenErc20 } from '../../entities/token.ts';
+import type { ChainEntity } from '../../apis/chains/entity-types.ts';
 
 export enum FormStep {
   Loading = 1,

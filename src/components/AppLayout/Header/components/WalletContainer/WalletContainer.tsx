@@ -1,10 +1,7 @@
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  askForWalletConnection,
-  doDisconnectWallet,
-} from '../../../../../features/data/actions/wallet.ts';
+import { walletSelectOpen, walletDisconnect } from '../../../../../features/data/actions/wallet.ts';
 import { useResolveAddress } from '../../../../../features/data/hooks/resolver.ts';
 import { isFulfilledStatus } from '../../../../../features/data/reducers/wallet/resolver-types.ts';
 import {
@@ -15,7 +12,6 @@ import {
 } from '../../../../../features/data/selectors/wallet.ts';
 import { formatAddressShort, formatDomain } from '../../../../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../features/data/store/hooks.ts';
-import type { ChainEntity } from '../../../../../features/data/entities/chain.ts';
 import { getNetworkSrc } from '../../../../../helpers/networkSrc.ts';
 import iconUnsupportedChain from '../../../../../images/icons/navigation/unsuported-chain.svg';
 import {
@@ -25,6 +21,7 @@ import {
 } from '../../../../../features/data/selectors/data-loader-helpers.ts';
 import { selectHasWalletInitialized } from '../../../../../features/data/selectors/data-loader/wallet.ts';
 import { WalletButton } from './WalletButton.tsx';
+import type { ChainId } from '../../../../../features/data/apis/chains/entity-types.ts';
 
 const WalletContainer = memo(function WalletContainer() {
   const dispatch = useAppDispatch();
@@ -48,9 +45,9 @@ const WalletContainer = memo(function WalletContainer() {
 
   const handleWalletConnect = useCallback(() => {
     if (walletAddress) {
-      dispatch(doDisconnectWallet());
+      dispatch(walletDisconnect());
     } else {
-      dispatch(askForWalletConnection());
+      dispatch(walletSelectOpen());
     }
   }, [dispatch, walletAddress]);
 
@@ -79,7 +76,7 @@ const WalletContainer = memo(function WalletContainer() {
   );
 });
 
-const ActiveChain = ({ chainId }: { chainId: ChainEntity['id'] | null }) => {
+const ActiveChain = ({ chainId }: { chainId: ChainId | undefined }) => {
   return (
     <ChainIcon
       height={20}

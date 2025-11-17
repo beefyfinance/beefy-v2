@@ -1,23 +1,12 @@
-import { config } from '../../src/config/config.ts';
-import type { ChainConfig } from '../../src/features/data/apis/config-types.ts';
-import type { ChainEntity } from '../../src/features/data/entities/chain.ts';
-import { entries } from '../../src/helpers/object.js';
+import type { config } from '../../src/config/config.ts';
+import type { ChainEntity } from '../../src/features/data/apis/chains/entity-types.ts';
+import { entities } from '../../src/features/data/apis/chains/entities.ts';
 
-export type AppChainId = keyof typeof config;
+export type AppChainId = (typeof config)[number]['id'];
 
-export const chainsByAppId: Record<AppChainId, ChainEntity> = entries(config).reduce(
-  (acc, [chainId, chainConfig]: [AppChainId, Omit<ChainConfig, 'id'>]) => {
-    acc[chainId] = {
-      ...chainConfig,
-      id: chainId,
-      networkChainId: chainConfig.chainId,
-      explorerTokenUrlTemplate:
-        chainConfig.explorerTokenUrlTemplate || `${chainConfig.explorerUrl}/token/{address}`,
-      explorerAddressUrlTemplate:
-        chainConfig.explorerAddressUrlTemplate || `${chainConfig.explorerUrl}/address/{address}`,
-      explorerTxUrlTemplate:
-        chainConfig.explorerTxUrlTemplate || `${chainConfig.explorerUrl}/tx/{hash}`,
-    };
+export const chainsByAppId: Record<AppChainId, ChainEntity> = entities.reduce(
+  (acc, chain) => {
+    acc[chain.id] = chain;
     return acc;
   },
   {} as Record<AppChainId, ChainEntity>

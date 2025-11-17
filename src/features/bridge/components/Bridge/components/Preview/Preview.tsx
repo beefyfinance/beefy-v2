@@ -4,7 +4,7 @@ import { Button } from '../../../../../../components/Button/Button.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { confirmBridgeForm } from '../../../../../data/actions/bridge.ts';
-import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet.ts';
+import { walletChangeNetwork, walletSelectOpen } from '../../../../../data/actions/wallet.ts';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
 import {
   selectBridgeDepositTokenForChainId,
@@ -44,11 +44,11 @@ function PreviewImpl() {
   }, [hasSelectedQuote, input.amount, userBalance]);
 
   const handleConnectWallet = useCallback(() => {
-    dispatch(askForWalletConnection());
+    dispatch(walletSelectOpen());
   }, [dispatch]);
 
   const handleNetworkChange = useCallback(() => {
-    dispatch(askForNetworkChange({ chainId: from }));
+    dispatch(walletChangeNetwork({ chainId: from }));
   }, [dispatch, from]);
 
   const handleStep = useCallback(() => {

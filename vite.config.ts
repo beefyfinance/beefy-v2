@@ -5,8 +5,19 @@ import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import versionPlugin from './tools/bundle/version-plugin.ts';
 import miniAppPlugin from './tools/bundle/miniapp-plugin.ts';
+import webManifestPlugin from './tools/bundle/webmanifest-plugin.ts';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { muiCompatSvgrPlugin, standardSvgrPlugin } from './tools/bundle/svgr.ts';
+import cloudflareHeadersPlugin from './tools/bundle/headers-file-plugin.ts';
+
+function isValidOrigin(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && url.origin === url.href;
+  } catch {
+    return false;
+  }
+}
 
 function getMiniAppDomain() {
   const deployUrl = process.env.DEPLOY_URL;
@@ -21,6 +32,20 @@ function getMiniAppDomain() {
   }
 
   return domain || 'app.beefy.com';
+}
+
+function getFrameAncestors() {
+  const ancestors = [`'self'`];
+
+  const origins = [process.env.VITE_SAFE_DOMAINS || '', process.env.VITE_FARCASTER_DOMAINS || '']
+    .flatMap(d => d.split(','))
+    .map(domain => domain.trim())
+    .filter(domain => domain.length > 3)
+    .map(domain => `https://${domain}`)
+    .filter(isValidOrigin);
+  ancestors.push(...origins);
+
+  return ancestors.join(' ');
 }
 
 const optionalPlugins: Plugin[] = [];
@@ -80,10 +105,40 @@ export default defineConfig({
         signature:
           'AHvDs-1ibYdkLHy8GTKN8CWECX-K4f3ekxVt04mMfANQruE3RT7_hwoviz62-4H3UZPWC6uCb7fci9pd9yDi4Rs',
       },
-      baseBuilderAddresses: ['0xd7Ec5766a06500e71e6695E579e4001A73Ed76A4']
+      baseBuilderAddresses: ['0xd7Ec5766a06500e71e6695E579e4001A73Ed76A4'],
     }),
-    versionPlugin(),
+    webManifestPlugin({
+      name: 'Beefy',
+      description: 'Earn the highest APYs on your crypto with safety and efficiency in mind',
+      start_url: '/?source=pwa',
+      background_color: '#020203',
+      theme_color: '#ffffff',
+      icons: [
+        {
+          src: 'src/images/webmanifest/icon.svg',
+          sizes: '512x512',
+          type: 'image/svg+xml',
+        },
+        {
+          src: 'src/images/webmanifest/icon-512.png',
+          sizes: '512x512',
+          type: 'image/png',
+        },
+        {
+          src: 'src/images/webmanifest/icon-256.png',
+          sizes: '256x256',
+          type: 'image/png',
+        },
+        {
+          src: 'src/images/webmanifest/icon-128.png',
+          sizes: '128x128',
+          type: 'image/png',
+        },
+      ],
+    }),
     ...optionalPlugins,
+    versionPlugin(),
+    cloudflareHeadersPlugin(),
   ],
   optimizeDeps: {
     esbuildOptions: {
@@ -138,5 +193,5 @@ export default defineConfig({
       },
       plugins: [RollupNodePolyFillPlugin()],
     },
-  }
+  },
 });

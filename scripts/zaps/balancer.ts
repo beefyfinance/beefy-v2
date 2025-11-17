@@ -7,11 +7,8 @@ import {
   getChainRpc,
   getVaultsForChain,
 } from '../common/config.ts';
-import type {
-  AmmConfigBalancer,
-  ChainConfig,
-  VaultConfig,
-} from '../../src/features/data/apis/config-types.ts';
+import type { AmmConfigBalancer, VaultConfig } from '../../src/features/data/apis/config-types.ts';
+import type { ChainConfig } from '../../src/features/data/apis/chains/config-types.ts';
 import { isNonEmptyArray, type NonEmptyArray } from '../common/utils.ts';
 import type { OptionalRecord } from '../../src/features/data/utils/types-utils.ts';
 import { type Address, createPublicClient, getAddress, type Hex, http, parseAbi } from 'viem';

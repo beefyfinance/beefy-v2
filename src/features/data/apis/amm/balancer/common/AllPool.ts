@@ -1,5 +1,4 @@
 import type { BalancerFeature, IBalancerAllPool } from '../types.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import type {
   ExitPoolRequest,
   JoinPoolRequest,
@@ -21,6 +20,7 @@ import {
   PoolJoinKind,
 } from './types.ts';
 import type { GetContractReturnType } from 'viem';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 /** Join/Exit with all tokens in ratio */
 export abstract class AllPool extends CommonPool implements IBalancerAllPool {

@@ -1,8 +1,8 @@
 import type BigNumber from 'bignumber.js';
-import type { ChainEntity } from '../../entities/chain.ts';
 import type { IAxelarApi } from './axelar-api-types.ts';
 import type { AxelarChain, AxelarGasToken } from './axelar-sdk-types.ts';
 import { getAxelarSdk } from './sdk.ts';
+import type { ChainEntity } from '../chains/entity-types.ts';
 
 /** @see https://github.com/axelarnetwork/axelarjs-sdk/blob/main/src/constants/EvmChain.ts */
 const chainIdToAxelarChain: Partial<Record<ChainEntity['id'], AxelarChain>> = {

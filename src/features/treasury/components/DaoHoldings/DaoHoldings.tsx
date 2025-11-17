@@ -4,10 +4,10 @@ import { useMediaQuery } from '../../../../components/MediaQueries/useMediaQuery
 import { Section } from '../../../../components/Section/Section.tsx';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
-import type { ChainEntity, ChainId } from '../../../data/entities/chain.ts';
 import { selectTreasurySorted } from '../../../data/selectors/treasury.ts';
 import { ChainHolding, MMHolding } from './components/ChainHolding/ChainHolding.tsx';
 import { styles } from './styles.ts';
+import type { ChainEntity, ChainId } from '../../../data/apis/chains/entity-types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

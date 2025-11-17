@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { getNetworkSrc } from '../../helpers/networkSrc.ts';
-import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import { css, type CssStyles } from '@repo/styles/css';
+import type { ChainEntity } from '../../features/data/apis/chains/entity-types.ts';
 
 export type ChainIconProps = {
   chainId: ChainEntity['id'];

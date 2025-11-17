@@ -5,10 +5,10 @@ import { initiateBoostForm } from '../../actions/boosts.ts';
 import { initiateMinterForm } from '../../actions/minters.ts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens.ts';
 import type { TokenAllowance } from '../../apis/allowance/allowance-types.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
 import { selectMinterById } from '../../selectors/minters.ts';
 import type { AllowanceState } from './allowance-types.ts';
-import { accountHasChanged, walletHasDisconnected } from './wallet.ts';
+import { walletUserChanged } from '../../actions/wallet.ts';
+import type { ChainEntity } from '../../apis/chains/entity-types.ts';
 
 export const initialAllowanceState: AllowanceState = { byChainId: {} };
 
@@ -20,13 +20,9 @@ export const allowanceSlice = createSlice({
   },
   extraReducers: builder => {
     // reset state on user disconnect or address change
-    builder.addCase(accountHasChanged, sliceState => {
+    builder.addCase(walletUserChanged, sliceState => {
       sliceState.byChainId = {};
     });
-    builder.addCase(walletHasDisconnected, sliceState => {
-      sliceState.byChainId = {};
-    });
-
     builder.addCase(fetchAllAllowanceAction.fulfilled, (sliceState, action) => {
       const chainId = action.payload.chainId;
       const allowances = action.payload.data;

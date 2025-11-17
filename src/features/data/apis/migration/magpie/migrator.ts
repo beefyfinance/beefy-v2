@@ -2,14 +2,14 @@ import type { Abi, Address } from 'viem';
 import type BigNumber from 'bignumber.js';
 import type { Hash } from 'viem';
 import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number.ts';
-import type { ChainEntity } from '../../../entities/chain.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import type { BeefyState } from '../../../store/types.ts';
-import { getWalletConnectionApi } from '../../instances.ts';
 import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
 import { buildExecute, buildFetchBalance } from '../utils.ts';
+import { getWalletConnectionApi } from '../../wallet/instance.ts';
+import type { ChainEntity } from '../../chains/entity-types.ts';
 
 const id = 'magpie';
 
@@ -41,7 +41,7 @@ async function unstakeCall(
   const amountInWei = toWei(amount, depositToken.decimals);
   const poolHelper = poolHelpers[vault.chainId];
   if (!poolHelper) throw new Error('No pool helper found for chain');
-  const walletClient = await (await getWalletConnectionApi()).getConnectedViemClient();
+  const walletClient = await getWalletConnectionApi().getConnectedViemClient();
   const contract = fetchWalletContract(poolHelper, PoolHelperAbi, walletClient);
   return (args: MigratorUnstakeProps) =>
     contract.write.withdrawMarketWithClaim(

@@ -1,6 +1,6 @@
 import type { Address } from 'viem';
-import type { ChainId } from '../../entities/chain.ts';
 import type BigNumber from 'bignumber.js';
+import type { ChainId } from '../../apis/chains/entity-types.ts';
 
 export type RewardToken = {
   decimals: number;

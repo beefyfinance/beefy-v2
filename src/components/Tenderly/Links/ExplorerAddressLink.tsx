@@ -1,10 +1,10 @@
 import { memo, type ReactNode, useMemo } from 'react';
-import type { ChainId } from '../../../features/data/entities/chain.ts';
 import { selectChainById } from '../../../features/data/selectors/chains.ts';
 import { formatAddressShort } from '../../../helpers/format.ts';
 import { explorerAddressUrl } from '../../../helpers/url.ts';
 import { useAppSelector } from '../../../features/data/store/hooks.ts';
 import { ExternalLink } from './ExternalLink.tsx';
+import type { ChainId } from '../../../features/data/apis/chains/entity-types.ts';
 
 export type ExplorerAddressLinkProps = {
   chainId: ChainId;

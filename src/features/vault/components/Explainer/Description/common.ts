@@ -1,7 +1,6 @@
 import { type ReactElement, useMemo } from 'react';
 import { type TFunction, useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../data/store/hooks.ts';
-import type { ChainEntity } from '../../../../data/entities/chain.ts';
 import type { PlatformEntity } from '../../../../data/entities/platform.ts';
 import type { TokenEntity } from '../../../../data/entities/token.ts';
 import {
@@ -22,6 +21,7 @@ import {
   selectVaultTokenSymbols,
 } from '../../../../data/selectors/tokens.ts';
 import { selectVaultById } from '../../../../data/selectors/vaults.ts';
+import type { ChainEntity } from '../../../../data/apis/chains/entity-types.ts';
 
 export type CommonHelper<TVault extends VaultEntity = VaultEntity> = {
   vault: TVault;

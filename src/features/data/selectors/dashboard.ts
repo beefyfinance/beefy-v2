@@ -1,7 +1,6 @@
 import type BigNumber from 'bignumber.js';
 import { cloneDeep, orderBy } from 'lodash-es';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import {
   isCowcentratedLikeVault,
@@ -46,10 +45,11 @@ import {
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens.ts';
 import { selectVaultById } from './vaults.ts';
-import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet.ts';
+import { selectWalletAddress } from './wallet.ts';
 import { selectIsAddressBookLoadedGlobal } from './data-loader/tokens.ts';
 import { selectIsAnalyticsLoadedByAddress } from './data-loader/analytics.ts';
 import { selectShouldInitDashboardForUserImpl } from './data-loader/dashboard.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export enum DashboardDataStatus {
   Loading,
@@ -206,7 +206,7 @@ const selectDashboardYieldRewardDataAvailableByVaultId = (
   vaultId: VaultEntity['id'],
   maybeWalletAddress?: string
 ): DashboardDataStatus => {
-  const walletAddress = maybeWalletAddress || selectWalletAddressIfKnown(state);
+  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
   if (!walletAddress) {
     return DashboardDataStatus.Missing;
   }
@@ -326,7 +326,7 @@ const selectDashboardUserExposure = <
   summarizerFn: DashboardUserExposureSummarizer<T>,
   maybeWalletAddress?: string
 ): DashboardUserExposureEntry<T>[] => {
-  const walletAddress = maybeWalletAddress || selectWalletAddressIfKnown(state);
+  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
   if (!walletAddress) {
     return [];
   }
