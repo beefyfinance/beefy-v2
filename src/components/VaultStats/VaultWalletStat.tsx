@@ -1,7 +1,6 @@
 import { memo } from 'react';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectUserBalanceOfToken } from '../../features/data/selectors/balance.ts';
-
 import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
 import {
   selectTokenByAddress,

@@ -1,5 +1,4 @@
 import { BalancerFeature, type IBalancerAllPool, type IBalancerSinglePool } from '../types.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import type { PoolConfig, VaultConfig } from '../vault/types.ts';
 import BigNumber from 'bignumber.js';
 import { fromWei } from '../../../../../../helpers/big-number.ts';
@@ -11,6 +10,7 @@ import {
 } from './join-exit-kinds.ts';
 import { SingleAllPool } from '../common/SingleAllPool.ts';
 import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 const SUPPORTED_FEATURES = new Set<BalancerFeature>([
   BalancerFeature.AddRemoveAll,

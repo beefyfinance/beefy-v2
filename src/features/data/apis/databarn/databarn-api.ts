@@ -7,9 +7,9 @@ import type {
   IDatabarnApi,
 } from './databarn-types.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
 import { getJson } from '../../../../helpers/http/http.ts';
 import { isFetchNotFoundError } from '../../../../helpers/http/errors.ts';
+import type { ChainEntity } from '../chains/entity-types.ts';
 
 export class DatabarnApi implements IDatabarnApi {
   private readonly databarnBase: string;

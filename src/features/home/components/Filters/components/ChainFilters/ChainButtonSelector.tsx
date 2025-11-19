@@ -1,14 +1,14 @@
 import { css, cx } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback } from 'react';
-import { NewBadge } from '../../../../../../components/Header/components/Badges/NewBadge.tsx';
+import { NewBadge } from '../../../../../../components/AppLayout/Header/components/Badges/NewBadge.tsx';
 import { ButtonWithTooltip } from '../../../../../../components/Tooltip/ButtonWithTooltip.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
-import type { ChainEntity, ChainId } from '../../../../../data/entities/chain.ts';
 import { selectActiveChainIds, selectChainById } from '../../../../../data/selectors/chains.ts';
 import { getNetworkIcon } from './hooks.ts';
 import { styles } from './styles.ts';
+import type { ChainEntity, ChainId } from '../../../../../data/apis/chains/entity-types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

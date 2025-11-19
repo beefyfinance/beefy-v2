@@ -1,6 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type {
   ByAddressByChainDataEntity,
@@ -18,7 +17,8 @@ import { createCachedFactory } from '../utils/factory-utils.ts';
 import { entries, isEqual, sortedUniq, uniq } from 'lodash-es';
 import { useAppSelector } from '../store/hooks.ts';
 import { selectEolChainIds } from './chains.ts';
-import { selectWalletAddressIfKnown } from './wallet.ts';
+import { selectWalletAddress } from './wallet.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 // time since a loader was last dispatched before it is allowed to be dispatched again
 const DEFAULT_DISPATCHED_RECENT_SECONDS = 30;
@@ -264,7 +264,7 @@ export const findChainIdMatching = (
 ) => {
   const chainIds: ChainEntity['id'][] = [];
   const eolChains = selectEolChainIds(state);
-  const walletAddress = selectWalletAddressIfKnown(state);
+  const walletAddress = selectWalletAddress(state);
   const chainsToCheck = entries(state.ui.dataLoader.byChainId).filter(
     ([chainId, _]) => !eolChains.includes(chainId as ChainEntity['id'])
   );

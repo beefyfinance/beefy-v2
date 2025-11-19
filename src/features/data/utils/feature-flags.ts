@@ -1,6 +1,6 @@
-import type { ChainEntity } from '../entities/chain.ts';
 import { clamp } from '../../../helpers/number.ts';
 import { createFactory } from './factory-utils.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 const DEFAULT_CHUNK_SIZE = 468;
 const DEFAULT_CHUNK_SIZE_BY_CHAIN: Record<string, number> = {

@@ -3,7 +3,6 @@ import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO, compareBigNumber, isFiniteBigNumber } from '../../../helpers/big-number.ts';
 import { entries, keys } from '../../../helpers/object.ts';
 import { explorerAddressUrl } from '../../../helpers/url.ts';
-import type { ChainEntity, ChainId } from '../entities/chain.ts';
 import type { TreasuryHoldingEntity } from '../entities/treasury.ts';
 import { isTokenHoldingEntity, isVaultHoldingEntity } from '../entities/treasury.ts';
 import type { BeefyState } from '../store/types.ts';
@@ -18,6 +17,7 @@ import {
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens.ts';
 import { selectVaultPricePerFullShare } from './vaults.ts';
+import type { ChainEntity, ChainId } from '../apis/chains/entity-types.ts';
 
 export const selectTreasury = (state: BeefyState) => {
   return state.ui.treasury.byChainId;

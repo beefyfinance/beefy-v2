@@ -1,9 +1,9 @@
 import { type FC, type SVGProps, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { selectFilterChainIds } from '../../../../../data/selectors/filtered-vaults.ts';
 import { selectActiveChainIds } from '../../../../../data/selectors/chains.ts';
+import type { ChainEntity } from '../../../../../data/apis/chains/entity-types.ts';
 
 const networkIcons = import.meta.glob<FC<SVGProps<SVGSVGElement>>>(
   '../../../../../../images/networks/*.svg',

@@ -2,13 +2,13 @@ import { createSelector } from '@reduxjs/toolkit';
 import { uniqBy } from 'lodash-es';
 import type { TFunction } from 'react-i18next';
 import { isZapQuoteStepSwap, type ZapQuoteStep } from '../apis/transact/transact-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { AmmEntity, SwapAggregatorEntity } from '../entities/zap.ts';
 import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
 import { selectPlatformByIdOrUndefined } from './platforms.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export const selectZapByChainId = (state: BeefyState, chainId: ChainEntity['id']) =>
   state.entities.zaps.zaps.byChainId[chainId] || undefined;

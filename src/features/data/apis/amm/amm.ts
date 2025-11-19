@@ -1,4 +1,3 @@
-import type { ChainEntity } from '../../entities/chain.ts';
 import {
   type AmmEntitySolidly,
   type AmmEntityUniswapLike,
@@ -26,6 +25,7 @@ import { VelodromeV2ModeSolidlyPool } from './solidly/VelodromeV2ModeSolidlyPool
 import { TokanSolidlyPool } from './solidly/TokanSolidlyPool.ts';
 import { DefiveUniswapV2Pool } from './uniswap-v2/DefiveUniswapV2Pool.ts';
 import { BlackholeSolidlyPool } from './solidly/BlackholeSolidlyPool.ts';
+import type { ChainEntity } from '../chains/entity-types.ts';
 
 const mapUniswapV2: Record<string, typeof UniswapV2Pool> = {
   'avax-swapsicle': SwapsicleUniswapV2Pool,

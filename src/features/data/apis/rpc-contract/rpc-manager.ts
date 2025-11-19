@@ -1,10 +1,9 @@
 import { createPublicClient, type PublicClient, type Client, type BlockTag } from 'viem';
-import type { ChainEntity, ChainId } from '../../entities/chain.ts';
 import { makeCustomFallbackTransport } from '../viem/transports/transports.ts';
 import { buildViemChain } from '../viem/chains.ts';
 import { getGasPrice, getFeeHistory } from 'viem/actions';
 import BigNumber from 'bignumber.js';
-import type { ChainConfig } from '../config-types.ts';
+import type { ChainEntity, ChainId } from '../chains/entity-types.ts';
 
 type RpcClients = {
   singleCallClient: PublicClient;
@@ -54,7 +53,7 @@ class RpcClientManager {
   private clients: Map<ChainId, RpcClients> = new Map();
 
   // Create new viem clients using the provided chain config and RPC URLs.
-  private createClients(chain: ChainEntity | ChainConfig, rpcUrls: string[]): RpcClients {
+  private createClients(chain: ChainEntity, rpcUrls: string[]): RpcClients {
     const retries = chain.eol ? 1 : 3;
     // Create a viem client with a fallback transport for single calls.
     const singleCallClient = createPublicClient({
@@ -80,7 +79,7 @@ class RpcClientManager {
   /**
    * Initialize or update clients for a chainId.
    */
-  public setClients(chain: ChainEntity | ChainConfig, rpcUrls: string[]): void {
+  public setClients(chain: ChainEntity, rpcUrls: string[]): void {
     const clients = this.createClients(chain, rpcUrls);
     this.clients.set(chain.id, clients);
   }

@@ -7,9 +7,9 @@ import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
 import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults.ts';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import { isStandardVault } from '../entities/vault.ts';
 import type { VaultsState } from './vaults-types.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export const initialVaultsState: VaultsState = {
   byId: {},

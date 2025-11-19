@@ -8,7 +8,6 @@ import {
   txWallet,
 } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
-import { getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectTransactSelectedQuote, selectTransactSlippage } from '../../selectors/transact.ts';
@@ -19,6 +18,7 @@ import { slipAllBy } from '../../apis/transact/helpers/amounts.ts';
 import { toWeiString } from '../../../../helpers/big-number.ts';
 import type { Address } from 'viem';
 import { selectTokenByAddress } from '../../selectors/tokens.ts';
+import { getWalletConnectionApi } from '../../apis/wallet/instance.ts';
 
 export const v3Deposit = (
   vault: VaultCowcentrated,
@@ -34,7 +34,7 @@ export const v3Deposit = (
     }
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const contract = fetchWalletContract(
@@ -95,7 +95,7 @@ export const v3Withdraw = (vault: VaultCowcentrated, withdrawAmount: BigNumber, 
       return;
     }
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const chain = selectChainById(state, vault.chainId);

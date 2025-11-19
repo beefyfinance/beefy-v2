@@ -6,7 +6,6 @@ import {
   selectChainByIdOrUndefined,
 } from '../../../../../data/selectors/chains.ts';
 import { selectFilterChainIds } from '../../../../../data/selectors/filtered-vaults.ts';
-import type { ChainEntity, ChainId } from '../../../../../data/entities/chain.ts';
 import { SelectMultipleContent } from '../../../../../../components/Form/Select/Multi/SelectMultipleContent.tsx';
 import { getNetworkIcon } from './hooks.ts';
 import { cva } from '@repo/styles/css';
@@ -14,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { NewBadge } from '../../../../../../components/Badges/NewBadge.tsx';
 import { styled } from '@repo/styles/jsx';
 import { isEmpty } from 'lodash-es';
+import type { ChainEntity, ChainId } from '../../../../../data/apis/chains/entity-types.ts';
 
 const iconRecipe = cva({
   base: {

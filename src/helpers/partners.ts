@@ -1,4 +1,4 @@
-import type { ChainEntity } from '../features/data/entities/chain.ts';
+import type { ChainEntity } from '../features/data/apis/chains/entity-types.ts';
 
 export const QiDao = [
   'fantom-bifi-maxi',

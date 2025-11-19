@@ -1,7 +1,6 @@
 import { getAddress } from 'viem';
 import { beGemsFactoryAbi } from '../../../../config/abi/BeGemsFactoryAbi.ts';
 import { BIG_ZERO, toWeiBigInt } from '../../../../helpers/big-number.ts';
-import { getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import {
@@ -13,6 +12,7 @@ import { selectChainNativeToken, selectTokenByAddress } from '../../selectors/to
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import { bindTransactionEvents, captureWalletErrors, txStart, txWallet } from './common.ts';
+import { getWalletConnectionApi } from '../../apis/wallet/instance.ts';
 
 export function redeemGems(season: number, amount: BigNumber) {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -33,7 +33,7 @@ export function redeemGems(season: number, amount: BigNumber) {
     const factoryAddress = selectBeGemsFactoryAddress(state);
     const chain = selectChainById(state, chainId);
     const native = selectChainNativeToken(state, chainId);
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const factory = fetchWalletContract(factoryAddress, beGemsFactoryAbi, walletClient);

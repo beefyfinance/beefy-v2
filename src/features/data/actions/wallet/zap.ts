@@ -3,7 +3,6 @@ import { uniqBy } from 'lodash-es';
 import { BeefyZapRouterAbi } from '../../../../config/abi/BeefyZapRouterAbi.ts';
 import { ZERO_ADDRESS } from '../../../../helpers/addresses.ts';
 import { BIG_ZERO } from '../../../../helpers/big-number.ts';
-import { getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import type { UserlessZapRequest, ZapOrder, ZapStep } from '../../apis/transact/zap/types.ts';
@@ -23,6 +22,7 @@ import {
   txStart,
   txWallet,
 } from './common.ts';
+import { getWalletConnectionApi } from '../../apis/wallet/instance.ts';
 
 export const zapExecuteOrder = (
   vaultId: VaultEntity['id'],
@@ -92,7 +92,7 @@ export const zapExecuteOrder = (
       })),
     }));
 
-    const walletApi = await getWalletConnectionApi();
+    const walletApi = getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const gasPrices = await getGasPriceOptions(chain);

@@ -13,9 +13,9 @@ import {
 } from '../../../../../data/selectors/filtered-vaults.ts';
 import { FilterContent } from '../../../../../data/reducers/filtered-vaults-types.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import type { ChainId } from '../../../../../data/entities/chain.ts';
 import { isEqual } from 'lodash-es';
 import { ScrollableDrawer } from '../../../../../../components/ScrollableDrawer/ScrollableDrawer.tsx';
+import type { ChainId } from '../../../../../data/apis/chains/entity-types.ts';
 
 export type MobileFiltersProps = {
   open: boolean;

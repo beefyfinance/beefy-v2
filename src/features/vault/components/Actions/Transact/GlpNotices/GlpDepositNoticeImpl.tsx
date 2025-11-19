@@ -3,7 +3,7 @@ import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { selectChainById } from '../../../../../data/selectors/chains.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet.ts';
+import { selectWalletAddress } from '../../../../../data/selectors/wallet.ts';
 import { getUnlockTime } from './GetUnlockTime.ts';
 import { GlpNotice } from './GlpNotice.tsx';
 import type { GlpLikeConfig } from './types.ts';
@@ -21,7 +21,7 @@ export const GlpDepositNoticeImpl = memo(function GlpDepositNoticeImpl({
 }: GlpDepositNoticeImplProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
-  const userAddress = useAppSelector(selectWalletAddressIfKnown);
+  const userAddress = useAppSelector(selectWalletAddress);
   const depositTokenAddress = vault.depositTokenAddress;
 
   const fetchUnlockTime = useCallback(

@@ -1,10 +1,10 @@
 import { getConfigApi, getMigrationApi } from '../apis/instances.ts';
 import type { MigratorExecuteProps } from '../apis/migration/migration-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { MigrationConfig } from '../reducers/wallet/migration-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export interface FulfilledAllMigratorsPayload {
   byChainId: {

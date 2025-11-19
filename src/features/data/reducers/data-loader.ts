@@ -45,7 +45,6 @@ import {
   fetchZapConfigsAction,
   fetchZapSwapAggregatorsAction,
 } from '../actions/zap.ts';
-import type { ChainEntity, ChainId } from '../entities/chain.ts';
 import type {
   ByAddressByChainDataEntity,
   ByChainDataEntity,
@@ -60,6 +59,7 @@ import type {
   LoaderStatePending,
   LoaderStateRejected,
 } from './data-loader-types.ts';
+import type { ChainEntity, ChainId } from '../apis/chains/entity-types.ts';
 
 const dataLoaderStateInit: LoaderStateIdle = {
   lastFulfilled: undefined,

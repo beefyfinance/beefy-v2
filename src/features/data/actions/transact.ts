@@ -14,7 +14,6 @@ import type {
   TransactQuote,
 } from '../apis/transact/transact-types.ts';
 import { isDepositOption, isWithdrawOption } from '../apis/transact/transact-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import { isCowcentratedVault, type VaultEntity } from '../entities/vault.ts';
 import {
@@ -43,6 +42,7 @@ import type { BeefyState } from '../store/types.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { fetchAllowanceAction } from './allowance.ts';
 import { fetchBalanceAction } from './balance.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export type TransactInitArgs = {
   vaultId: VaultEntity['id'];

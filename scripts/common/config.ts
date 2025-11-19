@@ -3,28 +3,25 @@ import { ChainId } from 'blockchain-addressbook';
 import { config } from '../../src/config/config.ts';
 import type {
   AmmConfig,
-  ChainConfig,
   MinterConfig,
   VaultConfig,
 } from '../../src/features/data/apis/config-types.ts';
 import type { PromoConfig } from '../../src/features/data/apis/promos/types.ts';
+import type { ChainConfig } from '../../src/features/data/apis/chains/config-types.ts';
 
 /** Harmony->One to match addressbook */
-const chainConfigs = Object.entries(config)
-  .filter(([_, chainConfig]) => !('disabled' in chainConfig) || !chainConfig.disabled)
+const chainConfigs = config
+  .filter(chainConfig => !('disabled' in chainConfig) || !chainConfig.disabled)
   .reduce(
-    (acc, [id, chainConfig]) => {
-      acc[appToAddressBookId(id)] = {
-        id: id as ChainConfig['id'],
-        ...chainConfig,
-      };
+    (acc, chainConfig) => {
+      acc[appToAddressBookId(chainConfig.id)] = chainConfig;
       return acc;
     },
     {} as Record<AddressBookChainId, ChainConfig>
   );
 
 export type AddressBookChainId = keyof typeof ChainId;
-export type AppChainId = keyof typeof config;
+export type AppChainId = (typeof config)[number]['id'];
 
 export type ChainMap<T> = Partial<Record<AddressBookChainId, T>>;
 export type AppChainMap<T> = Partial<Record<AppChainId, T>>;
@@ -215,7 +212,7 @@ export function addressBookToAppId(chainId: string): AppChainId {
   if (chainId === 'one') {
     return 'harmony' as AppChainId;
   }
-  if (chainId in config) {
+  if (chainId in chainConfigs) {
     return chainId as AppChainId;
   }
   throw new Error(`Unknown address book chain id ${chainId}`);

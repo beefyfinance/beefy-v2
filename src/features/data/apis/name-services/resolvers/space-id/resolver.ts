@@ -1,4 +1,3 @@
-import type { ChainId } from '../../../../entities/chain.ts';
 import { ZERO_ADDRESS } from '../../../../../../helpers/addresses.ts';
 import {
   hashDomain,
@@ -10,6 +9,7 @@ import type { Abi, Address, Hash } from 'viem';
 import type { AllChainsFromTldToChain } from '../../types.ts';
 import type { tldToChain } from './tlds.ts';
 import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
+import type { ChainId } from '../../../chains/entity-types.ts';
 
 const registryAddresses: Partial<Record<ChainId, Address>> = {
   // ethereum: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',

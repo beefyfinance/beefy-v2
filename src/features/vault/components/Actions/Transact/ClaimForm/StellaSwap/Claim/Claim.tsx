@@ -5,7 +5,6 @@ import { TenderlyStellaSwapClaimButton } from '../../../../../../../../component
 import { useAppDispatch, useAppSelector } from '../../../../../../../data/store/hooks.ts';
 import { stepperStartWithSteps } from '../../../../../../../data/actions/wallet/stepper.ts';
 import { claimStellaSwap } from '../../../../../../../data/actions/wallet/offchain.ts';
-import type { ChainEntity } from '../../../../../../../data/entities/chain.ts';
 import type { VaultEntity } from '../../../../../../../data/entities/vault.ts';
 import { selectChainById } from '../../../../../../../data/selectors/chains.ts';
 import { selectIsStepperStepping } from '../../../../../../../data/selectors/stepper.ts';
@@ -13,6 +12,7 @@ import { ActionConnectSwitch } from '../../../CommonActions/CommonActions.tsx';
 import { TimeCountdown } from '../../TimeCountdown/TimeCountdown.tsx';
 import { styles } from './styles.ts';
 import { selectFetchStellaSwapRewardsLastDispatched } from '../../../../../../../data/selectors/data-loader/user-rewards.ts';
+import type { ChainEntity } from '../../../../../../../data/apis/chains/entity-types.ts';
 
 const STELLA_SWAP_MIN_TIME_BETWEEN_REQUESTS_MS = 5000;
 

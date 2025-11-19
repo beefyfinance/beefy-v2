@@ -3,10 +3,10 @@ import type { Draft } from 'immer';
 import { entries } from '../../../helpers/object.ts';
 import { fetchAllMinters, initiateMinterForm, reloadReserves } from '../actions/minters.ts';
 import type { MinterConfig } from '../apis/config-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { MinterEntity } from '../entities/minter.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { MintersState } from './minters-types.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export const initialMintersState: MintersState = {
   byId: {},

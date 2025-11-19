@@ -10,7 +10,6 @@ import {
   type TransactOption,
   type TransactQuote,
 } from '../apis/transact/transact-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
 import { TransactStatus } from '../reducers/wallet/transact-types.ts';
 import type { BeefyState } from '../store/types.ts';
@@ -37,7 +36,8 @@ import {
   selectConnectedUserHasStellaSwapRewardsForVault,
 } from './user-rewards.ts';
 import { selectVaultById } from './vaults.ts';
-import { selectWalletAddressIfKnown } from './wallet.ts';
+import { selectWalletAddress } from './wallet.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
@@ -170,7 +170,7 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
   walletAddress?: string
 ) => {
   if (!walletAddress) {
-    walletAddress = selectWalletAddressIfKnown(state);
+    walletAddress = selectWalletAddress(state);
   }
 
   const selections = selectTransactWithdrawSelectionsForChain(state, chainId).map(selection => ({
@@ -223,7 +223,7 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
   chainId: ChainEntity['id'],
   vaultId: VaultEntity['id']
 ) => {
-  const walletAddress = selectWalletAddressIfKnown(state);
+  const walletAddress = selectWalletAddress(state);
   const selectionsForChain = state.ui.transact.selections.byChainId[chainId];
   if (!selectionsForChain) {
     return [];

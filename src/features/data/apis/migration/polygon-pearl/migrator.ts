@@ -16,7 +16,6 @@ import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectVaultById } from '../../../selectors/vaults.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { createAppAsyncThunk } from '../../../utils/store-utils.ts';
-import { getWalletConnectionApi } from '../../instances.ts';
 import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type {
   CommonMigrationUpdateFulfilledPayload,
@@ -25,6 +24,7 @@ import type {
   MigratorUnstakeProps,
   MigratorUpdateProps,
 } from '../migration-types.ts';
+import { getWalletConnectionApi } from '../../wallet/instance.ts';
 
 const PEARL_VOTER = '0xa26C2A6BfeC5512c13Ae9EacF41Cb4319d30cCF0';
 
@@ -52,7 +52,7 @@ async function unstakeCall(
   state: BeefyState
 ): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const walletApi = await getWalletConnectionApi();
+  const walletApi = getWalletConnectionApi();
   const walletClient = await walletApi.getConnectedViemClient();
 
   const voterContract = fetchContract(PEARL_VOTER, SolidlyVoterAbi, vault.chainId);

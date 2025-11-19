@@ -13,7 +13,6 @@ import {
 import { isFulfilledResult } from '../../../../../../helpers/promises.ts';
 import { tokenInList } from '../../../../../../helpers/tokens.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import {
   isTokenEqual,
   isTokenErc20,
@@ -100,6 +99,7 @@ import type {
 } from '../../zap/types.ts';
 import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy.ts';
 import type { BalancerStrategyConfig } from '../strategy-configs.ts';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 type ZapHelpers = {
   slippage: number;

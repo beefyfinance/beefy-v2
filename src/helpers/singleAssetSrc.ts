@@ -1,6 +1,6 @@
 import type { TokenEntity } from '../features/data/entities/token.ts';
-import type { ChainEntity } from '../features/data/entities/chain.ts';
 import { createGlobLoader, removeExtension } from './globLoader.ts';
+import type { ChainEntity } from '../features/data/apis/chains/entity-types.ts';
 
 const pathToUrl = import.meta.glob<string>('../images/single-assets/**/*.(svg|webp|png)', {
   query: '?url',

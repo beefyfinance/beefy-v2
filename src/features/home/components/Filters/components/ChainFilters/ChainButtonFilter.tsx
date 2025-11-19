@@ -1,9 +1,9 @@
 import { memo, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { selectFilterChainIds } from '../../../../../data/selectors/filtered-vaults.ts';
 import { ChainButtonSelector } from './ChainButtonSelector.tsx';
+import type { ChainEntity } from '../../../../../data/apis/chains/entity-types.ts';
 
 export const ChainButtonFilter = memo(function ChainButtonFilter() {
   const dispatch = useAppDispatch();

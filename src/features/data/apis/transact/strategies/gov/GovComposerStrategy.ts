@@ -5,7 +5,6 @@ import type { Namespace, TFunction } from 'react-i18next';
 import { encodeFunctionData } from 'viem';
 import { bigNumberToBigInt, toWei, toWeiString } from '../../../../../../helpers/big-number.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import { isTokenEqual, type TokenEntity, type TokenErc20 } from '../../../../entities/token.ts';
 import { isMultiGovVault, type VaultGov } from '../../../../entities/vault.ts';
 import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
@@ -65,6 +64,7 @@ import {
   type ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { GovComposerStrategyConfig } from '../strategy-configs.ts';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;

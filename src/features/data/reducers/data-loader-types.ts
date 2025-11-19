@@ -1,4 +1,4 @@
-import type { ChainEntity, ChainId } from '../entities/chain.ts';
+import type { ChainEntity, ChainId } from '../apis/chains/entity-types.ts';
 
 /**
  * because we want to be smart about data loading

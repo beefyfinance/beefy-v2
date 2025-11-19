@@ -14,9 +14,9 @@ import {
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types.ts';
 import type { BeefyAnyBridgeConfig } from '../../apis/config-types.ts';
 import type { InputTokenAmount } from '../../apis/transact/transact-types.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
 import { isTokenEqual, type TokenErc20 } from '../../entities/token.ts';
 import { type BridgeState, FormStep } from './bridge-types.ts';
+import type { ChainEntity } from '../../apis/chains/entity-types.ts';
 
 const initialBridgeState: BridgeState = {
   source: undefined,

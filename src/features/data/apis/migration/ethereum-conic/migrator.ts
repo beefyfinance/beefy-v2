@@ -16,7 +16,6 @@ import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectVaultById } from '../../../selectors/vaults.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { createAppAsyncThunk } from '../../../utils/store-utils.ts';
-import { getWalletConnectionApi } from '../../instances.ts';
 import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type {
   Migrator,
@@ -25,6 +24,7 @@ import type {
   MigratorUpdateProps,
 } from '../migration-types.ts';
 import type { ConicMigrationUpdateFulfilledPayload } from './types.ts';
+import { getWalletConnectionApi } from '../../wallet/instance.ts';
 
 const CONIC_LP_TOKEN_STAKER = '0xA5241560306298efb9ed80b87427e664FFff0CF9';
 
@@ -60,7 +60,7 @@ async function unstakeCall(
   state: BeefyState
 ): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const walletApi = await getWalletConnectionApi();
+  const walletApi = getWalletConnectionApi();
   const walletClient = await walletApi.getConnectedViemClient();
 
   const lpContract = fetchContract(depositToken.address, ConicLpTokenStakerAbi, vault.chainId);

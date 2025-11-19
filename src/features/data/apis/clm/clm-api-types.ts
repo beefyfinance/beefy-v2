@@ -1,6 +1,6 @@
 import type BigNumber from 'bignumber.js';
-import type { ChainEntity } from '../../entities/chain.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
+import type { ChainEntity } from '../chains/entity-types.ts';
 
 export type ApiClmHarvestRow = {
   id: string;

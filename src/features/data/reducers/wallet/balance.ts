@@ -16,9 +16,9 @@ import type {
   GovVaultBalance,
   TokenBalance,
 } from '../../apis/balance/balance-types.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
 import { selectMinterById } from '../../selectors/minters.ts';
 import type { BalanceState } from './balance-types.ts';
+import type { ChainEntity } from '../../apis/chains/entity-types.ts';
 
 export const initialBalanceState: BalanceState = {
   byAddress: {},

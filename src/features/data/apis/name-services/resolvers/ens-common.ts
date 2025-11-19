@@ -1,9 +1,9 @@
 import { type Abi, type Address, type Hash } from 'viem';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
-import type { ChainId } from '../../../entities/chain.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import type { ResolverMethods } from '../types.ts';
 import { hashDomain, normalizeAddress, normalizeAndHashDomain } from '../utils.ts';
+import type { ChainId } from '../../chains/entity-types.ts';
 
 const registryAbi = [
   {

@@ -1,7 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault.ts';
 import type { MerklVaultReward } from '../reducers/wallet/user-rewards-types.ts';
 import type { BeefyState } from '../store/types.ts';
@@ -27,6 +26,7 @@ import {
   selectStellaSwapRewardsForUserIsRejected,
   selectStellaSwapRewardsForUserShouldLoad,
 } from './data-loader/user-rewards.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export type UnifiedReward = {
   active: boolean;

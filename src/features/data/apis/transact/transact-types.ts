@@ -1,6 +1,5 @@
 import type BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { ChainEntity } from '../../entities/chain.ts';
 import type { PlatformEntity } from '../../entities/platform.ts';
 import type { TokenEntity, TokenErc20 } from '../../entities/token.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
@@ -15,6 +14,7 @@ import type { BeefyStateFn } from '../../store/types.ts';
 import type { CurveTokenOption } from './strategies/curve/types.ts';
 import type { ZapStrategyId } from './strategies/strategy-configs.ts';
 import type { QuoteResponse } from './swap/ISwapProvider.ts';
+import type { ChainEntity } from '../chains/entity-types.ts';
 
 export type TokenAmount<T extends TokenEntity = TokenEntity> = {
   amount: BigNumber;

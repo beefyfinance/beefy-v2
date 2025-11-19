@@ -2,7 +2,6 @@ import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { uniqueTokens } from '../../../helpers/tokens.ts';
 import type { FetchAllBalancesResult } from '../apis/balance/balance-types.ts';
 import { getBalanceApi } from '../apis/instances.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import {
@@ -33,6 +32,7 @@ import {
 import { selectWalletAddress } from '../selectors/wallet.ts';
 import type { BeefyState } from '../store/types.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export interface FetchAllBalanceActionParams {
   chainId: ChainEntity['id'];

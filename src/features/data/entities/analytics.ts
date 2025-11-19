@@ -1,11 +1,11 @@
 import type BigNumber from 'bignumber.js';
 import type { DatabarnTimelineEntry } from '../apis/databarn/databarn-types.ts';
 import type { Prettify, Rest, SnakeToCamelCase } from '../utils/types-utils.ts';
-import type { ChainEntity } from './chain.ts';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
 import type { NonEmptyArray } from '../utils/array-utils.ts';
 import type { VaultGovCowcentrated, VaultStandardCowcentrated } from './vault.ts';
 import type { TimelineActionClassic, TimelineActionClm } from '../apis/clm/clm-api-types.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 type TimelineConfigDatabarnSnake = {
   [K in keyof DatabarnTimelineEntry as SnakeToCamelCase<K>]: DatabarnTimelineEntry[K];

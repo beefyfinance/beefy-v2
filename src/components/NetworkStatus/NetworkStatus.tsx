@@ -1,7 +1,6 @@
 import { styled } from '@repo/styles/jsx';
 import { memo, type RefObject, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader.ts';
 import {
   selectBeefyApiKeysWithPendingData,
@@ -17,11 +16,12 @@ import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.
 import { DropdownContent } from '../Dropdown/DropdownContent.tsx';
 import { DropdownProvider } from '../Dropdown/DropdownProvider.tsx';
 import { DropdownTrigger } from '../Dropdown/DropdownTrigger.tsx';
-import { RpcSettingsPanel } from '../Header/components/UserSettings/RpcSettingsPanel.tsx';
+import { RpcSettingsPanel } from '../AppLayout/Header/components/UserSettings/RpcSettingsPanel.tsx';
 import { TitleComponent } from './Title.tsx';
 import { MobileDrawer } from './MobileDrawer.tsx';
 import { ErrorPopOut } from './ErrorPopOut.tsx';
 import { useMediaQuery } from '../MediaQueries/useMediaQuery.ts';
+import type { ChainEntity } from '../../features/data/apis/chains/entity-types.ts';
 
 export const NetworkStatus = memo(function NetworkStatus({
   positionRef,

@@ -5,7 +5,7 @@ import type {
   PromoConfig,
 } from './types.ts';
 import { extractChainId } from './utils.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
+import type { ChainEntity } from '../chains/entity-types.ts';
 
 const chainPathToImportFn = import.meta.glob<PromoConfig[]>(
   '../../../../config/promos/chain/*.json',

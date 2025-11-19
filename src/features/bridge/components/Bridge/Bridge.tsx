@@ -5,7 +5,7 @@ import { initiateBridgeForm } from '../../../data/actions/bridge.ts';
 import { FormStep } from '../../../data/reducers/wallet/bridge-types.ts';
 import { selectBridgeFormStep } from '../../../data/selectors/bridge.ts';
 import { selectIsConfigAvailable } from '../../../data/selectors/data-loader/config.ts';
-import { selectWalletAddressIfKnown } from '../../../data/selectors/wallet.ts';
+import { selectWalletAddress } from '../../../data/selectors/wallet.ts';
 import { ConfirmStep } from './components/ConfirmStep/ConfirmStep.tsx';
 import { LoadingStep } from './components/LoadingStep/LoadingStep.tsx';
 import { PreviewStep } from './components/PreviewStep/PreviewStep.tsx';
@@ -24,7 +24,7 @@ const stepToComponent: Record<FormStep, FC> = {
 
 export const Bridge = memo(function Bridge() {
   const dispatch = useAppDispatch();
-  const walletAddress = useAppSelector(selectWalletAddressIfKnown);
+  const walletAddress = useAppSelector(selectWalletAddress);
   const step = useAppSelector(selectBridgeFormStep);
   const StepComponent = stepToComponent[step];
   const globalConfigLoaded = useAppSelector(selectIsConfigAvailable);

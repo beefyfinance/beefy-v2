@@ -4,6 +4,7 @@ import beefyLogo from '../../../images/bifi-logos/header-logo.svg';
 import sonicLogo from '../../../images/campaigns/begems/sonic.svg';
 import { selectBeGemsSeasonExplainer } from '../../data/selectors/campaigns/begems.ts';
 import { useAppSelector } from '../../data/store/hooks.ts';
+import { Meta } from '../../../components/Meta/Meta.tsx';
 
 type SeasonExplainerProps = {
   season: number;
@@ -13,6 +14,7 @@ export const SeasonExplainer = memo(function SeasonExplainer({ season }: SeasonE
   const { title, paragraphs } = useAppSelector(state => selectBeGemsSeasonExplainer(state, season));
   return (
     <Layout>
+      <Meta title={`beGEMS Season ${season}`} description={title} />
       <Title>{title}</Title>
       {paragraphs.map((text, index) => (
         <Text key={index}>{text}</Text>

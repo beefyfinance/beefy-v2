@@ -1,8 +1,8 @@
 import { getSingleAssetSrc } from '../../../helpers/singleAssetSrc.ts';
-import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import { selectTokenByAddress } from '../selectors/tokens.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 export type AddToWalletParams = {
   chainId: ChainEntity['id'];

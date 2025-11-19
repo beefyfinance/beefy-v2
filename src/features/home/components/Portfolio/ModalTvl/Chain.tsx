@@ -5,8 +5,8 @@ import { ContentLoading } from '../../../../../components/ContentLoading/Content
 import { formatLargeUsd } from '../../../../../helpers/format.ts';
 import { getNetworkSrc } from '../../../../../helpers/networkSrc.ts';
 import { useAppSelector } from '../../../../data/store/hooks.ts';
-import type { ChainEntity } from '../../../../data/entities/chain.ts';
 import { selectChainById } from '../../../../data/selectors/chains.ts';
+import type { ChainEntity } from '../../../../data/apis/chains/entity-types.ts';
 
 type ChainProps = {
   chainId: ChainEntity['id'];

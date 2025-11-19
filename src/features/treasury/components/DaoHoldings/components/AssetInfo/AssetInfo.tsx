@@ -8,7 +8,6 @@ import { DivWithTooltip } from '../../../../../../components/Tooltip/DivWithTool
 import { formatLargeUsd } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
-import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import {
   isVaultHoldingEntity,
   type MarketMakerHoldingEntity,
@@ -17,6 +16,7 @@ import {
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { styles } from './styles.ts';
+import type { ChainEntity } from '../../../../../data/apis/chains/entity-types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

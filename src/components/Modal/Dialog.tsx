@@ -6,6 +6,7 @@ export type DialogVariantProps = NonNullable<RecipeVariantProps<typeof dialogRec
 const dialogRecipe = cva({
   base: {
     display: 'flex',
+    flexDirection: 'column',
     minHeight: '0',
     minWidth: '0',
     maxWidth: '100%',

@@ -1,7 +1,7 @@
 import type { VaultEntity } from '../../entities/vault.ts';
-import type { ChainEntity, ChainId } from '../../entities/chain.ts';
 import type { TokenEntity } from '../../entities/token.ts';
 import type { KeysOfUnion, MergeObjectUnion } from '../../utils/types-utils.ts';
+import type { ChainEntity, ChainId } from '../chains/entity-types.ts';
 
 export type AllCowcentratedVaultRangesResponse = {
   [chainId: string]: {

@@ -1,7 +1,6 @@
 import { BalancerFeature, type IBalancerAllPool, type IBalancerSinglePool } from '../types.ts';
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO, fromWei } from '../../../../../../helpers/big-number.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import {
   type ExitPoolRequest,
   type JoinPoolRequest,
@@ -24,6 +23,7 @@ import {
 } from './join-exit-kinds.ts';
 import { SingleAllPool } from '../common/SingleAllPool.ts';
 import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 const SUPPORTED_FEATURES = new Set<BalancerFeature>([
   BalancerFeature.AddRemoveAll,

@@ -1,5 +1,4 @@
 import type { TFunction } from 'react-i18next';
-import type { ChainEntity } from '../../entities/chain.ts';
 import type { TokenErc20 } from '../../entities/token.ts';
 import type { Step } from '../../reducers/wallet/stepper-types.ts';
 import type { BeefyState } from '../../store/types.ts';
@@ -11,6 +10,7 @@ import { ChainlinkProvider } from './providers/ChainlinkProvider.ts';
 import { LayerZeroProvider } from './providers/LayerZeroProvider.ts';
 import { OptimismProvider } from './providers/OptimismProvider.ts';
 import type { IBridgeProvider, IBridgeQuote } from './providers/provider-types.ts';
+import type { ChainEntity } from '../chains/entity-types.ts';
 
 type ProviderMap = {
   [K in BeefyAnyBridgeConfig['id']]: IBridgeProvider<BeefyBridgeIdToConfig<K>>;

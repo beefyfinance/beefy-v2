@@ -6,10 +6,10 @@ import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectWalletAddress } from '../../../selectors/wallet.ts';
 import type { BeefyState } from '../../../store/types.ts';
-import { getWalletConnectionApi } from '../../instances.ts';
 import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
 import { buildExecute, buildFetchBalance } from '../utils.ts';
+import { getWalletConnectionApi } from '../../wallet/instance.ts';
 
 const id = 'bera-kodiak';
 
@@ -39,7 +39,7 @@ async function unstakeCall(
 ): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
   const stakingAddress = await getStakingAddress(vault, state);
   const walletAddress = selectWalletAddress(state);
-  const walletApi = await getWalletConnectionApi();
+  const walletApi = getWalletConnectionApi();
   const walletClient = await walletApi.getConnectedViemClient();
   const walletContract = fetchWalletContract(stakingAddress, abi, walletClient);
   return (args: MigratorUnstakeProps) =>

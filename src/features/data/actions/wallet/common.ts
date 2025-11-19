@@ -5,7 +5,6 @@ import { waitForTransactionReceipt } from 'viem/actions';
 import { errorToString } from '../../../../helpers/format.ts';
 import { refTxConfirmedCallback, refTxRevertedCallback } from '../../apis/divvi/callbacks.ts';
 import type { GasPricing } from '../../apis/gas-prices/gas-prices.ts';
-import type { ChainEntity } from '../../entities/chain.ts';
 import type { MinterEntity } from '../../entities/minter.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity } from '../../entities/token.ts';
@@ -42,6 +41,7 @@ import {
   createWalletActionResetAction,
   createWalletActionSuccessAction,
 } from './wallet-action.ts';
+import type { ChainEntity } from '../../apis/chains/entity-types.ts';
 
 type TxRefreshOnSuccess = {
   walletAddress: string;

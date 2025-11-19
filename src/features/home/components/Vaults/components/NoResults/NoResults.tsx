@@ -5,14 +5,14 @@ import { Button } from '../../../../../../components/Button/Button.tsx';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import { askForWalletConnection, doDisconnectWallet } from '../../../../../data/actions/wallet.ts';
+import { walletSelectOpen, walletDisconnect } from '../../../../../data/actions/wallet.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { selectIsUserBalanceAvailable } from '../../../../../data/selectors/balance.ts';
 import {
   selectFilterUserCategory,
   selectHasActiveFilterExcludingUserCategoryAndSort,
 } from '../../../../../data/selectors/filtered-vaults.ts';
-import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet.ts';
+import { selectWalletAddress } from '../../../../../data/selectors/wallet.ts';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -40,12 +40,12 @@ const Message = memo(function Message({ title, text, children }: MessageProps) {
 const NotConnectedMessage = memo(function NotConnectedMessage({ title, text }: MessageProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const walletAddress = useAppSelector(selectWalletAddressIfKnown);
+  const walletAddress = useAppSelector(selectWalletAddress);
   const handleWalletConnect = useCallback(() => {
     if (walletAddress) {
-      dispatch(doDisconnectWallet());
+      dispatch(walletDisconnect());
     } else {
-      dispatch(askForWalletConnection());
+      dispatch(walletSelectOpen());
     }
   }, [dispatch, walletAddress]);
 
@@ -86,7 +86,7 @@ const LoadingMessage = memo(function LoadingMessage() {
 export const NoResults = memo(function NoResults() {
   const hasActiveFilter = useAppSelector(selectHasActiveFilterExcludingUserCategoryAndSort);
   const userCategory = useAppSelector(selectFilterUserCategory);
-  const walletAddress = useAppSelector(selectWalletAddressIfKnown);
+  const walletAddress = useAppSelector(selectWalletAddress);
   const userBalanceAvailable = useAppSelector(state =>
     selectIsUserBalanceAvailable(state, walletAddress)
   );

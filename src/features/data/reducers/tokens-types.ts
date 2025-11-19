@@ -1,5 +1,4 @@
 import type BigNumber from 'bignumber.js';
-import type { ChainEntity } from '../entities/chain.ts';
 import type {
   CurrentCowcentratedRangeData,
   TokenEntity,
@@ -7,6 +6,7 @@ import type {
   TokenLpBreakdown,
   TokenNative,
 } from '../entities/token.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 /**
  * State containing Vault infos

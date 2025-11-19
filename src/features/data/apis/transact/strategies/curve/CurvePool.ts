@@ -3,11 +3,11 @@ import { getInsertIndex, getTokenAddress } from '../../helpers/zap.ts';
 import type BigNumber from 'bignumber.js';
 import type { TokenAmount } from '../../transact-types.ts';
 import { fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import { isTokenNative, type TokenEntity } from '../../../../entities/token.ts';
 import type { ZapStep } from '../../zap/types.ts';
 import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
 import { encodeFunctionData, type Abi, type Address } from 'viem';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 export class CurvePool {
   public constructor(

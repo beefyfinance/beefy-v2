@@ -11,7 +11,6 @@ import {
 } from '../../../../../../helpers/big-number.ts';
 import { isFulfilledResult } from '../../../../../../helpers/promises.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import {
   isTokenEqual,
   isTokenErc20,
@@ -82,6 +81,7 @@ import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IS
 import type { CurveStrategyConfig } from '../strategy-configs.ts';
 import { CurvePool } from './CurvePool.ts';
 import type { CurveMethod, CurveTokenOption } from './types.ts';
+import type { ChainEntity } from '../../../chains/entity-types.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;

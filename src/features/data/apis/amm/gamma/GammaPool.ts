@@ -1,5 +1,4 @@
 import type { GammaHypervisorData, IGammaPool } from '../types.ts';
-import type { ChainEntity } from '../../../entities/chain.ts';
 import type { AmmConfigGamma } from '../../config-types.ts';
 import BigNumber from 'bignumber.js';
 import { GammaHypervisorAbi } from '../../../../../config/abi/GammaHypervisorAbi.ts';
@@ -21,6 +20,7 @@ import { isFulfilledResult } from '../../../../../helpers/promises.ts';
 import { onlyOneTokenAmount } from '../../transact/helpers/options.ts';
 import { encodeFunctionData, type Abi, type Address } from 'viem';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
+import type { ChainEntity } from '../../chains/entity-types.ts';
 
 export class GammaPool implements IGammaPool {
   public readonly type = 'gamma';

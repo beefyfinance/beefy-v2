@@ -1,10 +1,10 @@
-import type { ChainEntity } from '../../entities/chain.ts';
 import type { FetchMinterReservesResult, IMinterApi } from './minter-types.ts';
 import { MinterAbi } from '../../../../config/abi/MinterAbi.ts';
 import BigNumber from 'bignumber.js';
 import type { MinterEntity } from '../../entities/minter.ts';
 import { ERC20Abi } from '../../../../config/abi/ERC20Abi.ts';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
+import type { ChainEntity } from '../chains/entity-types.ts';
 
 export class MinterApi implements IMinterApi {
   constructor(protected chain: ChainEntity) {}

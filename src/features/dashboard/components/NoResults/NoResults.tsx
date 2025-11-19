@@ -9,8 +9,8 @@ import { formatAddressShort } from '../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
 import iconEmptyState from '../../../../images/empty-state.svg';
-import { askForWalletConnection, doDisconnectWallet } from '../../../data/actions/wallet.ts';
-import { selectWalletAddressIfKnown } from '../../../data/selectors/wallet.ts';
+import { walletSelectOpen, walletDisconnect } from '../../../data/actions/wallet.ts';
+import { selectWalletAddress } from '../../../data/selectors/wallet.ts';
 import { AddressInput } from '../AddressInput/AddressInput.tsx';
 import { styles } from './styles.ts';
 
@@ -18,7 +18,7 @@ const useStyles = legacyMakeStyles(styles);
 
 export const InvalidDomain = memo(function InvalidDomain() {
   const { t } = useTranslation();
-  const connectedAddress = useAppSelector(selectWalletAddressIfKnown);
+  const connectedAddress = useAppSelector(selectWalletAddress);
 
   return (
     <Error
@@ -33,7 +33,7 @@ export const InvalidDomain = memo(function InvalidDomain() {
 
 export const InvalidAddress = memo(function InvalidAddress() {
   const { t } = useTranslation();
-  const connectedAddress = useAppSelector(selectWalletAddressIfKnown);
+  const connectedAddress = useAppSelector(selectWalletAddress);
 
   return (
     <Error
@@ -59,7 +59,7 @@ export type NoResultsProps = {
 };
 export const NoResults = memo(function NoResults({ title, address }: NoResultsProps) {
   const { t } = useTranslation();
-  const connectedAddress = useAppSelector(selectWalletAddressIfKnown);
+  const connectedAddress = useAppSelector(selectWalletAddress);
   const requestForConnectedWallet = useMemo(() => {
     return address && connectedAddress && address.toLowerCase() === connectedAddress.toLowerCase();
   }, [address, connectedAddress]);
@@ -114,15 +114,15 @@ type ActionProps = {
 };
 const Actions = memo(function Actions({ connectedAction }: ActionProps) {
   const { t } = useTranslation();
-  const connectedAddress = useAppSelector(selectWalletAddressIfKnown);
+  const connectedAddress = useAppSelector(selectWalletAddress);
   const classes = useStyles();
   const dispatch = useAppDispatch();
 
   const handleWalletConnect = useCallback(() => {
     if (connectedAddress) {
-      dispatch(doDisconnectWallet());
+      dispatch(walletDisconnect());
     } else {
-      dispatch(askForWalletConnection());
+      dispatch(walletSelectOpen());
     }
   }, [dispatch, connectedAddress]);
 

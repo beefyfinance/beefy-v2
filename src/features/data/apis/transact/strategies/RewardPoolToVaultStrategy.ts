@@ -8,9 +8,7 @@ import {
   toWei,
   toWeiString,
 } from '../../../../../helpers/big-number.ts';
-
 import { zapExecuteOrder } from '../../../actions/wallet/zap.ts';
-import type { ChainEntity } from '../../../entities/chain.ts';
 import { isTokenEqual, type TokenErc20 } from '../../../entities/token.ts';
 import {
   getCowcentratedPool,
@@ -74,6 +72,7 @@ import type {
 } from '../zap/types.ts';
 import type { IZapStrategy, ZapTransactHelpers } from './IStrategy.ts';
 import type { RewardPoolToVaultStrategyConfig } from './strategy-configs.ts';
+import type { ChainEntity } from '../../chains/entity-types.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;

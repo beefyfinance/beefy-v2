@@ -1,4 +1,4 @@
-import type { ChainEntity } from '../entities/chain.ts';
+import type { ChainEntity } from '../apis/chains/entity-types.ts';
 
 type FactoryFn<P, R> = (...props: P[]) => R;
 

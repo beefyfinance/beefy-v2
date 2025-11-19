@@ -1,23 +1,11 @@
 import { isAnyOf } from '@reduxjs/toolkit';
 import { fetchAllBalanceAction } from '../actions/balance.ts';
-import {
-  accountHasChanged,
-  chainHasChanged,
-  chainHasChangedToUnsupported,
-  userDidConnect,
-  walletHasDisconnected,
-} from '../reducers/wallet/wallet.ts';
+import { walletUserChanged } from '../actions/wallet.ts';
 import { selectAllChainIds } from '../selectors/chains.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
 import { startAppListening } from './listener-middleware.ts';
 
-const hasWalletChanged = isAnyOf(
-  userDidConnect,
-  accountHasChanged,
-  walletHasDisconnected,
-  chainHasChanged,
-  chainHasChangedToUnsupported
-);
+const hasWalletChanged = isAnyOf(walletUserChanged);
 
 export function addWalletListeners() {
   /**

@@ -10,7 +10,6 @@ import { useAppDispatch, useAppSelector } from '../../../../../../data/store/hoo
 import ExpandLess from '../../../../../../../images/icons/mui/ExpandLess.svg?react';
 import ExpandMore from '../../../../../../../images/icons/mui/ExpandMore.svg?react';
 import { fetchUserMerklRewardsAction } from '../../../../../../data/actions/user-rewards/merkl-user-rewards.ts';
-import type { ChainEntity, ChainId } from '../../../../../../data/entities/chain.ts';
 import { type VaultEntity } from '../../../../../../data/entities/vault.ts';
 import { selectChainById } from '../../../../../../data/selectors/chains.ts';
 import {
@@ -25,6 +24,7 @@ import { RewardList } from '../RewardList.tsx';
 import { Source } from '../Source/Source.tsx';
 import { Claim } from './Claim/Claim.tsx';
 import { styles } from './styles.ts';
+import type { ChainEntity, ChainId } from '../../../../../../data/apis/chains/entity-types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 

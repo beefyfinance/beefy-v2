@@ -1,9 +1,9 @@
-import type { ChainId } from '../../../../entities/chain.ts';
 import { normalizeAddress, normalizeAndHashDomain } from '../../utils.ts';
 import { hexToBigInt, type Abi, type Address } from 'viem';
 import type { AllChainsFromTldToChain } from '../../types.ts';
 import type { tldToChain } from './tlds.ts';
 import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
+import type { ChainId } from '../../../chains/entity-types.ts';
 
 // https://docs.unstoppabledomains.com/smart-contracts/contract-reference/uns-smart-contracts/#unsregistry
 // https://github.com/unstoppabledomains/uns/blob/main/Contracts.md

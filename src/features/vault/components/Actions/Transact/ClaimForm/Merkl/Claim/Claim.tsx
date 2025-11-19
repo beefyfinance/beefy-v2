@@ -5,13 +5,13 @@ import { TenderlyMerklClaimButton } from '../../../../../../../../components/Ten
 import { useAppDispatch, useAppSelector } from '../../../../../../../data/store/hooks.ts';
 import { stepperStartWithSteps } from '../../../../../../../data/actions/wallet/stepper.ts';
 import { claimMerkl } from '../../../../../../../data/actions/wallet/offchain.ts';
-import type { ChainEntity } from '../../../../../../../data/entities/chain.ts';
 import { selectChainById } from '../../../../../../../data/selectors/chains.ts';
 import { selectIsStepperStepping } from '../../../../../../../data/selectors/stepper.ts';
 import { ActionConnectSwitch } from '../../../CommonActions/CommonActions.tsx';
 import { TimeCountdown } from '../../TimeCountdown/TimeCountdown.tsx';
 import { styles } from './styles.ts';
 import { selectFetchMerklRewardsLastDispatched } from '../../../../../../../data/selectors/data-loader/user-rewards.ts';
+import type { ChainEntity } from '../../../../../../../data/apis/chains/entity-types.ts';
 
 const MERKL_MIN_TIME_BETWEEN_REQUESTS_MS = 15000;
 
