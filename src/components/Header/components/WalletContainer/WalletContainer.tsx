@@ -81,30 +81,34 @@ const WalletContainer = memo(function WalletContainer() {
 
 const ActiveChain = ({ chainId }: { chainId: ChainEntity['id'] | null }) => {
   return (
-    <Chain>
-      <img
-        height={20}
-        width={20}
-        alt={chainId ?? ''}
-        src={chainId ? getNetworkSrc(chainId) : iconUnsupportedChain}
-      />
-    </Chain>
+    <ChainIcon
+      height={20}
+      width={20}
+      alt={chainId ?? ''}
+      src={chainId ? getNetworkSrc(chainId) : iconUnsupportedChain}
+    />
   );
 };
 
-const Chain = styled('div', {
+const ChainIcon = styled('img', {
   base: {
     display: 'flex',
     alignItems: 'center',
     textDecoration: 'none',
-    '& img': {
-      height: '24px',
-    },
+    flexShrink: 0,
+    height: '20px',
+    width: '20px',
   },
 });
 
 const Address = styled('div', {
-  base: {},
+  base: {
+    flexShrink: 1,
+    minWidth: 0,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
   variants: {
     blurred: {
       true: {
