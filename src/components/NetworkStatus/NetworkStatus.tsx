@@ -157,6 +157,7 @@ const DropdownButton = styled(DropdownTrigger.button, {
     cursor: 'pointer',
     backgroundColor: 'background.content.dark',
     paddingInline: '12px',
+    flexShrink: 0,
     _hover: {
       backgroundColor: 'background.content',
     },

@@ -7,7 +7,7 @@ import { styled } from '@repo/styles/jsx';
 import { useMediaQuery } from '../../../MediaQueries/useMediaQuery.ts';
 
 export const LogoLink = memo(function LogoLink() {
-  const showSmallLogo = useMediaQuery('(max-width: 380px)', false);
+  const showSmallLogo = useMediaQuery('(max-width: 450px)', false);
 
   return (
     <StyledLink to="/">
