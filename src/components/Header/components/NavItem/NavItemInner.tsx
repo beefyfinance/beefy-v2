@@ -21,7 +21,7 @@ export const NavItemInner = memo<NavItemInnerProps>(function NavItemInner({
         <Title>
           {t(title)}
           {externalLink ?
-            <ExternalLinkRegularIcon />
+            <ExternalLinkIcon />
           : null}
           {Badge ?
             <Badge />
@@ -34,6 +34,13 @@ export const NavItemInner = memo<NavItemInnerProps>(function NavItemInner({
       : null}
     </>
   );
+});
+
+const ExternalLinkIcon = styled(ExternalLinkRegularIcon, {
+  base: {
+    width: '20px',
+    height: '20px',
+  },
 });
 
 const IconTitleContainer = styled('div', {

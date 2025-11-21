@@ -70,6 +70,7 @@ export const selectDidAPIReturnValuesForVault = (state: BeefyState, vaultId: Vau
 const EMPTY_GLOBAL_STATS = {
   deposited: 0,
   daily: 0,
+  weekly: 0,
   monthly: 0,
   yearly: 0,
   apy: 0,
@@ -126,13 +127,14 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
     if (isEmpty(apyData)) {
       continue;
     }
-    const { dailyUsd, monthlyUsd, yearlyUsd } = selectYieldStatsByVaultId(
+    const { dailyUsd, weeklyUsd, monthlyUsd, yearlyUsd } = selectYieldStatsByVaultId(
       state,
       vault.id,
       walletAddress
     );
 
     newGlobalStats.daily += dailyUsd.toNumber();
+    newGlobalStats.weekly += weeklyUsd.toNumber();
     newGlobalStats.monthly += monthlyUsd.toNumber();
     newGlobalStats.yearly += yearlyUsd.toNumber();
   }
@@ -161,6 +163,8 @@ export const selectYieldStatsByVaultId = (
     return {
       dailyUsd: BIG_ZERO,
       dailyTokens: BIG_ZERO,
+      weeklyTokens: BIG_ZERO,
+      weeklyUsd: BIG_ZERO,
       monthlyTokens: BIG_ZERO,
       monthlyUsd: BIG_ZERO,
       yearlyUsd: BIG_ZERO,
@@ -180,6 +184,7 @@ export const selectYieldStatsByVaultId = (
     // base total apy is applied to the whole of the user's balance
     {
       daily: apyData.totalDaily,
+      weekly: apyData.totalDaily * 7,
       yearly: apyData.totalApy,
       tokens: tokenBalance,
     },
@@ -203,6 +208,7 @@ export const selectYieldStatsByVaultId = (
         // boost apy is applied only to the user's balance in the boost
         sources.push({
           daily: apyData.boostDaily,
+          weekly: apyData.boostDaily * 7,
           yearly: apyData.boostApr,
           tokens: tokensInBoost,
         });
@@ -214,6 +220,7 @@ export const selectYieldStatsByVaultId = (
     // merkl boost apy is applied to the whole of the user's balance
     sources.push({
       daily: apyData.merklBoostDaily,
+      weekly: apyData.merklBoostDaily * 7,
       yearly: apyData.merklBoostApr,
       tokens: tokenBalance,
     });
@@ -231,6 +238,8 @@ export const selectYieldStatsByVaultId = (
 
   const dailyTokens = total.daily;
   const dailyUsd = total.daily.times(oraclePrice);
+  const weeklyTokens = dailyTokens.times(7);
+  const weeklyUsd = dailyUsd.times(7);
   const monthlyTokens = dailyTokens.times(30);
   const monthlyUsd = dailyUsd.times(30);
   const yearlyTokens = total.yearly;
@@ -239,6 +248,8 @@ export const selectYieldStatsByVaultId = (
   return {
     dailyUsd,
     dailyTokens,
+    weeklyTokens,
+    weeklyUsd,
     monthlyTokens,
     monthlyUsd,
     yearlyTokens,
