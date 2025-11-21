@@ -1,5 +1,63 @@
 [
   {
+    "id": "aerodrome-lcap-eusd",
+    "name": "LCAP-eUSD vLP",
+    "type": "standard",
+    "token": "vAMM-LCAP/eUSD",
+    "tokenAddress": "0xe39E901F5C53fDA90eF90FeEF3ed1F0126b557a7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseLCAP-eUSD",
+    "earnedTokenAddress": "0x4fcBCEC8f9da4026CF9431d43C632632540B0FF7",
+    "earnContractAddress": "0x4fcBCEC8f9da4026CF9431d43C632632540B0FF7",
+    "oracle": "lps",
+    "oracleId": "aerodrome-lcap-eusd",
+    "status": "active",
+    "createdAt": 1763643789,
+    "platformId": "aerodrome",
+    "assets": ["LCAP", "eUSD"],
+    "risks": ["BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4dA9A0f397dB1397902070f93a4D6ddBC0E0E6e8&token1=0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4&type=-1&chain0=8453&chain1=8453&factory=0x420DD381b31aEf6683db6B902084cB0FFECe40Da",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-weth-rsr",
+    "name": "RSR-WETH vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/RSR",
+    "tokenAddress": "0xd204058452F57464E0E5ab8C3Cc9cbCb6B41D4EE",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseWETH-RSR",
+    "earnedTokenAddress": "0x7d141163dD3aB5cDB3EF9c10958d6AAd78c04598",
+    "earnContractAddress": "0x7d141163dD3aB5cDB3EF9c10958d6AAd78c04598",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-rsr",
+    "status": "active",
+    "createdAt": 1763643789,
+    "platformId": "aerodrome",
+    "assets": ["RSR", "WETH"],
+    "risks": ["BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xaB36452DbAC151bE02b16Ca17d8919826072f64a&type=-1&chain0=8453&chain1=8453&factory=0x420DD381b31aEf6683db6B902084cB0FFECe40Da",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-usdc-send",
     "name": "SEND-USDC vLP",
     "type": "standard",
