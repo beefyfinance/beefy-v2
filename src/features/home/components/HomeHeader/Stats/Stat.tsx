@@ -75,6 +75,9 @@ const StatContainer = styled('div', {
       paddingInline: '18px',
       gap: '1px',
     },
+    lg: {
+      backgroundColor: 'background.content.darkest',
+    },
   },
 });
 

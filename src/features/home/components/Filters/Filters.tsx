@@ -55,7 +55,10 @@ const Layout = styled('div', {
   base: {
     display: 'flex',
     flexWrap: 'wrap',
-    gap: '8px',
+    gap: '12px',
+    sm: {
+      gap: '8px',
+    },
   },
 });
 
