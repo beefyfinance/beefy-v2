@@ -100,12 +100,7 @@ const nonHarvestOnDepositPools = [
   'shadow-cow-sonic-wbtc-weth-vault',
   'shadow-cow-sonic-ws-bes-vault',
 ];
-const excludedAbPools = [
-  'gmx-arb-near-usdc',
-  'gmx-arb-atom-usdc',
-  'gmx-arb-xrp-usdc',
-  'gmx-arb-doge-usdc',
-];
+const excludedAbPools = ['gmx-arb-atom-usdc', 'gmx-arb-xrp-usdc', 'gmx-arb-doge-usdc'];
 const addressFields: Array<keyof VaultConfig> = [
   'tokenAddress',
   'earnedTokenAddress',
