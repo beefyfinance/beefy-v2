@@ -27,6 +27,7 @@ export const initialPromosState: PromosState = {
   allIds: [],
   byVaultId: {},
   byType: {},
+  byChainId: {},
   statusById: {},
   dataByType: { boost: {}, pool: {}, offchain: {} },
   partners: {
@@ -105,6 +106,7 @@ function addPromosToState(sliceState: Draft<PromosState>, promos: PromoEntity[])
   const byId: PromosState['byId'] = {};
   const byType: PromosState['byType'] = {};
   const byVaultId: PromosState['byVaultId'] = {};
+  const byChainId: PromosState['byChainId'] = {};
 
   // @dev build new objects so hot-reloading works
   for (const promo of promos) {
@@ -121,6 +123,12 @@ function addPromosToState(sliceState: Draft<PromosState>, promos: PromoEntity[])
     byVaultId[promo.vaultId].byType[promo.type] ??= { allIds: [] };
     byVaultId[promo.vaultId].byType[promo.type]!.allIds.push(promo.id);
 
+    byChainId[promo.chainId] ??= { allIds: [], byContractAddress: {} };
+    byChainId[promo.chainId]!.allIds.push(promo.id);
+    if (promo.type === 'boost') {
+      byChainId[promo.chainId]!.byContractAddress[promo.contractAddress.toLowerCase()] = promo.id;
+    }
+
     // default status from config
     if (!sliceState.statusById[promo.id]) {
       sliceState.statusById[promo.id] = getStatusFromTime(promo);
@@ -132,6 +140,7 @@ function addPromosToState(sliceState: Draft<PromosState>, promos: PromoEntity[])
   sliceState.byId = byId;
   sliceState.byType = byType;
   sliceState.byVaultId = byVaultId;
+  sliceState.byChainId = byChainId;
 }
 
 function addPartnersToState(

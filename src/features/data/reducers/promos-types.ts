@@ -41,6 +41,14 @@ export type PromosState = NormalizedEntity<PromoEntity> & {
       };
     };
   };
+  byChainId: {
+    [chainId in ChainEntity['id']]?: {
+      allIds: PromoEntity['id'][];
+      byContractAddress: {
+        [contractAddress: string]: PromoEntity['id'];
+      };
+    };
+  };
   partners: {
     allIds: PromoPartnerEntity['id'][];
     byId: Record<PromoPartnerEntity['id'], PromoPartnerEntity>;

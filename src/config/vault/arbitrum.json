@@ -14096,38 +14096,6 @@
     ]
   },
   {
-    "id": "gmx-arb-near-usdc",
-    "name": "NEAR-USDC GM",
-    "type": "standard",
-    "token": "NEAR-USDC GM",
-    "tokenAddress": "0x63Dc80EE90F26363B3FCD609007CC9e14c8991BE",
-    "tokenDecimals": 18,
-    "tokenProviderId": "gmx",
-    "earnedToken": "mooGmxNEAR-USDC",
-    "earnedTokenAddress": "0x5Cb952d0f1C4eC6B06f39c39d7082433575C7C56",
-    "earnContractAddress": "0x5Cb952d0f1C4eC6B06f39c39d7082433575C7C56",
-    "oracle": "lps",
-    "oracleId": "gmx-arb-near-usdc",
-    "status": "eol",
-    "retiredAt": 1727377666,
-    "retireReason": "rewards",
-    "createdAt": 1710772701,
-    "platformId": "gmx",
-    "assets": ["NEAR", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "gmx-gm",
-    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "network": "arbitrum"
-  },
-  {
     "id": "gmx-arb-aave-usdc",
     "name": "AAVE-USDC GM",
     "type": "standard",

@@ -38,7 +38,7 @@ export const Header = memo(function Header() {
         <LogoLink />
         <MainMenu mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
       </Side>
-      <Side spacing="sm">
+      <Side spacing="sm" shrink={true}>
         <RightSide ref={anchorEl}>
           <BifiPricesContainer>
             <BifiPricesDesktop positionRef={anchorEl} />
@@ -83,6 +83,12 @@ const Side = styled('div', {
         },
       },
     },
+    shrink: {
+      true: {
+        flexShrink: 1,
+        minWidth: 0,
+      },
+    },
   },
   defaultVariants: {
     spacing: 'md',
@@ -95,6 +101,8 @@ const RightSide = styled('div', {
     alignItems: 'center',
     alignContent: 'center',
     columnGap: '10px',
+    flexShrink: 1,
+    minWidth: 0,
   },
 });
 

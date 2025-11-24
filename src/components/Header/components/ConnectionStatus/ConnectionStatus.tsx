@@ -47,6 +47,8 @@ const Holder = styled('div', {
     alignItems: 'center',
     borderRadius: '8px',
     backgroundColor: 'background.content.dark',
+    flexShrink: 1,
+    minWidth: 0,
   },
   variants: {
     open: {

@@ -724,7 +724,7 @@ export const config = {
   sei: {
     name: 'Sei',
     chainId: 1329,
-    rpc: ['https://evm-rpc.sei-apis.com', 'https://sei.therpc.io'],
+    rpc: ['https://evm-rpc.sei-apis.com'],
     explorerUrl: 'https://seitrace.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeC1253CC6AB22680B3A3C35EA696dD0A6FC4B0D9',
@@ -830,7 +830,7 @@ export const config = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['HONEY', 'USDCe', 'BYUSD', 'USDbr'],
+    stableCoins: ['HONEY', 'USDCe', 'BYUSD', 'USDbr', 'USDe', 'sUSDe'],
   },
   saga: {
     name: 'Saga',

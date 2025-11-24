@@ -1,5 +1,45 @@
 [
   {
+    "id": "curve-frxusd-msusd",
+    "name": "frxUSD/msUSD",
+    "type": "standard",
+    "token": "FrxMsUSD",
+    "tokenAddress": "0x9A9e2e70919c75D80aAaA1D483c46CdBb8ac4d1b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x4a2136A8E27C4c55872dC983af25eB8f19C9FD4B",
+    "earnedToken": "mooCurveFrxUSD-msUSD",
+    "earnedTokenAddress": "0x4a2136A8E27C4c55872dC983af25eB8f19C9FD4B",
+    "oracle": "lps",
+    "oracleId": "curve-frxusd-msusd",
+    "status": "active",
+    "createdAt": 1763024852,
+    "platformId": "curve",
+    "assets": ["frxUSD", "msUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-599/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-599/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x9A9e2e70919c75D80aAaA1D483c46CdBb8ac4d1b",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x9A9e2e70919c75D80aAaA1D483c46CdBb8ac4d1b",
+            "coins": [
+              "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+              "0xab5eB14c09D416F0aC63661E57EDB7AEcDb9BEfA"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curve-crvusd-yb",
     "name": "YB/crvUSD",
     "type": "standard",
@@ -14,7 +54,7 @@
     "oracleId": "curve-crvusd-yb",
     "status": "active",
     "createdAt": 1761809824,
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["YB", "crvUSD"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -6860,8 +6900,9 @@
     "earnedTokenAddress": "0xe17D6212eAa54D98187026A770dee96f7C264feC",
     "oracle": "lps",
     "oracleId": "aura-reth-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1687443962,
+    "retiredAt": 1763017703,
     "platformId": "aura",
     "assets": ["rETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
