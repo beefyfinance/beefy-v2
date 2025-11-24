@@ -859,7 +859,6 @@ export const config = {
     stableCoins: ['USDT0', 'USDe', 'feUSD', 'WHLP'],
   },
   plasma: {
-    new: true,
     name: 'Plasma',
     chainId: 9745,
     rpc: ['https://rpc.plasma.to'],
@@ -875,6 +874,20 @@ export const config = {
       priorityMinimum: '10000000', // 0.01 gwei
     },
     stableCoins: ['USDT0', 'USDe', 'sUSDe', 'PlasmaUSD', 'msUSD', 'splUSD'],
+  },
+  monad: {
+    new: true,
+    name: 'Monad',
+    chainId: 143,
+    rpc: ['https://rpc.monad.xyz'],
+    explorerUrl: 'https://monadvision.com/',
+    multicall3Address: '0x0000000000000000000000000000000000000000',
+    appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
+    native: { symbol: 'MONAD', oracleId: 'WMONAD', decimals: 18 },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: [],
   },
   aurora: {
     name: 'Aurora',
