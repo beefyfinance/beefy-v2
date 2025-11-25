@@ -724,7 +724,7 @@ export const config = {
   sei: {
     name: 'Sei',
     chainId: 1329,
-    rpc: ['https://evm-rpc.sei-apis.com'],
+    rpc: ['https://sei.drpc.org'],
     explorerUrl: 'https://seitrace.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeC1253CC6AB22680B3A3C35EA696dD0A6FC4B0D9',
@@ -859,7 +859,6 @@ export const config = {
     stableCoins: ['USDT0', 'USDe', 'feUSD', 'WHLP'],
   },
   plasma: {
-    new: true,
     name: 'Plasma',
     chainId: 9745,
     rpc: ['https://rpc.plasma.to'],
@@ -875,6 +874,20 @@ export const config = {
       priorityMinimum: '10000000', // 0.01 gwei
     },
     stableCoins: ['USDT0', 'USDe', 'sUSDe', 'PlasmaUSD', 'msUSD', 'splUSD'],
+  },
+  monad: {
+    new: true,
+    name: 'Monad',
+    chainId: 143,
+    rpc: ['https://rpc.monad.xyz'],
+    explorerUrl: 'https://monad.socialscan.io/',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0xDD10a7949e48dCf5df301DC84268eaaC7F7d3f3D',
+    native: { symbol: 'MON', oracleId: 'WMON', decimals: 18 },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['USDC'],
   },
   aurora: {
     name: 'Aurora',

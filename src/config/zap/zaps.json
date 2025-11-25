@@ -158,5 +158,10 @@
     "chainId": "plasma",
     "router": "0x03C2E2e84031d913d45B1F5b5dDC8E50Fcb28652",
     "manager": "0x5B8F906E9E3355155F05A9c46c5bF3e6D1dEBE5E"
+  },
+  {
+    "chainId": "monad",
+    "router": "0x542Bf9f89c3Ba0edb7aE5EB4Cf582d349fCdC608",
+    "manager": "0xDBCE7119b8F1fCF8e5145087AB314A82Cb931e52"
   }
 ]

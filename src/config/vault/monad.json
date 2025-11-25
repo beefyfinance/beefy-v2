@@ -1,0 +1,61 @@
+[
+  {
+    "id": "uniswap-cow-monad-wmon-usdc-rp",
+    "name": "WMON-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapMonadUSDC-WMON",
+    "tokenAddress": "0x5B8F906E9E3355155F05A9c46c5bF3e6D1dEBE5E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xa6186c6F879eDC2a6Fc268E4Ddd71869195C3856",
+    "earnedToken": "rCowUniswapMonadUSDC-WMON",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-monad-wmon-usdc",
+    "status": "active",
+    "createdAt": 1764108468,
+    "platformId": "uniswap",
+    "assets": ["WMON", "USDC"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-monad-wmon-usdc",
+    "name": "WMON-USDC",
+    "type": "cowcentrated",
+    "token": "WMON-USDC uniswap",
+    "tokenAddress": "0x659bD0BC4167BA25c62E05656F78043E7eD4a9da",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603"
+    ],
+    "earnContractAddress": "0x5B8F906E9E3355155F05A9c46c5bF3e6D1dEBE5E",
+    "earnedToken": "cowUniswapMonadUSDC-WMON",
+    "earnedTokenAddress": "0x5B8F906E9E3355155F05A9c46c5bF3e6D1dEBE5E",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-monad-wmon-usdc",
+    "status": "active",
+    "createdAt": 1764108468,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["WMON", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  }
+]
