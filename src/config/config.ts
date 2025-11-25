@@ -724,7 +724,7 @@ export const config = {
   sei: {
     name: 'Sei',
     chainId: 1329,
-    rpc: ['https://evm-rpc.sei-apis.com'],
+    rpc: ['https://sei.drpc.org'],
     explorerUrl: 'https://seitrace.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeC1253CC6AB22680B3A3C35EA696dD0A6FC4B0D9',
@@ -880,14 +880,14 @@ export const config = {
     name: 'Monad',
     chainId: 143,
     rpc: ['https://rpc.monad.xyz'],
-    explorerUrl: 'https://monadvision.com/',
-    multicall3Address: '0x0000000000000000000000000000000000000000',
-    appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
-    native: { symbol: 'MONAD', oracleId: 'WMONAD', decimals: 18 },
+    explorerUrl: 'https://monad.socialscan.io/',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0xDD10a7949e48dCf5df301DC84268eaaC7F7d3f3D',
+    native: { symbol: 'MON', oracleId: 'WMON', decimals: 18 },
     gas: {
       type: 'standard',
     },
-    stableCoins: [],
+    stableCoins: ['USDC'],
   },
   aurora: {
     name: 'Aurora',
