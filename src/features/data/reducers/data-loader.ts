@@ -202,6 +202,9 @@ function addGlobalAsyncThunkActions<TPayload, TArg>(
         .filter(c => c.eol)
         .map(c => c.id);
     }
+    if (sliceState.statusIndicator.open) {
+      sliceState.statusIndicator.open = false;
+    }
   });
 }
 
@@ -337,6 +340,9 @@ function addByChainAsyncThunkActions<
 
       for (const stateKey of stateKeys) {
         chainState[stateKey] = makeFulfilledState(chainState[stateKey]);
+      }
+      if (sliceState.statusIndicator.open) {
+        sliceState.statusIndicator.open = false;
       }
     });
 }
