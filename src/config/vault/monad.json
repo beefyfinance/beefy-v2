@@ -47,7 +47,7 @@
     "status": "active",
     "createdAt": 1764108468,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "0.30",
     "assets": ["WMON", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
