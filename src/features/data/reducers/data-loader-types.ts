@@ -53,6 +53,20 @@ export interface DataLoaderState {
   statusIndicator: {
     open: boolean;
     excludeChainIds: ChainId[];
+    openBy: {
+      global: Record<string, boolean>;
+      byChainId: {
+        [chainId in ChainEntity['id']]?: Record<string, boolean>;
+      };
+      byAddress: {
+        [address: string]: {
+          global: Record<string, boolean>;
+          byChainId: {
+            [chainId in ChainEntity['id']]?: Record<string, boolean>;
+          };
+        };
+      };
+    };
   };
   global: {
     addressBook: LoaderState;

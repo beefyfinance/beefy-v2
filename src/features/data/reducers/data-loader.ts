@@ -102,6 +102,11 @@ export const initialDataLoaderState: DataLoaderState = {
   statusIndicator: {
     open: false,
     excludeChainIds: [],
+    openBy: {
+      global: {},
+      byChainId: {},
+      byAddress: {},
+    },
   },
   global: {
     chainConfig: dataLoaderStateInit,
@@ -196,15 +201,12 @@ function addGlobalAsyncThunkActions<TPayload, TArg>(
     setGlobalRejected(sliceState, stateKey, action.error, openNetworkModalOnReject);
   });
   builder.addCase(action.fulfilled, (sliceState, action) => {
-    setGlobalFulfilled(sliceState, stateKey);
     if (fetchChainConfigs.fulfilled.match(action)) {
       sliceState.statusIndicator.excludeChainIds = action.payload.chainConfigs
         .filter(c => c.eol)
         .map(c => c.id);
     }
-    if (sliceState.statusIndicator.open) {
-      sliceState.statusIndicator.open = false;
-    }
+    setGlobalFulfilled(sliceState, stateKey, openNetworkModalOnReject);
   });
 }
 
@@ -222,13 +224,20 @@ function setGlobalRejected(
     sliceState.global[stateKey],
     errorToString(error)
   );
-  if (openModal && !sliceState.statusIndicator.open) {
-    sliceState.statusIndicator.open = true;
+  if (openModal) {
+    setOpenByGlobal(sliceState, stateKey, true);
   }
 }
 
-function setGlobalFulfilled(sliceState: Draft<DataLoaderState>, stateKey: LoaderGlobalKey) {
+function setGlobalFulfilled(
+  sliceState: Draft<DataLoaderState>,
+  stateKey: LoaderGlobalKey,
+  openNetworkModalOnReject: boolean = false
+) {
   sliceState.global[stateKey] = makeFulfilledState(sliceState.global[stateKey]);
+  if (openNetworkModalOnReject) {
+    setOpenByGlobal(sliceState, stateKey, false);
+  }
 }
 
 function getOrCreateChainState(sliceState: Draft<DataLoaderState>, chainId: ChainId) {
@@ -311,7 +320,8 @@ function addByChainAsyncThunkActions<
       state: unknown;
     }
   >,
-  stateKeys: Array<LoaderChainKey>
+  stateKeys: Array<LoaderChainKey>,
+  openNetworkModalOnReject: boolean = false
 ) {
   builder
     .addCase(action.pending, (sliceState, action) => {
@@ -328,10 +338,9 @@ function addByChainAsyncThunkActions<
 
       for (const stateKey of stateKeys) {
         chainState[stateKey] = makeRejectedState(chainState[stateKey], error);
-
-        // something got rejected, we want to auto-open the indicator if not eol chain
-        sliceState.statusIndicator.open =
-          !sliceState.statusIndicator.excludeChainIds.includes(chainId);
+        if (openNetworkModalOnReject) {
+          setOpenByChainId(sliceState, chainId, stateKey, true);
+        }
       }
     })
     .addCase(action.fulfilled, (sliceState, action) => {
@@ -340,9 +349,9 @@ function addByChainAsyncThunkActions<
 
       for (const stateKey of stateKeys) {
         chainState[stateKey] = makeFulfilledState(chainState[stateKey]);
-      }
-      if (sliceState.statusIndicator.open) {
-        sliceState.statusIndicator.open = false;
+        if (openNetworkModalOnReject) {
+          setOpenByChainId(sliceState, chainId, stateKey, false);
+        }
       }
     });
 }
@@ -362,7 +371,8 @@ function addByAddressByChainAsyncThunkActions<
       state: unknown;
     }
   >,
-  stateKeys: Array<LoaderAddressChainKey>
+  stateKeys: Array<LoaderAddressChainKey>,
+  openNetworkModalOnReject: boolean = false
 ) {
   builder
     .addCase(action.pending, (sliceState, action) => {
@@ -388,6 +398,15 @@ function addByAddressByChainAsyncThunkActions<
 
       for (const stateKey of stateKeys) {
         chainState[stateKey] = makeRejectedState(chainState[stateKey], error);
+        if (openNetworkModalOnReject) {
+          setOpenByAddressByChainId(
+            sliceState,
+            action.meta.arg.walletAddress,
+            chainId,
+            stateKey,
+            true
+          );
+        }
       }
     })
     .addCase(action.fulfilled, (sliceState, action) => {
@@ -400,6 +419,15 @@ function addByAddressByChainAsyncThunkActions<
 
       for (const stateKey of stateKeys) {
         chainState[stateKey] = makeFulfilledState(chainState[stateKey]);
+        if (openNetworkModalOnReject) {
+          setOpenByAddressByChainId(
+            sliceState,
+            action.meta.arg.walletAddress,
+            chainId,
+            stateKey,
+            false
+          );
+        }
       }
     });
 }
@@ -466,7 +494,8 @@ function addByAddressAsyncThunkActions<
     }
   >,
   addressKeys: Array<LoaderAddressKey>,
-  globalKeys?: Array<LoaderGlobalKey>
+  globalKeys?: Array<LoaderGlobalKey>,
+  openNetworkModalOnReject: boolean = false
 ) {
   builder
     .addCase(action.pending, (sliceState, action) => {
@@ -484,19 +513,185 @@ function addByAddressAsyncThunkActions<
 
       for (const addressKey of addressKeys) {
         addressState.global[addressKey] = makeRejectedState(addressState.global[addressKey], error);
+        if (openNetworkModalOnReject) {
+          setOpenByAddressByGlobal(sliceState, action.meta.arg.walletAddress, addressKey, true);
+        }
       }
 
-      globalKeys?.forEach(globalKey => setGlobalRejected(sliceState, globalKey, action.error));
+      globalKeys?.forEach(globalKey =>
+        setGlobalRejected(sliceState, globalKey, action.error, openNetworkModalOnReject)
+      );
     })
     .addCase(action.fulfilled, (sliceState, action) => {
       const addressState = getOrCreateAddressState(sliceState, action.meta.arg.walletAddress);
 
       for (const addressKey of addressKeys) {
         addressState.global[addressKey] = makeFulfilledState(addressState.global[addressKey]);
+        if (openNetworkModalOnReject) {
+          setOpenByAddressByGlobal(sliceState, action.meta.arg.walletAddress, addressKey, false);
+        }
       }
 
-      globalKeys?.forEach(globalKey => setGlobalFulfilled(sliceState, globalKey));
+      globalKeys?.forEach(globalKey =>
+        setGlobalFulfilled(sliceState, globalKey, openNetworkModalOnReject)
+      );
     });
+}
+
+function setOpenByGlobal(
+  sliceState: Draft<DataLoaderState>,
+  stateKey: LoaderGlobalKey,
+  open: boolean
+) {
+  if (sliceState.statusIndicator.openBy.global[stateKey] === open) {
+    return;
+  }
+  sliceState.statusIndicator.openBy.global[stateKey] = open;
+
+  recalculateStatusIndicatorOpenState(sliceState, open);
+}
+
+function setOpenByChainId(
+  sliceState: Draft<DataLoaderState>,
+  chainId: ChainId,
+  stateKey: LoaderChainKey,
+  open: boolean
+) {
+  // ignore eol chains
+  if (sliceState.statusIndicator.excludeChainIds.includes(chainId)) {
+    return;
+  }
+
+  if (sliceState.statusIndicator.openBy.byChainId[chainId]?.[stateKey] === open) {
+    return;
+  }
+
+  sliceState.statusIndicator.openBy.byChainId[chainId] ??= {};
+  sliceState.statusIndicator.openBy.byChainId[chainId][stateKey] = open;
+
+  recalculateStatusIndicatorOpenState(sliceState, open);
+}
+
+function setOpenByAddressByGlobal(
+  sliceState: Draft<DataLoaderState>,
+  address: string,
+  stateKey: LoaderAddressKey,
+  open: boolean
+) {
+  const addressKey = address.toLowerCase();
+  if (sliceState.statusIndicator.openBy.byAddress[addressKey]?.global[stateKey] === open) {
+    return;
+  }
+
+  sliceState.statusIndicator.openBy.byAddress[addressKey] ??= {
+    global: {},
+    byChainId: {},
+  };
+  sliceState.statusIndicator.openBy.byAddress[addressKey].global[stateKey] = open;
+
+  recalculateStatusIndicatorOpenState(sliceState, open);
+}
+
+function setOpenByAddressByChainId(
+  sliceState: Draft<DataLoaderState>,
+  address: string,
+  chainId: ChainId,
+  stateKey: LoaderAddressChainKey,
+  open: boolean
+) {
+  // ignore eol chains
+  if (sliceState.statusIndicator.excludeChainIds.includes(chainId)) {
+    return;
+  }
+
+  const addressKey = address.toLowerCase();
+  if (
+    sliceState.statusIndicator.openBy.byAddress[addressKey]?.byChainId[chainId]?.[stateKey] === open
+  ) {
+    return;
+  }
+
+  sliceState.statusIndicator.openBy.byAddress[addressKey] ??= {
+    global: {},
+    byChainId: {},
+  };
+  sliceState.statusIndicator.openBy.byAddress[addressKey].byChainId[chainId] ??= {};
+  sliceState.statusIndicator.openBy.byAddress[addressKey].byChainId[chainId][stateKey] = open;
+
+  recalculateStatusIndicatorOpenState(sliceState, open);
+}
+
+function recalculateStatusIndicatorOpenState(sliceState: Draft<DataLoaderState>, open?: boolean) {
+  sliceState.statusIndicator.open =
+    // just opened
+    open ||
+    // any global open
+    Object.values(sliceState.statusIndicator.openBy.global).some(v => v) ||
+    // any by chain-global open
+    Object.values(sliceState.statusIndicator.openBy.byChainId).some(chainState =>
+      Object.values(chainState).some(v => v)
+    ) ||
+    // any by address open
+    Object.values(sliceState.statusIndicator.openBy.byAddress).some(
+      addressState =>
+        Object.values(addressState.global).some(v => v) ||
+        Object.values(addressState.byChainId).some(chainState =>
+          Object.values(chainState).some(v => v)
+        )
+    );
+
+  if (import.meta.env.DEV) {
+    if (sliceState.statusIndicator.open) {
+      console.dir(
+        {
+          global: Object.entries(sliceState.statusIndicator.openBy.global)
+            .filter(([, v]) => v)
+            .map(([k]) => k),
+          byChainId: Object.entries(sliceState.statusIndicator.openBy.byChainId).reduce(
+            (acc, [chainId, states]) => {
+              const openStates = Object.entries(states)
+                .filter(([, v]) => v)
+                .map(([k]) => k);
+              if (openStates.length > 0) {
+                acc[chainId] = openStates;
+              }
+              return acc;
+            },
+            {} as Record<string, string[]>
+          ),
+          byAddress: Object.entries(sliceState.statusIndicator.openBy.byAddress).reduce(
+            (acc, [address, addrState]) => {
+              const openGlobalStates = Object.entries(addrState.global)
+                .filter(([, v]) => v)
+                .map(([k]) => k);
+              const openByChainStates = Object.entries(addrState.byChainId).reduce(
+                (chainAcc, [chainId, states]) => {
+                  const openStates = Object.entries(states)
+                    .filter(([, v]) => v)
+                    .map(([k]) => k);
+                  if (openStates.length > 0) {
+                    chainAcc[chainId] = openStates;
+                  }
+                  return chainAcc;
+                },
+                {} as Record<string, string[]>
+              );
+
+              if (openGlobalStates.length > 0 || Object.keys(openByChainStates).length > 0) {
+                acc[address] = {
+                  global: openGlobalStates,
+                  byChainId: openByChainStates,
+                };
+              }
+              return acc;
+            },
+            {} as Record<string, { global: string[]; byChainId: Record<string, string[]> }>
+          ),
+        },
+        { depth: null }
+      );
+    }
+  }
 }
 
 export const dataLoaderSlice = createSlice({
@@ -553,35 +748,53 @@ export const dataLoaderSlice = createSlice({
     );
     addGlobalAsyncThunkActions(builder, initCampaignBeGems, 'beGemsCampaign', false);
 
-    addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
-    addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);
+    addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData'], true);
+    addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook'], true);
 
-    addByAddressByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance']);
-    addByAddressByChainAsyncThunkActions(builder, fetchAllAllowanceAction, ['allowance']);
+    addByAddressByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance'], true);
+    addByAddressByChainAsyncThunkActions(builder, fetchAllAllowanceAction, ['allowance'], true);
     addByAddressByChainAsyncThunkActions(
       builder,
       reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
-      ['balance', 'allowance']
+      ['balance', 'allowance'],
+      true
     );
-    addByAddressByChainAsyncThunkActions(builder, fetchClmHarvestsForVaultsOfUserOnChain, [
-      'clmHarvests',
-    ]);
+    addByAddressByChainAsyncThunkActions(
+      builder,
+      fetchClmHarvestsForVaultsOfUserOnChain,
+      ['clmHarvests'],
+      false
+    );
 
-    addByAddressAsyncThunkActions(builder, fetchWalletTimeline, ['timeline']);
-    addByAddressAsyncThunkActions(builder, recalculateDepositedVaultsAction, ['depositedVaults']);
-    addByAddressAsyncThunkActions(builder, initDashboardByAddress, ['dashboard']);
-    addByAddressAsyncThunkActions(builder, fetchClmHarvestsForUser, ['clmHarvests']);
+    addByAddressAsyncThunkActions(builder, fetchWalletTimeline, ['timeline'], undefined, false);
+    addByAddressAsyncThunkActions(
+      builder,
+      recalculateDepositedVaultsAction,
+      ['depositedVaults'],
+      undefined,
+      false
+    );
+    addByAddressAsyncThunkActions(builder, initDashboardByAddress, ['dashboard'], undefined, false);
+    addByAddressAsyncThunkActions(
+      builder,
+      fetchClmHarvestsForUser,
+      ['clmHarvests'],
+      undefined,
+      false
+    );
     addByAddressAsyncThunkActions(
       builder,
       fetchUserStellaSwapRewardsAction,
       ['stellaSwapRewards'],
-      ['stellaSwapRewards']
+      ['stellaSwapRewards'],
+      false
     );
     addByAddressAsyncThunkActions(
       builder,
       fetchUserMerklRewardsAction,
       ['merklRewards'],
-      ['merklRewards']
+      ['merklRewards'],
+      false
     );
   },
 });
