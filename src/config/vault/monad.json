@@ -1,5 +1,61 @@
 [
   {
+    "id": "morpho-monad-steakhouse-usdc",
+    "name": "USDC (Steakhouse, High Yield USDC)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x816716ebDB0D4c882d364C61aD3373eEAD91C86a",
+    "earnedToken": "mooMorphoMonadUSDC",
+    "earnedTokenAddress": "0x816716ebDB0D4c882d364C61aD3373eEAD91C86a",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1764176331,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0xbeEFf443C3CbA3E369DA795002243BeaC311aB83/steakhouse-high-yield-usdc",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-monad-steakhouse-ausd",
+    "name": "AUSD (Steakhouse, High Yield AUSD)",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x873629E73CD5FAc9e3Ee1963A796Ad0aBDf17542",
+    "earnedToken": "mooMorphoMonadAUSD",
+    "earnedTokenAddress": "0x873629E73CD5FAc9e3Ee1963A796Ad0aBDf17542",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1764176330,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0xbeeffeA75cFC4128ebe10C8D7aE22016D215060D/steakhouse-high-yield-ausd",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-monad-usdc-weth-rp",
     "name": "USDC-WETH Reward Pool",
     "type": "gov",
