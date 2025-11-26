@@ -880,7 +880,7 @@ export const config = {
     name: 'Monad',
     chainId: 143,
     rpc: ['https://rpc.monad.xyz'],
-    explorerUrl: 'https://monad.socialscan.io/',
+    explorerUrl: 'https://monadscan.com/',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xDD10a7949e48dCf5df301DC84268eaaC7F7d3f3D',
     native: { symbol: 'MON', oracleId: 'WMON', decimals: 18 },
