@@ -1,30 +1,29 @@
-import { memo } from 'react';
+import { memo, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollableDrawer, Layout, Main, Footer } from '../ScrollableDrawer/ScrollableDrawer.tsx';
+import { Footer, Layout, Main, ScrollableDrawer } from '../ScrollableDrawer/ScrollableDrawer.tsx';
 import { styled } from '@repo/styles/jsx';
 import { ChainRpcReset } from '../Header/components/UserSettings/RpcEdit.tsx';
 import { Button } from '../Button/Button.tsx';
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
-import { RpcSettingsPanel } from '../Header/components/UserSettings/RpcSettingsPanel.tsx';
-import { TitleComponent } from './Title.tsx';
 
-export const MobileDrawer = memo(function MobileDrawer({
-  open,
-  handleClose,
-  titleText,
-  editChainId,
-  setEditChainId,
-  rpcErrors,
-  hasAnyError,
-}: {
+type DetailsMobileProps = {
+  header: ReactNode;
+  content: ReactNode;
+  footer: ReactNode;
   open: boolean;
   handleClose: () => void;
-  titleText: string;
   editChainId: ChainEntity['id'] | null;
   setEditChainId: (id: ChainEntity['id'] | null) => void;
-  rpcErrors: ChainEntity['id'][];
-  hasAnyError: boolean;
-}) {
+};
+export const DetailsMobile = memo(function DetailsMobile({
+  open,
+  handleClose,
+  editChainId,
+  setEditChainId,
+  header,
+  content,
+  footer,
+}: DetailsMobileProps) {
   const { t } = useTranslation();
 
   return (
@@ -38,21 +37,13 @@ export const MobileDrawer = memo(function MobileDrawer({
       hideShadow={true}
       mainChildren={
         <>
-          <TitleWrapper>
-            <TitleComponent mobilelist={true} hasAnyError={hasAnyError} text={titleText} />
-          </TitleWrapper>
-          <ScrollableRpcSettingsPanel>
-            <RpcSettingsPanel
-              rpcErrors={rpcErrors}
-              editChainId={editChainId}
-              setEditChainId={setEditChainId}
-            />
-          </ScrollableRpcSettingsPanel>
+          <TitleWrapper>{header}</TitleWrapper>
+          <ScrollableRpcSettingsPanel>{content}</ScrollableRpcSettingsPanel>
         </>
       }
       footerChildren={
         <>
-          <div>{t('RpcModal-EmptyList')}</div>
+          <div>{footer}</div>
           <ActionButtons>
             {editChainId ?
               <>
