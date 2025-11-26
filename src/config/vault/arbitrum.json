@@ -330,7 +330,7 @@
     "earnedTokenAddress": "0xdFcfFE75EF84EdEa4ef62bE6D08fb82acD3d2044",
     "earnContractAddress": "0xdFcfFE75EF84EdEa4ef62bE6D08fb82acD3d2044",
     "oracle": "lps",
-    "oracleId": "balancerv3-arbitrum-waarusdcn-eure",
+    "oracleId": "balancerv3-arbitrum-waarbusdcn-eure",
     "createdAt": 1764094750,
     "status": "active",
     "platformId": "aura",
