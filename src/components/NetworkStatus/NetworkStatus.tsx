@@ -10,7 +10,7 @@ import {
   selectChainIdsWithRejectedData,
   selectConfigKeysWithPendingData,
   selectConfigKeysWithRejectedData,
-  selectIsStatusIndicatorOpen,
+  selectHaveUnreadStatusNotification,
 } from '../../features/data/selectors/data-loader-helpers.ts';
 import { PulseHighlight } from '../../features/vault/components/PulseHighlight/PulseHighlight.tsx';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
@@ -35,27 +35,25 @@ export const NetworkStatus = memo(function NetworkStatus({
   onClose: () => void;
 }) {
   const [editChainId, setEditChainId] = useState<ChainEntity['id'] | null>(null);
-  const isAutoOpen = useAppSelector(selectIsStatusIndicatorOpen);
+  const haveUnreadNotification = useAppSelector(selectHaveUnreadStatusNotification);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const isMobile = useMediaQuery('(max-width: 768px)', false);
-  const open = isUserOpen || isAutoOpen;
-  const openOnClick = isMobile || isAutoOpen;
+  const open = isUserOpen || haveUnreadNotification;
+  const openOnClick = isMobile || haveUnreadNotification;
   const openOnHover = !openOnClick;
-  const isNotification = isAutoOpen && !isUserOpen;
+  const isNotification = haveUnreadNotification && !isUserOpen;
 
   const handleClose = useCallback(() => {
-    dispatch(dataLoaderActions.closeIndicator());
+    dispatch(dataLoaderActions.dismissNotification());
     onClose();
   }, [dispatch, onClose]);
 
   const handleToggle = useCallback(() => {
     if (open) {
       handleClose();
-      dataLoaderActions.openIndicator();
     } else {
       onOpen();
-      dataLoaderActions.closeIndicator();
     }
   }, [open, handleClose, onOpen]);
 

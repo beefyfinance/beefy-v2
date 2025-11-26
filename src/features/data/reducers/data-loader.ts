@@ -698,11 +698,13 @@ export const dataLoaderSlice = createSlice({
   name: 'dataLoader',
   initialState: initialDataLoaderState,
   reducers: {
-    closeIndicator(sliceState) {
+    dismissNotification(sliceState) {
       sliceState.statusIndicator.open = false;
-    },
-    openIndicator(sliceState) {
-      sliceState.statusIndicator.open = true;
+      sliceState.statusIndicator.openBy = {
+        global: {},
+        byChainId: {},
+        byAddress: {},
+      };
     },
   },
   extraReducers: builder => {

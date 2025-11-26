@@ -2,14 +2,14 @@ import { lazy, memo, Suspense, useCallback, useRef, useState } from 'react';
 import { styled } from '@repo/styles/jsx';
 import { NetworkStatus } from '../../../NetworkStatus/NetworkStatus.tsx';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
-import { selectIsStatusIndicatorOpen } from '../../../../features/data/selectors/data-loader-helpers.ts';
+import { selectHaveUnreadStatusNotification } from '../../../../features/data/selectors/data-loader-helpers.ts';
 
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = lazy(() => import('../WalletContainer/WalletContainer.tsx'));
 
 export const ConnectionStatus = memo(function ConnectionStatus() {
   const [open, setOpen] = useState<boolean>(false);
-  const isAutoOpen = useAppSelector(selectIsStatusIndicatorOpen);
+  const haveUnreadNotification = useAppSelector(selectHaveUnreadStatusNotification);
   const anchorEl = useRef<HTMLDivElement>(null);
 
   const handleOpenStatus = useCallback(() => {
@@ -21,7 +21,7 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
   }, [setOpen]);
 
   return (
-    <Holder ref={anchorEl} open={open || isAutoOpen}>
+    <Holder ref={anchorEl} open={open || haveUnreadNotification}>
       <NetworkStatus
         positionRef={anchorEl}
         isOpen={open}

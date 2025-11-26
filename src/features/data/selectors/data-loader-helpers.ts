@@ -374,5 +374,5 @@ export const selectConfigKeysWithRejectedData = (state: BeefyState) =>
 export const selectConfigKeysWithFulfilledData = (state: BeefyState) =>
   selectNetStatus(state, findConfigMatching, isLoaderFulfilled);
 
-export const selectIsStatusIndicatorOpen = (state: BeefyState) =>
+export const selectHaveUnreadStatusNotification = (state: BeefyState) =>
   state.ui.dataLoader.statusIndicator.open;
