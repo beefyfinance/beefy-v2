@@ -319,6 +319,28 @@
     "network": "arbitrum"
   },
   {
+    "id": "balancerv3-arbitrum-waarbusdcn-eure",
+    "name": "USDC/EURe V3",
+    "type": "standard",
+    "token": "USDC/EURe V3",
+    "tokenAddress": "0xa978CC348A0B5dE8Bd564A1D8fe437787FD12664",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerArbitrumwaArbUSDCn/EURe",
+    "earnedTokenAddress": "0xdFcfFE75EF84EdEa4ef62bE6D08fb82acD3d2044",
+    "earnContractAddress": "0xdFcfFE75EF84EdEa4ef62bE6D08fb82acD3d2044",
+    "oracle": "lps",
+    "oracleId": "balancerv3-arbitrum-waarbusdcn-eure",
+    "createdAt": 1764094750,
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["waArbUSDCn", "EURe"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0xa978cc348a0b5de8bd564a1d8fe437787fd12664",
+    "network": "arbitrum"
+  },
+  {
     "id": "balancerv3-arbitrum-waarbweth-waarbwsteth",
     "name": "WETH/wstETH V3",
     "type": "standard",

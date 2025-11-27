@@ -188,7 +188,8 @@ type ChainId =
   | 'harmony'
   | 'saga'
   | 'hyperevm'
-  | 'plasma';
+  | 'plasma'
+  | 'monad';
 
 export type ChainConfig = {
   id: ChainId;

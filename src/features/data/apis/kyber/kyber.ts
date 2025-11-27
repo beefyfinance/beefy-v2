@@ -32,6 +32,7 @@ export const supportedChainIds: ChainConfig['id'][] = [
   'berachain',
   'hyperevm',
   'plasma',
+  'monad',
 ];
 
 export class KyberSwapApi implements IKyberSwapApi {

@@ -1099,6 +1099,7 @@ const config = buildConfig(
       moonriver: { primary: '#06353d', header: 0.4 },
       optimism: { primary: '#ff0420', header: 0.2 },
       plasma: { primary: '#162f29', header: 0.2 },
+      monad: { primary: '#836EF9', header: 0.2 },
       polygon: { primary: '#f5f0fd', header: 0.3 },
       real: { primary: '#ffffff', header: '#1c122c66' },
       rootstock: { primary: '#000000', header: '#1c122c66' },
