@@ -1,5 +1,46 @@
 [
   {
+    "id": "curve-monad-3pool",
+    "name": "AUSD/USDC/USDT0",
+    "type": "standard",
+    "token": "AUSDCT0",
+    "tokenAddress": "0x942644106B073E30D72c2C5D7529D5C296ea91ab",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x3bAFeB462E27154CBc58405355E71e85c091F0A4",
+    "earnedToken": "mooCurve-3pool",
+    "earnedTokenAddress": "0x3bAFeB462E27154CBc58405355E71e85c091F0A4",
+    "oracle": "lps",
+    "oracleId": "curve-monad-3pool",
+    "status": "active",
+    "createdAt": 1764322823,
+    "platformId": "curve",
+    "assets": ["AUSD", "USDC", "USDT0"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-2/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-2/withdraw",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x942644106B073E30D72c2C5D7529D5C296ea91ab",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x942644106B073E30D72c2C5D7529D5C296ea91ab",
+            "coins": [
+              "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+              "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+              "0xe7cd86e13AC4309349F30B3435a9d337750fC82D"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "morpho-monad-steakhouse-usdc",
     "name": "USDC (Steakhouse, High Yield USDC)",
     "type": "standard",

@@ -80,24 +80,11 @@ const cryptoPoolsIgnoreZap = new Set([
 ]);
 
 const chainIdToCurveChainId: ChainMap<string> = {
-  arbitrum: 'arbitrum',
-  aurora: 'aurora',
   avax: 'avalanche',
-  bsc: 'bsc',
-  base: 'base',
-  celo: 'celo',
-  ethereum: 'ethereum',
-  fantom: 'fantom',
   gnosis: 'xdai',
-  kava: 'kava',
-  moonbeam: 'moonbeam',
-  optimism: 'optimism',
-  polygon: 'polygon',
-  fraxtal: 'fraxtal',
-  sonic: 'sonic',
-  plasma: 'plasma',
 };
-
+const isCurveLite = (chainId: string) => ['plasma', 'monad'].includes(chainId);
+const liteEndpoints = ['factory-tricrypto', 'factory-twocrypto', 'factory-stable-ng'];
 const curveEndpoints = [
   'factory',
   'factory-tricrypto',
@@ -241,13 +228,12 @@ async function fetchCurvePools(
   quiet: boolean = false
 ): Promise<CurveApiPoolWithMetadata[]> {
   const abChainId = appToAddressBookId(chainId);
-  const curveChainId = chainIdToCurveChainId[abChainId];
-  if (!curveChainId) {
-    throw new Error(`No curve chain id found for chain ${chainId}`);
-  }
+  const curveChainId = chainIdToCurveChainId[abChainId] || abChainId;
 
-  const url = `https://api.curve.finance/api/getPools/${curveChainId}/${endpoint}`;
-  // const url = `https://api-core.curve.finance/v1/getPools/${curveChainId}/${endpoint}`;
+  const url =
+    isCurveLite(curveChainId) ?
+      `https://api-core.curve.finance/v1/getPools/${curveChainId}/${endpoint}`
+    : `https://api.curve.finance/api/getPools/${curveChainId}/${endpoint}`;
   if (!quiet) {
     console.log(`Fetching ${url}...`);
   }
@@ -293,17 +279,12 @@ export async function getCurvePools(
     return apiPoolsCache.get(chainId)!;
   }
 
-  const abChainId = appToAddressBookId(chainId);
-  const curveChainId = chainIdToCurveChainId[abChainId];
-  if (!curveChainId) {
-    throw new Error(`No curve chain id found for chain ${chainId}`);
-  }
-
   const cachePath = path.join(cacheCurveApiPath, chainId);
   await mkdir(cachePath, { recursive: true });
 
   const allPools: CurveApiPoolWithMetadata[] = [];
-  for (const endpoint of curveEndpoints) {
+  const endpoints = isCurveLite(chainId) ? liteEndpoints : curveEndpoints;
+  for (const endpoint of endpoints) {
     const cacheFile = path.join(cachePath, `${endpoint}.json`);
     let pools =
       updateCache ?
