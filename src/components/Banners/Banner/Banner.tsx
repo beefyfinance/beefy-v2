@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import Clear from '../../../images/icons/mui/Clear.svg?react';
+import Clear from '../../../images/icons/clear.svg?react';
 import { bannerRecipe } from './styles.ts';
 import type { BannerProps } from './types.ts';
 

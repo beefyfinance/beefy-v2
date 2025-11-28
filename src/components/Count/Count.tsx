@@ -12,7 +12,10 @@ export const Count = styled('span', {
     '&:before': {
       boxShadow:
         '0px 24.3px 36px 0px rgba(0, 0, 0, 0.40), 0px 7.326px 10.853px 0px rgba(0, 0, 0, 0.26), 0px 3.043px 4.508px 0px rgba(0, 0, 0, 0.20), 0px 1.1px 1.63px 0px rgba(0, 0, 0, 0.14)',
-      textStyle: 'body.sm.medium',
+      fontSize: '11px',
+      lineHeight: '11px',
+      letterSpacing: '0px',
+      fontWeight: 'semiBold',
       content: 'attr(data-count)',
       display: 'flex',
       justifyContent: 'center',

@@ -45,7 +45,8 @@ export const styles = {
     zIndex: 'badge',
     md: {
       marginTop: '-32px',
-      marginLeft: '-24px',
+      marginLeft: '-8px',
+      left: '0',
     },
   }),
   active: css.raw({

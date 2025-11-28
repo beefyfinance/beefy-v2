@@ -42,10 +42,10 @@ export function useTooltip<TRef extends ReferenceType = Element>({
       flipMiddleware({
         crossAxis: placement.includes('-'),
         fallbackAxisSideDirection: 'start',
-        padding: 16,
+        padding: 12,
       }),
-      shiftMiddleware({ padding: 16 }),
-      arrowMiddleware({ element: arrowRef, padding: 16 }),
+      shiftMiddleware({ padding: 12 }),
+      arrowMiddleware({ element: arrowRef, padding: 12 }),
     ],
   });
   const { context } = data;

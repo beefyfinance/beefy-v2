@@ -5,7 +5,6 @@ import { UnstakedClmBannerDashboard } from '../../components/Banners/UnstakedClm
 import { DashboardMeta } from '../../components/Meta/DashboardMeta.tsx';
 import { TechLoader } from '../../components/TechLoader/TechLoader.tsx';
 import { isMaybeDomain, isValidAddress } from '../../helpers/addresses.ts';
-import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { useAppSelector } from '../data/store/hooks.ts';
 import { useResolveDomain } from '../data/hooks/resolver.ts';
 import { isFulfilledStatus, isRejectedStatus } from '../data/reducers/wallet/resolver-types.ts';
@@ -22,10 +21,8 @@ import {
 import { UserExposure } from './components/UserExposure/UserExposure.tsx';
 import { UserVaults } from './components/UserVaults/UserVaults.tsx';
 import { useInitDashboard } from './hooks.ts';
-import { styles } from './styles.ts';
 import { BeGemsBanner } from '../../components/Banners/BeGemsBanner/BeGemsBanner.tsx';
-
-const useStyles = legacyMakeStyles(styles);
+import { styled } from '@repo/styles/jsx';
 
 export type DashboardProps = {
   mode: 'url' | 'wallet';
@@ -107,8 +104,7 @@ type DashboardContainerProps = {
 };
 
 const DashboardContainer = memo(function DashboardContainer({ children }: DashboardContainerProps) {
-  const classes = useStyles();
-  return <div className={classes.dashboard}>{children}</div>;
+  return <MainContainer>{children}</MainContainer>;
 });
 
 type DashboardForAddressProps = {
@@ -132,16 +128,42 @@ const DashboardForAddress = memo(function DashboardForAddress({
           <DepositSummaryPlaceholder />
         : <DepositSummary address={address} />}
       </Header>
-      {loading ?
-        <TechLoader />
-      : userVaults.length > 0 ?
-        <>
-          <UserExposure address={address} />
-          <UserVaults address={address} />
-        </>
-      : <NoResults title={addressLabel || address} address={address} />}
+      <Content>
+        {loading ?
+          <TechLoader />
+        : userVaults.length > 0 ?
+          <>
+            <UserExposure address={address} />
+            <UserVaults address={address} />
+          </>
+        : <NoResults title={addressLabel || address} address={address} />}
+      </Content>
     </DashboardContainer>
   );
+});
+
+const MainContainer = styled('div', {
+  base: {
+    flex: '1 1 auto',
+    paddingBottom: '48px',
+    backgroundColor: 'background.header',
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+  },
+});
+
+const Content = styled('div', {
+  base: {
+    paddingBlock: '12px 20px',
+    backgroundColor: 'background.body',
+    borderRadius: '20px',
+    flexGrow: 1,
+    sm: {
+      paddingBlock: '14px 32px',
+      borderRadius: '24px',
+    },
+  },
 });
 
 // eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
