@@ -1,5 +1,72 @@
 [
   {
+    "id": "curve-usds-stusds",
+    "name": "USDS/stUSDS",
+    "type": "standard",
+    "token": "USDSstUSDS",
+    "tokenAddress": "0x2C7C98A3b1582D83c43987202aEFf638312478aE",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x9f90F5D9A1f46B62fbdDDEfbc72F48a35c183510",
+    "earnedToken": "mooCurveUSDS-stUSDS",
+    "earnedTokenAddress": "0x9f90F5D9A1f46B62fbdDDEfbc72F48a35c183510",
+    "oracle": "lps",
+    "oracleId": "curve-usds-stusds",
+    "status": "active",
+    "createdAt": 1764577073,
+    "platformId": "curve",
+    "assets": ["USDS", "stUSDS"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-628/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-628/deposit",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x2C7C98A3b1582D83c43987202aEFf638312478aE",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x2C7C98A3b1582D83c43987202aEFf638312478aE",
+            "coins": [
+              "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+              "0x99CD4Ec3f88A45940936F469E4bB72A2A701EEB9"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sky-sky-spk",
+    "name": "SKY",
+    "type": "standard",
+    "token": "SKY",
+    "tokenAddress": "0x56072C95FAA701256059aa122697B133aDEd9279",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sky",
+    "earnContractAddress": "0x99b2Fa4c9Ff9919Ec984e5dA79798E45B1A0a854",
+    "earnedToken": "mooSkySpk",
+    "earnedTokenAddress": "0x99b2Fa4c9Ff9919Ec984e5dA79798E45B1A0a854",
+    "oracle": "tokens",
+    "oracleId": "SKY",
+    "status": "active",
+    "createdAt": 1764577049,
+    "platformId": "sky",
+    "assets": ["SKY"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "stakedao-mim",
     "name": "MIM/DAI/USDC/USDT",
     "type": "standard",
