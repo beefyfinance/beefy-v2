@@ -70,7 +70,9 @@ const DashboardFromWallet = memo(function DashboardFromWallet() {
 
   return (
     <DashboardContainer>
-      <NotConnected />
+      <Content>
+        <NotConnected />
+      </Content>
     </DashboardContainer>
   );
 });
@@ -91,7 +93,9 @@ const DashboardFromDomain = memo(function DashboardFromDomain({
   if (isRejectedStatus(status)) {
     return (
       <DashboardContainer>
-        <InvalidDomain />
+        <Content>
+          <InvalidDomain />
+        </Content>
       </DashboardContainer>
     );
   }

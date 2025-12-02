@@ -134,6 +134,9 @@ const ValueStatContainer = styled('div', {
       true: {
         gap: '4px',
         alignItems: 'flex-end',
+        _hover: {
+          cursor: 'default',
+        },
       },
     },
   },
