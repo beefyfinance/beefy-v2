@@ -52,6 +52,22 @@ export type ApiAvgApy = {
 
 export type ApiAvgApys = ApiAvgApy[];
 
+/** TODO: Add more in case we need  */
+export type ApiRevenueStatType = 'weekly';
+
+export type ApiRevenuePeriodStat = {
+  t: number;
+  harvests_total_usd: string;
+  buyback_amount?: string | null;
+  buyback_avg_price?: string | null;
+  buyback_total_usd?: string | null;
+  fees_platform_usd?: string | null;
+  fees_treasury_usd?: string | null;
+  fees_pool_native?: string | null;
+};
+
+export type ApiRevenueStats = ApiRevenuePeriodStat[];
+
 export interface IBeefyDataApi {
   getAvailableRanges(
     vaultId: VaultEntity['id'],
@@ -76,4 +92,6 @@ export interface IBeefyDataApi {
   ): Promise<ApiCowcentratedChartData>;
 
   getAvgApys(): Promise<ApiAvgApys>;
+
+  getRevenueStatsByPeriod(revenueStatType: ApiRevenueStatType): Promise<ApiRevenueStats>;
 }
