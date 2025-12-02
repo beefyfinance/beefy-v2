@@ -98,7 +98,7 @@ const BuybackAmountStat = memo(function BuybackAmountStat() {
   );
 
   const Label = useMemo(() => {
-    return mode === 'usd' ? 'USDT' : 'BIFI';
+    return mode === 'usd' ? 'USD' : 'BIFI';
   }, [mode]);
 
   const Value = useMemo(() => {
