@@ -22718,44 +22718,6 @@
     ]
   },
   {
-    "id": "baseswap-axlwbtc-usdbc",
-    "name": "axlWBTC-USDbC LP",
-    "type": "standard",
-    "token": "axlWBTC-USDbC LP",
-    "tokenAddress": "0x317d373E590795e2c09D73FaD7498FC98c0A692B",
-    "tokenDecimals": 18,
-    "tokenProviderId": "baseswap",
-    "earnedToken": "mooBaseSwapaxlWBTC-USDbC",
-    "earnedTokenAddress": "0xC81C310cf5Cb1c9167808a241bBaeA7ebDFBFCFB",
-    "earnContractAddress": "0xC81C310cf5Cb1c9167808a241bBaeA7ebDFBFCFB",
-    "oracle": "lps",
-    "oracleId": "baseswap-axlwbtc-usdbc",
-    "status": "eol",
-    "retiredAt": 1722030051,
-    "retireReason": "tvl",
-    "createdAt": 1693580890,
-    "platformId": "baseswap",
-    "assets": ["axlWBTC", "USDbC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://baseswap.fi/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x1a35EE4640b0A3B87705B0A4B45D227Ba60Ca2ad",
-    "removeLiquidityUrl": "https://baseswap.fi/remove/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x1a35EE4640b0A3B87705B0A4B45D227Ba60Ca2ad",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "base-baseswap"
-      }
-    ]
-  },
-  {
     "id": "baseswap-usd+-usdbc",
     "name": "USD+-USDbC LP",
     "type": "standard",
