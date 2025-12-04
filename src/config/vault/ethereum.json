@@ -875,7 +875,7 @@
     "oracleId": "SKY",
     "status": "eol",
     "createdAt": 1756186900,
-    "retireReason": "reward",
+    "retireReason": "rewards",
     "retiredAt": 1764838421,
     "platformId": "sky",
     "assets": ["SKY"],
