@@ -19,6 +19,7 @@ export const LogoLink = memo(function LogoLink() {
 });
 
 const StyledLink = styled(Link, {
+  // comment to trigger new build
   base: {
     display: 'block',
     '& >svg': {
