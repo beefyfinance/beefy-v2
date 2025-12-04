@@ -57,11 +57,11 @@ export async function start() {
     return;
   }
 
-  const zap = await discoverCurveZap(args);
+  const { zap, pool } = await discoverCurveZap(args);
   if (!args.quiet) {
     console.log('Zap:', JSON.stringify(zap, null, 2));
   }
-  await saveCurveZap(args.chain, args.vault, zap);
+  await saveCurveZap(args.chain, args.vault, zap, pool);
 }
 
 // npm run addCurveZap -- -- -c arbitrum -v curve-arb-asdcrv-v2.1
