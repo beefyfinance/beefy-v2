@@ -46,10 +46,7 @@ export const Section = memo(function Section({
   noPadding = false,
 }: SectionProps) {
   const sectionClass = css({
-    marginTop: '48px',
-    mdDown: {
-      marginTop: '24px',
-    },
+    marginTop: '24px',
   });
 
   return (

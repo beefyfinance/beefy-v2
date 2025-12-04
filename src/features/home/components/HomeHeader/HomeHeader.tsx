@@ -1,5 +1,5 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useCallback, useState, type ComponentType } from 'react';
+import { memo, useCallback, useMemo, useState, type ComponentType } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
 import VisibilityOffOutlinedIcon from '../../../../images/icons/eyeOff.svg?react';
@@ -74,13 +74,21 @@ const VisibilityToggle = memo(function VisibilityToggle() {
   // Show preview of next state on hover, otherwise show current state
   const showIcon = isHovered ? !hideBalance : hideBalance;
 
+  const hoverText = useMemo(() => {
+    if (hideBalance) {
+      return 'Show sensitive data';
+    }
+
+    return 'Hide sensitive data';
+  }, [hideBalance]);
+
   return (
     <ToggleButton
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={updateHideBalance}
     >
-      {isDesktop && isHovered && !hideBalance ? 'Hide sensitive data' : null}
+      {isDesktop && isHovered ? hoverText : null}
       {showIcon ?
         <VisibilityOffIcon active={true} />
       : <VisibilityOnIcon active={isHovered} />}

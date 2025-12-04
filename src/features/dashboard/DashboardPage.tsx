@@ -159,12 +159,11 @@ const MainContainer = styled('div', {
 
 const Content = styled('div', {
   base: {
-    paddingBlock: '12px 20px',
+    paddingBlock: '0px 20px',
     backgroundColor: 'background.body',
     borderRadius: '20px',
     flexGrow: 1,
     sm: {
-      paddingBlock: '14px 32px',
       borderRadius: '24px',
     },
   },

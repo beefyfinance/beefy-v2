@@ -24,7 +24,7 @@ const StyledLink = styled(Link, {
     '& >svg': {
       height: '40px',
       display: 'block',
-      '@media (min-width: 450px)': {
+      '@media (min-width: 451px)': {
         width: '105px',
       },
     },
