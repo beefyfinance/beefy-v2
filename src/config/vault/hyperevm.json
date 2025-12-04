@@ -675,8 +675,8 @@
     "assets": ["feUSD", "USDT0"],
     "risks": [],
     "strategyTypeId": "compounds",
-    "network": "hyperevm",
     "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -707,8 +707,8 @@
     "assets": ["feUSD", "USDT0"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "network": "hyperevm",
     "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -736,8 +736,8 @@
     "assets": ["USDT0", "WHYPE"],
     "risks": [],
     "strategyTypeId": "compounds",
-    "network": "hyperevm",
     "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -768,8 +768,8 @@
     "assets": ["USDT0", "WHYPE"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "network": "hyperevm",
     "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -797,8 +797,8 @@
     "assets": ["feUSD", "WHYPE"],
     "risks": [],
     "strategyTypeId": "compounds",
-    "network": "hyperevm",
     "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -829,8 +829,8 @@
     "assets": ["feUSD", "WHYPE"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "network": "hyperevm",
     "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -845,15 +845,15 @@
     "tokenAddress": "0xf3994B10d0E3153D99647a6Fe296102d2d6EadAF",
     "tokenDecimals": 18,
     "tokenProviderId": "kittenswap",
+    "earnContractAddress": "0x4ad02BF095B8FFB6E0aC687BEEE5610ca3EBe6b1",
     "earnedToken": "mooKittenswapHyperevmKITTEN-WHYPE",
     "earnedTokenAddress": "0x4ad02BF095B8FFB6E0aC687BEEE5610ca3EBe6b1",
-    "earnContractAddress": "0x4ad02BF095B8FFB6E0aC687BEEE5610ca3EBe6b1",
     "oracle": "lps",
     "oracleId": "kittenswap-whype-kitten",
+    "status": "eol",
     "createdAt": 1751541061,
     "retireReason": "rewards",
     "retiredAt": 1754378978,
-    "status": "eol",
     "platformId": "kittenswap",
     "assets": ["KITTEN", "WHYPE"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -1279,9 +1279,9 @@
     "platformId": "beefy",
     "feeTier": "0.25",
     "assets": ["USDe", "WHYPE"],
-    "pointStructureIds": ["ethena"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["ethena"],
     "network": "hyperevm",
     "zaps": [
       {
