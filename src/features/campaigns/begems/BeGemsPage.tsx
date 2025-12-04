@@ -10,6 +10,7 @@ import {
   selectHasBeGemsCampaignDispatchedRecently,
   selectIsBeGemsCampaignAvailable,
 } from '../../data/selectors/data-loader/begems.ts';
+import { PageLayout } from '../../../components/PageLayout/PageLayout.tsx';
 
 const BeGemsPageLoader = memo(() => {
   const dispatch = useAppDispatch();
@@ -30,10 +31,14 @@ const BeGemsPage = memo(() => {
   const [season, setSeason] = useState(defaultSeason);
 
   return (
-    <Layout>
-      <Seasons season={season} setSeason={setSeason} />
-      <FrequentlyAskedQuestions season={season} />
-    </Layout>
+    <PageLayout
+      content={
+        <Layout>
+          <Seasons season={season} setSeason={setSeason} />
+          <FrequentlyAskedQuestions season={season} />
+        </Layout>
+      }
+    />
   );
 });
 

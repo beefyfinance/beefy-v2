@@ -24,6 +24,7 @@ import { SafetyCard } from './components/SafetyCard/SafetyCard.tsx';
 import { VaultHeader } from './components/VaultHeader/VaultHeader.tsx';
 import { VaultsStats } from './components/VaultsStats/VaultsStats.tsx';
 import { styles } from './styles.ts';
+import { PageLayout } from '../../components/PageLayout/PageLayout.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 const NotFoundPage = lazy(() => import('../../features/pagenotfound/NotFoundPage.tsx'));
@@ -52,38 +53,44 @@ const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) 
   const classes = useStyles();
 
   return (
-    <Container maxWidth="lg" className={classes.page}>
-      <VaultMeta vaultId={vaultId} />
-      <VaultBanners vaultId={vaultId} />
-      <div className={classes.header}>
-        <VaultHeader vaultId={vaultId} />
-        <VaultsStats vaultId={vaultId} />
-      </div>
-      <div className={classes.contentColumns}>
-        <div className={classes.columnActions}>
-          <Actions vaultId={vaultId} />
-          <Hidden to="sm">
-            <InsuranceCards vaultId={vaultId} />
-            <LeverageCards vaultId={vaultId} />
-            <GamingCards vaultId={vaultId} />
-          </Hidden>
-        </div>
-        <div className={classes.columnInfo}>
-          <PromoCardLoader vaultId={vaultId} />
-          <PnLGraphIfWallet vaultId={vaultId} />
-          <HistoricGraphsLoader vaultId={vaultId} />
-          <LiquidityPoolBreakdownLoader vaultId={vaultId} />
-          <SafetyCard vaultId={vaultId} />
-          <Explainer vaultId={vaultId} />
-          <Details vaultId={vaultId} />
-          <Hidden from="md">
-            <InsuranceCards vaultId={vaultId} />
-            <LeverageCards vaultId={vaultId} />
-            <GamingCards vaultId={vaultId} />
-          </Hidden>
-        </div>
-      </div>
-    </Container>
+    <PageLayout
+      content={
+        <>
+          <Container maxWidth="lg" className={classes.page}>
+            <VaultMeta vaultId={vaultId} />
+            <VaultBanners vaultId={vaultId} />
+            <div className={classes.header}>
+              <VaultHeader vaultId={vaultId} />
+              <VaultsStats vaultId={vaultId} />
+            </div>
+            <div className={classes.contentColumns}>
+              <div className={classes.columnActions}>
+                <Actions vaultId={vaultId} />
+                <Hidden to="sm">
+                  <InsuranceCards vaultId={vaultId} />
+                  <LeverageCards vaultId={vaultId} />
+                  <GamingCards vaultId={vaultId} />
+                </Hidden>
+              </div>
+              <div className={classes.columnInfo}>
+                <PromoCardLoader vaultId={vaultId} />
+                <PnLGraphIfWallet vaultId={vaultId} />
+                <HistoricGraphsLoader vaultId={vaultId} />
+                <LiquidityPoolBreakdownLoader vaultId={vaultId} />
+                <SafetyCard vaultId={vaultId} />
+                <Explainer vaultId={vaultId} />
+                <Details vaultId={vaultId} />
+                <Hidden from="md">
+                  <InsuranceCards vaultId={vaultId} />
+                  <LeverageCards vaultId={vaultId} />
+                  <GamingCards vaultId={vaultId} />
+                </Hidden>
+              </div>
+            </div>
+          </Container>
+        </>
+      }
+    />
   );
 });
 
