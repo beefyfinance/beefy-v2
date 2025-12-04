@@ -60,6 +60,7 @@ import type {
   LoaderStatePending,
   LoaderStateRejected,
 } from './data-loader-types.ts';
+import { fetchWeeklyRevenueStats } from '../actions/revenue.ts';
 
 const dataLoaderStateInit: LoaderStateIdle = {
   lastFulfilled: undefined,
@@ -138,6 +139,7 @@ export const initialDataLoaderState: DataLoaderState = {
     merklRewards: dataLoaderStateInit,
     stellaSwapRewards: dataLoaderStateInit,
     beGemsCampaign: dataLoaderStateInit,
+    revenue: dataLoaderStateInit,
   },
   byChainId: {},
   byAddress: {},
@@ -546,6 +548,7 @@ export const dataLoaderSlice = createSlice({
       false
     );
     addGlobalAsyncThunkActions(builder, initCampaignBeGems, 'beGemsCampaign', false);
+    addGlobalAsyncThunkActions(builder, fetchWeeklyRevenueStats, 'revenue', true);
 
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);

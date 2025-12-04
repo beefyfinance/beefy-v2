@@ -40,10 +40,12 @@ export type VaultDepositStatProps = {
 type SelectDataReturn =
   | {
       loading: true;
+      hideBalance: boolean;
     }
   | {
       loading: false;
       totalDeposit: BigNumber;
+      hideBalance: boolean;
     }
   | {
       loading: false;
@@ -62,16 +64,18 @@ function selectVaultDepositStat(
   maybeWalletAddress?: string
 ): SelectDataReturn {
   const vault = selectVaultById(state, vaultId);
+
   const walletAddress = maybeWalletAddress || selectWalletAddress(state);
+  const hideBalance = selectIsBalanceHidden(state);
   if (!walletAddress) {
-    return { loading: false, totalDeposit: BIG_ZERO };
+    return { loading: false, totalDeposit: BIG_ZERO, hideBalance };
   }
 
   const isLoaded =
     selectIsPricesAvailable(state) &&
     selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress);
   if (!isLoaded) {
-    return { loading: true };
+    return { loading: true, hideBalance };
   }
 
   const totalDeposit = selectUserVaultBalanceInDepositTokenIncludingDisplaced(
@@ -80,10 +84,9 @@ function selectVaultDepositStat(
     walletAddress
   );
   if (!totalDeposit.gt(0)) {
-    return { loading: false, totalDeposit: BIG_ZERO };
+    return { loading: false, totalDeposit: BIG_ZERO, hideBalance };
   }
 
-  const hideBalance = selectIsBalanceHidden(state);
   const notEarning = selectUserVaultBalanceNotInActiveBoostInDepositToken(
     state,
     vault.id,
@@ -123,7 +126,7 @@ export const VaultDepositStat = memo(function VaultDepositStat({
       <VaultValueStat
         label={t(label)}
         value="-"
-        blur={false}
+        blur={data.hideBalance}
         loading={true}
         expectSubValue={true}
         {...passthrough}
@@ -133,7 +136,13 @@ export const VaultDepositStat = memo(function VaultDepositStat({
 
   if (!('vaultDeposit' in data) || data.totalDeposit.isZero()) {
     return (
-      <VaultValueStat label={t(label)} value="0" blur={false} loading={false} {...passthrough} />
+      <VaultValueStat
+        label={t(label)}
+        value="0"
+        blur={data.hideBalance}
+        loading={false}
+        {...passthrough}
+      />
     );
   }
 

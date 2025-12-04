@@ -2,8 +2,10 @@ import type {
   ApiAvgApys,
   ApiChartData,
   ApiCowcentratedChartData,
+  ApiRevenueStats,
   ApiRanges,
   ApiStat,
+  ApiRevenueStatType,
   ApiTimeBucket,
   IBeefyDataApi,
 } from './beefy-data-api-types.ts';
@@ -68,6 +70,12 @@ export class BeefyDataApi implements IBeefyDataApi {
   async getAvgApys(): Promise<ApiAvgApys> {
     return await getJson<ApiAvgApys>({
       url: `${this.data}/apys/avg`,
+    });
+  }
+
+  async getRevenueStatsByPeriod(statType: ApiRevenueStatType): Promise<ApiRevenueStats> {
+    return await getJson<ApiRevenueStats>({
+      url: `${this.data}/stats/${statType}`,
     });
   }
 

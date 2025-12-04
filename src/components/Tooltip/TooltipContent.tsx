@@ -39,7 +39,7 @@ export const TooltipContent = memo(function TooltipContent({
 const TooltipOuter = styled('div', {
   base: {
     minWidth: '36px',
-    maxWidth: 'min(calc(100vw - 32px), 440px)',
+    maxWidth: 'min(calc(100vw - 24px), 440px)',
   },
   variants: {
     variant: {
