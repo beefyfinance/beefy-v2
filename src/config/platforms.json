@@ -1528,5 +1528,14 @@
     "documentation": "https://docs.lithos.to/",
     "description": "Lithos is a 3,3 DEX built on the Plasma blockchain.",
     "type": "amm"
+  },
+  {
+    "id": "curvance",
+    "name": "Curvance",
+    "website": "https://app.curvance.com/",
+    "twitter": "Curvance",
+    "documentation": "https://docs.curvance.com/",
+    "description": "Curvance is purpose-built to bring high-efficiency lending to DeFi. The current implementation supports stablecoins, WETH, WBTC, Monad-native LSTs, and select LRTs. The system is optimized to offer deep liquidity, high LTVs, and dynamic risk processing for assets most relevant to the ecosystem at launch.",
+    "type": "money-market"
   }
 ]

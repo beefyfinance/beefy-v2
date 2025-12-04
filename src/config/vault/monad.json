@@ -1,5 +1,109 @@
 [
   {
+    "id": "curvance-monad-wmon-wmon-ausd",
+    "name": "WMON (WMON-AUSD Market)",
+    "type": "standard",
+    "token": "WMON",
+    "tokenAddress": "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0xC229c17f3023743621a355BbCEf419675B347B0c",
+    "earnedToken": "mooCurvanceWMON(WMON-AUSD)",
+    "earnedTokenAddress": "0xC229c17f3023743621a355BbCEf419675B347B0c",
+    "oracle": "tokens",
+    "oracleId": "WMON",
+    "status": "active",
+    "createdAt": 1764860777,
+    "platformId": "curvance",
+    "assets": ["WMON"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "curvance-monad-ausd-wmon-ausd",
+    "name": "AUSD (WMON-AUSD Market)",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xd16fA9b21786F8F23b9DEaC61197830E0e15752b",
+    "earnedToken": "mooCurvanceAUSD(WMON-AUSD)",
+    "earnedTokenAddress": "0xd16fA9b21786F8F23b9DEaC61197830E0e15752b",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1764860777,
+    "platformId": "curvance",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "curvance-monad-wmon-wmon-usdc",
+    "name": "WMON (WMON-USDC Market)",
+    "type": "standard",
+    "token": "WMON",
+    "tokenAddress": "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x7d3b4317F7b9d3B677163E3543fafa694Ad8BD06",
+    "earnedToken": "mooCurvanceWMON(WMON-USDC)",
+    "earnedTokenAddress": "0x7d3b4317F7b9d3B677163E3543fafa694Ad8BD06",
+    "oracle": "tokens",
+    "oracleId": "WMON",
+    "status": "active",
+    "createdAt": 1764860777,
+    "platformId": "curvance",
+    "assets": ["WMON"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "curvance-monad-usdc-wmon-usdc",
+    "name": "USDC (WMON-USDC Market)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xf26066a8Ef7c49a150Ef33E3adD6889a9d85e07E",
+    "earnedToken": "mooCurvanceUSDC(WMON-USDC)",
+    "earnedTokenAddress": "0xf26066a8Ef7c49a150Ef33E3adD6889a9d85e07E",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1764860777,
+    "platformId": "curvance",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-monad-wsteth-wmon-rp",
     "name": "wstETH-WMON Reward Pool",
     "type": "gov",
