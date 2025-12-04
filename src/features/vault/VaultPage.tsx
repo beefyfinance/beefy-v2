@@ -55,40 +55,38 @@ const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) 
   return (
     <PageLayout
       content={
-        <>
-          <Container maxWidth="lg" className={classes.page}>
-            <VaultMeta vaultId={vaultId} />
-            <VaultBanners vaultId={vaultId} />
-            <div className={classes.header}>
-              <VaultHeader vaultId={vaultId} />
-              <VaultsStats vaultId={vaultId} />
+        <Container maxWidth="lg" className={classes.page}>
+          <VaultMeta vaultId={vaultId} />
+          <VaultBanners vaultId={vaultId} />
+          <div className={classes.header}>
+            <VaultHeader vaultId={vaultId} />
+            <VaultsStats vaultId={vaultId} />
+          </div>
+          <div className={classes.contentColumns}>
+            <div className={classes.columnActions}>
+              <Actions vaultId={vaultId} />
+              <Hidden to="sm">
+                <InsuranceCards vaultId={vaultId} />
+                <LeverageCards vaultId={vaultId} />
+                <GamingCards vaultId={vaultId} />
+              </Hidden>
             </div>
-            <div className={classes.contentColumns}>
-              <div className={classes.columnActions}>
-                <Actions vaultId={vaultId} />
-                <Hidden to="sm">
-                  <InsuranceCards vaultId={vaultId} />
-                  <LeverageCards vaultId={vaultId} />
-                  <GamingCards vaultId={vaultId} />
-                </Hidden>
-              </div>
-              <div className={classes.columnInfo}>
-                <PromoCardLoader vaultId={vaultId} />
-                <PnLGraphIfWallet vaultId={vaultId} />
-                <HistoricGraphsLoader vaultId={vaultId} />
-                <LiquidityPoolBreakdownLoader vaultId={vaultId} />
-                <SafetyCard vaultId={vaultId} />
-                <Explainer vaultId={vaultId} />
-                <Details vaultId={vaultId} />
-                <Hidden from="md">
-                  <InsuranceCards vaultId={vaultId} />
-                  <LeverageCards vaultId={vaultId} />
-                  <GamingCards vaultId={vaultId} />
-                </Hidden>
-              </div>
+            <div className={classes.columnInfo}>
+              <PromoCardLoader vaultId={vaultId} />
+              <PnLGraphIfWallet vaultId={vaultId} />
+              <HistoricGraphsLoader vaultId={vaultId} />
+              <LiquidityPoolBreakdownLoader vaultId={vaultId} />
+              <SafetyCard vaultId={vaultId} />
+              <Explainer vaultId={vaultId} />
+              <Details vaultId={vaultId} />
+              <Hidden from="md">
+                <InsuranceCards vaultId={vaultId} />
+                <LeverageCards vaultId={vaultId} />
+                <GamingCards vaultId={vaultId} />
+              </Hidden>
             </div>
-          </Container>
-        </>
+          </div>
+        </Container>
       }
     />
   );

@@ -6,6 +6,7 @@ import { Bridge } from './components/Bridge/Bridge.tsx';
 import { PoweredBy } from './components/PoweredBy/PoweredBy.tsx';
 import { Container } from '../../components/Container/Container.tsx';
 import { Hidden } from '../../components/MediaQueries/Hidden.tsx';
+import { PageLayout } from '../../components/PageLayout/PageLayout.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -13,20 +14,24 @@ const BridgePage = memo(function BridgePage() {
   const classes = useStyles();
 
   return (
-    <Container maxWidth="lg" css={styles.pageContainer}>
-      <div className={classes.inner}>
-        <div className={classes.intro}>
-          <Introduction />
-          <Hidden to="sm">
-            <PoweredBy />
-          </Hidden>
-        </div>
-        <Bridge />
-        <Hidden from="md">
-          <PoweredBy />
-        </Hidden>
-      </div>
-    </Container>
+    <PageLayout
+      content={
+        <Container maxWidth="lg" css={styles.pageContainer}>
+          <div className={classes.inner}>
+            <div className={classes.intro}>
+              <Introduction />
+              <Hidden to="sm">
+                <PoweredBy />
+              </Hidden>
+            </div>
+            <Bridge />
+            <Hidden from="md">
+              <PoweredBy />
+            </Hidden>
+          </div>
+        </Container>
+      }
+    />
   );
 });
 
