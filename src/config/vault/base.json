@@ -1,5 +1,96 @@
 [
   {
+    "id": "aerodrome-cow-base-sol-usdc-vault",
+    "name": "SOL-USDC",
+    "type": "standard",
+    "token": "SOL-USDC",
+    "tokenAddress": "0x157cD721E2f6a52440f9C43EE2EE97FC1e14E2e3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x5f3b48b6E2B4fbCBCBA52d498C5baEBe6351cC49",
+    "earnedToken": "mooCowAerodromeSOL-USDC",
+    "earnedTokenAddress": "0x5f3b48b6E2B4fbCBCBA52d498C5baEBe6351cC49",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-sol-usdc",
+    "status": "active",
+    "createdAt": 1764935180,
+    "platformId": "aerodrome",
+    "assets": ["SOL", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-sol-usdc-rp",
+    "name": "SOL-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeSOL-USDC",
+    "tokenAddress": "0x157cD721E2f6a52440f9C43EE2EE97FC1e14E2e3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x1AfD3D92530F5f0b72bac4B7761C640De50bc97c",
+    "earnedToken": "rCowAerodromeSOL-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x1AfD3D92530F5f0b72bac4B7761C640De50bc97c"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-sol-usdc",
+    "status": "active",
+    "createdAt": 1764935180,
+    "platformId": "aerodrome",
+    "assets": ["SOL", "USDC"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-sol-usdc",
+    "name": "SOL-USDC",
+    "type": "cowcentrated",
+    "token": "SOL-USDC aerodrome",
+    "tokenAddress": "0xb30540172F1B37d1eE1d109e49F883E935E69219",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x311935Cd80B76769bF2ecC9D8Ab7635b2139cf82",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0x157cD721E2f6a52440f9C43EE2EE97FC1e14E2e3",
+    "earnedToken": "cowAerodromeSOL-USDC",
+    "earnedTokenAddress": "0x157cD721E2f6a52440f9C43EE2EE97FC1e14E2e3",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-sol-usdc",
+    "status": "active",
+    "createdAt": 1764935180,
+    "platformId": "beefy",
+    "feeTier": "0.035",
+    "assets": ["SOL", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-lcap-eusd",
     "name": "LCAP-eUSD vLP",
     "type": "standard",
