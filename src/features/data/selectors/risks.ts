@@ -62,9 +62,9 @@ export const selectVaultRiskChecklist = createSelector(selectVaultRisks, risks =
         return acc;
       }
       if (value) {
-        acc.passed.push(key);
-      } else {
         acc.failed.push(key);
+      } else {
+        acc.passed.push(key);
       }
       return acc;
     },
