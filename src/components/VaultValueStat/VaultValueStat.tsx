@@ -29,6 +29,8 @@ export type VaultValueStatProps = {
   boosted?: boolean;
   /** icon to show before the main value */
   Icon?: FC<SVGProps<SVGSVGElement>>;
+  /** additional class name for outer div */
+  className?: string;
 } & Pick<LayoutVariantProps, 'layout' | 'align' | 'altLayout' | 'altAlign' | 'altFrom'> &
   Pick<ValueHolderVariantProps, 'textWrap'>;
 

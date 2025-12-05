@@ -38,7 +38,7 @@ import {
   getContract,
   type PublicClient,
 } from 'viem';
-import { SCORED_RISKS } from '../src/config/risk.ts';
+import { getRisksConfigErrors, isValidRisksConfig } from './common/risks.ts';
 
 const overrides: Record<
   string,
@@ -111,7 +111,6 @@ const validPlatformIds = platforms.map(platform => platform.id);
 const validCuratorIds = curators.map(curator => curator.id);
 const validStrategyIds = getStrategyIds();
 const validPointProviderIds = pointProviders.map(pointProvider => pointProvider.id);
-const validRisks = new Set(Object.keys(SCORED_RISKS));
 
 const oldFields: Record<string, string> = {
   tokenDescription: 'Use addressbook',
@@ -309,7 +308,7 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
       }
     }
 
-    if (!checkRisks(pool, pool.type === 'standard')) {
+    if (!checkRisks(pool)) {
       exitCode = 1;
     }
 
@@ -835,15 +834,13 @@ const isHarvestOnDepositCorrect = (
   return updates;
 };
 
-const checkRisks = (pool: VaultConfig, allowMissingEol: boolean = false) => {
-  if (!pool.risks || pool.risks.length === 0) {
-    if (!(allowMissingEol && pool.status === 'eol')) {
-      console.error(`Error: ${pool.id} : risks missing`);
-      return false;
-    }
-  } else if (pool.risks.some(risk => !validRisks.has(risk))) {
-    const invalidRisks = pool.risks.filter(risk => !validRisks.has(risk));
-    console.error(`Error: ${pool.id} : risks invalid - ${invalidRisks.join(', ')}`);
+const checkRisks = (pool: VaultConfig) => {
+  if (!pool.risks || typeof pool.risks !== 'object') {
+    console.error(`Error: ${pool.id} : risks missing`);
+    return false;
+  } else if (!isValidRisksConfig(pool.risks)) {
+    const errors = getRisksConfigErrors(pool.risks);
+    console.error(`Error: ${pool.id} : risks invalid - \n\t${errors.join('\n\t')}`);
     return false;
   }
 

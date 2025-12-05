@@ -1,9 +1,8 @@
-import ExpandLess from '../../images/icons/mui/ExpandLess.svg?react';
-import ExpandMore from '../../images/icons/mui/ExpandMore.svg?react';
 import type { MouseEventHandler, ReactNode } from 'react';
-import { memo, useCallback, useState } from 'react';
-import { css, cva, type RecipeVariantProps, type CssStyles } from '@repo/styles/css';
+import { memo } from 'react';
+import { css, type CssStyles, cva, type RecipeVariantProps } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
+import { useCollapse } from './hooks.ts';
 
 type CollapsableProps = {
   openByDefault?: boolean;
@@ -23,17 +22,13 @@ export const Collapsable = memo<CollapsableProps>(function Collapsable({
   collapsableClass,
   ...recipeProps
 }) {
-  const [open, setOpen] = useState<boolean>(openByDefault);
-  const handleCollapse = useCallback(() => {
-    setOpen(prevStatus => !prevStatus);
-  }, [setOpen]);
-  const Icon = open ? ExpandLess : ExpandMore;
+  const { open, handleToggle, Icon } = useCollapse(openByDefault);
 
   return (
     <CollapsableContainer variant={recipeProps.variant} className={css(collapsableClass)}>
       <Header
         className={titleClass}
-        onClick={handleCollapse}
+        onClick={handleToggle}
         variant={recipeProps.variant}
         open={open}
       >
@@ -116,7 +111,7 @@ const Content = styled('div', contentRecipe);
 
 type ContentRecipeProps = NonNullable<RecipeVariantProps<typeof contentRecipe>>;
 
-const CollapsableContent = memo(function Header({
+const CollapsableContent = memo(function CollapsableContent({
   variant,
   className,
   ...props

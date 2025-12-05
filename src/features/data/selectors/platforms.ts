@@ -3,6 +3,8 @@ import { createCachedSelector } from 're-reselect';
 import type { PlatformEntity } from '../entities/platform.ts';
 import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import { selectVaultById } from './vaults.ts';
 
 export const selectPlatformById = createCachedSelector(
   // get a tiny bit of the data
@@ -49,3 +51,18 @@ export const selectConcentratedLiquidityManagerPlatforms = createSelector(
   (state: BeefyState) => state.entities.platforms.byType.alm,
   ids => arrayOrStaticEmpty(ids?.filter(id => id !== 'conic'))
 );
+
+export const selectVaultPlatformOrUndefined = createCachedSelector(
+  selectVaultById,
+  (state: BeefyState) => state.entities.platforms.byId,
+  (vault, tokensByChainId) => {
+    const platformId = vault.platformId;
+
+    if (!platformId) {
+      return undefined;
+    }
+
+    const platform = tokensByChainId[platformId];
+    return platform || undefined;
+  }
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
