@@ -47,7 +47,6 @@ const SORT_OPTIONS: SortOption[] = [
   { label: 'Filter-SortAvgApy', optionKey: 'avgApy', subSortOf: 'apy' },
   { label: 'Filter-SortDaily', optionKey: 'daily' },
   { label: 'Filter-SortTvl', optionKey: 'tvl' },
-  { label: 'Filter-SortSafety', optionKey: 'safetyScore' },
 ];
 
 const AVG_APY_OPTIONS = [

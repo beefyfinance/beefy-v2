@@ -3,6 +3,7 @@ import type { PlatformEntity } from './platform.ts';
 import type { TokenEntity } from './token.ts';
 import type { ZapStrategyConfig } from '../apis/transact/strategies/strategy-configs.ts';
 import type { CuratorEntity } from './curator.ts';
+import type { VaultRisksConfig } from '../apis/config-types.ts';
 
 // maybe a RiskAnalysis type would be better
 
@@ -66,9 +67,7 @@ export type VaultBase = {
   /** used to describe how the strategy works */
   strategyTypeId: string;
   /** risk assessments per category */
-  risks: string[];
-  /** score calculated from risks [0 if risks was empty] */
-  safetyScore: number;
+  risks: Required<VaultRisksConfig>;
   /** where you can buy the deposit token */
   buyTokenUrl?: string | undefined;
   /** where you create the deposit LP token */
@@ -171,9 +170,7 @@ export type VaultCowcentratedBaseOnly = {
   /** the address of the underlying CL pool */
   poolAddress: string;
   /** risk assessments per category */
-  risks: string[];
-  /** score calculated from risks [0 if risks was empty] */
-  safetyScore: number;
+  risks: Required<VaultRisksConfig>;
 };
 
 type VaultCowcentratedOnly = VaultCowcentratedBaseOnly & {

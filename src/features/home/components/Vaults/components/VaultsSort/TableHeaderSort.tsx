@@ -41,7 +41,6 @@ const SORT_COLUMNS = [
   },
   { label: 'Filter-SortDaily', value: 'daily' },
   { label: 'Filter-SortTvl', value: 'tvl' },
-  { label: 'Filter-SortSafety', value: 'safetyScore' },
 ] satisfies SortColumn[];
 
 export const TableHeaderSort = memo(function TableHeaderSort() {

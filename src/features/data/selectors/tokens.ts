@@ -419,6 +419,24 @@ export const selectSupportedSwapTokensForChainAggregatorHavingPrice = createSele
     tokens.filter(token => pricesByOracleId[token.oracleId]?.gt(BIG_ZERO))
 );
 
+export const selectVaultAssetTokensOrUndefined = createCachedSelector(
+  selectVaultById,
+  (state: BeefyState) => state.entities.tokens.byChainId,
+  (vault, tokensByChainId) => {
+    const tokens = vault.assetIds
+      .map(assetId => {
+        const address = tokensByChainId[vault.chainId]?.byId[assetId];
+        if (!address) {
+          return undefined;
+        }
+
+        return tokensByChainId[vault.chainId]?.byAddress[address] || undefined;
+      })
+      .filter(isDefined);
+    return tokens.length ? tokens : undefined;
+  }
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
 export const selectVaultTokenSymbols = createCachedSelector(
   selectVaultById,
   (state: BeefyState) => state.entities.tokens.byChainId,

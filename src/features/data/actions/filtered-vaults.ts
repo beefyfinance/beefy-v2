@@ -228,8 +228,6 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
         ]);
       } else if (filterOptions.sort === 'tvl') {
         sortedVaultIds = applyTvlSort(state, filteredVaults, filterOptions);
-      } else if (filterOptions.sort === 'safetyScore') {
-        sortedVaultIds = applySafetyScoreSort(state, filteredVaults, filterOptions);
       } else if (filterOptions.sort === 'depositValue') {
         sortedVaultIds = applyDepositValueSort(state, filteredVaults, filterOptions);
       } else if (filterOptions.sort === 'walletValue') {
@@ -338,14 +336,6 @@ function applyTvlSort(
     },
     filters.sortDirection
   ).map(v => v.id);
-}
-
-function applySafetyScoreSort(
-  _state: BeefyState,
-  vaults: VaultEntity[],
-  filters: FilteredVaultsState
-): VaultEntity['id'][] {
-  return orderBy(vaults, vault => vault.safetyScore, filters.sortDirection).map(v => v.id);
 }
 
 function applyDepositValueSort(
