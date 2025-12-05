@@ -1,7 +1,7 @@
 import type { VaultConfig } from '../../src/features/data/apis/config-types.ts';
 import { sortKeys } from './utils.ts';
 
-const FIELD_ORDER = [
+const compareVaultKeys = makeKeyComparer([
   'id',
   'name',
   'type',
@@ -49,20 +49,41 @@ const FIELD_ORDER = [
   'pointStructureIds',
   'network',
   'zaps',
-].reduce(
-  (fields, field, i) => {
-    fields[field] = i + 1;
-    return fields;
-  },
-  {} as Record<string, number>
-);
+]);
 
-function compareFieldKey(a: string, b: string) {
-  const aOrder = FIELD_ORDER[a] || Number.MAX_SAFE_INTEGER;
-  const bOrder = FIELD_ORDER[b] || Number.MAX_SAFE_INTEGER;
-  return aOrder - bOrder;
+const compareRisksKeys = makeKeyComparer([
+  'updatedAt',
+  'algoStable',
+  'complex',
+  'curated',
+  'ilHigh',
+  'notAudited',
+  'notBattleTested',
+  'notTimelocked',
+  'notVerified',
+]);
+
+function makeKeyComparer(fields: string[]) {
+  const fieldOrder = fields.reduce(
+    (acc, field, i) => {
+      acc[field] = i + 1;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
+  return (a: string, b: string) => {
+    const aOrder = fieldOrder[a] || Number.MAX_SAFE_INTEGER;
+    const bOrder = fieldOrder[b] || Number.MAX_SAFE_INTEGER;
+    return aOrder - bOrder;
+  };
 }
 
 export function sortVaultKeys(vault: VaultConfig): VaultConfig {
-  return sortKeys(vault, compareFieldKey);
+  return sortKeys(
+    {
+      ...vault,
+      risks: sortKeys(vault.risks, compareRisksKeys),
+    },
+    compareVaultKeys
+  );
 }

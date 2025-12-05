@@ -4,7 +4,6 @@ import { Transact } from './Transact/Transact.tsx';
 import { Minters } from './Minter/Minters.tsx';
 import { Migration } from '../Migation/Migration.tsx';
 import { DisplacedBalances } from '../DisplacedBalances/DisplacedBalances.tsx';
-import { NoSafuRisks } from '../NoSafuRisks/NoSafuRisks.tsx';
 
 const TransactDebugger =
   import.meta.env.DEV ?
@@ -22,7 +21,6 @@ export const Actions = memo(function Actions({ vaultId }: ActionsProps) {
       : null}
       <Migration vaultId={vaultId} />
       <DisplacedBalances vaultId={vaultId} />
-      <NoSafuRisks vaultId={vaultId} isTitle={true} />
       <Transact vaultId={vaultId} />
       <Minters vaultId={vaultId} />
     </>
