@@ -388,6 +388,7 @@ export const config = {
   cronos: {
     name: 'Cronos',
     chainId: 25,
+    eol: 1764838421,
     rpc: [
       'https://evm.cronos.org',
       'https://cronos.drpc.org',
@@ -836,6 +837,7 @@ export const config = {
   saga: {
     name: 'Saga',
     chainId: 5464,
+    eol: 1764838421,
     rpc: ['https://sagaevm.jsonrpc.sagarpc.io'],
     explorerUrl: 'https://sagaevm-5464-1.sagaexplorer.io',
     multicall3Address: '0x864DDc9B50B9A0dF676d826c9B9EDe9F8913a160', // TODO ?
