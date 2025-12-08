@@ -1,5 +1,46 @@
 [
   {
+    "id": "curve-monad-bitcoin",
+    "name": "WBTC/LBTC/BTCb",
+    "type": "standard",
+    "token": "3BTC",
+    "tokenAddress": "0x5D37F9B272ca7cdA2A05245b9a503746EefAC88f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x2b59b672569A6bb4D0058b569a13aF87c6bB9a3b",
+    "earnedToken": "mooCurveBitcoinConverter",
+    "earnedTokenAddress": "0x2b59b672569A6bb4D0058b569a13aF87c6bB9a3b",
+    "oracle": "lps",
+    "oracleId": "curve-monad-bitcoin",
+    "status": "active",
+    "createdAt": 1765173950,
+    "platformId": "curve",
+    "assets": ["WBTC", "LBTC", "BTCb"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-8/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-8/withdraw",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x5D37F9B272ca7cdA2A05245b9a503746EefAC88f",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x5D37F9B272ca7cdA2A05245b9a503746EefAC88f",
+            "coins": [
+              "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+              "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
+              "0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curvance-monad-wmon-wmon-ausd",
     "name": "WMON (WMON-AUSD Market)",
     "type": "standard",
