@@ -11,20 +11,14 @@ import { PlatformStatsContainer } from './Stats.tsx';
 import { useBreakpoint } from '../../../../../components/MediaQueries/useBreakpoint.ts';
 import ExpandMore from '../../../../../images/icons/mui/ExpandMore.svg?react';
 import { styled } from '@repo/styles/jsx';
-import { selectCurrentWeekRevenueStat } from '../../../../data/selectors/revenue.ts';
-import type { BeefyState } from '../../../../data/store/types.ts';
+import { selectPreviousWeekRevenueStats } from '../../../../data/selectors/revenue.ts';
 
 export const PlatformStats = memo(function PlatformStats() {
   const [isTvlModalOpen, setIsTvlModalOpen] = useState<boolean>(false);
   const { t } = useTranslation();
   const totalTvl = useAppSelector(selectTotalTvl);
   const totalActiveVaults = useAppSelector(selectTotalActiveVaults);
-  const currentWeekRevenueYieldUsd = useAppSelector((state: BeefyState) =>
-    selectCurrentWeekRevenueStat(state, 'yieldUsd')
-  );
-  const currentWeekRevenueRevenueUsd = useAppSelector((state: BeefyState) =>
-    selectCurrentWeekRevenueStat(state, 'revenueUsd')
-  );
+  const previousWeek = useAppSelector(selectPreviousWeekRevenueStats);
 
   const handleTvlModalOpen = useCallback(() => {
     setIsTvlModalOpen(true);
@@ -51,19 +45,21 @@ export const PlatformStats = memo(function PlatformStats() {
       />
       <Stat
         label={t('Platform-7DaysYield')}
-        value={formatLargeUsd(currentWeekRevenueYieldUsd)}
-        loading={!totalActiveVaults}
+        value={previousWeek.yieldUsd ? formatLargeUsd(previousWeek.yieldUsd) : '-'}
+        loading={previousWeek.yieldUsd === undefined}
         tooltip={t('Platform-7DaysYield-Tooltip')}
       />
       <Stat
         label={t('Platform-7DaysRevenue')}
-        value={formatLargeUsd(currentWeekRevenueRevenueUsd)}
-        loading={!totalActiveVaults}
+        value={previousWeek.revenueUsd ? formatLargeUsd(previousWeek.revenueUsd) : '-'}
+        loading={previousWeek.revenueUsd === undefined}
         tooltip={t('Platform-7DaysRevenue-Tooltip')}
       />
       <Stat
         label={t('Platform-7DaysBuyback')}
-        value={<BuybackAmountStat />}
+        value={
+          <BuybackAmountStat amount={previousWeek.buybackAmount} usd={previousWeek.buybackUsd} />
+        }
         loading={!totalActiveVaults}
         tooltip={t('Platform-7DaysBuyback-Tooltip')}
       />
@@ -87,34 +83,31 @@ const ValueTvlStat = memo(function ValueTvlStat({ totalTvl }: { totalTvl: BigNum
   );
 });
 
-const BuybackAmountStat = memo(function BuybackAmountStat() {
+type BuybackAmountStatProps = {
+  usd: BigNumber | null;
+  amount: BigNumber | null;
+};
+
+const BuybackAmountStat = memo(function BuybackAmountStat({ usd, amount }: BuybackAmountStatProps) {
   const [mode, setMode] = useState<'usd' | 'amount'>('usd');
-
-  const currentWeekRevenueBuybackUsd = useAppSelector((state: BeefyState) =>
-    selectCurrentWeekRevenueStat(state, 'buybackUsd')
-  );
-  const currentWeekRevenueBuybackAmount = useAppSelector((state: BeefyState) =>
-    selectCurrentWeekRevenueStat(state, 'buybackAmount')
-  );
-
-  const Label = useMemo(() => {
-    return mode === 'usd' ? 'USD' : 'BIFI';
-  }, [mode]);
-
-  const Value = useMemo(() => {
-    return mode === 'usd' ?
-        formatLargeUsd(currentWeekRevenueBuybackUsd)
-      : formatTokenDisplayCondensed(currentWeekRevenueBuybackAmount, 18, 6);
-  }, [mode, currentWeekRevenueBuybackUsd, currentWeekRevenueBuybackAmount]);
-
+  const label = mode === 'usd' ? 'USD' : 'BIFI';
+  const value = useMemo(() => {
+    return (
+      mode === 'usd' ?
+        usd ? formatLargeUsd(usd)
+        : '-'
+      : amount ? formatTokenDisplayCondensed(amount, 18, 6)
+      : '-'
+    );
+  }, [mode, usd, amount]);
   const handleModeChange = useCallback(() => {
-    setMode(mode === 'usd' ? 'amount' : 'usd');
-  }, [mode]);
+    setMode(m => (m === 'usd' ? 'amount' : 'usd'));
+  }, [setMode]);
 
   return (
     <ValueStatContainer buyback={true}>
-      {Value}
-      <StyledSwitchButton onClick={handleModeChange}>{Label}</StyledSwitchButton>
+      {value}
+      <StyledSwitchButton onClick={handleModeChange}>{label}</StyledSwitchButton>
     </ValueStatContainer>
   );
 });

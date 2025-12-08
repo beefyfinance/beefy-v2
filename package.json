@@ -86,6 +86,7 @@
   },
   "overrides": {
     "@coinbase/wallet-sdk": "^4.3.7",
+    "browserslist": "^4.28.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "viem": "^2.37.6",
@@ -119,6 +120,7 @@
     "@types/react": "^18.3.24",
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^4.7.0",
+    "browserslist": "^4.28.1",
     "cross-spawn": "^7.0.6",
     "csv-parser": "^3.2.0",
     "esbuild": "^0.25.9",

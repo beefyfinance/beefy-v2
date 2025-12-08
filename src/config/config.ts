@@ -593,7 +593,7 @@ export const config = {
   gnosis: {
     name: 'Gnosis',
     chainId: 100,
-    rpc: ['https://rpc.gnosischain.com', 'https://gnosis-rpc.publicnode.com'],
+    rpc: ['https://gnosis-rpc.publicnode.com', 'https://gnosis.drpc.org'],
     explorerUrl: 'https://gnosisscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xdAaD0085e5D301Cb5721466e600606AB5158862b',

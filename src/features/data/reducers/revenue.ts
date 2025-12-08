@@ -1,22 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchWeeklyRevenueStats } from '../actions/revenue.ts';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
 
 export type RevenueState = {
-  currentWeek: {
-    yieldUsd: BigNumber;
-    revenueUsd: BigNumber;
-    buybackUsd: BigNumber;
-    buybackAmount: BigNumber;
+  previousWeek: {
+    yieldUsd: BigNumber | null;
+    revenueUsd: BigNumber | null;
+    buybackUsd: BigNumber | null;
+    buybackAmount: BigNumber | null;
   };
 };
 
 export const initialRevenueState: RevenueState = {
-  currentWeek: {
-    yieldUsd: BIG_ZERO,
-    revenueUsd: BIG_ZERO,
-    buybackUsd: BIG_ZERO,
-    buybackAmount: BIG_ZERO,
+  previousWeek: {
+    yieldUsd: null,
+    revenueUsd: null,
+    buybackUsd: null,
+    buybackAmount: null,
   },
 };
 
@@ -26,7 +25,7 @@ export const revenueSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchWeeklyRevenueStats.fulfilled, (state, action) => {
-      state.currentWeek = action.payload.data;
+      state.previousWeek = action.payload.data;
     });
   },
 });
