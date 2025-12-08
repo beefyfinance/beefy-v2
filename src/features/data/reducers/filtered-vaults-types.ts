@@ -4,7 +4,7 @@ import type { PlatformEntity } from '../entities/platform.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { KeysOfType } from '../utils/types-utils.ts';
 
-export type SortType = 'tvl' | 'apy' | 'daily' | 'default' | 'depositValue' | 'walletValue';
+export type SortType = 'tvl' | 'apy' | 'daily' | 'default' | 'depositValue';
 
 export type SortDirectionType = 'asc' | 'desc';
 

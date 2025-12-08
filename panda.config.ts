@@ -132,10 +132,10 @@ const config = buildConfig(
         '--tooltip-content-horizontal-gap': '24px',
         '--tooltip-content-border-radius': '8px',
         // Vaults list grid
-        '--vaults-list-grid-columns': 'repeat(6, minmax(0, 1fr))',
+        '--vaults-list-grid-columns': 'repeat(2, minmax(0, 1fr))',
         sm: {
           '--vaults-list-grid-columns':
-            'minmax(0, 1fr) minmax(0, 1fr) minmax(110px, 1fr) minmax(0, 1fr) minmax(0, 1fr)',
+            'minmax(0, 1fr) minmax(110px, 1fr) minmax(0, 1fr) minmax(0, 1fr)',
         },
       },
       html: {
