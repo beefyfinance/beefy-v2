@@ -60,7 +60,7 @@ export const PlatformStats = memo(function PlatformStats() {
         value={
           <BuybackAmountStat amount={previousWeek.buybackAmount} usd={previousWeek.buybackUsd} />
         }
-        loading={!totalActiveVaults}
+        loading={previousWeek.buybackAmount === undefined && previousWeek.buybackUsd === undefined}
         tooltip={t('Platform-7DaysBuyback-Tooltip')}
       />
       <Modal
