@@ -1,11 +1,17 @@
 import { type ArgumentConfig, parse } from 'ts-command-line-args';
-import { getAllVaultConfigsByChainId, getVaultsForChain } from './common/config.ts';
+import {
+  type AddressBookChainId,
+  appToAddressBookId,
+  getAllVaultConfigsByChainId,
+  getVaultsForChain,
+} from './common/config.ts';
 import { sortVaultKeys } from './common/vault-fields.ts';
 import { saveJson } from './common/files.ts';
 import { type VaultConfig, type VaultRisksConfig } from '../src/features/data/apis/config-types.ts';
 import { cloneDeep, keyBy, uniqBy } from 'lodash-es';
 import { riskKeys, type RiskKeys } from './common/risks.ts';
-import { createFactory } from '../src/features/data/utils/factory-utils.ts';
+import { createCachedFactory, createFactory } from '../src/features/data/utils/factory-utils.ts';
+import { isDefined } from '../src/features/data/utils/array-utils.ts';
 
 type RunArgs = {
   help?: boolean;
@@ -78,6 +84,14 @@ function getRunArgs() {
     ],
   });
 }
+
+const platformRiskMap: Record<string, RiskChange> = {
+  NO_TIMELOCK: { key: 'notTimelocked', value: true },
+};
+
+const tokenRiskMap: Record<string, RiskChange> = {
+  NO_TIMELOCK: { key: 'notTimelocked', value: true },
+};
 
 type RiskChange = { key: RiskKeys; value: boolean };
 
@@ -215,9 +229,70 @@ const getRiskNames = createFactory(async () => {
   );
 });
 
+const getPlatformRisks = createFactory(async () => {
+  const { default: platforms } = await import('../src/config/platforms.json');
+  return new Map(
+    platforms
+      .filter(p => p.risks?.length)
+      .map(platform => [platform.id, new Set(platform.risks || [])])
+  );
+});
+
+const getTokenRisks = createCachedFactory(
+  async (chainId: AddressBookChainId) => {
+    const { addressBook } = await import('blockchain-addressbook');
+    return new Map(
+      Object.entries(addressBook[chainId].tokens)
+        .filter(([_, t]) => t.risks?.length)
+        .map(([id, token]) => [id, new Set<string>(token.risks || [])])
+    );
+  },
+  chainId => chainId
+);
+
+async function getForcedRisksFor(vault: VaultConfig) {
+  const [platformsRisks, chainTokenRisks] = await Promise.all([
+    getPlatformRisks(),
+    getTokenRisks(appToAddressBookId(vault.network)),
+  ]);
+  const forcedRisks = new Map<RiskKeys, { source: string; value: boolean }>();
+  const platformRisks = vault.platformId ? platformsRisks.get(vault.platformId) : undefined;
+  if (platformRisks) {
+    for (const [riskKey, change] of Object.entries(platformRiskMap)) {
+      if (platformRisks.has(riskKey)) {
+        forcedRisks.set(change.key, {
+          source: `platform ${vault.platformId}`,
+          value: change.value,
+        });
+      }
+    }
+  }
+  const tokenRisks =
+    vault.assets?.length ?
+      vault.assets
+        .map(a => {
+          const risks = chainTokenRisks.get(a);
+          return risks ? { id: a, risks } : undefined;
+        })
+        .filter(isDefined)
+    : undefined;
+  if (tokenRisks) {
+    for (const token of tokenRisks) {
+      for (const [riskKey, change] of Object.entries(tokenRiskMap)) {
+        if (token.risks.has(riskKey)) {
+          forcedRisks.set(change.key, { source: `token ${token.id}`, value: change.value });
+        }
+      }
+    }
+  }
+
+  return forcedRisks;
+}
+
 async function askForChangesViaUI(vault: VaultConfig) {
   const { checkbox, select } = await import('@inquirer/prompts');
   const riskNames = await getRiskNames();
+  const forcedRisks = await getForcedRisksFor(vault);
 
   while (true) {
     const selected = new Set(
@@ -226,18 +301,33 @@ async function askForChangesViaUI(vault: VaultConfig) {
         required: false,
         loop: true,
         pageSize: riskKeys.length,
-        choices: riskKeys.map((key, i) => ({
-          value: key,
-          short: key,
-          name: `[${i + 1}] ${riskNames[key].passed}`,
-          checkedName: `[${i + 1}] ${riskNames[key].failed}`,
-          description: `${key}: {false: "${riskNames[key].passed}", true: "${riskNames[key].failed}"}`,
-          checked: vault.risks[key] === true,
-        })),
+        choices: riskKeys.map((key, i) => {
+          const forced = forcedRisks.get(key);
+          const names = riskNames[key];
+          const forcedName =
+            forced ?
+              ` [${i + 1}] ${forced.value ? names.failed : names.passed} {from ${forced.source}}`
+            : undefined;
+
+          return {
+            value: key,
+            short: key,
+            name: forcedName ?? `[${i + 1}] ${names.passed}`,
+            checkedName: forcedName ?? `[${i + 1}] ${names.failed}`,
+            description: [
+              forced ? `Forced to ${forced.value} by ${forced.source}` : undefined,
+              `${key}: {false: "${names.passed}", true: "${names.failed}"}`,
+            ]
+              .filter(isDefined)
+              .join('\n\n'),
+            checked: forced?.value ?? vault.risks[key] === true,
+            disabled: forced !== undefined,
+          };
+        }),
       })
     );
     const changes = riskKeys.reduce((acc, key) => {
-      const value = selected.has(key);
+      const value = selected.has(key) || forcedRisks.get(key)?.value === true;
       if (value !== vault.risks[key]) {
         acc.push({ key, value });
       }
