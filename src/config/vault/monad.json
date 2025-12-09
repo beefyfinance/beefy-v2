@@ -1,5 +1,47 @@
 [
   {
+    "id": "curve-monad-mon-lsts",
+    "name": "WMON/shMON/sMON/gMON",
+    "type": "standard",
+    "token": "stMONMON",
+    "tokenAddress": "0x74d80eE400D3026FDd2520265cC98300710b25D4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x189518d8130060C75072c954caf962D12EeA19F8",
+    "earnedToken": "mooCurveMONLSTs",
+    "earnedTokenAddress": "0x189518d8130060C75072c954caf962D12EeA19F8",
+    "oracle": "lps",
+    "oracleId": "curve-monad-mon-lsts",
+    "status": "active",
+    "createdAt": 1765271343,
+    "platformId": "curve",
+    "assets": ["WMON", "shMON", "sMON", "gMON"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-6/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-6/withdraw",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x74d80eE400D3026FDd2520265cC98300710b25D4",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x74d80eE400D3026FDd2520265cC98300710b25D4",
+            "coins": [
+              "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+              "0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c",
+              "0xA3227C5969757783154C60bF0bC1944180ed81B9",
+              "0x8498312A6B3CbD158bf0c93AbdCF29E6e4F55081"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curve-monad-bitcoin",
     "name": "WBTC/LBTC/BTCb",
     "type": "standard",
