@@ -103,6 +103,7 @@ export interface DataLoaderState {
     zapAmms: LoaderState;
     zapConfigs: LoaderState;
     zapSwapAggregators: LoaderState;
+    revenue: LoaderState;
   };
   byChainId: {
     [chainId in ChainEntity['id']]?: ByChainDataEntity;

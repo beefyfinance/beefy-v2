@@ -1,0 +1,699 @@
+[
+  {
+    "id": "curve-monad-mon-lsts",
+    "name": "WMON/shMON/sMON/gMON",
+    "type": "standard",
+    "token": "stMONMON",
+    "tokenAddress": "0x74d80eE400D3026FDd2520265cC98300710b25D4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x189518d8130060C75072c954caf962D12EeA19F8",
+    "earnedToken": "mooCurveMONLSTs",
+    "earnedTokenAddress": "0x189518d8130060C75072c954caf962D12EeA19F8",
+    "oracle": "lps",
+    "oracleId": "curve-monad-mon-lsts",
+    "status": "active",
+    "createdAt": 1765271343,
+    "platformId": "curve",
+    "assets": ["WMON", "shMON", "sMON", "gMON"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-6/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-6/withdraw",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x74d80eE400D3026FDd2520265cC98300710b25D4",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x74d80eE400D3026FDd2520265cC98300710b25D4",
+            "coins": [
+              "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+              "0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c",
+              "0xA3227C5969757783154C60bF0bC1944180ed81B9",
+              "0x8498312A6B3CbD158bf0c93AbdCF29E6e4F55081"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-monad-bitcoin",
+    "name": "WBTC/LBTC/BTCb",
+    "type": "standard",
+    "token": "3BTC",
+    "tokenAddress": "0x5D37F9B272ca7cdA2A05245b9a503746EefAC88f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x2b59b672569A6bb4D0058b569a13aF87c6bB9a3b",
+    "earnedToken": "mooCurveBitcoinConverter",
+    "earnedTokenAddress": "0x2b59b672569A6bb4D0058b569a13aF87c6bB9a3b",
+    "oracle": "lps",
+    "oracleId": "curve-monad-bitcoin",
+    "status": "active",
+    "createdAt": 1765173950,
+    "platformId": "curve",
+    "assets": ["WBTC", "LBTC", "BTCb"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-8/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-8/withdraw",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x5D37F9B272ca7cdA2A05245b9a503746EefAC88f",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x5D37F9B272ca7cdA2A05245b9a503746EefAC88f",
+            "coins": [
+              "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+              "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
+              "0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curvance-monad-wmon-wmon-ausd",
+    "name": "WMON (WMON-AUSD Market)",
+    "type": "standard",
+    "token": "WMON",
+    "tokenAddress": "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0xC229c17f3023743621a355BbCEf419675B347B0c",
+    "earnedToken": "mooCurvanceWMON(WMON-AUSD)",
+    "earnedTokenAddress": "0xC229c17f3023743621a355BbCEf419675B347B0c",
+    "oracle": "tokens",
+    "oracleId": "WMON",
+    "status": "active",
+    "createdAt": 1764860777,
+    "platformId": "curvance",
+    "assets": ["WMON"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "curvance-monad-ausd-wmon-ausd",
+    "name": "AUSD (WMON-AUSD Market)",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xd16fA9b21786F8F23b9DEaC61197830E0e15752b",
+    "earnedToken": "mooCurvanceAUSD(WMON-AUSD)",
+    "earnedTokenAddress": "0xd16fA9b21786F8F23b9DEaC61197830E0e15752b",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1764860777,
+    "platformId": "curvance",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "curvance-monad-wmon-wmon-usdc",
+    "name": "WMON (WMON-USDC Market)",
+    "type": "standard",
+    "token": "WMON",
+    "tokenAddress": "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x7d3b4317F7b9d3B677163E3543fafa694Ad8BD06",
+    "earnedToken": "mooCurvanceWMON(WMON-USDC)",
+    "earnedTokenAddress": "0x7d3b4317F7b9d3B677163E3543fafa694Ad8BD06",
+    "oracle": "tokens",
+    "oracleId": "WMON",
+    "status": "active",
+    "createdAt": 1764860777,
+    "platformId": "curvance",
+    "assets": ["WMON"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "curvance-monad-usdc-wmon-usdc",
+    "name": "USDC (WMON-USDC Market)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xf26066a8Ef7c49a150Ef33E3adD6889a9d85e07E",
+    "earnedToken": "mooCurvanceUSDC(WMON-USDC)",
+    "earnedTokenAddress": "0xf26066a8Ef7c49a150Ef33E3adD6889a9d85e07E",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1764860777,
+    "platformId": "curvance",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-wsteth-wmon-rp",
+    "name": "wstETH-WMON Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeswapMonadwstETH-WMON",
+    "tokenAddress": "0x0B506f99eF689AF3E49A8FC29844553ff8302358",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x0a9fA099b0d0C4D7bAB4191eAAD095c68B765542",
+    "earnedToken": "rCowPancakeswapMonadwstETH-WMON",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-wsteth-wmon",
+    "status": "active",
+    "createdAt": 1764765410,
+    "platformId": "pancakeswap",
+    "assets": ["wstETH", "WMON"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-wsteth-wmon",
+    "name": "wstETH-WMON",
+    "type": "cowcentrated",
+    "token": "wstETH-WMON pancakeswap",
+    "tokenAddress": "0x9f14f09434D1CEF23a422d65D989dcf55283Ef62",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x10Aeaf63194db8d453d4D85a06E5eFE1dd0b5417",
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A"
+    ],
+    "earnContractAddress": "0x0B506f99eF689AF3E49A8FC29844553ff8302358",
+    "earnedToken": "cowPancakeswapMonadwstETH-WMON",
+    "earnedTokenAddress": "0x0B506f99eF689AF3E49A8FC29844553ff8302358",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-wsteth-wmon",
+    "status": "active",
+    "createdAt": 1764765410,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["wstETH", "WMON"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-wmon-weth-rp",
+    "name": "WETH-WMON Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeswapMonadWETH-WMON",
+    "tokenAddress": "0x88109720Ee250B9Ac49ED309AfB2DD682cBDA6d8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x85bdE8289197D95B3DCa4805c3935E3F51Ad64ea",
+    "earnedToken": "rCowPancakeswapMonadWETH-WMON",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-wmon-weth",
+    "status": "active",
+    "createdAt": 1764765192,
+    "platformId": "pancakeswap",
+    "assets": ["WETH", "WMON"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-wmon-weth",
+    "name": "WETH-WMON",
+    "type": "cowcentrated",
+    "token": "WETH-WMON pancakeswap",
+    "tokenAddress": "0xB02793FE655C1169A8699B4ee462F8Ac9c75E402",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242"
+    ],
+    "earnContractAddress": "0x88109720Ee250B9Ac49ED309AfB2DD682cBDA6d8",
+    "earnedToken": "cowPancakeswapMonadWETH-WMON",
+    "earnedTokenAddress": "0x88109720Ee250B9Ac49ED309AfB2DD682cBDA6d8",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-wmon-weth",
+    "status": "active",
+    "createdAt": 1764765192,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["WETH", "WMON"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-ausd-wmon-rp",
+    "name": "AUSD-WMON Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeswapMonadAUSD-WMON",
+    "tokenAddress": "0xE7f6FBE79cD88cd411da10d2E5c0BeED197adf23",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x6571d6ECD462A22a367159b82c3B86c5Ea2B6f1b",
+    "earnedToken": "rCowPancakeswapMonadAUSD-WMON",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-ausd-wmon",
+    "status": "active",
+    "createdAt": 1764765004,
+    "platformId": "pancakeswap",
+    "assets": ["AUSD", "WMON"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-ausd-wmon",
+    "name": "AUSD-WMON",
+    "type": "cowcentrated",
+    "token": "AUSD-WMON pancakeswap",
+    "tokenAddress": "0xD5b70d70CBE6C42bCD1aaa662A21673A83f4615b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A"
+    ],
+    "earnContractAddress": "0xE7f6FBE79cD88cd411da10d2E5c0BeED197adf23",
+    "earnedToken": "cowPancakeswapMonadAUSD-WMON",
+    "earnedTokenAddress": "0xE7f6FBE79cD88cd411da10d2E5c0BeED197adf23",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-ausd-wmon",
+    "status": "active",
+    "createdAt": 1764765004,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["AUSD", "WMON"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-wmon-usdc-rp",
+    "name": "USDC-WMON Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeswapMonadWMON-USDC",
+    "tokenAddress": "0x084472F7B9D4C75eBe28C0239C9FC62A2549f730",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x3A134B05E48F4b5A23eCdC6551Ef551EAEDca272",
+    "earnedToken": "rCowPancakeswapMonadWMON-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-wmon-usdc",
+    "status": "active",
+    "createdAt": 1764764803,
+    "platformId": "pancakeswap",
+    "assets": ["USDC", "WMON"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-wmon-usdc",
+    "name": "USDC-WMON",
+    "type": "cowcentrated",
+    "token": "USDC-WMON pancakeswap",
+    "tokenAddress": "0x63e48B725540A3Db24ACF6682a29f877808C53F2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603"
+    ],
+    "earnContractAddress": "0x084472F7B9D4C75eBe28C0239C9FC62A2549f730",
+    "earnedToken": "cowPancakeswapMonadWMON-USDC",
+    "earnedTokenAddress": "0x084472F7B9D4C75eBe28C0239C9FC62A2549f730",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-wmon-usdc",
+    "status": "active",
+    "createdAt": 1764764803,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["USDC", "WMON"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-monad-wbtc-usdc-rp",
+    "name": "WBTC-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapMonadWBTC-USDC",
+    "tokenAddress": "0xB674C66B5f717a9A54Fc9AB9896eA604B002a829",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x87e5737f5aC2dad996d9DfDe58B3822a88F45cF8",
+    "earnedToken": "rCowUniswapMonadWBTC-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-monad-wbtc-usdc",
+    "status": "active",
+    "createdAt": 1764764709,
+    "platformId": "uniswap",
+    "assets": ["WBTC", "USDC"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-monad-wbtc-usdc",
+    "name": "WBTC-USDC",
+    "type": "cowcentrated",
+    "token": "WBTC-USDC uniswap",
+    "tokenAddress": "0xB0B083E0353f7df4D5EE1C812eA8c6960c080373",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603"
+    ],
+    "earnContractAddress": "0xB674C66B5f717a9A54Fc9AB9896eA604B002a829",
+    "earnedToken": "cowUniswapMonadWBTC-USDC",
+    "earnedTokenAddress": "0xB674C66B5f717a9A54Fc9AB9896eA604B002a829",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-monad-wbtc-usdc",
+    "status": "active",
+    "createdAt": 1764764709,
+    "platformId": "beefy",
+    "feeTier": "0.30",
+    "assets": ["WBTC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "curve-monad-3pool",
+    "name": "AUSD/USDC/USDT0",
+    "type": "standard",
+    "token": "AUSDCT0",
+    "tokenAddress": "0x942644106B073E30D72c2C5D7529D5C296ea91ab",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x3bAFeB462E27154CBc58405355E71e85c091F0A4",
+    "earnedToken": "mooCurve-3pool",
+    "earnedTokenAddress": "0x3bAFeB462E27154CBc58405355E71e85c091F0A4",
+    "oracle": "lps",
+    "oracleId": "curve-monad-3pool",
+    "status": "active",
+    "createdAt": 1764322823,
+    "platformId": "curve",
+    "assets": ["AUSD", "USDC", "USDT0"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-2/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-2/withdraw",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x942644106B073E30D72c2C5D7529D5C296ea91ab",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x942644106B073E30D72c2C5D7529D5C296ea91ab",
+            "coins": [
+              "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+              "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+              "0xe7cd86e13AC4309349F30B3435a9d337750fC82D"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "morpho-monad-steakhouse-usdc",
+    "name": "USDC (Steakhouse, High Yield USDC)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x816716ebDB0D4c882d364C61aD3373eEAD91C86a",
+    "earnedToken": "mooMorphoMonadUSDC",
+    "earnedTokenAddress": "0x816716ebDB0D4c882d364C61aD3373eEAD91C86a",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1764176331,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0xbeEFf443C3CbA3E369DA795002243BeaC311aB83/steakhouse-high-yield-usdc",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-monad-steakhouse-ausd",
+    "name": "AUSD (Steakhouse, High Yield AUSD)",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x873629E73CD5FAc9e3Ee1963A796Ad0aBDf17542",
+    "earnedToken": "mooMorphoMonadAUSD",
+    "earnedTokenAddress": "0x873629E73CD5FAc9e3Ee1963A796Ad0aBDf17542",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1764176330,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0xbeeffeA75cFC4128ebe10C8D7aE22016D215060D/steakhouse-high-yield-ausd",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-monad-usdc-weth-rp",
+    "name": "USDC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapMonadUSDC-WETH",
+    "tokenAddress": "0x97CA048Abc85E36Ad20779eBfB3994aa61Ff05c1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x8BF038A30D3E5e16cE35973A75a3ac65d888Cc81",
+    "earnedToken": "rCowUniswapMonadUSDC-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-monad-usdc-weth",
+    "status": "active",
+    "createdAt": 1764167577,
+    "platformId": "uniswap",
+    "assets": ["USDC", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-monad-usdc-weth",
+    "name": "USDC-WETH",
+    "type": "cowcentrated",
+    "token": "USDC-WETH uniswap",
+    "tokenAddress": "0x25EF1a210fF55BcEe9F8fee979aAFf6bD1bE5Bf1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242"
+    ],
+    "earnContractAddress": "0x97CA048Abc85E36Ad20779eBfB3994aa61Ff05c1",
+    "earnedToken": "cowUniswapMonadUSDC-WETH",
+    "earnedTokenAddress": "0x97CA048Abc85E36Ad20779eBfB3994aa61Ff05c1",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-monad-usdc-weth",
+    "status": "active",
+    "createdAt": 1764167577,
+    "platformId": "beefy",
+    "feeTier": "0.30",
+    "assets": ["USDC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-monad-wmon-usdc-rp",
+    "name": "WMON-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapMonadUSDC-WMON",
+    "tokenAddress": "0x5B8F906E9E3355155F05A9c46c5bF3e6D1dEBE5E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xa6186c6F879eDC2a6Fc268E4Ddd71869195C3856",
+    "earnedToken": "rCowUniswapMonadUSDC-WMON",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-monad-wmon-usdc",
+    "status": "active",
+    "createdAt": 1764108468,
+    "platformId": "uniswap",
+    "assets": ["WMON", "USDC"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-monad-wmon-usdc",
+    "name": "WMON-USDC",
+    "type": "cowcentrated",
+    "token": "WMON-USDC uniswap",
+    "tokenAddress": "0x659bD0BC4167BA25c62E05656F78043E7eD4a9da",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603"
+    ],
+    "earnContractAddress": "0x5B8F906E9E3355155F05A9c46c5bF3e6D1dEBE5E",
+    "earnedToken": "cowUniswapMonadUSDC-WMON",
+    "earnedTokenAddress": "0x5B8F906E9E3355155F05A9c46c5bF3e6D1dEBE5E",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-monad-wmon-usdc",
+    "status": "active",
+    "createdAt": 1764108468,
+    "platformId": "beefy",
+    "feeTier": "0.30",
+    "assets": ["WMON", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  }
+]

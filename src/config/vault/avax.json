@@ -1923,37 +1923,6 @@
     ]
   },
   {
-    "id": "solisnek-btc.b-wbtc.e",
-    "name": "BTC.b-WBTC.e sLP",
-    "type": "standard",
-    "token": "BTC.b-WBTC.e sLP",
-    "tokenAddress": "0xaDb32De92151D0769d214445B6D8B905CFF17CCF",
-    "tokenDecimals": 18,
-    "tokenProviderId": "solisnek",
-    "earnedToken": "mooSoliSnekBTC.b-WBTC.e",
-    "earnedTokenAddress": "0x79AB83fC0a2598521f0756E5Ac572426bc8EC5FB",
-    "earnContractAddress": "0x79AB83fC0a2598521f0756E5Ac572426bc8EC5FB",
-    "oracle": "lps",
-    "oracleId": "solisnek-btc.b-wbtc.e",
-    "status": "eol",
-    "createdAt": 1682949068,
-    "retireReason": "tvl",
-    "retiredAt": 1694443783,
-    "platformId": "solisnek",
-    "assets": ["BTCb", "WBTCe"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.solisnek.finance/swap?from=0x152b9d0fdc40c096757f570a51e494bd4b943e50&to=0x50b7545627a5162F82A992c33b87aDc75187B218",
-    "addLiquidityUrl": "https://www.solisnek.finance/liquidity/0xadb32de92151d0769d214445b6d8b905cff17ccf",
-    "network": "avax",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "avax-solisnek"
-      }
-    ]
-  },
-  {
     "id": "solisnek-usdc.e-usdc",
     "name": "USDC.e-USDC sLP",
     "type": "standard",

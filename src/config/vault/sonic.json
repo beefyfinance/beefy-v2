@@ -21,7 +21,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.curve.finance/dex/sonic/pools/factory-stable-ng-26/deposit",
     "removeLiquidityUrl": "https://www.curve.finance/dex/sonic/pools/factory-stable-ng-26/withdraw",
-    "pointStructureIds": ["rings"],
     "network": "sonic",
     "zaps": [
       {
@@ -64,7 +63,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.curve.finance/dex/sonic/pools/factory-stable-ng-25/deposit",
     "removeLiquidityUrl": "https://www.curve.finance/dex/sonic/pools/factory-stable-ng-25/withdraw",
-    "pointStructureIds": ["rings"],
     "network": "sonic",
     "zaps": [
       {
@@ -105,7 +103,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xC1fd739f2Bf1Aad96F04d6AE35ED04DA4D68366b/zap/in?chain=sonic",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xC1fd739f2Bf1Aad96F04d6AE35ED04DA4D68366b/zap/out?chain=sonic",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -147,8 +144,10 @@
     "earnedTokenAddress": "0x35450C53A043B4a84Cc315756ccC008d15E1a1F8",
     "oracle": "lps",
     "oracleId": "swapx-ichi-usdc-strike",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1751517187,
+    "retireReason": "tvl",
+    "retiredAt": 1765213686,
     "platformId": "ichi",
     "assets": ["USDCe", "STRIKE"],
     "migrationIds": ["sonic-swapx"],
@@ -180,7 +179,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x7e2bcdB749D90Aa1E9E7262872AC8B1e062B2C4D/zap/in?chain=sonic",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x7e2bcdB749D90Aa1E9E7262872AC8B1e062B2C4D/zap/out?chain=sonic",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
   {
@@ -202,7 +200,6 @@
     "assets": ["S"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
-    "pointStructureIds": ["sonic-points", "silo-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -229,7 +226,6 @@
     "assets": ["USDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
-    "pointStructureIds": ["sonic-points", "silo-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -256,7 +252,6 @@
     "assets": ["USDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
-    "pointStructureIds": ["sonic-points", "silo-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -286,7 +281,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -311,7 +305,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -336,7 +329,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -358,7 +350,6 @@
     "assets": ["WBTC", "USDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -390,7 +381,6 @@
     "assets": ["WBTC", "USDCe"],
     "risks": [],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -425,7 +415,6 @@
     "assets": ["WBTC", "USDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -452,7 +441,6 @@
     "assets": ["S", "WBTC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -484,7 +472,6 @@
     "assets": ["S", "WBTC"],
     "risks": [],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -519,7 +506,6 @@
     "assets": ["S", "WBTC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -546,7 +532,6 @@
     "assets": ["WBTC", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -578,7 +563,6 @@
     "assets": ["WBTC", "WETH"],
     "risks": [],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -613,7 +597,6 @@
     "assets": ["WBTC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -640,7 +623,6 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "underlyingPlatformUrl": "https://app.silo.finance/markets/sonic/bes-s-52",
-    "pointStructureIds": ["sonic-points", "silo-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -672,7 +654,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
     "network": "sonic",
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "single"
@@ -699,7 +680,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
     "network": "sonic",
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "single"
@@ -726,7 +706,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "sonic",
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -758,7 +737,6 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "sonic",
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -792,7 +770,6 @@
     "assets": ["beS", "USDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -822,7 +799,6 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/S/0x871A101Dcf22fE4fE37be7B654098c801CBA1c88",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -851,7 +827,6 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/0x29219dd400f2Bf60E5a23d13Be72B486D4038894/0x871A101Dcf22fE4fE37be7B654098c801CBA1c88",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -880,7 +855,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "sonic",
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -915,7 +889,6 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "sonic",
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -950,7 +923,6 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "sonic",
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -977,7 +949,6 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/S/0xb0695ce12c56AAe40894235e2d1888D0b62Dd110",
-    "pointStructureIds": [],
     "network": "sonic",
     "zaps": [
       {
@@ -1006,7 +977,6 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/S/0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -1023,19 +993,20 @@
     "tokenAddress": "0x6cA85F19C4b3bfD45f537fe0e95e0357ea823FCd",
     "tokenDecimals": 18,
     "tokenProviderId": "defive",
+    "earnContractAddress": "0xE224968E8D4a86426Fb1770fB11CE99Ee9348f51",
     "earnedToken": "mooDefivewS-EURC.e",
     "earnedTokenAddress": "0xE224968E8D4a86426Fb1770fB11CE99Ee9348f51",
-    "earnContractAddress": "0xE224968E8D4a86426Fb1770fB11CE99Ee9348f51",
     "oracle": "lps",
     "oracleId": "defive-ws-eurc.e",
+    "status": "eol",
     "createdAt": 1744660905,
-    "status": "active",
+    "retireReason": "tvl",
+    "retiredAt": 1764609392,
     "platformId": "defive",
     "assets": ["S", "EURC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/S/0xe715cbA7B5cCb33790ceBFF1436809d36cb17E57",
-    "pointStructureIds": [],
     "network": "sonic",
     "zaps": [
       {
@@ -1052,19 +1023,20 @@
     "tokenAddress": "0x0f4dD4c3cCB1729f099b79d83540049758a5E9ff",
     "tokenDecimals": 18,
     "tokenProviderId": "defive",
+    "earnContractAddress": "0x0D93C40e96326E8C24d31CdecF0F8fFB6cE62E40",
     "earnedToken": "mooDefivewS-WETH",
     "earnedTokenAddress": "0x0D93C40e96326E8C24d31CdecF0F8fFB6cE62E40",
-    "earnContractAddress": "0x0D93C40e96326E8C24d31CdecF0F8fFB6cE62E40",
     "oracle": "lps",
     "oracleId": "defive-ws-weth",
+    "status": "eol",
     "createdAt": 1744660905,
-    "status": "active",
+    "retireReason": "tvl",
+    "retiredAt": 1764609392,
     "platformId": "defive",
     "assets": ["S", "WETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/S/0x50c42dEAcD8Fc9773493ED674b675bE577f2634b",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -1093,7 +1065,6 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/0x29219dd400f2Bf60E5a23d13Be72B486D4038894/0x50c42dEAcD8Fc9773493ED674b675bE577f2634b",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -1126,7 +1097,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=bes+os&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -1153,7 +1123,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=bes+os&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -1180,7 +1149,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+bes&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -1206,7 +1174,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=asonusdc+wstkscusd&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
   {
@@ -1230,7 +1197,6 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "besonic",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -1265,7 +1231,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=busdc.e-20+wstkscusd&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
   {
@@ -1291,7 +1256,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=busdc.e-20+wstkscusd&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
   {
@@ -1313,7 +1277,6 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -1344,7 +1307,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xc5954b1b9df8a0c0b7788d2cc2bc18d4bae9b0c2000200000000000000000099/add-liquidity",
     "network": "sonic",
-    "pointStructureIds": [],
     "zaps": [
       {
         "strategyId": "balancer",
@@ -1378,7 +1340,6 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xbd4a2ecdcd7acb0d2b20744ac4cc1368dd8fdc410001000000000000000000a8/add-liquidity",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic",
     "zaps": [
       {
@@ -1417,7 +1378,6 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x5485c26921e28830fbd7469442c0edad0e27e01c0002000000000000000000c7/add-liquidity",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": []
   },
@@ -1444,7 +1404,6 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xcf5d1864ab01b50c6e94adde80d5ec264c93f4910002000000000000000000bb/add-liquidity",
     "network": "sonic",
-    "pointStructureIds": ["sonic-points", "rings"],
     "zaps": []
   },
   {
@@ -1469,7 +1428,6 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xe7734b495a552ab6f4c78406e672cca7175181e10002000000000000000000c5/add-liquidity",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic",
     "zaps": []
   },
@@ -1497,7 +1455,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=wstkscusd+scusd&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
   {
@@ -1524,7 +1481,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=wstkscusd+scusd&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
   {
@@ -1550,7 +1506,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=staked+sonic+usd+sonic+usd&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
   {
@@ -1574,7 +1529,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=wbtc+scbtc&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -1589,8 +1543,10 @@
     "earnedTokenAddress": "0x7B096c4C73Fbf5A96943243D1F78ADDDf820D2ae",
     "oracle": "lps",
     "oracleId": "swapx-ichi-scbtc-wbtc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1740477793,
+    "retireReason": "tvl",
+    "retiredAt": 1764609392,
     "platformId": "ichi",
     "assets": ["scBTC", "WBTC"],
     "migrationIds": ["sonic-swapx"],
@@ -1598,7 +1554,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=wbtc+scbtc&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -1624,7 +1579,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sfrxeth+frxeth&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": [],
     "network": "sonic"
   },
   {
@@ -1646,7 +1600,6 @@
     "assets": ["USDCe", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -1678,7 +1631,6 @@
     "assets": ["USDCe", "USDT"],
     "risks": [],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -1713,7 +1665,6 @@
     "assets": ["USDCe", "USDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -1734,13 +1685,14 @@
     "earnedTokenAddress": "0xf5Be0aF42862eE909b83a78757b27d8A3efffcCa",
     "oracle": "lps",
     "oracleId": "shadow-cow-sonic-usdc.e-shadow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1740419131,
+    "retireReason": "tvl",
+    "retiredAt": 1764609953,
     "platformId": "shadow",
     "assets": ["SHADOW", "USDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -1766,13 +1718,14 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "shadow-cow-sonic-usdc.e-shadow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1740419081,
+    "retireReason": "tvl",
+    "retiredAt": 1764609953,
     "platformId": "shadow",
     "assets": ["SHADOW", "USDCe"],
     "risks": [],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -1800,14 +1753,15 @@
     "earnedTokenAddress": "0x7168464Ac7330EC5177694005e60FBe319DC40c2",
     "oracle": "lps",
     "oracleId": "shadow-cow-sonic-usdc.e-shadow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1740419081,
+    "retireReason": "tvl",
+    "retiredAt": 1764609953,
     "platformId": "beefy",
     "feeTier": "1",
     "assets": ["SHADOW", "USDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -1823,19 +1777,18 @@
     "tokenAddress": "0x5Eb126927242BaB536Ea9067624e78d8f7A9d4Ce",
     "tokenDecimals": 18,
     "tokenProviderId": "shadow",
+    "earnContractAddress": "0x7a271775B163045f8C7D3e29dd5F24831a3c9c58",
     "earnedToken": "mooCowShadowSonicwS-BRUSH",
     "earnedTokenAddress": "0x7a271775B163045f8C7D3e29dd5F24831a3c9c58",
-    "earnContractAddress": "0x7a271775B163045f8C7D3e29dd5F24831a3c9c58",
     "oracle": "lps",
     "oracleId": "shadow-cow-sonic-ws-brush",
     "status": "active",
+    "createdAt": 1739903476,
     "platformId": "shadow",
     "assets": ["BRUSH", "S"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "sonic",
-    "createdAt": 1739903476,
-    "pointStructureIds": [],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -1865,7 +1818,6 @@
     "platformId": "shadow",
     "assets": ["BRUSH", "S"],
     "risks": [],
-    "pointStructureIds": [],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -1897,7 +1849,6 @@
     "feeTier": "0.50",
     "assets": ["BRUSH", "S"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": [],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -1927,7 +1878,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+usdt&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -1953,7 +1903,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=frxeth+sceth&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["rings"],
     "network": "sonic"
   },
   {
@@ -1968,8 +1917,10 @@
     "earnedTokenAddress": "0x0f61600BAE509820207827b7e3d108ceeeB23C48",
     "oracle": "lps",
     "oracleId": "swapx-ichi-frxusd-scusd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1739788470,
+    "retireReason": "tvl",
+    "retiredAt": 1764614486,
     "platformId": "ichi",
     "assets": ["frxUSD", "scUSD"],
     "migrationIds": ["sonic-swapx"],
@@ -1977,7 +1928,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=frxusd+scusd&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["rings"],
     "network": "sonic"
   },
   {
@@ -2000,7 +1950,6 @@
     "strategyTypeId": "compounds",
     "network": "sonic",
     "createdAt": 1739395223,
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -2030,7 +1979,6 @@
     "platformId": "shadow",
     "assets": ["S", "WETH"],
     "risks": [],
-    "pointStructureIds": ["sonic-points"],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -2062,7 +2010,6 @@
     "feeTier": "0.16",
     "assets": ["S", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points"],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -2091,7 +2038,6 @@
     "platformId": "shadow",
     "assets": ["SHADOW", "S"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://www.shadow.so/liquidity/0xf19748a0e269c6965a84f8c98ca8c47a064d4dd0",
     "network": "sonic",
@@ -2119,7 +2065,6 @@
     "status": "active",
     "platformId": "beethovenx",
     "assets": ["mooSiloSonicUSDCe", "scUSD"],
-    "pointStructureIds": ["rings", "silo-points"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v3/0x43026d483f42fb35efe03c20b251142d022783f2/add-liquidity",
@@ -2138,8 +2083,10 @@
     "earnedTokenAddress": "0xd2a1b0A94a90A542C56E1310F005ac55f3b53bbb",
     "oracle": "lps",
     "oracleId": "swapx-ichi-sceth-weth-sceth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1738580775,
+    "retireReason": "tvl",
+    "retiredAt": 1764614486,
     "platformId": "ichi",
     "assets": ["scETH", "WETH"],
     "migrationIds": ["sonic-swapx"],
@@ -2147,7 +2094,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sceth+weth&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
   {
@@ -2162,8 +2108,10 @@
     "earnedTokenAddress": "0x95c0C8d19d75faF1A287Cb35028ef92cf5e1Ca56",
     "oracle": "lps",
     "oracleId": "swapx-ichi-sceth-weth-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1738580769,
+    "retireReason": "tvl",
+    "retiredAt": 1765213686,
     "platformId": "ichi",
     "assets": ["scETH", "WETH"],
     "migrationIds": ["sonic-swapx"],
@@ -2171,7 +2119,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sceth+weth&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
   {
@@ -2195,7 +2142,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=weth+swpx&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": [],
     "network": "sonic"
   },
   {
@@ -2221,7 +2167,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=swpx+os&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": [],
     "network": "sonic"
   },
   {
@@ -2245,7 +2190,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+os&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -2260,8 +2204,10 @@
     "earnedTokenAddress": "0xd9A027c0354D2dfDFAB7a0Be5758E9104b938415",
     "oracle": "lps",
     "oracleId": "swapx-ichi-ws-os-ws",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1737984600,
+    "retireReason": "tvl",
+    "retiredAt": 1765213686,
     "platformId": "ichi",
     "assets": ["OS", "S"],
     "migrationIds": ["sonic-swapx"],
@@ -2269,7 +2215,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=os+ws&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -2292,7 +2237,6 @@
     "platformId": "uniswap",
     "assets": ["S", "WETH"],
     "risks": [],
-    "pointStructureIds": ["sonic-points"],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -2324,7 +2268,6 @@
     "feeTier": "0.30",
     "assets": ["S", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points"],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -2355,7 +2298,6 @@
     "platformId": "uniswap",
     "assets": ["USDCe", "scUSD"],
     "risks": [],
-    "pointStructureIds": ["sonic-points", "rings"],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -2389,7 +2331,6 @@
     "feeTier": "0.01",
     "assets": ["USDCe", "scUSD"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points", "rings"],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -2418,7 +2359,6 @@
     "platformId": "uniswap",
     "assets": ["S", "USDCe"],
     "risks": [],
-    "pointStructureIds": ["sonic-points"],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -2450,7 +2390,6 @@
     "feeTier": "0.30",
     "assets": ["S", "USDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points"],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -2479,7 +2418,6 @@
     "platformId": "uniswap",
     "assets": ["USDCe", "WETH"],
     "risks": [],
-    "pointStructureIds": ["sonic-points"],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -2511,7 +2449,6 @@
     "feeTier": "0.05",
     "assets": ["USDCe", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points"],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -2541,7 +2478,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+weth&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -2565,7 +2501,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+weth&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -2580,8 +2515,10 @@
     "earnedTokenAddress": "0xcb076273698360801A24571F20DD3dd35Be94B80",
     "oracle": "lps",
     "oracleId": "swapx-ichi-usdc.e-scusd-scusd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1737634690,
+    "retireReason": "tvl",
+    "retiredAt": 1764614486,
     "platformId": "ichi",
     "assets": ["USDCe", "scUSD"],
     "migrationIds": ["sonic-swapx"],
@@ -2589,7 +2526,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+scusd&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
   {
@@ -2613,7 +2549,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+ws&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -2637,7 +2572,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sts+ws&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -2660,7 +2594,6 @@
     "assets": ["mooBIFI", "USDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": [],
     "network": "sonic",
     "zaps": [
       {
@@ -2693,7 +2626,6 @@
     "assets": ["mooBIFI", "USDCe"],
     "risks": [],
     "strategyTypeId": "compounds",
-    "pointStructureIds": [],
     "network": "sonic",
     "zaps": [
       {
@@ -2725,7 +2657,6 @@
     "feeTier": "1",
     "assets": ["mooBIFI", "USDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": [],
     "strategyTypeId": "compounds",
     "network": "sonic",
     "zaps": [
@@ -2756,7 +2687,6 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xe54dd58a6d4e04687f2034dd4ddab49da55f8aff00000000000000000000007c/add-liquidity",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic",
     "zaps": [
       {
@@ -2781,19 +2711,21 @@
     "tokenAddress": "0xc5AB8d98F959453E416b2F15848a02CC99bc695e",
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
+    "earnContractAddress": "0xc2eE5f2F9EdBdd83F6061dcf8e8474D0AaF0a47d",
     "earnedToken": "mooBeetsSonicscUSD/BRUSH",
     "earnedTokenAddress": "0xc2eE5f2F9EdBdd83F6061dcf8e8474D0AaF0a47d",
-    "earnContractAddress": "0xc2eE5f2F9EdBdd83F6061dcf8e8474D0AaF0a47d",
     "oracle": "lps",
     "oracleId": "beets-sonic-ringing-of-painted-melodies",
+    "status": "eol",
     "createdAt": 1737587231,
-    "status": "active",
+    "retireReason": "tvl",
+    "retiredAt": 1764614486,
     "platformId": "beethovenx",
     "assets": ["scUSD", "BRUSH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["rings"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xc5ab8d98f959453e416b2f15848a02cc99bc695e000200000000000000000022/add-liquidity",
+    "pointStructureIds": ["rings"],
     "network": "sonic",
     "zaps": [
       {
@@ -2828,7 +2760,6 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x713fb5036dc70012588d77a5b066f1dd05c712d7000200000000000000000041/add-liquidity",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -2866,7 +2797,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+scusd&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
   },
   {
@@ -2881,8 +2811,10 @@
     "earnedTokenAddress": "0x7D881FE2288f2f0D77296F3be2D8f480D264f3fB",
     "oracle": "lps",
     "oracleId": "swapx-usdc.e-scusd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1737364771,
+    "retireReason": "tvl",
+    "retiredAt": 1765213686,
     "platformId": "swapx",
     "assets": ["USDCe", "scUSD"],
     "migrationIds": ["sonic-swapx"],
@@ -2890,7 +2822,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&ownerType=pools&filter=classic-stable&search=usdc.e+scusd",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic",
     "zaps": [
       {
@@ -2920,7 +2851,6 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "sonic",
-    "pointStructureIds": ["sonic-points", "silo-points"],
     "zaps": [
       {
         "strategyId": "single"
@@ -2948,7 +2878,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+sts&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -2972,7 +2901,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+swpx&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": [],
     "network": "sonic"
   },
   {
@@ -2996,7 +2924,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+swpx&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": [],
     "network": "sonic"
   },
   {
@@ -3020,7 +2947,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+usdc.e&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic"
   },
   {
@@ -3031,19 +2957,20 @@
     "tokenAddress": "0x72cE11866e242Cd7d302cDAE9588cB32Cf2a2bB1",
     "tokenDecimals": 18,
     "tokenProviderId": "shadow",
+    "earnContractAddress": "0x84aD5B236605F7a6425DE729A8C941fc0b89890F",
     "earnedToken": "mooCowShadowSonicSHADOW-stS",
     "earnedTokenAddress": "0x84aD5B236605F7a6425DE729A8C941fc0b89890F",
-    "earnContractAddress": "0x84aD5B236605F7a6425DE729A8C941fc0b89890F",
     "oracle": "lps",
     "oracleId": "shadow-cow-sonic-shadow-sts",
-    "status": "active",
+    "status": "eol",
+    "createdAt": 1737032979,
+    "retireReason": "tvl",
+    "retiredAt": 1764609953,
     "platformId": "shadow",
     "assets": ["SHADOW", "stS"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "sonic",
-    "createdAt": 1737032979,
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -3062,22 +2989,23 @@
     "tokenAddress": "0x72cE11866e242Cd7d302cDAE9588cB32Cf2a2bB1",
     "tokenDecimals": 18,
     "tokenProviderId": "shadow",
+    "earnContractAddress": "0x57B4160A82786aCDe84594048dE024F9301Ab70C",
+    "earnedToken": "rCowShadowSonicSHADOW-stS",
+    "earnedTokenDecimals": [18],
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
-    "earnedTokenDecimals": [18],
-    "earnedToken": "rCowShadowSonicSHADOW-stS",
-    "earnContractAddress": "0x57B4160A82786aCDe84594048dE024F9301Ab70C",
     "oracle": "lps",
     "oracleId": "shadow-cow-sonic-shadow-sts",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1737032979,
+    "retireReason": "tvl",
+    "retiredAt": 1764609953,
     "platformId": "shadow",
     "assets": ["SHADOW", "stS"],
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "sonic",
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -3090,29 +3018,30 @@
   {
     "id": "shadow-cow-sonic-shadow-sts",
     "name": "SHADOW-stS",
+    "type": "cowcentrated",
     "token": "SHADOW-stS shadow",
     "tokenAddress": "0x66af3655e14a045F1742b3c9544553Ef7915ed35",
     "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
     "depositTokenAddresses": [
       "0x3333b97138D4b086720b5aE8A7844b1345a33333",
       "0xE5DA20F15420aD15DE0fa650600aFc998bbE3955"
     ],
-    "tokenProviderId": "shadow",
+    "earnContractAddress": "0x72cE11866e242Cd7d302cDAE9588cB32Cf2a2bB1",
     "earnedToken": "cowShadowSonicSHADOW-stS",
     "earnedTokenAddress": "0x72cE11866e242Cd7d302cDAE9588cB32Cf2a2bB1",
-    "earnContractAddress": "0x72cE11866e242Cd7d302cDAE9588cB32Cf2a2bB1",
     "oracle": "lps",
     "oracleId": "shadow-cow-sonic-shadow-sts",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1737032979,
+    "retireReason": "tvl",
+    "retiredAt": 1764609953,
     "platformId": "beefy",
+    "feeTier": "2",
     "assets": ["SHADOW", "stS"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "sonic",
-    "type": "cowcentrated",
-    "feeTier": "2",
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -3139,7 +3068,6 @@
     "strategyTypeId": "compounds",
     "network": "sonic",
     "createdAt": 1735931476,
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -3173,7 +3101,6 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "sonic",
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -3208,7 +3135,6 @@
     "network": "sonic",
     "type": "cowcentrated",
     "feeTier": "0.04",
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -3235,7 +3161,6 @@
     "strategyTypeId": "compounds",
     "network": "sonic",
     "createdAt": 1735931476,
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -3269,7 +3194,6 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "sonic",
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -3304,7 +3228,6 @@
     "network": "sonic",
     "type": "cowcentrated",
     "feeTier": "0.15",
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -3335,7 +3258,6 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "sonic",
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -3367,7 +3289,6 @@
     "network": "sonic",
     "type": "cowcentrated",
     "feeTier": "0.15",
-    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -3387,14 +3308,15 @@
     "earnedTokenAddress": "0x01cd2addD10540C538231965486aCE234d07385a",
     "oracle": "lps",
     "oracleId": "beets-sonic-high-speed-perfect-beets",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1735589544,
+    "retireReason": "tvl",
+    "retiredAt": 1764614486,
     "platformId": "beethovenx",
     "assets": ["BEETS", "stS", "LUDWIG"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x21fed4063bf8ebf4f51f4adf4ecfc9717aa4ca9d000100000000000000000044/add-liquidity",
-    "pointStructureIds": [],
     "network": "sonic",
     "zaps": [
       {
@@ -3430,7 +3352,6 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x25ca5451cd5a50ab1d324b5e64f32c0799661891000200000000000000000018/add-liquidity",
-    "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic",
     "zaps": [
       {
@@ -3465,7 +3386,6 @@
     "platformId": "beethovenx",
     "assets": ["scUSD", "USDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points", "rings"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xcd4d2b142235d5650ffa6a38787ed0b7d7a51c0c000000000000000000000037/add-liquidity",
     "network": "sonic",
@@ -3506,7 +3426,6 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x374641076b68371e69d03c417dac3e5f236c32fa000000000000000000000006/add-liquidity/0xf1dacc181cbb176ead93b2a7db5884161f95c40598ee588ae8d35f3118740cb8",
-    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
     "zaps": [
       {
@@ -3543,7 +3462,6 @@
     "platformId": "equalizer",
     "assets": ["scUSD", "USDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points", "rings"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xB78CdF29F7E563ea447feBB5b48DDe9bC3278Ba4",
     "network": "sonic",
@@ -3574,7 +3492,6 @@
     "platformId": "equalizer",
     "assets": ["stS", "S"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xB75C9073ea00AbDa9ff420b5Ae46fEe248993380",
     "network": "sonic",
@@ -3603,7 +3520,6 @@
     "platformId": "equalizer",
     "assets": ["BRUSH", "S"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": [],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0x38cFA6cB37d074B6E954C52d10a4cf0e4268607b",
     "network": "sonic",
@@ -3634,7 +3550,6 @@
     "platformId": "equalizer",
     "assets": ["USDCe", "WETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xbCbC5777537c0D0462fb82BA48Eeb6cb361E853f",
     "network": "sonic",
@@ -3665,7 +3580,6 @@
     "platformId": "equalizer",
     "assets": ["S", "USDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xdc85F86d5E3189e0d4a776e6Ae3B3911eC7B0133",
     "network": "sonic",
@@ -3696,7 +3610,6 @@
     "platformId": "equalizer",
     "assets": ["S", "WETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["sonic-points"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xcD7D89FF7bB263a5C45aD81ddE4Eed5892Ad540C",
     "network": "sonic",

@@ -387,6 +387,18 @@
     "blockedVaults": []
   },
   {
+    "id": "kyber-monad",
+    "type": "kyber",
+    "chainId": "monad",
+    "fee": {
+      "value": 0.0005,
+      "recipient": "0xA55e75C4815Ff39eFD76C257857441d9FD99b45b"
+    },
+    "priorityTokens": ["MON", "WMON", "USDC"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
     "id": "odos-ethereum",
     "type": "odos",
     "chainId": "ethereum",

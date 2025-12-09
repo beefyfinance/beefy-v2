@@ -19,11 +19,15 @@ export const LogoLink = memo(function LogoLink() {
 });
 
 const StyledLink = styled(Link, {
+  // comment to trigger new build
   base: {
     display: 'block',
     '& >svg': {
       height: '40px',
       display: 'block',
+      '@media (min-width: 451px)': {
+        width: '105px',
+      },
     },
   },
 });

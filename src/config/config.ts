@@ -93,6 +93,7 @@ export const config = {
       'USDaf',
       'ysyBOLD',
       'PYUSD',
+      'stUSDS',
       'cUSD',
       'stcUSD',
     ],
@@ -387,6 +388,7 @@ export const config = {
   cronos: {
     name: 'Cronos',
     chainId: 25,
+    eol: 1764838421,
     rpc: [
       'https://evm.cronos.org',
       'https://cronos.drpc.org',
@@ -591,7 +593,7 @@ export const config = {
   gnosis: {
     name: 'Gnosis',
     chainId: 100,
-    rpc: ['https://gnosis.drpc.org', 'https://gnosis-rpc.publicnode.com'],
+    rpc: ['https://gnosis-rpc.publicnode.com', 'https://gnosis.drpc.org'],
     explorerUrl: 'https://gnosisscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xdAaD0085e5D301Cb5721466e600606AB5158862b',
@@ -724,7 +726,7 @@ export const config = {
   sei: {
     name: 'Sei',
     chainId: 1329,
-    rpc: ['https://evm-rpc.sei-apis.com', 'https://sei.drpc.org'],
+    rpc: ['https://sei.drpc.org'],
     explorerUrl: 'https://seitrace.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeC1253CC6AB22680B3A3C35EA696dD0A6FC4B0D9',
@@ -835,6 +837,7 @@ export const config = {
   saga: {
     name: 'Saga',
     chainId: 5464,
+    eol: 1764838421,
     rpc: ['https://sagaevm.jsonrpc.sagarpc.io'],
     explorerUrl: 'https://sagaevm-5464-1.sagaexplorer.io',
     multicall3Address: '0x864DDc9B50B9A0dF676d826c9B9EDe9F8913a160', // TODO ?
@@ -859,7 +862,6 @@ export const config = {
     stableCoins: ['USDT0', 'USDe', 'feUSD', 'WHLP'],
   },
   plasma: {
-    new: true,
     name: 'Plasma',
     chainId: 9745,
     rpc: ['https://rpc.plasma.to'],
@@ -875,6 +877,20 @@ export const config = {
       priorityMinimum: '10000000', // 0.01 gwei
     },
     stableCoins: ['USDT0', 'USDe', 'sUSDe', 'PlasmaUSD', 'msUSD', 'splUSD'],
+  },
+  monad: {
+    new: true,
+    name: 'Monad',
+    chainId: 143,
+    rpc: ['https://rpc.monad.xyz'],
+    explorerUrl: 'https://monadscan.com/',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0xDD10a7949e48dCf5df301DC84268eaaC7F7d3f3D',
+    native: { symbol: 'MON', oracleId: 'WMON', decimals: 18 },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['USDC', 'AUSD', 'USDT0'],
   },
   aurora: {
     name: 'Aurora',

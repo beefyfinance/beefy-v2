@@ -37,6 +37,7 @@ import type { UserRewardsState } from '../reducers/wallet/user-rewards-types.ts'
 import type { WalletActionsState } from '../reducers/wallet/wallet-action-types.ts';
 import type { WalletState } from '../reducers/wallet/wallet-types.ts';
 import type { ZapsState } from '../reducers/zaps-types.ts';
+import type { RevenueState } from '../reducers/revenue.ts';
 
 export interface BeefyState {
   entities: {
@@ -85,6 +86,7 @@ export interface BeefyState {
     campaigns: {
       begems: BeGemsState;
     };
+    revenue: RevenueState;
   };
 }
 

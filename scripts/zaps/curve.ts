@@ -1,7 +1,6 @@
 import {
   addressBookToAppId,
   appToAddressBookId,
-  type ChainMap,
   getChain,
   getVaultsForChain,
 } from '../common/config.ts';
@@ -79,25 +78,11 @@ const cryptoPoolsIgnoreZap = new Set([
   '0xD51a44d3FaE010294C616388b506AcdA1bfAAE46', // zap only handles eth
 ]);
 
-const chainIdToCurveChainId: ChainMap<string> = {
-  arbitrum: 'arbitrum',
-  aurora: 'aurora',
-  avax: 'avalanche',
-  bsc: 'bsc',
-  base: 'base',
-  celo: 'celo',
-  ethereum: 'ethereum',
-  fantom: 'fantom',
-  gnosis: 'xdai',
-  kava: 'kava',
-  moonbeam: 'moonbeam',
-  optimism: 'optimism',
-  polygon: 'polygon',
-  fraxtal: 'fraxtal',
-  sonic: 'sonic',
-  plasma: 'plasma',
+const chainIdToCurveChainId = (chainId: string): string => {
+  return { avax: 'avalanche', gnosis: 'xdai' }[chainId] || chainId;
 };
-
+const isCurveLite = (chainId: string) => ['plasma', 'monad'].includes(chainId);
+const liteEndpoints = ['factory-tricrypto', 'factory-twocrypto', 'factory-stable-ng'];
 const curveEndpoints = [
   'factory',
   'factory-tricrypto',
@@ -241,13 +226,12 @@ async function fetchCurvePools(
   quiet: boolean = false
 ): Promise<CurveApiPoolWithMetadata[]> {
   const abChainId = appToAddressBookId(chainId);
-  const curveChainId = chainIdToCurveChainId[abChainId];
-  if (!curveChainId) {
-    throw new Error(`No curve chain id found for chain ${chainId}`);
-  }
+  const curveChainId = chainIdToCurveChainId(abChainId);
 
-  const url = `https://api.curve.finance/api/getPools/${curveChainId}/${endpoint}`;
-  // const url = `https://api-core.curve.finance/v1/getPools/${curveChainId}/${endpoint}`;
+  const url =
+    isCurveLite(curveChainId) ?
+      `https://api-core.curve.finance/v1/getPools/${curveChainId}/${endpoint}`
+    : `https://api.curve.finance/api/getPools/${curveChainId}/${endpoint}`;
   if (!quiet) {
     console.log(`Fetching ${url}...`);
   }
@@ -293,17 +277,12 @@ export async function getCurvePools(
     return apiPoolsCache.get(chainId)!;
   }
 
-  const abChainId = appToAddressBookId(chainId);
-  const curveChainId = chainIdToCurveChainId[abChainId];
-  if (!curveChainId) {
-    throw new Error(`No curve chain id found for chain ${chainId}`);
-  }
-
   const cachePath = path.join(cacheCurveApiPath, chainId);
   await mkdir(cachePath, { recursive: true });
 
   const allPools: CurveApiPoolWithMetadata[] = [];
-  for (const endpoint of curveEndpoints) {
+  const endpoints = isCurveLite(chainId) ? liteEndpoints : curveEndpoints;
+  for (const endpoint of endpoints) {
     const cacheFile = path.join(cachePath, `${endpoint}.json`);
     let pools =
       updateCache ?
@@ -997,13 +976,18 @@ export async function discoverCurveZap(args: RunArgs) {
       methods,
     };
 
-    return zap;
+    return { zap, pool };
   } else {
     throw new Error(`No zap methods found for pool`);
   }
 }
 
-export async function saveCurveZap(chainId: string, vaultId: string, zap: CurveStrategyConfig) {
+export async function saveCurveZap(
+  chainId: string,
+  vaultId: string,
+  zap: CurveStrategyConfig,
+  pool: CurveApiPoolWithChain
+) {
   const path = `./src/config/vault/${addressBookToAppId(chainId)}.json`;
   const vaults = await loadJson<VaultConfig[]>(path);
   let found = false;
@@ -1012,6 +996,8 @@ export async function saveCurveZap(chainId: string, vaultId: string, zap: CurveS
       found = true;
       return sortVaultKeys({
         ...vault,
+        addLiquidityUrl: `https://www.curve.finance/dex/${chainIdToCurveChainId(chainId)}/pools/${pool.id}/deposit`,
+        removeLiquidityUrl: `https://www.curve.finance/dex/${chainIdToCurveChainId(chainId)}/pools/${pool.id}/withdraw`,
         zaps: [zap],
       });
     }

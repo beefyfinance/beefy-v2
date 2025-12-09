@@ -41,6 +41,7 @@ import { walletActionsReducer } from './wallet/wallet-action.ts';
 import { walletSlice } from './wallet/wallet.ts';
 import { zapsSlice } from './zaps.ts';
 import type { BeefyState } from '../store/types.ts';
+import { revenueSlice } from './revenue.ts';
 
 const entitiesReducer = combineReducers({
   articles: persistReducer(
@@ -113,6 +114,7 @@ const uiReducer = combineReducers({
   treasury: treasurySlice.reducer,
   vaultsList: vaultsListReducer,
   version: versionReducer,
+  revenue: revenueSlice.reducer,
 });
 
 export const rootReducer = combineReducers({

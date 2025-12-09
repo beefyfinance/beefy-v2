@@ -507,6 +507,7 @@ const config = buildConfig(
         },
         letterSpacings: {
           subline: { value: '0.4px' }, // was 0.5
+          label: { value: '0.8px' },
         },
       },
       semanticTokens: {
@@ -520,6 +521,7 @@ const config = buildConfig(
             boosted: { value: '{colors.gold.30}' },
             warning: { value: '{colors.orange.40}' },
             disabled: { value: '{colors.darkBlue.90-56a}' },
+            underline: { value: '{colors.white.70-64a}' }
           },
           background: {
             header: { value: '{colors.headerFooterBackground}' },
@@ -631,7 +633,7 @@ const config = buildConfig(
           },
           tooltip: {
             light: {
-              background: { value: '{colors.white}' },
+              background: { value: '{colors.white.90}' },
               text: {
                 DEFAULT: { value: '{colors.darkBlue.90}' },
                 title: { value: '{colors.darkBlue.90}' },
@@ -880,6 +882,14 @@ const config = buildConfig(
         lineHeight: '{lineHeights.body.xl}',
         fontWeight: '{fontWeights.bold}',
       },
+
+      label: {
+        fontSize: '{fontSizes.subline.sm}',
+        lineHeight: '{lineHeights.subline.sm}',
+        fontWeight: '{fontWeights.medium}',
+        textTransform: 'uppercase',
+        letterSpacing: '{letterSpacings.label}',
+      },
       subline: {
         fontSize: '{fontSizes.subline}',
         lineHeight: '{lineHeights.subline}',
@@ -1089,6 +1099,7 @@ const config = buildConfig(
       moonriver: { primary: '#06353d', header: 0.4 },
       optimism: { primary: '#ff0420', header: 0.2 },
       plasma: { primary: '#162f29', header: 0.2 },
+      monad: { primary: '#836EF9', header: 0.2 },
       polygon: { primary: '#f5f0fd', header: 0.3 },
       real: { primary: '#ffffff', header: '#1c122c66' },
       rootstock: { primary: '#000000', header: '#1c122c66' },

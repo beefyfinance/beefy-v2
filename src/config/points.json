@@ -340,8 +340,7 @@
     ],
     "eligibility": [
       {
-        "type": "token-holding",
-        "tokens": ["wstkscUSD", "stkscUSD", "scUSD", "scETH", "wstkscETH"]
+        "type": "vault-whitelist"
       }
     ],
     "accounting": [
@@ -364,39 +363,7 @@
     ],
     "eligibility": [
       {
-        "type": "underlying-whitelist",
-        "chain": "sonic",
-        "tokens": [
-          "anS",
-          "aSonUSDC",
-          "aUSDC",
-          "BEETS",
-          "beS",
-          "bUSDC.e-20",
-          "bUSDCe-20",
-          "OS",
-          "S",
-          "scBTC",
-          "scETH",
-          "scUSD",
-          "SHADOW",
-          "stkscBTC",
-          "stkscETH",
-          "stkscUSD",
-          "stS",
-          "USDC.e",
-          "USDCe",
-          "USDT",
-          "wanS",
-          "WBTC",
-          "WETH",
-          "wOS",
-          "WS",
-          "wstkscBTC",
-          "wstkscETH",
-          "wstkscUSD",
-          "x33"
-        ]
+        "type": "vault-whitelist"
       }
     ],
     "accounting": [

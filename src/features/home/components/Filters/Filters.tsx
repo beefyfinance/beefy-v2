@@ -56,6 +56,9 @@ const Layout = styled('div', {
     display: 'flex',
     flexWrap: 'wrap',
     gap: '12px',
+    sm: {
+      gap: '8px',
+    },
   },
 });
 
