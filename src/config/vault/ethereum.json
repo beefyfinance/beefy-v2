@@ -3342,7 +3342,7 @@
     "oracleId": "curve-crvusd-susde",
     "status": "active",
     "createdAt": 1717410015,
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["crvUSD", "sUSDe"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "pointStructureIds": ["ethena"],
