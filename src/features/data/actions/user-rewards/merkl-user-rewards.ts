@@ -50,29 +50,79 @@ export const MERKL_SUPPORTED_CHAINS = new Map<ChainEntity['id'], Address>([
   ['lisk', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['hyperevm', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['plasma', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
+  ['monad', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
 ]);
 
-function parseReasonId(reasonId: string):
+function parseReasonId(
+  reasonId: string,
+  debug = import.meta.env.DEV
+):
   | {
       type: VaultEntity['type'];
       address: string;
     }
   | undefined {
-  const parts = reasonId.trim().split('_');
-  if (parts.length !== 2) {
+  const log = debug ? console.debug : () => {};
+  const segments = reasonId
+    .trim()
+    .split('~')
+    .map(s => s.trim())
+    .filter(s => s.length > 0);
+  if (segments.length === 0) {
+    log(`Empty reasonId ${reasonId}`);
+    return undefined;
+  }
+  const lastSegment = segments[segments.length - 1];
+  if (!lastSegment) {
+    log(`Invalid reasonId ${reasonId}`);
+    return undefined;
+  }
+  const parts = lastSegment.trim().split('_');
+  if (parts.length < 2 || parts.length > 4) {
+    log(`Invalid reasonId ${reasonId}`);
     return undefined;
   }
 
-  const [type, address] = parts;
+  if (parts.length === 4) {
+    const [_campaignId, protocol, _type, vaultAddress] = parts;
+    switch (protocol) {
+      case 'Beefy':
+        return { type: 'cowcentrated', address: vaultAddress };
+      case 'BeefyStaker':
+        return { type: 'gov', address: vaultAddress };
+      default:
+        break;
+    }
+    log(`Unknown protocol ${protocol} in reasonId ${reasonId}`);
+    return undefined;
+  }
 
-  switch (type) {
+  if (parts.length === 3) {
+    const [protocol, _type, vaultAddress] = parts;
+    switch (protocol) {
+      case 'Beefy':
+        return { type: 'cowcentrated', address: vaultAddress };
+      case 'BeefyStaker':
+        return { type: 'gov', address: vaultAddress };
+      default:
+        break;
+    }
+    log(`Unknown protocol ${protocol} in reasonId ${reasonId}`);
+    return undefined;
+  }
+
+  // 2
+  const [protocol, vaultAddress] = parts;
+
+  switch (protocol) {
     case 'Beefy':
-      return { type: 'cowcentrated', address: getAddress(address) };
+      return { type: 'cowcentrated', address: getAddress(vaultAddress) };
     case 'BeefyStaker':
-      return { type: 'gov', address: getAddress(address) };
+      return { type: 'gov', address: getAddress(vaultAddress) };
     case 'ERC20':
-      return { type: 'standard', address: getAddress(address) };
+      return { type: 'standard', address: getAddress(vaultAddress) };
     default:
+      log(`Unknown protocol ${protocol} in reasonId ${reasonId}`);
       return undefined;
   }
 }
