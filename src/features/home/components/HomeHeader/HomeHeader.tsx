@@ -1,5 +1,5 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useCallback, useMemo, useState, type ComponentType } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState, type ComponentType } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
 import VisibilityOffOutlinedIcon from '../../../../images/icons/eyeOff.svg?react';
@@ -10,6 +10,7 @@ import { PortfolioStats } from './Stats/PortfolioStats.tsx';
 import { PlatformStats } from './Stats/PlatformStats.tsx';
 import { cva } from '@repo/styles/css';
 import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { selectUserDepositedVaultIds } from '../../../data/selectors/balance.ts';
 
 const modeToComponent: Record<'portfolio' | 'platform', ComponentType> = {
   portfolio: PortfolioStats,
@@ -18,11 +19,18 @@ const modeToComponent: Record<'portfolio' | 'platform', ComponentType> = {
 
 export const HomeHeader = memo(function HomeHeader() {
   const isWalletConnected = useAppSelector(selectIsWalletKnown);
+  const userDepositedVaultIds = useAppSelector(selectUserDepositedVaultIds);
 
   const { t } = useTranslation();
-  const [mode, setMode] = useState<'portfolio' | 'platform'>(
+  const [mode, setMode] = useState<'portfolio' | 'platform'>(() =>
     isWalletConnected ? 'portfolio' : 'platform'
   );
+
+  useEffect(() => {
+    if (mode !== 'portfolio' && isWalletConnected && userDepositedVaultIds.length > 0) {
+      setMode('portfolio');
+    }
+  }, [isWalletConnected, userDepositedVaultIds, mode]);
 
   const Component = modeToComponent[mode];
   const handleModeChange = useCallback(
