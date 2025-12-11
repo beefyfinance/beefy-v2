@@ -12,10 +12,10 @@ type RisksToType = {
 
 const risksToTypeMap: Record<string, string[]> = {
   updatedAt: ['number', 'undefined'],
-  algoStable: ['boolean'],
+  synthStable: ['boolean'],
   complex: ['boolean'],
   curated: ['boolean'],
-  ilHigh: ['boolean'],
+  notCorrelated: ['boolean'],
   notAudited: ['boolean'],
   notBattleTested: ['boolean'],
   notTimelocked: ['boolean'],

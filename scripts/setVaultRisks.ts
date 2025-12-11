@@ -12,6 +12,11 @@ import { cloneDeep, keyBy, uniqBy } from 'lodash-es';
 import { riskKeys, type RiskKeys } from './common/risks.ts';
 import { createCachedFactory, createFactory } from '../src/features/data/utils/factory-utils.ts';
 import { isDefined } from '../src/features/data/utils/array-utils.ts';
+import {
+  platformRiskMap,
+  type RiskChange,
+  tokenRiskMap,
+} from '../src/features/data/selectors/risks.ts';
 
 type RunArgs = {
   help?: boolean;
@@ -84,16 +89,6 @@ function getRunArgs() {
     ],
   });
 }
-
-const platformRiskMap: Record<string, RiskChange> = {
-  NO_TIMELOCK: { key: 'notTimelocked', value: true },
-};
-
-const tokenRiskMap: Record<string, RiskChange> = {
-  NO_TIMELOCK: { key: 'notTimelocked', value: true },
-};
-
-type RiskChange = { key: RiskKeys; value: boolean };
 
 type CowcentratedVaultConfig = Omit<VaultConfig, 'type' | 'earnedTokenAddress'> & {
   type: 'cowcentrated';
@@ -240,7 +235,7 @@ const getPlatformRisks = createFactory(async () => {
 
 const getTokenRisks = createCachedFactory(
   async (chainId: AddressBookChainId) => {
-    const { addressBook } = await import('blockchain-addressbook');
+    const { addressBook } = await import('@beefyfinance/blockchain-addressbook');
     return new Map(
       Object.entries(addressBook[chainId].tokens)
         .filter(([_, t]) => t.risks?.length)

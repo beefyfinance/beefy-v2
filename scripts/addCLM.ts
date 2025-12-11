@@ -111,10 +111,10 @@ const requireString = (str: string) => orThrow(str, 'Missing string');
 
 // TODO review defaults
 const defaultRisks: VaultRisksConfig = {
-  algoStable: false,
+  synthStable: false,
   complex: true,
   curated: false,
-  ilHigh: true,
+  notCorrelated: true,
   notAudited: false,
   notBattleTested: false,
   notTimelocked: false,

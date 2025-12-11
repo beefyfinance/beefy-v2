@@ -153,10 +153,10 @@ async function generateVault() {
     strategyTypeId: 'multi-lp',
     risks: {
       // TODO review
-      algoStable: false,
+      synthStable: false,
       complex: false,
       curated: false,
-      ilHigh: false,
+      notCorrelated: false,
       notAudited: false,
       notBattleTested: false,
       notTimelocked: false,

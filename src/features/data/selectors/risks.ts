@@ -6,15 +6,16 @@ import { selectVaultById } from './vaults.ts';
 import { isDefined } from '../utils/array-utils.ts';
 import { createSelector } from '@reduxjs/toolkit';
 
-type RiskKeys = Exclude<keyof VaultEntity['risks'], 'updatedAt'>;
-type RiskChange = { key: RiskKeys; value: boolean };
+export type RiskKeys = Exclude<keyof VaultEntity['risks'], 'updatedAt'>;
+export type RiskChange = { key: RiskKeys; value: boolean };
 
-const platformRiskMap: Record<string, RiskChange> = {
+export const platformRiskMap: Record<string, RiskChange> = {
   NO_TIMELOCK: { key: 'notTimelocked', value: true },
 };
 
-const tokenRiskMap: Record<string, RiskChange> = {
+export const tokenRiskMap: Record<string, RiskChange> = {
   NO_TIMELOCK: { key: 'notTimelocked', value: true },
+  SYNTH_STABLE: { key: 'synthStable', value: true },
 };
 
 const selectVaultRisks = createSelector(

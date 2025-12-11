@@ -53,14 +53,14 @@ const compareVaultKeys = makeKeyComparer([
 
 const compareRisksKeys = makeKeyComparer([
   'updatedAt',
-  'algoStable',
   'complex',
   'curated',
-  'ilHigh',
   'notAudited',
   'notBattleTested',
+  'notCorrelated',
   'notTimelocked',
   'notVerified',
+  'synthStable',
 ]);
 
 function makeKeyComparer(fields: string[]) {

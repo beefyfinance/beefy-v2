@@ -12,10 +12,10 @@ import type { CuratorEntity } from '../entities/curator.ts';
 export type VaultRisksConfig = {
   /** when risks were last updated, defaults to vault.createdAt */
   updatedAt?: number;
-  algoStable: boolean;
+  synthStable: boolean;
   complex: boolean;
   curated: boolean;
-  ilHigh: boolean;
+  notCorrelated: boolean;
   notAudited: boolean;
   notBattleTested: boolean;
   notTimelocked: boolean;

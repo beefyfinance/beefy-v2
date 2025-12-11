@@ -7,8 +7,8 @@ permissions:
 on:
   workflow_dispatch:
     inputs:
-      algoStable:
-        description: "algoStable"
+      synthStable:
+        description: "synthStable"
         required: true
         type: choice
         options:
@@ -31,8 +31,8 @@ on:
           - "unchanged"
           - "false"
           - "true"
-      ilHigh:
-        description: "ilHigh"
+      notCorrelated:
+        description: "notCorrelated"
         required: true
         type: choice
         options:
@@ -110,20 +110,20 @@ jobs:
           # Convert comma-separated vault IDs into multiple --vault arguments
           VAULT_ARGS=$(echo "${{ github.event.inputs.vaults }}" | tr ',' '\n' | xargs -I {} echo "--vaults {}" | tr '\n' ' ')
           # Risks
-          ALGO_STABLE_ARG=$(if [ "${{ github.event.inputs.algoStable }}" != "unchanged" ]; then echo "--algoStable ${{ github.event.inputs.algoStable }}" ; fi)
+          SYNTH_STABLE_ARG=$(if [ "${{ github.event.inputs.synthStable }}" != "unchanged" ]; then echo "--synthStable ${{ github.event.inputs.synthStable }}" ; fi)
           COMPLEX_ARG=$(if [ "${{ github.event.inputs.complex }}" != "unchanged" ]; then echo "--complex ${{ github.event.inputs.complex }}" ; fi)
           CURATED_ARG=$(if [ "${{ github.event.inputs.curated }}" != "unchanged" ]; then echo "--curated ${{ github.event.inputs.curated }}" ; fi)
-          IL_HIGH_ARG=$(if [ "${{ github.event.inputs.ilHigh }}" != "unchanged" ]; then echo "--ilHigh ${{ github.event.inputs.ilHigh }}" ; fi)
+          NOT_CORRELATED_ARG=$(if [ "${{ github.event.inputs.notCorrelated }}" != "unchanged" ]; then echo "--notCorrelated ${{ github.event.inputs.notCorrelated }}" ; fi)
           NOT_AUDITED_ARG=$(if [ "${{ github.event.inputs.notAudited }}" != "unchanged" ]; then echo "--notAudited ${{ github.event.inputs.notAudited }}" ; fi)
           NOT_BATTLE_TESTED_ARG=$(if [ "${{ github.event.inputs.notBattleTested }}" != "unchanged" ]; then echo "--notBattleTested ${{ github.event.inputs.notBattleTested }}" ; fi)
           NOT_TIMELOCKED_ARG=$(if [ "${{ github.event.inputs.notTimelocked }}" != "unchanged" ]; then echo "--notTimelocked ${{ github.event.inputs.notTimelocked }}" ; fi)
           NOT_VERIFIED_ARG=$(if [ "${{ github.event.inputs.notVerified }}" != "unchanged" ]; then echo "--notVerified ${{ github.event.inputs.notVerified }}" ; fi)
 
           npm run setVaultStatus -- -- \
-            $ALGO_STABLE_ARG \
+            $SYNTH_STABLE_ARG \
             $COMPLEX_ARG \
             $CURATED_ARG \
-            $IL_HIGH_ARG \
+            $NOT_CORRELATED_ARG \
             $NOT_AUDITED_ARG \
             $NOT_BATTLE_TESTED_ARG \
             $NOT_TIMELOCKED_ARG \
@@ -139,10 +139,10 @@ jobs:
           title: 'Update vault risks of ${{ github.event.inputs.vaults }}'
           body: |
             Vault Risks Update:
-            - algoStable: ${{ github.event.inputs.algoStable }}
+            - synthStable: ${{ github.event.inputs.synthStable }}
             - complex: ${{ github.event.inputs.complex }}
             - curated: ${{ github.event.inputs.curated }}
-            - ilHigh: ${{ github.event.inputs.ilHigh }}
+            - notCorrelated: ${{ github.event.inputs.notCorrelated }}
             - notAudited: ${{ github.event.inputs.notAudited }}
             - notBattleTested: ${{ github.event.inputs.notBattleTested }}
             - notTimelocked: ${{ github.event.inputs.notTimelocked }}
