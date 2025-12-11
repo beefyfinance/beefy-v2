@@ -1424,7 +1424,6 @@
     "oracleId": "balancer-avax-savax-avax",
     "status": "eol",
     "createdAt": 1714408659,
-    "retireReason": "balancer-exploit-2025-11-03",
     "retiredAt": 1765469790,
     "retireReason": "Balancer2025",
     "platformId": "balancer",
