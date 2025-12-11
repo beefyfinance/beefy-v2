@@ -1,15 +1,16 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useCallback, useMemo, useState, type ComponentType } from 'react';
+import { type ComponentType, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
 import VisibilityOffOutlinedIcon from '../../../../images/icons/eyeOff.svg?react';
 import VisibilityOutlinedIcon from '../../../../images/icons/eyeOn.svg?react';
 import { setToggleHideBalance } from '../../../data/reducers/wallet/wallet.ts';
-import { selectIsBalanceHidden, selectIsWalletKnown } from '../../../data/selectors/wallet.ts';
+import { selectIsBalanceHidden } from '../../../data/selectors/wallet.ts';
 import { PortfolioStats } from './Stats/PortfolioStats.tsx';
 import { PlatformStats } from './Stats/PlatformStats.tsx';
 import { cva } from '@repo/styles/css';
 import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { selectUserHasDepositedInAnyVault } from '../../../data/selectors/balance.ts';
 
 const modeToComponent: Record<'portfolio' | 'platform', ComponentType> = {
   portfolio: PortfolioStats,
@@ -17,20 +18,24 @@ const modeToComponent: Record<'portfolio' | 'platform', ComponentType> = {
 };
 
 export const HomeHeader = memo(function HomeHeader() {
-  const isWalletConnected = useAppSelector(selectIsWalletKnown);
-
   const { t } = useTranslation();
-  const [mode, setMode] = useState<'portfolio' | 'platform'>(
-    isWalletConnected ? 'portfolio' : 'platform'
+  const hasUserDeposited = useAppSelector(selectUserHasDepositedInAnyVault);
+  const hasUserSelected = useRef(false);
+  const [mode, setMode] = useState<'portfolio' | 'platform'>(() =>
+    hasUserDeposited ? 'portfolio' : 'platform'
   );
-
   const Component = modeToComponent[mode];
-  const handleModeChange = useCallback(
-    (newMode: 'portfolio' | 'platform') => {
-      setMode(newMode);
-    },
-    [setMode]
-  );
+  const handleModeChange = useCallback((newMode: 'portfolio' | 'platform') => {
+    hasUserSelected.current = true;
+    setMode(newMode);
+  }, []);
+
+  useEffect(() => {
+    if (hasUserSelected.current) return;
+    if (hasUserDeposited) {
+      setMode('portfolio');
+    }
+  }, [hasUserDeposited]);
 
   return (
     <Container>
