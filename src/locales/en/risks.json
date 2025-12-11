@@ -2,7 +2,7 @@
   "Checklist-Introduction": "This checklist highlights risk points found through essential checks. Passing these checks does not mean the vault is safe - loss from exploit, malfunctions or other failures may still occur. It is intended only to aid user or professional due diligence.",
   "Checklist-synthStable-passed-Title": "No Synthetic Stablecoins",
   "Checklist-synthStable-passed-Description": "This product does not include direct exposure <Tooltip/> to synthetic or algorithmic stablecoin assets",
-  "Checklist-synthStable-passed-Tooltip": "",
+  "Checklist-synthStable-passed-Tooltip": "Direct exposure to synthetic stablecoins means they are a core asset featuring in the pool or a deposit asset for the market. Indirect includes lending markets where algo stables can be a collateral type or borrow option, leading to exposure that Beefy cannot monitor or control",
   "Checklist-synthStable-failed-Title": "Synthetic Stablecoin",
   "Checklist-synthStable-failed-Description": "This product includes direct exposure <Tooltip/> to synthetic or algorithmic stablecoins assets, meaning not backed 1:1 with fiat currency",
   "Checklist-synthStable-failed-Tooltip": "Direct exposure to synthetic stablecoins means they are a core asset featuring in the pool or a deposit asset for the market. Indirect includes lending markets where algo stables can be a collateral type or borrow option, leading to exposure that Beefy cannot monitor or control",
