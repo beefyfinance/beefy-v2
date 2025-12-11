@@ -1,4 +1,4 @@
-import { addressBook } from 'blockchain-addressbook';
+import { addressBook } from '@beefyfinance/blockchain-addressbook';
 import BigNumber from 'bignumber.js';
 import chalk from 'chalk';
 import { isValidChecksumAddress, maybeChecksumAddress } from './common/utils.ts';
