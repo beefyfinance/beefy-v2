@@ -135,7 +135,7 @@ const config = buildConfig(
         '--vaults-list-grid-columns': 'repeat(2, minmax(0, 1fr))',
         sm: {
           '--vaults-list-grid-columns':
-            'minmax(0, 1fr) minmax(110px, 1fr) minmax(0, 1fr) minmax(0, 1fr)',
+            'minmax(0, 1fr) minmax(0, 1fr) minmax(110px, 1fr) minmax(0, 1fr)',
         },
       },
       html: {

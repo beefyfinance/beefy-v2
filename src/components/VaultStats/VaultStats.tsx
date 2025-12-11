@@ -12,10 +12,10 @@ export const VaultStats = memo(function VaultStats({ vaultId }: VaultStatsProps)
   return (
     <Align>
       <Columns>
-        <VaultDepositStat vaultId={vaultId} altAlign="right" altFrom="lg" />
-        <VaultTvlStat vaultId={vaultId} altAlign="right" altFrom="lg" />
         <VaultApyStat type="yearly" vaultId={vaultId} altAlign="right" altFrom="lg" />
         <VaultApyStat type="daily" vaultId={vaultId} altAlign="right" altFrom="lg" />
+        <VaultTvlStat vaultId={vaultId} altAlign="right" altFrom="lg" />
+        <VaultDepositStat vaultId={vaultId} altAlign="right" altFrom="lg" />
       </Columns>
     </Align>
   );
