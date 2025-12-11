@@ -22583,7 +22583,7 @@
     "status": "eol",
     "createdAt": 1694110890,
     "updatedAt": 1718744992,
-    "retireReason": "Balancer2025",
+    "retireReason": "balancer2025",
     "retiredAt": 1765469790,
     "platformId": "aura",
     "assets": ["rETH", "ETH"],

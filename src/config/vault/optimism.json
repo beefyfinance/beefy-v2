@@ -6707,7 +6707,7 @@
     "oracleId": "aura-op-ethereum-triplets",
     "status": "eol",
     "createdAt": 1698951093,
-    "retireReason": "Balancer2025",
+    "retireReason": "balancer2025",
     "retiredAt": 1765469790,
     "platformId": "aura",
     "assets": ["wstETH", "sfrxETH", "rETH"],

@@ -109,14 +109,13 @@ export const RetirePauseReason = memo(function RetirePauseReason({
                 }}
               />
             );
-          } 
-          else if (reasonCode === 'balancer2025') {
+          } else if (reasonCode === 'balancer2025') {
             return (
               <Trans
                 t={t}
                 i18nKey={maybeKey}
                 components={{
-                  balancer: (
+                  announcement: (
                     <ExternalLink
                       className={linkClass}
                       href="https://x.com/Balancer/status/1987955747062239468"
@@ -125,14 +124,13 @@ export const RetirePauseReason = memo(function RetirePauseReason({
                 }}
               />
             );
-          }
-          else if (reasonCode === 'stream2025') {
+          } else if (reasonCode === 'stream2025') {
             return (
               <Trans
                 t={t}
                 i18nKey={maybeKey}
                 components={{
-                  stream: (
+                  announcement: (
                     <ExternalLink
                       className={linkClass}
                       href="https://x.com/StreamDefi/status/1985556360507822093"
@@ -141,8 +139,7 @@ export const RetirePauseReason = memo(function RetirePauseReason({
                 }}
               />
             );
-          } 
-          else {
+          } else {
             i18nKey = maybeKey;
           }
         }

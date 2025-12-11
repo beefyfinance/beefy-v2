@@ -497,7 +497,7 @@
     "oracleId": "etherex-usdc-asusd",
     "status": "eol",
     "createdAt": 1756144583,
-    "retireReason": "Stream2025",
+    "retireReason": "stream2025",
     "retiredAt": 1765469790,
     "platformId": "etherex",
     "assets": ["asUSD", "USDC"],

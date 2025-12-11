@@ -361,7 +361,7 @@
     "oracleId": "beraswap-ibera-wbera",
     "status": "eol",
     "createdAt": 1742949740,
-    "retireReason": "Balancer2025",
+    "retireReason": "balancer2025",
     "retiredAt": 1765469790,
     "platformId": "infrared",
     "assets": ["iBERA", "WBERA"],

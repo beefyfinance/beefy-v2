@@ -854,7 +854,7 @@
     "oracleId": "aura-polygon-wmatic-maticx",
     "status": "eol",
     "createdAt": 1719920477,
-    "retireReason": "Balancer2025",
+    "retireReason": "balancer2025",
     "retiredAt": 1765469790,
     "platformId": "aura",
     "assets": ["MaticX", "POL"],
