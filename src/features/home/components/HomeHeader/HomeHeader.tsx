@@ -1,5 +1,5 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useCallback, useEffect, useMemo, useState, type ComponentType } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState, type ComponentType } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
 import VisibilityOffOutlinedIcon from '../../../../images/icons/eyeOff.svg?react';
@@ -22,23 +22,23 @@ export const HomeHeader = memo(function HomeHeader() {
   const userDepositedVaultIds = useAppSelector(selectUserDepositedVaultIds);
 
   const { t } = useTranslation();
+  const hasUserSelected = useRef(false);
   const [mode, setMode] = useState<'portfolio' | 'platform'>(() =>
     isWalletConnected ? 'portfolio' : 'platform'
   );
 
   useEffect(() => {
-    if (mode !== 'portfolio' && isWalletConnected && userDepositedVaultIds.length > 0) {
+    if (hasUserSelected.current) return;
+    if (isWalletConnected && userDepositedVaultIds.length > 0) {
       setMode('portfolio');
     }
-  }, [isWalletConnected, userDepositedVaultIds, mode]);
+  }, [isWalletConnected, userDepositedVaultIds]);
 
   const Component = modeToComponent[mode];
-  const handleModeChange = useCallback(
-    (newMode: 'portfolio' | 'platform') => {
-      setMode(newMode);
-    },
-    [setMode]
-  );
+  const handleModeChange = useCallback((newMode: 'portfolio' | 'platform') => {
+    hasUserSelected.current = true;
+    setMode(newMode);
+  }, []);
 
   return (
     <Container>
