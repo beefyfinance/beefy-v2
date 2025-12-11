@@ -19,7 +19,7 @@ import PQueue from 'p-queue';
 import { join as pathJoin } from 'node:path';
 import { loadJson, saveJson, withFileCache } from '../common/files.ts';
 import { createCachedFactory, createFactory } from '../../src/features/data/utils/factory-utils.ts';
-import { addressBook, type Token } from 'blockchain-addressbook';
+import { addressBook, type Token } from '@beefyfinance/blockchain-addressbook';
 import { sortBy } from 'lodash-es';
 import platforms from '../../src/config/platforms.json';
 import type {

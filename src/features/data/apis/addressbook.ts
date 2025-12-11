@@ -6,7 +6,7 @@ export interface ChainAddressBook {
   [tokenId: TokenEntity['id']]: TokenEntity;
 }
 
-const addressbookImporter = import('blockchain-addressbook');
+const addressbookImporter = import('@beefyfinance/blockchain-addressbook');
 
 export const getChainAddressBook = memoize(
   async (chain: ChainEntity): Promise<ChainAddressBook> => {

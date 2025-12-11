@@ -1,7 +1,7 @@
 import { appToAddressBookId } from './common/config.ts';
 import { loadJson } from './common/files.ts';
 import { type AppChainId } from './common/chains.ts';
-import { addressBook } from 'blockchain-addressbook';
+import { addressBook } from '@beefyfinance/blockchain-addressbook';
 import { getViemClient } from './common/viem.ts';
 import { type Abi, type Address, checksumAddress, getContract } from 'viem';
 

@@ -1,5 +1,5 @@
 import { sample } from 'lodash-es';
-import { ChainId } from 'blockchain-addressbook';
+import { ChainId } from '@beefyfinance/blockchain-addressbook';
 import { config } from '../../src/config/config.ts';
 import type {
   AmmConfig,
