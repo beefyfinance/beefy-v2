@@ -109,7 +109,40 @@ export const RetirePauseReason = memo(function RetirePauseReason({
                 }}
               />
             );
-          } else {
+          } 
+          else if (reasonCode === 'balancer2025') {
+            return (
+              <Trans
+                t={t}
+                i18nKey={maybeKey}
+                components={{
+                  balancer: (
+                    <ExternalLink
+                      className={linkClass}
+                      href="https://x.com/Balancer/status/1987955747062239468"
+                    />
+                  ),
+                }}
+              />
+            );
+          }
+          else if (reasonCode === 'stream2025') {
+            return (
+              <Trans
+                t={t}
+                i18nKey={maybeKey}
+                components={{
+                  stream: (
+                    <ExternalLink
+                      className={linkClass}
+                      href="https://x.com/StreamDefi/status/1985556360507822093"
+                    />
+                  ),
+                }}
+              />
+            );
+          } 
+          else {
             i18nKey = maybeKey;
           }
         }
