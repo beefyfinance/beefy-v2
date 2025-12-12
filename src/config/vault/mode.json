@@ -18,7 +18,17 @@
     "retiredAt": 1744298354,
     "platformId": "velodrome",
     "assets": ["wMLT", "USDC"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "mode",
     "zaps": [
@@ -51,7 +61,17 @@
     "retiredAt": 1744298354,
     "platformId": "velodrome",
     "assets": ["wMLT", "USDC"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "mode",
     "zaps": [
@@ -87,7 +107,17 @@
     "platformId": "beefy",
     "feeTier": "1",
     "assets": ["wMLT", "USDC"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "mode",
     "zaps": [
@@ -115,7 +145,17 @@
     "retiredAt": 1743001154,
     "platformId": "velodrome",
     "assets": ["USDC", "USDT"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "mode",
     "zaps": [
@@ -150,7 +190,17 @@
     "retiredAt": 1743001154,
     "platformId": "velodrome",
     "assets": ["USDC", "USDT"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "mode",
     "zaps": [
@@ -186,7 +236,17 @@
     "platformId": "beefy",
     "feeTier": ".01",
     "assets": ["USDC", "USDT"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "mode",
     "zaps": [
@@ -214,7 +274,17 @@
     "retiredAt": 1744298354,
     "platformId": "velodrome",
     "assets": ["WETH", "XVELO"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "mode",
     "zaps": [
@@ -249,7 +319,17 @@
     "retiredAt": 1744298354,
     "platformId": "velodrome",
     "assets": ["WETH", "XVELO"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "mode",
     "zaps": [
@@ -285,7 +365,17 @@
     "platformId": "beefy",
     "feeTier": "1",
     "assets": ["WETH", "XVELO"],
-    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "mode",
     "zaps": [
@@ -313,7 +403,17 @@
     "retiredAt": 1754382440,
     "platformId": "velodrome",
     "assets": ["WETH", "USDC"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "mode",
     "zaps": [
@@ -348,7 +448,17 @@
     "retiredAt": 1754382440,
     "platformId": "velodrome",
     "assets": ["WETH", "USDC"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "mode",
     "zaps": [
@@ -384,7 +494,17 @@
     "platformId": "beefy",
     "feeTier": ".05",
     "assets": ["WETH", "USDC"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "mode",
     "zaps": [
@@ -413,7 +533,17 @@
     "retiredAt": 1754382440,
     "platformId": "kim",
     "assets": ["WETH", "USDC"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "mode",
     "zaps": [
@@ -446,7 +576,17 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "assets": ["WETH", "USDC"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "mode",
     "zaps": [
@@ -475,7 +615,17 @@
     "retiredAt": 1754382440,
     "platformId": "kim",
     "assets": ["MODE", "WETH"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "mode",
     "zaps": [
@@ -508,7 +658,17 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "assets": ["MODE", "WETH"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "mode",
     "zaps": [
@@ -537,7 +697,17 @@
     "retiredAt": 1743510776,
     "platformId": "kim",
     "assets": ["KIM", "WETH"],
-    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "mode",
     "zaps": [
@@ -570,7 +740,17 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "assets": ["KIM", "WETH"],
-    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "mode",
     "zaps": [
@@ -599,7 +779,17 @@
     "retiredAt": 1743510776,
     "platformId": "kim",
     "assets": ["KIM", "MODE"],
-    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "mode",
     "zaps": [
@@ -632,7 +822,17 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "assets": ["KIM", "MODE"],
-    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "mode",
     "zaps": [
@@ -660,14 +860,17 @@
     "retiredAt": 1723649381,
     "platformId": "velodrome",
     "assets": ["DOLA", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://velodrome.finance/swap?from=0x00eA4344e90c741560f08667961A8dE39FF506D7&to=eth",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x00eA4344e90c741560f08667961A8dE39FF506D7&token1=0xd988097fb8612cc24eeC14542bC03424c656005f&type=-1",
@@ -699,14 +902,17 @@
     "retiredAt": 1736182399,
     "platformId": "velodrome",
     "assets": ["weETH", "WETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://velodrome.finance/swap?from=0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A&to=eth",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A&token1=0x4200000000000000000000000000000000000006&type=-1",
@@ -739,14 +945,17 @@
     "retiredAt": 1736182399,
     "platformId": "velodrome",
     "assets": ["ezETH", "WETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://velodrome.finance/swap?from=0x2416092f143378750bb29b79eD961ab195CcEea5&to=eth",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x2416092f143378750bb29b79eD961ab195CcEea5&token1=0x4200000000000000000000000000000000000006&type=-1",
@@ -779,14 +988,17 @@
     "retiredAt": 1736182399,
     "platformId": "velodrome",
     "assets": ["USDC", "USDT"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://velodrome.finance/swap?from=0xdfc7c877a950e49d2610114102175a06c2e3167a&to=eth",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xd988097fb8612cc24eeC14542bC03424c656005f&token1=0xf0F161fDA2712DB8b566946122a5af183995e2eD&type=0",
@@ -818,14 +1030,17 @@
     "retiredAt": 1743001154,
     "platformId": "velodrome",
     "assets": ["WETH", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://velodrome.finance/swap?from=0xdfc7c877a950e49d2610114102175a06c2e3167a&to=eth",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xd988097fb8612cc24eeC14542bC03424c656005f&type=-1",
@@ -857,14 +1072,17 @@
     "retiredAt": 1743001154,
     "platformId": "velodrome",
     "assets": ["WETH", "MODE"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://velodrome.finance/swap?from=0xdfc7c877a950e49d2610114102175a06c2e3167a&to=eth",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xDfc7C877a950e49D2610114102175A06C2e3167a&type=-1",
@@ -896,14 +1114,17 @@
     "retiredAt": 1739314051,
     "platformId": "velodrome",
     "assets": ["USDC", "MODE"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://velodrome.finance/swap?from=0xdfc7c877a950e49d2610114102175a06c2e3167a&to=eth",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xd988097fb8612cc24eeC14542bC03424c656005f&token1=0xDfc7C877a950e49D2610114102175A06C2e3167a&type=-1",

@@ -20,7 +20,17 @@
     "retiredAt": 1727186611,
     "platformId": "oku",
     "assets": ["MANTA", "USDC"],
-    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "manta",
     "zaps": [
@@ -50,7 +60,17 @@
     "retiredAt": 1734101088,
     "platformId": "oku",
     "assets": ["STONE", "WETH"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "manta",
     "zaps": [
@@ -80,7 +100,17 @@
     "retiredAt": 1734101088,
     "platformId": "oku",
     "assets": ["WETH", "USDC"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "manta",
     "zaps": [
@@ -110,7 +140,17 @@
     "retiredAt": 1727186611,
     "platformId": "oku",
     "assets": ["USDC", "USDT"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "manta",
     "zaps": [
@@ -143,7 +183,17 @@
     "platformId": "beefy",
     "feeTier": "0.30",
     "assets": ["MANTA", "USDC"],
-    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "manta",
     "zaps": [
@@ -176,7 +226,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["STONE", "WETH"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "manta",
     "zaps": [
@@ -209,7 +269,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["WETH", "USDC"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "manta",
     "zaps": [
@@ -242,7 +312,17 @@
     "platformId": "beefy",
     "feeTier": "0.01",
     "assets": ["USDC", "USDT"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "manta",
     "zaps": [

@@ -18,7 +18,17 @@
     "retiredAt": 1761122430,
     "platformId": "oku",
     "assets": ["ETHs", "WRBTC"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -51,7 +61,17 @@
     "retiredAt": 1761122430,
     "platformId": "oku",
     "assets": ["ETHs", "WRBTC"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -87,7 +107,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["ETHs", "WRBTC"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -115,7 +145,17 @@
     "retiredAt": 1761122430,
     "platformId": "oku",
     "assets": ["WRBTC", "rUSDT"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -148,7 +188,17 @@
     "retiredAt": 1761122430,
     "platformId": "oku",
     "assets": ["WRBTC", "rUSDT"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -184,7 +234,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["WRBTC", "rUSDT"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -212,7 +272,17 @@
     "retiredAt": 1744298354,
     "platformId": "oku",
     "assets": ["DOC", "rUSDT"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -245,7 +315,17 @@
     "retiredAt": 1744298354,
     "platformId": "oku",
     "assets": ["DOC", "rUSDT"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -281,7 +361,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["DOC", "rUSDT"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -311,7 +401,17 @@
     "retiredAt": 1761122430,
     "platformId": "oku",
     "assets": ["RIF", "rUSDT"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -344,7 +444,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["RIF", "rUSDT"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -370,7 +480,17 @@
     "createdAt": 1727706127,
     "platformId": "sushi",
     "assets": ["DOC", "rUSDT"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -401,7 +521,17 @@
     "createdAt": 1727706126,
     "platformId": "sushi",
     "assets": ["DOC", "rUSDT"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -435,7 +565,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["DOC", "rUSDT"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -463,7 +603,17 @@
     "retiredAt": 1761122430,
     "platformId": "sushi",
     "assets": ["WRBTC", "rUSDT"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -496,7 +646,17 @@
     "retiredAt": 1761122430,
     "platformId": "sushi",
     "assets": ["WRBTC", "rUSDT"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -532,7 +692,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["WRBTC", "rUSDT"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -560,7 +730,17 @@
     "retiredAt": 1761122430,
     "platformId": "sushi",
     "assets": ["ETHs", "WRBTC"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -593,7 +773,17 @@
     "retiredAt": 1761122430,
     "platformId": "sushi",
     "assets": ["ETHs", "WRBTC"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [
@@ -629,7 +819,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["ETHs", "WRBTC"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "rootstock",
     "zaps": [

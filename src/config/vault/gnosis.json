@@ -20,7 +20,17 @@
     "retiredAt": 1756838084,
     "platformId": "uniswap",
     "assets": ["bCSPX", "sDAI"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "gnosis",
     "zaps": [
@@ -51,7 +61,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["bCSPX", "sDAI"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "gnosis",
     "zaps": [
@@ -79,7 +99,17 @@
     "retiredAt": 1761205953,
     "platformId": "uniswap",
     "assets": ["wbTSLA", "sDAI"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "gnosis",
     "zaps": [
@@ -112,7 +142,17 @@
     "retiredAt": 1761205953,
     "platformId": "uniswap",
     "assets": ["wbTSLA", "sDAI"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "gnosis",
     "zaps": [
@@ -145,7 +185,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["wbTSLA", "sDAI"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "gnosis",
     "zaps": [
@@ -173,7 +223,17 @@
     "createdAt": 1744216500,
     "platformId": "uniswap",
     "assets": ["USDCe", "sDAI"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "gnosis",
     "zaps": [
@@ -204,15 +264,17 @@
     "platformId": "beefy",
     "feeTier": "0.01",
     "assets": ["USDCe", "sDAI"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "BATTLE_TESTED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "gnosis",
     "zaps": [
@@ -240,7 +302,17 @@
     "createdAt": 1744216500,
     "platformId": "uniswap",
     "assets": ["WETH", "wstETH"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "gnosis",
     "zaps": [
@@ -271,15 +343,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["WETH", "wstETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "BATTLE_TESTED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "gnosis",
     "zaps": [
@@ -307,7 +381,17 @@
     "createdAt": 1744216500,
     "platformId": "uniswap",
     "assets": ["USDCe", "WXDAI"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "gnosis",
     "zaps": [
@@ -338,15 +422,17 @@
     "platformId": "beefy",
     "feeTier": "0.01",
     "assets": ["USDCe", "WXDAI"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "BATTLE_TESTED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "gnosis",
     "zaps": [
@@ -374,7 +460,17 @@
     "createdAt": 1744216500,
     "platformId": "uniswap",
     "assets": ["wstETH", "sDAI"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "gnosis",
     "zaps": [
@@ -405,15 +501,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["wstETH", "sDAI"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "BATTLE_TESTED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "gnosis",
     "zaps": [
@@ -441,7 +539,17 @@
     "createdAt": 1744216500,
     "platformId": "uniswap",
     "assets": ["wstETH", "GNO"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "gnosis",
     "zaps": [
@@ -472,15 +580,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["wstETH", "GNO"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "BATTLE_TESTED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "gnosis",
     "zaps": [
@@ -506,7 +616,17 @@
     "createdAt": 1739196922,
     "platformId": "aura",
     "assets": ["wagwstETH", "wagGNO"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v3/0x272d6be442e30d7c87390edeb9b96f1e84cecd8d/add-liquidity",
     "network": "gnosis"
@@ -528,7 +648,17 @@
     "createdAt": 1739195708,
     "platformId": "aura",
     "assets": ["wagwstETH", "wagETH"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v3/0x6e6bb18449fCF15B79EFa2CfA70ACF7593088029/add-liquidity",
     "network": "gnosis"
@@ -552,14 +682,17 @@
     "retiredAt": 1736099532,
     "platformId": "aura",
     "assets": ["rETH", "WETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x71E1179C5e197FA551BEEC85ca2EF8693c61b85b/",
     "removeLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x71E1179C5e197FA551BEEC85ca2EF8693c61b85b/",
@@ -594,14 +727,17 @@
     "createdAt": 1722694393,
     "platformId": "aura",
     "assets": ["wstETH", "WETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x8dd4df4ce580b9644437f3375e54f1ab09808228/",
     "removeLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x8dd4df4ce580b9644437f3375e54f1ab09808228/",
@@ -638,14 +774,17 @@
     "retiredAt": 1765469790,
     "platformId": "aura",
     "assets": ["USDCe", "USDT", "sDAI"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xfc095c811fe836ed12f247bcf042504342b73fb700000000000000000000009f/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xfc095c811fe836ed12f247bcf042504342b73fb700000000000000000000009f/remove-liquidity",
@@ -685,14 +824,17 @@
     "retiredAt": 1765469790,
     "platformId": "aura",
     "assets": ["stEUR", "EURe"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x06135a9ae830476d3a941bae9010b63732a055f4000000000000000000000065/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x06135a9ae830476d3a941bae9010b63732a055f4000000000000000000000065/remove-liquidity",
@@ -731,14 +873,17 @@
     "retiredAt": 1734101118,
     "platformId": "aura",
     "assets": ["crvUSD", "sDAI"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xc9f00c3a713008ddf69b768d90d4978549bfdf9400000000000000000000006d/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xc9f00c3a713008ddf69b768d90d4978549bfdf9400000000000000000000006d/remove-liquidity",
@@ -775,14 +920,17 @@
     "createdAt": 1699446018,
     "platformId": "aura",
     "assets": ["wstETH", "COW"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x4cdabe9e07ca393943acfb9286bbbd0d0a310ff600020000000000000000005c/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x4cdabe9e07ca393943acfb9286bbbd0d0a310ff600020000000000000000005c/remove-liquidity",
@@ -817,14 +965,17 @@
     "createdAt": 1699446018,
     "platformId": "aura",
     "assets": ["wstETH", "sDAI"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xbc2acf5e821c5c9f8667a36bb1131dad26ed64f9000200000000000000000063/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xbc2acf5e821c5c9f8667a36bb1131dad26ed64f9000200000000000000000063/remove-liquidity",
@@ -861,14 +1012,17 @@
     "retiredAt": 1727106695,
     "platformId": "aura",
     "assets": ["USDC", "USDT", "sDAI"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066/remove-liquidity",
@@ -908,14 +1062,17 @@
     "retiredAt": 1710346058,
     "platformId": "aura",
     "assets": ["COW", "GNO"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x21d4c792ea7e38e0d0819c2011a2b1cb7252bd9900020000000000000000001e/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x21d4c792ea7e38e0d0819c2011a2b1cb7252bd9900020000000000000000001e/remove-liquidity",
@@ -940,14 +1097,17 @@
     "retiredAt": 1765469790,
     "platformId": "aura",
     "assets": ["sDAI", "EURe"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064/remove-liquidity",
@@ -984,14 +1144,17 @@
     "createdAt": 1698264180,
     "platformId": "aura",
     "assets": ["wstETH", "BAL", "AURA"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x00df7f58e1cf932ebe5f54de5970fb2bdf0ef06d00010000000000000000005b/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x00df7f58e1cf932ebe5f54de5970fb2bdf0ef06d00010000000000000000005b/remove-liquidity",
@@ -1029,14 +1192,17 @@
     "retiredAt": 1743199524,
     "platformId": "aura",
     "assets": ["wstETH", "GNO"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x4683e340a8049261057d5ab1b29c8d840e75695e00020000000000000000005a/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x4683e340a8049261057d5ab1b29c8d840e75695e00020000000000000000005a/remove-liquidity",
@@ -1073,14 +1239,17 @@
     "retiredAt": 1765469790,
     "platformId": "aura",
     "assets": ["wstETH", "WETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034/remove-liquidity",

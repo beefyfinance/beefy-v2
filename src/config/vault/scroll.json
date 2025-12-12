@@ -17,7 +17,17 @@
     "retiredAt": 1730393926,
     "platformId": "tokan",
     "assets": ["USDC", "USDT"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.tokan.exchange/liquidity",
     "network": "scroll",
@@ -46,7 +56,17 @@
     "retiredAt": 1730393926,
     "platformId": "tokan",
     "assets": ["WETH", "wstETH"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.tokan.exchange/liquidity",
     "network": "scroll",
@@ -75,7 +95,17 @@
     "retiredAt": 1730393926,
     "platformId": "tokan",
     "assets": ["WBTC", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.tokan.exchange/liquidity",
     "network": "scroll",
@@ -104,7 +134,17 @@
     "retiredAt": 1730114936,
     "platformId": "tokan",
     "assets": ["TKN", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.tokan.exchange/liquidity",
     "network": "scroll",
@@ -134,7 +174,17 @@
     "retiredAt": 1730393926,
     "platformId": "tokan",
     "assets": ["USDC", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.tokan.exchange/liquidity?liquidityToken1Symbol=WETH&liquidityToken2Symbol=USDC",
     "network": "scroll",
@@ -164,7 +214,17 @@
     "retiredAt": 1743510776,
     "platformId": "nuri",
     "assets": ["WBTC", "WETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -199,7 +259,17 @@
     "retiredAt": 1743511150,
     "platformId": "nuri",
     "assets": ["WBTC", "WETH"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -235,7 +305,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["WBTC", "WETH"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -263,7 +343,17 @@
     "retiredAt": 1743510776,
     "platformId": "nuri",
     "assets": ["WETH", "wstETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -298,7 +388,17 @@
     "retiredAt": 1743511150,
     "platformId": "nuri",
     "assets": ["WETH", "wstETH"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -334,7 +434,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["WETH", "wstETH"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -362,7 +472,17 @@
     "retiredAt": 1743510776,
     "platformId": "nuri",
     "assets": ["WETH", "USDT"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -397,7 +517,17 @@
     "retiredAt": 1743510776,
     "platformId": "nuri",
     "assets": ["WETH", "USDT"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -433,7 +563,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["WETH", "USDT"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -461,7 +601,17 @@
     "retiredAt": 1744925964,
     "platformId": "nuri",
     "assets": ["USDC", "WETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -496,7 +646,17 @@
     "retiredAt": 1744925964,
     "platformId": "nuri",
     "assets": ["USDC", "WETH"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -532,7 +692,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["USDC", "WETH"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -564,7 +734,17 @@
     "retiredAt": 1743510776,
     "platformId": "oku",
     "assets": ["SCR", "USDC"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -597,7 +777,17 @@
     "platformId": "beefy",
     "feeTier": "1",
     "assets": ["SCR", "USDC"],
-    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -625,7 +815,17 @@
     "retiredAt": 1744298354,
     "platformId": "nuri",
     "assets": ["USDC", "SCR"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -660,7 +860,17 @@
     "retiredAt": 1744298354,
     "platformId": "nuri",
     "assets": ["USDC", "SCR"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -696,7 +906,17 @@
     "platformId": "beefy",
     "feeTier": "1",
     "assets": ["USDC", "SCR"],
-    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -724,7 +944,17 @@
     "retiredAt": 1744298354,
     "platformId": "nuri",
     "assets": ["WETH", "SCR"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -759,7 +989,17 @@
     "retiredAt": 1744298354,
     "platformId": "nuri",
     "assets": ["WETH", "SCR"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -795,7 +1035,17 @@
     "platformId": "beefy",
     "feeTier": "1",
     "assets": ["WETH", "SCR"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -827,7 +1077,17 @@
     "retiredAt": 1744298354,
     "platformId": "sushi",
     "assets": ["WETH", "SCR"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -860,7 +1120,17 @@
     "platformId": "beefy",
     "feeTier": "1",
     "assets": ["WETH", "SCR"],
-    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -888,7 +1158,17 @@
     "retiredAt": 1742594396,
     "platformId": "nuri",
     "assets": ["loreUSD", "USDC"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://www.nuri.exchange/manage/v1/0x4775dFFd8762eE4C8DE49f4FD6D02A1f0d8f1698",
     "network": "scroll",
@@ -918,7 +1198,17 @@
     "retiredAt": 1743510776,
     "platformId": "nuri",
     "assets": ["NURI", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://www.nuri.exchange/manage/v1/0x8ae1c699c9c62fac468a1e253e15b571b69a7ffe",
     "network": "scroll",
@@ -952,7 +1242,17 @@
     "retiredAt": 1743510776,
     "platformId": "sushi",
     "assets": ["USDC", "WETH"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -985,7 +1285,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["USDC", "WETH"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -1017,7 +1327,17 @@
     "retiredAt": 1743510776,
     "platformId": "sushi",
     "assets": ["USDC", "USDT"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -1050,7 +1370,17 @@
     "platformId": "beefy",
     "feeTier": "0.01",
     "assets": ["USDC", "USDT"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -1082,7 +1412,17 @@
     "retiredAt": 1743510776,
     "platformId": "oku",
     "assets": ["USDC", "WETH"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -1115,7 +1455,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["USDC", "WETH"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
