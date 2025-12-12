@@ -4,7 +4,7 @@
     "name": "EDEL-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/EDEL",
-    "tokenAddress": "0x566bee7ef7b39f29d150ab3be6b6242c17cc5a31",
+    "tokenAddress": "0x566beE7EF7b39f29d150AB3be6b6242C17CC5A31",
     "tokenDecimals": 18,
     "tokenProviderId": "aerodrome",
     "earnedToken": "mooAerodromeBaseWETH-EDEL",
