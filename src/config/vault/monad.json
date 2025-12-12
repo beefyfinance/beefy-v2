@@ -187,6 +187,35 @@
     ]
   },
   {
+    "id": "pancake-cow-monad-wsteth-wmon-vault",
+    "name": "wstETH-WMON",
+    "type": "standard",
+    "token": "wstETH-WMON pancakeswap",
+    "tokenAddress": "0x0B506f99eF689AF3E49A8FC29844553ff8302358",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xd171365adfA3427e0d069677EB67264c183CD03c",
+    "earnedToken": "mooBeefyPancakeMonadwstETH-WMON",
+    "earnedTokenAddress": "0xd171365adfA3427e0d069677EB67264c183CD03c",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-wsteth-wmon",
+    "status": "active",
+    "createdAt": 1765546282,
+    "platformId": "pancakeswap",
+    "assets": ["wstETH", "WMON"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-monad-wsteth-wmon-rp",
     "name": "wstETH-WMON Reward Pool",
     "type": "gov",
@@ -242,6 +271,35 @@
     "zaps": [
       {
         "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-wmon-weth-vault",
+    "name": "WETH-WMON",
+    "type": "standard",
+    "token": "WETH-WMON pancakeswap",
+    "tokenAddress": "0x88109720Ee250B9Ac49ED309AfB2DD682cBDA6d8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xe35395eFe6A5eF7b01b9104B36710d73e7D67cb3",
+    "earnedToken": "mooBeefyPancakeMonadWETH-WMON",
+    "earnedTokenAddress": "0xe35395eFe6A5eF7b01b9104B36710d73e7D67cb3",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-wmon-weth",
+    "status": "active",
+    "createdAt": 1765546282,
+    "platformId": "pancakeswap",
+    "assets": ["WETH", "WMON"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -305,6 +363,35 @@
     ]
   },
   {
+    "id": "pancake-cow-monad-ausd-wmon-vault",
+    "name": "AUSD-WMON",
+    "type": "standard",
+    "token": "AUSD-WMON pancakeswap",
+    "tokenAddress": "0xE7f6FBE79cD88cd411da10d2E5c0BeED197adf23",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x19c8D0aBf53c65D1d4f0ac9951041EcA6213bEd7",
+    "earnedToken": "mooBeefyPancakeMonadAUSD-WMON",
+    "earnedTokenAddress": "0x19c8D0aBf53c65D1d4f0ac9951041EcA6213bEd7",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-ausd-wmon",
+    "status": "active",
+    "createdAt": 1765546282,
+    "platformId": "pancakeswap",
+    "assets": ["AUSD", "WMON"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-monad-ausd-wmon-rp",
     "name": "AUSD-WMON Reward Pool",
     "type": "gov",
@@ -360,6 +447,35 @@
     "zaps": [
       {
         "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-wmon-usdc-vault",
+    "name": "USDC-WMON",
+    "type": "standard",
+    "token": "USDC-WMON pancakeswap",
+    "tokenAddress": "0x084472F7B9D4C75eBe28C0239C9FC62A2549f730",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xBed4B984E7dC447742C272B63800111d68298008",
+    "earnedToken": "mooBeefyPancakeMonadUSDC-WMON",
+    "earnedTokenAddress": "0xBed4B984E7dC447742C272B63800111d68298008",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-wmon-usdc",
+    "status": "active",
+    "createdAt": 1765546282,
+    "platformId": "pancakeswap",
+    "assets": ["USDC", "WMON"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
