@@ -838,6 +838,9 @@ const checkRisks = (pool: VaultConfig) => {
   if (!pool.risks || typeof pool.risks !== 'object') {
     console.error(`Error: ${pool.id} : risks missing`);
     return false;
+  } else if (Array.isArray(pool.risks)) {
+    console.error(`Error: ${pool.id} : risks should be an object, not an array`);
+    return false;
   } else if (!isValidRisksConfig(pool.risks)) {
     const errors = getRisksConfigErrors(pool.risks);
     console.error(`Error: ${pool.id} : risks invalid - \n\t${errors.join('\n\t')}`);
