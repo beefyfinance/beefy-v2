@@ -1,0 +1,155 @@
+name: Set Vault Risks Manual
+
+permissions:
+  contents: write
+  pull-requests: write
+
+on:
+  workflow_dispatch:
+    inputs:
+      synthStable:
+        description: "synthStable"
+        required: true
+        type: choice
+        options:
+          - "unchanged"
+          - "false"
+          - "true"
+      complex:
+        description: "complex"
+        required: true
+        type: choice
+        options:
+          - "unchanged"
+          - "false"
+          - "true"
+      curated:
+        description: "curated"
+        required: true
+        type: choice
+        options:
+          - "unchanged"
+          - "false"
+          - "true"
+      notCorrelated:
+        description: "notCorrelated"
+        required: true
+        type: choice
+        options:
+          - "unchanged"
+          - "false"
+          - "true"
+      notAudited:
+        description: "notAudited"
+        required: true
+        type: choice
+        options:
+          - "unchanged"
+          - "false"
+          - "true"
+      notBattleTested:
+        description: "notBattleTested"
+        required: true
+        type: choice
+        options:
+          - "unchanged"
+          - "false"
+          - "true"
+      notTimelocked:
+        description: "notTimelocked"
+        required: true
+        type: choice
+        options:
+          - "unchanged"
+          - "false"
+          - "true"
+      notVerified:
+        description: "notVerified"
+        required: true
+        type: choice
+        options:
+          - "unchanged"
+          - "false"
+          - "true"
+      vaults:
+        description: 'Comma-separated list of vault IDs'
+        required: true
+        type: string
+      includeRelated:
+        description: 'Include related vaults (CLMs)'
+        required: false
+        type: boolean
+        default: false
+      chain:
+        description: 'Consider only this chain (optional)'
+        required: false
+        type: string
+
+jobs:
+  set-vault-risks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set Vault Risks
+        run: |
+          # Optionally include chain argument
+          CHAIN_ARG=$(if [ -n "${{ github.event.inputs.chain }}" ]; then echo "--chain ${{ github.event.inputs.chain }}" ; fi)
+          # Optionally include includeRelated argument
+          INCLUDE_RELATED_ARG=$(if [ "${{ github.event.inputs.includeRelated }}" = "true" ]; then echo "--includeRelated" ; fi)
+          # Convert comma-separated vault IDs into multiple --vault arguments
+          VAULT_ARGS=$(echo "${{ github.event.inputs.vaults }}" | tr ',' '\n' | xargs -I {} echo "--vaults {}" | tr '\n' ' ')
+          # Risks
+          SYNTH_STABLE_ARG=$(if [ "${{ github.event.inputs.synthStable }}" != "unchanged" ]; then echo "--synthStable ${{ github.event.inputs.synthStable }}" ; fi)
+          COMPLEX_ARG=$(if [ "${{ github.event.inputs.complex }}" != "unchanged" ]; then echo "--complex ${{ github.event.inputs.complex }}" ; fi)
+          CURATED_ARG=$(if [ "${{ github.event.inputs.curated }}" != "unchanged" ]; then echo "--curated ${{ github.event.inputs.curated }}" ; fi)
+          NOT_CORRELATED_ARG=$(if [ "${{ github.event.inputs.notCorrelated }}" != "unchanged" ]; then echo "--notCorrelated ${{ github.event.inputs.notCorrelated }}" ; fi)
+          NOT_AUDITED_ARG=$(if [ "${{ github.event.inputs.notAudited }}" != "unchanged" ]; then echo "--notAudited ${{ github.event.inputs.notAudited }}" ; fi)
+          NOT_BATTLE_TESTED_ARG=$(if [ "${{ github.event.inputs.notBattleTested }}" != "unchanged" ]; then echo "--notBattleTested ${{ github.event.inputs.notBattleTested }}" ; fi)
+          NOT_TIMELOCKED_ARG=$(if [ "${{ github.event.inputs.notTimelocked }}" != "unchanged" ]; then echo "--notTimelocked ${{ github.event.inputs.notTimelocked }}" ; fi)
+          NOT_VERIFIED_ARG=$(if [ "${{ github.event.inputs.notVerified }}" != "unchanged" ]; then echo "--notVerified ${{ github.event.inputs.notVerified }}" ; fi)
+
+          npm run setVaultStatus -- -- \
+            $SYNTH_STABLE_ARG \
+            $COMPLEX_ARG \
+            $CURATED_ARG \
+            $NOT_CORRELATED_ARG \
+            $NOT_AUDITED_ARG \
+            $NOT_BATTLE_TESTED_ARG \
+            $NOT_TIMELOCKED_ARG \
+            $NOT_VERIFIED_ARG \      
+            $CHAIN_ARG \
+            $INCLUDE_RELATED_ARG \
+            $VAULT_ARGS
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: 'chore: update vault risks of ${{ github.event.inputs.vaults }}'
+          title: 'Update vault risks of ${{ github.event.inputs.vaults }}'
+          body: |
+            Vault Risks Update:
+            - synthStable: ${{ github.event.inputs.synthStable }}
+            - complex: ${{ github.event.inputs.complex }}
+            - curated: ${{ github.event.inputs.curated }}
+            - notCorrelated: ${{ github.event.inputs.notCorrelated }}
+            - notAudited: ${{ github.event.inputs.notAudited }}
+            - notBattleTested: ${{ github.event.inputs.notBattleTested }}
+            - notTimelocked: ${{ github.event.inputs.notTimelocked }}
+            - notVerified: ${{ github.event.inputs.notVerified }}
+            - Chain: ${{ github.event.inputs.chain || 'automatic' }}
+            - Vaults: ${{ github.event.inputs.vaults }}
+            - Include Related: ${{ github.event.inputs.includeRelated }}
+            - Triggered by: @${{ github.actor }}
+          branch: vault-status-${{ github.actor }}-${{ github.event.inputs.status }}-${{ github.run_id }}
+          delete-branch: true

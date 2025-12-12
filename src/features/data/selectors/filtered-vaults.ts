@@ -272,12 +272,13 @@ export const selectIsVaultStable = createSelector(
   },
   res => res
 );
+
 export const selectIsVaultCorrelated = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
 
     return (
-      vault.risks.includes('IL_NONE') &&
+      !vault.risks.notCorrelated &&
       vault.assetIds.length > 1 &&
       !selectIsVaultStable(state, vaultId)
     );

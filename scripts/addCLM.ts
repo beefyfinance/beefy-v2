@@ -6,7 +6,7 @@ import { ERC20Abi } from '../src/config/abi/ERC20Abi.ts';
 import { sortVaultKeys } from './common/vault-fields.ts';
 import { isValidChecksumAddress } from './common/utils.ts';
 import { join as pathJoin } from 'node:path';
-import type { VaultConfig } from '../src/features/data/apis/config-types.ts';
+import type { VaultConfig, VaultRisksConfig } from '../src/features/data/apis/config-types.ts';
 import { loadJson, saveJson } from './common/files.ts';
 import { getViemClient } from './common/viem.ts';
 import { type Address, getContract } from 'viem';
@@ -58,38 +58,28 @@ async function vaultData(chain: AppChainId, vaultAddress: string, id: string) {
     token1,
   };
 
-  const provider = params.mooToken.startsWith('cowAerodrome')
-    ? 'aerodrome'
-    : params.mooToken.startsWith('cowVelodrome')
-      ? 'velodrome'
-      : params.mooToken.startsWith('cowUniswap')
-        ? 'uniswap'
-        : params.mooToken.startsWith('cowRamses')
-          ? 'ramses'
-          : params.mooToken.startsWith('cowPancake')
-            ? 'pancakeswap'
-            : id.substring(0, id.indexOf('-'));
+  const provider =
+    params.mooToken.startsWith('cowAerodrome') ? 'aerodrome'
+    : params.mooToken.startsWith('cowVelodrome') ? 'velodrome'
+    : params.mooToken.startsWith('cowUniswap') ? 'uniswap'
+    : params.mooToken.startsWith('cowRamses') ? 'ramses'
+    : params.mooToken.startsWith('cowPancake') ? 'pancakeswap'
+    : id.substring(0, id.indexOf('-'));
   const platform = provider;
 
   const earnedToken =
-    provider === 'aerodrome'
-      ? ['AERO']
-      : provider === 'velodrome'
-        ? ['VELOV2']
-        : provider === 'nuri'
-          ? ['NURI']
-          : [];
+    provider === 'aerodrome' ? ['AERO']
+    : provider === 'velodrome' ? ['VELOV2']
+    : provider === 'nuri' ? ['NURI']
+    : [];
 
   const earnedTokenAddress =
-    provider === 'aerodrome'
-      ? ['0x940181a94A35A4569E4529A3CDfB74e38FD98631']
-      : provider === 'velodrome' && chain === 'optimism'
-        ? ['0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db']
-        : provider === 'velodrome'
-          ? ['0x7f9AdFbd38b669F03d1d11000Bc76b9AaEA28A81']
-          : provider === 'nuri'
-            ? ['0xAAAE8378809bb8815c08D3C59Eb0c7D1529aD769']
-            : [];
+    provider === 'aerodrome' ? ['0x940181a94A35A4569E4529A3CDfB74e38FD98631']
+    : provider === 'velodrome' && chain === 'optimism' ?
+      ['0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db']
+    : provider === 'velodrome' ? ['0x7f9AdFbd38b669F03d1d11000Bc76b9AaEA28A81']
+    : provider === 'nuri' ? ['0xAAAE8378809bb8815c08D3C59Eb0c7D1529aD769']
+    : [];
 
   const strategyTypeId = poolPlatforms.includes(provider) ? 'pool' : 'compounds';
 
@@ -119,6 +109,18 @@ const requireAddress = (address: string) =>
 const maybeAddress = (address: string) => (isValidChecksumAddress(address) ? address : '0x');
 const requireString = (str: string) => orThrow(str, 'Missing string');
 
+// TODO review defaults
+const defaultRisks: VaultRisksConfig = {
+  synthStable: false,
+  complex: true,
+  curated: false,
+  notCorrelated: true,
+  notAudited: false,
+  notBattleTested: false,
+  notTimelocked: false,
+  notVerified: false,
+};
+
 async function generateVault() {
   const chain = addressBookToAppId(process.argv[2]);
   const clmAddress = requireAddress(process.argv[3]);
@@ -134,37 +136,37 @@ async function generateVault() {
   const symbol = token0 + '-' + token1;
 
   const newVault: VaultConfig | undefined =
-    vaultAddress === '0x'
-      ? undefined
-      : {
-          id: id + '-vault',
-          name: symbol,
-          type: 'standard' as const,
-          token: symbol,
-          tokenAddress: clmAddress,
-          tokenDecimals: 18,
-          tokenProviderId: vault.provider,
-          earnedToken: 'mooC' + vault.mooToken.substring(1),
-          earnedTokenAddress: vaultAddress,
-          earnContractAddress: vaultAddress,
-          oracle: 'lps',
-          oracleId: id,
-          status: 'active',
-          platformId: vault.provider,
-          assets: [token0, token1],
-          risks: ['COMPLEXITY_LOW', 'IL_HIGH', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
-          strategyTypeId: vault.strategyTypeId,
-          network: chain,
-          createdAt: createdAt + 1,
-          zaps: [
-            {
-              strategyId: 'vault-composer' as const,
-            },
-            {
-              strategyId: 'reward-pool-to-vault' as const,
-            },
-          ],
-        };
+    vaultAddress === '0x' ? undefined : (
+      {
+        id: id + '-vault',
+        name: symbol,
+        type: 'standard' as const,
+        token: symbol,
+        tokenAddress: clmAddress,
+        tokenDecimals: 18,
+        tokenProviderId: vault.provider,
+        earnedToken: 'mooC' + vault.mooToken.substring(1),
+        earnedTokenAddress: vaultAddress,
+        earnContractAddress: vaultAddress,
+        oracle: 'lps',
+        oracleId: id,
+        status: 'active',
+        platformId: vault.provider,
+        assets: [token0, token1],
+        risks: defaultRisks,
+        strategyTypeId: vault.strategyTypeId,
+        network: chain,
+        createdAt: createdAt + 1,
+        zaps: [
+          {
+            strategyId: 'vault-composer' as const,
+          },
+          {
+            strategyId: 'reward-pool-to-vault' as const,
+          },
+        ],
+      }
+    );
 
   const newRewardPool: VaultConfig = {
     id: id + '-rp',
@@ -185,7 +187,7 @@ async function generateVault() {
     createdAt,
     platformId: vault.provider,
     assets: [token0, token1],
-    risks: [],
+    risks: defaultRisks,
     strategyTypeId: vault.strategyTypeId,
     network: chain,
     zaps: [
@@ -217,7 +219,7 @@ async function generateVault() {
     createdAt,
     platformId: 'beefy',
     assets: [token0, token1],
-    risks: ['IL_HIGH', 'MCAP_LARGE', 'CONTRACTS_VERIFIED'],
+    risks: defaultRisks,
     strategyTypeId: vault.strategyTypeId,
     network: chain,
     type: 'cowcentrated' as const,

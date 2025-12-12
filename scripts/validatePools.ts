@@ -23,7 +23,7 @@ import partners from '../src/config/promos/partners.json';
 import campaigns from '../src/config/promos/campaigns.json';
 import pointProviders from '../src/config/points.json';
 import type { PlatformType, VaultConfig } from '../src/features/data/apis/config-types.ts';
-import { partition } from 'lodash-es';
+import { groupBy, partition } from 'lodash-es';
 import i18keys from '../src/locales/en/main.json';
 import { fileExists } from './common/files.ts';
 import { isEmpty } from '../src/helpers/utils.ts';
@@ -38,7 +38,7 @@ import {
   getContract,
   type PublicClient,
 } from 'viem';
-import { SCORED_RISKS } from '../src/config/risk.ts';
+import { getRisksConfigErrors, isValidRisksConfig } from './common/risks.ts';
 
 const overrides: Record<
   string,
@@ -111,7 +111,6 @@ const validPlatformIds = platforms.map(platform => platform.id);
 const validCuratorIds = curators.map(curator => curator.id);
 const validStrategyIds = getStrategyIds();
 const validPointProviderIds = pointProviders.map(pointProvider => pointProvider.id);
-const validRisks = new Set(Object.keys(SCORED_RISKS));
 
 const oldFields: Record<string, string> = {
   tokenDescription: 'Use addressbook',
@@ -309,7 +308,7 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
       }
     }
 
-    if (!checkRisks(pool, pool.type === 'standard')) {
+    if (!checkRisks(pool)) {
       exitCode = 1;
     }
 
@@ -603,6 +602,10 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
     }
   });
 
+  if (!checkClmRisksMatch(clmsWithData, allVaults)) {
+    exitCode = 1;
+  }
+
   // All
   allVaults.forEach(vault => {
     if (vault.tokenAddress) {
@@ -835,19 +838,64 @@ const isHarvestOnDepositCorrect = (
   return updates;
 };
 
-const checkRisks = (pool: VaultConfig, allowMissingEol: boolean = false) => {
-  if (!pool.risks || pool.risks.length === 0) {
-    if (!(allowMissingEol && pool.status === 'eol')) {
-      console.error(`Error: ${pool.id} : risks missing`);
-      return false;
-    }
-  } else if (pool.risks.some(risk => !validRisks.has(risk))) {
-    const invalidRisks = pool.risks.filter(risk => !validRisks.has(risk));
-    console.error(`Error: ${pool.id} : risks invalid - ${invalidRisks.join(', ')}`);
+const checkRisks = (pool: VaultConfig) => {
+  if (!pool.risks || typeof pool.risks !== 'object') {
+    console.error(`Error: ${pool.id} : risks missing`);
+    return false;
+  } else if (Array.isArray(pool.risks)) {
+    console.error(`Error: ${pool.id} : risks should be an object, not an array`);
+    return false;
+  } else if (!isValidRisksConfig(pool.risks)) {
+    const errors = getRisksConfigErrors(pool.risks);
+    console.error(`Error: ${pool.id} : risks invalid - \n\t${errors.join('\n\t')}`);
     return false;
   }
 
   return true;
+};
+
+const checkClmRisksMatch = (clms: VaultConfig[], allVaults: VaultConfig[]) => {
+  const vaultsByTokenAddress = groupBy(allVaults, v => v.tokenAddress || 'native');
+  const withErrors = clms.filter(clm => {
+    const relatedVaults = vaultsByTokenAddress[clm.earnContractAddress] || [];
+    if (!relatedVaults.length) {
+      // beta CLMs had no pools/vaults
+      if (clm.retireReason === 'beta') {
+        return false;
+      }
+      console.error(`Error: ${clm.id} : CLM has no pools/vaults`);
+      return true;
+    }
+    const risks = clm.risks;
+    const allKeys = new Set(
+      Object.keys(risks).concat(...relatedVaults.map(v => Object.keys(v.risks)))
+    ) as Set<keyof VaultConfig['risks']>;
+    const mismatches: Array<{
+      key: string;
+      expected: number | boolean | undefined;
+      diffs: Array<{ id: string; value: number | boolean | undefined }>;
+    }> = [];
+    for (const key of allKeys) {
+      const clmValue = risks[key];
+      const mismatchedVaults = relatedVaults
+        .filter(v => v.risks[key] !== clmValue)
+        .map(v => ({ id: v.id, value: v.risks[key] }));
+      if (mismatchedVaults.length > 0) {
+        mismatches.push({ key, expected: clmValue, diffs: mismatchedVaults });
+      }
+    }
+    if (mismatches.length > 0) {
+      console.error(`Error: ${clm.id} : CLM risks do not match pools/vaults:`);
+      console.error(
+        `  ${mismatches.map(m => `- [${m.key}] CLM=${m.expected}, Different=${m.diffs.map(d => d.id).join(', ')}`).join('\n  ')}`
+      );
+      return true;
+    }
+
+    return false;
+  });
+
+  return withErrors.length === 0;
 };
 
 const checkPointsStructureIds = (pool: VaultConfig) => {

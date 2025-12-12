@@ -61,7 +61,7 @@ function addPlatformToState(sliceState: Draft<PlatformsState>, platformConfig: P
     const platform: PlatformEntity = {
       id: platformConfig.id,
       name: platformConfig.name,
-      risks: tempFilterRisks(platformConfig.risks || []), // FIXME remove once we support multiple risks types
+      risks: platformConfig.risks || [],
       twitter: platformConfig.twitter || '',
       website: platformConfig.website || '',
       documentation: platformConfig.documentation || '',
@@ -74,8 +74,4 @@ function addPlatformToState(sliceState: Draft<PlatformsState>, platformConfig: P
       (sliceState.byType[platform.type] ??= []).push(platform.id);
     }
   }
-}
-
-function tempFilterRisks(risks: string[]) {
-  return risks.filter(risk => risk === 'NO_TIMELOCK');
 }

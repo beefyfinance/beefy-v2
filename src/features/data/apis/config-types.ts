@@ -9,6 +9,19 @@ import type { Address } from 'viem';
 import type { ZapStrategyConfig } from './transact/strategies/strategy-configs.ts';
 import type { CuratorEntity } from '../entities/curator.ts';
 
+export type VaultRisksConfig = {
+  /** when risks were last updated, defaults to vault.createdAt */
+  updatedAt?: number;
+  synthStable: boolean;
+  complex: boolean;
+  curated: boolean;
+  notCorrelated: boolean;
+  notAudited: boolean;
+  notBattleTested: boolean;
+  notTimelocked: boolean;
+  notVerified: boolean;
+};
+
 export interface VaultConfig {
   id: string;
   name: string;
@@ -41,7 +54,7 @@ export interface VaultConfig {
   status: string; // 'active' | 'eol' | 'paused';
   platformId: PlatformEntity['id'];
   assets?: TokenEntity['id'][];
-  risks?: string[] | null;
+  risks: VaultRisksConfig;
   strategyTypeId: string;
   network: string;
   excluded?: string | null;

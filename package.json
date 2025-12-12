@@ -23,6 +23,7 @@
     "pause": "vite-node ./scripts/pausePlatform.ts",
     "setVaultUrls": "vite-node ./scripts/setVaultUrls.ts",
     "setVaultStatus": "vite-node ./scripts/setVaultStatus.ts",
+    "setVaultRisks": "vite-node ./scripts/setVaultRisks.ts",
     "addClmRewardPools": "vite-node ./scripts/addClmRewardPools.ts",
     "addCurveZap": "vite-node ./scripts/addCurveZap.ts",
     "addBalancerZap": "vite-node ./scripts/addBalancerZap.ts",
@@ -111,6 +112,7 @@
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@eslint/js": "^9.35.0",
+    "@inquirer/prompts": "^8.0.2",
     "@pandacss/dev": "^0.54.0",
     "@types/babel__core": "^7.20.5",
     "@types/command-line-usage": "^5.0.4",

@@ -17,7 +17,17 @@
     "platformId": "curve",
     "assets": ["WMON", "shMON", "sMON", "gMON"],
     "migrationIds": ["l2-convex", "l2-curve"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-6/deposit",
     "removeLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-6/withdraw",
@@ -59,7 +69,17 @@
     "platformId": "curve",
     "assets": ["WBTC", "LBTC", "BTCb"],
     "migrationIds": ["l2-convex", "l2-curve"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-8/deposit",
     "removeLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-8/withdraw",
@@ -99,7 +119,17 @@
     "platformId": "curvance",
     "assets": ["WMON"],
     "migrationIds": [],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "single",
     "network": "monad",
     "zaps": [
@@ -125,7 +155,17 @@
     "platformId": "curvance",
     "assets": ["AUSD"],
     "migrationIds": [],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "single",
     "network": "monad",
     "zaps": [
@@ -151,7 +191,17 @@
     "platformId": "curvance",
     "assets": ["WMON"],
     "migrationIds": [],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "single",
     "network": "monad",
     "zaps": [
@@ -177,7 +227,17 @@
     "platformId": "curvance",
     "assets": ["USDC"],
     "migrationIds": [],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "single",
     "network": "monad",
     "zaps": [
@@ -203,7 +263,17 @@
     "createdAt": 1765546282,
     "platformId": "pancakeswap",
     "assets": ["wstETH", "WMON"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "monad",
     "zaps": [
@@ -234,7 +304,17 @@
     "createdAt": 1764765410,
     "platformId": "pancakeswap",
     "assets": ["wstETH", "WMON"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
@@ -265,7 +345,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["wstETH", "WMON"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
@@ -291,7 +381,17 @@
     "createdAt": 1765546282,
     "platformId": "pancakeswap",
     "assets": ["WETH", "WMON"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "monad",
     "zaps": [
@@ -322,7 +422,17 @@
     "createdAt": 1764765192,
     "platformId": "pancakeswap",
     "assets": ["WETH", "WMON"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
@@ -353,7 +463,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["WETH", "WMON"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
@@ -379,7 +499,17 @@
     "createdAt": 1765546282,
     "platformId": "pancakeswap",
     "assets": ["AUSD", "WMON"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "monad",
     "zaps": [
@@ -410,7 +540,17 @@
     "createdAt": 1764765004,
     "platformId": "pancakeswap",
     "assets": ["AUSD", "WMON"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
@@ -441,7 +581,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["AUSD", "WMON"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
@@ -467,7 +617,17 @@
     "createdAt": 1765546282,
     "platformId": "pancakeswap",
     "assets": ["USDC", "WMON"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "pool",
     "network": "monad",
     "zaps": [
@@ -498,7 +658,17 @@
     "createdAt": 1764764803,
     "platformId": "pancakeswap",
     "assets": ["USDC", "WMON"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
@@ -529,7 +699,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["USDC", "WMON"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
@@ -557,7 +737,17 @@
     "createdAt": 1764764709,
     "platformId": "uniswap",
     "assets": ["WBTC", "USDC"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
@@ -588,7 +778,17 @@
     "platformId": "beefy",
     "feeTier": "0.30",
     "assets": ["WBTC", "USDC"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
@@ -615,7 +815,17 @@
     "platformId": "curve",
     "assets": ["AUSD", "USDC", "USDT0"],
     "migrationIds": ["l2-convex", "l2-curve"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-2/deposit",
     "removeLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-2/withdraw",
@@ -656,7 +866,17 @@
     "curatorId": "steakhouse",
     "assets": ["USDC"],
     "migrationIds": [],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "single",
     "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0xbeEFf443C3CbA3E369DA795002243BeaC311aB83/steakhouse-high-yield-usdc",
     "network": "monad",
@@ -684,7 +904,17 @@
     "curatorId": "steakhouse",
     "assets": ["AUSD"],
     "migrationIds": [],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "single",
     "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0xbeeffeA75cFC4128ebe10C8D7aE22016D215060D/steakhouse-high-yield-ausd",
     "network": "monad",
@@ -713,7 +943,17 @@
     "createdAt": 1764167577,
     "platformId": "uniswap",
     "assets": ["USDC", "WETH"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
@@ -744,7 +984,17 @@
     "platformId": "beefy",
     "feeTier": "0.30",
     "assets": ["USDC", "WETH"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
@@ -772,7 +1022,17 @@
     "createdAt": 1764108468,
     "platformId": "uniswap",
     "assets": ["WMON", "USDC"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
@@ -803,7 +1063,17 @@
     "platformId": "beefy",
     "feeTier": "0.30",
     "assets": ["WMON", "USDC"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [

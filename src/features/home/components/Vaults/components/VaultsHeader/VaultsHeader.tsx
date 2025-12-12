@@ -28,7 +28,7 @@ const headerCss = css({
     rowGap: '16px',
   },
   lg: {
-    gridTemplateColumns: 'minmax(0, 40fr) minmax(0, 60fr)',
+    gridTemplateColumns: 'minmax(0, 50fr) minmax(0, 50fr)',
     position: 'sticky',
     top: 0,
     zIndex: '[1]',

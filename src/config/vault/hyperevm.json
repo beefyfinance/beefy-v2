@@ -18,7 +18,17 @@
     "createdAt": 1755885073,
     "platformId": "projectx",
     "assets": ["UETH", "kHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -49,7 +59,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["UETH", "kHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -77,7 +97,17 @@
     "createdAt": 1755879076,
     "platformId": "projectx",
     "assets": ["UPUMP", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -108,7 +138,17 @@
     "platformId": "beefy",
     "feeTier": "0.3",
     "assets": ["UPUMP", "WHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -136,7 +176,17 @@
     "createdAt": 1755878941,
     "platformId": "projectx",
     "assets": ["UFART", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -167,7 +217,17 @@
     "platformId": "beefy",
     "feeTier": "0.3",
     "assets": ["UFART", "WHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -195,7 +255,17 @@
     "createdAt": 1755877215,
     "platformId": "projectx",
     "assets": ["UETH", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -226,7 +296,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["UETH", "WHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -254,7 +334,17 @@
     "createdAt": 1755877044,
     "platformId": "projectx",
     "assets": ["UBTC", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -285,7 +375,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["UBTC", "WHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -313,7 +413,17 @@
     "createdAt": 1755873446,
     "platformId": "projectx",
     "assets": ["USDT0", "kHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -344,7 +454,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["USDT0", "kHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -372,7 +492,17 @@
     "createdAt": 1755872848,
     "platformId": "projectx",
     "assets": ["UBTC", "kHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -403,7 +533,17 @@
     "platformId": "beefy",
     "feeTier": "0.3",
     "assets": ["UBTC", "kHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -431,7 +571,17 @@
     "createdAt": 1755870613,
     "platformId": "projectx",
     "assets": ["USDT0", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -462,7 +612,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["USDT0", "WHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -490,7 +650,17 @@
     "createdAt": 1751869915,
     "platformId": "hybra",
     "assets": ["USDe", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["ethena", "hybra"],
     "network": "hyperevm",
@@ -522,7 +692,17 @@
     "platformId": "beefy",
     "feeTier": "0.25",
     "assets": ["USDe", "WHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["ethena", "hybra"],
     "network": "hyperevm",
@@ -551,7 +731,17 @@
     "createdAt": 1751869664,
     "platformId": "hybra",
     "assets": ["WHLP", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["hybra"],
     "network": "hyperevm",
@@ -583,7 +773,17 @@
     "platformId": "beefy",
     "feeTier": "0.02",
     "assets": ["WHLP", "WHYPE"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["hybra"],
     "network": "hyperevm",
@@ -612,7 +812,17 @@
     "createdAt": 1751869332,
     "platformId": "hybra",
     "assets": ["LHYPE", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["hybra"],
     "network": "hyperevm",
@@ -644,7 +854,17 @@
     "platformId": "beefy",
     "feeTier": "0.25",
     "assets": ["LHYPE", "WHYPE"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["hybra"],
     "network": "hyperevm",
@@ -673,10 +893,20 @@
     "createdAt": 1751791284,
     "platformId": "hybra",
     "assets": ["feUSD", "USDT0"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
-    "network": "hyperevm",
     "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -705,10 +935,20 @@
     "platformId": "beefy",
     "feeTier": "0.02",
     "assets": ["feUSD", "USDT0"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
-    "network": "hyperevm",
     "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -734,10 +974,20 @@
     "createdAt": 1751790352,
     "platformId": "hybra",
     "assets": ["USDT0", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
-    "network": "hyperevm",
     "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -766,10 +1016,20 @@
     "platformId": "beefy",
     "feeTier": "0.25",
     "assets": ["USDT0", "WHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
-    "network": "hyperevm",
     "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -795,10 +1055,20 @@
     "createdAt": 1751790074,
     "platformId": "hybra",
     "assets": ["feUSD", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
-    "network": "hyperevm",
     "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -827,10 +1097,20 @@
     "platformId": "beefy",
     "feeTier": "1",
     "assets": ["feUSD", "WHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
-    "network": "hyperevm",
     "pointStructureIds": ["hybra"],
+    "network": "hyperevm",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -845,18 +1125,28 @@
     "tokenAddress": "0xf3994B10d0E3153D99647a6Fe296102d2d6EadAF",
     "tokenDecimals": 18,
     "tokenProviderId": "kittenswap",
+    "earnContractAddress": "0x4ad02BF095B8FFB6E0aC687BEEE5610ca3EBe6b1",
     "earnedToken": "mooKittenswapHyperevmKITTEN-WHYPE",
     "earnedTokenAddress": "0x4ad02BF095B8FFB6E0aC687BEEE5610ca3EBe6b1",
-    "earnContractAddress": "0x4ad02BF095B8FFB6E0aC687BEEE5610ca3EBe6b1",
     "oracle": "lps",
     "oracleId": "kittenswap-whype-kitten",
+    "status": "eol",
     "createdAt": 1751541061,
     "retireReason": "rewards",
     "retiredAt": 1754378978,
-    "status": "eol",
     "platformId": "kittenswap",
     "assets": ["KITTEN", "WHYPE"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.kittenswap.finance/liquidity/manage/standard?tokenA=0x5555555555555555555555555555555555555555&tokenB=0x618275F8EFE54c2afa87bfB9F210A52F0fF89364&action=add&pool=volatile",
     "network": "hyperevm",
@@ -886,7 +1176,17 @@
     "createdAt": 1749585509,
     "platformId": "hyperswap",
     "assets": ["feUSD", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -917,7 +1217,17 @@
     "platformId": "beefy",
     "feeTier": "0.30",
     "assets": ["feUSD", "WHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -947,7 +1257,17 @@
     "retiredAt": 1764609953,
     "platformId": "hyperswap",
     "assets": ["PiP", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -980,7 +1300,17 @@
     "platformId": "beefy",
     "feeTier": "1",
     "assets": ["PiP", "WHYPE"],
-    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -1008,7 +1338,17 @@
     "createdAt": 1749585438,
     "platformId": "hyperswap",
     "assets": ["LIQD", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -1039,7 +1379,17 @@
     "platformId": "beefy",
     "feeTier": "1",
     "assets": ["LIQD", "WHYPE"],
-    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -1067,7 +1417,17 @@
     "createdAt": 1749225435,
     "platformId": "hyperswap",
     "assets": ["USDT0", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -1098,7 +1458,17 @@
     "platformId": "beefy",
     "feeTier": "0.30",
     "assets": ["USDT0", "WHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -1126,7 +1496,17 @@
     "createdAt": 1749225435,
     "platformId": "hyperswap",
     "assets": ["PURR", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -1157,7 +1537,17 @@
     "platformId": "beefy",
     "feeTier": "0.30",
     "assets": ["PURR", "WHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -1187,7 +1577,17 @@
     "retiredAt": 1761205953,
     "platformId": "kittenswap",
     "assets": ["PURR", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -1220,7 +1620,17 @@
     "platformId": "beefy",
     "feeTier": "0.25",
     "assets": ["PURR", "WHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -1248,7 +1658,17 @@
     "createdAt": 1749225434,
     "platformId": "kittenswap",
     "assets": ["USDe", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -1279,9 +1699,19 @@
     "platformId": "beefy",
     "feeTier": "0.25",
     "assets": ["USDe", "WHYPE"],
-    "pointStructureIds": ["ethena"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["ethena"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -1308,7 +1738,17 @@
     "createdAt": 1749225434,
     "platformId": "kittenswap",
     "assets": ["USDT0", "WHYPE"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [
@@ -1339,7 +1779,17 @@
     "platformId": "beefy",
     "feeTier": "0.25",
     "assets": ["USDT0", "WHYPE"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
     "zaps": [

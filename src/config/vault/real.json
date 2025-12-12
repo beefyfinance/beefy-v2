@@ -14,16 +14,26 @@
     "oracleId": "pearl-ss-strwa-rwa",
     "status": "eol",
     "createdAt": 1731060017,
+    "retiredAt": 1731964514,
     "platformId": "pearl",
     "assets": ["stRWA", "RWA"],
     "migrationIds": ["real-pearl"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v2/0xb28d015563c81dd66Ab781853c03B7B66aa46C1b",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real",
-    "retiredAt": 1731964514
+    "network": "real"
   },
   {
     "id": "pearl-cp-usdc-pearl",
@@ -40,16 +50,26 @@
     "oracleId": "pearl-cp-usdc-pearl",
     "status": "eol",
     "createdAt": 1730965566,
+    "retiredAt": 1731964514,
     "platformId": "pearl",
     "assets": ["PEARL", "USDC"],
     "migrationIds": ["real-pearl"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v2/0xAFb84DFe257cBA43d2f44B4367aDAc5a82775275",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real",
-    "retiredAt": 1731964514
+    "network": "real"
   },
   {
     "id": "pearl-cp-arcusd-pearl",
@@ -66,16 +86,26 @@
     "oracleId": "pearl-cp-arcusd-pearl",
     "status": "eol",
     "createdAt": 1730965555,
+    "retiredAt": 1731964514,
     "platformId": "pearl",
     "assets": ["PEARL", "arcUSD"],
     "migrationIds": ["real-pearl"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v2/0xd3Ae2AF8f1Fb00af2e363fe6592C19ABF9105FA9",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real",
-    "retiredAt": 1731964514
+    "network": "real"
   },
   {
     "id": "pearl-ss-more-usdc",
@@ -92,16 +122,26 @@
     "oracleId": "pearl-ss-more-usdc",
     "status": "eol",
     "createdAt": 1730451268,
+    "retiredAt": 1731964514,
     "platformId": "pearl",
     "assets": ["MORE", "USDC"],
     "migrationIds": ["real-pearl"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v2/0x1733720f30EF013539Fa2EcEE00671A60B66243D",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real",
-    "retiredAt": 1731964514
+    "network": "real"
   },
   {
     "id": "pearl-trident-reeth-usdc",
@@ -118,16 +158,26 @@
     "oracleId": "pearl-trident-reeth-usdc",
     "status": "eol",
     "createdAt": 1730191341,
+    "retiredAt": 1731964514,
     "platformId": "pearl",
     "assets": ["reETH", "USDC"],
     "migrationIds": ["real-pearl"],
-    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x64F5eFB0f0643B654C96f77855DaFfe4C2FE0252",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real",
-    "retiredAt": 1731964514
+    "network": "real"
   },
   {
     "id": "pearl-trident-dai-usdc",
@@ -144,16 +194,26 @@
     "oracleId": "pearl-trident-dai-usdc",
     "status": "eol",
     "createdAt": 1730191329,
+    "retiredAt": 1731964514,
     "platformId": "pearl",
     "assets": ["DAI", "USDC"],
     "migrationIds": ["real-pearl"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x4f5c568F72369ff4Ce4e53d797985DFFBdA6FC71",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real",
-    "retiredAt": 1731964514
+    "network": "real"
   },
   {
     "id": "pearl-trident-usdc-pearl",
@@ -170,16 +230,26 @@
     "oracleId": "pearl-trident-usdc-pearl",
     "status": "eol",
     "createdAt": 1729580887,
+    "retiredAt": 1731964514,
     "platformId": "pearl",
     "assets": ["PEARL", "USDC"],
     "migrationIds": ["real-pearl"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x374a765309B6D5a123f32971dcA1E6CeF9fa0066",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real",
-    "retiredAt": 1731964514
+    "network": "real"
   },
   {
     "id": "pearl-trident-more-usdc",
@@ -196,16 +266,26 @@
     "oracleId": "pearl-trident-more-usdc",
     "status": "eol",
     "createdAt": 1729580434,
+    "retiredAt": 1731964514,
     "platformId": "pearl",
     "assets": ["MORE", "USDC"],
     "migrationIds": ["real-pearl"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x701655595037dfe1e59E69446De009236F012405",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real",
-    "retiredAt": 1731964514
+    "network": "real"
   },
   {
     "id": "pearl-trident-ukre-arcusd",
@@ -222,16 +302,26 @@
     "oracleId": "pearl-trident-ukre-arcusd",
     "status": "eol",
     "createdAt": 1727083629,
+    "retiredAt": 1731964514,
     "platformId": "pearl",
     "assets": ["UKRE", "arcUSD"],
     "migrationIds": ["real-pearl"],
-    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x72c20EBBffaE1fe4E9C759b326D97763E218F9F6",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real",
-    "retiredAt": 1731964514
+    "network": "real"
   },
   {
     "id": "pearl-trident-ustb-pearl",
@@ -248,16 +338,26 @@
     "oracleId": "pearl-trident-ustb-pearl",
     "status": "eol",
     "createdAt": 1721897463,
+    "retiredAt": 1731964514,
     "platformId": "pearl",
     "assets": ["USTB", "PEARL"],
     "migrationIds": ["real-pearl"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x35BA384F9D30D68028898849ddBf5bda09bbE7EA",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real",
-    "retiredAt": 1731964514
+    "network": "real"
   },
   {
     "id": "pearl-trident-rwa-reeth",
@@ -274,16 +374,26 @@
     "oracleId": "pearl-trident-rwa-reeth",
     "status": "eol",
     "createdAt": 1721897372,
+    "retiredAt": 1731964514,
     "platformId": "pearl",
     "assets": ["RWA", "reETH"],
     "migrationIds": ["real-pearl"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x182d3F8e154EB43d5f361a39A2234A84508244c9",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real",
-    "retiredAt": 1731964514
+    "network": "real"
   },
   {
     "id": "pearl-trident-arcusd-usdc",
@@ -300,16 +410,26 @@
     "oracleId": "pearl-trident-arcusd-usdc",
     "status": "eol",
     "createdAt": 1721897233,
+    "retiredAt": 1731964514,
     "platformId": "pearl",
     "assets": ["arcUSD", "USDC"],
     "migrationIds": ["real-pearl"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x22aC4821bBb8d1AC42eA7F0f32ed415F52577Ca1",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real",
-    "retiredAt": 1731964514
+    "network": "real"
   },
   {
     "id": "pearl-trident-ustb-arcusd",
@@ -326,16 +446,26 @@
     "oracleId": "pearl-trident-ustb-arcusd",
     "status": "eol",
     "createdAt": 1721897034,
+    "retiredAt": 1731964514,
     "platformId": "pearl",
     "assets": ["USTB", "arcUSD"],
     "migrationIds": ["real-pearl"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0xC6B3AaaAbf2f6eD6cF7fdFFfb0DaC45E10c4A5B3",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real",
-    "retiredAt": 1731964514
+    "network": "real"
   },
   {
     "id": "pearl-trident-more-ustb",
@@ -352,15 +482,25 @@
     "oracleId": "pearl-trident-more-ustb",
     "status": "eol",
     "createdAt": 1721894292,
+    "retiredAt": 1731964514,
     "platformId": "pearl",
     "assets": ["MORE", "USTB"],
     "migrationIds": ["real-pearl"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthStable": false
+    },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x6b1a34df762f1d3367e7e93AE5661c88CA848423",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real",
-    "retiredAt": 1731964514
+    "network": "real"
   }
 ]
