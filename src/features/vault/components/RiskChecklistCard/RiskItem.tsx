@@ -15,14 +15,10 @@ type RiskItemProps = {
 export const RiskItem = memo(function ({ risk, mode }: RiskItemProps) {
   const { t } = useTranslation();
   const descriptionComponents = useMemo(() => {
-    const tooltip = t(`Checklist-${risk}-${mode}-Tooltip`, { ns: 'risks' });
-    if (!tooltip) {
-      return undefined;
-    }
     return {
-      Tooltip: <Tooltip text={tooltip} />,
+      Tooltip: <Tooltip />,
     };
-  }, [t, risk, mode]);
+  }, []);
   const Icon = mode === 'failed' ? Cross : Tick;
 
   return (
@@ -79,13 +75,18 @@ const iconClass = css({
 });
 
 type TooltipProps = {
-  text: string;
+  key?: string;
 };
 
-const Tooltip = memo(function ({ text }: TooltipProps) {
+const Tooltip = memo(function ({ key }: TooltipProps) {
+  const { t } = useTranslation();
+  if (!key) {
+    return null;
+  }
+
   return (
     <IconWithBasicTooltip
-      title={text}
+      title={t(`Checklist-Tooltip-${key}`, { ns: 'risks' })}
       Icon={InfoRoundedSquare}
       iconCss={tooltipIconCss}
       iconSize={11}
