@@ -1,5 +1,41 @@
 [
   {
+    "id": "curvance-monad-loaznd-loaznd-ausd",
+    "name": "loAZND (loAZND-AUSD Market)",
+    "type": "standard",
+    "token": "loAZND",
+    "tokenAddress": "0x9c82eB49B51F7Dc61e22Ff347931CA32aDc6cd90",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x9AA6183B8E1148969b082B5585b8A7021fA1b6ce",
+    "earnedToken": "mooCurvanceloAZND(loAZND-AUSD)",
+    "earnedTokenAddress": "0x9AA6183B8E1148969b082B5585b8A7021fA1b6ce",
+    "oracle": "tokens",
+    "oracleId": "loAZND",
+    "status": "active",
+    "createdAt": 1765800810,
+    "platformId": "curvance",
+    "assets": ["loAZND"],
+    "migrationIds": [],
+    "risks": {
+      "updatedAt": 1765800810,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
+    "strategyTypeId": "single",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "curvance-monad-ausd-loaznd-ausd",
     "name": "AUSD (loAZND-AUSD Market)",
     "type": "standard",
