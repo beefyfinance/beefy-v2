@@ -461,7 +461,7 @@
     "oracleId": "curve-frxusd-msusd",
     "status": "active",
     "createdAt": 1763024852,
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["frxUSD", "msUSD"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
@@ -611,7 +611,7 @@
     "oracleId": "curve-pyusd-crvusd",
     "status": "active",
     "createdAt": 1761032266,
-    "platformId": "curve",
+    "platformId": "convex",
     "assets": ["PYUSD", "crvUSD"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
