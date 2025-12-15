@@ -1,5 +1,54 @@
 [
   {
+    "id": "stakedao-crv-sdcrv",
+    "name": "sdCRV/CRV",
+    "type": "standard",
+    "token": "sdCRVlp-f",
+    "tokenAddress": "0xCA0253A98D16e9C1e3614caFDA19318EE69772D0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xdf8bA5860dEeD6308463501E63fBb8659Dc82F4C",
+    "earnedToken": "mooStakeDaoCRV-sdCRV",
+    "earnedTokenAddress": "0xdf8bA5860dEeD6308463501E63fBb8659Dc82F4C",
+    "oracle": "lps",
+    "oracleId": "curve-crv-sdcrv",
+    "status": "active",
+    "createdAt": 1765775427,
+    "platformId": "stakedao",
+    "assets": ["sdCRV", "CRV"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-v2-300/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-v2-300/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xCA0253A98D16e9C1e3614caFDA19318EE69772D0",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xCA0253A98D16e9C1e3614caFDA19318EE69772D0",
+            "coins": [
+              "0xD533a949740bb3306d119CC777fa900bA034cd52",
+              "0xD1b5651E55D4CeeD36251c61c50C889B36F6abB5"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curve-eth+-weth",
     "name": "ETH+/WETH",
     "type": "standard",
