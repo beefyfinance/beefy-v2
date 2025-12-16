@@ -890,7 +890,7 @@ export const config = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['USDC', 'AUSD', 'USDT0'],
+    stableCoins: ['USDC', 'AUSD', 'USDT0', 'muBOND', 'AZND', 'loAZND'],
   },
   aurora: {
     name: 'Aurora',

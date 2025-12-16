@@ -1,5 +1,103 @@
 [
   {
+    "id": "curve-monad-mubond-ausd",
+    "name": "muBOND/AUSD",
+    "type": "standard",
+    "token": "muBONDAUSD",
+    "tokenAddress": "0x1E8D78e9b3f0152D54d32904B7933f1cFE439Df1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x2AeE91C4B3454A0e90F12A62badce251e6e7c2eC",
+    "earnedToken": "mooCurveMuBOND-AUSD",
+    "earnedTokenAddress": "0x2AeE91C4B3454A0e90F12A62badce251e6e7c2eC",
+    "oracle": "lps",
+    "oracleId": "curve-monad-mubond-ausd",
+    "status": "active",
+    "createdAt": 1765869100,
+    "platformId": "curve",
+    "assets": ["muBOND", "AUSD"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-1/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-1/withdraw",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x1E8D78e9b3f0152D54d32904B7933f1cFE439Df1",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x1E8D78e9b3f0152D54d32904B7933f1cFE439Df1",
+            "coins": [
+              "0x336D414754967C6682B5A665C7DAF6F1409E63e8",
+              "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-monad-aznd-ausd",
+    "name": "AZND/AUSD",
+    "type": "standard",
+    "token": "AZNDAUSD",
+    "tokenAddress": "0x2D84D79C852f6842AbE0304b70bBaA1506AdD457",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x70aB0bc107A0a4341f004fE22cCB94a752fD983B",
+    "earnedToken": "mooCurveAZND-AUSD",
+    "earnedTokenAddress": "0x70aB0bc107A0a4341f004fE22cCB94a752fD983B",
+    "oracle": "lps",
+    "oracleId": "curve-monad-aznd-ausd",
+    "status": "active",
+    "createdAt": 1765868876,
+    "platformId": "curve",
+    "assets": ["AZND", "AUSD"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-0/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-0/withdraw",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x2D84D79C852f6842AbE0304b70bBaA1506AdD457",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x2D84D79C852f6842AbE0304b70bBaA1506AdD457",
+            "coins": [
+              "0x4917a5ec9fCb5e10f47CBB197aBe6aB63be81fE8",
+              "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curvance-monad-loaznd-loaznd-ausd",
     "name": "loAZND (loAZND-AUSD Market)",
     "type": "standard",
