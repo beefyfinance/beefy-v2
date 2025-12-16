@@ -65,8 +65,7 @@ const InfoIconComponent = styled(InfoIcon, {
 const StatContainer = styled('div', {
   base: {
     backgroundColor: 'background.content.darkest',
-    paddingBlock: '8px',
-    paddingInline: '12px',
+    padding: '10px',
     borderRadius: '8px',
     width: '100%',
     display: 'flex',

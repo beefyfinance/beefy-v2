@@ -12,7 +12,11 @@ import { BifiPricesDesktop } from './components/Prices/Prices.tsx';
 import { selectShouldInitArticles } from '../../features/data/selectors/data-loader/articles.ts';
 import { selectShouldInitProposals } from '../../features/data/selectors/data-loader/proposals.ts';
 
-export const Header = memo(function Header() {
+type HeaderProps = {
+  fullWidth?: boolean;
+};
+
+export const Header = memo(function Header({ fullWidth = false }: HeaderProps) {
   const dispatch = useAppDispatch();
   const shouldLoadProposals = useAppSelector(selectShouldInitProposals);
   const shouldLoadArticles = useAppSelector(selectShouldInitArticles);
@@ -33,7 +37,7 @@ export const Header = memo(function Header() {
   }, [dispatch, shouldLoadArticles]);
 
   return (
-    <HeaderContainer maxWidth="lg">
+    <HeaderContainer maxWidth={fullWidth ? 'xl' : 'lg'}>
       <Side>
         <LogoLink />
         <MainMenu mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
