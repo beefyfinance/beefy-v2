@@ -1,5 +1,82 @@
 [
   {
+    "id": "uniswap-cow-arbitrum-corn-usdt0-rp",
+    "name": "CORN-USD₮0 Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArbitrumCORN-USDT0",
+    "tokenAddress": "0x9037D67a493024e9C1abD19e8776B6FC6965EC83",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x876B2287A374ac7CA9cA50f85fD440Cf52369908",
+    "earnedToken": "rCowUniswapArbitrumCORN-USDT0",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-corn-usdt0",
+    "status": "active",
+    "createdAt": 1765918675,
+    "platformId": "uniswap",
+    "assets": ["CORN", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arbitrum-corn-usdt0",
+    "name": "CORN-USD₮0",
+    "type": "cowcentrated",
+    "token": "CORN-USD₮0 uniswap",
+    "tokenAddress": "0xBcBBdDD69470f6FEAD37e5644c01C1C1217c213e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x44f49ff0da2498bCb1D3Dc7C0f999578F67FD8C6",
+      "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+    ],
+    "earnContractAddress": "0x9037D67a493024e9C1abD19e8776B6FC6965EC83",
+    "earnedToken": "cowUniswapArbitrumCORN-USDT0",
+    "earnedTokenAddress": "0x9037D67a493024e9C1abD19e8776B6FC6965EC83",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-corn-usdt0",
+    "status": "active",
+    "createdAt": 1765918675,
+    "platformId": "beefy",
+    "feeTier": "0.30",
+    "assets": ["CORN", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthStable": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "silov2-arbitrum-usdc-optima",
     "name": "USDC (Optima)",
     "type": "standard",
