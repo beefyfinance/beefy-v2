@@ -17,6 +17,7 @@ export const platformRiskMap: Record<string, RiskChange> = {
 export const tokenRiskMap: Record<string, RiskChange> = {
   NO_TIMELOCK: { key: 'notTimelocked', value: true },
   SYNTH_STABLE: { key: 'synthStable', value: true },
+  CURATED: { key: 'curated', value: true },
 };
 
 const selectVaultRisks = createSelector(
