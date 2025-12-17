@@ -12,6 +12,7 @@ export type RiskChange = { key: RiskKeys; value: boolean };
 export const platformRiskMap: Record<string, RiskChange> = {
   NO_TIMELOCK: { key: 'notTimelocked', value: true },
   HIGHLY_COMPLEX: { key: 'complex', value: true },
+  NOT_BATTLE_TESTED: { key: 'notBattleTested', value: true },
 };
 
 export const tokenRiskMap: Record<string, RiskChange> = {
