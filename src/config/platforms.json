@@ -28,6 +28,7 @@
   {
     "id": "equilibria",
     "name": "Equilibria",
+    "risks": ["HIGHLY_COMPLEX"],
     "website": "https://equilibria.fi/",
     "twitter": "Equilibriafi",
     "documentation": "https://docs.equilibria.fi/",
@@ -37,7 +38,7 @@
   {
     "id": "magpie",
     "name": "Magpie",
-    "risks": ["NO_TIMELOCK"],
+    "risks": ["NO_TIMELOCK", "HIGHLY_COMPLEX"],
     "website": "https://www.magpiexyz.io/",
     "twitter": "magpiexyz_io",
     "documentation": "https://docs.magpiexyz.io/",
@@ -450,6 +451,7 @@
   {
     "id": "dotdot",
     "name": "DotDot",
+    "risks": ["HIGHLY_COMPLEX"],
     "website": "https://dotdot.finance/",
     "twitter": "dotdotdotfi",
     "documentation": "https://docs.dotdot.finance/",
@@ -891,6 +893,7 @@
   {
     "id": "aura",
     "name": "Aura",
+    "risks": ["HIGHLY_COMPLEX"],
     "website": "https://aura.finance/",
     "twitter": "aurafinance",
     "documentation": "https://docs.aura.finance/",
@@ -909,6 +912,7 @@
   {
     "id": "convex",
     "name": "Convex",
+    "risks": ["HIGHLY_COMPLEX"],
     "website": "https://www.convexfinance.com/",
     "twitter": "ConvexFinance",
     "documentation": "https://docs.convexfinance.com/",
@@ -1059,6 +1063,7 @@
   {
     "id": "gamma",
     "name": "Gamma",
+    "risks": ["HIGHLY_COMPLEX"],
     "website": "https://app.gamma.xyz/",
     "twitter": "GammaStrategies",
     "documentation": "https://docs.gamma.xyz/gamma",
@@ -1160,6 +1165,7 @@
   {
     "id": "ichi",
     "name": "Ichi",
+    "risks": ["HIGHLY_COMPLEX"],
     "website": "https://app.ichi.org/",
     "twitter": "ichifoundation",
     "documentation": "https://docs.ichi.org/home",
@@ -1218,7 +1224,7 @@
   {
     "id": "fx",
     "name": "f(x) Protocol",
-    "risks": ["NO_TIMELOCK"],
+    "risks": ["NO_TIMELOCK", "HIGHLY_COMPLEX"],
     "website": "https://fx.aladdin.club/",
     "twitter": "protocol_fx",
     "documentation": "https://docs.aladdin.club/f-x-protocol",
@@ -1251,7 +1257,7 @@
   {
     "id": "stakedao",
     "name": "StakeDAO",
-    "risks": ["NO_TIMELOCK"]
+    "risks": ["NO_TIMELOCK", "HIGHLY_COMPLEX"]
   },
   {
     "id": "nile",
@@ -1415,6 +1421,7 @@
   {
     "id": "infrared",
     "name": "Infrared",
+    "risks": ["HIGHLY_COMPLEX"],
     "website": "https://infrared.finance/",
     "twitter": "infraredfinance",
     "documentation": "https://infrared.finance/docs",
@@ -1433,6 +1440,7 @@
   {
     "id": "berapaw",
     "name": "BeraPaw",
+    "risks": ["HIGHLY_COMPLEX"],
     "website": "https://www.berapaw.com",
     "twitter": "0xberapaw",
     "documentation": "https://docs.berapaw.com/",
