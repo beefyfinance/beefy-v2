@@ -27,7 +27,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "old-bifi-pool",
     "network": "moonriver"
@@ -60,7 +60,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080&outputCurrency=0x3bfd113ad0329a7994a681236323fb16E16790e3",
@@ -102,7 +102,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?outputCurrency=0xFFFfFfFfF6E528AD57184579beeE00c5d5e646F0",
@@ -138,7 +138,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
@@ -180,7 +180,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
@@ -221,7 +221,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x173fd7434B8B50dF08e3298f173487ebDB35FD14",
@@ -255,7 +255,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
@@ -297,7 +297,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C",
@@ -339,7 +339,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -375,7 +375,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -411,7 +411,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -447,7 +447,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -483,7 +483,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B&outputCurrency=0xbD90A6125a84E5C512129D622a75CDDE176aDE5E",
@@ -523,7 +523,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -557,7 +557,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -593,7 +593,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -629,7 +629,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
@@ -671,7 +671,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0xf50225a84382c74CbdeA10b0c176f71fc3DE0C4d",
@@ -713,7 +713,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
@@ -755,7 +755,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -790,7 +790,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
@@ -824,7 +824,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -860,7 +860,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0xf50225a84382c74CbdeA10b0c176f71fc3DE0C4d",
@@ -902,7 +902,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0x868892CCcEdbfF0B028F3b3595205Ea91b99376B",
@@ -944,7 +944,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -980,7 +980,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -1016,7 +1016,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -1052,7 +1052,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x682F81e57EAa716504090C3ECBa8595fB54561D8",
@@ -1094,7 +1094,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0xbD90A6125a84E5C512129D622a75CDDE176aDE5E",
@@ -1136,7 +1136,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0xAd7F1844696652ddA7959a49063BfFccafafEfe7",
@@ -1178,7 +1178,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x1e0F2A75Be02c025Bd84177765F89200c04337Da",
@@ -1220,7 +1220,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D&outputCurrency=0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818",
@@ -1262,7 +1262,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -1298,7 +1298,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0x98878B06940aE243284CA214f92Bb71a2b032B8A&outputCurrency=0xFb2019DfD635a03cfFF624D210AEe6AF2B00fC2C",
@@ -1340,7 +1340,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D&outputCurrency=0x0caE51e1032e8461f4806e26332c030E34De3aDb",
@@ -1382,7 +1382,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c&outputCurrency=0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818",
@@ -1424,7 +1424,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x14a0243C333A5b238143068dC3A7323Ba4C30ECB",
@@ -1466,7 +1466,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -1502,7 +1502,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -1538,7 +1538,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -1574,7 +1574,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
@@ -1610,7 +1610,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap",
@@ -1646,7 +1646,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?outputCurrency=0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
@@ -1682,7 +1682,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?outputCurrency=0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
@@ -1724,7 +1724,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap",
@@ -1760,7 +1760,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x1A93B23281CC1CDE4C4741353F3064709A16197d",
@@ -1802,7 +1802,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c",
@@ -1844,7 +1844,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D&outputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
@@ -1886,7 +1886,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D&outputCurrency=0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C",
@@ -1928,7 +1928,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8&outputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
@@ -1970,7 +1970,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0xaD12daB5959f30b9fF3c2d6709f53C335dC39908",

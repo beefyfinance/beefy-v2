@@ -27,7 +27,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
@@ -63,7 +63,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
@@ -99,7 +99,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
@@ -135,7 +135,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
@@ -171,7 +171,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
@@ -207,7 +207,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
@@ -243,7 +243,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
@@ -279,7 +279,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://dex.valleyswap.com/#/swap?outputCurrency=0xBC033203796CC2C8C543a5aAe93a9a643320433D",
@@ -315,7 +315,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://dex.valleyswap.com/#/swap?outputCurrency=0x94fbfFe5698DB6f54d6Ca524DbE673a7729014Be",
@@ -351,7 +351,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://dex.valleyswap.com/#/swap?outputCurrency=0x010CDf0Db2737f9407F8CFcb4dCaECA4dE54c815",

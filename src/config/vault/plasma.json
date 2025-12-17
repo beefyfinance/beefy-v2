@@ -26,7 +26,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9D0676EC013cB50B7bF9b291c22B618e9fe86832/zap/in?chain=plasma",
@@ -60,7 +60,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://lithos.to/pools/deposit?token0=0x6100e367285b01f48d07953803a2d8dca5d19873&token1=0xabb48792a3161e81b47ca084c0b7a22a50324a44&pool=0x7dab98cc51835beae6dee43bbda84cdb96896fb5&stable=-1&type=-1",
@@ -100,7 +100,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://lithos.to/pools/deposit?token0=0x29ad7fe4516909b9e498b5a65339e54791293234&token1=0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb&pool=0xaa1605fbd9c2cd3854337db654471a45b2276c12&stable=1&type=-1",
@@ -142,7 +142,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://lithos.to/pools/deposit?token0=0x9895d81bb462a195b4922ed7de0e3acd007c32cb&token1=0xa3d68b74bf0528fdd07263c60d6488749044914b&pool=0x82862237f37e8495d88287d72a4c0073250487e0&stable=1&type=-1",
@@ -182,7 +182,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://lithos.to/pools/deposit?token0=0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34&token1=0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb&pool=0x01b968c1b663c3921da5be3c99ee3c9b89a40b54&stable=1&type=-1",
@@ -222,7 +222,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://lithos.to/pools/deposit?token0=0x6100e367285b01f48d07953803a2d8dca5d19873&token1=0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb&pool=0xa0926801a2abc718822a60d8fa1bc2a51fa09f1e&stable=-1&type=-1",
@@ -262,7 +262,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x7209D228CD585f4b77A031f7B902f989439AC319/zap/in?chain=plasma",
@@ -296,7 +296,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.curve.finance/dex/plasma/pools/factory-stable-ng-1/deposit",
@@ -346,7 +346,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.curve.finance/dex/plasma/pools/factory-stable-ng-0/deposit",
@@ -398,7 +398,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "underlyingPlatformUrl": "https://app.euler.finance/earn/0x66bE42a0BdA425A8C3b3c2cF4F4Cb9EDfcAEd21d?network=plasma",
@@ -438,7 +438,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "underlyingPlatformUrl": "https://app.euler.finance/earn/0x66bE42a0BdA425A8C3b3c2cF4F4Cb9EDfcAEd21d?network=plasma",
@@ -478,7 +478,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "underlyingPlatformUrl": "https://app.euler.finance/earn/0xa9C251F8304b1B3Fc2b9e8fcae78D94Eff82Ac66?network=plasma",
@@ -519,7 +519,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "underlyingPlatformUrl": "https://app.euler.finance/earn/0xa5EeD1615cd883dD6883ca3a385F525e3bEB4E79?network=plasma",
@@ -558,7 +558,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "underlyingPlatformUrl": "https://app.euler.finance/earn/0xe818ad0D20D504C55601b9d5e0E137314414dec4?network=plasma",
@@ -596,7 +596,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "plasma",
@@ -632,7 +632,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "plasma",
@@ -670,7 +670,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "plasma",
@@ -711,7 +711,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "plasma",
@@ -749,7 +749,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "plasma",
@@ -790,7 +790,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "plasma",
@@ -828,7 +828,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "plasma",
@@ -869,7 +869,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "plasma",

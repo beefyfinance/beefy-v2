@@ -7,8 +7,8 @@ permissions:
 on:
   workflow_dispatch:
     inputs:
-      synthStable:
-        description: "synthStable"
+      synthAsset:
+        description: "synthAsset"
         required: true
         type: choice
         options:
@@ -110,7 +110,7 @@ jobs:
           # Convert comma-separated vault IDs into multiple --vault arguments
           VAULT_ARGS=$(echo "${{ github.event.inputs.vaults }}" | tr ',' '\n' | xargs -I {} echo "--vaults {}" | tr '\n' ' ')
           # Risks
-          SYNTH_STABLE_ARG=$(if [ "${{ github.event.inputs.synthStable }}" != "unchanged" ]; then echo "--synthStable ${{ github.event.inputs.synthStable }}" ; fi)
+          SYNTH_STABLE_ARG=$(if [ "${{ github.event.inputs.synthAsset }}" != "unchanged" ]; then echo "--synthAsset ${{ github.event.inputs.synthAsset }}" ; fi)
           COMPLEX_ARG=$(if [ "${{ github.event.inputs.complex }}" != "unchanged" ]; then echo "--complex ${{ github.event.inputs.complex }}" ; fi)
           CURATED_ARG=$(if [ "${{ github.event.inputs.curated }}" != "unchanged" ]; then echo "--curated ${{ github.event.inputs.curated }}" ; fi)
           NOT_CORRELATED_ARG=$(if [ "${{ github.event.inputs.notCorrelated }}" != "unchanged" ]; then echo "--notCorrelated ${{ github.event.inputs.notCorrelated }}" ; fi)
@@ -139,7 +139,7 @@ jobs:
           title: 'Update vault risks of ${{ github.event.inputs.vaults }}'
           body: |
             Vault Risks Update:
-            - synthStable: ${{ github.event.inputs.synthStable }}
+            - synthAsset: ${{ github.event.inputs.synthAsset }}
             - complex: ${{ github.event.inputs.complex }}
             - curated: ${{ github.event.inputs.curated }}
             - notCorrelated: ${{ github.event.inputs.notCorrelated }}

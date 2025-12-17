@@ -27,7 +27,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -68,7 +68,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -106,7 +106,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -147,7 +147,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -185,7 +185,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -226,7 +226,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -264,7 +264,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -305,7 +305,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -343,7 +343,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -384,7 +384,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -422,7 +422,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -463,7 +463,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -501,7 +501,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -542,7 +542,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -580,7 +580,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -621,7 +621,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -659,7 +659,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["ethena", "hybra"],
@@ -701,7 +701,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["ethena", "hybra"],
@@ -740,7 +740,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["hybra"],
@@ -782,7 +782,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["hybra"],
@@ -821,7 +821,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["hybra"],
@@ -863,7 +863,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["hybra"],
@@ -902,7 +902,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["hybra"],
@@ -944,7 +944,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["hybra"],
@@ -983,7 +983,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["hybra"],
@@ -1025,7 +1025,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["hybra"],
@@ -1064,7 +1064,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["hybra"],
@@ -1106,7 +1106,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["hybra"],
@@ -1145,7 +1145,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.kittenswap.finance/liquidity/manage/standard?tokenA=0x5555555555555555555555555555555555555555&tokenB=0x618275F8EFE54c2afa87bfB9F210A52F0fF89364&action=add&pool=volatile",
@@ -1185,7 +1185,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -1226,7 +1226,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -1266,7 +1266,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -1309,7 +1309,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -1347,7 +1347,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -1388,7 +1388,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -1426,7 +1426,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -1467,7 +1467,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -1505,7 +1505,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -1546,7 +1546,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -1586,7 +1586,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -1629,7 +1629,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -1667,7 +1667,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -1708,7 +1708,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["ethena"],
@@ -1747,7 +1747,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",
@@ -1788,7 +1788,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "hyperevm",

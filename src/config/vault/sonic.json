@@ -26,7 +26,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.curve.finance/dex/sonic/pools/factory-stable-ng-26/deposit",
@@ -78,7 +78,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.curve.finance/dex/sonic/pools/factory-stable-ng-25/deposit",
@@ -128,7 +128,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xC1fd739f2Bf1Aad96F04d6AE35ED04DA4D68366b/zap/in?chain=sonic",
@@ -164,7 +164,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn",
@@ -200,7 +200,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn",
@@ -234,7 +234,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x7e2bcdB749D90Aa1E9E7262872AC8B1e062B2C4D/zap/in?chain=sonic",
@@ -267,7 +267,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "network": "sonic",
@@ -303,7 +303,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "network": "sonic",
@@ -339,7 +339,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "network": "sonic",
@@ -376,7 +376,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn",
@@ -410,7 +410,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn",
@@ -444,7 +444,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn",
@@ -477,7 +477,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -518,7 +518,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -562,7 +562,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -598,7 +598,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -639,7 +639,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -683,7 +683,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -719,7 +719,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -760,7 +760,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -804,7 +804,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -839,7 +839,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "underlyingPlatformUrl": "https://app.silo.finance/markets/sonic/bes-s-52",
@@ -880,7 +880,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "network": "sonic",
@@ -916,7 +916,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "network": "sonic",
@@ -952,7 +952,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -993,7 +993,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -1037,7 +1037,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -1075,7 +1075,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/S/0x871A101Dcf22fE4fE37be7B654098c801CBA1c88",
@@ -1113,7 +1113,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/0x29219dd400f2Bf60E5a23d13Be72B486D4038894/0x871A101Dcf22fE4fE37be7B654098c801CBA1c88",
@@ -1151,7 +1151,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -1195,7 +1195,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -1239,7 +1239,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -1275,7 +1275,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/S/0xb0695ce12c56AAe40894235e2d1888D0b62Dd110",
@@ -1313,7 +1313,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/S/0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
@@ -1353,7 +1353,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/S/0xe715cbA7B5cCb33790ceBFF1436809d36cb17E57",
@@ -1393,7 +1393,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/S/0x50c42dEAcD8Fc9773493ED674b675bE577f2634b",
@@ -1431,7 +1431,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://defive.com/pools/add/0x29219dd400f2Bf60E5a23d13Be72B486D4038894/0x50c42dEAcD8Fc9773493ED674b675bE577f2634b",
@@ -1472,7 +1472,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=bes+os&ownerType=pools&filter=conc-liquidity",
@@ -1508,7 +1508,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=bes+os&ownerType=pools&filter=conc-liquidity",
@@ -1544,7 +1544,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+bes&ownerType=pools&filter=conc-liquidity",
@@ -1580,7 +1580,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=asonusdc+wstkscusd&ownerType=pools&filter=conc-liquidity",
@@ -1613,7 +1613,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "besonic",
     "network": "sonic",
@@ -1658,7 +1658,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=busdc.e-20+wstkscusd&ownerType=pools&filter=conc-liquidity",
@@ -1694,7 +1694,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=busdc.e-20+wstkscusd&ownerType=pools&filter=conc-liquidity",
@@ -1727,7 +1727,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "network": "sonic",
@@ -1765,7 +1765,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xc5954b1b9df8a0c0b7788d2cc2bc18d4bae9b0c2000200000000000000000099/add-liquidity",
@@ -1809,7 +1809,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xbd4a2ecdcd7acb0d2b20744ac4cc1368dd8fdc410001000000000000000000a8/add-liquidity",
@@ -1857,7 +1857,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x5485c26921e28830fbd7469442c0edad0e27e01c0002000000000000000000c7/add-liquidity",
@@ -1892,7 +1892,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xcf5d1864ab01b50c6e94adde80d5ec264c93f4910002000000000000000000bb/add-liquidity",
@@ -1927,7 +1927,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xe7734b495a552ab6f4c78406e672cca7175181e10002000000000000000000c5/add-liquidity",
@@ -1963,7 +1963,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=wstkscusd+scusd&ownerType=pools&filter=conc-liquidity",
@@ -1999,7 +1999,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=wstkscusd+scusd&ownerType=pools&filter=conc-liquidity",
@@ -2034,7 +2034,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=staked+sonic+usd+sonic+usd&ownerType=pools&filter=conc-liquidity",
@@ -2067,7 +2067,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=wbtc+scbtc&ownerType=pools&filter=conc-liquidity",
@@ -2102,7 +2102,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=wbtc+scbtc&ownerType=pools&filter=conc-liquidity",
@@ -2137,7 +2137,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sfrxeth+frxeth&ownerType=pools&filter=conc-liquidity",
@@ -2170,7 +2170,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -2211,7 +2211,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -2255,7 +2255,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -2293,7 +2293,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -2336,7 +2336,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -2382,7 +2382,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -2418,7 +2418,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -2459,7 +2459,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -2500,7 +2500,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -2536,7 +2536,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+usdt&ownerType=pools&filter=conc-liquidity",
@@ -2571,7 +2571,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=frxeth+sceth&ownerType=pools&filter=conc-liquidity",
@@ -2606,7 +2606,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=frxusd+scusd&ownerType=pools&filter=conc-liquidity",
@@ -2639,7 +2639,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -2680,7 +2680,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -2721,7 +2721,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -2759,7 +2759,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://www.shadow.so/liquidity/0xf19748a0e269c6965a84f8c98ca8c47a064d4dd0",
@@ -2797,7 +2797,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v3/0x43026d483f42fb35efe03c20b251142d022783f2/add-liquidity",
@@ -2832,7 +2832,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sceth+weth&ownerType=pools&filter=conc-liquidity",
@@ -2867,7 +2867,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sceth+weth&ownerType=pools&filter=conc-liquidity",
@@ -2900,7 +2900,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=weth+swpx&ownerType=pools&filter=conc-liquidity",
@@ -2935,7 +2935,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=swpx+os&ownerType=pools&filter=conc-liquidity",
@@ -2968,7 +2968,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+os&ownerType=pools&filter=conc-liquidity",
@@ -3003,7 +3003,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=os+ws&ownerType=pools&filter=conc-liquidity",
@@ -3038,7 +3038,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -3079,7 +3079,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -3119,7 +3119,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -3162,7 +3162,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -3200,7 +3200,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -3241,7 +3241,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -3279,7 +3279,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -3320,7 +3320,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -3356,7 +3356,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+weth&ownerType=pools&filter=conc-liquidity",
@@ -3389,7 +3389,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+weth&ownerType=pools&filter=conc-liquidity",
@@ -3424,7 +3424,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+scusd&ownerType=pools&filter=conc-liquidity",
@@ -3457,7 +3457,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+ws&ownerType=pools&filter=conc-liquidity",
@@ -3490,7 +3490,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=sts+ws&ownerType=pools&filter=conc-liquidity",
@@ -3524,7 +3524,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -3566,7 +3566,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -3608,7 +3608,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -3646,7 +3646,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xe54dd58a6d4e04687f2034dd4ddab49da55f8aff00000000000000000000007c/add-liquidity",
@@ -3694,7 +3694,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xc5ab8d98f959453e416b2f15848a02cc99bc695e000200000000000000000022/add-liquidity",
@@ -3739,7 +3739,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x713fb5036dc70012588d77a5b066f1dd05c712d7000200000000000000000041/add-liquidity",
@@ -3785,7 +3785,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+scusd&ownerType=pools&filter=conc-liquidity",
@@ -3820,7 +3820,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&ownerType=pools&filter=classic-stable&search=usdc.e+scusd",
@@ -3860,7 +3860,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "sonic",
@@ -3896,7 +3896,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+sts&ownerType=pools&filter=conc-liquidity",
@@ -3929,7 +3929,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+swpx&ownerType=pools&filter=conc-liquidity",
@@ -3962,7 +3962,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+swpx&ownerType=pools&filter=conc-liquidity",
@@ -3995,7 +3995,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=ws+usdc.e&ownerType=pools&filter=conc-liquidity",
@@ -4030,7 +4030,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -4075,7 +4075,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -4121,7 +4121,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -4157,7 +4157,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -4200,7 +4200,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -4244,7 +4244,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -4280,7 +4280,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -4323,7 +4323,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -4367,7 +4367,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -4407,7 +4407,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -4448,7 +4448,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "sonic",
@@ -4486,7 +4486,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x21fed4063bf8ebf4f51f4adf4ecfc9717aa4ca9d000100000000000000000044/add-liquidity",
@@ -4531,7 +4531,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x25ca5451cd5a50ab1d324b5e64f32c0799661891000200000000000000000018/add-liquidity",
@@ -4577,7 +4577,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xcd4d2b142235d5650ffa6a38787ed0b7d7a51c0c000000000000000000000037/add-liquidity",
@@ -4625,7 +4625,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x374641076b68371e69d03c417dac3e5f236c32fa000000000000000000000006/add-liquidity/0xf1dacc181cbb176ead93b2a7db5884161f95c40598ee588ae8d35f3118740cb8",
@@ -4673,7 +4673,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xB78CdF29F7E563ea447feBB5b48DDe9bC3278Ba4",
@@ -4713,7 +4713,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xB75C9073ea00AbDa9ff420b5Ae46fEe248993380",
@@ -4751,7 +4751,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0x38cFA6cB37d074B6E954C52d10a4cf0e4268607b",
@@ -4791,7 +4791,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xbCbC5777537c0D0462fb82BA48Eeb6cb361E853f",
@@ -4831,7 +4831,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xdc85F86d5E3189e0d4a776e6Ae3B3911eC7B0133",
@@ -4871,7 +4871,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xcD7D89FF7bB263a5C45aD81ddE4Eed5892Ad540C",

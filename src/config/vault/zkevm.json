@@ -27,7 +27,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/zkevm/v2/0x65da876a95cd5b6a5880710628c436409b1b29fa00000000000000000000005b/add-liquidity",
@@ -62,7 +62,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/polygonzkevm/e-clp/0xb1557cfea06de5a1601a7f0ccf3b515ef431a50d/join/",
@@ -97,7 +97,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9&currency1=0x68286607A1d43602d880D349187c3c48c0fD05E6",
@@ -139,7 +139,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4B16e4752711A7ABEc32799C976F3CeFc0111f2B&currency1=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9",
@@ -181,7 +181,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9&currency1=0x68791CFE079814c46e0E25C19Bcc5BFC71A744f7",
@@ -223,7 +223,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x3d5320821BfCa19fb0B5428F2c79d63bd5246f89&currency1=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e95",
@@ -265,7 +265,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "qlp",
     "addLiquidityUrl": "https://perps.quickswap.exchange/#/liquidity?ref=beefy",
@@ -300,7 +300,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9&currency1=0xa2036f0538221a77A3937F1379699f44945018d0",
@@ -342,7 +342,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x1E4a5963aBFD975d8c9021ce480b42188849D41d&currency1=0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035",
@@ -384,7 +384,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9&currency1=0xEA034fb02eB1808C2cc3adbC15f447B93CbE08e1",
@@ -426,7 +426,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9&currency1=0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035",
@@ -468,7 +468,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/zkevm/v2/0x1d0a8a31cdb04efac3153237526fb15cc65a252000000000000000000000000f/add-liquidity",
@@ -503,7 +503,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/zkevm/v2/0xdf725fde6e89981fb30d9bf999841ac2c160b512000000000000000000000010/add-liquidity",
@@ -538,7 +538,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/zkevm/v2/0xe1f2c039a68a216de6dd427be6c60decf405762a00000000000000000000000e/add-liquidity",

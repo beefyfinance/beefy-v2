@@ -26,7 +26,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.curve.finance/dex/fraxtal/pools/factory-stable-ng-67/deposit",
@@ -77,7 +77,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.curve.finance/dex/fraxtal/pools/factory-stable-ng-45/deposit",
@@ -128,7 +128,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/dex/fraxtal/pools/factory-stable-ng-44/deposit/",
@@ -177,7 +177,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-20/deposit",
@@ -228,7 +228,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-21/deposit",
@@ -279,7 +279,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://curve.finance/lend/fraxtal/markets/one-way-market-0/vault/deposit",
@@ -314,7 +314,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://curve.finance/lend/fraxtal/markets/one-way-market-1/vault/deposit",
@@ -349,7 +349,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://curve.finance/lend/fraxtal/markets/one-way-market-2/vault/deposit",
@@ -384,7 +384,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-27/deposit",
@@ -435,7 +435,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-tricrypto-3/deposit",
@@ -487,7 +487,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-23/deposit",
@@ -538,7 +538,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-24/deposit",
@@ -589,7 +589,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-22/deposit",
@@ -638,7 +638,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://frax.convexfinance.com/stake",
@@ -673,7 +673,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-11/deposit",
@@ -723,7 +723,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-17/deposit",
@@ -774,7 +774,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-15/deposit",
@@ -824,7 +824,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-2/deposit",
@@ -874,7 +874,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-3/deposit",
@@ -924,7 +924,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-7/deposit",
@@ -974,7 +974,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-tricrypto-1/deposit",
@@ -1027,7 +1027,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.ra.exchange/swap?to=0x7F3a9Afc827AeEdb0c5dC1A66C0Baa41cD7289F0",
@@ -1069,7 +1069,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.ra.exchange/swap?to=0x7F3a9Afc827AeEdb0c5dC1A66C0Baa41cD7289F0",
@@ -1111,7 +1111,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.ra.exchange/swap?to=0xFc00000000000000000000000000000000000002",
@@ -1152,7 +1152,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-tricrypto-0/deposit",
@@ -1203,7 +1203,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-0/deposit",
@@ -1253,7 +1253,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-1/deposit",
@@ -1303,7 +1303,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-6/deposit",

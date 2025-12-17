@@ -24,7 +24,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?outputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
@@ -62,7 +62,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
@@ -98,7 +98,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "old-bifi-pool",
     "excluded": "metis-bifi-maxi",
@@ -132,7 +132,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0x4c078361FC9BbB78DF910800A991C7c3DD2F6ce0&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
@@ -168,7 +168,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
@@ -204,7 +204,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&outputCurrency=0xb27BbeaACA2C00d6258C3118BAB6b5B6975161c8",
@@ -240,7 +240,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
@@ -276,7 +276,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21&outputCurrency=0x72c232D56542Ba082592DEE7C77b1C6CFA758BCD",
@@ -312,7 +312,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&outputCurrency=0x420000000000000000000000000000000000000A",
@@ -348,7 +348,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21&outputCurrency=0x420000000000000000000000000000000000000A",
@@ -384,7 +384,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&outputCurrency=0x4aAC94985cD83be30164DfE7e9AF7C054D7d2121",
@@ -420,7 +420,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278&outputCurrency=0xbb06dca3ae6887fabf931640f67cab3e3a16f4dc",
@@ -460,7 +460,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278&outputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
@@ -502,7 +502,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
@@ -544,7 +544,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278&outputCurrency=0x420000000000000000000000000000000000000A",
@@ -584,7 +584,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&outputCurrency=0x420000000000000000000000000000000000000A",
@@ -624,7 +624,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
@@ -664,7 +664,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
@@ -705,7 +705,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "maxi",
     "buyTokenUrl": "https://netswap.io/#/swap?outputCurrency=0xe6801928061cdbe32ac5ad0634427e140efd05f9",
@@ -739,7 +739,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0x69fdb77064ec5c84FA2F21072973eB28441F43F3",
@@ -781,7 +781,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
@@ -823,7 +823,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
@@ -865,7 +865,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0x420000000000000000000000000000000000000A",
@@ -907,7 +907,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0x6c4768d4b3acD4a3fF01F179FaffDaEbe084D12D",
@@ -949,7 +949,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=METIS&outputCurrency=0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
@@ -991,7 +991,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0xa5B55ab1dAF0F8e1EFc0eB1931a957fd89B918f4",
@@ -1033,7 +1033,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0x721532bC0dA5ffaeB0a6A45fB24271E8098629A7&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
@@ -1075,7 +1075,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0xE253E0CeA0CDD43d9628567d097052B33F98D611",
@@ -1117,7 +1117,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://v1.tethys.finance/swap?inputCurrency=METIS&outputCurrency=0x4651B38e7ec14BB3db731369BFE5B08F2466Bd0A",
@@ -1159,7 +1159,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0x90fe084f877c65e1b577c7b2ea64b8d8dd1ab278&outputCurrency=0x2692BE44A6E38B698731fDDf417d060f0d20A0cB",
@@ -1201,7 +1201,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://netswap.io/#/swap?inputCurrency=0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",

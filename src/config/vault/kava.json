@@ -27,7 +27,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://stargate.finance/pool/kava:0xAad094F6A75A14417d39f04E690fC216f080A41a",
@@ -62,7 +62,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "klp",
     "addLiquidityUrl": "https://perps.kinetix.finance/#/liquidity",
@@ -98,7 +98,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/kava/pools/factory-v2-17/swap",
@@ -150,7 +150,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/kava/pools/factory-v2-16/swap",
@@ -201,7 +201,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "maxi",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -235,7 +235,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "old-bifi-pool",
     "network": "kava"
@@ -268,7 +268,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -310,7 +310,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -352,7 +352,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -394,7 +394,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -436,7 +436,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -478,7 +478,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -520,7 +520,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -562,7 +562,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -604,7 +604,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -646,7 +646,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -688,7 +688,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -730,7 +730,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -772,7 +772,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -814,7 +814,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -856,7 +856,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -898,7 +898,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -940,7 +940,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -982,7 +982,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -1024,7 +1024,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -1066,7 +1066,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -1108,7 +1108,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -1150,7 +1150,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://equilibrefinance.com/swap",
@@ -1192,7 +1192,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/kava/pools/factory-v2-2/swap",
@@ -1245,7 +1245,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://curve.finance/#/kava/pools/factory-v2-0/swap",
@@ -1298,7 +1298,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/kava/pools/factory-v2-13/swap",
@@ -1350,7 +1350,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap",
@@ -1386,7 +1386,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap",
@@ -1422,7 +1422,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap",
@@ -1458,7 +1458,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap",
@@ -1494,7 +1494,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap",
