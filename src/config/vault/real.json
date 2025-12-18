@@ -27,7 +27,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v2/0xb28d015563c81dd66Ab781853c03B7B66aa46C1b",
@@ -63,7 +63,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v2/0xAFb84DFe257cBA43d2f44B4367aDAc5a82775275",
@@ -99,7 +99,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v2/0xd3Ae2AF8f1Fb00af2e363fe6592C19ABF9105FA9",
@@ -135,7 +135,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v2/0x1733720f30EF013539Fa2EcEE00671A60B66243D",
@@ -171,7 +171,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x64F5eFB0f0643B654C96f77855DaFfe4C2FE0252",
@@ -207,7 +207,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x4f5c568F72369ff4Ce4e53d797985DFFBdA6FC71",
@@ -243,7 +243,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x374a765309B6D5a123f32971dcA1E6CeF9fa0066",
@@ -279,7 +279,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x701655595037dfe1e59E69446De009236F012405",
@@ -315,7 +315,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x72c20EBBffaE1fe4E9C759b326D97763E218F9F6",
@@ -351,7 +351,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x35BA384F9D30D68028898849ddBf5bda09bbE7EA",
@@ -387,7 +387,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x182d3F8e154EB43d5f361a39A2234A84508244c9",
@@ -423,7 +423,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x22aC4821bBb8d1AC42eA7F0f32ed415F52577Ca1",
@@ -459,7 +459,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0xC6B3AaaAbf2f6eD6cF7fdFFfb0DaC45E10c4A5B3",
@@ -495,7 +495,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x6b1a34df762f1d3367e7e93AE5661c88CA848423",

@@ -26,7 +26,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -66,7 +66,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -102,7 +102,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "underlyingPlatformUrl": "https://app.silo.finance/vaults/arbitrum/0x2514A2Ce842705EAD703d02fABFd8250BfCfb8bd",
@@ -145,7 +145,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "underlyingPlatformUrl": "https://app.silo.finance/vaults/arbitrum/0x2BA39e5388aC6C702Cb29AEA78d52aa66832f1ee",
@@ -187,7 +187,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf78452e0f5C0B95fc5dC8353B8CD1e06E53fa25B/zap/in?chain=arbitrum",
@@ -221,7 +221,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf78452e0f5C0B95fc5dC8353B8CD1e06E53fa25B/zap/in?chain=arbitrum",
@@ -255,7 +255,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xd7Eac6c9109D8c3977EBCe4e7DBf0A5A9532E240/zap/in?chain=arbitrum",
@@ -289,7 +289,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xd7Eac6c9109D8c3977EBCe4e7DBf0A5A9532E240/zap/in?chain=arbitrum",
@@ -323,7 +323,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xD6D4648a192c5179B4175e0e431822b64aEDF6fC/zap/in?chain=arbitrum",
@@ -357,7 +357,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xD6D4648a192c5179B4175e0e431822b64aEDF6fC/zap/in?chain=arbitrum",
@@ -391,7 +391,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x18ffB61c6d223bd91ec15acC248bb7e670aBcc48/zap/in?chain=arbitrum",
@@ -425,7 +425,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x18ffB61c6d223bd91ec15acC248bb7e670aBcc48/zap/in?chain=arbitrum",
@@ -461,7 +461,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/dex/arbitrum/pools/factory-twocrypto-89/deposit/",
@@ -510,7 +510,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0x5418a64e0cdb20548acb394f5d00a089baf02161",
@@ -542,7 +542,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0xa978cc348a0b5de8bd564a1d8fe437787fd12664",
@@ -574,7 +574,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0xc072880e1bc0bcddc99db882c7f3e7a839281cf4",
@@ -608,7 +608,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0x9c5f17d96ca66748b459788148b7357220f2d100",
@@ -642,7 +642,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0x2ecE6781BAce5e37386aDEf7a3d45D0bB05F8FCE",
@@ -674,7 +674,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0x19b001e6bc2d89154c18e2216eec5c8c6047b6d8",
@@ -708,7 +708,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0x10f9e54aeea2fefa124238087dcfd919ba32f14d",
@@ -742,7 +742,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x4505ec38982Bb796B34D050ca8d765aCFF1aBdee/zap/in?chain=arbitrum",
@@ -775,7 +775,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-tricrypto-27/deposit",
@@ -827,7 +827,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x22e0F26320aCE985e3CB2434095F18Bfe114E28e/zap/in?chain=arbitrum",
@@ -862,7 +862,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x22e0F26320aCE985e3CB2434095F18Bfe114E28e/zap/in?chain=arbitrum",
@@ -894,7 +894,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
@@ -934,7 +934,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
@@ -977,7 +977,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x3be83Cc235455Ae1B624Cf6e326505769AD8f9eA/zap/in?chain=arbitrum",
@@ -1012,7 +1012,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x14FbC760eFaF36781cB0eb3Cb255aD976117B9Bd/zap/in?chain=arbitrum",
@@ -1048,7 +1048,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x0bD6890b3Bb15f16430546147734b254d0B03059/zap/in?chain=arbitrum",
@@ -1084,7 +1084,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x8cAB5Fd029ae2FBF28c53E965E4194C7260aDF0C/zap/in?chain=arbitrum",
@@ -1118,7 +1118,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "pointStructureIds": ["silo-points"],
@@ -1159,7 +1159,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "arbitrum",
@@ -1200,7 +1200,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "arbitrum",
@@ -1241,7 +1241,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "arbitrum",
@@ -1282,7 +1282,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "arbitrum",
@@ -1323,7 +1323,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "arbitrum",
@@ -1364,7 +1364,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "arbitrum",
@@ -1405,7 +1405,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "arbitrum",
@@ -1446,7 +1446,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "arbitrum",
@@ -1489,7 +1489,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -1532,7 +1532,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -1571,7 +1571,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -1614,7 +1614,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -1653,7 +1653,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-stable-ng-85/deposit",
@@ -1690,7 +1690,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xA9104b8B6698979568852C30231871e28A482b3C/zap/in?chain=arbitrum",
@@ -1725,7 +1725,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xf890360473c12d8015da8dbf7af11da87337a065000000000000000000000570/add-liquidity",
@@ -1775,7 +1775,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x69d9bc07a19caad9ae4ca40af18d5a688839a29900020000000000000000058e/add-liquidity",
@@ -1825,7 +1825,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xdeeaf8b0a8cf26217261b813e085418c7dd8f1ee00020000000000000000058f/add-liquidity",
@@ -1873,7 +1873,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xff38cc0ce0de4476c5a3e78675b48420a851035b000200000000000000000593/add-liquidity",
@@ -1923,7 +1923,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x71c64ac8ec1da03f8a05c3cfeb6493e6dad54a6f000200000000000000000592/add-liquidity",
@@ -1971,7 +1971,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2014,7 +2014,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2050,7 +2050,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2090,7 +2090,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2134,7 +2134,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2172,7 +2172,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2215,7 +2215,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2261,7 +2261,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2299,7 +2299,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2343,7 +2343,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2387,7 +2387,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2424,7 +2424,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.abracadabra.money/#/pool/2/42161",
@@ -2458,7 +2458,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.abracadabra.money/#/pool/1/42161",
@@ -2491,7 +2491,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2532,7 +2532,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2576,7 +2576,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2614,7 +2614,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["ethena"],
@@ -2658,7 +2658,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["ethena"],
@@ -2705,7 +2705,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "earningPoints": false,
@@ -2745,7 +2745,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2788,7 +2788,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2834,7 +2834,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2872,7 +2872,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2915,7 +2915,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -2961,7 +2961,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3000,7 +3000,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-stable-ng-49/deposit",
@@ -3051,7 +3051,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3093,7 +3093,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3139,7 +3139,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3175,7 +3175,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3215,7 +3215,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3259,7 +3259,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3297,7 +3297,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3339,7 +3339,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3385,7 +3385,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3423,7 +3423,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3465,7 +3465,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3511,7 +3511,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3547,7 +3547,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3586,7 +3586,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3627,7 +3627,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3670,7 +3670,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3716,7 +3716,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3752,7 +3752,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3793,7 +3793,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3837,7 +3837,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3875,7 +3875,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3917,7 +3917,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -3963,7 +3963,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4001,7 +4001,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x46472cba35e6800012aa9fcc7939ff07478c473e00020000000000000000056c/add-liquidity",
@@ -4049,7 +4049,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x7272163a931dac5bbe1cb5fefaf959bb65f7346f000200000000000000000549/add-liquidity",
@@ -4099,7 +4099,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x6e822c64c00393b2078f2a5bb75c575ab505b55c000200000000000000000548/add-liquidity",
@@ -4150,7 +4150,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x281fE15fd3E08A282f52D5cf09a4d13c3709E66D/zap/in?chain=arbitrum",
@@ -4186,7 +4186,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x315dd595e82bdc0c194f3a38a08fde480d7e5d2100020000000000000000056a/add-liquidity",
@@ -4233,7 +4233,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "earningPoints": true,
@@ -4280,7 +4280,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "earningPoints": true,
@@ -4327,7 +4327,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "earningPoints": true,
@@ -4366,7 +4366,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4409,7 +4409,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4455,7 +4455,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4491,7 +4491,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4532,7 +4532,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4576,7 +4576,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4614,7 +4614,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4657,7 +4657,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4703,7 +4703,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4741,7 +4741,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4784,7 +4784,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4830,7 +4830,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4868,7 +4868,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4911,7 +4911,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4957,7 +4957,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -4993,7 +4993,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5037,7 +5037,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5081,7 +5081,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5117,7 +5117,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5161,7 +5161,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5205,7 +5205,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5241,7 +5241,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5285,7 +5285,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5329,7 +5329,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5365,7 +5365,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5409,7 +5409,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5453,7 +5453,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5489,7 +5489,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5533,7 +5533,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5577,7 +5577,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5613,7 +5613,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5657,7 +5657,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5701,7 +5701,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5739,7 +5739,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5785,7 +5785,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5831,7 +5831,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5867,7 +5867,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5908,7 +5908,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5952,7 +5952,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -5990,7 +5990,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6036,7 +6036,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6082,7 +6082,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6120,7 +6120,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6166,7 +6166,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6212,7 +6212,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6250,7 +6250,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6296,7 +6296,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6342,7 +6342,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6380,7 +6380,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6426,7 +6426,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6472,7 +6472,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6510,7 +6510,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6556,7 +6556,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6602,7 +6602,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6641,7 +6641,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xa877a0E177b54A37066c1786F91a1DAb68F094AF/zap/in?chain=arbitrum",
@@ -6677,7 +6677,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x279b44E48226d40Ec389129061cb0B56C5c09e46/zap/in?chain=arbitrum",
@@ -6713,7 +6713,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x59743f1812bb85db83e9e4ee061d124aaa64290000000000000000000000052b/add-liquidity",
@@ -6763,7 +6763,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xdfa752ca3ff49d4b6dbe08e2d5a111f51773d3950000000000000000000004e8/add-liquidity",
@@ -6812,7 +6812,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6858,7 +6858,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6904,7 +6904,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6942,7 +6942,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -6984,7 +6984,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7030,7 +7030,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7068,7 +7068,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7114,7 +7114,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7160,7 +7160,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7198,7 +7198,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7237,7 +7237,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7278,7 +7278,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7319,7 +7319,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7358,7 +7358,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7397,7 +7397,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7436,7 +7436,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7475,7 +7475,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7514,7 +7514,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7553,7 +7553,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7594,7 +7594,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["ethena"],
@@ -7636,7 +7636,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7675,7 +7675,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7714,7 +7714,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7755,7 +7755,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7794,7 +7794,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7833,7 +7833,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7874,7 +7874,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7913,7 +7913,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7952,7 +7952,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -7993,7 +7993,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8032,7 +8032,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8071,7 +8071,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8112,7 +8112,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8153,7 +8153,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8192,7 +8192,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8231,7 +8231,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8270,7 +8270,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8309,7 +8309,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8350,7 +8350,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8391,7 +8391,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8432,7 +8432,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8471,7 +8471,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8511,7 +8511,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8552,7 +8552,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8589,7 +8589,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8633,7 +8633,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8670,7 +8670,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8714,7 +8714,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8751,7 +8751,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8792,7 +8792,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8829,7 +8829,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8870,7 +8870,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8909,7 +8909,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8952,7 +8952,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -8993,7 +8993,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -9037,7 +9037,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -9080,7 +9080,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -9126,7 +9126,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -9169,7 +9169,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -9215,7 +9215,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -9256,7 +9256,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -9300,7 +9300,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -9339,7 +9339,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-twocrypto-19/deposit",
@@ -9393,7 +9393,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -9437,7 +9437,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -9475,7 +9475,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0x14ABD18d1FA335E9F630a658a2799B33208763Fa/join/",
@@ -9525,7 +9525,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0xcA8ECD05A289B1FBc2E0eAEC07360c4BFec07B61/join/",
@@ -9574,7 +9574,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -9615,7 +9615,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -9654,7 +9654,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xe8a6026365254f779b6927f00f8724ea1b8ae5e0000000000000000000000580/add-liquidity",
@@ -9702,7 +9702,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-twocrypto-18/deposit",
@@ -9754,7 +9754,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/in?chain=arbitrum",
@@ -9790,7 +9790,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2aD746fa3faA0AD586021a633d10F4E2785A0349/zap/in?chain=arbitrum",
@@ -9826,7 +9826,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0x7967FA58B9501600D96bD843173b9334983EE6E6/join/",
@@ -9872,7 +9872,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -9909,7 +9909,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -9947,7 +9947,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -9986,7 +9986,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10026,7 +10026,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10066,7 +10066,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10107,7 +10107,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["ethena"],
@@ -10145,7 +10145,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10185,7 +10185,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10224,7 +10224,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10262,7 +10262,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10300,7 +10300,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10338,7 +10338,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10378,7 +10378,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10416,7 +10416,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10454,7 +10454,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10491,7 +10491,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10529,7 +10529,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10567,7 +10567,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10605,7 +10605,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10643,7 +10643,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10681,7 +10681,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10719,7 +10719,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10757,7 +10757,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10794,7 +10794,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10831,7 +10831,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10868,7 +10868,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10905,7 +10905,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10947,7 +10947,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -10987,7 +10987,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11027,7 +11027,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11069,7 +11069,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11111,7 +11111,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11150,7 +11150,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11190,7 +11190,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11227,7 +11227,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11267,7 +11267,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11307,7 +11307,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11347,7 +11347,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11389,7 +11389,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11426,7 +11426,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11466,7 +11466,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11506,7 +11506,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11548,7 +11548,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11587,7 +11587,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["ethena"],
@@ -11628,7 +11628,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11670,7 +11670,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11710,7 +11710,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11749,7 +11749,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11786,7 +11786,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11825,7 +11825,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11862,7 +11862,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11899,7 +11899,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11936,7 +11936,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -11973,7 +11973,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12012,7 +12012,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12049,7 +12049,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12089,7 +12089,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12129,7 +12129,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12166,7 +12166,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12203,7 +12203,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12242,7 +12242,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12284,7 +12284,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12324,7 +12324,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["ethena"],
@@ -12368,7 +12368,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12414,7 +12414,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12454,7 +12454,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12491,7 +12491,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12530,7 +12530,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12567,7 +12567,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12604,7 +12604,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12644,7 +12644,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12682,7 +12682,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12720,7 +12720,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12757,7 +12757,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12798,7 +12798,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12836,7 +12836,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12879,7 +12879,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -12921,7 +12921,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2Dfaf9a5E4F293BceedE49f2dBa29aACDD88E0C4/zap/in?chain=arbitrum",
@@ -12960,7 +12960,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -13001,7 +13001,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -13039,7 +13039,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0xaf88d065e77c8cC2239327C5EDb3A432268e5831&to=0xb2F30A7C980f052f02563fb518dcc39e6bf38175",
@@ -13083,7 +13083,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -13126,7 +13126,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -13167,7 +13167,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -13208,7 +13208,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -13246,7 +13246,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0xCDCef9765D369954a4A936064535710f7235110A/join/",
@@ -13293,7 +13293,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0xef0c116A2818A5b1A5D836A291856A321f43C2Fb/join/",
@@ -13340,7 +13340,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x90e6cb5249f5e1572afbf8a96d8a1ca6acffd73900000000000000000000055c/add-liquidity",
@@ -13389,7 +13389,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x7b54c44fbe6db6d97fd22b8756f89c0af16202cc00000000000000000000053c/add-liquidity",
@@ -13437,7 +13437,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-stable-ng-69/deposit",
@@ -13491,7 +13491,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["ethena"],
@@ -13533,7 +13533,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -13576,7 +13576,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -13619,7 +13619,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -13660,7 +13660,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -13699,7 +13699,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf9F9779d8fF604732EBA9AD345E6A27EF5c2a9d6/zap/in?chain=arbitrum",
@@ -13736,7 +13736,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xED99fC8bdB8E9e7B8240f62f69609a125A0Fbf14/zap/in?chain=arbitrum",
@@ -13772,7 +13772,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3dB08a6e9cB4391348b0B404F493E7ae264c0/zap/in?chain=arbitrum",
@@ -13809,7 +13809,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2fB73D98B1D60B35FD12508933578098f352cE7e/zap/in?chain=arbitrum",
@@ -13847,7 +13847,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -13888,7 +13888,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -13931,7 +13931,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -13972,7 +13972,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14013,7 +14013,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14054,7 +14054,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14095,7 +14095,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14136,7 +14136,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14177,7 +14177,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14218,7 +14218,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14259,7 +14259,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14300,7 +14300,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14341,7 +14341,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14382,7 +14382,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14423,7 +14423,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14464,7 +14464,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14505,7 +14505,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14544,7 +14544,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-tricrypto-22/deposit",
@@ -14599,7 +14599,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14642,7 +14642,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14683,7 +14683,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14724,7 +14724,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14767,7 +14767,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14810,7 +14810,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14853,7 +14853,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14894,7 +14894,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14935,7 +14935,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -14976,7 +14976,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15017,7 +15017,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15058,7 +15058,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15101,7 +15101,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15142,7 +15142,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15183,7 +15183,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15224,7 +15224,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15267,7 +15267,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15310,7 +15310,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["ethena"],
@@ -15352,7 +15352,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15395,7 +15395,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15431,7 +15431,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x17573150d67d820542EFb24210371545a4868B03&to=0x178412e79c25968a32e89b11f63B33F733770c2A",
@@ -15475,7 +15475,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15518,7 +15518,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15559,7 +15559,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15602,7 +15602,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15643,7 +15643,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15684,7 +15684,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15725,7 +15725,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15766,7 +15766,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15809,7 +15809,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15850,7 +15850,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15891,7 +15891,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15932,7 +15932,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -15973,7 +15973,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16014,7 +16014,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16055,7 +16055,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16098,7 +16098,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16141,7 +16141,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "compounds",
     "pointStructureIds": ["ethena"],
@@ -16185,7 +16185,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16228,7 +16228,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16271,7 +16271,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16312,7 +16312,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16353,7 +16353,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16396,7 +16396,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16437,7 +16437,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16478,7 +16478,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16519,7 +16519,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16560,7 +16560,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16601,7 +16601,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16642,7 +16642,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16683,7 +16683,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -16722,7 +16722,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xED99fC8bdB8E9e7B8240f62f69609a125A0Fbf14/zap/in?chain=arbitrum",
@@ -16757,7 +16757,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/USDC/ETH",
@@ -16796,7 +16796,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/USDC",
@@ -16835,7 +16835,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/USDT",
@@ -16875,7 +16875,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-stable-ng-62/deposit",
@@ -16927,7 +16927,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-stable-ng-61/deposit",
@@ -16979,7 +16979,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-stable-ng-57/deposit",
@@ -17031,7 +17031,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-v2-41/deposit",
@@ -17083,7 +17083,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-tricrypto-20/deposit",
@@ -17136,7 +17136,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x1d38d4204159aa5e767afba8f76be22117de61e5/zap/in?chain=arbitrum",
@@ -17172,7 +17172,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf9F9779d8fF604732EBA9AD345E6A27EF5c2a9d6/zap/in?chain=arbitrum",
@@ -17209,7 +17209,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3db08a6e9cb4391348b0b404f493e7ae264c0/zap/in?chain=arbitrum",
@@ -17249,7 +17249,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -17286,7 +17286,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-tricrypto-2/deposit",
@@ -17339,7 +17339,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-stable-ng-30/deposit",
@@ -17390,7 +17390,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0x125bc5a031b2db6733bfa35d914ffa428095978b/join/",
@@ -17445,7 +17445,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -17488,7 +17488,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -17531,7 +17531,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -17569,7 +17569,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516/add-liquidity",
@@ -17619,7 +17619,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://curve.finance/lend/arbitrum/markets/one-way-market-5/vault/deposit",
@@ -17653,7 +17653,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "arbitrum",
@@ -17694,7 +17694,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "arbitrum",
@@ -17741,7 +17741,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -17784,7 +17784,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -17827,7 +17827,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -17866,7 +17866,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x952083cde7aaa11ab8449057f7de23a970aa8472/zap/in?chain=arbitrum",
@@ -17903,7 +17903,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6ae79089b2cf4be441480801bb741a531d94312b/zap/in?chain=arbitrum",
@@ -17943,7 +17943,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -17986,7 +17986,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -18029,7 +18029,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -18072,7 +18072,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "arbitrum",
@@ -18111,7 +18111,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5e03c94fc5fb2e21882000a96df0b63d2c4312e2/zap/in?chain=arbitrum",
@@ -18145,7 +18145,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.1inch.io/#/42161/advanced/swap/ETH/USDC",
@@ -18188,7 +18188,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-stable-ng-15/deposit",
@@ -18238,7 +18238,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "arbitrum",
@@ -18279,7 +18279,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "arbitrum",
@@ -18322,7 +18322,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x551c423c441db0b691b5630f04d2080caee25963/zap/in?chain=arbitrum",
@@ -18357,7 +18357,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-tricrypto-20/deposit",
@@ -18409,7 +18409,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "gmx-gm",
     "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
@@ -18444,7 +18444,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x2d6ced12420a9af5a83765a8c48be2afcd1a8feb000000000000000000000500/add-liquidity",
@@ -18494,7 +18494,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc2598280bfea1fe18dfcabd21c7165c40c6859d30000000000000000000004f3/add-liquidity",
@@ -18544,7 +18544,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x99e9028e274feafa2e1d8787e1ee6de39c6f7724/zap/in?chain=arbitrum",
@@ -18578,7 +18578,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "arbitrum",
@@ -18620,7 +18620,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xd0ec47c54ca5e20aaae4616c25c825c7f48d40690000000000000000000004ef/add-liquidity",
@@ -18670,7 +18670,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xaccd9a7cb5518326bed715f90bd32cdf2fec2d14/zap/in?chain=arbitrum",
@@ -18706,7 +18706,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6f02c88650837c8dfe89f66723c4743e9cf833cd/zap/in?chain=arbitrum",
@@ -18742,7 +18742,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xe11f9786b06438456b044b3e21712228adcaa0d1/zap/in?chain=arbitrum",
@@ -18779,7 +18779,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x58f50de493b6be3585558f95f208de489c296e24/zap/in?chain=arbitrum",
@@ -18815,7 +18815,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x14fbc760efaf36781cb0eb3cb255ad976117b9bd/zap/in?chain=arbitrum",
@@ -18849,7 +18849,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/arbitrum/pools/factory-tricrypto-14/swap",
@@ -18902,7 +18902,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x0c8972437a38b389ec83d1e666b69b8a4fcf8bfd00000000000000000000049e/add-liquidity",
@@ -18937,7 +18937,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://traderjoexyz.com/arbitrum/vault/0x29240aff8c592640a20cbfe0db563a6ffeb12b01",
@@ -18973,7 +18973,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/arbitrum/pools/factory-stable-ng-11/swap",
@@ -19024,7 +19024,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/arbitrum/pools/factory-stable-ng-0/swap",
@@ -19075,7 +19075,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/arbitrum/pools/factory-stable-ng-2/swap",
@@ -19126,7 +19126,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/arbitrum/pools/factory-stable-ng-1/swap",
@@ -19179,7 +19179,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/arbitrum/pools/factory-stable-ng-7/swap",
@@ -19232,7 +19232,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/arbitrum/pools/factory-tricrypto-9/swap",
@@ -19287,7 +19287,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/arbitrum/pools/factory-v2-117/swap",
@@ -19348,7 +19348,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xa1a8bf131571a2139feb79401aa4a2e9482df6270002000000000000000004b4/add-liquidity",
@@ -19383,7 +19383,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x2ce4457acac29da4736ae6f5cd9f583a6b335c270000000000000000000004dc/add-liquidity",
@@ -19432,7 +19432,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-usdc-500-narrow",
@@ -19475,7 +19475,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x7d49e5adc0eaad9c027857767638613253ef125f/zap/in?chain=arbitrum",
@@ -19510,7 +19510,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x85ec6ae01624ae0d2a04d0ffaad3a25884c7d0f30002000000000000000004b6/add-liquidity",
@@ -19543,7 +19543,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "network": "arbitrum",
@@ -19584,7 +19584,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
@@ -19626,7 +19626,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
@@ -19668,7 +19668,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0x912ce59144191c1204e64559fe8253a0e49e6548",
@@ -19710,7 +19710,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0x5979d7b546e38e414f7e9822514be443a4800529",
@@ -19752,7 +19752,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0xec70dcb4a1efa46b8f2d97c310c9c4790ba5ffa8",
@@ -19795,7 +19795,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/cake/arbitrum/details/weth-arb-500-narrow",
@@ -19837,7 +19837,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "gmx-gm",
     "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
@@ -19872,7 +19872,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "gmx-gm",
     "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
@@ -19907,7 +19907,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "gmx-gm",
     "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
@@ -19942,7 +19942,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "gmx-gm",
     "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
@@ -19977,7 +19977,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "gmx-gm",
     "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
@@ -20012,7 +20012,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "gmx-gm",
     "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
@@ -20047,7 +20047,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "gmx-gm",
     "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
@@ -20082,7 +20082,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/arb-usdc.e-500-narrow",
@@ -20124,7 +20124,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/arb-usdt-500-narrow",
@@ -20166,7 +20166,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-weth-3000-narrow",
@@ -20208,7 +20208,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/rdnt-weth-3000-narrow",
@@ -20250,7 +20250,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/weth-link-3000-narrow",
@@ -20292,7 +20292,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-link-500-narrow",
@@ -20334,7 +20334,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://traderjoexyz.com/arbitrum/vault/0xea9f1AB0ccdb6BaF36ce8567D65f354f2945F0DA",
@@ -20369,7 +20369,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://traderjoexyz.com/arbitrum/vault/0xa37eF01065E0328b50A85256E159b9aaed196e05",
@@ -20405,7 +20405,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://traderjoexyz.com/arbitrum/vault/0x5fb31318e9a82efcaa2cfefbacf63e85f4dff2f1",
@@ -20441,7 +20441,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/arbitrum/pools/factory-v2-98/swap",
@@ -20490,7 +20490,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0xaf88d065e77c8cc2239327c5edb3a432268e5831",
@@ -20533,7 +20533,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/weth-arb-3000-narrow",
@@ -20574,7 +20574,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/weth-sushi-3000-narrow",
@@ -20615,7 +20615,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/weth-usdc.e-500-narrow",
@@ -20656,7 +20656,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-dai-100-stable",
@@ -20697,7 +20697,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/wsteth-weth-100-pegged-price",
@@ -20738,7 +20738,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/usdc-usdt-100-stable",
@@ -20779,7 +20779,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/btcb-weth-3000-narrow",
@@ -20820,7 +20820,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/magic-weth-3000-narrow",
@@ -20861,7 +20861,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/weth-reth-500-pegged-price",
@@ -20902,7 +20902,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/rdpx-weth-10000-narrow",
@@ -20944,7 +20944,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x423a1323c871abc9d89eb06855bf5347048fc4a5000000000000000000000496/add-liquidity",
@@ -20995,7 +20995,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xade4a71bb62bec25154cfc7e6ff49a513b491e81000000000000000000000497/add-liquidity",
@@ -21031,7 +21031,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x9791d590788598535278552eecd4b211bfc790cb000000000000000000000498/add-liquidity",
@@ -21080,7 +21080,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x4a2f6ae7f3e5d715689530873ec35593dc28951b000000000000000000000481/add-liquidity",
@@ -21115,7 +21115,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x3fd4954a851ead144c2ff72b1f5a38ea5976bd54000000000000000000000480/add-liquidity",
@@ -21162,7 +21162,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x32df62dc3aed2cd6224193052ce665dc181658410002000000000000000003bd/add-liquidity",
@@ -21209,7 +21209,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xbe0f30217be1e981add883848d0773a86d2d2cd4000000000000000000000471/add-liquidity",
@@ -21244,7 +21244,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x45c4d1376943ab28802b995acffc04903eb5223f000000000000000000000470/add-liquidity",
@@ -21279,7 +21279,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc6eee8cb7643ec2f05f46d569e9ec8ef8b41b389000000000000000000000475/add-liquidity",
@@ -21312,7 +21312,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc7fa3a3527435720f0e2a4c1378335324dd4f9b3000200000000000000000459/add-liquidity",
@@ -21359,7 +21359,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x8bc65eed474d1a00555825c91feab6a8255c2107000000000000000000000453/add-liquidity",
@@ -21408,7 +21408,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://traderjoexyz.com/arbitrum/vault/0xfd421d60905d2f7cabd49e6a5703a3499367b8f4",
@@ -21443,7 +21443,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0xd302119B5C46d504D0b3534312e56eC321976251",
@@ -21484,7 +21484,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xee02583596aee94cccb7e8ccd3921d955f17982a00000000000000000000040a/add-liquidity",
@@ -21519,7 +21519,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x542f16da0efb162d20bf4358efa095b70a100f9e000000000000000000000436/add-liquidity",
@@ -21568,7 +21568,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc9f52540976385a84bf416903e1ca3983c539e34000200000000000000000434/add-liquidity",
@@ -21603,7 +21603,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x95aB45875cFFdba1E5f451B950bC2E42c0053f39&to=0x178412e79c25968a32e89b11f63B33F733770c2A",
@@ -21644,7 +21644,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x5a7f39435fd9c381e4932fa2047c9a5136a5e3e7000000000000000000000400/add-liquidity",
@@ -21679,7 +21679,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0xA2F1C1B52E1b7223825552343297Dc68a29ABecC",
@@ -21720,7 +21720,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0xafE909b1A5ed90d36f9eE1490fCB855645C00EB3",
@@ -21761,7 +21761,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0x278f76df86EfdcbE0f2573AE54e917505621E312",
@@ -21802,7 +21802,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://beta.ramses.exchange/swap",
@@ -21843,7 +21843,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xcba9ff45cfb9ce238afde32b0148eb82cbe635620000000000000000000003fd/add-liquidity",
@@ -21878,7 +21878,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://arbidex.fi/swap/",
@@ -21919,7 +21919,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/simple/swap/ETH/rETH",
@@ -21955,7 +21955,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://www.sushi.com/swap?chainId=42161&token0=NATIVE&token1=0x539bdE0d7Dbd336b79148AA742883198BBF60342",
@@ -21991,7 +21991,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/USDC/ETH",
@@ -22027,7 +22027,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/USDC",
@@ -22063,7 +22063,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/DAI",
@@ -22099,7 +22099,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/USDT",
@@ -22135,7 +22135,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F&to=0x9d2F299715D94d8A7E6F5eaa8E654E8c74a988A7",
@@ -22176,7 +22176,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x93b346b6BC2548dA6A1E7d98E9a421B42541425b&to=0xfb9E5D956D889D91a82737B9bFCDaC1DCE3e1449",
@@ -22217,7 +22217,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F&to=0x6A7661795C374c0bFC635934efAddFf3A7Ee23b6",
@@ -22258,7 +22258,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x3F56e0c36d275367b8C502090EDF38289b3dEa0d&to=0x6A7661795C374c0bFC635934efAddFf3A7Ee23b6",
@@ -22299,7 +22299,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F&to=0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0",
@@ -22340,7 +22340,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=ETH&to=0x912ce59144191c1204e64559fe8253a0e49e6548",
@@ -22381,7 +22381,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&to=0x912ce59144191c1204e64559fe8253a0e49e6548",
@@ -22422,7 +22422,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9&to=0x912ce59144191c1204e64559fe8253a0e49e6548",
@@ -22463,7 +22463,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=ETH&to=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
@@ -22504,7 +22504,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=ETH&to=0x3082CC23568eA640225c2467653dB90e9250AaA0",
@@ -22545,7 +22545,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65&to=0xeb8E93A0c7504Bffd8A8fFa56CD754c63aAeBFe8",
@@ -22586,7 +22586,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x93b346b6BC2548dA6A1E7d98E9a421B42541425b&to=0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0",
@@ -22627,7 +22627,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0x99c409e5f62e4bd2ac142f17cafb6810b8f0baae",
@@ -22668,7 +22668,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0x539bde0d7dbd336b79148aa742883198bbf60342",
@@ -22709,7 +22709,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0xfb9e5d956d889d91a82737b9bfcdac1dce3e1449",
@@ -22750,7 +22750,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0xde5ed76e7c05ec5e4572cfc88d1acea165109e44",
@@ -22791,7 +22791,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0x2cab3abfc1670d1a452df502e216a66883cdf079",
@@ -22832,7 +22832,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0x6a7661795c374c0bfc635934efaddff3a7ee23b6",
@@ -22873,7 +22873,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0xde1e704dae0b4051e80dabb26ab6ad6c12262da0",
@@ -22914,7 +22914,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x82af49447d8a07e3bd95bd0d56f35241523fbab1&to=0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
@@ -22955,7 +22955,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0xff970a61a04b1ca14834a43f5de4533ebddb5cc8&to=0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
@@ -22996,7 +22996,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0xff970a61a04b1ca14834a43f5de4533ebddb5cc8&to=0x3f56e0c36d275367b8c502090edf38289b3dea0d",
@@ -23037,7 +23037,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap?fromCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&fromChainId=42161&toCurrency=0x912CE59144191C1204E64559FE8253a0e49E6548&toChainId=42161",
@@ -23079,7 +23079,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap?fromCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&fromChainId=42161&toCurrency=0x32Eb7902D4134bf98A28b963D26de779AF92A212&toChainId=42161",
@@ -23121,7 +23121,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap?fromCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&fromChainId=42161&toCurrency=0x6C2C06790b3E3E3c38e12Ee22F8183b37a13EE55&toChainId=42161",
@@ -23163,7 +23163,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.sushi.com/swap?fromCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&fromChainId=42161&toCurrency=0x912CE59144191C1204E64559FE8253a0e49E6548&toChainId=42161",
@@ -23199,7 +23199,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://solidlizard.finance/swap?from=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&to=0x912CE59144191C1204E64559FE8253a0e49E6548",
@@ -23241,7 +23241,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://solidlizard.finance/swap?from=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&to=0x912CE59144191C1204E64559FE8253a0e49E6548",
@@ -23283,7 +23283,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://solidlizard.finance/swap?from=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&to=0x3F56e0c36d275367b8C502090EDF38289b3dEa0d",
@@ -23325,7 +23325,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://solidlizard.finance/swap?from=0x6Aa395F06986ea4eFe0a4630C7865C1eB08D5e7e&to=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
@@ -23367,7 +23367,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://solidlizard.finance/swap?from=0x93b346b6BC2548dA6A1E7d98E9a421B42541425b&to=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
@@ -23409,7 +23409,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://solidlizard.finance/swap?from=0x93b346b6BC2548dA6A1E7d98E9a421B42541425b&to=0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
@@ -23451,7 +23451,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://solidlizard.finance/swap?from=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&to=0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
@@ -23493,7 +23493,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://solidlizard.finance/swap?from=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&to=0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
@@ -23535,7 +23535,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://solidlizard.finance/swap?from=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9&to=0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
@@ -23577,7 +23577,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://solidlizard.finance/swap?from=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&to=0x463913D3a3D3D291667D53B8325c598Eb88D3B0e",
@@ -23619,7 +23619,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://solidlizard.finance/swap?from=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&to=0xFA5Ed56A203466CbBC2430a43c66b9D8723528E7",
@@ -23661,7 +23661,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://solidlizard.finance/swap?from=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&to=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -23703,7 +23703,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://solidlizard.finance/swap?from=0xff970a61a04b1ca14834a43f5de4533ebddb5cc8&to=0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
@@ -23744,7 +23744,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/42161/simple/swap/USDC/0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
@@ -23783,7 +23783,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/add-liquidity",
@@ -23818,7 +23818,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "old-bifi-pool",
     "excluded": "arbi-bifi-maxi",
@@ -23852,7 +23852,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xFA5Ed56A203466CbBC2430a43c66b9D8723528E7&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -23894,7 +23894,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x4D15a3A2286D883AF0AA1B3f21367843FAc63E07&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -23936,7 +23936,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x680447595e8b7b3Aa1B43beB9f6098C79ac2Ab3f&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -23978,7 +23978,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x3F56e0c36d275367b8C502090EDF38289b3dEa0d&outputCurrency=ETH",
@@ -24020,7 +24020,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x3F56e0c36d275367b8C502090EDF38289b3dEa0d&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -24062,7 +24062,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x64343594Ab9b56e99087BfA6F2335Db24c2d1F17&outputCurrency=ETH",
@@ -24104,7 +24104,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x64343594Ab9b56e99087BfA6F2335Db24c2d1F17&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -24146,7 +24146,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x641441c631e2F909700d2f41FD87F0aA6A6b4EDb&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -24188,7 +24188,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=ETH&outputCurrency=0xb348B87b23D5977E2948E6f36ca07E1EC94d7328",
@@ -24230,7 +24230,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -24272,7 +24272,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -24314,7 +24314,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f&outputCurrency=ETH",
@@ -24356,7 +24356,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=ETH&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -24398,7 +24398,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -24440,7 +24440,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=ETH&outputCurrency=0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
@@ -24481,7 +24481,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&outputCurrency=0xb348B87b23D5977E2948E6f36ca07E1EC94d7328",
@@ -24515,7 +24515,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xb348B87b23D5977E2948E6f36ca07E1EC94d7328&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -24557,7 +24557,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0x5979D7b546E38E414F7E9822514be443A4800529&outputCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
@@ -24599,7 +24599,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -24641,7 +24641,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swapfish.fi/swap?inputCurrency=0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1&outputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -24684,7 +24684,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/arbitrum/pools/wsteth/swap",
@@ -24733,7 +24733,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "glp-gmx",
     "addLiquidityUrl": "https://app.gmx.io/#/buy_glp/?ref=beefy",
@@ -24765,7 +24765,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "glp-gmx",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/GMX",
@@ -24804,7 +24804,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/USDC/ETH",
@@ -24840,7 +24840,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xfb5e6d0c1dfed2ba000fbc040ab8df3615ac329c000000000000000000000159/add-liquidity",
@@ -24875,7 +24875,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x178e029173417b1f9c8bc16dcec6f697bc323746000200000000000000000158/add-liquidity",
@@ -24910,7 +24910,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/add-liquidity",
@@ -24945,7 +24945,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/USDC",
@@ -24981,7 +24981,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/USDT",
@@ -25017,7 +25017,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x0C4681e6C0235179ec3D4F4fc4DF3d14FDD96017&chainId=42161",
@@ -25059,7 +25059,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x83EA9d8748A7AD9f2F12B2A2F7a45CE47A862ac9&chainId=42161",
@@ -25101,7 +25101,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0xA0dF47432d9d88bcc040E9ee66dDC7E17A882715&chainId=42161",
@@ -25143,7 +25143,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x64541216bafffeec8ea535bb71fbc927831d0595000100000000000000000002/add-liquidity",
@@ -25179,7 +25179,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-v2-0/deposit",
@@ -25239,7 +25239,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x3E6648C5a70A150A88bCE65F4aD4d506Fe15d2AF&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
@@ -25281,7 +25281,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
@@ -25323,7 +25323,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
@@ -25366,7 +25366,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/arbitrum/pools/tricrypto/swap",
@@ -25420,7 +25420,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://curve.finance/#/arbitrum/pools/2pool/swap",
@@ -25473,7 +25473,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://curve.finance/#/arbitrum/pools/ren/swap",
@@ -25525,7 +25525,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
@@ -25567,7 +25567,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0xd4d42f0b6def4ce0383636770ef773390d85c61af&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
@@ -25609,7 +25609,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
@@ -25650,7 +25650,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "maxi",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
@@ -25684,7 +25684,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&outputCurrency=0x539bdE0d7Dbd336b79148AA742883198BBF60342",
@@ -25726,7 +25726,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&outputCurrency=0x8D9bA570D6cb60C7e3e0F31343Efe75AB8E65FB1",
@@ -25768,7 +25768,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0xf97f4df75117a78c1A5a0DBb814Af92458539FB4&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",

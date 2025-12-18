@@ -153,14 +153,14 @@ async function generateVault() {
     strategyTypeId: 'multi-lp',
     risks: {
       // TODO review
-      synthStable: false,
       complex: false,
       curated: false,
-      notCorrelated: false,
       notAudited: false,
       notBattleTested: false,
+      notCorrelated: false,
       notTimelocked: false,
       notVerified: false,
+      synthAsset: false,
     },
     addLiquidityUrl: data.addLiquidityUrl,
     removeLiquidityUrl: data.removeLiquidityUrl,

@@ -30,7 +30,7 @@ export interface TokenErc20 {
   description: string | undefined;
   documentation: string | undefined;
   bridge?: string;
-  risks: string[];
+  tags: string[];
 }
 
 /**
@@ -52,6 +52,7 @@ export interface TokenNative {
   website: string | undefined;
   description: string | undefined;
   documentation: string | undefined;
+  tags: string[];
 }
 
 // provide type guards

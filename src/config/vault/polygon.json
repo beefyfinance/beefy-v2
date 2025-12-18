@@ -24,7 +24,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "network": "polygon",
@@ -60,7 +60,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "network": "polygon",
@@ -96,7 +96,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "network": "polygon",
@@ -133,7 +133,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://swap.defillama.com/?chain=polygon&from=0x0000000000000000000000000000000000000000&to=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -177,7 +177,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -220,7 +220,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -257,7 +257,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -294,7 +294,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -333,7 +333,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -370,7 +370,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -407,7 +407,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -444,7 +444,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -481,7 +481,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -518,7 +518,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -555,7 +555,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -592,7 +592,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -629,7 +629,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -666,7 +666,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -703,7 +703,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -740,7 +740,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -777,7 +777,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -814,7 +814,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -851,7 +851,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -888,7 +888,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -925,7 +925,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -962,7 +962,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -999,7 +999,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1037,7 +1037,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x1dcea0bfbbe6848f117640d534c9b60f41b9f2a8000100000000000000000ea1/add-liquidity",
@@ -1085,7 +1085,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4b7586a4f49841447150d3d92d9e9e000f766c30000000000000000000000e8a/add-liquidity",
@@ -1135,7 +1135,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xcd78a20c597e367a4e478a2411ceb790604d7c8f000000000000000000000c22/add-liquidity",
@@ -1187,7 +1187,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1228,7 +1228,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1271,7 +1271,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1312,7 +1312,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1353,7 +1353,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1394,7 +1394,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1435,7 +1435,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1476,7 +1476,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1517,7 +1517,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1558,7 +1558,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1599,7 +1599,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1640,7 +1640,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1681,7 +1681,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1722,7 +1722,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1763,7 +1763,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1804,7 +1804,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1845,7 +1845,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1886,7 +1886,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1927,7 +1927,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -1968,7 +1968,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -2009,7 +2009,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "polygon",
@@ -2046,7 +2046,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-v2-498/deposit",
@@ -2096,7 +2096,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/137/advanced/swap/MATIC/USDC",
@@ -2134,7 +2134,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/137/advanced/swap/MATIC/USDT",
@@ -2173,7 +2173,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/wmatic-usdc-500-narrow",
@@ -2215,7 +2215,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/usdc-weth-500-narrow",
@@ -2257,7 +2257,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/usdc-usdt-100-stable",
@@ -2299,7 +2299,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/usdc-dai-100-stable",
@@ -2342,7 +2342,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-crypto-210/deposit",
@@ -2392,7 +2392,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdc-narrow",
@@ -2433,7 +2433,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdt-narrow",
@@ -2475,7 +2475,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc-weth-narrow",
@@ -2518,7 +2518,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-30/swap",
@@ -2571,7 +2571,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-28/swap",
@@ -2624,7 +2624,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-27/swap",
@@ -2677,7 +2677,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-29/swap",
@@ -2729,7 +2729,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/cbeth-weth-pegged-price",
@@ -2771,7 +2771,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-weth-wide",
@@ -2812,7 +2812,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://swap.defillama.com/?chain=polygon&from=0x0000000000000000000000000000000000000000&to=0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
@@ -2855,7 +2855,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-usdt-narrow",
@@ -2897,7 +2897,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-quick-narrow",
@@ -2939,7 +2939,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/link-weth-narrow",
@@ -2981,7 +2981,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-aave-wide",
@@ -3023,7 +3023,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xB0B195aEFA3650A6908f15CdaC7D92F8a5791B0B",
@@ -3065,7 +3065,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/cash-weth-500-narrow",
@@ -3106,7 +3106,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-cash-500-narrow",
@@ -3147,7 +3147,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wbtc-cash-3000-narrow",
@@ -3188,7 +3188,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-cash-100-stable",
@@ -3229,7 +3229,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://app.gyro.finance/pools/polygon/e-clp/0xf0ad209e2e969eaaa8c882aac71f02d8a047d5c2/",
@@ -3264,7 +3264,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://app.gyro.finance/pools/polygon/e-clp/0xee278d943584dd8640eaf4cc6c7a5c80c0073e85/",
@@ -3299,7 +3299,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wbtc-weth-500-narrow",
@@ -3340,7 +3340,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-frxeth-500-narrow",
@@ -3381,7 +3381,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/frax-mai-3000-stable",
@@ -3422,7 +3422,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-maticx-100-pegged-price",
@@ -3463,7 +3463,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-stmatic-100-pegged-price",
@@ -3504,7 +3504,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-ageur-100-narrow",
@@ -3545,7 +3545,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/weth-frxeth-100-stable",
@@ -3586,7 +3586,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-usdt-100-stable",
@@ -3628,7 +3628,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/liquidity",
@@ -3670,7 +3670,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/liquidity",
@@ -3712,7 +3712,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/liquidity",
@@ -3754,7 +3754,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/liquidity",
@@ -3795,7 +3795,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-usdc.e-500-narrow",
@@ -3836,7 +3836,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/usdc.e-weth-500-narrow",
@@ -3877,7 +3877,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/retro/polygon/details/wmatic-weth-500-narrow",
@@ -3919,7 +3919,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0x3f69055F203861abFd5D986dC81a2eFa7c915b0c",
@@ -3961,7 +3961,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0xD17cb0f162f133e339C0BbFc18c36c357E681D6b",
@@ -4003,7 +4003,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0xBD02973b441Aa83c8EecEA158b98B5984bb1036E",
@@ -4045,7 +4045,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0x8711a1a52c34EDe8E61eF40496ab2618a8F6EA4B",
@@ -4085,7 +4085,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?currency0=ETH&currency1=0x9246a5F10A79a5a939b0C2a75A3AD196aAfDB43b",
@@ -4120,7 +4120,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0x16e9D19221DF563CfB15628953B5c51E4a2Be30c",
@@ -4161,7 +4161,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
@@ -4203,7 +4203,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-usdc.e-narrow",
@@ -4245,7 +4245,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wbtc-weth-narrow",
@@ -4287,7 +4287,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -4329,7 +4329,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-weth-narrow",
@@ -4371,7 +4371,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
@@ -4413,7 +4413,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-usdt-stable",
@@ -4455,7 +4455,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdc.e-narrow",
@@ -4498,7 +4498,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0x5f9fEcbeCCaa14767cE5e067641002673cE3E946",
@@ -4539,7 +4539,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-stmatic-pegged-price",
@@ -4581,7 +4581,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-maticx-pegged-price",
@@ -4623,7 +4623,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-weth-narrow",
@@ -4665,7 +4665,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-weth-wide",
@@ -4708,7 +4708,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0x6ab291A9BB3C20F0017f2E93A6d1196842D09bF4",
@@ -4750,7 +4750,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/liquidity/manage/0xf6A72Bd46F53Cd5103812ea1f4B5CF38099aB797",
@@ -4791,7 +4791,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xd00f9ca46ce0e4a63067c4657986f0167b0de1e5000000000000000000000b42/add-liquidity",
@@ -4826,7 +4826,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4a77ef015ddcd972fd9ba2c7d5d658689d090f1a000000000000000000000b38/add-liquidity",
@@ -4861,7 +4861,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xe78b25c06db117fdf8f98583cdaaa6c92b79e917000000000000000000000b2b/add-liquidity",
@@ -4896,7 +4896,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x216690738aac4aa0c4770253ca26a28f0115c595000000000000000000000b2c/add-liquidity",
@@ -4932,7 +4932,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-339/swap",
@@ -4994,7 +4994,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4973f591784d9c94052a6c3ebd553fcd37bb0e5500020000000000000000087f/add-liquidity",
@@ -5028,7 +5028,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://app.1inch.io/#/137/simple/swap/MATIC/MaticX",
@@ -5066,7 +5066,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://app.1inch.io/#/137/simple/swap/MATIC/stMATIC",
@@ -5105,7 +5105,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b/add-liquidity",
@@ -5154,7 +5154,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x5dee84ffa2dc27419ba7b3419d7146e53e4f7ded000200000000000000000a4e/add-liquidity",
@@ -5190,7 +5190,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-crypto-83/swap",
@@ -5254,7 +5254,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x65fe9314be50890fb01457be076fafd05ff32b9a000000000000000000000a96/add-liquidity",
@@ -5289,7 +5289,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/add-liquidity",
@@ -5324,7 +5324,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x7d60a4cb5ca92e2da965637025122296ea6854f900000000000000000000085e/add-liquidity",
@@ -5358,7 +5358,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/137/simple/swap/USDC/GNS",
@@ -5398,7 +5398,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-crypto-1/swap",
@@ -5461,7 +5461,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "maxi",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xfbdd194376de19a88118e84e279b977f165d01b8",
@@ -5507,7 +5507,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "mvlp-mvx",
     "addLiquidityUrl": "https://app.metavault.trade/#/buy_mvlp",
@@ -5542,7 +5542,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://kyberswap.com/swap/polygon",
@@ -5578,7 +5578,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://kyberswap.com/swap/polygon",
@@ -5614,7 +5614,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -5656,7 +5656,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -5698,7 +5698,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -5740,7 +5740,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -5782,7 +5782,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -5824,7 +5824,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -5866,7 +5866,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -5908,7 +5908,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -5950,7 +5950,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -5986,7 +5986,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -6022,7 +6022,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -6064,7 +6064,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -6106,7 +6106,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-crypto-13/swap",
@@ -6158,7 +6158,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4a0b73f0d13ff6d43e304a174697e3d5cfd310a400020000000000000000091c/add-liquidity",
@@ -6193,7 +6193,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xe22483774bd8611be2ad2f4194078dac9159f4ba0000000000000000000008f0/add-liquidity",
@@ -6228,7 +6228,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x48e6b98ef6329f8f0a30ebb8c7c960330d64808500000000000000000000075b/add-liquidity",
@@ -6263,7 +6263,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x0297e37f1873d2dab4487aa67cd56b58e2f27875000100000000000000000002/add-liquidity",
@@ -6298,7 +6298,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x36128d5436d2d70cab39c9af9cce146c38554ff0000100000000000000000008/add-liquidity",
@@ -6333,7 +6333,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xce66904b68f1f070332cbc631de7ee98b650b499000100000000000000000009/add-liquidity",
@@ -6367,7 +6367,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://polygon.balancer.fi/#/trade",
@@ -6401,7 +6401,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4/add-liquidity",
@@ -6436,7 +6436,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xb20fc01d21a50d2c734c4a1262b4404d41fa7bf000000000000000000000075c/add-liquidity",
@@ -6471,7 +6471,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x8159462d255c1d24915cb51ec361f700174cd99400000000000000000000075d/add-liquidity",
@@ -6506,7 +6506,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366/add-liquidity",
@@ -6541,7 +6541,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "old-bifi-pool",
     "excluded": "polygon-bifi-maxi",
@@ -6576,7 +6576,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "multi-lp",
     "depositFee": 0.005,
@@ -6639,7 +6639,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "beqi",
     "excluded": "beefy-beqi",
@@ -6672,7 +6672,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.sushi.com/swap?tokens=MATIC&tokens=0x67eB41A14C0fe5CD701FC9d5A3D6597A72F641a6&chainId=137",
@@ -6711,7 +6711,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?tokens=MATIC&tokens=0x67eB41A14C0fe5CD701FC9d5A3D6597A72F641a6&chainId=137",
@@ -6753,7 +6753,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/aave/swap",
@@ -6814,7 +6814,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x831753DD7087CaC61aB5644b308642cc1c33Dc13",
@@ -6848,7 +6848,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0xFbdd194376de19a88118e84E279b977f165d01b8",
@@ -6890,7 +6890,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/ren/swap",
@@ -6950,7 +6950,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x5d47bAbA0d66083C52009271faF3F50DCc01023C",
@@ -6992,7 +6992,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/atricrypto3/swap",
@@ -7056,7 +7056,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x4c19DdeebAF84cA3A255730295AD9d824D4Ff51f&outputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
@@ -7098,7 +7098,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x4c19DdeebAF84cA3A255730295AD9d824D4Ff51f&outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
@@ -7139,7 +7139,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x0B048D6e01a6b9002C291060bF2179938fd8264c",
@@ -7180,7 +7180,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://polygon-exchange.jetswap.finance/#/swap?outputCurrency=0x0B048D6e01a6b9002C291060bF2179938fd8264c",
@@ -7221,7 +7221,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x238779aFfE6FFD475cB7e84582FcA7789F310Dc8",
@@ -7262,7 +7262,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x238779aFfE6FFD475cB7e84582FcA7789F310Dc8",
@@ -7304,7 +7304,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "depositFee": 0.005,
@@ -7347,7 +7347,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
@@ -7389,7 +7389,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
@@ -7431,7 +7431,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -7473,7 +7473,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x09211Dc67f9fe98Fb7bBB91Be0ef05f4a12FA2b2",
@@ -7515,7 +7515,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://apeswap.finance/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
@@ -7557,7 +7557,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x2C89bbc92BD86F8075d1DEcc58C7F4E0107f286b",
@@ -7599,7 +7599,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.iron.finance/swap/pools/isiron/deposit",
@@ -7633,7 +7633,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x883aBe4168705d2e5dA925d28538B7a6AA9d8419",
@@ -7672,7 +7672,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x883aBe4168705d2e5dA925d28538B7a6AA9d8419",
@@ -7714,7 +7714,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0x883aBe4168705d2e5dA925d28538B7a6AA9d8419",
@@ -7756,7 +7756,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x831753dd7087cac61ab5644b308642cc1c33dc13",
@@ -7798,7 +7798,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.wault.finance/polygon/#/swap?outputCurrency=0xc8bcb58caEf1bE972C0B638B1dD8B0748Fdc8A44",
@@ -7840,7 +7840,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.wault.finance/polygon/#/swap?outputCurrency=0xc8bcb58caEf1bE972C0B638B1dD8B0748Fdc8A44",
@@ -7882,7 +7882,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
@@ -7918,7 +7918,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x87f654c4b347230C60CAD8d7ea9cF0D7238bcc79",
@@ -7954,7 +7954,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x2628568509E87c4429fBb5c664Ed11391BE1BD29",
@@ -7990,7 +7990,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x8A953CfE442c5E8855cc6c61b1293FA648BAE472",
@@ -8026,7 +8026,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?inputCurrency=ETH&outputCurrency=0xc168e40227e4ebd8c1cae80f7a55a4f0e6d66c97",
@@ -8062,7 +8062,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?inputCurrency=0x24834bbec7e39ef42f4a75eaf8e5b6486d3f0e57&outputCurrency=0xc168e40227e4ebd8c1cae80f7a55a4f0e6d66c97",
@@ -8098,7 +8098,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?inputCurrency=0xb33EaAd8d922B1083446DC23f610c2567fB5180f&outputCurrency=0xc168e40227e4ebd8c1cae80f7a55a4f0e6d66c97",
@@ -8140,7 +8140,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?inputCurrency=0x172370d5Cd63279eFa6d502DAB29171933a610AF&outputCurrency=0xc168e40227e4ebd8c1cae80f7a55a4f0e6d66c97",
@@ -8181,7 +8181,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0x90AC3fa9fCD997B168f218041de26eB01399Bb55",
@@ -8221,7 +8221,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xfE1a200637464FBC9B60Bc7AeCb9b86c0E1d486E",
@@ -8259,7 +8259,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xfE1a200637464FBC9B60Bc7AeCb9b86c0E1d486E",
@@ -8301,7 +8301,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
@@ -8343,7 +8343,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://polygon-exchange.jetswap.finance/#/add/0xc2132D05D31c914a87C6611C10748AEb04B58e8F/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -8384,7 +8384,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "depositFee": 0.005,
@@ -8427,7 +8427,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x6bb45cEAC714c52342Ef73ec663479da35934bf7",
@@ -8467,7 +8467,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x90AC3fa9fCD997B168f218041de26eB01399Bb55",
@@ -8504,7 +8504,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xd0f3121A190d85dE0AB6131f2bCEcdbfcfB38891",
@@ -8542,7 +8542,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0xd0f3121A190d85dE0AB6131f2bCEcdbfcfB38891",
@@ -8584,7 +8584,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x831753DD7087CaC61aB5644b308642cc1c33Dc13&outputCurrency=0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
@@ -8626,7 +8626,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
@@ -8668,7 +8668,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0xD6DF932A45C0f255f85145f286eA0b292B21C90B&outputCurrency=0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
@@ -8710,7 +8710,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&outputCurrency=0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
@@ -8751,7 +8751,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/atricrypto/swap",
@@ -8815,7 +8815,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?outputCurrency=0x4A81f8796e0c6Ad4877A51C86693B0dE8093F2ef",
@@ -8857,7 +8857,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.iron.finance/swap/pools/is3usd/deposit",
@@ -8891,7 +8891,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?inputCurrency=0xfbdd194376de19a88118e84e279b977f165d01b8&outputCurrency=0xC168E40227E4ebD8C1caE80F7a55a4F0e6D66C97",
@@ -8932,7 +8932,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://polygon-exchange.jetswap.finance/#/swap?outputCurrency=0x845E76A8691423fbc4ECb8Dd77556Cb61c09eE25",
@@ -8974,7 +8974,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "depositFee": 0.005,
@@ -9017,7 +9017,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x831753DD7087CaC61aB5644b308642cc1c33Dc13&outputCurrency=0x580A84C73811E1839F75d86d75d88cCa0c241fF4",
@@ -9059,7 +9059,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
@@ -9101,7 +9101,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x4C16f69302CcB511c5Fac682c7626B9eF0Dc126a",
@@ -9137,7 +9137,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x4C16f69302CcB511c5Fac682c7626B9eF0Dc126a",
@@ -9173,7 +9173,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x80244C2441779361F35803b8C711C6c8fC6054a3",
@@ -9209,7 +9209,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x80244C2441779361F35803b8C711C6c8fC6054a3",
@@ -9245,7 +9245,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x80244C2441779361F35803b8C711C6c8fC6054a3",
@@ -9281,7 +9281,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x80244C2441779361F35803b8C711C6c8fC6054a3",
@@ -9316,7 +9316,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0xd0f3121A190d85dE0AB6131f2bCEcdbfcfB38891&outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
@@ -9358,7 +9358,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?inputCurrency=0x16ECCfDbb4eE1A85A33f3A9B21175Cd7Ae753dB4&outputCurrency=0xC168E40227E4ebD8C1caE80F7a55a4F0e6D66C97",
@@ -9400,7 +9400,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?inputCurrency=0x840195888Db4D6A99ED9F73FcD3B225Bb3cB1A79&outputCurrency=0xC168E40227E4ebD8C1caE80F7a55a4F0e6D66C97",
@@ -9442,7 +9442,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?inputCurrency=0x34C1b299A74588D6Abdc1b85A53345A48428a521&outputCurrency=0xC168E40227E4ebD8C1caE80F7a55a4F0e6D66C97",
@@ -9477,7 +9477,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?inputCurrency=0x5B4CF2C120A9702225814E18543ee658c5f8631e&outputCurrency=0xC168E40227E4ebD8C1caE80F7a55a4F0e6D66C97",
@@ -9512,7 +9512,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?inputCurrency=0x3a3df212b7aa91aa0402b9035b098891d276572b&outputCurrency=ETH",
@@ -9547,7 +9547,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x6bb45cEAC714c52342Ef73ec663479da35934bf7",
@@ -9585,7 +9585,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xcFe2cF35D2bDDE84967e67d00aD74237e234CE59",
@@ -9624,7 +9624,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0x6bb45cEAC714c52342Ef73ec663479da35934bf7",
@@ -9666,7 +9666,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0xcFe2cF35D2bDDE84967e67d00aD74237e234CE59",
@@ -9708,7 +9708,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0xcFe2cF35D2bDDE84967e67d00aD74237e234CE59",
@@ -9750,7 +9750,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -9792,7 +9792,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
@@ -9833,7 +9833,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xcFe2cF35D2bDDE84967e67d00aD74237e234CE59",
@@ -9875,7 +9875,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xaECeBfcF604AD245Eaf0D5BD68459C3a7A6399c2",
@@ -9910,7 +9910,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://apeswap.finance/swap?inputCurrency=0xd0f3121A190d85dE0AB6131f2bCEcdbfcfB38891&outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
@@ -9952,7 +9952,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&outputCurrency=0x4EaC4c4e9050464067D673102F8E24b2FccEB350",
@@ -9994,7 +9994,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -10036,7 +10036,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
@@ -10078,7 +10078,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F",
@@ -10119,7 +10119,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0xd0f3121A190d85dE0AB6131f2bCEcdbfcfB38891&outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
@@ -10160,7 +10160,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0xd0f3121A190d85dE0AB6131f2bCEcdbfcfB38891&outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -10202,7 +10202,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0xE55cb144E02Cffb6fBD65d9a4BD62378998Bc267&outputCurrency=0x831753DD7087CaC61aB5644b308642cc1c33Dc13",
@@ -10238,7 +10238,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0xE55cb144E02Cffb6fBD65d9a4BD62378998Bc267&outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -10274,7 +10274,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x9aceb6f749396d1930abc9e263efc449e5e82c13",
@@ -10310,7 +10310,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://swap.wault.finance/polygon/#/add/MATIC/0x8A953CfE442c5E8855cc6c61b1293FA648BAE472",
@@ -10345,7 +10345,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
@@ -10386,7 +10386,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x831753DD7087CaC61aB5644b308642cc1c33Dc13&outputCurrency=0xb33EaAd8d922B1083446DC23f610c2567fB5180f",
@@ -10428,7 +10428,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39&outputCurrency=0x831753DD7087CaC61aB5644b308642cc1c33Dc13",
@@ -10468,7 +10468,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x3a3Df212b7AA91Aa0402B9035b098891d276572B",
@@ -10507,7 +10507,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -10549,7 +10549,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x8f3cf7ad23cd3cadbd9735aff958023239c6a063&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -10591,7 +10591,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x9aceb6f749396d1930abc9e263efc449e5e82c13",
@@ -10626,7 +10626,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xaAa5B9e6c589642f98a1cDA99B9D024B8407285A",
@@ -10667,7 +10667,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xD86b5923F3AD7b585eD81B448170ae026c65ae9a",
@@ -10708,7 +10708,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&outputCurrency=0x3a3df212b7aa91aa0402b9035b098891d276572b",
@@ -10749,7 +10749,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0x3a3Df212b7AA91Aa0402B9035b098891d276572B",
@@ -10791,7 +10791,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x5fe2B58c013d7601147DcdD68C143A77499f5531&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -10833,7 +10833,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
@@ -10873,7 +10873,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.sushi.com/#/swap?outputCurrency=0xaAa5B9e6c589642f98a1cDA99B9D024B8407285A",
@@ -10911,7 +10911,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0xaAa5B9e6c589642f98a1cDA99B9D024B8407285A&outputCurrency=0xD86b5923F3AD7b585eD81B448170ae026c65ae9a",
@@ -10953,7 +10953,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xfbdd194376de19a88118e84e279b977f165d01b8",
@@ -10995,7 +10995,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x831753dd7087cac61ab5644b308642cc1c33dc13&outputCurrency=0xfbdd194376de19a88118e84e279b977f165d01b8",
@@ -11037,7 +11037,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x831753dd7087cac61ab5644b308642cc1c33dc13&outputCurrency=0x8a2870fb69A90000D6439b7aDfB01d4bA383A415",
@@ -11079,7 +11079,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x831753dd7087cac61ab5644b308642cc1c33dc13&outputCurrency=0x9c49BA0212Bb5Db371e66b59D1565b7c06E4894e",
@@ -11115,7 +11115,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x831753dd7087cac61ab5644b308642cc1c33dc13&outputCurrency=0x42435F467D33e5C4146a4E8893976ef12BBCE762",
@@ -11151,7 +11151,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -11192,7 +11192,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?outputCurrency=0xaAa5B9e6c589642f98a1cDA99B9D024B8407285A",
@@ -11233,7 +11233,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?outputCurrency=0xD86b5923F3AD7b585eD81B448170ae026c65ae9a",
@@ -11275,7 +11275,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=ETH&outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -11317,7 +11317,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x034b2090b579228482520c589dbd397c53fc51cc",
@@ -11359,7 +11359,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x8a2870fb69A90000D6439b7aDfB01d4bA383A415",
@@ -11401,7 +11401,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x9c49BA0212Bb5Db371e66b59D1565b7c06E4894e",
@@ -11437,7 +11437,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x172370d5cd63279efa6d502dab29171933a610af&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -11479,7 +11479,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -11521,7 +11521,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -11563,7 +11563,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6",
@@ -11599,7 +11599,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8&outputCurrency=0x831753dd7087cac61ab5644b308642cc1c33dc13",
@@ -11634,7 +11634,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x104592a158490a9228070e0a8e5343b499e125d0&outputCurrency=0x831753dd7087cac61ab5644b308642cc1c33dc13",
@@ -11670,7 +11670,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0xD6DF932A45C0f255f85145f286eA0b292B21C90B&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -11712,7 +11712,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -11754,7 +11754,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -11796,7 +11796,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -11838,7 +11838,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.cometh.io/#/swap?inputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&outputCurrency=0x7CdC0421469398e0F3aA8890693d86c840Ac8931",
@@ -11880,7 +11880,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.cometh.io/#/swap?inputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&outputCurrency=0x5C7F7Fe4766fE8f0fa9b41E2E4194d939488ff1C",
@@ -11922,7 +11922,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
@@ -11964,7 +11964,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6",
@@ -12006,7 +12006,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x7FBc10850caE055B27039aF31bD258430e714c62",
@@ -12042,7 +12042,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x42435F467D33e5C4146a4E8893976ef12BBCE762",
@@ -12078,7 +12078,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xB77e62709e39aD1cbeEBE77cF493745AeC0F453a",
@@ -12114,7 +12114,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xD85d1e945766Fea5Eda9103F918Bd915FbCa63E6",
@@ -12156,7 +12156,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x831753dd7087cac61ab5644b308642cc1c33dc13",
@@ -12197,7 +12197,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x05089c9ebffa4f0aca269e32056b1b36b37ed71b&outputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
@@ -12233,7 +12233,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=ETH&outputCurrency=0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
@@ -12275,7 +12275,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&outputCurrency=ETH",
@@ -12317,7 +12317,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&outputCurrency=0x831753dd7087cac61ab5644b308642cc1c33dc13",
@@ -12359,7 +12359,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap",
@@ -12395,7 +12395,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap",
@@ -12431,7 +12431,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.wault.finance/polygon/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x4c4BF319237D98a30A929A96112EfFa8DA3510EB",
@@ -12473,7 +12473,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.wault.finance/polygon/#/swap?inputCurrency=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&outputCurrency=0x4c4BF319237D98a30A929A96112EfFa8DA3510EB",
@@ -12515,7 +12515,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://swap.wault.finance/polygon/#/add/0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -12556,7 +12556,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://swap.wault.finance/polygon/#/add/0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -12597,7 +12597,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://swap.wault.finance/polygon/#/add/MATIC/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -12638,7 +12638,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://swap.wault.finance/polygon/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x50B728D8D964fd00C2d0AAD81718b71311feF68a",
@@ -12679,7 +12679,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://swap.wault.finance/polygon/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39",
@@ -12720,7 +12720,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://swap.wault.finance/polygon/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0xD6DF932A45C0f255f85145f286eA0b292B21C90B",
@@ -12761,7 +12761,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://swap.wault.finance/polygon/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
@@ -12802,7 +12802,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://swap.wault.finance/polygon/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
@@ -12843,7 +12843,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://swap.wault.finance/polygon/#/add/MATIC/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -12884,7 +12884,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://swap.wault.finance/polygon/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -12925,7 +12925,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.wault.finance/polygon/#/swap?outputCurrency=0x4c4BF319237D98a30A929A96112EfFa8DA3510EB",
@@ -12966,7 +12966,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://swap.wault.finance/polygon/#/swap?outputCurrency=0x4c4BF319237D98a30A929A96112EfFa8DA3510EB",
@@ -13005,7 +13005,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.wault.finance/polygon/#/swap?outputCurrency=0x4c4BF319237D98a30A929A96112EfFa8DA3510EB",
@@ -13047,7 +13047,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.wault.finance/polygon/#/swap?outputCurrency=0xFbdd194376de19a88118e84E279b977f165d01b8",
@@ -13090,7 +13090,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/eurtusd/swap",
@@ -13152,7 +13152,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-37/swap",
@@ -13206,7 +13206,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&inputCurrency=0x85955046DF4668e1DD369D2DE9f3AEB98DD2A369",
@@ -13242,7 +13242,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xb33EaAd8d922B1083446DC23f610c2567fB5180f",
@@ -13284,7 +13284,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x41b3966B4FF7b427969ddf5da3627d6AEAE9a48E",
@@ -13326,7 +13326,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x104592a158490a9228070E0A8e5343B499e125D0&outputCurrency=0x3e121107F6F22DA4911079845a470757aF4e1A1b",
@@ -13362,7 +13362,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x104592a158490a9228070E0A8e5343B499e125D0&outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -13398,7 +13398,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89&outputCurrency=0x1a3acf6D19267E2d3e7f898f42803e90C9219062",
@@ -13440,7 +13440,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x3Ad707dA309f3845cd602059901E39C4dcd66473",
@@ -13482,7 +13482,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89&outputCurrency=0x1a3acf6D19267E2d3e7f898f42803e90C9219062",
@@ -13524,7 +13524,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x2F800Db0fdb5223b3C3f354886d907A671414A7F",
@@ -13566,7 +13566,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
@@ -13608,7 +13608,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xcE829A89d4A55a63418bcC43F00145adef0eDB8E",
@@ -13650,7 +13650,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?inputCurrency=0x692597b009d13C4049a947CAB2239b7d6517875F&outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -13692,7 +13692,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xC168E40227E4ebD8C1caE80F7a55a4F0e6D66C97",
@@ -13734,7 +13734,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0xf153eff70dc0bf3b085134928daeea248d9b30d0",
@@ -13776,7 +13776,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0xfC40a4F89b410a1b855b5e205064a38fC29F5eb5",
@@ -13818,7 +13818,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0xEde1B77C0Ccc45BFa949636757cd2cA7eF30137F&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -13860,7 +13860,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0xD0660cD418a64a1d44E9214ad8e459324D8157f1",
@@ -13902,7 +13902,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x50B728D8D964fd00C2d0AAD81718b71311feF68a&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -13944,7 +13944,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x580A84C73811E1839F75d86d75d88cCa0c241fF4",
@@ -13986,7 +13986,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-23/swap",
@@ -14038,7 +14038,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0x4e1581f01046eFDd7a1a2CDB0F82cdd7F71F2E59",
@@ -14080,7 +14080,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&inputCurrency=0xa1c57f48f0deb89f569dfbe6e2b7f46d33606fd4",
@@ -14122,7 +14122,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x7DfF46370e9eA5f0Bad3C4E29711aD50062EA7A4",
@@ -14164,7 +14164,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x6f8a06447Ff6FcF75d803135a7de15CE88C1d4ec&inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
@@ -14206,7 +14206,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xAa9654BECca45B5BDFA5ac646c939C62b527D394",
@@ -14248,7 +14248,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0xAa9654BECca45B5BDFA5ac646c939C62b527D394",
@@ -14290,7 +14290,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xB382C1cfA622795a534e5bd56Fac93d59BAc8B0D",
@@ -14332,7 +14332,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xBbba073C31bF03b8ACf7c28EF0738DeCF3695683&inputCurrency=ETH",
@@ -14374,7 +14374,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1&inputCurrency=0x0e98C977B943f06075b2D795794238fBfB9b9a34",
@@ -14416,7 +14416,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1&inputCurrency=0xC250e9987A032ACAC293d838726C511E6E1C029d",
@@ -14458,7 +14458,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0xf5EA626334037a2cf0155D49eA6462fDdC6Eff19",
@@ -14500,7 +14500,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0xf5EA626334037a2cf0155D49eA6462fDdC6Eff19",
@@ -14541,7 +14541,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
@@ -14579,7 +14579,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -14616,7 +14616,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
@@ -14654,7 +14654,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xD6DF932A45C0f255f85145f286eA0b292B21C90B",
@@ -14692,7 +14692,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
@@ -14730,7 +14730,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lending",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
@@ -14769,7 +14769,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://apeswap.finance/swap",
@@ -14811,7 +14811,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://polygondex.cafeswap.finance/#/swap?outputCurrency=0xb5106a3277718ecad2f20ab6b86ce0fee7a21f09",
@@ -14847,7 +14847,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://polygondex.cafeswap.finance/#/swap?outputCurrency=0xb5106a3277718ecad2f20ab6b86ce0fee7a21f09",
@@ -14883,7 +14883,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0xCB898b0eFb084Df14dd8E018dA37B4d0f06aB26D",
@@ -14919,7 +14919,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?inputCurrency=0xD86b5923F3AD7b585eD81B448170ae026c65ae9a&outputCurrency=0x4A81f8796e0c6Ad4877A51C86693B0dE8093F2ef",
@@ -14961,7 +14961,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0xb82A20B4522680951F11c94c54B8800c1C237693",
@@ -15003,7 +15003,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.wault.finance/polygon/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0xb82A20B4522680951F11c94c54B8800c1C237693",
@@ -15045,7 +15045,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.firebird.finance/swap?outputCurrency=0x4A81f8796e0c6Ad4877A51C86693B0dE8093F2ef",
@@ -15081,7 +15081,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://exchange.dfyn.network/#/swap?outputCurrency=0x4A81f8796e0c6Ad4877A51C86693B0dE8093F2ef",
@@ -15122,7 +15122,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://polygon-exchange.jetswap.finance/#/swap?outputCurrency=0x845E76A8691423fbc4ECb8Dd77556Cb61c09eE25",
@@ -15161,7 +15161,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://polygon-exchange.jetswap.finance/#/swap?outputCurrency=0x845E76A8691423fbc4ECb8Dd77556Cb61c09eE25",
@@ -15203,7 +15203,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://polyzap.app/#/swap?outputCurrency=0xeb2778f74E5ee038E67AA6c77f0F0451ABd748FD",
@@ -15239,7 +15239,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://polyzap.app/#/swap?outputCurrency=0xeb2778f74E5ee038E67AA6c77f0F0451ABd748FD",
@@ -15275,7 +15275,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xfe4546fefe124f30788c4cc1bb9aa6907a7987f9",
@@ -15317,7 +15317,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x64875aaa68d1d5521666c67d692ee0b926b08b2f&outputCurrency=0xfe4546fefe124f30788c4cc1bb9aa6907a7987f9",
@@ -15359,7 +15359,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x9bd9ad490dd3a52f096d229af4483b94d63be618&outputCurrency=0xfe4546fefe124f30788c4cc1bb9aa6907a7987f9",
@@ -15401,7 +15401,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1&inputCurrency=0x1646C835d70F76D9030DF6BaAeec8f65c250353d",
@@ -15443,7 +15443,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=ETH&outputCurrency=0x5314bA045a459f63906Aa7C76d9F337DcB7d6995",
@@ -15485,7 +15485,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-22/swap",
@@ -15537,7 +15537,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x8f3cf7ad23cd3cadbd9735aff958023239c6a063&outputCurrency=0xE5417Af564e4bFDA1c483642db72007871397896",
@@ -15579,7 +15579,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x4e78011Ce80ee02d2c3e649Fb657E45898257815&outputCurrency=0x2F800Db0fdb5223b3C3f354886d907A671414A7F",
@@ -15621,7 +15621,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7",
@@ -15663,7 +15663,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.cometh.io/#/swap?inputCurrency=0x9c78ee466d6cb57a4d01fd887d2b5dfb2d46288f&outputCurrency=0xfbdd194376de19a88118e84e279b977f165d01b8",
@@ -15705,7 +15705,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xA1c57f48F0Deb89f569dFbE6E2B7f46D33606fD4&inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
@@ -15747,7 +15747,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -15789,7 +15789,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.cometh.io/#/swap?inputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&outputCurrency=0xfbdd194376de19a88118e84e279b977f165d01b8",
@@ -15831,7 +15831,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -15873,7 +15873,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
@@ -15915,7 +15915,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -15957,7 +15957,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0xD6DF932A45C0f255f85145f286eA0b292B21C90B&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
@@ -15999,7 +15999,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x831753DD7087CaC61aB5644b308642cc1c33Dc13&outputCurrency=0x51869836681BcE74a514625c856aFb697a013797",
@@ -16041,7 +16041,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0x42d61D766B85431666B39B89C43011f24451bFf6",
@@ -16083,7 +16083,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F&outputCurrency=0xE06Bd4F5aAc8D0aA337D13eC88dB6defC6eAEefE",
@@ -16125,7 +16125,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x61BDD9C7d4dF4Bf47A4508c0c8245505F2Af5b7b",
@@ -16167,7 +16167,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xD85d1e945766Fea5Eda9103F918Bd915FbCa63E6",
@@ -16209,7 +16209,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
@@ -16250,7 +16250,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0x580A84C73811E1839F75d86d75d88cCa0c241fF4",
@@ -16284,7 +16284,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6",
@@ -16326,7 +16326,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x80c0CBDB8d0B190238795d376f0bD57fd40525F2",
@@ -16368,7 +16368,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x5c4b7CCBF908E64F32e12c6650ec0C96d717f03F",
@@ -16404,7 +16404,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://dmm.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c",
@@ -16440,7 +16440,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&inputCurrency=0xB85517b87BF64942adf3A0B9E4c71E4Bc5Caa4e5",
@@ -16482,7 +16482,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://dmm.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x767058f11800fba6a682e73a6e79ec5eb74fac8c",
@@ -16518,7 +16518,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://dmm.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0xbd1463f02f61676d53fd183c2b19282bff93d099",
@@ -16554,7 +16554,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xF915fDDa4c882731C0456a4214548Cd13A822886",
@@ -16596,7 +16596,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&outputCurrency=0x2c89bbc92bd86f8075d1decc58c7f4e0107f286b",
@@ -16638,7 +16638,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.cometh.io/#/swap?inputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&outputCurrency=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
@@ -16680,7 +16680,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.cometh.io/#/swap?inputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -16722,7 +16722,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.cometh.io/#/swap?inputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&outputCurrency=0x9c78ee466d6cb57a4d01fd887d2b5dfb2d46288f",
@@ -16764,7 +16764,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.cometh.io/#/swap?inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&outputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
@@ -16806,7 +16806,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.cometh.io/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x9c78ee466d6cb57a4d01fd887d2b5dfb2d46288f",
@@ -16848,7 +16848,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xB5C064F955D8e7F38fE0460C556a72987494eE17",
@@ -16890,7 +16890,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xB5C064F955D8e7F38fE0460C556a72987494eE17",
@@ -16931,7 +16931,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://beta.quickswap.exchange/#/convert",
@@ -16965,7 +16965,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-85/swap",
@@ -17017,7 +17017,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-228/swap",
@@ -17069,7 +17069,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-255/swap",
@@ -17121,7 +17121,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-209/swap",
@@ -17173,7 +17173,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x72bd80445b0db58ebe3E8dB056529D4C5FAF6F2f",
@@ -17215,7 +17215,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xA863246658DEA34111C3C1DceDb2cfd5d6067334",
@@ -17257,7 +17257,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=ETH&outputCurrency=0x8192759Bf7f247cC92F74E39B3A4225516624fC1",
@@ -17299,7 +17299,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xE6469Ba6D2fD6130788E0eA9C0a0515900563b59&inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
@@ -17341,7 +17341,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xf2D8124b8F9267DaD61351c7aD252362880C6638&inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
@@ -17383,7 +17383,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://swap.cometh.io/#/swap?inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&outputCurrency=0x9c78ee466d6cb57a4d01fd887d2b5dfb2d46288f",
@@ -17425,7 +17425,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xD30DC92b8ec0fa8de625768d208f51A93C10aFF2",
@@ -17467,7 +17467,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
@@ -17509,7 +17509,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
@@ -17551,7 +17551,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xA0dF47432d9d88bcc040E9ee66dDC7E17A882715",
@@ -17593,7 +17593,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x8063037ea50E4a066bF1430EA1E3e609CD5cEf6B",
@@ -17635,7 +17635,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x596ebe76e2db4470966ea395b0d063ac6197a8c5",
@@ -17677,7 +17677,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xc3c7d422809852031b44ab29eec9f1eff2a58756",
@@ -17719,7 +17719,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xc2A45FE7d40bCAc8369371B08419DDAFd3131b4a",
@@ -17761,7 +17761,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xB5C064F955D8e7F38fE0460C556a72987494eE17",
@@ -17803,7 +17803,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x2e1AD108fF1D8C782fcBbB89AAd783aC49586756",
@@ -17845,7 +17845,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x8063037ea50E4a066bF1430EA1E3e609CD5cEf6B",
@@ -17887,7 +17887,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-286/swap",
@@ -17939,7 +17939,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-285/swap",
@@ -17991,7 +17991,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a/add-liquidity",
@@ -18026,7 +18026,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-v2-304/swap",

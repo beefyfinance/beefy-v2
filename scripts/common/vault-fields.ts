@@ -60,7 +60,7 @@ const compareRisksKeys = makeKeyComparer([
   'notCorrelated',
   'notTimelocked',
   'notVerified',
-  'synthStable',
+  'synthAsset',
 ]);
 
 function makeKeyComparer(fields: string[]) {

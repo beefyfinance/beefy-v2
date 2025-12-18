@@ -28,7 +28,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "mantle",
@@ -71,7 +71,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "mantle",
@@ -110,7 +110,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "mantle",
@@ -153,7 +153,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "mantle",
@@ -190,7 +190,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "mantle",
@@ -231,7 +231,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "mantle",
@@ -270,7 +270,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "mantle",
@@ -313,7 +313,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "mantle",
@@ -350,7 +350,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "mantle",
@@ -391,7 +391,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "mantle",
@@ -428,7 +428,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": true
+      "synthAsset": true
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
@@ -471,7 +471,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
@@ -512,7 +512,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
@@ -552,7 +552,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "single",
     "buyTokenUrl": "https://merchantmoe.com/trade",
@@ -591,7 +591,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xD7782b99671DD23203eBd4584FC71cf2B3dbB111",
@@ -632,7 +632,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x25356aeca4210eF7553140edb9b8026089E49396",
@@ -671,7 +671,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x25356aeca4210eF7553140edb9b8026089E49396",
@@ -712,7 +712,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xcda86a272531e8640cd7f1a92c01839911b90bb0",
@@ -753,7 +753,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xcda86a272531e8640cd7f1a92c01839911b90bb0",
@@ -794,7 +794,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xcda86a272531e8640cd7f1a92c01839911b90bb0",
@@ -835,7 +835,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xcda86a272531e8640cd7f1a92c01839911b90bb0",
@@ -876,7 +876,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xcda86a272531e8640cd7f1a92c01839911b90bb0",
@@ -915,7 +915,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x4515A45337F461A11Ff0FE8aBF3c606AE5dC00c9",
@@ -956,7 +956,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
@@ -997,7 +997,7 @@
       "notCorrelated": false,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
@@ -1038,7 +1038,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x371c7ec6D8039ff7933a2AA28EB827Ffe1F52f07",
@@ -1079,7 +1079,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
@@ -1120,7 +1120,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
@@ -1161,7 +1161,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
@@ -1202,7 +1202,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x371c7ec6D8039ff7933a2AA28EB827Ffe1F52f07",
@@ -1243,7 +1243,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x4515A45337F461A11Ff0FE8aBF3c606AE5dC00c9",
@@ -1281,7 +1281,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/WMNT",
@@ -1320,7 +1320,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/METH",
@@ -1361,7 +1361,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/WETH",
@@ -1402,7 +1402,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/USDT",
@@ -1441,7 +1441,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://app.openocean.finance/CLASSIC#/MANTLE/MNT/USDC",
@@ -1482,7 +1482,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://bridge.mantle.xyz/",

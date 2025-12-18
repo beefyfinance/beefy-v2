@@ -29,7 +29,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -70,7 +70,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -108,7 +108,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -151,7 +151,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -194,7 +194,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -232,7 +232,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -273,7 +273,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -311,7 +311,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -352,7 +352,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -390,7 +390,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -431,7 +431,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -469,7 +469,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -510,7 +510,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -548,7 +548,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "gnosis",
@@ -589,7 +589,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "gnosis",
@@ -625,7 +625,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v3/0x272d6be442e30d7c87390edeb9b96f1e84cecd8d/add-liquidity",
@@ -657,7 +657,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v3/0x6e6bb18449fCF15B79EFa2CfA70ACF7593088029/add-liquidity",
@@ -691,7 +691,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x71E1179C5e197FA551BEEC85ca2EF8693c61b85b/",
@@ -736,7 +736,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x8dd4df4ce580b9644437f3375e54f1ab09808228/",
@@ -783,7 +783,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xfc095c811fe836ed12f247bcf042504342b73fb700000000000000000000009f/add-liquidity",
@@ -833,7 +833,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x06135a9ae830476d3a941bae9010b63732a055f4000000000000000000000065/add-liquidity",
@@ -882,7 +882,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xc9f00c3a713008ddf69b768d90d4978549bfdf9400000000000000000000006d/add-liquidity",
@@ -929,7 +929,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x4cdabe9e07ca393943acfb9286bbbd0d0a310ff600020000000000000000005c/add-liquidity",
@@ -974,7 +974,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xbc2acf5e821c5c9f8667a36bb1131dad26ed64f9000200000000000000000063/add-liquidity",
@@ -1021,7 +1021,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066/add-liquidity",
@@ -1071,7 +1071,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x21d4c792ea7e38e0d0819c2011a2b1cb7252bd9900020000000000000000001e/add-liquidity",
@@ -1106,7 +1106,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064/add-liquidity",
@@ -1153,7 +1153,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x00df7f58e1cf932ebe5f54de5970fb2bdf0ef06d00010000000000000000005b/add-liquidity",
@@ -1201,7 +1201,7 @@
       "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x4683e340a8049261057d5ab1b29c8d840e75695e00020000000000000000005a/add-liquidity",
@@ -1248,7 +1248,7 @@
       "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
-      "synthStable": false
+      "synthAsset": false
     },
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034/add-liquidity",
