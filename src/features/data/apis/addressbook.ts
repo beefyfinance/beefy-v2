@@ -40,7 +40,7 @@ export const getChainAddressBook = memoize(
           description: bookToken.description || undefined,
           documentation: bookToken.documentation || undefined,
           type: 'erc20',
-          risks: (bookToken.risks as string[]) || [],
+          tags: (bookToken.tags as string[]) || [],
         };
       } else if (tokenId === nativeSymbol) {
         agg[tokenId] = {
@@ -55,6 +55,7 @@ export const getChainAddressBook = memoize(
           description: bookToken.description || undefined,
           documentation: bookToken.documentation || undefined,
           type: 'native',
+          tags: (bookToken.tags as string[]) || [],
         };
       } else {
         agg[tokenId] = {
@@ -70,7 +71,7 @@ export const getChainAddressBook = memoize(
           documentation: bookToken.documentation || undefined,
           type: 'erc20',
           bridge: bookToken.bridge,
-          risks: (bookToken.risks as string[]) || [],
+          tags: (bookToken.tags as string[]) || [],
         };
       }
 

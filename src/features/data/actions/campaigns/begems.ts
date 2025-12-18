@@ -147,7 +147,7 @@ export const initCampaignBeGems = createAppAsyncThunk<InitCampaignBeGemsPayload>
           website: 'https://app.beefy.com/campaigns/begems',
           description: `Season ${num} of Beefy Gems`,
           documentation: '',
-          risks: [],
+          tags: [],
         } satisfies TokenEntity;
       })
       .filter(isDefined);

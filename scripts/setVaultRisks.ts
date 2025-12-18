@@ -15,7 +15,7 @@ import { isDefined } from '../src/features/data/utils/array-utils.ts';
 import {
   platformRiskMap,
   type RiskChange,
-  tokenRiskMap,
+  tokenTagToRiskMap,
 } from '../src/features/data/selectors/risks.ts';
 
 type RunArgs = {
@@ -233,22 +233,22 @@ const getPlatformRisks = createFactory(async () => {
   );
 });
 
-const getTokenRisks = createCachedFactory(
+const getTokenTags = createCachedFactory(
   async (chainId: AddressBookChainId) => {
     const { addressBook } = await import('@beefyfinance/blockchain-addressbook');
     return new Map(
       Object.entries(addressBook[chainId].tokens)
-        .filter(([_, t]) => t.risks?.length)
-        .map(([id, token]) => [id, new Set<string>(token.risks || [])])
+        .filter(([_, t]) => t.tags?.length)
+        .map(([id, token]) => [id, new Set<string>(token.tags || [])])
     );
   },
   chainId => chainId
 );
 
 async function getForcedRisksFor(vault: VaultConfig) {
-  const [platformsRisks, chainTokenRisks] = await Promise.all([
+  const [platformsRisks, chainTokenTags] = await Promise.all([
     getPlatformRisks(),
-    getTokenRisks(appToAddressBookId(vault.network)),
+    getTokenTags(appToAddressBookId(vault.network)),
   ]);
   const forcedRisks = new Map<RiskKeys, { source: string; value: boolean }>();
   const platformRisks = vault.platformId ? platformsRisks.get(vault.platformId) : undefined;
@@ -262,19 +262,19 @@ async function getForcedRisksFor(vault: VaultConfig) {
       }
     }
   }
-  const tokenRisks =
+  const tokenTags =
     vault.assets?.length ?
       vault.assets
         .map(a => {
-          const risks = chainTokenRisks.get(a);
-          return risks ? { id: a, risks } : undefined;
+          const tags = chainTokenTags.get(a);
+          return tags ? { id: a, tags } : undefined;
         })
         .filter(isDefined)
     : undefined;
-  if (tokenRisks) {
-    for (const token of tokenRisks) {
-      for (const [riskKey, change] of Object.entries(tokenRiskMap)) {
-        if (token.risks.has(riskKey)) {
+  if (tokenTags) {
+    for (const token of tokenTags) {
+      for (const [tagKey, change] of Object.entries(tokenTagToRiskMap)) {
+        if (token.tags.has(tagKey)) {
           forcedRisks.set(change.key, { source: `token ${token.id}`, value: change.value });
         }
       }
