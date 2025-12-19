@@ -1,5 +1,241 @@
 [
   {
+    "id": "pancake-cow-monad-usd1-usdc-vault",
+    "name": "USD1-USDC",
+    "type": "standard",
+    "token": "USD1-USDC",
+    "tokenAddress": "0xF22e61260c5b41D3e9A2E753Dc8fBEBe56d95970",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x1FE5A638eF3e905b35ff14f7F8d08272Fc94075e",
+    "earnedToken": "mooCowPancakeswapMonadUSD1-USDC",
+    "earnedTokenAddress": "0x1FE5A638eF3e905b35ff14f7F8d08272Fc94075e",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-usd1-usdc",
+    "status": "active",
+    "createdAt": 1766105432,
+    "platformId": "pancakeswap",
+    "assets": ["USD1", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-usd1-usdc-rp",
+    "name": "USD1-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeswapMonadUSD1-USDC",
+    "tokenAddress": "0xF22e61260c5b41D3e9A2E753Dc8fBEBe56d95970",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x0Fbaca16E9682D8286A9Ada84992D10ED666ed71",
+    "earnedToken": "rCowPancakeswapMonadUSD1-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-usd1-usdc",
+    "status": "active",
+    "createdAt": 1766105431,
+    "platformId": "pancakeswap",
+    "assets": ["USD1", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-usd1-usdc",
+    "name": "USD1-USDC",
+    "type": "cowcentrated",
+    "token": "USD1-USDC pancakeswap",
+    "tokenAddress": "0x8CcB070b6F871AbA552972c76D3b7DF8d88Ffa1a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x111111d2bf19e43C34263401e0CAd979eD1cdb61",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603"
+    ],
+    "earnContractAddress": "0xF22e61260c5b41D3e9A2E753Dc8fBEBe56d95970",
+    "earnedToken": "cowPancakeswapMonadUSD1-USDC",
+    "earnedTokenAddress": "0xF22e61260c5b41D3e9A2E753Dc8fBEBe56d95970",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-usd1-usdc",
+    "status": "active",
+    "createdAt": 1766105431,
+    "platformId": "beefy",
+    "feeTier": "0.01",
+    "assets": ["USD1", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-usd1-wmon-vault",
+    "name": "USD1-WMON",
+    "type": "standard",
+    "token": "USD1-WMON",
+    "tokenAddress": "0x52e68134c11c89b34f8Deae227F72318df15D0A1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xDaAcCD65bC4690316Eb1a621420374279D8fc926",
+    "earnedToken": "mooCowPancakeswapMonadUSD1-WMON",
+    "earnedTokenAddress": "0xDaAcCD65bC4690316Eb1a621420374279D8fc926",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-usd1-wmon",
+    "status": "active",
+    "createdAt": 1766105432,
+    "platformId": "pancakeswap",
+    "assets": ["USD1", "WMON"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-usd1-wmon-rp",
+    "name": "USD1-WMON Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeswapMonadUSD1-WMON",
+    "tokenAddress": "0x52e68134c11c89b34f8Deae227F72318df15D0A1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x513830a95fb769594bFEad76CA968c975727824c",
+    "earnedToken": "rCowPancakeswapMonadUSD1-WMON",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-usd1-wmon",
+    "status": "active",
+    "createdAt": 1766105404,
+    "platformId": "pancakeswap",
+    "assets": ["USD1", "WMON"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-usd1-wmon",
+    "name": "USD1-WMON",
+    "type": "cowcentrated",
+    "token": "USD1-WMON pancakeswap",
+    "tokenAddress": "0xE4228db368740B2DE03174EB2f98D7976fF1E8FA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x111111d2bf19e43C34263401e0CAd979eD1cdb61",
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A"
+    ],
+    "earnContractAddress": "0x52e68134c11c89b34f8Deae227F72318df15D0A1",
+    "earnedToken": "cowPancakeswapMonadUSD1-WMON",
+    "earnedTokenAddress": "0x52e68134c11c89b34f8Deae227F72318df15D0A1",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-usd1-wmon",
+    "status": "active",
+    "createdAt": 1766105404,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["USD1", "WMON"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "curve-monad-mubond-ausd",
     "name": "muBOND/AUSD",
     "type": "standard",
