@@ -16,7 +16,6 @@ import {
   selectHasUserDepositInVault,
   selectUserBalanceOfToken,
   selectUserVaultBalanceInUsdIncludingDisplaced,
-  selectUserVaultDepositTokenWalletBalanceInUsd,
 } from '../selectors/balance.ts';
 import {
   selectIsVaultPrestakedBoost,
@@ -228,12 +227,8 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
         ]);
       } else if (filterOptions.sort === 'tvl') {
         sortedVaultIds = applyTvlSort(state, filteredVaults, filterOptions);
-      } else if (filterOptions.sort === 'safetyScore') {
-        sortedVaultIds = applySafetyScoreSort(state, filteredVaults, filterOptions);
       } else if (filterOptions.sort === 'depositValue') {
         sortedVaultIds = applyDepositValueSort(state, filteredVaults, filterOptions);
-      } else if (filterOptions.sort === 'walletValue') {
-        sortedVaultIds = applyWalletValueSort(state, filteredVaults, filterOptions);
       } else {
         sortedVaultIds = applyDefaultSort(state, filteredVaults, filterOptions);
       }
@@ -340,14 +335,6 @@ function applyTvlSort(
   ).map(v => v.id);
 }
 
-function applySafetyScoreSort(
-  _state: BeefyState,
-  vaults: VaultEntity[],
-  filters: FilteredVaultsState
-): VaultEntity['id'][] {
-  return orderBy(vaults, vault => vault.safetyScore, filters.sortDirection).map(v => v.id);
-}
-
 function applyDepositValueSort(
   state: BeefyState,
   vaults: VaultEntity[],
@@ -357,25 +344,6 @@ function applyDepositValueSort(
     vaults,
     vault => {
       const value = selectUserVaultBalanceInUsdIncludingDisplaced(state, vault.id);
-      if (!value) {
-        return -1;
-      }
-
-      return value.toNumber();
-    },
-    filters.sortDirection
-  ).map(v => v.id);
-}
-
-function applyWalletValueSort(
-  state: BeefyState,
-  vaults: VaultEntity[],
-  filters: FilteredVaultsState
-): VaultEntity['id'][] {
-  return orderBy(
-    vaults,
-    vault => {
-      const value = selectUserVaultDepositTokenWalletBalanceInUsd(state, vault.id);
       if (!value) {
         return -1;
       }

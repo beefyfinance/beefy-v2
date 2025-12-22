@@ -1,6 +1,4 @@
-import { first, keyBy, mapValues, partition } from 'lodash-es';
-import { SCORED_RISKS } from '../../../config/risk.ts';
-import { safetyScoreNum } from '../../../helpers/safetyScore.ts';
+import { first, keyBy, mapValues } from 'lodash-es';
 import type { VaultConfig } from '../apis/config-types.ts';
 import { getBeefyApi, getConfigApi } from '../apis/instances.ts';
 import type { ChainEntity, ChainId } from '../entities/chain.ts';
@@ -20,6 +18,7 @@ import {
 import { isDefined } from '../utils/array-utils.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { getVaultNames } from '../utils/vault-utils.ts';
+import { isFiniteNumber } from '../../../helpers/number.ts';
 
 export interface FulfilledAllVaultsPayload {
   byChainId: {
@@ -259,6 +258,23 @@ function isValidErc4626SubType(subType: string | undefined): subType is VaultErc
   return subType === 'erc7540:withdraw';
 }
 
+function risksHasUpdatedAt(risks: VaultConfig['risks']): risks is Required<VaultConfig['risks']> {
+  return isFiniteNumber(risks.updatedAt) && risks.updatedAt > 0;
+}
+
+function risksWithUpdatedAt(
+  risks: VaultConfig['risks'],
+  createdAt: number
+): Required<VaultConfig['risks']> {
+  if (risksHasUpdatedAt(risks)) {
+    return risks;
+  }
+  return {
+    ...risks,
+    updatedAt: createdAt,
+  };
+}
+
 function getCowcentratedBases(configs: VaultConfig[]) {
   const configByAddress = keyBy(configs, 'earnContractAddress');
   const byId: Record<string, VaultCowcentratedBaseOnly> = {};
@@ -297,6 +313,7 @@ function getCowcentratedBases(configs: VaultConfig[]) {
         .sort((a, b) => b.createdAt - a.createdAt);
       const gov = first(govs.filter(c => c.status === 'active'));
       const standard = first(standards.filter(c => c.status === 'active'));
+      const risks = config.risks;
 
       byId[config.id] = {
         subType: 'cowcentrated',
@@ -310,8 +327,7 @@ function getCowcentratedBases(configs: VaultConfig[]) {
         depositTokenAddresses: config.depositTokenAddresses,
         feeTier: config.feeTier,
         poolAddress: config.tokenAddress,
-        risks: config.risks || [],
-        safetyScore: safetyScoreNum(config.risks || []) || 0,
+        risks: risksWithUpdatedAt(risks, config.createdAt),
       };
 
       for (const c of govs) {
@@ -343,20 +359,8 @@ function getVaultStatus(apiVault: VaultConfig): VaultStatus {
   );
 }
 
-function getVaultRisks(apiVault: VaultConfig): string[] {
-  const risks = apiVault.risks || [];
-  const [validRisks, invalidrisks] = partition(risks, risk => risk in SCORED_RISKS);
-
-  if (invalidrisks.length > 0) {
-    console.warn(`Invalid risks found for vault ${apiVault.id}: ${invalidrisks.join(', ')}`);
-  }
-
-  return validRisks;
-}
-
 function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBase {
   const names = getVaultNames(config.name, config.type);
-  const risks = getVaultRisks(config);
 
   return {
     id: config.id,
@@ -379,8 +383,7 @@ function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBas
     pointStructureIds: config.pointStructureIds || [],
     platformId: config.platformId,
     strategyTypeId: config.strategyTypeId,
-    risks,
-    safetyScore: safetyScoreNum(risks) || 0,
+    risks: risksWithUpdatedAt(config.risks, config.createdAt),
     depositFee: config.depositFee || 0,
     migrationIds: config.migrationIds || [],
     hidden: false,

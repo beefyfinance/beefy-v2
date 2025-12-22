@@ -101,7 +101,7 @@ export const config = {
   polygon: {
     name: 'Polygon PoS',
     chainId: 137,
-    rpc: ['https://polygon-bor-rpc.publicnode.com'],
+    rpc: ['https://polygon.drpc.org', 'https://polygon-rpc.com'],
     explorerUrl: 'https://polygonscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x9C983dd514087674CA1d22A22B7432b614b4C835',
@@ -726,7 +726,7 @@ export const config = {
   sei: {
     name: 'Sei',
     chainId: 1329,
-    rpc: ['https://sei.drpc.org'],
+    rpc: ['https://sei.drpc.org', 'https://sei-public.nodies.app'],
     explorerUrl: 'https://seitrace.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeC1253CC6AB22680B3A3C35EA696dD0A6FC4B0D9',
@@ -890,7 +890,7 @@ export const config = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['USDC', 'AUSD', 'USDT0'],
+    stableCoins: ['USDC', 'AUSD', 'USDT0', 'muBOND', 'AZND', 'loAZND', 'USD1'],
   },
   aurora: {
     name: 'Aurora',

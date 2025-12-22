@@ -1,67 +1,86 @@
-import type { PlatformEntity } from '../entities/platform.ts';
-import { isTokenErc20, type TokenErc20 } from '../entities/token.ts';
+import { isTokenErc20 } from '../entities/token.ts';
 import type { VaultEntity } from '../entities/vault.ts';
-import type { BeefyState } from '../store/types.ts';
-import { selectPlatformById } from './platforms.ts';
-import { selectTokenByIdOrUndefined } from './tokens.ts';
+import { selectVaultPlatformOrUndefined } from './platforms.ts';
+import { selectVaultAssetTokensOrUndefined } from './tokens.ts';
 import { selectVaultById } from './vaults.ts';
+import { isDefined } from '../utils/array-utils.ts';
+import { createSelector } from '@reduxjs/toolkit';
+import type { Token } from '@beefyfinance/blockchain-addressbook';
 
-export const selectVaultHasAssetsWithRisks = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-):
-  | {
-      risks: false;
+export type RiskKeys = Exclude<keyof VaultEntity['risks'], 'updatedAt'>;
+export type RiskChange = { key: RiskKeys; value: boolean };
+type TokenTag = Exclude<Token['tags'], undefined>[number];
+type TokenTagToRiskMap = { [K in TokenTag]?: RiskChange };
+
+export const platformRiskMap: Record<string, RiskChange> = {
+  NO_TIMELOCK: { key: 'notTimelocked', value: true },
+  HIGHLY_COMPLEX: { key: 'complex', value: true },
+  NOT_BATTLE_TESTED: { key: 'notBattleTested', value: true },
+};
+
+export const tokenTagToRiskMap: Record<string, RiskChange> = {
+  NO_TIMELOCK: { key: 'notTimelocked', value: true },
+  SYNTHETIC: { key: 'synthAsset', value: true },
+  CURATED: { key: 'curated', value: true },
+} satisfies TokenTagToRiskMap;
+
+const selectVaultRisks = createSelector(
+  selectVaultById,
+  selectVaultPlatformOrUndefined,
+  selectVaultAssetTokensOrUndefined,
+  (vault, platform, tokens) => {
+    if (
+      (!platform || !platform.risks || platform.risks.length === 0) &&
+      (!tokens || tokens.length === 0)
+    ) {
+      return vault.risks;
     }
-  | {
-      risks: true;
-      tokens: TokenErc20[];
-    } => {
-  const vault = selectVaultById(state, vaultId);
 
-  const tokensWithRisks: TokenErc20[] = [];
-
-  for (const tokenId of vault.assetIds) {
-    const token = selectTokenByIdOrUndefined(state, vault.chainId, tokenId);
-
-    if (token && isTokenErc20(token) && (token?.risks?.length || 0) > 0) {
-      tokensWithRisks.push(token);
+    const platformRisks =
+      platform?.risks
+        .map(k => platformRiskMap[k])
+        .filter(change => change !== undefined && vault.risks[change.key] !== change.value) || [];
+    const tokenRisks =
+      tokens
+        ?.filter(isDefined)
+        .filter(isTokenErc20)
+        .flatMap(token => token.tags ?? [])
+        .map(k => tokenTagToRiskMap[k])
+        .filter(change => change !== undefined && vault.risks[change.key] !== change.value) || [];
+    if (platformRisks.length === 0 && tokenRisks.length === 0) {
+      return vault.risks;
     }
-  }
 
-  if (tokensWithRisks.length >= 1) {
-    return {
-      risks: true,
-      tokens: tokensWithRisks,
-    };
+    const risks = { ...vault.risks };
+    for (const change of platformRisks) {
+      risks[change.key] = change.value;
+    }
+    for (const change of tokenRisks) {
+      risks[change.key] = change.value;
+    }
+    return risks;
   }
+);
 
-  // by default return false
+export const selectVaultRiskChecklist = createSelector(selectVaultRisks, risks => {
+  const { passed, failed } = Object.entries(risks).reduce(
+    (acc, [key, value]) => {
+      if (key === 'updatedAt') {
+        return acc;
+      }
+      if (value) {
+        acc.failed.push(key);
+      } else {
+        acc.passed.push(key);
+      }
+      return acc;
+    },
+    { passed: [] as string[], failed: [] as string[] }
+  );
+
   return {
-    risks: false,
+    updatedAt: risks.updatedAt,
+    passed,
+    failed,
   };
-};
-export const selectVaultHasPlatformWithRisks = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-):
-  | {
-      risks: false;
-    }
-  | {
-      risks: true;
-      platform: PlatformEntity;
-    } => {
-  const vault = selectVaultById(state, vaultId);
-
-  const platform = selectPlatformById(state, vault.platformId);
-
-  if ((platform?.risks?.length || 0) > 0) {
-    return {
-      risks: true,
-      platform,
-    };
-  } else {
-    return { risks: false };
-  }
-};
+});

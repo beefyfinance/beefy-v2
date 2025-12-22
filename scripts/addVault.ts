@@ -151,7 +151,17 @@ async function generateVault() {
     assets: [data.tokenName],
     migrationIds: data.migrationIds,
     strategyTypeId: 'multi-lp',
-    risks: ['COMPLEXITY_LOW', 'IL_NONE', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
+    risks: {
+      // TODO review
+      complex: false,
+      curated: false,
+      notAudited: false,
+      notBattleTested: false,
+      notCorrelated: false,
+      notTimelocked: false,
+      notVerified: false,
+      synthAsset: false,
+    },
     addLiquidityUrl: data.addLiquidityUrl,
     removeLiquidityUrl: data.removeLiquidityUrl,
     network: chain,

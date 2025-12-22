@@ -52,7 +52,7 @@ export function getDepositTokenFromLegacyVaultConfig(
       website: undefined,
       type: 'erc20',
       documentation: undefined,
-      risks: [],
+      tags: [],
     };
   }
 

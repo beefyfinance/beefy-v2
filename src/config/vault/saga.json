@@ -20,7 +20,17 @@
     "retiredAt": 1764838421,
     "platformId": "uniswap",
     "assets": ["SAGA", "USDC"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "saga",
     "zaps": [
@@ -53,7 +63,17 @@
     "platformId": "beefy",
     "feeTier": "0.01",
     "assets": ["SAGA", "USDC"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "saga",
     "zaps": [
@@ -83,7 +103,17 @@
     "retiredAt": 1764838421,
     "platformId": "uniswap",
     "assets": ["SAGA", "WETH"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "saga",
     "zaps": [
@@ -116,7 +146,17 @@
     "platformId": "beefy",
     "feeTier": "0.01",
     "assets": ["SAGA", "WETH"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "saga",
     "zaps": [
@@ -146,7 +186,17 @@
     "retiredAt": 1764838421,
     "platformId": "uniswap",
     "assets": ["USDT", "USDC"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "saga",
     "zaps": [
@@ -179,7 +229,17 @@
     "platformId": "beefy",
     "feeTier": "0.01",
     "assets": ["USDT", "USDC"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "saga",
     "zaps": [
@@ -209,7 +269,17 @@
     "retiredAt": 1764838421,
     "platformId": "uniswap",
     "assets": ["WETH", "USDC"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "saga",
     "zaps": [
@@ -242,7 +312,17 @@
     "platformId": "beefy",
     "feeTier": "0.01",
     "assets": ["WETH", "USDC"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "saga",
     "zaps": [

@@ -41,13 +41,11 @@ type PendingSort = {
 
 const SORT_OPTIONS: SortOption[] = [
   { label: 'Filter-SortDate', optionKey: 'default' },
-  { label: 'Filter-SortWallet', optionKey: 'walletValue' },
   { label: 'Filter-SortDeposited', optionKey: 'depositValue' },
   { label: 'Filter-SortApy', optionKey: 'apy' },
   { label: 'Filter-SortAvgApy', optionKey: 'avgApy', subSortOf: 'apy' },
   { label: 'Filter-SortDaily', optionKey: 'daily' },
   { label: 'Filter-SortTvl', optionKey: 'tvl' },
-  { label: 'Filter-SortSafety', optionKey: 'safetyScore' },
 ];
 
 const AVG_APY_OPTIONS = [

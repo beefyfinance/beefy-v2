@@ -28,6 +28,7 @@
   {
     "id": "equilibria",
     "name": "Equilibria",
+    "risks": ["HIGHLY_COMPLEX"],
     "website": "https://equilibria.fi/",
     "twitter": "Equilibriafi",
     "documentation": "https://docs.equilibria.fi/",
@@ -37,7 +38,7 @@
   {
     "id": "magpie",
     "name": "Magpie",
-    "risks": ["NO_TIMELOCK"],
+    "risks": ["NO_TIMELOCK", "HIGHLY_COMPLEX"],
     "website": "https://www.magpiexyz.io/",
     "twitter": "magpiexyz_io",
     "documentation": "https://docs.magpiexyz.io/",
@@ -450,6 +451,7 @@
   {
     "id": "dotdot",
     "name": "DotDot",
+    "risks": ["HIGHLY_COMPLEX"],
     "website": "https://dotdot.finance/",
     "twitter": "dotdotdotfi",
     "documentation": "https://docs.dotdot.finance/",
@@ -648,6 +650,7 @@
   {
     "id": "beethovenx",
     "name": "Beets",
+    "risks": ["NOT_BATTLE_TESTED"],
     "website": "https://beets.fi/",
     "twitter": "beethoven_x",
     "documentation": "https://docs.beets.fi/",
@@ -831,6 +834,7 @@
   {
     "id": "balancer",
     "name": "Balancer",
+    "risks": ["NOT_BATTLE_TESTED"],
     "website": "https://balancer.fi/",
     "twitter": "Balancer",
     "documentation": "https://docs.balancer.fi/",
@@ -891,6 +895,7 @@
   {
     "id": "aura",
     "name": "Aura",
+    "risks": ["HIGHLY_COMPLEX", "NOT_BATTLE_TESTED"],
     "website": "https://aura.finance/",
     "twitter": "aurafinance",
     "documentation": "https://docs.aura.finance/",
@@ -909,6 +914,7 @@
   {
     "id": "convex",
     "name": "Convex",
+    "risks": ["HIGHLY_COMPLEX"],
     "website": "https://www.convexfinance.com/",
     "twitter": "ConvexFinance",
     "documentation": "https://docs.convexfinance.com/",
@@ -926,6 +932,7 @@
   {
     "id": "equalizer",
     "name": "Equalizer",
+    "risks": ["NOT_BATTLE_TESTED"],
     "website": "https://equalizer.exchange/",
     "twitter": "Equalizer0x",
     "documentation": "https://docs.equalizer.exchange/",
@@ -939,6 +946,7 @@
   {
     "id": "thena",
     "name": "Thena",
+    "risks": ["NOT_BATTLE_TESTED"],
     "website": "https://thena.fi/",
     "twitter": "ThenaFi_",
     "documentation": "https://docs.thena.fi/thena",
@@ -1012,6 +1020,7 @@
   {
     "id": "ramses",
     "name": "Ramses",
+    "risks": ["NOT_BATTLE_TESTED"],
     "website": "https://app.ramses.exchange/",
     "twitter": "RamsesExchange",
     "documentation": "https://docs.ramses.exchange/",
@@ -1059,6 +1068,7 @@
   {
     "id": "gamma",
     "name": "Gamma",
+    "risks": ["HIGHLY_COMPLEX"],
     "website": "https://app.gamma.xyz/",
     "twitter": "GammaStrategies",
     "documentation": "https://docs.gamma.xyz/gamma",
@@ -1125,6 +1135,7 @@
   {
     "id": "alienbase",
     "name": "AlienBase",
+    "risks": ["NOT_BATTLE_TESTED"],
     "website": "https://app.alienbase.xyz/",
     "twitter": "alienbasedex",
     "documentation": "https://docs.alienbase.xyz/",
@@ -1160,6 +1171,7 @@
   {
     "id": "ichi",
     "name": "Ichi",
+    "risks": ["HIGHLY_COMPLEX", "NOT_BATTLE_TESTED"],
     "website": "https://app.ichi.org/",
     "twitter": "ichifoundation",
     "documentation": "https://docs.ichi.org/home",
@@ -1218,7 +1230,7 @@
   {
     "id": "fx",
     "name": "f(x) Protocol",
-    "risks": ["NO_TIMELOCK"],
+    "risks": ["NO_TIMELOCK", "HIGHLY_COMPLEX"],
     "website": "https://fx.aladdin.club/",
     "twitter": "protocol_fx",
     "documentation": "https://docs.aladdin.club/f-x-protocol",
@@ -1228,6 +1240,7 @@
   {
     "id": "lynex",
     "name": "Lynex",
+    "risks": ["NOT_BATTLE_TESTED"],
     "website": "https://app.lynex.fi/",
     "twitter": "LynexFi",
     "documentation": "https://lynex.gitbook.io/lynex-docs/protocol-overview/about-lynex",
@@ -1251,7 +1264,7 @@
   {
     "id": "stakedao",
     "name": "StakeDAO",
-    "risks": ["NO_TIMELOCK"]
+    "risks": ["NO_TIMELOCK", "HIGHLY_COMPLEX"]
   },
   {
     "id": "nile",
@@ -1319,6 +1332,7 @@
   {
     "id": "dragon",
     "name": "DragonSwap",
+    "risks": ["NOT_BATTLE_TESTED"],
     "website": "https://dragonswap.app/",
     "twitter": "dragonswap_dex",
     "documentation": "https://docs.dragonswap.app/dragonswap",
@@ -1378,12 +1392,12 @@
   {
     "id": "swapx",
     "name": "SwapX",
+    "risks": ["NO_TIMELOCK", "NOT_BATTLE_TESTED"],
     "website": "https://swapx.fi/",
     "twitter": "swapxfi",
     "documentation": "https://swapxfi.gitbook.io/swapx-docs",
     "description": "SwapX is a decentralized exchange (DEX) which aims to become the leading platform for native concentrated liquidity on Sonic Blockchain.",
-    "type": "amm",
-    "risks": ["NO_TIMELOCK"]
+    "type": "amm"
   },
   {
     "id": "shadow",
@@ -1415,6 +1429,7 @@
   {
     "id": "infrared",
     "name": "Infrared",
+    "risks": ["HIGHLY_COMPLEX"],
     "website": "https://infrared.finance/",
     "twitter": "infraredfinance",
     "documentation": "https://infrared.finance/docs",
@@ -1433,6 +1448,7 @@
   {
     "id": "berapaw",
     "name": "BeraPaw",
+    "risks": ["HIGHLY_COMPLEX"],
     "website": "https://www.berapaw.com",
     "twitter": "0xberapaw",
     "documentation": "https://docs.berapaw.com/",
@@ -1505,6 +1521,7 @@
   {
     "id": "etherex",
     "name": "Etherex",
+    "risks": ["NOT_BATTLE_TESTED"],
     "website": "https://www.etherex.finance/",
     "twitter": "etherexfi",
     "documentation": "https://docs.etherex.finance/",

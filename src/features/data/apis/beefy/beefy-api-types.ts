@@ -162,7 +162,6 @@ type MakeCampaign<
   providerId: TProvider;
   id: string;
   chainId: ChainId;
-  poolAddress: string;
   rewardToken: BeefyOffChainRewardsRewardToken;
   vaults: BeefyOffChainRewardsCampaignVault[];
   type: BeefyOffChainRewardsCampaignType;

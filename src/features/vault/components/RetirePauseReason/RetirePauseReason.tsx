@@ -1,9 +1,9 @@
 import { css, type CssStyles } from '@repo/styles/css';
-import { memo, useMemo } from 'react';
+import { memo, type ReactElement, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertWarning } from '../../../../components/Alerts/Alerts.tsx';
 import { useAppSelector } from '../../../data/store/hooks.ts';
-import { isGovVault, type VaultEntity } from '../../../data/entities/vault.ts';
+import { type VaultEntity } from '../../../data/entities/vault.ts';
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
 import { ExternalLink } from '../../../../components/Links/ExternalLink.tsx';
 
@@ -27,7 +27,7 @@ export const RetirePauseReason = memo(function RetirePauseReason({
   vaultId,
   css: cssProp,
 }: RetirePauseReasonProps) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   const message = useMemo(() => {
@@ -43,83 +43,34 @@ export const RetirePauseReason = memo(function RetirePauseReason({
     }
 
     if (reason) {
-      let i18nKey = `Vault-${reason}-default`;
+      const components: Record<string, ReactElement> = {
+        Link: <ExternalLink className={linkClass} />,
+      };
+      const values: Record<string, string> = {
+        type:
+          vault.type === 'cowcentrated' ? 'CLM'
+          : vault.type === 'gov' ? 'pool'
+          : 'vault',
+      };
 
       if (reasonCode) {
-        const maybeKey = `Vault-${reason}-${reasonCode}`;
-        if (i18n.exists(maybeKey)) {
-          if (reasonCode === 'bifiV2') {
-            return (
-              <Trans
-                t={t}
-                i18nKey={isGovVault(vault) ? `${maybeKey}-gov` : maybeKey}
-                components={{
-                  info: (
-                    <ExternalLink
-                      className={linkClass}
-                      href="https://snapshot.org/#/beefydao.eth/proposal/0x55e6ad9dd3ebcca3334e23872fa8e2ab1e926466b3d2d0af6f462cc45b1541a2"
-                    />
-                  ),
-                }}
-              />
-            );
-          } else if (reasonCode === 'scream' && ScreamTx[vaultId]) {
-            return (
-              <Trans
-                t={t}
-                i18nKey={maybeKey}
-                components={{
-                  tx: <ExternalLink className={linkClass} href={ScreamTx[vaultId]} />,
-                  plan: (
-                    <ExternalLink
-                      className={linkClass}
-                      href="https://snapshot.org/#/screamsh.eth/proposal/0xcbf4a9d1c951a141a2fa806f7c7e6c4b2fea7db5952aee9e1dcc68b1c11adff9"
-                    />
-                  ),
-                }}
-              />
-            );
-          } else if (reasonCode === 'bevelo') {
-            return (
-              <Trans
-                t={t}
-                i18nKey={maybeKey}
-                components={{
-                  pool: (
-                    <ExternalLink
-                      className={linkClass}
-                      href="https://app.beefy.com/vault/beefy-bevelo-v2-earnings"
-                    />
-                  ),
-                }}
-              />
-            );
-          } else if (reasonCode === 'balancer-exploit-2025-11-03') {
-            return (
-              <Trans
-                t={t}
-                i18nKey={maybeKey}
-                components={{
-                  balancer: (
-                    <ExternalLink
-                      className={linkClass}
-                      href="https://x.com/Balancer/status/1985283356582453588"
-                    />
-                  ),
-                }}
-              />
-            );
-          } else {
-            i18nKey = maybeKey;
-          }
+        if (reasonCode === 'scream' && ScreamTx[vault.id]) {
+          components['Tx'] = <ExternalLink className={linkClass} href={ScreamTx[vault.id]} />;
         }
       }
 
-      return t(i18nKey);
+      return (
+        <Trans
+          t={t}
+          i18nKey={[`Vault-${reason}-${reasonCode}`, `Vault-${reason}-default`]}
+          components={components}
+          values={values}
+        />
+      );
     }
 
     return null;
-  }, [vault, t, i18n, vaultId]);
+  }, [t, vault]);
 
   return message ? <AlertWarning css={cssProp}>{message}</AlertWarning> : null;
 });

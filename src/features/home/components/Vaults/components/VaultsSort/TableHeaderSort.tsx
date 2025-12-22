@@ -26,8 +26,6 @@ type SortColumn = {
 }[SortType];
 
 const SORT_COLUMNS = [
-  { label: 'Filter-SortWallet', value: 'walletValue' },
-  { label: 'Filter-SortDeposited', value: 'depositValue' },
   {
     label: 'Filter-SortApy',
     value: 'apy',
@@ -41,7 +39,7 @@ const SORT_COLUMNS = [
   },
   { label: 'Filter-SortDaily', value: 'daily' },
   { label: 'Filter-SortTvl', value: 'tvl' },
-  { label: 'Filter-SortSafety', value: 'safetyScore' },
+  { label: 'Filter-SortDeposited', value: 'depositValue' },
 ] satisfies SortColumn[];
 
 export const TableHeaderSort = memo(function TableHeaderSort() {

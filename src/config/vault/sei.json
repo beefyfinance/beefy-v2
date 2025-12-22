@@ -18,7 +18,17 @@
     "createdAt": 1753383403,
     "platformId": "dragon",
     "assets": ["USDCn", "USDC"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -49,7 +59,17 @@
     "platformId": "beefy",
     "feeTier": "0.01",
     "assets": ["USDCn", "USDC"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -77,7 +97,17 @@
     "createdAt": 1753383353,
     "platformId": "dragon",
     "assets": ["USDC", "WSEI"],
-    "risks": [],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -108,7 +138,17 @@
     "platformId": "beefy",
     "feeTier": "0.3",
     "assets": ["USDC", "WSEI"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -136,7 +176,17 @@
     "createdAt": 1730394194,
     "platformId": "dragon",
     "assets": ["iSEI", "WSEI"],
-    "risks": ["IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -167,7 +217,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["iSEI", "WSEI"],
-    "risks": ["IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -195,7 +255,17 @@
     "createdAt": 1727260520,
     "platformId": "dragon",
     "assets": ["USDCn", "WSEI"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -226,7 +296,17 @@
     "platformId": "beefy",
     "feeTier": "0.30",
     "assets": ["USDCn", "WSEI"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -251,12 +331,22 @@
     "oracle": "lps",
     "oracleId": "dragon-cow-usdt-wsei",
     "status": "eol",
-    "retiredAt": 1744298354,
-    "retireReason": "tvl",
     "createdAt": 1727260520,
+    "retireReason": "tvl",
+    "retiredAt": 1744298354,
     "platformId": "dragon",
     "assets": ["USDT", "WSEI"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -283,13 +373,23 @@
     "oracle": "lps",
     "oracleId": "dragon-cow-usdt-wsei",
     "status": "eol",
-    "retiredAt": 1744298354,
-    "retireReason": "tvl",
     "createdAt": 1727260520,
+    "retireReason": "tvl",
+    "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.30",
     "assets": ["USDT", "WSEI"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -314,12 +414,22 @@
     "oracle": "lps",
     "oracleId": "dragon-cow-isei-wsei",
     "status": "eol",
-    "retiredAt": 1735665006,
-    "retireReason": "rewards",
     "createdAt": 1727260520,
+    "retireReason": "rewards",
+    "retiredAt": 1735665006,
     "platformId": "dragon",
     "assets": ["iSEI", "WSEI"],
-    "risks": ["IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -346,13 +456,23 @@
     "oracle": "lps",
     "oracleId": "dragon-cow-isei-wsei",
     "status": "eol",
-    "retiredAt": 1735665006,
-    "retireReason": "rewards",
     "createdAt": 1727260520,
+    "retireReason": "rewards",
+    "retiredAt": 1735665006,
     "platformId": "beefy",
     "feeTier": "0.30",
     "assets": ["iSEI", "WSEI"],
-    "risks": ["IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -377,12 +497,22 @@
     "oracle": "lps",
     "oracleId": "dragon-cow-usdc-isei",
     "status": "eol",
-    "retiredAt": 1744925964,
-    "retireReason": "tvl",
     "createdAt": 1727260520,
+    "retireReason": "tvl",
+    "retiredAt": 1744925964,
     "platformId": "dragon",
     "assets": ["iSEI", "USDCn"],
-    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -409,13 +539,23 @@
     "oracle": "lps",
     "oracleId": "dragon-cow-usdc-isei",
     "status": "eol",
-    "retiredAt": 1744925964,
-    "retireReason": "tvl",
     "createdAt": 1727260520,
+    "retireReason": "tvl",
+    "retiredAt": 1744925964,
     "platformId": "beefy",
     "feeTier": "0.30",
     "assets": ["iSEI", "USDCn"],
-    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -431,25 +571,28 @@
     "token": "USDC",
     "tokenAddress": "0x3894085Ef7Ff0f0aeDf52E2A2704928d1Ec074F1",
     "tokenDecimals": 6,
+    "earnContractAddress": "0xdA86D4168e63111055b6ffEf0AbA1ca5A9aD98B1",
     "earnedToken": "mooStargateV2USDC",
     "earnedTokenAddress": "0xdA86D4168e63111055b6ffEf0AbA1ca5A9aD98B1",
-    "earnContractAddress": "0xdA86D4168e63111055b6ffEf0AbA1ca5A9aD98B1",
     "oracle": "tokens",
     "oracleId": "USDCn",
     "status": "eol",
-    "retiredAt": 1735665006,
-    "retireReason": "rewards",
     "createdAt": 1725883356,
+    "retireReason": "rewards",
+    "retiredAt": 1735665006,
     "platformId": "stargate",
     "assets": ["USDCn"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "single",
     "network": "sei",
     "zaps": [
@@ -465,25 +608,28 @@
     "token": "USDT",
     "tokenAddress": "0xB75D0B03c06A926e488e2659DF1A861F860bD3d1",
     "tokenDecimals": 6,
+    "earnContractAddress": "0x50fF3200afefd39e2bd4ad45bfEbD74C6f1C4377",
     "earnedToken": "mooStargateV2USDT",
     "earnedTokenAddress": "0x50fF3200afefd39e2bd4ad45bfEbD74C6f1C4377",
-    "earnContractAddress": "0x50fF3200afefd39e2bd4ad45bfEbD74C6f1C4377",
     "oracle": "tokens",
     "oracleId": "USDT",
     "status": "eol",
-    "retiredAt": 1737731759,
-    "retireReason": "rewards",
     "createdAt": 1725883356,
+    "retireReason": "rewards",
+    "retiredAt": 1737731759,
     "platformId": "stargate",
     "assets": ["USDT"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "single",
     "network": "sei",
     "zaps": [
@@ -499,37 +645,40 @@
     "token": "iSEI",
     "tokenAddress": "0x5Cf6826140C1C56Ff49C808A1A75407Cd1DF9423",
     "tokenDecimals": 6,
+    "earnContractAddress": "0x65862C640CE6FbC3fb289cd93ee8F0dFFEBC2FFe",
     "earnedToken": "mooYeiiSEI",
     "earnedTokenAddress": "0x65862C640CE6FbC3fb289cd93ee8F0dFFEBC2FFe",
-    "earnContractAddress": "0x65862C640CE6FbC3fb289cd93ee8F0dFFEBC2FFe",
     "oracle": "tokens",
     "oracleId": "iSEI",
     "status": "eol",
-    "retiredAt": 1754691689,
-    "retireReason": "rewards",
     "createdAt": 1725602894,
+    "retireReason": "rewards",
+    "retiredAt": 1754691689,
     "platformId": "yei",
     "assets": ["iSEI"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://oku.trade/app/sei/swap/0x3894085Ef7Ff0f0aeDf52E2A2704928d1Ec074F1/0x5Cf6826140C1C56Ff49C808A1A75407Cd1DF9423",
     "network": "sei",
-    "lendingOracle": {
-      "provider": "redstone",
-      "address": "0xF708DB0C6352d012AA093d71d407Cec1250A4CB3"
-    },
     "zaps": [
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "redstone",
+      "address": "0xF708DB0C6352d012AA093d71d407Cec1250A4CB3"
+    }
   },
   {
     "id": "yei-usdt",
@@ -538,37 +687,40 @@
     "token": "USDT",
     "tokenAddress": "0xB75D0B03c06A926e488e2659DF1A861F860bD3d1",
     "tokenDecimals": 6,
+    "earnContractAddress": "0xcb25214EC41Ea480068638897FcBd6F1206F5521",
     "earnedToken": "mooYeiUSDT",
     "earnedTokenAddress": "0xcb25214EC41Ea480068638897FcBd6F1206F5521",
-    "earnContractAddress": "0xcb25214EC41Ea480068638897FcBd6F1206F5521",
     "oracle": "tokens",
     "oracleId": "USDT",
     "status": "eol",
-    "retiredAt": 1746801184,
-    "retireReason": "rewards",
     "createdAt": 1725011789,
+    "retireReason": "rewards",
+    "retiredAt": 1746801184,
     "platformId": "yei",
     "assets": ["USDT"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://oku.trade/app/sei/swap/0x0000000000000000000000000000000000000000/0xb75d0b03c06a926e488e2659df1a861f860bd3d1",
     "network": "sei",
-    "lendingOracle": {
-      "provider": "pyth",
-      "address": "0xb4B0a33487baFbb9b90b084AC2A2A150956F4658"
-    },
     "zaps": [
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "pyth",
+      "address": "0xb4B0a33487baFbb9b90b084AC2A2A150956F4658"
+    }
   },
   {
     "id": "yei-usdc",
@@ -577,37 +729,40 @@
     "token": "USDC",
     "tokenAddress": "0x3894085Ef7Ff0f0aeDf52E2A2704928d1Ec074F1",
     "tokenDecimals": 6,
+    "earnContractAddress": "0x906e60166A4B185016e53597fA12FBB1424e47d7",
     "earnedToken": "mooYeiUSDC",
     "earnedTokenAddress": "0x906e60166A4B185016e53597fA12FBB1424e47d7",
-    "earnContractAddress": "0x906e60166A4B185016e53597fA12FBB1424e47d7",
     "oracle": "tokens",
     "oracleId": "USDCn",
     "status": "eol",
-    "retiredAt": 1754691689,
-    "retireReason": "rewards",
     "createdAt": 1725011789,
+    "retireReason": "rewards",
+    "retiredAt": 1754691689,
     "platformId": "yei",
     "assets": ["USDCn"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://oku.trade/app/sei/swap/0x0000000000000000000000000000000000000000/0x3894085Ef7Ff0f0aeDf52E2A2704928d1Ec074F1",
     "network": "sei",
-    "lendingOracle": {
-      "provider": "pyth",
-      "address": "0x2443Be92682b72A77E562d1B364dEC6eA3dAbb0a"
-    },
     "zaps": [
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "pyth",
+      "address": "0x2443Be92682b72A77E562d1B364dEC6eA3dAbb0a"
+    }
   },
   {
     "id": "yei-wsei",
@@ -616,37 +771,40 @@
     "token": "WSEI",
     "tokenAddress": "0xE30feDd158A2e3b13e9badaeABaFc5516e95e8C7",
     "tokenDecimals": 18,
+    "earnContractAddress": "0x9E6B9518978bb7caf2ad70778E9AEED9eDb3DB78",
     "earnedToken": "mooYeiWSEI",
     "earnedTokenAddress": "0x9E6B9518978bb7caf2ad70778E9AEED9eDb3DB78",
-    "earnContractAddress": "0x9E6B9518978bb7caf2ad70778E9AEED9eDb3DB78",
     "oracle": "tokens",
     "oracleId": "WSEI",
     "status": "eol",
-    "retiredAt": 1744925964,
-    "retireReason": "tvl",
     "createdAt": 1725011789,
+    "retireReason": "tvl",
+    "retiredAt": 1744925964,
     "platformId": "yei",
     "assets": ["WSEI"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://oku.trade/app/sei/swap/0x3894085Ef7Ff0f0aeDf52E2A2704928d1Ec074F1/0xE30feDd158A2e3b13e9badaeABaFc5516e95e8C7",
     "network": "sei",
-    "lendingOracle": {
-      "provider": "pyth",
-      "address": "0x752Df241a4abafe90aA46ec25D2c2701a3d35598"
-    },
     "zaps": [
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "lendingOracle": {
+      "provider": "pyth",
+      "address": "0x752Df241a4abafe90aA46ec25D2c2701a3d35598"
+    }
   },
   {
     "id": "uniswap-cow-sei-usdt-wsei-rp",
@@ -667,7 +825,17 @@
     "createdAt": 1722597986,
     "platformId": "oku",
     "assets": ["USDT", "WSEI"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -698,7 +866,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["USDT", "WSEI"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -726,7 +904,17 @@
     "createdAt": 1722597986,
     "platformId": "oku",
     "assets": ["USDCn", "USDT"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -757,7 +945,17 @@
     "platformId": "beefy",
     "feeTier": "0.01",
     "assets": ["USDCn", "USDT"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -785,7 +983,17 @@
     "createdAt": 1722523990,
     "platformId": "oku",
     "assets": ["WETH", "USDCn"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -816,7 +1024,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["WETH", "USDCn"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -844,7 +1062,17 @@
     "createdAt": 1722523990,
     "platformId": "oku",
     "assets": ["WETH", "WSEI"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -875,7 +1103,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["WETH", "WSEI"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -903,7 +1141,17 @@
     "createdAt": 1722523990,
     "platformId": "oku",
     "assets": ["USDCn", "WSEI"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [
@@ -934,7 +1182,17 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["USDCn", "WSEI"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
     "strategyTypeId": "compounds",
     "network": "sei",
     "zaps": [

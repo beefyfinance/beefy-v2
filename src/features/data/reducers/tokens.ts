@@ -73,6 +73,7 @@ export const tokensSlice = createSlice({
           website: existingNative?.website ?? undefined,
           description: existingNative?.description ?? undefined,
           documentation: existingNative?.documentation ?? undefined,
+          tags: [],
         };
 
         addTokenToState(sliceState, token, true);
@@ -152,7 +153,7 @@ export const tokensSlice = createSlice({
             website: undefined,
             documentation: undefined,
             description: undefined,
-            risks: [],
+            tags: [],
           },
           true
         );
@@ -341,7 +342,7 @@ function addAddressBookToState(
       existingToken.website = existingToken.website || token.website;
       if (isTokenErc20(existingToken)) {
         existingToken.bridge = existingToken.bridge || token.bridge;
-        existingToken.risks = tempFilterRisks(existingToken.risks || token.risks || []); // FIXME remove once we support multiple risks types
+        existingToken.tags = existingToken.tags || token.tags;
       }
     }
 
@@ -349,10 +350,6 @@ function addAddressBookToState(
       chainState.wnative = token.id;
     }
   }
-}
-
-function tempFilterRisks(risks: string[]) {
-  return risks.filter(risk => risk === 'NO_TIMELOCK');
 }
 
 function addPromoRewardTokenToState(
@@ -378,7 +375,7 @@ function addPromoRewardTokenToState(
       description: undefined,
       website: undefined,
       documentation: undefined,
-      risks: [],
+      tags: [],
     };
     addTokenToState(sliceState, token, true);
   }
@@ -413,7 +410,7 @@ function addMinterToState(
         description: undefined,
         website: undefined,
         documentation: undefined,
-        risks: [],
+        tags: [],
       };
       addTokenToState(sliceState, token, true);
     }
@@ -482,7 +479,7 @@ function addVaultToState(sliceState: Draft<TokensState>, config: VaultConfig, en
       website: undefined,
       description: undefined,
       documentation: undefined,
-      risks: [],
+      tags: [],
     };
 
     // We always let the vault overwrite the receipt token, even if it was added via deposit token of another vault

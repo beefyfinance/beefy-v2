@@ -83,6 +83,11 @@ export const selectUserDepositedVaultIds = (state: BeefyState, walletAddress?: s
   return arrayOrStaticEmpty(walletBalance?.depositedVaultIds);
 };
 
+export const selectUserHasDepositedInAnyVault = createSelector(
+  selectUserDepositedVaultIds,
+  ids => ids.length > 0
+);
+
 export const selectUserDepositedVaultIdsForAsset = (state: BeefyState, asset: string) => {
   const vaultIds = selectUserDepositedVaultIds(state);
   return vaultIds.filter(vaultId => {
