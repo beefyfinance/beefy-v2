@@ -4,7 +4,7 @@
     "name": "rETH/WETH V3",
     "type": "standard",
     "token": "rETH/WETH V3",
-    "tokenAddress": "0x1ea5870f7c037930ce1d5d8d9317c670e89e13e3",
+    "tokenAddress": "0x1ea5870f7C037930CE1d5d8d9317c670e89e13E3",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
     "earnContractAddress": "0xf18b52793185A885975b6d9e307e7Aaacc614766",
