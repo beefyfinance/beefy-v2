@@ -1,5 +1,37 @@
 [
   {
+    "id": "balancerv3-ethereum-waethweth-reth",
+    "name": "rETH/WETH V3",
+    "type": "standard",
+    "token": "rETH/WETH V3",
+    "tokenAddress": "0x1ea5870f7c037930ce1d5d8d9317c670e89e13e3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnContractAddress": "0xf18b52793185A885975b6d9e307e7Aaacc614766",
+    "earnedToken": "mooBalancerEthereumrETH-WETH",
+    "earnedTokenAddress": "0xf18b52793185A885975b6d9e307e7Aaacc614766",
+    "oracle": "lps",
+    "oracleId": "balancerv3-ethereum-waethweth-reth",
+    "status": "active",
+    "createdAt": 1766583303,
+    "platformId": "aura",
+    "assets": ["rETH", "waEthWETH"],
+    "risks": {
+      "updatedAt": 1766583303,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v3/0x1ea5870f7c037930ce1d5d8d9317c670e89e13e3/add-liquidity",
+    "network": "ethereum"
+  },
+  {
     "id": "stakedao-crv-sdcrv",
     "name": "sdCRV/CRV",
     "type": "standard",
