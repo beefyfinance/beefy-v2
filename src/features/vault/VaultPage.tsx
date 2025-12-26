@@ -1,32 +1,20 @@
 import type { PropsWithChildren } from 'react';
 import { lazy, memo } from 'react';
 import { Navigate, useParams } from 'react-router';
-import { Container } from '../../components/Container/Container.tsx';
-import { Hidden } from '../../components/MediaQueries/Hidden.tsx';
 import { VaultMeta } from '../../components/Meta/VaultMeta.tsx';
 import { TechLoader } from '../../components/TechLoader/TechLoader.tsx';
-import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { useAppSelector } from '../data/store/hooks.ts';
 import { type VaultEntity } from '../data/entities/vault.ts';
 import { selectVaultIdForVaultPage } from '../data/selectors/vaults.ts';
 import { Actions } from './components/Actions/Actions.tsx';
 import { VaultBanners } from './components/Banners/VaultBanners.tsx';
-import { PromoCardLoader } from './components/BoostCard/PromoCardLoader.tsx';
-import { Details } from './components/Details/Details.tsx';
-import { Explainer } from './components/Explainer/Explainer.tsx';
-import { GamingCards } from './components/GamingCards/GamingCards.tsx';
-import { HistoricGraphsLoader } from './components/HistoricGraph/HistoricGraphsLoader.tsx';
-import { InsuranceCards } from './components/InsuranceCards/InsuranceCards.tsx';
-import { LeverageCards } from './components/LeverageCards/LeverageCards.tsx';
-import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdown/LiquidityPoolBreakdown.tsx';
-import { PnLGraphIfWallet } from './components/PnLGraph/PnLGraphIfWallet.tsx';
-import { RiskChecklistCard } from './components/RiskChecklistCard/RiskChecklistCard.tsx';
 import { VaultHeader } from './components/VaultHeader/VaultHeader.tsx';
 import { VaultsStats } from './components/VaultsStats/VaultsStats.tsx';
-import { styles } from './styles.ts';
-import { PageLayout } from '../../components/PageLayout/PageLayout.tsx';
+import { MainAreaTabs } from './components/MainAreaTabs/MainAreaTabs.tsx';
+import { PartnersAreaTabs } from './components/PartnersAreaTabs/PartnersAreaTabs.tsx';
+import { BalancesTable } from './components/BalancesTable/BalancesTable.tsx';
+import { styled } from '@repo/styles/jsx';
 
-const useStyles = legacyMakeStyles(styles);
 const NotFoundPage = lazy(() => import('../../features/pagenotfound/NotFoundPage.tsx'));
 
 type VaultUrlParams = {
@@ -49,47 +37,151 @@ const VaultPage = memo(function VaultPage() {
 type VaultContentProps = PropsWithChildren<{
   vaultId: VaultEntity['id'];
 }>;
-const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) {
-  const classes = useStyles();
 
+const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) {
   return (
-    <PageLayout
-      content={
-        <Container maxWidth="lg" className={classes.page}>
-          <VaultMeta vaultId={vaultId} />
-          <VaultBanners vaultId={vaultId} />
-          <div className={classes.header}>
+    <PageContainer>
+      <VaultMeta vaultId={vaultId} />
+      <VaultBanners vaultId={vaultId} />
+
+      {/* Main Grid Layout - 2 columns */}
+      <ContentGrid>
+        {/* Left Column */}
+        <LeftColumn>
+          {/* Vault Header Row */}
+          <HeaderArea>
             <VaultHeader vaultId={vaultId} />
             <VaultsStats vaultId={vaultId} />
-          </div>
-          <div className={classes.contentColumns}>
-            <div className={classes.columnActions}>
-              <Actions vaultId={vaultId} />
-              <Hidden to="sm">
-                <InsuranceCards vaultId={vaultId} />
-                <LeverageCards vaultId={vaultId} />
-                <GamingCards vaultId={vaultId} />
-              </Hidden>
-            </div>
-            <div className={classes.columnInfo}>
-              <PromoCardLoader vaultId={vaultId} />
-              <PnLGraphIfWallet vaultId={vaultId} />
-              <HistoricGraphsLoader vaultId={vaultId} />
-              <LiquidityPoolBreakdownLoader vaultId={vaultId} />
-              <Explainer vaultId={vaultId} />
-              <RiskChecklistCard vaultId={vaultId} />
-              <Details vaultId={vaultId} />
-              <Hidden from="md">
-                <InsuranceCards vaultId={vaultId} />
-                <LeverageCards vaultId={vaultId} />
-                <GamingCards vaultId={vaultId} />
-              </Hidden>
-            </div>
-          </div>
-        </Container>
-      }
-    />
+          </HeaderArea>
+
+          {/* Main Area */}
+          <MainArea>
+            <MainAreaTabs vaultId={vaultId} />
+          </MainArea>
+
+          {/* Balances Section */}
+          <BalancesArea>
+            <BalancesTable />
+          </BalancesArea>
+        </LeftColumn>
+
+        {/* Right Column - Actions 70% + Partners 30% */}
+        <RightColumn>
+          {/* Actions Area - 70% */}
+          <ActionsArea>
+            <Actions vaultId={vaultId} />
+          </ActionsArea>
+
+          {/* Partners Area - 30% */}
+          <PartnersArea>
+            <PartnersAreaTabs vaultId={vaultId} />
+          </PartnersArea>
+        </RightColumn>
+      </ContentGrid>
+    </PageContainer>
   );
+});
+
+const PageContainer = styled('div', {
+  base: {
+    width: '100%',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'hidden',
+  },
+});
+
+const ContentGrid = styled('div', {
+  base: {
+    display: 'grid',
+    gridTemplateColumns: '1fr',
+    flex: 1,
+    overflow: 'hidden',
+    md: {
+      gridTemplateColumns: '1fr 380px',
+    },
+    lg: {
+      gridTemplateColumns: '1fr 420px',
+    },
+  },
+});
+
+const LeftColumn = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'hidden',
+    borderRight: '1px solid',
+    borderColor: 'bayOfMany',
+    order: 1,
+    md: {
+      order: 0,
+    },
+  },
+});
+
+const HeaderArea = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
+    padding: '8px 12px',
+    borderBottom: '1px solid',
+    borderColor: 'bayOfMany',
+    flexShrink: 0,
+  },
+});
+
+const MainArea = styled('div', {
+  base: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'hidden',
+    borderBottom: '1px solid',
+    borderColor: 'bayOfMany',
+  },
+});
+
+const BalancesArea = styled('div', {
+  base: {
+    overflow: 'auto',
+    flexShrink: 0,
+    maxHeight: '200px',
+  },
+});
+
+const RightColumn = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'hidden',
+    order: 0,
+    md: {
+      order: 1,
+    },
+  },
+});
+
+const ActionsArea = styled('div', {
+  base: {
+    flex: 7,
+    borderBottom: '1px solid',
+    borderColor: 'bayOfMany',
+    overflow: 'auto',
+    minHeight: 0,
+  },
+});
+
+const PartnersArea = styled('div', {
+  base: {
+    flex: 3,
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: 0,
+  },
 });
 
 // eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
