@@ -4,13 +4,18 @@ import { memo, type ReactNode } from 'react';
 export type PageLayoutProps = {
   content: ReactNode;
   header?: ReactNode;
+  contentAlignedCenter?: boolean;
 };
 
-export const PageLayout = memo(function PageLayout({ header, content }: PageLayoutProps) {
+export const PageLayout = memo(function PageLayout({
+  header,
+  content,
+  contentAlignedCenter = false,
+}: PageLayoutProps) {
   return (
     <Container>
       {header && header}
-      <Content>{content}</Content>
+      <Content contentAlignedCenter={contentAlignedCenter}>{content}</Content>
     </Container>
   );
 });
@@ -33,6 +38,15 @@ const Content = styled('div', {
     flexGrow: 1,
     sm: {
       borderRadius: '24px',
+    },
+  },
+  variants: {
+    contentAlignedCenter: {
+      true: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
     },
   },
 });

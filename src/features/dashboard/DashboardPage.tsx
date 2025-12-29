@@ -1,4 +1,4 @@
-import { memo, type ReactNode } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate, useParams } from 'react-router';
 import { UnstakedClmBannerDashboard } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBannerDashboard.tsx';
@@ -23,6 +23,7 @@ import { UserVaults } from './components/UserVaults/UserVaults.tsx';
 import { useInitDashboard } from './hooks.ts';
 import { BeGemsBanner } from '../../components/Banners/BeGemsBanner/BeGemsBanner.tsx';
 import { styled } from '@repo/styles/jsx';
+import { PageLayout } from '../../components/PageLayout/PageLayout.tsx';
 
 export type DashboardProps = {
   mode: 'url' | 'wallet';
@@ -53,11 +54,16 @@ const DashboardFromUrl = memo(function DashboardFromWallet() {
   }
 
   return (
-    <DashboardContainer>
-      {addressOrDomain?.toLowerCase().startsWith('0x') ?
-        <InvalidAddress />
-      : <InvalidDomain />}
-    </DashboardContainer>
+    <PageLayout
+      contentAlignedCenter={true}
+      content={
+        <Content w100={true}>
+          {addressOrDomain?.toLowerCase().startsWith('0x') ?
+            <InvalidAddress />
+          : <InvalidDomain />}
+        </Content>
+      }
+    />
   );
 });
 
@@ -69,11 +75,14 @@ const DashboardFromWallet = memo(function DashboardFromWallet() {
   }
 
   return (
-    <DashboardContainer>
-      <Content>
-        <NotConnected />
-      </Content>
-    </DashboardContainer>
+    <PageLayout
+      contentAlignedCenter={true}
+      content={
+        <Content w100={true}>
+          <NotConnected />
+        </Content>
+      }
+    />
   );
 });
 
@@ -92,23 +101,18 @@ const DashboardFromDomain = memo(function DashboardFromDomain({
 
   if (isRejectedStatus(status)) {
     return (
-      <DashboardContainer>
-        <Content>
-          <InvalidDomain />
-        </Content>
-      </DashboardContainer>
+      <PageLayout
+        contentAlignedCenter={true}
+        content={
+          <Content w100={true}>
+            <InvalidDomain />
+          </Content>
+        }
+      />
     );
   }
 
   return <TechLoader text={t('Loading')} />;
-});
-
-type DashboardContainerProps = {
-  children: ReactNode;
-};
-
-const DashboardContainer = memo(function DashboardContainer({ children }: DashboardContainerProps) {
-  return <MainContainer>{children}</MainContainer>;
 });
 
 type DashboardForAddressProps = {
@@ -123,48 +127,46 @@ const DashboardForAddress = memo(function DashboardForAddress({
   const userVaults = useAppSelector(state => selectUserDepositedVaultIds(state, address));
 
   return (
-    <DashboardContainer>
+    <>
       <DashboardMeta wallet={addressLabel || address} />
-      <UnstakedClmBannerDashboard address={address} />
-      <BeGemsBanner address={address} dashboard={true} />
-      <Header address={address} addressLabel={addressLabel}>
-        {loading ?
-          <DepositSummaryPlaceholder />
-        : <DepositSummary address={address} />}
-      </Header>
-      <Content>
-        {loading ?
-          <TechLoader />
-        : userVaults.length > 0 ?
+      <PageLayout
+        header={
           <>
-            <UserExposure address={address} />
-            <UserVaults address={address} />
+            <UnstakedClmBannerDashboard address={address} />
+            <BeGemsBanner address={address} dashboard={true} />
+            <Header address={address} addressLabel={addressLabel}>
+              {loading ?
+                <DepositSummaryPlaceholder />
+              : <DepositSummary address={address} />}
+            </Header>
           </>
-        : <NoResults title={addressLabel || address} address={address} />}
-      </Content>
-    </DashboardContainer>
+        }
+        content={
+          <Content>
+            {loading ?
+              <TechLoader />
+            : userVaults.length > 0 ?
+              <>
+                <UserExposure address={address} />
+                <UserVaults address={address} />
+              </>
+            : <NoResults title={addressLabel || address} address={address} />}
+          </Content>
+        }
+      />
+    </>
   );
-});
-
-const MainContainer = styled('div', {
-  base: {
-    flex: '1 1 auto',
-    paddingBottom: '48px',
-    backgroundColor: 'background.header',
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-  },
 });
 
 const Content = styled('div', {
   base: {
     paddingBlock: '0px 20px',
-    backgroundColor: 'background.body',
-    borderRadius: '20px',
-    flexGrow: 1,
-    sm: {
-      borderRadius: '24px',
+  },
+  variants: {
+    w100: {
+      true: {
+        width: '100%',
+      },
     },
   },
 });
