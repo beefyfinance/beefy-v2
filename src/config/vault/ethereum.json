@@ -1,5 +1,37 @@
 [
   {
+    "id": "balancerv3-ethereum-oseth-waethweth",
+    "name": "osETH/WETH V3",
+    "type": "standard",
+    "token": "osETH/WETH V3",
+    "tokenAddress": "0x57c23c58B1D8C3292c15BEcF07c62C5c52457A42",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnContractAddress": "0xEe4537328D7B9D591Dcb76f57eeC7B5f11E007D2",
+    "earnedToken": "mooBalancerEthereumosETH-WETH",
+    "earnedTokenAddress": "0xEe4537328D7B9D591Dcb76f57eeC7B5f11E007D2",
+    "oracle": "lps",
+    "oracleId": "balancerv3-ethereum-oseth-waethweth",
+    "status": "active",
+    "createdAt": 1767541791,
+    "platformId": "aura",
+    "assets": ["osETH", "waEthWETH"],
+    "risks": {
+      "updatedAt": 1767541791,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v3/0x57c23c58B1D8C3292c15BEcF07c62C5c52457A42/add-liquidity",
+    "network": "ethereum"
+  },
+  {
     "id": "balancerv3-ethereum-waethweth-reth",
     "name": "rETH/WETH V3",
     "type": "standard",
