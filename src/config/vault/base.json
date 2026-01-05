@@ -1,5 +1,44 @@
 [
   {
+    "id": "aerodrome-usdc-nock",
+    "name": "NOCK-USDC vLP",
+    "type": "standard",
+    "token": "vAMM-USDC/NOCK",
+    "tokenAddress": "0x85f1Aa3a70fEdd1C52705c15BAEd143e675CD626",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xd72AADd60AC42E77e3Fb471847Dd1364A28B52F6",
+    "earnedToken": "mooAerodromeBaseUSDC-NOCK",
+    "earnedTokenAddress": "0xd72AADd60AC42E77e3Fb471847Dd1364A28B52F6",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usdc-nock",
+    "status": "active",
+    "createdAt": 1766684616,
+    "platformId": "aerodrome",
+    "assets": ["NOCK", "USDC"],
+    "risks": {
+      "updatedAt": 1766684616,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&token1=0x9b5e262cf9bb04869ab40b19af91d2dc85761722&type=-1&chain0=8453&chain1=8453&factory=0x420DD381b31aEf6683db6B902084cB0FFECe40Da",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-edel",
     "name": "EDEL-WETH vLP",
     "type": "standard",
