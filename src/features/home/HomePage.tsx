@@ -16,10 +16,14 @@ const HomePage = memo(function HomePage() {
 
   if (!isVaultListAvailable) {
     return (
-      <>
-        <HomeMeta />
-        <Loading />
-      </>
+      <PageLayout
+        content={
+          <>
+            <HomeMeta />
+            <Loading />
+          </>
+        }
+      />
     );
   }
 
