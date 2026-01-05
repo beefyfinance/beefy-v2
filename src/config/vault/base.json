@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-usdc-nock",
     "status": "active",
-    "createdAt": 1766684616,
+    "createdAt": 1767597566,
     "platformId": "aerodrome",
     "assets": ["NOCK", "USDC"],
     "risks": {
