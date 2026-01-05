@@ -622,5 +622,28 @@
         "url": "https://docs.orbiter.finance/welcome/quest/task-verification-specification"
       }
     ]
+  },
+  {
+    "id": "re.xyz",
+    "docs": "https://docs.re.xyz/protocol/re-points",
+    "points": [
+      {
+        "id": "re-points",
+        "name": "Re Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "re-points",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://app.re.xyz/points"
+      }
+    ]
   }
 ]

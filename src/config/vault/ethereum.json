@@ -17,6 +17,7 @@
     "platformId": "magpie",
     "assets": ["reUSDe"],
     "migrationIds": ["magpie"],
+    "pointStructureIds": ["re.xyz", "ethena"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -51,6 +52,7 @@
     "assets": ["reUSDxyz"],
     "icons": ["reUSDxyz"],
     "migrationIds": ["magpie"],
+    "pointStructureIds": ["re.xyz", "ethena"],
     "risks": {
       "complex": false,
       "curated": false,
