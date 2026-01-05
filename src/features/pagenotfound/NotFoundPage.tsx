@@ -6,6 +6,7 @@ import { legacyMakeStyles } from '../../helpers/mui.ts';
 import image from '../../images/404image.svg';
 import { Button } from '../../components/Button/Button.tsx';
 import { Container } from '../../components/Container/Container.tsx';
+import { PageLayout } from '../../components/PageLayout/PageLayout.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -19,17 +20,21 @@ const NotFoundPage = memo(() => {
   }, [navigate]);
 
   return (
-    <Container maxWidth="lg">
-      <div className={classes.inner}>
-        <img src={image} alt="404" className={classes.image} />
-        <div className={classes.textContainer}>
-          <div className={classes.text}>{t('Page-Not-Found')}</div>
-          <Button variant="cta" css={styles.button} onClick={handleOpen}>
-            {t('View-All')}
-          </Button>
-        </div>
-      </div>
-    </Container>
+    <PageLayout
+      content={
+        <Container maxWidth="lg">
+          <div className={classes.inner}>
+            <img src={image} alt="404" className={classes.image} />
+            <div className={classes.textContainer}>
+              <div className={classes.text}>{t('Page-Not-Found')}</div>
+              <Button variant="cta" css={styles.button} onClick={handleOpen}>
+                {t('View-All')}
+              </Button>
+            </div>
+          </div>
+        </Container>
+      }
+    />
   );
 });
 
