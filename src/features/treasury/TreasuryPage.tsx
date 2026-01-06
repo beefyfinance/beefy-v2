@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TechLoader } from '../../components/TechLoader/TechLoader.tsx';
+import { FullscreenTechLoader } from '../../components/TechLoader/TechLoader.tsx';
 import { useAppDispatch, useAppSelector } from '../data/store/hooks.ts';
 import { fetchTreasury } from '../data/actions/treasury.ts';
 import { selectIsVaultsAvailable } from '../data/selectors/data-loader/config.ts';
@@ -30,7 +30,7 @@ const TreasuryPage = memo(function TreasuryPage() {
   }, [dispatch, shouldInit, isAddressBookLoaded, vaultsLoaded]);
 
   if (!isLoaded || !isAddressBookLoaded || !vaultsLoaded) {
-    return <TechLoader text={t('Treasury-Loading')} />;
+    return <FullscreenTechLoader text={t('Treasury-Loading')} />;
   }
 
   return (
