@@ -1,44 +1,5 @@
 [
   {
-    "id": "aerodrome-usdc-nock",
-    "name": "NOCK-USDC vLP",
-    "type": "standard",
-    "token": "vAMM-USDC/NOCK",
-    "tokenAddress": "0x85f1Aa3a70fEdd1C52705c15BAEd143e675CD626",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnContractAddress": "0xd72AADd60AC42E77e3Fb471847Dd1364A28B52F6",
-    "earnedToken": "mooAerodromeBaseUSDC-NOCK",
-    "earnedTokenAddress": "0xd72AADd60AC42E77e3Fb471847Dd1364A28B52F6",
-    "oracle": "lps",
-    "oracleId": "aerodrome-usdc-nock",
-    "status": "active",
-    "createdAt": 1767597566,
-    "platformId": "aerodrome",
-    "assets": ["NOCK", "USDC"],
-    "risks": {
-      "updatedAt": 1766684616,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "pool",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
     "id": "aerodrome-cow-base-aero-cbbtc-vault",
     "name": "AERO-cbBTC",
     "type": "standard",
@@ -271,7 +232,33 @@
     "zaps": [
       {
         "strategyId": "cowcentrated"
-=======
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-usdc-nock",
+    "name": "NOCK-USDC vLP",
+    "type": "standard",
+    "token": "vAMM-USDC/NOCK",
+    "tokenAddress": "0x85f1aa3a70fedd1c52705c15baed143e675cd626",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xd72AADd60AC42E77e3Fb471847Dd1364A28B52F6",
+    "earnedToken": "mooAerodromeBaseUSDC-NOCK",
+    "earnedTokenAddress": "0xd72AADd60AC42E77e3Fb471847Dd1364A28B52F6",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usdc-nock",
+    "status": "active",
+    "createdAt": 1766684616,
+    "platformId": "aerodrome",
+    "assets": ["NOCK", "USDC"],
+    "risks": {
+      "updatedAt": 1766684616,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
