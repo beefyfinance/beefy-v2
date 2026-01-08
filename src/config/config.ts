@@ -96,6 +96,8 @@ export const config = {
       'stUSDS',
       'cUSD',
       'stcUSD',
+      'reUSDxyz',
+      'reUSDe',
     ],
   },
   polygon: {
@@ -890,7 +892,7 @@ export const config = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['USDC', 'AUSD', 'USDT0', 'muBOND', 'AZND', 'loAZND'],
+    stableCoins: ['USDC', 'AUSD', 'USDT0', 'muBOND', 'AZND', 'loAZND', 'USD1'],
   },
   aurora: {
     name: 'Aurora',
