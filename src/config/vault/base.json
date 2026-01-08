@@ -240,7 +240,7 @@
     "name": "NOCK-USDC vLP",
     "type": "standard",
     "token": "vAMM-USDC/NOCK",
-    "tokenAddress": "0x85f1aa3a70fedd1c52705c15baed143e675cd626",
+    "tokenAddress": "0x85f1Aa3a70fEdd1C52705c15BAEd143e675CD626",
     "tokenDecimals": 18,
     "tokenProviderId": "aerodrome",
     "earnContractAddress": "0xd72AADd60AC42E77e3Fb471847Dd1364A28B52F6",
