@@ -499,14 +499,7 @@
     ],
     "eligibility": [
       {
-        "type": "platform",
-        "platformId": "hybra",
-        "liveAfter": "2025-07-01"
-      },
-      {
-        "type": "provider",
-        "tokenProviderId": "hybra",
-        "liveAfter": "2025-07-01"
+        "type": "vault-whitelist"
       }
     ],
     "accounting": [
