@@ -11,7 +11,7 @@ import { MobileMenu } from './components/MobileMenu/MobileMenu.tsx';
 import { BifiPricesDesktop } from './components/Prices/Prices.tsx';
 import { selectShouldInitArticles } from '../../features/data/selectors/data-loader/articles.ts';
 import { selectShouldInitProposals } from '../../features/data/selectors/data-loader/proposals.ts';
-import { SignMessageProvider } from './components/SignMessage/SignMessageContext.tsx';
+import { SignMessageProvider } from './components/SignMessage/SignMessageProvider.tsx';
 
 export const Header = memo(function Header() {
   const dispatch = useAppDispatch();

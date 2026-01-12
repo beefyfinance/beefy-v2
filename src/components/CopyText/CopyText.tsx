@@ -6,6 +6,7 @@ import { styled } from '@repo/styles/jsx';
 type CopyTextProps = {
   className?: string;
   value: string;
+  onClick?: () => void;
 };
 
 const copyTextRecipe = sva({
@@ -54,7 +55,7 @@ const FileCopyIcon = styled(FileCopy, {
   },
 });
 
-export const CopyText = memo<CopyTextProps>(function CopyText({ className, value }) {
+export const CopyText = memo<CopyTextProps>(function CopyText({ className, value, onClick }) {
   const classes = copyTextRecipe();
   const inputRef = useRef<HTMLInputElement>(null);
   const handleCopy = useCallback(() => {
@@ -62,7 +63,8 @@ export const CopyText = memo<CopyTextProps>(function CopyText({ className, value
       inputRef.current.select();
     }
     navigator.clipboard.writeText(value).catch(e => console.error(e));
-  }, [value, inputRef]);
+    onClick?.();
+  }, [value, inputRef, onClick]);
 
   return (
     <div className={cx(classes.root, className)}>

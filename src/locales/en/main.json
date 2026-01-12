@@ -40,6 +40,7 @@
   "SignMessage-SignaturePlaceholder": "Signature will appear here...",
   "SignMessage-Sign": "Sign",
   "SignMessage-Signing": "Signing...",
+  "SignMessage-Copied": "Copied to clipboard!",
   "SignMessage-ErrorEmpty": "Please enter a message to sign",
   "SignMessage-ErrorUnknown": "An error occurred while signing",
   "Footer-Audit": "Audit",

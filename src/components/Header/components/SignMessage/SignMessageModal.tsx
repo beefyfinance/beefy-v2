@@ -1,9 +1,9 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState, type ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@repo/styles/jsx';
 import { Modal } from '../../../Modal/Modal.tsx';
 import { Button } from '../../../Button/Button.tsx';
-import { CopyText } from '../../../CopyText.tsx/CopyText.tsx';
+import { CopyText } from '../../../CopyText/CopyText.tsx';
 import { useAppDispatch, useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { selectIsWalletConnected } from '../../../../features/data/selectors/wallet.ts';
 import { askForWalletConnection } from '../../../../features/data/actions/wallet.ts';
@@ -26,6 +26,7 @@ export const SignMessageModal = memo<SignMessageModalProps>(function SignMessage
   const [message, setMessage] = useState(initialMessage);
   const [signature, setSignature] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Update message when initialMessage changes (e.g., from URL param)
@@ -66,10 +67,24 @@ export const SignMessageModal = memo<SignMessageModalProps>(function SignMessage
     }
   }, [message, t]);
 
-  const handleMessageChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(e.target.value);
-    setError(null);
-  }, []);
+  const handleMessageChange = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => {
+      if (signature !== '') {
+        setSignature('');
+        setIsCopied(false);
+      }
+      setMessage(e.target.value);
+      setError(null);
+    },
+    [signature]
+  );
+
+  const handleCopySignature = useCallback(() => {
+    setIsCopied(true);
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 3000);
+  }, [setIsCopied]);
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -89,8 +104,12 @@ export const SignMessageModal = memo<SignMessageModalProps>(function SignMessage
 
         <Label>{t('SignMessage-SignatureLabel')}</Label>
         {signature ?
-          <CopyText value={signature} />
+          <CopyText value={signature} onClick={handleCopySignature} />
         : <SignaturePlaceholder>{t('SignMessage-SignaturePlaceholder')}</SignaturePlaceholder>}
+
+        {isCopied ?
+          <CopiedText>{t('SignMessage-Copied')}</CopiedText>
+        : null}
 
         {isWalletConnected ?
           <SignButton
@@ -191,5 +210,14 @@ const ErrorText = styled('p', {
     textStyle: 'body.sm',
     color: 'indicators.error',
     margin: '0',
+  },
+});
+
+const CopiedText = styled('p', {
+  base: {
+    textStyle: 'body.sm',
+    color: 'green.40',
+    margin: '0',
+    animation: 'fadeInOut 1s ease-in-out forwards',
   },
 });

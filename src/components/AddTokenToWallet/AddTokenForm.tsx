@@ -14,7 +14,7 @@ import {
 } from '../../features/data/selectors/wallet.ts';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
 import { Button } from '../Button/Button.tsx';
-import { CopyText } from '../CopyText.tsx/CopyText.tsx';
+import { CopyText } from '../CopyText/CopyText.tsx';
 
 const addTokenFormRecipe = sva({
   slots: ['details', 'label', 'buttons'],
