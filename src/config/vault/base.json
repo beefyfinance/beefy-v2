@@ -12210,47 +12210,6 @@
     ]
   },
   {
-    "id": "aerodrome-jarvis-wsteth",
-    "name": "JARVIS-wstETH vLP",
-    "type": "standard",
-    "token": "vAMM-JARVIS/wstETH",
-    "tokenAddress": "0xa5061aa5eB2e8abCE384B36a855549e8D9C8cEd5",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnContractAddress": "0xEe37B2135237B460a85FF3755443C5B74F11580d",
-    "earnedToken": "mooAerodromeBaseJARVIS-wstETH",
-    "earnedTokenAddress": "0xEe37B2135237B460a85FF3755443C5B74F11580d",
-    "oracle": "lps",
-    "oracleId": "aerodrome-jarvis-wsteth",
-    "status": "eol",
-    "createdAt": 1732176041,
-    "retireReason": "tvl",
-    "retiredAt": 1733532788,
-    "platformId": "aerodrome",
-    "assets": ["JARVIS", "wstETH"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x777b2839832982B35213063d850848369390EE16&token1=0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452&type=-1",
-    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "base-aerodrome"
-      }
-    ]
-  },
-  {
     "id": "uniswap-cow-base-weth-morpho-rp",
     "name": "WETH-MORPHO Reward Pool",
     "type": "gov",
