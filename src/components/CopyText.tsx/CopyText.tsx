@@ -1,6 +1,7 @@
 import { memo, useCallback, useRef } from 'react';
 import FileCopy from '../../images/icons/mui/FileCopy.svg?react';
 import { cx, sva } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
 
 type CopyTextProps = {
   className?: string;
@@ -38,11 +39,18 @@ const copyTextRecipe = sva({
       outline: 'none',
       cursor: 'pointer',
       color: 'text.middle',
-      padding: '1px 6px',
+      padding: '1px 12px 1px 6px',
       '&:hover': {
         color: 'text.light',
       },
     },
+  },
+});
+
+const FileCopyIcon = styled(FileCopy, {
+  base: {
+    width: '16px',
+    height: '16px',
   },
 });
 
@@ -60,7 +68,7 @@ export const CopyText = memo<CopyTextProps>(function CopyText({ className, value
     <div className={cx(classes.root, className)}>
       <input type="text" readOnly className={classes.input} value={value} ref={inputRef} />
       <button type="button" className={classes.button} onClick={handleCopy}>
-        <FileCopy />
+        <FileCopyIcon />
       </button>
     </div>
   );

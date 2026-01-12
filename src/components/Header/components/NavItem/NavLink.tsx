@@ -42,6 +42,7 @@ const navLinkRecipe = cva({
     ...navItemStyles.base,
     _hover: {
       color: 'text.light',
+      cursor: 'pointer',
     },
     _focus: {
       color: 'text.light',
