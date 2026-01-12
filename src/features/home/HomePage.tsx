@@ -9,36 +9,47 @@ import { Filters } from './components/Filters/Filters.tsx';
 import { Loading } from './components/Loading/Loading.tsx';
 import { HomeHeader } from './components/HomeHeader/HomeHeader.tsx';
 import { Vaults } from './components/Vaults/Vaults.tsx';
+import { PageLayout } from '../../components/PageLayout/PageLayout.tsx';
 
 const HomePage = memo(function HomePage() {
   const isVaultListAvailable = useAppSelector(selectIsVaultListAvailable);
 
   if (!isVaultListAvailable) {
     return (
-      <>
-        <HomeMeta />
-        <Loading />
-      </>
+      <PageLayout
+        content={
+          <>
+            <HomeMeta />
+            <Loading />
+          </>
+        }
+      />
     );
   }
 
   return (
     <>
       <HomeMeta />
-      <Background>
-        <Container maxWidth="lg">
-          <Banners />
-        </Container>
-        <HeaderContainer maxWidth="lg">
-          <HomeHeader />
-        </HeaderContainer>
-        <Content>
-          <Container maxWidth="lg">
-            <Filters />
-          </Container>
-          <Vaults />
-        </Content>
-      </Background>
+      <PageLayout
+        content={
+          <Content>
+            <Container maxWidth="lg">
+              <Filters />
+            </Container>
+            <Vaults />
+          </Content>
+        }
+        header={
+          <>
+            <Container maxWidth="lg">
+              <Banners />
+            </Container>
+            <HeaderContainer maxWidth="lg">
+              <HomeHeader />
+            </HeaderContainer>
+          </>
+        }
+      />
     </>
   );
 });
@@ -57,21 +68,9 @@ const HeaderContainer = styled(Container, {
   },
 });
 
-const Background = styled('div', {
-  base: {
-    backgroundColor: 'background.header',
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-  },
-});
-
 const Content = styled('div', {
   base: {
     paddingBlock: '12px 20px',
-    backgroundColor: 'background.body',
-    borderRadius: '20px',
-    flexGrow: 1,
     sm: {
       paddingBlock: '14px 32px',
       borderRadius: '24px',

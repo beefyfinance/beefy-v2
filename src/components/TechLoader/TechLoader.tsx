@@ -3,6 +3,7 @@ import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { styles } from './styles.ts';
 import loadingImage from '../../images/tech-loader.gif';
 import { css, type CssStyles } from '@repo/styles/css';
+import { PageLayout } from '../PageLayout/PageLayout.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -26,8 +27,12 @@ export const TechLoader = memo(function TechLoader({ text, css: cssProp }: TechL
 export const FullscreenTechLoader = memo(function FullscreenTechLoader({ text }: TechLoaderProps) {
   const classes = useStyles();
   return (
-    <div className={classes.fullscreen}>
-      <TechLoader text={text} />
-    </div>
+    <PageLayout
+      content={
+        <div className={classes.fullscreen}>
+          <TechLoader text={text} />
+        </div>
+      }
+    />
   );
 });

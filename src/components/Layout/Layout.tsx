@@ -3,6 +3,7 @@ import { Outlet } from 'react-router';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary.tsx';
 import { FullscreenTechLoader } from '../TechLoader/TechLoader.tsx';
 import { layoutRecipe } from './styles.ts';
+import { useTranslation } from 'react-i18next';
 
 export type LayoutProps = {
   header: ReactNode;
@@ -11,13 +12,14 @@ export type LayoutProps = {
 
 export const Layout = memo<LayoutProps>(function Layout({ header, footer }) {
   const classes = layoutRecipe();
+  const { t } = useTranslation();
 
   return (
     <div className={classes.wrapper}>
       <div className={classes.top}>{header}</div>
       <div className={classes.middle}>
         <ErrorBoundary>
-          <Suspense fallback={<FullscreenTechLoader />}>
+          <Suspense fallback={<FullscreenTechLoader text={t('Vaults-LoadingData')} />}>
             <Outlet />
           </Suspense>
         </ErrorBoundary>
