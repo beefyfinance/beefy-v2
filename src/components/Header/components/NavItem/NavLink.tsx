@@ -4,7 +4,7 @@ import { styled } from '@repo/styles/jsx';
 import type { ReactNode } from 'react';
 import { DropdownTrigger } from '../../../Dropdown/DropdownTrigger.tsx';
 import { ExternalLink } from '../../../Links/ExternalLink.tsx';
-import { navItemRecipe, navLinkRecipe } from './styles.tsx';
+import { navItemRecipe, navLinkRecipe } from './styles.ts';
 
 export const NavItem = styled('div', navItemRecipe);
 

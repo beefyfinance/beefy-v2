@@ -2,11 +2,13 @@ import { memo, useCallback, useRef } from 'react';
 import FileCopy from '../../images/icons/mui/FileCopy.svg?react';
 import { cx, sva } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
+import { useMountedState } from './hooks.ts';
 
 type CopyTextProps = {
   className?: string;
   value: string;
-  onClick?: () => void;
+  onSuccess?: () => void;
+  onFailure?: (e: unknown) => void;
 };
 
 const copyTextRecipe = sva({
@@ -55,16 +57,26 @@ const FileCopyIcon = styled(FileCopy, {
   },
 });
 
-export const CopyText = memo<CopyTextProps>(function CopyText({ className, value, onClick }) {
+export const CopyText = memo<CopyTextProps>(function CopyText({
+  className,
+  value,
+  onSuccess,
+  onFailure,
+}) {
   const classes = copyTextRecipe();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const isMounted = useMountedState();
+
   const handleCopy = useCallback(() => {
     if (inputRef.current) {
       inputRef.current.select();
     }
-    navigator.clipboard.writeText(value).catch(e => console.error(e));
-    onClick?.();
-  }, [value, inputRef, onClick]);
+    navigator.clipboard
+      .writeText(value)
+      .then(() => isMounted && onSuccess?.())
+      .catch(e => isMounted && onFailure?.(e));
+  }, [value, isMounted, onSuccess, onFailure]);
 
   return (
     <div className={cx(classes.root, className)}>

@@ -3,7 +3,7 @@ import type { NavItemProps } from '../DropNavItem/types.ts';
 import { NavItemInner } from '../NavItem/NavItemInner.tsx';
 import { useSignMessageModal } from './useSignMessageModal.ts';
 import { styled } from '@repo/styles/jsx';
-import { navLinkRecipe } from '../NavItem/styles.tsx';
+import { navLinkRecipe } from '../NavItem/styles.ts';
 import { RightArrow } from '../NavItem/RightArrow.tsx';
 
 export const SignMessageNavItem = memo<NavItemProps>(function SignMessageNavItem({

@@ -104,7 +104,7 @@ export const SignMessageModal = memo<SignMessageModalProps>(function SignMessage
 
         <Label>{t('SignMessage-SignatureLabel')}</Label>
         {signature ?
-          <CopyText value={signature} onClick={handleCopySignature} />
+          <CopyText value={signature} onSuccess={handleCopySignature} />
         : <SignaturePlaceholder>{t('SignMessage-SignaturePlaceholder')}</SignaturePlaceholder>}
 
         {isCopied ?
