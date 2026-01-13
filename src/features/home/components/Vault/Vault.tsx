@@ -34,6 +34,7 @@ export const Vault = memo(function Vault({ vaultId }: VaultProps) {
   return (
     <Link
       to={`/vault/${vaultId}`}
+      viewTransition={true}
       className={css(
         styles.vault,
         isCowcentrated && styles.vaultCowcentrated,

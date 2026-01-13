@@ -1,7 +1,7 @@
 import { css, cx } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback } from 'react';
-import { NewBadge } from '../../../../../../components/Header/components/Badges/NewBadge.tsx';
+import { NewBadge } from '../../../../../../components/AppLayout/Header/components/Badges/NewBadge.tsx';
 import { ButtonWithTooltip } from '../../../../../../components/Tooltip/ButtonWithTooltip.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';

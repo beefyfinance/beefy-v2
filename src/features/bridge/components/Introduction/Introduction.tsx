@@ -4,6 +4,7 @@ import { styles } from './styles.ts';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { css, type CssStyles } from '@repo/styles/css';
+import { Meta } from '../../../../components/Meta/Meta.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -17,6 +18,12 @@ export const Introduction = memo(function Introduction({ css: cssProp }: Introdu
 
   return (
     <div className={css(cssProp)}>
+      <Meta
+        title={t('Bridge-Intro-Title')}
+        description={
+          'mooBIFI represents BIFI staked in the BIFI vault on Ethereum. You can bridge your mooBIFI to other chains and it will continue to earn a share of vault revenue.'
+        }
+      />
       <h1 className={classes.title}>{t('Bridge-Intro-Title')}</h1>
       <div className={classes.text}>
         <Trans

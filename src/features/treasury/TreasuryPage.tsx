@@ -14,6 +14,7 @@ import {
 import { selectIsAddressBookLoadedGlobal } from '../data/selectors/data-loader/tokens.ts';
 import { styled } from '@repo/styles/jsx';
 import { PageLayout } from '../../components/PageLayout/PageLayout.tsx';
+import { Meta } from '../../components/Meta/Meta.tsx';
 
 const TreasuryPage = memo(function TreasuryPage() {
   const { t } = useTranslation();
@@ -22,6 +23,7 @@ const TreasuryPage = memo(function TreasuryPage() {
   const isLoaded = useAppSelector(selectIsTreasuryLoaded);
   const isAddressBookLoaded = useAppSelector(selectIsAddressBookLoadedGlobal);
   const vaultsLoaded = useAppSelector(selectIsVaultsAvailable);
+  const isLoading = !isLoaded || !isAddressBookLoaded || !vaultsLoaded;
 
   useEffect(() => {
     if (shouldInit && isAddressBookLoaded && vaultsLoaded) {
@@ -29,20 +31,22 @@ const TreasuryPage = memo(function TreasuryPage() {
     }
   }, [dispatch, shouldInit, isAddressBookLoaded, vaultsLoaded]);
 
-  if (!isLoaded || !isAddressBookLoaded || !vaultsLoaded) {
-    return <FullscreenTechLoader text={t('Treasury-Loading')} />;
-  }
-
   return (
-    <PageLayout
-      content={
-        <Content>
-          <DaoExposure />
-          <DaoHoldings />
-        </Content>
+    <>
+      <Meta title="Treasury" />
+      {isLoading ?
+        <FullscreenTechLoader text={t('Treasury-Loading')} />
+      : <PageLayout
+          content={
+            <Content>
+              <DaoExposure />
+              <DaoHoldings />
+            </Content>
+          }
+          header={<DaoSummary />}
+        />
       }
-      header={<DaoSummary />}
-    />
+    </>
   );
 });
 
