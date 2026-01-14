@@ -664,7 +664,7 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["ethena", "hybra"],
+    "pointStructureIds": ["ethena"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -708,7 +708,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["ethena", "hybra"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -749,7 +748,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["hybra"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -793,7 +791,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["hybra"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -834,7 +831,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["hybra"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -878,7 +874,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["hybra"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -919,7 +914,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["hybra"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -963,7 +957,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["hybra"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -1002,7 +995,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["hybra"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -1044,7 +1036,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["hybra"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -1085,7 +1076,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["hybra"],
     "network": "hyperevm",
     "zaps": [
       {
@@ -1129,7 +1119,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["hybra"],
     "network": "hyperevm",
     "zaps": [
       {
