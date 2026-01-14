@@ -37,7 +37,7 @@ const VaultPage = memo(function VaultPage() {
   const { id: maybeId } = useParams<VaultUrlParams>();
   const idOrStatus = useAppSelector(state => selectVaultIdForVaultPage(state, maybeId));
   if (idOrStatus === 'loading') {
-    return <TechLoader text="Loading..." />;
+    return <PageLayout content={<TechLoader text="Loading..." />} />;
   } else if (idOrStatus === 'not-found') {
     return <NotFoundPage />;
   } else if (idOrStatus !== maybeId) {

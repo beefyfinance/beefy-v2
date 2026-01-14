@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TechLoader } from '../../components/TechLoader/TechLoader.tsx';
+import { FullscreenTechLoader } from '../../components/TechLoader/TechLoader.tsx';
 import { useAppDispatch, useAppSelector } from '../data/store/hooks.ts';
 import { fetchTreasury } from '../data/actions/treasury.ts';
 import { selectIsVaultsAvailable } from '../data/selectors/data-loader/config.ts';
@@ -13,6 +13,7 @@ import {
 } from '../data/selectors/data-loader/treasury.ts';
 import { selectIsAddressBookLoadedGlobal } from '../data/selectors/data-loader/tokens.ts';
 import { styled } from '@repo/styles/jsx';
+import { PageLayout } from '../../components/PageLayout/PageLayout.tsx';
 
 const TreasuryPage = memo(function TreasuryPage() {
   const { t } = useTranslation();
@@ -29,39 +30,27 @@ const TreasuryPage = memo(function TreasuryPage() {
   }, [dispatch, shouldInit, isAddressBookLoaded, vaultsLoaded]);
 
   if (!isLoaded || !isAddressBookLoaded || !vaultsLoaded) {
-    return <TechLoader text={t('Treasury-Loading')} />;
+    return <FullscreenTechLoader text={t('Treasury-Loading')} />;
   }
 
   return (
-    <TreasuryContainer>
-      <DaoSummary />
-      <Content>
-        <DaoExposure />
-        <DaoHoldings />
-      </Content>
-    </TreasuryContainer>
+    <PageLayout
+      content={
+        <Content>
+          <DaoExposure />
+          <DaoHoldings />
+        </Content>
+      }
+      header={<DaoSummary />}
+    />
   );
-});
-
-const TreasuryContainer = styled('div', {
-  base: {
-    flex: '1 1 auto',
-    backgroundColor: 'background.header',
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-  },
 });
 
 const Content = styled('div', {
   base: {
     paddingBlock: '12px 20px',
-    backgroundColor: 'background.body',
-    borderRadius: '20px',
-    flexGrow: 1,
     sm: {
       paddingBlock: '14px 32px',
-      borderRadius: '24px',
     },
   },
 });
