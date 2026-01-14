@@ -1,4 +1,5 @@
 # beefy-v2
+
 Official frontend repo of Beefy, The Multichain Yield Optimizer - [app.beefy.com](https://app.beefy.com)
 
 ## Quickstart
