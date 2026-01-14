@@ -22,7 +22,7 @@ import { styles } from './styles.ts';
 import { XAxisTick } from '../../../../../../../components/XAxisTick/XAxisTick.tsx';
 import { GraphNoData } from '../../../../../../../components/GraphNoData/GraphNoData.tsx';
 import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks.ts';
-import { useBreakpoint } from '../../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../../../../hooks/useBreakpoint.ts';
 import { token } from '@repo/styles/tokens';
 
 const useStyles = legacyMakeStyles(styles);

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { Draft } from 'immer';
 import {
-  fetchChainConfigs,
+  fetchChains,
   restoreDefaultRpcsOnSingleChain,
   updateActiveRpc,
 } from '../actions/chains.ts';
@@ -23,14 +23,10 @@ export const chainsSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    builder.addCase(fetchChainConfigs.fulfilled, (sliceState: Draft<ChainsState>, action) => {
+    builder.addCase(fetchChains.fulfilled, (sliceState: Draft<ChainsState>, action) => {
       const timestampNow = Date.now() / 1000;
-      const { chainConfigs, localRpcs } = action.payload;
-      for (const chain of chainConfigs) {
-        // completely skip disabled chains that we can't interact with
-        if (chain.disabled) {
-          continue;
-        }
+      const { chains, localRpcs } = action.payload;
+      for (const chain of chains) {
         // we already know this chain
         if (chain.id in sliceState.byId) {
           continue;

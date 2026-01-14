@@ -18,7 +18,6 @@ import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { stepperReset } from './wallet/stepper.ts';
 import { createWalletActionResetAction } from './wallet/wallet-action.ts';
 import { selectHasWalletInitialized } from '../selectors/data-loader/wallet.ts';
-import { wagmiConfig } from '../apis/chains/wagmi.ts';
 import { walletsConfig } from '../apis/wallet/wallets.ts';
 import type { WalletOption } from '../apis/wallet/wallet-connection-types.ts';
 import type { WalletAccount } from '../reducers/wallet/wallet-types.ts';
@@ -40,7 +39,6 @@ export const initWallet = createAppAsyncThunk<void, boolean | undefined>(
       disposeWalletConnectionApi();
     }
     await initWalletConnectionApi({
-      wagmi: wagmiConfig,
       wallets: walletsConfig,
       chains,
       events: {

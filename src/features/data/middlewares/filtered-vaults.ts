@@ -7,7 +7,7 @@ import {
   fetchBalanceAction,
   recalculateDepositedVaultsAction,
 } from '../actions/balance.ts';
-import { fetchChainConfigs } from '../actions/chains.ts';
+import { fetchChains } from '../actions/chains.ts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
 import { fetchPlatforms } from '../actions/platforms.ts';
@@ -35,7 +35,7 @@ function isRehydrateFiltersAction(action: unknown): action is UnknownRehydrateAc
   return isRehydrateAction(action) && action.key === 'filters';
 }
 
-const hasDataLoaded = isFulfilled(fetchChainConfigs, fetchAllVaults, fetchPlatforms, initPromos);
+const hasDataLoaded = isFulfilled(fetchChains, fetchAllVaults, fetchPlatforms, initPromos);
 
 const hasDataChanged = isFulfilled(
   fetchAllPricesAction,

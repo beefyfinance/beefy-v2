@@ -1,5 +1,5 @@
 import type { WalletOption } from '../../features/data/apis/wallet/wallet-connection-types.ts';
-import { memo, useCallback, useRef } from 'react';
+import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
 import { walletConnectTo } from '../../features/data/actions/wallet.ts';
 import {
@@ -9,6 +9,7 @@ import {
 import { styled } from '@repo/styles/jsx';
 import { VerticalScrollShadows } from '../ScrollShadows/VerticalScrollShadows.tsx';
 import { WalletIcon } from './WalletIcon.tsx';
+import { css } from '@repo/styles/css';
 
 type WalletItemProps = {
   disabled?: boolean;
@@ -30,7 +31,7 @@ const WalletItem = memo(
     return (
       <Button data-id={id} data-rdns={rdns} data-type={type} grid={grid} onClick={handleConnect}>
         <WalletIcon src={iconUrl} background={iconBackground} />
-        {name}
+        <WalletLabel>{name}</WalletLabel>
       </Button>
     );
   }
@@ -48,20 +49,32 @@ export const WalletList = memo(function WalletList({
   const wallets = useAppSelector(selectWalletOptions);
   const activeId = useAppSelector(selectWalletSelectActive);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isTest, setTest] = useState(false);
+  const walletsList = useMemo(() => {
+    if (!isTest) {
+      return wallets;
+    }
+    const testWallets: WalletOption[] = [];
+    while (testWallets.length < 20) {
+      testWallets.push(...wallets);
+    }
+    return testWallets;
+  }, [isTest, wallets]);
+  const toggleTest = useCallback(() => {
+    setTest(v => !v);
+  }, [setTest]);
 
   return (
     <VerticalScrollShadows scrollContainerRef={scrollContainerRef}>
       <List ref={scrollContainerRef} grid={grid}>
-        {wallets.map(wallet => (
-          <WalletItem
-            key={wallet.id}
-            wallet={wallet}
-            grid={grid}
-            disabled={disabled}
-            active={wallet.id === activeId}
-          />
-        ))}
-        {wallets.map(wallet => (
+        <button
+          onClick={toggleTest}
+          type="button"
+          className={css({ position: 'absolute', top: 0, right: 0 })}
+        >
+          Test ({isTest ? 'ON' : 'OFF'})
+        </button>
+        {walletsList.map(wallet => (
           <WalletItem
             key={wallet.id}
             wallet={wallet}
@@ -103,10 +116,12 @@ const List = styled('div', {
 const Button = styled('button', {
   base: {
     display: 'flex',
+    flex: '0 1 auto',
     flexDirection: 'row',
     gap: '12px',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    textAlign: 'left',
     whiteSpace: 'wrap',
     color: 'text.light',
     width: '100%',
@@ -125,5 +140,15 @@ const Button = styled('button', {
         },
       },
     },
+  },
+});
+
+const WalletLabel = styled('div', {
+  base: {
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    minWidth: 0,
+    flex: '0 1 auto',
   },
 });

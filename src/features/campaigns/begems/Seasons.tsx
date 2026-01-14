@@ -8,7 +8,7 @@ import { SeasonProgressBar } from './SeasonProgress.tsx';
 import { SeasonTabs } from './SeasonTabs.tsx';
 import { selectBeGemsSeasonType } from '../../data/selectors/campaigns/begems.ts';
 import { useAppSelector } from '../../data/store/hooks.ts';
-import { useBreakpoint } from '../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../hooks/useBreakpoint.ts';
 import type { SeasonConfig } from '../../data/reducers/campaigns/begems-types.ts';
 import type { SeasonBoxProps } from './types.ts';
 import { LoadingIndicator } from '../../../components/LoadingIndicator/LoadingIndicator.tsx';

@@ -7,14 +7,15 @@ import { Button } from '../Button/Button.tsx';
 import { styled } from '@repo/styles/jsx';
 import { Box } from './Box.tsx';
 
-export type WalletStepConnectingProps = BaseWalletStepProps & {
+export type StepErrorProps = BaseWalletStepProps & {
   select: SelectError;
 };
 
-export const WalletStepError = memo(function WalletStepError({
+export const StepError = memo(function StepError({
   Layout,
   select,
-}: WalletStepConnectingProps) {
+  hideIntroduction = false,
+}: StepErrorProps) {
   const { error } = select;
   const dispatch = useAppDispatch();
   const handleBack = useCallback(() => {
@@ -23,17 +24,17 @@ export const WalletStepError = memo(function WalletStepError({
 
   return (
     <Layout
-      title="Error"
-      main={
-        <Box variant="error" align="top">
+      content={
+        <Box variant="error" align="top" title="Error" iconUrl={select.wallet.iconUrl}>
           <ErrorMessage>{error.message}</ErrorMessage>
         </Box>
       }
-      footer={
+      button={
         <Button onClick={handleBack} fullWidth={true}>
           Back
         </Button>
       }
+      hideIntroduction={hideIntroduction}
     />
   );
 });

@@ -70,8 +70,11 @@ import { makeWalletConnectWallet } from './walletConnectWallet.ts';
     },
  */
 export const fireblocksWallet = makeWalletConnectWallet({
-  id: 'fireblocks',
+  id: 'wc.fireblocks',
   name: 'Fireblocks',
   iconUrl: async () => (await import('../../../../../images/wallets/fireblocks.svg')).default,
+  deepLinks: {
+    mobile: 'fireblocks-wc://{uri}',
+  },
   // iconBackground: '#1c1c1b'
 });

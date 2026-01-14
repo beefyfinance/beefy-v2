@@ -1,10 +1,12 @@
 import type { ComponentType, ReactNode } from 'react';
 
+export type WalletStepLayoutProps = {
+  content: ReactNode;
+  button?: ReactNode;
+  hideIntroduction?: boolean;
+};
+
 export type BaseWalletStepProps = {
-  Layout: ComponentType<{
-    title: string;
-    description?: ReactNode;
-    main: ReactNode;
-    footer?: ReactNode;
-  }>;
+  Layout: ComponentType<WalletStepLayoutProps>;
+  hideIntroduction?: boolean;
 };

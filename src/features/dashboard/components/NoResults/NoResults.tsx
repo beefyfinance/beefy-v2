@@ -2,7 +2,7 @@ import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../components/Button/Button.tsx';
 import { ButtonLink } from '../../../../components/Button/ButtonLink.tsx';
-import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 import { Section } from '../../../../components/Section/Section.tsx';
 import { isValidAddress } from '../../../../helpers/addresses.ts';
 import { formatAddressShort } from '../../../../helpers/format.ts';

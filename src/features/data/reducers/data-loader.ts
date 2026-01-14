@@ -17,7 +17,7 @@ import { initiateBoostForm } from '../actions/boosts.ts';
 import { fetchBridgeConfig } from '../actions/bridge.ts';
 import { fetchBridges } from '../actions/bridges.ts';
 import { initCampaignBeGems } from '../actions/campaigns/begems.ts';
-import { fetchChainConfigs } from '../actions/chains.ts';
+import { fetchChains } from '../actions/chains.ts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { fetchCurators } from '../actions/curators.ts';
 import { fetchFees } from '../actions/fees.ts';
@@ -199,8 +199,8 @@ function addGlobalAsyncThunkActions<TPayload, TArg>(
   });
   builder.addCase(action.fulfilled, (sliceState, action) => {
     setGlobalFulfilled(sliceState, stateKey);
-    if (fetchChainConfigs.fulfilled.match(action)) {
-      sliceState.statusIndicator.excludeChainIds = action.payload.chainConfigs
+    if (fetchChains.fulfilled.match(action)) {
+      sliceState.statusIndicator.excludeChainIds = action.payload.chains
         .filter(c => c.eol)
         .map(c => c.id);
     }
@@ -507,7 +507,7 @@ export const dataLoaderSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    addGlobalAsyncThunkActions(builder, fetchChainConfigs, 'chainConfig', true);
+    addGlobalAsyncThunkActions(builder, fetchChains, 'chainConfig', true);
     // addGlobalAsyncThunkActions(builder, askForWalletConnection, 'wallet', false);
     addGlobalAsyncThunkActions(builder, initWallet, 'wallet', false);
     // addGlobalAsyncThunkActions(builder, doDisconnectWallet, 'wallet', false);

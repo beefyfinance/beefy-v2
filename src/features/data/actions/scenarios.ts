@@ -10,7 +10,7 @@ import { featureFlag_noDataPolling } from '../utils/feature-flags.ts';
 import { fetchApyAction, fetchAvgApyAction } from './apy.ts';
 import { fetchAllBalanceAction } from './balance.ts';
 import { fetchBridges } from './bridges.ts';
-import { fetchChainConfigs } from './chains.ts';
+import { fetchChains } from './chains.ts';
 import { fetchAllContractDataByChainAction } from './contract-data.ts';
 import { fetchCurators } from './curators.ts';
 import { fetchPartnersConfig } from './partners.ts';
@@ -55,7 +55,7 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
   const captureFulfill = createFulfilledActionCapturer(dispatch, getState);
 
   // start fetching chain config
-  const chainListPromise = dispatch(fetchChainConfigs());
+  const chainListPromise = dispatch(fetchChains());
 
   // we fetch the configuration for all chain
   const promosPromise = dispatch(initPromos());

@@ -5,6 +5,7 @@ import type {
   WalletInitOptions,
 } from '../wallet-types.ts';
 import { createWallet, normalizeRdns } from '../helpers.ts';
+import { walletConnect } from '@wagmi/connectors';
 
 export type MakeWalletConnectWalletOptions = Omit<
   CreateWalletParams,
@@ -25,26 +26,25 @@ export function makeWalletConnectWallet({
   ...rest
 }: MakeWalletConnectWalletOptions): (opts: WalletConnectWalletOptions) => WalletInit {
   return function walletConnectWallet({ projectId }: WalletConnectWalletOptions): WalletInit {
-    return async function ({ app }: WalletInitOptions) {
-      const { walletConnect } = await import('@wagmi/connectors');
-      const createConnector = walletConnect({
-        projectId,
-        isNewChainsStale: true,
-        customStoragePrefix: customStoragePrefix ?? rest.id,
-        showQrModal: false,
-        metadata: {
-          name: app.name,
-          description: app.description,
-          url: app.url,
-          icons: [app.icon],
-        },
-      });
-
+    return function ({ app }: WalletInitOptions) {
       return createWallet({
         ...rest,
         rdns: normalizeRdns(rdns),
         ui: 'qr',
-        createConnector: (...params: Parameters<typeof createConnector>) => {
+        createConnector: (...params: Parameters<ReturnType<typeof walletConnect>>) => {
+          const createConnector = walletConnect({
+            projectId,
+            isNewChainsStale: true,
+            customStoragePrefix: customStoragePrefix ?? rest.id,
+            showQrModal: false,
+            metadata: {
+              name: app.name,
+              description: app.description,
+              url: app.url,
+              icons: [app.icon],
+            },
+          });
+
           const connector = createConnector(...params);
           // we set the id so each wallet connect connector is unique (rather than 'walletConnect')
           // @dev these are readonly, and we can't spread due to bound getters

@@ -3,7 +3,7 @@ import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { formatAddressShort, formatDomain } from '../../../../helpers/format.ts';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles.ts';
-import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 import { DivWithTooltip } from '../../../../components/Tooltip/DivWithTooltip.tsx';
 
 const useStyles = legacyMakeStyles(styles);

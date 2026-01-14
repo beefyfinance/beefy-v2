@@ -2,6 +2,7 @@ import { debounce, find } from 'lodash-es';
 import { type Address, type EIP1193Provider, type WalletClient } from 'viem';
 import { withDivvi } from '../divvi/client.ts';
 import type {
+  BaseWalletOption,
   ConnectOptions,
   IWalletConnectionApi,
   ReconnectOptions,
@@ -66,7 +67,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   protected readonly wagmi: Register['config'];
   protected readonly walletsById: Record<string, Wallet>;
   protected readonly walletToConnector: Map<string, Connector> = new Map();
-  protected readonly connectorIdToWalletId: Map<string, string> = new Map();
+  protected readonly connectorUidToWalletId: Map<string, string> = new Map();
   protected readonly events: WalletEvents;
   protected readonly connectionRequests = new AsyncRequests();
   protected readonly autoConnectRdns: Set<string> = new Set();
@@ -77,14 +78,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     | { account: Address; connectionId: string; client: WalletClient }
     | undefined;
 
-  constructor({
-    chains,
-    wagmi,
-    wallets,
-    initialWalletIds,
-    autoConnect,
-    events,
-  }: WalletConnectionOptions) {
+  constructor({ chains, wagmi, wallets, autoConnect, events }: WalletConnectionOptions) {
     this.chains = chains;
     this.wagmi = wagmi;
     this.walletsById = wallets.reduce(
@@ -111,9 +105,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       maxWait: 1000,
     });
 
-    this.registerConnectorsForWallets(
-      initialWalletIds.map(id => this.walletsById[id]).filter(isDefined)
-    );
+    // this.registerConnectorsForWallets(
+    //   initialWalletIds.map(id => this.walletsById[id]).filter(isDefined)
+    // );
     this.buildInitialWalletOptions();
     this.subscribe();
     this.resolveAccountChanges(getAccount(this.wagmi));
@@ -234,7 +228,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
           });
         },
         async () => {
-          const walletId = this.connectorIdToWalletId.get(connector.uid);
+          const walletId = this.connectorUidToWalletId.get(connector.uid);
           const wallet = walletId ? this.walletsById[walletId] : undefined;
           if (wallet?.abortAction === 'disconnect') {
             await connector.disconnect().catch(err => {
@@ -297,13 +291,13 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     console.debug({
       previousOptions,
-      connectorIdToWalletId: this.connectorIdToWalletId,
+      connectorIdToWalletId: this.connectorUidToWalletId,
       walletToConnector: this.walletToConnector,
       connectors,
     });
 
     // calculate added and removed connectors
-    const removed = new Set(this.connectorIdToWalletId.keys());
+    const removed = new Set(this.connectorUidToWalletId.keys());
     const added = new Set<GetConnectorsReturnType[number]>();
     for (const connector of connectors) {
       if (!removed.delete(connector.uid)) {
@@ -313,10 +307,10 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     // remove wallets for removed connectors
     for (const connectorUid of removed) {
-      const walletId = this.connectorIdToWalletId.get(connectorUid);
+      const walletId = this.connectorUidToWalletId.get(connectorUid);
       if (walletId) {
         this.walletToConnector.delete(walletId);
-        this.connectorIdToWalletId.delete(connectorUid);
+        this.connectorUidToWalletId.delete(connectorUid);
       }
     }
 
@@ -328,7 +322,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         if (this.isEip6963Connector(connector)) {
           walletId = `${eip6963Prefix}${connector.id}`;
         } else {
-          // @dev make sure the wallet and connector id match, or only lazy-init the wallet
+          // @dev make sure the wallet and connector id match
           throw new Error(
             `No wallet with connector id "${connector.id}" and connector is not EIP-6963`
           );
@@ -338,9 +332,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       if (this.walletToConnector.has(walletId)) {
         console.warn(`Connector for wallet ${walletId} already registered`, connector);
       }
-      if (this.connectorIdToWalletId.has(connector.uid)) {
+      if (this.connectorUidToWalletId.has(connector.uid)) {
         console.warn(
-          `Connector uid ${connector.uid} already registered for wallet ${this.connectorIdToWalletId.get(
+          `Connector uid ${connector.uid} already registered for wallet ${this.connectorUidToWalletId.get(
             connector.uid
           )}`,
           connector
@@ -348,7 +342,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       }
 
       this.walletToConnector.set(walletId, connector);
-      this.connectorIdToWalletId.set(connector.uid, walletId);
+      this.connectorUidToWalletId.set(connector.uid, walletId);
     }
 
     // Create options for any eip6963 connectors we don't already have a wallet for
@@ -364,14 +358,23 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         ui: 'external',
         priority: SORT_PRIORITY_EIP6963,
       }));
-    const eip6963Rnds = new Set<string>(eip6963Wallets.flatMap(w => w.rdns));
 
-    // Prefer eip6963 wallets - deduplicate by rdns
+    // Collect all wallet options sorted by priority
     const wallets: WalletOption[] = Object.values(this.walletsById)
-      .filter(w => !w.hidden && !w.rdns.some(rdns => eip6963Rnds.has(rdns)))
-      .map(this.createWalletOption);
+      .filter(w => !w.hidden)
+      .map(this.createWalletOption)
+      .concat(eip6963Wallets)
+      .sort(compareWalletOptionForSort);
 
-    const options = wallets.concat(eip6963Wallets).sort(compareWalletOptionForSort);
+    // Filter out duplicate rdns
+    const seenRdns = new Set<string>();
+    const options = wallets.filter(w => {
+      if (w.rdns.some(rdns => seenRdns.has(rdns))) {
+        return false;
+      }
+      w.rdns.forEach(rdns => seenRdns.add(rdns));
+      return true;
+    });
 
     // only update if changed
     if (!areWalletOptionsEqual(previousOptions, options)) {
@@ -382,7 +385,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
   /** build a WalletOption from a Wallet */
   protected createWalletOption(wallet: Wallet): WalletOption {
-    return {
+    const base = {
       id: wallet.id,
       name: wallet.name,
       iconUrl: wallet.iconUrl,
@@ -391,7 +394,16 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       ui: wallet.ui,
       type: 'wallet',
       priority: wallet.priority,
-    };
+    } as const satisfies BaseWalletOption;
+
+    if (wallet.ui === 'qr' && wallet.deepLinks) {
+      return {
+        ...base,
+        deepLinks: wallet.deepLinks,
+      };
+    }
+
+    return base;
   }
 
   /** build initial wallet options from configured wallets */
@@ -415,7 +427,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     );
     const connector = this.wagmi._internal.connectors.setup(wallet.createConnector);
     this.walletToConnector.set(wallet.id, connector);
-    this.connectorIdToWalletId.set(connector.uid, wallet.id);
+    this.connectorUidToWalletId.set(connector.uid, wallet.id);
     this.wagmi._internal.connectors.setState((existing: Connector[]) => [...existing, connector]);
     return connector;
   }
@@ -432,7 +444,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       }
       const connector = this.wagmi._internal.connectors.setup(wallet.createConnector);
       this.walletToConnector.set(wallet.id, connector);
-      this.connectorIdToWalletId.set(connector.uid, wallet.id);
+      this.connectorUidToWalletId.set(connector.uid, wallet.id);
       newConnectors.push(connector);
     }
     if (newConnectors.length) {
@@ -477,6 +489,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       console.debug('reconnect: not disconnected, skipping');
       return;
     }
+
+    // TODO ignore wallets/connectors if they will need in-app interaction (e.g. WC QR)
 
     const { walletId, connectorId, autoConnect } = options;
     const availableConnectors = getConnectors(this.wagmi);

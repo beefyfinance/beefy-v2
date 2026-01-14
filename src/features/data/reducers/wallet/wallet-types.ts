@@ -100,12 +100,19 @@ export type WalletSelect = SelectClosed | SelectWallet | SelectConnecting | Sele
  * Only address and hideBalance are persisted
  */
 export type WalletState = {
+  /** current wallet address (does not necessarily mean wallet is connected) */
   address: string | undefined;
+  /** current wallet account/connection info/status */
   account: WalletAccount;
+  /** most recently used wallet info */
   recent: WalletRecent;
+  /** select wallet ui state */
   select: WalletSelect;
+  /** available wallets */
   options: WalletOption[];
-
+  /** user settings */
+  settings: {
+    hideBalance: boolean;
+  };
   isInMiniApp: boolean;
-  hideBalance: boolean;
 };

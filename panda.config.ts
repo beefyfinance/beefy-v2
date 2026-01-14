@@ -804,6 +804,23 @@ const config = buildConfig(
             opacity: '1',
           }
         },
+        flipLoading: {
+          '0%': {
+            transform: 'rotateY(0deg) rotateX(0deg)',
+          },
+          '25%': {
+            transform: 'rotateY(180deg) rotateX(0deg)',
+          },
+          '50%': {
+            transform: 'rotateY(180deg) rotateX(180deg)',
+          },
+          '75%': {
+            transform: 'rotateY(0deg) rotateX(180deg)',
+          },
+          '100%': {
+            transform: 'rotateY(0deg) rotateX(0deg)',
+          },
+        }
       },
     },
   },

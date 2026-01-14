@@ -21,7 +21,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../features/data/sto
 import { Button } from '../../../../Button/Button.tsx';
 import { ChainIcon } from '../../../../ChainIcon/ChainIcon.tsx';
 import { BaseInput } from '../../../../Form/Input/BaseInput.tsx';
-import { useBreakpoint } from '../../../../MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../../hooks/useBreakpoint.ts';
 import type { ChainEntity } from '../../../../../features/data/apis/chains/entity-types.ts';
 
 const URL_REGX = /^https:\/\//;

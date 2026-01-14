@@ -1,5 +1,5 @@
 import type { BaseWalletOptions, WalletInit, WalletInitOptions } from '../wallet-types.ts';
-import { type BaseAccountParameters } from '@wagmi/connectors';
+import { baseAccount, type BaseAccountParameters } from '@wagmi/connectors';
 import { createWallet } from '../helpers.ts';
 
 export type BaseAccountWalletOptions = BaseWalletOptions &
@@ -9,8 +9,7 @@ export function baseAccountWallet({
   priority,
   ...baseAccountOptions
 }: BaseAccountWalletOptions = {}): WalletInit {
-  return async function ({ app }: WalletInitOptions) {
-    const { baseAccount } = await import('@wagmi/connectors');
+  return function ({ app }: WalletInitOptions) {
     return createWallet({
       id: 'baseAccount',
       name: 'Base Account',

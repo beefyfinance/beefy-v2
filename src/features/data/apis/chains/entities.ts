@@ -8,30 +8,31 @@ function buildChainEntities<const TInput extends readonly [ChainConfig, ...Chain
   chains: TInput
 ) {
   return freezeArray(
-    chains.map(input => {
-      return {
-        ...omit(input, [
-          'chainId',
-          'explorerTokenUrlTemplate',
-          'explorerAddressUrlTemplate',
-          'explorerTxUrlTemplate',
-          'viem',
-        ]),
-        networkChainId: input.chainId,
-        explorerTokenUrlTemplate:
-          input.explorerTokenUrlTemplate || `${input.explorerUrl}/token/{address}`,
-        explorerAddressUrlTemplate:
-          input.explorerAddressUrlTemplate || `${input.explorerUrl}/address/{address}`,
-        explorerTxUrlTemplate: input.explorerTxUrlTemplate || `${input.explorerUrl}/tx/{hash}`,
-        disabled: input.disabled || false,
-        new: input.new || false,
-        eol: input.eol || 0,
-        brand: {
-          icon: input.brand?.icon || 'solid',
-          header: input.brand?.header || 'solid',
-        },
-      } as const satisfies BuiltEntity;
-    })
+    chains
+      .filter(c => !c.disabled)
+      .map(input => {
+        return {
+          ...omit(input, [
+            'chainId',
+            'explorerTokenUrlTemplate',
+            'explorerAddressUrlTemplate',
+            'explorerTxUrlTemplate',
+            'viem',
+          ]),
+          networkChainId: input.chainId,
+          explorerTokenUrlTemplate:
+            input.explorerTokenUrlTemplate || `${input.explorerUrl}/token/{address}`,
+          explorerAddressUrlTemplate:
+            input.explorerAddressUrlTemplate || `${input.explorerUrl}/address/{address}`,
+          explorerTxUrlTemplate: input.explorerTxUrlTemplate || `${input.explorerUrl}/tx/{hash}`,
+          new: input.new || false,
+          eol: input.eol || 0,
+          brand: {
+            icon: input.brand?.icon || 'solid',
+            header: input.brand?.header || 'solid',
+          },
+        } as const satisfies BuiltEntity;
+      })
   ) as BuiltEntities<TInput>;
 }
 

@@ -8,6 +8,7 @@ export type WalletIconProps = {
   background?: string;
   size?: number;
   padding?: number;
+  loading?: boolean;
 };
 
 export const WalletIcon = memo(function WalletIcon({
@@ -15,9 +16,11 @@ export const WalletIcon = memo(function WalletIcon({
   background = '#fff',
   size,
   padding,
+  loading = false,
 }: WalletIconProps) {
   return (
     <IconBackground
+      loading={loading}
       style={
         {
           background,
@@ -41,6 +44,13 @@ const IconBackground = styled('div', {
     borderRadius: 'calc(var(--icon-padding-x, 4px) * 1.5)',
     backgroundColor: 'white',
     flex: '0 0 auto',
+  },
+  variants: {
+    loading: {
+      true: {
+        animation: 'flipLoading 3s linear infinite',
+      },
+    },
   },
 });
 

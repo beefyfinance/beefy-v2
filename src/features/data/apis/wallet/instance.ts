@@ -14,24 +14,21 @@ export function getWalletConnectionApi() {
 }
 
 export async function initWalletConnectionApi({
-  wallets: { initial, lazy, ...walletOptions },
+  wallets: { initial, lazy, options: initOptions, wagmi, autoConnect },
   ...rest
 }: WalletConnectionInitOptions) {
   if (walletConnection) {
     throw new Error('Wallet connection api already initialized.');
   }
 
-  const [{ WalletConnectionApi }, initialWallets, lazyWallets] = await Promise.all([
-    import('./wallet-connection.ts'),
-    Promise.all(initial.map(walletInit => walletInit(walletOptions))),
-    Promise.all(lazy.map(walletInit => walletInit(walletOptions))),
-  ]);
+  const { WalletConnectionApi } = await import('./wallet-connection.ts');
+  const lazyWallets = lazy.map(walletInit => walletInit(initOptions));
 
   const options: WalletConnectionOptions = {
     ...rest,
-    wallets: [...initialWallets, ...lazyWallets],
-    initialWalletIds: initialWallets.map(wallet => wallet.id),
-    ...walletOptions,
+    wallets: [...initial, ...lazyWallets],
+    wagmi,
+    autoConnect,
   };
 
   walletConnection = new WalletConnectionApi(options);

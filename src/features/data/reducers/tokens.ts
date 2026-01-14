@@ -4,7 +4,7 @@ import type { Draft } from 'immer';
 import { isNativeAlternativeAddress } from '../../../helpers/addresses.ts';
 import { entries } from '../../../helpers/object.ts';
 import { fetchBridgeConfig } from '../actions/bridge.ts';
-import { fetchChainConfigs } from '../actions/chains.ts';
+import { fetchChains } from '../actions/chains.ts';
 import { fetchAllMinters } from '../actions/minters.ts';
 import { fetchAllPricesAction } from '../actions/prices.ts';
 import { initPromos } from '../actions/promos.ts';
@@ -55,8 +55,8 @@ export const tokensSlice = createSlice({
   },
   extraReducers: builder => {
     // handle native token config
-    builder.addCase(fetchChainConfigs.fulfilled, (sliceState, action) => {
-      for (const chainConf of action.payload.chainConfigs) {
+    builder.addCase(fetchChains.fulfilled, (sliceState, action) => {
+      for (const chainConf of action.payload.chains) {
         const chainId = chainConf.id;
         const chainState = getOrCreateTokensChainState(sliceState, chainId);
         const existingNative = chainState.byAddress['native'];

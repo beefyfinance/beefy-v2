@@ -10,7 +10,7 @@ import { type Token, tokens } from './config.ts';
 import { ChainSquareIcon, Icon } from './Icon.tsx';
 import { styled } from '@repo/styles/jsx';
 import { selectChainById } from '../../../../../features/data/selectors/chains.ts';
-import { useBreakpoint } from '../../../../MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../../hooks/useBreakpoint.ts';
 import ExternalLinkRegularIcon from '../../../../../images/icons/externalLinkRegular.svg?react';
 
 const buyPlatforms: Record<

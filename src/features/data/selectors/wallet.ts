@@ -12,7 +12,7 @@ export const selectIsWalletKnown = (state: BeefyState) => !!selectWalletAddress(
 export const selectIsWalletConnected = (state: BeefyState) => state.user.wallet.account.isConnected;
 
 export const selectCurrentChainId = (state: BeefyState) => state.user.wallet.account.chainId;
-export const selectIsBalanceHidden = (state: BeefyState) => state.user.wallet.hideBalance;
+export const selectIsBalanceHidden = (state: BeefyState) => state.user.wallet.settings.hideBalance;
 export const selectIsInMiniApp = (state: BeefyState) => state.user.wallet.isInMiniApp;
 
 export const selectWalletAccount = (state: BeefyState) => state.user.wallet.account;

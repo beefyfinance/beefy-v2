@@ -549,89 +549,68 @@
   "OnRamp-Continue": "Continue",
   "NoMatches": "No matches.",
   "Stepper-Dust": "<dust/> has been returned to your wallet",
-
   "Stepper-approve-Building-Content": "Building approve transaction...",
-
   "Stepper-zap-in-Building-Content": "Building zap-in transaction...",
   "Stepper-zap-in-Success-Title": "Deposit Confirmed",
   "Stepper-zap-in-Success-Content": "You have successfully zapped {{amount}} {{token}} in to the vault",
-
   "Stepper-zap-out-Building-Content": "Building zap-out transaction...",
   "Stepper-zap-out-Success-Title": "Withdraw Success",
   "Stepper-zap-out-Success-Content": "You have successfully zapped {{amount}} {{token}} out from the vault",
-
   "Stepper-mint-Building-Content": "Building mint transaction...",
   "Stepper-mint-Success-Title": "Mint Confirmed",
   "Stepper-mint-mint-Success-Content": "You successfully minted {{amount}} {{token}}",
   "Stepper-mint-buy-Success-Content": "You successfully bought {{amount}} {{token}}",
-
   "Stepper-burn-Building-Content": "Building burn transaction...",
   "Stepper-burn-Success-Title": "Burn Confirmed",
   "Stepper-burn-Success-Content": "You have successfully withdrawn {{amount}} {{token}}",
-
   "Stepper-deposit-Building-Content": "Building deposit transaction...",
   "Stepper-deposit-Success-Title": "Deposit Confirmed",
   "Stepper-deposit-Success-Content": "You have successfully deposited {{amount}} {{token}} in the vault",
-
   "Stepper-deposit-erc4626-Building-Content": "Building deposit transaction...",
   "Stepper-deposit-erc4626-Success-Title": "Deposit Confirmed",
   "Stepper-deposit-erc4626-Success-Content": "You have successfully deposited {{amount}} {{token}} in the vault",
-
   "Stepper-deposit-gov-Building-Content": "Building deposit transaction...",
   "Stepper-deposit-gov-Success-Title": "Deposit Confirmed",
   "Stepper-deposit-gov-Success-Content": "You have successfully deposited {{amount}} {{token}} in the Earnings Pool",
-
   "Stepper-withdraw-Building-Content": "Building withdraw transaction...",
   "Stepper-withdraw-Success-Title": "Withdraw Success",
   "Stepper-withdraw-Success-Content": "You have successfully withdrawn {{amount}} {{token}} from the vault",
-
   "Stepper-request-withdraw-Building-Content": "Building withdrawal request transaction...",
   "Stepper-request-withdraw-Success-Title": "Withdrawal request successful",
   "Stepper-request-withdraw-Success-Content": "You have successfully requested the withdrawal of {{amount}} {{token}}. It will be available in 14 days.",
-
   "Stepper-fulfill-request-withdraw-Building-Content": "Building withdrawal transaction...",
   "Stepper-fulfill-request-withdraw-Success-Title": "Withdrawal successful",
   "Stepper-fulfill-request-withdraw-Success-Content": "You have successfully withdrawn {{amount}} {{token}} from the vault",
-
   "Stepper-claim-withdraw-Building-Content": "Building withdraw transaction...",
   "Stepper-claim-withdraw-Success-Title": "Claim & Withdraw Confirmed",
   "Stepper-claim-withdraw-Success-Content": "You have successfully withdrawn {{amount}} {{token}} and claimed {{rewards}} {{rewardToken}} from the Earnings Pool",
-
   "Stepper-claim-gov-Building-Content": "Building claim transaction...",
   "Stepper-claim-gov-Success-Title": "Rewards Claimed",
   "Stepper-claim-gov-Success-Content": "You have successfully claimed {{amount}} {{token}} from the Earnings Pool",
-
   "Stepper-boost-stake-Building-Content": "Building stake transaction...",
   "Stepper-boost-stake-Success-Title": "Boost Confirmed",
   "Stepper-boost-stake-Success-Content": "You have successfully staked {{amount}} {{token}} in the Boost",
-
   "Stepper-boost-claim-Building-Content": "Building claim transaction...",
   "Stepper-boost-claim-Success-Content": "You have successfully claimed rewards from the Boost",
   "Stepper-boost-claim-Success-Title": "Boost Rewards Claimed",
   "Stepper-boost-claim-Rewards": "<claimed/> rewards claimed",
-
   "Stepper-boost-claim-unstake-Building-Content": "Building claim & unstake transaction...",
   "Stepper-boost-claim-unstake-Success-Title": "Claim & Unstake Confirmed",
   "Stepper-boost-claim-unstake-Success-Content": "You have successfully unstaked {{amount}} {{token}} from the Boost",
-
   "Stepper-boost-unstake-Building-Content": "Building unstake transaction...",
   "Stepper-boost-unstake-Success-Title": "Unstake Confirmed",
   "Stepper-boost-unstake-Success-Content": "You have successfully unstaked {{amount}} {{token}} from the Boost",
-
   "Stepper-claim-rewards-Building-Content": "Building claim transaction...",
   "Stepper-claim-rewards-Success-Title": "Rewards Claimed",
   "Stepper-claim-rewards-Success-Content": "You have successfully claimed rewards",
-
   "Stepper-bridge-Building-Content": "Building bridge transaction...",
   "Stepper-bridge-Success-Title": "Bridge Sent",
   "Stepper-bridge-Success-Content": "Outgoing transaction of {{amount}} mooBIFI from {{from}} sent.",
   "Stepper-bridge-Success-Track-Incoming": "Track the incoming transaction to {{to}} at <Link>{{provider}}</Link>.",
   "Stepper-bridge-Success-Track-Outgoing": "See the outgoing transaction on the <Link>{{from}} block explorer</Link>.",
-
   "Stepper-redeem-Building-Content": "Building redeem transaction...",
   "Stepper-redeem-Success-Title": "S Redeemed",
   "Stepper-redeem-Success-Content": "You have successfully redeemed beGEMS for S",
-
   "Stepper-migration-Building-Content": "Building migration transaction...",
   "How-It-Works": "How It Works",
   "Earn": "Earn {{symbol}}",
@@ -928,5 +907,7 @@
   "RpcModal-Reset": "Restore Default RPC",
   "RpcModal-InputPlaceholder": "Enter the RPC URL",
   "RpcModal-InvalidRpc": "Please insert a valid RPC",
-  "RpcModal-EmptyList": "You can modify Beefy’s default RPC for each chain. Once modified, it will be used for the connection until it is removed."
+  "RpcModal-EmptyList": "You can modify Beefy’s default RPC for each chain. Once modified, it will be used for the connection until it is removed.",
+  "WalletSelect-Title": "Connect your wallet",
+  "WalletSelect-Description": "Connecting your wallet is like “logging in” to Web3. Select your wallet from the options to get started."
 }

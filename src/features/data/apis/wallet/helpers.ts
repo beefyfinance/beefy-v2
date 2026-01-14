@@ -1,8 +1,7 @@
 import type { WalletOption } from './wallet-connection-types.ts';
-import type { CreateWalletParams, Wallet } from './wallet-types.ts';
+import type { CreateWalletParams, Wallet, WalletParamsWithDefaults } from './wallet-types.ts';
 import { createFactory } from '../../utils/factory-utils.ts';
 import { SORT_PRIORITY_DEFAULT } from './constants.ts';
-import type { OptionalKeysOf } from '../../utils/types-utils.ts';
 
 export function areRdnsEqual(a: readonly string[], b: readonly string[]): boolean {
   if (a.length !== b.length) {
@@ -50,23 +49,12 @@ export function compareWalletOptionForSort(a: WalletOption, b: WalletOption): nu
 export type Scalar = string | number | boolean | null | undefined | bigint;
 export type LazyValue<T extends Scalar> = T | (() => T) | (() => Promise<T>);
 
-export async function lazyValue<T extends Scalar>(value: LazyValue<T>): Promise<T> {
-  if (typeof value === 'function') {
-    return await value();
-  }
-  return value;
-}
-
 type DefaultCreateWalletParams<
   provider = unknown,
   properties extends Record<string, unknown> = Record<string, unknown>,
   storageItem extends Record<string, unknown> = Record<string, unknown>,
 > = {
-  [K in OptionalKeysOf<CreateWalletParams<provider, properties, storageItem>>]: CreateWalletParams<
-    provider,
-    properties,
-    storageItem
-  >[K];
+  [K in WalletParamsWithDefaults]: CreateWalletParams<provider, properties, storageItem>[K];
 };
 
 export function createWallet<
@@ -77,8 +65,22 @@ export function createWallet<
   obj: CreateWalletParams<provider, properties, storageItem>
 ): Wallet<provider, properties, storageItem> {
   const { createConnector } = obj;
-  // @dev this bind breaks wallet.createConnector.apply(thisArg, ...) but we shouldn't need that
-  const cachedCreateConnector = createFactory(createConnector.bind(obj));
+  // cached factory so only one connector instance is created per wallet
+  const cachedCreateConnector = createFactory((...params: Parameters<typeof createConnector>) => {
+    const connector = createConnector(...params);
+    // force connector id to match wallet id
+    Object.defineProperties(connector, {
+      id: {
+        configurable: false,
+        enumerable: true,
+        get() {
+          // @dev getter, since could be a getter on wallet options object
+          return obj.id;
+        },
+      },
+    });
+    return connector;
+  });
   const defaults: DefaultCreateWalletParams<provider, properties, storageItem> = {
     hidden: false,
     ui: 'external' as const,

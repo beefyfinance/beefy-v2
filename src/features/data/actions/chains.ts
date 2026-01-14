@@ -5,8 +5,8 @@ import { rpcClientManager } from '../apis/rpc-contract/rpc-manager.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import type { ChainEntity, ChainId } from '../apis/chains/entity-types.ts';
 
-export interface FulfilledPayload {
-  chainConfigs: ChainEntity[];
+export interface FetchChainsFulfilledPayload {
+  chains: ChainEntity[];
   localRpcs: Partial<Record<ChainEntity['id'], string[]>>;
 }
 
@@ -60,16 +60,16 @@ const removeLocalStoredRpcs = (chainId: ChainId) => {
   }
 };
 
-export const fetchChainConfigs = createAppAsyncThunk<FulfilledPayload>(
-  'chains/fetchChainConfigs',
+export const fetchChains = createAppAsyncThunk<FetchChainsFulfilledPayload>(
+  'chains/fetchChains',
   async () => {
     const api = await getConfigApi();
-    const chainConfigs = await api.fetchChainConfigs();
+    const chains = await api.fetchChains();
     const localRpcs = fetchLocalStoredRpcs();
-    for (const chain of chainConfigs) {
+    for (const chain of chains) {
       rpcClientManager.setClients(chain, localRpcs[chain.id] || chain.rpc);
     }
-    return { chainConfigs: [...chainConfigs], localRpcs };
+    return { chains: [...chains], localRpcs };
   }
 );
 

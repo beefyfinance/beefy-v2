@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { isString } from 'lodash-es';
-import { fetchChainConfigs } from '../../actions/chains.ts';
+import { fetchChains } from '../../actions/chains.ts';
 import { fetchAllVaults } from '../../actions/vaults.ts';
 import { mapValuesDeep } from '../../utils/array-utils.ts';
 import { sleep } from '../../utils/async-utils.ts';
@@ -22,7 +22,7 @@ export async function replayReduxActions(actionsList: any[], delayMs: 200) {
     } /*else if (action.type.startsWith('boosts/fetchAllBoosts/')) {
       await store.dispatch(fetchAllBoosts());
     } */ else if (action.type.startsWith('chains/fetchChainConfigs/')) {
-      await store.dispatch(fetchChainConfigs());
+      await store.dispatch(fetchChains());
     } else {
       if (action.payload && 'state' in action.payload && action.payload.state === '__STATE__') {
         action.payload.state = store.getState();

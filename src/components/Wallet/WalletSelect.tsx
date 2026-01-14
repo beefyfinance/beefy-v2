@@ -1,16 +1,17 @@
-import { memo, type ReactNode, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { Drawer } from '../Modal/Drawer.tsx';
-import { useBreakpoint } from '../MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../hooks/useBreakpoint.ts';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
 import {
   selectWalletSelect,
   selectWalletSelectOpen,
 } from '../../features/data/selectors/wallet.ts';
 import { walletSelectClose } from '../../features/data/actions/wallet.ts';
-import { WalletStepError } from './WalletStepError.tsx';
-import { WalletStepConnecting } from './WalletStepConnecting.tsx';
-import { WalletStepWallet } from './WalletStepWallet.tsx';
-import { styled } from '@repo/styles/jsx';
+import { StepError } from './StepError.tsx';
+import { StepConnecting } from './StepConnecting.tsx';
+import { StepWallets } from './StepWallets.tsx';
+import { MobileStepLayout } from './MobileStepLayout.tsx';
+import { DesktopStepLayout } from './DesktopStepLayout.tsx';
 
 export const WalletSelect = memo(() => {
   const dispatch = useAppDispatch();
@@ -41,62 +42,14 @@ const Content = memo(function Content({ desktop }: ContentProps) {
   if (!select.open) {
     throw new Error('Content rendered when select is closed');
   }
-  const StepLayout = desktop ? MobileStepLayout : MobileStepLayout;
+  const StepLayout = desktop ? DesktopStepLayout : MobileStepLayout;
 
-  return (
-    <Layout desktop={desktop}>
-      {select.step === 'wallet' && <WalletStepWallet Layout={StepLayout} grid={desktop} />}
-      {select.step === 'connecting' && <WalletStepConnecting Layout={StepLayout} select={select} />}
-      {select.step === 'error' && <WalletStepError Layout={StepLayout} select={select} />}
-    </Layout>
-  );
-});
-
-type MobileStepLayoutProps = {
-  title: string;
-  description?: ReactNode;
-  main: ReactNode;
-  footer?: ReactNode;
-};
-
-const MobileStepLayout = memo(function MobileStepLayout({
-  title,
-  description,
-  main,
-  footer,
-}: MobileStepLayoutProps) {
-  return (
-    <>
-      <h2>{title}</h2>
-      {description && <p>{description}</p>}
-      {main}
-      {footer && <div>{footer}</div>}
-    </>
-  );
-});
-
-const Layout = styled('div', {
-  base: {
-    background: 'background.content.darkest',
-    borderTopRadius: '8px',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    maxHeight: '80vh',
-    minHeight: 0,
-    padding: '16px',
-    gap: '12px',
-  },
-  variants: {
-    desktop: {
-      true: {
-        borderRadius: '16px',
-        width: 'container.sm',
-        maxWidth: '100%',
-        height: 'container.sm',
-        maxHeight: '80vh',
-        minHeight: '360px',
-      },
-    },
-  },
+  switch (select.step) {
+    case 'wallet':
+      return <StepWallets Layout={StepLayout} grid={desktop} />;
+    case 'connecting':
+      return <StepConnecting Layout={StepLayout} select={select} hideIntroduction={!desktop} />;
+    case 'error':
+      return <StepError Layout={StepLayout} select={select} hideIntroduction={!desktop} />;
+  }
 });

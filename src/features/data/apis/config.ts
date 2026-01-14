@@ -27,9 +27,10 @@ const ammsChainPathToImportFn = import.meta.glob<AmmConfig[]>('../../../config/z
  * Access to vaults, boosts, featured items, etc
  */
 export class ConfigAPI {
-  private readonly enabledChainIds = entities.filter(e => !e.disabled).map(e => e.id);
+  private readonly chainIds = entities.map(e => e.id);
 
-  public async fetchChainConfigs(): Promise<readonly ChainEntity[]> {
+  /** only those not disabled in config */
+  public async fetchChains(): Promise<readonly ChainEntity[]> {
     return entities;
   }
 
@@ -42,7 +43,7 @@ export class ConfigAPI {
   }> {
     return Object.fromEntries(
       await Promise.all(
-        this.enabledChainIds.map(async chainId => {
+        this.chainIds.map(async chainId => {
           const importer = ammsChainPathToImportFn[`../../../config/zap/amm/${chainId}.json`];
           return [chainId, importer ? await importer() : []];
         })
@@ -76,7 +77,7 @@ export class ConfigAPI {
       [chainId in ChainEntity['id']]: VaultConfig[];
     } = Object.fromEntries(
       await Promise.all(
-        this.enabledChainIds.map(async chainId => [
+        this.chainIds.map(async chainId => [
           chainId,
           (await import(`../../../config/vault/${chainId}.json`)).default as VaultConfig[],
         ])
@@ -88,7 +89,7 @@ export class ConfigAPI {
 
   public async fetchAllMinters(): Promise<{ [chainId in ChainEntity['id']]?: MinterConfig[] }> {
     const entries = await Promise.all(
-      this.enabledChainIds.map(async chainId => {
+      this.chainIds.map(async chainId => {
         const minters = await getMinterConfig(chainId);
         return [chainId, minters || []];
       })
@@ -103,7 +104,7 @@ export class ConfigAPI {
     [chainId in ChainEntity['id']]?: MigrationConfig[];
   }> {
     const entries = await Promise.all(
-      this.enabledChainIds.map(async chainId => {
+      this.chainIds.map(async chainId => {
         const migrators = await getMigratorConfig(chainId);
         return [chainId, migrators || []];
       })

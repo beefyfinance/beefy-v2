@@ -3,6 +3,7 @@ import type { InjectedParameters } from '@wagmi/core';
 import defaultIcon from '../../../../../images/wallets/browser-wallet.svg';
 import { createWallet, type LazyValue, normalizeRdns } from '../helpers.ts';
 import { SORT_PRIORITY_BROWSER } from '../constants.ts';
+import { injected } from '@wagmi/connectors';
 
 type WagmiTarget = Exclude<InjectedParameters['target'], undefined | string | (() => unknown)>;
 type WagmiProviderFn = Extract<WagmiTarget['provider'], () => unknown>;
@@ -108,7 +109,7 @@ export function browserWallet<
   injectedAt = 'ethereum',
   identifiers: identifierOptions,
 }: BrowserWalletOptions<TFlag, TIdentifier>): WalletInit {
-  return async function (_: WalletInitOptions) {
+  return function (_: WalletInitOptions) {
     const fallbackIdentifier: BrowserWalletIdentifier = {
       id: `browserWallet.${injectedAt}`,
       name: 'Browser Wallet',
@@ -153,7 +154,6 @@ export function browserWallet<
       return identifier;
     };
 
-    const { injected } = await import('@wagmi/core');
     return createWallet({
       get id() {
         return fallbackIdentifier.id;

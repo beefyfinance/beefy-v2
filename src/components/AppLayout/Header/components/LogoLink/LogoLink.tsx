@@ -3,7 +3,7 @@ import HeaderLogoMobile from '../../../../../images/bifi-logos/header-logo-notex
 import { Link } from 'react-router';
 import { memo } from 'react';
 import { styled } from '@repo/styles/jsx';
-import { useMediaQuery } from '../../../../MediaQueries/useMediaQuery.ts';
+import { useMediaQuery } from '../../../../../hooks/useMediaQuery.ts';
 
 export const LogoLink = memo(function LogoLink() {
   const showSmallLogo = useMediaQuery('(max-width: 450px)', false);

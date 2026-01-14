@@ -46,8 +46,10 @@ const initialWalletState: WalletState = {
   select: {
     open: false,
   },
+  settings: {
+    hideBalance: false,
+  },
   isInMiniApp: false,
-  hideBalance: false,
 };
 
 export const walletSlice = createSlice({
@@ -149,7 +151,7 @@ export const walletSlice = createSlice({
      * Display configuration
      */
     setToggleHideBalance(sliceState) {
-      sliceState.hideBalance = !sliceState.hideBalance;
+      sliceState.settings.hideBalance = !sliceState.settings.hideBalance;
     },
   },
   extraReducers: builder => {

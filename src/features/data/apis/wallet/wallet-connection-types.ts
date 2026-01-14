@@ -62,7 +62,6 @@ export type WalletEvents = {
 
 export type WalletConnectionInitOptions = {
   chains: ChainEntity[];
-  wagmi: Register['config'];
   events: WalletEvents;
   wallets: WalletsConfig;
 };
@@ -72,24 +71,35 @@ export type WalletConnectionOptions = {
   wagmi: Register['config'];
   events: WalletEvents;
   wallets: readonly Wallet[];
-  initialWalletIds: readonly string[];
-} & Omit<WalletsConfig, 'initial' | 'lazy'>;
+} & Pick<WalletsConfig, 'autoConnect'>;
 
 export type WalletIdentifier = {
   id: string;
   type: 'wallet' | 'eip6963';
 };
 
-export type WalletOption = {
+export type WalletOptionUIs = 'embed' | 'external' | 'qr';
+
+export type BaseWalletOption<UI extends WalletOptionUIs = WalletOptionUIs> = {
   id: string;
   type: string;
   name: string;
   iconUrl: LazyValue<string>;
   iconBackground: string;
   rdns: readonly string[];
-  ui: 'embed' | 'external' | 'qr';
+  ui: UI;
   priority: number;
 };
+export type EmbedWalletOption = BaseWalletOption<'embed'>;
+export type ExternalWalletOption = BaseWalletOption<'external'>;
+export type QrWalletOption = BaseWalletOption<'qr'> & {
+  deepLinks?: {
+    mobile?: string;
+    desktop?: string;
+  };
+};
+
+export type WalletOption = EmbedWalletOption | ExternalWalletOption | QrWalletOption;
 
 export type ConnectOptions = {
   requestId: string;

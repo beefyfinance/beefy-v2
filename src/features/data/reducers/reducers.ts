@@ -75,7 +75,7 @@ const userReducer = combineReducers({
   resolver: resolverReducer,
   rewards: userRewardsReducer,
   wallet: persistReducer(
-    { key: 'wallet', storage, whitelist: ['address', 'hideBalance'] },
+    { key: 'wallet', storage, whitelist: ['address', 'settings', 'recent'], version: 2 },
     walletSlice.reducer
   ),
   walletActions: walletActionsReducer as Reducer<WalletActionsState>,

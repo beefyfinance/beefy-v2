@@ -10,7 +10,7 @@ export type WalletInitOptions = {
   };
 };
 
-export type WalletInit = (options: WalletInitOptions) => Promise<Wallet>;
+export type WalletInit = (options: WalletInitOptions) => Wallet;
 
 export type BaseWalletOptions = {
   priority?: number;
@@ -29,7 +29,7 @@ export type WalletUIType = 'external' | 'embed' | 'qr';
  */
 export type WalletAbortAction = 'none' | 'disconnect';
 
-export type CreateWalletParams<
+export type Wallet<
   provider = unknown,
   properties extends Record<string, unknown> = Record<string, unknown>,
   storageItem extends Record<string, unknown> = Record<string, unknown>,
@@ -43,24 +43,38 @@ export type CreateWalletParams<
   /** icon for displaying in select ui */
   iconUrl: LazyValue<string>;
   /** background for icon */
-  iconBackground?: string;
+  iconBackground: string;
   /** hide the wallet from the UI */
-  hidden?: boolean;
+  hidden: boolean;
   /** what kind of ui is needed to connect, default: external */
-  ui?: WalletUIType;
+  ui: WalletUIType;
   /** sort priority, lower appears first */
-  priority?: number;
+  priority: number;
   /** action to take when user aborts connection attempt */
-  abortAction?: WalletAbortAction;
+  abortAction: WalletAbortAction;
   /**
    * wagmi connector for this wallet
    * @dev SDKs needed for the wallet should be loaded in the getProvider method of the object returned by CreateConnectorFn
    **/
   createConnector: CreateConnectorFn<provider, properties, storageItem>;
+  /** walletconnect app deeplinks */
+  deepLinks?: {
+    mobile?: string;
+    desktop?: string;
+  };
 };
 
-export type Wallet<
+export type WalletParamsWithDefaults =
+  | 'hidden'
+  | 'ui'
+  | 'priority'
+  | 'abortAction'
+  | 'iconBackground';
+
+export type CreateWalletParams<
   provider = unknown,
   properties extends Record<string, unknown> = Record<string, unknown>,
   storageItem extends Record<string, unknown> = Record<string, unknown>,
-> = Required<CreateWalletParams<provider, properties, storageItem>>;
+> = {
+  [K in WalletParamsWithDefaults]?: Wallet<provider, properties, storageItem>[K];
+} & Omit<Wallet<provider, properties, storageItem>, WalletParamsWithDefaults>;
