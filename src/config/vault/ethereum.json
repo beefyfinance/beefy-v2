@@ -7430,59 +7430,6 @@
     ]
   },
   {
-    "id": "convex-ctr",
-    "name": "CTR/ETH",
-    "type": "standard",
-    "token": "CTRETH-f",
-    "tokenAddress": "0x3f0e7916681452D23Cd36B1281457DA721F2E5dF",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnContractAddress": "0xa6b53563a13de4C443FC4fd60d7127Ad54924cd3",
-    "earnedToken": "mooConvexCTR-ETH",
-    "earnedTokenAddress": "0xa6b53563a13de4C443FC4fd60d7127Ad54924cd3",
-    "oracle": "lps",
-    "oracleId": "convex-ctr",
-    "status": "eol",
-    "createdAt": 1678861498,
-    "retireReason": "rewards",
-    "retiredAt": 1731017785,
-    "platformId": "convex",
-    "assets": ["CTR", "ETH"],
-    "migrationIds": ["ethereum-convex", "ethereum-curve"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-151/swap",
-    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-151/deposit",
-    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-crypto-151/withdraw",
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0xf2f12B364F614925aB8E2C8BFc606edB9282Ba09",
-        "methods": [
-          {
-            "type": "fixed",
-            "target": "0xf2f12B364F614925aB8E2C8BFc606edB9282Ba09",
-            "coins": [
-              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "0xb3Ad645dB386D7F6D753B2b9C3F4B853DA6890B8"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "verse-weth-usdt",
     "name": "WETH-USDT LP",
     "type": "standard",
