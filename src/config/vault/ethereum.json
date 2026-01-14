@@ -1,5 +1,41 @@
 [
   {
+    "id": "sky-usds-spk",
+    "name": "USDS",
+    "type": "standard",
+    "token": "USDS",
+    "tokenAddress": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sky",
+    "earnContractAddress": "0x456e524364B20c7e5F47281eD49bfE8980D93FeE",
+    "earnedToken": "MooSkyUSDS_SPK",
+    "earnedTokenAddress": "0x456e524364B20c7e5F47281eD49bfE8980D93FeE",
+    "oracle": "token",
+    "oracleId": "USDS",
+    "status": "active",
+    "createdAt": 1768387341,
+    "platformId": "sky",
+    "assets": ["USDS"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single-lp",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "pendle-reusde-25jun26",
     "name": "reUSDe 25Jun26",
     "type": "standard",
