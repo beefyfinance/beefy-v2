@@ -1,6 +1,6 @@
 [
   {
-    "id": "aerodrome-cow-base-flock-usdc-vault-vault",
+    "id": "aerodrome-cow-base-flock-usdc-vault",
     "name": "FLOCK-USDC",
     "type": "standard",
     "token": "FLOCK-USDC",
@@ -11,7 +11,7 @@
     "earnedToken": "mooCowAerodromeFLOCK-USDC",
     "earnedTokenAddress": "0xcEB0E7d5A102aa26049BB843FF561EF7faa8A27E",
     "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-flock-usdc-vault",
+    "oracleId": "aerodrome-cow-base-flock-usdc",
     "status": "active",
     "createdAt": 1768387267,
     "platformId": "aerodrome",
@@ -38,7 +38,7 @@
     ]
   },
   {
-    "id": "aerodrome-cow-base-flock-usdc-vault-rp",
+    "id": "aerodrome-cow-base-flock-usdc-rp",
     "name": "FLOCK-USDC Reward Pool",
     "type": "gov",
     "version": 2,
@@ -51,7 +51,7 @@
     "earnedTokenDecimals": 18,
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-flock-usdc-vault",
+    "oracleId": "aerodrome-cow-base-flock-usdc",
     "status": "active",
     "createdAt": 1768387266,
     "platformId": "aerodrome",
@@ -78,7 +78,7 @@
     ]
   },
   {
-    "id": "aerodrome-cow-base-flock-usdc-vault",
+    "id": "aerodrome-cow-base-flock-usdc",
     "name": "FLOCK-USDC",
     "type": "cowcentrated",
     "token": "FLOCK-USDC aerodrome",
@@ -93,7 +93,7 @@
     "earnedToken": "cowAerodromeFLOCK-USDC",
     "earnedTokenAddress": "0xc38d5c15Bb01f8368244232AE2dddC193E7E1ad5",
     "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-flock-usdc-vault",
+    "oracleId": "aerodrome-cow-base-flock-usdc",
     "status": "active",
     "createdAt": 1768387266,
     "platformId": "beefy",
