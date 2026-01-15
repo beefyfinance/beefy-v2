@@ -1,5 +1,75 @@
 [
   {
+    "id": "curvance-monad-earnausd-earnausd-ausd",
+    "name": "earnAUSD (earnAUSD-AUSD Market)",
+    "type": "standard",
+    "token": "earnAUSD",
+    "tokenAddress": "0x103222f020e98Bba0AD9809A011FDF8e6F067496",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x443c58B9593CfCA7315759bc7104b1E1285978aD",
+    "earnedToken": "mooCurvanceearnAUSD(earnAUSD-AUSD)",
+    "earnedTokenAddress": "0x443c58B9593CfCA7315759bc7104b1E1285978aD",
+    "oracle": "tokens",
+    "oracleId": "earnAUSD",
+    "status": "active",
+    "createdAt": 1768478014,
+    "platformId": "curvance",
+    "assets": ["earnAUSD"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "curvance-monad-ausd-earnausd-ausd",
+    "name": "AUSD (earnAUSD-AUSD Market)",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xD0a2829De21BC3b54305D30E58b07F4C8B6f838f",
+    "earnedToken": "mooCurvanceAUSD(earnAUSD-AUSD)",
+    "earnedTokenAddress": "0xD0a2829De21BC3b54305D30E58b07F4C8B6f838f",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1768478014,
+    "platformId": "curvance",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-monad-ausd-dust-vault",
     "name": "DUST-AUSD",
     "type": "standard",
