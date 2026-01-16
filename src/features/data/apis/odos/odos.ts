@@ -34,7 +34,7 @@ export class OdosApi implements IOdosApi {
 
   constructor(protected chain: ChainEntity) {
     if (!supportedChainIds.includes(chain.id)) {
-      throw new Error(`OneInch api is not supported on ${chain.id}`);
+      throw new Error(`Odos api is not supported on ${chain.id}`);
     }
     this.api = `${API_ZAP_URL}/providers/odos/${chain.id}`;
   }

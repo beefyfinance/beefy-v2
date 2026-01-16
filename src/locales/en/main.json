@@ -777,7 +777,6 @@
   "Transact-Fee-HarvestFee": "Harvest Fee",
   "Transact-Fee-Liquidity": "Liquidity Fee",
   "Transact-Fee-TotalFee": "Total Performance Fee",
-  "Transact-SwapProvider-one-inch": "1inch",
   "Transact-SwapProvider-kyber": "KyberSwap",
   "Transact-SwapProvider-odos": "Odos",
   "Transact-SwapProvider-liquid-swap": "LiquidSwap",
