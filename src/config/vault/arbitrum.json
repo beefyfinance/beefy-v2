@@ -538,7 +538,7 @@
     "oracle": "lps",
     "oracleId": "balancerv3-arbitrum-waarbwbtc-ebtc",
     "status": "active",
-    "createdAt": 1768420000,
+    "createdAt": 1768586851,
     "platformId": "aura",
     "assets": ["waArbWBTC", "eBTC"],
     "risks": {
