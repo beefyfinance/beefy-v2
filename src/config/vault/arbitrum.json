@@ -525,6 +525,38 @@
     "network": "arbitrum"
   },
   {
+    "id": "balancerv3-arbitrum-waarbwbtc-ebtc",
+    "name": "WBTC/eBTC V3",
+    "type": "standard",
+    "token": "WBTC/eBTC V3",
+    "tokenAddress": "0x10F9E54AeEA2FeFA124238087DCFD919BA32f14d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnContractAddress": "0x1Ec305f7938C99AdB3DEc111230fc4e61a96b864",
+    "earnedToken": "mooBalancerArbitrumwaArbWBTC/eBTC",
+    "earnedTokenAddress": "0x1Ec305f7938C99AdB3DEc111230fc4e61a96b864",
+    "oracle": "lps",
+    "oracleId": "balancerv3-arbitrum-waarbwbtc-ebtc",
+    "status": "active",
+    "createdAt": 1768420000,
+    "platformId": "aura",
+    "assets": ["waArbWBTC", "eBTC"],
+    "risks": {
+      "updatedAt": 1768420000,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0x10f9e54aeea2fefa124238087dcfd919ba32f14d",
+    "network": "arbitrum"
+  },
+  {
     "id": "balancerv3-arbitrum-waarbusdcn-eure",
     "name": "USDC/EURe V3",
     "type": "standard",
