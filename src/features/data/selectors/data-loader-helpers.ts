@@ -281,7 +281,6 @@ export const selectUnreadStatusNotifications = createSelector(
   (common, byAddress, ignoredCommon, ignoredByAddress) => {
     const ignored = new Set([...ignoredCommon, ...(ignoredByAddress ?? [])]);
     const notIgnored = (list: LoaderNotification[]) => list.filter(n => !ignored.has(n.key));
-    console.debug({ common, byAddress, ignoredCommon, ignoredByAddress });
     return combineNotifications(notIgnored(common), notIgnored(byAddress ?? []));
   },
   {

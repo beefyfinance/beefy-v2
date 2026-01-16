@@ -33,23 +33,19 @@ export const NetworkStatus = memo(function NetworkStatus({
   const isDetails = open && !isNotification;
 
   const handleClose = useCallback(() => {
-    console.debug('[NetworkStatus]', 'handleClose');
     dispatch(dataLoaderActions.dismissNotification({ walletAddress }));
     setOpen(false);
   }, [dispatch, setOpen, walletAddress]);
 
   const handleOpen = useCallback(() => {
-    console.debug('[NetworkStatus]', 'handleOpen');
     setOpen(true);
   }, [setOpen]);
 
   const handleChange = useCallback(
     (openNow: boolean) => {
       if (openNow) {
-        console.debug('[NetworkStatus]', 'handleChange: opening');
         handleOpen();
       } else {
-        console.debug('[NetworkStatus]', 'handleChange: closing');
         handleClose();
       }
     },
