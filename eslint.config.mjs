@@ -135,7 +135,7 @@ export default tseslint.config(
       '@typescript-eslint/no-unsafe-call': 'off', // TODO try to enable this after viem migration
       '@typescript-eslint/no-unsafe-assignment': 'off', // TODO try to enable this after viem migration
       '@typescript-eslint/no-unsafe-argument': 'off', // TODO try to enable this after viem migration
-      'react-dom/no-missing-iframe-sandbox': 'off', // TODO investigate what each onramp provider needs
+      'react-dom/no-missing-iframe-sandbox': 'off', // TODO investigate what each wallet needs
       'react-dom/no-unsafe-target-blank': 'off', // noopener is implicit now when target="_blank"
       'react-x/no-array-index-key': 'off', // sometimes there is no alternative
       // 'react-x/display-name': 'warn',

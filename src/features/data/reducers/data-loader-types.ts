@@ -8,6 +8,12 @@ import type { ChainEntity, ChainId } from '../entities/chain.ts';
  * and this slice can focus on data fetching
  * maybe it's dumb though, but it can be refactored
  **/
+
+export type LastStatus = {
+  timestamp: number;
+  requestId: string;
+};
+
 export interface LoaderStateIdle {
   lastDispatched: undefined;
   lastFulfilled: undefined;
@@ -17,25 +23,25 @@ export interface LoaderStateIdle {
 }
 
 export interface LoaderStatePending {
-  lastDispatched: number;
-  lastFulfilled: number | undefined;
-  lastRejected: number | undefined;
+  lastDispatched: LastStatus;
+  lastFulfilled: LastStatus | undefined;
+  lastRejected: LastStatus | undefined;
   status: 'pending';
   error: null;
 }
 
 export interface LoaderStateRejected {
-  lastDispatched: number;
-  lastFulfilled: number | undefined;
-  lastRejected: number;
+  lastDispatched: LastStatus;
+  lastFulfilled: LastStatus | undefined;
+  lastRejected: LastStatus;
   status: 'rejected';
   error: string;
 }
 
 export interface LoaderStateFulfilled {
-  lastDispatched: number;
-  lastFulfilled: number;
-  lastRejected: number | undefined;
+  lastDispatched: LastStatus;
+  lastFulfilled: LastStatus;
+  lastRejected: LastStatus | undefined;
   status: 'fulfilled';
   error: null;
 }
@@ -51,8 +57,15 @@ export interface DataLoaderState {
     wallet: boolean;
   };
   statusIndicator: {
-    open: boolean;
     excludeChainIds: ChainId[];
+    notifications: {
+      common: LoaderNotification[];
+      byAddress: Record<string, LoaderNotification[]>;
+    };
+    ignored: {
+      common: LoaderNotificationKey[];
+      byAddress: Record<string, LoaderNotificationKey[]>;
+    };
   };
   global: {
     addressBook: LoaderState;
@@ -67,7 +80,6 @@ export interface DataLoaderState {
     chainConfig: LoaderState;
     curators: LoaderState;
     currentCowcentratedRanges: LoaderState;
-    depositForm: LoaderState;
     fees: LoaderState;
     lastHarvests: LoaderState;
     merklCampaigns: LoaderState;
@@ -75,7 +87,6 @@ export interface DataLoaderState {
     migrators: LoaderState;
     minterForm: LoaderState;
     minters: LoaderState;
-    onRamp: LoaderState;
     platforms: LoaderState;
     prices: LoaderState;
     proposals: LoaderState;
@@ -84,7 +95,6 @@ export interface DataLoaderState {
     treasury: LoaderState;
     vaults: LoaderState;
     wallet: LoaderState;
-    withdrawForm: LoaderState;
     zapAggregatorTokenSupport: LoaderState;
     zapAmms: LoaderState;
     zapConfigs: LoaderState;
@@ -131,3 +141,24 @@ export type LoaderChainKey = keyof ByChainDataEntity;
 export type LoaderAddressKey = keyof ByAddressGlobalDataEntity;
 export type LoaderAddressChainKey = keyof ByAddressByChainDataEntity;
 // export type LoaderAddressVaultKey = keyof ByAddressByVaultDataEntity;
+
+export type LoaderNotificationCategory = 'rpc' | 'api' | 'config';
+
+export type LoaderKeys = {
+  global?: (keyof DataLoaderState['global'])[];
+  chain?: (keyof ByChainDataEntity)[];
+  addressGlobal?: (keyof ByAddressGlobalDataEntity)[];
+  addressChain?: (keyof ByAddressByChainDataEntity)[];
+};
+
+export type LoaderNotificationCategoryMap = Record<LoaderNotificationCategory, LoaderKeys>;
+
+export type LoaderNotificationKey =
+  | LoaderNotificationCategory
+  | `${LoaderNotificationCategory}-${ChainId}`;
+
+export type LoaderNotification = {
+  key: LoaderNotificationKey;
+  category: LoaderNotificationCategory;
+  chainId?: ChainId | undefined;
+};

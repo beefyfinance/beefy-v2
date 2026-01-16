@@ -113,11 +113,6 @@ export function featureFlag_noDataPolling() {
   return params.has('__no_polling');
 }
 
-export function featureFlag_debugOnRamp() {
-  const params = getSearchParams();
-  return params.has('__debug_onramp');
-}
-
 export function featureFlag_walletAddressOverride(walletAddress: string) {
   if (walletAddress) {
     return getParam('__view_as', walletAddress);
