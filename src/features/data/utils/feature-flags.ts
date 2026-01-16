@@ -213,20 +213,6 @@ export function featureFlag_simulateAllBridgeRateLimit(): boolean {
   return params.has('__simulate_all_bridge_rate_limit');
 }
 
-export function featureFlag_oneInchSupport(): {
-  chainId: string;
-  tokenAddress: string;
-}[] {
-  const params = getSearchParams();
-  if (params.has('__oneinch_support')) {
-    return (params.get('__oneinch_support') || '').split(',').map(s => {
-      const [chainId, tokenAddress] = s.split(':');
-      return { chainId, tokenAddress };
-    });
-  }
-  return [];
-}
-
 export function featureFlag_kyberSwapSupport(): {
   chainId: string;
   tokenAddress: string;
@@ -272,11 +258,6 @@ export function featureFlag_liquidSwapSupport(): {
 export function featureFlag_disableSwapAggregators(): boolean {
   const params = getSearchParams();
   return params.has('__disable_swap_aggregators');
-}
-
-export function featureFlag_disableOneInch(): boolean {
-  const params = getSearchParams();
-  return featureFlag_disableSwapAggregators() || params.has('__disable_one_inch');
 }
 
 export function featureFlag_disableKyber(): boolean {

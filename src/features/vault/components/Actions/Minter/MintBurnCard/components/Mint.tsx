@@ -67,10 +67,10 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
 
   const minterEarningsType = useAppSelector(state => selectMinterVaultsType(state, minterId));
 
-  const { canBurn, canZapInWithOneInch } = minter;
+  const { canBurn } = minter;
   const [contentKey, reminderKey] = useMemo(() => {
     const liquidityType = canBurn ? 'Burnable' : 'Liquid';
-    const zapType = canZapInWithOneInch ? 'WithZap' : 'WithoutZap';
+    const zapType = 'WithoutZap';
 
     return ['Content', 'Reminder'].map(key => [
       `Mint-${key}-${liquidityType}-${minterEarningsType}-${zapType}`,
@@ -78,7 +78,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       `Mint-${key}-${liquidityType}`,
       `Mint-${key}`,
     ]);
-  }, [canBurn, canZapInWithOneInch, minterEarningsType]);
+  }, [canBurn, minterEarningsType]);
 
   const isStepping = useAppSelector(selectIsStepperStepping);
 

@@ -287,16 +287,6 @@ export interface ZapConfig {
   chainId: ChainEntity['id'];
 }
 
-export interface OneInchSwapConfig {
-  id: string;
-  type: 'one-inch';
-  chainId: ChainEntity['id'];
-  priorityTokens: TokenEntity['id'][];
-  blockedTokens: TokenEntity['id'][];
-  blockedVaults: VaultEntity['id'][];
-  fee: ZapFee;
-}
-
 export interface KyberSwapSwapConfig {
   id: string;
   type: 'kyber';
@@ -327,11 +317,7 @@ export interface LiquidSwapSwapConfig {
   fee: ZapFee;
 }
 
-export type SwapAggregatorConfig =
-  | OneInchSwapConfig
-  | KyberSwapSwapConfig
-  | OdosSwapConfig
-  | LiquidSwapSwapConfig;
+export type SwapAggregatorConfig = KyberSwapSwapConfig | OdosSwapConfig | LiquidSwapSwapConfig;
 
 export type SwapAggregatorConfigLoose = ChangeTypeOfKeys<
   SwapAggregatorConfig,
@@ -368,7 +354,6 @@ export interface MinterConfig {
   canBurn: false | 'reserves' | 'supply';
   reserveBalanceMethod?: 'withdrawableBalance' | 'balanceOfWant';
   vaultIds: string[];
-  canZapInWithOneInch?: boolean;
 }
 
 export type PlatformType =
