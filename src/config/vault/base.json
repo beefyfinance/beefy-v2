@@ -1,5 +1,159 @@
 [
   {
+    "id": "uniswap-cow-base-fun-usdc-rp",
+    "name": "FUN-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseFUN-USDC",
+    "tokenAddress": "0xbA397d5fe9C197A0cE7cE9f51Ca47689A894A07A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x2D95d2a39f2F0A8BEA9AB3CAfBff0D59061e622b",
+    "earnedToken": "rCowUniswapBaseFUN-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-fun-usdc",
+    "status": "active",
+    "createdAt": 1768580452,
+    "platformId": "uniswap",
+    "assets": ["FUN", "USDC"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-fun-usdc",
+    "name": "FUN-USDC",
+    "type": "cowcentrated",
+    "token": "FUN-USDC uniswap",
+    "tokenAddress": "0xC2BB4fd5648856c73F8b81156C9B52fe173085eD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x16EE7ecAc70d1028E7712751E2Ee6BA808a7dd92",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0xbA397d5fe9C197A0cE7cE9f51Ca47689A894A07A",
+    "earnedToken": "cowUniswapBaseFUN-USDC",
+    "earnedTokenAddress": "0xbA397d5fe9C197A0cE7cE9f51Ca47689A894A07A",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-fun-usdc",
+    "status": "active",
+    "createdAt": 1768580452,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["FUN", "USDC"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-byte-weth-rp",
+    "name": "BYTE-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseBYTE-WETH",
+    "tokenAddress": "0x4b892B39d6A0A88A26Fdf8D15FA8d79706E33f8d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x29F240028c92795D0e4eAac66E1d8C80faD027Ce",
+    "earnedToken": "rCowUniswapBaseBYTE-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-byte-weth",
+    "status": "active",
+    "createdAt": 1768580452,
+    "platformId": "uniswap",
+    "assets": ["BYTE", "WETH"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-byte-weth",
+    "name": "BYTE-WETH",
+    "type": "cowcentrated",
+    "token": "BYTE-WETH uniswap",
+    "tokenAddress": "0x76569E1d4Fc83917ef40Cd3b2053B2B8620644b3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x03cEac3c28E353F5E4626c1242A6C7A41d004354",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "earnContractAddress": "0x4b892B39d6A0A88A26Fdf8D15FA8d79706E33f8d",
+    "earnedToken": "cowUniswapBaseBYTE-WETH",
+    "earnedTokenAddress": "0x4b892B39d6A0A88A26Fdf8D15FA8d79706E33f8d",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-byte-weth",
+    "status": "active",
+    "createdAt": 1768580452,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["BYTE", "WETH"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-flock-usdc-vault",
     "name": "FLOCK-USDC",
     "type": "standard",
