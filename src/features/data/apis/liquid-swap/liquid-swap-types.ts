@@ -1,3 +1,5 @@
+import type { ZapExtraQuoteResponse } from '../transact/transact-types.ts';
+
 export type QuoteRequest = {
   tokenIn: string;
   tokenOut: string;
@@ -59,7 +61,7 @@ export type QuoteResponse = {
   amountOut: string;
   averagePriceImpact: string;
   execution: QuoteExecution;
-};
+} & ZapExtraQuoteResponse;
 
 export type SwapRequest = QuoteRequest;
 

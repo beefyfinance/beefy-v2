@@ -59,7 +59,7 @@ export class LiquidSwapSwapProvider implements ISwapProvider {
       fromAmount: request.fromAmount,
       toToken: request.toToken,
       toAmount: new BigNumber(quote.amountOut), // @dev in decimal, no need to convert from wei
-      fee: config.fee,
+      fee: quote.extra.fee,
       extra: quote, // store whole quote so we don't need to fetch it again during swap
     };
   }
@@ -110,7 +110,7 @@ export class LiquidSwapSwapProvider implements ISwapProvider {
           : '0',
         inputPosition: -1, // not supported
       },
-      fee: config.fee,
+      fee: quote.fee,
     };
   }
 
