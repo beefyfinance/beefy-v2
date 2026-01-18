@@ -19,14 +19,12 @@ export const supportedChainIds: ChainConfig['id'][] = [
   'mantle',
   'polygon',
   'optimism',
-  'mode',
   'avax',
   'linea',
   'arbitrum',
   'bsc',
-  'fantom',
-  'scroll',
   'sonic',
+  'fraxtal',
 ];
 
 export class OdosApi implements IOdosApi {

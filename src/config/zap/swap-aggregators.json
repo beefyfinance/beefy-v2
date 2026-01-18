@@ -32,14 +32,6 @@
     "blockedVaults": []
   },
   {
-    "id": "kyber-fantom",
-    "type": "kyber",
-    "chainId": "fantom",
-    "priorityTokens": ["FTM", "WFTM", "USDC", "fUSDT", "DAI", "MIM", "MAI", "WETH", "WBTC"],
-    "blockedTokens": [],
-    "blockedVaults": ["geist-ftm"]
-  },
-  {
     "id": "kyber-arbitrum",
     "type": "kyber",
     "chainId": "arbitrum",
@@ -79,30 +71,6 @@
     "blockedVaults": []
   },
   {
-    "id": "kyber-cronos",
-    "type": "kyber",
-    "chainId": "cronos",
-    "priorityTokens": [],
-    "blockedTokens": [],
-    "blockedVaults": []
-  },
-  {
-    "id": "kyber-zksync",
-    "type": "kyber",
-    "chainId": "zksync",
-    "priorityTokens": [],
-    "blockedTokens": [],
-    "blockedVaults": []
-  },
-  {
-    "id": "kyber-zkevm",
-    "type": "kyber",
-    "chainId": "zkevm",
-    "priorityTokens": [],
-    "blockedTokens": [],
-    "blockedVaults": []
-  },
-  {
     "id": "kyber-base",
     "type": "kyber",
     "chainId": "base",
@@ -123,14 +91,6 @@
     "type": "kyber",
     "chainId": "mantle",
     "priorityTokens": ["MNT", "WMNT", "USDC", "USDT", "WETH", "mETH", "WBTC"],
-    "blockedTokens": [],
-    "blockedVaults": []
-  },
-  {
-    "id": "kyber-scroll",
-    "type": "kyber",
-    "chainId": "scroll",
-    "priorityTokens": ["WETH", "USDC", "USDT", "WBTC"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -228,14 +188,6 @@
     "blockedVaults": []
   },
   {
-    "id": "odos-mode",
-    "type": "odos",
-    "chainId": "mode",
-    "priorityTokens": ["ETH", "WETH", "USDT", "DAI", "MAI", "sUSD", "sETH", "WBTC", "MODE"],
-    "blockedTokens": [],
-    "blockedVaults": []
-  },
-  {
     "id": "odos-avax",
     "type": "odos",
     "chainId": "avax",
@@ -280,22 +232,6 @@
     "blockedVaults": []
   },
   {
-    "id": "odos-fantom",
-    "type": "odos",
-    "chainId": "fantom",
-    "priorityTokens": ["FTM", "WFTM", "USDC", "fUSDT", "DAI", "MIM", "MAI", "WETH", "WBTC"],
-    "blockedTokens": [],
-    "blockedVaults": ["geist-ftm"]
-  },
-  {
-    "id": "odos-scroll",
-    "type": "odos",
-    "chainId": "scroll",
-    "priorityTokens": ["WETH", "USDC", "USDT", "WBTC"],
-    "blockedTokens": [],
-    "blockedVaults": []
-  },
-  {
     "id": "odos-sonic",
     "type": "odos",
     "chainId": "sonic",
@@ -316,6 +252,14 @@
     "type": "kyber",
     "chainId": "hyperevm",
     "priorityTokens": ["HYPE", "WHYPE", "feUSD", "USDT0", "LIQD"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "odos-fraxtal",
+    "type": "odos",
+    "chainId": "fraxtal",
+    "priorityTokens": ["FXS", "WFXS", "WETH", "USDC", "USDT", "DAI", "frxUSD", "frxETH", "WBTC"],
     "blockedTokens": [],
     "blockedVaults": []
   }
