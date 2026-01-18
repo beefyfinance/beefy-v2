@@ -590,6 +590,7 @@ export const config = {
       'smUSDC',
       'OUSDT',
       'BOLDV2',
+      'ABasUSDC',
     ],
   },
   gnosis: {
