@@ -2,7 +2,6 @@ import type { VaultEntity } from '../entities/vault.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import type { PlatformEntity } from '../entities/platform.ts';
-import type { ZapFee } from './transact/transact-types.ts';
 import type { ChangeTypeOfKeys } from '../utils/types-utils.ts';
 import type BigNumber from 'bignumber.js';
 import type { Address } from 'viem';
@@ -294,7 +293,6 @@ export interface KyberSwapSwapConfig {
   priorityTokens: TokenEntity['id'][];
   blockedTokens: TokenEntity['id'][];
   blockedVaults: VaultEntity['id'][];
-  fee: ZapFee;
 }
 
 export interface OdosSwapConfig {
@@ -304,7 +302,6 @@ export interface OdosSwapConfig {
   priorityTokens: TokenEntity['id'][];
   blockedTokens: TokenEntity['id'][];
   blockedVaults: VaultEntity['id'][];
-  fee: ZapFee;
 }
 
 export interface LiquidSwapSwapConfig {
@@ -314,7 +311,6 @@ export interface LiquidSwapSwapConfig {
   priorityTokens: TokenEntity['id'][];
   blockedTokens: TokenEntity['id'][];
   blockedVaults: VaultEntity['id'][];
-  fee: ZapFee;
 }
 
 export type SwapAggregatorConfig = KyberSwapSwapConfig | OdosSwapConfig | LiquidSwapSwapConfig;

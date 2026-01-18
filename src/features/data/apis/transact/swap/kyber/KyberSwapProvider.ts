@@ -62,7 +62,7 @@ export class KyberSwapProvider implements ISwapProvider {
       fromAmount: request.fromAmount,
       toToken: request.toToken,
       toAmount: fromWei(quote.routeSummary.amountOut, request.toToken.decimals),
-      fee: config.fee,
+      fee: quote.extra.fee,
       extra: quote.routeSummary,
     };
   }
@@ -111,7 +111,7 @@ export class KyberSwapProvider implements ISwapProvider {
         value: isTokenNative(quote.fromToken) ? quote.extra.amountIn : '0',
         inputPosition: -1, // not supported
       },
-      fee: config.fee,
+      fee: quote.fee,
     };
   }
 

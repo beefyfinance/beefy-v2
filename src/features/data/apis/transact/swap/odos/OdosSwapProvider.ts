@@ -18,14 +18,15 @@ import type {
   SwapRequest,
   SwapResponse,
 } from '../ISwapProvider.ts';
+import type { Address } from 'viem';
 
 export class OdosSwapProvider implements ISwapProvider {
   getId(): string {
     return 'odos';
   }
 
-  protected getTokenAddress(token: TokenEntity): string {
-    return isTokenNative(token) ? ZERO_ADDRESS : token.address;
+  protected getTokenAddress(token: TokenEntity): Address {
+    return isTokenNative(token) ? ZERO_ADDRESS : (token.address as Address);
   }
 
   protected getConfigForChain(
@@ -62,7 +63,7 @@ export class OdosSwapProvider implements ISwapProvider {
         },
       ],
       chainId: chain.networkChainId,
-      userAddr: zap.router,
+      userAddr: zap.router as Address,
       slippageLimitPercent: slippage * 100,
       simple: true,
     });
@@ -73,7 +74,7 @@ export class OdosSwapProvider implements ISwapProvider {
       fromAmount: request.fromAmount,
       toToken: request.toToken,
       toAmount: fromWei(quote.outAmounts[0], request.toToken.decimals),
-      fee: config.fee,
+      fee: quote.extra.fee,
       extra: quote.pathId,
     };
   }
@@ -112,9 +113,9 @@ export class OdosSwapProvider implements ISwapProvider {
     const api = await getOdosApi(chain);
 
     const swap = await api.postSwap({
-      userAddr: fromAddress,
+      userAddr: fromAddress as Address,
       pathId: quote.extra as string,
-      receiver: fromAddress,
+      receiver: fromAddress as Address,
     });
 
     return {
@@ -135,7 +136,7 @@ export class OdosSwapProvider implements ISwapProvider {
         value: swap.transaction.value,
         inputPosition: -1, // not supported
       },
-      fee: config.fee,
+      fee: quote.fee,
     };
   }
 
