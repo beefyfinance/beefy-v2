@@ -5,42 +5,37 @@ import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import { ChainIcon } from '../ChainIcon/ChainIcon.tsx';
 import ForwardArrowIcon from '../../images/icons/forward-arrow.svg?react';
 
-export const ErrorPopOut = memo(function ErrorPopOut({
-  setIsPopupOpen,
-  rpcErrors,
+export const NotificationRpcChains = memo(function NotificationRpcChains({
+  onOpenDropdown,
+  chains,
 }: {
-  setIsPopupOpen: (isPopupOpen: boolean) => void;
-  rpcErrors: ChainEntity['id'][];
+  onOpenDropdown: () => void;
+  chains: ChainEntity['id'][];
 }) {
-  const showChainsConnectedError = useMemo(() => rpcErrors.length > 4, [rpcErrors]);
+  const showChainsConnectedError = useMemo(() => chains.length > 4, [chains]);
 
   const chainsToShow = useMemo(() => {
     if (showChainsConnectedError) {
-      return rpcErrors.slice(0, 4);
+      return chains.slice(0, 4);
     }
-    return rpcErrors;
-  }, [rpcErrors, showChainsConnectedError]);
+    return chains;
+  }, [chains, showChainsConnectedError]);
 
-  if (rpcErrors.length === 0) {
+  if (chains.length === 0) {
     return null;
   }
 
   return (
     <Container>
-      <ArrowExpandButton
-        variant="dark"
-        borderless={true}
-        fullWidth={true}
-        onClick={() => setIsPopupOpen(false)}
-      >
-        <DisconnectedChains>{`${rpcErrors.length} RPC disconnected`}</DisconnectedChains>
+      <ArrowExpandButton variant="dark" borderless={true} fullWidth={true} onClick={onOpenDropdown}>
+        <DisconnectedChains>{`${chains.length} RPC disconnected`}</DisconnectedChains>
         <Chains>
           <ChainsContainer>
             {chainsToShow.map(chainId => (
               <ChainIcon key={chainId} chainId={chainId} size={20} />
             ))}
             {showChainsConnectedError && (
-              <ChainsConnected>{`+ ${rpcErrors.length - 4}`}</ChainsConnected>
+              <ChainsConnected>{`+ ${chains.length - 4}`}</ChainsConnected>
             )}
           </ChainsContainer>
           <IconContainer>

@@ -1,4 +1,9 @@
-import type { ActionReducerMapBuilder, AsyncThunk, SerializedError } from '@reduxjs/toolkit';
+import type {
+  ActionReducerMapBuilder,
+  AsyncThunk,
+  PayloadAction,
+  SerializedError,
+} from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { Draft } from 'immer';
 import { cloneDeep } from 'lodash-es';
@@ -61,6 +66,7 @@ import type {
   LoaderStateRejected,
 } from './data-loader-types.ts';
 import { fetchWeeklyRevenueStats } from '../actions/revenue.ts';
+import { getNotifications } from './data-loader-notifications.ts';
 
 const dataLoaderStateInit: LoaderStateIdle = {
   lastFulfilled: undefined,
@@ -101,53 +107,60 @@ export const initialDataLoaderState: DataLoaderState = {
     wallet: false,
   },
   statusIndicator: {
-    open: false,
     excludeChainIds: [],
+    notifications: {
+      common: [],
+      byAddress: {},
+    },
+    ignored: {
+      common: [],
+      byAddress: {},
+    },
   },
   global: {
-    chainConfig: dataLoaderStateInit,
-    prices: dataLoaderStateInit,
+    addressBook: dataLoaderStateInit,
+    analytics: dataLoaderStateInit,
     apy: dataLoaderStateInit,
+    articles: dataLoaderStateInit,
     avgApy: dataLoaderStateInit,
-    promos: dataLoaderStateInit,
-    vaults: dataLoaderStateInit,
-    lastHarvests: dataLoaderStateInit,
+    beGemsCampaign: dataLoaderStateInit,
+    boostForm: dataLoaderStateInit,
+    bridgeConfig: dataLoaderStateInit,
+    bridges: dataLoaderStateInit,
+    chainConfig: dataLoaderStateInit,
+    curators: dataLoaderStateInit,
+    currentCowcentratedRanges: dataLoaderStateInit,
     fees: dataLoaderStateInit,
+    lastHarvests: dataLoaderStateInit,
+    merklCampaigns: dataLoaderStateInit,
+    merklRewards: dataLoaderStateInit,
+    migrators: dataLoaderStateInit,
+    minterForm: dataLoaderStateInit,
+    minters: dataLoaderStateInit,
+    platforms: dataLoaderStateInit,
+    prices: dataLoaderStateInit,
+    promos: dataLoaderStateInit,
+    proposals: dataLoaderStateInit,
+    stellaSwapRewards: dataLoaderStateInit,
+    treasury: dataLoaderStateInit,
+    vaults: dataLoaderStateInit,
     wallet: dataLoaderStateInit,
+    zapAggregatorTokenSupport: dataLoaderStateInit,
     zapAmms: dataLoaderStateInit,
     zapConfigs: dataLoaderStateInit,
     zapSwapAggregators: dataLoaderStateInit,
-    zapAggregatorTokenSupport: dataLoaderStateInit,
-    depositForm: dataLoaderStateInit,
-    withdrawForm: dataLoaderStateInit,
-    boostForm: dataLoaderStateInit,
-    addressBook: dataLoaderStateInit,
-    minters: dataLoaderStateInit,
-    minterForm: dataLoaderStateInit,
-    bridgeConfig: dataLoaderStateInit,
-    curators: dataLoaderStateInit,
-    platforms: dataLoaderStateInit,
-    onRamp: dataLoaderStateInit,
-    treasury: dataLoaderStateInit,
-    analytics: dataLoaderStateInit,
-    proposals: dataLoaderStateInit,
-    bridges: dataLoaderStateInit,
-    migrators: dataLoaderStateInit,
-    articles: dataLoaderStateInit,
-    merklCampaigns: dataLoaderStateInit,
-    currentCowcentratedRanges: dataLoaderStateInit,
-    merklRewards: dataLoaderStateInit,
-    stellaSwapRewards: dataLoaderStateInit,
-    beGemsCampaign: dataLoaderStateInit,
     revenue: dataLoaderStateInit,
   },
   byChainId: {},
   byAddress: {},
 };
 
-function makePendingState(existing: LoaderState | undefined): LoaderStatePending {
+function makePendingState(
+  existing: LoaderState | undefined,
+  requestId: string
+): LoaderStatePending {
   return {
-    lastDispatched: Date.now(),
+    lastDispatched: { timestamp: Date.now(), requestId },
     lastFulfilled: existing?.lastFulfilled || undefined,
     lastRejected: existing?.lastRejected || undefined,
     status: 'pending',
@@ -155,24 +168,49 @@ function makePendingState(existing: LoaderState | undefined): LoaderStatePending
   };
 }
 
-function makeRejectedState(existing: LoaderState | undefined, error: string): LoaderStateRejected {
+function makeRejectedState(
+  existing: LoaderState | undefined,
+  requestId: string,
+  error: string
+): LoaderStateRejected {
   return {
-    lastDispatched: existing?.lastDispatched || Date.now(),
+    lastDispatched: existing?.lastDispatched || { timestamp: Date.now(), requestId },
     lastFulfilled: existing?.lastFulfilled || undefined,
-    lastRejected: Date.now(),
+    lastRejected: { timestamp: Date.now(), requestId },
     status: 'rejected',
     error,
   };
 }
 
-function makeFulfilledState(existing: LoaderState | undefined): LoaderStateFulfilled {
+function makeFulfilledState(
+  existing: LoaderState | undefined,
+  requestId: string
+): LoaderStateFulfilled {
   return {
-    lastDispatched: existing?.lastDispatched || Date.now(),
-    lastFulfilled: Date.now(),
+    lastDispatched: existing?.lastDispatched || { timestamp: Date.now(), requestId },
+    lastFulfilled: { timestamp: Date.now(), requestId },
     lastRejected: existing?.lastRejected || undefined,
     status: 'fulfilled',
     error: null,
   };
+}
+
+function recalculateNotifications(sliceState: Draft<DataLoaderState>, walletAddress?: string) {
+  const { common, user } = getNotifications(sliceState, walletAddress);
+  sliceState.statusIndicator.notifications.common = common;
+  if (common.length === 0) {
+    // clear ignored if there are currently no errors
+    sliceState.statusIndicator.ignored.common = [];
+  }
+
+  if (walletAddress && user) {
+    const addressKey = walletAddress.toLowerCase();
+    sliceState.statusIndicator.notifications.byAddress[addressKey] = user;
+    if (user.length === 0) {
+      // clear ignored if there are currently no errors
+      sliceState.statusIndicator.ignored.byAddress[addressKey] = [];
+    }
+  }
 }
 
 /**
@@ -188,46 +226,53 @@ function addGlobalAsyncThunkActions<TPayload, TArg>(
       state: unknown;
     }
   >,
-  stateKey: LoaderGlobalKey,
-  openNetworkModalOnReject: boolean = false
+  stateKey: LoaderGlobalKey
 ) {
-  builder.addCase(action.pending, sliceState => {
-    setGlobalPending(sliceState, stateKey);
+  builder.addCase(action.pending, (sliceState, action) => {
+    setGlobalPending(sliceState, stateKey, action.meta.requestId);
   });
   builder.addCase(action.rejected, (sliceState, action) => {
-    setGlobalRejected(sliceState, stateKey, action.error, openNetworkModalOnReject);
+    setGlobalRejected(sliceState, stateKey, action.meta.requestId, action.error);
+    recalculateNotifications(sliceState);
   });
   builder.addCase(action.fulfilled, (sliceState, action) => {
-    setGlobalFulfilled(sliceState, stateKey);
     if (fetchChainConfigs.fulfilled.match(action)) {
       sliceState.statusIndicator.excludeChainIds = action.payload.chainConfigs
         .filter(c => c.eol)
         .map(c => c.id);
     }
+    setGlobalFulfilled(sliceState, stateKey, action.meta.requestId);
+    recalculateNotifications(sliceState);
   });
 }
 
-function setGlobalPending(sliceState: Draft<DataLoaderState>, stateKey: LoaderGlobalKey) {
-  sliceState.global[stateKey] = makePendingState(sliceState.global[stateKey]);
+function setGlobalPending(
+  sliceState: Draft<DataLoaderState>,
+  stateKey: LoaderGlobalKey,
+  requestId: string
+) {
+  sliceState.global[stateKey] = makePendingState(sliceState.global[stateKey], requestId);
 }
 
 function setGlobalRejected(
   sliceState: Draft<DataLoaderState>,
   stateKey: LoaderGlobalKey,
-  error: SerializedError | string | undefined | null,
-  openModal?: boolean
+  requestId: string,
+  error: SerializedError | string | undefined | null
 ) {
   sliceState.global[stateKey] = makeRejectedState(
     sliceState.global[stateKey],
+    requestId,
     errorToString(error)
   );
-  if (openModal && !sliceState.statusIndicator.open) {
-    sliceState.statusIndicator.open = true;
-  }
 }
 
-function setGlobalFulfilled(sliceState: Draft<DataLoaderState>, stateKey: LoaderGlobalKey) {
-  sliceState.global[stateKey] = makeFulfilledState(sliceState.global[stateKey]);
+function setGlobalFulfilled(
+  sliceState: Draft<DataLoaderState>,
+  stateKey: LoaderGlobalKey,
+  requestId: string
+) {
+  sliceState.global[stateKey] = makeFulfilledState(sliceState.global[stateKey], requestId);
 }
 
 function getOrCreateChainState(sliceState: Draft<DataLoaderState>, chainId: ChainId) {
@@ -314,32 +359,36 @@ function addByChainAsyncThunkActions<
 ) {
   builder
     .addCase(action.pending, (sliceState, action) => {
-      const chainId = action.meta?.arg.chainId;
+      const chainId = action.meta.arg.chainId;
       const chainState = getOrCreateChainState(sliceState, chainId);
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = makePendingState(chainState[stateKey]);
+        chainState[stateKey] = makePendingState(chainState[stateKey], action.meta.requestId);
       }
     })
     .addCase(action.rejected, (sliceState, action) => {
-      const chainId = action.meta?.arg.chainId;
+      const chainId = action.meta.arg.chainId;
       const chainState = getOrCreateChainState(sliceState, chainId);
       const error = errorToString(action.error);
 
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = makeRejectedState(chainState[stateKey], error);
-
-        // something got rejected, we want to auto-open the indicator if not eol chain
-        sliceState.statusIndicator.open =
-          !sliceState.statusIndicator.excludeChainIds.includes(chainId);
+        chainState[stateKey] = makeRejectedState(
+          chainState[stateKey],
+          action.meta.requestId,
+          error
+        );
       }
+
+      recalculateNotifications(sliceState);
     })
     .addCase(action.fulfilled, (sliceState, action) => {
-      const chainId = action.meta?.arg.chainId;
+      const chainId = action.meta.arg.chainId;
       const chainState = getOrCreateChainState(sliceState, chainId);
 
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = makeFulfilledState(chainState[stateKey]);
+        chainState[stateKey] = makeFulfilledState(chainState[stateKey], action.meta.requestId);
       }
+
+      recalculateNotifications(sliceState);
     });
 }
 
@@ -370,11 +419,11 @@ function addByAddressByChainAsyncThunkActions<
       );
 
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = makePendingState(chainState[stateKey]);
+        chainState[stateKey] = makePendingState(chainState[stateKey], action.meta.requestId);
       }
     })
     .addCase(action.rejected, (sliceState, action) => {
-      const chainId = action.meta?.arg.chainId;
+      const chainId = action.meta.arg.chainId;
       const chainState = getOrCreateAddressChainState(
         sliceState,
         chainId,
@@ -383,8 +432,14 @@ function addByAddressByChainAsyncThunkActions<
       const error = errorToString(action.error);
 
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = makeRejectedState(chainState[stateKey], error);
+        chainState[stateKey] = makeRejectedState(
+          chainState[stateKey],
+          action.meta.requestId,
+          error
+        );
       }
+
+      recalculateNotifications(sliceState, action.meta.arg.walletAddress);
     })
     .addCase(action.fulfilled, (sliceState, action) => {
       const chainId = action.meta?.arg.chainId;
@@ -395,8 +450,10 @@ function addByAddressByChainAsyncThunkActions<
       );
 
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = makeFulfilledState(chainState[stateKey]);
+        chainState[stateKey] = makeFulfilledState(chainState[stateKey], action.meta.requestId);
       }
+
+      recalculateNotifications(sliceState, action.meta.arg.walletAddress);
     });
 }
 
@@ -469,29 +526,49 @@ function addByAddressAsyncThunkActions<
       const addressState = getOrCreateAddressState(sliceState, action.meta.arg.walletAddress);
 
       for (const addressKey of addressKeys) {
-        addressState.global[addressKey] = makePendingState(addressState.global[addressKey]);
+        addressState.global[addressKey] = makePendingState(
+          addressState.global[addressKey],
+          action.meta.requestId
+        );
       }
 
-      globalKeys?.forEach(globalKey => setGlobalPending(sliceState, globalKey));
+      globalKeys?.forEach(globalKey =>
+        setGlobalPending(sliceState, globalKey, action.meta.requestId)
+      );
     })
     .addCase(action.rejected, (sliceState, action) => {
       const addressState = getOrCreateAddressState(sliceState, action.meta.arg.walletAddress);
       const error = errorToString(action.error);
 
       for (const addressKey of addressKeys) {
-        addressState.global[addressKey] = makeRejectedState(addressState.global[addressKey], error);
+        addressState.global[addressKey] = makeRejectedState(
+          addressState.global[addressKey],
+          action.meta.requestId,
+          error
+        );
       }
 
-      globalKeys?.forEach(globalKey => setGlobalRejected(sliceState, globalKey, action.error));
+      globalKeys?.forEach(globalKey =>
+        setGlobalRejected(sliceState, globalKey, action.meta.requestId, action.error)
+      );
+
+      recalculateNotifications(sliceState, action.meta.arg.walletAddress);
     })
     .addCase(action.fulfilled, (sliceState, action) => {
       const addressState = getOrCreateAddressState(sliceState, action.meta.arg.walletAddress);
 
       for (const addressKey of addressKeys) {
-        addressState.global[addressKey] = makeFulfilledState(addressState.global[addressKey]);
+        addressState.global[addressKey] = makeFulfilledState(
+          addressState.global[addressKey],
+          action.meta.requestId
+        );
       }
 
-      globalKeys?.forEach(globalKey => setGlobalFulfilled(sliceState, globalKey));
+      globalKeys?.forEach(globalKey =>
+        setGlobalFulfilled(sliceState, globalKey, action.meta.requestId)
+      );
+
+      recalculateNotifications(sliceState, action.meta.arg.walletAddress);
     });
 }
 
@@ -499,56 +576,54 @@ export const dataLoaderSlice = createSlice({
   name: 'dataLoader',
   initialState: initialDataLoaderState,
   reducers: {
-    closeIndicator(sliceState) {
-      sliceState.statusIndicator.open = false;
-    },
-    openIndicator(sliceState) {
-      sliceState.statusIndicator.open = true;
+    dismissNotification(sliceState, action: PayloadAction<{ walletAddress?: string }>) {
+      sliceState.statusIndicator.ignored.common =
+        sliceState.statusIndicator.notifications.common.map(n => n.key);
+      const walletAddress = action.payload.walletAddress?.toLowerCase();
+      if (walletAddress) {
+        sliceState.statusIndicator.ignored.byAddress[walletAddress] =
+          sliceState.statusIndicator.notifications.byAddress[walletAddress]?.map(n => n.key) || [];
+      }
     },
   },
   extraReducers: builder => {
-    addGlobalAsyncThunkActions(builder, fetchChainConfigs, 'chainConfig', true);
-    // addGlobalAsyncThunkActions(builder, askForWalletConnection, 'wallet', false);
-    addGlobalAsyncThunkActions(builder, initWallet, 'wallet', false);
-    // addGlobalAsyncThunkActions(builder, doDisconnectWallet, 'wallet', false);
-    // addGlobalAsyncThunkActions(builder, askForNetworkChange, 'wallet', false);
-    addGlobalAsyncThunkActions(builder, fetchAllPricesAction, 'prices', true);
-    addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy', true);
-    addGlobalAsyncThunkActions(builder, fetchAvgApyAction, 'avgApy', true);
-    addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults', true);
-    addGlobalAsyncThunkActions(builder, fetchVaultsLastHarvests, 'lastHarvests', true);
-    addGlobalAsyncThunkActions(builder, initPromos, 'promos', true);
-    addGlobalAsyncThunkActions(builder, fetchFees, 'fees', true);
-    addGlobalAsyncThunkActions(builder, fetchAllMinters, 'minters', false);
-    addGlobalAsyncThunkActions(builder, fetchAllMigrators, 'migrators', false);
-    addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm', true);
-    addGlobalAsyncThunkActions(builder, initiateMinterForm, 'minterForm', true);
-    addGlobalAsyncThunkActions(builder, fetchBridgeConfig, 'bridgeConfig', true);
-    addGlobalAsyncThunkActions(builder, fetchZapConfigsAction, 'zapConfigs', true);
-    addGlobalAsyncThunkActions(builder, fetchZapSwapAggregatorsAction, 'zapSwapAggregators', true);
+    addGlobalAsyncThunkActions(builder, fetchChainConfigs, 'chainConfig');
+    addGlobalAsyncThunkActions(builder, initWallet, 'wallet');
+    addGlobalAsyncThunkActions(builder, fetchAllPricesAction, 'prices');
+    addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy');
+    addGlobalAsyncThunkActions(builder, fetchAvgApyAction, 'avgApy');
+    addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults');
+    addGlobalAsyncThunkActions(builder, fetchVaultsLastHarvests, 'lastHarvests');
+    addGlobalAsyncThunkActions(builder, initPromos, 'promos');
+    addGlobalAsyncThunkActions(builder, fetchFees, 'fees');
+    addGlobalAsyncThunkActions(builder, fetchAllMinters, 'minters');
+    addGlobalAsyncThunkActions(builder, fetchAllMigrators, 'migrators');
+    addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm');
+    addGlobalAsyncThunkActions(builder, initiateMinterForm, 'minterForm');
+    addGlobalAsyncThunkActions(builder, fetchBridgeConfig, 'bridgeConfig');
+    addGlobalAsyncThunkActions(builder, fetchZapConfigsAction, 'zapConfigs');
+    addGlobalAsyncThunkActions(builder, fetchZapSwapAggregatorsAction, 'zapSwapAggregators');
     addGlobalAsyncThunkActions(
       builder,
       fetchZapAggregatorTokenSupportAction,
-      'zapAggregatorTokenSupport',
-      true
+      'zapAggregatorTokenSupport'
     );
-    addGlobalAsyncThunkActions(builder, fetchZapAmmsAction, 'zapAmms', true);
-    addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
-    addGlobalAsyncThunkActions(builder, fetchCurators, 'curators', true);
-    addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms', true);
-    addGlobalAsyncThunkActions(builder, fetchBridges, 'bridges', true);
-    addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury', true);
-    addGlobalAsyncThunkActions(builder, fetchActiveProposals, 'proposals', false);
-    addGlobalAsyncThunkActions(builder, fetchLastArticle, 'articles', false);
-    addGlobalAsyncThunkActions(builder, fetchOffChainCampaignsAction, 'merklCampaigns', false);
+    addGlobalAsyncThunkActions(builder, fetchZapAmmsAction, 'zapAmms');
+    addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook');
+    addGlobalAsyncThunkActions(builder, fetchCurators, 'curators');
+    addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms');
+    addGlobalAsyncThunkActions(builder, fetchBridges, 'bridges');
+    addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury');
+    addGlobalAsyncThunkActions(builder, fetchActiveProposals, 'proposals');
+    addGlobalAsyncThunkActions(builder, fetchLastArticle, 'articles');
+    addGlobalAsyncThunkActions(builder, fetchOffChainCampaignsAction, 'merklCampaigns');
     addGlobalAsyncThunkActions(
       builder,
       fetchAllCurrentCowcentratedRanges,
-      'currentCowcentratedRanges',
-      false
+      'currentCowcentratedRanges'
     );
-    addGlobalAsyncThunkActions(builder, initCampaignBeGems, 'beGemsCampaign', false);
-    addGlobalAsyncThunkActions(builder, fetchWeeklyRevenueStats, 'revenue', true);
+    addGlobalAsyncThunkActions(builder, initCampaignBeGems, 'beGemsCampaign');
+    addGlobalAsyncThunkActions(builder, fetchWeeklyRevenueStats, 'revenue');
 
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);
@@ -564,10 +639,15 @@ export const dataLoaderSlice = createSlice({
       'clmHarvests',
     ]);
 
-    addByAddressAsyncThunkActions(builder, fetchWalletTimeline, ['timeline']);
-    addByAddressAsyncThunkActions(builder, recalculateDepositedVaultsAction, ['depositedVaults']);
-    addByAddressAsyncThunkActions(builder, initDashboardByAddress, ['dashboard']);
-    addByAddressAsyncThunkActions(builder, fetchClmHarvestsForUser, ['clmHarvests']);
+    addByAddressAsyncThunkActions(builder, fetchWalletTimeline, ['timeline'], undefined);
+    addByAddressAsyncThunkActions(
+      builder,
+      recalculateDepositedVaultsAction,
+      ['depositedVaults'],
+      undefined
+    );
+    addByAddressAsyncThunkActions(builder, initDashboardByAddress, ['dashboard'], undefined);
+    addByAddressAsyncThunkActions(builder, fetchClmHarvestsForUser, ['clmHarvests'], undefined);
     addByAddressAsyncThunkActions(
       builder,
       fetchUserStellaSwapRewardsAction,

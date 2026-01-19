@@ -4134,48 +4134,6 @@
     ]
   },
   {
-    "id": "quick-gamma-usdc-mimatic-stable",
-    "name": "MAI-USDC.e Stable LP",
-    "type": "standard",
-    "token": "aMAI-USDC.e",
-    "tokenAddress": "0x25B186eEd64ca5FDD1bc33fc4CFfd6d34069BAec",
-    "tokenDecimals": 18,
-    "tokenProviderId": "quickswap",
-    "earnContractAddress": "0x8E2E71C236A0cEB822eE916C9E2701D1D2F80893",
-    "earnedToken": "mooQuickMAI-USDC_Stable",
-    "earnedTokenAddress": "0x8E2E71C236A0cEB822eE916C9E2701D1D2F80893",
-    "oracle": "lps",
-    "oracleId": "quick-gamma-usdc-mimatic-stable",
-    "status": "eol",
-    "createdAt": 1688597681,
-    "retireReason": "rewards",
-    "retiredAt": 1698574248,
-    "platformId": "gamma",
-    "assets": ["MAI", "pUSDCe"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": true,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
-    "network": "polygon",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
-      }
-    ]
-  },
-  {
     "id": "quick-gamma-wbtc-usdc-narrow",
     "name": "WBTC-USDC.e Narrow LP",
     "type": "standard",

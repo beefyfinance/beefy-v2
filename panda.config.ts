@@ -299,7 +299,6 @@ const config = buildConfig(
           missingNetworkIconBackground: { value: 'magenta' },
           modalProgressBarBackground: { value: '#e5e5e5', description: 'txsModal.bgLine' },
           mtPellerin: { value: '#121212' },
-          onRampIconLoading: { value: '#ffffff1e' },
           orangeWarning: { value: '#d19847', description: 'indicators.warning' },
           purpleDarkest: { value: '#121421', description: 'app bg + search input bg' },
           redError: { value: '#da5932', description: 'indicators.error' },

@@ -6,7 +6,7 @@ import BackArrow from '../../images/back-arrow.svg?react';
 
 const useStyles = legacyMakeStyles(styles);
 
-export type StepType = 'bridge' | 'onRamp';
+export type StepType = 'bridge';
 
 export type StepProps = {
   stepType: StepType;

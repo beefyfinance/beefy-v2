@@ -1,5 +1,55 @@
 [
   {
+    "id": "stakedao-wbtc-cbbtc-hemibtc",
+    "name": "WBTC/cbBTC/hemiBTC",
+    "type": "standard",
+    "token": "HemiCbWBTC",
+    "tokenAddress": "0x66039342C66760874047c36943B1e2d8300363BB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x7D387275C83b40d72f593e184653dEDfb06091E7",
+    "earnedToken": "mooStakeDaoWBTC-cbBTC-hemiBTC",
+    "earnedTokenAddress": "0x7D387275C83b40d72f593e184653dEDfb06091E7",
+    "oracle": "lps",
+    "oracleId": "curve-wbtc-cbbtc-hemibtc",
+    "status": "active",
+    "createdAt": 1768809500,
+    "platformId": "stakedao",
+    "assets": ["WBTC", "cbBTC", "hemiBTC"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-625/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-625/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x66039342C66760874047c36943B1e2d8300363BB",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x66039342C66760874047c36943B1e2d8300363BB",
+            "coins": [
+              "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+              "0x06ea695B91700071B161A434fED42D1DcbAD9f00"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "sky-usds-spk",
     "name": "USDS",
     "type": "standard",
@@ -1782,8 +1832,10 @@
     "earnedTokenAddress": "0x6E0d7f2929194cEa155FFC809BBf941EC5732395",
     "oracle": "lps",
     "oracleId": "curve-usd0-usd0++",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1748423442,
+    "retireReason": "rewards",
+    "retiredAt": 1768810812,
     "platformId": "curve",
     "assets": ["USD0", "USD0++"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
@@ -8522,7 +8574,7 @@
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
-      "notCorrelated": false,
+      "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false

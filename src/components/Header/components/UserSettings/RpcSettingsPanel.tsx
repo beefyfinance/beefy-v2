@@ -5,11 +5,11 @@ import { RpcMenu } from './RpcMenu.tsx';
 import { styled } from '@repo/styles/jsx';
 
 export const RpcSettingsPanel = memo(function RpcSettingsPanel({
-  rpcErrors,
+  chainsWithErrors,
   editChainId,
   setEditChainId,
 }: {
-  rpcErrors: ChainEntity['id'][];
+  chainsWithErrors: ChainEntity['id'][];
   editChainId: ChainEntity['id'] | null;
   setEditChainId: (chainId: ChainEntity['id'] | null) => void;
 }) {
@@ -22,7 +22,7 @@ export const RpcSettingsPanel = memo(function RpcSettingsPanel({
       {editChainId ?
         <RpcEdit chainId={editChainId} onBack={onBack} />
       : <PanelContent>
-          <RpcMenu rpcErrors={rpcErrors} onSelect={setEditChainId} />
+          <RpcMenu chainsWithErrors={chainsWithErrors} onSelect={setEditChainId} />
         </PanelContent>
       }
     </Container>
