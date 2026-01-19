@@ -1460,47 +1460,6 @@
     }
   },
   {
-    "id": "venus-arb-wbtc",
-    "name": "WBTC",
-    "type": "standard",
-    "token": "WBTC",
-    "tokenAddress": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
-    "tokenDecimals": 8,
-    "earnContractAddress": "0xdE928310D40b43b9b95DD454F4B83Ef966753950",
-    "earnedToken": "mooVenusWBTC",
-    "earnedTokenAddress": "0xdE928310D40b43b9b95DD454F4B83Ef966753950",
-    "oracle": "tokens",
-    "oracleId": "WBTC",
-    "status": "eol",
-    "createdAt": 1729610236,
-    "retireReason": "rewards",
-    "retiredAt": 1754691688,
-    "platformId": "venus",
-    "assets": ["WBTC"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": true,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "lendingNoBorrow",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ],
-    "lendingOracle": {
-      "provider": "chainlink",
-      "address": "0xd0C7101eACbB49F3deCcCc166d238410D6D46d57"
-    }
-  },
-  {
     "id": "camelot-order-weth-rp",
     "name": "ORDER-WETH Reward Pool",
     "type": "gov",
