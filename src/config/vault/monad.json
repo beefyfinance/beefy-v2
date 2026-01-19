@@ -1,5 +1,42 @@
 [
   {
+    "id": "morpho-monad-hyperithm-usdc",
+    "name": "USDC (Hyperithm, Degen)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xA95FCe7251396b66661379fb33B7c6F4F26CAf91",
+    "earnedToken": "mooMorphoMonadHyperithmUSDC",
+    "earnedTokenAddress": "0xA95FCe7251396b66661379fb33B7c6F4F26CAf91",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1768828284,
+    "platformId": "morpho",
+    "curatorId": "hyperithm",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0x78999cc96d2Ba0341588C60CcB0E91c6C33CF371/hyperithm-usdc-degen",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "curvance-monad-earnausd-earnausd-ausd",
     "name": "earnAUSD (earnAUSD-AUSD Market)",
     "type": "standard",
