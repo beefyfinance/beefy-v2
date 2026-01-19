@@ -1,5 +1,221 @@
 [
   {
+    "id": "morpho-arb-steakhouse-usdt",
+    "name": "USD₮0 (Steakhouse, High Yield V2)",
+    "token": "USD₮0",
+    "tokenAddress": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x1d23D806c8e78E862285464A91673486219acd9c",
+    "earnedToken": "mooMorphoArbSteakhouseUSDT",
+    "earnedTokenAddress": "0x1d23D806c8e78E862285464A91673486219acd9c",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1768828284,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["USDT"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/arbitrum/vault/0xbeeff77CE5C059445714E6A3490E273fE7F2492F/steakhouse-high-yield",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-arb-steakhouse-v2-usdc",
+    "name": "USDC (Steakhouse, High Yield V2)",
+    "token": "USDC",
+    "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x48c22563d06826CA38ab32F7EcbcB94f03a287aa",
+    "earnedToken": "mooMorphoArbSteakhouseV2USDC",
+    "earnedTokenAddress": "0x48c22563d06826CA38ab32F7EcbcB94f03a287aa",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1768828284,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/arbitrum/vault/0xbeeff1D5dE8F79ff37a151681100B039661da518/steakhouse-high-yield",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-arb-steakhouse-usdc",
+    "name": "USDC (Steakhouse, High Yield USDC)",
+    "token": "USDC",
+    "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x13EaA79178f2b6C0A43cA265B66d70b9d60F827a",
+    "earnedToken": "mooMorphoArbSteakhouseUSDC",
+    "earnedTokenAddress": "0x13EaA79178f2b6C0A43cA265B66d70b9d60F827a",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1768828284,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/arbitrum/vault/0x5c0C306Aaa9F877de636f4d5822cA9F2E81563BA/steakhouse-high-yield-usdc",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-arb-gauntlet-core-usdc",
+    "name": "USDC (Gauntlet, Core)",
+    "token": "USDC",
+    "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x3e101847e64987CE01E56918dcc8c437F4c6B24c",
+    "earnedToken": "mooMorphoArbGauntletCoreUSDC",
+    "earnedTokenAddress": "0x3e101847e64987CE01E56918dcc8c437F4c6B24c",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1768828284,
+    "platformId": "morpho",
+    "curatorId": "gauntlet",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/arbitrum/vault/0x7e97fa6893871A2751B5fE961978DCCb2c201E65/gauntlet-usdc-core",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-arb-gauntlet-prime-usdc",
+    "name": "USDC (Gauntlet, Prime)",
+    "token": "USDC",
+    "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xBced10660D87ecE552E1F3652927Bc7C87CccA75",
+    "earnedToken": "mooMorphoArbGauntletPrimeUSDC",
+    "earnedTokenAddress": "0xBced10660D87ecE552E1F3652927Bc7C87CccA75",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1768828284,
+    "platformId": "morpho",
+    "curatorId": "gauntlet",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/arbitrum/vault/0x7c574174DA4b2be3f705c6244B4BfA0815a8B3Ed/gauntlet-usdc-prime",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-arb-hyperithm-usdc",
+    "name": "USDC (Hyperithm)",
+    "token": "USDC",
+    "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x99925188f1B92661A443376319370ACFF1D68B87",
+    "earnedToken": "mooMorphoArbHyperithmUSDC",
+    "earnedTokenAddress": "0x99925188f1B92661A443376319370ACFF1D68B87",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1768828284,
+    "platformId": "morpho",
+    "curatorId": "hyperithm",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/arbitrum/vault/0x4B6F1C9E5d470b97181786b26da0d0945A7cf027/hyperithm-usdc",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arbitrum-corn-usdt0-rp",
     "name": "CORN-USD₮0 Reward Pool",
     "type": "gov",
