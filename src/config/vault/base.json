@@ -1,5 +1,5 @@
 [
-    {
+  {
     "id": "aerodrome-cow-base-fun-usdc-vault",
     "name": "FUN-USDC",
     "type": "standard",
@@ -137,7 +137,7 @@
     "platformId": "uniswap",
     "assets": ["FUN", "USDC"],
     "risks": {
-      "complex": false,
+      "complex": true,
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
@@ -177,7 +177,7 @@
     "feeTier": "1",
     "assets": ["FUN", "USDC"],
     "risks": {
-      "complex": false,
+      "complex": true,
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
@@ -214,7 +214,7 @@
     "platformId": "uniswap",
     "assets": ["BYTE", "WETH"],
     "risks": {
-      "complex": false,
+      "complex": true,
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
@@ -254,7 +254,7 @@
     "feeTier": "1",
     "assets": ["BYTE", "WETH"],
     "risks": {
-      "complex": false,
+      "complex": true,
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
