@@ -1,5 +1,41 @@
 [
   {
+    "id": "morpho-op-gauntlet-prime-usdc",
+    "name": "USDC (Gauntlet, Prime)",
+    "token": "USDC",
+    "tokenAddress": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xb3D2afBBc8485E3C89C8e511470988526763eAA8",
+    "earnedToken": "mooMorphoOpGauntletPrimeUSDC",
+    "earnedTokenAddress": "0xb3D2afBBc8485E3C89C8e511470988526763eAA8",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1768921271,
+    "platformId": "morpho",
+    "curatorId": "gauntlet",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/opmainnet/vault/0xC30ce6A5758786e0F640cC5f881Dd96e9a1C5C59/gauntlet-usdc-prime",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "balancerv3-optimism-sfrxusd-waoptusdcn",
     "name": "sfrxUSD/USDC V3",
     "type": "standard",
