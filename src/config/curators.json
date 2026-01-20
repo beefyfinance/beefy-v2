@@ -61,5 +61,12 @@
     "description": "Steakhouse Financial is a DeFi risk-curation firm that manages institutional-grade vaults and stablecoin-lending strategies focused on capital efficiency and treasury optimization.",
     "website": "https://www.steakhouse.financial/",
     "twitter": "https://twitter.com/SteakhouseFi"
+  },
+  {
+    "id": "euler",
+    "name": "Euler DAO",
+    "description": "The Euler DAO (Decentralized Autonomous Organization) is a community-driven mechanism focused on advancing the Euler ecosystem.",
+    "website": "https://euler.foundation/",
+    "twitter": "https://twitter.com/eulerfinance"
   }
 ]

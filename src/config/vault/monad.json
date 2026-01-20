@@ -1,5 +1,79 @@
 [
   {
+    "id": "euler-monad-euler-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x5bE4113647bCCD2150339a6EB18250a0593AAEE9",
+    "earnedToken": "mooEulerMonadUSDC",
+    "earnedTokenAddress": "0x5bE4113647bCCD2150339a6EB18250a0593AAEE9",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1768921272,
+    "platformId": "euler",
+    "curatorId": "euler",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0xA981f053C118FE4dB0e1aEBA192AAD20Ec7F7801?network=monad",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "euler-monad-euler-ausd",
+    "name": "AUSD",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xe661B68c26745e48A18C9a7B0D743BC659C4C9F4",
+    "earnedToken": "mooEulerMonadAUSD",
+    "earnedTokenAddress": "0xe661B68c26745e48A18C9a7B0D743BC659C4C9F4",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1768921272,
+    "platformId": "euler",
+    "curatorId": "euler",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0x598035A2E984993229f6FA4C8C3eCf6c52aD51b5?network=monad",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "morpho-monad-hyperithm-usdc",
     "name": "USDC (Hyperithm, Degen)",
     "type": "standard",
