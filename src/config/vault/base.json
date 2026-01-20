@@ -1,5 +1,123 @@
 [
   {
+    "id": "aerodrome-cow-base-fun-usdc-vault",
+    "name": "FUN-USDC",
+    "type": "standard",
+    "token": "FUN-USDC",
+    "tokenAddress": "0xD5B820CDDc990eDcFfa8CD10Eed8FF242e731b36",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x73fD88f0c1364F9f81D52dD6Bb9FfF6429597cCD",
+    "earnedToken": "mooCowAerodromeFUN-USDC",
+    "earnedTokenAddress": "0x73fD88f0c1364F9f81D52dD6Bb9FfF6429597cCD",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-fun-usdc",
+    "status": "active",
+    "createdAt": 1768843093,
+    "platformId": "aerodrome",
+    "assets": ["FUN", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-fun-usdc-rp",
+    "name": "FUN-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeFUN-USDC",
+    "tokenAddress": "0xD5B820CDDc990eDcFfa8CD10Eed8FF242e731b36",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xaDe28acC33Bd0E76dAef4794dcD359Cc225fdb00",
+    "earnedToken": "rCowAerodromeFUN-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-fun-usdc",
+    "status": "active",
+    "createdAt": 1768843092,
+    "platformId": "aerodrome",
+    "assets": ["FUN", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-fun-usdc",
+    "name": "FUN-USDC",
+    "type": "cowcentrated",
+    "token": "FUN-USDC aerodrome",
+    "tokenAddress": "0x659bE70647B0f63217D60e077F4417b1eCC65064",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x16EE7ecAc70d1028E7712751E2Ee6BA808a7dd92",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0xD5B820CDDc990eDcFfa8CD10Eed8FF242e731b36",
+    "earnedToken": "cowAerodromeFUN-USDC",
+    "earnedTokenAddress": "0xD5B820CDDc990eDcFfa8CD10Eed8FF242e731b36",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-fun-usdc",
+    "status": "active",
+    "createdAt": 1768843092,
+    "platformId": "beefy",
+    "feeTier": "0.1",
+    "assets": ["FUN", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-fun-usdc-rp",
     "name": "FUN-USDC Reward Pool",
     "type": "gov",
@@ -19,7 +137,7 @@
     "platformId": "uniswap",
     "assets": ["FUN", "USDC"],
     "risks": {
-      "complex": false,
+      "complex": true,
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
@@ -59,7 +177,7 @@
     "feeTier": "1",
     "assets": ["FUN", "USDC"],
     "risks": {
-      "complex": false,
+      "complex": true,
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
@@ -96,7 +214,7 @@
     "platformId": "uniswap",
     "assets": ["BYTE", "WETH"],
     "risks": {
-      "complex": false,
+      "complex": true,
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
@@ -136,7 +254,7 @@
     "feeTier": "1",
     "assets": ["BYTE", "WETH"],
     "risks": {
-      "complex": false,
+      "complex": true,
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
