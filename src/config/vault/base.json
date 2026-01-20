@@ -97,7 +97,7 @@
     "status": "active",
     "createdAt": 1768843092,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "0.1",
     "assets": ["FUN", "USDC"],
     "risks": {
       "complex": true,
