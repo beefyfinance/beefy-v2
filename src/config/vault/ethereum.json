@@ -1,5 +1,103 @@
 [
   {
+    "id": "stakedao-pmusd-frxusd",
+    "name": "pmUSD/frxUSD",
+    "type": "standard",
+    "token": "pmfrxUSD",
+    "tokenAddress": "0xBf5047039F2980C21eB5692c790BAd8A9533b900",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x2a2b182E5A05626489eb4874B19158C728705746",
+    "earnedToken": "mooStakeDao_pmUSD-frxUSD",
+    "earnedTokenAddress": "0x2a2b182E5A05626489eb4874B19158C728705746",
+    "oracle": "lps",
+    "oracleId": "curve-pmusd-frxusd",
+    "status": "active",
+    "createdAt": 1768887915,
+    "platformId": "stakedao",
+    "assets": ["pmUSD", "frxUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-653/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-653/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xBf5047039F2980C21eB5692c790BAd8A9533b900",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xBf5047039F2980C21eB5692c790BAd8A9533b900",
+            "coins": [
+              "0xC0c17dD08263C16f6b64E772fB9B723Bf1344DdF",
+              "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "stakedao-pmusd-crvusd",
+    "name": "pmUSD/crvUSD",
+    "type": "standard",
+    "token": "pmcrvUSD",
+    "tokenAddress": "0xEcb0F0d68C19BdAaDAEbE24f6752A4Db34e2c2cb",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x3b09a704669A5d8463FbFF06730895AEEe7A9671",
+    "earnedToken": "mooStakeDao_pmUSD-crvUSD",
+    "earnedTokenAddress": "0x3b09a704669A5d8463FbFF06730895AEEe7A9671",
+    "oracle": "lps",
+    "oracleId": "curve-pmusd-crvusd",
+    "status": "active",
+    "createdAt": 1768887899,
+    "platformId": "stakedao",
+    "assets": ["pmUSD", "crvUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-652/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-652/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xEcb0F0d68C19BdAaDAEbE24f6752A4Db34e2c2cb",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xEcb0F0d68C19BdAaDAEbE24f6752A4Db34e2c2cb",
+            "coins": [
+              "0xC0c17dD08263C16f6b64E772fB9B723Bf1344DdF",
+              "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "stakedao-wbtc-cbbtc-hemibtc",
     "name": "WBTC/cbBTC/hemiBTC",
     "type": "standard",

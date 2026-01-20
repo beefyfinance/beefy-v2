@@ -98,6 +98,7 @@ export const config = {
       'stcUSD',
       'reUSDxyz',
       'reUSDe',
+      'pmUSD',
     ],
   },
   polygon: {
