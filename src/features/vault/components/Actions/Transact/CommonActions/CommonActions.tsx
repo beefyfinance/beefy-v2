@@ -1,5 +1,4 @@
-import { css, type CssStyles } from '@repo/styles/css';
-import { type FC, memo, type ReactNode, useCallback } from 'react';
+import { memo, type ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import type { ButtonVariantProps } from '../../../../../../components/Button/styles.ts';
@@ -64,38 +63,24 @@ export const ActionSwitch = memo(function ActionSwitch({ chainId, ...props }: Ac
 });
 
 export type ActionConnectSwitchProps = {
-  css?: CssStyles;
   chainId?: ChainEntity['id'];
   children: ReactNode;
-  FeesComponent?: FC;
 };
 
 export const ActionConnectSwitch = memo(function ActionConnectSwitch({
   children,
-  css: cssProp,
   chainId,
-  FeesComponent,
 }: ActionConnectSwitchProps) {
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const connectedChainId = useAppSelector(selectCurrentChainId);
 
   if (!isWalletConnected) {
-    return (
-      <div className={css(cssProp)}>
-        <ActionConnect />
-        {FeesComponent && <FeesComponent />}
-      </div>
-    );
+    return <ActionConnect />;
   }
 
   if (chainId && chainId !== connectedChainId) {
-    return (
-      <div className={css(cssProp)}>
-        <ActionSwitch chainId={chainId} />
-        {FeesComponent && <FeesComponent />}
-      </div>
-    );
+    return <ActionSwitch chainId={chainId} />;
   }
 
-  return <>{children}</>;
+  return children;
 });

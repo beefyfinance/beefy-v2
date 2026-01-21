@@ -1,6 +1,5 @@
 import { config as chainConfigs } from '../../../config/config.ts';
 import type { ChainEntity } from '../entities/chain.ts';
-import type { MigrationConfig } from '../reducers/wallet/migration-types.ts';
 import type {
   AmmConfig,
   BeefyBridgeConfig,
@@ -18,7 +17,7 @@ import type {
 } from './config-types.ts';
 import { mapValues } from 'lodash-es';
 import { entries, keys } from '../../../helpers/object.ts';
-import { getMigratorConfig, getMinterConfig } from '../../../helpers/getConfig.ts';
+import { getMinterConfig } from '../../../helpers/getConfig.ts';
 
 const ammsChainPathToImportFn = import.meta.glob<AmmConfig[]>('../../../config/zap/amm/*.json', {
   import: 'default',
@@ -100,21 +99,6 @@ export class ConfigAPI {
 
     return Object.fromEntries(entries.filter(entry => entry !== undefined)) as {
       [chainId in ChainEntity['id']]?: MinterConfig[];
-    };
-  }
-
-  public async fetchAllMigrators(): Promise<{
-    [chainId in ChainEntity['id']]?: MigrationConfig[];
-  }> {
-    const entries = await Promise.all(
-      keys(chainConfigs).map(async chainId => {
-        const migrators = await getMigratorConfig(chainId);
-        return [chainId, migrators || []];
-      })
-    );
-
-    return Object.fromEntries(entries.filter(entry => entry !== undefined)) as {
-      [chainId in ChainEntity['id']]?: MigrationConfig[];
     };
   }
 

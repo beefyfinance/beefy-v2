@@ -8737,7 +8737,7 @@
     "platformId": "morpho",
     "curatorId": "gauntlet",
     "assets": ["WETH"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9348,7 +9348,7 @@
     "platformId": "morpho",
     "curatorId": "gauntlet",
     "assets": ["cbBTC"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9709,7 +9709,7 @@
     "platformId": "morpho",
     "curatorId": "gauntlet",
     "assets": ["USDC"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11660,7 +11660,7 @@
     "platformId": "morpho",
     "curatorId": "gauntlet",
     "assets": ["USDC"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11697,7 +11697,7 @@
     "platformId": "morpho",
     "curatorId": "re7-labs",
     "assets": ["eUSD"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11734,7 +11734,7 @@
     "platformId": "morpho",
     "curatorId": "gauntlet",
     "assets": ["WETH"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,

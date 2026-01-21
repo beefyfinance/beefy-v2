@@ -84,7 +84,6 @@ export interface DataLoaderState {
     lastHarvests: LoaderState;
     merklCampaigns: LoaderState;
     merklRewards: LoaderState;
-    migrators: LoaderState;
     minterForm: LoaderState;
     minters: LoaderState;
     platforms: LoaderState;

@@ -15,7 +15,7 @@
     "platformId": "morpho",
     "curatorId": "gauntlet",
     "assets": ["USDC"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "complex": false,
       "curated": true,

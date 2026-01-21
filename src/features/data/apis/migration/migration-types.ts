@@ -1,58 +1,98 @@
-import type { AsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Address, Chain } from 'viem';
 import type { VaultEntity } from '../../entities/vault.ts';
-import type { MigrationConfig } from '../../reducers/wallet/migration-types.ts';
-import type { BeefyState } from '../../store/types.ts';
+import type { BeefyDispatchFn, BeefyStateFn } from '../../store/types.ts';
 import type { GasPricing } from '../gas-prices/gas-prices.ts';
+import type { Step } from '../../reducers/wallet/stepper-types.ts';
 
 export interface IMigrationApi {
-  getMigrator(id: MigrationConfig['id']): Promise<Migrator>;
+  getMigrator(id: string): Promise<Migrator>;
 }
 
-export interface MigratorUpdateProps {
-  vaultId: VaultEntity['id'];
-  walletAddress: string;
-}
+export type MigratorLoadParams = {
+  readonly migrationId: string;
+};
 
-export interface CommonMigrationUpdateFulfilledPayload {
-  readonly balance: BigNumber;
+export type MigratorLoadPayload = Omit<Migrator, 'update' | 'execute'>;
+
+export type MigratorUpdateParams = {
   readonly vaultId: VaultEntity['id'];
+  readonly migrationId: string;
   readonly walletAddress: string;
-  readonly migrationId: MigrationConfig['id'];
-}
+};
 
-export type CommonMigrationUpdateAsyncThunk = AsyncThunk<
-  CommonMigrationUpdateFulfilledPayload,
-  MigratorUpdateProps,
-  { state: BeefyState }
->;
-
-export type CommonMigrationUpdateFulfilledAction = PayloadAction<
-  CommonMigrationUpdateFulfilledPayload,
-  string,
-  { arg: MigratorUpdateProps; requestId: string; requestStatus: 'fulfilled' }
->;
-
-export interface MigratorExecuteProps {
-  readonly vaultId: VaultEntity['id'];
-  t: TFunction<Namespace>;
-  readonly migrationId: MigrationConfig['id'];
-}
-
-export type CommonMigrationExecuteAsyncThunk = AsyncThunk<
-  void,
-  MigratorExecuteProps,
-  { state: BeefyState }
->;
+export type MigratorExecuteParams = MigratorUpdateParams & {
+  readonly t: TFunction<Namespace>;
+};
 
 export type MigratorUnstakeProps = {
   account: Address;
   chain: Chain | undefined;
 } & GasPricing;
 
-export interface Migrator {
-  update: CommonMigrationUpdateAsyncThunk;
-  execute: CommonMigrationExecuteAsyncThunk;
+export type UpdateParams<TId extends string = string> = {
+  migrationId: TId;
+  vault: VaultEntity;
+  walletAddress: Address;
+  dispatch: BeefyDispatchFn;
+  getState: BeefyStateFn;
+};
+
+export type BaseUserData = {
+  /** balance of deposit token in decimals */
+  balance: BigNumber;
+  /** optional symbol to display in the UI */
+  symbol?: string;
+};
+
+export type UpdateResult<TId extends string = string, TData extends BaseUserData = BaseUserData> = {
+  migrationId: TId;
+  data: TData;
+};
+
+export type UpdatePayload<
+  TId extends string = string,
+  TData extends BaseUserData = BaseUserData,
+> = UpdateResult<TId, TData> & {
+  vault: VaultEntity;
+  walletAddress: Address;
+};
+
+export type ExecuteParams<
+  TId extends string = string,
+  TData extends BaseUserData = BaseUserData,
+> = {
+  migrationId: TId;
+  vault: VaultEntity;
+  walletAddress: Address;
+  t: TFunction<Namespace>;
+  dispatch: BeefyDispatchFn;
+  getState: BeefyStateFn;
+  data: TData;
+};
+
+export type ExecuteResult<TId extends string = string> = {
+  migrationId: TId;
+  steps: Step[];
+};
+
+export type ExecutePayload<TId extends string = string> = ExecuteResult<TId> & {
+  vault: VaultEntity;
+};
+
+export type UpdateFn<TId extends string = string, TData extends BaseUserData = BaseUserData> = (
+  params: UpdateParams<TId>
+) => Promise<UpdateResult<TId, TData>>;
+
+export type ExecuteFn<TId extends string = string, TData extends BaseUserData = BaseUserData> = (
+  params: ExecuteParams<TId, TData>
+) => Promise<ExecuteResult<TId>>;
+
+export interface Migrator<TId extends string = string, TData extends BaseUserData = BaseUserData> {
+  id: TId;
+  name: string;
+  icon: string;
+  update: UpdateFn<TId, TData>;
+  execute: ExecuteFn<TId, TData>;
 }

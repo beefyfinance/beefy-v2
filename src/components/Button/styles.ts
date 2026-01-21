@@ -16,6 +16,7 @@ export const buttonRecipe = cva({
     borderColor: 'colorPalette.border',
     borderRadius: '8px',
     textStyle: 'body.medium',
+    transition: 'opacity 0.3s, color 0.3s, backgroundColor 0.3s, borderColor 0.3s',
     _active: activeStyles,
     _disabled: {
       color: 'colorPalette.disabled.color',

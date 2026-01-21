@@ -52,7 +52,7 @@
     "platformId": "morpho",
     "curatorId": "steakhouse",
     "assets": ["USDT"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "complex": false,
       "curated": true,
@@ -88,7 +88,7 @@
     "platformId": "morpho",
     "curatorId": "steakhouse",
     "assets": ["USDC"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "complex": false,
       "curated": true,
@@ -124,7 +124,7 @@
     "platformId": "morpho",
     "curatorId": "steakhouse",
     "assets": ["USDC"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "complex": false,
       "curated": true,
@@ -160,7 +160,7 @@
     "platformId": "morpho",
     "curatorId": "gauntlet",
     "assets": ["USDC"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "complex": false,
       "curated": true,
@@ -196,7 +196,7 @@
     "platformId": "morpho",
     "curatorId": "gauntlet",
     "assets": ["USDC"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "complex": false,
       "curated": true,
@@ -232,7 +232,7 @@
     "platformId": "morpho",
     "curatorId": "hyperithm",
     "assets": ["USDC"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "complex": false,
       "curated": true,

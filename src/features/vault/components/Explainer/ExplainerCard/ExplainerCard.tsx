@@ -29,8 +29,6 @@ export const ExplainerCard = memo(function ExplainerCard({
 }: ExplainerCardProps) {
   const classes = useStyles();
 
-  console.log(details);
-
   return (
     <Card css={cssProp}>
       <CardHeader>
