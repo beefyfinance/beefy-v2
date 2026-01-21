@@ -1,5 +1,42 @@
 [
   {
+    "id": "euler-arb-euler-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x24a4fc8d00e33A3b7f158e3a455B88e674941DAC",
+    "earnedToken": "mooEulerArbUSDC",
+    "earnedTokenAddress": "0x24a4fc8d00e33A3b7f158e3a455B88e674941DAC",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1769000039,
+    "platformId": "euler",
+    "curatorId": "euler",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0xe4783824593a50Bfe9dc873204CEc171ebC62dE0?network=arbitrumone",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "morpho-arb-steakhouse-usdt",
     "name": "USD₮0 (Steakhouse, High Yield V2)",
     "token": "USD₮0",
