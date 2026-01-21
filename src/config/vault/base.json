@@ -1,5 +1,41 @@
 [
   {
+    "id": "morpho-base-steakhouse-prime-eurc",
+    "name": "EURC (Steakhouse, Prime)",
+    "token": "USDC",
+    "tokenAddress": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x01F1A592B0b757B2931bbcCf28227cdC1e892dde",
+    "earnedToken": "mooMorphoBaseSteakhousePrimeEURC",
+    "earnedTokenAddress": "0x01F1A592B0b757B2931bbcCf28227cdC1e892dde",
+    "oracle": "tokens",
+    "oracleId": "EURC",
+    "status": "active",
+    "createdAt": 1769021077,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["EURC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/base/vault/0xbeef009F28cCf367444a9F79096862920e025DC1/steakhouse-prime-eurc",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "morpho-base-gauntlet-prime-usdc",
     "name": "USDC (Gauntlet, Prime)",
     "token": "USDC",
@@ -15,7 +51,7 @@
     "platformId": "morpho",
     "curatorId": "gauntlet",
     "assets": ["USDC"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "complex": false,
       "curated": true,
@@ -51,7 +87,7 @@
     "platformId": "morpho",
     "curatorId": "gauntlet",
     "assets": ["USDC"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "complex": false,
       "curated": true,
@@ -87,7 +123,7 @@
     "platformId": "morpho",
     "curatorId": "steakhouse",
     "assets": ["USDC"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "complex": false,
       "curated": true,
