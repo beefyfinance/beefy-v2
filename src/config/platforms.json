@@ -1564,5 +1564,14 @@
     "description": "Neverland is a decentralized lending protocol designed to provide a sustainable, capital-efficient borrowing and lending market, using a proven Aave V3 framework.",
     "type": "money-market",
     "risks": ["NO_TIMELOCK"]
+  },
+  {
+    "id": "gearbox",
+    "name": "Gearbox",
+    "website": "https://app.gearbox.finance/",
+    "twitter": "GearboxProtocol",
+    "documentation": "https://docs.gearbox.finance/",
+    "description": "Gearbox Protocol separates the source of liquidity from the utilization of liquidity. This architecture allows a single passive liquidity source to fund diverse, isolated lending strategies simultaneously.",
+    "type": "money-market"
   }
 ]

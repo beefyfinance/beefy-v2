@@ -68,5 +68,12 @@
     "description": "The Euler DAO (Decentralized Autonomous Organization) is a community-driven mechanism focused on advancing the Euler ecosystem.",
     "website": "https://euler.foundation/",
     "twitter": "https://twitter.com/eulerfinance"
+  },
+  {
+    "id": "edge",
+    "name": "Edge UltraYield",
+    "description": "UltraYield is onchain strategy curator working with top-tier protocols to bring depositor the highest yield possible on the market.",
+    "website": "https://ultrayield.app/",
+    "twitter": "https://twitter.com/ultrayieldapp"
   }
 ]

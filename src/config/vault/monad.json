@@ -1,5 +1,79 @@
 [
   {
+    "id": "gearbox-monad-edge-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x39A1992C9C1074e334DB16bBc6A27f0fDe72ce8f",
+    "earnedToken": "mooGearboxMonadEdgeUSDC",
+    "earnedTokenAddress": "0x39A1992C9C1074e334DB16bBc6A27f0fDe72ce8f",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1769001247,
+    "platformId": "gearbox",
+    "curatorId": "edge",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.gearbox.finance/pools/143/0x6b343f7b797f1488aa48c49d540690f2b2c89751",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "gearbox-monad-edge-ausd",
+    "name": "AUSD",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x46DaFc1a70c88056125D90995EDa8b5bB18b6c98",
+    "earnedToken": "mooGearboxMonadEdgeAUSD",
+    "earnedTokenAddress": "0x46DaFc1a70c88056125D90995EDa8b5bB18b6c98",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1769001247,
+    "platformId": "gearbox",
+    "curatorId": "edge",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.gearbox.finance/pools/143/0xc4173359087ce643235420b7bc610d9b0cf2b82d",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "euler-monad-euler-usdc",
     "name": "USDC",
     "type": "standard",
@@ -60,7 +134,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": false,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -168,7 +242,7 @@
       "notAudited": false,
       "notBattleTested": true,
       "notCorrelated": false,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
