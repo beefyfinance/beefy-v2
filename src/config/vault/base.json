@@ -1,5 +1,113 @@
 [
   {
+    "id": "morpho-base-gauntlet-prime-usdc",
+    "name": "USDC (Gauntlet, Prime)",
+    "token": "USDC",
+    "tokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xCCB979379754d605FB4819A3e394D2e4087fC70e",
+    "earnedToken": "mooMorphoBaseGauntletPrimeUSDC",
+    "earnedTokenAddress": "0xCCB979379754d605FB4819A3e394D2e4087fC70e",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1769021077,
+    "platformId": "morpho",
+    "curatorId": "gauntlet",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/base/vault/0x050cE30b927Da55177A4914EC73480238BAD56f0/gauntlet-usdc-prime",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-base-gauntlet-frontier-usdc",
+    "name": "USDC (Gauntlet, Frontier)",
+    "token": "USDC",
+    "tokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x83152eE78d8f20Bba134A5FF000D551355Ce3996",
+    "earnedToken": "mooMorphoBaseGauntletFrontierUSDC",
+    "earnedTokenAddress": "0x83152eE78d8f20Bba134A5FF000D551355Ce3996",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1769021077,
+    "platformId": "morpho",
+    "curatorId": "gauntlet",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/base/vault/0x1deEfABEe758AAbdC29a542B24ca3b75aFD56765/gauntlet-usdc-frontier",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-base-steakhouse-high-yield-usdc",
+    "name": "USDC (Steakhouse, High Yield)",
+    "token": "USDC",
+    "tokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xF1C55b6E063ee90A33FFE62deBe618962bae021e",
+    "earnedToken": "mooMorphoBaseSteakhouseHighYieldUSDC",
+    "earnedTokenAddress": "0xF1C55b6E063ee90A33FFE62deBe618962bae021e",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1769021077,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/base/vault/0xbeeff7aE5E00Aae3Db302e4B0d8C883810a58100/steakhouse-high-yield-instant",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-tig-usdc-vault",
     "name": "TIG-USDC",
     "type": "standard",
