@@ -1,6 +1,6 @@
+import icon from '../../../../../images/single-assets/PRISMA.svg?url';
 import type { Abi, Address } from 'viem';
 import BigNumber from 'bignumber.js';
-import type { Hash } from 'viem';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi.ts';
 import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
@@ -8,10 +8,10 @@ import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults.ts';
 import { selectWalletAddress } from '../../../selectors/wallet.ts';
 import type { BeefyState } from '../../../store/types.ts';
-import { getWalletConnectionApi } from '../../instances.ts';
 import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
-import { buildExecute, buildFetchBalance } from '../utils.ts';
+import { buildExecute, buildUpdate } from '../utils.ts';
+import type { BuildUnstakeCallParams, UnstakeCallFn } from '../utils-types.ts';
 
 const id = 'ethereum-prisma';
 
@@ -57,14 +57,16 @@ async function getBalance(
   }
 }
 
-async function unstakeCall(
-  vault: VaultEntity,
-  amount: BigNumber,
-  state: BeefyState
-): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
+async function unstakeCall({
+  vault,
+  data: { balance },
+  getState,
+  walletClient,
+}: BuildUnstakeCallParams): Promise<UnstakeCallFn> {
+  const state = getState();
   const wallet = selectWalletAddress(state);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const amountInWei = toWei(amount, depositToken.decimals);
+  const amountInWei = toWei(balance, depositToken.decimals);
   let stakingAddress = await getStakingAddress(vault, state);
   const pools = prismaPools.find(s => s.includes(stakingAddress)) || [];
   if (pools.length > 1) {
@@ -78,7 +80,6 @@ async function unstakeCall(
       }
     }
   }
-  const walletClient = await (await getWalletConnectionApi()).getConnectedViemClient();
   const contract = fetchWalletContract(stakingAddress, StakingAbi, walletClient);
   return (args: MigratorUnstakeProps) =>
     contract.write.withdraw([wallet as Address, bigNumberToBigInt(amountInWei)], args);
@@ -107,7 +108,10 @@ const StakingAbi = [
   },
 ] as const satisfies Abi;
 
-export const migrator: Migrator = {
-  update: buildFetchBalance(id, getBalance),
+export const migrator: Migrator<typeof id> = {
+  id,
+  name: 'Prisma',
+  icon,
+  update: buildUpdate(id, getBalance),
   execute: buildExecute(id, unstakeCall),
 };

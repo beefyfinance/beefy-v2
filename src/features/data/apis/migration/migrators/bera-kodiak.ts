@@ -1,15 +1,14 @@
+import icon from '../../../../../images/single-assets/KDK.png?url';
 import type { Abi, Address } from 'viem';
-import type BigNumber from 'bignumber.js';
-import { type Hash } from 'viem';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi.ts';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectWalletAddress } from '../../../selectors/wallet.ts';
 import type { BeefyState } from '../../../store/types.ts';
-import { getWalletConnectionApi } from '../../instances.ts';
 import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
-import { buildExecute, buildFetchBalance } from '../utils.ts';
+import { buildExecute, buildUpdate } from '../utils.ts';
+import type { BuildUnstakeCallParams, UnstakeCallFn } from '../utils-types.ts';
 
 const id = 'bera-kodiak';
 
@@ -32,15 +31,14 @@ async function getBalance(
   return balance.toString(10);
 }
 
-async function unstakeCall(
-  vault: VaultEntity,
-  _amount: BigNumber,
-  state: BeefyState
-): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
+async function unstakeCall({
+  vault,
+  getState,
+  walletClient,
+}: BuildUnstakeCallParams): Promise<UnstakeCallFn> {
+  const state = getState();
   const stakingAddress = await getStakingAddress(vault, state);
   const walletAddress = selectWalletAddress(state);
-  const walletApi = await getWalletConnectionApi();
-  const walletClient = await walletApi.getConnectedViemClient();
   const walletContract = fetchWalletContract(stakingAddress, abi, walletClient);
   return (args: MigratorUnstakeProps) =>
     walletContract.write.exit([walletAddress as Address], args);
@@ -63,7 +61,10 @@ const abi = [
   },
 ] as const satisfies Abi;
 
-export const migrator: Migrator = {
-  update: buildFetchBalance(id, getBalance),
+export const migrator: Migrator<typeof id> = {
+  id,
+  name: 'Kodiak',
+  icon,
+  update: buildUpdate(id, getBalance),
   execute: buildExecute(id, unstakeCall),
 };

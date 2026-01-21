@@ -55,7 +55,6 @@ const notificationCategories: LoaderNotificationCategoryMap = {
       'bridges',
       'chainConfig',
       'curators',
-      'migrators',
       'minters',
       'platforms',
       'promos',

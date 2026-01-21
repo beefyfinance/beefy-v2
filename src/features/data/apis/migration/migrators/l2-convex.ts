@@ -1,15 +1,14 @@
+import icon from '../../../../../images/single-assets/CVX.png?url';
 import type { Abi, Address } from 'viem';
-import type BigNumber from 'bignumber.js';
-import type { Hash } from 'viem';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi.ts';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
 import type { ChainEntity } from '../../../entities/chain.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import type { BeefyState } from '../../../store/types.ts';
-import { getWalletConnectionApi } from '../../instances.ts';
 import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
-import { buildExecute, buildFetchBalance } from '../utils.ts';
+import { buildExecute, buildUpdate } from '../utils.ts';
+import type { BuildUnstakeCallParams, UnstakeCallFn } from '../utils-types.ts';
 
 const id = 'l2-convex';
 
@@ -41,13 +40,12 @@ async function getBalance(
   return walletBalance.toString(10);
 }
 
-async function unstakeCall(
-  vault: VaultEntity,
-  _: BigNumber,
-  state: BeefyState
-): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
-  const stakingAddress = await getStakingAddress(vault, state);
-  const walletClient = await (await getWalletConnectionApi()).getConnectedViemClient();
+async function unstakeCall({
+  vault,
+  getState,
+  walletClient,
+}: BuildUnstakeCallParams): Promise<UnstakeCallFn> {
+  const stakingAddress = await getStakingAddress(vault, getState());
   const contract = fetchWalletContract(stakingAddress, ConvexAbi, walletClient);
   return (args: MigratorUnstakeProps) => contract.write.withdrawAll([true], args);
 }
@@ -79,7 +77,10 @@ const ConvexAbi = [
   },
 ] as const satisfies Abi;
 
-export const migrator: Migrator = {
-  update: buildFetchBalance(id, getBalance),
+export const migrator: Migrator<typeof id> = {
+  id,
+  name: 'Convex',
+  icon,
+  update: buildUpdate(id, getBalance),
   execute: buildExecute(id, unstakeCall),
 };

@@ -834,7 +834,7 @@
   "Dashboard-Rewards-compounded-vault": "Compounded Vault Yield",
   "More-info": "More info",
   "Migration-Title": "Migrate your deposit",
-  "Migration-Text": "You have {{balance}} LP tokens staked on {{migrator}} that are available for an easy migration into this autocompounding vault",
+  "Migration-Text": "You have <Balance>{{balance}} {{symbol}}</Balance> staked on {{migrator}} that are available for an easy migration into this autocompounding vault",
   "Migration-Action": "Migrate Now",
   "TokenBridge-native": "Native",
   "TokenBridge-Tooltip-native": "Token is native to {{chain}}",

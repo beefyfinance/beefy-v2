@@ -26,7 +26,6 @@ import { fetchChainConfigs } from '../actions/chains.ts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { fetchCurators } from '../actions/curators.ts';
 import { fetchFees } from '../actions/fees.ts';
-import { fetchAllMigrators } from '../actions/migrator.ts';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters.ts';
 import { fetchPlatforms } from '../actions/platforms.ts';
 import { fetchAllPricesAction } from '../actions/prices.ts';
@@ -134,7 +133,6 @@ export const initialDataLoaderState: DataLoaderState = {
     lastHarvests: dataLoaderStateInit,
     merklCampaigns: dataLoaderStateInit,
     merklRewards: dataLoaderStateInit,
-    migrators: dataLoaderStateInit,
     minterForm: dataLoaderStateInit,
     minters: dataLoaderStateInit,
     platforms: dataLoaderStateInit,
@@ -597,7 +595,6 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, initPromos, 'promos');
     addGlobalAsyncThunkActions(builder, fetchFees, 'fees');
     addGlobalAsyncThunkActions(builder, fetchAllMinters, 'minters');
-    addGlobalAsyncThunkActions(builder, fetchAllMigrators, 'migrators');
     addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm');
     addGlobalAsyncThunkActions(builder, initiateMinterForm, 'minterForm');
     addGlobalAsyncThunkActions(builder, fetchBridgeConfig, 'bridgeConfig');
