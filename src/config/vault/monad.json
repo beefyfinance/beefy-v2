@@ -164,7 +164,7 @@
     "platformId": "morpho",
     "curatorId": "hyperithm",
     "assets": ["USDC"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "complex": false,
       "curated": true,
@@ -1896,7 +1896,7 @@
     "platformId": "morpho",
     "curatorId": "steakhouse",
     "assets": ["USDC"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -1934,7 +1934,7 @@
     "platformId": "morpho",
     "curatorId": "steakhouse",
     "assets": ["AUSD"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,

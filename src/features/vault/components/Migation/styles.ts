@@ -20,6 +20,8 @@ export const styles = {
   }),
   icon: css.raw({
     height: '48px',
+    width: '48px',
+    objectFit: 'contain',
   }),
   subTitle: css.raw({
     textStyle: 'subline',

@@ -18,7 +18,6 @@ import {
   isVaultWithReceipt,
   type VaultEntity,
 } from '../../entities/vault.ts';
-import type { MigrationConfig } from '../../reducers/wallet/migration-types.ts';
 import { StepContent } from '../../reducers/wallet/stepper-types.ts';
 import type { TrxError, TxAdditionalData } from '../../reducers/wallet/wallet-action-types.ts';
 import {
@@ -52,7 +51,7 @@ type TxRefreshOnSuccess = {
   boostId?: BoostPromoEntity['id'];
   minterId?: MinterEntity['id'];
   vaultId?: VaultEntity['id'];
-  migrationId?: MigrationConfig['id'];
+  migrationId?: string;
   rewards?: boolean;
   clearInput?: boolean;
 };

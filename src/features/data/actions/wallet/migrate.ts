@@ -1,8 +1,7 @@
 import type { MigratorUnstakeProps } from '../../apis/migration/migration-types.ts';
-import type { Hash } from 'viem';
+import { getAddress, type Hash } from 'viem';
 import type { VaultEntity } from '../../entities/vault.ts';
 import type BigNumber from 'bignumber.js';
-import type { MigrationConfig } from '../../reducers/wallet/migration-types.ts';
 import {
   bindTransactionEvents,
   captureWalletErrors,
@@ -15,13 +14,12 @@ import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { selectTokenByAddress } from '../../selectors/tokens.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
-import type { Address } from 'viem';
 
 export const migrateUnstake = (
   unstakeCall: (args: MigratorUnstakeProps) => Promise<Hash>,
   vault: VaultEntity,
   amount: BigNumber,
-  migrationId: MigrationConfig['id']
+  migrationId: string
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -37,7 +35,7 @@ export const migrateUnstake = (
     const gasPrices = await getGasPriceOptions(chain);
     txWallet(dispatch);
     const transaction = unstakeCall({
-      account: address as Address,
+      account: getAddress(address),
       ...gasPrices,
       chain: publicClient.chain,
     });

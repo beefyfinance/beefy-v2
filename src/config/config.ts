@@ -989,7 +989,7 @@ export const config = {
     name: 'Polygon zkEVM',
     eol: 1729771090,
     chainId: 1101,
-    rpc: ['https://rpc.ankr.com/polygon_zkevm'],
+    rpc: ['https://zkevm-rpc.com', 'https://polygon-zkevm.drpc.org'],
     explorerUrl: 'https://zkevm.polygonscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x2ec5d5e9aaf3c3f56eBeF2fC46A5af9e42810b41',

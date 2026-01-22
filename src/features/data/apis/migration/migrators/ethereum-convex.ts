@@ -1,16 +1,15 @@
+import icon from '../../../../../images/single-assets/CVX.png?url';
 import type { Abi, Address } from 'viem';
-import type BigNumber from 'bignumber.js';
-import type { Hash } from 'viem';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi.ts';
 import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults.ts';
 import type { BeefyState } from '../../../store/types.ts';
-import { getWalletConnectionApi } from '../../instances.ts';
 import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
-import { buildExecute, buildFetchBalance } from '../utils.ts';
+import { buildExecute, buildUpdate } from '../utils.ts';
+import type { BuildUnstakeCallParams, UnstakeCallFn } from '../utils-types.ts';
 
 const id = 'ethereum-convex';
 
@@ -39,16 +38,16 @@ async function getBalance(
   return walletBalance.toString(10);
 }
 
-async function unstakeCall(
-  vault: VaultEntity,
-  amount: BigNumber,
-  state: BeefyState
-): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
+async function unstakeCall({
+  vault,
+  data: { balance },
+  getState,
+  walletClient,
+}: BuildUnstakeCallParams): Promise<UnstakeCallFn> {
+  const state = getState();
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const amountInWei = toWei(amount, depositToken.decimals);
+  const amountInWei = toWei(balance, depositToken.decimals);
   const stakingAddress = await getStakingAddress(vault, state);
-  const walletApi = await getWalletConnectionApi();
-  const walletClient = await walletApi.getConnectedViemClient();
   const contract = fetchWalletContract(stakingAddress, ConvexAbi, walletClient);
 
   if (vault.assetIds.length === 1) {
@@ -114,7 +113,10 @@ const ConvexAbi = [
   },
 ] as const satisfies Abi;
 
-export const migrator: Migrator = {
-  update: buildFetchBalance(id, getBalance),
+export const migrator: Migrator<typeof id> = {
+  id,
+  name: 'Convex',
+  icon,
+  update: buildUpdate(id, getBalance),
   execute: buildExecute(id, unstakeCall),
 };

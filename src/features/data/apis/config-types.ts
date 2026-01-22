@@ -465,12 +465,6 @@ export interface BridgeConfig {
   readonly website: string;
 }
 
-export type BaseMigrationConfig = {
-  readonly id: string; // eg ethereum-conic
-  readonly name: string; // eg Conic Finance
-  readonly icon: string;
-};
-
 export type BeefyCommonBridgeChainConfig = {
   /** Address of our deployed bridge contract */
   bridge: string;

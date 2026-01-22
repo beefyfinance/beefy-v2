@@ -77,7 +77,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -446,7 +446,7 @@ const config = buildConfig(
             },
             pool: {
               '70': { value: '#4C2CDE' },
-            }
+            },
           },
         },
         sizes: {
@@ -517,7 +517,7 @@ const config = buildConfig(
             boosted: { value: '{colors.gold.30}' },
             warning: { value: '{colors.orange.40}' },
             disabled: { value: '{colors.darkBlue.90-56a}' },
-            underline: { value: '{colors.white.70-64a}' }
+            underline: { value: '{colors.white.70-64a}' },
           },
           background: {
             header: { value: '{colors.headerFooterBackground}' },
@@ -791,6 +791,17 @@ const config = buildConfig(
           '0%': { strokeDasharray: '0px, 200px', strokeDashoffset: '0px' },
           '50%': { strokeDasharray: '100px, 200px', strokeDashoffset: '-15px' },
           '100%': { strokeDasharray: '100px, 200px', strokeDashoffset: '-127px' },
+        },
+        fadeUpdating: {
+          '0%': {
+            opacity: '0.8',
+          },
+          '50%': {
+            opacity: '0.5',
+          },
+          '100%': {
+            opacity: '0.8',
+          },
         },
       },
     },
