@@ -75,5 +75,12 @@
     "description": "UltraYield is onchain strategy curator working with top-tier protocols to bring depositor the highest yield possible on the market.",
     "website": "https://ultrayield.app/",
     "twitter": "https://twitter.com/ultrayieldapp"
+  },
+  {
+    "id": "api3",
+    "name": "Api3",
+    "description": "Api3 focuses on conservative lending against the highest-quality collateral available. By limiting exposure to well-established assets and recapturing liquidation incentives through Api3s oracle design the vault prioritizes capital preservation and stable returns across market conditions.",
+    "website": "https://api3.org/",
+    "twitter": "https://twitter.com/Api3DAO"
   }
 ]

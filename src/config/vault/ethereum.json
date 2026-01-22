@@ -1,5 +1,149 @@
 [
   {
+    "id": "morpho-eth-gauntlet-prime-usdc",
+    "name": "USDC (Gauntlet, Prime V2)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x9a1F11F93939DBF1103A4321206b334181359A96",
+    "earnedToken": "mooMorphoEthGauntletPrimeUSDC",
+    "earnedTokenAddress": "0x9a1F11F93939DBF1103A4321206b334181359A96",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1769085405,
+    "platformId": "morpho",
+    "curatorId": "gauntlet",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-eth-gauntlet-frontier-usdc",
+    "name": "USDC (Gauntlet, Frontier V2)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x35E7Bf11193C40B943df1fb33e20f947a6EB04E4",
+    "earnedToken": "mooMorphoEthGauntletFrontierUSDC",
+    "earnedTokenAddress": "0x35E7Bf11193C40B943df1fb33e20f947a6EB04E4",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1769085405,
+    "platformId": "morpho",
+    "curatorId": "gauntlet",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-eth-steakhouse-prime-weth",
+    "name": "WETH (Steakhouse, Prime V2)",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0xc7ea3C3e2ad0553b960F10ae25DA3cE34e15256a",
+    "earnedToken": "mooMorphoEthSteakhousePrimeWETH",
+    "earnedTokenAddress": "0xc7ea3C3e2ad0553b960F10ae25DA3cE34e15256a",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1769085405,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["WETH"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-eth-api3-core-usdc",
+    "name": "USDC (Api3, Core V2)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x90155419435F80E78A23C4ECCAEEAfd65240184c",
+    "earnedToken": "mooMorphoEthApi3CoreUSDC",
+    "earnedTokenAddress": "0x90155419435F80E78A23C4ECCAEEAfd65240184c",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1769085405,
+    "platformId": "morpho",
+    "curatorId": "api3",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "stakedao-pmusd-frxusd",
     "name": "pmUSD/frxUSD",
     "type": "standard",
