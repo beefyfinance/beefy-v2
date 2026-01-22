@@ -306,6 +306,7 @@ function addAddressBookToState(
       existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
       existingToken.description = existingToken.description || token.description;
       existingToken.website = existingToken.website || token.website;
+      existingToken.tags = existingToken.tags || token.tags;
       continue;
     }
 
@@ -340,9 +341,9 @@ function addAddressBookToState(
       existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
       existingToken.description = existingToken.description || token.description;
       existingToken.website = existingToken.website || token.website;
+      existingToken.tags = existingToken.tags || token.tags;
       if (isTokenErc20(existingToken)) {
         existingToken.bridge = existingToken.bridge || token.bridge;
-        existingToken.tags = existingToken.tags || token.tags;
       }
     }
 
