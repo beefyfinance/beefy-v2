@@ -48,7 +48,7 @@
     "packages:update": "node ./scripts/updatePackages.js"
   },
   "dependencies": {
-    "@beefyfinance/blockchain-addressbook": "^0.54.145",
+    "@beefyfinance/blockchain-addressbook": "^0.54.148",
     "@coinbase/wallet-sdk": "^4.3.7",
     "@deficonnect/web3-connector": "^2.0.3",
     "@farcaster/miniapp-sdk": "^0.1.10",

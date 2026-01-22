@@ -1,5 +1,359 @@
 [
   {
+    "id": "aerodrome-cow-base-vfy-zen-vault",
+    "name": "VFY-ZEN",
+    "type": "standard",
+    "token": "VFY-ZEN",
+    "tokenAddress": "0xe37FbAeB14a63FdcdE1FD803C31E6a3797890287",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xe8b4e5248312e9D81BBE70753AbC116cFF32B868",
+    "earnedToken": "mooCowAerodromeVFY-ZEN",
+    "earnedTokenAddress": "0xe8b4e5248312e9D81BBE70753AbC116cFF32B868",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-vfy-zen",
+    "status": "active",
+    "createdAt": 1769014697,
+    "platformId": "aerodrome",
+    "assets": ["VFY", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-vfy-zen-rp",
+    "name": "VFY-ZEN Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeVFY-ZEN",
+    "tokenAddress": "0xe37FbAeB14a63FdcdE1FD803C31E6a3797890287",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xE0E717B7DcE02667fE4c7C26A7D46421088f295f",
+    "earnedToken": "rCowAerodromeVFY-ZEN",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-vfy-zen",
+    "status": "active",
+    "createdAt": 1769014696,
+    "platformId": "aerodrome",
+    "assets": ["VFY", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-vfy-zen",
+    "name": "VFY-ZEN",
+    "type": "cowcentrated",
+    "token": "VFY-ZEN aerodrome",
+    "tokenAddress": "0x700d91F1C3C5e430eA776245e741B84402e8de2E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0xa749dE6c28262B7ffbc5De27dC845DD7eCD2b358",
+      "0xf43eB8De897Fbc7F2502483B2Bef7Bb9EA179229"
+    ],
+    "earnContractAddress": "0xe37FbAeB14a63FdcdE1FD803C31E6a3797890287",
+    "earnedToken": "cowAerodromeVFY-ZEN",
+    "earnedTokenAddress": "0xe37FbAeB14a63FdcdE1FD803C31E6a3797890287",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-vfy-zen",
+    "status": "active",
+    "createdAt": 1769014696,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["VFY", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-cbbtc-zen-vault",
+    "name": "cbBTC-ZEN",
+    "type": "standard",
+    "token": "cbBTC-ZEN",
+    "tokenAddress": "0x38fbA739aFBb434816F9E4F4190Ba22142dDd266",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x4fDd05C5D8C651418b34FFc34258004182B7F51d",
+    "earnedToken": "mooCowAerodromecbBTC-ZEN",
+    "earnedTokenAddress": "0x4fDd05C5D8C651418b34FFc34258004182B7F51d",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-cbbtc-zen",
+    "status": "active",
+    "createdAt": 1769013798,
+    "platformId": "aerodrome",
+    "assets": ["cbBTC", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-cbbtc-zen-rp",
+    "name": "cbBTC-ZEN Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromecbBTC-ZEN",
+    "tokenAddress": "0x38fbA739aFBb434816F9E4F4190Ba22142dDd266",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x53b2345Bdf0AF62495A6908b72b59F7e94198c24",
+    "earnedToken": "rCowAerodromecbBTC-ZEN",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-cbbtc-zen",
+    "status": "active",
+    "createdAt": 1769013797,
+    "platformId": "aerodrome",
+    "assets": ["cbBTC", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-cbbtc-zen",
+    "name": "cbBTC-ZEN",
+    "type": "cowcentrated",
+    "token": "cbBTC-ZEN aerodrome",
+    "tokenAddress": "0x47f9e291bb766Fc307Ad7BBa4f29f3Eab6A97101",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "0xf43eB8De897Fbc7F2502483B2Bef7Bb9EA179229"
+    ],
+    "earnContractAddress": "0x38fbA739aFBb434816F9E4F4190Ba22142dDd266",
+    "earnedToken": "cowAerodromecbBTC-ZEN",
+    "earnedTokenAddress": "0x38fbA739aFBb434816F9E4F4190Ba22142dDd266",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-cbbtc-zen",
+    "status": "active",
+    "createdAt": 1769013797,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["cbBTC", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-zen-vault",
+    "name": "WETH-ZEN",
+    "type": "standard",
+    "token": "WETH-ZEN",
+    "tokenAddress": "0x6690a92c7073a5122E65D3a3187B95b808Dc152b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x9883Aa049f45aFffa7aFf4ef02a06FC4a958162a",
+    "earnedToken": "mooCowAerodromeWETH-ZEN",
+    "earnedTokenAddress": "0x9883Aa049f45aFffa7aFf4ef02a06FC4a958162a",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-zen",
+    "status": "active",
+    "createdAt": 1769012394,
+    "platformId": "aerodrome",
+    "assets": ["WETH", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-zen-rp",
+    "name": "WETH-ZEN Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeWETH-ZEN",
+    "tokenAddress": "0x6690a92c7073a5122E65D3a3187B95b808Dc152b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x22AB82C0c135B66d7B17b02950E8214627013d14",
+    "earnedToken": "rCowAerodromeWETH-ZEN",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-zen",
+    "status": "active",
+    "createdAt": 1769012393,
+    "platformId": "aerodrome",
+    "assets": ["WETH", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-zen",
+    "name": "WETH-ZEN",
+    "type": "cowcentrated",
+    "token": "WETH-ZEN aerodrome",
+    "tokenAddress": "0x0392B12a1cEb0cd13af5Ea448CF5586EA609852D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xf43eB8De897Fbc7F2502483B2Bef7Bb9EA179229"
+    ],
+    "earnContractAddress": "0x6690a92c7073a5122E65D3a3187B95b808Dc152b",
+    "earnedToken": "cowAerodromeWETH-ZEN",
+    "earnedTokenAddress": "0x6690a92c7073a5122E65D3a3187B95b808Dc152b",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-zen",
+    "status": "active",
+    "createdAt": 1769012393,
+    "platformId": "beefy",
+    "feeTier": "0.15",
+    "assets": ["WETH", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-tig-usdc-vault",
     "name": "TIG-USDC",
     "type": "standard",
