@@ -2844,7 +2844,7 @@
     "retireReason": "rewards",
     "retiredAt": 1752239317,
     "platformId": "thena",
-    "assets": ["THE", "BNB"],
+    "assets": ["THE", "WBNB"],
     "migrationIds": [],
     "risks": {
       "updatedAt": 1765557014,
@@ -3333,7 +3333,7 @@
     "status": "active",
     "createdAt": 1724853599,
     "platformId": "pancakeswap",
-    "assets": ["USDC", "BNB"],
+    "assets": ["USDC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -3374,7 +3374,7 @@
     "status": "active",
     "createdAt": 1724853598,
     "platformId": "pancakeswap",
-    "assets": ["USDC", "BNB"],
+    "assets": ["USDC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -3418,7 +3418,7 @@
     "createdAt": 1724853598,
     "platformId": "beefy",
     "feeTier": "0.05",
-    "assets": ["USDC", "BNB"],
+    "assets": ["USDC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -3535,7 +3535,7 @@
     "status": "active",
     "createdAt": 1724853598,
     "platformId": "uniswap",
-    "assets": ["BTCB", "BNB"],
+    "assets": ["BTCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -3576,7 +3576,7 @@
     "createdAt": 1724853598,
     "platformId": "beefy",
     "feeTier": "0.05",
-    "assets": ["BTCB", "BNB"],
+    "assets": ["BTCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4246,7 +4246,7 @@
     "retireReason": "tvl",
     "retiredAt": 1760631004,
     "platformId": "pancakeswap",
-    "assets": ["BNB", "BUSD"],
+    "assets": ["WBNB", "BUSD"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4289,7 +4289,7 @@
     "retireReason": "tvl",
     "retiredAt": 1760631004,
     "platformId": "pancakeswap",
-    "assets": ["BNB", "BUSD"],
+    "assets": ["WBNB", "BUSD"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4335,7 +4335,7 @@
     "retiredAt": 1760631004,
     "platformId": "beefy",
     "feeTier": "0.05",
-    "assets": ["BNB", "BUSD"],
+    "assets": ["WBNB", "BUSD"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4619,7 +4619,7 @@
     "status": "active",
     "createdAt": 1723067552,
     "platformId": "pancakeswap",
-    "assets": ["ZRO", "BNB"],
+    "assets": ["ZRO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4660,7 +4660,7 @@
     "status": "active",
     "createdAt": 1723067551,
     "platformId": "pancakeswap",
-    "assets": ["ZRO", "BNB"],
+    "assets": ["ZRO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4704,7 +4704,7 @@
     "createdAt": 1723067551,
     "platformId": "beefy",
     "feeTier": "1",
-    "assets": ["ZRO", "BNB"],
+    "assets": ["ZRO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4740,7 +4740,7 @@
     "status": "active",
     "createdAt": 1723067552,
     "platformId": "pancakeswap",
-    "assets": ["PEPE", "BNB"],
+    "assets": ["PEPE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4781,7 +4781,7 @@
     "status": "active",
     "createdAt": 1723067551,
     "platformId": "pancakeswap",
-    "assets": ["PEPE", "BNB"],
+    "assets": ["PEPE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4825,7 +4825,7 @@
     "createdAt": 1723067551,
     "platformId": "beefy",
     "feeTier": "1",
-    "assets": ["PEPE", "BNB"],
+    "assets": ["PEPE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4861,7 +4861,7 @@
     "status": "active",
     "createdAt": 1723067552,
     "platformId": "pancakeswap",
-    "assets": ["XVS", "BNB"],
+    "assets": ["XVS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4902,7 +4902,7 @@
     "status": "active",
     "createdAt": 1723067551,
     "platformId": "pancakeswap",
-    "assets": ["XVS", "BNB"],
+    "assets": ["XVS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4946,7 +4946,7 @@
     "createdAt": 1723067551,
     "platformId": "beefy",
     "feeTier": "0.25",
-    "assets": ["XVS", "BNB"],
+    "assets": ["XVS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -5230,7 +5230,7 @@
     "status": "active",
     "createdAt": 1723051091,
     "platformId": "pancakeswap",
-    "assets": ["DOGE", "BNB"],
+    "assets": ["DOGE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -5271,7 +5271,7 @@
     "status": "active",
     "createdAt": 1723051090,
     "platformId": "pancakeswap",
-    "assets": ["DOGE", "BNB"],
+    "assets": ["DOGE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -5315,7 +5315,7 @@
     "createdAt": 1723051090,
     "platformId": "beefy",
     "feeTier": "0.25",
-    "assets": ["DOGE", "BNB"],
+    "assets": ["DOGE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -5351,7 +5351,7 @@
     "status": "active",
     "createdAt": 1723051091,
     "platformId": "pancakeswap",
-    "assets": ["SOL", "BNB"],
+    "assets": ["SOL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -5392,7 +5392,7 @@
     "status": "active",
     "createdAt": 1723051090,
     "platformId": "pancakeswap",
-    "assets": ["SOL", "BNB"],
+    "assets": ["SOL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -5436,7 +5436,7 @@
     "createdAt": 1723051090,
     "platformId": "beefy",
     "feeTier": "0.25",
-    "assets": ["SOL", "BNB"],
+    "assets": ["SOL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -5593,7 +5593,7 @@
     "status": "active",
     "createdAt": 1723051091,
     "platformId": "pancakeswap",
-    "assets": ["slisBNB", "BNB"],
+    "assets": ["slisBNB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -5634,7 +5634,7 @@
     "status": "active",
     "createdAt": 1723051090,
     "platformId": "pancakeswap",
-    "assets": ["slisBNB", "BNB"],
+    "assets": ["slisBNB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -5678,7 +5678,7 @@
     "createdAt": 1723051090,
     "platformId": "beefy",
     "feeTier": "0.05",
-    "assets": ["slisBNB", "BNB"],
+    "assets": ["slisBNB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -5960,7 +5960,7 @@
     "status": "active",
     "createdAt": 1722967710,
     "platformId": "pancakeswap",
-    "assets": ["CAKE", "BNB"],
+    "assets": ["CAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -6001,7 +6001,7 @@
     "status": "active",
     "createdAt": 1722967709,
     "platformId": "pancakeswap",
-    "assets": ["CAKE", "BNB"],
+    "assets": ["CAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -6045,7 +6045,7 @@
     "createdAt": 1722967709,
     "platformId": "beefy",
     "feeTier": "0.25",
-    "assets": ["CAKE", "BNB"],
+    "assets": ["CAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -6202,7 +6202,7 @@
     "status": "active",
     "createdAt": 1722967710,
     "platformId": "pancakeswap",
-    "assets": ["BNB", "USDT"],
+    "assets": ["WBNB", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -6243,7 +6243,7 @@
     "status": "active",
     "createdAt": 1722967709,
     "platformId": "pancakeswap",
-    "assets": ["BNB", "USDT"],
+    "assets": ["WBNB", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -6287,7 +6287,7 @@
     "createdAt": 1722967709,
     "platformId": "beefy",
     "feeTier": "0.05",
-    "assets": ["BNB", "USDT"],
+    "assets": ["WBNB", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -6444,7 +6444,7 @@
     "status": "active",
     "createdAt": 1722967710,
     "platformId": "pancakeswap",
-    "assets": ["BTCB", "BNB"],
+    "assets": ["BTCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -6485,7 +6485,7 @@
     "status": "active",
     "createdAt": 1722967709,
     "platformId": "pancakeswap",
-    "assets": ["BTCB", "BNB"],
+    "assets": ["BTCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -6529,7 +6529,7 @@
     "createdAt": 1722967709,
     "platformId": "beefy",
     "feeTier": "0.05",
-    "assets": ["BTCB", "BNB"],
+    "assets": ["BTCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -6686,7 +6686,7 @@
     "status": "active",
     "createdAt": 1722967710,
     "platformId": "pancakeswap",
-    "assets": ["ETH", "BNB"],
+    "assets": ["ETH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -6727,7 +6727,7 @@
     "status": "active",
     "createdAt": 1722967709,
     "platformId": "pancakeswap",
-    "assets": ["ETH", "BNB"],
+    "assets": ["ETH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -6771,7 +6771,7 @@
     "createdAt": 1722967709,
     "platformId": "beefy",
     "feeTier": "0.05",
-    "assets": ["ETH", "BNB"],
+    "assets": ["ETH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -7133,7 +7133,7 @@
     "createdAt": 1710331580,
     "retiredAt": 1731274075,
     "platformId": "gamma",
-    "assets": ["FIL", "BNB"],
+    "assets": ["FIL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -7174,7 +7174,7 @@
     "createdAt": 1710331580,
     "retiredAt": 1731274075,
     "platformId": "gamma",
-    "assets": ["THE", "BNB"],
+    "assets": ["THE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -7258,7 +7258,7 @@
     "retireReason": "rewards",
     "retiredAt": 1708113204,
     "platformId": "bril",
-    "assets": ["USDT", "BNB"],
+    "assets": ["USDT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -7398,7 +7398,7 @@
     "retireReason": "rewards",
     "retiredAt": 1708974810,
     "platformId": "bril",
-    "assets": ["CAKE", "BNB"],
+    "assets": ["CAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -7508,7 +7508,7 @@
     "status": "active",
     "createdAt": 1690454374,
     "platformId": "openocean",
-    "assets": ["OOEV2", "BNB"],
+    "assets": ["OOEV2", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -7844,7 +7844,7 @@
     "retireReason": "bifiV2",
     "retiredAt": 1689007467,
     "platformId": "gamma",
-    "assets": ["oldBIFI", "BNB"],
+    "assets": ["oldBIFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -8051,7 +8051,7 @@
     "createdAt": 1683627865,
     "retiredAt": 1731274075,
     "platformId": "gamma",
-    "assets": ["USDT", "BNB"],
+    "assets": ["USDT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -8092,7 +8092,7 @@
     "createdAt": 1683627862,
     "retiredAt": 1731274075,
     "platformId": "gamma",
-    "assets": ["ETH", "BNB"],
+    "assets": ["ETH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -8133,7 +8133,7 @@
     "createdAt": 1683627858,
     "retiredAt": 1731274075,
     "platformId": "gamma",
-    "assets": ["BTCB", "BNB"],
+    "assets": ["BTCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -8174,7 +8174,7 @@
     "createdAt": 1683627855,
     "retiredAt": 1731274075,
     "platformId": "gamma",
-    "assets": ["ankrBNB", "BNB"],
+    "assets": ["ankrBNB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -8216,7 +8216,7 @@
     "retireReason": "rewards",
     "retiredAt": 1718118986,
     "platformId": "gamma",
-    "assets": ["BNB", "stkBNB"],
+    "assets": ["WBNB", "stkBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -8257,7 +8257,7 @@
     "createdAt": 1683532902,
     "retiredAt": 1731274075,
     "platformId": "gamma",
-    "assets": ["BNBx", "BNB"],
+    "assets": ["BNBx", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -8425,7 +8425,7 @@
     "retireReason": "rewards",
     "retiredAt": 1682019887,
     "platformId": "thena",
-    "assets": ["USDT", "BNB"],
+    "assets": ["USDT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -8509,7 +8509,7 @@
     "retireReason": "rewards",
     "retiredAt": 1684776304,
     "platformId": "pancakeswap",
-    "assets": ["BNBx", "BNB"],
+    "assets": ["BNBx", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -8705,7 +8705,7 @@
     "retireReason": "rewards",
     "retiredAt": 1702305918,
     "platformId": "thena",
-    "assets": ["MULTI", "BNB"],
+    "assets": ["MULTI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9209,7 +9209,7 @@
     "retireReason": "bifiV2",
     "retiredAt": 1689007467,
     "platformId": "thena",
-    "assets": ["oldBIFI", "BNB"],
+    "assets": ["oldBIFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9293,7 +9293,7 @@
     "retireReason": "tvl",
     "retiredAt": 1679770018,
     "platformId": "swapfish",
-    "assets": ["BUSD", "BNB"],
+    "assets": ["BUSD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9545,7 +9545,7 @@
     "retireReason": "tvl",
     "retiredAt": 1682892779,
     "platformId": "thena",
-    "assets": ["ANKR", "BNB"],
+    "assets": ["ANKR", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9587,7 +9587,7 @@
     "retireReason": "rewards",
     "retiredAt": 1696060775,
     "platformId": "thena",
-    "assets": ["BNBx", "BNB"],
+    "assets": ["BNBx", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9629,7 +9629,7 @@
     "retireReason": "rewards",
     "retiredAt": 1722030032,
     "platformId": "thena",
-    "assets": ["BUSD", "BNB"],
+    "assets": ["BUSD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9671,7 +9671,7 @@
     "retireReason": "rewards",
     "retiredAt": 1682019887,
     "platformId": "thena",
-    "assets": ["ETH", "BNB"],
+    "assets": ["ETH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9713,7 +9713,7 @@
     "retireReason": "rewards",
     "retiredAt": 1696060775,
     "platformId": "thena",
-    "assets": ["stkBNB", "BNB"],
+    "assets": ["stkBNB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9923,7 +9923,7 @@
     "retireReason": "rewards",
     "retiredAt": 1691754615,
     "platformId": "dotdot",
-    "assets": ["ankrBNB", "BNB"],
+    "assets": ["ankrBNB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9958,7 +9958,7 @@
     "retireReason": "tvl",
     "retiredAt": 1680336147,
     "platformId": "swapfish",
-    "assets": ["oldBIFI", "BNB"],
+    "assets": ["oldBIFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10000,7 +10000,7 @@
     "retireReason": "tvl",
     "retiredAt": 1679479578,
     "platformId": "swapfish",
-    "assets": ["BNBx", "BNB"],
+    "assets": ["BNBx", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10227,7 +10227,7 @@
     "retireReason": "tvl",
     "retiredAt": 1673955477,
     "platformId": "cone",
-    "assets": ["BNBx", "BNB"],
+    "assets": ["BNBx", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10269,7 +10269,7 @@
     "retireReason": "tvl",
     "retiredAt": 1714130472,
     "platformId": "biswap",
-    "assets": ["BAT", "BNB"],
+    "assets": ["BAT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10311,7 +10311,7 @@
     "retireReason": "tvl",
     "retiredAt": 1667573270,
     "platformId": "cone",
-    "assets": ["USD+", "BNB"],
+    "assets": ["USD+", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10479,7 +10479,7 @@
     "retireReason": "rewards",
     "retiredAt": 1669968203,
     "platformId": "pancakeswap",
-    "assets": ["TRIVIA", "BNB"],
+    "assets": ["TRIVIA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10563,7 +10563,7 @@
     "retireReason": "tvl",
     "retiredAt": 1661644227,
     "platformId": "apeswap",
-    "assets": ["HEC", "BNB"],
+    "assets": ["HEC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10731,7 +10731,7 @@
     "retireReason": "rewards",
     "retiredAt": 1684742133,
     "platformId": "apeswap",
-    "assets": ["BNBx", "BNB"],
+    "assets": ["BNBx", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10773,7 +10773,7 @@
     "retireReason": "tvl",
     "retiredAt": 1690357628,
     "platformId": "cone",
-    "assets": ["BUSD", "BNB"],
+    "assets": ["BUSD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10899,7 +10899,7 @@
     "retireReason": "tvl",
     "retiredAt": 1670254803,
     "platformId": "cone",
-    "assets": ["QI", "BNB"],
+    "assets": ["QI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10941,7 +10941,7 @@
     "retireReason": "tvl",
     "retiredAt": 1670254803,
     "platformId": "cone",
-    "assets": ["MAI", "BNB"],
+    "assets": ["MAI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10983,7 +10983,7 @@
     "retireReason": "tvl",
     "retiredAt": 1677683221,
     "platformId": "cone",
-    "assets": ["oldBIFI", "BNB"],
+    "assets": ["oldBIFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11109,7 +11109,7 @@
     "retireReason": "tvl",
     "retiredAt": 1670254803,
     "platformId": "cone",
-    "assets": ["CONE", "BNB"],
+    "assets": ["CONE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11151,7 +11151,7 @@
     "retireReason": "rewards",
     "retiredAt": 1669968203,
     "platformId": "pancakeswap",
-    "assets": ["stkBNB", "BNB"],
+    "assets": ["stkBNB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11277,7 +11277,7 @@
     "retireReason": "tvl",
     "retiredAt": 1672943144,
     "platformId": "babyswap",
-    "assets": ["SOL", "BNB"],
+    "assets": ["SOL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11571,7 +11571,7 @@
     "retireReason": "tvl",
     "retiredAt": 1672943144,
     "platformId": "babyswap",
-    "assets": ["USDC", "BNB"],
+    "assets": ["USDC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11613,7 +11613,7 @@
     "retireReason": "tvl",
     "retiredAt": 1672943144,
     "platformId": "babyswap",
-    "assets": ["BUSD", "BNB"],
+    "assets": ["BUSD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11655,7 +11655,7 @@
     "retireReason": "tvl",
     "retiredAt": 1672943144,
     "platformId": "babyswap",
-    "assets": ["AVAX", "BNB"],
+    "assets": ["AVAX", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11697,7 +11697,7 @@
     "retireReason": "tvl",
     "retiredAt": 1672943144,
     "platformId": "babyswap",
-    "assets": ["FTM", "BNB"],
+    "assets": ["FTM", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11739,7 +11739,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["NFTY", "BNB"],
+    "assets": ["NFTY", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11781,7 +11781,7 @@
     "retireReason": "rewards",
     "retiredAt": 1674407168,
     "platformId": "apeswap",
-    "assets": ["STARS", "BNB"],
+    "assets": ["STARS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11823,7 +11823,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["CEEK", "BNB"],
+    "assets": ["CEEK", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11865,7 +11865,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["BANANA", "BNB"],
+    "assets": ["BANANA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12018,7 +12018,7 @@
     "retireReason": "tvl",
     "retiredAt": 1655486707,
     "platformId": "pancakeswap",
-    "assets": ["LAZIO", "BNB"],
+    "assets": ["LAZIO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12102,7 +12102,7 @@
     "retireReason": "rewards",
     "retiredAt": 1711564394,
     "platformId": "belt",
-    "assets": ["BNB"],
+    "assets": ["WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12172,7 +12172,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["oldBIFI", "BNB"],
+    "assets": ["oldBIFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12251,7 +12251,7 @@
     "retireReason": "tvl",
     "retiredAt": 1670254803,
     "platformId": "wsg",
-    "assets": ["WSG", "BNB"],
+    "assets": ["WSG", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12335,7 +12335,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["FIL", "BNB"],
+    "assets": ["FIL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12377,7 +12377,7 @@
     "retireReason": "tvl",
     "retiredAt": 1670254803,
     "platformId": "apeswap",
-    "assets": ["DEP", "BNB"],
+    "assets": ["DEP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12499,7 +12499,7 @@
     "retireReason": "tvl",
     "retiredAt": 1672943144,
     "platformId": "babyswap",
-    "assets": ["BABY", "BNB"],
+    "assets": ["BABY", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12541,7 +12541,7 @@
     "retireReason": "tvl",
     "retiredAt": 1655486707,
     "platformId": "pancakeswap",
-    "assets": ["BETA", "BNB"],
+    "assets": ["BETA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12583,7 +12583,7 @@
     "retireReason": "rewards",
     "retiredAt": 1684742133,
     "platformId": "apeswap",
-    "assets": ["PACOCA", "BNB"],
+    "assets": ["PACOCA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12698,7 +12698,7 @@
     "retireReason": "rewards",
     "retiredAt": 1656931941,
     "platformId": "czodiac",
-    "assets": ["CZF", "BNB"],
+    "assets": ["CZF", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12739,7 +12739,7 @@
     "createdAt": 1625611527,
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["DVI", "BNB"],
+    "assets": ["DVI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12775,7 +12775,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["MCRN", "BNB"],
+    "assets": ["MCRN", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12811,7 +12811,7 @@
     "retireReason": "rewards",
     "retiredAt": 1666978574,
     "platformId": "apeswap",
-    "assets": ["POTS", "BNB"],
+    "assets": ["POTS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12852,7 +12852,7 @@
     "createdAt": 1631186662,
     "retiredAt": 1635753051,
     "platformId": "honeyfarm",
-    "assets": ["MOON", "BNB"],
+    "assets": ["MOON", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12977,7 +12977,7 @@
     "retireReason": "rewards",
     "retiredAt": 1638451243,
     "platformId": "pancakeswap",
-    "assets": ["BSCDEFI", "BNB"],
+    "assets": ["BSCDEFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13019,7 +13019,7 @@
     "retireReason": "tvl",
     "retiredAt": 1655486707,
     "platformId": "pancakeswap",
-    "assets": ["BP", "BNB"],
+    "assets": ["BP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13061,7 +13061,7 @@
     "retireReason": "rewards",
     "retiredAt": 1638451243,
     "platformId": "pancakeswap",
-    "assets": ["QBT", "BNB"],
+    "assets": ["QBT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13097,7 +13097,7 @@
     "retireReason": "rewards",
     "retiredAt": 1712508332,
     "platformId": "pancakeswap",
-    "assets": ["CAKE", "BNB"],
+    "assets": ["CAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13139,7 +13139,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "pancakeswap",
-    "assets": ["NAOS", "BNB"],
+    "assets": ["NAOS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13217,7 +13217,7 @@
     "retireReason": "rewards",
     "retiredAt": 1633089141,
     "platformId": "pancakeswap",
-    "assets": ["DIS", "BNB"],
+    "assets": ["DIS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13259,7 +13259,7 @@
     "retireReason": "rewards",
     "retiredAt": 1673714261,
     "platformId": "apeswap",
-    "assets": ["ONT", "BNB"],
+    "assets": ["ONT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13301,7 +13301,7 @@
     "retireReason": "rewards",
     "retiredAt": 1638451243,
     "platformId": "waultfinance",
-    "assets": ["ONT", "BNB"],
+    "assets": ["ONT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13375,7 +13375,7 @@
     "retireReason": "tvl",
     "retiredAt": 1695146858,
     "platformId": "apeswap",
-    "assets": ["YEL", "BNB"],
+    "assets": ["YEL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13416,7 +13416,7 @@
     "createdAt": 1629121148,
     "retiredAt": 1633089141,
     "platformId": "honeyfarm",
-    "assets": ["BEAR", "BNB"],
+    "assets": ["BEAR", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13486,7 +13486,7 @@
     "createdAt": 1629120042,
     "retiredAt": 1633089141,
     "platformId": "honeyfarm",
-    "assets": ["HONEY", "BNB"],
+    "assets": ["HONEY", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13569,7 +13569,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["ETH", "BNB"],
+    "assets": ["ETH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13611,7 +13611,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["BUSD", "BNB"],
+    "assets": ["BUSD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13653,7 +13653,7 @@
     "retireReason": "rewards",
     "retiredAt": 1669796150,
     "platformId": "apeswap",
-    "assets": ["SXP", "BNB"],
+    "assets": ["SXP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13695,7 +13695,7 @@
     "retireReason": "rewards",
     "retiredAt": 1669796150,
     "platformId": "apeswap",
-    "assets": ["CAKE", "BNB"],
+    "assets": ["CAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13737,7 +13737,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["BTCB", "BNB"],
+    "assets": ["BTCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13856,7 +13856,7 @@
     "createdAt": 1628251164,
     "retiredAt": 1630461640,
     "platformId": "honeyfarm",
-    "assets": ["HONEY", "BNB"],
+    "assets": ["HONEY", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13898,7 +13898,7 @@
     "retireReason": "rewards",
     "retiredAt": 1674407168,
     "platformId": "apeswap",
-    "assets": ["CYT", "BNB"],
+    "assets": ["CYT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14024,7 +14024,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "pancakeswap",
-    "assets": ["REVV", "BNB"],
+    "assets": ["REVV", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14066,7 +14066,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["WSG", "BNB"],
+    "assets": ["WSG", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14108,7 +14108,7 @@
     "retireReason": "rewards",
     "retiredAt": 1638451243,
     "platformId": "waultfinance",
-    "assets": ["DEP", "BNB"],
+    "assets": ["DEP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14144,7 +14144,7 @@
     "retireReason": "tvl",
     "retiredAt": 1670254803,
     "platformId": "jetswap",
-    "assets": ["BTCB", "BNB"],
+    "assets": ["BTCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14180,7 +14180,7 @@
     "retireReason": "rewards",
     "retiredAt": 1663593472,
     "platformId": "apeswap",
-    "assets": ["AXS", "BNB"],
+    "assets": ["AXS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14257,7 +14257,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "pancakeswap",
-    "assets": ["SKILL", "BNB"],
+    "assets": ["SKILL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14299,7 +14299,7 @@
     "retireReason": "rewards",
     "retiredAt": 1684776304,
     "platformId": "pancakeswap",
-    "assets": ["C98", "BNB"],
+    "assets": ["C98", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14410,7 +14410,7 @@
     "retireReason": "tvl",
     "retiredAt": 1655486707,
     "platformId": "pancakeswap",
-    "assets": ["AXS", "BNB"],
+    "assets": ["AXS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14532,7 +14532,7 @@
     "retireReason": "rewards",
     "retiredAt": 1689233756,
     "platformId": "openocean",
-    "assets": ["OOE", "BNB"],
+    "assets": ["OOE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14616,7 +14616,7 @@
     "retireReason": "tvl",
     "retiredAt": 1661444768,
     "platformId": "apeswap",
-    "assets": ["YFI", "BNB"],
+    "assets": ["YFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14700,7 +14700,7 @@
     "retireReason": "rewards",
     "retiredAt": 1664791156,
     "platformId": "apeswap",
-    "assets": ["SFP", "BNB"],
+    "assets": ["SFP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14742,7 +14742,7 @@
     "retireReason": "rewards",
     "retiredAt": 1669796150,
     "platformId": "apeswap",
-    "assets": ["XVS", "BNB"],
+    "assets": ["XVS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14784,7 +14784,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["TWT", "BNB"],
+    "assets": ["TWT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14861,7 +14861,7 @@
     "retireReason": "rewards",
     "retiredAt": 1664791156,
     "platformId": "pancakeswap",
-    "assets": ["ONE", "BNB"],
+    "assets": ["ONE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14903,7 +14903,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "waultfinance",
-    "assets": ["WATCH", "BNB"],
+    "assets": ["WATCH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15016,7 +15016,7 @@
     "retireReason": "tvl",
     "retiredAt": 1655486707,
     "platformId": "pancakeswap",
-    "assets": ["BSCPAD", "BNB"],
+    "assets": ["BSCPAD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15221,7 +15221,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "pancakeswap",
-    "assets": ["RABBIT", "BNB"],
+    "assets": ["RABBIT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15256,7 +15256,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["HTB", "BNB"],
+    "assets": ["HTB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15292,7 +15292,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "pancakeswap",
-    "assets": ["WEX", "BNB"],
+    "assets": ["WEX", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15334,7 +15334,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["WAULTx", "BNB"],
+    "assets": ["WAULTx", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15370,7 +15370,7 @@
     "retireReason": "tvl",
     "retiredAt": 1657620389,
     "platformId": "pancakeswap",
-    "assets": ["WOO", "BNB"],
+    "assets": ["WOO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15412,7 +15412,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["BORING", "BNB"],
+    "assets": ["BORING", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15448,7 +15448,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["MARSH", "BNB"],
+    "assets": ["MARSH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15484,7 +15484,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["HAI", "BNB"],
+    "assets": ["HAI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15603,7 +15603,7 @@
     "createdAt": 1623756710,
     "retiredAt": 1633089141,
     "platformId": "memefarm",
-    "assets": ["APE", "BNB"],
+    "assets": ["APE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15806,7 +15806,7 @@
     "retireReason": "tvl",
     "retiredAt": 1657620389,
     "platformId": "ten",
-    "assets": ["TENFI", "BNB"],
+    "assets": ["TENFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15890,7 +15890,7 @@
     "retireReason": "rewards",
     "retiredAt": 1672563902,
     "platformId": "apeswap",
-    "assets": ["CELR", "BNB"],
+    "assets": ["CELR", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15932,7 +15932,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["SHIB", "BNB"],
+    "assets": ["SHIB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15974,7 +15974,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "pancakeswap",
-    "assets": ["ATA", "BNB"],
+    "assets": ["ATA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16015,7 +16015,7 @@
     "createdAt": 1620992847,
     "retiredAt": 1625098855,
     "platformId": "pancakeswap",
-    "assets": ["GARUDA", "BNB"],
+    "assets": ["GARUDA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16129,7 +16129,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["KTN", "BNB"],
+    "assets": ["KTN", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16204,7 +16204,7 @@
     "createdAt": 1622289628,
     "retiredAt": 1633089141,
     "platformId": "pancakeswap",
-    "assets": ["VRT", "BNB"],
+    "assets": ["VRT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16246,7 +16246,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["EZ", "BNB"],
+    "assets": ["EZ", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16282,7 +16282,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "pancakeswap",
-    "assets": ["KALM", "BNB"],
+    "assets": ["KALM", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16351,7 +16351,7 @@
     "retireReason": "rewards",
     "retiredAt": 1664791156,
     "platformId": "pancakeswap",
-    "assets": ["oldBIFI", "BNB"],
+    "assets": ["oldBIFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16393,7 +16393,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["SUSHI", "BNB"],
+    "assets": ["SUSHI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16435,7 +16435,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["DOT", "BNB"],
+    "assets": ["DOT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16477,7 +16477,7 @@
     "retireReason": "rewards",
     "retiredAt": 1672563902,
     "platformId": "apeswap",
-    "assets": ["XRP", "BNB"],
+    "assets": ["XRP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16519,7 +16519,7 @@
     "retireReason": "rewards",
     "retiredAt": 1672563902,
     "platformId": "apeswap",
-    "assets": ["SNX", "BNB"],
+    "assets": ["SNX", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16561,7 +16561,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["LTC", "BNB"],
+    "assets": ["LTC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16800,7 +16800,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["CYC", "BNB"],
+    "assets": ["CYC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16842,7 +16842,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["NEAR", "BNB"],
+    "assets": ["NEAR", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16884,7 +16884,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["COTI", "BNB"],
+    "assets": ["COTI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16926,7 +16926,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["ZEC", "BNB"],
+    "assets": ["ZEC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17003,7 +17003,7 @@
     "retireReason": "tvl",
     "retiredAt": 1686234513,
     "platformId": "jetswap",
-    "assets": ["WINGS", "BNB"],
+    "assets": ["WINGS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17039,7 +17039,7 @@
     "retireReason": "tvl",
     "retiredAt": 1661444768,
     "platformId": "jetswap",
-    "assets": ["BUSD", "BNB"],
+    "assets": ["BUSD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17110,7 +17110,7 @@
     "createdAt": 1621596545,
     "retiredAt": 1633089141,
     "platformId": "grand",
-    "assets": ["GRAND", "BNB"],
+    "assets": ["GRAND", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17151,7 +17151,7 @@
     "createdAt": 1621586017,
     "retiredAt": 1627830688,
     "platformId": "dumpling",
-    "assets": ["SDUMP", "BNB"],
+    "assets": ["SDUMP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17268,7 +17268,7 @@
     "createdAt": 1621511403,
     "retiredAt": 1635753051,
     "platformId": "satis",
-    "assets": ["SAT", "BNB"],
+    "assets": ["SAT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17340,7 +17340,7 @@
     "createdAt": 1621421804,
     "retiredAt": 1627830688,
     "platformId": "iron",
-    "assets": ["DND", "BNB"],
+    "assets": ["DND", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17382,7 +17382,7 @@
     "retireReason": "rewards",
     "retiredAt": 1664791156,
     "platformId": "pancakeswap",
-    "assets": ["HOTCROSS", "BNB"],
+    "assets": ["HOTCROSS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17424,7 +17424,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "pancakeswap",
-    "assets": ["RFOX", "BNB"],
+    "assets": ["RFOX", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17656,7 +17656,7 @@
     "createdAt": 1621416442,
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["tDOGE", "BNB"],
+    "assets": ["tDOGE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17692,7 +17692,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "pancakeswap",
-    "assets": ["FINE", "BNB"],
+    "assets": ["FINE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17734,7 +17734,7 @@
     "retireReason": "rewards",
     "retiredAt": 1703155937,
     "platformId": "pancakeswap",
-    "assets": ["DOGE", "BNB"],
+    "assets": ["DOGE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17776,7 +17776,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["HYFI", "BNB"],
+    "assets": ["HYFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17812,7 +17812,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["AVAX", "BNB"],
+    "assets": ["AVAX", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17889,7 +17889,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["FTM", "BNB"],
+    "assets": ["FTM", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17931,7 +17931,7 @@
     "retireReason": "tvl",
     "retiredAt": 1670254803,
     "platformId": "apeswap",
-    "assets": ["COMP", "BNB"],
+    "assets": ["COMP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -17973,7 +17973,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["AAVE", "BNB"],
+    "assets": ["AAVE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -18015,7 +18015,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["LINK", "BNB"],
+    "assets": ["LINK", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -18057,7 +18057,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["ADA", "BNB"],
+    "assets": ["ADA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -18139,7 +18139,7 @@
     "createdAt": 1620995657,
     "retiredAt": 1627830688,
     "platformId": "iron",
-    "assets": ["STEEL", "BNB"],
+    "assets": ["STEEL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -18218,7 +18218,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["MATIC", "BNB"],
+    "assets": ["MATIC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -18365,7 +18365,7 @@
     "createdAt": 1620824133,
     "retiredAt": 1625098855,
     "platformId": "marshmallow",
-    "assets": ["TOFY", "BNB"],
+    "assets": ["TOFY", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -18479,7 +18479,7 @@
     "retireReason": "rewards",
     "retiredAt": 1663090806,
     "platformId": "apeswap",
-    "assets": ["WATCH", "BNB"],
+    "assets": ["WATCH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -18520,7 +18520,7 @@
     "createdAt": 1620547906,
     "retiredAt": 1625098855,
     "platformId": "pancakeswap",
-    "assets": ["FTS", "BNB"],
+    "assets": ["FTS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -18555,7 +18555,7 @@
     "createdAt": 1620370116,
     "retiredAt": 1627830688,
     "platformId": "apeswap",
-    "assets": ["BXBTC", "BNB"],
+    "assets": ["BXBTC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -18590,7 +18590,7 @@
     "createdAt": 1620373799,
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["BTT", "BNB"],
+    "assets": ["BTT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -18631,7 +18631,7 @@
     "createdAt": 1620373832,
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["TRX", "BNB"],
+    "assets": ["TRX", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -18672,7 +18672,7 @@
     "createdAt": 1620373868,
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["WIN", "BNB"],
+    "assets": ["WIN", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -18831,7 +18831,7 @@
     "createdAt": 1620046260,
     "retiredAt": 1622506963,
     "platformId": "satis",
-    "assets": ["SAT", "BNB"],
+    "assets": ["SAT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -18952,7 +18952,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["DOGE", "BNB"],
+    "assets": ["DOGE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19036,7 +19036,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "apeswap",
-    "assets": ["KEYFI", "BNB"],
+    "assets": ["KEYFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19078,7 +19078,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["LMT", "BNB"],
+    "assets": ["LMT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19119,7 +19119,7 @@
     "createdAt": 1619446464,
     "retiredAt": 1630461640,
     "platformId": "swamp",
-    "assets": ["CAKE", "BNB"],
+    "assets": ["CAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19162,7 +19162,7 @@
     "retireReason": "tvl",
     "retiredAt": 1686234513,
     "platformId": "belt",
-    "assets": ["BELT", "BNB"],
+    "assets": ["BELT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19288,7 +19288,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["EOS", "BNB"],
+    "assets": ["EOS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19324,7 +19324,7 @@
     "retireReason": "rewards",
     "retiredAt": 1684776304,
     "platformId": "pancakeswap",
-    "assets": ["XRP", "BNB"],
+    "assets": ["XRP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19366,7 +19366,7 @@
     "retireReason": "rewards",
     "retiredAt": 1686234513,
     "platformId": "pancakeswap",
-    "assets": ["UNI", "BNB"],
+    "assets": ["UNI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19408,7 +19408,7 @@
     "retireReason": "rewards",
     "retiredAt": 1666978574,
     "platformId": "pancakeswap",
-    "assets": ["SXP", "BNB"],
+    "assets": ["SXP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19449,7 +19449,7 @@
     "createdAt": 1619423720,
     "retiredAt": 1627830688,
     "platformId": "pancakeswap",
-    "assets": ["BLK", "BNB"],
+    "assets": ["BLK", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19485,7 +19485,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["JGN", "BNB"],
+    "assets": ["JGN", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19527,7 +19527,7 @@
     "retireReason": "rewards",
     "retiredAt": 1658757185,
     "platformId": "pancakeswap",
-    "assets": ["EPS", "BNB"],
+    "assets": ["EPS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19569,7 +19569,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["NRV", "BNB"],
+    "assets": ["NRV", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19604,7 +19604,7 @@
     "createdAt": 1619419856,
     "retiredAt": 1627830688,
     "platformId": "pancakeswap",
-    "assets": ["BFI", "BNB"],
+    "assets": ["BFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19639,7 +19639,7 @@
     "createdAt": 1619419892,
     "retiredAt": 1627830688,
     "platformId": "pancakeswap",
-    "assets": ["BDO", "BNB"],
+    "assets": ["BDO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19753,7 +19753,7 @@
     "retireReason": "rewards",
     "retiredAt": 1660148413,
     "platformId": "pancakeswap",
-    "assets": ["ALPHA", "BNB"],
+    "assets": ["ALPHA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19795,7 +19795,7 @@
     "retireReason": "rewards",
     "retiredAt": 1673275162,
     "platformId": "pancakeswap",
-    "assets": ["INJ", "BNB"],
+    "assets": ["INJ", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19837,7 +19837,7 @@
     "retireReason": "rewards",
     "retiredAt": 1712508332,
     "platformId": "pancakeswap",
-    "assets": ["TWT", "BNB"],
+    "assets": ["TWT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19879,7 +19879,7 @@
     "retireReason": "tvl",
     "retiredAt": 1686234513,
     "platformId": "pancakeswap",
-    "assets": ["XVS", "BNB"],
+    "assets": ["XVS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19921,7 +19921,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "pancakeswap",
-    "assets": ["REEF", "BNB"],
+    "assets": ["REEF", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -19963,7 +19963,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "pancakeswap",
-    "assets": ["BAND", "BNB"],
+    "assets": ["BAND", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -20005,7 +20005,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["ATOM", "BNB"],
+    "assets": ["ATOM", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -20047,7 +20047,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["HGET", "BNB"],
+    "assets": ["HGET", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -20083,7 +20083,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["XED", "BNB"],
+    "assets": ["XED", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -20125,7 +20125,7 @@
     "retireReason": "rewards",
     "retiredAt": 1684776304,
     "platformId": "pancakeswap",
-    "assets": ["LINK", "BNB"],
+    "assets": ["LINK", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -20167,7 +20167,7 @@
     "retireReason": "rewards",
     "retiredAt": 1685707957,
     "platformId": "pancakeswap",
-    "assets": ["USDT", "BNB"],
+    "assets": ["USDT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -20209,7 +20209,7 @@
     "retireReason": "rewards",
     "retiredAt": 1685707957,
     "platformId": "pancakeswap",
-    "assets": ["BUSD", "BNB"],
+    "assets": ["BUSD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -20251,7 +20251,7 @@
     "retireReason": "rewards",
     "retiredAt": 1685707957,
     "platformId": "pancakeswap",
-    "assets": ["ETH", "BNB"],
+    "assets": ["ETH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -20293,7 +20293,7 @@
     "retireReason": "rewards",
     "retiredAt": 1685707957,
     "platformId": "pancakeswap",
-    "assets": ["BTCB", "BNB"],
+    "assets": ["BTCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -20887,7 +20887,7 @@
     "retireReason": "rewards",
     "retiredAt": 1633089141,
     "platformId": "pancakeswap",
-    "assets": ["DEGO", "BNB"],
+    "assets": ["DEGO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -20923,7 +20923,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["GUM", "BNB"],
+    "assets": ["GUM", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -20965,7 +20965,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "pancakeswap",
-    "assets": ["BEL", "BNB"],
+    "assets": ["BEL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21001,7 +21001,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["BMXX", "BNB"],
+    "assets": ["BMXX", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21036,7 +21036,7 @@
     "createdAt": 1619331241,
     "retiredAt": 1625098855,
     "platformId": "pancakeswap",
-    "assets": ["SWGB", "BNB"],
+    "assets": ["SWGB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21072,7 +21072,7 @@
     "retireReason": "rewards",
     "retiredAt": 1633089141,
     "platformId": "pancakeswap",
-    "assets": ["LIT", "BNB"],
+    "assets": ["LIT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21113,7 +21113,7 @@
     "createdAt": 1619331040,
     "retiredAt": 1627830688,
     "platformId": "pancakeswap",
-    "assets": ["DITTO", "BNB"],
+    "assets": ["DITTO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21149,7 +21149,7 @@
     "retireReason": "tvl",
     "retiredAt": 1657620389,
     "platformId": "pancakeswap",
-    "assets": ["SFP", "BNB"],
+    "assets": ["SFP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21190,7 +21190,7 @@
     "createdAt": 1619285608,
     "retiredAt": 1625098855,
     "platformId": "pancakeswap",
-    "assets": ["WSOTE", "BNB"],
+    "assets": ["WSOTE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21226,7 +21226,7 @@
     "retireReason": "rewards",
     "retiredAt": 1673275162,
     "platformId": "pancakeswap",
-    "assets": ["BTCST", "BNB"],
+    "assets": ["BTCST", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21268,7 +21268,7 @@
     "retireReason": "tvl",
     "retiredAt": 1657620389,
     "platformId": "pancakeswap",
-    "assets": ["LTC", "BNB"],
+    "assets": ["LTC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21310,7 +21310,7 @@
     "retireReason": "rewards",
     "retiredAt": 1684776304,
     "platformId": "pancakeswap",
-    "assets": ["ADA", "BNB"],
+    "assets": ["ADA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21352,7 +21352,7 @@
     "retireReason": "rewards",
     "retiredAt": 1684742133,
     "platformId": "pancakeswap",
-    "assets": ["DOT", "BNB"],
+    "assets": ["DOT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21394,7 +21394,7 @@
     "retireReason": "rewards",
     "retiredAt": 1633089141,
     "platformId": "pancakeswap",
-    "assets": ["ZIL", "BNB"],
+    "assets": ["ZIL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21436,7 +21436,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["LTO", "BNB"],
+    "assets": ["LTO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21471,7 +21471,7 @@
     "createdAt": 1619302611,
     "retiredAt": 1627830688,
     "platformId": "pancakeswap",
-    "assets": ["TRADE", "BNB"],
+    "assets": ["TRADE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21507,7 +21507,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["COS", "BNB"],
+    "assets": ["COS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21549,7 +21549,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["WATCH", "BNB"],
+    "assets": ["WATCH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21590,7 +21590,7 @@
     "createdAt": 1619302716,
     "retiredAt": 1627830688,
     "platformId": "pancakeswap",
-    "assets": ["BRY", "BNB"],
+    "assets": ["BRY", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21632,7 +21632,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["ZEE", "BNB"],
+    "assets": ["ZEE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21668,7 +21668,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["SWINGBY", "BNB"],
+    "assets": ["SWINGBY", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21704,7 +21704,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["APYS", "BNB"],
+    "assets": ["APYS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21746,7 +21746,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["ODDZ", "BNB"],
+    "assets": ["ODDZ", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21788,7 +21788,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["BONDLY", "BNB"],
+    "assets": ["BONDLY", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21824,7 +21824,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["ARPA", "BNB"],
+    "assets": ["ARPA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21866,7 +21866,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["DFT", "BNB"],
+    "assets": ["DFT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21907,7 +21907,7 @@
     "createdAt": 1619285425,
     "retiredAt": 1627830688,
     "platformId": "pancakeswap",
-    "assets": ["SWTH", "BNB"],
+    "assets": ["SWTH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21949,7 +21949,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["LIEN", "BNB"],
+    "assets": ["LIEN", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -21984,7 +21984,7 @@
     "createdAt": 1619280195,
     "retiredAt": 1627830688,
     "platformId": "pancakeswap",
-    "assets": ["bROOBEE", "BNB"],
+    "assets": ["bROOBEE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -22026,7 +22026,7 @@
     "retireReason": "rewards",
     "retiredAt": 1664791156,
     "platformId": "pancakeswap",
-    "assets": ["TKO", "BNB"],
+    "assets": ["TKO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -22068,7 +22068,7 @@
     "retireReason": "rewards",
     "retiredAt": 1664791156,
     "platformId": "pancakeswap",
-    "assets": ["TLM", "BNB"],
+    "assets": ["TLM", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -22110,7 +22110,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["PERL", "BNB"],
+    "assets": ["PERL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -22146,7 +22146,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["ALPA", "BNB"],
+    "assets": ["ALPA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -22188,7 +22188,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["HZN", "BNB"],
+    "assets": ["HZN", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -22230,7 +22230,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["SUTER", "BNB"],
+    "assets": ["SUTER", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -22271,7 +22271,7 @@
     "createdAt": 1619279428,
     "retiredAt": 1625098855,
     "platformId": "pancakeswap",
-    "assets": ["TEN", "BNB"],
+    "assets": ["TEN", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -22313,7 +22313,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["BSCX", "BNB"],
+    "assets": ["BSCX", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -22355,7 +22355,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "pancakeswap",
-    "assets": ["CTK", "BNB"],
+    "assets": ["CTK", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -22507,7 +22507,7 @@
     "retireReason": "tvl",
     "retiredAt": 1661444768,
     "platformId": "mdex",
-    "assets": ["MDX", "BNB"],
+    "assets": ["MDX", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -22584,7 +22584,7 @@
     "createdAt": 1618841436,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["bROOBEE", "BNB"],
+    "assets": ["bROOBEE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -22660,7 +22660,7 @@
     "retireReason": "rewards",
     "retiredAt": 1675359281,
     "platformId": "apeswap",
-    "assets": ["IOTA", "BNB"],
+    "assets": ["IOTA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -22702,7 +22702,7 @@
     "retireReason": "rewards",
     "retiredAt": 1669796150,
     "platformId": "apeswap",
-    "assets": ["BAT", "BNB"],
+    "assets": ["BAT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -22743,7 +22743,7 @@
     "createdAt": 1618230406,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["APYS", "BNB"],
+    "assets": ["APYS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -23026,7 +23026,7 @@
     "createdAt": 1618484353,
     "retiredAt": 1625098855,
     "platformId": "marshmallow",
-    "assets": ["MASH", "BNB"],
+    "assets": ["MASH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -23205,7 +23205,7 @@
     "createdAt": 1618230328,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["ITAM", "BNB"],
+    "assets": ["ITAM", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -23345,7 +23345,7 @@
     "createdAt": 1613479169,
     "retiredAt": 1625098855,
     "platformId": "autofarm",
-    "assets": ["BNB"],
+    "assets": ["WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -23492,7 +23492,7 @@
     "retireReason": "rewards",
     "retiredAt": 1633089141,
     "platformId": "pancakeswap",
-    "assets": ["xBLZD", "BNB"],
+    "assets": ["xBLZD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -23534,7 +23534,7 @@
     "retireReason": "rewards",
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["xBLZD", "BNB"],
+    "assets": ["xBLZD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -23638,7 +23638,7 @@
     "createdAt": 1615208558,
     "retiredAt": 1619893987,
     "platformId": "autofarm",
-    "assets": ["CAKE", "BNB"],
+    "assets": ["CAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -23713,7 +23713,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "autofarm",
-    "assets": ["AUTO", "BNB"],
+    "assets": ["AUTO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -23746,7 +23746,7 @@
     "createdAt": 1617962171,
     "retiredAt": 1619893987,
     "platformId": "typhoon",
-    "assets": ["TYPH", "BNB"],
+    "assets": ["TYPH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -23779,7 +23779,7 @@
     "createdAt": 1617884368,
     "retiredAt": 1622506963,
     "platformId": "biti",
-    "assets": ["BITI", "BNB"],
+    "assets": ["BITI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -23847,7 +23847,7 @@
     "createdAt": 1617798247,
     "retiredAt": 1627830688,
     "platformId": "yieldbay",
-    "assets": ["PALM", "BNB"],
+    "assets": ["PALM", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -23958,7 +23958,7 @@
     "createdAt": 1617721572,
     "retiredAt": 1619893987,
     "platformId": "swamp",
-    "assets": ["CAKE", "BNB"],
+    "assets": ["CAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24092,7 +24092,7 @@
     "createdAt": 1617362536,
     "retiredAt": 1627830688,
     "platformId": "thunderswap",
-    "assets": ["TNDR", "BNB"],
+    "assets": ["TNDR", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24127,7 +24127,7 @@
     "createdAt": 1617298796,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["SWAMP", "BNB"],
+    "assets": ["SWAMP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24193,7 +24193,7 @@
     "createdAt": 1617190565,
     "retiredAt": 1622506963,
     "platformId": "swirl",
-    "assets": ["SWIRL", "BNB"],
+    "assets": ["SWIRL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24226,7 +24226,7 @@
     "createdAt": 1617112149,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["DFT", "BNB"],
+    "assets": ["DFT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24259,7 +24259,7 @@
     "createdAt": 1617112197,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["SWTH", "BNB"],
+    "assets": ["SWTH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24292,7 +24292,7 @@
     "createdAt": 1617105351,
     "retiredAt": 1619893987,
     "platformId": "zcore",
-    "assets": ["ZEFI", "BNB"],
+    "assets": ["ZEFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24359,7 +24359,7 @@
     "retireReason": "rewards",
     "retiredAt": 1635753051,
     "platformId": "billionhappiness",
-    "assets": ["HPS", "BNB"],
+    "assets": ["HPS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24425,7 +24425,7 @@
     "createdAt": 1616763592,
     "retiredAt": 1622506963,
     "platformId": "apeswap",
-    "assets": ["NAUT", "BNB"],
+    "assets": ["NAUT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24464,7 +24464,7 @@
     "createdAt": 1616695017,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["LTO", "BNB"],
+    "assets": ["LTO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24497,7 +24497,7 @@
     "createdAt": 1616694954,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["TRADE", "BNB"],
+    "assets": ["TRADE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24530,7 +24530,7 @@
     "createdAt": 1616621126,
     "retiredAt": 1619893987,
     "platformId": "alpaca",
-    "assets": ["ALPACA", "BNB"],
+    "assets": ["ALPACA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24596,7 +24596,7 @@
     "createdAt": 1616413974,
     "retiredAt": 1625098855,
     "platformId": "pumpy",
-    "assets": ["PMP", "BNB"],
+    "assets": ["PMP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24631,7 +24631,7 @@
     "createdAt": 1615960933,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["oldBIFI", "BNB"],
+    "assets": ["oldBIFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24664,7 +24664,7 @@
     "createdAt": 1616264123,
     "retiredAt": 1619893987,
     "platformId": "julswap",
-    "assets": ["TWT", "BNB"],
+    "assets": ["TWT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24734,7 +24734,7 @@
     "createdAt": 1615984690,
     "retiredAt": 1619893987,
     "platformId": "squirrel",
-    "assets": ["NUTS", "BNB"],
+    "assets": ["NUTS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24805,7 +24805,7 @@
     "createdAt": 1615791800,
     "retiredAt": 1622506963,
     "platformId": "memefarm",
-    "assets": ["MFRM", "BNB"],
+    "assets": ["MFRM", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24873,7 +24873,7 @@
     "createdAt": 1615636861,
     "retiredAt": 1622506963,
     "platformId": "slimefinance",
-    "assets": ["SLME", "BNB"],
+    "assets": ["SLME", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24909,7 +24909,7 @@
     "retireReason": "rewards",
     "retiredAt": 1673275162,
     "platformId": "pancakeswap",
-    "assets": ["ALICE", "BNB"],
+    "assets": ["ALICE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24950,7 +24950,7 @@
     "createdAt": 1615785029,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["ALICE", "BNB"],
+    "assets": ["ALICE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25016,7 +25016,7 @@
     "createdAt": 1615485635,
     "retiredAt": 1619893987,
     "platformId": "belt",
-    "assets": ["BELT", "BNB"],
+    "assets": ["BELT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25049,7 +25049,7 @@
     "createdAt": 1615370547,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["BELT", "BNB"],
+    "assets": ["BELT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25082,7 +25082,7 @@
     "createdAt": 1615208693,
     "retiredAt": 1619893987,
     "platformId": "autofarm",
-    "assets": ["BUSD", "BNB"],
+    "assets": ["BUSD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -25115,7 +25115,7 @@
     "createdAt": 1615208756,
     "retiredAt": 1619893987,
     "platformId": "autofarm",
-    "assets": ["BTCB", "BNB"],
+    "assets": ["BTCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -25218,7 +25218,7 @@
     "createdAt": 1614785554,
     "retiredAt": 1625098855,
     "platformId": "julswap",
-    "assets": ["oldBIFI", "BNB"],
+    "assets": ["oldBIFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25253,7 +25253,7 @@
     "createdAt": 1614954499,
     "retiredAt": 1633089141,
     "platformId": "julswap",
-    "assets": ["JulD", "BNB"],
+    "assets": ["JulD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25325,7 +25325,7 @@
     "createdAt": 1615043247,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["BEL", "BNB"],
+    "assets": ["BEL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25391,7 +25391,7 @@
     "createdAt": 1614862041,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["WATCH", "BNB"],
+    "assets": ["WATCH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25457,7 +25457,7 @@
     "createdAt": 1614849256,
     "retiredAt": 1627830688,
     "platformId": "soup",
-    "assets": ["SOUP", "BNB"],
+    "assets": ["SOUP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25490,7 +25490,7 @@
     "createdAt": 1614853224,
     "retiredAt": 1627830688,
     "platformId": "soup",
-    "assets": ["SOUPS", "BNB"],
+    "assets": ["SOUPS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25565,7 +25565,7 @@
     "createdAt": 1614694792,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["BMXX", "BNB"],
+    "assets": ["BMXX", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25598,7 +25598,7 @@
     "createdAt": 1614690289,
     "retiredAt": 1622506963,
     "platformId": "1inch",
-    "assets": ["1INCH", "BNB"],
+    "assets": ["1INCH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25732,7 +25732,7 @@
     "createdAt": 1614451674,
     "retiredAt": 1635753051,
     "platformId": "sponge",
-    "assets": ["STEAM", "BNB"],
+    "assets": ["STEAM", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25831,7 +25831,7 @@
     "createdAt": 1614529623,
     "retiredAt": 1622506963,
     "platformId": "crow",
-    "assets": ["CROW", "BNB"],
+    "assets": ["CROW", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25897,7 +25897,7 @@
     "createdAt": 1614452547,
     "retiredAt": 1622506963,
     "platformId": "cafeswap",
-    "assets": ["oldBIFI", "BNB"],
+    "assets": ["oldBIFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25930,7 +25930,7 @@
     "createdAt": 1613499567,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["ZEE", "BNB"],
+    "assets": ["ZEE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25963,7 +25963,7 @@
     "createdAt": 1614195621,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["DODO", "BNB"],
+    "assets": ["DODO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -25996,7 +25996,7 @@
     "createdAt": 1614193328,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["SWINGBY", "BNB"],
+    "assets": ["SWINGBY", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -26133,7 +26133,7 @@
     "createdAt": 1613998911,
     "retiredAt": 1622506963,
     "platformId": "monster",
-    "assets": ["MSC", "BNB"],
+    "assets": ["MSC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -26314,7 +26314,7 @@
     "createdAt": 1613228660,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["SWGB", "BNB"],
+    "assets": ["SWGB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -26347,7 +26347,7 @@
     "createdAt": 1613228585,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["LIT", "BNB"],
+    "assets": ["LIT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -26416,7 +26416,7 @@
     "createdAt": 1612978544,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["DITTO", "BNB"],
+    "assets": ["DITTO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -26523,7 +26523,7 @@
     "createdAt": 1612829714,
     "retiredAt": 1635753051,
     "platformId": "sponge",
-    "assets": ["SPG", "BNB"],
+    "assets": ["SPG", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -26558,7 +26558,7 @@
     "createdAt": 1612829132,
     "retiredAt": 1635753051,
     "platformId": "sponge",
-    "assets": ["SOAK", "BNB"],
+    "assets": ["SOAK", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -26593,7 +26593,7 @@
     "createdAt": 1612804452,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["SFP", "BNB"],
+    "assets": ["SFP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -26696,7 +26696,7 @@
     "createdAt": 1612278503,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["BDO", "BNB"],
+    "assets": ["BDO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -26729,7 +26729,7 @@
     "createdAt": 1611761568,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["EGLD", "BNB"],
+    "assets": ["EGLD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -26828,7 +26828,7 @@
     "createdAt": 1611327477,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["WSOTE", "BNB"],
+    "assets": ["WSOTE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -26861,7 +26861,7 @@
     "createdAt": 1611326706,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["FRONT", "BNB"],
+    "assets": ["FRONT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -26894,7 +26894,7 @@
     "createdAt": 1611325875,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["BTCST", "BNB"],
+    "assets": ["BTCST", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -26963,7 +26963,7 @@
     "createdAt": 1610894177,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["ADA", "BNB"],
+    "assets": ["ADA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27032,7 +27032,7 @@
     "createdAt": 1610780683,
     "retiredAt": 1617283015,
     "platformId": "pancakeswap",
-    "assets": ["VAPOR", "BNB"],
+    "assets": ["VAPOR", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27065,7 +27065,7 @@
     "createdAt": 1610714437,
     "retiredAt": 1625098855,
     "platformId": "bdollar",
-    "assets": ["BDO", "BNB"],
+    "assets": ["BDO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27100,7 +27100,7 @@
     "createdAt": 1610247300,
     "retiredAt": 1617283015,
     "platformId": "bdollar",
-    "assets": ["BDO", "BNB"],
+    "assets": ["BDO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27310,7 +27310,7 @@
     "createdAt": 1610267196,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["bALBT", "BNB"],
+    "assets": ["bALBT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27344,7 +27344,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "bakery",
-    "assets": ["BTCB", "BNB"],
+    "assets": ["BTCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27379,7 +27379,7 @@
     "createdAt": 1609772742,
     "retiredAt": 1617283015,
     "platformId": "traphouse",
-    "assets": ["BHC", "BNB"],
+    "assets": ["BHC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27411,7 +27411,7 @@
     "createdAt": 1609774230,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["REEF", "BNB"],
+    "assets": ["REEF", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27617,7 +27617,7 @@
     "createdAt": 1609126521,
     "retiredAt": 1625098855,
     "platformId": "traphouse",
-    "assets": ["FUEL", "BNB"],
+    "assets": ["FUEL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27650,7 +27650,7 @@
     "createdAt": 1609125132,
     "retiredAt": 1622506963,
     "platformId": "pancakeswap",
-    "assets": ["FUEL", "BNB"],
+    "assets": ["FUEL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27683,7 +27683,7 @@
     "createdAt": 1609126605,
     "retiredAt": 1625098855,
     "platformId": "traphouse",
-    "assets": ["BHC", "BNB"],
+    "assets": ["BHC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27716,7 +27716,7 @@
     "createdAt": 1609126638,
     "retiredAt": 1625098855,
     "platformId": "fuel",
-    "assets": ["ETH", "BNB"],
+    "assets": ["ETH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27749,7 +27749,7 @@
     "createdAt": 1609126665,
     "retiredAt": 1625098855,
     "platformId": "fuel",
-    "assets": ["CAKE", "BNB"],
+    "assets": ["CAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27782,7 +27782,7 @@
     "createdAt": 1609126695,
     "retiredAt": 1625098855,
     "platformId": "fuel",
-    "assets": ["UNI", "BNB"],
+    "assets": ["UNI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27815,7 +27815,7 @@
     "createdAt": 1609126755,
     "retiredAt": 1625098855,
     "platformId": "fuel",
-    "assets": ["BUSD", "BNB"],
+    "assets": ["BUSD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27959,7 +27959,7 @@
     "createdAt": 1608605486,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["ATOM", "BNB"],
+    "assets": ["ATOM", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28043,21 +28043,21 @@
   },
   {
     "id": "venus-bnb",
-    "name": "BNB",
+    "name": "WBNB",
     "type": "standard",
-    "token": "BNB",
+    "token": "WBNB",
     "tokenDecimals": 18,
     "earnContractAddress": "0x6BE4741AB0aD233e4315a10bc783a7B923386b71",
     "earnedToken": "mooVenusBNB",
     "earnedTokenAddress": "0x6BE4741AB0aD233e4315a10bc783a7B923386b71",
     "oracle": "tokens",
-    "oracleId": "BNB",
+    "oracleId": "WBNB",
     "status": "eol",
     "createdAt": 1608060201,
     "retireReason": "rewards",
     "retiredAt": 1726494192,
     "platformId": "venus",
-    "assets": ["BNB"],
+    "assets": ["WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28316,7 +28316,7 @@
     "createdAt": 1607382402,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["TWT", "BNB"],
+    "assets": ["TWT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28349,7 +28349,7 @@
     "createdAt": 1607382459,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["XVS", "BNB"],
+    "assets": ["XVS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28421,7 +28421,7 @@
     "retireReason": "rewards",
     "retiredAt": 1630461640,
     "platformId": "bakery",
-    "assets": ["BAKE", "BNB"],
+    "assets": ["BAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28456,7 +28456,7 @@
     "createdAt": 1606423596,
     "retiredAt": 1617283015,
     "platformId": "traphouse",
-    "assets": ["oldBIFI", "BNB"],
+    "assets": ["oldBIFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28489,7 +28489,7 @@
     "createdAt": 1606169751,
     "retiredAt": 1617283015,
     "platformId": "traphouse",
-    "assets": ["DRUGS", "BNB"],
+    "assets": ["DRUGS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28521,7 +28521,7 @@
     "createdAt": 1606173714,
     "retiredAt": 1617283015,
     "platformId": "traphouse",
-    "assets": ["THUGS", "BNB"],
+    "assets": ["THUGS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28553,7 +28553,7 @@
     "createdAt": 1606173765,
     "retiredAt": 1617283015,
     "platformId": "traphouse",
-    "assets": ["CRED", "BNB"],
+    "assets": ["CRED", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28585,7 +28585,7 @@
     "createdAt": 1606173867,
     "retiredAt": 1617283015,
     "platformId": "traphouse",
-    "assets": ["BUSD", "BNB"],
+    "assets": ["BUSD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28617,7 +28617,7 @@
     "createdAt": 1606192225,
     "retiredAt": 1617283015,
     "platformId": "traphouse",
-    "assets": ["THUGS", "BNB"],
+    "assets": ["THUGS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28649,7 +28649,7 @@
     "createdAt": 1606174227,
     "retiredAt": 1617283015,
     "platformId": "traphouse",
-    "assets": ["DAI", "BNB"],
+    "assets": ["DAI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28681,7 +28681,7 @@
     "createdAt": 1606174413,
     "retiredAt": 1617283015,
     "platformId": "traphouse",
-    "assets": ["BLIQ", "BNB"],
+    "assets": ["BLIQ", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28713,7 +28713,7 @@
     "createdAt": 1605660664,
     "retiredAt": 1617283015,
     "platformId": "traphouse",
-    "assets": ["DRUGS", "BNB"],
+    "assets": ["DRUGS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28853,7 +28853,7 @@
     "createdAt": 1604768244,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["CAKE", "BNB"],
+    "assets": ["CAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28886,7 +28886,7 @@
     "createdAt": 1604768346,
     "retiredAt": 1619893987,
     "platformId": "pancakeswap",
-    "assets": ["BUSD", "BNB"],
+    "assets": ["BUSD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -29277,7 +29277,7 @@
     "retireReason": "tvl",
     "retiredAt": 1661444768,
     "platformId": "pancakeswap",
-    "assets": ["DAR", "BNB"],
+    "assets": ["DAR", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -29319,7 +29319,7 @@
     "retireReason": "rewards",
     "retiredAt": 1656929227,
     "platformId": "apeswap",
-    "assets": ["OASIS", "BNB"],
+    "assets": ["OASIS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -29445,7 +29445,7 @@
     "retireReason": "tvl",
     "retiredAt": 1661444768,
     "platformId": "apeswap",
-    "assets": ["FXS", "BNB"],
+    "assets": ["FXS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -29567,7 +29567,7 @@
     "retireReason": "rewards",
     "retiredAt": 1638451243,
     "platformId": "pancakeswap",
-    "assets": ["FRONT", "BNB"],
+    "assets": ["FRONT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -29831,7 +29831,7 @@
     "retireReason": "rewards",
     "retiredAt": 1641245437,
     "platformId": "waultfinance",
-    "assets": ["ETH", "BNB"],
+    "assets": ["ETH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -29975,7 +29975,7 @@
     "retireReason": "rewards",
     "retiredAt": 1641245437,
     "platformId": "waultfinance",
-    "assets": ["ALPACA", "BNB"],
+    "assets": ["ALPACA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30047,7 +30047,7 @@
     "retireReason": "rewards",
     "retiredAt": 1641245437,
     "platformId": "waultfinance",
-    "assets": ["WEX", "BNB"],
+    "assets": ["WEX", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30116,7 +30116,7 @@
     "retireReason": "rewards",
     "retiredAt": 1641245437,
     "platformId": "apeswap",
-    "assets": ["EXP", "BNB"],
+    "assets": ["EXP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30158,7 +30158,7 @@
     "retireReason": "rewards",
     "retiredAt": 1641245437,
     "platformId": "pearzap",
-    "assets": ["PEAR", "BNB"],
+    "assets": ["PEAR", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30362,7 +30362,7 @@
     "retireReason": "rewards",
     "retiredAt": 1641245437,
     "platformId": "apeswap",
-    "assets": ["FRUIT", "BNB"],
+    "assets": ["FRUIT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30475,7 +30475,7 @@
     "retireReason": "tvl",
     "retiredAt": 1641245437,
     "platformId": "complus",
-    "assets": ["COM", "BNB"],
+    "assets": ["COM", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30545,7 +30545,7 @@
     "retireReason": "rewards",
     "retiredAt": 1641245437,
     "platformId": "elkfinance",
-    "assets": ["ELK", "BNB"],
+    "assets": ["ELK", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30659,7 +30659,7 @@
     "retireReason": "rewards",
     "retiredAt": 1641245437,
     "platformId": "apeswap",
-    "assets": ["TYPH", "BNB"],
+    "assets": ["TYPH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30735,7 +30735,7 @@
     "retireReason": "rewards",
     "retiredAt": 1673275162,
     "platformId": "dibs",
-    "assets": ["DIBS", "BNB"],
+    "assets": ["DIBS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30777,7 +30777,7 @@
     "retireReason": "rewards",
     "retiredAt": 1673275162,
     "platformId": "dibs",
-    "assets": ["DSHARE", "BNB"],
+    "assets": ["DSHARE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30861,7 +30861,7 @@
     "retireReason": "rewards",
     "retiredAt": 1663090806,
     "platformId": "pancakeswap",
-    "assets": ["THG", "BNB"],
+    "assets": ["THG", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30981,7 +30981,7 @@
     "retireReason": "rewards",
     "retiredAt": 1643992700,
     "platformId": "apeswap",
-    "assets": ["BHC", "BNB"],
+    "assets": ["BHC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31023,7 +31023,7 @@
     "retireReason": "rewards",
     "retiredAt": 1643992700,
     "platformId": "apeswap",
-    "assets": ["CAPS", "BNB"],
+    "assets": ["CAPS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31065,7 +31065,7 @@
     "retireReason": "rewards",
     "retiredAt": 1643992700,
     "platformId": "apeswap",
-    "assets": ["ETC", "BNB"],
+    "assets": ["ETC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31149,7 +31149,7 @@
     "retireReason": "rewards",
     "retiredAt": 1643992700,
     "platformId": "pancakeswap",
-    "assets": ["MCB", "BNB"],
+    "assets": ["MCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31233,7 +31233,7 @@
     "retireReason": "rewards",
     "retiredAt": 1643992700,
     "platformId": "pancakeswap",
-    "assets": ["TLOS", "BNB"],
+    "assets": ["TLOS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31359,7 +31359,7 @@
     "retireReason": "rewards",
     "retiredAt": 1643992700,
     "platformId": "narwhal",
-    "assets": ["GOLD", "BNB"],
+    "assets": ["GOLD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31395,7 +31395,7 @@
     "retireReason": "rewards",
     "retiredAt": 1643992700,
     "platformId": "apeswap",
-    "assets": ["BAKE", "BNB"],
+    "assets": ["BAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31437,7 +31437,7 @@
     "retireReason": "rewards",
     "retiredAt": 1643992700,
     "platformId": "apeswap",
-    "assets": ["TAPE", "BNB"],
+    "assets": ["TAPE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31479,7 +31479,7 @@
     "retireReason": "rewards",
     "retiredAt": 1643992700,
     "platformId": "apeswap",
-    "assets": ["BLZ", "BNB"],
+    "assets": ["BLZ", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31563,7 +31563,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646429647,
     "platformId": "bishares",
-    "assets": ["BISON", "BNB"],
+    "assets": ["BISON", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31806,7 +31806,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646429647,
     "platformId": "pancakeswap",
-    "assets": ["CCAR", "BNB"],
+    "assets": ["CCAR", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31890,7 +31890,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646429647,
     "platformId": "pancakeswap",
-    "assets": ["bZoo", "BNB"],
+    "assets": ["bZoo", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31926,7 +31926,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646429647,
     "platformId": "pancakeswap",
-    "assets": ["ETERNAL", "BNB"],
+    "assets": ["ETERNAL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32046,7 +32046,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646429647,
     "platformId": "apeswap",
-    "assets": ["GUARD", "BNB"],
+    "assets": ["GUARD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32088,7 +32088,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646429647,
     "platformId": "apeswap",
-    "assets": ["EPS", "BNB"],
+    "assets": ["EPS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32172,7 +32172,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646429647,
     "platformId": "apeswap",
-    "assets": ["CRUSH", "BNB"],
+    "assets": ["CRUSH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32214,7 +32214,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646429647,
     "platformId": "pancakeswap",
-    "assets": ["MASK", "BNB"],
+    "assets": ["MASK", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32298,7 +32298,7 @@
     "retireReason": "rewards",
     "retiredAt": 1646429647,
     "platformId": "pancakeswap",
-    "assets": ["ITAM", "BNB"],
+    "assets": ["ITAM", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32490,7 +32490,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "pancakeswap",
-    "assets": ["KART", "BNB"],
+    "assets": ["KART", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32532,7 +32532,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "pancakeswap",
-    "assets": ["DKT", "BNB"],
+    "assets": ["DKT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32616,7 +32616,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "cafeswap",
-    "assets": ["BREW", "BNB"],
+    "assets": ["BREW", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32688,7 +32688,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "pancakeswap",
-    "assets": ["NFT", "BNB"],
+    "assets": ["NFT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32730,7 +32730,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "apeswap",
-    "assets": ["ONG", "BNB"],
+    "assets": ["ONG", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32814,7 +32814,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "longdrink",
-    "assets": ["LONG", "BNB"],
+    "assets": ["LONG", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32892,7 +32892,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "viralata",
-    "assets": ["AURO", "BNB"],
+    "assets": ["AURO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33048,7 +33048,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "apeswap",
-    "assets": ["SISTA", "BNB"],
+    "assets": ["SISTA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33090,7 +33090,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "pancakeswap",
-    "assets": ["HERO", "BNB"],
+    "assets": ["HERO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33280,7 +33280,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "pancakeswap",
-    "assets": ["MBOX", "BNB"],
+    "assets": ["MBOX", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33402,7 +33402,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "mdex",
-    "assets": ["BNB", "USDT"],
+    "assets": ["WBNB", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33560,7 +33560,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "zcore",
-    "assets": ["ZEFI", "BNB"],
+    "assets": ["ZEFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33644,7 +33644,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "swamp",
-    "assets": ["SWAMP", "BNB"],
+    "assets": ["SWAMP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33730,7 +33730,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "pancakeswap",
-    "assets": ["BUNNY", "BNB"],
+    "assets": ["BUNNY", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33856,7 +33856,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "pancakeswap",
-    "assets": ["BELT", "BNB"],
+    "assets": ["BELT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33898,7 +33898,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "pancakeswap",
-    "assets": ["SPACE", "BNB"],
+    "assets": ["SPACE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33968,7 +33968,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "saltswap",
-    "assets": ["SALT", "BNB"],
+    "assets": ["SALT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -34150,7 +34150,7 @@
     "retireReason": "tvl",
     "retiredAt": 1646429647,
     "platformId": "kebab",
-    "assets": ["KEBAB", "BNB"],
+    "assets": ["KEBAB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -34306,7 +34306,7 @@
     "retireReason": "rewards",
     "retiredAt": 1648812613,
     "platformId": "pancakeswap",
-    "assets": ["USDO", "BNB"],
+    "assets": ["USDO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -34390,7 +34390,7 @@
     "retireReason": "rewards",
     "retiredAt": 1648812613,
     "platformId": "pancakeswap",
-    "assets": ["DODO", "BNB"],
+    "assets": ["DODO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -34432,7 +34432,7 @@
     "retireReason": "tvl",
     "retiredAt": 1648812613,
     "platformId": "pancakeswap",
-    "assets": ["GM", "BNB"],
+    "assets": ["GM", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -34474,7 +34474,7 @@
     "retireReason": "tvl",
     "retiredAt": 1648812613,
     "platformId": "pancakeswap",
-    "assets": ["DPT", "BNB"],
+    "assets": ["DPT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -34516,7 +34516,7 @@
     "retireReason": "tvl",
     "retiredAt": 1648812613,
     "platformId": "pancakeswap",
-    "assets": ["SANTOS", "BNB"],
+    "assets": ["SANTOS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -34558,7 +34558,7 @@
     "retireReason": "tvl",
     "retiredAt": 1648812613,
     "platformId": "pancakeswap",
-    "assets": ["PORTO", "BNB"],
+    "assets": ["PORTO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -34642,7 +34642,7 @@
     "retireReason": "tvl",
     "retiredAt": 1648812613,
     "platformId": "pancakeswap",
-    "assets": ["SPS", "BNB"],
+    "assets": ["SPS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -34684,7 +34684,7 @@
     "retireReason": "tvl",
     "retiredAt": 1648812613,
     "platformId": "kingdefi",
-    "assets": ["KROWN", "BNB"],
+    "assets": ["KROWN", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -34810,7 +34810,7 @@
     "retireReason": "rewards",
     "retiredAt": 1673714261,
     "platformId": "apeswap",
-    "assets": ["APE", "BNB"],
+    "assets": ["APE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -34888,7 +34888,7 @@
     "retireReason": "tvl",
     "retiredAt": 1655486707,
     "platformId": "pancakeswap",
-    "assets": ["ERA", "BNB"],
+    "assets": ["ERA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -34930,7 +34930,7 @@
     "retireReason": "rewards",
     "retiredAt": 1664791156,
     "platformId": "pancakeswap",
-    "assets": ["BSW", "BNB"],
+    "assets": ["BSW", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -35199,7 +35199,7 @@
     "retireReason": "rewards",
     "retiredAt": 1666978574,
     "platformId": "emp",
-    "assets": ["ESHARE", "BNB"],
+    "assets": ["ESHARE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -35241,7 +35241,7 @@
     "retireReason": "rewards",
     "retiredAt": 1651567122,
     "platformId": "pancakeswap",
-    "assets": ["INSUR", "BNB"],
+    "assets": ["INSUR", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -35283,7 +35283,7 @@
     "retireReason": "rewards",
     "retiredAt": 1651567122,
     "platformId": "ellipsis",
-    "assets": ["EPS", "BNB"],
+    "assets": ["EPS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -35399,7 +35399,7 @@
     "retireReason": "rewards",
     "retiredAt": 1716901675,
     "platformId": "biswap",
-    "assets": ["BSW", "BNB"],
+    "assets": ["BSW", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -35525,7 +35525,7 @@
     "retireReason": "rewards",
     "retiredAt": 1716901675,
     "platformId": "biswap",
-    "assets": ["USDT", "BNB"],
+    "assets": ["USDT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -35567,7 +35567,7 @@
     "retireReason": "bifiV2",
     "retiredAt": 1689007467,
     "platformId": "biswap",
-    "assets": ["oldBIFI", "BNB"],
+    "assets": ["oldBIFI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -35609,7 +35609,7 @@
     "retireReason": "rewards",
     "retiredAt": 1651567122,
     "platformId": "pancakeswap",
-    "assets": ["BMON", "BNB"],
+    "assets": ["BMON", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -35687,7 +35687,7 @@
     "retireReason": "rewards",
     "retiredAt": 1651567122,
     "platformId": "pantherswap",
-    "assets": ["PANTHER", "BNB"],
+    "assets": ["PANTHER", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -35723,7 +35723,7 @@
     "retireReason": "tvl",
     "retiredAt": 1661444768,
     "platformId": "valas",
-    "assets": ["VALAS", "BNB"],
+    "assets": ["VALAS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -36141,7 +36141,7 @@
     "retireReason": "tvl",
     "retiredAt": 1651567122,
     "platformId": "pancakeswap",
-    "assets": ["WOOP", "BNB"],
+    "assets": ["WOOP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -36183,7 +36183,7 @@
     "retireReason": "tvl",
     "retiredAt": 1651567122,
     "platformId": "apeswap",
-    "assets": ["LAND", "BNB"],
+    "assets": ["LAND", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -36309,7 +36309,7 @@
     "retireReason": "tvl",
     "retiredAt": 1651567122,
     "platformId": "apeswap",
-    "assets": ["NAUT", "BNB"],
+    "assets": ["NAUT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -36432,7 +36432,7 @@
     "retireReason": "tvl",
     "retiredAt": 1651567122,
     "platformId": "ramenswap",
-    "assets": ["RAMEN", "BNB"],
+    "assets": ["RAMEN", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -36468,7 +36468,7 @@
     "retireReason": "rewards",
     "retiredAt": 1666978574,
     "platformId": "bomb",
-    "assets": ["BSHARE", "BNB"],
+    "assets": ["BSHARE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -36594,7 +36594,7 @@
     "retireReason": "rewards",
     "retiredAt": 1669968203,
     "platformId": "pancakeswap",
-    "assets": ["aBNBc", "BNB"],
+    "assets": ["aBNBc", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -36636,7 +36636,7 @@
     "retireReason": "rewards",
     "retiredAt": 1695146858,
     "platformId": "pancakeswap",
-    "assets": ["CEEK", "BNB"],
+    "assets": ["CEEK", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -36678,7 +36678,7 @@
     "retireReason": "rewards",
     "retiredAt": 1661444768,
     "platformId": "pancakeswap",
-    "assets": ["FROYO", "BNB"],
+    "assets": ["FROYO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -36842,7 +36842,7 @@
     "retireReason": "rewards",
     "retiredAt": 1716901675,
     "platformId": "biswap",
-    "assets": ["BTCB", "BNB"],
+    "assets": ["BTCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -36884,7 +36884,7 @@
     "retireReason": "tvl",
     "retiredAt": 1661444768,
     "platformId": "biswap",
-    "assets": ["BUSD", "BNB"],
+    "assets": ["BUSD", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -36968,7 +36968,7 @@
     "retireReason": "rewards",
     "retiredAt": 1716901675,
     "platformId": "biswap",
-    "assets": ["ETH", "BNB"],
+    "assets": ["ETH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37010,7 +37010,7 @@
     "retireReason": "tvl",
     "retiredAt": 1661444768,
     "platformId": "biswap",
-    "assets": ["CAKE", "BNB"],
+    "assets": ["CAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37052,7 +37052,7 @@
     "retireReason": "rewards",
     "retiredAt": 1683019048,
     "platformId": "ripae",
-    "assets": ["pBNB", "BNB"],
+    "assets": ["pBNB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37094,7 +37094,7 @@
     "retireReason": "tvl",
     "retiredAt": 1676567650,
     "platformId": "ripae",
-    "assets": ["PAE", "BNB"],
+    "assets": ["PAE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37136,7 +37136,7 @@
     "retireReason": "tvl",
     "retiredAt": 1670254803,
     "platformId": "pancakeswap",
-    "assets": ["GAL", "BNB"],
+    "assets": ["GAL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37214,7 +37214,7 @@
     "retireReason": "rewards",
     "retiredAt": 1669968203,
     "platformId": "dotdot",
-    "assets": ["aBNBb", "BNB"],
+    "assets": ["aBNBb", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37250,7 +37250,7 @@
     "retireReason": "rewards",
     "retiredAt": 1754691689,
     "platformId": "dotdot",
-    "assets": ["BNBx", "BNB"],
+    "assets": ["BNBx", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37286,7 +37286,7 @@
     "retireReason": "rewards",
     "retiredAt": 1669796150,
     "platformId": "dotdot",
-    "assets": ["BNBx", "BNB"],
+    "assets": ["BNBx", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37442,7 +37442,7 @@
     "retireReason": "rewards",
     "retiredAt": 1654097535,
     "platformId": "pancakeswap",
-    "assets": ["ERTHA", "BNB"],
+    "assets": ["ERTHA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37484,7 +37484,7 @@
     "retireReason": "tvl",
     "retiredAt": 1672943144,
     "platformId": "babyswap",
-    "assets": ["BNB", "USDT"],
+    "assets": ["WBNB", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37526,7 +37526,7 @@
     "retireReason": "rewards",
     "retiredAt": 1654097535,
     "platformId": "pancakeswap",
-    "assets": ["FUSE", "BNB"],
+    "assets": ["FUSE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37568,7 +37568,7 @@
     "retireReason": "rewards",
     "retiredAt": 1654097535,
     "platformId": "pera",
-    "assets": ["PERA", "BNB"],
+    "assets": ["PERA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37610,7 +37610,7 @@
     "retireReason": "rewards",
     "retiredAt": 1654097535,
     "platformId": "pancakeswap",
-    "assets": ["bQI", "BNB"],
+    "assets": ["bQI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37694,7 +37694,7 @@
     "retireReason": "rewards",
     "retiredAt": 1716385466,
     "platformId": "biswap",
-    "assets": ["USDC", "BNB"],
+    "assets": ["USDC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37736,7 +37736,7 @@
     "retireReason": "rewards",
     "retiredAt": 1716385466,
     "platformId": "biswap",
-    "assets": ["ADA", "BNB"],
+    "assets": ["ADA", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37778,7 +37778,7 @@
     "retireReason": "tvl",
     "retiredAt": 1661444768,
     "platformId": "biswap",
-    "assets": ["LINK", "BNB"],
+    "assets": ["LINK", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37820,7 +37820,7 @@
     "retireReason": "rewards",
     "retiredAt": 1716385466,
     "platformId": "biswap",
-    "assets": ["UNI", "BNB"],
+    "assets": ["UNI", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37862,7 +37862,7 @@
     "retireReason": "rewards",
     "retiredAt": 1716385466,
     "platformId": "biswap",
-    "assets": ["XRP", "BNB"],
+    "assets": ["XRP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37904,7 +37904,7 @@
     "retireReason": "tvl",
     "retiredAt": 1661444768,
     "platformId": "biswap",
-    "assets": ["DOGE", "BNB"],
+    "assets": ["DOGE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -37988,7 +37988,7 @@
     "retireReason": "tvl",
     "retiredAt": 1670254803,
     "platformId": "biswap",
-    "assets": ["SOL", "BNB"],
+    "assets": ["SOL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -38030,7 +38030,7 @@
     "retireReason": "tvl",
     "retiredAt": 1661444768,
     "platformId": "biswap",
-    "assets": ["MATIC", "BNB"],
+    "assets": ["MATIC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -38114,7 +38114,7 @@
     "retireReason": "tvl",
     "retiredAt": 1661444768,
     "platformId": "biswap",
-    "assets": ["PAE", "BNB"],
+    "assets": ["PAE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -38156,7 +38156,7 @@
     "retireReason": "tvl",
     "retiredAt": 1661444768,
     "platformId": "biswap",
-    "assets": ["TRX", "BNB"],
+    "assets": ["TRX", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
