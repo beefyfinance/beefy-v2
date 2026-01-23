@@ -66,21 +66,21 @@
   {
     "id": "euler",
     "name": "Euler DAO",
-    "description": "Description pending.",
+    "description": "Euler DAO is a community-governed organization that advances the Euler protocol and ecosystem through on-chain proposals, voting, and ecosystem coordination.",
     "website": "https://euler.foundation/",
     "twitter": "https://x.com/eulerfinance"
   },
   {
     "id": "edge",
     "name": "Edge UltraYield",
-    "description": "Description pending.",
+    "description": "Edge UltraYield curates yield-generating DeFi vaults using market-neutral strategies and transparent infrastructure, aiming to make institutional-grade yield accessible through a simplified deposit experience.",
     "website": "https://ultrayield.app/",
     "twitter": "https://x.com/ultrayieldapp"
   },
   {
     "id": "api3",
     "name": "Api3",
-    "description": "Description pending.",
+    "description": "Api3 builds decentralized oracle infrastructure that delivers on-chain data feeds and supports DeFi applications with first-party oracles and OEV-based incentives.",
     "website": "https://api3.org/",
     "twitter": "https://x.com/Api3DAO"
   },
@@ -88,63 +88,63 @@
   {
     "id": "sentora",
     "name": "Sentora",
-    "description": "Description pending.",
+    "description": "Sentora provides institutional-grade DeFi strategies with integrated risk management, offering non-custodial vault access, analytics, and monitoring tools for professional allocators and treasuries.",
     "website": "https://sentora.com/",
     "twitter": "https://x.com/SentoraHQ"
   },
   {
     "id": "august-digital",
     "name": "August Digital",
-    "description": "Description pending.",
+    "description": "August Digital provides an institutional platform for spot, derivatives, and DeFi trading, paired with automated lending operations and risk-management software for digital-asset markets.",
     "website": "https://www.augustdigital.io/",
     "twitter": "https://x.com/august_digital"
   },
   {
     "id": "kpk",
     "name": "kpk",
-    "description": "Description pending.",
+    "description": "kpk provides non-custodial on-chain treasury and asset management, delivering curated vault strategies built on a defined risk framework with continuous monitoring and operational safeguards.",
     "website": "https://kpk.io/",
     "twitter": "https://x.com/kpk_io"
   },
   {
     "id": "clearstar",
     "name": "Clearstar",
-    "description": "Description pending.",
+    "description": "Clearstar Labs is an on-chain strategy curator providing qualitative-first risk curation, continuous monitoring, and distribution infrastructure to launch and scale curated DeFi vaults.",
     "website": "https://www.clearstar.xyz/",
     "twitter": "https://x.com/ClearstarLabs"
   },
   {
     "id": "yearn",
     "name": "Yearn",
-    "description": "Description pending.",
+    "description": "Yearn is a battle-tested DeFi yield aggregator whose vaults automate strategy execution, harvesting, and compounding to optimize returns across DeFi opportunities.",
     "website": "https://yearn.fi/",
     "twitter": "https://x.com/yearnfi"
   },
   {
     "id": "keyrock",
     "name": "Keyrock",
-    "description": "Description pending.",
+    "description": "Keyrock is a digital-asset market maker and liquidity provider delivering tailored liquidity solutions across centralized and decentralized trading venues.",
     "website": "https://keyrock.com/",
     "twitter": "https://x.com/keyrock"
   },
   {
     "id": "architect",
     "name": "Architect",
-    "description": "Description pending.",
+    "description": "Architect Systems deploys patient, long-horizon capital through a research-led investment approach focused on long-term outcomes.",
     "website": "https://architect.systems/",
     "twitter": "https://x.com/xxi_eth"
   },
   {
     "id": "stake-dao",
     "name": "Stake DAO",
-    "description": "Description pending.",
+    "description": "Stake DAO is a non-custodial liquid staking and yield platform focused on governance-token ecosystems, offering products and strategies designed to boost rewards and protocol alignment.",
     "website": "https://www.stakedao.org/",
     "twitter": "https://x.com/StakeDAOHQ"
   },
   {
     "id": "avantgarde",
     "name": "Avantgarde",
-    "description": "Description pending.",
+    "description": "Avantgarde is a DeFi-native asset manager and advisory firm providing treasury management and digital-asset investment strategies for DAOs and institutions, and is known as a founding team behind Enzyme.",
     "website": "https://avantgarde.finance/",
     "twitter": "https://x.com/avantgardefi"
   }
