@@ -1,7 +1,7 @@
 [
   {
     "id": "gearbox-monad-edge-usdc",
-    "name": "USDC",
+    "name": "USDC (Edge UltraYield)",
     "type": "standard",
     "token": "USDC",
     "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
@@ -38,7 +38,7 @@
   },
   {
     "id": "gearbox-monad-edge-ausd",
-    "name": "AUSD",
+    "name": "AUSD (Edge UltraYield)",
     "type": "standard",
     "token": "AUSD",
     "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
