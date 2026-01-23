@@ -668,7 +668,7 @@ export async function discoverBeraSwapZap(args: RunArgs) {
     tokens.some(isAaveToken) ?
       {
         swap: {
-          blockProviders: ['kyber', 'one-inch'],
+          blockProviders: ['kyber'],
         },
       }
     : {};
