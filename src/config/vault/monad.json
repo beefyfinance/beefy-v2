@@ -603,6 +603,7 @@
     "status": "active",
     "createdAt": 1768320940,
     "platformId": "neverland",
+    "curatorId": "august-digital",
     "assets": ["earnAUSD"],
     "migrationIds": [],
     "risks": {
