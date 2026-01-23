@@ -75,7 +75,7 @@
   },
   {
     "id": "euler-monad-euler-usdc",
-    "name": "USDC",
+    "name": "USDC (Euler DAO)",
     "type": "standard",
     "token": "USDC",
     "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
@@ -112,7 +112,7 @@
   },
   {
     "id": "euler-monad-euler-ausd",
-    "name": "AUSD",
+    "name": "AUSD (Euler DAO)",
     "type": "standard",
     "token": "AUSD",
     "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
@@ -590,7 +590,7 @@
   },
   {
     "id": "neverland-monad-earnausd",
-    "name": "earnAUSD",
+    "name": "earnAUSD (August Digital)",
     "type": "standard",
     "token": "earnAUSD",
     "tokenAddress": "0x103222f020e98Bba0AD9809A011FDF8e6F067496",
@@ -608,7 +608,7 @@
     "risks": {
       "updatedAt": 1768320940,
       "complex": false,
-      "curated": false,
+      "curated": true,
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": false,
