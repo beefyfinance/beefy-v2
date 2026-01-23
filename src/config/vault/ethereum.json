@@ -1,5 +1,149 @@
 [
   {
+    "id": "morpho-eth-gauntlet-prime-usdc",
+    "name": "USDC (Gauntlet, Prime V2)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x9a1F11F93939DBF1103A4321206b334181359A96",
+    "earnedToken": "mooMorphoEthGauntletPrimeUSDC",
+    "earnedTokenAddress": "0x9a1F11F93939DBF1103A4321206b334181359A96",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1769085405,
+    "platformId": "morpho",
+    "curatorId": "gauntlet",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-eth-gauntlet-frontier-usdc",
+    "name": "USDC (Gauntlet, Frontier V2)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x35E7Bf11193C40B943df1fb33e20f947a6EB04E4",
+    "earnedToken": "mooMorphoEthGauntletFrontierUSDC",
+    "earnedTokenAddress": "0x35E7Bf11193C40B943df1fb33e20f947a6EB04E4",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1769085405,
+    "platformId": "morpho",
+    "curatorId": "gauntlet",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-eth-steakhouse-prime-weth",
+    "name": "WETH (Steakhouse, Prime V2)",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0xc7ea3C3e2ad0553b960F10ae25DA3cE34e15256a",
+    "earnedToken": "mooMorphoEthSteakhousePrimeWETH",
+    "earnedTokenAddress": "0xc7ea3C3e2ad0553b960F10ae25DA3cE34e15256a",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1769085405,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["WETH"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-eth-api3-core-usdc",
+    "name": "USDC (Api3, Core V2)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x90155419435F80E78A23C4ECCAEEAfd65240184c",
+    "earnedToken": "mooMorphoEthApi3CoreUSDC",
+    "earnedTokenAddress": "0x90155419435F80E78A23C4ECCAEEAfd65240184c",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1769085405,
+    "platformId": "morpho",
+    "curatorId": "api3",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "stakedao-pmusd-frxusd",
     "name": "pmUSD/frxUSD",
     "type": "standard",
@@ -2886,7 +3030,7 @@
     "retireReason": "rewards",
     "retiredAt": 1746801184,
     "platformId": "convex",
-    "assets": ["AIOZ", "ETH"],
+    "assets": ["AIOZ", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3223,7 +3367,7 @@
     "retireReason": "rewards",
     "retiredAt": 1742594371,
     "platformId": "convex",
-    "assets": ["hETH", "ETH"],
+    "assets": ["hETH", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4264,7 +4408,7 @@
     "retiredAt": 1743510776,
     "pausedAt": 1726863410,
     "platformId": "curve",
-    "assets": ["ShezETH", "ETH"],
+    "assets": ["ShezETH", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5167,7 +5311,7 @@
     "status": "active",
     "createdAt": 1711528299,
     "platformId": "fx",
-    "assets": ["FXN", "ETH"],
+    "assets": ["FXN", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -5501,7 +5645,7 @@
     "retireReason": "rewards",
     "retiredAt": 1724851479,
     "platformId": "curve",
-    "assets": ["vETH", "ETH"],
+    "assets": ["vETH", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5603,7 +5747,7 @@
     "retireReason": "Balancer2025",
     "retiredAt": 1765469790,
     "platformId": "aura",
-    "assets": ["ezETH", "ETH"],
+    "assets": ["ezETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -5652,7 +5796,7 @@
     "retireReason": "withdraw",
     "retiredAt": 1741596406,
     "platformId": "conic",
-    "assets": ["ETH"],
+    "assets": ["WETH"],
     "migrationIds": ["ethereum-conic"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5828,7 +5972,7 @@
     "retireReason": "tvl",
     "retiredAt": 1713202188,
     "platformId": "aura",
-    "assets": ["SILO", "ETH"],
+    "assets": ["SILO", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -6051,7 +6195,7 @@
     "status": "active",
     "createdAt": 1703151273,
     "platformId": "convex",
-    "assets": ["ETH+", "ETH"],
+    "assets": ["ETH+", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6252,7 +6396,7 @@
     "retireReason": "tvl",
     "retiredAt": 1714462317,
     "platformId": "prisma",
-    "assets": ["PRISMA", "ETH"],
+    "assets": ["PRISMA", "WETH"],
     "migrationIds": ["ethereum-prisma"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6396,21 +6540,21 @@
   },
   {
     "id": "compound-mainnet-eth",
-    "name": "ETH",
+    "name": "WETH",
     "type": "standard",
-    "token": "ETH",
+    "token": "WETH",
     "tokenDecimals": 18,
     "earnContractAddress": "0xa95a7C9413B562f8D0581b91eC9d51A4FB5baB7e",
     "earnedToken": "mooCompoundETH",
     "earnedTokenAddress": "0xa95a7C9413B562f8D0581b91eC9d51A4FB5baB7e",
     "oracle": "tokens",
-    "oracleId": "ETH",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1699615970,
     "retireReason": "rewards",
     "retiredAt": 1724851479,
     "platformId": "compound",
-    "assets": ["ETH"],
+    "assets": ["WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -6495,7 +6639,7 @@
     "retireReason": "rewards",
     "retiredAt": 1724851479,
     "platformId": "gamma",
-    "assets": ["rETH", "ETH"],
+    "assets": ["rETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -6570,9 +6714,9 @@
     "earnContractAddress": "0xb1F131437e314614313aAb3a3016FA05c1b0e087",
     "earnedToken": "rBIFI",
     "earnedTokenDecimals": [18],
-    "earnedTokens": ["ETH"],
+    "earnedTokens": ["WETH"],
     "earnedTokenAddresses": ["0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"],
-    "earnedOracleIds": ["ETH"],
+    "earnedOracleIds": ["WETH"],
     "oracle": "tokens",
     "oracleId": "BIFI",
     "status": "active",
@@ -6714,7 +6858,7 @@
     "retireReason": "rewards",
     "retiredAt": 1731017785,
     "platformId": "aura",
-    "assets": ["wstETH", "ETH"],
+    "assets": ["wstETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -7029,7 +7173,7 @@
     "status": "active",
     "createdAt": 1687161060,
     "platformId": "convex",
-    "assets": ["USDC", "WBTC", "ETH"],
+    "assets": ["USDC", "WBTC", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -7081,7 +7225,7 @@
     "status": "active",
     "createdAt": 1719084155,
     "platformId": "convex",
-    "assets": ["crvUSD", "ETH", "CRV"],
+    "assets": ["crvUSD", "WETH", "CRV"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -7133,7 +7277,7 @@
     "status": "active",
     "createdAt": 1687161061,
     "platformId": "convex",
-    "assets": ["OETH", "ETH"],
+    "assets": ["OETH", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -7253,7 +7397,7 @@
     "retireReason": "rewards",
     "retiredAt": 1727731740,
     "platformId": "convex",
-    "assets": ["wBETH", "ETH"],
+    "assets": ["wBETH", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -7336,7 +7480,7 @@
     "status": "active",
     "createdAt": 1683622692,
     "platformId": "convex",
-    "assets": ["T", "ETH"],
+    "assets": ["T", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -7546,7 +7690,7 @@
     "retireReason": "tvl",
     "retiredAt": 1742594396,
     "platformId": "convex",
-    "assets": ["CNC", "ETH"],
+    "assets": ["CNC", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -7599,7 +7743,7 @@
     "retireReason": "tvl",
     "retiredAt": 1696930682,
     "platformId": "verse",
-    "assets": ["ETH", "USDT"],
+    "assets": ["WETH", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -7679,7 +7823,7 @@
     "retireReason": "rewards",
     "retiredAt": 1697816149,
     "platformId": "verse",
-    "assets": ["WBTC", "ETH"],
+    "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -7719,7 +7863,7 @@
     "retireReason": "tvl",
     "retiredAt": 1709759896,
     "platformId": "verse",
-    "assets": ["DAI", "ETH"],
+    "assets": ["DAI", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -7759,7 +7903,7 @@
     "retireReason": "rewards",
     "retiredAt": 1729892802,
     "platformId": "verse",
-    "assets": ["VERSE", "ETH"],
+    "assets": ["VERSE", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -7799,7 +7943,7 @@
     "retireReason": "rewards",
     "retiredAt": 1729892802,
     "platformId": "verse",
-    "assets": ["USDC", "ETH"],
+    "assets": ["USDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -7839,7 +7983,7 @@
     "retireReason": "rewards",
     "retiredAt": 1715784934,
     "platformId": "convex",
-    "assets": ["LDO", "ETH"],
+    "assets": ["LDO", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -7890,7 +8034,7 @@
     "status": "active",
     "createdAt": 1677063176,
     "platformId": "convex",
-    "assets": ["CLEV", "ETH"],
+    "assets": ["CLEV", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -7996,7 +8140,7 @@
     "retireReason": "rewards",
     "retiredAt": 1698574248,
     "platformId": "synapse",
-    "assets": ["SYN", "ETH"],
+    "assets": ["SYN", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -8109,7 +8253,7 @@
     "retireReason": "bifiV2",
     "retiredAt": 1689007467,
     "platformId": "solidly",
-    "assets": ["oldBIFI", "ETH"],
+    "assets": ["oldBIFI", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -8149,7 +8293,7 @@
     "retireReason": "rewards",
     "retiredAt": 1676799336,
     "platformId": "solidly",
-    "assets": ["moSOLID", "ETH"],
+    "assets": ["moSOLID", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -8189,7 +8333,7 @@
     "retireReason": "rewards",
     "retiredAt": 1696060775,
     "platformId": "solidly",
-    "assets": ["SOLID", "ETH"],
+    "assets": ["SOLID", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -8229,7 +8373,7 @@
     "retireReason": "rewards",
     "retiredAt": 1691431139,
     "platformId": "solidly",
-    "assets": ["frxETH", "ETH"],
+    "assets": ["frxETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -8349,7 +8493,7 @@
     "retireReason": "tvl",
     "retiredAt": 1684742133,
     "platformId": "solidly",
-    "assets": ["USDC", "ETH"],
+    "assets": ["USDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -8389,7 +8533,7 @@
     "retireReason": "tvl",
     "retiredAt": 1686563142,
     "platformId": "solidly",
-    "assets": ["BLUR", "ETH"],
+    "assets": ["BLUR", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -8664,7 +8808,7 @@
     "status": "active",
     "createdAt": 1669805289,
     "platformId": "convex",
-    "assets": ["CVX", "ETH"],
+    "assets": ["CVX", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -8715,7 +8859,7 @@
     "status": "active",
     "createdAt": 1675457175,
     "platformId": "convex",
-    "assets": ["GEAR", "ETH"],
+    "assets": ["GEAR", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -8767,7 +8911,7 @@
     "createdAt": 1669805267,
     "retiredAt": 1691160640,
     "platformId": "convex",
-    "assets": ["CRV", "ETH"],
+    "assets": ["CRV", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -9210,7 +9354,7 @@
     "retireReason": "rewards",
     "retiredAt": 1727731740,
     "platformId": "convex",
-    "assets": ["USDT", "WBTC", "ETH"],
+    "assets": ["USDT", "WBTC", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -9264,7 +9408,7 @@
     "retireReason": "rewards",
     "retiredAt": 1714505422,
     "platformId": "convex",
-    "assets": ["stETH", "ETH"],
+    "assets": ["stETH", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -9437,7 +9581,7 @@
     "retireReason": "rewards",
     "retiredAt": 1724851479,
     "platformId": "stargate",
-    "assets": ["ETH"],
+    "assets": ["WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9472,7 +9616,7 @@
     "createdAt": 1687443962,
     "retiredAt": 1763017703,
     "platformId": "aura",
-    "assets": ["rETH", "ETH"],
+    "assets": ["rETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9587,7 +9731,7 @@
     "retireReason": "tvl",
     "retiredAt": 1704791264,
     "platformId": "aura",
-    "assets": ["SD", "ETH"],
+    "assets": ["SD", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,

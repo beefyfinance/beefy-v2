@@ -1,5 +1,5 @@
 [
-  {
+    {
     "id": "aerodrome-cow-base-ousdt-usdc-vault",
     "name": "oUSDT-USDC",
     "type": "standard",
@@ -571,6 +571,360 @@
     "platformId": "beefy",
     "feeTier": "0.25",
     "assets": ["WETH", "LINK"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-vfy-zen-vault",
+    "name": "VFY-ZEN",
+    "type": "standard",
+    "token": "VFY-ZEN",
+    "tokenAddress": "0xe37FbAeB14a63FdcdE1FD803C31E6a3797890287",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xe8b4e5248312e9D81BBE70753AbC116cFF32B868",
+    "earnedToken": "mooCowAerodromeVFY-ZEN",
+    "earnedTokenAddress": "0xe8b4e5248312e9D81BBE70753AbC116cFF32B868",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-vfy-zen",
+    "status": "active",
+    "createdAt": 1769014697,
+    "platformId": "aerodrome",
+    "assets": ["VFY", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-vfy-zen-rp",
+    "name": "VFY-ZEN Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeVFY-ZEN",
+    "tokenAddress": "0xe37FbAeB14a63FdcdE1FD803C31E6a3797890287",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xE0E717B7DcE02667fE4c7C26A7D46421088f295f",
+    "earnedToken": "rCowAerodromeVFY-ZEN",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-vfy-zen",
+    "status": "active",
+    "createdAt": 1769014696,
+    "platformId": "aerodrome",
+    "assets": ["VFY", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-vfy-zen",
+    "name": "VFY-ZEN",
+    "type": "cowcentrated",
+    "token": "VFY-ZEN aerodrome",
+    "tokenAddress": "0x700d91F1C3C5e430eA776245e741B84402e8de2E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0xa749dE6c28262B7ffbc5De27dC845DD7eCD2b358",
+      "0xf43eB8De897Fbc7F2502483B2Bef7Bb9EA179229"
+    ],
+    "earnContractAddress": "0xe37FbAeB14a63FdcdE1FD803C31E6a3797890287",
+    "earnedToken": "cowAerodromeVFY-ZEN",
+    "earnedTokenAddress": "0xe37FbAeB14a63FdcdE1FD803C31E6a3797890287",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-vfy-zen",
+    "status": "active",
+    "createdAt": 1769014696,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["VFY", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-cbbtc-zen-vault",
+    "name": "cbBTC-ZEN",
+    "type": "standard",
+    "token": "cbBTC-ZEN",
+    "tokenAddress": "0x38fbA739aFBb434816F9E4F4190Ba22142dDd266",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x4fDd05C5D8C651418b34FFc34258004182B7F51d",
+    "earnedToken": "mooCowAerodromecbBTC-ZEN",
+    "earnedTokenAddress": "0x4fDd05C5D8C651418b34FFc34258004182B7F51d",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-cbbtc-zen",
+    "status": "active",
+    "createdAt": 1769013798,
+    "platformId": "aerodrome",
+    "assets": ["cbBTC", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-cbbtc-zen-rp",
+    "name": "cbBTC-ZEN Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromecbBTC-ZEN",
+    "tokenAddress": "0x38fbA739aFBb434816F9E4F4190Ba22142dDd266",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x53b2345Bdf0AF62495A6908b72b59F7e94198c24",
+    "earnedToken": "rCowAerodromecbBTC-ZEN",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-cbbtc-zen",
+    "status": "active",
+    "createdAt": 1769013797,
+    "platformId": "aerodrome",
+    "assets": ["cbBTC", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-cbbtc-zen",
+    "name": "cbBTC-ZEN",
+    "type": "cowcentrated",
+    "token": "cbBTC-ZEN aerodrome",
+    "tokenAddress": "0x47f9e291bb766Fc307Ad7BBa4f29f3Eab6A97101",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "0xf43eB8De897Fbc7F2502483B2Bef7Bb9EA179229"
+    ],
+    "earnContractAddress": "0x38fbA739aFBb434816F9E4F4190Ba22142dDd266",
+    "earnedToken": "cowAerodromecbBTC-ZEN",
+    "earnedTokenAddress": "0x38fbA739aFBb434816F9E4F4190Ba22142dDd266",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-cbbtc-zen",
+    "status": "active",
+    "createdAt": 1769013797,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["cbBTC", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-zen-vault",
+    "name": "WETH-ZEN",
+    "type": "standard",
+    "token": "WETH-ZEN",
+    "tokenAddress": "0x6690a92c7073a5122E65D3a3187B95b808Dc152b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x9883Aa049f45aFffa7aFf4ef02a06FC4a958162a",
+    "earnedToken": "mooCowAerodromeWETH-ZEN",
+    "earnedTokenAddress": "0x9883Aa049f45aFffa7aFf4ef02a06FC4a958162a",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-zen",
+    "status": "active",
+    "createdAt": 1769012394,
+    "platformId": "aerodrome",
+    "assets": ["WETH", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-zen-rp",
+    "name": "WETH-ZEN Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeWETH-ZEN",
+    "tokenAddress": "0x6690a92c7073a5122E65D3a3187B95b808Dc152b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x22AB82C0c135B66d7B17b02950E8214627013d14",
+    "earnedToken": "rCowAerodromeWETH-ZEN",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-zen",
+    "status": "active",
+    "createdAt": 1769012393,
+    "platformId": "aerodrome",
+    "assets": ["WETH", "ZEN"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-zen",
+    "name": "WETH-ZEN",
+    "type": "cowcentrated",
+    "token": "WETH-ZEN aerodrome",
+    "tokenAddress": "0x0392B12a1cEb0cd13af5Ea448CF5586EA609852D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xf43eB8De897Fbc7F2502483B2Bef7Bb9EA179229"
+    ],
+    "earnContractAddress": "0x6690a92c7073a5122E65D3a3187B95b808Dc152b",
+    "earnedToken": "cowAerodromeWETH-ZEN",
+    "earnedTokenAddress": "0x6690a92c7073a5122E65D3a3187B95b808Dc152b",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-zen",
+    "status": "active",
+    "createdAt": 1769012393,
+    "platformId": "beefy",
+    "feeTier": "0.15",
+    "assets": ["WETH", "ZEN"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -5246,7 +5600,7 @@
     "status": "active",
     "createdAt": 1754302367,
     "platformId": "stakedao",
-    "assets": ["crvUSD", "tBTC", "ETH"],
+    "assets": ["crvUSD", "tBTC", "WETH"],
     "migrationIds": ["l2-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -13809,7 +14163,7 @@
     "retireReason": "rewards",
     "retiredAt": 1760538180,
     "platformId": "alienbase",
-    "assets": ["ALB", "ETH"],
+    "assets": ["ALB", "WETH"],
     "migrationIds": [],
     "risks": {
       "updatedAt": 1765557014,
@@ -13844,7 +14198,7 @@
     "retireReason": "rewards",
     "retiredAt": 1742594371,
     "platformId": "alienbase",
-    "assets": ["cbETH", "ETH"],
+    "assets": ["cbETH", "WETH"],
     "migrationIds": [],
     "risks": {
       "updatedAt": 1765557014,
@@ -14491,7 +14845,7 @@
     "status": "active",
     "createdAt": 1732523151,
     "platformId": "aerodrome",
-    "assets": ["KLIMA", "ETH"],
+    "assets": ["KLIMA", "WETH"],
     "migrationIds": [],
     "risks": {
       "updatedAt": 1765557014,
@@ -17259,7 +17613,7 @@
     "earnedToken": "mooSiloBaseWETH(superOETHb)",
     "earnedTokenAddress": "0x367A8DF45A165fD0A4405b4c45773d50E427322F",
     "oracle": "tokens",
-    "oracleId": "ETH",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1729264245,
     "retireReason": "rewards",
@@ -17382,7 +17736,7 @@
     "earnedToken": "mooSiloBaseWETH(cbETH)",
     "earnedTokenAddress": "0x766685A4d1eAB18d0AfAA2e6d3D65b6A116b36C3",
     "oracle": "tokens",
-    "oracleId": "ETH",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1729264245,
     "retireReason": "rewards",
@@ -17505,7 +17859,7 @@
     "earnedToken": "mooSiloBaseWETH(cbBTC)",
     "earnedTokenAddress": "0x01793ef258B053E86e3dF3D6A6786867De12c1B1",
     "oracle": "tokens",
-    "oracleId": "ETH",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1729264245,
     "retireReason": "rewards",
@@ -17628,7 +17982,7 @@
     "earnedToken": "mooSiloBaseWETH(weETH)",
     "earnedTokenAddress": "0xd660e4C3Ae43188f3c6561cEc0f0a2D30B0887F3",
     "oracle": "tokens",
-    "oracleId": "ETH",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1729264245,
     "retireReason": "rewards",
@@ -17710,7 +18064,7 @@
     "earnedToken": "mooSiloBaseWETH(ezETH)",
     "earnedTokenAddress": "0xEa9677ed4BF937425a211A3F35935B199B842e2d",
     "oracle": "tokens",
-    "oracleId": "ETH",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1729264245,
     "retireReason": "rewards",
@@ -17792,7 +18146,7 @@
     "earnedToken": "mooSiloBaseWETH(wstETH)",
     "earnedTokenAddress": "0xC9a29591Bf10BCF9acFb2187d9df630C8d4A67D2",
     "oracle": "tokens",
-    "oracleId": "ETH",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1729264245,
     "retireReason": "rewards",
@@ -17915,7 +18269,7 @@
     "earnedToken": "mooSiloBaseWETH(bsdETH)",
     "earnedTokenAddress": "0xdCba6d23d52763FaC90718C690766A0Daf16958d",
     "oracle": "tokens",
-    "oracleId": "ETH",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1729264245,
     "retireReason": "rewards",
@@ -24880,7 +25234,7 @@
     "retireReason": "tvl",
     "retiredAt": 1765213686,
     "platformId": "aerodrome",
-    "assets": ["USDz", "ETH"],
+    "assets": ["USDz", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -24921,7 +25275,7 @@
     "retireReason": "tvl",
     "retiredAt": 1739314051,
     "platformId": "aerodrome",
-    "assets": ["sUSDz", "ETH"],
+    "assets": ["sUSDz", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27304,7 +27658,7 @@
     "retireReason": "rewards",
     "retiredAt": 1742594371,
     "platformId": "aura",
-    "assets": ["weETH", "ETH"],
+    "assets": ["weETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27352,7 +27706,7 @@
     "status": "active",
     "createdAt": 1716034908,
     "platformId": "aerodrome",
-    "assets": ["ETH", "GHST"],
+    "assets": ["WETH", "GHST"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27432,7 +27786,7 @@
     "status": "active",
     "createdAt": 1714647704,
     "platformId": "aerodrome",
-    "assets": ["weETH", "ETH"],
+    "assets": ["weETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27515,7 +27869,7 @@
     "retireReason": "tvl",
     "retiredAt": 1764609392,
     "platformId": "aerodrome",
-    "assets": ["wrsETH", "ETH"],
+    "assets": ["wrsETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27679,7 +28033,7 @@
     "retireReason": "tvl",
     "retiredAt": 1743199545,
     "platformId": "ichi",
-    "assets": ["ETH", "USDbC"],
+    "assets": ["WETH", "USDbC"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27714,7 +28068,7 @@
     "retireReason": "tvl",
     "retiredAt": 1722030051,
     "platformId": "ichi",
-    "assets": ["ETH", "USDC"],
+    "assets": ["WETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -27908,7 +28262,7 @@
     "retireReason": "rewards",
     "retiredAt": 1724851478,
     "platformId": "aura",
-    "assets": ["tBTC", "ETH"],
+    "assets": ["tBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -28917,7 +29271,7 @@
     "status": "active",
     "createdAt": 1712591169,
     "platformId": "aerodrome",
-    "assets": ["wBaseDOGE", "ETH"],
+    "assets": ["wBaseDOGE", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -29037,7 +29391,7 @@
     "retireReason": "tvl",
     "retiredAt": 1744925964,
     "platformId": "aerodrome",
-    "assets": ["ezETH", "ETH"],
+    "assets": ["ezETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -29078,7 +29432,7 @@
     "retireReason": "tvl",
     "retiredAt": 1764609392,
     "platformId": "aerodrome",
-    "assets": ["ezETH", "ETH"],
+    "assets": ["ezETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -29200,7 +29554,7 @@
     "retireReason": "tvl",
     "retiredAt": 1742594396,
     "platformId": "aerodrome",
-    "assets": ["L2VE", "ETH"],
+    "assets": ["L2VE", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -29239,7 +29593,7 @@
     "status": "active",
     "createdAt": 1712195843,
     "platformId": "aerodrome",
-    "assets": ["doginme", "ETH"],
+    "assets": ["doginme", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -29401,7 +29755,7 @@
     "retireReason": "tvl",
     "retiredAt": 1713202188,
     "platformId": "aerodrome",
-    "assets": ["axlOP", "ETH"],
+    "assets": ["axlOP", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -29522,7 +29876,7 @@
     "status": "active",
     "createdAt": 1709420692,
     "platformId": "aerodrome",
-    "assets": ["TYBG", "ETH"],
+    "assets": ["TYBG", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -29561,7 +29915,7 @@
     "status": "active",
     "createdAt": 1709343618,
     "platformId": "aerodrome",
-    "assets": ["ETH", "bsdETH"],
+    "assets": ["WETH", "bsdETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -29602,7 +29956,7 @@
     "retireReason": "tvl",
     "retiredAt": 1737389669,
     "platformId": "aerodrome",
-    "assets": ["ETH", "USD+"],
+    "assets": ["WETH", "USD+"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -29763,7 +30117,7 @@
     "status": "active",
     "createdAt": 1725604112,
     "platformId": "aerodrome",
-    "assets": ["msETH", "ETH"],
+    "assets": ["msETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30034,7 +30388,7 @@
     "status": "active",
     "createdAt": 1703168135,
     "platformId": "aerodrome",
-    "assets": ["ETH", "USDC"],
+    "assets": ["WETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30561,7 +30915,7 @@
     "retireReason": "tvl",
     "retiredAt": 1704791264,
     "platformId": "aerodrome",
-    "assets": ["ETH", "axlUSDC"],
+    "assets": ["WETH", "axlUSDC"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30639,7 +30993,7 @@
     "status": "active",
     "createdAt": 1699845057,
     "platformId": "aerodrome",
-    "assets": ["ETH", "wstETH"],
+    "assets": ["WETH", "wstETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30799,17 +31153,17 @@
     "id": "compound-base-eth",
     "name": "WETH",
     "type": "standard",
-    "token": "ETH",
+    "token": "WETH",
     "tokenDecimals": 18,
     "earnContractAddress": "0x62e5B9934dCB87618CFC74B222305D16C997E8c1",
     "earnedToken": "mooCompoundBaseETH",
     "earnedTokenAddress": "0x62e5B9934dCB87618CFC74B222305D16C997E8c1",
     "oracle": "tokens",
-    "oracleId": "ETH",
+    "oracleId": "WETH",
     "status": "active",
     "createdAt": 1698951095,
     "platformId": "compound",
-    "assets": ["ETH"],
+    "assets": ["WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30894,7 +31248,7 @@
     "retireReason": "rewards",
     "retiredAt": 1708113204,
     "platformId": "gamma",
-    "assets": ["USDbC", "ETH"],
+    "assets": ["USDbC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -30935,7 +31289,7 @@
     "retireReason": "tvl",
     "retiredAt": 1699954665,
     "platformId": "equalizer",
-    "assets": ["axlWBTC", "ETH"],
+    "assets": ["axlWBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -30976,7 +31330,7 @@
     "retireReason": "tvl",
     "retiredAt": 1697816149,
     "platformId": "equalizer",
-    "assets": ["axlUSDC", "ETH"],
+    "assets": ["axlUSDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31017,7 +31371,7 @@
     "retireReason": "tvl",
     "retiredAt": 1717514438,
     "platformId": "equalizer",
-    "assets": ["USDC", "ETH"],
+    "assets": ["USDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31058,7 +31412,7 @@
     "retireReason": "rewards",
     "retiredAt": 1718118986,
     "platformId": "equalizer",
-    "assets": ["USDbC", "ETH"],
+    "assets": ["USDbC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31314,7 +31668,7 @@
     "retireReason": "rewards",
     "retiredAt": 1764618307,
     "platformId": "baseswap",
-    "assets": ["BSX", "ETH"],
+    "assets": ["BSX", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31433,7 +31787,7 @@
     "retireReason": "Balancer2025",
     "retiredAt": 1765469790,
     "platformId": "aura",
-    "assets": ["rETH", "ETH"],
+    "assets": ["rETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31482,7 +31836,7 @@
     "retireReason": "tvl",
     "retiredAt": 1744925964,
     "platformId": "baseswap",
-    "assets": ["USDC", "ETH"],
+    "assets": ["USDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31523,7 +31877,7 @@
     "retireReason": "tvl",
     "retiredAt": 1729892827,
     "platformId": "baseswap",
-    "assets": ["DAI", "ETH"],
+    "assets": ["DAI", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -31912,7 +32266,7 @@
     "status": "active",
     "createdAt": 1694096967,
     "platformId": "curve",
-    "assets": ["crvUSD", "tBTC", "ETH"],
+    "assets": ["crvUSD", "tBTC", "WETH"],
     "migrationIds": ["l2-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -31966,7 +32320,7 @@
     "retireReason": "rewards",
     "retiredAt": 1710882786,
     "platformId": "curve",
-    "assets": ["cbETH", "ETH"],
+    "assets": ["cbETH", "WETH"],
     "migrationIds": ["l2-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -32266,7 +32620,7 @@
     "retireReason": "tvl",
     "retiredAt": 1764614486,
     "platformId": "aerodrome",
-    "assets": ["THALES", "ETH"],
+    "assets": ["THALES", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32466,7 +32820,7 @@
     "status": "active",
     "createdAt": 1693429056,
     "platformId": "aerodrome",
-    "assets": ["tBTC", "ETH"],
+    "assets": ["tBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32546,7 +32900,7 @@
     "status": "active",
     "createdAt": 1693409597,
     "platformId": "aerodrome",
-    "assets": ["cbETH", "ETH"],
+    "assets": ["cbETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32624,7 +32978,7 @@
     "status": "active",
     "createdAt": 1693409575,
     "platformId": "aerodrome",
-    "assets": ["ETH", "USDbC"],
+    "assets": ["WETH", "USDbC"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32704,7 +33058,7 @@
     "retireReason": "rewards",
     "retiredAt": 1718118986,
     "platformId": "baso",
-    "assets": ["ETH", "USDbC"],
+    "assets": ["WETH", "USDbC"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32827,7 +33181,7 @@
     "retireReason": "tvl",
     "retiredAt": 1713202188,
     "platformId": "swapbased",
-    "assets": ["cbETH", "ETH"],
+    "assets": ["cbETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -32943,7 +33297,7 @@
     "retireReason": "tvl",
     "retiredAt": 1698574248,
     "platformId": "baseswap",
-    "assets": ["UNIDX", "ETH"],
+    "assets": ["UNIDX", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33067,7 +33421,7 @@
     "retireReason": "tvl",
     "retiredAt": 1708974810,
     "platformId": "swapbased",
-    "assets": ["ETH", "USDbC"],
+    "assets": ["WETH", "USDbC"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33108,7 +33462,7 @@
     "retireReason": "rewards",
     "retiredAt": 1715090908,
     "platformId": "swapbased",
-    "assets": ["ETH", "axlUSDC"],
+    "assets": ["WETH", "axlUSDC"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33297,7 +33651,7 @@
   },
   {
     "id": "moonwell-base-weth",
-    "name": "ETH",
+    "name": "WETH",
     "type": "standard",
     "token": "ETH Base",
     "tokenDecimals": 18,
@@ -33305,13 +33659,13 @@
     "earnedToken": "mooMoonwellBaseETH",
     "earnedTokenAddress": "0x48DfFA589c0ca127C5C7B3E7250BA83FAC206309",
     "oracle": "tokens",
-    "oracleId": "ETH",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1691865366,
     "retireReason": "rewards",
     "retiredAt": 1708113204,
     "platformId": "moonwell",
-    "assets": ["ETH"],
+    "assets": ["WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33353,7 +33707,7 @@
     "retireReason": "rewards",
     "retiredAt": 1764618307,
     "platformId": "alienbase",
-    "assets": ["ALB", "ETH"],
+    "assets": ["ALB", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33435,7 +33789,7 @@
     "retireReason": "rewards",
     "retiredAt": 1757610814,
     "platformId": "alienbase",
-    "assets": ["ETH", "USDbC"],
+    "assets": ["WETH", "USDbC"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33515,7 +33869,7 @@
     "status": "active",
     "createdAt": 1691865365,
     "platformId": "alienbase",
-    "assets": ["cbETH", "ETH"],
+    "assets": ["cbETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33591,7 +33945,7 @@
     "retireReason": "tvl",
     "retiredAt": 1704791264,
     "platformId": "bvm",
-    "assets": ["cbETH", "ETH"],
+    "assets": ["cbETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33632,7 +33986,7 @@
     "retireReason": "tvl",
     "retiredAt": 1710882786,
     "platformId": "stargate",
-    "assets": ["ETH"],
+    "assets": ["WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33704,7 +34058,7 @@
     "retireReason": "tvl",
     "retiredAt": 1698743862,
     "platformId": "bvm",
-    "assets": ["USDbC", "ETH"],
+    "assets": ["USDbC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33745,7 +34099,7 @@
     "retireReason": "rewards",
     "retiredAt": 1731017785,
     "platformId": "bvm",
-    "assets": ["BVM", "ETH"],
+    "assets": ["BVM", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33786,7 +34140,7 @@
     "retireReason": "rewards",
     "retiredAt": 1758546805,
     "platformId": "baseswap",
-    "assets": ["cbETH", "ETH"],
+    "assets": ["cbETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33868,7 +34222,7 @@
     "retireReason": "tvl",
     "retiredAt": 1718119005,
     "platformId": "baseswap",
-    "assets": ["axlUSDC", "ETH"],
+    "assets": ["axlUSDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33909,7 +34263,7 @@
     "retireReason": "rewards",
     "retiredAt": 1729892802,
     "platformId": "baseswap",
-    "assets": ["USDbC", "ETH"],
+    "assets": ["USDbC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -33950,7 +34304,7 @@
     "retireReason": "rewards",
     "retiredAt": 1694455295,
     "platformId": "balancer",
-    "assets": ["ETH", "bsUSD"],
+    "assets": ["WETH", "bsUSD"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -34021,7 +34375,7 @@
     "retireReason": "rewards",
     "retiredAt": 1718118986,
     "platformId": "aura",
-    "assets": ["cbETH", "ETH"],
+    "assets": ["cbETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,

@@ -222,7 +222,6 @@ export type ChainConfig = {
     decimals: number;
   };
   gas: GasConfig;
-  stableCoins: string[];
   new?: boolean;
   brand?: {
     icon?: 'solid' | 'gradient';

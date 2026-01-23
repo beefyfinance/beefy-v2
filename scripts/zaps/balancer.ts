@@ -775,7 +775,7 @@ export async function discoverBalancerZap(args: RunArgs) {
     tokens.some(isAaveToken) ?
       {
         swap: {
-          blockProviders: ['kyber', 'one-inch'],
+          blockProviders: ['kyber'],
         },
       }
     : {};
