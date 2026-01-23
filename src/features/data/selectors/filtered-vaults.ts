@@ -1,7 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import escapeStringRegexp from 'escape-string-regexp';
-import { differenceWith, isEqual } from 'lodash-es';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import {
@@ -16,7 +15,6 @@ import type { BeefyState } from '../store/types.ts';
 import type { KeysOfType } from '../utils/types-utils.ts';
 import { selectVaultTotalApy } from './apy.ts';
 import { selectUserDepositedVaultIds } from './balance.ts';
-import { selectChainById } from './chains.ts';
 import { selectActivePromoForVault } from './promos.ts';
 import {
   selectIsTokenBluechip,
@@ -254,17 +252,17 @@ export const selectFilterContent = createSelector(
 export const selectIsVaultBlueChip = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
-    const chain = selectChainById(state, vault.chainId);
-    const nonStables = differenceWith(vault.assetIds, chain.stableCoins, isEqual);
+    const nonStables = vault.assetIds.filter(
+      tokenId => !selectIsTokenStable(state, vault.chainId, tokenId)
+    );
     return (
       nonStables.length > 0 &&
-      nonStables.every(tokenId => {
-        return selectIsTokenBluechip(state, tokenId);
-      })
+      nonStables.every(tokenId => selectIsTokenBluechip(state, vault.chainId, tokenId))
     );
   },
   res => res
 );
+
 export const selectIsVaultStable = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
@@ -289,7 +287,7 @@ export const selectIsVaultCorrelated = createSelector(
 export const selectIsVaultMeme = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
-    return vault.assetIds.some(assetId => selectIsTokenMeme(state, assetId));
+    return vault.assetIds.some(assetId => selectIsTokenMeme(state, vault.chainId, assetId));
   },
   res => res
 );
