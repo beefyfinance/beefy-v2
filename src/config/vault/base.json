@@ -356,7 +356,7 @@
   {
     "id": "morpho-base-steakhouse-prime-eurc",
     "name": "EURC (Steakhouse, Prime)",
-    "token": "USDC",
+    "token": "EURC",
     "tokenAddress": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
     "tokenDecimals": 6,
     "earnContractAddress": "0x01F1A592B0b757B2931bbcCf28227cdC1e892dde",
