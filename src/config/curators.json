@@ -4,62 +4,148 @@
     "name": "K3 Capital",
     "description": "K3 Capital provides institutional asset-management and DeFi strategy solutions, developing advanced on-chain products for professional investors and protocols.",
     "website": "https://k3.capital",
-    "twitter": "https://twitter.com/k3_capital"
+    "twitter": "https://x.com/k3_capital"
   },
   {
     "id": "hyperithm",
     "name": "Hyperithm",
     "description": "Hyperithm delivers institutional-grade DeFi strategies and quantitative trading solutions, bridging traditional finance with decentralized markets to maximize risk-adjusted yield.",
     "website": "https://www.hyperithm.com/",
-    "twitter": "https://twitter.com/hyperithm"
+    "twitter": "https://x.com/hyperithm"
   },
   {
     "id": "telosc",
     "name": "TelosC",
     "description": "TelosC designs incentive, risk, credit, and coordination models that drive growth across protocol and DAO economies within the DeFi ecosystem.",
     "website": "https://telosc.com",
-    "twitter": "https://twitter.com/TelosConsilium"
+    "twitter": "https://x.com/TelosConsilium"
   },
   {
     "id": "varlamore",
     "name": "Varlamore",
     "description": "Varlamore builds high-yield lending strategies across isolated markets such as Silo Finance, targeting stable, risk-adjusted income for DeFi participants.",
     "website": "https://varlamore.capital",
-    "twitter": "https://twitter.com/VarlamoreCap"
+    "twitter": "https://x.com/VarlamoreCap"
   },
   {
     "id": "mev-capital",
     "name": "MEV Capital",
     "description": "MEV Capital is a digital-asset manager specializing in validator operations, MEV extraction, and structured DeFi yield strategies that generate uncorrelated returns.",
     "website": "https://mevcapital.com",
-    "twitter": "https://twitter.com/MEVCapital"
+    "twitter": "https://x.com/MEVCapital"
   },
   {
     "id": "optima",
     "name": "Optima",
     "description": "Optima is a financial-software and tokenization platform offering blockchain-based certificates and digital-asset investment products for regulated and institutional markets.",
     "website": "https://optima.financial",
-    "twitter": "https://twitter.com/Optima_Fi"
+    "twitter": "https://x.com/Optima_Fi"
   },
   {
     "id": "re7-labs",
     "name": "Re7 Labs",
     "description": "Re7 Labs is a research-driven DeFi asset manager focused on risk-curated vaults and restaking strategies. It builds institutional-grade yield products leveraging protocols like Morpho, EigenLayer, and Mellow.",
     "website": "https://re7labs.xyz",
-    "twitter": "https://twitter.com/Re7Labs"
+    "twitter": "https://x.com/Re7Labs"
   },
   {
     "id": "gauntlet",
     "name": "Gauntlet",
     "description": "Gauntlet is a quantitative risk-management platform providing simulation-based insights and automated parameter optimization for DeFi protocols. It enables safer, more capital-efficient on-chain markets through data-driven modeling.",
     "website": "https://www.gauntlet.xyz/",
-    "twitter": "https://twitter.com/gauntlet_xyz"
+    "twitter": "https://x.com/gauntlet_xyz"
   },
   {
     "id": "steakhouse",
     "name": "Steakhouse",
     "description": "Steakhouse Financial is a DeFi risk-curation firm that manages institutional-grade vaults and stablecoin-lending strategies focused on capital efficiency and treasury optimization.",
     "website": "https://www.steakhouse.financial/",
-    "twitter": "https://twitter.com/SteakhouseFi"
+    "twitter": "https://x.com/SteakhouseFi"
+  },
+
+  {
+    "id": "euler",
+    "name": "Euler DAO",
+    "description": "Euler DAO is a community-governed organization that advances the Euler protocol and ecosystem through on-chain proposals, voting, and ecosystem coordination.",
+    "website": "https://euler.foundation/",
+    "twitter": "https://x.com/eulerfinance"
+  },
+  {
+    "id": "edge",
+    "name": "Edge UltraYield",
+    "description": "Edge UltraYield curates yield-generating DeFi vaults using market-neutral strategies and transparent infrastructure, aiming to make institutional-grade yield accessible through a simplified deposit experience.",
+    "website": "https://ultrayield.app/",
+    "twitter": "https://x.com/ultrayieldapp"
+  },
+  {
+    "id": "api3",
+    "name": "Api3",
+    "description": "Api3 builds decentralized oracle infrastructure that delivers on-chain data feeds and supports DeFi applications with first-party oracles and OEV-based incentives.",
+    "website": "https://api3.org/",
+    "twitter": "https://x.com/Api3DAO"
+  },
+
+  {
+    "id": "sentora",
+    "name": "Sentora",
+    "description": "Sentora provides institutional-grade DeFi strategies with integrated risk management, offering non-custodial vault access, analytics, and monitoring tools for professional allocators and treasuries.",
+    "website": "https://sentora.com/",
+    "twitter": "https://x.com/SentoraHQ"
+  },
+  {
+    "id": "august-digital",
+    "name": "August Digital",
+    "description": "August Digital provides an institutional platform for spot, derivatives, and DeFi trading, paired with automated lending operations and risk-management software for digital-asset markets.",
+    "website": "https://www.augustdigital.io/",
+    "twitter": "https://x.com/august_digital"
+  },
+  {
+    "id": "kpk",
+    "name": "kpk",
+    "description": "kpk provides non-custodial on-chain treasury and asset management, delivering curated vault strategies built on a defined risk framework with continuous monitoring and operational safeguards.",
+    "website": "https://kpk.io/",
+    "twitter": "https://x.com/kpk_io"
+  },
+  {
+    "id": "clearstar",
+    "name": "Clearstar",
+    "description": "Clearstar Labs is an on-chain strategy curator providing qualitative-first risk curation, continuous monitoring, and distribution infrastructure to launch and scale curated DeFi vaults.",
+    "website": "https://www.clearstar.xyz/",
+    "twitter": "https://x.com/ClearstarLabs"
+  },
+  {
+    "id": "yearn",
+    "name": "Yearn",
+    "description": "Yearn is a battle-tested DeFi yield aggregator whose vaults automate strategy execution, harvesting, and compounding to optimize returns across DeFi opportunities.",
+    "website": "https://yearn.fi/",
+    "twitter": "https://x.com/yearnfi"
+  },
+  {
+    "id": "keyrock",
+    "name": "Keyrock",
+    "description": "Keyrock is a digital-asset market maker and liquidity provider delivering tailored liquidity solutions across centralized and decentralized trading venues.",
+    "website": "https://keyrock.com/",
+    "twitter": "https://x.com/keyrock"
+  },
+  {
+    "id": "architect",
+    "name": "Architect",
+    "description": "Architect Systems deploys patient, long-horizon capital through a research-led investment approach focused on long-term outcomes.",
+    "website": "https://architect.systems/",
+    "twitter": "https://x.com/xxi_eth"
+  },
+  {
+    "id": "stake-dao",
+    "name": "Stake DAO",
+    "description": "Stake DAO is a non-custodial liquid staking and yield platform focused on governance-token ecosystems, offering products and strategies designed to boost rewards and protocol alignment.",
+    "website": "https://www.stakedao.org/",
+    "twitter": "https://x.com/StakeDAOHQ"
+  },
+  {
+    "id": "avantgarde",
+    "name": "Avantgarde",
+    "description": "Avantgarde is a DeFi-native asset manager and advisory firm providing treasury management and digital-asset investment strategies for DAOs and institutions, and is known as a founding team behind Enzyme.",
+    "website": "https://avantgarde.finance/",
+    "twitter": "https://x.com/avantgardefi"
   }
 ]

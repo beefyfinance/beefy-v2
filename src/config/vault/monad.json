@@ -1,5 +1,631 @@
 [
   {
+    "id": "gearbox-monad-edge-usdc",
+    "name": "USDC (Edge UltraYield)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x39A1992C9C1074e334DB16bBc6A27f0fDe72ce8f",
+    "earnedToken": "mooGearboxMonadEdgeUSDC",
+    "earnedTokenAddress": "0x39A1992C9C1074e334DB16bBc6A27f0fDe72ce8f",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1769001247,
+    "platformId": "gearbox",
+    "curatorId": "edge",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.gearbox.finance/pools/143/0x6b343f7b797f1488aa48c49d540690f2b2c89751",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "gearbox-monad-edge-ausd",
+    "name": "AUSD (Edge UltraYield)",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x46DaFc1a70c88056125D90995EDa8b5bB18b6c98",
+    "earnedToken": "mooGearboxMonadEdgeAUSD",
+    "earnedTokenAddress": "0x46DaFc1a70c88056125D90995EDa8b5bB18b6c98",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1769001247,
+    "platformId": "gearbox",
+    "curatorId": "edge",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.gearbox.finance/pools/143/0xc4173359087ce643235420b7bc610d9b0cf2b82d",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "euler-monad-euler-usdc",
+    "name": "USDC (Euler DAO)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x5bE4113647bCCD2150339a6EB18250a0593AAEE9",
+    "earnedToken": "mooEulerMonadUSDC",
+    "earnedTokenAddress": "0x5bE4113647bCCD2150339a6EB18250a0593AAEE9",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1768921272,
+    "platformId": "euler",
+    "curatorId": "euler",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0xA981f053C118FE4dB0e1aEBA192AAD20Ec7F7801?network=monad",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "euler-monad-euler-ausd",
+    "name": "AUSD (Euler DAO)",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xe661B68c26745e48A18C9a7B0D743BC659C4C9F4",
+    "earnedToken": "mooEulerMonadAUSD",
+    "earnedTokenAddress": "0xe661B68c26745e48A18C9a7B0D743BC659C4C9F4",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1768921272,
+    "platformId": "euler",
+    "curatorId": "euler",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.euler.finance/earn/0x598035A2E984993229f6FA4C8C3eCf6c52aD51b5?network=monad",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-monad-hyperithm-usdc",
+    "name": "USDC (Hyperithm, Degen)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xA95FCe7251396b66661379fb33B7c6F4F26CAf91",
+    "earnedToken": "mooMorphoMonadHyperithmUSDC",
+    "earnedTokenAddress": "0xA95FCe7251396b66661379fb33B7c6F4F26CAf91",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1768828284,
+    "platformId": "morpho",
+    "curatorId": "hyperithm",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0x78999cc96d2Ba0341588C60CcB0E91c6C33CF371/hyperithm-usdc-degen",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "curvance-monad-earnausd-earnausd-ausd",
+    "name": "earnAUSD (earnAUSD-AUSD Market)",
+    "type": "standard",
+    "token": "earnAUSD",
+    "tokenAddress": "0x103222f020e98Bba0AD9809A011FDF8e6F067496",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x443c58B9593CfCA7315759bc7104b1E1285978aD",
+    "earnedToken": "mooCurvanceearnAUSD(earnAUSD-AUSD)",
+    "earnedTokenAddress": "0x443c58B9593CfCA7315759bc7104b1E1285978aD",
+    "oracle": "tokens",
+    "oracleId": "earnAUSD",
+    "status": "active",
+    "createdAt": 1768478014,
+    "platformId": "curvance",
+    "assets": ["earnAUSD"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "curvance-monad-ausd-earnausd-ausd",
+    "name": "AUSD (earnAUSD-AUSD Market)",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xD0a2829De21BC3b54305D30E58b07F4C8B6f838f",
+    "earnedToken": "mooCurvanceAUSD(earnAUSD-AUSD)",
+    "earnedTokenAddress": "0xD0a2829De21BC3b54305D30E58b07F4C8B6f838f",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1768478014,
+    "platformId": "curvance",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-monad-ausd-dust-vault",
+    "name": "DUST-AUSD",
+    "type": "standard",
+    "token": "DUST-AUSD",
+    "tokenAddress": "0xfb24ea52D2e0165d509Ddb2c9A362314a2d467b6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x876E3c0A3F7774398231DA0878011e7064d81437",
+    "earnedToken": "mooCowUniswapMonadAUSD-DUST",
+    "earnedTokenAddress": "0x876E3c0A3F7774398231DA0878011e7064d81437",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-monad-ausd-dust",
+    "status": "active",
+    "createdAt": 1768320940,
+    "platformId": "uniswap",
+    "assets": ["DUST", "AUSD"],
+    "risks": {
+      "updatedAt": 1768320940,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-monad-ausd-dust-rp",
+    "name": "DUST-AUSD Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapMonadAUSD-DUST",
+    "tokenAddress": "0xfb24ea52D2e0165d509Ddb2c9A362314a2d467b6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x6d93C1D5c7ACD252579af016DD30f8C6C04220Ea",
+    "earnedToken": "rCowUniswapMonadAUSD-DUST",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-monad-ausd-dust",
+    "status": "active",
+    "createdAt": 1768320940,
+    "platformId": "uniswap",
+    "assets": ["DUST", "AUSD"],
+    "risks": {
+      "updatedAt": 1768320940,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-monad-ausd-dust",
+    "name": "DUST-AUSD",
+    "type": "cowcentrated",
+    "token": "DUST-AUSD uniswap",
+    "tokenAddress": "0xD15965968fe8BF2BAbbe39b2FC5de1Ab6749141F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+      "0xAD96C3dffCD6374294e2573A7fBBA96097CC8d7c"
+    ],
+    "earnContractAddress": "0xfb24ea52D2e0165d509Ddb2c9A362314a2d467b6",
+    "earnedToken": "cowUniswapMonadAUSD-DUST",
+    "earnedTokenAddress": "0xfb24ea52D2e0165d509Ddb2c9A362314a2d467b6",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-monad-ausd-dust",
+    "status": "active",
+    "createdAt": 1768320940,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["DUST", "AUSD"],
+    "risks": {
+      "updatedAt": 1768320940,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "neverland-monad-wmon",
+    "name": "WMON",
+    "type": "standard",
+    "token": "WMON",
+    "tokenAddress": "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x5556cF644FA856cE7D2E0C5258d1Db9fF2B7528b",
+    "earnedToken": "mooNeverlandWMON",
+    "earnedTokenAddress": "0x5556cF644FA856cE7D2E0C5258d1Db9fF2B7528b",
+    "oracle": "tokens",
+    "oracleId": "WMON",
+    "status": "active",
+    "createdAt": 1768320940,
+    "platformId": "neverland",
+    "assets": ["WMON"],
+    "migrationIds": [],
+    "risks": {
+      "updatedAt": 1768320940,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "neverland-monad-wbtc",
+    "name": "WBTC",
+    "type": "standard",
+    "token": "WBTC",
+    "tokenAddress": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+    "tokenDecimals": 8,
+    "earnContractAddress": "0xE07Bf3215ceC684ea71e013dC2F3BbfFAD1D7F6B",
+    "earnedToken": "mooNeverlandWBTC",
+    "earnedTokenAddress": "0xE07Bf3215ceC684ea71e013dC2F3BbfFAD1D7F6B",
+    "oracle": "tokens",
+    "oracleId": "WBTC",
+    "status": "active",
+    "createdAt": 1768320940,
+    "platformId": "neverland",
+    "assets": ["WBTC"],
+    "migrationIds": [],
+    "risks": {
+      "updatedAt": 1768320940,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "neverland-monad-weth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x41477D94Ed9D8aA96a6B32f9c0A064720B02c72b",
+    "earnedToken": "mooNeverlandWETH",
+    "earnedTokenAddress": "0x41477D94Ed9D8aA96a6B32f9c0A064720B02c72b",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1768320940,
+    "platformId": "neverland",
+    "assets": ["WETH"],
+    "migrationIds": [],
+    "risks": {
+      "updatedAt": 1768320940,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "neverland-monad-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xaB1c9bE3c9e4FeAF37A4cF0d64Ce67cdFED714E5",
+    "earnedToken": "mooNeverlandUSDC",
+    "earnedTokenAddress": "0xaB1c9bE3c9e4FeAF37A4cF0d64Ce67cdFED714E5",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1768320940,
+    "platformId": "neverland",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "updatedAt": 1768320940,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "neverland-monad-usdt0",
+    "name": "USDT0",
+    "type": "standard",
+    "token": "USDT0",
+    "tokenAddress": "0xe7cd86e13AC4309349F30B3435a9d337750fC82D",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xF900c471Ca36869B11C86f14437186A2e6FD4AB0",
+    "earnedToken": "mooNeverlandUSDT0",
+    "earnedTokenAddress": "0xF900c471Ca36869B11C86f14437186A2e6FD4AB0",
+    "oracle": "tokens",
+    "oracleId": "USDT0",
+    "status": "active",
+    "createdAt": 1768320940,
+    "platformId": "neverland",
+    "assets": ["USDT0"],
+    "migrationIds": [],
+    "risks": {
+      "updatedAt": 1768320940,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "neverland-monad-ausd",
+    "name": "AUSD",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x64606Bee7e4F5f67414765C4290315d3830ae0e2",
+    "earnedToken": "mooNeverlandAUSD",
+    "earnedTokenAddress": "0x64606Bee7e4F5f67414765C4290315d3830ae0e2",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1768320940,
+    "platformId": "neverland",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": {
+      "updatedAt": 1768320940,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "neverland-monad-earnausd",
+    "name": "earnAUSD (August Digital)",
+    "type": "standard",
+    "token": "earnAUSD",
+    "tokenAddress": "0x103222f020e98Bba0AD9809A011FDF8e6F067496",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xAf92a4C7FCBc0Af09CfFf66d36C615fB40Ac1eEE",
+    "earnedToken": "mooNeverlandearnAUSD",
+    "earnedTokenAddress": "0xAf92a4C7FCBc0Af09CfFf66d36C615fB40Ac1eEE",
+    "oracle": "tokens",
+    "oracleId": "earnAUSD",
+    "status": "active",
+    "createdAt": 1768320940,
+    "platformId": "neverland",
+    "curatorId": "august-digital",
+    "assets": ["earnAUSD"],
+    "migrationIds": [],
+    "risks": {
+      "updatedAt": 1768320940,
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-monad-usd1-usdc-vault",
     "name": "USD1-USDC",
     "type": "standard",
@@ -1271,7 +1897,7 @@
     "platformId": "morpho",
     "curatorId": "steakhouse",
     "assets": ["USDC"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -1309,7 +1935,7 @@
     "platformId": "morpho",
     "curatorId": "steakhouse",
     "assets": ["AUSD"],
-    "migrationIds": [],
+    "migrationIds": ["morpho"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,

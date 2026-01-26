@@ -34,6 +34,7 @@ async function getChainTokens(chain: ChainEntity): Promise<TokenEntity[]> {
       website: undefined,
       description: undefined,
       documentation: undefined,
+      tags: [],
     },
     {
       type: 'native',
@@ -47,6 +48,7 @@ async function getChainTokens(chain: ChainEntity): Promise<TokenEntity[]> {
       website: undefined,
       description: undefined,
       documentation: undefined,
+      tags: [],
     },
   ];
 }
@@ -69,7 +71,7 @@ async function getVaultTokensForChain(chain: ChainEntity): Promise<TokenEntity[]
         website: undefined,
         description: undefined,
         documentation: undefined,
-        risks: [],
+        tags: [],
       });
     }
 
@@ -86,7 +88,7 @@ async function getVaultTokensForChain(chain: ChainEntity): Promise<TokenEntity[]
         website: undefined,
         description: undefined,
         documentation: undefined,
-        risks: [],
+        tags: [],
       });
     }
 
@@ -114,7 +116,7 @@ async function getBoostTokensForChain(chain: ChainEntity): Promise<TokenEntity[]
           website: undefined,
           description: undefined,
           documentation: undefined,
-          risks: [],
+          tags: [],
         });
       }
     }
@@ -140,7 +142,7 @@ async function getMinterTokensForChain(chain: ChainEntity): Promise<TokenEntity[
         website: undefined,
         description: undefined,
         documentation: undefined,
-        risks: [],
+        tags: [],
       });
     }
 
@@ -157,7 +159,7 @@ async function getMinterTokensForChain(chain: ChainEntity): Promise<TokenEntity[
         website: undefined,
         description: undefined,
         documentation: undefined,
-        risks: [],
+        tags: [],
       });
     }
 
