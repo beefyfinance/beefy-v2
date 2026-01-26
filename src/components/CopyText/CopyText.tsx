@@ -1,7 +1,6 @@
 import { memo, useCallback, useRef } from 'react';
-import FileCopy from '../../images/icons/mui/FileCopy.svg?react';
+import FileCopy from '../../images/icons/CopyToClipboard.svg?react';
 import { cx, sva } from '@repo/styles/css';
-import { styled } from '@repo/styles/jsx';
 import { useMountedState } from './hooks.ts';
 
 type CopyTextProps = {
@@ -50,13 +49,6 @@ const copyTextRecipe = sva({
   },
 });
 
-const FileCopyIcon = styled(FileCopy, {
-  base: {
-    width: '16px',
-    height: '16px',
-  },
-});
-
 export const CopyText = memo<CopyTextProps>(function CopyText({
   className,
   value,
@@ -82,7 +74,7 @@ export const CopyText = memo<CopyTextProps>(function CopyText({
     <div className={cx(classes.root, className)}>
       <input type="text" readOnly className={classes.input} value={value} ref={inputRef} />
       <button type="button" className={classes.button} onClick={handleCopy}>
-        <FileCopyIcon />
+        <FileCopy />
       </button>
     </div>
   );

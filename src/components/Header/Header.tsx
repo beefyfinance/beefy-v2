@@ -11,7 +11,6 @@ import { MobileMenu } from './components/MobileMenu/MobileMenu.tsx';
 import { BifiPricesDesktop } from './components/Prices/Prices.tsx';
 import { selectShouldInitArticles } from '../../features/data/selectors/data-loader/articles.ts';
 import { selectShouldInitProposals } from '../../features/data/selectors/data-loader/proposals.ts';
-import { SignMessageProvider } from './components/SignMessage/SignMessageProvider.tsx';
 
 export const Header = memo(function Header() {
   const dispatch = useAppDispatch();
@@ -34,23 +33,21 @@ export const Header = memo(function Header() {
   }, [dispatch, shouldLoadArticles]);
 
   return (
-    <SignMessageProvider>
-      <HeaderContainer maxWidth="lg">
-        <Side>
-          <LogoLink />
-          <MainMenu mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
-        </Side>
-        <Side spacing="sm" shrink={true}>
-          <RightSide ref={anchorEl}>
-            <BifiPricesContainer>
-              <BifiPricesDesktop positionRef={anchorEl} />
-            </BifiPricesContainer>
-            <ConnectionStatus />
-          </RightSide>
-          <MobileMenu mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
-        </Side>
-      </HeaderContainer>
-    </SignMessageProvider>
+    <HeaderContainer maxWidth="lg">
+      <Side>
+        <LogoLink />
+        <MainMenu mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
+      </Side>
+      <Side spacing="sm" shrink={true}>
+        <RightSide ref={anchorEl}>
+          <BifiPricesContainer>
+            <BifiPricesDesktop positionRef={anchorEl} />
+          </BifiPricesContainer>
+          <ConnectionStatus />
+        </RightSide>
+        <MobileMenu mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
+      </Side>
+    </HeaderContainer>
   );
 });
 
