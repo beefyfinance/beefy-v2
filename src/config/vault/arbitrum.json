@@ -15674,8 +15674,10 @@
     "earnedTokenAddress": "0x986aCB6886bfD1556F4AC6e7F1Bb53e6eA66890F",
     "oracle": "lps",
     "oracleId": "ramses-aleth-frxeth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1718628471,
+    "retireReason": "tvl",
+    "retiredAt": 1769468077,
     "platformId": "ramses",
     "assets": ["alETH", "frxETH"],
     "risks": {
