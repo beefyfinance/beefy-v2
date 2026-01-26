@@ -1,5 +1,54 @@
 [
   {
+    "id": "stakedao-frxusd-ousd",
+    "name": "frxUSD/OUSD",
+    "type": "standard",
+    "token": "frxUSDOUSD",
+    "tokenAddress": "0x68d03Ed49800e92D7Aa8aB171424007e55Fd1F49",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x5309330d5579f77781B69F8a6a95Ac5e41581F2B",
+    "earnedToken": "mooStakeDao_frxUSD-OUSD",
+    "earnedTokenAddress": "0x5309330d5579f77781B69F8a6a95Ac5e41581F2B",
+    "oracle": "lps",
+    "oracleId": "curve-frxusd-ousd",
+    "status": "active",
+    "createdAt": 1769419905,
+    "platformId": "stakedao",
+    "assets": ["frxUSD", "OUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-584/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-584/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x68d03Ed49800e92D7Aa8aB171424007e55Fd1F49",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x68d03Ed49800e92D7Aa8aB171424007e55Fd1F49",
+            "coins": [
+              "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+              "0x2A8e1E676Ec238d8A992307B495b45B3fEAa5e86"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "morpho-eth-gauntlet-prime-usdc",
     "name": "USDC (Gauntlet, Prime V2)",
     "type": "standard",
