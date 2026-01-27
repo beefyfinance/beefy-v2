@@ -156,7 +156,7 @@ export const selectTreasuryAssetsByChainId = createCachedSelector(
   }
 )((_state: BeefyState, chainId: ChainEntity['id']) => chainId);
 
-const bifiOracles = ['BIFI', 'mooBIFI', 'rBIFI'];
+const bifiOracles = ['BIFI', 'mooBIFI', 'rBIFI', 'basemooBIFI', 'opmooBIFI'];
 
 export const selectTreasuryStats = (state: BeefyState) => {
   const treasury = selectTreasury(state);
@@ -257,8 +257,10 @@ export const selectTreasuryStats = (state: BeefyState) => {
       for (const holding of Object.values(exchangeHoldings)) {
         if (holding) {
           if (isFiniteBigNumber(holding.usdValue)) {
-            if (holding.oracleId === 'BIFI') {
-              beefyHeld = beefyHeld.plus(holding.balance);
+            if (bifiOracles.includes(holding.oracleId)) {
+              beefyHeld = beefyHeld.plus(
+                getBifiBalanceInTokens(state, holding.oracleId, holding.balance)
+              );
             }
             // @dev oracleId != token id
             if (selectIsTokenStable(state, 'ethereum', holding.oracleId)) {
@@ -323,6 +325,8 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
                   for (const asset of assets) {
                     if (selectIsTokenStable(state, chainId, asset.id)) {
                       totals['stables'] = (totals['stables'] || BIG_ZERO).plus(asset.userValue);
+                    } else if (bifiOracles.includes(asset.oracleId)) {
+                      totals['BIFI'] = (totals['BIFI'] || BIG_ZERO).plus(asset.userValue);
                     } else {
                       const assetId = selectWrappedToNativeSymbolOrTokenSymbol(state, asset.symbol);
                       totals[assetId] = (totals[assetId] || BIG_ZERO).plus(asset.userValue);
@@ -335,6 +339,8 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
             } else {
               if (selectIsTokenStableByAddress(state, chainId, token.address)) {
                 totals['stables'] = (totals['stables'] || BIG_ZERO).plus(tokenBalanceUsd);
+              } else if (bifiOracles.includes(token.oracleId)) {
+                totals['BIFI'] = (totals['BIFI'] || BIG_ZERO).plus(tokenBalanceUsd);
               } else {
                 const assetId =
                   token.symbol ?
@@ -358,6 +364,8 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
           // @dev oracleId != token id
           if (selectIsTokenStable(state, 'ethereum', holding.oracleId)) {
             exposure['stables'] = (exposure['stables'] || BIG_ZERO).plus(holding.usdValue);
+          } else if (bifiOracles.includes(holding.oracleId)) {
+            exposure['BIFI'] = (exposure['BIFI'] || BIG_ZERO).plus(holding.usdValue);
           } else {
             const assetId =
               holding.symbol ?
