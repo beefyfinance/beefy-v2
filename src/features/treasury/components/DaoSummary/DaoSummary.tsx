@@ -20,8 +20,6 @@ export const DaoSummary = memo(function DaoSummary() {
 
   const { holdings, beefyHeld, assets, stables } = useAppSelector(selectTreasuryStats);
 
-  console.log(holdings.toFixed(0));
-
   const DaoStats = useMemo(() => {
     return [
       {
