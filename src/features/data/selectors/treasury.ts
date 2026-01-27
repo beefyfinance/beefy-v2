@@ -13,6 +13,7 @@ import { selectIsVaultStable } from './filtered-vaults.ts';
 import {
   selectHasBreakdownDataByOracleId,
   selectIsTokenStable,
+  selectIsTokenStableByAddress,
   selectLpBreakdownByOracleId,
   selectVaultTokenSymbols,
   selectWrappedToNativeSymbolOrTokenSymbol,
@@ -202,7 +203,7 @@ export const selectTreasuryStats = (state: BeefyState) => {
                     getBifiBalanceInTokens(state, asset.oracleId, asset.userAmount)
                   );
                 }
-                if (selectIsTokenStable(state, chainId, asset.oracleId)) {
+                if (selectIsTokenStable(state, chainId, asset.id)) {
                   stables = stables.plus(asset.userValue);
                 }
                 if (asset.userValue.gt(100)) {
@@ -230,7 +231,7 @@ export const selectTreasuryStats = (state: BeefyState) => {
           }
 
           if (isFiniteBigNumber(token.usdValue)) {
-            if (selectIsTokenStable(state, chainId, token.oracleId)) {
+            if (selectIsTokenStableByAddress(state, chainId, token.address)) {
               stables = stables.plus(token.usdValue);
             }
 
@@ -259,6 +260,7 @@ export const selectTreasuryStats = (state: BeefyState) => {
             if (holding.oracleId === 'BIFI') {
               beefyHeld = beefyHeld.plus(holding.balance);
             }
+            // @dev oracleId != token id
             if (selectIsTokenStable(state, 'ethereum', holding.oracleId)) {
               stables = stables.plus(holding.usdValue);
             }
@@ -275,11 +277,6 @@ export const selectTreasuryStats = (state: BeefyState) => {
 
 /**
  * Helper function to get bifi balance
- * @param state
- * @param token
- * @param beefyHeld
- * @param balance
- * @returns Balance in Tokens
  */
 const getBifiBalanceInTokens = (
   state: BeefyState,
@@ -336,7 +333,7 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
                 }
               }
             } else {
-              if (selectIsTokenStable(state, chainId, token.oracleId)) {
+              if (selectIsTokenStableByAddress(state, chainId, token.address)) {
                 totals['stables'] = (totals['stables'] || BIG_ZERO).plus(tokenBalanceUsd);
               } else {
                 const assetId =
@@ -358,6 +355,7 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
     Object.values(mmData).forEach(exchange => {
       Object.values(exchange).forEach(holding => {
         if (isFiniteBigNumber(holding.usdValue)) {
+          // @dev oracleId != token id
           if (selectIsTokenStable(state, 'ethereum', holding.oracleId)) {
             exposure['stables'] = (exposure['stables'] || BIG_ZERO).plus(holding.usdValue);
           } else {

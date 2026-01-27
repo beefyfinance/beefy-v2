@@ -183,30 +183,49 @@ export const selectChainWrappedNativeToken = (state: BeefyState, chainId: ChainE
   return token;
 };
 
-export const selectTokenHasTag = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  tokenId: TokenEntity['id'],
+export function isTokenStable(token: TokenEntity): boolean {
+  return token.tags.includes('STABLECOIN');
+}
+
+export function isTokenBluechip(token: TokenEntity): boolean {
+  return token.tags.includes('BLUECHIP');
+}
+
+export function isTokenMeme(token: TokenEntity): boolean {
+  return token.tags.includes('MEMECOIN');
+}
+
+const makeSelectTokenIsTag = <
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- createSelector uses any
+  TSelectToken extends (state: BeefyState, ...args: any[]) => TokenEntity | undefined,
+>(
+  selector: TSelectToken,
   tag: string
-): boolean => selectTokenById(state, chainId, tokenId).tags.includes(tag);
+) =>
+  createSelector(selector, (token: TokenEntity | undefined) => {
+    if (!token) {
+      console.debug(`makeSelectTokenIsTag: token is undefined for tag ${tag}`);
+      return false;
+    }
+    return token.tags.includes(tag);
+  });
 
-export const selectIsTokenStable = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  tokenId: TokenEntity['id']
-): boolean => selectTokenHasTag(state, chainId, tokenId, 'STABLECOIN');
+export const selectIsTokenStable = makeSelectTokenIsTag(selectTokenByIdOrUndefined, 'STABLECOIN');
+export const selectIsTokenBluechip = makeSelectTokenIsTag(selectTokenByIdOrUndefined, 'BLUECHIP');
+export const selectIsTokenMeme = makeSelectTokenIsTag(selectTokenByIdOrUndefined, 'MEMECOIN');
 
-export const selectIsTokenBluechip = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  tokenId: TokenEntity['id']
-): boolean => selectTokenHasTag(state, chainId, tokenId, 'BLUECHIP');
-
-export const selectIsTokenMeme = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  tokenId: TokenEntity['id']
-): boolean => selectTokenHasTag(state, chainId, tokenId, 'MEMECOIN');
+export const selectIsTokenStableByAddress = makeSelectTokenIsTag(
+  selectTokenByAddressOrUndefined,
+  'STABLECOIN'
+);
+export const selectIsTokenBluechipByAddress = makeSelectTokenIsTag(
+  selectTokenByAddressOrUndefined,
+  'BLUECHIP'
+);
+export const selectIsTokenMemeByAddress = makeSelectTokenIsTag(
+  selectTokenByAddressOrUndefined,
+  'MEMECOIN'
+);
 
 export const selectTokenPriceByAddress = createSelector(
   selectTokenByAddressOrUndefined,
