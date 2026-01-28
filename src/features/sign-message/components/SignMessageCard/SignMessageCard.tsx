@@ -50,16 +50,16 @@ export const SignMessageCard = memo(function SignMessageCard() {
         {!isWalletConnected && (
           <>
             <PromptText>{t('SignMessage-Card-ConnectPrompt')}</PromptText>
-            <SignButton variant="cta" fullWidth={true} borderless={true} onClick={handleConnect}>
+            <Button variant="cta" fullWidth={true} borderless={true} onClick={handleConnect}>
               {t('Network-ConnectWallet')}
-            </SignButton>
+            </Button>
           </>
         )}
 
         {isWalletConnected && !isSigned && (
           <>
             <PromptText>{t('SignMessage-Card-SignPrompt')}</PromptText>
-            <SignButton
+            <Button
               variant="cta"
               fullWidth={true}
               borderless={true}
@@ -67,7 +67,7 @@ export const SignMessageCard = memo(function SignMessageCard() {
               disabled={isLoading}
             >
               {isLoading ? t('SignMessage-Signing') : t('SignMessage-Sign')}
-            </SignButton>
+            </Button>
           </>
         )}
 
@@ -91,7 +91,7 @@ export const SignMessageCard = memo(function SignMessageCard() {
 const Container = styled('div', {
   base: {
     background: 'background.content',
-    borderRadius: '12px',
+    borderRadius: '24px',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -103,16 +103,12 @@ const TitleBar = styled('div', {
     textStyle: 'body.medium',
     color: 'text.middle',
     background: 'background.content.dark',
-    borderTopLeftRadius: '12px',
-    borderTopRightRadius: '12px',
+    borderTopRadius: '24px',
     borderBottom: 'solid 2px {colors.bayOfMany}',
     display: 'flex',
     columnGap: '12px',
     alignItems: 'center',
-    padding: '24px 16px 24px',
-    md: {
-      padding: '24px',
-    },
+    padding: '24px',
   },
 });
 
@@ -148,11 +144,5 @@ const SignedLabel = styled('div', {
     textStyle: 'body.sm',
     color: 'text.dark',
     textTransform: 'uppercase',
-  },
-});
-
-const SignButton = styled(Button, {
-  base: {
-    marginTop: '8px',
   },
 });
