@@ -1,5 +1,54 @@
 [
   {
+    "id": "stakedao-frxusd-ousd",
+    "name": "frxUSD/OUSD",
+    "type": "standard",
+    "token": "frxUSDOUSD",
+    "tokenAddress": "0x68d03Ed49800e92D7Aa8aB171424007e55Fd1F49",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x5309330d5579f77781B69F8a6a95Ac5e41581F2B",
+    "earnedToken": "mooStakeDao_frxUSD-OUSD",
+    "earnedTokenAddress": "0x5309330d5579f77781B69F8a6a95Ac5e41581F2B",
+    "oracle": "lps",
+    "oracleId": "curve-frxusd-ousd",
+    "status": "active",
+    "createdAt": 1769419905,
+    "platformId": "stakedao",
+    "assets": ["frxUSD", "OUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-584/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-584/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x68d03Ed49800e92D7Aa8aB171424007e55Fd1F49",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x68d03Ed49800e92D7Aa8aB171424007e55Fd1F49",
+            "coins": [
+              "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+              "0x2A8e1E676Ec238d8A992307B495b45B3fEAa5e86"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "morpho-eth-gauntlet-prime-usdc",
     "name": "USDC (Gauntlet, Prime V2)",
     "type": "standard",
@@ -772,8 +821,10 @@
     "earnedTokenAddress": "0x99b2Fa4c9Ff9919Ec984e5dA79798E45B1A0a854",
     "oracle": "tokens",
     "oracleId": "SKY",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1764577049,
+    "retireReason": "tvl",
+    "retiredAt": 1769468077,
     "platformId": "sky",
     "assets": ["SKY"],
     "migrationIds": [],
@@ -1625,8 +1676,8 @@
     "oracleId": "SKY",
     "status": "eol",
     "createdAt": 1756186900,
-    "retireReason": "rewards",
-    "retiredAt": 1764838421,
+    "retireReason": "tvl",
+    "retiredAt": 1769468077,
     "platformId": "sky",
     "assets": ["SKY"],
     "migrationIds": [],
@@ -1954,8 +2005,10 @@
     "earnedTokenAddress": "0x7A40C080f5fB60AcD1891581fa9414Ab31399d83",
     "oracle": "lps",
     "oracleId": "balancerv3-ethereum-waethlidogho-usdf",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1751182241,
+    "retireReason": "tvl",
+    "retiredAt": 1769468077,
     "platformId": "aura",
     "assets": ["USDf", "waEthLidoGHO"],
     "risks": {
