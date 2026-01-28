@@ -35,13 +35,13 @@ const TreasuryPage = memo(function TreasuryPage() {
 
   return (
     <PageLayout
+      header={<DaoSummary />}
       content={
         <Content>
           <DaoExposure />
           <DaoHoldings />
         </Content>
       }
-      header={<DaoSummary />}
     />
   );
 });
