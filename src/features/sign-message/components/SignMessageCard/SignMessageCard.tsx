@@ -144,5 +144,6 @@ const SignedLabel = styled('div', {
     textStyle: 'body.sm',
     color: 'text.dark',
     textTransform: 'uppercase',
+    letterSpacing: '0.08px',
   },
 });

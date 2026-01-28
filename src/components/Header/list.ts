@@ -12,7 +12,7 @@ import PartnersIcon from '../../images/icons/navigation/partners.svg?react';
 import AnalyticsIcon from '../../images/icons/navigation/analytics.svg?react';
 import GemsIcon from '../../images/icons/navigation/gems.svg?react';
 import ProfitDistributionIcon from '../../images/icons/navigation/profit-distribution.svg?react';
-import SignMessageIcon from '../../images/icons/edit_pen.svg?react';
+import SignMessageIcon from '../../images/icons/navigation/sign.svg?react';
 import {
   MainProposalsNavItem,
   ProfitProposalsNavItem,
