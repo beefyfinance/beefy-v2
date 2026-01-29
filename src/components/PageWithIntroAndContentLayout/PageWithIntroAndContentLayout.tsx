@@ -54,5 +54,8 @@ const Intro = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     gap: '24px',
+    lg: {
+      paddingLeft: '12px',
+    },
   },
 });
