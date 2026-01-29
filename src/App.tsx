@@ -6,6 +6,7 @@ import { AppVersionCheck } from './components/AppVersionCheck/AppVersionCheck.ts
 import { Footer } from './components/Footer/Footer.tsx';
 import { Header } from './components/Header/Header.tsx';
 import { Layout } from './components/Layout/Layout.tsx';
+import { VaultLayout } from './components/Layout/VaultLayout.tsx';
 import { BreakpointProvider } from './components/MediaQueries/BreakpointProvider.tsx';
 import { DefaultMeta } from './components/Meta/DefaultMeta.tsx';
 import { Redirects } from './components/Redirects/Redirects.tsx';
@@ -31,10 +32,14 @@ export const App = memo(function App() {
           <DefaultMeta />
           <Redirects />
           <Routes>
-            <Route element={<Layout header={<Header />} footer={<Footer />} />}>
-              <Route path="/" element={<HomePage />} />
+            {/* Vault pages use VaultLayout (no footer, full height, full width header) */}
+            <Route element={<VaultLayout header={<Header fullWidth />} />}>
               <Route path="/:network/vault/:id" caseSensitive={true} element={<VaultPage />} />
               <Route path="/vault/:id" element={<VaultPage />} />
+            </Route>
+            {/* All other pages use standard Layout with footer */}
+            <Route element={<Layout header={<Header />} footer={<Footer />} />}>
+              <Route path="/" element={<HomePage />} />
               <Route path="/bridge" element={<BridgePage />} />
               <Route path="/dashboard/:address" element={<DashboardPage mode={'url'} />} />
               <Route path="/dashboard" element={<DashboardPage mode={'wallet'} />} />
