@@ -1,5 +1,159 @@
 [
   {
+    "id": "uniswap-cow-base-usdc-molt-rp",
+    "name": "USDC-MOLT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseMOLT-USDC",
+    "tokenAddress": "0xBC465eE45e95Bf084416e9040C52C09379aafe75",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x0498362Ac2EeC3Bb32bEe325a364c7850a1590C7",
+    "earnedToken": "rCowUniswapBaseMOLT-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-molt",
+    "status": "active",
+    "createdAt": 1769803391,
+    "platformId": "uniswap",
+    "assets": ["USDC", "MOLT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-usdc-molt",
+    "name": "USDC-MOLT",
+    "type": "cowcentrated",
+    "token": "USDC-MOLT uniswap",
+    "tokenAddress": "0x852aE1DA9ec34848C0b1531e0a6C4E0c141c30f5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xB695559b26BB2c9703ef1935c37AeaE9526bab07"
+    ],
+    "earnContractAddress": "0xBC465eE45e95Bf084416e9040C52C09379aafe75",
+    "earnedToken": "cowUniswapBaseMOLT-USDC",
+    "earnedTokenAddress": "0xBC465eE45e95Bf084416e9040C52C09379aafe75",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-molt",
+    "status": "active",
+    "createdAt": 1769803391,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["USDC", "MOLT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-molt-rp",
+    "name": "WETH-MOLT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseMOLT-WETH",
+    "tokenAddress": "0x6936f06f2fCb9f2a8cA0bcB779AB8a9B3a8F63DA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x05bD154BFa77E376998e2950F25f1Ca4988c2A3B",
+    "earnedToken": "rCowUniswapBaseMOLT-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-molt",
+    "status": "active",
+    "createdAt": 1769803353,
+    "platformId": "uniswap",
+    "assets": ["WETH", "MOLT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-molt",
+    "name": "WETH-MOLT",
+    "type": "cowcentrated",
+    "token": "WETH-MOLT uniswap",
+    "tokenAddress": "0x6F3a1B2054d091b5C14EA8c720142c9EBC4387C1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xB695559b26BB2c9703ef1935c37AeaE9526bab07"
+    ],
+    "earnContractAddress": "0x6936f06f2fCb9f2a8cA0bcB779AB8a9B3a8F63DA",
+    "earnedToken": "cowUniswapBaseMOLT-WETH",
+    "earnedTokenAddress": "0x6936f06f2fCb9f2a8cA0bcB779AB8a9B3a8F63DA",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-molt",
+    "status": "active",
+    "createdAt": 1769803353,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["WETH", "MOLT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-usdc-titn-vault",
     "name": "USDC-TITN",
     "type": "standard",
