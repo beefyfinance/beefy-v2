@@ -1,7 +1,7 @@
 [
   {
     "id": "uniswap-cow-base-usdc-molt-rp",
-    "name": "USDC-MOLT Reward Pool",
+    "name": "MOLT-USDC Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapBaseMOLT-USDC",
@@ -17,7 +17,7 @@
     "status": "active",
     "createdAt": 1769803391,
     "platformId": "uniswap",
-    "assets": ["USDC", "MOLT"],
+    "assets": ["MOLT", "USDC"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -38,9 +38,9 @@
   },
   {
     "id": "uniswap-cow-base-usdc-molt",
-    "name": "USDC-MOLT",
+    "name": "MOLT-USDC",
     "type": "cowcentrated",
-    "token": "USDC-MOLT uniswap",
+    "token": "MOLT-USDC uniswap",
     "tokenAddress": "0x852aE1DA9ec34848C0b1531e0a6C4E0c141c30f5",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
@@ -57,7 +57,7 @@
     "createdAt": 1769803391,
     "platformId": "beefy",
     "feeTier": "1",
-    "assets": ["USDC", "MOLT"],
+    "assets": ["MOLT", "USDC"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -78,7 +78,7 @@
   },
   {
     "id": "uniswap-cow-base-weth-molt-rp",
-    "name": "WETH-MOLT Reward Pool",
+    "name": "MOLT-WETH Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapBaseMOLT-WETH",
@@ -94,7 +94,7 @@
     "status": "active",
     "createdAt": 1769803353,
     "platformId": "uniswap",
-    "assets": ["WETH", "MOLT"],
+    "assets": ["MOLT", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -115,9 +115,9 @@
   },
   {
     "id": "uniswap-cow-base-weth-molt",
-    "name": "WETH-MOLT",
+    "name": "MOLT-WETH",
     "type": "cowcentrated",
-    "token": "WETH-MOLT uniswap",
+    "token": "MOLT-WETH uniswap",
     "tokenAddress": "0x6F3a1B2054d091b5C14EA8c720142c9EBC4387C1",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
@@ -134,7 +134,7 @@
     "createdAt": 1769803353,
     "platformId": "beefy",
     "feeTier": "1",
-    "assets": ["WETH", "MOLT"],
+    "assets": ["MOLT", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
