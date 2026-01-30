@@ -3,7 +3,7 @@ import { css } from '@repo/styles/css';
 export const styles = {
   container: css.raw({
     background: 'background.content',
-    borderRadius: '12px',
+    borderRadius: '24px',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -13,8 +13,7 @@ export const styles = {
     color: 'text.middle',
     background: 'background.content.dark',
     padding: '24px',
-    borderTopLeftRadius: '12px',
-    borderTopRightRadius: '12px',
+    borderTopRadius: '24px',
     borderBottom: 'solid 2px {colors.bayOfMany}',
     display: 'flex',
     columnGap: '12px',
