@@ -1,5 +1,82 @@
 [
   {
+    "id": "niswap-cow-base-weth-clawd-rp",
+    "name": "CLAWD-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseCLAWD-WETH",
+    "tokenAddress": "0xa513Bf2186a803fb7e4fCC1e317A64c74318fCEb",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x64eA5C33C1327a87A4ef768b995d01d031BcdaE7",
+    "earnedToken": "rCowUniswapBaseCLAWD-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "niswap-cow-base-weth-clawd",
+    "status": "active",
+    "createdAt": 1769869047,
+    "platformId": "uniswap",
+    "assets": ["CLAWD", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "niswap-cow-base-weth-clawd",
+    "name": "CLAWD-WETH",
+    "type": "cowcentrated",
+    "token": "CLAWD-WETH uniswap",
+    "tokenAddress": "0xCD55381a53da35Ab1D7Bc5e3fE5F76cac976FAc3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x9f86dB9fc6f7c9408e8Fda3Ff8ce4e78ac7a6b07"
+    ],
+    "earnContractAddress": "0xa513Bf2186a803fb7e4fCC1e317A64c74318fCEb",
+    "earnedToken": "cowUniswapBaseCLAWD-WETH",
+    "earnedTokenAddress": "0xa513Bf2186a803fb7e4fCC1e317A64c74318fCEb",
+    "oracle": "lps",
+    "oracleId": "niswap-cow-base-weth-clawd",
+    "status": "active",
+    "createdAt": 1769869047,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["CLAWD", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-usdc-molt-rp",
     "name": "MOLT-USDC Reward Pool",
     "type": "gov",
