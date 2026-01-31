@@ -30,10 +30,9 @@ import { featureFlag_simulateRpcError } from '../utils/feature-flags.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 
 /**
- * Override values for vaults affected by the Stream exploit.
- * These vaults had their underlying platforms exploited and report incorrect
- * balance() and getPricePerFullShare() values on-chain.
- * The values below are the correct values at the block before the exploit.
+ * Override values for vaults affected by external platform issues.
+ * These vaults report incorrect balance() and getPricePerFullShare() values on-chain.
+ * The values below are the correct values at the block before the issue.
  *
  * Raw values queried at specific blocks:
  * - silov2-avalanche-ausd-valamore (block 73541735): balance=492153165795, ppfs=1518690926181063910
@@ -41,7 +40,7 @@ import { createAppAsyncThunk } from '../utils/store-utils.ts';
  * - silov2-avalanche-usdc-mev (block 73541735): balance=3049903089584, ppfs=1490148745133000150
  * - silov2-arbitrum-usdc-valamore (block 409563489): balance=11591864596129, ppfs=1468794706954620224
  */
-const EXPLOITED_VAULT_OVERRIDES: Record<
+const CONTRACT_VAULT_OVERRIDES: Record<
   string,
   { balance: BigNumber; pricePerFullShare: BigNumber }
 > = {
@@ -64,15 +63,15 @@ const EXPLOITED_VAULT_OVERRIDES: Record<
 };
 
 /**
- * Apply overrides for exploited vaults to the contract data.
- * This ensures all consumers of contract data get the correct pre-exploit values.
+ * Apply overrides for vaults with incorrect on-chain values.
+ * This ensures all consumers of contract data get the correct values.
  */
-function applyExploitedVaultOverrides(
+function applyContractVaultOverrides(
   contractData: FetchAllContractDataResult
 ): FetchAllContractDataResult {
   const overriddenStandardVaults = contractData.standardVaults.map(
     (vault): StandardVaultContractData => {
-      const override = EXPLOITED_VAULT_OVERRIDES[vault.id];
+      const override = CONTRACT_VAULT_OVERRIDES[vault.id];
       if (override) {
         return {
           ...vault,
@@ -161,7 +160,7 @@ export const fetchAllContractDataByChainAction = createAppAsyncThunk<
   // always re-fetch the latest state
   return {
     chainId,
-    contractData: applyExploitedVaultOverrides(res),
+    contractData: applyContractVaultOverrides(res),
     state: getState(),
   };
 });
