@@ -1,6 +1,6 @@
 [
   {
-    "id": "niswap-cow-base-weth-clawd-rp",
+    "id": "uniswap-cow-base-weth-clawd-rp",
     "name": "CLAWD-WETH Reward Pool",
     "type": "gov",
     "version": 2,
@@ -13,7 +13,7 @@
     "earnedTokenDecimals": 18,
     "earnedTokenAddresses": [],
     "oracle": "lps",
-    "oracleId": "niswap-cow-base-weth-clawd",
+    "oracleId": "uniswap-cow-base-weth-clawd",
     "status": "active",
     "createdAt": 1769869047,
     "platformId": "uniswap",
@@ -37,7 +37,7 @@
     ]
   },
   {
-    "id": "niswap-cow-base-weth-clawd",
+    "id": "uniswap-cow-base-weth-clawd",
     "name": "CLAWD-WETH",
     "type": "cowcentrated",
     "token": "CLAWD-WETH uniswap",
@@ -52,7 +52,7 @@
     "earnedToken": "cowUniswapBaseCLAWD-WETH",
     "earnedTokenAddress": "0xa513Bf2186a803fb7e4fCC1e317A64c74318fCEb",
     "oracle": "lps",
-    "oracleId": "niswap-cow-base-weth-clawd",
+    "oracleId": "uniswap-cow-base-weth-clawd",
     "status": "active",
     "createdAt": 1769869047,
     "platformId": "beefy",
