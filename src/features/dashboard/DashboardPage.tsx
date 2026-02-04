@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Navigate, useParams } from 'react-router';
 import { UnstakedClmBannerDashboard } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBannerDashboard.tsx';
 import { DashboardMeta } from '../../components/Meta/DashboardMeta.tsx';
-import { TechLoader } from '../../components/TechLoader/TechLoader.tsx';
+import { FullscreenTechLoader, TechLoader } from '../../components/TechLoader/TechLoader.tsx';
 import { isMaybeDomain, isValidAddress } from '../../helpers/addresses.ts';
 import { useAppSelector } from '../data/store/hooks.ts';
 import { useResolveDomain } from '../data/hooks/resolver.ts';
@@ -112,7 +112,7 @@ const DashboardFromDomain = memo(function DashboardFromDomain({
     );
   }
 
-  return <TechLoader text={t('Loading')} />;
+  return <FullscreenTechLoader text={t('Loading')} />;
 });
 
 type DashboardForAddressProps = {
@@ -146,10 +146,10 @@ const DashboardForAddress = memo(function DashboardForAddress({
             {loading ?
               <TechLoader />
             : userVaults.length > 0 ?
-              <>
+              <UserInfoContainer>
                 <UserExposure address={address} />
                 <UserVaults address={address} />
-              </>
+              </UserInfoContainer>
             : <NoResults title={addressLabel || address} address={address} />}
           </Content>
         }
@@ -158,9 +158,20 @@ const DashboardForAddress = memo(function DashboardForAddress({
   );
 });
 
+const UserInfoContainer = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px',
+  },
+});
+
 const Content = styled('div', {
   base: {
-    paddingBlock: '0px 20px',
+    paddingBlock: '12px 24px',
+    sm: {
+      paddingBlock: '14px 48px',
+    },
   },
   variants: {
     w100: {

@@ -4,7 +4,7 @@ import { Navigate, useParams } from 'react-router';
 import { Container } from '../../components/Container/Container.tsx';
 import { Hidden } from '../../components/MediaQueries/Hidden.tsx';
 import { VaultMeta } from '../../components/Meta/VaultMeta.tsx';
-import { TechLoader } from '../../components/TechLoader/TechLoader.tsx';
+import { FullscreenTechLoader } from '../../components/TechLoader/TechLoader.tsx';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { useAppSelector } from '../data/store/hooks.ts';
 import { type VaultEntity } from '../data/entities/vault.ts';
@@ -37,7 +37,7 @@ const VaultPage = memo(function VaultPage() {
   const { id: maybeId } = useParams<VaultUrlParams>();
   const idOrStatus = useAppSelector(state => selectVaultIdForVaultPage(state, maybeId));
   if (idOrStatus === 'loading') {
-    return <PageLayout content={<TechLoader text="Loading..." />} />;
+    return <FullscreenTechLoader text="Loading..." />;
   } else if (idOrStatus === 'not-found') {
     return <NotFoundPage />;
   } else if (idOrStatus !== maybeId) {

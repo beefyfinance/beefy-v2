@@ -70,9 +70,9 @@ const HeaderContainer = styled(Container, {
 
 const Content = styled('div', {
   base: {
-    paddingBlock: '12px 20px',
+    paddingBlock: '12px 24px',
     sm: {
-      paddingBlock: '14px 32px',
+      paddingBlock: '14px 48px',
       borderRadius: '24px',
     },
   },

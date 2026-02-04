@@ -45,12 +45,8 @@ export const Section = memo(function Section({
   maxWidth = 'lg',
   noPadding = false,
 }: SectionProps) {
-  const sectionClass = css({
-    marginTop: '24px',
-  });
-
   return (
-    <div className={sectionClass}>
+    <div>
       {(title || subTitle) && <SectionHeader title={title} subTitle={subTitle} />}
       <Container maxWidth={maxWidth} noPadding={noPadding}>
         {children}

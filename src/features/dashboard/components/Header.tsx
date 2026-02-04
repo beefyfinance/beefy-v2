@@ -34,9 +34,9 @@ export const Header = memo(function Header({ address, addressLabel, children }: 
 
 const headerClass = css({
   backgroundColor: 'background.header',
-  padding: '24px 0px',
-  lg: {
-    padding: '24px 0 48px 0',
+  paddingBlock: '12px 16px',
+  sm: {
+    paddingBlock: '8px 24px',
   },
 });
 
