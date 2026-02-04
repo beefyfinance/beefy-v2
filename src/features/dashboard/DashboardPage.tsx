@@ -21,7 +21,6 @@ import {
 import { UserExposure } from './components/UserExposure/UserExposure.tsx';
 import { UserVaults } from './components/UserVaults/UserVaults.tsx';
 import { useInitDashboard } from './hooks.ts';
-import { BeGemsBanner } from '../../components/Banners/BeGemsBanner/BeGemsBanner.tsx';
 import { styled } from '@repo/styles/jsx';
 import { PageLayout } from '../../components/PageLayout/PageLayout.tsx';
 
@@ -133,7 +132,6 @@ const DashboardForAddress = memo(function DashboardForAddress({
         header={
           <>
             <UnstakedClmBannerDashboard address={address} />
-            <BeGemsBanner address={address} dashboard={true} />
             <Header address={address} addressLabel={addressLabel}>
               {loading ?
                 <DepositSummaryPlaceholder />

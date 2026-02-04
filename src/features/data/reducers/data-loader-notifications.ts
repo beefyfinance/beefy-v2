@@ -13,7 +13,6 @@ import { strictEntries } from '../../../helpers/object.ts';
 const notificationCategories: LoaderNotificationCategoryMap = {
   rpc: {
     global: [
-      // 'beGemsCampaign', // rpc error for S1, but no chain in action
       // 'boostForm', likely rpc error but there is no chain in action
       // 'minterForm', likely rpc error but there is no chain in action
     ],
@@ -26,7 +25,6 @@ const notificationCategories: LoaderNotificationCategoryMap = {
       'apy',
       'articles',
       'avgApy',
-      'beGemsCampaign', // S2
       'currentCowcentratedRanges',
       'fees',
       'lastHarvests',
