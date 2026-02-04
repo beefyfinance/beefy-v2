@@ -1,5 +1,38 @@
 [
   {
+    "id": "beetsv3-sonic-waws-sts",
+    "name": "stS-wS V3",
+    "type": "standard",
+    "token": "stS-wS V3",
+    "tokenAddress": "0xa000e477014097B96437B5587f4f1c55C556b2dd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnContractAddress": "0xd8358a58A9c6199087C8a64771f7e79d0A87c31b",
+    "earnedToken": "mooBeetsSonicstS-wS",
+    "earnedTokenAddress": "0xd8358a58A9c6199087C8a64771f7e79d0A87c31b",
+    "oracle": "lps",
+    "oracleId": "beetsv3-sonic-waws-sts",
+    "status": "active",
+    "createdAt": 1769634083,
+    "platformId": "beethovenx",
+    "assets": ["stS", "wawS"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://beets.fi/pools/sonic/v3/0xa000e477014097b96437b5587f4f1c55c556b2dd/add-liquidity",
+    "removeLiquidityUrl": "https://beets.fi/pools/sonic/v3/0xa000e477014097b96437b5587f4f1c55c556b2dd/remove-liquidity",
+    "network": "sonic"
+  },
+  {
     "id": "stakedao-sonic-sceth-frxeth",
     "name": "scETH/frxETH",
     "type": "standard",
