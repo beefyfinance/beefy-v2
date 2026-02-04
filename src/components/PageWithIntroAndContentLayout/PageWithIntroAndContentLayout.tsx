@@ -46,6 +46,9 @@ const Inner = styled('div', {
     md: {
       gridTemplateColumns: 'minmax(0, 1fr) 440px',
     },
+    lg: {
+      paddingInline: '16px',
+    },
   },
 });
 
@@ -54,8 +57,5 @@ const Intro = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     gap: '24px',
-    lg: {
-      paddingLeft: '12px',
-    },
   },
 });

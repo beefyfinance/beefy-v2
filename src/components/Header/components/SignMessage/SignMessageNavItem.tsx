@@ -8,11 +8,12 @@ export const SignMessageNavItem = memo<NavItemProps>(function SignMessageNavItem
   title,
   Icon,
   Badge,
+  onClick,
   mobile = false,
   dropdownItem = false,
 }) {
   return (
-    <NavLink to="/sign-message" mobile={mobile} dropdownItem={dropdownItem}>
+    <NavLink to="/sign-message" onClick={onClick} mobile={mobile} dropdownItem={dropdownItem}>
       <NavItemInner
         title={title}
         Icon={Icon}
