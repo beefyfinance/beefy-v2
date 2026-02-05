@@ -55,6 +55,11 @@ const DashboardFromUrl = memo(function DashboardFromWallet() {
   return (
     <PageLayout
       contentAlignedCenter={true}
+      header={
+        <Header address={addressOrDomain || ''} addressLabel={addressOrDomain || ''}>
+          <DepositSummaryPlaceholder showZeroBalance={true} />
+        </Header>
+      }
       content={
         <Content w100={true}>
           {addressOrDomain?.toLowerCase().startsWith('0x') ?
@@ -76,6 +81,11 @@ const DashboardFromWallet = memo(function DashboardFromWallet() {
   return (
     <PageLayout
       contentAlignedCenter={true}
+      header={
+        <Header address={address || ''} addressLabel={address || ''}>
+          <DepositSummaryPlaceholder showZeroBalance={true} />
+        </Header>
+      }
       content={
         <Content w100={true}>
           <NotConnected />

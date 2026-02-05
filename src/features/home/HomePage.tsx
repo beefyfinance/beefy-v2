@@ -31,14 +31,6 @@ const HomePage = memo(function HomePage() {
     <>
       <HomeMeta />
       <PageLayout
-        content={
-          <Content>
-            <Container maxWidth="lg">
-              <Filters />
-            </Container>
-            <Vaults />
-          </Content>
-        }
         header={
           <>
             <Container maxWidth="lg">
@@ -48,6 +40,14 @@ const HomePage = memo(function HomePage() {
               <HomeHeader />
             </HeaderContainer>
           </>
+        }
+        content={
+          <Content>
+            <Container maxWidth="lg">
+              <Filters />
+            </Container>
+            <Vaults />
+          </Content>
         }
       />
     </>
