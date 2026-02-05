@@ -1,5 +1,54 @@
 [
   {
+    "id": "stakedao-usdc-savusd",
+    "name": "savUSD/USDC",
+    "type": "standard",
+    "token": "savUSDUSDC",
+    "tokenAddress": "0x2E1776968EC75Bfd13dbC5B94AE57034d7e85Fb9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x967C94aF547070A0FED6d17d82b7Dc31392609E8",
+    "earnedToken": "mooStakeDaoUSDC-savUSD",
+    "earnedTokenAddress": "0x967C94aF547070A0FED6d17d82b7Dc31392609E8",
+    "oracle": "lps",
+    "oracleId": "curve-usdc-savusd",
+    "status": "active",
+    "createdAt": 1770271757,
+    "platformId": "stakedao",
+    "assets": ["savUSD", "USDC"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-655/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-655/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x2E1776968EC75Bfd13dbC5B94AE57034d7e85Fb9",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x2E1776968EC75Bfd13dbC5B94AE57034d7e85Fb9",
+            "coins": [
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "0xb8D89678E75a973E74698c976716308abB8a46A4"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "pendle-susdf-18jun26",
     "name": "sUSDf 18Jun26",
     "type": "standard",
