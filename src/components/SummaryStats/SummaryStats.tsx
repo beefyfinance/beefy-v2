@@ -1,42 +1,30 @@
-import { legacyMakeStyles } from '../../helpers/mui.ts';
-import { type FC, memo, type ReactNode } from 'react';
-import { styles } from './styles.ts';
+import { memo } from 'react';
+import { Stat, type StatProps } from '../../features/home/components/HomeHeader/Stats/Stat.tsx';
+import { styled } from '@repo/styles/jsx';
 
-const useStyles = legacyMakeStyles(styles);
+type SummaryStatsProps = {
+  items: StatProps[];
+};
 
-interface SummaryStatProps {
-  title: string;
-  Icon: FC;
-  value: string | ReactNode;
-}
-
-const SummaryStat = memo(function SummaryStat({ title, Icon, value }: SummaryStatProps) {
-  const classes = useStyles();
+export const SummaryStats = memo(function SummaryStats({ items }: SummaryStatsProps) {
   return (
-    <div className={classes.container}>
-      <div className={classes.iconContainer}>
-        <Icon />
-      </div>
-      <div className={classes.contentContainer}>
-        <div className={classes.title}>{title}</div>
-        <div className={classes.value}>{value}</div>
-      </div>
-    </div>
+    <SummaryStatsContainer>
+      {items.map(item => (
+        <Stat key={item.label as string} label={item.label} value={item.value} />
+      ))}
+    </SummaryStatsContainer>
   );
 });
 
-interface SummaryStatsProps {
-  items: SummaryStatProps[];
-}
-
-export const SummaryStats = memo(function SummaryStats({ items }: SummaryStatsProps) {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.summaryContainer}>
-      {items.map(item => (
-        <SummaryStat key={item.title} title={item.title} value={item.value} Icon={item.Icon} />
-      ))}
-    </div>
-  );
+const SummaryStatsContainer = styled('div', {
+  base: {
+    display: 'grid',
+    gap: '2px',
+    // Mobile (0-600px): 3 items stacked vertically
+    gridTemplateColumns: '1fr',
+    // Desktop (600px+): 3 items in one line
+    md: {
+      gridTemplateColumns: 'repeat(4, 1fr)',
+    },
+  },
 });

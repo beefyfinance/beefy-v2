@@ -4,10 +4,6 @@ import { SummaryStats } from '../../../components/SummaryStats/SummaryStats.tsx'
 import { TextLoader } from '../../../components/TextLoader/TextLoader.tsx';
 import { formatLargeUsd } from '../../../helpers/format.ts';
 import { useAppSelector } from '../../data/store/hooks.ts';
-import DailyIcon from '../../../images/icons/daily-yield.svg?react';
-import MonthlyIcon from '../../../images/icons/monthly-yield.svg?react';
-import VaultIcon from '../../../images/icons/vault.svg?react';
-import WalletIcon from '../../../images/icons/wallet.svg?react';
 import { selectUserGlobalStats } from '../../data/selectors/apy.ts';
 import { selectUserTotalYieldUsd } from '../../data/selectors/dashboard.ts';
 
@@ -23,24 +19,20 @@ export const DepositSummary = memo(function DepositSummary({ address }: DepositS
   const userStats = useMemo(() => {
     return [
       {
-        title: t('Summary-Deposit'),
+        label: t('Summary-Deposit'),
         value: formatLargeUsd(stats.deposited),
-        Icon: WalletIcon,
       },
       {
-        title: t('Summary-Vaults'),
+        label: t('Summary-Vaults'),
         value: `${stats.depositedVaults}`,
-        Icon: VaultIcon,
       },
       {
-        title: t('Summary-Yield'),
+        label: t('Summary-Yield'),
         value: formatLargeUsd(totalYieldUsd.toNumber()),
-        Icon: MonthlyIcon,
       },
       {
-        title: t('Summary-Daily'),
+        label: t('Summary-Daily'),
         value: formatLargeUsd(stats.daily),
-        Icon: DailyIcon,
       },
     ];
   }, [t, stats.deposited, stats.depositedVaults, stats.daily, totalYieldUsd]);
@@ -48,33 +40,36 @@ export const DepositSummary = memo(function DepositSummary({ address }: DepositS
   return <SummaryStats items={userStats} />;
 });
 
-export const DepositSummaryPlaceholder = memo(function DepositSummaryPlaceholder() {
+export const DepositSummaryPlaceholder = memo(function DepositSummaryPlaceholder({
+  showZeroBalance,
+}: {
+  showZeroBalance?: boolean;
+}) {
   const { t } = useTranslation();
   const userStats = useMemo(() => {
     const loading = <TextLoader placeholder={'Loading...'} />;
+    const zeroBalance = <div>{t('Summary-Zero-Balance')}</div>;
+
+    const value = showZeroBalance ? zeroBalance : loading;
     return [
       {
-        title: t('Summary-Deposit'),
-        value: loading,
-        Icon: WalletIcon,
+        label: t('Summary-Deposit'),
+        value: value,
       },
       {
-        title: t('Summary-Vaults'),
-        value: loading,
-        Icon: VaultIcon,
+        label: t('Summary-Vaults'),
+        value: value,
       },
       {
-        title: t('Summary-Yield'),
-        value: loading,
-        Icon: MonthlyIcon,
+        label: t('Summary-Yield'),
+        value: value,
       },
       {
-        title: t('Summary-Daily'),
-        value: loading,
-        Icon: DailyIcon,
+        label: t('Summary-Daily'),
+        value: value,
       },
     ];
-  }, [t]);
+  }, [showZeroBalance, t]);
 
   return <SummaryStats items={userStats} />;
 });

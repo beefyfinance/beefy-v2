@@ -73,7 +73,6 @@ export interface DataLoaderState {
     apy: LoaderState;
     articles: LoaderState;
     avgApy: LoaderState;
-    beGemsCampaign: LoaderState;
     boostForm: LoaderState;
     bridgeConfig: LoaderState;
     bridges: LoaderState;
