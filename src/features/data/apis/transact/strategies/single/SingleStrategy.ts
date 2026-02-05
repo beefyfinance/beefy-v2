@@ -27,6 +27,7 @@ import {
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
 import type { BeefyState, BeefyThunk } from '../../../../store/types.ts';
 import { slipBy } from '../../helpers/amounts.ts';
+import { Balances } from '../../helpers/Balances.ts';
 import {
   createOptionId,
   createQuoteId,
@@ -50,7 +51,6 @@ import {
   type SingleWithdrawOption,
   type SingleWithdrawQuote,
   type TokenAmount,
-  type TransactQuote,
   type ZapFee,
   type ZapQuoteStep,
   type ZapQuoteStepSwapAggregator,
@@ -89,7 +89,7 @@ type StrategyId = typeof strategyId;
 
 class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
   public static readonly id = strategyId;
-  public static readonly composable: true;
+  public static readonly composable = true;
   public readonly id = strategyId;
 
   protected readonly wnative: TokenErc20;
@@ -260,87 +260,9 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
       throw new Error('Deposit zap is disabled');
     }
 
-    const { zap, swapAggregator } = this.helpers;
-
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
-      const state = getState();
-      const slippage = selectTransactSlippage(state);
-
-      // Step 1. Swap
-      const swap = await swapAggregator.fetchSwap(
-        quote.swapQuote.providerId,
-        {
-          quote: quote.swapQuote,
-          fromAddress: zap.router,
-          slippage,
-        },
-        state
-      );
-
-      const steps: ZapStep[] = [
-        {
-          target: swap.tx.toAddress,
-          value: swap.tx.value,
-          data: swap.tx.data,
-          tokens: [
-            {
-              token: getTokenAddress(swap.fromToken),
-              index: -1, // not dynamically inserted
-            },
-          ],
-        },
-      ];
-
-      // Step 2. Deposit to vault
-      const vaultDeposit = await this.vaultType.fetchZapDeposit({
-        inputs: [
-          {
-            token: swap.toToken,
-            amount: slipBy(swap.toAmount, slippage, swap.toToken.decimals), // min expected in case add liquidity slipped
-            max: true, // but we call depositAll
-          },
-        ],
-        from: this.helpers.zap.router,
-      });
-
-      steps.push(vaultDeposit.zap);
-
-      // Build order
-      const inputs: OrderInput[] = quote.inputs.map(input => ({
-        token: getTokenAddress(input.token),
-        amount: toWeiString(input.amount, input.token.decimals),
-      }));
-
-      const requiredOutputs: OrderOutput[] = vaultDeposit.outputs.map(output => ({
-        token: getTokenAddress(output.token),
-        minOutputAmount: toWeiString(
-          slipBy(output.amount, slippage, output.token.decimals),
-          output.token.decimals
-        ),
-      }));
-
-      // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
-      const dustOutputs: OrderOutput[] = quote.outputs.concat(quote.inputs).map(input => ({
-        token: getTokenAddress(input.token),
-        minOutputAmount: '0',
-      }));
-
-      // @dev uniqBy: first occurrence of each element is kept.
-      const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
-
-      // Perform TX
-      const zapRequest: UserlessZapRequest = {
-        order: {
-          inputs,
-          outputs,
-          relay: NO_RELAY,
-        },
-        steps,
-      };
-
-      const expectedTokens = vaultDeposit.outputs.map(output => output.token);
+      const { zapRequest, expectedTokens } = await this.fetchDepositUserlessZapBreakdown(quote);
       const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
-
       return walletAction(dispatch, getState, extraArgument);
     };
 
@@ -520,96 +442,8 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     }
 
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
-      const state = getState();
-      const chain = selectChainById(state, this.vault.chainId);
-      const slippage = selectTransactSlippage(state);
-      const zapHelpers: ZapHelpers = { chain, slippage, state };
-      const withdrawQuote = quote.steps.find(isZapQuoteStepWithdraw);
-      const swapQuotes = quote.steps
-        .filter(isZapQuoteStepSwap)
-        .filter(isZapQuoteStepSwapAggregator);
-
-      if (!withdrawQuote || !swapQuotes.length) {
-        throw new Error('Invalid quote steps');
-      }
-
-      // Step 1. Withdraw from vault
-      const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
-        inputs: quote.inputs,
-        from: this.helpers.zap.router,
-      });
-      if (vaultWithdraw.outputs.length !== 1) {
-        throw new Error('Withdraw output count mismatch');
-      }
-      const withdrawOutput = first(vaultWithdraw.outputs)!;
-      if (!isTokenEqual(withdrawOutput.token, swapQuotes[0].fromToken)) {
-        throw new Error('Withdraw output token mismatch');
-      }
-      if (withdrawOutput.amount.lt(withdrawQuote.toAmount)) {
-        throw new Error('Withdraw output amount mismatch');
-      }
-
-      const steps: ZapStep[] = [vaultWithdraw.zap];
-
-      // Step 2. Swaps
-      const swapZaps = await Promise.all(
-        swapQuotes.map(quoteStep => this.fetchZapSwapAggregator(quoteStep, zapHelpers, true))
-      );
-      swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
-
-      // Build order (note: input to order is shares, but quote inputs are the deposit token)
-      const inputs: OrderInput[] = vaultWithdraw.inputs.map(input => ({
-        token: getTokenAddress(input.token),
-        amount: toWeiString(input.amount, input.token.decimals),
-      }));
-
-      // The required output is the swap output
-      const requiredOutputs: OrderOutput[] = quote.outputs.map(output => ({
-        token: getTokenAddress(output.token),
-        minOutputAmount: toWeiString(
-          slipBy(output.amount, slippage, output.token.decimals),
-          output.token.decimals
-        ),
-      }));
-
-      // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
-      const dustOutputs: OrderOutput[] = pickTokens(
-        vaultWithdraw.inputs,
-        quote.outputs,
-        quote.inputs,
-        quote.returned
-      ).map(token => ({
-        token: getTokenAddress(token),
-        minOutputAmount: '0',
-      }));
-
-      swapQuotes.forEach(quoteStep => {
-        dustOutputs.push({
-          token: getTokenAddress(quoteStep.fromToken),
-          minOutputAmount: '0',
-        });
-        dustOutputs.push({
-          token: getTokenAddress(quoteStep.toToken),
-          minOutputAmount: '0',
-        });
-      });
-
-      // @dev uniqBy: first occurrence of each element is kept.
-      const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
-
-      // Perform TX
-      const zapRequest: UserlessZapRequest = {
-        order: {
-          inputs,
-          outputs,
-          relay: NO_RELAY,
-        },
-        steps,
-      };
-
-      const expectedTokens = quote.outputs.map(output => output.token);
+      const { zapRequest, expectedTokens } = await this.fetchWithdrawUserlessZapBreakdown(quote);
       const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
-
       return walletAction(dispatch, getState, extraArgument);
     };
 
@@ -645,12 +479,190 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     );
   }
 
-  fetchDepositUserlessZapBreakdown(_quote: TransactQuote): Promise<UserlessZapDepositBreakdown> {
-    throw new Error('no impl');
+  async fetchDepositUserlessZapBreakdown(
+    quote: SingleDepositQuote
+  ): Promise<UserlessZapDepositBreakdown> {
+    const { zap, swapAggregator } = this.helpers;
+    const state = this.helpers.getState();
+    const slippage = selectTransactSlippage(state);
+
+    // Step 1. Swap
+    const swap = await swapAggregator.fetchSwap(
+      quote.swapQuote.providerId,
+      {
+        quote: quote.swapQuote,
+        fromAddress: zap.router,
+        slippage,
+      },
+      state
+    );
+
+    const steps: ZapStep[] = [
+      {
+        target: swap.tx.toAddress,
+        value: swap.tx.value,
+        data: swap.tx.data,
+        tokens: [
+          {
+            token: getTokenAddress(swap.fromToken),
+            index: -1, // not dynamically inserted
+          },
+        ],
+      },
+    ];
+
+    const minBalances = new Balances(quote.inputs);
+    minBalances.subtractMany([{ token: swap.fromToken, amount: swap.fromAmount }]);
+    minBalances.addMany([
+      {
+        token: swap.toToken,
+        amount: slipBy(swap.toAmount, slippage, swap.toToken.decimals),
+      },
+    ]);
+
+    // Step 2. Deposit to vault
+    const vaultDeposit = await this.vaultType.fetchZapDeposit({
+      inputs: [
+        {
+          token: swap.toToken,
+          amount: slipBy(swap.toAmount, slippage, swap.toToken.decimals), // min expected in case add liquidity slipped
+          max: true, // but we call depositAll
+        },
+      ],
+      from: this.helpers.zap.router,
+    });
+
+    steps.push(vaultDeposit.zap);
+    minBalances.subtractMany(vaultDeposit.inputs);
+    minBalances.addMany(vaultDeposit.minOutputs);
+
+    // Build order
+    const inputs: OrderInput[] = quote.inputs.map(input => ({
+      token: getTokenAddress(input.token),
+      amount: toWeiString(input.amount, input.token.decimals),
+    }));
+
+    const requiredOutputs: OrderOutput[] = vaultDeposit.outputs.map(output => ({
+      token: getTokenAddress(output.token),
+      minOutputAmount: toWeiString(
+        slipBy(output.amount, slippage, output.token.decimals),
+        output.token.decimals
+      ),
+    }));
+
+    // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
+    const dustOutputs: OrderOutput[] = quote.outputs.concat(quote.inputs).map(input => ({
+      token: getTokenAddress(input.token),
+      minOutputAmount: '0',
+    }));
+
+    // @dev uniqBy: first occurrence of each element is kept.
+    const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
+
+    const zapRequest: UserlessZapRequest = {
+      order: {
+        inputs,
+        outputs,
+        relay: NO_RELAY,
+      },
+      steps,
+    };
+
+    const expectedTokens = vaultDeposit.outputs.map(output => output.token);
+
+    return { zapRequest, expectedTokens, minBalances };
   }
 
-  fetchWithdrawUserlessZapBreakdown(_quote: TransactQuote): Promise<UserlessZapWithdrawBreakdown> {
-    throw new Error('no impl');
+  async fetchWithdrawUserlessZapBreakdown(
+    quote: SingleWithdrawQuote
+  ): Promise<UserlessZapWithdrawBreakdown> {
+    const state = this.helpers.getState();
+    const chain = selectChainById(state, this.vault.chainId);
+    const slippage = selectTransactSlippage(state);
+    const zapHelpers: ZapHelpers = { chain, slippage, state };
+    const withdrawQuote = quote.steps.find(isZapQuoteStepWithdraw);
+    const swapQuotes = quote.steps.filter(isZapQuoteStepSwap).filter(isZapQuoteStepSwapAggregator);
+
+    if (!withdrawQuote || !swapQuotes.length) {
+      throw new Error('Invalid quote steps');
+    }
+
+    // Step 1. Withdraw from vault
+    const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
+      inputs: quote.inputs,
+      from: this.helpers.zap.router,
+    });
+    if (vaultWithdraw.outputs.length !== 1) {
+      throw new Error('Withdraw output count mismatch');
+    }
+    const withdrawOutput = first(vaultWithdraw.outputs)!;
+    if (!isTokenEqual(withdrawOutput.token, swapQuotes[0].fromToken)) {
+      throw new Error('Withdraw output token mismatch');
+    }
+    if (withdrawOutput.amount.lt(withdrawQuote.toAmount)) {
+      throw new Error('Withdraw output amount mismatch');
+    }
+
+    const steps: ZapStep[] = [vaultWithdraw.zap];
+
+    // Step 2. Swaps
+    const swapZaps = await Promise.all(
+      swapQuotes.map(quoteStep => this.fetchZapSwapAggregator(quoteStep, zapHelpers, true))
+    );
+    swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
+
+    // Build order (note: input to order is shares, but quote inputs are the deposit token)
+    const inputs: OrderInput[] = vaultWithdraw.inputs.map(input => ({
+      token: getTokenAddress(input.token),
+      amount: toWeiString(input.amount, input.token.decimals),
+    }));
+
+    // The required output is the swap output
+    const requiredOutputs: OrderOutput[] = quote.outputs.map(output => ({
+      token: getTokenAddress(output.token),
+      minOutputAmount: toWeiString(
+        slipBy(output.amount, slippage, output.token.decimals),
+        output.token.decimals
+      ),
+    }));
+
+    // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
+    const dustOutputs: OrderOutput[] = pickTokens(
+      vaultWithdraw.inputs,
+      quote.outputs,
+      quote.inputs,
+      quote.returned
+    ).map(token => ({
+      token: getTokenAddress(token),
+      minOutputAmount: '0',
+    }));
+
+    swapQuotes.forEach(quoteStep => {
+      dustOutputs.push({
+        token: getTokenAddress(quoteStep.fromToken),
+        minOutputAmount: '0',
+      });
+      dustOutputs.push({
+        token: getTokenAddress(quoteStep.toToken),
+        minOutputAmount: '0',
+      });
+    });
+
+    // @dev uniqBy: first occurrence of each element is kept.
+    const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
+
+    const zapRequest: UserlessZapRequest = {
+      order: {
+        inputs,
+        outputs,
+        relay: NO_RELAY,
+      },
+      steps,
+    };
+
+    const expectedTokens = quote.outputs.map(output => output.token);
+
+    return { zapRequest, expectedTokens };
   }
 }
 
