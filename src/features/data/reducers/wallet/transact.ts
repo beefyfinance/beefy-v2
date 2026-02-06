@@ -78,6 +78,10 @@ const initialTransactState: TransactState = {
   options: initialTransactOptions,
   quotes: initialTransactQuotes,
   confirm: initialTransactConfirm,
+  crossChain: {
+    pendingOps: {},
+    pendingOpIds: [],
+  },
 };
 
 const transactSlice = createSlice({

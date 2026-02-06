@@ -712,6 +712,7 @@
   "Transact-Route-Step-Unstake": "Unstake <tokenAmounts/>",
   "Transact-Route-Step-Split": "Split LP for <tokenAmounts/> on {{provider}}",
   "Transact-Route-Step-Unused": "Return up to <tokenAmounts/> unused tokens",
+  "Transact-Route-Step-Bridge": "Bridge <fromAmount/> {{fromToken}} to <toAmount/> {{toToken}} via CCTP",
   "Transact-Options-Error": "There was an error fetching options: {{error}}",
   "Transact-Quote-Title": "Beefy Zap",
   "Transact-Quote-Title-one": "Beefy × {{one}}",
