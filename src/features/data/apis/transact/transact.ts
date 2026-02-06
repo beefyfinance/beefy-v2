@@ -1,6 +1,7 @@
 import { partition, uniq } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';
 import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
 import { isCowcentratedLikeVault, type VaultEntity } from '../../entities/vault.ts';
 import type { Step } from '../../reducers/wallet/stepper-types.ts';
 import { selectVaultById, selectVaultUnderlyingVault } from '../../selectors/vaults.ts';
@@ -75,6 +76,38 @@ export function isComposableStrategyConstructorWithOptions(
 }
 
 export class TransactApi implements ITransactApi {
+  /**
+   * Get transact helpers for a vault on a specific chain.
+   * Used by CrossChainStrategy for destination chain operations.
+   * Guarantees zap router exists (throws otherwise).
+   */
+  async getHelpersForChain(
+    chainId: ChainEntity['id'],
+    vaultId: VaultEntity['id'],
+    getState: BeefyStateFn
+  ): Promise<ZapTransactHelpers> {
+    const state = getState();
+    const zap = selectZapByChainId(state, chainId);
+    if (!zap) {
+      throw new Error(`No zap router configured for chain ${chainId}`);
+    }
+
+    const vault = selectVaultById(state, vaultId);
+    if (vault.chainId !== chainId) {
+      throw new Error(`Vault ${vaultId} is on chain ${vault.chainId}, not ${chainId}`);
+    }
+
+    const vaultType = await this.getVaultTypeFor(vault, getState);
+
+    return {
+      vault,
+      vaultType,
+      zap,
+      swapAggregator: await getSwapAggregator(),
+      getState,
+    };
+  }
+
   protected async getHelpersForVault(
     vaultId: VaultEntity['id'],
     getState: BeefyStateFn
@@ -359,7 +392,7 @@ export class TransactApi implements ITransactApi {
     return options.flat().length > 0;
   }
 
-  private async getZapStrategiesForVault(helpers: TransactHelpers): Promise<IStrategy[]> {
+  async getZapStrategiesForVault(helpers: TransactHelpers): Promise<IStrategy[]> {
     const { vault } = helpers;
 
     if (!vault.zaps || vault.zaps.length === 0) {
