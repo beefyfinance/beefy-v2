@@ -14,6 +14,7 @@ import { TransactMode } from '../../reducers/wallet/transact-types.ts';
 import type { BeefyStateFn } from '../../store/types.ts';
 import type { CurveTokenOption } from './strategies/curve/types.ts';
 import type { ZapStrategyId } from './strategies/strategy-configs.ts';
+import type { IStrategy, TransactHelpers, ZapTransactHelpers } from './strategies/IStrategy.ts';
 import type { QuoteResponse } from './swap/ISwapProvider.ts';
 
 export type TokenAmount<T extends TokenEntity = TokenEntity> = {
@@ -936,4 +937,12 @@ export interface ITransactApi {
   ): Promise<Step>;
 
   fetchVaultHasZap(vaultId: VaultEntity['id'], getState: BeefyStateFn): Promise<boolean>;
+
+  getHelpersForChain(
+    chainId: ChainEntity['id'],
+    vaultId: VaultEntity['id'],
+    getState: BeefyStateFn
+  ): Promise<ZapTransactHelpers>;
+
+  getZapStrategiesForVault(helpers: TransactHelpers): Promise<IStrategy[]>;
 }
