@@ -448,7 +448,6 @@ export const config = {
     },
   },
   monad: {
-    new: true,
     name: 'Monad',
     chainId: 143,
     rpc: ['https://rpc.monad.xyz'],
@@ -456,6 +455,19 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xDD10a7949e48dCf5df301DC84268eaaC7F7d3f3D',
     native: { symbol: 'MON', oracleId: 'WMON', decimals: 18 },
+    gas: {
+      type: 'standard',
+    },
+  },
+  megaeth: {
+    new: true,
+    name: 'MegaETH',
+    chainId: 4326,
+    rpc: ['https://mainnet.megaeth.com/rpc'],
+    explorerUrl: 'https://mega.etherscan.io/',
+    multicall3Address: '0x0000000000000000000000000000000000000000',
+    appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'standard',
     },
