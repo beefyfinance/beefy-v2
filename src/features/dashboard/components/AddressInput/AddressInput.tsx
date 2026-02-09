@@ -1,6 +1,5 @@
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import CloseRounded from '../../../../images/icons/mui/CloseRounded.svg?react';
-import Search from '../../../../images/icons/mui/Search.svg?react';
+import Search from '../../../../images/icons/search.svg?react';
 import {
   type ChangeEvent,
   type KeyboardEvent,
@@ -12,9 +11,8 @@ import {
   useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router';
-import { styles } from './styles.ts';
-import { css, type CssStyles } from '@repo/styles/css';
+import { useNavigate } from 'react-router';
+import { IconButton, IconDiv, LoaderContainer } from './styles.ts';
 import { isMaybeDomain, isValidAddress } from '../../../../helpers/addresses.ts';
 import { FloatingError } from './FloatingError/FloatingError.tsx';
 import { useResolveDomain } from '../../../data/hooks/resolver.ts';
@@ -26,10 +24,13 @@ import {
 import { BaseInput } from '../../../../components/Form/Input/BaseInput.tsx';
 import { CircularProgress } from '../../../../components/CircularProgress/CircularProgress.tsx';
 import EnterIcon from '../../../../images/icons/enter.svg?react';
+import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
 
-const useStyles = legacyMakeStyles(styles);
+type AddressInputProps = {
+  variant?: 'default' | 'transparent';
+};
 
-export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?: CssStyles }) {
+export const AddressInput = memo(function AddressInput({ variant = 'default' }: AddressInputProps) {
   const [userInput, setUserInput] = useState<string>('');
   const [inputMode, setInputMode] = useState<'address' | 'domain'>('address');
   const resolverStatus = useResolveDomain(inputMode === 'domain' ? userInput : '');
@@ -39,6 +40,14 @@ export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?:
   const { t } = useTranslation();
   const anchorEl = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
+
+  const isMobile = useBreakpoint({ to: 'xs' });
+
+  const placeholder = useMemo(() => {
+    return isMobile ?
+        t('Dashboard-SearchInput-Placeholder-Mobile')
+      : t('Dashboard-SearchInput-Placeholder');
+  }, [isMobile, t]);
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -112,19 +121,15 @@ export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?:
     <>
       <BaseInput
         ref={anchorEl}
-        className={css(
-          styles.search,
-          cssProp,
-          (userInput.length !== 0 || hasFocus) && styles.active
-        )}
+        variant={variant}
         value={userInput}
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        fullWidth={true}
+        fullWidth={variant === 'default'}
         onKeyDown={handleGoToDashboardOnEnterKey}
-        startAdornment={
-          <GoToDashboardButton
+        endAdornment={
+          <EndAdornment
             domainResolving={isDomainResolving}
             isValid={isValid}
             userInput={userInput}
@@ -132,10 +137,8 @@ export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?:
             inputMode={inputMode}
           />
         }
-        endAdornment={
-          <ClearEnterButton userInput={userInput} handleClear={handleClear} isValid={isValid} />
-        }
-        placeholder={t('Dashboard-SearchInput-Placeholder')}
+        placeholder={placeholder}
+        size={Math.ceil(placeholder.length * 0.9)}
       />
       {(
         hasFocus &&
@@ -157,7 +160,7 @@ export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?:
   );
 });
 
-interface GoToDashboardButtonProps {
+interface EndAdornmentProps {
   isValid: boolean;
   userInput: string;
   handleClear: () => void;
@@ -165,52 +168,13 @@ interface GoToDashboardButtonProps {
   inputMode: 'address' | 'domain';
 }
 
-const GoToDashboardButton = memo(function GoToDashboardButton({
+const EndAdornment = memo(function EndAdornment({
   isValid,
   userInput,
   handleClear,
   domainResolving,
   inputMode,
-}: GoToDashboardButtonProps) {
-  const classes = useStyles();
-
-  if (domainResolving && inputMode === 'domain') {
-    return (
-      <div className={classes.flex}>
-        <CircularProgress size={23} className={css(styles.loader, styles.disabledIcon)} />
-      </div>
-    );
-  }
-
-  if (isValid) {
-    return (
-      <Link
-        onClick={handleClear}
-        className={css(styles.icon, styles.activeIcon)}
-        aria-disabled={isValid}
-        to={`/dashboard/${userInput}`}
-      >
-        <Search />
-      </Link>
-    );
-  }
-
-  return (
-    <div className={css(styles.icon, styles.disabledIcon)}>
-      <Search />
-    </div>
-  );
-});
-
-const ClearEnterButton = memo(function ClearButton({
-  userInput,
-  handleClear,
-  isValid,
-}: {
-  userInput: string;
-  handleClear: () => void;
-  isValid: boolean;
-}) {
+}: EndAdornmentProps) {
   const navigate = useNavigate();
 
   const handleGoToDashboard = useCallback(() => {
@@ -218,25 +182,33 @@ const ClearEnterButton = memo(function ClearButton({
     handleClear();
   }, [userInput, handleClear, navigate]);
 
+  if (domainResolving && inputMode === 'domain') {
+    return (
+      <LoaderContainer>
+        <CircularProgress size={20} />
+      </LoaderContainer>
+    );
+  }
+
   if (isValid) {
     return (
-      <button
-        type="button"
-        onClick={handleGoToDashboard}
-        className={css(styles.icon, styles.enterButton, styles.activeIcon)}
-      >
+      <IconButton state="active" enter={true} onClick={handleGoToDashboard}>
         <EnterIcon />
-      </button>
+      </IconButton>
     );
   }
 
   if (userInput.length !== 0) {
     return (
-      <button type="button" onClick={handleClear} className={css(styles.icon, styles.activeIcon)}>
+      <IconButton state="active" onClick={handleClear}>
         <CloseRounded />
-      </button>
+      </IconButton>
     );
   }
 
-  return null;
+  return (
+    <IconDiv state="disabled">
+      <Search />
+    </IconDiv>
+  );
 });

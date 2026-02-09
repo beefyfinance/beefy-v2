@@ -55,7 +55,13 @@ const HeaderContainer = styled('div', {
 
 const Title = styled('div', {
   base: {
-    textStyle: 'h1',
+    textStyle: 'label',
+    fontWeight: 500,
+    color: 'text.light',
     marginBottom: '6px',
+    lg: {
+      //14px + 4px
+      paddingInline: '18px',
+    },
   },
 });

@@ -71,6 +71,7 @@ const recipe = sva({
       paddingBlock: '8px',
     },
     input: {
+      transition: '0.2s ease-in-out',
       textStyle: 'body.medium',
       backgroundColor: 'inherit',
       border: 'none',
@@ -93,6 +94,33 @@ const recipe = sva({
       amount: {
         input: {
           textStyle: 'h2',
+        },
+      },
+      transparent: {
+        root: {
+          backgroundColor: 'transparent',
+          paddingInline: '0',
+          paddingBlock: '0',
+          height: '20px',
+          alignItems: 'flex-end',
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '8px',
+        },
+        input: {
+          transition: '0.2s ease-in-out',
+          height: '20px',
+          caretColor: 'indicators.success',
+          '&::placeholder': {
+            textStyle: 'label',
+            opacity: '0.64',
+            color: 'text.dark',
+            fontWeight: 500,
+            textDecoration: 'underline',
+            textDecorationColor: 'text.dark',
+            textDecorationThickness: '0.5px',
+            textUnderlineOffset: '2px',
+          },
         },
       },
     },

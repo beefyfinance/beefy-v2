@@ -13,7 +13,7 @@ export const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'background.content.light',
-    borderRadius: '8px 8px 0px 0px',
+    borderRadius: '20px 20px 0px 0px',
     lgDown: {
       padding: '16px',
     },

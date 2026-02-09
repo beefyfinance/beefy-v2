@@ -1,12 +1,8 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { formatAddressShort, formatDomain } from '../../../../helpers/format.ts';
 import { useTranslation } from 'react-i18next';
-import { styles } from './styles.ts';
 import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
-import { DivWithTooltip } from '../../../../components/Tooltip/DivWithTooltip.tsx';
-
-const useStyles = legacyMakeStyles(styles);
+import { styled } from '@repo/styles/jsx';
 
 export type ShortAddressProps = {
   address: string;
@@ -17,9 +13,9 @@ export const ShortAddress = memo(function ShortAddress({
   address,
   addressLabel,
 }: ShortAddressProps) {
-  const classes = useStyles();
   const { t } = useTranslation();
   const [showCopied, setShowCopied] = useState<boolean>(false);
+  const [isHover, setIsHover] = useState<boolean>(false);
   const mdUp = useBreakpoint({ from: 'sm' });
 
   const handleCopyAddressToClipboard = useCallback(() => {
@@ -48,14 +44,50 @@ export const ShortAddress = memo(function ShortAddress({
 
   if (address) {
     return (
-      <DivWithTooltip
-        onClick={handleCopyAddressToClipboard}
-        className={classes.triggerClass}
-        children={<div className={classes.shortAddress}>{`(${shortAddressLabel})`}</div>}
-        tooltip={showCopied ? t('Clipboard-Copied') : address}
-      />
+      <ShortAddressContainer onClick={handleCopyAddressToClipboard}>
+        <Text
+          variant="dark"
+          onMouseEnter={() => setIsHover(true)}
+          onMouseLeave={() => setIsHover(false)}
+        >
+          {shortAddressLabel}
+        </Text>
+
+        {isHover ?
+          <Text variant="light">
+            {showCopied ? t('Clipboard-Copied') : t('Clipboard-CopyToClipboard')}
+          </Text>
+        : null}
+      </ShortAddressContainer>
     );
   }
 
   return null;
+});
+
+const ShortAddressContainer = styled('div', {
+  base: {
+    display: 'flex',
+    gap: '9px',
+    _hover: {
+      cursor: 'pointer',
+    },
+  },
+});
+
+const Text = styled('div', {
+  base: {
+    textStyle: 'label',
+    fontWeight: 500,
+  },
+  variants: {
+    variant: {
+      light: {
+        color: 'text.light',
+      },
+      dark: {
+        color: 'text.dark',
+      },
+    },
+  },
 });
