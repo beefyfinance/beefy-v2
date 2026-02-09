@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "mellow-aero-weth-usdc",
     "status": "active",
-    "createdAt": 1770385000,
+    "createdAt": 1770630518,
     "platformId": "aerodrome",
     "assets": ["WETH", "USDC"],
     "migrationIds": [],
