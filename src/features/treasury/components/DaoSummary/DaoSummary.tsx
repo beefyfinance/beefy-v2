@@ -56,6 +56,6 @@ const HeaderContainer = styled('div', {
 const Title = styled('div', {
   base: {
     textStyle: 'h1',
-    marginBottom: '24px',
+    marginBottom: '6px',
   },
 });

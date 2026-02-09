@@ -54,14 +54,13 @@ const DashboardFromUrl = memo(function DashboardFromWallet() {
 
   return (
     <PageLayout
-      contentAlignedCenter={true}
       header={
         <Header address={addressOrDomain || ''} addressLabel={addressOrDomain || ''}>
           <DepositSummaryPlaceholder showZeroBalance={true} />
         </Header>
       }
       content={
-        <Content w100={true}>
+        <Content>
           {addressOrDomain?.toLowerCase().startsWith('0x') ?
             <InvalidAddress />
           : <InvalidDomain />}
@@ -80,14 +79,13 @@ const DashboardFromWallet = memo(function DashboardFromWallet() {
 
   return (
     <PageLayout
-      contentAlignedCenter={true}
       header={
         <Header address={address || ''} addressLabel={address || ''}>
           <DepositSummaryPlaceholder showZeroBalance={true} />
         </Header>
       }
       content={
-        <Content w100={true}>
+        <Content>
           <NotConnected />
         </Content>
       }
@@ -111,14 +109,13 @@ const DashboardFromDomain = memo(function DashboardFromDomain({
   if (isRejectedStatus(status)) {
     return (
       <PageLayout
-        contentAlignedCenter={true}
         header={
           <Header address={domain || ''} addressLabel={domain || ''}>
             <DepositSummaryPlaceholder showZeroBalance={true} />
           </Header>
         }
         content={
-          <Content w100={true}>
+          <Content>
             <InvalidDomain />
           </Content>
         }
@@ -182,15 +179,14 @@ const UserInfoContainer = styled('div', {
 const Content = styled('div', {
   base: {
     paddingBlock: '12px 24px',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
     sm: {
-      paddingBlock: '14px 48px',
+      paddingBlock: '14px 28px',
     },
-  },
-  variants: {
-    w100: {
-      true: {
-        width: '100%',
-      },
+    lg: {
+      paddingBlock: '14px 48px',
     },
   },
 });

@@ -51,8 +51,13 @@ const Content = styled('div', {
     paddingBlock: '12px 24px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '24px',
+    gap: '28px',
     sm: {
+      paddingBlock: '14px 28px',
+      gap: '32px',
+    },
+    lg: {
+      gap: '24px',
       paddingBlock: '14px 48px',
     },
   },

@@ -72,8 +72,11 @@ const Content = styled('div', {
   base: {
     paddingBlock: '12px 24px',
     sm: {
-      paddingBlock: '14px 48px',
+      paddingBlock: '14px 28px',
       borderRadius: '24px',
+    },
+    lg: {
+      paddingBlock: '14px 48px',
     },
   },
 });
