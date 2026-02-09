@@ -1,5 +1,38 @@
 [
   {
+    "id": "mellow-aero-weth-usdc",
+    "name": "WETH-USDC ALM",
+    "type": "standard",
+    "token": "MVS:WETH-USDC-100",
+    "tokenAddress": "0xcd975e6a5F55137755487F0918b8ca74aCCe7925",
+    "tokenDecimals": 18,
+    "tokenProviderId": "autopilot",
+    "earnContractAddress": "0x224409f92c30F7965C6D9030d1EB30B547A6F9e3",
+    "earnedToken": "mooAeroAutopilotWETH-USDC",
+    "earnedTokenAddress": "0x224409f92c30F7965C6D9030d1EB30B547A6F9e3",
+    "oracle": "lps",
+    "oracleId": "mellow-aero-weth-usdc",
+    "status": "active",
+    "createdAt": 1770385000,
+    "platformId": "aerodrome",
+    "assets": ["WETH", "USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&type=100&chain0=8453&chain1=8453&factory=0x5e7BB104d84c7CB9B682AaC2F3d509f5F406809A",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw?pool=0xb2cc224c1c9fee385f8ad6a55b4d94e92359dc59&chain=8453",
+    "network": "base"
+  },
+  {
     "id": "uniswap-cow-base-usdc-rnbw-rp",
     "name": "RNBW-USDC Reward Pool",
     "type": "gov",

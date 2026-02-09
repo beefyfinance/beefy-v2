@@ -1573,5 +1573,14 @@
     "documentation": "https://docs.gearbox.finance/",
     "description": "Gearbox Protocol separates the source of liquidity from the utilization of liquidity. This architecture allows a single passive liquidity source to fund diverse, isolated lending strategies simultaneously.",
     "type": "money-market"
+  },
+  {
+    "id": "autopilot",
+    "name": "Autopilot",
+    "website": "https://aerodrome.finance/liquidity?filters=alm",
+    "twitter": "mellowalm",
+    "documentation": "https://aerodrome.finance/autopilot",
+    "description": "Autopilot is the automated liquidity management solution on Aerodrome.",
+    "type": "alm"
   }
 ]
