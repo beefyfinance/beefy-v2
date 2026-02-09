@@ -48,7 +48,7 @@ export const DepositSummaryPlaceholder = memo(function DepositSummaryPlaceholder
   const { t } = useTranslation();
   const userStats = useMemo(() => {
     const loading = <TextLoader placeholder={'Loading...'} />;
-    const zeroBalance = <div>{t('Summary-Zero-Balance')}</div>;
+    const zeroBalance = <div>{'$0'}</div>;
 
     const value = showZeroBalance ? zeroBalance : loading;
     return [

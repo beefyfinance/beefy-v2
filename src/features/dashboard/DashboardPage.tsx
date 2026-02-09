@@ -112,6 +112,11 @@ const DashboardFromDomain = memo(function DashboardFromDomain({
     return (
       <PageLayout
         contentAlignedCenter={true}
+        header={
+          <Header address={domain || ''} addressLabel={domain || ''}>
+            <DepositSummaryPlaceholder showZeroBalance={true} />
+          </Header>
+        }
         content={
           <Content w100={true}>
             <InvalidDomain />

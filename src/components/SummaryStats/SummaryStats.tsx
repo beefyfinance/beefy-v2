@@ -26,5 +26,8 @@ const SummaryStatsContainer = styled('div', {
     md: {
       gridTemplateColumns: 'repeat(4, 1fr)',
     },
+    lg: {
+      paddingInline: '14px',
+    },
   },
 });
