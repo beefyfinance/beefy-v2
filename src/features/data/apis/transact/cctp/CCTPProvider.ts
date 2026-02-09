@@ -38,7 +38,7 @@ export function getUSDCForChain(chainId: ChainEntity['id'], state: BeefyState): 
  * Compute the max fee in token units from an amount using the source chain's bps.
  */
 export function computeMaxFee(amount: BigNumber, feeBps: number): BigNumber {
-  return amount.multipliedBy(feeBps).dividedToIntegerBy(10000);
+  return amount.multipliedBy(feeBps).dividedBy(10000);
 }
 
 export function fetchBridgeQuote(
