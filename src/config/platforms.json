@@ -1582,5 +1582,23 @@
     "documentation": "https://aerodrome.finance/autopilot",
     "description": "Autopilot is the automated liquidity management solution on Aerodrome.",
     "type": "alm"
+  },
+  {
+    "id": "kumbaya",
+    "name": "Kumbaya",
+    "website": "https://www.kumbaya.xyz/",
+    "twitter": "kumbaya_xyz",
+    "documentation": "https://www.kumbaya.xyz/",
+    "description": "Cult formation venue for MegaETH. Token launchpad with built-in Uniswap V3 style liquidity.",
+    "type": "amm"
+  },
+  {
+    "id": "prism",
+    "name": "Prism",
+    "website": "https://prismfi.cc/",
+    "twitter": "PrismFi_",
+    "documentation": "https://prismfi.cc/docs/",
+    "description": "Prism is MegaETH's superdapp built for swapping, launching tokens and more.",
+    "type": "amm"
   }
 ]

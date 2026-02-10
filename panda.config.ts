@@ -77,7 +77,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -1107,6 +1107,7 @@ const config = buildConfig(
       optimism: { primary: '#ff0420', header: 0.2 },
       plasma: { primary: '#162f29', header: 0.2 },
       monad: { primary: '#836EF9', header: 0.2 },
+      megaeth: { primary: '#D9D9D9', header: 0.4 },
       polygon: { primary: '#f5f0fd', header: 0.3 },
       real: { primary: '#ffffff', header: '#1c122c66' },
       rootstock: { primary: '#000000', header: '#1c122c66' },
