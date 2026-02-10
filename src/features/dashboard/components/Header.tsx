@@ -21,8 +21,12 @@ export const Header = memo(function Header({ address, addressLabel, children }: 
           <TitleSearch>
             <Title>
               {t('Dashboard-Title')}
-              <span>/</span>
-              <ShortAddress address={address} addressLabel={addressLabel} />
+              {address && (
+                <>
+                  <span>/</span>
+                  <ShortAddress address={address} addressLabel={addressLabel} />
+                </>
+              )}
             </Title>
             <div>
               <AddressInput variant="transparent" />

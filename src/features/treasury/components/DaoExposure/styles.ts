@@ -3,15 +3,16 @@ import { css } from '@repo/styles/css';
 export const styles = {
   container: css.raw({
     width: '100%',
-    padding: '16px 24px',
+    padding: '16px',
     backgroundColor: 'background.content',
     borderRadius: '8px',
     display: 'grid',
     mdOnly: {
       height: '120px',
     },
-    lgDown: {
-      padding: '16px',
+    lg: {
+      padding: '16px 24px',
+      borderRadius: '20px',
     },
   }),
   option: css.raw({
