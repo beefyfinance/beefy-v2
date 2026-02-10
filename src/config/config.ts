@@ -464,9 +464,9 @@ export const config = {
     name: 'MegaETH',
     chainId: 4326,
     rpc: ['https://mainnet.megaeth.com/rpc'],
-    explorerUrl: 'https://mega.etherscan.io/',
-    multicall3Address: '0x0000000000000000000000000000000000000000',
-    appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
+    explorerUrl: 'https://mega.etherscan.io',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0xb267dE0B043Ec5faCc5e554c7a3aB8F06a4A44D8',
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'standard',
