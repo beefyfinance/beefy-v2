@@ -1,5 +1,159 @@
 [
   {
+    "id": "kumbaya-cow-megaeth-duck-weth-rp",
+    "name": "DUCK-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowKumbayaMegaethDUCK-WETH",
+    "tokenAddress": "0xdcDB09546179E38E41E39E8a14FDcC1dec885722",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kumbaya",
+    "earnContractAddress": "0xcF1E70521833fF53290d000dc24A671aE0246912",
+    "earnedToken": "rCowKumbayaMegaethDUCK-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "kumbaya-cow-megaeth-duck-weth",
+    "status": "active",
+    "createdAt": 1770726819,
+    "platformId": "kumbaya",
+    "assets": ["DUCK", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "kumbaya-cow-megaeth-duck-weth",
+    "name": "DUCK-WETH",
+    "type": "cowcentrated",
+    "token": "DUCK-WETH kumbaya",
+    "tokenAddress": "0xab72F355eE690252A07D197B2A17E3a232419f39",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kumbaya",
+    "depositTokenAddresses": [
+      "0x021ee124cF23D302A7f725AE7a01B77A8ce9782B",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "earnContractAddress": "0xdcDB09546179E38E41E39E8a14FDcC1dec885722",
+    "earnedToken": "cowKumbayaMegaethDUCK-WETH",
+    "earnedTokenAddress": "0xdcDB09546179E38E41E39E8a14FDcC1dec885722",
+    "oracle": "lps",
+    "oracleId": "kumbaya-cow-megaeth-duck-weth",
+    "status": "active",
+    "createdAt": 1770726819,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["DUCK", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "kumbaya-cow-megaeth-kpi-weth-rp",
+    "name": "KPI-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowKumbayaMegaethKPI-WETH",
+    "tokenAddress": "0xA745AEf3e54f2Fa45560a8FC8cEE190479D8E7D4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kumbaya",
+    "earnContractAddress": "0xE179CD753dE84504615129CB333242D71Ec3af0c",
+    "earnedToken": "rCowKumbayaMegaethKPI-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "kumbaya-cow-megaeth-kpi-weth",
+    "status": "active",
+    "createdAt": 1770726819,
+    "platformId": "kumbaya",
+    "assets": ["KPI", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "kumbaya-cow-megaeth-kpi-weth",
+    "name": "KPI-WETH",
+    "type": "cowcentrated",
+    "token": "KPI-WETH kumbaya",
+    "tokenAddress": "0x39fb3F1649e752d1590E95151784fc941320bbd0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kumbaya",
+    "depositTokenAddresses": [
+      "0x3F927036A6c29F50e1c2dfceba572FC40Cf39069",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "earnContractAddress": "0xA745AEf3e54f2Fa45560a8FC8cEE190479D8E7D4",
+    "earnedToken": "cowKumbayaMegaethKPI-WETH",
+    "earnedTokenAddress": "0xA745AEf3e54f2Fa45560a8FC8cEE190479D8E7D4",
+    "oracle": "lps",
+    "oracleId": "kumbaya-cow-megaeth-kpi-weth",
+    "status": "active",
+    "createdAt": 1770726819,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["KPI", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "prism-cow-megaeth-weth-usdm-rp",
     "name": "WETH-USDm Reward Pool",
     "type": "gov",
