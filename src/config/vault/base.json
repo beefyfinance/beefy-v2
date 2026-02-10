@@ -1,5 +1,82 @@
 [
   {
+    "id": "uniswap-cow-base-weth-clawnch-rp",
+    "name": "CLAWNCH-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-CLAWNCH",
+    "tokenAddress": "0x5998CBF86fF6E2Aab65686430f577c06dff916Af",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xA368aaBe33Ae8dDa65a7c5BB43634dc1a69D2C92",
+    "earnedToken": "rCowUniswapBaseWETH-CLAWNCH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-clawnch",
+    "status": "active",
+    "createdAt": 1770737880,
+    "platformId": "uniswap",
+    "assets": ["CLAWNCH", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-clawnch",
+    "name": "CLAWNCH-WETH",
+    "type": "cowcentrated",
+    "token": "CLAWNCH-WETH uniswap",
+    "tokenAddress": "0x07Da9c5d35028f578dFac5BE6e5Aaa8a835704F6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xa1F72459dfA10BAD200Ac160eCd78C6b77a747be"
+    ],
+    "earnContractAddress": "0x5998CBF86fF6E2Aab65686430f577c06dff916Af",
+    "earnedToken": "cowUniswapBaseWETH-CLAWNCH",
+    "earnedTokenAddress": "0x5998CBF86fF6E2Aab65686430f577c06dff916Af",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-clawnch",
+    "status": "active",
+    "createdAt": 1770737880,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["CLAWNCH", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-usdz-weth-v2-vault",
     "name": "USDz-WETH",
     "type": "standard",
