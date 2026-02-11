@@ -36,9 +36,13 @@ export function getUSDCForChain(chainId: ChainEntity['id'], state: BeefyState): 
 
 /**
  * Compute the max fee in token units from an amount using the source chain's bps.
+ * Adds a 15% buffer to account for potential fee fluctuations as recommended by Circle.
+ * @see https://developers.circle.com/cctp/concepts/fees#maximum-fee-parameter
  */
 export function computeMaxFee(amount: BigNumber, feeBps: number): BigNumber {
-  return amount.multipliedBy(feeBps).dividedBy(10000);
+  const calculatedFee = amount.multipliedBy(feeBps).dividedBy(10000);
+  // Add 15% buffer and round up to ensure we never underpay
+  return calculatedFee.multipliedBy(1.15).integerValue(BigNumber.ROUND_UP);
 }
 
 export function fetchBridgeQuote(
@@ -80,6 +84,16 @@ export function buildDepositForBurnCalldata(
 ): { data: Hex; amountIndex: number } {
   const destConfig = getChainConfig(destChainId);
 
+  console.debug('[CCTP] buildDepositForBurnCalldata (simple)', {
+    destChainId,
+    destDomain: destConfig.domain,
+    mintRecipient,
+    burnToken,
+    destinationCaller: 'unrestricted (0x0)',
+    maxFee: maxFee.toString(),
+    minFinalityThreshold: 0,
+  });
+
   const data = encodeFunctionData({
     abi: CCTPTokenMessengerV2Abi,
     functionName: 'depositForBurn',
@@ -94,7 +108,14 @@ export function buildDepositForBurnCalldata(
     ],
   });
 
-  return { data, amountIndex: getInsertIndex(0) };
+  const amountIndex = getInsertIndex(0);
+
+  console.debug('[CCTP] buildDepositForBurnCalldata result', {
+    dataLength: data.length,
+    amountIndex,
+  });
+
+  return { data, amountIndex };
 }
 
 /**
@@ -109,6 +130,17 @@ export function buildDepositForBurnWithHookCalldata(
   hookData: Hex
 ): { data: Hex; amountIndex: number } {
   const destConfig = getChainConfig(destChainId);
+
+  console.debug('[CCTP] buildDepositForBurnWithHookCalldata', {
+    destChainId,
+    destDomain: destConfig.domain,
+    mintRecipient,
+    burnToken,
+    destinationCaller: destConfig.receiver,
+    maxFee: maxFee.toString(),
+    minFinalityThreshold: 0,
+    hookDataLength: hookData.length,
+  });
 
   const data = encodeFunctionData({
     abi: CCTPTokenMessengerV2Abi,
@@ -125,7 +157,14 @@ export function buildDepositForBurnWithHookCalldata(
     ],
   });
 
-  return { data, amountIndex: getInsertIndex(0) };
+  const amountIndex = getInsertIndex(0);
+
+  console.debug('[CCTP] buildDepositForBurnWithHookCalldata result', {
+    dataLength: data.length,
+    amountIndex,
+  });
+
+  return { data, amountIndex };
 }
 
 /**
@@ -133,7 +172,22 @@ export function buildDepositForBurnWithHookCalldata(
  * Converts string addresses/amounts to viem-compatible types.
  */
 export function encodeZapPayload(payload: ZapPayload): Hex {
-  return encodeAbiParameters(ZapPayloadAbiParams, [
+  console.debug('[CCTP] encodeZapPayload', {
+    recipient: payload.recipient,
+    outputsCount: payload.outputs.length,
+    outputs: payload.outputs,
+    relay: payload.relay,
+    routeSteps: payload.route.length,
+    route: payload.route.map((step, i) => ({
+      index: i,
+      target: step.target,
+      value: step.value,
+      dataLength: step.data.length,
+      tokens: step.tokens,
+    })),
+  });
+
+  const encoded = encodeAbiParameters(ZapPayloadAbiParams, [
     {
       recipient: payload.recipient as Address,
       outputs: payload.outputs.map(o => ({
@@ -156,6 +210,13 @@ export function encodeZapPayload(payload: ZapPayload): Hex {
       })),
     },
   ]);
+
+  console.debug('[CCTP] encodeZapPayload result', {
+    encodedLength: encoded.length,
+    encoded,
+  });
+
+  return encoded;
 }
 
 /**
@@ -164,9 +225,23 @@ export function encodeZapPayload(payload: ZapPayload): Hex {
  */
 export function buildHookData(destChainId: ChainEntity['id'], zapPayload: ZapPayload): Hex {
   const destConfig = getChainConfig(destChainId);
+  console.debug('[CCTP] buildHookData', {
+    destChainId,
+    receiver: destConfig.receiver,
+  });
+
   const encodedPayload = encodeZapPayload(zapPayload);
   // hookData = receiver address (20 bytes) + encoded ZapPayload (without 0x prefix)
-  return `${destConfig.receiver}${encodedPayload.slice(2)}` as Hex;
+  const hookData = `${destConfig.receiver}${encodedPayload.slice(2)}` as Hex;
+
+  console.debug('[CCTP] buildHookData result', {
+    receiverLength: 42, // 0x + 40 chars
+    encodedPayloadLength: encodedPayload.length,
+    totalHookDataLength: hookData.length,
+    hookData,
+  });
+
+  return hookData;
 }
 
 /**
@@ -182,6 +257,15 @@ export function buildBurnZapStep(
   hookData: Hex
 ): ZapStep {
   const sourceConfig = getChainConfig(sourceChainId);
+  console.debug('[CCTP] buildBurnZapStep', {
+    sourceChainId,
+    destChainId,
+    usdcAddress,
+    mintRecipient,
+    maxFee: maxFee.toString(),
+    tokenMessenger: sourceConfig.tokenMessenger,
+  });
+
   const { data, amountIndex } = buildDepositForBurnWithHookCalldata(
     destChainId,
     mintRecipient,
@@ -190,12 +274,21 @@ export function buildBurnZapStep(
     hookData
   );
 
-  return {
+  const zapStep: ZapStep = {
     target: sourceConfig.tokenMessenger,
     value: '0',
     data,
     tokens: [{ token: usdcAddress, index: amountIndex }],
   };
+
+  console.debug('[CCTP] buildBurnZapStep result', {
+    target: zapStep.target,
+    value: zapStep.value,
+    dataLength: zapStep.data.length,
+    tokens: zapStep.tokens,
+  });
+
+  return zapStep;
 }
 
 /**
@@ -210,6 +303,15 @@ export function buildBurnZapStepSimple(
   maxFee: bigint
 ): ZapStep {
   const sourceConfig = getChainConfig(sourceChainId);
+  console.debug('[CCTP] buildBurnZapStepSimple', {
+    sourceChainId,
+    destChainId,
+    usdcAddress,
+    mintRecipient,
+    maxFee: maxFee.toString(),
+    tokenMessenger: sourceConfig.tokenMessenger,
+  });
+
   const { data, amountIndex } = buildDepositForBurnCalldata(
     destChainId,
     mintRecipient,
@@ -217,10 +319,19 @@ export function buildBurnZapStepSimple(
     maxFee
   );
 
-  return {
+  const zapStep: ZapStep = {
     target: sourceConfig.tokenMessenger,
     value: '0',
     data,
     tokens: [{ token: usdcAddress, index: amountIndex }],
   };
+
+  console.debug('[CCTP] buildBurnZapStepSimple result', {
+    target: zapStep.target,
+    value: zapStep.value,
+    dataLength: zapStep.data.length,
+    tokens: zapStep.tokens,
+  });
+
+  return zapStep;
 }

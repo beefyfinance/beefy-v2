@@ -14,7 +14,7 @@ import type { ChainEntity } from '../../entities/chain.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectTokenByAddress, selectTokenByAddressOrUndefined } from '../../selectors/tokens.ts';
 import { selectVaultById } from '../../selectors/vaults.ts';
-import { selectWalletAddress } from '../../selectors/wallet.ts';
+import { selectCurrentChainId, selectWalletAddress } from '../../selectors/wallet.ts';
 import { selectZapByChainId } from '../../selectors/zap.ts';
 import type { BeefyState } from '../../store/types.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
@@ -46,6 +46,15 @@ export const crossChainZapExecuteOrder = (
     const address = selectWalletAddress(state);
     if (!address) {
       throw new Error(`No wallet connected`);
+    }
+
+    // Validate user is on source chain
+    const currentChainId = selectCurrentChainId(state);
+    if (currentChainId !== sourceChainId) {
+      const sourceChain = selectChainById(state, sourceChainId);
+      throw new Error(
+        `Please switch to ${sourceChain.name} to execute this cross-chain transaction`
+      );
     }
 
     const vault = selectVaultById(state, vaultId);
