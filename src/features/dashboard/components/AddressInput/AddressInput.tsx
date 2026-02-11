@@ -13,6 +13,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { IconButton, IconDiv, LoaderContainer } from './styles.ts';
+import { css } from '@repo/styles/css';
 import { isMaybeDomain, isValidAddress } from '../../../../helpers/addresses.ts';
 import { FloatingError } from './FloatingError/FloatingError.tsx';
 import { useResolveDomain } from '../../../data/hooks/resolver.ts';
@@ -117,16 +118,19 @@ export const AddressInput = memo(function AddressInput({ variant = 'default' }: 
     }
   }, [inputMode, resolverStatus, setIsDomainValid, setIsDomainResolving]);
 
+  const isActive = userInput.length !== 0 || hasFocus;
+
   return (
     <>
       <BaseInput
         ref={anchorEl}
         variant={variant}
+        className={css(baseWidth, isActive && activeWidth)}
         value={userInput}
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        fullWidth={variant === 'default'}
+        fullWidth={false}
         onKeyDown={handleGoToDashboardOnEnterKey}
         endAdornment={
           <EndAdornment
@@ -138,7 +142,6 @@ export const AddressInput = memo(function AddressInput({ variant = 'default' }: 
           />
         }
         placeholder={placeholder}
-        size={Math.ceil(placeholder.length * 0.9)}
       />
       {(
         hasFocus &&
@@ -211,4 +214,13 @@ const EndAdornment = memo(function EndAdornment({
       <Search />
     </IconDiv>
   );
+});
+
+const baseWidth = css.raw({
+  width: '207px',
+  transition: 'width 0.2s ease-in-out',
+});
+
+const activeWidth = css.raw({
+  width: '423px',
 });
