@@ -111,6 +111,7 @@ const recipe = sva({
           transition: '0.2s ease-in-out',
           height: '20px',
           caretColor: 'indicators.success',
+          color: 'text.dark',
           '&::placeholder': {
             textStyle: 'label',
             opacity: '0.64',

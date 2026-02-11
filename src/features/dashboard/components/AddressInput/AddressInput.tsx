@@ -125,12 +125,15 @@ export const AddressInput = memo(function AddressInput({ variant = 'default' }: 
       <BaseInput
         ref={anchorEl}
         variant={variant}
-        className={css(baseWidth, isActive && activeWidth)}
+        className={css(
+          variant === 'transparent' ? transparentBaseWidth : defaultBaseWidth,
+          isActive && (variant === 'transparent' ? transparentActiveWidth : defaultActiveWidth)
+        )}
         value={userInput}
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        fullWidth={false}
+        fullWidth={true}
         onKeyDown={handleGoToDashboardOnEnterKey}
         endAdornment={
           <EndAdornment
@@ -216,11 +219,28 @@ const EndAdornment = memo(function EndAdornment({
   );
 });
 
-const baseWidth = css.raw({
-  width: '207px',
+const transparentBaseWidth = css.raw({
+  width: '100%',
   transition: 'width 0.2s ease-in-out',
+  md: {
+    width: '207px',
+  },
 });
 
-const activeWidth = css.raw({
-  width: '423px',
+const transparentActiveWidth = css.raw({
+  md: {
+    width: '423px',
+  },
+});
+
+const defaultBaseWidth = css.raw({
+  transition: 'width 0.2s ease-in-out',
+  width: '272px',
+});
+
+const defaultActiveWidth = css.raw({
+  width: '100%',
+  md: {
+    width: '443px',
+  },
 });
