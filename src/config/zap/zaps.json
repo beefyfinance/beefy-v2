@@ -163,5 +163,10 @@
     "chainId": "monad",
     "router": "0x542Bf9f89c3Ba0edb7aE5EB4Cf582d349fCdC608",
     "manager": "0xDBCE7119b8F1fCF8e5145087AB314A82Cb931e52"
+  },
+  {
+    "chainId": "megaeth",
+    "router": "0x6f66F246Bb436B6f4E66A992C2218b57cD906109",
+    "manager": "0xD3D46FF34cD495d5B91b8F3C5C552E81E5e3eab5"
   }
 ]
