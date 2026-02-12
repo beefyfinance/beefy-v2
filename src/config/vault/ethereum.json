@@ -1,5 +1,37 @@
 [
   {
+    "id": "balancerv3-ethereum-teth-wsteth",
+    "name": "tETH/wstETH V3",
+    "type": "standard",
+    "token": "tETH/wstETH V3",
+    "tokenAddress": "0x9ED5175aeCB6653C1BDaa19793c16fd74fBeEB37",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnContractAddress": "0x99B91bbc278A3D6f20A83De8c15215Aa0829FEDd",
+    "earnedToken": "mooBalancerEthereumwstETH-tETH",
+    "earnedTokenAddress": "0x99B91bbc278A3D6f20A83De8c15215Aa0829FEDd",
+    "oracle": "lps",
+    "oracleId": "balancerv3-ethereum-teth-wsteth",
+    "status": "active",
+    "createdAt": 1770938814,
+    "platformId": "aura",
+    "assets": ["tETH", "waEthLidowstETH"],
+    "risks": {
+      "updatedAt": 1770938814,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v3/0x9ED5175aeCB6653C1BDaa19793c16fd74fBeEB37/add-liquidity",
+    "network": "ethereum"
+  },
+  {
     "id": "stakedao-ynrwax-ousd",
     "name": "ynRWAx/OUSD",
     "type": "standard",
