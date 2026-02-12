@@ -1,5 +1,82 @@
 [
   {
+    "id": "uniswap-cow-base-weth-fair-rp",
+    "name": "FAIR-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-FAIR",
+    "tokenAddress": "0xDe11Edf36A145e809021C2Db31aF216Ec26B0102",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xbB332ACeeb0ddF9Bd82458d0504c9DF1c21f8d8d",
+    "earnedToken": "rCowUniswapBaseWETH-FAIR",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-fair",
+    "status": "active",
+    "createdAt": 1770897999,
+    "platformId": "uniswap",
+    "assets": ["FAIR", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-fair",
+    "name": "FAIR-WETH",
+    "type": "cowcentrated",
+    "token": "FAIR-WETH uniswap",
+    "tokenAddress": "0xFC01837343cfC2A9dDCA9e8a0a19825f6b2f0460",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x7D928816CC9c462DD7adef911De41535E444CB07"
+    ],
+    "earnContractAddress": "0xDe11Edf36A145e809021C2Db31aF216Ec26B0102",
+    "earnedToken": "cowUniswapBaseWETH-FAIR",
+    "earnedTokenAddress": "0xDe11Edf36A145e809021C2Db31aF216Ec26B0102",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-fair",
+    "status": "active",
+    "createdAt": 1770897999,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["FAIR", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-up-cbbtc-vault",
     "name": "UP-cbBTC",
     "type": "standard",
