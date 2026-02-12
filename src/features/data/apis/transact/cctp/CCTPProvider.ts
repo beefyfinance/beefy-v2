@@ -42,7 +42,7 @@ export function getUSDCForChain(chainId: ChainEntity['id'], state: BeefyState): 
 export function computeMaxFee(amount: BigNumber, feeBps: number): BigNumber {
   const calculatedFee = amount.multipliedBy(feeBps).dividedBy(10000);
   // Add 15% buffer and round up to ensure we never underpay
-  return calculatedFee.multipliedBy(1.15).integerValue(BigNumber.ROUND_UP);
+  return calculatedFee.multipliedBy(1.15);
 }
 
 export function fetchBridgeQuote(
