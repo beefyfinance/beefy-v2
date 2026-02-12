@@ -14,6 +14,7 @@ import { transactSelectSelection } from '../../../../../data/actions/transact.ts
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import {
   selectTransactDepositTokensForChainIdWithBalances,
+  selectTransactSelectedChainId,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -38,7 +39,8 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const [dustHidden, setDustHidden] = useState(false);
-  const [selectedChain] = useState(vault.chainId);
+  const transactChainId = useAppSelector(selectTransactSelectedChainId);
+  const selectedChain = transactChainId ?? vault.chainId;
   const [search, setSearch] = useState('');
   const optionsForChain = useAppSelector(state =>
     selectTransactDepositTokensForChainIdWithBalances(state, selectedChain, vaultId)

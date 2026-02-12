@@ -684,6 +684,7 @@
   "Transact-Claim-RewardsOnly": "Claim Rewards Only",
   "Transact-Claim-WithdrawAll": "Claim & Withdraw All",
   "Transact-SelectToken": "Select token",
+  "Transact-SelectChain": "Select Chain",
   "Transact-SelectAmount": "Select amount",
   "Transact-SelectProvider": "Select provider",
   "Transact-Available": "Available:",

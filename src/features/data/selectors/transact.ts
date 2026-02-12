@@ -23,6 +23,7 @@ import {
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInShareToken,
+  SelectUserWalletBalanceByChainId,
 } from './balance.ts';
 import { selectAllVaultBoostIds, selectPreStakeOrActiveBoostIds } from './boosts.ts';
 import {
@@ -38,6 +39,9 @@ import {
 } from './user-rewards.ts';
 import { selectVaultById } from './vaults.ts';
 import { selectWalletAddressIfKnown } from './wallet.ts';
+import { selectChainById } from './chains.ts';
+import { CCTP_CONFIG } from '../../../config/cctp/cctp-config.ts';
+import { getSupportedChainIds } from '../apis/transact/cctp/CCTPProvider.ts';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
@@ -318,6 +322,68 @@ export const selectTransactConfirmChanges = (state: BeefyState) =>
   state.ui.transact.confirm.changes;
 
 export const selectTransactForceSelection = (state: BeefyState) => state.ui.transact.forceSelection;
+
+export const selectTransactVaultHasCrossChainZap = (state: BeefyState) => {
+  const vaultId = state.ui.transact.vaultId;
+  if (!vaultId) return false;
+  const vault = selectVaultById(state, vaultId);
+  return vault.zaps?.some(z => z.strategyId === 'cross-chain') ?? false;
+};
+
+export type CrossChainChainOption = {
+  chainId: ChainEntity['id'];
+  chainName: string;
+  balanceUsd: BigNumber;
+};
+
+/**
+ * Returns the list of chains available for cross-chain deposit, sorted as:
+ * 1. Vault's own chain first
+ * 2. Remaining chains with balance, sorted by USD balance descending
+ * 3. Remaining chains with $0 balance, sorted alphabetically by chain name
+ */
+export const selectCrossChainSortedChains = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): CrossChainChainOption[] => {
+  const vault = selectVaultById(state, vaultId);
+  const crossChainZap = vault.zaps?.find(z => z.strategyId === 'cross-chain');
+  if (!crossChainZap) return [];
+
+  const supportedSourceChains =
+    'supportedSourceChains' in crossChainZap ? crossChainZap.supportedSourceChains : undefined;
+
+  const cctpChainIds = getSupportedChainIds();
+  const sourceChains = supportedSourceChains ?? cctpChainIds;
+  // Deduplicated set: vault chain + supported source chains
+  const allChainIds = Array.from(new Set([vault.chainId, ...sourceChains]));
+
+  const walletAddress = selectWalletAddressIfKnown(state);
+  const chainsWithBalance: CrossChainChainOption[] = allChainIds.map(chainId => {
+    const cctpConfig = CCTP_CONFIG.chains[chainId];
+    const chain = selectChainById(state, chainId);
+    let balanceUsd = BIG_ZERO;
+    if (cctpConfig && walletAddress) {
+      balanceUsd = SelectUserWalletBalanceByChainId(state, chainId, walletAddress);
+    }
+    return { chainId, chainName: chain.name, balanceUsd };
+  });
+
+  return orderBy(
+    chainsWithBalance,
+    [
+      // 1. Vault chain always first
+      o => (o.chainId === vault.chainId ? 0 : 1),
+      // 2. Chains with balance before chains without
+      o => (o.balanceUsd.isGreaterThan(BIG_ZERO) ? 0 : 1),
+      // 3. Among chains with balance, sort by balance descending
+      o => o.balanceUsd.toNumber(),
+      // 4. Among chains with $0 balance, sort alphabetically by chain name
+      o => o.chainName.toLowerCase(),
+    ],
+    ['asc', 'asc', 'desc', 'asc']
+  );
+};
 
 export const selectTransactShouldShowClaims = createSelector(
   selectVaultById,

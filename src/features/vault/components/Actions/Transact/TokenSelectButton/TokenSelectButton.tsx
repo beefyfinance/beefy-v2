@@ -15,6 +15,7 @@ import {
   selectTransactNumTokens,
   selectTransactOptionsMode,
   selectTransactSelected,
+  selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -40,11 +41,17 @@ export const TokenSelectButton = memo(function TokenSelectButton({
   const numTokenOptions = useAppSelector(selectTransactNumTokens);
   const forceSelection = useAppSelector(selectTransactForceSelection);
   const mode = useAppSelector(selectTransactOptionsMode);
+  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
+  const isCrossChainDeposit = mode === TransactMode.Deposit && hasCrossChainZap;
   const canSwitchToTokenSelect = index === 0 && numTokenOptions > 1;
 
   const handleClick = useCallback(() => {
-    dispatch(transactSwitchStep(TransactStep.TokenSelect));
-  }, [dispatch]);
+    if (isCrossChainDeposit && forceSelection) {
+      dispatch(transactSwitchStep(TransactStep.ChainSelect));
+    } else {
+      dispatch(transactSwitchStep(TransactStep.TokenSelect));
+    }
+  }, [dispatch, isCrossChainDeposit, forceSelection]);
 
   const tokenSymbol = useMemo(() => {
     return (
@@ -68,7 +75,9 @@ export const TokenSelectButton = memo(function TokenSelectButton({
       onClick={canSwitchToTokenSelect ? handleClick : undefined}
       className={css(styles.button, cssProp, canSwitchToTokenSelect && styles.buttonMore)}
     >
-      {forceSelection ?
+      {forceSelection && isCrossChainDeposit ?
+        <div className={css(styles.select, styles.forceSelection)}>{t('Transact-SelectChain')}</div>
+      : forceSelection ?
         <div className={css(styles.select, styles.forceSelection)}>
           <div className={classes.zapIcon}>
             <img src={zapIcon} alt="zap" />

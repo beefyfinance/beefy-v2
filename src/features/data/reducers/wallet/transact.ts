@@ -16,6 +16,7 @@ import {
   transactSelectQuote,
   transactSelectSelection,
   transactSetInputAmount,
+  transactSetSelectedChainId,
   transactSetSlippage,
   transactSwitchMode,
   transactSwitchStep,
@@ -103,6 +104,12 @@ const transactSlice = createSlice({
       })
       .addCase(transactSwitchStep, (sliceState, action) => {
         sliceState.step = action.payload;
+      })
+      .addCase(transactSetSelectedChainId, (sliceState, action) => {
+        const chainId = action.payload;
+        sliceState.selectedChainId = chainId;
+        sliceState.step = TransactStep.TokenSelect;
+        clearInputs(sliceState);
       })
       .addCase(transactSelectSelection, (sliceState, action) => {
         sliceState.selectedSelectionId = action.payload.selectionId;

@@ -923,3 +923,20 @@ export const selectPastBoostIdsWithUserBalance = (
   }
   return boostIds;
 };
+
+export const SelectUserWalletBalanceByChainId = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  address: string
+) => {
+  const tokensByAddress =
+    state.user.balance.byAddress[address.toLowerCase()]?.tokenAmount.byChainId[chainId]
+      ?.byTokenAddress;
+  if (!tokensByAddress) return BIG_ZERO;
+
+  return Object.entries(tokensByAddress).reduce(
+    (acc, [address, value]) =>
+      acc.plus(value.balance.multipliedBy(selectTokenPriceByAddress(state, chainId, address))),
+    BIG_ZERO
+  );
+};
