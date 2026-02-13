@@ -33,6 +33,10 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "cross-chain",
+        "supportedSourceChains": ["optimism"]
       }
     ]
   },
