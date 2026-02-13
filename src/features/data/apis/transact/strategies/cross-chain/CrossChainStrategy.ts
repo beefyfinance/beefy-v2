@@ -847,8 +847,10 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     for (const strategy of strategies) {
       try {
         const options = await strategy.fetchDepositOptions();
-        const usdcOption = options.find(o =>
-          o.inputs.some(i => i.address.toLowerCase() === destUSDC.address.toLowerCase())
+        const usdcOption = options.find(
+          o =>
+            o.inputs.length === 1 &&
+            o.inputs[0].address.toLowerCase() === destUSDC.address.toLowerCase()
         );
         if (usdcOption && isComposableStrategy(strategy)) {
           return { strategy, option: usdcOption };
@@ -886,45 +888,6 @@ function isComposableStrategy(strategy: IStrategy): strategy is IComposableStrat
     'fetchDepositUserlessZapBreakdown' in strategy &&
     'fetchWithdrawUserlessZapBreakdown' in strategy
   );
-}
-
-/**
- * Extracts all unique token addresses from ZapSteps.
- * Used to identify intermediate tokens that need dust return.
- */
-function extractTokensFromZapSteps(
-  steps: ZapStep[],
-  state: BeefyState,
-  chainId: ChainEntity['id']
-): TokenEntity[] {
-  if (!steps || steps.length === 0) return [];
-
-  const tokenAddresses = new Set<string>();
-
-  steps.forEach(step => {
-    if (!step?.tokens || !Array.isArray(step.tokens)) {
-      console.warn(`[CrossChain] Step has invalid tokens array:`, step);
-      return;
-    }
-    step.tokens.forEach(stepToken => {
-      if (stepToken?.token) {
-        tokenAddresses.add(stepToken.token.toLowerCase());
-      }
-    });
-  });
-
-  const tokens: TokenEntity[] = [];
-  tokenAddresses.forEach(address => {
-    try {
-      const token = selectTokenByAddress(state, chainId, address);
-      tokens.push(token);
-    } catch (error) {
-      console.warn(`[CrossChain] Token ${address} not found in registry for chain ${chainId}`);
-      console.error(`[CrossChain] Error fetching token:`, error);
-    }
-  });
-
-  return tokens;
 }
 
 // ===== Dust Output Helper Types and Functions =====
@@ -1040,9 +1003,6 @@ function collectIntermediateTokens(config: IntermediateTokenConfig): TokenEntity
         tokens.push(swapStep.toToken);
       });
 
-      // ZapStep tokens
-      const zapTokens = extractTokensFromZapSteps(config.zapSteps, config.state, config.chainId);
-      tokens.push(...zapTokens);
       break;
     }
 
@@ -1059,9 +1019,6 @@ function collectIntermediateTokens(config: IntermediateTokenConfig): TokenEntity
         tokens.push(config.swapStep.toToken);
       }
 
-      // ZapStep tokens
-      const zapTokens = extractTokensFromZapSteps(config.zapSteps, config.state, config.chainId);
-      tokens.push(...zapTokens);
       break;
     }
 
@@ -1075,9 +1032,6 @@ function collectIntermediateTokens(config: IntermediateTokenConfig): TokenEntity
         tokens.push(swapStep.toToken);
       });
 
-      // ZapStep tokens
-      const zapTokens = extractTokensFromZapSteps(config.zapSteps, config.state, config.chainId);
-      tokens.push(...zapTokens);
       break;
     }
 
@@ -1104,9 +1058,6 @@ function collectIntermediateTokens(config: IntermediateTokenConfig): TokenEntity
         });
       }
 
-      // ZapStep tokens
-      const zapTokens = extractTokensFromZapSteps(config.zapSteps, config.state, config.chainId);
-      tokens.push(...zapTokens);
       break;
     }
   }
