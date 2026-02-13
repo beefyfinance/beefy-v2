@@ -33,10 +33,6 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "cross-chain",
-        "supportedSourceChains": ["optimism"]
       }
     ]
   },
@@ -1919,10 +1915,6 @@
     "zaps": [
       {
         "strategyId": "single"
-      },
-      {
-        "strategyId": "cross-chain",
-        "supportedSourceChains": ["optimism"]
       }
     ]
   },
@@ -4756,10 +4748,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "cross-chain",
-        "supportedSourceChains": ["optimism"]
       }
     ]
   },
