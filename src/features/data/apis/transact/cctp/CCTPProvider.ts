@@ -60,13 +60,17 @@ export function fetchBridgeQuote(
       computeMaxFee(amount, fromConfig.fastFeeBps)
     : new BigNumber(0);
 
+  // Truncate to token precision so downstream strategies never see sub-wei amounts
+  const fromAmount = amount.decimalPlaces(fromToken.decimals, BigNumber.ROUND_FLOOR);
+  const toAmount = fromAmount.minus(fee).decimalPlaces(toToken.decimals, BigNumber.ROUND_FLOOR);
+
   return {
     fromChainId,
     toChainId,
     fromToken,
     toToken,
-    fromAmount: amount,
-    toAmount: amount.minus(fee),
+    fromAmount,
+    toAmount,
     fee,
     timeEstimate,
   };
