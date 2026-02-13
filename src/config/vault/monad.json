@@ -1,5 +1,79 @@
 [
   {
+    "id": "morpho-monad-steakhouse-prime-weth",
+    "name": "WETH (Steakhouse, Prime WETH)",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x83B0a383C3d1b94F28A453735C692d166B561681",
+    "earnedToken": "mooMorphoMonadSteakhousePrimeWETH",
+    "earnedTokenAddress": "0x83B0a383C3d1b94F28A453735C692d166B561681",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1770979279,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["WETH"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0xbeef04b01e0275D4ac2e2986256BB14E3Ff6ef42/steakhouse-prime-eth",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-monad-steakhouse-high-yield-usdt",
+    "name": "USDT0 (Steakhouse, High Yield USDT)",
+    "type": "standard",
+    "token": "USDT0",
+    "tokenAddress": "0xe7cd86e13AC4309349F30B3435a9d337750fC82D",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x0941794781eDb8ae0703687AaC94601E279c4D6b",
+    "earnedToken": "mooMorphoMonadSteakhouseHighYieldUSDT",
+    "earnedTokenAddress": "0x0941794781eDb8ae0703687AaC94601E279c4D6b",
+    "oracle": "tokens",
+    "oracleId": "USDT0",
+    "status": "active",
+    "createdAt": 1770979279,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["USDT0"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0xbeeff300E9A9caeC7beEA740ab8758D33b777509/steakhouse-high-yield-usdt0",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-monad-wbtc-wmon-vault",
     "name": "WBTC-WMON",
     "type": "standard",
