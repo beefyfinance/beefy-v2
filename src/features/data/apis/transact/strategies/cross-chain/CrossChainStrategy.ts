@@ -2,11 +2,9 @@ import type { Namespace, TFunction } from 'react-i18next';
 import type { Address } from 'viem';
 import { uniqBy } from 'lodash-es';
 import { BIG_ZERO, toWeiBigInt, toWeiString } from '../../../../../../helpers/big-number.ts';
-import type { ChainEntity } from '../../../../entities/chain.ts';
 import type { TokenEntity, TokenErc20 } from '../../../../entities/token.ts';
 import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
-import type { BeefyState } from '../../../../store/types.ts';
 import { selectTokenByAddress } from '../../../../selectors/tokens.ts';
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
 import { selectWalletAddress } from '../../../../selectors/wallet.ts';
@@ -309,9 +307,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       },
       bridgeToken: quote.option.destBridgeToken,
       swapSteps: quote.destSteps,
-      zapSteps: breakdown.zapRequest.steps,
-      state,
-      chainId: destChainId,
     });
     const dustOutputs = buildDustOutputs(intermediateTokens);
 
@@ -420,9 +415,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       inputs: quote.inputs,
       bridgeToken: quote.option.bridgeToken,
       swapStep: sourceSwapStepOrUndefined,
-      zapSteps: sourceZapSteps,
-      state,
-      chainId: sourceChainId,
     });
     const sourceOutputs = buildDustOutputs(sourceIntermediateTokens);
 
@@ -748,9 +740,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         context: 'withdraw-dest',
         bridgeToken: quote.option.destBridgeToken,
         swapSteps: quote.destSteps,
-        zapSteps: destSwapZap.zaps,
-        state,
-        chainId: destChainId,
       });
       const dustOutputs = buildDustOutputs(withdrawDestIntermediateTokens);
 
@@ -804,9 +793,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       inputs: quote.inputs,
       bridgeToken: quote.option.bridgeToken,
       withdrawQuote: withdrawQuoteConfig,
-      zapSteps: sourceZapSteps,
-      state,
-      chainId: sourceChainId,
     });
     const sourceOutputs = buildDustOutputs(withdrawSourceIntermediateTokens);
 
@@ -905,9 +891,6 @@ type DepositDestConfig = {
   };
   bridgeToken: TokenEntity;
   swapSteps: ZapQuoteStep[];
-  zapSteps: ZapStep[];
-  state: BeefyState;
-  chainId: ChainEntity['id'];
 };
 
 /**
@@ -919,9 +902,6 @@ type DepositSourceConfig = {
   inputs: InputTokenAmount[];
   bridgeToken: TokenEntity;
   swapStep?: ZapQuoteStepSwapAggregator;
-  zapSteps: ZapStep[];
-  state: BeefyState;
-  chainId: ChainEntity['id'];
 };
 
 /**
@@ -932,9 +912,6 @@ type WithdrawDestConfig = {
   context: 'withdraw-dest';
   bridgeToken: TokenEntity;
   swapSteps: ZapQuoteStep[];
-  zapSteps: ZapStep[];
-  state: BeefyState;
-  chainId: ChainEntity['id'];
 };
 
 /**
@@ -954,9 +931,6 @@ type WithdrawSourceConfig = {
         steps: ZapQuoteStep[];
       }
     | { isZapQuote: false };
-  zapSteps: ZapStep[];
-  state: BeefyState;
-  chainId: ChainEntity['id'];
 };
 
 /**
