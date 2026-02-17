@@ -1,7 +1,8 @@
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Address } from 'viem';
+import { uniqBy } from 'lodash-es';
 import { BIG_ZERO, toWeiBigInt, toWeiString } from '../../../../../../helpers/big-number.ts';
-import type { TokenErc20 } from '../../../../entities/token.ts';
+import type { TokenEntity, TokenErc20 } from '../../../../entities/token.ts';
 import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
 import { selectTokenByAddress } from '../../../../selectors/tokens.ts';
@@ -28,6 +29,7 @@ import {
   createSelectionId,
   onlyOneInput,
 } from '../../helpers/options.ts';
+import { pickTokens, uniqueTokens } from '../../helpers/tokens.ts';
 import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import {
@@ -48,7 +50,7 @@ import {
   type ZapQuoteStepSwapAggregator,
 } from '../../transact-types.ts';
 import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
-import type { UserlessZapRequest, ZapStep } from '../../zap/types.ts';
+import type { UserlessZapRequest, ZapStep, OrderOutput } from '../../zap/types.ts';
 import type {
   IComposableStrategy,
   IStrategy,
@@ -244,6 +246,15 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const { sourceChainId, destChainId, bridgeToken } = quote.option;
     const slippage = selectTransactSlippage(state);
 
+    console.debug('[CrossChain] fetchDepositStep - Starting', {
+      sourceChainId,
+      destChainId,
+      vaultId: quote.option.vaultId,
+      bridgeToken: bridgeToken.symbol,
+      inputs: quote.inputs.map(i => ({ token: i.token.symbol, amount: i.amount.toString(10) })),
+      slippage,
+    });
+
     const userAddress = selectWalletAddress(state);
     if (!userAddress) {
       throw new Error('No wallet connected');
@@ -273,14 +284,48 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       quote.destQuote as Parameters<typeof destStrategy.fetchDepositUserlessZapBreakdown>[0]
     );
 
+    console.debug('[CrossChain] Destination strategy breakdown', {
+      strategyId: quote.destQuote.option.strategyId,
+      steps: breakdown.zapRequest.steps.length,
+      outputs: breakdown.zapRequest.order.outputs.length,
+      expectedTokens: breakdown.expectedTokens.length,
+      zapRequestSteps: breakdown.zapRequest.steps,
+      zapRequestOutputs: breakdown.zapRequest.order.outputs,
+    });
+
     // 2. Build ZapPayload for CircleBeefyZapReceiver on dest chain
+    // Required outputs: from destination strategy (already have slippage)
+    const requiredOutputs: OrderOutput[] = breakdown.zapRequest.order.outputs;
+
+    // Dust outputs: collect all intermediate tokens
+    const intermediateTokens = collectIntermediateTokens({
+      context: 'deposit-dest',
+      pickTokensFrom: {
+        outputs: quote.destQuote.outputs,
+        inputs: quote.destQuote.inputs,
+        returned: isZapQuote(quote.destQuote) ? quote.destQuote.returned : [],
+      },
+      bridgeToken: quote.option.destBridgeToken,
+      swapSteps: quote.destSteps,
+    });
+    const dustOutputs = buildDustOutputs(intermediateTokens);
+
+    // Merge: required first (correct slippage), then dust
+    const outputs = mergeOutputs(requiredOutputs, dustOutputs);
+
     const zapPayload: ZapPayload = {
       recipient: userAddress,
-      outputs: breakdown.zapRequest.order.outputs,
+      outputs,
       relay: NO_RELAY,
       route: breakdown.zapRequest.steps,
     };
     const hookData = buildHookData(destChainId, zapPayload);
+
+    console.debug('[CrossChain] ZapPayload and hookData', {
+      zapPayload,
+      hookDataLength: hookData.length,
+      hookData,
+    });
 
     // 3. Build source chain ZapSteps
     const sourceZapSteps: ZapStep[] = [];
@@ -289,6 +334,14 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     // Source swap (if needed)
     const sourceSwapStep = quote.sourceSteps.find(isZapQuoteStepSwap);
     if (sourceSwapStep && isZapQuoteStepSwapAggregator(sourceSwapStep)) {
+      console.debug('[CrossChain] Building source swap step', {
+        fromToken: sourceSwapStep.fromToken.symbol,
+        fromAmount: sourceSwapStep.fromAmount.toString(10),
+        toToken: sourceSwapStep.toToken.symbol,
+        toAmount: sourceSwapStep.toAmount.toString(10),
+        providerId: sourceSwapStep.providerId,
+      });
+
       const swapZap = await fetchZapAggregatorSwap(
         {
           quote: sourceSwapStep.quote,
@@ -305,6 +358,16 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       swapZap.zaps.forEach(step => sourceZapSteps.push(step));
       minBalances.subtractMany(swapZap.inputs);
       minBalances.addMany(swapZap.minOutputs);
+
+      console.debug('[CrossChain] Source swap ZapSteps built', {
+        steps: swapZap.zaps.length,
+        minOutputs: swapZap.minOutputs.map(o => ({
+          token: o.token.symbol,
+          amount: o.amount.toString(10),
+        })),
+      });
+    } else {
+      console.debug('[CrossChain] No source swap needed');
     }
 
     // CCTP burn step
@@ -316,6 +379,15 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         toWeiBigInt(computeMaxFee(usdcBalance, sourceConfig.fastFeeBps), bridgeToken.decimals)
       : 0n;
 
+    console.debug('[CrossChain] Building CCTP burn step', {
+      usdcBalance: usdcBalance.toString(10),
+      maxFee: maxFee.toString(),
+      sourceTokenMessenger: sourceConfig.tokenMessenger,
+      destReceiver: destConfig.receiver,
+      destDomain: destConfig.domain,
+      fastFeeBps: sourceConfig.fastFeeBps,
+    });
+
     const burnStep = buildBurnZapStep(
       sourceChainId,
       destChainId,
@@ -326,18 +398,50 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     );
     sourceZapSteps.push(burnStep);
 
+    console.debug('[CrossChain] CCTP burn step built', {
+      target: burnStep.target,
+      value: burnStep.value,
+      dataLength: burnStep.data.length,
+      tokens: burnStep.tokens.map(t => ({ token: t.token, index: t.index })),
+    });
+
     // 4. Build UserlessZapRequest (source chain)
+    // Build dust outputs for source chain (no required outputs - USDC is burned)
+    const sourceSwapStepOrUndefined =
+      sourceSwapStep && isZapQuoteStepSwapAggregator(sourceSwapStep) ? sourceSwapStep : undefined;
+
+    const sourceIntermediateTokens = collectIntermediateTokens({
+      context: 'deposit-source',
+      inputs: quote.inputs,
+      bridgeToken: quote.option.bridgeToken,
+      swapStep: sourceSwapStepOrUndefined,
+    });
+    const sourceOutputs = buildDustOutputs(sourceIntermediateTokens);
+
     const zapRequest: UserlessZapRequest = {
       order: {
         inputs: quote.inputs.map(i => ({
           token: getTokenAddress(i.token),
           amount: toWeiString(i.amount, i.token.decimals),
         })),
-        outputs: [], // empty: USDC burned via CCTP, nothing to return on source chain
+        outputs: sourceOutputs,
         relay: NO_RELAY,
       },
       steps: sourceZapSteps,
     };
+
+    console.debug('[CrossChain] Final source zapRequest', {
+      orderInputs: zapRequest.order.inputs,
+      orderOutputs: zapRequest.order.outputs,
+      totalSteps: zapRequest.steps.length,
+      steps: zapRequest.steps.map((s, i) => ({
+        index: i,
+        target: s.target,
+        value: s.value,
+        dataLength: s.data.length,
+        tokens: s.tokens,
+      })),
+    });
 
     return {
       step: 'zap-in',
@@ -617,20 +721,34 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         state
       );
 
+      // Required output: wanted token with double slippage
+      const requiredOutputs: OrderOutput[] = [
+        {
+          token: getTokenAddress(wantedOutput),
+          // Double slippage is intentional: minOutputs already includes aggregator slippage,
+          // but the destination swap executes minutes later (after CCTP bridge), so we apply
+          // additional slippage as safety margin for quote staleness.
+          minOutputAmount: toWeiString(
+            slipBy(destSwapZap.minOutputs[0].amount, slippage, wantedOutput.decimals),
+            wantedOutput.decimals
+          ),
+        },
+      ];
+
+      // Dust outputs: collect all intermediate tokens
+      const withdrawDestIntermediateTokens = collectIntermediateTokens({
+        context: 'withdraw-dest',
+        bridgeToken: quote.option.destBridgeToken,
+        swapSteps: quote.destSteps,
+      });
+      const dustOutputs = buildDustOutputs(withdrawDestIntermediateTokens);
+
+      // Merge: required first, then dust
+      const outputs = mergeOutputs(requiredOutputs, dustOutputs);
+
       const zapPayload: ZapPayload = {
         recipient: userAddress,
-        outputs: [
-          {
-            token: getTokenAddress(wantedOutput),
-            // Double slippage is intentional: minOutputs already includes aggregator slippage,
-            // but the destination swap executes minutes later (after CCTP bridge), so we apply
-            // additional slippage as safety margin for quote staleness.
-            minOutputAmount: toWeiString(
-              slipBy(destSwapZap.minOutputs[0].amount, slippage, wantedOutput.decimals),
-              wantedOutput.decimals
-            ),
-          },
-        ],
+        outputs,
         relay: NO_RELAY,
         route: destSwapZap.zaps,
       };
@@ -658,13 +776,33 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     }
 
     // 3. Build UserlessZapRequest (vault chain)
+    // Build dust outputs for source chain (withdraw flow)
+    const withdrawQuoteConfig: WithdrawSourceConfig['withdrawQuote'] =
+      isZapQuote(quote.sourceWithdrawQuote) ?
+        {
+          isZapQuote: true,
+          outputs: quote.sourceWithdrawQuote.outputs,
+          inputs: quote.sourceWithdrawQuote.inputs,
+          returned: quote.sourceWithdrawQuote.returned,
+          steps: quote.sourceWithdrawQuote.steps,
+        }
+      : { isZapQuote: false };
+
+    const withdrawSourceIntermediateTokens = collectIntermediateTokens({
+      context: 'withdraw-source',
+      inputs: quote.inputs,
+      bridgeToken: quote.option.bridgeToken,
+      withdrawQuote: withdrawQuoteConfig,
+    });
+    const sourceOutputs = buildDustOutputs(withdrawSourceIntermediateTokens);
+
     const zapRequest: UserlessZapRequest = {
       order: {
         inputs: quote.inputs.map(i => ({
           token: getTokenAddress(i.token),
           amount: toWeiString(i.amount, i.token.decimals),
         })),
-        outputs: [], // empty: USDC burned via CCTP, nothing to return on source chain
+        outputs: sourceOutputs,
         relay: NO_RELAY,
       },
       steps: sourceZapSteps,
@@ -695,8 +833,10 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     for (const strategy of strategies) {
       try {
         const options = await strategy.fetchDepositOptions();
-        const usdcOption = options.find(o =>
-          o.inputs.some(i => i.address.toLowerCase() === destUSDC.address.toLowerCase())
+        const usdcOption = options.find(
+          o =>
+            o.inputs.length === 1 &&
+            o.inputs[0].address.toLowerCase() === destUSDC.address.toLowerCase()
         );
         if (usdcOption && isComposableStrategy(strategy)) {
           return { strategy, option: usdcOption };
@@ -734,6 +874,202 @@ function isComposableStrategy(strategy: IStrategy): strategy is IComposableStrat
     'fetchDepositUserlessZapBreakdown' in strategy &&
     'fetchWithdrawUserlessZapBreakdown' in strategy
   );
+}
+
+// ===== Dust Output Helper Types and Functions =====
+
+/**
+ * Configuration for deposit destination dust outputs.
+ * Used when building ZapPayload for CircleBeefyZapReceiver on dest chain.
+ */
+type DepositDestConfig = {
+  context: 'deposit-dest';
+  pickTokensFrom: {
+    outputs: TokenAmount[];
+    inputs: InputTokenAmount[];
+    returned: TokenAmount[];
+  };
+  bridgeToken: TokenEntity;
+  swapSteps: ZapQuoteStep[];
+};
+
+/**
+ * Configuration for deposit source dust outputs.
+ * Used when building UserlessZapRequest for source chain (USDC burn case).
+ */
+type DepositSourceConfig = {
+  context: 'deposit-source';
+  inputs: InputTokenAmount[];
+  bridgeToken: TokenEntity;
+  swapStep?: ZapQuoteStepSwapAggregator;
+};
+
+/**
+ * Configuration for withdraw destination dust outputs.
+ * Used when building ZapPayload for destination swap (non-USDC output).
+ */
+type WithdrawDestConfig = {
+  context: 'withdraw-dest';
+  bridgeToken: TokenEntity;
+  swapSteps: ZapQuoteStep[];
+};
+
+/**
+ * Configuration for withdraw source dust outputs.
+ * Used when building UserlessZapRequest for vault chain (withdrawal flow).
+ */
+type WithdrawSourceConfig = {
+  context: 'withdraw-source';
+  inputs: InputTokenAmount[];
+  bridgeToken: TokenEntity;
+  withdrawQuote:
+    | {
+        isZapQuote: true;
+        outputs: TokenAmount[];
+        inputs: InputTokenAmount[];
+        returned: TokenAmount[];
+        steps: ZapQuoteStep[];
+      }
+    | { isZapQuote: false };
+};
+
+/**
+ * Discriminated union for all dust output building contexts.
+ */
+type IntermediateTokenConfig =
+  | DepositDestConfig
+  | DepositSourceConfig
+  | WithdrawDestConfig
+  | WithdrawSourceConfig;
+
+/**
+ * Collects all intermediate tokens that should be returned as dust outputs.
+ * Uses discriminated union to handle different contexts type-safely.
+ *
+ * Each context has different token sources:
+ * - deposit-dest: pickTokens + bridgeToken + swapSteps + zapSteps
+ * - deposit-source: inputs + bridgeToken + optional swapStep + zapSteps
+ * - withdraw-dest: bridgeToken + swapSteps + zapSteps
+ * - withdraw-source: inputs + bridgeToken + optional withdrawQuote + zapSteps
+ *
+ * @param config - Configuration with context-specific token sources
+ * @returns Array of unique TokenEntity objects (deduplicated by chainId + address)
+ */
+function collectIntermediateTokens(config: IntermediateTokenConfig): TokenEntity[] {
+  const tokens: TokenEntity[] = [];
+
+  switch (config.context) {
+    case 'deposit-dest': {
+      // pickTokens(outputs, inputs, returned)
+      const pickedTokens = pickTokens(
+        config.pickTokensFrom.outputs,
+        config.pickTokensFrom.inputs,
+        config.pickTokensFrom.returned
+      );
+      tokens.push(...pickedTokens);
+
+      // Bridge token (USDC arrives from bridge)
+      tokens.push(config.bridgeToken);
+
+      // Swap step tokens
+      config.swapSteps.filter(isZapQuoteStepSwap).forEach(swapStep => {
+        tokens.push(swapStep.fromToken);
+        tokens.push(swapStep.toToken);
+      });
+
+      break;
+    }
+
+    case 'deposit-source': {
+      // Input tokens (in case of partial consumption)
+      tokens.push(...config.inputs.map(i => i.token));
+
+      // Bridge token (USDC before burn)
+      tokens.push(config.bridgeToken);
+
+      // Swap step tokens (if present)
+      if (config.swapStep) {
+        tokens.push(config.swapStep.fromToken);
+        tokens.push(config.swapStep.toToken);
+      }
+
+      break;
+    }
+
+    case 'withdraw-dest': {
+      // Bridge token (USDC)
+      tokens.push(config.bridgeToken);
+
+      // Swap step tokens
+      config.swapSteps.filter(isZapQuoteStepSwap).forEach(swapStep => {
+        tokens.push(swapStep.fromToken);
+        tokens.push(swapStep.toToken);
+      });
+
+      break;
+    }
+
+    case 'withdraw-source': {
+      // Input tokens (mooToken)
+      tokens.push(...config.inputs.map(i => i.token));
+
+      // Bridge token (USDC before burn)
+      tokens.push(config.bridgeToken);
+
+      // Withdraw quote tokens (if it's a zap quote)
+      if (config.withdrawQuote.isZapQuote) {
+        const pickedTokens = pickTokens(
+          config.withdrawQuote.outputs,
+          config.withdrawQuote.inputs,
+          config.withdrawQuote.returned
+        );
+        tokens.push(...pickedTokens);
+
+        // Swap intermediates from withdraw steps
+        config.withdrawQuote.steps.filter(isZapQuoteStepSwap).forEach(swapStep => {
+          tokens.push(swapStep.fromToken);
+          tokens.push(swapStep.toToken);
+        });
+      }
+
+      break;
+    }
+  }
+
+  // Return unique tokens (by chainId + address)
+  return uniqueTokens(tokens);
+}
+
+/**
+ * Converts token entities to dust outputs (minOutputAmount='0').
+ * Deduplicates by token address.
+ *
+ * @param tokens - Array of token entities
+ * @returns Array of OrderOutput with minOutputAmount='0'
+ */
+function buildDustOutputs(tokens: TokenEntity[]): OrderOutput[] {
+  // Convert to OrderOutput with minOutputAmount='0'
+  const outputs = tokens.map(token => ({
+    token: getTokenAddress(token),
+    minOutputAmount: '0',
+  }));
+
+  // Deduplicate by token address (uniqBy keeps first occurrence)
+  return uniqBy(outputs, output => output.token);
+}
+
+/**
+ * Merges required outputs and dust outputs, ensuring required outputs take precedence.
+ * Deduplicates by token address, keeping the first occurrence (required outputs come first).
+ *
+ * @param required - Required outputs with proper slippage settings
+ * @param dust - Dust outputs with minOutputAmount='0'
+ * @returns Merged and deduplicated OrderOutput array
+ */
+function mergeOutputs(required: OrderOutput[], dust: OrderOutput[]): OrderOutput[] {
+  // Concatenate required first, then dust
+  // uniqBy keeps first occurrence, so required outputs take precedence
+  return uniqBy(required.concat(dust), output => output.token);
 }
 
 export const CrossChainStrategy = CrossChainStrategyImpl satisfies IZapStrategyStatic<StrategyId>;

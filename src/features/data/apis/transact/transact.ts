@@ -9,7 +9,7 @@ import { selectSwapAggregatorsExistForChain, selectZapByChainId } from '../../se
 import type { BeefyStateFn } from '../../store/types.ts';
 import { isDefined } from '../../utils/array-utils.ts';
 import { getSwapAggregator } from '../instances.ts';
-// import * as cctp from './cctp/CCTPProvider.ts';
+import * as cctp from './cctp/CCTPProvider.ts';
 import {
   type AnyComposableStrategy,
   type IComposableStrategyStatic,
@@ -156,19 +156,18 @@ export class TransactApi implements ITransactApi {
       });
     }
 
-    // // Cross-chain deposit options
-    // if (isZapTransactHelpers(helpers) && cctp.isChainSupported(helpers.vault.chainId)) {
-    //   try {
-    //     const { CrossChainStrategy } = await import(
-    //       './strategies/cross-chain/CrossChainStrategy.ts'
-    //     );
-    //     const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
-    //     const xChainOptions = await xChainStrategy.fetchDepositOptions();
-    //     options.push(...xChainOptions);
-    //   } catch (err) {
-    //     console.warn('Failed to load cross-chain deposit options:', err);
-    //   }
-    // }
+    // Cross-chain deposit options
+    if (isZapTransactHelpers(helpers) && cctp.isChainSupported(helpers.vault.chainId)) {
+      try {
+        const { CrossChainStrategy } =
+          await import('./strategies/cross-chain/CrossChainStrategy.ts');
+        const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
+        const xChainOptions = await xChainStrategy.fetchDepositOptions();
+        options.push(...xChainOptions);
+      } catch (err) {
+        console.warn('Failed to load cross-chain deposit options:', err);
+      }
+    }
 
     // if not disabled by a zap strategy, add the vault deposit option as the first item
     if (vaultDepositOption) {
@@ -280,19 +279,18 @@ export class TransactApi implements ITransactApi {
       });
     }
 
-    // // Cross-chain withdraw options
-    // if (isZapTransactHelpers(helpers) && cctp.isChainSupported(helpers.vault.chainId)) {
-    //   try {
-    //     const { CrossChainStrategy } = await import(
-    //       './strategies/cross-chain/CrossChainStrategy.ts'
-    //     );
-    //     const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
-    //     const xChainOptions = await xChainStrategy.fetchWithdrawOptions();
-    //     options.push(...xChainOptions);
-    //   } catch (err) {
-    //     console.warn('Failed to load cross-chain withdraw options:', err);
-    //   }
-    // }
+    // Cross-chain withdraw options
+    if (isZapTransactHelpers(helpers) && cctp.isChainSupported(helpers.vault.chainId)) {
+      try {
+        const { CrossChainStrategy } =
+          await import('./strategies/cross-chain/CrossChainStrategy.ts');
+        const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
+        const xChainOptions = await xChainStrategy.fetchWithdrawOptions();
+        options.push(...xChainOptions);
+      } catch (err) {
+        console.warn('Failed to load cross-chain withdraw options:', err);
+      }
+    }
 
     // if not disabled by a zap strategy, add the vault withdraw option as the first item
     if (vaultWithdrawOption) {
