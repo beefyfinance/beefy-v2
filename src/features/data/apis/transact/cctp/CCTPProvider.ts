@@ -55,9 +55,13 @@ export function fetchBridgeQuote(
   const fromConfig = getChainConfig(fromChainId);
   const toConfig = getChainConfig(toChainId);
   const timeEstimate = fromConfig.time.outgoing + toConfig.time.incoming;
+  // Ceil fee to token precision so toAmount never overestimates what actually arrives on-chain
   const fee =
     fromConfig.fastFeeBps !== undefined ?
-      computeMaxFee(amount, fromConfig.fastFeeBps)
+      computeMaxFee(amount, fromConfig.fastFeeBps).decimalPlaces(
+        fromToken.decimals,
+        BigNumber.ROUND_CEIL
+      )
     : new BigNumber(0);
 
   // Truncate to token precision so downstream strategies never see sub-wei amounts
