@@ -327,7 +327,8 @@ export const selectTransactVaultHasCrossChainZap = (state: BeefyState) => {
   const vaultId = state.ui.transact.vaultId;
   if (!vaultId) return false;
   const vault = selectVaultById(state, vaultId);
-  return vault.zaps?.some(z => z.strategyId === 'cross-chain') ?? false;
+  const cctpChainIds = getSupportedChainIds();
+  return cctpChainIds.includes(vault.chainId);
 };
 
 export type CrossChainChainOption = {
@@ -347,16 +348,9 @@ export const selectCrossChainSortedChains = (
   vaultId: VaultEntity['id']
 ): CrossChainChainOption[] => {
   const vault = selectVaultById(state, vaultId);
-  const crossChainZap = vault.zaps?.find(z => z.strategyId === 'cross-chain');
-  if (!crossChainZap) return [];
-
-  const supportedSourceChains =
-    'supportedSourceChains' in crossChainZap ? crossChainZap.supportedSourceChains : undefined;
-
   const cctpChainIds = getSupportedChainIds();
-  const sourceChains = supportedSourceChains ?? cctpChainIds;
   // Deduplicated set: vault chain + supported source chains
-  const allChainIds = Array.from(new Set([vault.chainId, ...sourceChains]));
+  const allChainIds = Array.from(new Set([vault.chainId, ...cctpChainIds]));
 
   const walletAddress = selectWalletAddressIfKnown(state);
   const chainsWithBalance: CrossChainChainOption[] = allChainIds.map(chainId => {
