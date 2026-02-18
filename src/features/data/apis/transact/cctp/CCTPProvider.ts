@@ -37,12 +37,13 @@ export function getUSDCForChain(chainId: ChainEntity['id'], state: BeefyState): 
 /**
  * Compute the max fee in token units from an amount using the source chain's bps.
  * Adds a 15% buffer to account for potential fee fluctuations as recommended by Circle.
+ * Ceils to token precision so the returned value is a real max (never underestimates).
  * @see https://developers.circle.com/cctp/concepts/fees#maximum-fee-parameter
  */
-export function computeMaxFee(amount: BigNumber, feeBps: number): BigNumber {
+export function computeMaxFee(amount: BigNumber, feeBps: number, decimals: number): BigNumber {
   const calculatedFee = amount.multipliedBy(feeBps).dividedBy(10000);
-  // Add 15% buffer and round up to ensure we never underpay
-  return calculatedFee.multipliedBy(1.15);
+  // Add 15% buffer and ceil to token precision to ensure we never underpay
+  return calculatedFee.multipliedBy(1.15).decimalPlaces(decimals, BigNumber.ROUND_CEIL);
 }
 
 export function fetchBridgeQuote(
@@ -55,13 +56,9 @@ export function fetchBridgeQuote(
   const fromConfig = getChainConfig(fromChainId);
   const toConfig = getChainConfig(toChainId);
   const timeEstimate = fromConfig.time.outgoing + toConfig.time.incoming;
-  // Ceil fee to token precision so toAmount never overestimates what actually arrives on-chain
   const fee =
     fromConfig.fastFeeBps !== undefined ?
-      computeMaxFee(amount, fromConfig.fastFeeBps).decimalPlaces(
-        fromToken.decimals,
-        BigNumber.ROUND_CEIL
-      )
+      computeMaxFee(amount, fromConfig.fastFeeBps, fromToken.decimals)
     : new BigNumber(0);
 
   // Truncate to token precision so downstream strategies never see sub-wei amounts

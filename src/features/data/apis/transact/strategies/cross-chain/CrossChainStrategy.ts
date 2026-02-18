@@ -265,73 +265,10 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       throw new Error(`No zap router on source chain ${sourceChainId}`);
     }
 
-    // 1. Re-load destination strategy and get composable breakdown
-    const destHelpers = await (
-      await getTransactApi()
-    ).getHelpersForChain(destChainId, quote.option.vaultId, getState);
-    const destStrategies = await (await getTransactApi()).getZapStrategiesForVault(destHelpers);
-    const destStrategy = destStrategies.find(s => s.id === quote.destQuote.option.strategyId);
-    if (!destStrategy || !isComposableStrategy(destStrategy)) {
-      throw new Error(
-        `Destination strategy '${quote.destQuote.option.strategyId}' on chain ${destChainId} is not composable`
-      );
-    }
-    if (!isZapQuote(quote.destQuote)) {
-      throw new Error('Destination quote is not a zap quote');
-    }
-
-    const breakdown = await destStrategy.fetchDepositUserlessZapBreakdown(
-      quote.destQuote as Parameters<typeof destStrategy.fetchDepositUserlessZapBreakdown>[0]
-    );
-
-    console.debug('[CrossChain] Destination strategy breakdown', {
-      strategyId: quote.destQuote.option.strategyId,
-      steps: breakdown.zapRequest.steps.length,
-      outputs: breakdown.zapRequest.order.outputs.length,
-      expectedTokens: breakdown.expectedTokens.length,
-      zapRequestSteps: breakdown.zapRequest.steps,
-      zapRequestOutputs: breakdown.zapRequest.order.outputs,
-    });
-
-    // 2. Build ZapPayload for CircleBeefyZapReceiver on dest chain
-    // Required outputs: from destination strategy (already have slippage)
-    const requiredOutputs: OrderOutput[] = breakdown.zapRequest.order.outputs;
-
-    // Dust outputs: collect all intermediate tokens
-    const intermediateTokens = collectIntermediateTokens({
-      context: 'deposit-dest',
-      pickTokensFrom: {
-        outputs: quote.destQuote.outputs,
-        inputs: quote.destQuote.inputs,
-        returned: isZapQuote(quote.destQuote) ? quote.destQuote.returned : [],
-      },
-      bridgeToken: quote.option.destBridgeToken,
-      swapSteps: quote.destSteps,
-    });
-    const dustOutputs = buildDustOutputs(intermediateTokens);
-
-    // Merge: required first (correct slippage), then dust
-    const outputs = mergeOutputs(requiredOutputs, dustOutputs);
-
-    const zapPayload: ZapPayload = {
-      recipient: userAddress,
-      outputs,
-      relay: NO_RELAY,
-      route: breakdown.zapRequest.steps,
-    };
-    const hookData = buildHookData(destChainId, zapPayload);
-
-    console.debug('[CrossChain] ZapPayload and hookData', {
-      zapPayload,
-      hookDataLength: hookData.length,
-      hookData,
-    });
-
-    // 3. Build source chain ZapSteps
+    // 1. Build source chain swap first (to get step-time USDC amount)
     const sourceZapSteps: ZapStep[] = [];
     const minBalances = new Balances(quote.inputs);
 
-    // Source swap (if needed)
     const sourceSwapStep = quote.sourceSteps.find(isZapQuoteStepSwap);
     if (sourceSwapStep && isZapQuoteStepSwapAggregator(sourceSwapStep)) {
       console.debug('[CrossChain] Building source swap step', {
@@ -370,13 +307,103 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       console.debug('[CrossChain] No source swap needed');
     }
 
-    // CCTP burn step
+    // 2. Compute step-time bridge quote from slippage-adjusted USDC balance
+    const usdcBalance = minBalances.get(bridgeToken);
+    const { destBridgeToken } = quote.option;
+    const stepBridgeQuote = fetchBridgeQuote(
+      sourceChainId,
+      destChainId,
+      usdcBalance,
+      bridgeToken as TokenErc20,
+      destBridgeToken as TokenErc20
+    );
+
+    console.debug('[CrossChain] Step-time bridge quote', {
+      usdcBalance: usdcBalance.toString(10),
+      toAmount: stepBridgeQuote.toAmount.toString(10),
+      fee: stepBridgeQuote.fee.toString(10),
+    });
+
+    // 3. Re-quote destination strategy with step-time bridge output
+    const destHelpers = await (
+      await getTransactApi()
+    ).getHelpersForChain(destChainId, quote.option.vaultId, getState);
+    const destStrategies = await (await getTransactApi()).getZapStrategiesForVault(destHelpers);
+    const destMatch = await this.findDestStrategyForDeposit(destStrategies, destBridgeToken);
+    if (!destMatch) {
+      throw new Error(
+        `No composable destination strategy accepts USDC on chain ${destChainId} for vault ${quote.option.vaultId}`
+      );
+    }
+
+    // Call fetchDepositQuote on IStrategy before narrowing to IComposableStrategy
+    const stepDestQuote = await destMatch.strategy.fetchDepositQuote(
+      [{ token: destBridgeToken, amount: stepBridgeQuote.toAmount, max: false }],
+      destMatch.option
+    );
+    if (!isZapQuote(stepDestQuote)) {
+      throw new Error('Destination quote is not a zap quote');
+    }
+
+    if (!isComposableStrategy(destMatch.strategy)) {
+      throw new Error(
+        `Destination strategy '${destMatch.strategy.id}' on chain ${destChainId} is not composable`
+      );
+    }
+
+    const breakdown = await destMatch.strategy.fetchDepositUserlessZapBreakdown(
+      stepDestQuote as Parameters<typeof destMatch.strategy.fetchDepositUserlessZapBreakdown>[0]
+    );
+
+    console.debug('[CrossChain] Destination strategy breakdown (step-time)', {
+      strategyId: destMatch.strategy.id,
+      steps: breakdown.zapRequest.steps.length,
+      outputs: breakdown.zapRequest.order.outputs.length,
+      expectedTokens: breakdown.expectedTokens.length,
+      zapRequestSteps: breakdown.zapRequest.steps,
+      zapRequestOutputs: breakdown.zapRequest.order.outputs,
+    });
+
+    // 4. Build ZapPayload for CircleBeefyZapReceiver on dest chain
+    const requiredOutputs: OrderOutput[] = breakdown.zapRequest.order.outputs;
+
+    const intermediateTokens = collectIntermediateTokens({
+      context: 'deposit-dest',
+      pickTokensFrom: {
+        outputs: stepDestQuote.outputs,
+        inputs: stepDestQuote.inputs,
+        returned: stepDestQuote.returned,
+      },
+      bridgeToken: destBridgeToken,
+      swapSteps: stepDestQuote.steps,
+    });
+    const dustOutputs = buildDustOutputs(intermediateTokens);
+
+    const outputs = mergeOutputs(requiredOutputs, dustOutputs);
+
+    const zapPayload: ZapPayload = {
+      recipient: userAddress,
+      outputs,
+      relay: NO_RELAY,
+      route: breakdown.zapRequest.steps,
+    };
+    const hookData = buildHookData(destChainId, zapPayload);
+
+    console.debug('[CrossChain] ZapPayload and hookData', {
+      zapPayload,
+      hookDataLength: hookData.length,
+      hookData,
+    });
+
+    // 5. CCTP burn step
     const sourceConfig = getChainConfig(sourceChainId);
     const destConfig = getChainConfig(destChainId);
-    const usdcBalance = minBalances.get(bridgeToken);
     const maxFee =
       sourceConfig.fastFeeBps !== undefined ?
-        toWeiBigInt(computeMaxFee(usdcBalance, sourceConfig.fastFeeBps), bridgeToken.decimals)
+        toWeiBigInt(
+          computeMaxFee(usdcBalance, sourceConfig.fastFeeBps, bridgeToken.decimals),
+          bridgeToken.decimals
+        )
       : 0n;
 
     console.debug('[CrossChain] Building CCTP burn step', {
@@ -405,7 +432,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       tokens: burnStep.tokens.map(t => ({ token: t.token, index: t.index })),
     });
 
-    // 4. Build UserlessZapRequest (source chain)
+    // 6. Build UserlessZapRequest (source chain)
     // Build dust outputs for source chain (no required outputs - USDC is burned)
     const sourceSwapStepOrUndefined =
       sourceSwapStep && isZapQuoteStepSwapAggregator(sourceSwapStep) ? sourceSwapStep : undefined;
@@ -686,35 +713,66 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
     const sourceConfig = getChainConfig(sourceChainId);
     const destConfig = getChainConfig(destChainId);
+
+    // 3. Compute step-time USDC from source withdrawal output (slippage-adjusted)
+    const usdcOutput = quote.sourceWithdrawQuote.outputs.find(
+      o => o.token.address.toLowerCase() === bridgeToken.address.toLowerCase()
+    );
+    if (!usdcOutput || usdcOutput.amount.lte(BIG_ZERO)) {
+      throw new Error('Source withdrawal quote did not produce USDC');
+    }
+    const stepUsdcAmount = slipBy(usdcOutput.amount, slippage, bridgeToken.decimals);
+
+    // 4. Step-time bridge quote from slippage-adjusted USDC
+    const stepBridgeQuote = fetchBridgeQuote(
+      sourceChainId,
+      destChainId,
+      stepUsdcAmount,
+      bridgeToken as TokenErc20,
+      destBridgeToken as TokenErc20
+    );
+
     const maxFee =
       sourceConfig.fastFeeBps !== undefined ?
         toWeiBigInt(
-          computeMaxFee(quote.bridgeQuote.fromAmount, sourceConfig.fastFeeBps),
+          computeMaxFee(stepUsdcAmount, sourceConfig.fastFeeBps, bridgeToken.decimals),
           bridgeToken.decimals
         )
       : 0n;
 
     if (needsDestHook) {
       // Path B: Non-USDC output → burn with hooks (dest swap via CircleBeefyZapReceiver)
-      const destSwapStep = quote.destSteps.find(isZapQuoteStepSwap);
-      if (!destSwapStep || !isZapQuoteStepSwapAggregator(destSwapStep)) {
-        throw new Error('Expected aggregator swap step for destination chain');
-      }
-
       const destZap = selectZapByChainId(state, destChainId);
       if (!destZap) {
         throw new Error(`No zap router on destination chain ${destChainId}`);
       }
 
       const wantedOutput = quote.option.wantedOutputs[0];
+
+      // 5. Re-quote destination swap with step-time bridge output (fresh pathId)
+      const destSwapQuotes = await swapAggregator.fetchQuotes(
+        {
+          fromToken: destBridgeToken,
+          fromAmount: stepBridgeQuote.toAmount,
+          toToken: wantedOutput,
+          vaultId: quote.option.vaultId,
+        },
+        state,
+        this.options.swap
+      );
+      if (!destSwapQuotes.length) {
+        throw new Error('No swap quotes available for destination chain swap at step time');
+      }
+      const bestDestSwap = destSwapQuotes[0];
+
       const destSwapZap = await fetchZapAggregatorSwap(
         {
-          quote: destSwapStep.quote,
-          inputs: [{ token: destBridgeToken, amount: quote.bridgeQuote.toAmount }],
-          outputs: [{ token: wantedOutput, amount: destSwapStep.toAmount }],
+          quote: bestDestSwap,
+          inputs: [{ token: destBridgeToken, amount: stepBridgeQuote.toAmount }],
+          outputs: [{ token: wantedOutput, amount: bestDestSwap.toAmount }],
           maxSlippage: slippage,
           zapRouter: destZap.router,
-          providerId: destSwapStep.providerId,
+          providerId: bestDestSwap.providerId,
           insertBalance: true,
         },
         swapAggregator,
