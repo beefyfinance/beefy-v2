@@ -11,6 +11,7 @@ import type { UserlessZapRequest, ZapOrder, ZapStep } from '../../apis/transact/
 import type { TokenEntity } from '../../entities/token.ts';
 import { isGovVault, type VaultEntity } from '../../entities/vault.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
+import type { GasPricing } from '../../apis/gas-prices/gas-prices.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectTokenByAddress, selectTokenByAddressOrUndefined } from '../../selectors/tokens.ts';
 import { selectVaultById } from '../../selectors/vaults.ts';
@@ -30,6 +31,44 @@ import {
   txWallet,
 } from './common.ts';
 
+type GasPriceCache = {
+  chainId: ChainEntity['id'];
+  promise: Promise<GasPricing>;
+  timestamp: number;
+};
+
+const GAS_PRICE_TTL_MS = 30_000;
+let gasPriceCache: GasPriceCache | null = null;
+
+/** Kick off a gas price fetch that can be consumed later by crossChainZapExecuteOrder */
+export function prefetchGasPrice(chain: ChainEntity): void {
+  gasPriceCache = {
+    chainId: chain.id,
+    promise: getGasPriceOptions(chain),
+    timestamp: Date.now(),
+  };
+  // Suppress unhandled rejection if nobody consumes this
+  gasPriceCache.promise.catch(err =>
+    console.warn('[XChainPerf] Prefetched gas price rejected (suppressed)', err)
+  );
+}
+
+async function getPrefetchedOrFreshGasPrice(chain: ChainEntity): Promise<GasPricing> {
+  const cached = gasPriceCache;
+  gasPriceCache = null; // consume once
+
+  if (cached && cached.chainId === chain.id && Date.now() - cached.timestamp < GAS_PRICE_TTL_MS) {
+    try {
+      return await cached.promise;
+    } catch {
+      // Prefetch failed — fall back to fresh
+      console.warn('[XChainPerf] Prefetched gas price failed, fetching fresh');
+    }
+  }
+
+  return getGasPriceOptions(chain);
+}
+
 /**
  * Execute a zap order on a source chain different from the vault's chain.
  * Modeled after zapExecuteOrder but uses sourceChainId for chain/zap/rpc lookups.
@@ -41,10 +80,19 @@ export const crossChainZapExecuteOrder = (
   expectedTokens: TokenEntity[]
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
+    console.time('[XChainPerf] G: crossChainZapExecuteOrder TOTAL');
+    console.debug('[XChainPerf] G: crossChainZapExecuteOrder START', {
+      sourceChainId,
+      vaultId,
+      stepCount: params.steps.length,
+      inputCount: params.order.inputs.length,
+      outputCount: params.order.outputs.length,
+    });
     txStart(dispatch);
     const state = getState();
     const address = selectWalletAddress(state);
     if (!address) {
+      console.timeEnd('[XChainPerf] G: crossChainZapExecuteOrder TOTAL');
       throw new Error(`No wallet connected`);
     }
 
@@ -112,10 +160,16 @@ export const crossChainZapExecuteOrder = (
       })),
     }));
 
+    console.time('[XChainPerf] G.1: getWalletConnectionApi');
     const walletApi = await getWalletConnectionApi();
+    console.timeEnd('[XChainPerf] G.1: getWalletConnectionApi');
     const publicClient = rpcClientManager.getBatchClient(sourceChainId);
+    console.time('[XChainPerf] G.2: getConnectedViemClient');
     const walletClient = await walletApi.getConnectedViemClient();
-    const gasPrices = await getGasPriceOptions(chain);
+    console.timeEnd('[XChainPerf] G.2: getConnectedViemClient');
+    console.time('[XChainPerf] G.3: getGasPriceOptions');
+    const gasPrices = await getPrefetchedOrFreshGasPrice(chain);
+    console.timeEnd('[XChainPerf] G.3: getGasPriceOptions');
     const nativeInput = castedOrder.inputs.find(input => input.token === ZERO_ADDRESS);
 
     const contract = fetchWalletContract(zap.router, BeefyZapRouterAbi, walletClient);
@@ -128,7 +182,10 @@ export const crossChainZapExecuteOrder = (
 
     txWallet(dispatch);
     console.debug('crossChainExecuteOrder', { order: castedOrder, steps: castedSteps, options });
+    console.time('[XChainPerf] G.4: contract.write.executeOrder (wallet prompt)');
     const transaction = contract.write.executeOrder([castedOrder, castedSteps], options);
+    console.timeEnd('[XChainPerf] G.4: contract.write.executeOrder (wallet prompt)');
+    console.timeEnd('[XChainPerf] G: crossChainZapExecuteOrder TOTAL');
 
     bindTransactionEvents(
       dispatch,
