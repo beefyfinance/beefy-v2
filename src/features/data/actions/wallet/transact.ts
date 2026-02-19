@@ -5,6 +5,7 @@ import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { getTransactApi } from '../../apis/instances.ts';
 import { serializeError } from '../../apis/transact/strategies/error.ts';
 import {
+  isCrossChainOption,
   isDepositOption,
   isDepositQuote,
   isWithdrawOption,
@@ -16,6 +17,7 @@ import { isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
 import type { VaultGov } from '../../entities/vault.ts';
 import type { Step } from '../../reducers/wallet/stepper-types.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
+import { selectChainById } from '../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../selectors/transact.ts';
 import type { BeefyStateFn, BeefyThunk } from '../../store/types.ts';
 import {
@@ -25,6 +27,7 @@ import {
   transactConfirmUnneeded,
 } from '../transact.ts';
 import { approve } from './approval.ts';
+import { prefetchGasPrice } from './cross-chain.ts';
 import { claimGovVault } from './gov.ts';
 import { stepperReset, stepperStartWithSteps } from './stepper.ts';
 
@@ -50,6 +53,13 @@ export async function getTransactSteps(
 
   const steps: Step[] = [];
   const state = getState();
+
+  // Prefetch gas price for cross-chain options (runs in background, consumed by crossChainZapExecuteOrder)
+  if (isCrossChainOption(quote.option)) {
+    const sourceChain = selectChainById(state, quote.option.sourceChainId);
+    prefetchGasPrice(sourceChain);
+  }
+
   console.time('[XChainPerf] A.1: getTransactApi()');
   const api = await getTransactApi();
   console.timeEnd('[XChainPerf] A.1: getTransactApi()');
