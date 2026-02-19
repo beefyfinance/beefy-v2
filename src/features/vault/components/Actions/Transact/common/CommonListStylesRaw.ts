@@ -11,9 +11,7 @@ export const buildLpLink = css.raw({
 });
 
 export const listItemArrow = css.raw({
-  color: 'text.middle',
-  height: '24px',
-  width: '8px',
+  color: 'inherit',
   flexShrink: 0,
 });
 

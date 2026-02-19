@@ -94,6 +94,7 @@ export const ListItemName = styled('span', {
 
 export const ListItemBalance = styled('span', {
   base: {
+    color: 'inherit',
     flexShrink: 1,
     minWidth: 0,
     overflow: 'hidden',

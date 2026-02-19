@@ -11,6 +11,7 @@ import {
   type TransactQuote,
 } from '../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
+import type { TokenEntity } from '../entities/token.ts';
 import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
 import { TransactStatus } from '../reducers/wallet/transact-types.ts';
 import type { BeefyState } from '../store/types.ts';
@@ -330,10 +331,16 @@ export const selectTransactVaultHasCrossChainZap = (state: BeefyState) => {
   return cctpChainIds.includes(vault.chainId);
 };
 
+export type CrossChainTokenOption = {
+  token: TokenEntity;
+  balanceUsd: BigNumber;
+};
+
 export type CrossChainChainOption = {
   chainId: ChainEntity['id'];
   chainName: string;
   balanceUsd: BigNumber;
+  tokens: CrossChainTokenOption[];
 };
 
 /**
@@ -354,11 +361,45 @@ export const selectCrossChainSortedChains = (
   const walletAddress = selectWalletAddressIfKnown(state);
   const chainsWithBalance: CrossChainChainOption[] = allChainIds.map(chainId => {
     const chain = selectChainById(state, chainId);
-    const balanceUsd =
+    const totalBalanceUsd =
       walletAddress ?
         selectDepositOptionTokensBalanceByChainId(state, chainId, walletAddress)
       : BIG_ZERO;
-    return { chainId, chainName: chain.name, balanceUsd };
+
+    const selectionIds = state.ui.transact.selections.byChainId[chainId];
+    const seenAddresses = new Set<string>();
+    const tokenOptions: CrossChainTokenOption[] = [];
+    if (selectionIds) {
+      for (const selectionId of selectionIds) {
+        const selection = state.ui.transact.selections.bySelectionId[selectionId];
+        if (!selection) continue;
+        for (const token of selection.tokens) {
+          const key = `${token.chainId}:${token.address.toLowerCase()}`;
+          if (seenAddresses.has(key)) continue;
+          seenAddresses.add(key);
+          let tokenBalanceUsd = BIG_ZERO;
+          if (walletAddress) {
+            const balance = selectUserBalanceOfToken(
+              state,
+              token.chainId,
+              token.address,
+              walletAddress
+            );
+            const price = selectTokenPriceByAddress(state, token.chainId, token.address);
+            tokenBalanceUsd = balance.multipliedBy(price);
+          }
+          tokenOptions.push({ token, balanceUsd: tokenBalanceUsd });
+        }
+      }
+    }
+
+    const sortedTokens = orderBy(
+      tokenOptions,
+      [o => o.balanceUsd.toNumber(), o => o.token.symbol.toLowerCase()],
+      ['desc', 'asc']
+    );
+
+    return { chainId, chainName: chain.name, balanceUsd: totalBalanceUsd, tokens: sortedTokens };
   });
 
   return orderBy(
