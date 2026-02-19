@@ -80,9 +80,10 @@ export const ListItemRightSide = styled('div', {
     display: 'flex',
     flexWrap: 'nowrap',
     alignItems: 'center',
+    justifyContent: 'flex-end',
     gap: '8px',
     flexShrink: 1,
-    minWidth: 0,
+    minWidth: '80px',
   },
 });
 
