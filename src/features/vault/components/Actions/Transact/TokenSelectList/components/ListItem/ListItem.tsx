@@ -1,6 +1,4 @@
 import { memo, useCallback, useMemo } from 'react';
-import { legacyMakeStyles } from '../../../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
 import { formatTokenDisplayCondensed } from '../../../../../../../../helpers/format.ts';
 import type { ChainEntity } from '../../../../../../../data/entities/chain.ts';
 import { css, type CssStyles, cx } from '@repo/styles/css';
@@ -9,8 +7,15 @@ import type BigNumber from 'bignumber.js';
 import { TokensImage } from '../../../../../../../../components/TokenImage/TokenImage.tsx';
 import { ListJoin } from '../../../../../../../../components/ListJoin.tsx';
 import ChevronRight from '../../../../../../../../images/icons/chevron-right.svg?react';
-
-const useStyles = legacyMakeStyles(styles);
+import {
+  ListItemBalance,
+  ListItemButton,
+  ListItemName,
+  ListItemRightSide,
+  ListItemSide,
+  ListItemTag,
+} from '../../../common/CommonListStyles.tsx';
+import { listItemArrow } from '../../../common/CommonListStylesRaw.ts';
 
 export type ListItemProps = {
   selectionId: string;
@@ -31,27 +36,26 @@ export const ListItem = memo(function ListItem({
   onSelect,
   tag,
 }: ListItemProps) {
-  const classes = useStyles();
   const handleClick = useCallback(() => onSelect(selectionId), [onSelect, selectionId]);
   const tokenSymbols = useMemo(() => tokens.map(token => token.symbol), [tokens]);
 
   return (
-    <button type="button" className={css(styles.item, cssProp)} onClick={handleClick}>
-      <div className={css(styles.side)}>
+    <ListItemButton type="button" css={cssProp} onClick={handleClick}>
+      <ListItemSide>
         <TokensImage tokens={tokens} size={24} />
-        <div className={classes.symbol}>
+        <ListItemName>
           <ListJoin items={tokenSymbols} />
-        </div>
+        </ListItemName>
         {tag ?
-          <div className={classes.tag}>{tag}</div>
+          <ListItemTag>{tag}</ListItemTag>
         : null}
-      </div>
-      <div className={css(styles.side, styles.right)}>
+      </ListItemSide>
+      <ListItemRightSide>
         {balance ?
-          <div className={classes.balance}>{formatTokenDisplayCondensed(balance, decimals, 8)}</div>
+          <ListItemBalance>{formatTokenDisplayCondensed(balance, decimals, 8)}</ListItemBalance>
         : null}
-        <ChevronRight className={cx('item-arrow', classes.arrow)} />
-      </div>
-    </button>
+        <ChevronRight className={cx('list-item-arrow', css(listItemArrow))} />
+      </ListItemRightSide>
+    </ListItemButton>
   );
 });

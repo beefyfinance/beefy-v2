@@ -21,6 +21,18 @@ import {
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { StepHeader } from '../StepHeader/StepHeader.tsx';
+import {
+  ListItemBalance,
+  ListItemButton,
+  ListItemName,
+  ListItemRightSide,
+  ListItemSide,
+  SelectListContainer,
+  SelectListItems,
+  SelectListNoResults,
+  SelectListSearch,
+} from '../common/CommonListStyles.tsx';
+import { selectListScrollable, listItemArrow } from '../common/CommonListStylesRaw.ts';
 
 export const ChainSelectStep = memo(function ChainSelectStep() {
   const { t } = useTranslation();
@@ -64,12 +76,12 @@ const ChainList = memo(function ChainList() {
   }, [sortedChains, search]);
 
   return (
-    <div className={containerClass}>
-      <div className={searchClass}>
+    <SelectListContainer>
+      <SelectListSearch>
         <SearchInput value={search} onValueChange={setSearch} />
-      </div>
-      <Scrollable css={scrollableClass}>
-        <div className={listClass}>
+      </SelectListSearch>
+      <Scrollable css={selectListScrollable}>
+        <SelectListItems>
           {filteredChains.length ?
             filteredChains.map(({ chainId, chainName, balanceUsd }) => (
               <ChainListRow
@@ -80,10 +92,10 @@ const ChainList = memo(function ChainList() {
                 onSelect={handleSelect}
               />
             ))
-          : <div className={noResultsClass}>{t('NoMatches')}</div>}
-        </div>
+          : <SelectListNoResults>{t('NoMatches')}</SelectListNoResults>}
+        </SelectListItems>
       </Scrollable>
-    </div>
+    </SelectListContainer>
   );
 });
 
@@ -104,112 +116,23 @@ const ChainListRow = memo(function ChainListRow({
   const hasBalance = balanceUsd.isGreaterThan(BIG_ZERO);
 
   return (
-    <button type="button" className={itemClass} onClick={handleClick}>
-      <div className={sideClass}>
+    <ListItemButton type="button" onClick={handleClick}>
+      <ListItemSide>
         <ChainIcon chainId={chainId} size={24} />
-        <span className={nameClass}>{chainName}</span>
-      </div>
-      <div className={rightSideClass}>
-        {hasBalance && <span className={balanceTextClass}>{formatLargeUsd(balanceUsd)}</span>}
-        <ChevronRight className={cx('chain-arrow', arrowClass)} />
-      </div>
-    </button>
+        <ListItemName>{chainName}</ListItemName>
+      </ListItemSide>
+      <ListItemRightSide>
+        {hasBalance && (
+          <ListItemBalance className={balanceTextClass}>
+            {formatLargeUsd(balanceUsd)}
+          </ListItemBalance>
+        )}
+        <ChevronRight className={cx('list-item-arrow', css(listItemArrow))} />
+      </ListItemRightSide>
+    </ListItemButton>
   );
 });
 
-// Styles
-const containerClass = css({
-  padding: '24px 0 0 0',
-  height: '469px',
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  borderRadius: '0 0 12px 12px',
-  overflow: 'hidden',
-});
-
-const searchClass = css({
-  padding: '0 24px',
-  margin: '0 0 24px 0',
-});
-
-const scrollableClass = css.raw({
-  flexGrow: 1,
-  height: '100%',
-});
-
-const listClass = css({
-  padding: '0 24px 24px 24px',
-  minHeight: '100px',
-  display: 'flex',
-  flexDirection: 'column',
-  rowGap: '16px',
-  overflowY: 'auto',
-});
-
-const noResultsClass = css({
-  padding: '8px 12px',
-  borderRadius: '8px',
-  background: 'background.content.light',
-});
-
-const itemClass = css({
-  textStyle: 'body.medium',
-  display: 'flex',
-  flexWrap: 'nowrap',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: '12px',
-  width: '100%',
-  color: 'text.dark',
-  background: 'transparent',
-  border: 'none',
-  boxShadow: 'none',
-  padding: '0',
-  margin: '0',
-  cursor: 'pointer',
-  userSelect: 'none',
-  outline: 'none',
-  textAlign: 'left',
-  '&:hover, &:focus-visible': {
-    color: 'text.middle',
-    '& .chain-arrow': {
-      color: 'text.lightest',
-    },
-  },
-});
-
-const sideClass = css({
-  display: 'flex',
-  flexWrap: 'nowrap',
-  alignItems: 'center',
-  gap: '8px',
-});
-
-const rightSideClass = css({
-  display: 'flex',
-  flexWrap: 'nowrap',
-  alignItems: 'center',
-  gap: '8px',
-  flexShrink: 1,
-  minWidth: 0,
-});
-
-const nameClass = css({
-  whiteSpace: 'nowrap',
-});
-
 const balanceTextClass = css({
-  flexShrink: 1,
-  minWidth: 0,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
   color: 'text.middle',
-});
-
-const arrowClass = css({
-  color: 'text.middle',
-  height: '24px',
-  width: '8px',
-  flexShrink: 0,
 });

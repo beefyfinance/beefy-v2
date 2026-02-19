@@ -6,7 +6,6 @@ import { SearchInput } from '../../../../../../components/Form/Input/SearchInput
 import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
 import type { ToggleProps } from '../../../../../../components/Toggle/Toggle.tsx';
 import { Toggle } from '../../../../../../components/Toggle/Toggle.tsx';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import buildLpIcon from '../../../../../../images/icons/build-lp.svg';
 import OpenInNewRoundedIcon from '../../../../../../images/icons/mui/OpenInNewRounded.svg?react';
@@ -20,10 +19,20 @@ import {
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import type { ListItemProps } from './components/ListItem/ListItem.tsx';
 import { ListItem } from './components/ListItem/ListItem.tsx';
-import { styles } from './styles.ts';
 import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
+import {
+  BuildLpContent,
+  BuildLpIcon,
+  SelectListContainer,
+  SelectListItems,
+  SelectListNoResults,
+  SelectListSearch,
+  WalletToggleDust,
+  WalletToggleLabel,
+  WalletToggleRow,
+} from '../common/CommonListStyles.tsx';
+import { selectListScrollable, buildLpLink } from '../common/CommonListStylesRaw.ts';
 
-const useStyles = legacyMakeStyles(styles);
 const DUST_HIDDEN_THRESHOLD = new BigNumber('0.01');
 
 export type DepositTokenSelectListProps = {
@@ -35,7 +44,6 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
 }: DepositTokenSelectListProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const [dustHidden, setDustHidden] = useState(false);
@@ -64,7 +72,6 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
 
     return options;
   }, [optionsForChain, search, dustHidden]);
-  // const hasMultipleChains = availableChains.length > 1;
   const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
     tokenId => {
       dispatch(
@@ -84,23 +91,22 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
   );
 
   return (
-    <div className={css(styles.container, cssProp)}>
-      <div className={classes.search}>
+    <SelectListContainer css={cssProp}>
+      <SelectListSearch>
         <SearchInput value={search} onValueChange={setSearch} />
-      </div>
-      <div className={classes.walletToggle}>
-        <div className={classes.inWallet}>{t('Transact-TokenSelect-InYourWallet')}</div>
-        <div className={classes.hideDust}>
+      </SelectListSearch>
+      <WalletToggleRow>
+        <WalletToggleLabel>{t('Transact-TokenSelect-InYourWallet')}</WalletToggleLabel>
+        <WalletToggleDust>
           <Toggle
             checked={dustHidden}
             onChange={handleToggleDust}
             startAdornment={t('Transact-TokenSelect-HideDust')}
           />
-        </div>
-      </div>
-      {/*hasMultipleChains ? <div className={classes.chainSelector}>TODO {selectedChain}</div> : null*/}
-      <Scrollable css={styles.listContainer}>
-        <div className={classes.list}>
+        </WalletToggleDust>
+      </WalletToggleRow>
+      <Scrollable css={selectListScrollable}>
+        <SelectListItems>
           {filteredOptionsForChain.length ?
             filteredOptionsForChain.map(option => (
               <ListItem
@@ -114,30 +120,31 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
                 onSelect={handleTokenSelect}
               />
             ))
-          : <div className={classes.noResults}>{t('Transact-TokenSelect-NoResults')}</div>}
-        </div>
+          : <SelectListNoResults>{t('Transact-TokenSelect-NoResults')}</SelectListNoResults>}
+        </SelectListItems>
       </Scrollable>
       {filteredOptionsForChain?.length > 1 && <BuildLpManually vaultId={vaultId} />}
-    </div>
+    </SelectListContainer>
   );
 });
 
 const BuildLpManually = memo(function BuildLpManually({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const { t } = useTranslation();
-  const classes = useStyles();
 
   if (!vault.addLiquidityUrl) {
     return null;
   }
 
   return (
-    <ExternalLink className={classes.buildLp} href={vault.addLiquidityUrl}>
-      <div className={classes.buildLpContent}>
+    <ExternalLink className={css(buildLpLink)} href={vault.addLiquidityUrl}>
+      <BuildLpContent>
         <img src={buildLpIcon} alt="buildLp" />
         {t('Build LP Manually')}
-      </div>
-      <OpenInNewRoundedIcon fontSize="inherit" className={classes.icon} />
+      </BuildLpContent>
+      <BuildLpIcon>
+        <OpenInNewRoundedIcon fontSize="inherit" />
+      </BuildLpIcon>
     </ExternalLink>
   );
 });
