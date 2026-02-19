@@ -924,19 +924,21 @@ export const selectPastBoostIdsWithUserBalance = (
   return boostIds;
 };
 
-export const SelectUserWalletBalanceByChainId = (
+export const selectDepositOptionTokensBalanceByChainId = (
   state: BeefyState,
   chainId: ChainEntity['id'],
-  address: string
-) => {
-  const tokensByAddress =
-    state.user.balance.byAddress[address.toLowerCase()]?.tokenAmount.byChainId[chainId]
-      ?.byTokenAddress;
-  if (!tokensByAddress) return BIG_ZERO;
+  walletAddress: string
+): BigNumber => {
+  const selectionIds = state.ui.transact.selections.byChainId[chainId];
+  if (!selectionIds) return BIG_ZERO;
 
-  return Object.entries(tokensByAddress).reduce(
-    (acc, [address, value]) =>
-      acc.plus(value.balance.multipliedBy(selectTokenPriceByAddress(state, chainId, address))),
-    BIG_ZERO
-  );
+  return selectionIds.reduce((acc, selectionId) => {
+    const selection = state.ui.transact.selections.bySelectionId[selectionId];
+    if (!selection) return acc;
+    return selection.tokens.reduce((sum, token) => {
+      const balance = selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress);
+      const price = selectTokenPriceByAddress(state, token.chainId, token.address);
+      return sum.plus(balance.multipliedBy(price));
+    }, acc);
+  }, BIG_ZERO);
 };

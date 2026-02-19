@@ -18,12 +18,12 @@ import { valueOrThrow } from '../utils/selector-utils.ts';
 import {
   selectAddressHasVaultPendingWithdrawal,
   selectBoostUserRewardsInToken,
+  selectDepositOptionTokensBalanceByChainId,
   selectPastBoostIdsWithUserBalance,
   selectUserBalanceOfToken,
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInShareToken,
-  SelectUserWalletBalanceByChainId,
 } from './balance.ts';
 import { selectAllVaultBoostIds, selectPreStakeOrActiveBoostIds } from './boosts.ts';
 import {
@@ -40,7 +40,6 @@ import {
 import { selectVaultById } from './vaults.ts';
 import { selectWalletAddressIfKnown } from './wallet.ts';
 import { selectChainById } from './chains.ts';
-import { CCTP_CONFIG } from '../../../config/cctp/cctp-config.ts';
 import { getSupportedChainIds } from '../apis/transact/cctp/CCTPProvider.ts';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
@@ -354,12 +353,11 @@ export const selectCrossChainSortedChains = (
 
   const walletAddress = selectWalletAddressIfKnown(state);
   const chainsWithBalance: CrossChainChainOption[] = allChainIds.map(chainId => {
-    const cctpConfig = CCTP_CONFIG.chains[chainId];
     const chain = selectChainById(state, chainId);
-    let balanceUsd = BIG_ZERO;
-    if (cctpConfig && walletAddress) {
-      balanceUsd = SelectUserWalletBalanceByChainId(state, chainId, walletAddress);
-    }
+    const balanceUsd =
+      walletAddress ?
+        selectDepositOptionTokensBalanceByChainId(state, chainId, walletAddress)
+      : BIG_ZERO;
     return { chainId, chainName: chain.name, balanceUsd };
   });
 
