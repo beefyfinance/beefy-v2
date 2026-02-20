@@ -1,6 +1,6 @@
 [
   {
-    "id": "aerodrome-cow-base-kellyclaude-usdc-rp",
+    "id": "uniswap-cow-base-kellyclaude-usdc-rp",
     "name": "KELLYCLAUDE-USDC Reward Pool",
     "type": "gov",
     "version": 2,
@@ -13,7 +13,7 @@
     "earnedTokenDecimals": 18,
     "earnedTokenAddresses": [],
     "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-kellyclaude-usdc",
+    "oracleId": "uniswap-cow-base-kellyclaude-usdc",
     "status": "active",
     "createdAt": 1771585243,
     "platformId": "uniswap",
@@ -37,7 +37,7 @@
     ]
   },
   {
-    "id": "aerodrome-cow-base-kellyclaude-usdc",
+    "id": "uniswap-cow-base-kellyclaude-usdc",
     "name": "KELLYCLAUDE-USDC",
     "type": "cowcentrated",
     "token": "KELLYCLAUDE-USDC uniswap",
@@ -52,7 +52,7 @@
     "earnedToken": "cowUniswapBaseKELLYCLAUDE-USDC",
     "earnedTokenAddress": "0x65bF0950f67258f99E5DE34918aBceFAe5e271Ef",
     "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-kellyclaude-usdc",
+    "oracleId": "uniswap-cow-base-kellyclaude-usdc",
     "status": "active",
     "createdAt": 1771585243,
     "platformId": "beefy",
@@ -77,7 +77,7 @@
     ]
   },
   {
-    "id": "aerodrome-cow-base-weth-kellyclaude-rp",
+    "id": "uniswap-cow-base-weth-kellyclaude-rp",
     "name": "WETH-KELLYCLAUDE Reward Pool",
     "type": "gov",
     "version": 2,
@@ -90,7 +90,7 @@
     "earnedTokenDecimals": 18,
     "earnedTokenAddresses": [],
     "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-weth-kellyclaude",
+    "oracleId": "uniswap-cow-base-weth-kellyclaude",
     "status": "active",
     "createdAt": 1771584879,
     "platformId": "uniswap",
@@ -114,7 +114,7 @@
     ]
   },
   {
-    "id": "aerodrome-cow-base-weth-kellyclaude",
+    "id": "uniswap-cow-base-weth-kellyclaude",
     "name": "WETH-KELLYCLAUDE",
     "type": "cowcentrated",
     "token": "WETH-KELLYCLAUDE uniswap",
@@ -129,7 +129,7 @@
     "earnedToken": "cowUniswapBaseWETH-KELLYCLAUDE",
     "earnedTokenAddress": "0x247D34fAC3Be593e6F182F45b8461F619D8B9234",
     "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-weth-kellyclaude",
+    "oracleId": "uniswap-cow-base-weth-kellyclaude",
     "status": "active",
     "createdAt": 1771584879,
     "platformId": "beefy",
