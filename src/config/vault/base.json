@@ -1,5 +1,159 @@
 [
   {
+    "id": "aerodrome-cow-base-kellyclaude-usdc-rp",
+    "name": "KELLYCLAUDE-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseKELLYCLAUDE-USDC",
+    "tokenAddress": "0x65bF0950f67258f99E5DE34918aBceFAe5e271Ef",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x33cC185f8C4053805D2e36E614C69097FA665aE2",
+    "earnedToken": "rCowUniswapBaseKELLYCLAUDE-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-kellyclaude-usdc",
+    "status": "active",
+    "createdAt": 1771585243,
+    "platformId": "uniswap",
+    "assets": ["KELLYCLAUDE", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-kellyclaude-usdc",
+    "name": "KELLYCLAUDE-USDC",
+    "type": "cowcentrated",
+    "token": "KELLYCLAUDE-USDC uniswap",
+    "tokenAddress": "0xfc37C5CCDf712c54f21973f77799739225071704",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x50D2280441372486BeecdD328c1854743EBaCb07",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0x65bF0950f67258f99E5DE34918aBceFAe5e271Ef",
+    "earnedToken": "cowUniswapBaseKELLYCLAUDE-USDC",
+    "earnedTokenAddress": "0x65bF0950f67258f99E5DE34918aBceFAe5e271Ef",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-kellyclaude-usdc",
+    "status": "active",
+    "createdAt": 1771585243,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["KELLYCLAUDE", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-kellyclaude-rp",
+    "name": "WETH-KELLYCLAUDE Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-KELLYCLAUDE",
+    "tokenAddress": "0x247D34fAC3Be593e6F182F45b8461F619D8B9234",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xe20009C690705671847C6Ce32a2D5eC4f78892CF",
+    "earnedToken": "rCowUniswapBaseWETH-KELLYCLAUDE",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-kellyclaude",
+    "status": "active",
+    "createdAt": 1771584879,
+    "platformId": "uniswap",
+    "assets": ["WETH", "KELLYCLAUDE"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-kellyclaude",
+    "name": "WETH-KELLYCLAUDE",
+    "type": "cowcentrated",
+    "token": "WETH-KELLYCLAUDE uniswap",
+    "tokenAddress": "0xF3A6c1E06491eC1c9FA0731f2857BD2Fff348496",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x50D2280441372486BeecdD328c1854743EBaCb07"
+    ],
+    "earnContractAddress": "0x247D34fAC3Be593e6F182F45b8461F619D8B9234",
+    "earnedToken": "cowUniswapBaseWETH-KELLYCLAUDE",
+    "earnedTokenAddress": "0x247D34fAC3Be593e6F182F45b8461F619D8B9234",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-kellyclaude",
+    "status": "active",
+    "createdAt": 1771584879,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["WETH", "KELLYCLAUDE"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-usdc-diem-vault",
     "name": "USDC-DIEM",
     "type": "standard",
