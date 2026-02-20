@@ -51,12 +51,12 @@ import {
 } from '../../transact-types.ts';
 import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
 import type { UserlessZapRequest, ZapStep, OrderOutput } from '../../zap/types.ts';
-import type {
-  IComposableStrategy,
-  IStrategy,
-  IZapStrategy,
-  IZapStrategyStatic,
-  ZapTransactHelpers,
+import {
+  type IStrategy,
+  type IZapStrategy,
+  type IZapStrategyStatic,
+  type ZapTransactHelpers,
+  isComposableStrategy,
 } from '../IStrategy.ts';
 import type { CrossChainStrategyConfig } from '../strategy-configs.ts';
 import { getTransactApi } from '../../../../apis/instances.ts';
@@ -1014,13 +1014,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     }
     return undefined;
   }
-}
-
-function isComposableStrategy(strategy: IStrategy): strategy is IComposableStrategy {
-  return (
-    'fetchDepositUserlessZapBreakdown' in strategy &&
-    'fetchWithdrawUserlessZapBreakdown' in strategy
-  );
 }
 
 // ===== Dust Output Helper Types and Functions =====
