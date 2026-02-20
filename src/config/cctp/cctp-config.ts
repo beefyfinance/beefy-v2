@@ -25,7 +25,7 @@ import type { ChainEntity } from '../../features/data/entities/chain.ts';
  * Chains without fast transfer use standard only (0 bps fee, slower).
  *
  * Supported chains (as of 2026-02):
- * @see https://developers.circle.com/cctp/concepts/supported-chains-and-domains#cctp-supported-blockchains
+ * @see https://developers.circle.com/cctp/cctp-supported-blockchains
  * Chain          | Domain | Fast | Forwarding
  * Ethereum       |   0    |  ✓  |     ✓
  * Avalanche      |   1    |  ✗  |     ✓
@@ -33,6 +33,11 @@ import type { ChainEntity } from '../../features/data/entities/chain.ts';
  * Arbitrum       |   3    |  ✓  |     ✓
  * Base           |   6    |  ✓  |     ✓
  * Polygon PoS    |   7    |  ✗  |     ✓
+ * Linea          |  11    |  ✓  |     ✓
+ * Sonic          |  13    |  ✗  |     ✓
+ * Monad          |  15    |  ✗  |     ✓
+ * Sei            |  16    |  ✗  |     ✓
+ * HyperEVM       |  19    |  ✗  |     ✓
  */
 
 export type CCTPChainConfig = {
@@ -118,6 +123,47 @@ export const CCTP_CONFIG: CCTPConfig = {
       receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
       usdcAddress: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
       domain: 7,
+      time: { outgoing: 5, incoming: 5 },
+    },
+    linea: {
+      tokenMessenger: TOKEN_MESSENGER_V2,
+      messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
+      usdcAddress: '0x176211869cA2b568f2A7D4EE941E073a821EE1ff',
+      domain: 11,
+      time: { outgoing: 5, incoming: 5 },
+      fastFeeBps: 11,
+    },
+    sonic: {
+      tokenMessenger: TOKEN_MESSENGER_V2,
+      messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
+      usdcAddress: '0x29219dd400f2Bf60E5a23d13Be72B486D4038894',
+      domain: 13,
+      time: { outgoing: 5, incoming: 5 },
+    },
+    // monad: {
+    //   tokenMessenger: TOKEN_MESSENGER_V2,
+    //   messageTransmitter: MESSAGE_TRANSMITTER_V2,
+    //   receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
+    //   usdcAddress: '0x754704Bc059F8C67012fEd69BC8A327a5aafb603',
+    //   domain: 15,
+    //   time: { outgoing: 5, incoming: 5 },
+    // },
+    sei: {
+      tokenMessenger: TOKEN_MESSENGER_V2,
+      messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
+      usdcAddress: '0xe15fC38F6D8c56aF07bbCBe3BAf5708A2Bf42392',
+      domain: 16,
+      time: { outgoing: 5, incoming: 5 },
+    },
+    hyperevm: {
+      tokenMessenger: TOKEN_MESSENGER_V2,
+      messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
+      usdcAddress: '0xb88339CB7199b77E23DB6E890353E22632Ba630f',
+      domain: 19,
       time: { outgoing: 5, incoming: 5 },
     },
   },
