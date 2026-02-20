@@ -1,5 +1,123 @@
 [
   {
+    "id": "aerodrome-cow-base-up-usdc-vault",
+    "name": "UP-USDC",
+    "type": "standard",
+    "token": "UP-USDC",
+    "tokenAddress": "0xA0749dc6E59152Eb2dFd39e9863609622d015b06",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x095bc1912C71C575e2248eC781973AaE95b34310",
+    "earnedToken": "mooCowAerodromeUP-USDC",
+    "earnedTokenAddress": "0x095bc1912C71C575e2248eC781973AaE95b34310",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-up-usdc",
+    "status": "active",
+    "createdAt": 1771618284,
+    "platformId": "aerodrome",
+    "assets": ["UP", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-up-usdc-rp",
+    "name": "UP-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeUP-USDC",
+    "tokenAddress": "0xA0749dc6E59152Eb2dFd39e9863609622d015b06",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x19fB5510BaE59F5A4C84a6857bb5c8420aDA2f2f",
+    "earnedToken": "rCowAerodromeUP-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-up-usdc",
+    "status": "active",
+    "createdAt": 1771618283,
+    "platformId": "aerodrome",
+    "assets": ["UP", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-up-usdc",
+    "name": "UP-USDC",
+    "type": "cowcentrated",
+    "token": "UP-USDC aerodrome",
+    "tokenAddress": "0xb1857B20d91c216f51656B63081f35C7cD0A489d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x5b2193fDc451C1f847bE09CA9d13A4Bf60f8c86B",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0xA0749dc6E59152Eb2dFd39e9863609622d015b06",
+    "earnedToken": "cowAerodromeUP-USDC",
+    "earnedTokenAddress": "0xA0749dc6E59152Eb2dFd39e9863609622d015b06",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-up-usdc",
+    "status": "active",
+    "createdAt": 1771618283,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["UP", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-kellyclaude-usdc-rp",
     "name": "KELLYCLAUDE-USDC Reward Pool",
     "type": "gov",
