@@ -262,5 +262,13 @@
     "priorityTokens": ["FXS", "WFXS", "WETH", "USDC", "USDT", "DAI", "frxUSD", "frxETH", "WBTC"],
     "blockedTokens": [],
     "blockedVaults": []
+  },
+  {
+    "id": "kyber-megaeth",
+    "type": "kyber",
+    "chainId": "megaeth",
+    "priorityTokens": ["USDm", "WETH", "USDT0", "cUSD"],
+    "blockedTokens": [],
+    "blockedVaults": []
   }
 ]

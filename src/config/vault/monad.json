@@ -1,5 +1,123 @@
 [
   {
+    "id": "pancake-cow-monad-wbtc-wmon-vault",
+    "name": "WBTC-WMON",
+    "type": "standard",
+    "token": "WBTC-WMON",
+    "tokenAddress": "0x496D745C9788fD90e8423bA1E700E59D994BC816",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xd4D3dCb14B311887A563C38A2528F943561e6c04",
+    "earnedToken": "mooCowPancakeWBTC-WMON",
+    "earnedTokenAddress": "0xd4D3dCb14B311887A563C38A2528F943561e6c04",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-wbtc-wmon",
+    "status": "active",
+    "createdAt": 1769465727,
+    "platformId": "pancakeswap",
+    "assets": ["WBTC", "WMON"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-wbtc-wmon-rp",
+    "name": "WBTC-WMON Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeWBTC-WMON",
+    "tokenAddress": "0x496D745C9788fD90e8423bA1E700E59D994BC816",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x71b8AF90834098285664C73209839E698F925321",
+    "earnedToken": "rCowPancakeWBTC-WMON",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-wbtc-wmon",
+    "status": "active",
+    "createdAt": 1769465726,
+    "platformId": "pancakeswap",
+    "assets": ["WBTC", "WMON"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-wbtc-wmon",
+    "name": "WBTC-WMON",
+    "type": "cowcentrated",
+    "token": "WBTC-WMON pancakeswap",
+    "tokenAddress": "0x0944526D2727B532653E6Ca6c4D980461E170a09",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A"
+    ],
+    "earnContractAddress": "0x496D745C9788fD90e8423bA1E700E59D994BC816",
+    "earnedToken": "cowPancakeWBTC-WMON",
+    "earnedTokenAddress": "0x496D745C9788fD90e8423bA1E700E59D994BC816",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-wbtc-wmon",
+    "status": "active",
+    "createdAt": 1769465726,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["WBTC", "WMON"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "gearbox-monad-edge-usdc",
     "name": "USDC (Edge UltraYield)",
     "type": "standard",

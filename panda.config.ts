@@ -77,7 +77,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -371,6 +371,7 @@ const config = buildConfig(
             '50-20a': { value: '#53be6433' },
             '60': { value: '#449a4d' },
             '70': { value: '#368a4d' },
+            '70-56a': { value: '#2748468F' },
             '80': { value: '#2a784c' },
             '80-40': { value: '#274846' },
             '80-40a': { value: '#2a784c66' },
@@ -378,6 +379,7 @@ const config = buildConfig(
             '100': { value: '#155042' },
           },
           darkBlue: {
+            '30': { value: '#151728' },
             '40': { value: '#3f4574' },
             '50': { value: '#363b63' },
             '50-56a': { value: '#363b638e' },
@@ -1107,6 +1109,7 @@ const config = buildConfig(
       optimism: { primary: '#ff0420', header: 0.2 },
       plasma: { primary: '#162f29', header: 0.2 },
       monad: { primary: '#836EF9', header: 0.2 },
+      megaeth: { primary: '#D9D9D9', header: 0.4 },
       polygon: { primary: '#f5f0fd', header: 0.3 },
       real: { primary: '#ffffff', header: '#1c122c66' },
       rootstock: { primary: '#000000', header: '#1c122c66' },
