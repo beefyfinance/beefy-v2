@@ -21,6 +21,7 @@ import {
   type ZapQuoteStepUnstake,
   type ZapQuoteStepUnused,
   type ZapQuoteStepWithdraw,
+  type ZapQuoteStepBridge,
 } from '../../../../../data/apis/transact/transact-types.ts';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
 import { selectPlatformById } from '../../../../../data/selectors/platforms.ts';
@@ -222,6 +223,27 @@ const StepContentUnused = memo(function StepContentUnused({
   );
 });
 
+const StepContentBridge = memo(function StepContentBridge({
+  step,
+}: StepContentProps<ZapQuoteStepBridge>) {
+  const { t } = useTranslation();
+
+  return (
+    <Trans
+      t={t}
+      i18nKey="Transact-Route-Step-Bridge"
+      values={{
+        fromToken: step.fromToken.symbol,
+        toToken: step.toToken.symbol,
+      }}
+      components={{
+        fromAmount: <TokenAmountFromEntity amount={step.fromAmount} token={step.fromToken} />,
+        toAmount: <TokenAmountFromEntity amount={step.toAmount} token={step.toToken} />,
+      }}
+    />
+  );
+});
+
 type StepContentMap = {
   [K in ZapQuoteStep as K['type']]: ComponentType<StepContentProps<K>>;
 };
@@ -235,6 +257,7 @@ const StepContentComponents: StepContentMap = {
   unused: StepContentUnused,
   stake: StepContentStake,
   unstake: StepContentUnstake,
+  bridge: StepContentBridge,
 };
 
 type StepProps = {

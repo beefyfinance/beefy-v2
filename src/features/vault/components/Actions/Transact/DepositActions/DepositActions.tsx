@@ -27,6 +27,7 @@ import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
 import { styles } from './styles.ts';
+import { getExecutionChainId } from '../../../../../../helpers/transactUtils.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -79,6 +80,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
   const isCowDepositQuote = isCowcentratedDepositQuote(quote);
+  const executionChainId = useMemo(() => getExecutionChainId(quote), [quote]);
 
   const isDisabled =
     isTxInProgress ||
@@ -107,7 +109,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <NotEnoughNotice mode="deposit" onChange={setIsDisabledByNotEnoughInput} />
       <div className={classes.feesContainer}>
-        <ActionConnectSwitch chainId={option.chainId}>
+        <ActionConnectSwitch chainId={executionChainId}>
           <Button
             variant="cta"
             disabled={isDisabled}

@@ -35,6 +35,12 @@ const StepperImpl = () => {
 
   useEffect(() => {
     if (!isEmpty(currentStepData) && steps.modal && currentStepData.pending === false) {
+      console.debug('[XChainPerf] F: Stepper dispatching step action', {
+        step: currentStepData.step,
+        message: currentStepData.message,
+        currentStep: steps.currentStep,
+        extraInfo: currentStepData.extraInfo,
+      });
       dispatch(stepperUpdateCurrentStep({ pending: true }));
       dispatch(currentStepData.action);
     }

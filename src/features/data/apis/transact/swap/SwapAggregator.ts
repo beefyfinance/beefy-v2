@@ -178,7 +178,17 @@ export class SwapAggregator implements ISwapAggregator {
     state: BeefyState,
     options?: StrategySwapConfig
   ): Promise<QuoteResponse[]> {
+    const swapPair = `${request.fromToken.symbol}->${request.toToken.symbol}`;
+    console.time(`[XChainPerf] SwapAgg.fetchQuotes(${swapPair})`);
+    console.debug('[XChainPerf] SwapAgg.fetchQuotes START', {
+      fromToken: request.fromToken.symbol,
+      fromAmount: request.fromAmount.toString(10),
+      toToken: request.toToken.symbol,
+      vaultId: request.vaultId,
+    });
+
     const allowedProviders = this.allowedProviders(options);
+    console.time(`[XChainPerf] SwapAgg.fetchQuotes.canSwapBetween(${swapPair})`);
     const providerSupported = await Promise.all(
       allowedProviders.map(provider =>
         this.canSwapBetween(
@@ -191,19 +201,32 @@ export class SwapAggregator implements ISwapAggregator {
         )
       )
     );
+    console.timeEnd(`[XChainPerf] SwapAgg.fetchQuotes.canSwapBetween(${swapPair})`);
     const providers = allowedProviders.filter((_, i) => providerSupported[i]);
+    console.debug('[XChainPerf] SwapAgg.fetchQuotes: supported providers', {
+      supported: providers.map(p => p.getId()),
+      total: allowedProviders.length,
+    });
 
     if (providers.length === 0) {
+      console.timeEnd(`[XChainPerf] SwapAgg.fetchQuotes(${swapPair})`);
       throw new Error(
         `No swap providers available for ${request.fromToken.symbol} -> ${request.toToken.symbol}`
       );
     }
 
+    console.time(`[XChainPerf] SwapAgg.fetchQuotes.providerQuotes(${swapPair})`);
     const quotes = await Promise.allSettled(
       providers.map(provider => provider.fetchQuote(request, state))
     );
+    console.timeEnd(`[XChainPerf] SwapAgg.fetchQuotes.providerQuotes(${swapPair})`);
 
     const [success, failure] = partition(quotes, isFulfilledResult);
+    console.debug('[XChainPerf] SwapAgg.fetchQuotes: results', {
+      success: success.length,
+      failure: failure.length,
+      successProviders: success.map(q => q.value.providerId),
+    });
 
     if (failure.length > 0) {
       console.warn(
@@ -213,6 +236,7 @@ export class SwapAggregator implements ISwapAggregator {
     }
 
     if (success.length === 0) {
+      console.timeEnd(`[XChainPerf] SwapAgg.fetchQuotes(${swapPair})`);
       if (failure.length > 0) {
         throw failure[0].reason;
       }
@@ -222,6 +246,7 @@ export class SwapAggregator implements ISwapAggregator {
       );
     }
 
+    console.timeEnd(`[XChainPerf] SwapAgg.fetchQuotes(${swapPair})`);
     return sortQuotes(success.map(quote => quote.value));
   }
 
@@ -230,11 +255,30 @@ export class SwapAggregator implements ISwapAggregator {
     request: SwapRequest,
     state: BeefyState
   ): Promise<SwapResponse> {
+    const swapPair = `${request.quote.fromToken.symbol}->${request.quote.toToken.symbol}`;
+    const timerKey = `[XChainPerf] SwapAgg.fetchSwap(${providerId}:${swapPair})`;
+    const providerTimerKey = `${timerKey}.provider`;
+    console.time(timerKey);
+    console.debug(`${timerKey} START`, {
+      providerId,
+      fromToken: request.quote.fromToken.symbol,
+      toToken: request.quote.toToken.symbol,
+    });
     const provider = this.providersById[providerId];
     if (!provider) {
+      console.timeEnd(timerKey);
       throw new Error(`Provider ${providerId} not found`);
     }
 
-    return await provider.fetchSwap(request, state);
+    console.time(providerTimerKey);
+    const result = await provider.fetchSwap(request, state);
+    console.timeEnd(providerTimerKey);
+    console.debug(`${timerKey} DONE`, {
+      providerId,
+      toAmount: result.toAmount.toString(10),
+      toAmountMin: result.toAmountMin.toString(10),
+    });
+    console.timeEnd(timerKey);
+    return result;
   }
 }

@@ -46,6 +46,10 @@ export type Step = {
       token: TokenEntity;
       amount: BigNumber;
     };
+    crossChain?: {
+      sourceChainId: ChainEntity['id'];
+      destChainId: ChainEntity['id'];
+    };
   };
 };
 

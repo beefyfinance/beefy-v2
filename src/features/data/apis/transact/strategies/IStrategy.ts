@@ -67,7 +67,7 @@ export interface IZapStrategy<TId extends ZapStrategyId = ZapStrategyId> extends
   ): Promise<Step>;
 }
 
-export type IComposerStrategy<TId extends ZapStrategyId = ZapStrategyId> = IZapStrategy<TId>;
+export type IComposerStrategy<TId extends ZapStrategyId = ZapStrategyId> = IComposableStrategy<TId>;
 
 export type UserlessZapDepositBreakdown = {
   zapRequest: UserlessZapRequest;
@@ -80,8 +80,9 @@ export type UserlessZapWithdrawBreakdown = {
   expectedTokens: TokenEntity[];
 };
 
-export interface IComposableStrategy<TId extends ZapStrategyId = ZapStrategyId>
-  extends IZapStrategy<TId> {
+export interface IComposableStrategy<
+  TId extends ZapStrategyId = ZapStrategyId,
+> extends IZapStrategy<TId> {
   getHelpers(): TransactHelpers;
   fetchDepositUserlessZapBreakdown(
     quote: ZapStrategyIdToDepositQuote<TId>

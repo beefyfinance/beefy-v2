@@ -82,7 +82,13 @@ import type {
   ZapStepResponse,
 } from '../../zap/types.ts';
 import { QuoteChangedError } from '../error.ts';
-import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy.ts';
+import type {
+  IComposableStrategy,
+  IComposableStrategyStatic,
+  UserlessZapDepositBreakdown,
+  UserlessZapWithdrawBreakdown,
+  ZapTransactHelpers,
+} from '../IStrategy.ts';
 import type { GammaStrategyConfig } from '../strategy-configs.ts';
 
 type ZapHelpers = {
@@ -96,8 +102,9 @@ type PartialWithdrawQuote = Pick<GammaWithdrawQuote, 'steps' | 'outputs' | 'fee'
 const strategyId = 'gamma';
 type StrategyId = typeof strategyId;
 
-class GammaStrategyImpl implements IZapStrategy<StrategyId> {
+class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
   public static readonly id = strategyId;
+  public static readonly composable = true;
   public readonly id = strategyId;
 
   protected readonly wnative: TokenErc20;
@@ -152,6 +159,10 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
     this.depositToken = vaultType.depositToken;
     this.chain = selectChainById(state, vault.chainId);
     this.pool = new GammaPool(this.depositToken.address, amm, this.chain);
+  }
+
+  public getHelpers(): ZapTransactHelpers {
+    return this.helpers;
   }
 
   public async beforeQuote(): Promise<void> {
@@ -484,126 +495,132 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
     });
   }
 
-  async fetchDepositStep(quote: GammaDepositQuote, t: TFunction<Namespace>): Promise<Step> {
-    const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
-      const state = getState();
-      const chain = selectChainById(state, this.vault.chainId);
-      const slippage = selectTransactSlippage(state);
-      const zapHelpers: ZapHelpers = { chain, slippage, state };
-      const steps: ZapStep[] = [];
-      const minBalances = new Balances(quote.inputs);
-      const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
-      const buildQuote = quote.steps.find(isZapQuoteStepBuild);
+  async fetchDepositUserlessZapBreakdown(
+    quote: GammaDepositQuote
+  ): Promise<UserlessZapDepositBreakdown> {
+    const state = this.helpers.getState();
+    const chain = selectChainById(state, this.vault.chainId);
+    const slippage = selectTransactSlippage(state);
+    const zapHelpers: ZapHelpers = { chain, slippage, state };
+    const steps: ZapStep[] = [];
+    const minBalances = new Balances(quote.inputs);
+    const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
+    const buildQuote = quote.steps.find(isZapQuoteStepBuild);
 
-      if (!buildQuote || !swapQuotes.length) {
-        throw new Error('Invalid deposit quote');
-      }
+    if (!buildQuote || !swapQuotes.length) {
+      throw new Error('Invalid deposit quote');
+    }
 
-      // Swaps
-      if (swapQuotes.length === 0 || swapQuotes.length > 2) {
-        throw new Error('Invalid swap quote');
-      }
-      const insertBalance = allTokensAreDistinct(
-        swapQuotes
-          .map(quoteStep => quoteStep.fromToken)
-          .concat(buildQuote.inputs.map(({ token }) => token))
-      );
-      const swapZaps = await Promise.all(
-        swapQuotes.map(quoteStep => this.fetchZapSwap(quoteStep, zapHelpers, insertBalance))
-      );
-      swapZaps.forEach(swap => {
-        console.debug('swapZaps', bigNumberToStringDeep(swapZaps));
-        // add step to order
-        swap.zaps.forEach(step => steps.push(step));
-        // track the minimum balances for use in further steps
-        minBalances.subtractMany(swap.inputs);
-        minBalances.addMany(swap.minOutputs);
-      });
+    // Swaps
+    if (swapQuotes.length === 0 || swapQuotes.length > 2) {
+      throw new Error('Invalid swap quote');
+    }
+    const insertBalance = allTokensAreDistinct(
+      swapQuotes
+        .map(quoteStep => quoteStep.fromToken)
+        .concat(buildQuote.inputs.map(({ token }) => token))
+    );
+    const swapZaps = await Promise.all(
+      swapQuotes.map(quoteStep => this.fetchZapSwap(quoteStep, zapHelpers, insertBalance))
+    );
+    swapZaps.forEach(swap => {
+      console.debug('swapZaps', bigNumberToStringDeep(swapZaps));
+      // add step to order
+      swap.zaps.forEach(step => steps.push(step));
+      // track the minimum balances for use in further steps
+      minBalances.subtractMany(swap.inputs);
+      minBalances.addMany(swap.minOutputs);
+    });
 
-      // Build LP
-      const buildZap = await this.fetchZapBuild(
-        buildQuote,
-        buildQuote.inputs.map(({ token }) => ({
-          token,
-          amount: minBalances.get(token), // we have to pass min expected in case swaps slipped
-        })),
-        zapHelpers
-      );
-      console.debug('buildZap', bigNumberToStringDeep(buildZap));
-      buildZap.zaps.forEach(step => steps.push(step));
-      minBalances.subtractMany(buildZap.inputs);
-      minBalances.addMany(buildZap.minOutputs);
+    // Build LP
+    const buildZap = await this.fetchZapBuild(
+      buildQuote,
+      buildQuote.inputs.map(({ token }) => ({
+        token,
+        amount: minBalances.get(token), // we have to pass min expected in case swaps slipped
+      })),
+      zapHelpers
+    );
+    console.debug('buildZap', bigNumberToStringDeep(buildZap));
+    buildZap.zaps.forEach(step => steps.push(step));
+    minBalances.subtractMany(buildZap.inputs);
+    minBalances.addMany(buildZap.minOutputs);
 
-      // Deposit in vault
-      const vaultDeposit = await this.vaultType.fetchZapDeposit({
-        inputs: [
-          {
-            token: buildQuote.outputToken,
-            amount: minBalances.get(buildQuote.outputToken), // min expected in case add liquidity slipped
-            max: true, // but we call depositAll
-          },
-        ],
-        from: this.helpers.zap.router,
-      });
-      steps.push(vaultDeposit.zap);
+    // Deposit in vault
+    const vaultDeposit = await this.vaultType.fetchZapDeposit({
+      inputs: [
+        {
+          token: buildQuote.outputToken,
+          amount: minBalances.get(buildQuote.outputToken), // min expected in case add liquidity slipped
+          max: true, // but we call depositAll
+        },
+      ],
+      from: this.helpers.zap.router,
+    });
+    steps.push(vaultDeposit.zap);
+    minBalances.subtractMany(vaultDeposit.inputs);
+    minBalances.addMany(vaultDeposit.minOutputs);
 
-      console.log('fetchDepositStep::vaultDeposit', vaultDeposit);
+    console.log('fetchDepositStep::vaultDeposit', vaultDeposit);
 
-      // Build order
-      const inputs: OrderInput[] = quote.inputs.map(input => ({
-        token: getTokenAddress(input.token),
-        amount: toWeiString(input.amount, input.token.decimals),
-      }));
+    // Build order
+    const inputs: OrderInput[] = quote.inputs.map(input => ({
+      token: getTokenAddress(input.token),
+      amount: toWeiString(input.amount, input.token.decimals),
+    }));
 
-      const requiredOutputs: OrderOutput[] = vaultDeposit.outputs.map(output => ({
-        token: getTokenAddress(output.token),
-        minOutputAmount: toWeiString(
-          slipBy(output.amount, slippage, output.token.decimals),
-          output.token.decimals
-        ),
-      }));
+    const requiredOutputs: OrderOutput[] = vaultDeposit.outputs.map(output => ({
+      token: getTokenAddress(output.token),
+      minOutputAmount: toWeiString(
+        slipBy(output.amount, slippage, output.token.decimals),
+        output.token.decimals
+      ),
+    }));
 
-      // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
-      const dustOutputs: OrderOutput[] = pickTokens(
-        quote.outputs,
-        quote.inputs,
-        quote.returned
-      ).map(token => ({
+    // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
+    const dustOutputs: OrderOutput[] = pickTokens(quote.outputs, quote.inputs, quote.returned).map(
+      token => ({
         token: getTokenAddress(token),
         minOutputAmount: '0',
-      }));
+      })
+    );
 
-      swapQuotes.forEach(quoteStep => {
-        dustOutputs.push({
-          token: getTokenAddress(quoteStep.fromToken),
-          minOutputAmount: '0',
-        });
-        dustOutputs.push({
-          token: getTokenAddress(quoteStep.toToken),
-          minOutputAmount: '0',
-        });
-      });
+    swapQuotes.forEach(quoteStep => {
       dustOutputs.push({
-        token: getTokenAddress(buildQuote.outputToken),
+        token: getTokenAddress(quoteStep.fromToken),
         minOutputAmount: '0',
       });
+      dustOutputs.push({
+        token: getTokenAddress(quoteStep.toToken),
+        minOutputAmount: '0',
+      });
+    });
+    dustOutputs.push({
+      token: getTokenAddress(buildQuote.outputToken),
+      minOutputAmount: '0',
+    });
 
-      // @dev uniqBy: first occurrence of each element is kept.
-      const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
+    // @dev uniqBy: first occurrence of each element is kept.
+    const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
 
-      // Perform TX
-      const zapRequest: UserlessZapRequest = {
-        order: {
-          inputs,
-          outputs,
-          relay: NO_RELAY,
-        },
-        steps,
-      };
+    const zapRequest: UserlessZapRequest = {
+      order: {
+        inputs,
+        outputs,
+        relay: NO_RELAY,
+      },
+      steps,
+    };
 
-      const expectedTokens = vaultDeposit.outputs.map(output => output.token);
+    const expectedTokens = vaultDeposit.outputs.map(output => output.token);
+
+    return { zapRequest, expectedTokens, minBalances };
+  }
+
+  async fetchDepositStep(quote: GammaDepositQuote, t: TFunction<Namespace>): Promise<Step> {
+    const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
+      const { zapRequest, expectedTokens } = await this.fetchDepositUserlessZapBreakdown(quote);
       const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
-
       return walletAction(dispatch, getState, extraArgument);
     };
 
@@ -907,125 +924,129 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
     });
   }
 
+  async fetchWithdrawUserlessZapBreakdown(
+    quote: GammaWithdrawQuote
+  ): Promise<UserlessZapWithdrawBreakdown> {
+    const state = this.helpers.getState();
+    const chain = selectChainById(state, this.vault.chainId);
+    const slippage = selectTransactSlippage(state);
+    const zapHelpers: ZapHelpers = { chain, slippage, state };
+    const withdrawQuote = quote.steps.find(isZapQuoteStepWithdraw);
+    const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
+    const splitQuote = quote.steps.find(isZapQuoteStepSplit);
+
+    if (!withdrawQuote || !splitQuote) {
+      throw new Error('Withdraw or split zap quote not found');
+    }
+
+    // Step 1. Withdraw from vault
+    const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
+      inputs: quote.inputs,
+      from: this.helpers.zap.router,
+    });
+    if (vaultWithdraw.outputs.length !== 1) {
+      throw new Error('Withdraw output count mismatch');
+    }
+
+    const withdrawOutput = onlyOneTokenAmount(vaultWithdraw.outputs);
+    if (!isTokenEqual(withdrawOutput.token, splitQuote.inputToken)) {
+      throw new Error('Withdraw output token mismatch');
+    }
+
+    if (withdrawOutput.amount.lt(withdrawQuote.toAmount)) {
+      throw new Error('Withdraw output amount mismatch');
+    }
+
+    const steps: ZapStep[] = [vaultWithdraw.zap];
+
+    // Step 2. Split lp
+    const splitZap = await this.fetchZapSplit(splitQuote, [withdrawOutput], zapHelpers);
+    splitZap.zaps.forEach(step => steps.push(step));
+
+    // Step 3. Swaps
+    // 0 swaps is valid when we break only
+    if (swapQuotes.length > 0) {
+      if (swapQuotes.length > 2) {
+        throw new Error('Invalid swap quote');
+      }
+
+      const insertBalance = allTokensAreDistinct(swapQuotes.map(quoteStep => quoteStep.fromToken));
+      // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
+      const lastSwapIndex = swapQuotes.length - 1;
+
+      const swapZaps = await Promise.all(
+        swapQuotes.map((quoteStep, i) => {
+          const input = splitZap.minOutputs.find(o => isTokenEqual(o.token, quoteStep.fromToken));
+          if (!input) {
+            throw new Error('Swap input not found in split outputs');
+          }
+          return this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i);
+        })
+      );
+      swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
+    }
+
+    // Build order
+    const inputs: OrderInput[] = vaultWithdraw.inputs.map(input => ({
+      token: getTokenAddress(input.token),
+      amount: toWeiString(input.amount, input.token.decimals),
+    }));
+
+    const requiredOutputs: OrderOutput[] = quote.outputs.map(output => ({
+      token: getTokenAddress(output.token),
+      minOutputAmount: toWeiString(
+        slipBy(output.amount, slippage, output.token.decimals),
+        output.token.decimals
+      ),
+    }));
+
+    // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
+    const dustOutputs: OrderOutput[] = pickTokens(
+      vaultWithdraw.inputs,
+      quote.outputs,
+      quote.inputs,
+      quote.returned,
+      splitQuote.outputs
+    ).map(token => ({
+      token: getTokenAddress(token),
+      minOutputAmount: '0',
+    }));
+
+    swapQuotes.forEach(quoteStep => {
+      dustOutputs.push({
+        token: getTokenAddress(quoteStep.fromToken),
+        minOutputAmount: '0',
+      });
+      dustOutputs.push({
+        token: getTokenAddress(quoteStep.toToken),
+        minOutputAmount: '0',
+      });
+    });
+
+    // @dev uniqBy: first occurrence of each element is kept -> required outputs are kept
+    const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
+
+    const zapRequest: UserlessZapRequest = {
+      order: {
+        inputs,
+        outputs,
+        relay: NO_RELAY,
+      },
+      steps,
+    };
+
+    const expectedTokens = quote.outputs.map(output => output.token);
+
+    return { zapRequest, expectedTokens };
+  }
+
   public async fetchWithdrawStep(
     quote: GammaWithdrawQuote,
     t: TFunction<Namespace>
   ): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
-      const state = getState();
-      const chain = selectChainById(state, this.vault.chainId);
-      const slippage = selectTransactSlippage(state);
-      const zapHelpers: ZapHelpers = { chain, slippage, state };
-      const withdrawQuote = quote.steps.find(isZapQuoteStepWithdraw);
-      const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
-      const splitQuote = quote.steps.find(isZapQuoteStepSplit);
-
-      if (!withdrawQuote || !splitQuote) {
-        throw new Error('Withdraw or split zap quote not found');
-      }
-
-      // Step 1. Withdraw from vault
-      const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
-        inputs: quote.inputs,
-        from: this.helpers.zap.router,
-      });
-      if (vaultWithdraw.outputs.length !== 1) {
-        throw new Error('Withdraw output count mismatch');
-      }
-
-      const withdrawOutput = onlyOneTokenAmount(vaultWithdraw.outputs);
-      if (!isTokenEqual(withdrawOutput.token, splitQuote.inputToken)) {
-        throw new Error('Withdraw output token mismatch');
-      }
-
-      if (withdrawOutput.amount.lt(withdrawQuote.toAmount)) {
-        throw new Error('Withdraw output amount mismatch');
-      }
-
-      const steps: ZapStep[] = [vaultWithdraw.zap];
-
-      // Step 2. Split lp
-      const splitZap = await this.fetchZapSplit(splitQuote, [withdrawOutput], zapHelpers);
-      splitZap.zaps.forEach(step => steps.push(step));
-
-      // Step 3. Swaps
-      // 0 swaps is valid when we break only
-      if (swapQuotes.length > 0) {
-        if (swapQuotes.length > 2) {
-          throw new Error('Invalid swap quote');
-        }
-
-        const insertBalance = allTokensAreDistinct(
-          swapQuotes.map(quoteStep => quoteStep.fromToken)
-        );
-        // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
-        const lastSwapIndex = swapQuotes.length - 1;
-
-        const swapZaps = await Promise.all(
-          swapQuotes.map((quoteStep, i) => {
-            const input = splitZap.minOutputs.find(o => isTokenEqual(o.token, quoteStep.fromToken));
-            if (!input) {
-              throw new Error('Swap input not found in split outputs');
-            }
-            return this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i);
-          })
-        );
-        swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
-      }
-
-      // Build order
-      const inputs: OrderInput[] = vaultWithdraw.inputs.map(input => ({
-        token: getTokenAddress(input.token),
-        amount: toWeiString(input.amount, input.token.decimals),
-      }));
-
-      const requiredOutputs: OrderOutput[] = quote.outputs.map(output => ({
-        token: getTokenAddress(output.token),
-        minOutputAmount: toWeiString(
-          slipBy(output.amount, slippage, output.token.decimals),
-          output.token.decimals
-        ),
-      }));
-
-      // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
-      const dustOutputs: OrderOutput[] = pickTokens(
-        vaultWithdraw.inputs,
-        quote.outputs,
-        quote.inputs,
-        quote.returned,
-        splitQuote.outputs
-      ).map(token => ({
-        token: getTokenAddress(token),
-        minOutputAmount: '0',
-      }));
-
-      swapQuotes.forEach(quoteStep => {
-        dustOutputs.push({
-          token: getTokenAddress(quoteStep.fromToken),
-          minOutputAmount: '0',
-        });
-        dustOutputs.push({
-          token: getTokenAddress(quoteStep.toToken),
-          minOutputAmount: '0',
-        });
-      });
-
-      // @dev uniqBy: first occurrence of each element is kept -> required outputs are kept
-      const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
-
-      // Perform TX
-      const zapRequest: UserlessZapRequest = {
-        order: {
-          inputs,
-          outputs,
-          relay: NO_RELAY,
-        },
-        steps,
-      };
-
-      const expectedTokens = quote.outputs.map(output => output.token);
+      const { zapRequest, expectedTokens } = await this.fetchWithdrawUserlessZapBreakdown(quote);
       const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
-
       return walletAction(dispatch, getState, extraArgument);
     };
 
@@ -1059,4 +1080,4 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
   }
 }
 
-export const GammaStrategy = GammaStrategyImpl satisfies IZapStrategyStatic<StrategyId>;
+export const GammaStrategy = GammaStrategyImpl satisfies IComposableStrategyStatic<StrategyId>;

@@ -20,6 +20,11 @@ import {
   transactSwitchMode,
   transactSwitchStep,
 } from '../../actions/transact.ts';
+import {
+  crossChainOpDismiss,
+  crossChainOpInitiated,
+  crossChainOpStatusUpdate,
+} from '../../actions/wallet/cross-chain.ts';
 import { type TransactOption, type TransactQuote } from '../../apis/transact/transact-types.ts';
 import type {
   TransactOptions,
@@ -78,6 +83,10 @@ const initialTransactState: TransactState = {
   options: initialTransactOptions,
   quotes: initialTransactQuotes,
   confirm: initialTransactConfirm,
+  crossChain: {
+    pendingOps: {},
+    pendingOpIds: [],
+  },
 };
 
 const transactSlice = createSlice({
@@ -240,6 +249,29 @@ const transactSlice = createSlice({
             }
           }
         }
+      })
+      .addCase(crossChainOpInitiated, (sliceState, action) => {
+        const op = action.payload;
+        sliceState.crossChain.pendingOps[op.id] = op;
+        sliceState.crossChain.pendingOpIds.unshift(op.id);
+      })
+      .addCase(crossChainOpStatusUpdate, (sliceState, action) => {
+        const { id, status, destTxHash } = action.payload;
+        const op = sliceState.crossChain.pendingOps[id];
+        if (op) {
+          op.status = status;
+          op.updatedAt = Date.now();
+          if (destTxHash) {
+            op.destTxHash = destTxHash;
+          }
+        }
+      })
+      .addCase(crossChainOpDismiss, (sliceState, action) => {
+        const { id } = action.payload;
+        delete sliceState.crossChain.pendingOps[id];
+        sliceState.crossChain.pendingOpIds = sliceState.crossChain.pendingOpIds.filter(
+          opId => opId !== id
+        );
       });
   },
 });

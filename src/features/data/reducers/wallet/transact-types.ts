@@ -70,6 +70,34 @@ export type TransactConfirm = {
   error: SerializedError | undefined;
 };
 
+export type CrossChainOpStatus =
+  | 'source-pending'
+  | 'waiting-attestation'
+  | 'attestation-ready'
+  | 'executed'
+  | 'failed'
+  | 'returned';
+
+export type PendingCrossChainOp = {
+  id: string;
+  status: CrossChainOpStatus;
+  direction: 'deposit' | 'withdraw';
+  sourceChainId: ChainEntity['id'];
+  destChainId: ChainEntity['id'];
+  vaultId: VaultEntity['id'];
+  sourceTxHash: string;
+  destTxHash?: string;
+  input: { token: string; amount: string; chainId: ChainEntity['id'] };
+  expectedOutput: { token: string; amount: string; chainId: ChainEntity['id'] };
+  createdAt: number;
+  updatedAt: number;
+};
+
+export type TransactCrossChain = {
+  pendingOps: Record<string, PendingCrossChainOp>;
+  pendingOpIds: string[];
+};
+
 export type TransactState = {
   vaultId: VaultEntity['id'] | undefined;
   pendingVaultId: VaultEntity['id'] | undefined;
@@ -86,4 +114,5 @@ export type TransactState = {
   options: TransactOptions;
   quotes: TransactQuotes;
   confirm: TransactConfirm;
+  crossChain: TransactCrossChain;
 };
