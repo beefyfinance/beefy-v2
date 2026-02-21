@@ -4,10 +4,13 @@ export const styles = {
   assetsContainer: css.raw({
     display: 'flex',
     flexDirection: 'column',
-    marginTop: '2px',
-    rowGap: '2px',
+    marginTop: '1px',
+    rowGap: '1px',
     '& div:last-child': {
       borderRadius: '0px 0px 8px 8px',
+      lg: {
+        borderRadius: '0px 0px 20px 20px',
+      },
     },
   }),
   filter: css.raw({

@@ -9,6 +9,7 @@ import DaoIcon from '../../../../images/icons/navigation/dao.svg?react';
 import ResourcesIcon from '../../../../images/icons/navigation/resources.svg?react';
 import { styled } from '@repo/styles/jsx';
 import MenuButton from '../../../../images/icons/navigation/3dots.svg?react';
+import { useLocation } from 'react-router';
 
 export const MainMenu = memo(function MainMenu({
   mobileMenuOpen,
@@ -17,13 +18,16 @@ export const MainMenu = memo(function MainMenu({
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (open: boolean) => void;
 }) {
+  const location = useLocation();
   const handleDrawerToggle = useCallback(() => {
     setMobileMenuOpen(!mobileMenuOpen);
   }, [mobileMenuOpen, setMobileMenuOpen]);
 
+  const isOnHomePage = location.pathname === '/';
+
   return (
     <Container>
-      <VaultsAndMenuContainer>
+      <VaultsAndMenuContainer isOnHomePage={isOnHomePage}>
         <NavLinkItem title={'Header-Vaults'} url="/" Icon={VaultsIcon} />
       </VaultsAndMenuContainer>
       <DashboardContainer>
@@ -47,7 +51,7 @@ export const MainMenu = memo(function MainMenu({
           />
         </ResourcesContainer>
       </DaoResourcesContainer>
-      <VaultsAndMenuContainer>
+      <VaultsAndMenuContainer isOnHomePage={isOnHomePage}>
         <MenuButtonContainer>
           <MenuButton onClick={handleDrawerToggle} />
         </MenuButtonContainer>
@@ -85,6 +89,15 @@ const VaultsAndMenuContainer = styled('div', {
   base: {
     '@media (max-width: 712px)': {
       display: 'none',
+    },
+  },
+  variants: {
+    isOnHomePage: {
+      true: {
+        '@media (max-width: 712px)': {
+          display: 'none',
+        },
+      },
     },
   },
 });

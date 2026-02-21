@@ -1,6 +1,11 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
+  wrapper: css.raw({
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+  }),
   container: css.raw({
     backgroundColor: 'background.content',
     padding: '24px',
@@ -10,6 +15,7 @@ export const styles = {
     justifyContent: 'center',
     rowGap: '24px',
     borderRadius: '8px',
+    flex: 1,
   }),
   icon: css.raw({
     width: '120px',
