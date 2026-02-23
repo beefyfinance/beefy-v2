@@ -3,12 +3,14 @@ import type { ComponentType, ReactNode } from 'react';
 import { Fragment, memo, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx';
+import { SpinLoader } from '../../../../../../components/SpinLoader/SpinLoader.tsx';
 import { ListJoin } from '../../../../../../components/ListJoin.tsx';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import {
+  type AllowanceTokenAmount,
   isCowcentratedDepositQuote,
   type TokenAmount,
   type ZapQuote,
@@ -31,6 +33,7 @@ import {
   selectStepperCurrentStep,
   selectStepperStepContent,
 } from '../../../../../data/selectors/stepper.ts';
+import { selectPendingAllowances } from '../../../../../data/selectors/allowances.ts';
 import { selectChainById } from '../../../../../data/selectors/chains.ts';
 import { selectTransactQuoteIds } from '../../../../../data/selectors/transact.ts';
 import { selectZapSwapProviderName } from '../../../../../data/selectors/zap.ts';
@@ -39,7 +42,7 @@ import { styles } from './styles.ts';
 import CheckmarkIcon from '../../../../../../images/icons/checkmark.svg?react';
 import PlayIcon from '../../../../../../images/icons/play.svg?react';
 
-export type StepStatusState = 'list' | 'finished' | 'inProgress' | 'notStarted';
+export type StepStatusState = 'list' | 'finished' | 'inProgress' | 'notStarted' | 'failed';
 
 function getStepChainId(step: ZapQuoteStep): ChainEntity['id'] | undefined {
   switch (step.type) {
@@ -81,10 +84,16 @@ const StepStatusIndicator = memo(function StepStatusIndicator({
           <CheckmarkIcon />
         </div>
       );
-    case 'inProgress':
+    case 'failed':
       return (
         <div className={css(styles.statusBase, styles.statusInProgress)}>
           <PlayIcon />
+        </div>
+      );
+    case 'inProgress':
+      return (
+        <div className={css(styles.statusBase, styles.statusNotStarted)}>
+          <SpinLoader />
         </div>
       );
     case 'notStarted':
@@ -112,6 +121,49 @@ type StepContentProps<T extends ZapQuoteStep> = {
   css?: CssStyles;
   chainId?: ChainEntity['id'];
 };
+
+const ApprovalStepContent = memo(function ApprovalStepContent({
+  allowance,
+}: {
+  allowance: AllowanceTokenAmount;
+}) {
+  const { t } = useTranslation();
+  const chainId = allowance.token.chainId;
+  const chainName = useChainName(chainId);
+
+  return (
+    <Trans
+      t={t}
+      i18nKey="Transact-Route-Step-Approval"
+      values={{
+        fromToken: allowance.token.symbol,
+        chainName,
+      }}
+      components={{
+        fromAmount: <TokenAmountFromEntity amount={allowance.amount} token={allowance.token} />,
+        chain: <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} />,
+      }}
+    />
+  );
+});
+
+type ApprovalStepProps = {
+  allowance: AllowanceTokenAmount;
+  number: number;
+  status: StepStatusState;
+};
+const ApprovalStep = memo(function ApprovalStep({ allowance, number, status }: ApprovalStepProps) {
+  return (
+    <div className={css(styles.stepRow)}>
+      <div className={css(styles.stepStatusWrapper)}>
+        <StepStatusIndicator status={status} number={number} />
+      </div>
+      <div className={css(styles.stepContent)}>
+        <ApprovalStepContent allowance={allowance} />
+      </div>
+    </div>
+  );
+});
 
 const StepContentSwap = memo(function StepContentSwap({
   step,
@@ -392,7 +444,12 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
   const dispatch = useAppDispatch();
   const quotes = useAppSelector(selectTransactQuoteIds);
   const hasMultipleOptions = quotes.length > 1;
-  const stepStatuses = useStepStatuses(quote.steps.length);
+  const pendingAllowances: AllowanceTokenAmount[] = useAppSelector(state =>
+    selectPendingAllowances(state, quote.allowances)
+  );
+  const approvalCount = pendingAllowances.length;
+  const totalSteps = approvalCount + quote.steps.length;
+  const stepStatuses = useStepStatuses(totalSteps);
   const handleSwitch = useCallback(() => {
     dispatch(transactSwitchStep(TransactStep.QuoteSelect));
   }, [dispatch]);
@@ -417,8 +474,21 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
         </div>
         <div className={css(styles.routeContent)}>
           <div className={css(styles.steps)}>
+            {pendingAllowances.map((allowance, i) => (
+              <ApprovalStep
+                allowance={allowance}
+                key={`approval-${allowance.token.address}`}
+                number={i + 1}
+                status={stepStatuses[i]}
+              />
+            ))}
             {quote.steps.map((step, i) => (
-              <Step step={step} key={i} number={i + 1} status={stepStatuses[i]} />
+              <Step
+                step={step}
+                key={i}
+                number={approvalCount + i + 1}
+                status={stepStatuses[approvalCount + i]}
+              />
             ))}
           </div>
         </div>
