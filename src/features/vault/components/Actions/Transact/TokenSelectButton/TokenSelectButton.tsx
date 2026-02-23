@@ -2,7 +2,10 @@ import { css, type CssStyles } from '@repo/styles/css';
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
-import { TokenImage, TokensImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
+import {
+  TokenImage,
+  TokensImageWithChain,
+} from '../../../../../../components/TokenImage/TokenImage.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
@@ -73,7 +76,12 @@ export const TokenSelectButton = memo(function TokenSelectButton({
     <button
       type="button"
       onClick={canSwitchToTokenSelect ? handleClick : undefined}
-      className={css(styles.button, cssProp, canSwitchToTokenSelect && styles.buttonMore)}
+      className={css(
+        styles.button,
+        cssProp,
+        canSwitchToTokenSelect && styles.buttonMore,
+        forceSelection && styles.buttonForceSelection
+      )}
     >
       {forceSelection && isCrossChainDeposit ?
         <div className={css(styles.select, styles.forceSelection)}>{t('Transact-SelectChain')}</div>
@@ -87,7 +95,8 @@ export const TokenSelectButton = memo(function TokenSelectButton({
       : isBreakLp ?
         <BreakLp tokens={selection.tokens} />
       : <div className={classes.select}>
-          <TokensImage
+          <TokensImageWithChain
+            chainId={selection.tokens[index].chainId}
             tokens={isMultiDeposit ? [selection.tokens[index]] : selection.tokens}
             css={styles.iconAssets}
             size={24}
