@@ -1,5 +1,43 @@
 [
   {
+    "id": "uniswap-monad-usdc-dust",
+    "name": "DUST-USDC LP",
+    "type": "standard",
+    "token": "DUST-USDC LP",
+    "tokenAddress": "0x86dBF00485871C901C5129bD525348Db96c2eB2d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xCd232AEc0B84016FDba5e425a20e41932E9e4C73",
+    "earnedToken": "mooUniswapV2USDC-DUST",
+    "earnedTokenAddress": "0xCd232AEc0B84016FDba5e425a20e41932E9e4C73",
+    "oracle": "lps",
+    "oracleId": "uniswap-monad-usdc-dust",
+    "status": "active",
+    "createdAt": 1771850301,
+    "platformId": "uniswap",
+    "assets": ["DUST", "USDC"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.uniswap.org/positions/create/v2?currencyA=0xad96c3dffcd6374294e2573a7fbba96097cc8d7c&currencyB=0x754704Bc059F8C67012fEd69BC8A327a5aafb603&chain=monad",
+    "removeLiquidityUrl": "https://app.uniswap.org/positions/v2/monad/0x86dBF00485871C901C5129bD525348Db96c2eB2d",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "monad-uniswap"
+      }
+    ]
+  },
+  {
     "id": "morpho-monad-steakhouse-prime-weth",
     "name": "WETH (Steakhouse, Prime WETH)",
     "type": "standard",
