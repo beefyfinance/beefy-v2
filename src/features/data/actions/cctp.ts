@@ -4,8 +4,12 @@ import { getCCTPApi } from '../apis/instances.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import { StepContent } from '../reducers/wallet/stepper-types.ts';
 import { selectChainById } from '../selectors/chains.ts';
-import type { BeefyThunk } from '../store/types.ts';
+import { selectStepperBridgeStatus } from '../selectors/stepper.ts';
+import { selectTokenByAddress } from '../selectors/tokens.ts';
+import { selectVaultById } from '../selectors/vaults.ts';
+import type { BeefyState, BeefyThunk } from '../store/types.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
+import { fetchBalanceAction } from './balance.ts';
 import { transactClearInput } from './transact.ts';
 import { stepperSetBridgeStatus, stepperSetStepContent } from './wallet/stepper.ts';
 
@@ -38,7 +42,7 @@ export function pollCCTPBridgeStatus({
   srcChainId: ChainEntity['id'];
   txHash: string;
 }): BeefyThunk {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     const poll = async () => {
       try {
         const result = await dispatch(
@@ -68,6 +72,10 @@ export function pollCCTPBridgeStatus({
           dispatch(stepperSetStepContent({ stepContent: StepContent.ErrorTx }));
           return;
         }
+        // If the bridge is terminal, fetch the balances
+        if (TERMINAL_STATES.has(message.lifecycleState)) {
+          dispatch(fetchVaultChainBalances(getState));
+        }
 
         if (!TERMINAL_STATES.has(message.lifecycleState)) {
           schedulePoll();
@@ -83,5 +91,25 @@ export function pollCCTPBridgeStatus({
     };
 
     await poll();
+  };
+}
+
+function fetchVaultChainBalances(getState: () => BeefyState): BeefyThunk {
+  return dispatch => {
+    const state = getState();
+    const bridgeStatus = selectStepperBridgeStatus(state);
+    if (!bridgeStatus) return;
+
+    const { destChainId, vaultId } = bridgeStatus;
+    const vault = selectVaultById(state, vaultId);
+    const cctpConfig = CCTP_CONFIG.chains[destChainId];
+
+    const tokens = [];
+    if (cctpConfig) {
+      const usdc = selectTokenByAddress(state, destChainId, cctpConfig.usdcAddress);
+      tokens.push(usdc);
+    }
+
+    dispatch(fetchBalanceAction({ chainId: destChainId, tokens, vaults: [vault] }));
   };
 }
