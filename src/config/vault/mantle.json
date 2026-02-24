@@ -1,5 +1,75 @@
 [
   {
+    "id": "aavev3-mantle-weth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0xbD4101c66e814ecD27F23574566F819e88A05169",
+    "earnedToken": "mooAaveMantleWETH",
+    "earnedTokenAddress": "0xbD4101c66e814ecD27F23574566F819e88A05169",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1771347391,
+    "platformId": "aave",
+    "assets": ["WETH"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev3-mantle-usdt0",
+    "name": "USDT0",
+    "type": "standard",
+    "token": "USDT0",
+    "tokenAddress": "0x779Ded0c9e1022225f8E0630b35a9b54bE713736",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xcb7DCb043efA02FD256b05c3724d7c6486472254",
+    "earnedToken": "mooAaveMantleUSDT0",
+    "earnedTokenAddress": "0xcb7DCb043efA02FD256b05c3724d7c6486472254",
+    "oracle": "tokens",
+    "oracleId": "USDT0",
+    "status": "active",
+    "createdAt": 1771347391,
+    "platformId": "aave",
+    "assets": ["USDT0"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-mantle-usdt-wmnt-rp",
     "name": "WMNT-USDT Reward Pool",
     "type": "gov",
