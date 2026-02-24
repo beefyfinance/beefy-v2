@@ -1,6 +1,6 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import type { ComponentType, ReactNode } from 'react';
-import { Fragment, memo, useCallback, useMemo } from 'react';
+import { Fragment, memo, useCallback, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx';
 import { SpinLoader } from '../../../../../../components/SpinLoader/SpinLoader.tsx';
@@ -97,7 +97,11 @@ const StepStatusIndicator = memo(function StepStatusIndicator({
         </div>
       );
     case 'notStarted':
-      return <div className={css(styles.statusBase, styles.statusNotStarted)} />;
+      return (
+        <div className={css(styles.statusBase, styles.statusNotStarted)}>
+          <span>{number}</span>
+        </div>
+      );
   }
 });
 
@@ -390,26 +394,51 @@ const StepContentComponents: StepContentMap = {
   bridge: StepContentBridge,
 };
 
-function useStepStatuses(stepsCount: number): StepStatusState[] {
+function useStepStatuses(
+  totalStepsCount: number,
+  approvalCount: number,
+  quoteSteps: ZapQuoteStep[]
+): StepStatusState[] {
   const isStepping = useAppSelector(selectIsStepperStepping);
   const stepperContent = useAppSelector(selectStepperStepContent);
   const currentStepIndex = useAppSelector(selectStepperCurrentStep);
 
   return useMemo(() => {
     if (!isStepping && stepperContent !== StepContent.SuccessTx) {
-      return Array(stepsCount).fill('list') as StepStatusState[];
+      return Array(totalStepsCount).fill('list') as StepStatusState[];
     }
 
     if (stepperContent === StepContent.SuccessTx) {
-      return Array(stepsCount).fill('finished') as StepStatusState[];
+      return Array(totalStepsCount).fill('finished') as StepStatusState[];
     }
 
-    return Array.from({ length: stepsCount }, (_, i) => {
-      if (i < currentStepIndex) return 'finished';
-      if (i === currentStepIndex) return 'inProgress';
+    if (stepperContent === StepContent.BridgingTx) {
+      const bridgeIdx = quoteSteps.findIndex(s => s.type === 'bridge');
+      return Array.from({ length: totalStepsCount }, (_, i) => {
+        if (bridgeIdx >= 0) {
+          const absoluteBridgeIdx = approvalCount + bridgeIdx;
+          if (i < absoluteBridgeIdx) return 'finished';
+          if (i === absoluteBridgeIdx) return 'inProgress';
+          return 'notStarted';
+        }
+        return 'finished';
+      }) as StepStatusState[];
+    }
+
+    if (currentStepIndex < approvalCount) {
+      return Array.from({ length: totalStepsCount }, (_, i) => {
+        if (i < currentStepIndex) return 'finished';
+        if (i === currentStepIndex) return 'inProgress';
+        return 'notStarted';
+      }) as StepStatusState[];
+    }
+
+    return Array.from({ length: totalStepsCount }, (_, i) => {
+      if (i < approvalCount) return 'finished';
+      if (i === approvalCount) return 'inProgress';
       return 'notStarted';
     }) as StepStatusState[];
-  }, [isStepping, stepperContent, currentStepIndex, stepsCount]);
+  }, [isStepping, stepperContent, currentStepIndex, totalStepsCount, approvalCount, quoteSteps]);
 }
 
 type StepProps = {
@@ -444,12 +473,20 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
   const dispatch = useAppDispatch();
   const quotes = useAppSelector(selectTransactQuoteIds);
   const hasMultipleOptions = quotes.length > 1;
-  const pendingAllowances: AllowanceTokenAmount[] = useAppSelector(state =>
+
+  const pendingAllowancesLive: AllowanceTokenAmount[] = useAppSelector(state =>
     selectPendingAllowances(state, quote.allowances)
   );
+  const stepperModal = useAppSelector(state => state.ui.stepperState.modal);
+  const snapshotRef = useRef<AllowanceTokenAmount[]>(pendingAllowancesLive);
+  if (!stepperModal) {
+    snapshotRef.current = pendingAllowancesLive;
+  }
+  const pendingAllowances = stepperModal ? snapshotRef.current : pendingAllowancesLive;
+
   const approvalCount = pendingAllowances.length;
   const totalSteps = approvalCount + quote.steps.length;
-  const stepStatuses = useStepStatuses(totalSteps);
+  const stepStatuses = useStepStatuses(totalSteps, approvalCount, quote.steps);
   const handleSwitch = useCallback(() => {
     dispatch(transactSwitchStep(TransactStep.QuoteSelect));
   }, [dispatch]);

@@ -74,9 +74,12 @@ export const styles = {
   }),
   statusNotStarted: css.raw({
     background: 'darkBlue.30',
+    textStyle: 'sm',
+    color: 'text.dark',
+    textAlign: 'center',
   }),
   chainIcon: css.raw({
     display: 'inline',
-    verticalAlign: 'text-bottom',
+    verticalAlign: 'middle',
   }),
 };

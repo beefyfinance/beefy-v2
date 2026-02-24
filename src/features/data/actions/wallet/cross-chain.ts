@@ -203,7 +203,7 @@ export const crossChainZapExecuteOrder = (
         chainId: sourceChainId,
         spenderAddress: zap.manager,
         tokens: selectCrossChainZapTokensToRefresh(state, vault, sourceChainId, order),
-        clearInput: true,
+        clearInput: false,
         ...(isGovVault(vault) ? { govVaultId: vault.id } : {}),
       }
     );
