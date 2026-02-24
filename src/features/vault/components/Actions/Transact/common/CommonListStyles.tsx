@@ -47,7 +47,7 @@ export const ListItemButton = styled('button', {
     justifyContent: 'space-between',
     gap: '12px',
     width: '100%',
-    color: 'text.dark',
+    color: 'text.middle',
     background: 'transparent',
     border: 'none',
     boxShadow: 'none',
@@ -58,7 +58,7 @@ export const ListItemButton = styled('button', {
     outline: 'none',
     textAlign: 'left',
     '&:hover, &:focus-visible': {
-      color: 'text.middle',
+      color: 'text.lightest',
       '& .list-item-arrow': {
         color: 'text.lightest',
       },
@@ -100,6 +100,36 @@ export const ListItemBalance = styled('span', {
     minWidth: 0,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+  },
+});
+
+export const ListItemBalanceColumn = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    gap: '0',
+    flexShrink: 1,
+    minWidth: 0,
+  },
+});
+
+export const ListItemBalanceAmount = styled('span', {
+  base: {
+    color: 'inherit',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+});
+
+export const ListItemBalanceUsd = styled('span', {
+  base: {
+    textStyle: 'body.sm',
+    color: 'text.dark',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
 });
 

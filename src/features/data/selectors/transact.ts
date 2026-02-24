@@ -399,7 +399,14 @@ export const selectCrossChainSortedChains = (
       ['desc', 'asc']
     );
 
-    return { chainId, chainName: chain.name, balanceUsd: totalBalanceUsd, tokens: sortedTokens };
+    const tokensWithBalance = sortedTokens.filter(o => o.balanceUsd.gt(BIG_ZERO));
+
+    return {
+      chainId,
+      chainName: chain.name,
+      balanceUsd: totalBalanceUsd,
+      tokens: tokensWithBalance,
+    };
   });
 
   return orderBy(

@@ -138,7 +138,7 @@ const ChainListRow = memo(function ChainListRow({
         ))}
         {overflowCount > 0 && <OverflowBadge style={{ zIndex: 5 }}>+{overflowCount}</OverflowBadge>}
       </TokenIcons>
-      <ListItemRightSide>
+      <ListItemRightSide className={rightSideClass}>
         <ListItemBalance className={balanceTextClass}>
           {formatLargeUsd(balanceUsd ?? BIG_ZERO)}
         </ListItemBalance>
@@ -152,7 +152,7 @@ const ChainRowButton = styled('button', {
   base: {
     textStyle: 'body.medium',
     display: 'grid',
-    gridTemplateColumns: '120px 1fr auto',
+    gridTemplateColumns: '1fr auto 1fr',
     alignItems: 'center',
     columnGap: '16px',
     width: '100%',
@@ -179,7 +179,8 @@ const TokenIcons = styled('div', {
   base: {
     display: 'flex',
     alignItems: 'center',
-    justifySelf: 'center',
+    justifyContent: 'flex-start',
+    width: '96px',
   },
 });
 
@@ -208,6 +209,10 @@ const OverflowBadge = styled('div', {
     position: 'relative',
     marginLeft: '-6px',
   },
+});
+
+const rightSideClass = css({
+  justifySelf: 'end',
 });
 
 const balanceTextClass = css({
