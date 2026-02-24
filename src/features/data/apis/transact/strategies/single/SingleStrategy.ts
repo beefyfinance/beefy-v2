@@ -204,8 +204,29 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
         ]
       : [];
 
-    // Swap + Output
+    // Direct deposit: no swap needed (used by cross-chain when bridge token = deposit token)
     const state = getState();
+    if (isTokenEqual(input.token, this.vaultType.depositToken)) {
+      const outputs = [{ token: this.vaultType.depositToken, amount: input.amount }];
+      const steps: ZapQuoteStep[] = [
+        { type: 'deposit', inputs: [{ token: input.token, amount: input.amount }] },
+      ];
+      return {
+        id: createQuoteId(option.id),
+        strategyId: 'single',
+        swapQuote: undefined,
+        priceImpact: calculatePriceImpact(inputs, outputs, [], state),
+        option,
+        inputs,
+        outputs,
+        returned: [],
+        allowances,
+        steps,
+        fee: ZERO_FEE,
+      };
+    }
+
+    // Swap + Output
     const swapQuotes = await swapAggregator.fetchQuotes(
       {
         vaultId: this.vault.id,
@@ -486,19 +507,23 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     const state = this.helpers.getState();
     const slippage = selectTransactSlippage(state);
 
-    // Step 1. Swap
-    const swap = await swapAggregator.fetchSwap(
-      quote.swapQuote.providerId,
-      {
-        quote: quote.swapQuote,
-        fromAddress: zap.router,
-        slippage,
-      },
-      state
-    );
+    const steps: ZapStep[] = [];
+    const minBalances = new Balances(quote.inputs);
+    let depositInput: InputTokenAmount;
 
-    const steps: ZapStep[] = [
-      {
+    if (quote.swapQuote) {
+      // Step 1. Swap
+      const swap = await swapAggregator.fetchSwap(
+        quote.swapQuote.providerId,
+        {
+          quote: quote.swapQuote,
+          fromAddress: zap.router,
+          slippage,
+        },
+        state
+      );
+
+      steps.push({
         target: swap.tx.toAddress,
         value: swap.tx.value,
         data: swap.tx.data,
@@ -508,27 +533,33 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
             index: -1, // not dynamically inserted
           },
         ],
-      },
-    ];
+      });
 
-    const minBalances = new Balances(quote.inputs);
-    minBalances.subtractMany([{ token: swap.fromToken, amount: swap.fromAmount }]);
-    minBalances.addMany([
-      {
+      minBalances.subtractMany([{ token: swap.fromToken, amount: swap.fromAmount }]);
+      minBalances.addMany([
+        {
+          token: swap.toToken,
+          amount: slipBy(swap.toAmount, slippage, swap.toToken.decimals),
+        },
+      ]);
+
+      depositInput = {
         token: swap.toToken,
         amount: slipBy(swap.toAmount, slippage, swap.toToken.decimals),
-      },
-    ]);
+        max: true,
+      };
+    } else {
+      // Direct deposit: input IS the deposit token, no swap needed
+      depositInput = {
+        token: quote.inputs[0].token,
+        amount: quote.inputs[0].amount,
+        max: true,
+      };
+    }
 
     // Step 2. Deposit to vault
     const vaultDeposit = await this.vaultType.fetchZapDeposit({
-      inputs: [
-        {
-          token: swap.toToken,
-          amount: slipBy(swap.toAmount, slippage, swap.toToken.decimals), // min expected in case add liquidity slipped
-          max: true, // but we call depositAll
-        },
-      ],
+      inputs: [depositInput],
       from: this.helpers.zap.router,
     });
 
@@ -583,7 +614,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     const withdrawQuote = quote.steps.find(isZapQuoteStepWithdraw);
     const swapQuotes = quote.steps.filter(isZapQuoteStepSwap).filter(isZapQuoteStepSwapAggregator);
 
-    if (!withdrawQuote || !swapQuotes.length) {
+    if (!withdrawQuote) {
       throw new Error('Invalid quote steps');
     }
 
@@ -596,11 +627,13 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
       throw new Error('Withdraw output count mismatch');
     }
     const withdrawOutput = first(vaultWithdraw.outputs)!;
-    if (!isTokenEqual(withdrawOutput.token, swapQuotes[0].fromToken)) {
-      throw new Error('Withdraw output token mismatch');
-    }
-    if (withdrawOutput.amount.lt(withdrawQuote.toAmount)) {
-      throw new Error('Withdraw output amount mismatch');
+    if (swapQuotes.length) {
+      if (!isTokenEqual(withdrawOutput.token, swapQuotes[0].fromToken)) {
+        throw new Error('Withdraw output token mismatch');
+      }
+      if (withdrawOutput.amount.lt(withdrawQuote.toAmount)) {
+        throw new Error('Withdraw output amount mismatch');
+      }
     }
 
     const steps: ZapStep[] = [vaultWithdraw.zap];
