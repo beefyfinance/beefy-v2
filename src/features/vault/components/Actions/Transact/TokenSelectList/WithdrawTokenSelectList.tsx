@@ -77,6 +77,7 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
                 selectionId={option.id}
                 tokens={option.tokens}
                 balance={option.balance}
+                balanceValue={option.balanceValue}
                 decimals={option.decimals}
                 tag={option.tag}
                 chainId={selectedChain}

@@ -710,6 +710,7 @@
   "Transact-Slippage-Explainer-Danger": "Make sure you know what you are doing! Each step may receive {{slippage}} less than quoted if prices changes unfavorably.",
   "Transact-TokenSelect-InYourWallet": "In your wallet",
   "Transact-TokenSelect-HideDust": "Hide dust",
+  "Transact-TokenSelect-LowValueTokens": "Low value tokens",
   "Transact-TokenSelect-NoResults": "No results",
   "Transact-Route-Step-Wrap": "Wrap <fromAmount/> {{fromToken}} to <toAmount/> {{toToken}} on {{chainName}} <chain/>",
   "Transact-Route-Step-Unwrap": "Unwrap <fromAmount/> {{fromToken}} to <toAmount/> {{toToken}} on {{chainName}} <chain/>",

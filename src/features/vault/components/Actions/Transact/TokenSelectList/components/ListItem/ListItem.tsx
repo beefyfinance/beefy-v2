@@ -1,5 +1,8 @@
 import { memo, useCallback, useMemo } from 'react';
-import { formatTokenDisplayCondensed } from '../../../../../../../../helpers/format.ts';
+import {
+  formatLargeUsd,
+  formatTokenDisplayCondensed,
+} from '../../../../../../../../helpers/format.ts';
 import type { ChainEntity } from '../../../../../../../data/entities/chain.ts';
 import { css, type CssStyles, cx } from '@repo/styles/css';
 import type { TokenEntity } from '../../../../../../../data/entities/token.ts';
@@ -8,7 +11,9 @@ import { TokensImage } from '../../../../../../../../components/TokenImage/Token
 import { ListJoin } from '../../../../../../../../components/ListJoin.tsx';
 import ChevronRight from '../../../../../../../../images/icons/chevron-right.svg?react';
 import {
-  ListItemBalance,
+  ListItemBalanceColumn,
+  ListItemBalanceAmount,
+  ListItemBalanceUsd,
   ListItemButton,
   ListItemName,
   ListItemRightSide,
@@ -21,6 +26,7 @@ export type ListItemProps = {
   selectionId: string;
   tokens: TokenEntity[];
   balance?: BigNumber;
+  balanceValue?: BigNumber;
   decimals: number;
   chainId: ChainEntity['id'];
   onSelect: (id: string) => void;
@@ -32,6 +38,7 @@ export const ListItem = memo(function ListItem({
   tokens,
   decimals,
   balance,
+  balanceValue,
   css: cssProp,
   onSelect,
   tag,
@@ -52,7 +59,14 @@ export const ListItem = memo(function ListItem({
       </ListItemSide>
       <ListItemRightSide>
         {balance ?
-          <ListItemBalance>{formatTokenDisplayCondensed(balance, decimals, 8)}</ListItemBalance>
+          <ListItemBalanceColumn>
+            <ListItemBalanceAmount>
+              {formatTokenDisplayCondensed(balance, decimals, 8)}
+            </ListItemBalanceAmount>
+            {balanceValue ?
+              <ListItemBalanceUsd>{formatLargeUsd(balanceValue)}</ListItemBalanceUsd>
+            : null}
+          </ListItemBalanceColumn>
         : null}
         <ChevronRight className={cx('list-item-arrow', css(listItemArrow))} />
       </ListItemRightSide>
