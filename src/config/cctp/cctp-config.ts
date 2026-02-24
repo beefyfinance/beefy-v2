@@ -36,7 +36,6 @@ import type { ChainEntity } from '../../features/data/entities/chain.ts';
  * Linea          |  11    |  ✓  |     ✓
  * Sonic          |  13    |  ✗  |     ✓
  * Monad          |  15    |  ✗  |     ✓
- * Sei            |  16    |  ✗  |     ✓
  * HyperEVM       |  19    |  ✗  |     ✓
  */
 
@@ -150,14 +149,6 @@ export const CCTP_CONFIG: CCTPConfig = {
     //   domain: 15,
     //   time: { outgoing: 5, incoming: 5 },
     // },
-    sei: {
-      tokenMessenger: TOKEN_MESSENGER_V2,
-      messageTransmitter: MESSAGE_TRANSMITTER_V2,
-      receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
-      usdcAddress: '0xe15fC38F6D8c56aF07bbCBe3BAf5708A2Bf42392',
-      domain: 16,
-      time: { outgoing: 5, incoming: 5 },
-    },
     hyperevm: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
