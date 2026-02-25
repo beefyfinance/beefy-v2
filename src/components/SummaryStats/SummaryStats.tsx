@@ -20,8 +20,7 @@ const SummaryStatsContainer = styled('div', {
   base: {
     display: 'grid',
     gap: '2px',
-    // Mobile (0-600px): 3 items stacked vertically
-    gridTemplateColumns: '1fr',
+    gridTemplateColumns: 'repeat(2, 1fr)',
     // Desktop (600px+): 3 items in one line
     md: {
       gridTemplateColumns: 'repeat(4, 1fr)',
