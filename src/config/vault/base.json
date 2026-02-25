@@ -97,7 +97,7 @@
     "status": "active",
     "createdAt": 1771941839,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "0.3",
     "assets": ["WETH", "WCT"],
     "risks": {
       "complex": true,
