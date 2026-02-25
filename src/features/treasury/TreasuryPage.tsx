@@ -48,9 +48,17 @@ const TreasuryPage = memo(function TreasuryPage() {
 
 const Content = styled('div', {
   base: {
-    paddingBlock: '12px 20px',
+    paddingBlock: '12px 24px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '28px',
     sm: {
-      paddingBlock: '14px 32px',
+      paddingBlock: '14px 28px',
+      gap: '32px',
+    },
+    lg: {
+      gap: '24px',
+      paddingBlock: '14px 48px',
     },
   },
 });

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Navigate, useParams } from 'react-router';
 import { UnstakedClmBannerDashboard } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBannerDashboard.tsx';
 import { DashboardMeta } from '../../components/Meta/DashboardMeta.tsx';
-import { TechLoader } from '../../components/TechLoader/TechLoader.tsx';
+import { FullscreenTechLoader, TechLoader } from '../../components/TechLoader/TechLoader.tsx';
 import { isMaybeDomain, isValidAddress } from '../../helpers/addresses.ts';
 import { useAppSelector } from '../data/store/hooks.ts';
 import { useResolveDomain } from '../data/hooks/resolver.ts';
@@ -21,7 +21,6 @@ import {
 import { UserExposure } from './components/UserExposure/UserExposure.tsx';
 import { UserVaults } from './components/UserVaults/UserVaults.tsx';
 import { useInitDashboard } from './hooks.ts';
-import { BeGemsBanner } from '../../components/Banners/BeGemsBanner/BeGemsBanner.tsx';
 import { styled } from '@repo/styles/jsx';
 import { PageLayout } from '../../components/PageLayout/PageLayout.tsx';
 
@@ -55,9 +54,13 @@ const DashboardFromUrl = memo(function DashboardFromWallet() {
 
   return (
     <PageLayout
-      contentAlignedCenter={true}
+      header={
+        <Header address={addressOrDomain || ''} addressLabel={addressOrDomain || ''}>
+          <DepositSummaryPlaceholder showZeroBalance={true} />
+        </Header>
+      }
       content={
-        <Content w100={true}>
+        <Content>
           {addressOrDomain?.toLowerCase().startsWith('0x') ?
             <InvalidAddress />
           : <InvalidDomain />}
@@ -76,9 +79,13 @@ const DashboardFromWallet = memo(function DashboardFromWallet() {
 
   return (
     <PageLayout
-      contentAlignedCenter={true}
+      header={
+        <Header address={address || ''} addressLabel={address || ''}>
+          <DepositSummaryPlaceholder showZeroBalance={true} />
+        </Header>
+      }
       content={
-        <Content w100={true}>
+        <Content>
           <NotConnected />
         </Content>
       }
@@ -102,9 +109,13 @@ const DashboardFromDomain = memo(function DashboardFromDomain({
   if (isRejectedStatus(status)) {
     return (
       <PageLayout
-        contentAlignedCenter={true}
+        header={
+          <Header address={domain || ''} addressLabel={domain || ''}>
+            <DepositSummaryPlaceholder showZeroBalance={true} />
+          </Header>
+        }
         content={
-          <Content w100={true}>
+          <Content>
             <InvalidDomain />
           </Content>
         }
@@ -112,7 +123,7 @@ const DashboardFromDomain = memo(function DashboardFromDomain({
     );
   }
 
-  return <TechLoader text={t('Loading')} />;
+  return <FullscreenTechLoader text={t('Loading')} />;
 });
 
 type DashboardForAddressProps = {
@@ -133,7 +144,6 @@ const DashboardForAddress = memo(function DashboardForAddress({
         header={
           <>
             <UnstakedClmBannerDashboard address={address} />
-            <BeGemsBanner address={address} dashboard={true} />
             <Header address={address} addressLabel={addressLabel}>
               {loading ?
                 <DepositSummaryPlaceholder />
@@ -146,10 +156,10 @@ const DashboardForAddress = memo(function DashboardForAddress({
             {loading ?
               <TechLoader />
             : userVaults.length > 0 ?
-              <>
+              <UserInfoContainer>
                 <UserExposure address={address} />
                 <UserVaults address={address} />
-              </>
+              </UserInfoContainer>
             : <NoResults title={addressLabel || address} address={address} />}
           </Content>
         }
@@ -158,15 +168,25 @@ const DashboardForAddress = memo(function DashboardForAddress({
   );
 });
 
+const UserInfoContainer = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px',
+  },
+});
+
 const Content = styled('div', {
   base: {
-    paddingBlock: '0px 20px',
-  },
-  variants: {
-    w100: {
-      true: {
-        width: '100%',
-      },
+    paddingBlock: '12px 24px',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    sm: {
+      paddingBlock: '14px 28px',
+    },
+    lg: {
+      paddingBlock: '14px 48px',
     },
   },
 });

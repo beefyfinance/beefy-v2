@@ -36,6 +36,8 @@ const Content = styled('div', {
     backgroundColor: 'background.body',
     borderRadius: '20px',
     flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
     sm: {
       borderRadius: '24px',
     },
@@ -43,8 +45,6 @@ const Content = styled('div', {
   variants: {
     contentAlignedCenter: {
       true: {
-        display: 'flex',
-        alignItems: 'center',
         justifyContent: 'center',
       },
     },

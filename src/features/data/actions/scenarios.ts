@@ -27,7 +27,6 @@ import {
   fetchZapConfigsAction,
   fetchZapSwapAggregatorsAction,
 } from './zap.ts';
-import { initCampaignBeGems } from './campaigns/begems.ts';
 import { fetchWeeklyRevenueStats } from './revenue.ts';
 
 declare const window: {
@@ -97,9 +96,6 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
       .then(() => {
         // create the wallet instance as soon as we get the chain list
         dispatch(initWallet());
-        // fetch beGems data so we can show the claim time limit banner
-        // TODO remove after claims closed
-        dispatch(initCampaignBeGems());
       })
       .catch(console.error);
   });

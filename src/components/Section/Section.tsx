@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
 import { Container, type ContainerProps } from '../Container/Container.tsx';
-import { css } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
 
 interface SectionHeaderProps {
   title?: string;
@@ -9,25 +9,32 @@ interface SectionHeaderProps {
 }
 
 export const SectionHeader = memo(function SectionHeader({ title, subTitle }: SectionHeaderProps) {
-  const titleContainerClass = css({
-    marginBottom: '24px',
-  });
-  const titleClass = css({
+  return (
+    <SectionHeaderContainer maxWidth="lg">
+      {title && <Title>{title}</Title>}
+      {subTitle && <SubTitle>{subTitle}</SubTitle>}
+    </SectionHeaderContainer>
+  );
+});
+
+const Title = styled('div', {
+  base: {
     textStyle: 'h3',
     color: 'text.middle',
-  });
-  const subTitleClass = css({
+  },
+});
+const SubTitle = styled('div', {
+  base: {
     textStyle: 'body',
     color: 'text.dark',
     marginTop: '8px',
-  });
+  },
+});
 
-  return (
-    <Container maxWidth="lg" className={titleContainerClass}>
-      {title && <div className={titleClass}>{title}</div>}
-      {subTitle && <div className={subTitleClass}>{subTitle}</div>}
-    </Container>
-  );
+const SectionHeaderContainer = styled(Container, {
+  base: {
+    gap: '8px',
+  },
 });
 
 interface SectionProps {
@@ -45,16 +52,20 @@ export const Section = memo(function Section({
   maxWidth = 'lg',
   noPadding = false,
 }: SectionProps) {
-  const sectionClass = css({
-    marginTop: '24px',
-  });
-
   return (
-    <div className={sectionClass}>
+    <SectionContainer>
       {(title || subTitle) && <SectionHeader title={title} subTitle={subTitle} />}
       <Container maxWidth={maxWidth} noPadding={noPadding}>
         {children}
       </Container>
-    </div>
+    </SectionContainer>
   );
+});
+
+const SectionContainer = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+  },
 });
