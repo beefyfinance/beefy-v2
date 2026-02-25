@@ -149,3 +149,10 @@ export type TransactHelpers = ZaplessTransactHelpers | ZapTransactHelpers;
 export function isZapTransactHelpers(helpers: TransactHelpers): helpers is ZapTransactHelpers {
   return helpers.zap !== undefined;
 }
+
+export function isComposableStrategy(strategy: IStrategy): strategy is IComposableStrategy {
+  return (
+    'fetchDepositUserlessZapBreakdown' in strategy &&
+    'fetchWithdrawUserlessZapBreakdown' in strategy
+  );
+}

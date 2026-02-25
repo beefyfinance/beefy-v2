@@ -9,11 +9,15 @@ import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import type { UserlessZapRequest, ZapOrder, ZapStep } from '../../apis/transact/zap/types.ts';
 import type { TokenEntity } from '../../entities/token.ts';
-import { isGovVault, type VaultEntity } from '../../entities/vault.ts';
+import type { VaultEntity } from '../../entities/vault.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { GasPricing } from '../../apis/gas-prices/gas-prices.ts';
 import { selectChainById } from '../../selectors/chains.ts';
-import { selectTokenByAddress, selectTokenByAddressOrUndefined } from '../../selectors/tokens.ts';
+import {
+  selectChainNativeToken,
+  selectTokenByAddress,
+  selectTokenByAddressOrUndefined,
+} from '../../selectors/tokens.ts';
 import { selectVaultById } from '../../selectors/vaults.ts';
 import { selectCurrentChainId, selectWalletAddress } from '../../selectors/wallet.ts';
 import { selectZapByChainId } from '../../selectors/zap.ts';
@@ -23,13 +27,7 @@ import type {
   CrossChainOpStatus,
   PendingCrossChainOp,
 } from '../../reducers/wallet/transact-types.ts';
-import {
-  bindTransactionEvents,
-  captureWalletErrors,
-  selectVaultTokensToRefresh,
-  txStart,
-  txWallet,
-} from './common.ts';
+import { bindTransactionEvents, captureWalletErrors, txStart, txWallet } from './common.ts';
 
 type GasPriceCache = {
   chainId: ChainEntity['id'];
@@ -202,21 +200,21 @@ export const crossChainZapExecuteOrder = (
         walletAddress: address,
         chainId: sourceChainId,
         spenderAddress: zap.manager,
-        tokens: selectCrossChainZapTokensToRefresh(state, vault, sourceChainId, order),
+        tokens: selectCrossChainZapTokensToRefresh(state, sourceChainId, order),
         clearInput: false,
-        ...(isGovVault(vault) ? { govVaultId: vault.id } : {}),
       }
     );
   });
 };
 
+/** Source-chain tokens whose balances should be refreshed after the source tx is mined.
+ * Dest-chain token refresh is handled separately by cross-chain operation polling. */
 function selectCrossChainZapTokensToRefresh(
   state: BeefyState,
-  vault: VaultEntity,
   sourceChainId: ChainEntity['id'],
   order: ZapOrder
 ): TokenEntity[] {
-  const tokens: TokenEntity[] = selectVaultTokensToRefresh(state, vault);
+  const tokens: TokenEntity[] = [selectChainNativeToken(state, sourceChainId)];
 
   for (const { token: tokenAddress } of order.inputs) {
     const token = selectTokenByAddressOrUndefined(state, sourceChainId, tokenAddress);

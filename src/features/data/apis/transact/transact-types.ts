@@ -618,7 +618,7 @@ export type VaultComposerZapDepositQuote = BaseZapQuote<VaultComposerDepositOpti
 };
 
 export type SingleDepositQuote = BaseZapQuote<SingleDepositOption> & {
-  swapQuote: QuoteResponse;
+  swapQuote?: QuoteResponse;
 };
 
 export type UniswapLikePoolDepositQuote<T extends UniswapLikeDepositOption<AmmEntityUniswapLike>> =

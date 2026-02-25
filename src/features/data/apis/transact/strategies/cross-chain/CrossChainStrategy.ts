@@ -39,6 +39,8 @@ import {
   type CrossChainWithdrawQuote,
   type DepositOption,
   type InputTokenAmount,
+  type SingleDepositOption,
+  type SingleWithdrawOption,
   isZapQuote,
   isZapQuoteStepSwap,
   isZapQuoteStepSwapAggregator,
@@ -51,12 +53,12 @@ import {
 } from '../../transact-types.ts';
 import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
 import type { UserlessZapRequest, ZapStep, OrderOutput } from '../../zap/types.ts';
-import type {
-  IComposableStrategy,
-  IStrategy,
-  IZapStrategy,
-  IZapStrategyStatic,
-  ZapTransactHelpers,
+import {
+  type IStrategy,
+  type IZapStrategy,
+  type IZapStrategyStatic,
+  type ZapTransactHelpers,
+  isComposableStrategy,
 } from '../IStrategy.ts';
 import type { CrossChainStrategyConfig } from '../strategy-configs.ts';
 import { getTransactApi } from '../../../../apis/instances.ts';
@@ -990,6 +992,34 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         continue;
       }
     }
+    // Fallback: bridge token IS the vault's deposit token → direct deposit (no swap needed)
+    const state = this.helpers.getState();
+    const { vault } = this.helpers;
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    if (depositToken.address.toLowerCase() === destUSDC.address.toLowerCase()) {
+      for (const strategy of strategies) {
+        if (strategy.id === 'single' && isComposableStrategy(strategy)) {
+          const selectionId = createSelectionId(vault.chainId, [depositToken]);
+          const syntheticOption = {
+            id: createOptionId(strategy.id, vault.id, selectionId, 'direct'),
+            vaultId: vault.id,
+            chainId: vault.chainId,
+            selectionId,
+            selectionOrder: SelectionOrder.Other,
+            inputs: [depositToken],
+            wantedOutputs: [depositToken],
+            strategyId: strategy.id,
+            mode: TransactMode.Deposit,
+          } as SingleDepositOption;
+          console.timeEnd('[XChainPerf] findDestStrategyForDeposit TOTAL');
+          console.debug('[XChainPerf] findDestStrategyForDeposit: direct deposit fallback', {
+            strategyId: strategy.id,
+          });
+          return { strategy, option: syntheticOption as DepositOption };
+        }
+      }
+    }
+
     console.timeEnd('[XChainPerf] findDestStrategyForDeposit TOTAL');
     console.debug('[XChainPerf] findDestStrategyForDeposit: no match found');
     return undefined;
@@ -1012,15 +1042,33 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         continue;
       }
     }
+
+    // Fallback: source USDC IS the vault's deposit token → direct withdraw (no swap needed)
+    const state = this.helpers.getState();
+    const { vault } = this.helpers;
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    if (depositToken.address.toLowerCase() === sourceUSDC.address.toLowerCase()) {
+      for (const strategy of strategies) {
+        if (strategy.id === 'single' && isComposableStrategy(strategy)) {
+          const selectionId = createSelectionId(vault.chainId, [depositToken]);
+          const syntheticOption = {
+            id: createOptionId(strategy.id, vault.id, selectionId, 'direct'),
+            vaultId: vault.id,
+            chainId: vault.chainId,
+            selectionId,
+            selectionOrder: SelectionOrder.Other,
+            inputs: [depositToken],
+            wantedOutputs: [depositToken],
+            strategyId: strategy.id,
+            mode: TransactMode.Withdraw,
+          } as SingleWithdrawOption;
+          return { strategy, option: syntheticOption as WithdrawOption };
+        }
+      }
+    }
+
     return undefined;
   }
-}
-
-function isComposableStrategy(strategy: IStrategy): strategy is IComposableStrategy {
-  return (
-    'fetchDepositUserlessZapBreakdown' in strategy &&
-    'fetchWithdrawUserlessZapBreakdown' in strategy
-  );
 }
 
 // ===== Dust Output Helper Types and Functions =====
