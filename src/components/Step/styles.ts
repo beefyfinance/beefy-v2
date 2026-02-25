@@ -12,12 +12,15 @@ export const styles = {
     textStyle: 'body.medium',
     color: 'text.middle',
     background: 'background.content.dark',
-    padding: '24px',
     borderTopRadius: '24px',
     borderBottom: 'solid 2px {colors.bayOfMany}',
     display: 'flex',
     columnGap: '12px',
     alignItems: 'center',
+    padding: '24px 16px',
+    sm: {
+      padding: '24px',
+    },
   }),
   backButton: css.raw({
     margin: '0',
@@ -50,11 +53,17 @@ export const styles = {
     marginRight: '8px',
   }),
   content: css.raw({
-    padding: '24px',
     height: '462px',
     display: 'flex',
     flexDirection: 'column',
     flexGrow: '1',
+    padding: '20px 16px 24px 16px',
+    sm: {
+      padding: '20px 24px 24px 24px',
+    },
+    md: {
+      padding: '24px',
+    },
   }),
   noPadding: css.raw({
     padding: '0',

@@ -136,18 +136,24 @@ const TitleBar = styled('div', {
     display: 'flex',
     columnGap: '12px',
     alignItems: 'center',
-    padding: '24px',
+    padding: '24px 16px',
+    sm: {
+      padding: '24px',
+    },
   },
 });
 
 const Content = styled('div', {
   base: {
-    padding: '20px 16px 24px 16px',
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
-    mdDown: {
+    padding: '20px 16px 24px 16px',
+    sm: {
       padding: '20px 24px 24px 24px',
+    },
+    md: {
+      padding: '24px',
     },
   },
 });
