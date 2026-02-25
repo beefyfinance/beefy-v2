@@ -1,5 +1,235 @@
 [
   {
+    "id": "uniswap-monad-usdc-dust",
+    "name": "DUST-USDC LP",
+    "type": "standard",
+    "token": "DUST-USDC LP",
+    "tokenAddress": "0x86dBF00485871C901C5129bD525348Db96c2eB2d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xCd232AEc0B84016FDba5e425a20e41932E9e4C73",
+    "earnedToken": "mooUniswapV2USDC-DUST",
+    "earnedTokenAddress": "0xCd232AEc0B84016FDba5e425a20e41932E9e4C73",
+    "oracle": "lps",
+    "oracleId": "uniswap-monad-usdc-dust",
+    "status": "active",
+    "createdAt": 1771850301,
+    "platformId": "uniswap",
+    "assets": ["DUST", "USDC"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.uniswap.org/positions/create/v2?currencyA=0xad96c3dffcd6374294e2573a7fbba96097cc8d7c&currencyB=0x754704Bc059F8C67012fEd69BC8A327a5aafb603&chain=monad",
+    "removeLiquidityUrl": "https://app.uniswap.org/positions/v2/monad/0x86dBF00485871C901C5129bD525348Db96c2eB2d",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "monad-uniswap"
+      }
+    ]
+  },
+  {
+    "id": "morpho-monad-steakhouse-prime-weth",
+    "name": "WETH (Steakhouse, Prime WETH)",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x83B0a383C3d1b94F28A453735C692d166B561681",
+    "earnedToken": "mooMorphoMonadSteakhousePrimeWETH",
+    "earnedTokenAddress": "0x83B0a383C3d1b94F28A453735C692d166B561681",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1770979279,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["WETH"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0xbeef04b01e0275D4ac2e2986256BB14E3Ff6ef42/steakhouse-prime-eth",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-monad-steakhouse-high-yield-usdt",
+    "name": "USDT0 (Steakhouse, High Yield USDT)",
+    "type": "standard",
+    "token": "USDT0",
+    "tokenAddress": "0xe7cd86e13AC4309349F30B3435a9d337750fC82D",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x0941794781eDb8ae0703687AaC94601E279c4D6b",
+    "earnedToken": "mooMorphoMonadSteakhouseHighYieldUSDT",
+    "earnedTokenAddress": "0x0941794781eDb8ae0703687AaC94601E279c4D6b",
+    "oracle": "tokens",
+    "oracleId": "USDT0",
+    "status": "active",
+    "createdAt": 1770979279,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["USDT0"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0xbeeff300E9A9caeC7beEA740ab8758D33b777509/steakhouse-high-yield-usdt0",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-wbtc-wmon-vault",
+    "name": "WBTC-WMON",
+    "type": "standard",
+    "token": "WBTC-WMON",
+    "tokenAddress": "0x496D745C9788fD90e8423bA1E700E59D994BC816",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xd4D3dCb14B311887A563C38A2528F943561e6c04",
+    "earnedToken": "mooCowPancakeWBTC-WMON",
+    "earnedTokenAddress": "0xd4D3dCb14B311887A563C38A2528F943561e6c04",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-wbtc-wmon",
+    "status": "active",
+    "createdAt": 1769465727,
+    "platformId": "pancakeswap",
+    "assets": ["WBTC", "WMON"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-wbtc-wmon-rp",
+    "name": "WBTC-WMON Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeWBTC-WMON",
+    "tokenAddress": "0x496D745C9788fD90e8423bA1E700E59D994BC816",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x71b8AF90834098285664C73209839E698F925321",
+    "earnedToken": "rCowPancakeWBTC-WMON",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-wbtc-wmon",
+    "status": "active",
+    "createdAt": 1769465726,
+    "platformId": "pancakeswap",
+    "assets": ["WBTC", "WMON"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-monad-wbtc-wmon",
+    "name": "WBTC-WMON",
+    "type": "cowcentrated",
+    "token": "WBTC-WMON pancakeswap",
+    "tokenAddress": "0x0944526D2727B532653E6Ca6c4D980461E170a09",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A"
+    ],
+    "earnContractAddress": "0x496D745C9788fD90e8423bA1E700E59D994BC816",
+    "earnedToken": "cowPancakeWBTC-WMON",
+    "earnedTokenAddress": "0x496D745C9788fD90e8423bA1E700E59D994BC816",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-monad-wbtc-wmon",
+    "status": "active",
+    "createdAt": 1769465726,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["WBTC", "WMON"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "gearbox-monad-edge-usdc",
     "name": "USDC (Edge UltraYield)",
     "type": "standard",
