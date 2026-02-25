@@ -1,5 +1,171 @@
 [
   {
+    "id": "sky-staking",
+    "name": "SKY",
+    "type": "standard",
+    "token": "SKY",
+    "tokenAddress": "0x56072C95FAA701256059aa122697B133aDEd9279",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sky",
+    "earnContractAddress": "0x15BbD315B61e7C0717B2BcE6DD1172590860fc28",
+    "earnedToken": "mooSky",
+    "earnedTokenAddress": "0x15BbD315B61e7C0717B2BcE6DD1172590860fc28",
+    "oracle": "tokens",
+    "oracleId": "SKY",
+    "status": "active",
+    "createdAt": 1772011909,
+    "platformId": "sky",
+    "assets": ["SKY"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "balancerv3-ethereum-teth-wsteth",
+    "name": "tETH/wstETH V3",
+    "type": "standard",
+    "token": "tETH/wstETH V3",
+    "tokenAddress": "0x9ED5175aeCB6653C1BDaa19793c16fd74fBeEB37",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnContractAddress": "0x99B91bbc278A3D6f20A83De8c15215Aa0829FEDd",
+    "earnedToken": "mooBalancerEthereumwstETH-tETH",
+    "earnedTokenAddress": "0x99B91bbc278A3D6f20A83De8c15215Aa0829FEDd",
+    "oracle": "lps",
+    "oracleId": "balancerv3-ethereum-teth-wsteth",
+    "status": "active",
+    "createdAt": 1770938814,
+    "platformId": "aura",
+    "assets": ["tETH", "waEthLidowstETH"],
+    "risks": {
+      "updatedAt": 1770938814,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v3/0x9ED5175aeCB6653C1BDaa19793c16fd74fBeEB37/add-liquidity",
+    "network": "ethereum"
+  },
+  {
+    "id": "stakedao-ynrwax-ousd",
+    "name": "ynRWAx/OUSD",
+    "type": "standard",
+    "token": "RWA/OUSD",
+    "tokenAddress": "0xf75f2b5fc5F375e1aD3130dD0eEC7219Fe821204",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xed43B7564965A09a1439d4F5d3424Ab6DC3AE8b1",
+    "earnedToken": "mooStakeDao-ynRWAx-OUSD",
+    "earnedTokenAddress": "0xed43B7564965A09a1439d4F5d3424Ab6DC3AE8b1",
+    "oracle": "lps",
+    "oracleId": "curve-ynrwax-ousd",
+    "status": "active",
+    "createdAt": 1770892120,
+    "platformId": "stakedao",
+    "assets": ["ynRWAx", "OUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-663/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-663/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xf75f2b5fc5F375e1aD3130dD0eEC7219Fe821204",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xf75f2b5fc5F375e1aD3130dD0eEC7219Fe821204",
+            "coins": [
+              "0x01Ba69727E2860b37bc1a2bd56999c1aFb4C15D8",
+              "0x2A8e1E676Ec238d8A992307B495b45B3fEAa5e86"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "stakedao-ousd-musd",
+    "name": "OUSD/MUSD",
+    "type": "standard",
+    "token": "OUSDMUSD",
+    "tokenAddress": "0x23b78Dc3b1b0A27f3838219e97d806Aae377a1b2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x2096F8db3dbFD6076F38C61a0aaE82D8c4a47DfB",
+    "earnedToken": "mooStakeDao-OUSD-MUSD",
+    "earnedTokenAddress": "0x2096F8db3dbFD6076F38C61a0aaE82D8c4a47DfB",
+    "oracle": "lps",
+    "oracleId": "curve-ousd-musd",
+    "status": "active",
+    "createdAt": 1770892109,
+    "platformId": "stakedao",
+    "assets": ["OUSD", "MUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-681/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-681/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x23b78Dc3b1b0A27f3838219e97d806Aae377a1b2",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x23b78Dc3b1b0A27f3838219e97d806Aae377a1b2",
+            "coins": [
+              "0x2A8e1E676Ec238d8A992307B495b45B3fEAa5e86",
+              "0xdD468A1DDc392dcdbEf6db6e34E89AA338F9F186"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "stakedao-usdc-savusd",
     "name": "savUSD/USDC",
     "type": "standard",
@@ -1833,7 +1999,7 @@
     "tokenAddress": "0x56072C95FAA701256059aa122697B133aDEd9279",
     "tokenDecimals": 18,
     "earnContractAddress": "0x30368EC9B8827c68754E4C41ff7678ed784DaAc2",
-    "earnedToken": "mooSky",
+    "earnedToken": "mooSkyOld",
     "earnedTokenAddress": "0x30368EC9B8827c68754E4C41ff7678ed784DaAc2",
     "oracle": "tokens",
     "oracleId": "SKY",
