@@ -4,9 +4,6 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
 import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
-import type { ToggleProps } from '../../../../../../components/Toggle/Toggle.tsx';
-import { Toggle } from '../../../../../../components/Toggle/Toggle.tsx';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import buildLpIcon from '../../../../../../images/icons/build-lp.svg';
 import OpenInNewRoundedIcon from '../../../../../../images/icons/mui/OpenInNewRounded.svg?react';
@@ -14,16 +11,27 @@ import { transactSelectSelection } from '../../../../../data/actions/transact.ts
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import {
   selectTransactDepositTokensForChainIdWithBalances,
+  selectTransactSelectedChainId,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import type { ListItemProps } from './components/ListItem/ListItem.tsx';
 import { ListItem } from './components/ListItem/ListItem.tsx';
-import { styles } from './styles.ts';
 import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
+import {
+  BuildLpContent,
+  BuildLpIcon,
+  SelectListContainer,
+  SelectListItems,
+  SelectListNoResults,
+  SelectListSearch,
+} from '../common/CommonListStyles.tsx';
+import { selectListScrollable, buildLpLink } from '../common/CommonListStylesRaw.ts';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { DustList } from './components/DustList/DustList.tsx';
 
-const useStyles = legacyMakeStyles(styles);
-const DUST_HIDDEN_THRESHOLD = new BigNumber('0.01');
+// 1 USD
+const DUST_THRESHOLD = new BigNumber('1');
 
 export type DepositTokenSelectListProps = {
   css?: CssStyles;
@@ -34,35 +42,53 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
 }: DepositTokenSelectListProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const [dustHidden, setDustHidden] = useState(false);
-  const [selectedChain] = useState(vault.chainId);
+  const transactChainId = useAppSelector(selectTransactSelectedChainId);
+  const selectedChain = transactChainId ?? vault.chainId;
   const [search, setSearch] = useState('');
   const optionsForChain = useAppSelector(state =>
     selectTransactDepositTokensForChainIdWithBalances(state, selectedChain, vaultId)
   );
-  const filteredOptionsForChain = useMemo(() => {
-    let options = optionsForChain;
 
-    if (search.length) {
-      options = options.filter(option =>
-        option.tokens
-          .map(token => token.symbol)
-          .join(' ')
-          .toLowerCase()
-          .includes(search.toLowerCase())
-      );
+  const searchFiltered = useMemo(() => {
+    if (!search.length) return optionsForChain;
+    const lowerSearch = search.toLowerCase();
+    return optionsForChain.filter(option =>
+      option.tokens
+        .map(token => token.symbol)
+        .join(' ')
+        .toLowerCase()
+        .includes(lowerSearch)
+    );
+  }, [optionsForChain, search]);
+
+  const { normalOptions, dustOptions, dustTotalUsd } = useMemo(() => {
+    const vaultDeposits = [];
+    const other = [];
+    const dust = [];
+    let dustSum = BIG_ZERO;
+    for (const option of searchFiltered) {
+      const isVaultDeposit = option.tokens.length > 1 || option.order === 0;
+      const hasBalance = option.balance && option.balance.gt(BIG_ZERO);
+
+      if (isVaultDeposit) {
+        vaultDeposits.push(option);
+      } else if (hasBalance && option.balanceValue.lt(DUST_THRESHOLD)) {
+        dust.push(option);
+        dustSum = dustSum.plus(option.balanceValue);
+      } else if (hasBalance) {
+        other.push(option);
+      }
     }
+    vaultDeposits.sort((a, b) => b.tokens.length - a.tokens.length);
+    return {
+      normalOptions: [...vaultDeposits, ...other],
+      dustOptions: dust,
+      dustTotalUsd: dustSum,
+    };
+  }, [searchFiltered]);
 
-    if (dustHidden) {
-      options = options.filter(option => option.balanceValue.gte(DUST_HIDDEN_THRESHOLD));
-    }
-
-    return options;
-  }, [optionsForChain, search, dustHidden]);
-  // const hasMultipleChains = availableChains.length > 1;
   const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
     tokenId => {
       dispatch(
@@ -74,68 +100,72 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
     },
     [dispatch]
   );
-  const handleToggleDust = useCallback<ToggleProps['onChange']>(
-    checked => {
-      setDustHidden(checked);
-    },
-    [setDustHidden]
-  );
 
   return (
-    <div className={css(styles.container, cssProp)}>
-      <div className={classes.search}>
+    <SelectListContainer css={cssProp}>
+      <SelectListSearch>
         <SearchInput value={search} onValueChange={setSearch} />
-      </div>
-      <div className={classes.walletToggle}>
-        <div className={classes.inWallet}>{t('Transact-TokenSelect-InYourWallet')}</div>
-        <div className={classes.hideDust}>
-          <Toggle
-            checked={dustHidden}
-            onChange={handleToggleDust}
-            startAdornment={t('Transact-TokenSelect-HideDust')}
-          />
-        </div>
-      </div>
-      {/*hasMultipleChains ? <div className={classes.chainSelector}>TODO {selectedChain}</div> : null*/}
-      <Scrollable css={styles.listContainer}>
-        <div className={classes.list}>
-          {filteredOptionsForChain.length ?
-            filteredOptionsForChain.map(option => (
+      </SelectListSearch>
+      <Scrollable css={selectListScrollable}>
+        <SelectListItems noGap={true}>
+          {normalOptions.length ?
+            normalOptions.map(option => (
               <ListItem
                 key={option.id}
                 selectionId={option.id}
                 tokens={option.tokens}
                 balance={option.balance}
+                balanceValue={option.balanceValue}
                 decimals={option.decimals}
                 tag={option.tag}
                 chainId={selectedChain}
                 onSelect={handleTokenSelect}
               />
             ))
-          : <div className={classes.noResults}>{t('Transact-TokenSelect-NoResults')}</div>}
-        </div>
+          : !dustOptions.length ?
+            <SelectListNoResults>{t('Transact-TokenSelect-NoResults')}</SelectListNoResults>
+          : null}
+          {dustOptions.length > 0 && (
+            <DustList dustTotalUsd={dustTotalUsd}>
+              {dustOptions.map(option => (
+                <ListItem
+                  key={option.id}
+                  selectionId={option.id}
+                  tokens={option.tokens}
+                  balance={option.balance}
+                  balanceValue={option.balanceValue}
+                  decimals={option.decimals}
+                  tag={option.tag}
+                  chainId={selectedChain}
+                  onSelect={handleTokenSelect}
+                />
+              ))}
+            </DustList>
+          )}
+        </SelectListItems>
       </Scrollable>
-      {filteredOptionsForChain?.length > 1 && <BuildLpManually vaultId={vaultId} />}
-    </div>
+      {searchFiltered?.length > 1 && <BuildLpManually vaultId={vaultId} />}
+    </SelectListContainer>
   );
 });
 
 const BuildLpManually = memo(function BuildLpManually({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const { t } = useTranslation();
-  const classes = useStyles();
 
   if (!vault.addLiquidityUrl) {
     return null;
   }
 
   return (
-    <ExternalLink className={classes.buildLp} href={vault.addLiquidityUrl}>
-      <div className={classes.buildLpContent}>
+    <ExternalLink className={css(buildLpLink)} href={vault.addLiquidityUrl}>
+      <BuildLpContent>
         <img src={buildLpIcon} alt="buildLp" />
         {t('Build LP Manually')}
-      </div>
-      <OpenInNewRoundedIcon fontSize="inherit" className={classes.icon} />
+      </BuildLpContent>
+      <BuildLpIcon>
+        <OpenInNewRoundedIcon fontSize="inherit" />
+      </BuildLpIcon>
     </ExternalLink>
   );
 });

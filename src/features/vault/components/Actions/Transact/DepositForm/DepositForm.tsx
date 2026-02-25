@@ -24,6 +24,7 @@ import {
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactSelected,
+  selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -115,15 +116,19 @@ const DepositFormInputs = memo(function DepositFormInputs() {
   const multipleInputs = selection.tokens.length > 1;
   const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
   const forceSelection = useAppSelector(selectTransactForceSelection);
+  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
   const availableLabel = t('Transact-Available');
   const firstSelectLabel = useMemo(() => {
+    if (hasCrossChainZap && forceSelection) {
+      return t('Transact-SelectChain');
+    }
     return t(
       hasOptions ?
         forceSelection ? 'Transact-SelectToken'
         : 'Transact-SelectAmount'
       : 'Transact-Deposit'
     );
-  }, [forceSelection, hasOptions, t]);
+  }, [forceSelection, hasOptions, hasCrossChainZap, t]);
 
   if (forceSelection) {
     return (
@@ -131,8 +136,8 @@ const DepositFormInputs = memo(function DepositFormInputs() {
         index={0}
         token={selection.tokens[0]}
         availableLabel={availableLabel}
-        selectLabel={t('Transact-SelectToken')}
-        showZapIcon={hasOptions}
+        selectLabel={hasCrossChainZap ? t('Transact-SelectChain') : t('Transact-SelectToken')}
+        showZapIcon={hasOptions && !hasCrossChainZap}
       />
     );
   }

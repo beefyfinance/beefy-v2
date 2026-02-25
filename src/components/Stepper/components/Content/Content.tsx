@@ -13,6 +13,7 @@ import {
   selectBoostClaimed,
   selectBridgeSuccess,
   selectMintResult,
+  selectStepperBridgeStatus,
   selectStepperCurrentStep,
   selectStepperCurrentStepData,
   selectStepperItems,
@@ -28,6 +29,7 @@ import iconError from '../../../../images/icons/error.svg';
 import { Button } from '../../../Button/Button.tsx';
 import { CircularProgress } from '../../../CircularProgress/CircularProgress.tsx';
 import { ListJoin } from '../../../ListJoin.tsx';
+import { SpinLoader } from '../../../SpinLoader/SpinLoader.tsx';
 import { Title } from '../Title/Title.tsx';
 import { TransactionLink } from '../TransactionLink/TransactionLink.tsx';
 import { styles } from './styles.ts';
@@ -405,6 +407,35 @@ const stepToSuccessContent: StepToSuccessContent = {
   'boost-claim-unstake': BoostUnstakeSuccessContent,
   'boost-claim': BoostUnstakeSuccessContent,
 };
+
+export const BridgingContent = memo(function BridgingContent() {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const bridgeStatus = useAppSelector(selectStepperBridgeStatus);
+
+  const statusKey =
+    bridgeStatus?.lifecycleState ?
+      `Transactn-Bridging-Status-${bridgeStatus.lifecycleState}`
+    : undefined;
+
+  return (
+    <>
+      <Title
+        text={
+          <>
+            <SpinLoader size={16} css={css.raw({ marginRight: '8px' })} />
+            {t('Transactn-Bridging')}
+          </>
+        }
+      />
+      <div className={css(styles.content, styles.successContent)}>
+        <div className={classes.message}>
+          {statusKey ? t(statusKey) : t('Transactn-Bridging-Wait')}
+        </div>
+      </div>
+    </>
+  );
+});
 
 export const SuccessContent = memo(function SuccessContent() {
   const step = useAppSelector(selectStepperCurrentStepData);

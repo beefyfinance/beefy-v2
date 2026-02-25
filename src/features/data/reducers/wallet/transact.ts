@@ -16,6 +16,7 @@ import {
   transactSelectQuote,
   transactSelectSelection,
   transactSetInputAmount,
+  transactSetSelectedChainId,
   transactSetSlippage,
   transactSwitchMode,
   transactSwitchStep,
@@ -25,7 +26,11 @@ import {
   crossChainOpInitiated,
   crossChainOpStatusUpdate,
 } from '../../actions/wallet/cross-chain.ts';
-import { type TransactOption, type TransactQuote } from '../../apis/transact/transact-types.ts';
+import {
+  isCrossChainDepositOption,
+  type TransactOption,
+  type TransactQuote,
+} from '../../apis/transact/transact-types.ts';
 import type {
   TransactOptions,
   TransactQuotes,
@@ -103,6 +108,12 @@ const transactSlice = createSlice({
       })
       .addCase(transactSwitchStep, (sliceState, action) => {
         sliceState.step = action.payload;
+      })
+      .addCase(transactSetSelectedChainId, (sliceState, action) => {
+        const chainId = action.payload;
+        sliceState.selectedChainId = chainId;
+        sliceState.step = TransactStep.TokenSelect;
+        clearInputs(sliceState);
       })
       .addCase(transactSelectSelection, (sliceState, action) => {
         sliceState.selectedSelectionId = action.payload.selectionId;
@@ -376,10 +387,13 @@ function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOp
     }
 
     // Add chainId -> selectionId[] mapping
-    const byChainId = sliceState.selections.byChainId[option.chainId];
+    // Cross-chain deposit options are indexed by sourceChainId so they appear
+    // when the user picks the source chain in ChainSelectStep
+    const chainKey = isCrossChainDepositOption(option) ? option.sourceChainId : option.chainId;
+    const byChainId = sliceState.selections.byChainId[chainKey];
     if (!byChainId) {
-      sliceState.selections.byChainId[option.chainId] = [option.selectionId];
-      sliceState.selections.allChainIds.push(option.chainId);
+      sliceState.selections.byChainId[chainKey] = [option.selectionId];
+      sliceState.selections.allChainIds.push(chainKey);
     } else if (!byChainId.includes(option.selectionId)) {
       byChainId.push(option.selectionId);
     }

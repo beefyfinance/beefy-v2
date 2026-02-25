@@ -16,7 +16,11 @@ import type { BeefyState } from '../../features/data/store/types.ts';
 import { singleAssetExists } from '../../helpers/singleAssetSrc.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import type { AssetsImageProps } from '../AssetsImage/AssetsImage.tsx';
-import { AssetsImage, MissingAssetsImage } from '../AssetsImage/AssetsImage.tsx';
+import {
+  AssetsImage,
+  AssetsImageWithChain,
+  MissingAssetsImage,
+} from '../AssetsImage/AssetsImage.tsx';
 
 type AddressChainIdOptions = {
   address: TokenEntity['address'];
@@ -179,6 +183,26 @@ export const TokensImage = memo(function TokensImage({
 
   return assets ?
       <AssetsImage {...assets} css={cssProp} size={size} />
+    : <MissingAssetsImage css={cssProp} size={size} />;
+});
+
+export type TokensImageWithChainProps = TokensOptions &
+  CommonTokenImageProps & { chainId: ChainEntity['id'] };
+export const TokensImageWithChain = memo(function TokensImageWithChain({
+  size,
+  css: cssProp,
+  chainId,
+  ...options
+}: TokensImageWithChainProps) {
+  const assets = useAppSelector(state => selectAssetsForTokens(state, options));
+
+  return assets ?
+      <AssetsImageWithChain
+        chainId={chainId}
+        assetSymbols={assets.assetSymbols}
+        css={cssProp}
+        size={size}
+      />
     : <MissingAssetsImage css={cssProp} size={size} />;
 });
 

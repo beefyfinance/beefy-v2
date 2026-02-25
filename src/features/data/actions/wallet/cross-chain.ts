@@ -201,7 +201,7 @@ export const crossChainZapExecuteOrder = (
         chainId: sourceChainId,
         spenderAddress: zap.manager,
         tokens: selectCrossChainZapTokensToRefresh(state, sourceChainId, order),
-        clearInput: true,
+        clearInput: false,
       }
     );
   });
