@@ -64,7 +64,8 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
   }, [optionsForChain, search]);
 
   const { normalOptions, dustOptions, dustTotalUsd } = useMemo(() => {
-    const normal = [];
+    const vaultDeposits = [];
+    const other = [];
     const dust = [];
     let dustSum = BIG_ZERO;
     for (const option of searchFiltered) {
@@ -72,15 +73,20 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
       const hasBalance = option.balance && option.balance.gt(BIG_ZERO);
 
       if (isVaultDeposit) {
-        normal.push(option);
+        vaultDeposits.push(option);
       } else if (hasBalance && option.balanceValue.lt(DUST_THRESHOLD)) {
         dust.push(option);
         dustSum = dustSum.plus(option.balanceValue);
       } else if (hasBalance) {
-        normal.push(option);
+        other.push(option);
       }
     }
-    return { normalOptions: normal, dustOptions: dust, dustTotalUsd: dustSum };
+    vaultDeposits.sort((a, b) => b.tokens.length - a.tokens.length);
+    return {
+      normalOptions: [...vaultDeposits, ...other],
+      dustOptions: dust,
+      dustTotalUsd: dustSum,
+    };
   }, [searchFiltered]);
 
   const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
