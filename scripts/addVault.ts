@@ -23,6 +23,7 @@ async function vaultData(
   tokenDecimals: number;
   provider: string;
   platform: string;
+  assets: string[];
   migrationIds: string[];
   oracleId: string;
   addLiquidityUrl: string;
@@ -32,21 +33,13 @@ async function vaultData(
   const viemClient = getViemClient(chain);
   const abi = [...StandardVaultAbi, ...StratAbi] as const satisfies Abi;
 
-  const vaultContract = getContract({
-    address: vaultAddress,
-    abi,
-    client: viemClient,
-  });
+  const vaultContract = getContract({ address: vaultAddress, abi, client: viemClient });
   const [want, mooToken] = await Promise.all([
     vaultContract.read.want(),
     vaultContract.read.symbol(),
   ]);
 
-  const tokenContract = getContract({
-    address: want,
-    abi: ERC20Abi,
-    client: viemClient,
-  });
+  const tokenContract = getContract({ address: want, abi: ERC20Abi, client: viemClient });
   const [tokenSymbol, tokenDecimals] = await Promise.all([
     tokenContract.read.symbol(),
     tokenContract.read.decimals(),
@@ -72,16 +65,10 @@ async function vaultData(
     : mooToken.startsWith('mooBeraPaw') ? 'berapaw'
     : provider === 'kodiak' ? 'infrared'
     : provider;
-  if (provider === 'pendle') {
-    platform = 'magpie';
-    if (id.startsWith('pendle-eqb')) platform = 'equilibria';
-  }
-  if (platform === 'equilibria') provider = 'pendle';
   const migrationIds =
     ['curve', 'curve-lend'].includes(provider) && chain === 'ethereum' ?
       ['ethereum-convex', 'ethereum-curve']
     : ['curve', 'curve-lend'].includes(provider) ? ['l2-convex', 'l2-curve']
-    : ['pendle'].includes(provider) ? ['magpie']
     : provider === 'swapx' ? ['sonic-swapx']
     : platform === 'berapaw' ? ['bera-kodiak']
     : provider === 'kodiak' ? ['bera-infrared', 'bera-kodiak']
@@ -89,12 +76,18 @@ async function vaultData(
 
   let tokenName = tokenSymbol.slice(tokenSymbol.lastIndexOf(' ') + 1);
   let token = tokenSymbol;
+  let assets = [tokenName];
   if (provider === 'pendle') {
     token = mooToken.slice(mooToken.indexOf('-') + 1);
-    tokenName = token;
+    tokenName = token.replace('-', ' ');
+    const date = tokenName.split(' ').pop() || '';
+    tokenName = tokenName.replace(
+      date,
+      date.toLowerCase().replace(/[^0-9]/, month => month.toUpperCase())
+    );
+    assets = [tokenName.split(' ')[0]];
   }
   let oracleId = id;
-  if (id.startsWith('pendle-eqb')) oracleId = id.replace('pendle-eqb', 'pendle');
   if (id.startsWith('stakedao')) oracleId = id.replace('stakedao-', 'curve-');
 
   const addLiquidityUrl =
@@ -118,6 +111,7 @@ async function vaultData(
     tokenDecimals,
     provider,
     platform,
+    assets,
     migrationIds,
     oracleId,
     addLiquidityUrl,
@@ -148,7 +142,7 @@ async function generateVault() {
     oracleId: data.oracleId,
     status: 'active',
     platformId: data.platform,
-    assets: [data.tokenName],
+    assets: data.assets,
     migrationIds: data.migrationIds,
     strategyTypeId: 'multi-lp',
     risks: {
