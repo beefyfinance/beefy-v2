@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react';
 import { memo, useMemo } from 'react';
 import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
-import { useMediaQuery } from '../../../../../../components/MediaQueries/useMediaQuery.ts';
+import { useMediaQuery } from '../../../../../../hooks/useMediaQuery.ts';
 import { TokenImage, VaultImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent.tsx';
 import { DivWithTooltip } from '../../../../../../components/Tooltip/DivWithTooltip.tsx';

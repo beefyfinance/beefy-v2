@@ -10,7 +10,7 @@ import { formatLargeUsd } from '../../../../../../helpers/format.ts';
 import { SliderInput } from '../../../../../../components/Form/Input/SliderInput.tsx';
 import { styled } from '@repo/styles/jsx';
 import { useTranslation } from 'react-i18next';
-import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../../../hooks/useBreakpoint.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 
 //5 MILLION

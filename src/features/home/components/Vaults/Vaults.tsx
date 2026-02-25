@@ -3,7 +3,7 @@ import { VaultsHeader } from './components/VaultsHeader/VaultsHeader.tsx';
 import { VaultsList } from './components/VaultsList/VaultsList.tsx';
 import { styled } from '@repo/styles/jsx';
 import { Container } from '../../../../components/Container/Container.tsx';
-import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 
 export const Vaults = memo(function Vaults() {
   const isMobile = useBreakpoint({ to: 'xs' });

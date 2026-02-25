@@ -7,7 +7,7 @@ import type { PlatformEntity } from '../../../../../data/entities/platform.ts';
 import { SelectMultipleContent } from '../../../../../../components/Form/Select/Multi/SelectMultipleContent.tsx';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'lodash-es';
-import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../../../hooks/useBreakpoint.ts';
 
 export const PlatformChecklist = memo(function PlatformChecklist() {
   const { t } = useTranslation();

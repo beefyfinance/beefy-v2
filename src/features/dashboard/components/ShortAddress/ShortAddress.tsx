@@ -1,10 +1,11 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { formatAddressShort, formatDomain } from '../../../../helpers/format.ts';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles.ts';
-import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 import { DivWithTooltip } from '../../../../components/Tooltip/DivWithTooltip.tsx';
+import { useCopyToClipboard } from '../../../../hooks/useCopyToClipboard.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -19,15 +20,12 @@ export const ShortAddress = memo(function ShortAddress({
 }: ShortAddressProps) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const [showCopied, setShowCopied] = useState<boolean>(false);
+  const { copy, status } = useCopyToClipboard();
   const mdUp = useBreakpoint({ from: 'sm' });
 
   const handleCopyAddressToClipboard = useCallback(() => {
-    navigator.clipboard
-      .writeText(address)
-      .then(() => setShowCopied(true))
-      .catch(e => console.error(e));
-  }, [address, setShowCopied]);
+    copy(address);
+  }, [address, copy]);
 
   const shortAddressLabel = useMemo(() => {
     if (addressLabel) {
@@ -37,22 +35,13 @@ export const ShortAddress = memo(function ShortAddress({
     return formatAddressShort(address);
   }, [addressLabel, address, mdUp]);
 
-  useEffect(() => {
-    if (showCopied) {
-      const handle = setTimeout(() => {
-        setShowCopied(false);
-      }, 3000);
-      return () => clearTimeout(handle);
-    }
-  }, [showCopied, setShowCopied]);
-
   if (address) {
     return (
       <DivWithTooltip
         onClick={handleCopyAddressToClipboard}
         className={classes.triggerClass}
         children={<div className={classes.shortAddress}>{`(${shortAddressLabel})`}</div>}
-        tooltip={showCopied ? t('Clipboard-Copied') : address}
+        tooltip={status === 'success' ? t('Clipboard-Copied') : address}
       />
     );
   }
