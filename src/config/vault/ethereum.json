@@ -1,5 +1,41 @@
 [
   {
+    "id": "sky-staking",
+    "name": "SKY",
+    "type": "standard",
+    "token": "SKY",
+    "tokenAddress": "0x56072C95FAA701256059aa122697B133aDEd9279",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sky",
+    "earnContractAddress": "0x15BbD315B61e7C0717B2BcE6DD1172590860fc28",
+    "earnedToken": "mooSky",
+    "earnedTokenAddress": "0x15BbD315B61e7C0717B2BcE6DD1172590860fc28",
+    "oracle": "tokens",
+    "oracleId": "SKY",
+    "status": "active",
+    "createdAt": 1772011909,
+    "platformId": "sky",
+    "assets": ["SKY"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "balancerv3-ethereum-teth-wsteth",
     "name": "tETH/wstETH V3",
     "type": "standard",
@@ -1963,7 +1999,7 @@
     "tokenAddress": "0x56072C95FAA701256059aa122697B133aDEd9279",
     "tokenDecimals": 18,
     "earnContractAddress": "0x30368EC9B8827c68754E4C41ff7678ed784DaAc2",
-    "earnedToken": "mooSky",
+    "earnedToken": "mooSkyOld",
     "earnedTokenAddress": "0x30368EC9B8827c68754E4C41ff7678ed784DaAc2",
     "oracle": "tokens",
     "oracleId": "SKY",
