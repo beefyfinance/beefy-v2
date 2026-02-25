@@ -1,13 +1,11 @@
 import { memo, useCallback, useRef } from 'react';
 import FileCopy from '../../images/icons/CopyToClipboard.svg?react';
 import { cx, sva } from '@repo/styles/css';
-import { useMountedState } from './hooks.ts';
+import { useCopyToClipboard } from '../../hooks/useCopyToClipboard.ts';
 
 type CopyTextProps = {
   className?: string;
   value: string;
-  onSuccess?: () => void;
-  onFailure?: (e: unknown) => void;
 };
 
 const copyTextRecipe = sva({
@@ -47,33 +45,50 @@ const copyTextRecipe = sva({
       },
     },
   },
+  variants: {
+    status: {
+      idle: {},
+      pending: {},
+      success: {
+        button: {
+          color: 'indicators.success.fg',
+        },
+      },
+      error: {
+        button: {
+          color: 'indicators.error.fg',
+        },
+      },
+    },
+  },
+  defaultVariants: {
+    status: 'idle',
+  },
 });
 
-export const CopyText = memo<CopyTextProps>(function CopyText({
-  className,
-  value,
-  onSuccess,
-  onFailure,
-}) {
-  const classes = copyTextRecipe();
+export const CopyText = memo<CopyTextProps>(function CopyText({ className, value }) {
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const isMounted = useMountedState();
+  const { copy, status } = useCopyToClipboard();
+  const classes = copyTextRecipe({ status });
 
   const handleCopy = useCallback(() => {
     if (inputRef.current) {
       inputRef.current.select();
     }
-    navigator.clipboard
-      .writeText(value)
-      .then(() => isMounted && onSuccess?.())
-      .catch(e => isMounted && onFailure?.(e));
-  }, [value, isMounted, onSuccess, onFailure]);
+    if (value.length) {
+      copy(value);
+    }
+  }, [copy, value]);
 
   return (
     <div className={cx(classes.root, className)}>
       <input type="text" readOnly className={classes.input} value={value} ref={inputRef} />
-      <button type="button" className={classes.button} onClick={handleCopy}>
+      <button
+        type="button"
+        className={classes.button}
+        onClick={handleCopy}
+        disabled={value.length === 0 || status === 'pending'}
+      >
         <FileCopy />
       </button>
     </div>

@@ -9,7 +9,7 @@ import { selectIsBalanceHidden } from '../../../data/selectors/wallet.ts';
 import { PortfolioStats } from './Stats/PortfolioStats.tsx';
 import { PlatformStats } from './Stats/PlatformStats.tsx';
 import { cva } from '@repo/styles/css';
-import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 import { selectUserHasDepositedInAnyVault } from '../../../data/selectors/balance.ts';
 
 const modeToComponent: Record<'portfolio' | 'platform', ComponentType> = {

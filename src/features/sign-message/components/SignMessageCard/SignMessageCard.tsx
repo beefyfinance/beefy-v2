@@ -7,6 +7,9 @@ import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
 import { selectIsWalletConnected } from '../../../data/selectors/wallet.ts';
 import { askForWalletConnection } from '../../../data/actions/wallet.ts';
 import { getWalletConnectionApi } from '../../../data/apis/instances.ts';
+import { useIsMounted } from '../../../../hooks/useIsMounted.ts';
+import type { Address } from 'viem';
+import { formatAddressShort } from '../../../../helpers/format.ts';
 
 const MESSAGE_TO_SIGN = 'I verify the ownership of';
 
@@ -14,40 +17,63 @@ export const SignMessageCard = memo(function SignMessageCard() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
-  const [signature, setSignature] = useState('');
+  const [signature, setSignature] = useState<{ hash: string; address: Address } | undefined>(
+    undefined
+  );
   const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useIsMounted();
 
   const handleConnect = useCallback(() => {
     dispatch(askForWalletConnection());
   }, [dispatch]);
 
-  const handleSign = useCallback(async () => {
-    setIsLoading(true);
-    setSignature('');
-
-    try {
+  const handleSign = useCallback(() => {
+    const askForSignature = async () => {
       const walletApi = await getWalletConnectionApi();
       const client = await walletApi.getConnectedViemClient();
       const [account] = await client.getAddresses();
-      const sig = await client.signMessage({
-        account,
-        message: `${MESSAGE_TO_SIGN} ${account}`,
+      return {
+        address: account,
+        hash: await client.signMessage({
+          account,
+          message: `${MESSAGE_TO_SIGN} ${account}`,
+        }),
+      };
+    };
+
+    setIsLoading(true);
+    setSignature(undefined);
+    askForSignature()
+      .then(sig => {
+        if (isMounted()) {
+          setSignature(sig);
+        }
+      })
+      .catch(err => {
+        console.error('Sign message error:', err);
+      })
+      .finally(() => {
+        if (isMounted()) {
+          setIsLoading(false);
+        }
       });
-      setSignature(sig);
-    } catch (err) {
-      console.error('Sign message error:', err);
-    } finally {
-      setIsLoading(false);
-    }
+  }, [isMounted]);
+
+  const handleReset = useCallback(() => {
+    setSignature(undefined);
   }, []);
 
-  const isSigned = signature !== '';
+  const isSigned = !!signature;
+  const step =
+    isSigned ? 'copy'
+    : isWalletConnected ? 'sign'
+    : 'connect';
 
   return (
     <Container>
       <TitleBar>{t('SignMessage-Title')}</TitleBar>
       <Content>
-        {!isWalletConnected && (
+        {step === 'connect' && (
           <>
             <PromptText>{t('SignMessage-Card-ConnectPrompt')}</PromptText>
             <Button variant="cta" fullWidth={true} borderless={true} onClick={handleConnect}>
@@ -56,14 +82,14 @@ export const SignMessageCard = memo(function SignMessageCard() {
           </>
         )}
 
-        {isWalletConnected && !isSigned && (
+        {step === 'sign' && (
           <>
             <PromptText>{t('SignMessage-Card-SignPrompt')}</PromptText>
             <Button
               variant="cta"
               fullWidth={true}
               borderless={true}
-              onClick={() => void handleSign()}
+              onClick={handleSign}
               disabled={isLoading}
             >
               {isLoading ? t('SignMessage-Signing') : t('SignMessage-Sign')}
@@ -71,15 +97,17 @@ export const SignMessageCard = memo(function SignMessageCard() {
           </>
         )}
 
-        {isWalletConnected && isSigned && (
+        {step === 'copy' && signature && (
           <>
-            <PromptText>{t('SignMessage-Card-CopyPrompt')}</PromptText>
+            <PromptText>
+              {t('SignMessage-Card-CopyPrompt', { address: formatAddressShort(signature.address) })}
+            </PromptText>
             <SignatureContainer>
               <SignedLabel>{t('SignMessage-Card-SignatureHash')}</SignedLabel>
-              <CopyText value={signature} />
+              <CopyText value={signature.hash} />
             </SignatureContainer>
-            <Button variant="cta" fullWidth={true} borderless={true} disabled={true}>
-              {t('SignMessage-Card-Signed')}
+            <Button variant="cta" fullWidth={true} borderless={true} onClick={handleReset}>
+              {t('SignMessage-Card-Reset')}
             </Button>
           </>
         )}

@@ -21,7 +21,7 @@ import { XAxisTick } from '../../../../../../../components/XAxisTick/XAxisTick.t
 import { OverviewTooltip, type OverviewTooltipProps } from '../Tooltips/Tooltips.tsx';
 import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks.ts';
 import { GraphNoData } from '../../../../../../../components/GraphNoData/GraphNoData.tsx';
-import { useBreakpoint } from '../../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../../../../hooks/useBreakpoint.ts';
 import { token } from '@repo/styles/tokens';
 
 const useStyles = legacyMakeStyles(styles);

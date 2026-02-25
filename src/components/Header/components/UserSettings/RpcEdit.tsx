@@ -22,7 +22,7 @@ import { useAppDispatch, useAppSelector } from '../../../../features/data/store/
 import { Button } from '../../../Button/Button.tsx';
 import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
 import { BaseInput } from '../../../Form/Input/BaseInput.tsx';
-import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 
 const URL_REGX = /^https:\/\//;
 

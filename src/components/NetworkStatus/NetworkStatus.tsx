@@ -4,7 +4,7 @@ import { dataLoaderActions } from '../../features/data/reducers/data-loader.ts';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
 import { DropdownProvider } from '../Dropdown/DropdownProvider.tsx';
 import { DropdownTrigger } from '../Dropdown/DropdownTrigger.tsx';
-import { useMediaQuery } from '../MediaQueries/useMediaQuery.ts';
+import { useMediaQuery } from '../../hooks/useMediaQuery.ts';
 import { selectWalletAddress } from '../../features/data/selectors/wallet.ts';
 import { Notification } from './Notification.tsx';
 import { Details } from './Details.tsx';
