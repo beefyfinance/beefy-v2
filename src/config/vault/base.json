@@ -1,5 +1,123 @@
 [
   {
+    "id": "aerodrome-cow-base-usdc-wct-vault",
+    "name": "USDC-WCT",
+    "type": "standard",
+    "token": "USDC-WCT",
+    "tokenAddress": "0x0B0c73f3C68D79De531A41E88Ae38CcE0bBfD3c7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xd8E98169aC7f023e2814515497649a633D6c8aaA",
+    "earnedToken": "mooCowAerodromeUSDC-WCT",
+    "earnedTokenAddress": "0xd8E98169aC7f023e2814515497649a633D6c8aaA",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-wct",
+    "status": "active",
+    "createdAt": 1772045069,
+    "platformId": "aerodrome",
+    "assets": ["USDC", "WCT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-wct-rp",
+    "name": "USDC-WCT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeUSDC-WCT",
+    "tokenAddress": "0x0B0c73f3C68D79De531A41E88Ae38CcE0bBfD3c7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x633F70776386F728c3Ab0f8188F52dAECC67535C",
+    "earnedToken": "rCowAerodromeUSDC-WCT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-wct",
+    "status": "active",
+    "createdAt": 1772045068,
+    "platformId": "aerodrome",
+    "assets": ["USDC", "WCT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-wct",
+    "name": "USDC-WCT",
+    "type": "cowcentrated",
+    "token": "USDC-WCT aerodrome",
+    "tokenAddress": "0x3f932B543490c477846288e48e4546A04FF1410e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xeF4461891DfB3AC8572cCf7C794664A8DD927945"
+    ],
+    "earnContractAddress": "0x0B0c73f3C68D79De531A41E88Ae38CcE0bBfD3c7",
+    "earnedToken": "cowAerodromeUSDC-WCT",
+    "earnedTokenAddress": "0x0B0c73f3C68D79De531A41E88Ae38CcE0bBfD3c7",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-wct",
+    "status": "active",
+    "createdAt": 1772045068,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["USDC", "WCT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-usdc-diem-vault",
     "name": "USDC-DIEM",
     "type": "standard",
