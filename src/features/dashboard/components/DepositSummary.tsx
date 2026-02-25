@@ -48,25 +48,25 @@ export const DepositSummaryPlaceholder = memo(function DepositSummaryPlaceholder
   const { t } = useTranslation();
   const userStats = useMemo(() => {
     const loading = <TextLoader placeholder={'Loading...'} />;
-    const zeroBalance = <div>{'$0'}</div>;
+    const zeroUsd = <div>{'$0'}</div>;
+    const zeroCount = <div>{'0'}</div>;
 
-    const value = showZeroBalance ? zeroBalance : loading;
     return [
       {
         label: t('Summary-Deposit'),
-        value: value,
+        value: showZeroBalance ? zeroUsd : loading,
       },
       {
         label: t('Summary-Vaults'),
-        value: value,
+        value: showZeroBalance ? zeroCount : loading,
       },
       {
         label: t('Summary-Yield'),
-        value: value,
+        value: showZeroBalance ? zeroUsd : loading,
       },
       {
         label: t('Summary-Daily'),
-        value: value,
+        value: showZeroBalance ? zeroUsd : loading,
       },
     ];
   }, [showZeroBalance, t]);

@@ -1,4 +1,13 @@
-import { type FC, type FunctionComponent, memo, type SVGProps, useCallback, useState } from 'react';
+import {
+  type FC,
+  type FunctionComponent,
+  memo,
+  type SVGProps,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
+import { useLocation } from 'react-router';
 import ExpandMore from '../../../../images/icons/mui/ExpandMore.svg?react';
 import ExpandLess from '../../../../images/icons/mui/ExpandLess.svg?react';
 import { NavLinkItem } from '../NavItem/NavLinkItem.tsx';
@@ -25,6 +34,12 @@ export const DropNavItem = memo<DropNavItemProps>(function DropNavItem({
   Badge,
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { pathname } = useLocation();
+
+  const isChildActive = useMemo(
+    () => items.some(item => item.url.startsWith('/') && pathname.startsWith(item.url)),
+    [items, pathname]
+  );
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
@@ -40,7 +55,7 @@ export const DropNavItem = memo<DropNavItemProps>(function DropNavItem({
         hoverOpenDelay={0}
         hoverCloseDelay={100}
       >
-        <DropdownNavButton>
+        <DropdownNavButton active={isChildActive}>
           <NavItemInner
             title={title}
             Icon={Icon}
