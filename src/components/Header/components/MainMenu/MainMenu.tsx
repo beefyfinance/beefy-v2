@@ -8,8 +8,15 @@ import DashboardIcon from '../../../../images/icons/navigation/dashboard.svg?rea
 import DaoIcon from '../../../../images/icons/navigation/dao.svg?react';
 import ResourcesIcon from '../../../../images/icons/navigation/resources.svg?react';
 import { styled } from '@repo/styles/jsx';
-import MenuButton from '../../../../images/icons/navigation/3dots.svg?react';
-import { useLocation } from 'react-router';
+import MenuButtonIcon from '../../../../images/icons/navigation/3dots.svg?react';
+import type { Nested, SystemProperties, SystemStyleObject } from '@repo/styles/types';
+
+const visibleFrom = {
+  vaults: 712,
+  dashboard: 851,
+  dao: 941,
+  resources: 1041,
+};
 
 export const MainMenu = memo(function MainMenu({
   mobileMenuOpen,
@@ -18,44 +25,37 @@ export const MainMenu = memo(function MainMenu({
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (open: boolean) => void;
 }) {
-  const location = useLocation();
   const handleDrawerToggle = useCallback(() => {
     setMobileMenuOpen(!mobileMenuOpen);
   }, [mobileMenuOpen, setMobileMenuOpen]);
 
-  const isOnHomePage = location.pathname === '/';
-
   return (
     <Container>
-      <VaultsAndMenuContainer isOnHomePage={isOnHomePage}>
+      <Item visibility="vaults">
         <NavLinkItem title={'Header-Vaults'} url="/" Icon={VaultsIcon} />
-      </VaultsAndMenuContainer>
-      <DashboardContainer>
+      </Item>
+      <Item visibility="dashboard">
         <NavLinkItem end={false} title={'Header-Dashboard'} url="/dashboard" Icon={DashboardIcon} />
-      </DashboardContainer>
-      <DaoResourcesContainer>
-        <DaoContainer>
-          <DropNavItem
-            title={'Header-Dao'}
-            Icon={DaoIcon}
-            items={DaoNavItems}
-            Badge={UnreadProposalDot}
-          />
-        </DaoContainer>
-        <ResourcesContainer>
-          <DropNavItem
-            title={'Header-Resources'}
-            Icon={ResourcesIcon}
-            items={ResourcesNavItems}
-            Badge={UnreadArticleDot}
-          />
-        </ResourcesContainer>
-      </DaoResourcesContainer>
-      <VaultsAndMenuContainer isOnHomePage={isOnHomePage}>
-        <MenuButtonContainer>
-          <MenuButton onClick={handleDrawerToggle} />
-        </MenuButtonContainer>
-      </VaultsAndMenuContainer>
+      </Item>
+      <Item visibility="dao">
+        <DropNavItem
+          title={'Header-Dao'}
+          Icon={DaoIcon}
+          items={DaoNavItems}
+          Badge={UnreadProposalDot}
+        />
+      </Item>
+      <Item visibility="resources">
+        <DropNavItem
+          title={'Header-Resources'}
+          Icon={ResourcesIcon}
+          items={ResourcesNavItems}
+          Badge={UnreadArticleDot}
+        />
+      </Item>
+      <MenuButton>
+        <MenuButtonIcon onClick={handleDrawerToggle} />
+      </MenuButton>
     </Container>
   );
 });
@@ -64,69 +64,23 @@ const Container = styled('div', {
   base: {
     display: 'flex',
     alignItems: 'center',
-    columnGap: '24px',
-    '@media (max-width: 1002px)': {
-      columnGap: '12px',
+    columnGap: '12px',
+    '@media (min-width: 1003px)': {
+      columnGap: '24px',
     },
   },
 });
 
-const DaoResourcesContainer = styled('div', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    columnGap: '20px',
-    '@media (max-width: 1002px)': {
-      columnGap: '8px',
-    },
-    '@media (max-width: 920px)': {
-      display: 'none',
-    },
+const menuButtonQuery = {
+  [`@media (max-width: ${visibleFrom.vaults - 1}px)`]: {
+    display: 'none',
   },
-});
+  [`@media (min-width: ${visibleFrom.resources}px)`]: {
+    display: 'none',
+  },
+} as Nested<SystemStyleObject>;
 
-const VaultsAndMenuContainer = styled('div', {
-  base: {
-    '@media (max-width: 712px)': {
-      display: 'none',
-    },
-  },
-  variants: {
-    isOnHomePage: {
-      true: {
-        '@media (max-width: 712px)': {
-          display: 'none',
-        },
-      },
-    },
-  },
-});
-
-const DashboardContainer = styled('div', {
-  base: {
-    '@media (max-width: 850px)': {
-      display: 'none',
-    },
-  },
-});
-
-const DaoContainer = styled('div', {
-  base: {
-    '@media (max-width: 940px)': {
-      display: 'none',
-    },
-  },
-});
-
-const ResourcesContainer = styled('div', {
-  base: {
-    '@media (max-width: 1040px)': {
-      display: 'none',
-    },
-  },
-});
-
-const MenuButtonContainer = styled('div', {
+const MenuButton = styled('button', {
   base: {
     height: '40px',
     width: '40px',
@@ -136,8 +90,26 @@ const MenuButtonContainer = styled('div', {
       cursor: 'pointer',
       color: 'text.light',
     },
-    '@media (min-width: 1040px)': {
-      display: 'none',
-    },
+    ...menuButtonQuery,
   },
 });
+
+const Item = styled('div', {
+  base: {},
+  variants: {
+    visibility: getVisibilityVariants(),
+  },
+});
+
+function getVisibilityVariants() {
+  return Object.fromEntries(
+    Object.entries(visibleFrom).map(([key, from]) => [
+      key,
+      {
+        [`@media (max-width: ${from - 1}px)` as const]: {
+          display: 'none' as const,
+        } as SystemProperties,
+      } as SystemStyleObject,
+    ])
+  ) as Record<keyof typeof visibleFrom, SystemStyleObject>;
+}
