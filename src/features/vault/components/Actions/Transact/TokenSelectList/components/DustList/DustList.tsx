@@ -13,11 +13,7 @@ export type DustListProps = {
 export const DustList = memo(function DustList({ children, dustTotalUsd }: DustListProps) {
   const { t } = useTranslation();
   const [isDustHovered, setIsDustHovered] = useState(false);
-  const {
-    open: dustExpanded,
-    handleToggle: toggleDustExpanded,
-    Icon: DustIcon,
-  } = useCollapse(false);
+  const { open: dustExpanded, handleToggle: toggleDustExpanded, Icon: DustIcon } = useCollapse();
 
   const dustTitle = useMemo(() => {
     return (
