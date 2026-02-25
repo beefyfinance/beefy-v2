@@ -68,11 +68,16 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
     const dust = [];
     let dustSum = BIG_ZERO;
     for (const option of searchFiltered) {
-      if (option.balanceValue.gte(DUST_THRESHOLD)) {
+      const isVaultDeposit = option.tokens.length > 1 || option.order === 0;
+      const hasBalance = option.balance && option.balance.gt(BIG_ZERO);
+
+      if (isVaultDeposit) {
         normal.push(option);
-      } else if (option.balance && option.balance.gt(BIG_ZERO)) {
+      } else if (hasBalance && option.balanceValue.lt(DUST_THRESHOLD)) {
         dust.push(option);
         dustSum = dustSum.plus(option.balanceValue);
+      } else if (hasBalance) {
+        normal.push(option);
       }
     }
     return { normalOptions: normal, dustOptions: dust, dustTotalUsd: dustSum };

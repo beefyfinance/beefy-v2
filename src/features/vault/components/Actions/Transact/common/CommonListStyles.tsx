@@ -64,6 +64,7 @@ export const ListItemButton = styled('button', {
     userSelect: 'none',
     outline: 'none',
     textAlign: 'left',
+    height: '44px',
     '&:hover, &:focus-visible': {
       color: 'text.lightest',
       '& .list-item-arrow': {
