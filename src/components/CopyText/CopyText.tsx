@@ -1,6 +1,7 @@
 import { memo, useCallback, useRef } from 'react';
-import FileCopy from '../../images/icons/mui/FileCopy.svg?react';
+import FileCopy from '../../images/icons/CopyToClipboard.svg?react';
 import { cx, sva } from '@repo/styles/css';
+import { useCopyToClipboard } from '../../hooks/useCopyToClipboard.ts';
 
 type CopyTextProps = {
   className?: string;
@@ -38,28 +39,56 @@ const copyTextRecipe = sva({
       outline: 'none',
       cursor: 'pointer',
       color: 'text.middle',
-      padding: '1px 6px',
+      padding: '1px 12px 1px 6px',
       '&:hover': {
         color: 'text.light',
       },
     },
   },
+  variants: {
+    status: {
+      idle: {},
+      pending: {},
+      success: {
+        button: {
+          color: 'indicators.success.fg',
+        },
+      },
+      error: {
+        button: {
+          color: 'indicators.error.fg',
+        },
+      },
+    },
+  },
+  defaultVariants: {
+    status: 'idle',
+  },
 });
 
 export const CopyText = memo<CopyTextProps>(function CopyText({ className, value }) {
-  const classes = copyTextRecipe();
   const inputRef = useRef<HTMLInputElement>(null);
+  const { copy, status } = useCopyToClipboard();
+  const classes = copyTextRecipe({ status });
+
   const handleCopy = useCallback(() => {
     if (inputRef.current) {
       inputRef.current.select();
     }
-    navigator.clipboard.writeText(value).catch(e => console.error(e));
-  }, [value, inputRef]);
+    if (value.length) {
+      copy(value);
+    }
+  }, [copy, value]);
 
   return (
     <div className={cx(classes.root, className)}>
       <input type="text" readOnly className={classes.input} value={value} ref={inputRef} />
-      <button type="button" className={classes.button} onClick={handleCopy}>
+      <button
+        type="button"
+        className={classes.button}
+        onClick={handleCopy}
+        disabled={value.length === 0 || status === 'pending'}
+      >
         <FileCopy />
       </button>
     </div>

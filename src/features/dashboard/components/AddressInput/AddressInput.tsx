@@ -25,7 +25,7 @@ import {
 import { BaseInput } from '../../../../components/Form/Input/BaseInput.tsx';
 import { CircularProgress } from '../../../../components/CircularProgress/CircularProgress.tsx';
 import EnterIcon from '../../../../images/icons/enter.svg?react';
-import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 
 type AddressInputProps = {
   variant?: 'default' | 'transparent';

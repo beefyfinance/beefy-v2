@@ -1,8 +1,9 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { formatAddressShort, formatDomain } from '../../../../helpers/format.ts';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
 import { styled } from '@repo/styles/jsx';
+import { formatAddressShort, formatDomain } from '../../../../helpers/format.ts';
+import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
+import { useCopyToClipboard } from '../../../../hooks/useCopyToClipboard.ts';
 
 export type ShortAddressProps = {
   address: string;
@@ -14,16 +15,13 @@ export const ShortAddress = memo(function ShortAddress({
   addressLabel,
 }: ShortAddressProps) {
   const { t } = useTranslation();
-  const [showCopied, setShowCopied] = useState<boolean>(false);
   const [isHover, setIsHover] = useState<boolean>(false);
+  const { copy, status } = useCopyToClipboard();
   const mdUp = useBreakpoint({ from: 'sm' });
 
   const handleCopyAddressToClipboard = useCallback(() => {
-    navigator.clipboard
-      .writeText(address)
-      .then(() => setShowCopied(true))
-      .catch(e => console.error(e));
-  }, [address, setShowCopied]);
+    copy(address);
+  }, [address, copy]);
 
   const shortAddressLabel = useMemo(() => {
     if (addressLabel) {
@@ -32,15 +30,6 @@ export const ShortAddress = memo(function ShortAddress({
 
     return formatAddressShort(address);
   }, [addressLabel, address, mdUp]);
-
-  useEffect(() => {
-    if (showCopied) {
-      const handle = setTimeout(() => {
-        setShowCopied(false);
-      }, 3000);
-      return () => clearTimeout(handle);
-    }
-  }, [showCopied, setShowCopied]);
 
   if (address) {
     return (
@@ -55,7 +44,7 @@ export const ShortAddress = memo(function ShortAddress({
 
         {isHover ?
           <Text variant="light">
-            {showCopied ? t('Clipboard-Copied') : t('Clipboard-CopyToClipboard')}
+            {status === 'success' ? t('Clipboard-Copied') : t('Clipboard-CopyToClipboard')}
           </Text>
         : null}
       </ShortAddressContainer>

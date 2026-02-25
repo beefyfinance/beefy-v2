@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
-import { createCachedFactory } from '../../features/data/utils/factory-utils.ts';
+import { createCachedFactory } from '../features/data/utils/factory-utils.ts';
 
 function useMediaQueryServer(_query: string, defaultValue: boolean = false) {
   return defaultValue;

@@ -1,5 +1,5 @@
 import { memo, type PropsWithChildren } from 'react';
-import { useMediaQuery } from './useMediaQuery.ts';
+import { useMediaQuery } from '../../hooks/useMediaQuery.ts';
 
 type VisibleAboveProps = PropsWithChildren<{
   width: number;

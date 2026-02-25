@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../components/Button/Button.tsx';
 import { ButtonLink } from '../../../../components/Button/ButtonLink.tsx';
 import { Container } from '../../../../components/Container/Container.tsx';
-import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 import { isValidAddress } from '../../../../helpers/addresses.ts';
 import { formatAddressShort } from '../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';

@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
-import type { BreakpointMatches } from './types.ts';
-import { createFactory } from '../../features/data/utils/factory-utils.ts';
+import type { BreakpointMatches } from '../components/MediaQueries/types.ts';
+import { createFactory } from '../features/data/utils/factory-utils.ts';
 import { type BreakpointToken, token } from '@repo/styles/tokens';
 
 export const defaultBreakpointMatches: BreakpointMatches = {

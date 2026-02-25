@@ -6,7 +6,7 @@ import { TransactionsFilter } from './components/TransactionsFilter/Transactions
 import { useSortedTransactionHistory } from './hook.ts';
 import { TransactionTimelineSeparator } from './components/TransactionTimelineSeparator/TransactionTimelineSeparator.tsx';
 import { css } from '@repo/styles/css';
-import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../../../hooks/useBreakpoint.ts';
 
 interface VaultTransactionsProps {
   vaultId: VaultEntity['id'];

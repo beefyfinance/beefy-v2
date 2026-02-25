@@ -1,6 +1,10 @@
 import { useBreakpoints } from './useBreakpoints.ts';
 import { useMemo } from 'react';
-import type { Breakpoint, BreakpointMatches, FromOrToProp } from './types.ts';
+import type {
+  Breakpoint,
+  BreakpointMatches,
+  FromOrToProp,
+} from '../components/MediaQueries/types.ts';
 
 export function useBreakpoint(opts: FromOrToProp) {
   const breakpoints = useBreakpoints();

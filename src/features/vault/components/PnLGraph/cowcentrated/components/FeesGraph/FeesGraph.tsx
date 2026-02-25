@@ -22,7 +22,7 @@ import type { ClmInvestorFeesTimeSeriesPoint } from '../../../../../../../helper
 import { LINE_COLORS } from '../../../../../../../helpers/charts.ts';
 import type { GraphBucket } from '../../../../../../../helpers/graph/types.ts';
 import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks.ts';
-import { useBreakpoint } from '../../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../../../../hooks/useBreakpoint.ts';
 import { token } from '@repo/styles/tokens';
 
 const useStyles = legacyMakeStyles(styles);
