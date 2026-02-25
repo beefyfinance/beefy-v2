@@ -1,5 +1,5 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useCallback, useMemo, useState, type ReactNode } from 'react';
+import { memo, useCallback, useState, type ReactNode } from 'react';
 import { formatLargeUsd } from '../../../../../../../../helpers/format.ts';
 import { useCollapse } from '../../../../../../../../components/Collapsable/hooks.ts';
 import { useTranslation } from 'react-i18next';
@@ -15,14 +15,11 @@ export const DustList = memo(function DustList({ children, dustTotalUsd }: DustL
   const [isDustHovered, setIsDustHovered] = useState(false);
   const { open: dustExpanded, handleToggle: toggleDustExpanded, Icon: DustIcon } = useCollapse();
 
-  const dustTitle = useMemo(() => {
-    return (
-      dustExpanded ?
-        isDustHovered ? `Hide ${t('Transact-TokenSelect-LowValueTokens')}`
-        : t('Transact-TokenSelect-LowValueTokens')
-      : `Show ${t('Transact-TokenSelect-LowValueTokens')}`
-    );
-  }, [dustExpanded, isDustHovered, t]);
+  const lowValueLabel = t('Transact-TokenSelect-LowValueTokens');
+  const dustTitle =
+    dustExpanded && isDustHovered ? `Hide ${lowValueLabel}`
+    : dustExpanded ? lowValueLabel
+    : `Show ${lowValueLabel}`;
 
   const handleMouseEnter = useCallback(() => {
     setIsDustHovered(true);
@@ -84,6 +81,7 @@ const DustTitle = styled('span', {
     flexGrow: 1,
     color: 'text.dark',
     transition: 'color 0.2s',
+    textTransform: 'capitalize',
   },
   variants: {
     hovered: {
