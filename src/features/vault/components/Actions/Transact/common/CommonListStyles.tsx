@@ -25,8 +25,15 @@ export const SelectListItems = styled('div', {
     minHeight: '100px',
     display: 'flex',
     flexDirection: 'column',
-    rowGap: '16px',
+    gap: '16px',
     overflowY: 'auto',
+  },
+  variants: {
+    noGap: {
+      true: {
+        gap: '0',
+      },
+    },
   },
 });
 

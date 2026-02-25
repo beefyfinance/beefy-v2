@@ -1,12 +1,9 @@
 import { css, type CssStyles } from '@repo/styles/css';
-import { styled } from '@repo/styles/jsx';
 import BigNumber from 'bignumber.js';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useCollapse } from '../../../../../../components/Collapsable/hooks.ts';
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
 import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
-import { formatLargeUsd } from '../../../../../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import buildLpIcon from '../../../../../../images/icons/build-lp.svg';
 import OpenInNewRoundedIcon from '../../../../../../images/icons/mui/OpenInNewRounded.svg?react';
@@ -31,8 +28,10 @@ import {
 } from '../common/CommonListStyles.tsx';
 import { selectListScrollable, buildLpLink } from '../common/CommonListStylesRaw.ts';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { DustList } from './components/DustList/DustList.tsx';
 
-const DUST_THRESHOLD = new BigNumber('0.01');
+// 1 USD
+const DUST_THRESHOLD = new BigNumber('1');
 
 export type DepositTokenSelectListProps = {
   css?: CssStyles;
@@ -48,7 +47,6 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
   const transactChainId = useAppSelector(selectTransactSelectedChainId);
   const selectedChain = transactChainId ?? vault.chainId;
   const [search, setSearch] = useState('');
-  const { open: dustExpanded, handleToggle: toggleDustExpanded, Icon: DustIcon } = useCollapse();
   const optionsForChain = useAppSelector(state =>
     selectTransactDepositTokensForChainIdWithBalances(state, selectedChain, vaultId)
   );
@@ -98,7 +96,7 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
         <SearchInput value={search} onValueChange={setSearch} />
       </SelectListSearch>
       <Scrollable css={selectListScrollable}>
-        <SelectListItems>
+        <SelectListItems noGap={true}>
           {normalOptions.length ?
             normalOptions.map(option => (
               <ListItem
@@ -117,111 +115,27 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
             <SelectListNoResults>{t('Transact-TokenSelect-NoResults')}</SelectListNoResults>
           : null}
           {dustOptions.length > 0 && (
-            <DustSection>
-              <DustHeader onClick={toggleDustExpanded} expanded={dustExpanded} data-group>
-                <DustTitle>{t('Transact-TokenSelect-LowValueTokens')}</DustTitle>
-                <DustRight>
-                  <DustSum>{formatLargeUsd(dustTotalUsd)}</DustSum>
-                  <DustIconWrapper expanded={dustExpanded}>
-                    <DustIcon />
-                  </DustIconWrapper>
-                </DustRight>
-              </DustHeader>
-              {dustExpanded &&
-                dustOptions.map(option => (
-                  <ListItem
-                    key={option.id}
-                    selectionId={option.id}
-                    tokens={option.tokens}
-                    balance={option.balance}
-                    balanceValue={option.balanceValue}
-                    decimals={option.decimals}
-                    tag={option.tag}
-                    chainId={selectedChain}
-                    onSelect={handleTokenSelect}
-                  />
-                ))}
-            </DustSection>
+            <DustList dustTotalUsd={dustTotalUsd}>
+              {dustOptions.map(option => (
+                <ListItem
+                  key={option.id}
+                  selectionId={option.id}
+                  tokens={option.tokens}
+                  balance={option.balance}
+                  balanceValue={option.balanceValue}
+                  decimals={option.decimals}
+                  tag={option.tag}
+                  chainId={selectedChain}
+                  onSelect={handleTokenSelect}
+                />
+              ))}
+            </DustList>
           )}
         </SelectListItems>
       </Scrollable>
       {searchFiltered?.length > 1 && <BuildLpManually vaultId={vaultId} />}
     </SelectListContainer>
   );
-});
-
-const DustSection = styled('div', {
-  base: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px',
-  },
-});
-
-const DustHeader = styled('button', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'left',
-    width: '100%',
-    padding: '0',
-    background: 'transparent',
-    border: 'none',
-    cursor: 'pointer',
-    outline: 'none',
-    userSelect: 'none',
-    textStyle: 'body.medium',
-  },
-  variants: {
-    expanded: {
-      true: {},
-    },
-  },
-});
-
-const DustTitle = styled('span', {
-  base: {
-    flexGrow: 1,
-    color: 'text.dark',
-    transition: 'color 0.2s',
-    _groupHover: {
-      color: 'text.middle',
-    },
-  },
-});
-
-const DustRight = styled('div', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '4px',
-    color: 'text.dark',
-  },
-});
-
-const DustSum = styled('span', {
-  base: {
-    color: 'text.dark',
-  },
-});
-
-const DustIconWrapper = styled('span', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    color: 'text.dark',
-    transition: 'color 0.2s',
-    _groupHover: {
-      color: 'text.light',
-    },
-  },
-  variants: {
-    expanded: {
-      true: {
-        color: 'text.light',
-      },
-    },
-  },
 });
 
 const BuildLpManually = memo(function BuildLpManually({ vaultId }: { vaultId: VaultEntity['id'] }) {

@@ -69,7 +69,7 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
         <SearchInput value={search} onValueChange={setSearch} />
       </SelectListSearch>
       <Scrollable css={selectListScrollable}>
-        <SelectListItems>
+        <SelectListItems noGap={true}>
           {filteredOptionsForChain.length ?
             filteredOptionsForChain.map(option => (
               <ListItem
