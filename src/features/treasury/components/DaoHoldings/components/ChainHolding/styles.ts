@@ -16,7 +16,6 @@ export const styles = {
     borderRadius: '8px 8px 0px 0px',
     lg: {
       padding: '16px 24px',
-      borderRadius: '20px 20px 0px 0px',
     },
   }),
   marketMakerAnnotation: css.raw({
