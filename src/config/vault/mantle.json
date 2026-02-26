@@ -1,5 +1,40 @@
 [
   {
+    "id": "aavev3-mantle-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xE8B582d6Ad0C7c158F1A521DE6f5c6584A239cfe",
+    "earnedToken": "mooAaveMantleUSDC",
+    "earnedTokenAddress": "0xE8B582d6Ad0C7c158F1A521DE6f5c6584A239cfe",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1772105976,
+    "platformId": "aave",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "aavev3-mantle-weth",
     "name": "WETH",
     "type": "standard",

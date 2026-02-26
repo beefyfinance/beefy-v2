@@ -87,14 +87,6 @@
     "blockedVaults": []
   },
   {
-    "id": "kyber-mantle",
-    "type": "kyber",
-    "chainId": "mantle",
-    "priorityTokens": ["MNT", "WMNT", "USDC", "USDT", "WETH", "mETH", "WBTC"],
-    "blockedTokens": [],
-    "blockedVaults": []
-  },
-  {
     "id": "kyber-sonic",
     "type": "kyber",
     "chainId": "sonic",
