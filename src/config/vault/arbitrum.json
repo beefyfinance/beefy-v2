@@ -25970,5 +25970,46 @@
         "ammId": "arbitrum-sushi"
       }
     ]
+  },
+  {
+    "id": "uniswap-cow-arb-rain-weth",
+    "name": "RAIN-WETH",
+    "type": "cowcentrated",
+    "token": "RAIN-WETH",
+    "tokenAddress": "0xd13040d4fe917EE704158CfCB3338dCd2838B245",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x25118290e6A5f4139381D072181157035864099d",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnContractAddress": "0x148B67E7f93dd8590B5E452411DA83D17d54C940",
+    "earnedToken": "cowUniswapArbRAIN-WETH",
+    "earnedTokenAddress": "0x148B67E7f93dd8590B5E452411DA83D17d54C940",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-rain-weth",
+    "status": "active",
+    "createdAt": 1772113261,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["RAIN", "WETH"],
+    "risks": {
+      "updatedAt": 1772113261,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   }
 ]
