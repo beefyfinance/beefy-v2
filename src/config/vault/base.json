@@ -97,7 +97,7 @@
     "status": "active",
     "createdAt": 1772113286,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "0.3",
     "assets": ["USDC", "WCT"],
     "risks": {
       "complex": true,
