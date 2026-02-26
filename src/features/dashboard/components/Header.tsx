@@ -22,7 +22,7 @@ export const Header = memo(function Header({ address, addressLabel, children }: 
             <Title>
               <TitlePrefix>
                 {t('Dashboard-Title')}
-                {address && <span>/</span>}
+                {address && <Slash> /</Slash>}
               </TitlePrefix>
               {address ?
                 <ShortAddress address={address} addressLabel={addressLabel} />
@@ -80,16 +80,19 @@ const Title = styled('div', {
     alignItems: 'center',
     textStyle: 'label',
     fontWeight: 500,
-    color: 'text.light',
-    '& span': {
-      color: 'text.dark',
-    },
   },
 });
 
 const TitlePrefix = styled('span', {
   base: {
     flexShrink: 0,
+    color: 'text.light',
+  },
+});
+
+const Slash = styled('span', {
+  base: {
+    color: 'text.dark',
   },
 });
 
