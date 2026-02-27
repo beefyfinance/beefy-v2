@@ -25970,5 +25970,84 @@
         "ammId": "arbitrum-sushi"
       }
     ]
+  },
+  {
+    "id": "uniswap-cow-arb-weth-usdx-rp",
+    "name": "WETH-USD+ Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArbWETH-USD+",
+    "tokenAddress": "0x5B94dA4EE91aA2d736c5a2e93769672f5c06638C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xcC178Dd8b00eeCB979fb040Fdd03840C91E7F0f0",
+    "earnedToken": "rcowUniswapArbWETH-USD+",
+    "earnedTokenAddresses": ["0x912CE59144191C1204E64559FE8253a0e49E6548"],
+    "earnedOracleIds": ["ARB"],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-weth-usdx",
+    "status": "active",
+    "createdAt": 1772160095,
+    "platformId": "uniswap",
+    "assets": ["WETH", "USD+"],
+    "risks": {
+      "updatedAt": 1772160095,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-weth-usdx",
+    "name": "WETH-USD+",
+    "type": "cowcentrated",
+    "token": "WETH-USD+",
+    "tokenAddress": "0x421803dA50d3932Caa36bD1731d36a0E2AF93542",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65"
+    ],
+    "earnContractAddress": "0x5B94dA4EE91aA2d736c5a2e93769672f5c06638C",
+    "earnedToken": "cowUniswapArbWETH-USD+",
+    "earnedTokenAddress": "0x5B94dA4EE91aA2d736c5a2e93769672f5c06638C",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-weth-usdx",
+    "status": "active",
+    "createdAt": 1772160095,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["WETH", "USD+"],
+    "risks": {
+      "updatedAt": 1772160095,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   }
 ]
