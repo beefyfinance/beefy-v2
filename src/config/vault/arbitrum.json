@@ -25973,6 +25973,44 @@
   },
   {
     "id": "uniswap-cow-arb-weth-xusd",
+    "name": "WETH-USD+ Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArbWETH-USD+",
+    "tokenAddress": "0x5B94dA4EE91aA2d736c5a2e93769672f5c06638C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x23540e6B251a11Aa16208dAFB5aF031Cd9989501",
+    "earnedToken": "rcowUniswapArbWETH-USD+",
+    "earnedTokenAddresses": ["0x912CE59144191C1204E64559FE8253a0e49E6548"],
+    "earnedOracleIds": ["ARB"],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-weth-xusd",
+    "status": "active",
+    "createdAt": 1719321886,
+    "platformId": "uniswap",
+    "assets": ["WETH", "xUSD"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-weth-xusd",
     "name": "WETH-USD+",
     "type": "cowcentrated",
     "token": "WETH-USD+",
@@ -25983,9 +26021,9 @@
       "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
       "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65"
     ],
-    "earnContractAddress": "0x0789AB0E72c7dEa2A4D025Fb34f5Fe8416a47852",
+    "earnContractAddress": "0x5B94dA4EE91aA2d736c5a2e93769672f5c06638C",
     "earnedToken": "cowUniswapArbWETH-USD+",
-    "earnedTokenAddress": "0x0789AB0E72c7dEa2A4D025Fb34f5Fe8416a47852",
+    "earnedTokenAddress": "0x5B94dA4EE91aA2d736c5a2e93769672f5c06638C",
     "oracle": "lps",
     "oracleId": "uniswap-cow-arb-weth-xusd",
     "status": "active",
