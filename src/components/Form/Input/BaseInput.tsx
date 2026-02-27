@@ -16,6 +16,7 @@ export const BaseInput = memo(
       warning = false,
       success = false,
       inputRef,
+      disabled,
       ...rest
     },
     ref
@@ -31,10 +32,19 @@ export const BaseInput = memo(
     });
 
     return (
-      <div className={cx('BaseInput-root', classes.root, className)} ref={ref}>
-        {startAdornment && <Adornments>{startAdornment}</Adornments>}
-        <input {...inputProps} ref={inputRef} className={cx('BaseInput-input', classes.input)} />
-        {endAdornment && <Adornments>{endAdornment}</Adornments>}
+      <div
+        className={cx('BaseInput-root', classes.root, className)}
+        ref={ref}
+        data-disabled={disabled ? '' : undefined}
+      >
+        {startAdornment && <Adornments data-slot="adornments">{startAdornment}</Adornments>}
+        <input
+          {...inputProps}
+          ref={inputRef}
+          disabled={disabled}
+          className={cx('BaseInput-input', classes.input)}
+        />
+        {endAdornment && <Adornments data-slot="adornments">{endAdornment}</Adornments>}
       </div>
     );
   })
@@ -69,9 +79,18 @@ const recipe = sva({
       borderRadius: '8px',
       paddingInline: '12px',
       paddingBlock: '8px',
+      _focusWithin: {
+        color: 'text.light',
+      },
+      '&[data-disabled]': {
+        opacity: '0.5',
+        pointerEvents: 'none',
+      },
+      '& [data-slot="adornments"]': {
+        color: 'inherit',
+      },
     },
     input: {
-      transition: '0.2s ease-in-out',
       textStyle: 'body.medium',
       backgroundColor: 'inherit',
       border: 'none',
@@ -84,7 +103,10 @@ const recipe = sva({
         opacity: '1',
       },
       _focus: {
-        color: 'text.light',
+        color: 'inherit',
+      },
+      _disabled: {
+        cursor: 'not-allowed',
       },
     },
   },
@@ -106,21 +128,47 @@ const recipe = sva({
           display: 'flex',
           justifyContent: 'center',
           gap: '8px',
+          color: 'text.dark',
+          _hover: {
+            color: 'text.middle',
+          },
+          _focusWithin: {
+            color: 'text.light',
+          },
+          '&[data-disabled]': {
+            opacity: '0.5',
+            pointerEvents: 'none',
+          },
+          '& [data-slot="adornments"]': {
+            color: 'inherit',
+          },
         },
         input: {
-          transition: '0.2s ease-in-out',
           height: '20px',
           caretColor: 'indicators.success',
-          color: 'text.dark',
+          color: 'inherit',
+          backgroundColor: 'transparent',
           '&::placeholder': {
             textStyle: 'label',
             opacity: '0.64',
-            color: 'text.dark',
+            color: 'inherit',
             fontWeight: 500,
             textDecoration: 'underline',
-            textDecorationColor: 'text.dark',
+            textDecorationColor: 'inherit',
             textDecorationThickness: '0.5px',
             textUnderlineOffset: '2px',
+          },
+          '&:not(:placeholder-shown)': {
+            textDecoration: 'underline',
+            textDecorationColor: 'inherit',
+            textDecorationThickness: '0.5px',
+            textUnderlineOffset: '2px',
+          },
+          _focus: {
+            color: 'inherit',
+          },
+          _disabled: {
+            cursor: 'not-allowed',
           },
         },
       },

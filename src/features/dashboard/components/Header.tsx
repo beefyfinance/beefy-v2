@@ -20,17 +20,17 @@ export const Header = memo(function Header({ address, addressLabel, children }: 
         <Content>
           <TitleSearch>
             <Title>
-              {t('Dashboard-Title')}
-              {address && (
-                <>
-                  <span>/</span>
-                  <ShortAddress address={address} addressLabel={addressLabel} />
-                </>
-              )}
+              <TitlePrefix>
+                {t('Dashboard-Title')}
+                {address && <Slash> /</Slash>}
+              </TitlePrefix>
+              {address ?
+                <ShortAddress address={address} addressLabel={addressLabel} />
+              : null}
             </Title>
-            <div>
+            <AddressInputContainer>
               <AddressInput variant="transparent" />
-            </div>
+            </AddressInputContainer>
           </TitleSearch>
           {children}
         </Content>
@@ -59,32 +59,48 @@ const Content = styled('div', {
 
 const TitleSearch = styled('div', {
   base: {
-    display: 'flex',
-    flexDirection: 'column',
-
-    gap: '6px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    alignItems: 'center',
+    gap: '2px',
     lg: {
       //14px + 4px
       paddingInline: '18px',
-    },
-
-    md: {
-      justifyContent: 'space-between',
-      flexDirection: 'row',
     },
   },
 });
 
 const Title = styled('div', {
   base: {
+    width: '100%',
+    minWidth: 0,
+    overflow: 'hidden',
     display: 'flex',
     columnGap: '8px',
     alignItems: 'center',
     textStyle: 'label',
     fontWeight: 500,
+  },
+});
+
+const TitlePrefix = styled('span', {
+  base: {
+    flexShrink: 0,
     color: 'text.light',
-    '& span': {
-      color: 'text.dark',
-    },
+  },
+});
+
+const Slash = styled('span', {
+  base: {
+    color: 'text.dark',
+  },
+});
+
+const AddressInputContainer = styled('div', {
+  base: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    minWidth: 0,
   },
 });

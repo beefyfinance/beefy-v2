@@ -58,6 +58,9 @@ const ShortAddressContainer = styled('div', {
   base: {
     display: 'flex',
     gap: '9px',
+    minWidth: 0,
+    overflow: 'hidden',
+    flexShrink: 1,
     _hover: {
       cursor: 'pointer',
     },
@@ -68,6 +71,9 @@ const Text = styled('div', {
   base: {
     textStyle: 'label',
     fontWeight: 500,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
   variants: {
     variant: {

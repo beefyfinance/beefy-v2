@@ -45,4 +45,12 @@ export const navLinkRecipe = cva({
       color: 'text.light',
     },
   },
+  variants: {
+    ...navItemStyles.variants,
+    active: {
+      true: {
+        color: 'text.light',
+      },
+    },
+  },
 });
