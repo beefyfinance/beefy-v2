@@ -25980,7 +25980,7 @@
     "tokenAddress": "0x5B94dA4EE91aA2d736c5a2e93769672f5c06638C",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
-    "earnContractAddress": "0x23540e6B251a11Aa16208dAFB5aF031Cd9989501",
+    "earnContractAddress": "0xcC178Dd8b00eeCB979fb040Fdd03840C91E7F0f0",
     "earnedToken": "rcowUniswapArbWETH-USD+",
     "earnedTokenAddresses": ["0x912CE59144191C1204E64559FE8253a0e49E6548"],
     "earnedOracleIds": ["ARB"],
@@ -26030,7 +26030,7 @@
     "createdAt": 1772160095,
     "platformId": "beefy",
     "feeTier": "0.05",
-    "assets": ["WETH", "xUSD"],
+    "assets": ["WETH", "USD+"],
     "risks": {
       "updatedAt": 1772160095,
       "complex": true,
