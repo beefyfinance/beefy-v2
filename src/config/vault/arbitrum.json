@@ -26032,7 +26032,7 @@
     "feeTier": "0.05",
     "assets": ["WETH", "USD+"],
     "risks": {
-      "updatedAt": 1772160096,
+      "updatedAt": 1772160095,
       "complex": true,
       "curated": false,
       "notAudited": false,
