@@ -25972,7 +25972,7 @@
     ]
   },
   {
-    "id": "uniswap-cow-arb-weth-usdx-rp",
+    "id": "uniswap-cow-arb-weth-xusd-rp",
     "name": "WETH-USD+ Reward Pool",
     "type": "gov",
     "version": 2,
@@ -25985,7 +25985,7 @@
     "earnedTokenAddresses": ["0x912CE59144191C1204E64559FE8253a0e49E6548"],
     "earnedOracleIds": ["ARB"],
     "oracle": "lps",
-    "oracleId": "uniswap-cow-arb-weth-usdx",
+    "oracleId": "uniswap-cow-arb-weth-xusd",
     "status": "active",
     "createdAt": 1772160095,
     "platformId": "uniswap",
@@ -26010,7 +26010,7 @@
     ]
   },
   {
-    "id": "uniswap-cow-arb-weth-usdx",
+    "id": "uniswap-cow-arb-weth-xusd",
     "name": "WETH-USD+",
     "type": "cowcentrated",
     "token": "WETH-USD+",
@@ -26025,12 +26025,12 @@
     "earnedToken": "cowUniswapArbWETH-USD+",
     "earnedTokenAddress": "0x5B94dA4EE91aA2d736c5a2e93769672f5c06638C",
     "oracle": "lps",
-    "oracleId": "uniswap-cow-arb-weth-usdx",
+    "oracleId": "uniswap-cow-arb-weth-xusd",
     "status": "active",
     "createdAt": 1772160095,
     "platformId": "beefy",
     "feeTier": "0.05",
-    "assets": ["WETH", "USDx"],
+    "assets": ["WETH", "USD+"],
     "risks": {
       "updatedAt": 1772160095,
       "complex": true,
