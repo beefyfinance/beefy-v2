@@ -1,5 +1,123 @@
 [
   {
+    "id": "aerodrome-cow-base-weth-aixbt-vault",
+    "name": "WETH-AIXBT",
+    "type": "standard",
+    "token": "WETH-AIXBT",
+    "tokenAddress": "0x72d2F4F0521cA50eE27C5bC5aCb16678f5b062cD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x7315359dd6B9d7022C2F448666F373609dDF1bd7",
+    "earnedToken": "mooCowAerodromeWETH-AIXBT",
+    "earnedTokenAddress": "0x7315359dd6B9d7022C2F448666F373609dDF1bd7",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-aixbt",
+    "status": "active",
+    "createdAt": 1772211576,
+    "platformId": "aerodrome",
+    "assets": ["WETH", "AIXBT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-aixbt-rp",
+    "name": "WETH-AIXBT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeWETH-AIXBT",
+    "tokenAddress": "0x72d2F4F0521cA50eE27C5bC5aCb16678f5b062cD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xD5F3ad3ecE7f48F15664981FcdD4dE91979F9588",
+    "earnedToken": "rCowAerodromeWETH-AIXBT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-aixbt",
+    "status": "active",
+    "createdAt": 1772211575,
+    "platformId": "aerodrome",
+    "assets": ["WETH", "AIXBT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-aixbt",
+    "name": "WETH-AIXBT",
+    "type": "cowcentrated",
+    "token": "WETH-AIXBT aerodrome",
+    "tokenAddress": "0x22A52bB644f855ebD5ca2edB643FF70222D70C31",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x4F9Fd6Be4a90f2620860d680c0d4d5Fb53d1A825"
+    ],
+    "earnContractAddress": "0x72d2F4F0521cA50eE27C5bC5aCb16678f5b062cD",
+    "earnedToken": "cowAerodromeWETH-AIXBT",
+    "earnedTokenAddress": "0x72d2F4F0521cA50eE27C5bC5aCb16678f5b062cD",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-aixbt",
+    "status": "active",
+    "createdAt": 1772211575,
+    "platformId": "beefy",
+    "feeTier": "0.26",
+    "assets": ["WETH", "AIXBT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-usdc-wct-vault",
     "name": "USDC-WCT",
     "type": "standard",
