@@ -25972,7 +25972,7 @@
     ]
   },
   {
-    "id": "uniswap-cow-arb-weth-xusd",
+    "id": "uniswap-cow-arb-weth-xusd-rp",
     "name": "WETH-USD+ Reward Pool",
     "type": "gov",
     "version": 2,
@@ -25987,11 +25987,11 @@
     "oracle": "lps",
     "oracleId": "uniswap-cow-arb-weth-xusd",
     "status": "active",
-    "createdAt": 1719321886,
+    "createdAt": 1772160095,
     "platformId": "uniswap",
     "assets": ["WETH", "xUSD"],
     "risks": {
-      "updatedAt": 1765557014,
+      "updatedAt": 1772160095,
       "complex": true,
       "curated": false,
       "notAudited": false,
@@ -26027,12 +26027,12 @@
     "oracle": "lps",
     "oracleId": "uniswap-cow-arb-weth-xusd",
     "status": "active",
-    "createdAt": 1772113261,
+    "createdAt": 1772160095,
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["WETH", "xUSD"],
     "risks": {
-      "updatedAt": 1772113261,
+      "updatedAt": 1772160095,
       "complex": true,
       "curated": false,
       "notAudited": false,
