@@ -25989,7 +25989,7 @@
     "status": "active",
     "createdAt": 1772160095,
     "platformId": "uniswap",
-    "assets": ["WETH", "xUSD"],
+    "assets": ["WETH", "USD+"],
     "risks": {
       "updatedAt": 1772160095,
       "complex": true,
