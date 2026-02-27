@@ -25970,5 +25970,46 @@
         "ammId": "arbitrum-sushi"
       }
     ]
+  },
+  {
+    "id": "uniswap-cow-arb-weth-xusd",
+    "name": "WETH-USD+",
+    "type": "cowcentrated",
+    "token": "WETH-USD+",
+    "tokenAddress": "0x421803dA50d3932Caa36bD1731d36a0E2AF93542",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65"
+    ],
+    "earnContractAddress": "0x0789AB0E72c7dEa2A4D025Fb34f5Fe8416a47852",
+    "earnedToken": "cowUniswapArbWETH-USD+",
+    "earnedTokenAddress": "0x0789AB0E72c7dEa2A4D025Fb34f5Fe8416a47852",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-weth-xusd",
+    "status": "active",
+    "createdAt": 1772113261,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["WETH", "xUSD"],
+    "risks": {
+      "updatedAt": 1772113261,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   }
 ]
