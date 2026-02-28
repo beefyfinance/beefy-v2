@@ -78,7 +78,13 @@ import type {
   ZapStep,
   ZapStepResponse,
 } from '../../zap/types.ts';
-import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy.ts';
+import type {
+  IComposableStrategy,
+  IComposableStrategyStatic,
+  UserlessZapDepositBreakdown,
+  UserlessZapWithdrawBreakdown,
+  ZapTransactHelpers,
+} from '../IStrategy.ts';
 import type { CurveStrategyConfig } from '../strategy-configs.ts';
 import { CurvePool } from './CurvePool.ts';
 import type { CurveMethod, CurveTokenOption } from './types.ts';
@@ -109,8 +115,9 @@ type WithdrawLiquidity = DepositLiquidity & {
 const strategyId = 'curve';
 type StrategyId = typeof strategyId;
 
-class CurveStrategyImpl implements IZapStrategy<StrategyId> {
+class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
   public static readonly id = strategyId;
+  public static readonly composable = true;
   public readonly id = strategyId;
 
   protected readonly native: TokenNative;
@@ -160,6 +167,10 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
           .join(', ')}`
       );
     }
+  }
+
+  public getHelpers(): ZapTransactHelpers {
+    return this.helpers;
   }
 
   /**
@@ -480,131 +491,138 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
     };
   }
 
+  async fetchDepositUserlessZapBreakdown(
+    quote: CurveDepositQuote
+  ): Promise<UserlessZapDepositBreakdown> {
+    const state = this.helpers.getState();
+    const chain = selectChainById(state, this.vault.chainId);
+    const slippage = selectTransactSlippage(state);
+    const zapHelpers: ZapHelpers = {
+      chain,
+      slippage,
+      state,
+      poolAddress: this.options.poolAddress || this.depositToken.address,
+    };
+    const steps: ZapStep[] = [];
+    const minBalances = new Balances(quote.inputs);
+    const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
+    const buildQuote = quote.steps.find(isZapQuoteStepBuild);
+
+    if (!buildQuote) {
+      throw new Error('CurveStrategy: No build step in quote');
+    }
+
+    // wrap and asset swap, 2 max
+    if (swapQuotes.length > 2) {
+      throw new Error('CurveStrategy: Too many swaps');
+    }
+
+    // Swaps
+    if (swapQuotes.length) {
+      if (swapQuotes.length > 1) {
+        throw new Error('CurveStrategy: Too many swaps in quote');
+      }
+
+      const swapQuote = swapQuotes[0];
+      const swap = await this.fetchZapSwap(swapQuote, zapHelpers, true);
+      // add step to order
+      swap.zaps.forEach(zap => steps.push(zap));
+      // track minimum balances for use in further steps
+      minBalances.subtractMany(swap.inputs);
+      minBalances.addMany(swap.minOutputs);
+    }
+
+    // Build LP
+    const buildZap = await this.fetchZapBuild(
+      buildQuote,
+      quote.viaToken,
+      minBalances.get(quote.viaToken.token),
+      zapHelpers,
+      true
+    );
+    console.debug('fetchDepositStep::buildZap', bigNumberToStringDeep(buildZap));
+    buildZap.zaps.forEach(step => steps.push(step));
+    minBalances.subtractMany(buildZap.inputs);
+    minBalances.addMany(buildZap.minOutputs);
+
+    // Deposit in vault
+    const vaultDeposit = await this.vaultType.fetchZapDeposit({
+      inputs: [
+        {
+          token: buildQuote.outputToken,
+          amount: minBalances.get(buildQuote.outputToken), // min expected in case add liquidity slipped
+          max: true, // but we call depositAll
+        },
+      ],
+      from: this.helpers.zap.router,
+    });
+    console.log('fetchDepositStep::vaultDeposit', vaultDeposit);
+    steps.push(vaultDeposit.zap);
+    minBalances.subtractMany(vaultDeposit.inputs);
+    minBalances.addMany(vaultDeposit.minOutputs);
+
+    // Build order
+    const inputs: OrderInput[] = quote.inputs.map(input => ({
+      token: getTokenAddress(input.token),
+      amount: toWeiString(input.amount, input.token.decimals),
+    }));
+
+    const requiredOutputs: OrderOutput[] = vaultDeposit.outputs.map(output => ({
+      token: getTokenAddress(output.token),
+      minOutputAmount: toWeiString(
+        slipBy(output.amount, slippage, output.token.decimals),
+        output.token.decimals
+      ),
+    }));
+
+    // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
+    const dustOutputs: OrderOutput[] = pickTokens(quote.outputs, quote.inputs, quote.returned).map(
+      token => ({
+        token: getTokenAddress(token),
+        minOutputAmount: '0',
+      })
+    );
+
+    swapQuotes.forEach(quoteStep => {
+      dustOutputs.push({
+        token: getTokenAddress(quoteStep.fromToken),
+        minOutputAmount: '0',
+      });
+      dustOutputs.push({
+        token: getTokenAddress(quoteStep.toToken),
+        minOutputAmount: '0',
+      });
+    });
+    dustOutputs.push({
+      token: getTokenAddress(buildQuote.outputToken),
+      minOutputAmount: '0',
+    });
+
+    // @dev uniqBy: first occurrence of each element is kept.
+    const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
+
+    // Perform TX
+    const zapRequest: UserlessZapRequest = {
+      order: {
+        inputs,
+        outputs,
+        relay: NO_RELAY,
+      },
+      steps,
+    };
+
+    const expectedTokens = vaultDeposit.outputs.map(output => output.token);
+
+    return { zapRequest, expectedTokens, minBalances };
+  }
+
   public async fetchDepositStep(
     quote: CurveDepositQuote,
     t: TFunction<Namespace<string>>
   ): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
-      const state = getState();
-      const chain = selectChainById(state, this.vault.chainId);
-      const slippage = selectTransactSlippage(state);
-      const zapHelpers: ZapHelpers = {
-        chain,
-        slippage,
-        state,
-        poolAddress: this.options.poolAddress || this.depositToken.address,
-      };
-      const steps: ZapStep[] = [];
-      const minBalances = new Balances(quote.inputs);
-      const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
-      const buildQuote = quote.steps.find(isZapQuoteStepBuild);
-
-      if (!buildQuote) {
-        throw new Error('CurveStrategy: No build step in quote');
-      }
-
-      // wrap and asset swap, 2 max
-      if (swapQuotes.length > 2) {
-        throw new Error('CurveStrategy: Too many swaps');
-      }
-
-      // Swaps
-      if (swapQuotes.length) {
-        if (swapQuotes.length > 1) {
-          throw new Error('CurveStrategy: Too many swaps in quote');
-        }
-
-        const swapQuote = swapQuotes[0];
-        const swap = await this.fetchZapSwap(swapQuote, zapHelpers, true);
-        // add step to order
-        swap.zaps.forEach(zap => steps.push(zap));
-        // track minimum balances for use in further steps
-        minBalances.subtractMany(swap.inputs);
-        minBalances.addMany(swap.minOutputs);
-      }
-
-      // Build LP
-      const buildZap = await this.fetchZapBuild(
-        buildQuote,
-        quote.viaToken,
-        minBalances.get(quote.viaToken.token),
-        zapHelpers,
-        true
-      );
-      console.debug('fetchDepositStep::buildZap', bigNumberToStringDeep(buildZap));
-      buildZap.zaps.forEach(step => steps.push(step));
-      minBalances.subtractMany(buildZap.inputs);
-      minBalances.addMany(buildZap.minOutputs);
-
-      // Deposit in vault
-      const vaultDeposit = await this.vaultType.fetchZapDeposit({
-        inputs: [
-          {
-            token: buildQuote.outputToken,
-            amount: minBalances.get(buildQuote.outputToken), // min expected in case add liquidity slipped
-            max: true, // but we call depositAll
-          },
-        ],
-        from: this.helpers.zap.router,
-      });
-      console.log('fetchDepositStep::vaultDeposit', vaultDeposit);
-      steps.push(vaultDeposit.zap);
-
-      // Build order
-      const inputs: OrderInput[] = quote.inputs.map(input => ({
-        token: getTokenAddress(input.token),
-        amount: toWeiString(input.amount, input.token.decimals),
-      }));
-
-      const requiredOutputs: OrderOutput[] = vaultDeposit.outputs.map(output => ({
-        token: getTokenAddress(output.token),
-        minOutputAmount: toWeiString(
-          slipBy(output.amount, slippage, output.token.decimals),
-          output.token.decimals
-        ),
-      }));
-
-      // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
-      const dustOutputs: OrderOutput[] = pickTokens(
-        quote.outputs,
-        quote.inputs,
-        quote.returned
-      ).map(token => ({
-        token: getTokenAddress(token),
-        minOutputAmount: '0',
-      }));
-
-      swapQuotes.forEach(quoteStep => {
-        dustOutputs.push({
-          token: getTokenAddress(quoteStep.fromToken),
-          minOutputAmount: '0',
-        });
-        dustOutputs.push({
-          token: getTokenAddress(quoteStep.toToken),
-          minOutputAmount: '0',
-        });
-      });
-      dustOutputs.push({
-        token: getTokenAddress(buildQuote.outputToken),
-        minOutputAmount: '0',
-      });
-
-      // @dev uniqBy: first occurrence of each element is kept.
-      const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
-
-      // Perform TX
-      const zapRequest: UserlessZapRequest = {
-        order: {
-          inputs,
-          outputs,
-          relay: NO_RELAY,
-        },
-        steps,
-      };
-
-      const expectedTokens = vaultDeposit.outputs.map(output => output.token);
+      const { zapRequest, expectedTokens } = await this.fetchDepositUserlessZapBreakdown(quote);
       const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
-
       return walletAction(dispatch, getState, extraArgument);
     };
 
@@ -898,136 +916,141 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
     };
   }
 
+  async fetchWithdrawUserlessZapBreakdown(
+    quote: CurveWithdrawQuote
+  ): Promise<UserlessZapWithdrawBreakdown> {
+    const state = this.helpers.getState();
+    const chain = selectChainById(state, this.vault.chainId);
+    const slippage = selectTransactSlippage(state);
+    const zapHelpers: ZapHelpers = {
+      chain,
+      slippage,
+      state,
+      poolAddress: this.options.poolAddress || this.depositToken.address,
+    };
+    const withdrawQuote = quote.steps.find(isZapQuoteStepWithdraw);
+    const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
+    const splitQuote = quote.steps.find(isZapQuoteStepSplit);
+
+    if (!withdrawQuote || !splitQuote) {
+      throw new Error('Withdraw quote missing withdraw or split step');
+    }
+
+    // Step 1. Withdraw from vault
+    const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
+      inputs: quote.inputs,
+      from: this.helpers.zap.router,
+    });
+    if (vaultWithdraw.outputs.length !== 1) {
+      throw new Error('Withdraw output count mismatch');
+    }
+
+    const withdrawOutput = onlyOneTokenAmount(vaultWithdraw.outputs);
+    if (!isTokenEqual(withdrawOutput.token, splitQuote.inputToken)) {
+      throw new Error('Withdraw output token mismatch');
+    }
+
+    if (withdrawOutput.amount.lt(withdrawQuote.toAmount)) {
+      throw new Error('Withdraw output amount mismatch');
+    }
+
+    const steps: ZapStep[] = [vaultWithdraw.zap];
+
+    // Step 2. Split lp
+    const splitZap = await this.fetchZapSplit(
+      splitQuote,
+      [withdrawOutput],
+      quote.viaToken,
+      zapHelpers,
+      true
+    );
+    splitZap.zaps.forEach(step => steps.push(step));
+
+    // Step 3. Swaps
+    // 0 swaps is valid when we break only
+    if (swapQuotes.length > 0) {
+      if (swapQuotes.length > splitZap.minOutputs.length) {
+        throw new Error('More swap quotes than expected outputs');
+      }
+
+      const insertBalance = allTokensAreDistinct(swapQuotes.map(quoteStep => quoteStep.fromToken));
+      // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
+      const lastSwapIndex = swapQuotes.length - 1;
+
+      const swapZaps = await Promise.all(
+        swapQuotes.map((quoteStep, i) => {
+          const input = splitZap.minOutputs.find(o => isTokenEqual(o.token, quoteStep.fromToken));
+          if (!input) {
+            throw new Error('Swap input not found in split outputs');
+          }
+          return this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i);
+        })
+      );
+      swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
+    }
+
+    // Build order
+    const inputs: OrderInput[] = vaultWithdraw.inputs.map(input => ({
+      token: getTokenAddress(input.token),
+      amount: toWeiString(input.amount, input.token.decimals),
+    }));
+
+    const requiredOutputs: OrderOutput[] = quote.outputs.map(output => ({
+      token: getTokenAddress(output.token),
+      minOutputAmount: toWeiString(
+        slipBy(output.amount, slippage, output.token.decimals),
+        output.token.decimals
+      ),
+    }));
+
+    // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
+    const dustOutputs: OrderOutput[] = pickTokens(
+      vaultWithdraw.inputs,
+      quote.outputs,
+      quote.inputs,
+      quote.returned,
+      splitQuote.outputs
+    ).map(token => ({
+      token: getTokenAddress(token),
+      minOutputAmount: '0',
+    }));
+
+    swapQuotes.forEach(quoteStep => {
+      dustOutputs.push({
+        token: getTokenAddress(quoteStep.fromToken),
+        minOutputAmount: '0',
+      });
+      dustOutputs.push({
+        token: getTokenAddress(quoteStep.toToken),
+        minOutputAmount: '0',
+      });
+    });
+
+    // @dev uniqBy: first occurrence of each element is kept -> required outputs are kept
+    const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
+
+    // Perform TX
+    const zapRequest: UserlessZapRequest = {
+      order: {
+        inputs,
+        outputs,
+        relay: NO_RELAY,
+      },
+      steps,
+    };
+
+    const expectedTokens = quote.outputs.map(output => output.token);
+
+    return { zapRequest, expectedTokens };
+  }
+
   public async fetchWithdrawStep(
     quote: CurveWithdrawQuote,
     t: TFunction<Namespace<string>>
   ): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
-      const state = getState();
-      const chain = selectChainById(state, this.vault.chainId);
-      const slippage = selectTransactSlippage(state);
-      const zapHelpers: ZapHelpers = {
-        chain,
-        slippage,
-        state,
-        poolAddress: this.options.poolAddress || this.depositToken.address,
-      };
-      const withdrawQuote = quote.steps.find(isZapQuoteStepWithdraw);
-      const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
-      const splitQuote = quote.steps.find(isZapQuoteStepSplit);
-
-      if (!withdrawQuote || !splitQuote) {
-        throw new Error('Withdraw quote missing withdraw or split step');
-      }
-
-      // Step 1. Withdraw from vault
-      const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
-        inputs: quote.inputs,
-        from: this.helpers.zap.router,
-      });
-      if (vaultWithdraw.outputs.length !== 1) {
-        throw new Error('Withdraw output count mismatch');
-      }
-
-      const withdrawOutput = onlyOneTokenAmount(vaultWithdraw.outputs);
-      if (!isTokenEqual(withdrawOutput.token, splitQuote.inputToken)) {
-        throw new Error('Withdraw output token mismatch');
-      }
-
-      if (withdrawOutput.amount.lt(withdrawQuote.toAmount)) {
-        throw new Error('Withdraw output amount mismatch');
-      }
-
-      const steps: ZapStep[] = [vaultWithdraw.zap];
-
-      // Step 2. Split lp
-      const splitZap = await this.fetchZapSplit(
-        splitQuote,
-        [withdrawOutput],
-        quote.viaToken,
-        zapHelpers,
-        true
-      );
-      splitZap.zaps.forEach(step => steps.push(step));
-
-      // Step 3. Swaps
-      // 0 swaps is valid when we break only
-      if (swapQuotes.length > 0) {
-        if (swapQuotes.length > splitZap.minOutputs.length) {
-          throw new Error('More swap quotes than expected outputs');
-        }
-
-        const insertBalance = allTokensAreDistinct(
-          swapQuotes.map(quoteStep => quoteStep.fromToken)
-        );
-        // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
-        const lastSwapIndex = swapQuotes.length - 1;
-
-        const swapZaps = await Promise.all(
-          swapQuotes.map((quoteStep, i) => {
-            const input = splitZap.minOutputs.find(o => isTokenEqual(o.token, quoteStep.fromToken));
-            if (!input) {
-              throw new Error('Swap input not found in split outputs');
-            }
-            return this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i);
-          })
-        );
-        swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
-      }
-
-      // Build order
-      const inputs: OrderInput[] = vaultWithdraw.inputs.map(input => ({
-        token: getTokenAddress(input.token),
-        amount: toWeiString(input.amount, input.token.decimals),
-      }));
-
-      const requiredOutputs: OrderOutput[] = quote.outputs.map(output => ({
-        token: getTokenAddress(output.token),
-        minOutputAmount: toWeiString(
-          slipBy(output.amount, slippage, output.token.decimals),
-          output.token.decimals
-        ),
-      }));
-
-      // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
-      const dustOutputs: OrderOutput[] = pickTokens(
-        vaultWithdraw.inputs,
-        quote.outputs,
-        quote.inputs,
-        quote.returned,
-        splitQuote.outputs
-      ).map(token => ({
-        token: getTokenAddress(token),
-        minOutputAmount: '0',
-      }));
-
-      swapQuotes.forEach(quoteStep => {
-        dustOutputs.push({
-          token: getTokenAddress(quoteStep.fromToken),
-          minOutputAmount: '0',
-        });
-        dustOutputs.push({
-          token: getTokenAddress(quoteStep.toToken),
-          minOutputAmount: '0',
-        });
-      });
-
-      // @dev uniqBy: first occurrence of each element is kept -> required outputs are kept
-      const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
-
-      // Perform TX
-      const zapRequest: UserlessZapRequest = {
-        order: {
-          inputs,
-          outputs,
-          relay: NO_RELAY,
-        },
-        steps,
-      };
-
-      const expectedTokens = quote.outputs.map(output => output.token);
+      const { zapRequest, expectedTokens } = await this.fetchWithdrawUserlessZapBreakdown(quote);
       const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
-
       return walletAction(dispatch, getState, extraArgument);
     };
 
@@ -1073,4 +1096,4 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
   }
 }
 
-export const CurveStrategy = CurveStrategyImpl satisfies IZapStrategyStatic<StrategyId>;
+export const CurveStrategy = CurveStrategyImpl satisfies IComposableStrategyStatic<StrategyId>;

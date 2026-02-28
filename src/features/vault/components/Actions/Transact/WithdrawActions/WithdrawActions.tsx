@@ -47,6 +47,7 @@ import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
 import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotice/ScreamAvailableLiquidityNotice.tsx';
 import { WithdrawFees } from '../VaultFees/VaultFees.tsx';
 import { styles } from './styles.ts';
+import { getExecutionChainId } from '../../../../../../helpers/transactUtils.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -147,6 +148,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
+  const executionChainId = useMemo(() => getExecutionChainId(quote), [quote]);
 
   const isDisabled =
     isTxInProgress ||
@@ -174,7 +176,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <NotEnoughNotice mode="withdraw" onChange={setIsDisabledByNotEnoughInput} />
       <div className={classes.feesContainer}>
-        <ActionConnectSwitch chainId={option.chainId}>
+        <ActionConnectSwitch chainId={executionChainId}>
           <Button
             variant="cta"
             disabled={isDisabled}

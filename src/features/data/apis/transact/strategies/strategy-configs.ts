@@ -5,6 +5,7 @@ import type {
   AmmEntitySolidly,
   AmmEntityUniswapV2,
 } from '../../../entities/zap.ts';
+import type { ChainEntity } from '../../../entities/chain.ts';
 import type { CurveMethod } from './curve/types.ts';
 
 export type SwapAggregatorId = 'kyber' | 'odos' | 'liquid-swap';
@@ -89,6 +90,14 @@ export type RewardPoolToVaultStrategyConfig = {
   strategyId: 'reward-pool-to-vault';
 } & OptionalStrategySwapConfig;
 
+export type CrossChainStrategyConfig = {
+  strategyId: 'cross-chain';
+  /** Limit to specific source chains (default: all CCTP-supported chains) */
+  supportedSourceChains?: ChainEntity['id'][];
+  /** Limit to specific destination chains for withdrawals */
+  supportedDestChains?: ChainEntity['id'][];
+} & OptionalStrategySwapConfig;
+
 export type ZapStrategyConfig =
   | SingleStrategyConfig
   | UniswapV2StrategyConfig
@@ -100,7 +109,8 @@ export type ZapStrategyConfig =
   | GovComposerStrategyConfig
   | VaultComposerStrategyConfig
   | RewardPoolToVaultStrategyConfig
-  | BalancerStrategyConfig;
+  | BalancerStrategyConfig
+  | CrossChainStrategyConfig;
 
 export type ZapStrategyId = ZapStrategyConfig['strategyId'];
 
