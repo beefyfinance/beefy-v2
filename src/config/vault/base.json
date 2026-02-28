@@ -38298,5 +38298,84 @@
     "addLiquidityUrl": "https://balancer.fi/pools/base/v2/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/remove-liquidity",
     "network": "base"
+  },
+  {
+    "id": "uniswap-cow-base-weth-usdc-3000-vault-rp",
+    "name": "WETH-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-USDC-3000",
+    "tokenAddress": "0x3E3687F7A07eE1a673f34AC1bAe1FE623d528Da3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x3b71B331a186140b24624F553Af42fA833D309c9",
+    "earnedToken": "rcowUniswapBaseWETH-USDC-3000",
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": ["BASE"],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-usdc",
+    "status": "active",
+    "createdAt": 1772160095,
+    "platformId": "uniswap",
+    "assets": ["WETH", "USDC"],
+    "risks": {
+      "updatedAt": 1772160095,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-usdc-3000-vault",
+    "name": "WETH-USDC",
+    "type": "cowcentrated",
+    "token": "WETH-USDC",
+    "tokenAddress": "0x6c561B446416E1A00E8E93E221854d6eA4171372",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0x3E3687F7A07eE1a673f34AC1bAe1FE623d528Da3",
+    "earnedToken": "cowUniswapBaseWETH-USDC-3000",
+    "earnedTokenAddress": "0x3E3687F7A07eE1a673f34AC1bAe1FE623d528Da3",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-usdc",
+    "status": "active",
+    "createdAt": 1772160095,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["WETH", "USDC"],
+    "risks": {
+      "updatedAt": 1772160095,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   }
 ]
