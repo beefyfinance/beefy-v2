@@ -1,5 +1,103 @@
 [
   {
+    "id": "stakedao-ousd-msusd",
+    "name": "OUSD/msUSD",
+    "type": "standard",
+    "token": "OUSDmsUSD",
+    "tokenAddress": "0x9AfAd25833D0F47b3A3D9204dDF965CB172De0CB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xb9F6f809BC2d635BD1578C26b61e1b9c56A8be70",
+    "earnedToken": "mooStakeDao-OUSD-msUSD",
+    "earnedTokenAddress": "0xb9F6f809BC2d635BD1578C26b61e1b9c56A8be70",
+    "oracle": "lps",
+    "oracleId": "curve-ousd-msusd",
+    "status": "active",
+    "createdAt": 1772450901,
+    "platformId": "stakedao",
+    "assets": ["OUSD", "msUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-688/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-688/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x9AfAd25833D0F47b3A3D9204dDF965CB172De0CB",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x9AfAd25833D0F47b3A3D9204dDF965CB172De0CB",
+            "coins": [
+              "0x2A8e1E676Ec238d8A992307B495b45B3fEAa5e86",
+              "0xab5eB14c09D416F0aC63661E57EDB7AEcDb9BEfA"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "stakedao-frax-pyusd",
+    "name": "FRAX/PYUSD",
+    "type": "standard",
+    "token": "FRAXPYUSD",
+    "tokenAddress": "0xA5588F7cdf560811710A2D82D3C9c99769DB1Dcb",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xf71B39e56cD0C8ffC61F68F6BeD6fE8EcEf7e461",
+    "earnedToken": "mooStakeDao-FRAX-PYUSD",
+    "earnedTokenAddress": "0xf71B39e56cD0C8ffC61F68F6BeD6fE8EcEf7e461",
+    "oracle": "lps",
+    "oracleId": "curve-frax-pyusd",
+    "status": "active",
+    "createdAt": 1772450885,
+    "platformId": "stakedao",
+    "assets": ["FRAX", "PYUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-34/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-34/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xA5588F7cdf560811710A2D82D3C9c99769DB1Dcb",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xA5588F7cdf560811710A2D82D3C9c99769DB1Dcb",
+            "coins": [
+              "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+              "0x6c3ea9036406852006290770BEdFcAbA0e23A0e8"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "sky-staking",
     "name": "SKY",
     "type": "standard",
