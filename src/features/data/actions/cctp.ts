@@ -19,6 +19,7 @@ const TERMINAL_STATES: ReadonlySet<MessageLifecycleState> = new Set([
   'confirmed',
   'cancelled',
   'abandoned',
+  'zap_failed',
 ]);
 
 export const fetchCCTPBridgeStatusByTxHash = createAppAsyncThunk<
@@ -59,7 +60,7 @@ export function pollCCTPBridgeStatus({
         console.debug('[CCTP] Bridge status:', message.lifecycleState);
         dispatch(stepperSetBridgeStatus({ lifecycleState: message.lifecycleState }));
 
-        if (message.lifecycleState === 'confirmed') {
+        if (message.lifecycleState === 'confirmed' && message.dstTxHash) {
           console.debug('[CCTP] Bridge confirmed, dstTxHash:', message.dstTxHash);
           dispatch(stepperSetBridgeStatus({ dstTxHash: message.dstTxHash }));
           dispatch(stepperSetStepContent({ stepContent: StepContent.SuccessTx }));
@@ -67,11 +68,12 @@ export function pollCCTPBridgeStatus({
           return;
         }
 
-        if (message.lifecycleState === 'cancelled' || message.lifecycleState === 'abandoned') {
+        if (message.lifecycleState !== 'confirmed' && TERMINAL_STATES.has(message.lifecycleState)) {
           console.debug('[CCTP] Bridge failed:', message.lifecycleState);
           dispatch(stepperSetStepContent({ stepContent: StepContent.ErrorTx }));
           return;
         }
+
         // If the bridge is terminal, fetch the balances
         if (TERMINAL_STATES.has(message.lifecycleState)) {
           dispatch(fetchVaultChainBalances(getState));
