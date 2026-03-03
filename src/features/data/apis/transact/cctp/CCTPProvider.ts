@@ -56,10 +56,11 @@ export function fetchBridgeQuote(
   const fromConfig = getChainConfig(fromChainId);
   const toConfig = getChainConfig(toChainId);
   const timeEstimate = fromConfig.time.outgoing + toConfig.time.incoming;
-  const fee =
+  const cctpFee =
     fromConfig.fastFeeBps !== undefined ?
       computeMaxFee(amount, fromConfig.fastFeeBps, fromToken.decimals)
     : new BigNumber(0);
+  const fee = cctpFee.plus(toConfig.beefyBridgeFeeUsd);
 
   // Truncate to token precision so downstream strategies never see sub-wei amounts
   const fromAmount = amount.decimalPlaces(fromToken.decimals, BigNumber.ROUND_FLOOR);

@@ -59,6 +59,8 @@ export type CCTPChainConfig = {
    * Omit for chains that don't support fast transfers (standard transfer, 0 fee).
    */
   fastFeeBps?: number;
+  /** Flat fee in USD charged by Beefy when this chain is the destination of a cross-chain zap */
+  beefyBridgeFeeUsd: number;
 };
 
 export type CCTPConfig = {
@@ -80,6 +82,7 @@ export const CCTP_CONFIG: CCTPConfig = {
       domain: 0,
       time: { outgoing: 15, incoming: 15 },
       fastFeeBps: 1,
+      beefyBridgeFeeUsd: 1.2,
     },
     avax: {
       tokenMessenger: TOKEN_MESSENGER_V2,
@@ -88,6 +91,7 @@ export const CCTP_CONFIG: CCTPConfig = {
       usdcAddress: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
       domain: 1,
       time: { outgoing: 5, incoming: 5 },
+      beefyBridgeFeeUsd: 0.2,
     },
     optimism: {
       tokenMessenger: TOKEN_MESSENGER_V2,
@@ -97,6 +101,7 @@ export const CCTP_CONFIG: CCTPConfig = {
       domain: 2,
       time: { outgoing: 5, incoming: 5 },
       fastFeeBps: 1.3,
+      beefyBridgeFeeUsd: 0.2,
     },
     arbitrum: {
       tokenMessenger: TOKEN_MESSENGER_V2,
@@ -106,15 +111,17 @@ export const CCTP_CONFIG: CCTPConfig = {
       domain: 3,
       time: { outgoing: 5, incoming: 5 },
       fastFeeBps: 1.3,
+      beefyBridgeFeeUsd: 0.2,
     },
     base: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
-      receiver: '0xe04b70d82e797b0B21caeaAaDfbA81c565c20e0B',
+      receiver: '0xe82D84B76A61E9dec3C38890621CD5db806e2219',
       usdcAddress: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
       domain: 6,
       time: { outgoing: 5, incoming: 5 },
       fastFeeBps: 1.3,
+      beefyBridgeFeeUsd: 0.2,
     },
     polygon: {
       tokenMessenger: TOKEN_MESSENGER_V2,
@@ -123,6 +130,7 @@ export const CCTP_CONFIG: CCTPConfig = {
       usdcAddress: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
       domain: 7,
       time: { outgoing: 5, incoming: 5 },
+      beefyBridgeFeeUsd: 0.2,
     },
     linea: {
       tokenMessenger: TOKEN_MESSENGER_V2,
@@ -132,6 +140,7 @@ export const CCTP_CONFIG: CCTPConfig = {
       domain: 11,
       time: { outgoing: 5, incoming: 5 },
       fastFeeBps: 11,
+      beefyBridgeFeeUsd: 0.2,
     },
     sonic: {
       tokenMessenger: TOKEN_MESSENGER_V2,
@@ -140,6 +149,7 @@ export const CCTP_CONFIG: CCTPConfig = {
       usdcAddress: '0x29219dd400f2Bf60E5a23d13Be72B486D4038894',
       domain: 13,
       time: { outgoing: 5, incoming: 5 },
+      beefyBridgeFeeUsd: 0.2,
     },
     // monad: {
     //   tokenMessenger: TOKEN_MESSENGER_V2,
@@ -148,6 +158,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     //   usdcAddress: '0x754704Bc059F8C67012fEd69BC8A327a5aafb603',
     //   domain: 15,
     //   time: { outgoing: 5, incoming: 5 },
+    // beefyBridgeFeeUsd: 0.2,
     // },
     hyperevm: {
       tokenMessenger: TOKEN_MESSENGER_V2,
@@ -156,6 +167,7 @@ export const CCTP_CONFIG: CCTPConfig = {
       usdcAddress: '0xb88339CB7199b77E23DB6E890353E22632Ba630f',
       domain: 19,
       time: { outgoing: 5, incoming: 5 },
+      beefyBridgeFeeUsd: 0.2,
     },
   },
 };
