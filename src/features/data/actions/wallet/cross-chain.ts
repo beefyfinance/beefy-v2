@@ -400,7 +400,6 @@ export const crossChainRecoveryExecuteOrder = (
           });
       })
       .catch(() => {
-        // User rejected — revert to dest-failed
         dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-failed' }));
       });
   });
@@ -426,15 +425,12 @@ function bindCrossChainOpTracking(
           if (receipt.status === 'success') {
             dispatch(crossChainOpStatusUpdate({ id: opId, status: 'source-done' }));
           } else {
-            dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-failed' }));
+            dispatch(crossChainOpStatusUpdate({ id: opId, status: 'source-failed' }));
           }
         })
-        .catch(() => {
-          // Receipt fetch failed — leave in source-pending, polling can retry
-        });
+        .catch(() => {});
     })
     .catch(() => {
-      // User rejected in wallet — remove the op
       dispatch(crossChainOpDismiss({ id: opId }));
     });
 }

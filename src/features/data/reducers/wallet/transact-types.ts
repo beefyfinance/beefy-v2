@@ -76,6 +76,7 @@ export type TransactConfirm = {
 export type CrossChainOpStatus =
   | 'source-pending'
   | 'source-done'
+  | 'source-failed'
   | 'dest-pending'
   | 'dest-done'
   | 'dest-failed'
