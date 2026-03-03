@@ -84,6 +84,9 @@ export const transactConfirmUnneeded = createAction<{
 export const transactSelectQuote = createAction<{
   quoteId: string;
 }>('transact/selectQuote');
+export const transactSetSelectedChainId = createAction<ChainEntity['id']>(
+  'transact/setSelectedChainId'
+);
 export const transactSetSlippage = createAction<{
   slippage: number;
 }>('transact/setSlippage');

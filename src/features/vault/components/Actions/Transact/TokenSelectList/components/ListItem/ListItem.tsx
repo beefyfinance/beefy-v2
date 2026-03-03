@@ -1,7 +1,8 @@
 import { memo, useCallback, useMemo } from 'react';
-import { legacyMakeStyles } from '../../../../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-import { formatTokenDisplayCondensed } from '../../../../../../../../helpers/format.ts';
+import {
+  formatLargeUsd,
+  formatTokenDisplayCondensed,
+} from '../../../../../../../../helpers/format.ts';
 import type { ChainEntity } from '../../../../../../../data/entities/chain.ts';
 import { css, type CssStyles, cx } from '@repo/styles/css';
 import type { TokenEntity } from '../../../../../../../data/entities/token.ts';
@@ -9,13 +10,23 @@ import type BigNumber from 'bignumber.js';
 import { TokensImage } from '../../../../../../../../components/TokenImage/TokenImage.tsx';
 import { ListJoin } from '../../../../../../../../components/ListJoin.tsx';
 import ChevronRight from '../../../../../../../../images/icons/chevron-right.svg?react';
-
-const useStyles = legacyMakeStyles(styles);
+import {
+  ListItemBalanceColumn,
+  ListItemBalanceAmount,
+  ListItemBalanceUsd,
+  ListItemButton,
+  ListItemName,
+  ListItemRightSide,
+  ListItemSide,
+  ListItemTag,
+} from '../../../common/CommonListStyles.tsx';
+import { listItemArrow } from '../../../common/CommonListStylesRaw.ts';
 
 export type ListItemProps = {
   selectionId: string;
   tokens: TokenEntity[];
   balance?: BigNumber;
+  balanceValue?: BigNumber;
   decimals: number;
   chainId: ChainEntity['id'];
   onSelect: (id: string) => void;
@@ -27,31 +38,38 @@ export const ListItem = memo(function ListItem({
   tokens,
   decimals,
   balance,
+  balanceValue,
   css: cssProp,
   onSelect,
   tag,
 }: ListItemProps) {
-  const classes = useStyles();
   const handleClick = useCallback(() => onSelect(selectionId), [onSelect, selectionId]);
   const tokenSymbols = useMemo(() => tokens.map(token => token.symbol), [tokens]);
 
   return (
-    <button type="button" className={css(styles.item, cssProp)} onClick={handleClick}>
-      <div className={css(styles.side)}>
+    <ListItemButton type="button" css={cssProp} onClick={handleClick}>
+      <ListItemSide>
         <TokensImage tokens={tokens} size={24} />
-        <div className={classes.symbol}>
+        <ListItemName>
           <ListJoin items={tokenSymbols} />
-        </div>
+        </ListItemName>
         {tag ?
-          <div className={classes.tag}>{tag}</div>
+          <ListItemTag>{tag}</ListItemTag>
         : null}
-      </div>
-      <div className={css(styles.side, styles.right)}>
+      </ListItemSide>
+      <ListItemRightSide>
         {balance ?
-          <div className={classes.balance}>{formatTokenDisplayCondensed(balance, decimals, 8)}</div>
+          <ListItemBalanceColumn>
+            <ListItemBalanceAmount>
+              {formatTokenDisplayCondensed(balance, decimals, 8)}
+            </ListItemBalanceAmount>
+            {balanceValue ?
+              <ListItemBalanceUsd>{formatLargeUsd(balanceValue)}</ListItemBalanceUsd>
+            : null}
+          </ListItemBalanceColumn>
         : null}
-        <ChevronRight className={cx('item-arrow', classes.arrow)} />
-      </div>
-    </button>
+        <ChevronRight className={cx('list-item-arrow', css(listItemArrow))} />
+      </ListItemRightSide>
+    </ListItemButton>
   );
 });

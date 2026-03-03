@@ -3,6 +3,7 @@ import {
   stepperStart,
   stepperAddStep,
   stepperReset,
+  stepperSetBridgeStatus,
   stepperSetChainId,
   stepperSetModel,
   stepperSetStepContent,
@@ -51,6 +52,12 @@ export const stepperSlice = createSlice({
       })
       .addCase(stepperSetStepContent, (sliceState, action) => {
         sliceState.stepContent = action.payload.stepContent;
+      })
+      .addCase(stepperSetBridgeStatus, (sliceState, action) => {
+        sliceState.bridgeStatus = {
+          ...sliceState.bridgeStatus,
+          ...action.payload,
+        } as StepperState['bridgeStatus'];
       });
   },
 });

@@ -143,3 +143,8 @@ export const getDivviApi = createDependencyFactory(
   async ({ DivviApi }) => new DivviApi(),
   () => import('./divvi/api.ts')
 );
+
+export const getCCTPApi = createDependencyFactory(
+  async ({ CCTPApi }) => new CCTPApi(),
+  () => import('./cctp/cctp-api.ts')
+);

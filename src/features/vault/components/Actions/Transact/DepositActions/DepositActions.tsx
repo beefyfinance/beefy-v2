@@ -14,6 +14,7 @@ import { TransactStatus } from '../../../../../data/reducers/wallet/transact-typ
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
 import {
   selectTransactQuoteStatus,
+  selectTransactSelectedChainId,
   selectTransactSelectedQuoteOrUndefined,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
@@ -46,12 +47,13 @@ export const DepositActions = memo(function DepositActions() {
 const ActionDepositDisabled = memo(function ActionDepositDisabled() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const selectedChainId = useAppSelector(selectTransactSelectedChainId);
   const { t } = useTranslation();
   const classes = useStyles();
 
   return (
     <div className={classes.feesContainer}>
-      <ActionConnectSwitch chainId={vault.chainId}>
+      <ActionConnectSwitch chainId={selectedChainId ?? vault.chainId}>
         <Button variant="cta" disabled={true} fullWidth={true} borderless={true}>
           {t('Transact-Deposit')}
         </Button>

@@ -52,6 +52,10 @@ export const selectStepperStepContent = (state: BeefyState) => {
   return state.ui.stepperState.stepContent;
 };
 
+export const selectStepperBridgeStatus = (state: BeefyState) => {
+  return state.ui.stepperState.bridgeStatus;
+};
+
 const transferAbi = [
   {
     anonymous: false,
@@ -191,6 +195,11 @@ export function selectBoostClaimed(state: BeefyState) {
 }
 
 export const selectStepperProgress = (state: BeefyState) => {
+  if (state.ui.stepperState.stepContent === StepContent.BridgingTx) {
+    const completedSteps = state.ui.stepperState.items.length;
+    return (completedSteps / (completedSteps + 1)) * 100;
+  }
+
   const currentStep = state.ui.stepperState.currentStep;
   const percentagePerStep = 100 / state.ui.stepperState.items.length;
   const currentTxProgress = selectStandardTxPercentage(state);

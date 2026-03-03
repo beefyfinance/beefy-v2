@@ -1,9 +1,10 @@
 import { createAction } from '@reduxjs/toolkit';
 import { isEmpty } from '../../../../helpers/utils.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
-import { type Step, StepContent } from '../../reducers/wallet/stepper-types.ts';
+import { type BridgeStatus, type Step, StepContent } from '../../reducers/wallet/stepper-types.ts';
 import type { BeefyThunk } from '../../store/types.ts';
 import { createAppAsyncThunk } from '../../utils/store-utils.ts';
+import { pollCCTPBridgeStatus } from '../cctp.ts';
 
 export const stepperReset = createAction('stepper/reset');
 export const stepperAddStep = createAction<{ step: Step }>('stepper/addStep');
@@ -18,6 +19,8 @@ export const stepperSetChainId = createAction<{ chainId: ChainEntity['id'] }>('s
 export const stepperSetStepContent = createAction<{ stepContent: StepContent }>(
   'stepper/setStepContent'
 );
+export const stepperSetBridgeStatus =
+  createAction<Partial<BridgeStatus>>('stepper/setBridgeStatus');
 
 type StartStepperParams = ChainEntity['id'];
 
@@ -42,13 +45,35 @@ export const stepperUpdate = createAppAsyncThunk('stepper/update', (_, { getStat
   const store = getState();
   const walletActionsState = store.user.walletActions;
   const steps = store.ui.stepperState;
-  if (walletActionsState.result === 'success' && steps.stepContent !== StepContent.SuccessTx) {
+  if (
+    walletActionsState.result === 'success' &&
+    steps.stepContent !== StepContent.SuccessTx &&
+    steps.stepContent !== StepContent.BridgingTx
+  ) {
     const nextStep = steps.currentStep + 1;
     if (!isEmpty(steps.items[nextStep])) {
       dispatch(stepperUpdateCurrentStepIndex({ stepIndex: nextStep }));
       dispatch(stepperSetStepContent({ stepContent: StepContent.StartTx }));
     } else {
-      dispatch(stepperSetStepContent({ stepContent: StepContent.SuccessTx }));
+      const currentItem = steps.items[steps.currentStep];
+      const crossChain = currentItem?.extraInfo?.crossChain;
+
+      if (crossChain && walletActionsState.data?.receipt?.transactionHash) {
+        const srcTxHash = walletActionsState.data.receipt.transactionHash;
+        dispatch(
+          stepperSetBridgeStatus({
+            srcChainId: crossChain.sourceChainId,
+            srcTxHash,
+            destChainId: crossChain.destChainId,
+            vaultId: currentItem.extraInfo?.vaultId,
+          })
+        );
+        dispatch(stepperSetStepContent({ stepContent: StepContent.BridgingTx }));
+
+        dispatch(pollCCTPBridgeStatus({ srcChainId: crossChain.sourceChainId, txHash: srcTxHash }));
+      } else {
+        dispatch(stepperSetStepContent({ stepContent: StepContent.SuccessTx }));
+      }
     }
   }
 });

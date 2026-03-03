@@ -15,6 +15,7 @@ import type { SerializedError } from '../../apis/transact/strategies/error-types
 export enum TransactStep {
   Loading,
   Form,
+  ChainSelect,
   TokenSelect,
   QuoteSelect,
 }

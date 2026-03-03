@@ -10,6 +10,7 @@ import {
 import { isEmpty } from '../../helpers/utils.ts';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
 import {
+  BridgingContent,
   ErrorContent,
   StepsCountContent,
   StepsStartContent,
@@ -24,6 +25,7 @@ const stepToComponent: Record<StepContent, FC> = {
   [StepContent.WaitingTx]: WaitingContent,
   [StepContent.ErrorTx]: ErrorContent,
   [StepContent.SuccessTx]: SuccessContent,
+  [StepContent.BridgingTx]: BridgingContent,
 };
 
 const StepperImpl = () => {
