@@ -21,12 +21,15 @@ import {
   transactSwitchStep,
 } from '../../actions/transact.ts';
 import {
+  crossChainClearRecoveryQuote,
+  crossChainFetchRecoveryQuote,
   crossChainOpDismiss,
   crossChainOpInitiated,
   crossChainOpStatusUpdate,
 } from '../../actions/wallet/cross-chain.ts';
 import { type TransactOption, type TransactQuote } from '../../apis/transact/transact-types.ts';
 import type {
+  CrossChainRecoveryQuoteState,
   TransactOptions,
   TransactQuotes,
   TransactSelections,
@@ -67,6 +70,13 @@ const initialTransactConfirm = {
   error: undefined,
 };
 
+const initialRecoveryQuoteState: CrossChainRecoveryQuoteState = {
+  opId: undefined,
+  quote: undefined,
+  status: TransactStatus.Idle,
+  error: undefined,
+};
+
 const initialTransactState: TransactState = {
   vaultId: undefined,
   pendingVaultId: undefined,
@@ -86,6 +96,7 @@ const initialTransactState: TransactState = {
   crossChain: {
     pendingOps: {},
     pendingOpIds: [],
+    recoveryQuote: initialRecoveryQuoteState,
   },
 };
 
@@ -256,13 +267,16 @@ const transactSlice = createSlice({
         sliceState.crossChain.pendingOpIds.unshift(op.id);
       })
       .addCase(crossChainOpStatusUpdate, (sliceState, action) => {
-        const { id, status, destTxHash } = action.payload;
+        const { id, status, destTxHash, sourceTxHash } = action.payload;
         const op = sliceState.crossChain.pendingOps[id];
         if (op) {
           op.status = status;
           op.updatedAt = Date.now();
           if (destTxHash) {
             op.destTxHash = destTxHash;
+          }
+          if (sourceTxHash) {
+            op.sourceTxHash = sourceTxHash;
           }
         }
       })
@@ -272,6 +286,31 @@ const transactSlice = createSlice({
         sliceState.crossChain.pendingOpIds = sliceState.crossChain.pendingOpIds.filter(
           opId => opId !== id
         );
+      })
+      .addCase(crossChainFetchRecoveryQuote.pending, (sliceState, action) => {
+        sliceState.crossChain.recoveryQuote = {
+          opId: action.meta.arg.opId,
+          quote: undefined,
+          status: TransactStatus.Pending,
+          error: undefined,
+        };
+      })
+      .addCase(crossChainFetchRecoveryQuote.rejected, (sliceState, action) => {
+        const rq = sliceState.crossChain.recoveryQuote;
+        if (rq.opId === action.meta.arg.opId) {
+          rq.status = TransactStatus.Rejected;
+          rq.error = action.error;
+        }
+      })
+      .addCase(crossChainFetchRecoveryQuote.fulfilled, (sliceState, action) => {
+        const rq = sliceState.crossChain.recoveryQuote;
+        if (rq.opId === action.meta.arg.opId) {
+          rq.status = TransactStatus.Fulfilled;
+          rq.quote = action.payload.quote;
+        }
+      })
+      .addCase(crossChainClearRecoveryQuote, sliceState => {
+        sliceState.crossChain.recoveryQuote = initialRecoveryQuoteState;
       });
   },
 });

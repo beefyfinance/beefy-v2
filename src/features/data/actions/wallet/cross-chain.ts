@@ -1,17 +1,22 @@
-import type { Address } from 'viem';
+import type { Address, Hash, PublicClient } from 'viem';
+import { waitForTransactionReceipt } from 'viem/actions';
+import BigNumber from 'bignumber.js';
 import { uniqBy } from 'lodash-es';
 import { createAction } from '@reduxjs/toolkit';
+import type { Namespace, TFunction } from 'react-i18next';
 import { BeefyZapRouterAbi } from '../../../../config/abi/BeefyZapRouterAbi.ts';
 import { ZERO_ADDRESS } from '../../../../helpers/addresses.ts';
 import { BIG_ZERO } from '../../../../helpers/big-number.ts';
-import { getWalletConnectionApi } from '../../apis/instances.ts';
+import { getTransactApi, getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import type { UserlessZapRequest, ZapOrder, ZapStep } from '../../apis/transact/zap/types.ts';
-import type { TokenEntity } from '../../entities/token.ts';
+import { isTokenErc20, type TokenEntity } from '../../entities/token.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { GasPricing } from '../../apis/gas-prices/gas-prices.ts';
+import type { Step } from '../../reducers/wallet/stepper-types.ts';
+import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import {
   selectChainNativeToken,
@@ -21,13 +26,22 @@ import {
 import { selectVaultById } from '../../selectors/vaults.ts';
 import { selectCurrentChainId, selectWalletAddress } from '../../selectors/wallet.ts';
 import { selectZapByChainId } from '../../selectors/zap.ts';
-import type { BeefyState } from '../../store/types.ts';
+import type { BeefyState, BeefyThunk } from '../../store/types.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import type {
   CrossChainOpStatus,
+  CrossChainRecoveryParams,
   PendingCrossChainOp,
 } from '../../reducers/wallet/transact-types.ts';
+import type {
+  RecoveryQuote,
+  TokenAmount,
+  ZapQuoteStep,
+} from '../../apis/transact/transact-types.ts';
+import { createAppAsyncThunk } from '../../utils/store-utils.ts';
 import { bindTransactionEvents, captureWalletErrors, txStart, txWallet } from './common.ts';
+import { approve } from './approval.ts';
+import { stepperStartWithSteps } from './stepper.ts';
 
 type GasPriceCache = {
   chainId: ChainEntity['id'];
@@ -67,6 +81,19 @@ async function getPrefetchedOrFreshGasPrice(chain: ChainEntity): Promise<GasPric
   return getGasPriceOptions(chain);
 }
 
+export type CrossChainExecuteMetadata = {
+  opId: string;
+  direction: 'deposit' | 'withdraw';
+  sourceChainId: ChainEntity['id'];
+  destChainId: ChainEntity['id'];
+  vaultId: VaultEntity['id'];
+  sourceInput: TokenAmount;
+  expectedOutput: TokenAmount;
+  sourceDisplaySteps: ZapQuoteStep[];
+  destDisplaySteps: ZapQuoteStep[];
+  recovery: CrossChainRecoveryParams;
+};
+
 /**
  * Execute a zap order on a source chain different from the vault's chain.
  * Modeled after zapExecuteOrder but uses sourceChainId for chain/zap/rpc lookups.
@@ -75,7 +102,8 @@ export const crossChainZapExecuteOrder = (
   sourceChainId: ChainEntity['id'],
   vaultId: VaultEntity['id'],
   params: UserlessZapRequest,
-  expectedTokens: TokenEntity[]
+  expectedTokens: TokenEntity[],
+  metadata: CrossChainExecuteMetadata
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     console.time('[XChainPerf] G: crossChainZapExecuteOrder TOTAL');
@@ -178,6 +206,27 @@ export const crossChainZapExecuteOrder = (
       value: nativeInput ? nativeInput.amount : undefined,
     };
 
+    // Dispatch cross-chain op tracking before wallet prompt
+    const now = Date.now();
+    dispatch(
+      crossChainOpInitiated({
+        id: metadata.opId,
+        status: 'source-pending',
+        direction: metadata.direction,
+        sourceChainId: metadata.sourceChainId,
+        destChainId: metadata.destChainId,
+        vaultId: metadata.vaultId,
+        sourceTxHash: '',
+        sourceInput: metadata.sourceInput,
+        expectedOutput: metadata.expectedOutput,
+        sourceDisplaySteps: metadata.sourceDisplaySteps,
+        destDisplaySteps: metadata.destDisplaySteps,
+        recovery: metadata.recovery,
+        createdAt: now,
+        updatedAt: now,
+      })
+    );
+
     txWallet(dispatch);
     console.debug('crossChainExecuteOrder', { order: castedOrder, steps: castedSteps, options });
     console.time('[XChainPerf] G.4: contract.write.executeOrder (wallet prompt)');
@@ -201,11 +250,194 @@ export const crossChainZapExecuteOrder = (
         chainId: sourceChainId,
         spenderAddress: zap.manager,
         tokens: selectCrossChainZapTokensToRefresh(state, sourceChainId, order),
-        clearInput: true,
+        clearInput: false,
       }
     );
+
+    // Track cross-chain op lifecycle alongside bindTransactionEvents
+    bindCrossChainOpTracking(dispatch, transaction, publicClient, metadata.opId);
   });
 };
+
+/**
+ * Execute a recovery zap order on the destination chain.
+ * Used when the destination portion of a cross-chain zap has failed.
+ */
+export const crossChainRecoveryExecuteOrder = (
+  opId: string,
+  destChainId: ChainEntity['id'],
+  vaultId: VaultEntity['id'],
+  params: UserlessZapRequest,
+  expectedTokens: TokenEntity[]
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    txStart(dispatch);
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      throw new Error('No wallet connected');
+    }
+
+    const currentChainId = selectCurrentChainId(state);
+    if (currentChainId !== destChainId) {
+      const destChain = selectChainById(state, destChainId);
+      throw new Error(`Please switch to ${destChain.name} to execute this recovery transaction`);
+    }
+
+    const vault = selectVaultById(state, vaultId);
+    const chain = selectChainById(state, destChainId);
+    const zap = selectZapByChainId(state, destChainId);
+    if (!zap) {
+      throw new Error(`No zap found for chain ${chain.id}`);
+    }
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+
+    const order: ZapOrder = {
+      ...params.order,
+      inputs: params.order.inputs.filter(i => BIG_ZERO.lt(i.amount)),
+      user: address,
+      recipient: address,
+    };
+    if (!order.inputs.length) {
+      throw new Error('No inputs provided');
+    }
+
+    // @dev key order must match actual function / `components` in ABI
+    const castedOrder = {
+      inputs: params.order.inputs
+        .filter(i => BIG_ZERO.lt(i.amount))
+        .map(i => ({
+          token: i.token as Address,
+          amount: BigInt(i.amount),
+        })),
+      outputs: params.order.outputs.map(o => ({
+        token: o.token as Address,
+        minOutputAmount: BigInt(o.minOutputAmount),
+      })),
+      relay: {
+        target: params.order.relay.target as Address,
+        value: BigInt(params.order.relay.value),
+        data: params.order.relay.data as `0x${string}`,
+      },
+      user: address as Address,
+      recipient: address as Address,
+    };
+
+    const steps: ZapStep[] = params.steps;
+    if (!steps.length) {
+      throw new Error('No steps provided');
+    }
+
+    // @dev key order must match actual function / `components` in ABI
+    const castedSteps = params.steps.map(step => ({
+      target: step.target as Address,
+      value: BigInt(step.value),
+      data: step.data as `0x${string}`,
+      tokens: step.tokens.map(t => ({
+        token: t.token as Address,
+        index: t.index,
+      })),
+    }));
+
+    const walletApi = await getWalletConnectionApi();
+    const publicClient = rpcClientManager.getBatchClient(destChainId);
+    const walletClient = await walletApi.getConnectedViemClient();
+    const gasPrices = await getGasPriceOptions(chain);
+    const nativeInput = castedOrder.inputs.find(input => input.token === ZERO_ADDRESS);
+
+    const contract = fetchWalletContract(zap.router, BeefyZapRouterAbi, walletClient);
+    const options = {
+      ...gasPrices,
+      account: castedOrder.user,
+      chain: publicClient.chain,
+      value: nativeInput ? nativeInput.amount : undefined,
+    };
+
+    dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-pending' }));
+
+    txWallet(dispatch);
+    const transaction = contract.write.executeOrder([castedOrder, castedSteps], options);
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      publicClient,
+      {
+        type: 'zap',
+        amount: BIG_ZERO,
+        token: depositToken,
+        expectedTokens,
+        vaultId: vault.id,
+      },
+      {
+        walletAddress: address,
+        chainId: destChainId,
+        spenderAddress: zap.manager,
+        tokens: expectedTokens,
+        clearInput: false,
+      }
+    );
+
+    // Track recovery outcome
+    transaction
+      .then(hash => {
+        waitForTransactionReceipt(publicClient, { hash })
+          .then(receipt => {
+            if (receipt.status === 'success') {
+              dispatch(
+                crossChainOpStatusUpdate({
+                  id: opId,
+                  status: 'dest-recovered',
+                  destTxHash: hash,
+                })
+              );
+            } else {
+              dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-failed' }));
+            }
+          })
+          .catch(() => {
+            // Receipt fetch failed — leave status as dest-pending for retry
+          });
+      })
+      .catch(() => {
+        // User rejected — revert to dest-failed
+        dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-failed' }));
+      });
+  });
+};
+
+/**
+ * Track cross-chain op lifecycle: capture tx hash on submission,
+ * transition to source-done on successful mining, dismiss on rejection.
+ */
+function bindCrossChainOpTracking(
+  dispatch: (action: unknown) => void,
+  transactionHashPromise: Promise<Hash>,
+  client: PublicClient,
+  opId: string
+) {
+  transactionHashPromise
+    .then(hash => {
+      dispatch(
+        crossChainOpStatusUpdate({ id: opId, status: 'source-pending', sourceTxHash: hash })
+      );
+      waitForTransactionReceipt(client, { hash })
+        .then(receipt => {
+          if (receipt.status === 'success') {
+            dispatch(crossChainOpStatusUpdate({ id: opId, status: 'source-done' }));
+          } else {
+            dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-failed' }));
+          }
+        })
+        .catch(() => {
+          // Receipt fetch failed — leave in source-pending, polling can retry
+        });
+    })
+    .catch(() => {
+      // User rejected in wallet — remove the op
+      dispatch(crossChainOpDismiss({ id: opId }));
+    });
+}
 
 /** Source-chain tokens whose balances should be refreshed after the source tx is mined.
  * Dest-chain token refresh is handled separately by cross-chain operation polling. */
@@ -240,6 +472,95 @@ export const crossChainOpStatusUpdate = createAction<{
   id: string;
   status: CrossChainOpStatus;
   destTxHash?: string;
+  sourceTxHash?: string;
 }>('cross-chain/statusUpdate');
 
 export const crossChainOpDismiss = createAction<{ id: string }>('cross-chain/dismiss');
+
+export const crossChainClearRecoveryQuote = createAction('cross-chain/clearRecoveryQuote');
+
+// ---------------------------------------------------------------------------
+// Recovery: quote + step thunks
+// ---------------------------------------------------------------------------
+
+type CrossChainFetchRecoveryQuotePayload = {
+  quote: RecoveryQuote;
+};
+
+type CrossChainFetchRecoveryQuoteArgs = {
+  opId: string;
+};
+
+export const crossChainFetchRecoveryQuote = createAppAsyncThunk<
+  CrossChainFetchRecoveryQuotePayload,
+  CrossChainFetchRecoveryQuoteArgs
+>('cross-chain/fetchRecoveryQuote', async ({ opId }, { getState }) => {
+  const state = getState();
+  const op = state.ui.transact.crossChain.pendingOps[opId];
+  if (!op) {
+    throw new Error(`No pending cross-chain op with id ${opId}`);
+  }
+  if (op.status !== 'dest-failed') {
+    throw new Error(`Op ${opId} is not in dest-failed state`);
+  }
+
+  const api = await getTransactApi();
+  const actualBridgedAmount = new BigNumber(op.recovery.bridgedAmount);
+  const quote = await api.fetchRecoveryQuote(op.recovery, actualBridgedAmount, getState);
+
+  return { quote };
+});
+
+export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): BeefyThunk {
+  return async function (dispatch, getState) {
+    const state = getState();
+    const op = state.ui.transact.crossChain.pendingOps[opId];
+    if (!op) {
+      throw new Error(`No pending cross-chain op with id ${opId}`);
+    }
+
+    const api = await getTransactApi();
+    const actualBridgedAmount = new BigNumber(op.recovery.bridgedAmount);
+
+    const steps: Step[] = [];
+
+    // Build approval steps from the recovery quote if available
+    const rqState = state.ui.transact.crossChain.recoveryQuote;
+    if (rqState.opId === opId && rqState.quote) {
+      for (const allowanceTokenAmount of rqState.quote.allowances) {
+        if (isTokenErc20(allowanceTokenAmount.token)) {
+          const allowance = selectAllowanceByTokenAddress(
+            state,
+            allowanceTokenAmount.token.chainId,
+            allowanceTokenAmount.token.address,
+            allowanceTokenAmount.spenderAddress
+          );
+          if (allowance.lt(allowanceTokenAmount.amount)) {
+            steps.push({
+              step: 'approve',
+              message: t('Vault-ApproveMsg'),
+              action: approve(
+                allowanceTokenAmount.token,
+                allowanceTokenAmount.spenderAddress,
+                allowanceTokenAmount.amount
+              ),
+              pending: false,
+            });
+          }
+        }
+      }
+    }
+
+    // Build recovery step (re-quotes internally for fresh data)
+    const recoveryStep = await api.fetchRecoveryStep(
+      op.recovery,
+      opId,
+      actualBridgedAmount,
+      getState,
+      t
+    );
+    steps.push(recoveryStep);
+
+    dispatch(stepperStartWithSteps(steps, op.recovery.destChainId));
+  };
+}

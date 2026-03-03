@@ -11,6 +11,7 @@ import type {
 } from '../../entities/zap.ts';
 import type { Step } from '../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../reducers/wallet/transact-types.ts';
+import type { CrossChainRecoveryParams } from '../../reducers/wallet/transact-types.ts';
 import type { BeefyStateFn } from '../../store/types.ts';
 import type { CurveTokenOption } from './strategies/curve/types.ts';
 import type { ZapStrategyId } from './strategies/strategy-configs.ts';
@@ -576,6 +577,18 @@ type BaseZapQuote<T extends TransactOption> = BaseQuote<T> & {
   steps: ZapQuoteStep[];
 };
 
+/** Quote for recovery of the destination portion of a cross-chain zap. */
+export type RecoveryQuote = {
+  id: string;
+  inputs: InputTokenAmount[];
+  outputs: TokenAmount[];
+  returned: TokenAmount[];
+  steps: ZapQuoteStep[];
+  priceImpact: number;
+  fee: ZapFee;
+  allowances: AllowanceTokenAmount[];
+};
+
 export type StandardVaultDepositQuote = BaseQuote<StandardVaultDepositOption> & {
   vaultType: 'standard';
 };
@@ -1057,4 +1070,18 @@ export interface ITransactApi {
   ): Promise<ZapTransactHelpers>;
 
   getZapStrategiesForVault(helpers: TransactHelpers): Promise<IStrategy[]>;
+
+  fetchRecoveryQuote(
+    recoveryParams: CrossChainRecoveryParams,
+    actualBridgedAmount: BigNumber,
+    getState: BeefyStateFn
+  ): Promise<RecoveryQuote>;
+
+  fetchRecoveryStep(
+    recoveryParams: CrossChainRecoveryParams,
+    opId: string,
+    actualBridgedAmount: BigNumber,
+    getState: BeefyStateFn,
+    t: TFunction<Namespace>
+  ): Promise<Step>;
 }

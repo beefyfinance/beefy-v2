@@ -1,10 +1,15 @@
+import type BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Address } from 'viem';
 import { uniqBy } from 'lodash-es';
 import { BIG_ZERO, toWeiBigInt, toWeiString } from '../../../../../../helpers/big-number.ts';
 import type { TokenEntity, TokenErc20 } from '../../../../entities/token.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
+import type { VaultEntity } from '../../../../entities/vault.ts';
 import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
+import type { CrossChainRecoveryParams } from '../../../../reducers/wallet/transact-types.ts';
+import type { CrossChainExecuteMetadata } from '../../../../actions/wallet/cross-chain.ts';
 import { selectTokenByAddress } from '../../../../selectors/tokens.ts';
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
 import { selectWalletAddress } from '../../../../selectors/wallet.ts';
@@ -33,12 +38,14 @@ import { pickTokens, uniqueTokens } from '../../helpers/tokens.ts';
 import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import {
+  type AllowanceTokenAmount,
   type CrossChainDepositOption,
   type CrossChainDepositQuote,
   type CrossChainWithdrawOption,
   type CrossChainWithdrawQuote,
   type DepositOption,
   type InputTokenAmount,
+  type RecoveryQuote,
   type SingleDepositOption,
   type SingleWithdrawOption,
   isZapQuote,
@@ -62,7 +69,10 @@ import {
 } from '../IStrategy.ts';
 import type { CrossChainStrategyConfig } from '../strategy-configs.ts';
 import { getTransactApi } from '../../../../apis/instances.ts';
-import { crossChainZapExecuteOrder } from '../../../../actions/wallet/cross-chain.ts';
+import {
+  crossChainZapExecuteOrder,
+  crossChainRecoveryExecuteOrder,
+} from '../../../../actions/wallet/cross-chain.ts';
 
 const strategyId = 'cross-chain';
 type StrategyId = typeof strategyId;
@@ -540,6 +550,11 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     console.timeEnd('[XChainPerf] C.6: build UserlessZapRequest');
     console.timeEnd('[XChainPerf] C: CrossChain.fetchDepositStep TOTAL');
 
+    const metadata = this.buildRecoveryMetadata(quote, {
+      token: destBridgeToken,
+      amount: stepBridgeQuote.toAmount,
+    });
+
     return {
       step: 'zap-in',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
@@ -547,7 +562,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         sourceChainId,
         quote.option.vaultId,
         zapRequest,
-        breakdown.expectedTokens
+        breakdown.expectedTokens,
+        metadata
       ),
       pending: false,
       extraInfo: {
@@ -937,16 +953,404 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     };
 
     // Withdrawals execute on vault's chain but are cross-chain ops (USDC bridged to dest)
+    const metadata = this.buildRecoveryMetadata(quote, {
+      token: destBridgeToken,
+      amount: stepBridgeQuote.toAmount,
+    });
+
     return {
       step: 'zap-out',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-      action: crossChainZapExecuteOrder(sourceChainId, quote.option.vaultId, zapRequest, []),
+      action: crossChainZapExecuteOrder(
+        sourceChainId,
+        quote.option.vaultId,
+        zapRequest,
+        [],
+        metadata
+      ),
       pending: false,
       extraInfo: {
         zap: true,
         vaultId: quote.option.vaultId,
         crossChain: { sourceChainId, destChainId },
       },
+    };
+  }
+
+  // ---------------------------------------------------------------------------
+  // RECOVERY
+  // ---------------------------------------------------------------------------
+
+  private buildRecoveryMetadata(
+    quote: CrossChainDepositQuote | CrossChainWithdrawQuote,
+    bridgedAmount: { token: TokenEntity; amount: BigNumber }
+  ): CrossChainExecuteMetadata {
+    const { sourceChainId, destChainId, vaultId } = quote.option;
+    const direction = quote.option.mode === TransactMode.Deposit ? 'deposit' : 'withdraw';
+
+    let recovery: CrossChainRecoveryParams;
+    if (direction === 'deposit') {
+      recovery = {
+        direction: 'deposit',
+        destChainId,
+        vaultId,
+        bridgeTokenAddress: bridgedAmount.token.address,
+        bridgedAmount: bridgedAmount.amount.toString(10),
+      };
+    } else {
+      const withdrawOption = (quote as CrossChainWithdrawQuote).option;
+      recovery = {
+        direction: 'withdraw',
+        destChainId,
+        vaultId,
+        bridgeTokenAddress: bridgedAmount.token.address,
+        bridgedAmount: bridgedAmount.amount.toString(10),
+        desiredOutputAddress:
+          withdrawOption.needsDestHook ? withdrawOption.wantedOutputs[0].address : undefined,
+      };
+    }
+
+    return {
+      opId: `xchain-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+      direction,
+      sourceChainId,
+      destChainId,
+      vaultId,
+      sourceInput: { token: quote.inputs[0].token, amount: quote.inputs[0].amount },
+      expectedOutput: { token: quote.outputs[0].token, amount: quote.outputs[0].amount },
+      sourceDisplaySteps: quote.sourceSteps,
+      destDisplaySteps: quote.destSteps,
+      recovery,
+    };
+  }
+
+  /**
+   * Quote the destination-only deposit for recovery display.
+   * Resolves dest strategy, gets a fresh quote, returns a RecoveryQuote for UI.
+   */
+  async fetchDestinationDepositQuote(params: {
+    destChainId: ChainEntity['id'];
+    vaultId: VaultEntity['id'];
+    bridgedAmount: BigNumber;
+    bridgeToken: TokenErc20;
+  }): Promise<RecoveryQuote> {
+    const { getState } = this.helpers;
+    const state = getState();
+    const { destChainId, vaultId, bridgedAmount, bridgeToken } = params;
+
+    const destHelpers = await (
+      await getTransactApi()
+    ).getHelpersForChain(destChainId, vaultId, getState);
+    const destStrategies = await (await getTransactApi()).getZapStrategiesForVault(destHelpers);
+
+    const destMatch = await this.findDestStrategyForDeposit(destStrategies, bridgeToken);
+    if (!destMatch) {
+      throw new Error(
+        `No composable destination strategy accepts USDC on ${destChainId} for vault ${vaultId}`
+      );
+    }
+
+    const destQuote = await destMatch.strategy.fetchDepositQuote(
+      [{ token: bridgeToken, amount: bridgedAmount, max: false }],
+      destMatch.option
+    );
+    if (!isZapQuote(destQuote)) {
+      throw new Error('Destination quote is not a zap quote');
+    }
+
+    const allowances: AllowanceTokenAmount[] = destQuote.allowances.filter(a =>
+      a.amount.gt(BIG_ZERO)
+    );
+
+    return {
+      id: createQuoteId(destQuote.option.id),
+      inputs: destQuote.inputs,
+      outputs: destQuote.outputs,
+      returned: destQuote.returned,
+      steps: destQuote.steps,
+      priceImpact: calculatePriceImpact(
+        destQuote.inputs,
+        destQuote.outputs,
+        destQuote.returned,
+        state
+      ),
+      fee: highestFeeOrZero(destQuote.steps),
+      allowances,
+    };
+  }
+
+  /**
+   * Build a destination-only deposit step for recovery execution.
+   * Re-quotes internally at step-time for fresh data.
+   */
+  async fetchDestinationDepositStep(
+    params: {
+      opId: string;
+      destChainId: ChainEntity['id'];
+      vaultId: VaultEntity['id'];
+      bridgedAmount: BigNumber;
+      bridgeToken: TokenErc20;
+    },
+    t: TFunction<Namespace>
+  ): Promise<Step> {
+    const { getState } = this.helpers;
+    const state = getState();
+    const { opId, destChainId, vaultId, bridgedAmount, bridgeToken } = params;
+
+    const userAddress = selectWalletAddress(state);
+    if (!userAddress) {
+      throw new Error('No wallet connected');
+    }
+
+    // 1. Resolve dest helpers and strategies
+    const destHelpers = await (
+      await getTransactApi()
+    ).getHelpersForChain(destChainId, vaultId, getState);
+    const destStrategies = await (await getTransactApi()).getZapStrategiesForVault(destHelpers);
+
+    // 2. Find composable dest strategy that accepts USDC
+    const destMatch = await this.findDestStrategyForDeposit(destStrategies, bridgeToken);
+    if (!destMatch) {
+      throw new Error(
+        `No composable destination strategy accepts USDC on ${destChainId} for vault ${vaultId}`
+      );
+    }
+
+    // 3. Fresh deposit quote with actual bridged USDC amount
+    const stepDestQuote = await destMatch.strategy.fetchDepositQuote(
+      [{ token: bridgeToken, amount: bridgedAmount, max: false }],
+      destMatch.option
+    );
+    if (!isZapQuote(stepDestQuote)) {
+      throw new Error('Destination quote is not a zap quote');
+    }
+    if (!isComposableStrategy(destMatch.strategy)) {
+      throw new Error(`Destination strategy '${destMatch.strategy.id}' is not composable`);
+    }
+
+    // 4. Get userless ZapSteps for dest
+    const breakdown = await destMatch.strategy.fetchDepositUserlessZapBreakdown(
+      stepDestQuote as Parameters<typeof destMatch.strategy.fetchDepositUserlessZapBreakdown>[0]
+    );
+
+    // 5. Build UserlessZapRequest for dest chain execution
+    const destZap = selectZapByChainId(state, destChainId);
+    if (!destZap) {
+      throw new Error(`No zap router on chain ${destChainId}`);
+    }
+
+    const intermediateTokens = collectIntermediateTokens({
+      context: 'deposit-dest',
+      pickTokensFrom: {
+        outputs: stepDestQuote.outputs,
+        inputs: stepDestQuote.inputs,
+        returned: stepDestQuote.returned,
+      },
+      bridgeToken,
+      swapSteps: stepDestQuote.steps,
+    });
+    const dustOutputs = buildDustOutputs(intermediateTokens);
+    const outputs = mergeOutputs(breakdown.zapRequest.order.outputs, dustOutputs);
+
+    const zapRequest: UserlessZapRequest = {
+      order: {
+        inputs: [
+          {
+            token: getTokenAddress(bridgeToken),
+            amount: toWeiString(bridgedAmount, bridgeToken.decimals),
+          },
+        ],
+        outputs,
+        relay: NO_RELAY,
+      },
+      steps: breakdown.zapRequest.steps,
+    };
+
+    // 6. Return Step executing on dest chain
+    return {
+      step: 'zap-in',
+      message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+      action: crossChainRecoveryExecuteOrder(
+        opId,
+        destChainId,
+        vaultId,
+        zapRequest,
+        breakdown.expectedTokens
+      ),
+      pending: false,
+      extraInfo: { zap: true, vaultId },
+    };
+  }
+
+  /**
+   * Quote the destination-only withdraw swap for recovery display.
+   * Given USDC on dest chain, quote swapping it to the desired output token.
+   */
+  async fetchDestinationWithdrawQuote(params: {
+    destChainId: ChainEntity['id'];
+    vaultId: VaultEntity['id'];
+    bridgedAmount: BigNumber;
+    bridgeToken: TokenErc20;
+    desiredOutput: TokenEntity;
+  }): Promise<RecoveryQuote> {
+    const { swapAggregator, getState } = this.helpers;
+    const state = getState();
+    const { vaultId, bridgedAmount, bridgeToken, desiredOutput } = params;
+
+    const destSwapQuotes = await swapAggregator.fetchQuotes(
+      {
+        fromToken: bridgeToken,
+        fromAmount: bridgedAmount,
+        toToken: desiredOutput,
+        vaultId,
+      },
+      state,
+      this.options.swap
+    );
+    if (!destSwapQuotes.length) {
+      throw new Error('No swap quotes available for recovery');
+    }
+    const bestSwap = destSwapQuotes[0];
+
+    const swapStep: ZapQuoteStepSwapAggregator = {
+      type: 'swap',
+      via: 'aggregator',
+      providerId: bestSwap.providerId,
+      fromToken: bridgeToken,
+      toToken: desiredOutput,
+      fromAmount: bridgedAmount,
+      toAmount: bestSwap.toAmount,
+      fee: bestSwap.fee,
+      quote: bestSwap,
+    };
+
+    const inputs: InputTokenAmount[] = [{ token: bridgeToken, amount: bridgedAmount, max: false }];
+    const outputs: TokenAmount[] = [{ token: desiredOutput, amount: bestSwap.toAmount }];
+
+    return {
+      id: createQuoteId(`recovery-withdraw-${vaultId}`),
+      inputs,
+      outputs,
+      returned: [],
+      steps: [swapStep],
+      priceImpact: calculatePriceImpact(inputs, outputs, [], state),
+      fee: highestFeeOrZero([swapStep]),
+      allowances: [],
+    };
+  }
+
+  /**
+   * Build a destination-only withdraw step for recovery execution.
+   * Re-quotes the swap internally at step-time for fresh data.
+   */
+  async fetchDestinationWithdrawStep(
+    params: {
+      opId: string;
+      destChainId: ChainEntity['id'];
+      vaultId: VaultEntity['id'];
+      bridgedAmount: BigNumber;
+      bridgeToken: TokenErc20;
+      desiredOutput: TokenEntity;
+    },
+    t: TFunction<Namespace>
+  ): Promise<Step> {
+    const { swapAggregator, getState } = this.helpers;
+    const state = getState();
+    const { opId, destChainId, vaultId, bridgedAmount, bridgeToken, desiredOutput } = params;
+    const slippage = selectTransactSlippage(state);
+
+    const userAddress = selectWalletAddress(state);
+    if (!userAddress) {
+      throw new Error('No wallet connected');
+    }
+
+    // 1. Get fresh swap quote: USDC → desired token on dest chain
+    const destSwapQuotes = await swapAggregator.fetchQuotes(
+      {
+        fromToken: bridgeToken,
+        fromAmount: bridgedAmount,
+        toToken: desiredOutput,
+        vaultId,
+      },
+      state,
+      this.options.swap
+    );
+    if (!destSwapQuotes.length) {
+      throw new Error('No swap quotes available for recovery');
+    }
+    const bestSwap = destSwapQuotes[0];
+
+    const destZap = selectZapByChainId(state, destChainId);
+    if (!destZap) {
+      throw new Error(`No zap router on chain ${destChainId}`);
+    }
+
+    // 2. Build ZapSteps for the swap
+    const swapZap = await fetchZapAggregatorSwap(
+      {
+        quote: bestSwap,
+        inputs: [{ token: bridgeToken, amount: bridgedAmount }],
+        outputs: [{ token: desiredOutput, amount: bestSwap.toAmount }],
+        maxSlippage: slippage,
+        zapRouter: destZap.router,
+        providerId: bestSwap.providerId,
+        insertBalance: true,
+      },
+      swapAggregator,
+      state
+    );
+
+    // 3. Build outputs with slippage
+    const minOutput = slipBy(swapZap.minOutputs[0].amount, slippage, desiredOutput.decimals);
+    const requiredOutputs: OrderOutput[] = [
+      {
+        token: getTokenAddress(desiredOutput),
+        minOutputAmount: toWeiString(minOutput, desiredOutput.decimals),
+      },
+    ];
+
+    const intermediateTokens = collectIntermediateTokens({
+      context: 'withdraw-dest',
+      bridgeToken,
+      swapSteps: [
+        {
+          type: 'swap' as const,
+          via: 'aggregator' as const,
+          providerId: bestSwap.providerId,
+          fromToken: bridgeToken,
+          toToken: desiredOutput,
+          fromAmount: bridgedAmount,
+          toAmount: bestSwap.toAmount,
+          fee: bestSwap.fee,
+          quote: bestSwap,
+        },
+      ],
+    });
+    const dustOutputs = buildDustOutputs(intermediateTokens);
+    const allOutputs = mergeOutputs(requiredOutputs, dustOutputs);
+
+    const zapRequest: UserlessZapRequest = {
+      order: {
+        inputs: [
+          {
+            token: getTokenAddress(bridgeToken),
+            amount: toWeiString(bridgedAmount, bridgeToken.decimals),
+          },
+        ],
+        outputs: allOutputs,
+        relay: NO_RELAY,
+      },
+      steps: swapZap.zaps,
+    };
+
+    return {
+      step: 'zap-out',
+      message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+      action: crossChainRecoveryExecuteOrder(opId, destChainId, vaultId, zapRequest, [
+        desiredOutput,
+      ]),
+      pending: false,
+      extraInfo: { zap: true, vaultId },
     };
   }
 

@@ -1,3 +1,4 @@
+import type BigNumber from 'bignumber.js';
 import { partition, uniq } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';
 import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises.ts';
@@ -5,7 +6,10 @@ import type { ChainEntity } from '../../entities/chain.ts';
 import { isCowcentratedLikeVault, type VaultEntity } from '../../entities/vault.ts';
 import type { Step } from '../../reducers/wallet/stepper-types.ts';
 import { selectVaultById, selectVaultUnderlyingVault } from '../../selectors/vaults.ts';
+import { selectTokenByAddress } from '../../selectors/tokens.ts';
 import { selectSwapAggregatorsExistForChain, selectZapByChainId } from '../../selectors/zap.ts';
+import type { CrossChainRecoveryParams } from '../../reducers/wallet/transact-types.ts';
+import type { TokenErc20 } from '../../entities/token.ts';
 import type { BeefyStateFn } from '../../store/types.ts';
 import { isDefined } from '../../utils/array-utils.ts';
 import { getSwapAggregator } from '../instances.ts';
@@ -43,6 +47,7 @@ import {
   type DepositQuote,
   type InputTokenAmount,
   type ITransactApi,
+  type RecoveryQuote,
   type TransactQuote,
   type WithdrawOption,
   type WithdrawQuote,
@@ -698,5 +703,99 @@ export class TransactApi implements ITransactApi {
     const result = await this.buildZapStrategy(zap, helpers);
     console.timeEnd(`[XChainPerf] getStrategyById(${strategyId})`);
     return result;
+  }
+
+  async fetchRecoveryQuote(
+    recoveryParams: CrossChainRecoveryParams,
+    actualBridgedAmount: BigNumber,
+    getState: BeefyStateFn
+  ): Promise<RecoveryQuote> {
+    const { destChainId, vaultId } = recoveryParams;
+
+    const helpers = await this.getHelpersForChain(destChainId, vaultId, getState);
+
+    const { CrossChainStrategy } = await import('./strategies/cross-chain/CrossChainStrategy.ts');
+    const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
+
+    const state = getState();
+    const bridgeToken = selectTokenByAddress(
+      state,
+      destChainId,
+      recoveryParams.bridgeTokenAddress
+    ) as TokenErc20;
+
+    if (recoveryParams.direction === 'deposit') {
+      return xChainStrategy.fetchDestinationDepositQuote({
+        destChainId,
+        vaultId,
+        bridgedAmount: actualBridgedAmount,
+        bridgeToken,
+      });
+    } else {
+      if (!recoveryParams.desiredOutputAddress) {
+        throw new Error('No recovery quote needed for USDC-output withdrawals');
+      }
+      const desiredOutput = selectTokenByAddress(
+        state,
+        destChainId,
+        recoveryParams.desiredOutputAddress
+      );
+      return xChainStrategy.fetchDestinationWithdrawQuote({
+        destChainId,
+        vaultId,
+        bridgedAmount: actualBridgedAmount,
+        bridgeToken,
+        desiredOutput,
+      });
+    }
+  }
+
+  async fetchRecoveryStep(
+    recoveryParams: CrossChainRecoveryParams,
+    opId: string,
+    actualBridgedAmount: BigNumber,
+    getState: BeefyStateFn,
+    t: TFunction<Namespace>
+  ): Promise<Step> {
+    const { destChainId, vaultId } = recoveryParams;
+
+    const helpers = await this.getHelpersForChain(destChainId, vaultId, getState);
+
+    const { CrossChainStrategy } = await import('./strategies/cross-chain/CrossChainStrategy.ts');
+    const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
+
+    const state = getState();
+    const bridgeToken = selectTokenByAddress(
+      state,
+      destChainId,
+      recoveryParams.bridgeTokenAddress
+    ) as TokenErc20;
+
+    if (recoveryParams.direction === 'deposit') {
+      return xChainStrategy.fetchDestinationDepositStep(
+        { opId, destChainId, vaultId, bridgedAmount: actualBridgedAmount, bridgeToken },
+        t
+      );
+    } else {
+      if (!recoveryParams.desiredOutputAddress) {
+        throw new Error('No recovery step needed for USDC-output withdrawals');
+      }
+      const desiredOutput = selectTokenByAddress(
+        state,
+        destChainId,
+        recoveryParams.desiredOutputAddress
+      );
+      return xChainStrategy.fetchDestinationWithdrawStep(
+        {
+          opId,
+          destChainId,
+          vaultId,
+          bridgedAmount: actualBridgedAmount,
+          bridgeToken,
+          desiredOutput,
+        },
+        t
+      );
+    }
   }
 }

@@ -12,7 +12,7 @@ import {
 } from '../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
-import { TransactStatus } from '../reducers/wallet/transact-types.ts';
+import { TransactStatus, type PendingCrossChainOp } from '../reducers/wallet/transact-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { valueOrThrow } from '../utils/selector-utils.ts';
 import {
@@ -424,3 +424,39 @@ export const selectTransactShouldShowWithdrawNotification = (
     }
   }
 };
+
+// ---------------------------------------------------------------------------
+// Cross-chain operation selectors
+// ---------------------------------------------------------------------------
+
+export const selectCrossChainPendingOps = createSelector(
+  (state: BeefyState) => state.ui.transact.crossChain,
+  (crossChain): PendingCrossChainOp[] =>
+    crossChain.pendingOpIds.map(id => crossChain.pendingOps[id]).filter(Boolean)
+);
+
+export const selectCrossChainPendingOpById = (state: BeefyState, opId: string) =>
+  state.ui.transact.crossChain.pendingOps[opId];
+
+export const selectCrossChainRecoverableOps = createSelector(
+  selectCrossChainPendingOps,
+  (ops): PendingCrossChainOp[] => ops.filter(op => op.status === 'dest-failed')
+);
+
+export const selectCrossChainActiveOps = createSelector(
+  selectCrossChainPendingOps,
+  (ops): PendingCrossChainOp[] =>
+    ops.filter(op => op.status !== 'dest-done' && op.status !== 'dest-recovered')
+);
+
+export const selectCrossChainRecoveryQuoteStatus = (state: BeefyState) =>
+  state.ui.transact.crossChain.recoveryQuote.status;
+
+export const selectCrossChainRecoveryQuote = (state: BeefyState) =>
+  state.ui.transact.crossChain.recoveryQuote.quote;
+
+export const selectCrossChainRecoveryQuoteOpId = (state: BeefyState) =>
+  state.ui.transact.crossChain.recoveryQuote.opId;
+
+export const selectCrossChainRecoveryQuoteError = (state: BeefyState) =>
+  state.ui.transact.crossChain.recoveryQuote.error;
