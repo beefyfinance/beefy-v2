@@ -116,7 +116,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     base: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
-      receiver: '0xe82D84B76A61E9dec3C38890621CD5db806e2219',
+      receiver: '0xe04b70d82e797b0B21caeaAaDfbA81c565c20e0B',
       usdcAddress: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
       domain: 6,
       time: { outgoing: 5, incoming: 5 },
