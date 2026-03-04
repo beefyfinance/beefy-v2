@@ -273,7 +273,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
             {
               token: input.token as TokenErc20,
               amount: input.amount,
-              spenderAddress: sourceZap.router,
+              spenderAddress: sourceZap.manager,
             },
           ]
         : [],
