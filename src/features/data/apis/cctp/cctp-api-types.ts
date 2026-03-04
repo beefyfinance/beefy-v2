@@ -39,6 +39,12 @@ export type MessageListItem = {
   updatedAt: string;
 };
 
+export type MessageDetail = MessageListItem & {
+  srcBlockHash: string;
+  dstCaller: string;
+  dstRelayAttempts: number;
+};
+
 export type MessageListResponse = {
   messages: MessageListItem[];
   cursor: string | null;

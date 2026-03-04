@@ -30,6 +30,7 @@ import {
 } from '../../actions/wallet/cross-chain.ts';
 import {
   isCrossChainDepositOption,
+  isCrossChainWithdrawOption,
   type TransactOption,
   type TransactQuote,
 } from '../../apis/transact/transact-types.ts';
@@ -426,9 +427,12 @@ function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOp
     }
 
     // Add chainId -> selectionId[] mapping
-    // Cross-chain deposit options are indexed by sourceChainId so they appear
-    // when the user picks the source chain in ChainSelectStep
-    const chainKey = isCrossChainDepositOption(option) ? option.sourceChainId : option.chainId;
+    // Cross-chain options are indexed by the chain the user interacts with:
+    // deposits by sourceChainId, withdrawals by destChainId
+    const chainKey =
+      isCrossChainDepositOption(option) ? option.sourceChainId
+      : isCrossChainWithdrawOption(option) ? option.destChainId
+      : option.chainId;
     const byChainId = sliceState.selections.byChainId[chainKey];
     if (!byChainId) {
       sliceState.selections.byChainId[chainKey] = [option.selectionId];

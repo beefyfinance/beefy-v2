@@ -3,9 +3,11 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
 import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSelectSelection } from '../../../../../data/actions/transact.ts';
 import {
+  selectTransactSelectedChainId,
   selectTransactVaultId,
   selectTransactWithdrawSelectionsForChainWithBalances,
 } from '../../../../../data/selectors/transact.ts';
@@ -31,26 +33,43 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
   const dispatch = useAppDispatch();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const [selectedChain] = useState(vault.chainId);
+  const transactChainId = useAppSelector(selectTransactSelectedChainId);
+  const selectedChain = transactChainId ?? vault.chainId;
   const [search, setSearch] = useState('');
   const optionsForChain = useAppSelector(state =>
     selectTransactWithdrawSelectionsForChainWithBalances(state, selectedChain, vaultId)
   );
-  const filteredOptionsForChain = useMemo(() => {
+
+  const filteredOptions = useMemo(() => {
     let options = optionsForChain;
 
     if (search.length) {
+      const lowerSearch = search.toLowerCase();
       options = options.filter(option =>
         option.tokens
           .map(token => token.symbol)
           .join(' ')
           .toLowerCase()
-          .includes(search.toLowerCase())
+          .includes(lowerSearch)
       );
     }
 
-    return options;
+    const vaultWithdrawals = [];
+    const other = [];
+    for (const option of options) {
+      const isVaultWithdrawal = option.tokens.length > 1 || option.order === 0;
+      const hasBalance = option.balance && option.balance.gt(BIG_ZERO);
+
+      if (isVaultWithdrawal) {
+        vaultWithdrawals.push(option);
+      } else if (hasBalance) {
+        other.push(option);
+      }
+    }
+    vaultWithdrawals.sort((a, b) => b.tokens.length - a.tokens.length);
+    return [...vaultWithdrawals, ...other];
   }, [optionsForChain, search]);
+
   const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
     selectionId => {
       dispatch(
@@ -70,8 +89,8 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
       </SelectListSearch>
       <Scrollable css={selectListScrollable}>
         <SelectListItems noGap={true}>
-          {filteredOptionsForChain.length ?
-            filteredOptionsForChain.map(option => (
+          {filteredOptions.length ?
+            filteredOptions.map(option => (
               <ListItem
                 key={option.id}
                 selectionId={option.id}

@@ -14,13 +14,9 @@ import { WithdrawTokenSelectList } from '../TokenSelectList/WithdrawTokenSelectL
 export const TokenSelectStep = memo(function TokenSelectStep() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-
   const mode = useAppSelector(selectTransactMode);
   const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
-  const backStep =
-    mode === TransactMode.Deposit && hasCrossChainZap ?
-      TransactStep.ChainSelect
-    : TransactStep.Form;
+  const backStep = hasCrossChainZap ? TransactStep.ChainSelect : TransactStep.Form;
 
   const handleBack = useCallback(() => {
     dispatch(transactSwitchStep(backStep));

@@ -18,6 +18,7 @@ import {
   selectTransactNumTokens,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
+  selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
@@ -87,15 +88,19 @@ const WithdrawForm = memo(function WithdrawForm() {
   const classes = useStyles();
   const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
   const forceSelection = useAppSelector(selectTransactForceSelection);
+  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
 
   const i18key = useMemo(() => {
+    if (hasCrossChainZap && forceSelection) {
+      return 'Transact-SelectChain';
+    }
     return (
       hasOptions ?
         forceSelection ? 'Transact-SelectToken'
         : 'Transact-SelectAmount'
       : 'Transact-Withdraw'
     );
-  }, [forceSelection, hasOptions]);
+  }, [forceSelection, hasOptions, hasCrossChainZap]);
 
   return (
     <>
@@ -103,7 +108,7 @@ const WithdrawForm = memo(function WithdrawForm() {
       <WithdrawQueueLoader />
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
-          {hasOptions ?
+          {hasOptions && !hasCrossChainZap ?
             <img src={zapIcon} alt="Zap" height={12} className={classes.zapIcon} />
           : null}
           {t(i18key)}

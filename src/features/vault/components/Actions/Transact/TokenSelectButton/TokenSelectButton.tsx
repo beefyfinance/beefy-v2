@@ -45,16 +45,15 @@ export const TokenSelectButton = memo(function TokenSelectButton({
   const forceSelection = useAppSelector(selectTransactForceSelection);
   const mode = useAppSelector(selectTransactOptionsMode);
   const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
-  const isCrossChainDeposit = mode === TransactMode.Deposit && hasCrossChainZap;
   const canSwitchToTokenSelect = index === 0 && numTokenOptions > 1;
 
   const handleClick = useCallback(() => {
-    if (isCrossChainDeposit && forceSelection) {
+    if (hasCrossChainZap && forceSelection) {
       dispatch(transactSwitchStep(TransactStep.ChainSelect));
     } else {
       dispatch(transactSwitchStep(TransactStep.TokenSelect));
     }
-  }, [dispatch, isCrossChainDeposit, forceSelection]);
+  }, [dispatch, hasCrossChainZap, forceSelection]);
 
   const tokenSymbol = useMemo(() => {
     return (
@@ -83,7 +82,7 @@ export const TokenSelectButton = memo(function TokenSelectButton({
         forceSelection && styles.buttonForceSelection
       )}
     >
-      {forceSelection && isCrossChainDeposit ?
+      {forceSelection && hasCrossChainZap ?
         <div className={css(styles.select, styles.forceSelection)}>{t('Transact-SelectChain')}</div>
       : forceSelection ?
         <div className={css(styles.select, styles.forceSelection)}>
