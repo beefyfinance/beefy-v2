@@ -942,10 +942,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
     const zapRequest: UserlessZapRequest = {
       order: {
-        inputs: quote.inputs.map(i => ({
-          token: getTokenAddress(i.token),
-          amount: toWeiString(i.amount, i.token.decimals),
-        })),
+        inputs: breakdown.zapRequest.order.inputs,
         outputs: sourceOutputs,
         relay: NO_RELAY,
       },
