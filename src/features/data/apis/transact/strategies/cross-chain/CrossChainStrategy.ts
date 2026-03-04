@@ -932,14 +932,28 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         }
       : { isZapQuote: false };
 
+    // Some strategies declare quote.inputs as the deposit token (e.g. SingleStrategy uses USDT),
+    // while others use the vault share token (e.g. CowcentratedStrategy uses the mooToken).
+    // For the withdraw flow, the actual input the user holds is always the vault share token (mooToken),
+    // so we use breakdown.zapRequest.order.inputs which correctly contains the share token.
+    // The deposit token is already covered by the withdrawQuote branch in collectIntermediateTokens.
+    const withdrawInputTokens: InputTokenAmount[] = breakdown.zapRequest.order.inputs.map(oi => ({
+      token: selectTokenByAddress(state, sourceChainId, oi.token),
+      amount: BIG_ZERO,
+      max: false,
+    }));
+
     const withdrawSourceIntermediateTokens = collectIntermediateTokens({
       context: 'withdraw-source',
-      inputs: quote.inputs,
+      inputs: withdrawInputTokens,
       bridgeToken: quote.option.bridgeToken,
       withdrawQuote: withdrawQuoteConfig,
     });
     const sourceOutputs = buildDustOutputs(withdrawSourceIntermediateTokens);
 
+    // order.inputs must be the vault share token (mooToken) from the breakdown,
+    // not quote.inputs (deposit token), because the Zap Router uses order.inputs
+    // to transferFrom the user — and the user holds mooTokens, not the deposit token.
     const zapRequest: UserlessZapRequest = {
       order: {
         inputs: breakdown.zapRequest.order.inputs,
