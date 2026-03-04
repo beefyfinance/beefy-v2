@@ -61,7 +61,8 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const multicallContract = fetchContract(
       this.chain.appMulticallContractAddress,
       BeefyV2AppMulticallAbi,
-      this.chain.id
+      this.chain.id,
+      false
     );
 
     const CHUNK_SIZE = featureFlag_getContractDataApiChunkSize(this.chain.id);
