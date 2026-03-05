@@ -16,11 +16,14 @@ export class CCTPApi {
   }
 
   public async getTxStatusByTxHash(
-    srcChainId: ChainEntity['networkChainId'],
+    srcNetworkId: ChainEntity['networkChainId'],
     txHash: string
   ): Promise<MessageListResponse> {
     return await getJson<MessageListResponse>({
-      url: `${this.api}/${this.version}/messages/by-tx/${srcChainId}/${txHash}`,
+      url: `${this.api}/${this.version}/messages/by-src-tx/${txHash}`,
+      params: {
+        srcNetworkId,
+      },
     });
   }
 }
