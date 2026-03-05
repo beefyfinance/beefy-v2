@@ -69,7 +69,7 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
     }
 
     // if we send too much in a single call, we get "execution reversed"
-    const CHUNK_SIZE = featureFlag_getAllowanceApiChunkSize();
+    const CHUNK_SIZE = featureFlag_getAllowanceApiChunkSize(this.chain.id);
 
     const allowanceCalls = Object.entries(allowanceCallsByToken);
     const callBatches = chunk(allowanceCalls, CHUNK_SIZE);
@@ -121,8 +121,7 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
     const appMulticallContract = fetchContract(
       this.chain.appMulticallContractAddress,
       BeefyV2AppMulticallAbi,
-      this.chain.id,
-      false
+      this.chain.id
     );
 
     // first, build a list of tokens and spenders we want info on
@@ -154,7 +153,7 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
     }
 
     // if we send too much in a single call, we get "execution reversed"
-    const CHUNK_SIZE = featureFlag_getAllowanceApiChunkSize();
+    const CHUNK_SIZE = featureFlag_getAllowanceApiChunkSize(this.chain.id);
 
     const allowanceCalls = Object.entries(allowanceCallsByToken);
     const callBatches = chunk(allowanceCalls, CHUNK_SIZE);

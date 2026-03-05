@@ -56,11 +56,10 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     const appMulticallContract = fetchContract(
       this.chain.appMulticallContractAddress,
       BeefyV2AppMulticallAbi,
-      this.chain.id,
-      false
+      this.chain.id
     );
 
-    const CHUNK_SIZE = featureFlag_getBalanceApiChunkSize();
+    const CHUNK_SIZE = featureFlag_getBalanceApiChunkSize(this.chain.id);
 
     const nativeTokens: TokenNative[] = [];
     const erc20Tokens: TokenErc20[] = [];
