@@ -16,7 +16,7 @@
     "createdAt": 1772708864,
     "platformId": "curve",
     "assets": ["cbBTC", "WBTC", "LBTC"],
-    "migrationIds": ["l2-convex", "l2-curve"],
+    "migrationIds": ["l2-curve"],
     "risks": {
       "complex": false,
       "curated": false,
