@@ -1,5 +1,55 @@
 [
   {
+    "id": "curve-monad-cbbtc",
+    "name": "cbBTC/WBTC/LBTC",
+    "type": "standard",
+    "token": "triBTC",
+    "tokenAddress": "0xD2634E05EbEd90Bd0a6c0E93d48d7bd8036653B1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xDa1Da785aB148d544A6Ad93E810b5Eabf718D204",
+    "earnedToken": "mooCurveTriBTC",
+    "earnedTokenAddress": "0xDa1Da785aB148d544A6Ad93E810b5Eabf718D204",
+    "oracle": "lps",
+    "oracleId": "curve-monad-cbbtc",
+    "status": "active",
+    "createdAt": 1772708864,
+    "platformId": "curve",
+    "assets": ["cbBTC", "WBTC", "LBTC"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-18/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-18/withdraw",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xD2634E05EbEd90Bd0a6c0E93d48d7bd8036653B1",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xD2634E05EbEd90Bd0a6c0E93d48d7bd8036653B1",
+            "coins": [
+              "0xd18B7EC58Cdf4876f6AFebd3Ed1730e4Ce10414b",
+              "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+              "0xecAc9C5F704e954931349Da37F60E39f515c11c1"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "balancerv3-monad-usdt0-ausd-usdc",
     "name": "USDT0/AUSD/USDC V3",
     "type": "standard",
