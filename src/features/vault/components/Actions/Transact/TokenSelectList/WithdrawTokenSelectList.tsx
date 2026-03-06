@@ -3,7 +3,6 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
 import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSelectSelection } from '../../../../../data/actions/transact.ts';
 import {
@@ -58,11 +57,9 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
     const other = [];
     for (const option of options) {
       const isVaultWithdrawal = option.tokens.length > 1 || option.order === 0;
-      const hasBalance = option.balance && option.balance.gt(BIG_ZERO);
-
       if (isVaultWithdrawal) {
         vaultWithdrawals.push(option);
-      } else if (hasBalance) {
+      } else {
         other.push(option);
       }
     }
@@ -96,7 +93,8 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
                 selectionId={option.id}
                 tokens={option.tokens}
                 balance={option.balance}
-                balanceValue={option.balanceValue}
+                //show balance value only if have $0.01
+                balanceValue={option.balanceValue.gt(0.01) ? option.balanceValue : undefined}
                 decimals={option.decimals}
                 tag={option.tag}
                 chainId={selectedChain}
