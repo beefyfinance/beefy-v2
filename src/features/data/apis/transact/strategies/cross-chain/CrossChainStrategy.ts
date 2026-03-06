@@ -1447,8 +1447,10 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     for (const strategy of strategies) {
       try {
         const options = await strategy.fetchWithdrawOptions();
-        const usdcOption = options.find(o =>
-          o.wantedOutputs.some(t => t.address.toLowerCase() === sourceUSDC.address.toLowerCase())
+        const usdcOption = options.find(
+          o =>
+            o.wantedOutputs.length === 1 &&
+            o.wantedOutputs[0].address.toLowerCase() === sourceUSDC.address.toLowerCase()
         );
         if (usdcOption && isComposableStrategy(strategy)) {
           return { strategy, option: usdcOption };
