@@ -1,5 +1,123 @@
 [
   {
+    "id": "pancake-cow-base-virtual-usdc-vault",
+    "name": "VIRTUAL-USDC",
+    "type": "standard",
+    "token": "VIRTUAL-USDC",
+    "tokenAddress": "0xa15c903326A6498704cb963437E42bcB37d47478",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x83F6c67ac3793aFF9C940aCa6E334300Ad44CAb8",
+    "earnedToken": "mooCowPancakeBaseVIRTUAL-USDC",
+    "earnedTokenAddress": "0x83F6c67ac3793aFF9C940aCa6E334300Ad44CAb8",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-virtual-usdc",
+    "status": "active",
+    "createdAt": 1772937429,
+    "platformId": "pancakeswap",
+    "assets": ["VIRTUAL", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-base-virtual-usdc-rp",
+    "name": "VIRTUAL-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBaseVIRTUAL-USDC",
+    "tokenAddress": "0xa15c903326A6498704cb963437E42bcB37d47478",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x9bEDf9ea6845a2DC4aE43a6CE3B025F768ce19c3",
+    "earnedToken": "rCowPancakeBaseVIRTUAL-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-virtual-usdc",
+    "status": "active",
+    "createdAt": 1772937428,
+    "platformId": "pancakeswap",
+    "assets": ["VIRTUAL", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-base-virtual-usdc",
+    "name": "VIRTUAL-USDC",
+    "type": "cowcentrated",
+    "token": "VIRTUAL-USDC pancakeswap",
+    "tokenAddress": "0x7CB770D0513c30e0CB45E4899e4a2CbEEd6F9830",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0xa15c903326A6498704cb963437E42bcB37d47478",
+    "earnedToken": "cowPancakeBaseVIRTUAL-USDC",
+    "earnedTokenAddress": "0xa15c903326A6498704cb963437E42bcB37d47478",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-virtual-usdc",
+    "status": "active",
+    "createdAt": 1772937428,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["VIRTUAL", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-msusd-mseth-vault",
     "name": "msUSD-msETH",
     "type": "standard",
