@@ -509,19 +509,24 @@ export const crossChainFetchRecoveryQuote = createAppAsyncThunk<
 });
 
 export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): BeefyThunk {
-  return async function (dispatch, getState) {
+  return captureWalletErrors(async (dispatch, getState) => {
+    txStart(dispatch);
     const state = getState();
     const op = state.ui.transact.crossChain.pendingOps[opId];
     if (!op) {
       throw new Error(`No pending cross-chain op with id ${opId}`);
     }
 
+    console.debug('[Recovery] Starting recovery steps for op', opId, {
+      bridgedAmount: op.recovery.bridgedAmount,
+      destChainId: op.recovery.destChainId,
+    });
+
     const api = await getTransactApi();
     const actualBridgedAmount = new BigNumber(op.recovery.bridgedAmount);
 
     const steps: Step[] = [];
 
-    // Build approval steps from the recovery quote if available
     const rqState = state.ui.transact.crossChain.recoveryQuote;
     if (rqState.opId === opId && rqState.quote) {
       for (const allowanceTokenAmount of rqState.quote.allowances) {
@@ -548,7 +553,7 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
       }
     }
 
-    // Build recovery step (re-quotes internally for fresh data)
+    console.debug('[Recovery] Fetching recovery step...');
     const recoveryStep = await api.fetchRecoveryStep(
       op.recovery,
       opId,
@@ -558,6 +563,7 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
     );
     steps.push(recoveryStep);
 
+    console.debug('[Recovery] Starting stepper with', steps.length, 'steps');
     dispatch(stepperStartWithSteps(steps, op.recovery.destChainId));
-  };
+  });
 }
