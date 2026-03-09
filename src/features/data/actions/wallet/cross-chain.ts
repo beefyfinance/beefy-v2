@@ -373,8 +373,9 @@ export const crossChainRecoveryExecuteOrder = (
               dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-failed' }));
             }
           })
-          .catch(() => {
+          .catch(err => {
             // Receipt fetch failed — leave status as dest-pending for retry
+            console.warn(`[cross-chain] Recovery receipt fetch failed for op ${opId} `, err);
           });
       })
       .catch(() => {

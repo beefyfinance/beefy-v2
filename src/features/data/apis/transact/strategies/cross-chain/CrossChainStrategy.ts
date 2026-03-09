@@ -1257,7 +1257,11 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         if (usdcOption && isComposableStrategy(strategy)) {
           return { strategy, option: usdcOption };
         }
-      } catch {
+      } catch (err) {
+        console.warn(
+          `[cross-chain] findDestStrategyForDeposit: strategy '${strategy.id}' failed`,
+          err
+        );
         continue;
       }
     }
@@ -1303,7 +1307,11 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         if (usdcOption && isComposableStrategy(strategy)) {
           return { strategy, option: usdcOption };
         }
-      } catch {
+      } catch (err) {
+        console.warn(
+          `[cross-chain] findVaultStrategyForUSDCWithdraw: strategy '${strategy.id}' failed`,
+          err
+        );
         continue;
       }
     }
