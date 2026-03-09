@@ -94,29 +94,20 @@ export class TransactApi implements ITransactApi {
     vaultId: VaultEntity['id'],
     getState: BeefyStateFn
   ): Promise<ZapTransactHelpers> {
-    console.time(`[XChainPerf] getHelpersForChain(${chainId})`);
     const state = getState();
     const zap = selectZapByChainId(state, chainId);
     if (!zap) {
-      console.timeEnd(`[XChainPerf] getHelpersForChain(${chainId})`);
       throw new Error(`No zap router configured for chain ${chainId}`);
     }
 
     const vault = selectVaultById(state, vaultId);
     if (vault.chainId !== chainId) {
-      console.timeEnd(`[XChainPerf] getHelpersForChain(${chainId})`);
       throw new Error(`Vault ${vaultId} is on chain ${vault.chainId}, not ${chainId}`);
     }
 
-    console.time(`[XChainPerf] getHelpersForChain.getVaultTypeFor(${chainId})`);
     const vaultType = await this.getVaultTypeFor(vault, getState);
-    console.timeEnd(`[XChainPerf] getHelpersForChain.getVaultTypeFor(${chainId})`);
-
-    console.time(`[XChainPerf] getHelpersForChain.getSwapAggregator(${chainId})`);
     const swapAggregator = await getSwapAggregator();
-    console.timeEnd(`[XChainPerf] getHelpersForChain.getSwapAggregator(${chainId})`);
 
-    console.timeEnd(`[XChainPerf] getHelpersForChain(${chainId})`);
     return {
       vault,
       vaultType,
@@ -130,19 +121,12 @@ export class TransactApi implements ITransactApi {
     vaultId: VaultEntity['id'],
     getState: BeefyStateFn
   ): Promise<TransactHelpers> {
-    console.time(`[XChainPerf] getHelpersForVault(${vaultId})`);
     const state = getState();
     const vault = selectVaultById(state, vaultId);
-    console.time(`[XChainPerf] getHelpersForVault.getVaultTypeFor(${vaultId})`);
     const vaultType = await this.getVaultTypeFor(vault, getState);
-    console.timeEnd(`[XChainPerf] getHelpersForVault.getVaultTypeFor(${vaultId})`);
     const zap = selectZapByChainId(state, vault.chainId);
-
-    console.time(`[XChainPerf] getHelpersForVault.getSwapAggregator(${vaultId})`);
     const swapAggregator = await getSwapAggregator();
-    console.timeEnd(`[XChainPerf] getHelpersForVault.getSwapAggregator(${vaultId})`);
 
-    console.timeEnd(`[XChainPerf] getHelpersForVault(${vaultId})`);
     return {
       vault,
       vaultType,
@@ -209,29 +193,17 @@ export class TransactApi implements ITransactApi {
     amounts: InputTokenAmount[],
     getState: BeefyStateFn
   ): Promise<DepositQuote[]> {
-    console.time('[XChainPerf] E: fetchDepositQuotesFor TOTAL');
-    console.debug('[XChainPerf] E: fetchDepositQuotesFor START', {
-      optionCount: options.length,
-      strategyIds: options.map(o => o.strategyId),
-      inputs: amounts.map(a => ({ token: a.token.symbol, amount: a.amount.toString(10) })),
-    });
-
     const vaultId = options[0].vaultId;
-    console.time('[XChainPerf] E.1: getHelpersForVault (re-quote)');
     const helpers = await this.getHelpersForVault(vaultId, getState);
-    console.timeEnd('[XChainPerf] E.1: getHelpersForVault (re-quote)');
 
     // Init each strategy at most once
     const strategyIds = uniq(options.map(option => option.strategyId));
-    console.time('[XChainPerf] E.2: getStrategyById (all strategies)');
     const strategies = await Promise.all(strategyIds.map(id => this.getStrategyById(id, helpers)));
-    console.timeEnd('[XChainPerf] E.2: getStrategyById (all strategies)');
     const strategiesById = Object.fromEntries(
       strategies.map((strategy, i) => [strategyIds[i], strategy])
     );
 
     // Call beforeQuote hooks
-    console.time('[XChainPerf] E.3: beforeQuote hooks');
     await Promise.allSettled(
       strategies.map(async strategy => {
         if (strategy.beforeQuote) {
@@ -239,10 +211,8 @@ export class TransactApi implements ITransactApi {
         }
       })
     );
-    console.timeEnd('[XChainPerf] E.3: beforeQuote hooks');
 
     // Get quotes
-    console.time('[XChainPerf] E.4: fetchDepositQuote (all options)');
     const quotes = await Promise.allSettled(
       options.map(async option => {
         const strategy = strategiesById[option.strategyId];
@@ -253,13 +223,8 @@ export class TransactApi implements ITransactApi {
         return quote;
       })
     );
-    console.timeEnd('[XChainPerf] E.4: fetchDepositQuote (all options)');
 
     const [fulfilled, rejected] = partition(quotes, isFulfilledResult);
-    console.debug('[XChainPerf] E.4: quote results', {
-      fulfilled: fulfilled.length,
-      rejected: rejected.length,
-    });
     const successfulQuotes = fulfilled
       .map(result => result.value)
       .filter(quote => !!quote)
@@ -270,16 +235,13 @@ export class TransactApi implements ITransactApi {
     }
 
     if (successfulQuotes.length > 0) {
-      console.timeEnd('[XChainPerf] E: fetchDepositQuotesFor TOTAL');
       return successfulQuotes;
     }
 
     if (rejected.length > 0) {
-      console.timeEnd('[XChainPerf] E: fetchDepositQuotesFor TOTAL');
       throw rejected[0].reason;
     }
 
-    console.timeEnd('[XChainPerf] E: fetchDepositQuotesFor TOTAL');
     throw new Error('No quotes succeeded');
   }
 
@@ -288,32 +250,16 @@ export class TransactApi implements ITransactApi {
     getState: BeefyStateFn,
     t: TFunction<Namespace>
   ): Promise<Step> {
-    console.time('[XChainPerf] B: TransactApi.fetchDepositStep TOTAL');
-    console.debug('[XChainPerf] B: TransactApi.fetchDepositStep START', {
-      vaultId: quote.option.vaultId,
-      strategyId: quote.option.strategyId,
-    });
-
-    console.time('[XChainPerf] B.1: getHelpersForVault');
     const helpers = await this.getHelpersForVault(quote.option.vaultId, getState);
-    console.timeEnd('[XChainPerf] B.1: getHelpersForVault');
-
-    console.time(`[XChainPerf] B.2: getStrategyById(${quote.option.strategyId})`);
     const strategy = await this.getStrategyById(quote.option.strategyId, helpers);
-    console.timeEnd(`[XChainPerf] B.2: getStrategyById(${quote.option.strategyId})`);
 
     // Call beforeStep hooks
-    console.time('[XChainPerf] B.3: strategy.beforeStep');
     if (strategy.beforeStep) {
       await strategy.beforeStep();
     }
-    console.timeEnd('[XChainPerf] B.3: strategy.beforeStep');
 
-    console.time('[XChainPerf] B.4: strategy.fetchDepositStep');
     const step = await strategy.fetchDepositStep(quote, t);
-    console.timeEnd('[XChainPerf] B.4: strategy.fetchDepositStep');
 
-    console.timeEnd('[XChainPerf] B: TransactApi.fetchDepositStep TOTAL');
     return step;
   }
 
@@ -500,13 +446,6 @@ export class TransactApi implements ITransactApi {
       return [];
     }
 
-    console.time(`[XChainPerf] getZapStrategiesForVault(${vault.id})`);
-    console.debug('[XChainPerf] getZapStrategiesForVault START', {
-      vaultId: vault.id,
-      zapCount: vault.zaps.length,
-      zapStrategyIds: vault.zaps.map(z => z.strategyId),
-    });
-
     const strategies = await Promise.all(
       vault.zaps.map(async zapConfig => {
         if (!zapConfig.strategyId) {
@@ -515,10 +454,7 @@ export class TransactApi implements ITransactApi {
         }
 
         try {
-          console.time(`[XChainPerf] buildZapStrategy(${zapConfig.strategyId}@${vault.id})`);
-          const strat = await this.buildZapStrategy(zapConfig, helpers);
-          console.timeEnd(`[XChainPerf] buildZapStrategy(${zapConfig.strategyId}@${vault.id})`);
-          return strat;
+          return await this.buildZapStrategy(zapConfig, helpers);
         } catch (err: unknown) {
           console.error(
             `Vault ${vault.id} failed to build strategy "${zapConfig.strategyId}"`,
@@ -529,14 +465,7 @@ export class TransactApi implements ITransactApi {
       })
     );
 
-    const result = strategies.filter(isDefined);
-    console.timeEnd(`[XChainPerf] getZapStrategiesForVault(${vault.id})`);
-    console.debug('[XChainPerf] getZapStrategiesForVault DONE', {
-      vaultId: vault.id,
-      loadedCount: result.length,
-      ids: result.map(s => s.id),
-    });
-    return result;
+    return strategies.filter(isDefined);
   }
 
   private async getZapStrategyConstructorsForVault(
@@ -666,40 +595,31 @@ export class TransactApi implements ITransactApi {
     strategyId: AnyStrategyId,
     helpers: TransactHelpers
   ): Promise<IStrategy> {
-    console.time(`[XChainPerf] getStrategyById(${strategyId})`);
     const { vault, vaultType } = helpers;
 
     if (strategyId === 'vault') {
-      console.timeEnd(`[XChainPerf] getStrategyById(${strategyId})`);
       return new VaultStrategy(vaultType);
     }
 
     if (!isZapTransactHelpers(helpers)) {
-      console.timeEnd(`[XChainPerf] getStrategyById(${strategyId})`);
       throw new Error(`Strategy "${strategyId}" requires zap contract`);
     }
 
     // Cross-chain strategy is not in vault.zaps — instantiate inline
     if (strategyId === 'cross-chain') {
-      const result = await this.buildZapStrategy({ strategyId: 'cross-chain' }, helpers);
-      console.timeEnd(`[XChainPerf] getStrategyById(${strategyId})`);
-      return result;
+      return await this.buildZapStrategy({ strategyId: 'cross-chain' }, helpers);
     }
 
     if (!vault.zaps) {
-      console.timeEnd(`[XChainPerf] getStrategyById(${strategyId})`);
       throw new Error(`Vault ${vault.id} has no zaps`);
     }
 
     const zap = vault.zaps.find(zap => zap.strategyId === strategyId);
     if (!zap) {
-      console.timeEnd(`[XChainPerf] getStrategyById(${strategyId})`);
       throw new Error(`Vault ${vault.id} has no zap with strategy "${strategyId}"`);
     }
 
-    const result = await this.buildZapStrategy(zap, helpers);
-    console.timeEnd(`[XChainPerf] getStrategyById(${strategyId})`);
-    return result;
+    return await this.buildZapStrategy(zap, helpers);
   }
 
   async fetchRecoveryQuote(

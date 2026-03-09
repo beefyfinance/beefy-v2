@@ -43,14 +43,6 @@ export async function getTransactSteps(
   t: TFunction<Namespace>,
   getState: BeefyStateFn
 ): Promise<Step[]> {
-  console.time('[XChainPerf] A: getTransactSteps TOTAL');
-  console.debug('[XChainPerf] A: getTransactSteps START', {
-    optionId: quote.option.id,
-    strategyId: quote.option.strategyId,
-    vaultId: quote.option.vaultId,
-    inputs: quote.inputs.map(i => ({ token: i.token.symbol, amount: i.amount.toString(10) })),
-  });
-
   const steps: Step[] = [];
   const state = getState();
 
@@ -60,11 +52,7 @@ export async function getTransactSteps(
     prefetchGasPrice(sourceChain);
   }
 
-  console.time('[XChainPerf] A.1: getTransactApi()');
   const api = await getTransactApi();
-  console.timeEnd('[XChainPerf] A.1: getTransactApi()');
-
-  console.time('[XChainPerf] A.2: allowance checks');
   for (const allowanceTokenAmount of quote.allowances) {
     if (isTokenErc20(allowanceTokenAmount.token)) {
       const allowance = selectAllowanceByTokenAddress(
@@ -88,13 +76,9 @@ export async function getTransactSteps(
       }
     }
   }
-  console.timeEnd('[XChainPerf] A.2: allowance checks');
-  console.debug('[XChainPerf] A.2: approval steps needed', { count: steps.length });
 
   // Kick off re-quote prefetch in parallel with step building.
   // Both use independent strategy instances (confirmed safe by audit).
-  console.time('[XChainPerf] A.3: fetchStep + prefetchRequote (parallel)');
-
   let requotePromise: Promise<TransactQuote[]>;
   const option = quote.option;
   if (isDepositOption(option)) {
@@ -110,9 +94,7 @@ export async function getTransactSteps(
   };
 
   // Suppress unhandled rejection if step-build fails first and nobody awaits this
-  requotePromise.catch(err =>
-    console.warn('[XChainPerf] Prefetched re-quote rejected (suppressed)', err)
-  );
+  requotePromise.catch(() => {});
 
   // Build the step (~5-8s, re-quote runs in parallel)
   let originalStep: Step;
@@ -124,15 +106,8 @@ export async function getTransactSteps(
     throw new Error(`Invalid quote`);
   }
 
-  console.timeEnd('[XChainPerf] A.3: fetchStep + prefetchRequote (parallel)');
-  console.debug('[XChainPerf] A.3: prefetch age at step completion', {
-    ageMs: Date.now() - prefetchedRequote.startedAt,
-  });
-
   steps.push(wrapStepConfirmQuote(originalStep, quote, prefetchedRequote));
 
-  console.timeEnd('[XChainPerf] A: getTransactSteps TOTAL');
-  console.debug('[XChainPerf] A: getTransactSteps DONE', { totalSteps: steps.length });
   return steps;
 }
 
@@ -181,50 +156,24 @@ function wrapStepConfirmQuote(
 ): Step {
   const action: BeefyThunk = async function (dispatch, getState) {
     const requestId = nanoid();
-    console.time('[XChainPerf] D: wrapStepConfirmQuote action TOTAL');
-    console.debug('[XChainPerf] D: wrapStepConfirmQuote action START', {
-      requestId,
-      optionId: originalQuote.option.id,
-      strategyId: originalQuote.option.strategyId,
-    });
     dispatch(transactConfirmPending({ requestId }));
 
     try {
       let quotes: TransactQuote[];
       const prefetchAge = Date.now() - prefetchedRequote.startedAt;
-      console.debug('[XChainPerf] D.1: prefetch age check', {
-        prefetchAge,
-        maxAge: REQUOTE_MAX_AGE_MS,
-      });
 
       if (prefetchAge < REQUOTE_MAX_AGE_MS) {
         // Prefetch is still fresh — try to use it
-        console.time('[XChainPerf] D.2: re-quote validation (prefetched)');
         try {
           quotes = await prefetchedRequote.promise;
-          console.timeEnd('[XChainPerf] D.2: re-quote validation (prefetched)');
-          console.debug('[XChainPerf] D.2: used prefetched re-quote', {
-            quotesCount: quotes.length,
-            ageMs: prefetchAge,
-          });
-        } catch (prefetchError) {
+        } catch {
           // Prefetch failed — fall back to fresh re-quote
-          console.timeEnd('[XChainPerf] D.2: re-quote validation (prefetched)');
-          console.warn(
-            '[XChainPerf] D.2: prefetched re-quote failed, fetching fresh',
-            prefetchError
-          );
           quotes = await fetchFreshRequote(originalQuote, getState);
         }
       } else {
         // Prefetch is stale (user took >30s with approvals) — fetch fresh
-        console.time('[XChainPerf] D.2: re-quote validation (fresh, prefetch stale)');
-        console.debug('[XChainPerf] D.2: prefetch stale, fetching fresh', { prefetchAge });
         quotes = await fetchFreshRequote(originalQuote, getState);
-        console.timeEnd('[XChainPerf] D.2: re-quote validation (fresh, prefetch stale)');
       }
-
-      console.debug('[XChainPerf] D.2: re-quote returned', { quotesCount: quotes.length });
 
       const state = getState();
       const maxSlippage = selectTransactSlippage(state);
@@ -255,11 +204,6 @@ function wrapStepConfirmQuote(
         }
       }
 
-      console.debug('[XChainPerf] D.3: quote comparison', {
-        significantChanges: significantChanges.length,
-        minAllowedRatio: minAllowedRatio.toString(10),
-      });
-
       // Perform original action if no changes
       if (significantChanges.length === 0) {
         dispatch(
@@ -269,10 +213,7 @@ function wrapStepConfirmQuote(
             originalQuoteId: originalQuote.id,
           })
         );
-        console.time('[XChainPerf] D.4: originalStep.action execution');
         const result = await originalStep.action(dispatch, getState, undefined);
-        console.timeEnd('[XChainPerf] D.4: originalStep.action execution');
-        console.timeEnd('[XChainPerf] D: wrapStepConfirmQuote action TOTAL');
         return result;
       }
 
@@ -295,10 +236,7 @@ function wrapStepConfirmQuote(
           originalQuoteId: originalQuote.id,
         })
       );
-      console.timeEnd('[XChainPerf] D: wrapStepConfirmQuote action TOTAL');
     } catch (error) {
-      console.timeEnd('[XChainPerf] D: wrapStepConfirmQuote action TOTAL');
-      console.debug('[XChainPerf] D: wrapStepConfirmQuote FAILED', { error });
       // Hide stepper (as UI will now show error)
       dispatch(stepperReset());
       dispatch(transactConfirmRejected({ requestId, error: serializeError(error) }));
