@@ -35,7 +35,11 @@ import {
   onlyOneInput,
 } from '../../helpers/options.ts';
 import { pickTokens, uniqueTokens } from '../../helpers/tokens.ts';
-import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes.ts';
+import {
+  calculatePriceImpact,
+  highestFeeOrZero,
+  totalValueOfTokenAmounts,
+} from '../../helpers/quotes.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import {
   type AllowanceTokenAmount,
@@ -277,7 +281,13 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
             },
           ]
         : [],
-      priceImpact: calculatePriceImpact(inputs, destQuote.outputs, destQuote.returned, state),
+      priceImpact: calculatePriceImpact(
+        inputs,
+        destQuote.outputs,
+        destQuote.returned,
+        state,
+        totalValueOfTokenAmounts([{ token: bridgeQuote.fromToken, amount: bridgeQuote.fee }], state)
+      ),
       fee: highestFeeOrZero([...sourceSteps, ...destSteps]),
       steps: [...sourceSteps, ...destSteps],
       sourceSteps,
@@ -755,7 +765,13 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       outputs: finalOutputs,
       returned: [],
       allowances: sourceWithdrawQuote.allowances,
-      priceImpact: calculatePriceImpact(inputs, finalOutputs, [], state),
+      priceImpact: calculatePriceImpact(
+        inputs,
+        finalOutputs,
+        [],
+        state,
+        totalValueOfTokenAmounts([{ token: bridgeQuote.fromToken, amount: bridgeQuote.fee }], state)
+      ),
       fee: highestFeeOrZero([...sourceSteps, ...destSteps]),
       steps: [...sourceSteps, ...destSteps],
       sourceSteps,
