@@ -41,6 +41,7 @@ import type {
   ZapStrategyConfig,
   ZapStrategyId,
 } from './strategies/strategy-configs.ts';
+import { CrossChainStrategy } from './strategies/cross-chain/CrossChainStrategy.ts';
 import { VaultStrategy } from './strategies/vault/VaultStrategy.ts';
 import {
   type DepositOption,
@@ -186,8 +187,6 @@ export class TransactApi implements ITransactApi {
         zapStrategies.some(isComposableStrategy)
       ) {
         try {
-          const { CrossChainStrategy } =
-            await import('./strategies/cross-chain/CrossChainStrategy.ts');
           const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
           const xChainOptions = await xChainStrategy.fetchDepositOptions();
           options.push(...xChainOptions);
@@ -353,8 +352,6 @@ export class TransactApi implements ITransactApi {
         zapStrategies.some(isComposableStrategy)
       ) {
         try {
-          const { CrossChainStrategy } =
-            await import('./strategies/cross-chain/CrossChainStrategy.ts');
           const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
           const xChainOptions = await xChainStrategy.fetchWithdrawOptions();
           options.push(...xChainOptions);
@@ -714,7 +711,6 @@ export class TransactApi implements ITransactApi {
 
     const helpers = await this.getHelpersForChain(destChainId, vaultId, getState);
 
-    const { CrossChainStrategy } = await import('./strategies/cross-chain/CrossChainStrategy.ts');
     const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
 
     const state = getState();
@@ -761,7 +757,6 @@ export class TransactApi implements ITransactApi {
 
     const helpers = await this.getHelpersForChain(destChainId, vaultId, getState);
 
-    const { CrossChainStrategy } = await import('./strategies/cross-chain/CrossChainStrategy.ts');
     const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
 
     const state = getState();
