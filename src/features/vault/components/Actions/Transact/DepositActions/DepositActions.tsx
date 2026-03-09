@@ -95,6 +95,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
   const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
+  const [isExecuting, setIsExecuting] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const isMaxAll = useMemo(() => {
@@ -105,6 +106,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
 
   const isDisabled =
     isTxInProgress ||
+    isExecuting ||
     isDisabledByPriceImpact ||
     isDisabledByMaxNative ||
     isDisabledByConfirm ||
@@ -112,7 +114,8 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
     isDisabledByNotEnoughInput;
 
   const handleClick = useCallback(() => {
-    dispatch(transactSteps(quote, t));
+    setIsExecuting(true);
+    Promise.resolve(dispatch(transactSteps(quote, t))).catch(() => setIsExecuting(false));
   }, [dispatch, quote, t]);
 
   return (
@@ -158,6 +161,7 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const connectedChainId = useAppSelector(selectCurrentChainId);
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const [isExecuting, setIsExecuting] = useState(false);
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
@@ -167,7 +171,10 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
 
   const handleClick = useCallback(() => {
     if (opId) {
-      dispatch(crossChainRecoverySteps(opId, t));
+      setIsExecuting(true);
+      Promise.resolve(dispatch(crossChainRecoverySteps(opId, t))).catch(() =>
+        setIsExecuting(false)
+      );
     }
   }, [dispatch, opId, t]);
 
@@ -198,7 +205,7 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
     <div className={classes.feesContainer}>
       <Button
         variant="recovery"
-        disabled={isTxInProgress || !opId}
+        disabled={isTxInProgress || isExecuting || !opId}
         fullWidth={true}
         borderless={true}
         onClick={handleClick}

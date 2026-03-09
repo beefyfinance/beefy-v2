@@ -42,25 +42,6 @@ export const fetchCCTPBridgeStatusByTxHash = createAppAsyncThunk<
   return await api.getTxStatusByTxHash(chain.networkChainId, txHash);
 });
 
-// DEV MOCK: simulate zap_failed after a few poll cycles
-const DEV_MOCK_ZAP_FAILED = import.meta.env.DEV && true; // flip to false to disable
-let devMockPollCount = 0;
-const DEV_MOCK_SEQUENCE: Array<
-  Partial<MessageListResponse['messages'][number]> & { lifecycleState: MessageLifecycleState }
-> = [
-  { lifecycleState: 'discovered' },
-  { lifecycleState: 'awaiting_attestation' },
-  { lifecycleState: 'attestation_received' },
-  { lifecycleState: 'ready_to_relay' },
-  { lifecycleState: 'pending_tx' },
-  {
-    lifecycleState: 'zap_failed',
-    dstTxHash: '0xfake_dst_tx_hash_for_testing',
-    dstRefundedAmount: '5000000',
-    dstZapSuccess: false,
-  },
-];
-
 export function pollCCTPBridgeStatus({
   srcChainId,
   txHash,
@@ -71,48 +52,10 @@ export function pollCCTPBridgeStatus({
   return async (dispatch, getState) => {
     const poll = async () => {
       try {
-        let message: MessageListResponse['messages'][number] | undefined;
-
-        if (DEV_MOCK_ZAP_FAILED) {
-          const mockStep =
-            DEV_MOCK_SEQUENCE[Math.min(devMockPollCount, DEV_MOCK_SEQUENCE.length - 1)];
-          devMockPollCount++;
-          console.debug('[CCTP][DEV MOCK] Poll #', devMockPollCount, mockStep.lifecycleState);
-          message = {
-            attestationNonce: null,
-            attestationVersion: null,
-            srcNetworkId: 0,
-            srcTxHash: txHash,
-            srcLogIndex: 0,
-            srcBlockNumber: '0',
-            srcBlockTimestamp: null,
-            srcSender: null,
-            srcBurnToken: null,
-            srcBurnAmount: null,
-            dstNetworkId: 0,
-            dstRecipient: null,
-            dstTxHash: null,
-            dstBlockNumber: null,
-            dstBlockTimestamp: null,
-            dstZapSuccess: null,
-            dstAmountIn: null,
-            dstRefundedAmount: null,
-            dstRecoveredAmount: null,
-            dstFeePaid: null,
-            zapRecipient: null,
-            zapPayload: null,
-            errorCode: null,
-            errorMessage: null,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            ...mockStep,
-          } as MessageListResponse['messages'][number];
-        } else {
-          const result = await dispatch(
-            fetchCCTPBridgeStatusByTxHash({ srcChainId, txHash })
-          ).unwrap();
-          message = result.messages?.[0];
-        }
+        const result = await dispatch(
+          fetchCCTPBridgeStatusByTxHash({ srcChainId, txHash })
+        ).unwrap();
+        const message = result.messages?.[0];
 
         if (!message) {
           console.debug('[CCTP] No messages yet, polling again...');

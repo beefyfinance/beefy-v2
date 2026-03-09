@@ -147,6 +147,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
   const [isDisabledByScreamLiquidity, setIsDisabledByScreamLiquidity] = useState(false);
   const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
+  const [isExecuting, setIsExecuting] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const isMaxAll = useMemo(() => {
@@ -156,6 +157,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
 
   const isDisabled =
     isTxInProgress ||
+    isExecuting ||
     isDisabledByPriceImpact ||
     isDisabledByConfirm ||
     isDisabledByGlpLock ||
@@ -163,7 +165,8 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
     isDisabledByNotEnoughInput;
 
   const handleClick = useCallback(() => {
-    dispatch(transactSteps(quote, t));
+    setIsExecuting(true);
+    Promise.resolve(dispatch(transactSteps(quote, t))).catch(() => setIsExecuting(false));
   }, [dispatch, quote, t]);
 
   return (
@@ -219,6 +222,7 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
   const [isDisabledByPriceImpact, setIsDisabledByPriceImpact] = useState(false);
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
+  const [isExecuting, setIsExecuting] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const isMaxAll = useMemo(() => {
@@ -226,11 +230,16 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
   }, [quote]);
 
   const isDisabled =
-    isTxInProgress || isDisabledByPriceImpact || isDisabledByConfirm || isDisabledByNotEnoughInput;
+    isTxInProgress ||
+    isExecuting ||
+    isDisabledByPriceImpact ||
+    isDisabledByConfirm ||
+    isDisabledByNotEnoughInput;
   const showClaim = !isCowcentratedLikeVault(vault);
 
   const handleWithdraw = useCallback(() => {
-    dispatch(transactSteps(quote, t));
+    setIsExecuting(true);
+    Promise.resolve(dispatch(transactSteps(quote, t))).catch(() => setIsExecuting(false));
   }, [dispatch, quote, t]);
 
   return (
@@ -288,11 +297,13 @@ const ActionClaim = memo(function ActionClaim({ vault }: ActionClaimProps) {
     selectGovVaultPendingRewards(state, vault.id, walletAddress)
   );
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const [isExecuting, setIsExecuting] = useState(false);
   const isDisabled = useMemo(() => {
-    return isTxInProgress || !pendingRewards.some(r => r.amount.gt(BIG_ZERO));
-  }, [pendingRewards, isTxInProgress]);
+    return isTxInProgress || isExecuting || !pendingRewards.some(r => r.amount.gt(BIG_ZERO));
+  }, [pendingRewards, isTxInProgress, isExecuting]);
   const handleClaim = useCallback(() => {
-    dispatch(transactStepsClaimGov(vault, t));
+    setIsExecuting(true);
+    Promise.resolve(dispatch(transactStepsClaimGov(vault, t))).catch(() => setIsExecuting(false));
   }, [dispatch, vault, t]);
 
   return (
