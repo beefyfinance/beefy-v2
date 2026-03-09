@@ -5,13 +5,19 @@ import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Bu
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSteps } from '../../../../../data/actions/wallet/transact.ts';
+import { crossChainRecoverySteps } from '../../../../../data/actions/wallet/cross-chain.ts';
 import {
   isCowcentratedDepositQuote,
   type TransactOption,
   type TransactQuote,
 } from '../../../../../data/apis/transact/transact-types.ts';
+import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
+import {
+  selectIsStepperStepping,
+  selectStepperBridgeStatus,
+  selectStepperStepContent,
+} from '../../../../../data/selectors/stepper.ts';
 import {
   selectTransactQuoteStatus,
   selectTransactSelectedChainId,
@@ -19,7 +25,11 @@ import {
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
+import {
+  ActionConnect,
+  ActionConnectSwitch,
+  ActionSwitch,
+} from '../CommonActions/CommonActions.tsx';
 import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
 import { GlpDepositNotice } from '../GlpNotices/GlpNotices.tsx';
@@ -29,6 +39,10 @@ import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
 import { styles } from './styles.ts';
 import { getExecutionChainId } from '../../../../../../helpers/transactUtils.ts';
+import {
+  selectCurrentChainId,
+  selectIsWalletConnected,
+} from '../../../../../data/selectors/wallet.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -36,6 +50,11 @@ export const DepositActions = memo(function DepositActions() {
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const option = quote ? quote.option : null;
+  const stepperContent = useAppSelector(selectStepperStepContent);
+
+  if (stepperContent === StepContent.RecoveryTx) {
+    return <ActionRecoveryDeposit />;
+  }
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
     return <ActionDepositDisabled />;
@@ -128,5 +147,65 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
         <VaultFees />
       </div>
     </>
+  );
+});
+
+const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const dispatch = useAppDispatch();
+  const bridgeStatus = useAppSelector(selectStepperBridgeStatus);
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+  const connectedChainId = useAppSelector(selectCurrentChainId);
+  const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+
+  const destChainId = bridgeStatus?.destChainId ?? vault.chainId;
+  const opId = bridgeStatus?.opId;
+  const isOnCorrectChain = connectedChainId === destChainId;
+
+  const handleClick = useCallback(() => {
+    if (opId) {
+      dispatch(crossChainRecoverySteps(opId, t));
+    }
+  }, [dispatch, opId, t]);
+
+  if (!isWalletConnected) {
+    return (
+      <div className={classes.feesContainer}>
+        <ActionConnect />
+        <VaultFees />
+      </div>
+    );
+  }
+
+  if (!isOnCorrectChain) {
+    return (
+      <div className={classes.feesContainer}>
+        <ActionSwitch
+          chainId={destChainId}
+          variant="recovery"
+          borderless={true}
+          buttonText={t('Transact-RecoverySwitchChain')}
+        />
+        <VaultFees />
+      </div>
+    );
+  }
+
+  return (
+    <div className={classes.feesContainer}>
+      <Button
+        variant="recovery"
+        disabled={isTxInProgress || !opId}
+        fullWidth={true}
+        borderless={true}
+        onClick={handleClick}
+      >
+        {t('Transact-FinaliseDeposit')}
+      </Button>
+      <VaultFees />
+    </div>
   );
 });

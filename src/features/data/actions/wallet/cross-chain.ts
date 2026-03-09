@@ -469,6 +469,7 @@ export const crossChainOpStatusUpdate = createAction<{
   status: CrossChainOpStatus;
   destTxHash?: string;
   sourceTxHash?: string;
+  recoveryBridgedAmount?: string;
 }>('cross-chain/statusUpdate');
 
 export const crossChainOpDismiss = createAction<{ id: string }>('cross-chain/dismiss');

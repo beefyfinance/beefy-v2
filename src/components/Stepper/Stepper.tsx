@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.
 import {
   BridgingContent,
   ErrorContent,
+  RecoveryContent,
   StepsCountContent,
   StepsStartContent,
   SuccessContent,
@@ -26,6 +27,7 @@ const stepToComponent: Record<StepContent, FC> = {
   [StepContent.ErrorTx]: ErrorContent,
   [StepContent.SuccessTx]: SuccessContent,
   [StepContent.BridgingTx]: BridgingContent,
+  [StepContent.RecoveryTx]: RecoveryContent,
 };
 
 const StepperImpl = () => {

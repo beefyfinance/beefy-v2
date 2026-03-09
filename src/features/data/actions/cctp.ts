@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import { CCTP_CONFIG } from '../../../config/cctp/cctp-config.ts';
 import type { MessageLifecycleState, MessageListResponse } from '../apis/cctp/cctp-api-types.ts';
 import { getCCTPApi } from '../apis/instances.ts';
@@ -11,7 +12,12 @@ import type { BeefyState, BeefyThunk } from '../store/types.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { fetchBalanceAction } from './balance.ts';
 import { transactClearInput } from './transact.ts';
-import { stepperSetBridgeStatus, stepperSetStepContent } from './wallet/stepper.ts';
+import { crossChainFetchRecoveryQuote, crossChainOpStatusUpdate } from './wallet/cross-chain.ts';
+import {
+  stepperSetBridgeStatus,
+  stepperSetModel,
+  stepperSetStepContent,
+} from './wallet/stepper.ts';
 
 const POLL_INTERVAL_MS = 2000;
 
@@ -36,6 +42,25 @@ export const fetchCCTPBridgeStatusByTxHash = createAppAsyncThunk<
   return await api.getTxStatusByTxHash(chain.networkChainId, txHash);
 });
 
+// DEV MOCK: simulate zap_failed after a few poll cycles
+const DEV_MOCK_ZAP_FAILED = import.meta.env.DEV && true; // flip to false to disable
+let devMockPollCount = 0;
+const DEV_MOCK_SEQUENCE: Array<
+  Partial<MessageListResponse['messages'][number]> & { lifecycleState: MessageLifecycleState }
+> = [
+  { lifecycleState: 'discovered' },
+  { lifecycleState: 'awaiting_attestation' },
+  { lifecycleState: 'attestation_received' },
+  { lifecycleState: 'ready_to_relay' },
+  { lifecycleState: 'pending_tx' },
+  {
+    lifecycleState: 'zap_failed',
+    dstTxHash: '0xfake_dst_tx_hash_for_testing',
+    dstRefundedAmount: '5000000',
+    dstZapSuccess: false,
+  },
+];
+
 export function pollCCTPBridgeStatus({
   srcChainId,
   txHash,
@@ -46,11 +71,49 @@ export function pollCCTPBridgeStatus({
   return async (dispatch, getState) => {
     const poll = async () => {
       try {
-        const result = await dispatch(
-          fetchCCTPBridgeStatusByTxHash({ srcChainId, txHash })
-        ).unwrap();
+        let message: MessageListResponse['messages'][number] | undefined;
 
-        const message = result.messages?.[0];
+        if (DEV_MOCK_ZAP_FAILED) {
+          const mockStep =
+            DEV_MOCK_SEQUENCE[Math.min(devMockPollCount, DEV_MOCK_SEQUENCE.length - 1)];
+          devMockPollCount++;
+          console.debug('[CCTP][DEV MOCK] Poll #', devMockPollCount, mockStep.lifecycleState);
+          message = {
+            attestationNonce: null,
+            attestationVersion: null,
+            srcNetworkId: 0,
+            srcTxHash: txHash,
+            srcLogIndex: 0,
+            srcBlockNumber: '0',
+            srcBlockTimestamp: null,
+            srcSender: null,
+            srcBurnToken: null,
+            srcBurnAmount: null,
+            dstNetworkId: 0,
+            dstRecipient: null,
+            dstTxHash: null,
+            dstBlockNumber: null,
+            dstBlockTimestamp: null,
+            dstZapSuccess: null,
+            dstAmountIn: null,
+            dstRefundedAmount: null,
+            dstRecoveredAmount: null,
+            dstFeePaid: null,
+            zapRecipient: null,
+            zapPayload: null,
+            errorCode: null,
+            errorMessage: null,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            ...mockStep,
+          } as MessageListResponse['messages'][number];
+        } else {
+          const result = await dispatch(
+            fetchCCTPBridgeStatusByTxHash({ srcChainId, txHash })
+          ).unwrap();
+          message = result.messages?.[0];
+        }
+
         if (!message) {
           console.debug('[CCTP] No messages yet, polling again...');
           schedulePoll();
@@ -65,18 +128,18 @@ export function pollCCTPBridgeStatus({
           dispatch(stepperSetBridgeStatus({ dstTxHash: message.dstTxHash }));
           dispatch(stepperSetStepContent({ stepContent: StepContent.SuccessTx }));
           dispatch(transactClearInput());
-          return;
-        }
-
-        if (message.lifecycleState !== 'confirmed' && TERMINAL_STATES.has(message.lifecycleState)) {
-          console.debug('[CCTP] Bridge failed:', message.lifecycleState);
-          dispatch(stepperSetStepContent({ stepContent: StepContent.ErrorTx }));
-          return;
-        }
-
-        // If the bridge is terminal, fetch the balances
-        if (TERMINAL_STATES.has(message.lifecycleState)) {
           dispatch(fetchVaultChainBalances(getState));
+          return;
+        }
+
+        if (
+          message.lifecycleState !== 'confirmed' &&
+          TERMINAL_STATES.has(message.lifecycleState) &&
+          message.dstTxHash
+        ) {
+          console.debug('[CCTP] Bridge failed:', message.lifecycleState);
+          dispatch(handleBridgeFailure(message.dstRefundedAmount, getState));
+          return;
         }
 
         if (!TERMINAL_STATES.has(message.lifecycleState)) {
@@ -93,6 +156,52 @@ export function pollCCTPBridgeStatus({
     };
 
     await poll();
+  };
+}
+
+function handleBridgeFailure(
+  dstRefundedAmount: string | null,
+  getState: () => BeefyState
+): BeefyThunk {
+  return async dispatch => {
+    const state = getState();
+    const bridgeStatus = selectStepperBridgeStatus(state);
+    if (!bridgeStatus) {
+      dispatch(stepperSetStepContent({ stepContent: StepContent.ErrorTx }));
+      return;
+    }
+
+    const { opId } = bridgeStatus;
+    if (!opId) {
+      console.warn('[CCTP] No opId found in bridge status, falling back to error');
+      dispatch(stepperSetStepContent({ stepContent: StepContent.ErrorTx }));
+      return;
+    }
+
+    const refundedAmount = dstRefundedAmount ?? '0';
+    dispatch(stepperSetBridgeStatus({ dstRefundedAmount: refundedAmount }));
+
+    const op = state.ui.transact.crossChain.pendingOps[opId];
+    if (op) {
+      const actualRefund =
+        new BigNumber(refundedAmount).gt(0) ? refundedAmount : op.recovery.bridgedAmount;
+      dispatch(
+        crossChainOpStatusUpdate({
+          id: opId,
+          status: 'dest-failed',
+          recoveryBridgedAmount: actualRefund,
+        })
+      );
+    }
+
+    try {
+      await dispatch(crossChainFetchRecoveryQuote({ opId })).unwrap();
+      dispatch(stepperSetStepContent({ stepContent: StepContent.RecoveryTx }));
+      dispatch(stepperSetModel({ modal: false }));
+    } catch (err) {
+      console.error('[CCTP] Failed to fetch recovery quote:', err);
+      dispatch(stepperSetStepContent({ stepContent: StepContent.ErrorTx }));
+    }
   };
 }
 

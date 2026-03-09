@@ -991,6 +991,22 @@ const config = buildConfig(
           color: '{colors.text.black}',
         },
       },
+      recovery: {
+        base: {
+          color: '{colors.text.black}',
+          background: '{colors.orange.50}',
+          border: '{colors.orange.50}',
+        },
+        hover: {
+          background: '{colors.orange.30}',
+          border: '{colors.orange.30}',
+        },
+        disabled: {
+          color: '{colors.text.disabled}',
+          background: '{colors.orange.40-12}',
+          border: '{colors.orange.40-12}',
+        },
+      },
       filter: {
         base: {
           color: '{colors.text.dark}',

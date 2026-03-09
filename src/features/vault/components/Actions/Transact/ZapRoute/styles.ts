@@ -72,6 +72,14 @@ export const styles = {
   statusInProgress: css.raw({
     background: 'gold.20',
   }),
+  statusFailed: css.raw({
+    background: 'gold.20',
+    '& svg': {
+      width: '12px',
+      height: '12px',
+      fill: 'orange.50',
+    },
+  }),
   statusNotStarted: css.raw({
     background: 'darkBlue.30',
     textStyle: 'sm',

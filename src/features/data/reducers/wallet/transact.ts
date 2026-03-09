@@ -279,7 +279,7 @@ const transactSlice = createSlice({
         sliceState.crossChain.pendingOpIds.unshift(op.id);
       })
       .addCase(crossChainOpStatusUpdate, (sliceState, action) => {
-        const { id, status, destTxHash, sourceTxHash } = action.payload;
+        const { id, status, destTxHash, sourceTxHash, recoveryBridgedAmount } = action.payload;
         const op = sliceState.crossChain.pendingOps[id];
         if (op) {
           op.status = status;
@@ -289,6 +289,9 @@ const transactSlice = createSlice({
           }
           if (sourceTxHash) {
             op.sourceTxHash = sourceTxHash;
+          }
+          if (recoveryBridgedAmount !== undefined) {
+            op.recovery.bridgedAmount = recoveryBridgedAmount;
           }
         }
       })

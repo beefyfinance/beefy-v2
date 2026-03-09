@@ -48,7 +48,8 @@ export const stepperUpdate = createAppAsyncThunk('stepper/update', (_, { getStat
   if (
     walletActionsState.result === 'success' &&
     steps.stepContent !== StepContent.SuccessTx &&
-    steps.stepContent !== StepContent.BridgingTx
+    steps.stepContent !== StepContent.BridgingTx &&
+    steps.stepContent !== StepContent.RecoveryTx
   ) {
     const nextStep = steps.currentStep + 1;
     if (!isEmpty(steps.items[nextStep])) {
@@ -60,12 +61,15 @@ export const stepperUpdate = createAppAsyncThunk('stepper/update', (_, { getStat
 
       if (crossChain && walletActionsState.data?.receipt?.transactionHash) {
         const srcTxHash = walletActionsState.data.receipt.transactionHash;
+        const pendingOps = store.ui.transact.crossChain.pendingOps;
+        const opId = Object.keys(pendingOps).find(id => pendingOps[id].sourceTxHash === srcTxHash);
         dispatch(
           stepperSetBridgeStatus({
             srcChainId: crossChain.sourceChainId,
             srcTxHash,
             destChainId: crossChain.destChainId,
             vaultId: currentItem.extraInfo?.vaultId,
+            opId,
           })
         );
         dispatch(stepperSetStepContent({ stepContent: StepContent.BridgingTx }));

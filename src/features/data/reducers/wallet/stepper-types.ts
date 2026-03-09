@@ -12,6 +12,7 @@ export enum StepContent {
   ErrorTx,
   SuccessTx,
   BridgingTx,
+  RecoveryTx,
 }
 
 export type Step = {
@@ -62,6 +63,8 @@ export type BridgeStatus = {
   vaultId: VaultEntity['id'];
   lifecycleState?: MessageLifecycleState;
   dstTxHash?: string;
+  opId?: string;
+  dstRefundedAmount?: string;
 };
 
 export interface StepperState {
