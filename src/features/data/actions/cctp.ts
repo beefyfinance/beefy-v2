@@ -120,8 +120,17 @@ export function pollCCTPBridgeStatus({
           return;
         }
 
-        console.debug('[CCTP] Bridge status:', message.lifecycleState);
+        console.debug('[CCTP] Bridge status:', message.lifecycleState, {
+          dstZapSuccess: message.dstZapSuccess,
+          dstTxHash: message.dstTxHash,
+        });
         dispatch(stepperSetBridgeStatus({ lifecycleState: message.lifecycleState }));
+
+        if (message.dstTxHash && message.dstZapSuccess === false) {
+          console.debug('[CCTP] Zap failed on destination:', message.lifecycleState);
+          dispatch(handleBridgeFailure(message.dstRefundedAmount, getState));
+          return;
+        }
 
         if (message.lifecycleState === 'confirmed' && message.dstTxHash) {
           console.debug('[CCTP] Bridge confirmed, dstTxHash:', message.dstTxHash);
@@ -132,19 +141,13 @@ export function pollCCTPBridgeStatus({
           return;
         }
 
-        if (
-          message.lifecycleState !== 'confirmed' &&
-          TERMINAL_STATES.has(message.lifecycleState) &&
-          message.dstTxHash
-        ) {
-          console.debug('[CCTP] Bridge failed:', message.lifecycleState);
-          dispatch(handleBridgeFailure(message.dstRefundedAmount, getState));
+        if (TERMINAL_STATES.has(message.lifecycleState)) {
+          console.debug('[CCTP] Terminal state without dstTxHash:', message.lifecycleState);
+          dispatch(stepperSetStepContent({ stepContent: StepContent.ErrorTx }));
           return;
         }
 
-        if (!TERMINAL_STATES.has(message.lifecycleState)) {
-          schedulePoll();
-        }
+        schedulePoll();
       } catch (err) {
         console.warn('[CCTP] Poll error, retrying...', err);
         schedulePoll();
@@ -178,30 +181,39 @@ function handleBridgeFailure(
       return;
     }
 
-    const refundedAmount = dstRefundedAmount ?? '0';
-    dispatch(stepperSetBridgeStatus({ dstRefundedAmount: refundedAmount }));
+    dispatch(stepperSetBridgeStatus({ dstRefundedAmount: dstRefundedAmount ?? '0' }));
 
     const op = state.ui.transact.crossChain.pendingOps[opId];
     if (op) {
-      const actualRefund =
-        new BigNumber(refundedAmount).gt(0) ? refundedAmount : op.recovery.bridgedAmount;
+      const rawRefund = new BigNumber(dstRefundedAmount ?? '0');
+      let humanRefund: string;
+      if (rawRefund.gt(0)) {
+        const bridgeToken = selectTokenByAddress(
+          state,
+          op.recovery.destChainId,
+          op.recovery.bridgeTokenAddress
+        );
+        humanRefund = rawRefund.shiftedBy(-bridgeToken.decimals).toString(10);
+      } else {
+        humanRefund = op.recovery.bridgedAmount;
+      }
       dispatch(
         crossChainOpStatusUpdate({
           id: opId,
           status: 'dest-failed',
-          recoveryBridgedAmount: actualRefund,
+          recoveryBridgedAmount: humanRefund,
         })
       );
     }
 
     try {
       await dispatch(crossChainFetchRecoveryQuote({ opId })).unwrap();
-      dispatch(stepperSetStepContent({ stepContent: StepContent.RecoveryTx }));
-      dispatch(stepperSetModel({ modal: false }));
     } catch (err) {
-      console.error('[CCTP] Failed to fetch recovery quote:', err);
-      dispatch(stepperSetStepContent({ stepContent: StepContent.ErrorTx }));
+      console.warn('[CCTP] Recovery quote fetch failed (will retry from form):', err);
     }
+
+    dispatch(stepperSetStepContent({ stepContent: StepContent.RecoveryTx }));
+    dispatch(stepperSetModel({ modal: false }));
   };
 }
 
