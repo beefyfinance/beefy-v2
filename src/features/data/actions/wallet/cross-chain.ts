@@ -70,8 +70,9 @@ async function getPrefetchedOrFreshGasPrice(chain: ChainEntity): Promise<GasPric
   if (cached && cached.chainId === chain.id && Date.now() - cached.timestamp < GAS_PRICE_TTL_MS) {
     try {
       return await cached.promise;
-    } catch {
+    } catch (err) {
       // Prefetch failed — fall back to fresh
+      console.warn('[cross-chain] Gas price prefetch failed, fetching fresh', err);
     }
   }
 
@@ -407,9 +408,15 @@ function bindCrossChainOpTracking(
             dispatch(crossChainOpStatusUpdate({ id: opId, status: 'source-failed' }));
           }
         })
-        .catch(() => {});
+        .catch(err => {
+          console.warn(
+            `[cross-chain] Receipt fetch failed for op ${opId}, status may be stale`,
+            err
+          );
+        });
     })
-    .catch(() => {
+    .catch(err => {
+      console.warn(`[cross-chain] Transaction rejected/failed for op ${opId}`, err);
       dispatch(crossChainOpDismiss({ id: opId }));
     });
 }
