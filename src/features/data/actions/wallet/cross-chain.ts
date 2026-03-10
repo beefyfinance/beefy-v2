@@ -60,9 +60,7 @@ export function prefetchGasPrice(chain: ChainEntity): void {
     timestamp: Date.now(),
   };
   // Suppress unhandled rejection if nobody consumes this
-  gasPriceCache.promise.catch(err =>
-    console.warn('[XChainPerf] Prefetched gas price rejected (suppressed)', err)
-  );
+  gasPriceCache.promise.catch(() => {});
 }
 
 async function getPrefetchedOrFreshGasPrice(chain: ChainEntity): Promise<GasPricing> {
@@ -72,9 +70,9 @@ async function getPrefetchedOrFreshGasPrice(chain: ChainEntity): Promise<GasPric
   if (cached && cached.chainId === chain.id && Date.now() - cached.timestamp < GAS_PRICE_TTL_MS) {
     try {
       return await cached.promise;
-    } catch {
+    } catch (err) {
       // Prefetch failed — fall back to fresh
-      console.warn('[XChainPerf] Prefetched gas price failed, fetching fresh');
+      console.warn('[cross-chain] Gas price prefetch failed, fetching fresh', err);
     }
   }
 
@@ -106,19 +104,10 @@ export const crossChainZapExecuteOrder = (
   metadata: CrossChainExecuteMetadata
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
-    console.time('[XChainPerf] G: crossChainZapExecuteOrder TOTAL');
-    console.debug('[XChainPerf] G: crossChainZapExecuteOrder START', {
-      sourceChainId,
-      vaultId,
-      stepCount: params.steps.length,
-      inputCount: params.order.inputs.length,
-      outputCount: params.order.outputs.length,
-    });
     txStart(dispatch);
     const state = getState();
     const address = selectWalletAddress(state);
     if (!address) {
-      console.timeEnd('[XChainPerf] G: crossChainZapExecuteOrder TOTAL');
       throw new Error(`No wallet connected`);
     }
 
@@ -186,16 +175,10 @@ export const crossChainZapExecuteOrder = (
       })),
     }));
 
-    console.time('[XChainPerf] G.1: getWalletConnectionApi');
     const walletApi = await getWalletConnectionApi();
-    console.timeEnd('[XChainPerf] G.1: getWalletConnectionApi');
     const publicClient = rpcClientManager.getBatchClient(sourceChainId);
-    console.time('[XChainPerf] G.2: getConnectedViemClient');
     const walletClient = await walletApi.getConnectedViemClient();
-    console.timeEnd('[XChainPerf] G.2: getConnectedViemClient');
-    console.time('[XChainPerf] G.3: getGasPriceOptions');
     const gasPrices = await getPrefetchedOrFreshGasPrice(chain);
-    console.timeEnd('[XChainPerf] G.3: getGasPriceOptions');
     const nativeInput = castedOrder.inputs.find(input => input.token === ZERO_ADDRESS);
 
     const contract = fetchWalletContract(zap.router, BeefyZapRouterAbi, walletClient);
@@ -228,11 +211,7 @@ export const crossChainZapExecuteOrder = (
     );
 
     txWallet(dispatch);
-    console.debug('crossChainExecuteOrder', { order: castedOrder, steps: castedSteps, options });
-    console.time('[XChainPerf] G.4: contract.write.executeOrder (wallet prompt)');
     const transaction = contract.write.executeOrder([castedOrder, castedSteps], options);
-    console.timeEnd('[XChainPerf] G.4: contract.write.executeOrder (wallet prompt)');
-    console.timeEnd('[XChainPerf] G: crossChainZapExecuteOrder TOTAL');
 
     bindTransactionEvents(
       dispatch,
@@ -395,8 +374,9 @@ export const crossChainRecoveryExecuteOrder = (
               dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-failed' }));
             }
           })
-          .catch(() => {
+          .catch(err => {
             // Receipt fetch failed — leave status as dest-pending for retry
+            console.warn(`[cross-chain] Recovery receipt fetch failed for op ${opId} `, err);
           });
       })
       .catch(() => {
@@ -428,9 +408,15 @@ function bindCrossChainOpTracking(
             dispatch(crossChainOpStatusUpdate({ id: opId, status: 'source-failed' }));
           }
         })
-        .catch(() => {});
+        .catch(err => {
+          console.warn(
+            `[cross-chain] Receipt fetch failed for op ${opId}, status may be stale`,
+            err
+          );
+        });
     })
-    .catch(() => {
+    .catch(err => {
+      console.warn(`[cross-chain] Transaction rejected/failed for op ${opId}`, err);
       dispatch(crossChainOpDismiss({ id: opId }));
     });
 }
