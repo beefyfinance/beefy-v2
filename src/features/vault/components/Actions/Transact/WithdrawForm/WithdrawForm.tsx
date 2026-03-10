@@ -9,7 +9,6 @@ import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/
 import { errorToString } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
-import zapIcon from '../../../../../../images/icons/zap.svg';
 import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance.ts';
@@ -107,12 +106,7 @@ const WithdrawForm = memo(function WithdrawForm() {
       <WithdrawnInWalletNotice css={styles.notice} />
       <WithdrawQueueLoader />
       <div className={classes.labels}>
-        <div className={classes.selectLabel}>
-          {hasOptions && !hasCrossChainZap ?
-            <img src={zapIcon} alt="Zap" height={12} className={classes.zapIcon} />
-          : null}
-          {t(i18key)}
-        </div>
+        <div className={classes.selectLabel}>{t(i18key)}</div>
         <div className={classes.availableLabel}>
           {t('Transact-Available')}{' '}
           <span className={classes.availableLabelAmount}>

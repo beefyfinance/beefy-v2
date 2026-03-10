@@ -334,8 +334,10 @@ const StepContentSplit = memo(function StepContentSplit({
 
 const StepContentUnused = memo(function StepContentUnused({
   step,
+  chainId,
 }: StepContentProps<ZapQuoteStepUnused>) {
   const { t } = useTranslation();
+  const chainName = useChainName(chainId);
   const tokenAmounts = useMemo(() => {
     return step.outputs.map(tokenAmount => (
       <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
@@ -350,8 +352,10 @@ const StepContentUnused = memo(function StepContentUnused({
       <Trans
         t={t}
         i18nKey="Transact-Route-Step-Unused"
+        values={{ chainName }}
         components={{
           tokenAmounts: <ListJoin items={tokenAmounts} />,
+          chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
         }}
       />
     </>

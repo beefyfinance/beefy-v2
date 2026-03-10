@@ -191,11 +191,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
             borderless={true}
             onClick={handleClick}
           >
-            {t(
-              option.async ? 'Transact-RequestWithdraw'
-              : isMaxAll ? 'Transact-WithdrawAll'
-              : 'Transact-Withdraw'
-            )}
+            {t(isMaxAll ? 'Transact-WithdrawAll' : 'Transact-Withdraw')}
           </Button>
         </ActionConnectSwitch>
         {import.meta.env.DEV ?

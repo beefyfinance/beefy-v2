@@ -994,17 +994,17 @@ const config = buildConfig(
       recovery: {
         base: {
           color: '{colors.text.black}',
-          background: '{colors.orange.50}',
-          border: '{colors.orange.50}',
+          background: '{colors.gold.50}',
+          border: '{colors.gold.50}',
         },
         hover: {
-          background: '{colors.orange.30}',
-          border: '{colors.orange.30}',
+          background: '{colors.gold.30}',
+          border: '{colors.gold.30}',
         },
         disabled: {
           color: '{colors.text.disabled}',
-          background: '{colors.orange.40-12}',
-          border: '{colors.orange.40-12}',
+          background: '{colors.gold.40-12a}',
+          border: '{colors.gold.40-12a}',
         },
       },
       filter: {

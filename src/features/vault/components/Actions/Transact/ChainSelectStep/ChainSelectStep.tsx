@@ -7,7 +7,6 @@ import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx'
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
 import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
 import { TokenImageFromEntity } from '../../../../../../components/TokenImage/TokenImage.tsx';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { formatLargeUsd } from '../../../../../../helpers/format.ts';
 import ChevronRight from '../../../../../../images/icons/chevron-right.svg?react';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
@@ -90,7 +89,7 @@ const ChainList = memo(function ChainList() {
                 key={chainId}
                 chainId={chainId}
                 chainName={chainName}
-                balanceUsd={balanceUsd}
+                balanceUsd={balanceUsd?.gt(0) ? balanceUsd : undefined}
                 tokens={tokens}
                 onSelect={handleSelect}
               />
@@ -105,7 +104,7 @@ const ChainList = memo(function ChainList() {
 type ChainListRowProps = {
   chainId: ChainEntity['id'];
   chainName: string;
-  balanceUsd: BigNumber;
+  balanceUsd?: BigNumber;
   tokens: CrossChainTokenOption[];
   onSelect: (chainId: ChainEntity['id']) => void;
 };
@@ -140,7 +139,7 @@ const ChainListRow = memo(function ChainListRow({
       </TokenIcons>
       <ListItemRightSide className={rightSideClass}>
         <ListItemBalance className={balanceTextClass}>
-          {formatLargeUsd(balanceUsd ?? BIG_ZERO)}
+          {balanceUsd ? formatLargeUsd(balanceUsd) : null}
         </ListItemBalance>
         <ChevronRight className={cx('list-item-arrow', css(listItemArrow))} />
       </ListItemRightSide>
