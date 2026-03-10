@@ -47,7 +47,7 @@ import { GlpWithdrawNotice } from '../GlpNotices/GlpNotices.tsx';
 import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
 import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotice/ScreamAvailableLiquidityNotice.tsx';
-import { WithdrawFees } from '../VaultFees/VaultFees.tsx';
+import { VaultFees } from '../VaultFees/VaultFees.tsx';
 import { styles } from './styles.ts';
 import { getExecutionChainId } from '../../../../../../helpers/transactUtils.ts';
 
@@ -97,7 +97,7 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
         <ActionClaimWithdraw quote={quote} vault={vault} />
       : <ActionConnectSwitch
           css={styles.feesContainer}
-          FeesComponent={WithdrawFees}
+          FeesComponent={VaultFees}
           chainId={vault.chainId}
         >
           <div className={classes.buttons}>
@@ -107,7 +107,7 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
               {showClaim ?
                 <ActionClaim vault={vault} />
               : null}
-              <WithdrawFees />
+              <VaultFees />
             </div>
           </div>
         </ActionConnectSwitch>
@@ -129,7 +129,7 @@ const ActionWithdrawDisabled = memo(function ActionWithdrawDisabled() {
           {t('Transact-Withdraw')}
         </Button>
       </ActionConnectSwitch>
-      {!isGovVault(vault) && <WithdrawFees />}
+      {!isGovVault(vault) && <VaultFees />}
     </div>
   );
 });
@@ -197,7 +197,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
         {import.meta.env.DEV ?
           <TenderlyTransactButton option={option} quote={quote} />
         : null}
-        <WithdrawFees />
+        <VaultFees />
       </div>
     </>
   );
@@ -248,7 +248,7 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
       <NotEnoughNotice mode="withdraw" onChange={setIsDisabledByNotEnoughInput} />
       <div className={classes.buttons}>
         <ActionConnectSwitch
-          FeesComponent={WithdrawFees}
+          FeesComponent={VaultFees}
           css={styles.feesContainer}
           chainId={option.chainId}
         >
@@ -271,7 +271,7 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
             {showClaim ?
               <ActionClaim vault={vault} />
             : null}
-            <WithdrawFees />
+            <VaultFees />
           </div>
         </ActionConnectSwitch>
         {import.meta.env.DEV ?
