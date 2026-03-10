@@ -1,5 +1,54 @@
 [
   {
+    "id": "stakedao-ousd-pmusd",
+    "name": "OUSD/pmUSD",
+    "type": "standard",
+    "token": "OUSDpmUSD",
+    "tokenAddress": "0x57690E5287d36733664caa21fa2Dc48c156e962D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x61DfA236e0C30aaE123Ce152a89927DaBe5ebB93",
+    "earnedToken": "mooStakeDao-OUSD-pmUSD",
+    "earnedTokenAddress": "0x61DfA236e0C30aaE123Ce152a89927DaBe5ebB93",
+    "oracle": "lps",
+    "oracleId": "curve-ousd-pmusd",
+    "status": "active",
+    "createdAt": 1773141624,
+    "platformId": "stakedao",
+    "assets": ["OUSD", "pmUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-695/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-695/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x57690E5287d36733664caa21fa2Dc48c156e962D",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x57690E5287d36733664caa21fa2Dc48c156e962D",
+            "coins": [
+              "0x2A8e1E676Ec238d8A992307B495b45B3fEAa5e86",
+              "0xC0c17dD08263C16f6b64E772fB9B723Bf1344DdF"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "stakedao-ousd-msusd",
     "name": "OUSD/msUSD",
     "type": "standard",
