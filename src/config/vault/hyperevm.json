@@ -1,5 +1,82 @@
 [
   {
+    "id": "projectx-cow-hyperevm-kntq-whype-rp",
+    "name": "KNTQ-WHYPE Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowProjectXHyperevmKNTQ-WHYPE",
+    "tokenAddress": "0x01B0020E6A9b80f82AF3f3F12Bf3Fb4543DBaD5a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "projectx",
+    "earnContractAddress": "0x191949230b5253f6c9D4aDcC375b1326119169ce",
+    "earnedToken": "rCowProjectXHyperevmKNTQ-WHYPE",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "projectx-cow-hyperevm-kntq-whype",
+    "status": "active",
+    "createdAt": 1773262250,
+    "platformId": "projectx",
+    "assets": ["KNTQ", "WHYPE"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "projectx-cow-hyperevm-kntq-whype",
+    "name": "KNTQ-WHYPE",
+    "type": "cowcentrated",
+    "token": "KNTQ-WHYPE projectx",
+    "tokenAddress": "0xD19A88824A363E9291a6D0fC3baafA93aafC12c5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "projectx",
+    "depositTokenAddresses": [
+      "0x000000000000780555bD0BCA3791f89f9542c2d6",
+      "0x5555555555555555555555555555555555555555"
+    ],
+    "earnContractAddress": "0x01B0020E6A9b80f82AF3f3F12Bf3Fb4543DBaD5a",
+    "earnedToken": "cowProjectXHyperevmKNTQ-WHYPE",
+    "earnedTokenAddress": "0x01B0020E6A9b80f82AF3f3F12Bf3Fb4543DBaD5a",
+    "oracle": "lps",
+    "oracleId": "projectx-cow-hyperevm-kntq-whype",
+    "status": "active",
+    "createdAt": 1773262250,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["KNTQ", "WHYPE"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "projectx-cow-hyperevm-whype-xaut0-rp",
     "name": "WHYPE-XAUt0 Reward Pool",
     "type": "gov",
@@ -15,7 +92,7 @@
     "oracle": "lps",
     "oracleId": "projectx-cow-hyperevm-whype-xaut0",
     "status": "active",
-    "createdAt": 1772806267,
+    "createdAt": 1773262250,
     "platformId": "projectx",
     "assets": ["WHYPE", "XAUt0"],
     "risks": {
@@ -54,7 +131,7 @@
     "oracle": "lps",
     "oracleId": "projectx-cow-hyperevm-whype-xaut0",
     "status": "active",
-    "createdAt": 1772806267,
+    "createdAt": 1773262250,
     "platformId": "beefy",
     "feeTier": "0.3",
     "assets": ["WHYPE", "XAUt0"],
@@ -92,7 +169,7 @@
     "oracle": "lps",
     "oracleId": "projectx-cow-hyperevm-usdt0-xaut0",
     "status": "active",
-    "createdAt": 1772748195,
+    "createdAt": 1773262250,
     "platformId": "projectx",
     "assets": ["USDT0", "XAUt0"],
     "risks": {
@@ -131,7 +208,7 @@
     "oracle": "lps",
     "oracleId": "projectx-cow-hyperevm-usdt0-xaut0",
     "status": "active",
-    "createdAt": 1772748195,
+    "createdAt": 1773262250,
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["USDT0", "XAUt0"],
