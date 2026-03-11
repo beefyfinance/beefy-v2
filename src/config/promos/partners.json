@@ -1,4 +1,22 @@
 {
+  "monad": {
+    "title": "Monad",
+    "text": "Monad is a high-performance EVM-compatible Layer 1 blockchain designed for massive scalability, delivering 10,000 TPS through pipelined execution and optimistic parallel processing.",
+    "website": "https://www.monad.xyz/",
+    "social": {
+      "discord": "https://discord.gg/monad",
+      "twitter": "https://x.com/monad"
+    }
+  },
+  "pancakeswap": {
+    "title": "PancakeSwap",
+    "text": "PancakeSwap is a leading multichain decentralized exchange (DEX) offering swaps, liquidity provision, and yield farming across multiple blockchains.",
+    "website": "https://pancakeswap.finance/",
+    "social": {
+      "discord": "https://discord.gg/pancakeswap",
+      "twitter": "https://x.com/PancakeSwap"
+    }
+  },
   "venice": {
     "title": "Venice",
     "text": "Venice.ai is a company that offers AI-powered tools and services, including image generation, document analysis, and more.",
