@@ -33,7 +33,7 @@ const HeaderTitle = styled('div', {
     columnGap: '12px',
     alignItems: 'center',
     sm: {
-      padding: '24px 24px',
+      padding: '16px 24px',
     },
     '&::after': {
       content: '""',
