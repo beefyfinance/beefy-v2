@@ -44,7 +44,7 @@ export type CCTPChainConfig = {
   tokenMessenger: string;
   /** CCTP V2 MessageTransmitterV2 proxy address */
   messageTransmitter: string;
-  /** CircleBeefyZapReceiver address (PLACEHOLDER until deployed) */
+  /** CircleBeefyZapReceiver address */
   receiver: string;
   /** Native USDC address on this chain */
   usdcAddress: string;
@@ -77,7 +77,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     ethereum: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
-      receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
+      receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
       domain: 0,
       time: { outgoing: 15, incoming: 15 },
@@ -87,7 +87,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     avax: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
-      receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
+      receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
       domain: 1,
       time: { outgoing: 5, incoming: 5 },
@@ -96,7 +96,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     optimism: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
-      receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
+      receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85',
       domain: 2,
       time: { outgoing: 5, incoming: 5 },
@@ -106,7 +106,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     arbitrum: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
-      receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
+      receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
       domain: 3,
       time: { outgoing: 5, incoming: 5 },
@@ -116,7 +116,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     base: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
-      receiver: '0xe04b70d82e797b0B21caeaAaDfbA81c565c20e0B',
+      receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
       domain: 6,
       time: { outgoing: 5, incoming: 5 },
@@ -126,7 +126,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     polygon: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
-      receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
+      receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
       domain: 7,
       time: { outgoing: 5, incoming: 5 },
@@ -135,7 +135,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     linea: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
-      receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
+      receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0x176211869cA2b568f2A7D4EE941E073a821EE1ff',
       domain: 11,
       time: { outgoing: 5, incoming: 5 },
@@ -145,25 +145,25 @@ export const CCTP_CONFIG: CCTPConfig = {
     sonic: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
-      receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
+      receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0x29219dd400f2Bf60E5a23d13Be72B486D4038894',
       domain: 13,
       time: { outgoing: 5, incoming: 5 },
       beefyBridgeFeeUsd: 0.2,
     },
-    // monad: {
-    //   tokenMessenger: TOKEN_MESSENGER_V2,
-    //   messageTransmitter: MESSAGE_TRANSMITTER_V2,
-    //   receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
-    //   usdcAddress: '0x754704Bc059F8C67012fEd69BC8A327a5aafb603',
-    //   domain: 15,
-    //   time: { outgoing: 5, incoming: 5 },
-    // beefyBridgeFeeUsd: 0.2,
-    // },
+    monad: {
+      tokenMessenger: TOKEN_MESSENGER_V2,
+      messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
+      usdcAddress: '0x754704Bc059F8C67012fEd69BC8A327a5aafb603',
+      domain: 15,
+      time: { outgoing: 5, incoming: 5 },
+      beefyBridgeFeeUsd: 0.2,
+    },
     hyperevm: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
-      receiver: '0x0000000000000000000000000000000000000000', // TODO: deploy
+      receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0xb88339CB7199b77E23DB6E890353E22632Ba630f',
       domain: 19,
       time: { outgoing: 5, incoming: 5 },
