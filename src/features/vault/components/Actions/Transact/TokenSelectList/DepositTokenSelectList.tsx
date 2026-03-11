@@ -86,9 +86,11 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
       }
     }
     vaultDeposits.sort((a, b) => b.tokens.length - a.tokens.length);
+    const normalList = [...vaultDeposits, ...other];
+    const onlyDust = normalList.length === 0 && dust.length > 0;
     return {
-      normalOptions: [...vaultDeposits, ...other],
-      dustOptions: dust,
+      normalOptions: onlyDust ? dust : normalList,
+      dustOptions: onlyDust ? [] : dust,
       dustTotalUsd: dustSum,
     };
   }, [searchFiltered, isWalletConnected, search]);

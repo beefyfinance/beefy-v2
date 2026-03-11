@@ -9,7 +9,6 @@ import {
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
-import zapIcon from '../../../../../../images/icons/zap.svg';
 import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
@@ -85,12 +84,7 @@ export const TokenSelectButton = memo(function TokenSelectButton({
       {forceSelection && hasCrossChainZap ?
         <div className={css(styles.select, styles.forceSelection)}>{t('Transact-SelectChain')}</div>
       : forceSelection ?
-        <div className={css(styles.select, styles.forceSelection)}>
-          <div className={classes.zapIcon}>
-            <img src={zapIcon} alt="zap" />
-          </div>
-          {t('Select')}
-        </div>
+        <div className={css(styles.select, styles.forceSelection)}>{t('Transact-SelectToken')}</div>
       : isBreakLp ?
         <BreakLp tokens={selection.tokens} />
       : <div className={classes.select}>

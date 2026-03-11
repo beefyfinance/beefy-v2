@@ -2,31 +2,41 @@ import { styled } from '@repo/styles/jsx';
 
 export const SelectListContainer = styled('div', {
   base: {
-    padding: '24px 0 0 0',
+    padding: '16px 0 0 0',
     height: '469px',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
     borderRadius: '0 0 12px 12px',
     overflow: 'hidden',
+    sm: {
+      padding: '24px 0 0 0',
+    },
   },
 });
 
 export const SelectListSearch = styled('div', {
   base: {
-    padding: '0 24px',
-    margin: '0 0 24px 0',
+    padding: '0 16px',
+    margin: '0 0 16px 0',
+    sm: {
+      padding: '0 24px',
+      margin: '0 0 24px 0',
+    },
   },
 });
 
 export const SelectListItems = styled('div', {
   base: {
-    padding: '0 24px 24px 24px',
+    padding: '0 16px 16px 16px',
     minHeight: '100px',
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
     overflowY: 'auto',
+    sm: {
+      padding: '0 24px 24px 24px',
+    },
   },
   variants: {
     noGap: {

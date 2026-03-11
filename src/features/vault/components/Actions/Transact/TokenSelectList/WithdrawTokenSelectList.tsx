@@ -93,8 +93,7 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
                 selectionId={option.id}
                 tokens={option.tokens}
                 balance={option.balance}
-                //show balance value only if have $0.01
-                balanceValue={option.balanceValue.gt(0.01) ? option.balanceValue : undefined}
+                balanceValue={option.balanceValue}
                 decimals={option.decimals}
                 tag={option.tag}
                 chainId={selectedChain}
