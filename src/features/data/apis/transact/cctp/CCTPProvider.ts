@@ -13,6 +13,8 @@ import type { CCTPBridgeQuote, ZapPayload } from './types.ts';
 
 const ZERO_BYTES32 = pad('0x00' as Hex, { size: 32 });
 
+const MAX_CCTP_MESSAGE_BODY_SIZE = 8192; // bytes
+
 export function getSupportedChainIds(): ChainEntity['id'][] {
   return Object.keys(CCTP_CONFIG.chains) as ChainEntity['id'][];
 }
@@ -258,6 +260,12 @@ export function buildHookData(destChainId: ChainEntity['id'], zapPayload: ZapPay
     hookDataByteSize,
     hookData,
   });
+
+  if (hookDataByteSize > MAX_CCTP_MESSAGE_BODY_SIZE) {
+    throw new Error(
+      `CCTP hookData size ${hookDataByteSize} bytes exceeds max message body size of ${MAX_CCTP_MESSAGE_BODY_SIZE} bytes`
+    );
+  }
 
   return hookData;
 }
