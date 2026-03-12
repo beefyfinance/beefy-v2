@@ -149,7 +149,11 @@ const ChainListRow = memo(function ChainListRow({
       </TokenIcons>
       <ListItemRightSide className={rightSideClass}>
         <ListItemBalance className={balanceTextClass}>
-          {balanceUsd ? formatLargeUsd(balanceUsd) : null}
+          {balanceUsd ?
+            balanceUsd.gt(0.01) ?
+              formatLargeUsd(balanceUsd)
+            : '<$0.01'
+          : null}
         </ListItemBalance>
         <ChevronRight className={cx('list-item-arrow', css(listItemArrow))} />
       </ListItemRightSide>
@@ -189,7 +193,7 @@ const TokenIcons = styled('div', {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    width: '56px',
+    width: '60px',
     sm: {
       width: '96px',
     },
