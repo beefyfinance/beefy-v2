@@ -20,7 +20,7 @@ export const config = {
   polygon: {
     name: 'Polygon PoS',
     chainId: 137,
-    rpc: ['https://polygon.drpc.org', 'https://polygon-rpc.com'],
+    rpc: ['https://1rpc.io/matic'], // polygon-rpc.com returns 401 (API key disabled)
     explorerUrl: 'https://polygonscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x9C983dd514087674CA1d22A22B7432b614b4C835',
@@ -377,7 +377,7 @@ export const config = {
   sonic: {
     name: 'Sonic',
     chainId: 146,
-    rpc: ['https://sonic.drpc.org'],
+    rpc: ['https://sonic.drpc.org', 'https://rpc.soniclabs.com'],
     explorerUrl: 'https://sonicscan.org',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeb18FDA456Ae7a51Ead79A3BbB93507bb0d1d80d',
