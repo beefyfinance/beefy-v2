@@ -68,7 +68,7 @@ import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaul
 import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
 import type { OrderInput, OrderOutput, UserlessZapRequest, ZapStep } from '../../zap/types.ts';
 import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy.ts';
-import type { ConicStrategyConfig } from '../strategy-configs.ts';
+import type { ConicStrategyConfig, QuoteSelectionConfig } from '../strategy-configs.ts';
 
 const strategyId = 'conic';
 type StrategyId = typeof strategyId;
@@ -144,7 +144,8 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
 
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: ConicDepositOption
+    option: ConicDepositOption,
+    _quoteSelection?: QuoteSelectionConfig
   ): Promise<ConicDepositQuote> {
     const { zap, getState } = this.helpers;
     const state = getState();

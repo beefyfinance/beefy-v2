@@ -39,7 +39,12 @@ import {
   onlyOneInput,
   onlyOneToken,
 } from '../helpers/options.ts';
-import { calculatePriceImpact, highestFeeOrZero, ZERO_FEE } from '../helpers/quotes.ts';
+import {
+  calculatePriceImpact,
+  highestFeeOrZero,
+  selectQuotesRespectingProviderLimits,
+  ZERO_FEE,
+} from '../helpers/quotes.ts';
 import {
   allTokensAreDistinct,
   includeWrappedAndNative,
@@ -87,7 +92,7 @@ import type {
   UserlessZapWithdrawBreakdown,
   ZapTransactHelpers,
 } from './IStrategy.ts';
-import type { UniswapLikeStrategyConfig } from './strategy-configs.ts';
+import type { QuoteSelectionConfig, UniswapLikeStrategyConfig } from './strategy-configs.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -233,7 +238,8 @@ export abstract class UniswapLikeStrategy<
 
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: UniswapLikeDepositOption<TAmm>
+    option: UniswapLikeDepositOption<TAmm>,
+    quoteSelection?: QuoteSelectionConfig
   ): Promise<UniswapLikeDepositQuote<UniswapLikeDepositOption<TAmm>>> {
     const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
@@ -243,7 +249,7 @@ export abstract class UniswapLikeStrategy<
     if (option.swapVia === 'pool') {
       return this.fetchDepositQuotePool(input, option);
     } else {
-      return this.fetchDepositQuoteAggregator(input, option);
+      return this.fetchDepositQuoteAggregator(input, option, quoteSelection);
     }
   }
 
@@ -397,7 +403,8 @@ export abstract class UniswapLikeStrategy<
 
   protected async fetchDepositQuoteAggregator(
     input: InputTokenAmount,
-    option: UniswapLikeDepositOption<TAmm>
+    option: UniswapLikeDepositOption<TAmm>,
+    quoteSelection?: QuoteSelectionConfig
   ): Promise<UniswapLikeDepositQuote<UniswapLikeDepositOption<TAmm>>> {
     const { zap, swapAggregator, getState } = this.helpers;
     const { lpTokens, depositToken } = option;
@@ -447,21 +454,22 @@ export abstract class UniswapLikeStrategy<
       })
     );
 
-    const quotePerLpToken = quotesPerLpToken.map((quotes, i) => {
-      if (quotes === undefined) {
-        const quoteRequest = quoteRequestsPerLpToken[i];
-        if (quoteRequest === undefined) {
-          return undefined;
-        } else {
-          throw new Error(
-            `No quotes found for ${quoteRequest.fromToken.symbol} -> ${quoteRequest.toToken.symbol}`
-          );
-        }
+    // Validate that we got quotes for every requested swap
+    for (let i = 0; i < quotesPerLpToken.length; i++) {
+      if (quotesPerLpToken[i] === undefined && quoteRequestsPerLpToken[i] !== undefined) {
+        const quoteRequest = quoteRequestsPerLpToken[i]!;
+        throw new Error(
+          `No quotes found for ${quoteRequest.fromToken.symbol} -> ${quoteRequest.toToken.symbol}`
+        );
       }
+    }
 
-      // fetchQuotes is already sorted by toAmount
-      return first(quotes);
-    });
+    // Select best quotes respecting provider limits (fetchQuotes already sorted by toAmount)
+    const quotePerLpToken = selectQuotesRespectingProviderLimits(
+      quotesPerLpToken,
+      this.helpers.getState(),
+      quoteSelection
+    );
 
     // Build LP
     const lpTokenAmounts = quotePerLpToken.map((quote, i) => {
