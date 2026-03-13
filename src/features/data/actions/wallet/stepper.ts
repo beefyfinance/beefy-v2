@@ -21,6 +21,7 @@ export const stepperSetStepContent = createAction<{ stepContent: StepContent }>(
 );
 export const stepperSetBridgeStatus =
   createAction<Partial<BridgeStatus>>('stepper/setBridgeStatus');
+export const stepperSetRecoveryExecution = createAction<boolean>('stepper/setRecoveryExecution');
 
 type StartStepperParams = ChainEntity['id'];
 

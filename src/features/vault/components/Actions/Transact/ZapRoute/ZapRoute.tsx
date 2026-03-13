@@ -29,6 +29,7 @@ import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.ts';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
+  selectIsStepperRecoveryExecution,
   selectIsStepperStepping,
   selectStepperCurrentStep,
   selectStepperStepContent,
@@ -410,12 +411,14 @@ function useStepStatuses(
   const isStepping = useAppSelector(selectIsStepperStepping);
   const stepperContent = useAppSelector(selectStepperStepContent);
   const currentStepIndex = useAppSelector(selectStepperCurrentStep);
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
 
   return useMemo(() => {
     if (
       !isStepping &&
       stepperContent !== StepContent.SuccessTx &&
-      stepperContent !== StepContent.RecoveryTx
+      stepperContent !== StepContent.RecoveryTx &&
+      !isRecoveryExecution
     ) {
       return Array(totalStepsCount).fill('list') as StepStatusState[];
     }
@@ -429,6 +432,14 @@ function useStepStatuses(
       return Array.from({ length: totalStepsCount }, (_, i) => {
         if (i <= bridgeStepAbsoluteIndex) return 'finished';
         if (i === failedIdx) return 'failed';
+        return 'notStarted';
+      }) as StepStatusState[];
+    }
+
+    if (isRecoveryExecution) {
+      return Array.from({ length: totalStepsCount }, (_, i) => {
+        if (i <= bridgeStepAbsoluteIndex) return 'finished';
+        if (i === bridgeStepAbsoluteIndex + 1) return 'inProgress';
         return 'notStarted';
       }) as StepStatusState[];
     }
@@ -467,6 +478,7 @@ function useStepStatuses(
     approvalCount,
     quoteSteps,
     bridgeStepAbsoluteIndex,
+    isRecoveryExecution,
   ]);
 }
 
@@ -515,7 +527,8 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
   }
   const pendingAllowances = stepperModal ? snapshotRef.current : pendingAllowancesLive;
 
-  const isRecovery = stepperContent === StepContent.RecoveryTx;
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const isRecovery = stepperContent === StepContent.RecoveryTx || isRecoveryExecution;
 
   const { effectiveSteps, bridgeStepAbsoluteIndex } = useMemo(() => {
     const bridgeIdx = quote.steps.findIndex(s => s.type === 'bridge');

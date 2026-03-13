@@ -14,6 +14,7 @@ import {
 import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
+  selectIsStepperRecoveryExecution,
   selectIsStepperStepping,
   selectStepperBridgeStatus,
   selectStepperStepContent,
@@ -51,8 +52,9 @@ export const DepositActions = memo(function DepositActions() {
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const option = quote ? quote.option : null;
   const stepperContent = useAppSelector(selectStepperStepContent);
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
 
-  if (stepperContent === StepContent.RecoveryTx) {
+  if (stepperContent === StepContent.RecoveryTx || isRecoveryExecution) {
     return <ActionRecoveryDeposit />;
   }
 

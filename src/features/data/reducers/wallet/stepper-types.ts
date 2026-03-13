@@ -74,4 +74,5 @@ export interface StepperState {
   items: Step[];
   chainId: ChainEntity['id'] | null;
   bridgeStatus?: BridgeStatus;
+  isRecoveryExecution?: boolean;
 }

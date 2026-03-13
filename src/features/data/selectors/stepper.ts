@@ -56,6 +56,10 @@ export const selectStepperBridgeStatus = (state: BeefyState) => {
   return state.ui.stepperState.bridgeStatus;
 };
 
+export const selectIsStepperRecoveryExecution = (state: BeefyState) => {
+  return state.ui.stepperState.isRecoveryExecution === true;
+};
+
 const transferAbi = [
   {
     anonymous: false,

@@ -41,7 +41,7 @@ import type {
 import { createAppAsyncThunk } from '../../utils/store-utils.ts';
 import { bindTransactionEvents, captureWalletErrors, txStart, txWallet } from './common.ts';
 import { approve } from './approval.ts';
-import { stepperStartWithSteps } from './stepper.ts';
+import { stepperSetRecoveryExecution, stepperStartWithSteps } from './stepper.ts';
 
 type GasPriceCache = {
   chainId: ChainEntity['id'];
@@ -551,5 +551,6 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
 
     console.debug('[Recovery] Starting stepper with', steps.length, 'steps');
     dispatch(stepperStartWithSteps(steps, op.recovery.destChainId));
+    dispatch(stepperSetRecoveryExecution(true));
   });
 }
