@@ -105,7 +105,7 @@ import type {
   UserlessZapWithdrawBreakdown,
   ZapTransactHelpers,
 } from '../IStrategy.ts';
-import type { BalancerStrategyConfig } from '../strategy-configs.ts';
+import type { BalancerStrategyConfig, QuoteSelectionConfig } from '../strategy-configs.ts';
 
 type ZapHelpers = {
   slippage: number;
@@ -406,7 +406,8 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
 
   public async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: BalancerDepositOption
+    option: BalancerDepositOption,
+    _quoteSelection?: QuoteSelectionConfig
   ): Promise<BalancerDepositQuote> {
     const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {

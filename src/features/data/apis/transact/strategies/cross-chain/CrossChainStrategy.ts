@@ -71,7 +71,7 @@ import {
   type ZapTransactHelpers,
   isComposableStrategy,
 } from '../IStrategy.ts';
-import type { CrossChainStrategyConfig } from '../strategy-configs.ts';
+import type { CrossChainStrategyConfig, QuoteSelectionConfig } from '../strategy-configs.ts';
 import { getTransactApi } from '../../../../apis/instances.ts';
 import {
   crossChainZapExecuteOrder,
@@ -143,7 +143,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: CrossChainDepositOption
+    option: CrossChainDepositOption,
+    _quoteSelection?: QuoteSelectionConfig
   ): Promise<CrossChainDepositQuote> {
     const { swapAggregator, getState } = this.helpers;
     const state = getState();
@@ -217,9 +218,15 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       );
     }
 
+    const destQuoteSelection: QuoteSelectionConfig = {
+      maxUsesPerProvider: { kyber: 1 },
+      maxUsesStrict: false,
+    };
+
     const destQuote = await destMatch.strategy.fetchDepositQuote(
       [{ token: destBridgeToken, amount: bridgeQuote.toAmount, max: false }],
-      destMatch.option
+      destMatch.option,
+      destQuoteSelection
     );
 
     const destSteps: ZapQuoteStep[] = isZapQuote(destQuote) ? destQuote.steps : [];
@@ -328,9 +335,14 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     }
 
     // Call fetchDepositQuote on IStrategy before narrowing to IComposableStrategy
+    const destQuoteSelection: QuoteSelectionConfig = {
+      maxUsesPerProvider: { kyber: 1 },
+      maxUsesStrict: false,
+    };
     const stepDestQuote = await destMatch.strategy.fetchDepositQuote(
       [{ token: destBridgeToken, amount: stepBridgeQuote.toAmount, max: false }],
-      destMatch.option
+      destMatch.option,
+      destQuoteSelection
     );
     if (!isZapQuote(stepDestQuote)) {
       throw new Error('Destination quote is not a zap quote');

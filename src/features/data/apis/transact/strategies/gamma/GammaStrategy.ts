@@ -89,7 +89,7 @@ import type {
   UserlessZapWithdrawBreakdown,
   ZapTransactHelpers,
 } from '../IStrategy.ts';
-import type { GammaStrategyConfig } from '../strategy-configs.ts';
+import type { GammaStrategyConfig, QuoteSelectionConfig } from '../strategy-configs.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -262,7 +262,8 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
 
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: GammaDepositOption
+    option: GammaDepositOption,
+    _quoteSelection?: QuoteSelectionConfig
   ): Promise<GammaDepositQuote> {
     const { zap, swapAggregator, getState } = this.helpers;
     const { lpTokens, depositToken } = option;
