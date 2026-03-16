@@ -20,7 +20,11 @@ export const config = {
   polygon: {
     name: 'Polygon PoS',
     chainId: 137,
-    rpc: ['https://1rpc.io/matic'],
+    rpc: [
+      'https://polygon-bor-rpc.publicnode.com',
+      'https://polygon.drpc.org',
+      'https://1rpc.io/matic',
+    ],
     explorerUrl: 'https://polygonscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x9C983dd514087674CA1d22A22B7432b614b4C835',
