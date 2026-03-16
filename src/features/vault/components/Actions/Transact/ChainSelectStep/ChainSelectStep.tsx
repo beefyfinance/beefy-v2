@@ -4,7 +4,7 @@ import type BigNumber from 'bignumber.js';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx';
-import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../../../hooks/useBreakpoint.ts';
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
 import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
 import { TokenImageFromEntity } from '../../../../../../components/TokenImage/TokenImage.tsx';
