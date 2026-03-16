@@ -13,7 +13,7 @@ import SearchIcon from '../../../images/icons/search.svg?react';
 import { css, cx } from '@repo/styles/css';
 import { BaseInput, type BaseInputProps } from './BaseInput.tsx';
 import type { Override } from '../../../features/data/utils/types-utils.ts';
-import { useMediaQuery } from '../../MediaQueries/useMediaQuery.ts';
+import { useMediaQuery } from '../../../hooks/useMediaQuery.ts';
 import SlashIcon from '../../../images/icons/slash.svg?react';
 import { styled } from '@repo/styles/jsx';
 

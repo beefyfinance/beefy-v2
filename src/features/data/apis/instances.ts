@@ -139,11 +139,6 @@ export const getNameServicesApi = createDependencyFactory(
   () => import('./name-services/name-services-api.ts')
 );
 
-export const getDivviApi = createDependencyFactory(
-  async ({ DivviApi }) => new DivviApi(),
-  () => import('./divvi/api.ts')
-);
-
 export const getCCTPApi = createDependencyFactory(
   async ({ CCTPApi }) => new CCTPApi(),
   () => import('./cctp/cctp-api.ts')

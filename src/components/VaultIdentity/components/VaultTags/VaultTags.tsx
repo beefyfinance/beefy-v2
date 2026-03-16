@@ -35,7 +35,7 @@ import { useIsOverflowingHorizontally } from '../../../../helpers/overflow.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import BoostIcon from '../../../../images/icons/boost.svg?react';
 import LineaIgnitionIcon from '../../../../images/icons/linea-ignition.svg?react';
-import { useMediaQuery } from '../../../MediaQueries/useMediaQuery.ts';
+import { useMediaQuery } from '../../../../hooks/useMediaQuery.ts';
 import { BasicTooltipContent } from '../../../Tooltip/BasicTooltipContent.tsx';
 import { VaultPlatform } from '../../../VaultPlatform/VaultPlatform.tsx';
 import { styles } from './styles.ts';

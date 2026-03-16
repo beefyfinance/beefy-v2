@@ -7,15 +7,16 @@ export const styles = {
   }),
   title: css.raw({
     textStyle: 'h3',
-    padding: '16px 24px',
+    padding: '16px',
     display: 'flex',
     columnGap: '12px',
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'background.content.light',
     borderRadius: '8px 8px 0px 0px',
-    lgDown: {
-      padding: '16px',
+    lg: {
+      padding: '16px 24px',
+      borderRadius: '20px 20px 0px 0px',
     },
   }),
   marketMakerAnnotation: css.raw({

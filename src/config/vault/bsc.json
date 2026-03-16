@@ -1,5 +1,82 @@
 [
   {
+    "id": "pancake-cow-bsc-usdt-q-rp",
+    "name": "USDT-Q Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBscUSDT-Q",
+    "tokenAddress": "0x71Dca0ACdf0C9aD7fa3704b5478076699E90Ee0c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x12C5268a64a1c5fAD981c363B302f78F1E171f67",
+    "earnedToken": "rCowPancakeBscUSDT-Q",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdt-q",
+    "status": "active",
+    "createdAt": 1772743311,
+    "platformId": "pancakeswap",
+    "assets": ["USDT", "Q"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-usdt-q",
+    "name": "USDT-Q",
+    "type": "cowcentrated",
+    "token": "USDT-Q pancakeswap",
+    "tokenAddress": "0x8Bafe0bdD3eB9ae0539f5B32e771C1a72A189b7f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x55d398326f99059fF775485246999027B3197955",
+      "0xc07e1300dc138601FA6B0b59f8D0FA477e690589"
+    ],
+    "earnContractAddress": "0x71Dca0ACdf0C9aD7fa3704b5478076699E90Ee0c",
+    "earnedToken": "cowPancakeBscUSDT-Q",
+    "earnedTokenAddress": "0x71Dca0ACdf0C9aD7fa3704b5478076699E90Ee0c",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdt-q",
+    "status": "active",
+    "createdAt": 1772743311,
+    "platformId": "beefy",
+    "feeTier": "0.01",
+    "assets": ["USDT", "Q"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-bsc-xpl-usdt-rp",
     "name": "XPL-USDT Reward Pool",
     "type": "gov",

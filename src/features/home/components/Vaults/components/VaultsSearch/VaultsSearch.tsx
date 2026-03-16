@@ -1,5 +1,5 @@
 import { css } from '@repo/styles/css';
-import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../../../hooks/useBreakpoint.ts';
 import { useTranslation } from 'react-i18next';
 import { debounce } from 'lodash-es';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';

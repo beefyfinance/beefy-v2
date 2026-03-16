@@ -10,7 +10,7 @@ import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
 import ForwardArrowIcon from '../../../../images/icons/forward-arrow.svg?react';
 
 import Edit from '../../../../images/icons/edit_pen.svg?react';
-import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 
 export const ChainRpcItem = memo(function ChainRpcItem({
   error = false,

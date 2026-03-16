@@ -1,8 +1,12 @@
 import { memo, type ReactNode, useLayoutEffect, useState } from 'react';
-import { getMatchMedia } from './useMediaQuery.ts';
+import { getMatchMedia } from '../../hooks/useMediaQuery.ts';
 import { entries } from '../../helpers/object.ts';
 import type { BreakpointMatches } from './types.ts';
-import { BreakpointContext, defaultBreakpointMatches, getQueries } from './useBreakpoints.ts';
+import {
+  BreakpointContext,
+  defaultBreakpointMatches,
+  getQueries,
+} from '../../hooks/useBreakpoints.ts';
 
 export const BreakpointProvider = memo<{ children: ReactNode }>(function BreakpointProvider({
   children,

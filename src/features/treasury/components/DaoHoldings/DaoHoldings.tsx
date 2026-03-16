@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMediaQuery } from '../../../../components/MediaQueries/useMediaQuery.ts';
+import { useMediaQuery } from '../../../../hooks/useMediaQuery.ts';
 import { Section } from '../../../../components/Section/Section.tsx';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';

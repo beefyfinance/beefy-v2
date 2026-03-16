@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { ToggleButtons } from '../../../../components/ToggleButtons/ToggleButtons.tsx';
-import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 import { SelectSingle } from '../../../../components/Form/Select/Single/SelectSingle.tsx';
 import type { SelectItem } from '../../../../components/Form/Select/types.ts';
 

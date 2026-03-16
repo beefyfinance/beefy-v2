@@ -1,12 +1,9 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
-import { formatAddressShort, formatDomain } from '../../../../helpers/format.ts';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { styles } from './styles.ts';
-import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
-import { DivWithTooltip } from '../../../../components/Tooltip/DivWithTooltip.tsx';
-
-const useStyles = legacyMakeStyles(styles);
+import { styled } from '@repo/styles/jsx';
+import { formatAddressShort, formatDomain } from '../../../../helpers/format.ts';
+import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
+import { useCopyToClipboard } from '../../../../hooks/useCopyToClipboard.ts';
 
 export type ShortAddressProps = {
   address: string;
@@ -17,17 +14,14 @@ export const ShortAddress = memo(function ShortAddress({
   address,
   addressLabel,
 }: ShortAddressProps) {
-  const classes = useStyles();
   const { t } = useTranslation();
-  const [showCopied, setShowCopied] = useState<boolean>(false);
+  const [isHover, setIsHover] = useState<boolean>(false);
+  const { copy, status } = useCopyToClipboard();
   const mdUp = useBreakpoint({ from: 'sm' });
 
   const handleCopyAddressToClipboard = useCallback(() => {
-    navigator.clipboard
-      .writeText(address)
-      .then(() => setShowCopied(true))
-      .catch(e => console.error(e));
-  }, [address, setShowCopied]);
+    copy(address);
+  }, [address, copy]);
 
   const shortAddressLabel = useMemo(() => {
     if (addressLabel) {
@@ -37,25 +31,52 @@ export const ShortAddress = memo(function ShortAddress({
     return formatAddressShort(address);
   }, [addressLabel, address, mdUp]);
 
-  useEffect(() => {
-    if (showCopied) {
-      const handle = setTimeout(() => {
-        setShowCopied(false);
-      }, 3000);
-      return () => clearTimeout(handle);
-    }
-  }, [showCopied, setShowCopied]);
-
   if (address) {
     return (
-      <DivWithTooltip
-        onClick={handleCopyAddressToClipboard}
-        className={classes.triggerClass}
-        children={<div className={classes.shortAddress}>{`(${shortAddressLabel})`}</div>}
-        tooltip={showCopied ? t('Clipboard-Copied') : address}
-      />
+      <ShortAddressContainer onClick={handleCopyAddressToClipboard}>
+        <Text
+          variant="dark"
+          onMouseEnter={() => setIsHover(true)}
+          onMouseLeave={() => setIsHover(false)}
+        >
+          {shortAddressLabel}
+        </Text>
+
+        {isHover ?
+          <Text variant="light">
+            {status === 'success' ? t('Clipboard-Copied') : t('Clipboard-CopyToClipboard')}
+          </Text>
+        : null}
+      </ShortAddressContainer>
     );
   }
 
   return null;
+});
+
+const ShortAddressContainer = styled('div', {
+  base: {
+    display: 'flex',
+    gap: '9px',
+    _hover: {
+      cursor: 'pointer',
+    },
+  },
+});
+
+const Text = styled('div', {
+  base: {
+    textStyle: 'label',
+    fontWeight: 500,
+  },
+  variants: {
+    variant: {
+      light: {
+        color: 'text.light',
+      },
+      dark: {
+        color: 'text.dark',
+      },
+    },
+  },
 });

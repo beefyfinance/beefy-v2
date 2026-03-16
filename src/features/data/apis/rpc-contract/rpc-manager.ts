@@ -5,6 +5,7 @@ import { buildViemChain } from '../viem/chains.ts';
 import { getGasPrice, getFeeHistory } from 'viem/actions';
 import BigNumber from 'bignumber.js';
 import type { ChainConfig } from '../config-types.ts';
+import { featureFlag_getMulticallBatchSize } from '../../utils/feature-flags.ts';
 
 type RpcClients = {
   singleCallClient: PublicClient;
@@ -68,7 +69,7 @@ class RpcClientManager {
       transport: makeCustomFallbackTransport(rpcUrls, retries),
       batch: {
         multicall: {
-          batchSize: 1024,
+          batchSize: featureFlag_getMulticallBatchSize(chain.id),
           wait: 250,
         },
       },

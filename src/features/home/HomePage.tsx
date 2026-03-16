@@ -31,14 +31,6 @@ const HomePage = memo(function HomePage() {
     <>
       <HomeMeta />
       <PageLayout
-        content={
-          <Content>
-            <Container maxWidth="lg">
-              <Filters />
-            </Container>
-            <Vaults />
-          </Content>
-        }
         header={
           <>
             <Container maxWidth="lg">
@@ -48,6 +40,14 @@ const HomePage = memo(function HomePage() {
               <HomeHeader />
             </HeaderContainer>
           </>
+        }
+        content={
+          <Content>
+            <Container maxWidth="lg">
+              <Filters />
+            </Container>
+            <Vaults />
+          </Content>
         }
       />
     </>
@@ -70,10 +70,13 @@ const HeaderContainer = styled(Container, {
 
 const Content = styled('div', {
   base: {
-    paddingBlock: '12px 20px',
+    paddingBlock: '12px 24px',
     sm: {
-      paddingBlock: '14px 32px',
+      paddingBlock: '14px 28px',
       borderRadius: '24px',
+    },
+    lg: {
+      paddingBlock: '14px 48px',
     },
   },
 });
