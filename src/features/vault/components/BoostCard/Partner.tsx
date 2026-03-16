@@ -41,10 +41,10 @@ const headerCss = css({
 });
 
 const titleCss = css({
-  padding: '16px',
+  textStyle: 'h3',
+  margin: '0',
 });
 
 const contentCss = css({
-  textStyle: 'h3',
-  margin: '0',
+  padding: '16px',
 });
