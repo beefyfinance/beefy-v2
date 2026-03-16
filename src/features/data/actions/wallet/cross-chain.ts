@@ -104,6 +104,7 @@ export const crossChainZapExecuteOrder = (
   metadata: CrossChainExecuteMetadata
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
+    console.log('[cross-chain] crossChainZapExecuteOrder: start', { sourceChainId, vaultId });
     txStart(dispatch);
     const state = getState();
     const address = selectWalletAddress(state);
@@ -119,6 +120,7 @@ export const crossChainZapExecuteOrder = (
         `Please switch to ${sourceChain.name} to execute this cross-chain transaction`
       );
     }
+    console.log('[cross-chain] crossChainZapExecuteOrder: validation passed');
 
     const vault = selectVaultById(state, vaultId);
     const chain = selectChainById(state, sourceChainId);
@@ -175,10 +177,12 @@ export const crossChainZapExecuteOrder = (
       })),
     }));
 
+    console.log('[cross-chain] crossChainZapExecuteOrder: order/steps cast');
     const walletApi = await getWalletConnectionApi();
     const publicClient = rpcClientManager.getBatchClient(sourceChainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const gasPrices = await getPrefetchedOrFreshGasPrice(chain);
+    console.log('[cross-chain] crossChainZapExecuteOrder: gas price fetched');
     const nativeInput = castedOrder.inputs.find(input => input.token === ZERO_ADDRESS);
 
     const contract = fetchWalletContract(zap.router, BeefyZapRouterAbi, walletClient);
@@ -210,6 +214,7 @@ export const crossChainZapExecuteOrder = (
       })
     );
 
+    console.log('[cross-chain] crossChainZapExecuteOrder: prompting wallet');
     txWallet(dispatch);
     const transaction = contract.write.executeOrder([castedOrder, castedSteps], options);
 
@@ -235,6 +240,7 @@ export const crossChainZapExecuteOrder = (
 
     // Track cross-chain op lifecycle alongside bindTransactionEvents
     bindCrossChainOpTracking(dispatch, transaction, publicClient, metadata.opId);
+    console.log('[cross-chain] crossChainZapExecuteOrder: tx submitted, tracking bound');
   });
 };
 
