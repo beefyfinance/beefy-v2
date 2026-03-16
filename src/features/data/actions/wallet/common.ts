@@ -3,7 +3,6 @@ import { uniqBy } from 'lodash-es';
 import { BaseError, type Chain, type Hash, type PublicClient, type TransactionReceipt } from 'viem';
 import { waitForTransactionReceipt } from 'viem/actions';
 import { errorToString } from '../../../../helpers/format.ts';
-import { refTxConfirmedCallback, refTxRevertedCallback } from '../../apis/divvi/callbacks.ts';
 import type { GasPricing } from '../../apis/gas-prices/gas-prices.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { MinterEntity } from '../../entities/minter.ts';
@@ -157,10 +156,6 @@ function txMined(dispatch: BeefyDispatchFn, context: TxContext, receipt: Transac
       }, 60 * 1000);
     }
   }
-
-  if (receipt.transactionHash) {
-    refTxConfirmedCallback(receipt.transactionHash);
-  }
 }
 
 /**
@@ -170,7 +165,7 @@ function txError(
   dispatch: BeefyDispatchFn,
   context: TxContext,
   error: unknown,
-  txHash?: Hash,
+  _txHash?: Hash,
   from?: string
 ) {
   const { additionalData } = context;
@@ -180,9 +175,6 @@ function txError(
   }
   dispatch(createWalletActionErrorAction(txError, additionalData));
   dispatch(stepperSetStepContent({ stepContent: StepContent.ErrorTx }));
-  if (txHash) {
-    refTxRevertedCallback(txHash);
-  }
 }
 
 export const resetWallet = () => {
