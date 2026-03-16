@@ -33,3 +33,16 @@ export async function allFulfilled<T>(promises: Promise<T>[]): Promise<T[]> {
 export function asyncMap<T, U>(array: T[], mapper: (item: T) => Promise<U>): Promise<U[]> {
   return Promise.all(array.map(mapper));
 }
+
+/** throws after {ms} milliseconds */
+export async function timeout(
+  ms: number,
+  errorMessage: string | (() => Error) = `Timeout after ${ms}ms`
+): Promise<void> {
+  return new Promise((_, reject) => {
+    setTimeout(
+      () => reject(typeof errorMessage === 'string' ? new Error(errorMessage) : errorMessage()),
+      ms
+    );
+  });
+}

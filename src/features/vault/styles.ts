@@ -5,12 +5,17 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
-    paddingBlock: '20px',
+    paddingBlock: '12px 24px',
+
     sm: {
+      paddingBlock: '24px 28px',
       gap: '24px',
     },
     md: {
-      paddingBlock: '32px',
+      paddingBlock: '28px 48px',
+    },
+    lg: {
+      paddingBlock: '32px 48px',
     },
   }),
   contentColumns: css.raw({
@@ -56,12 +61,6 @@ export const styles = {
   header: css.raw({
     display: 'flex',
     flexDirection: 'column',
-    gap: '2px',
-    sm: {
-      gap: '8px',
-    },
-    md: {
-      gap: '12px',
-    },
+    gap: '12px',
   }),
 };

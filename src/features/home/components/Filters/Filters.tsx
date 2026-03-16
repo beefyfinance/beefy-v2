@@ -6,7 +6,7 @@ import { ExtendedFiltersButtonDropdown } from './components/ExtendedFilters/Exte
 import { ClearFiltersButton } from './components/ClearFiltersButton/ClearFiltersButton.tsx';
 import { VaultCategoryButtonFilter } from './components/VaultCategoryFilters/VaultCategoryButtonFilter.tsx';
 import { StrategyTypeButtonFilter } from './components/StrategyTypeFilters/StrategyTypeButtonFilter.tsx';
-import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 import { styled } from '@repo/styles/jsx';
 import { BoostFilterButton } from './components/BoostFilter/BoostFilterButton.tsx';
 import { Sort } from './components/Sort/Sort.tsx';

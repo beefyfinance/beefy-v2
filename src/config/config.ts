@@ -20,7 +20,11 @@ export const config = {
   polygon: {
     name: 'Polygon PoS',
     chainId: 137,
-    rpc: ['https://1rpc.io/matic'], // polygon-rpc.com returns 401 (API key disabled)
+    rpc: [
+      'https://polygon-bor-rpc.publicnode.com',
+      'https://polygon.drpc.org',
+      'https://1rpc.io/matic',
+    ],
     explorerUrl: 'https://polygonscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x9C983dd514087674CA1d22A22B7432b614b4C835',
@@ -450,7 +454,7 @@ export const config = {
   monad: {
     name: 'Monad',
     chainId: 143,
-    rpc: ['https://rpc.monad.xyz'],
+    rpc: ['https://rpc3.monad.xyz'],
     explorerUrl: 'https://monadscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xDD10a7949e48dCf5df301DC84268eaaC7F7d3f3D',

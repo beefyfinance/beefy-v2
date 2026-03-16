@@ -8,7 +8,7 @@ import {
   type ListProps,
   Virtuoso,
 } from 'react-virtuoso';
-import { useBreakpoints } from '../../../../../../components/MediaQueries/useBreakpoints.ts';
+import { useBreakpoints } from '../../../../../../hooks/useBreakpoints.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { selectLastViewedVaultsVaultId } from '../../../../../data/selectors/vaults-list.ts';

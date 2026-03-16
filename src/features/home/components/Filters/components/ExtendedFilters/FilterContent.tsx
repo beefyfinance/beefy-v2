@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ShownVaultsCount } from './ShownVaultsCount.tsx';
 import { CheckboxFilter } from '../CheckboxFilter/CheckboxFilter.tsx';
 import { MinTvlFilter } from '../MinTvlFilter/MinTvlFilter.tsx';
-import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../../../hooks/useBreakpoint.ts';
 import { BoostCheckBox } from '../BoostFilter/BoostFilterButton.tsx';
 import { StategyTypeCheckBoxList } from '../StrategyTypeFilters/StategyTypeCheckboxList.tsx';
 import { VaultCategoryCheckList } from '../VaultCategoryFilters/VaultCategoryCheckList.tsx';

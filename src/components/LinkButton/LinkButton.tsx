@@ -6,7 +6,7 @@ import CodeRoundedIcon from '../../images/icons/mui/CodeRounded.svg?react';
 import InsertIcon from '../../images/icons/mui/InsertLink.svg?react';
 import type { LinkButtonProps } from './LinkButtonProps.ts';
 import { css } from '@repo/styles/css';
-import { useBreakpoint } from '../MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../hooks/useBreakpoint.ts';
 import { ExternalLink } from '../Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);

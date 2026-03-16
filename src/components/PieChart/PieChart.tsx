@@ -3,7 +3,7 @@ import { Cell, Pie, PieChart as RechartsPieChart, Tooltip } from 'recharts';
 import { PieChartTooltip } from '../PieChartTooltip/PieChartTooltip.tsx';
 import { CHART_COLORS } from '../../helpers/charts.ts';
 import type { PieChartProps } from './types.ts';
-import { useBreakpoint } from '../MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../hooks/useBreakpoint.ts';
 import { token } from '@repo/styles/tokens';
 
 export const PieChart = memo(function PieChart({ data, type, formatter }: PieChartProps) {

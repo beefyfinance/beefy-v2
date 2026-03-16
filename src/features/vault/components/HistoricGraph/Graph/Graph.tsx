@@ -13,7 +13,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { useBreakpoint } from '../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../../hooks/useBreakpoint.ts';
 import { XAxisTick } from '../../../../../components/XAxisTick/XAxisTick.tsx';
 import {
   formatLargePercent,

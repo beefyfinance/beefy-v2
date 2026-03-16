@@ -1,6 +1,6 @@
 import { css } from '@repo/styles/css';
 import { memo, useCallback, useState } from 'react';
-import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../../../hooks/useBreakpoint.ts';
 import { VaultIdentity } from '../../../../../../components/VaultIdentity/VaultIdentity.tsx';
 import { VaultDashboardStats } from '../../../../../../components/VaultStats/VaultDashboardStats.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';

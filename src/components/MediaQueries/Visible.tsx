@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import type { VisibleProps } from './types.ts';
-import { useBreakpoint } from './useBreakpoint.ts';
+import { useBreakpoint } from '../../hooks/useBreakpoint.ts';
 
 export const Visible = memo(function Visible({
   children,

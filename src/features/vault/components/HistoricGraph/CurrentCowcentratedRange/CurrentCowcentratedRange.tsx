@@ -2,7 +2,7 @@ import type BigNumber from 'bignumber.js';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../components/Button/Button.tsx';
-import { useBreakpoint } from '../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../../hooks/useBreakpoint.ts';
 import { BIG_ONE, BIG_ZERO } from '../../../../../helpers/big-number.ts';
 import { formatTokenDisplayCondensed } from '../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../helpers/mui.ts';

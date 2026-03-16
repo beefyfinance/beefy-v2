@@ -21,7 +21,6 @@ import { fetchAllBalanceAction, recalculateDepositedVaultsAction } from '../acti
 import { initiateBoostForm } from '../actions/boosts.ts';
 import { fetchBridgeConfig } from '../actions/bridge.ts';
 import { fetchBridges } from '../actions/bridges.ts';
-import { initCampaignBeGems } from '../actions/campaigns/begems.ts';
 import { fetchChainConfigs } from '../actions/chains.ts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { fetchCurators } from '../actions/curators.ts';
@@ -122,7 +121,6 @@ export const initialDataLoaderState: DataLoaderState = {
     apy: dataLoaderStateInit,
     articles: dataLoaderStateInit,
     avgApy: dataLoaderStateInit,
-    beGemsCampaign: dataLoaderStateInit,
     boostForm: dataLoaderStateInit,
     bridgeConfig: dataLoaderStateInit,
     bridges: dataLoaderStateInit,
@@ -619,7 +617,6 @@ export const dataLoaderSlice = createSlice({
       fetchAllCurrentCowcentratedRanges,
       'currentCowcentratedRanges'
     );
-    addGlobalAsyncThunkActions(builder, initCampaignBeGems, 'beGemsCampaign');
     addGlobalAsyncThunkActions(builder, fetchWeeklyRevenueStats, 'revenue');
 
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);

@@ -8,7 +8,7 @@ import { selectTotalActiveVaults } from '../../../../data/selectors/vaults.ts';
 import { ModalTvl } from '../ModalTvl/ModalTvl.tsx';
 import { Stat } from './Stat.tsx';
 import { PlatformStatsContainer } from './Stats.tsx';
-import { useBreakpoint } from '../../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../../hooks/useBreakpoint.ts';
 import ExpandMore from '../../../../../images/icons/mui/ExpandMore.svg?react';
 import { styled } from '@repo/styles/jsx';
 import { selectPreviousWeekRevenueStats } from '../../../../data/selectors/revenue.ts';

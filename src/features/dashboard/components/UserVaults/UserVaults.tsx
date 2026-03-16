@@ -9,7 +9,7 @@ import {
   type ListProps,
   Virtuoso,
 } from 'react-virtuoso';
-import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 import { Section } from '../../../../components/Section/Section.tsx';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../data/entities/vault.ts';
