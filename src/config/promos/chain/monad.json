@@ -1,1 +1,59 @@
-[]
+[
+  {
+    "id": "moo_pancake-cow-monad-wmon-usdc-vault-monad",
+    "title": "Monad",
+    "vaultId": "pancake-cow-monad-wmon-usdc-vault",
+    "tokenAddress": "0xBed4B984E7dC447742C272B63800111d68298008",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xC17C462Fe317154cc817F5e7C202361f8D214f8a",
+    "partners": ["monad", "pancakeswap"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+        "symbol": "WMON",
+        "decimals": 18,
+        "oracleId": "WMON"
+      }
+    ]
+  },
+  {
+    "id": "moo_pancake-cow-monad-wmon-weth-vault-monad",
+    "title": "Monad",
+    "vaultId": "pancake-cow-monad-wmon-weth-vault",
+    "tokenAddress": "0xe35395eFe6A5eF7b01b9104B36710d73e7D67cb3",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xBF3376893A79Cdaad43639dbA8B9C2508278B737",
+    "partners": ["monad", "pancakeswap"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+        "symbol": "WMON",
+        "decimals": 18,
+        "oracleId": "WMON"
+      }
+    ]
+  },
+  {
+    "id": "moo_pancake-cow-monad-wbtc-wmon-vault-monad",
+    "title": "Monad",
+    "vaultId": "pancake-cow-monad-wbtc-wmon-vault",
+    "tokenAddress": "0xd4D3dCb14B311887A563C38A2528F943561e6c04",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xA2383454cB7203e9F10181d4737976DA179DC434",
+    "partners": ["monad", "pancakeswap"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+        "symbol": "WMON",
+        "decimals": 18,
+        "oracleId": "WMON"
+      }
+    ]
+  }
+]
