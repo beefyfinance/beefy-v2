@@ -1781,7 +1781,7 @@
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
-      "notCorrelated": true,
+      "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
@@ -1821,7 +1821,7 @@
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
-      "notCorrelated": true,
+      "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
@@ -1864,7 +1864,7 @@
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
-      "notCorrelated": true,
+      "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
