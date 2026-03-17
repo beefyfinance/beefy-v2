@@ -150,6 +150,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const { swapAggregator, getState } = this.helpers;
     const state = getState();
     const input = onlyOneInput(inputs);
+    const slippage = selectTransactSlippage(state);
     const { sourceChainId, destChainId, bridgeToken, destBridgeToken } = option;
     console.log('[cross-chain] fetchDepositQuote: start', {
       sourceChainId,
@@ -194,11 +195,13 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       });
     }
 
-    // B. CCTP bridge quote
+    // B. CCTP bridge quote (slip only when there was a source swap; direct USDC input has no swap slippage)
+    const bridgeUsdcAmount =
+      sourceSteps.length > 0 ? slipBy(usdcAmount, slippage, bridgeToken.decimals) : usdcAmount;
     const bridgeQuote = fetchBridgeQuote(
       sourceChainId,
       destChainId,
-      usdcAmount,
+      bridgeUsdcAmount,
       bridgeToken as TokenErc20,
       destBridgeToken as TokenErc20
     );
@@ -345,48 +348,27 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       destBridgeToken as TokenErc20
     );
 
-    // 3. Re-quote destination strategy with step-time bridge output
-    console.log('[cross-chain] fetchDepositStep: fetching dest helpers and strategies');
-    const destHelpers = await (
-      await getTransactApi()
-    ).getHelpersForChain(destChainId, quote.option.vaultId, getState);
-    const destStrategies = await (await getTransactApi()).getZapStrategiesForVault(destHelpers);
-
-    const destMatch = await this.findDestStrategyForDeposit(destStrategies, destBridgeToken);
-    if (!destMatch) {
-      throw new Error(
-        `No composable destination strategy accepts USDC on chain ${destChainId} for vault ${quote.option.vaultId}`
-      );
-    }
-    console.log('[cross-chain] fetchDepositStep: dest strategy matched', {
-      strategyId: destMatch.strategy.id,
-    });
-
-    // Call fetchDepositQuote on IStrategy before narrowing to IComposableStrategy
-    const destQuoteSelection: QuoteSelectionConfig = {
-      maxUsesPerProvider: { kyber: 1 },
-      maxUsesStrict: false,
-    };
-    console.log('[cross-chain] fetchDepositStep: re-quoting dest strategy');
-    const stepDestQuote = await destMatch.strategy.fetchDepositQuote(
-      [{ token: destBridgeToken, amount: stepBridgeQuote.toAmount, max: false }],
-      destMatch.option,
-      destQuoteSelection
-    );
-    console.log('[cross-chain] fetchDepositStep: dest re-quote done');
+    // 3. Reuse stored destination quote (slippage already applied at quote time)
+    const stepDestQuote = quote.destQuote;
     if (!isZapQuote(stepDestQuote)) {
       throw new Error('Destination quote is not a zap quote');
     }
 
-    if (!isComposableStrategy(destMatch.strategy)) {
+    console.log('[cross-chain] fetchDepositStep: loading dest strategy for breakdown');
+    const destHelpers = await (
+      await getTransactApi()
+    ).getHelpersForChain(destChainId, quote.option.vaultId, getState);
+    const destStrategies = await (await getTransactApi()).getZapStrategiesForVault(destHelpers);
+    const destStrategy = destStrategies.find(s => s.id === stepDestQuote.option.strategyId);
+    if (!destStrategy || !isComposableStrategy(destStrategy)) {
       throw new Error(
-        `Destination strategy '${destMatch.strategy.id}' on chain ${destChainId} is not composable`
+        `Destination strategy '${stepDestQuote.option.strategyId}' on chain ${destChainId} is not composable`
       );
     }
 
     console.log('[cross-chain] fetchDepositStep: fetching dest breakdown');
-    const breakdown = await destMatch.strategy.fetchDepositUserlessZapBreakdown(
-      stepDestQuote as Parameters<typeof destMatch.strategy.fetchDepositUserlessZapBreakdown>[0]
+    const breakdown = await destStrategy.fetchDepositUserlessZapBreakdown(
+      stepDestQuote as Parameters<typeof destStrategy.fetchDepositUserlessZapBreakdown>[0]
     );
 
     // 4. Build ZapPayload for CircleBeefyZapReceiver on dest chain
@@ -617,11 +599,13 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       usdcAmount: usdcOutput.amount.toString(10),
     });
 
-    // C. CCTP bridge
+    // C. CCTP bridge (use slippage-adjusted USDC so dest quote is pessimistic)
+    const slippage = selectTransactSlippage(state);
+    const slippedUsdcAmount = slipBy(usdcOutput.amount, slippage, bridgeToken.decimals);
     const bridgeQuote = fetchBridgeQuote(
       sourceChainId,
       destChainId,
-      usdcOutput.amount,
+      slippedUsdcAmount,
       bridgeToken as TokenErc20,
       destBridgeToken as TokenErc20
     );
@@ -803,31 +787,23 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
       const wantedOutput = quote.option.wantedOutputs[0];
 
-      // 5. Re-quote destination swap with step-time bridge output (fresh pathId)
-      console.log('[cross-chain] fetchWithdrawStep: re-quoting dest swap');
-      const destSwapQuotes = await swapAggregator.fetchQuotes(
-        {
-          fromToken: destBridgeToken,
-          fromAmount: stepBridgeQuote.toAmount,
-          toToken: wantedOutput,
-          vaultId: quote.option.vaultId,
-        },
-        state,
-        this.options.swap
-      );
-      if (!destSwapQuotes.length) {
-        throw new Error('No swap quotes available for destination chain swap at step time');
+      // 5. Reuse stored dest swap step (slippage already applied at quote time)
+      console.log('[cross-chain] fetchWithdrawStep: reusing dest swap from quote');
+      const destSwapStep = quote.destSteps
+        .filter(isZapQuoteStepSwap)
+        .find(isZapQuoteStepSwapAggregator);
+      if (!destSwapStep) {
+        throw new Error('Missing dest swap step for needsDestHook path');
       }
-      const bestDestSwap = destSwapQuotes[0];
 
       const destSwapZap = await fetchZapAggregatorSwap(
         {
-          quote: bestDestSwap,
-          inputs: [{ token: destBridgeToken, amount: stepBridgeQuote.toAmount }],
-          outputs: [{ token: wantedOutput, amount: bestDestSwap.toAmount }],
+          quote: destSwapStep.quote,
+          inputs: [{ token: destSwapStep.fromToken, amount: destSwapStep.fromAmount }],
+          outputs: [{ token: destSwapStep.toToken, amount: destSwapStep.toAmount }],
           maxSlippage: slippage,
           zapRouter: destZap.router,
-          providerId: bestDestSwap.providerId,
+          providerId: destSwapStep.providerId,
           insertBalance: true,
         },
         swapAggregator,
