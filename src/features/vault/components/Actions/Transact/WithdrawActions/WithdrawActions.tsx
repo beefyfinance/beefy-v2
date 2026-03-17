@@ -30,6 +30,7 @@ import { TransactStatus } from '../../../../../data/reducers/wallet/transact-typ
 import { selectGovVaultPendingRewards } from '../../../../../data/selectors/balance.ts';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
 import {
+  selectTransactConfirmNeededWithChanges,
   selectTransactQuoteStatus,
   selectTransactSelectedQuoteOrUndefined,
   selectTransactVaultId,
@@ -77,6 +78,7 @@ export const WithdrawActionsStandard = memo(function WithdrawActionsStandard() {
 });
 
 export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
+  const { t } = useTranslation();
   const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectGovVaultById(state, vaultId));
@@ -100,15 +102,14 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
           FeesComponent={VaultFees}
           chainId={vault.chainId}
         >
-          <div className={classes.buttons}>
-            <ActionWithdrawDisabled />
-
-            <div className={classes.feesContainer}>
-              {showClaim ?
-                <ActionClaim vault={vault} />
-              : null}
-              <VaultFees />
-            </div>
+          <div className={classes.feesContainer}>
+            <Button variant="cta" disabled={true} fullWidth={true} borderless={true}>
+              {t('Transact-Withdraw')}
+            </Button>
+            {showClaim ?
+              <ActionClaim vault={vault} />
+            : null}
+            <VaultFees />
           </div>
         </ActionConnectSwitch>
       }
@@ -150,16 +151,19 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
   const [isExecuting, setIsExecuting] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const confirmNeededWithChanges = useAppSelector(selectTransactConfirmNeededWithChanges);
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
   const executionChainId = useMemo(() => getExecutionChainId(quote), [quote]);
 
+  const effectiveDisabledByConfirm = isDisabledByConfirm && !confirmNeededWithChanges;
+
   const isDisabled =
     isTxInProgress ||
     isExecuting ||
     isDisabledByPriceImpact ||
-    isDisabledByConfirm ||
+    effectiveDisabledByConfirm ||
     isDisabledByGlpLock ||
     isDisabledByScreamLiquidity ||
     isDisabledByNotEnoughInput;
@@ -221,15 +225,18 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
   const [isExecuting, setIsExecuting] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const confirmNeededWithChanges = useAppSelector(selectTransactConfirmNeededWithChanges);
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
+
+  const effectiveDisabledByConfirm = isDisabledByConfirm && !confirmNeededWithChanges;
 
   const isDisabled =
     isTxInProgress ||
     isExecuting ||
     isDisabledByPriceImpact ||
-    isDisabledByConfirm ||
+    effectiveDisabledByConfirm ||
     isDisabledByNotEnoughInput;
   const showClaim = !isCowcentratedLikeVault(vault);
 

@@ -323,6 +323,12 @@ export const selectTransactConfirmError = (state: BeefyState) => state.ui.transa
 export const selectTransactConfirmChanges = (state: BeefyState) =>
   state.ui.transact.confirm.changes;
 
+/** True when "quote has changed, please confirm" is shown — button should be enabled so user can confirm with new quote */
+export const selectTransactConfirmNeededWithChanges = createSelector(
+  [selectTransactConfirmStatus, selectTransactConfirmChanges],
+  (status, changes) => status === TransactStatus.Fulfilled && changes != null && changes.length > 0
+);
+
 export const selectTransactForceSelection = (state: BeefyState) => state.ui.transact.forceSelection;
 
 export const selectTransactVaultHasCrossChainZap = (state: BeefyState) => {
@@ -549,6 +555,17 @@ export const selectCrossChainPendingOpById = (state: BeefyState, opId: string) =
 export const selectCrossChainRecoverableOps = createSelector(
   selectCrossChainPendingOps,
   (ops): PendingCrossChainOp[] => ops.filter(op => op.status === 'dest-failed')
+);
+
+/** Dest-failed op for the current transact vault, if any (most recent by updatedAt). Used to show recovery UI after modal close. */
+export const selectRecoveryOpForCurrentVault = createSelector(
+  [(state: BeefyState) => state.ui.transact.vaultId, selectCrossChainRecoverableOps],
+  (vaultId, recoverableOps): PendingCrossChainOp | undefined => {
+    if (!vaultId) return undefined;
+    const forVault = recoverableOps.filter(op => op.recovery.vaultId === vaultId);
+    if (forVault.length === 0) return undefined;
+    return orderBy(forVault, 'updatedAt', 'desc')[0];
+  }
 );
 
 export const selectCrossChainActiveOps = createSelector(

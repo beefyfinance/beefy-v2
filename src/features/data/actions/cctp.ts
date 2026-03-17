@@ -85,8 +85,11 @@ export function pollCCTPBridgeStatus({
         }
 
         if (TERMINAL_STATES.has(message.lifecycleState)) {
-          console.debug('[CCTP] Terminal state without dstTxHash:', message.lifecycleState);
-          dispatch(stepperSetStepContent({ stepContent: StepContent.ErrorTx }));
+          console.debug(
+            '[CCTP] Terminal state (e.g. abandoned/zap_failed):',
+            message.lifecycleState
+          );
+          dispatch(handleBridgeFailure(message.dstRefundedAmount, getState));
           return;
         }
 

@@ -1,8 +1,14 @@
 import { styled } from '@repo/styles/jsx';
 import { type FC, memo, useEffect } from 'react';
-import { stepperUpdateCurrentStep } from '../../features/data/actions/wallet/stepper.ts';
-import { StepContent } from '../../features/data/reducers/wallet/stepper-types.ts';
 import {
+  stepperReset,
+  stepperUpdateCurrentStep,
+} from '../../features/data/actions/wallet/stepper.ts';
+import { resetWallet } from '../../features/data/actions/wallet/common.ts';
+import { crossChainClearRecoveryQuote } from '../../features/data/actions/wallet/cross-chain.ts';
+import { StepContent as StepContentEnum } from '../../features/data/reducers/wallet/stepper-types.ts';
+import {
+  selectIsStepperRecoveryExecution,
   selectStepperCurrentStepData,
   selectStepperState,
   selectStepperStepContent,
@@ -20,14 +26,14 @@ import {
 } from './components/Content/Content.tsx';
 import { ProgressBar } from './components/ProgressBar/ProgressBar.tsx';
 
-const stepToComponent: Record<StepContent, FC> = {
-  [StepContent.StartTx]: StepsStartContent,
-  [StepContent.WalletTx]: StepsCountContent,
-  [StepContent.WaitingTx]: WaitingContent,
-  [StepContent.ErrorTx]: ErrorContent,
-  [StepContent.SuccessTx]: SuccessContent,
-  [StepContent.BridgingTx]: BridgingContent,
-  [StepContent.RecoveryTx]: RecoveryContent,
+const stepToComponent: Record<StepContentEnum, FC> = {
+  [StepContentEnum.StartTx]: StepsStartContent,
+  [StepContentEnum.WalletTx]: StepsCountContent,
+  [StepContentEnum.WaitingTx]: WaitingContent,
+  [StepContentEnum.ErrorTx]: ErrorContent,
+  [StepContentEnum.SuccessTx]: SuccessContent,
+  [StepContentEnum.BridgingTx]: BridgingContent,
+  [StepContentEnum.RecoveryTx]: RecoveryContent,
 };
 
 const StepperImpl = () => {
@@ -36,6 +42,7 @@ const StepperImpl = () => {
   const content = useAppSelector(selectStepperStepContent);
   const StepContent = stepToComponent[content];
   const steps = useAppSelector(selectStepperState);
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
 
   useEffect(() => {
     if (!isEmpty(currentStepData) && steps.modal && currentStepData.pending === false) {
@@ -43,6 +50,14 @@ const StepperImpl = () => {
       dispatch(currentStepData.action);
     }
   }, [currentStepData, dispatch, steps.currentStep, steps.modal]);
+
+  useEffect(() => {
+    if (isRecoveryExecution && content === StepContentEnum.ErrorTx && steps.modal) {
+      dispatch(crossChainClearRecoveryQuote());
+      dispatch(stepperReset());
+      dispatch(resetWallet());
+    }
+  }, [isRecoveryExecution, content, steps.modal, dispatch]);
 
   if (!steps.modal) {
     return null;

@@ -38,6 +38,8 @@ import { selectPendingAllowances } from '../../../../../data/selectors/allowance
 import { selectChainById } from '../../../../../data/selectors/chains.ts';
 import {
   selectCrossChainRecoveryQuote,
+  selectCrossChainRecoveryQuoteOpId,
+  selectRecoveryOpForCurrentVault,
   selectTransactQuoteIds,
 } from '../../../../../data/selectors/transact.ts';
 import { selectZapSwapProviderName } from '../../../../../data/selectors/zap.ts';
@@ -412,13 +414,17 @@ function useStepStatuses(
   const stepperContent = useAppSelector(selectStepperStepContent);
   const currentStepIndex = useAppSelector(selectStepperCurrentStep);
   const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
 
   return useMemo(() => {
+    const isRecoveryFromOp = recoveryOp != null && !isStepping;
+
     if (
       !isStepping &&
       stepperContent !== StepContent.SuccessTx &&
       stepperContent !== StepContent.RecoveryTx &&
-      !isRecoveryExecution
+      !isRecoveryExecution &&
+      !isRecoveryFromOp
     ) {
       return Array(totalStepsCount).fill('list') as StepStatusState[];
     }
@@ -427,7 +433,7 @@ function useStepStatuses(
       return Array(totalStepsCount).fill('finished') as StepStatusState[];
     }
 
-    if (stepperContent === StepContent.RecoveryTx) {
+    if (stepperContent === StepContent.RecoveryTx || isRecoveryFromOp) {
       const failedIdx = bridgeStepAbsoluteIndex + 1;
       return Array.from({ length: totalStepsCount }, (_, i) => {
         if (i <= bridgeStepAbsoluteIndex) return 'finished';
@@ -479,6 +485,7 @@ function useStepStatuses(
     quoteSteps,
     bridgeStepAbsoluteIndex,
     isRecoveryExecution,
+    recoveryOp,
   ]);
 }
 
@@ -516,6 +523,8 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
   const hasMultipleOptions = quotes.length > 1;
   const stepperContent = useAppSelector(selectStepperStepContent);
   const recoveryQuote = useAppSelector(selectCrossChainRecoveryQuote);
+  const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
+  const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
 
   const pendingAllowancesLive: AllowanceTokenAmount[] = useAppSelector(state =>
     selectPendingAllowances(state, quote.allowances)
@@ -528,14 +537,17 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
   const pendingAllowances = stepperModal ? snapshotRef.current : pendingAllowancesLive;
 
   const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
-  const isRecovery = stepperContent === StepContent.RecoveryTx || isRecoveryExecution;
+  const isRecovery =
+    stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null;
+
+  const recoveryQuoteMatchesOp = !recoveryOp || recoveryQuoteOpId === recoveryOp.id;
 
   const { effectiveSteps, bridgeStepAbsoluteIndex } = useMemo(() => {
     const bridgeIdx = quote.steps.findIndex(s => s.type === 'bridge');
     const absoluteBridgeIdx =
       pendingAllowances.length + (bridgeIdx >= 0 ? bridgeIdx : quote.steps.length);
 
-    if (isRecovery && recoveryQuote && bridgeIdx >= 0) {
+    if (isRecovery && recoveryQuote && recoveryQuoteMatchesOp && bridgeIdx >= 0) {
       const preBridgeSteps = quote.steps.slice(0, bridgeIdx + 1);
       return {
         effectiveSteps: [...preBridgeSteps, ...recoveryQuote.steps],
@@ -544,7 +556,7 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
     }
 
     return { effectiveSteps: quote.steps, bridgeStepAbsoluteIndex: absoluteBridgeIdx };
-  }, [quote.steps, isRecovery, recoveryQuote, pendingAllowances.length]);
+  }, [quote.steps, isRecovery, recoveryQuote, recoveryQuoteMatchesOp, pendingAllowances.length]);
 
   const approvalCount = pendingAllowances.length;
   const totalSteps = approvalCount + effectiveSteps.length;

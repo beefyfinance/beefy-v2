@@ -1,11 +1,14 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSteps } from '../../../../../data/actions/wallet/transact.ts';
-import { crossChainRecoverySteps } from '../../../../../data/actions/wallet/cross-chain.ts';
+import {
+  crossChainFetchRecoveryQuote,
+  crossChainRecoverySteps,
+} from '../../../../../data/actions/wallet/cross-chain.ts';
 import {
   isCowcentratedDepositQuote,
   type TransactOption,
@@ -20,6 +23,10 @@ import {
   selectStepperStepContent,
 } from '../../../../../data/selectors/stepper.ts';
 import {
+  selectCrossChainRecoveryQuoteOpId,
+  selectCrossChainRecoveryQuoteStatus,
+  selectRecoveryOpForCurrentVault,
+  selectTransactConfirmNeededWithChanges,
   selectTransactQuoteStatus,
   selectTransactSelectedChainId,
   selectTransactSelectedQuoteOrUndefined,
@@ -53,8 +60,9 @@ export const DepositActions = memo(function DepositActions() {
   const option = quote ? quote.option : null;
   const stepperContent = useAppSelector(selectStepperStepContent);
   const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
 
-  if (stepperContent === StepContent.RecoveryTx || isRecoveryExecution) {
+  if (stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null) {
     return <ActionRecoveryDeposit />;
   }
 
@@ -100,18 +108,21 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const [isExecuting, setIsExecuting] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const confirmNeededWithChanges = useAppSelector(selectTransactConfirmNeededWithChanges);
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
   const isCowDepositQuote = isCowcentratedDepositQuote(quote);
   const executionChainId = useMemo(() => getExecutionChainId(quote), [quote]);
 
+  const effectiveDisabledByConfirm = isDisabledByConfirm && !confirmNeededWithChanges;
+
   const isDisabled =
     isTxInProgress ||
     isExecuting ||
     isDisabledByPriceImpact ||
     isDisabledByMaxNative ||
-    isDisabledByConfirm ||
+    effectiveDisabledByConfirm ||
     isDisabledByGlpLock ||
     isDisabledByNotEnoughInput;
 
@@ -160,18 +171,46 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const bridgeStatus = useAppSelector(selectStepperBridgeStatus);
+  const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const connectedChainId = useAppSelector(selectCurrentChainId);
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const recoveryQuoteStatus = useAppSelector(selectCrossChainRecoveryQuoteStatus);
+  const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
   const [isExecuting, setIsExecuting] = useState(false);
+  const [isFetchingQuote, setIsFetchingQuote] = useState(false);
+
+  useEffect(() => {
+    if (!isTxInProgress && !isRecoveryExecution) {
+      setIsExecuting(false);
+    }
+  }, [isTxInProgress, isRecoveryExecution]);
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
-  const destChainId = bridgeStatus?.destChainId ?? vault.chainId;
-  const opId = bridgeStatus?.opId;
+  const opIdFromOp = bridgeStatus?.opId ?? recoveryOp?.id;
+  const opId = opIdFromOp ?? recoveryQuoteOpId;
+  const destChainId =
+    bridgeStatus?.destChainId ?? recoveryOp?.recovery.destChainId ?? vault?.chainId;
   const isOnCorrectChain = connectedChainId === destChainId;
 
-  const handleClick = useCallback(() => {
+  const hasValidQuote =
+    opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
+
+  const needsNewQuote = recoveryOp != null && !isRecoveryExecution && !hasValidQuote;
+
+  const handleFetchQuote = useCallback(() => {
+    if (opId) {
+      setIsFetchingQuote(true);
+      dispatch(crossChainFetchRecoveryQuote({ opId }))
+        .unwrap()
+        .catch(() => {})
+        .finally(() => setIsFetchingQuote(false));
+    }
+  }, [dispatch, opId]);
+
+  const handleFinalise = useCallback(() => {
     if (opId) {
       setIsExecuting(true);
       Promise.resolve(dispatch(crossChainRecoverySteps(opId, t))).catch(() =>
@@ -203,14 +242,34 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
     );
   }
 
+  if (needsNewQuote) {
+    return (
+      <div className={classes.feesContainer}>
+        <Button
+          variant="recovery"
+          disabled={isTxInProgress || isFetchingQuote || !opId}
+          fullWidth={true}
+          borderless={true}
+          onClick={handleFetchQuote}
+        >
+          {isFetchingQuote ? t('Transact-FetchingQuote') : t('Transact-FetchNewQuote')}
+        </Button>
+        <VaultFees />
+      </div>
+    );
+  }
+
+  const canFinalise = hasValidQuote && opId != null;
+  const finaliseDisabled = !canFinalise || isTxInProgress || isExecuting;
+
   return (
     <div className={classes.feesContainer}>
       <Button
         variant="recovery"
-        disabled={isTxInProgress || isExecuting || !opId}
+        disabled={finaliseDisabled}
         fullWidth={true}
         borderless={true}
-        onClick={handleClick}
+        onClick={handleFinalise}
       >
         {t('Transact-FinaliseDeposit')}
       </Button>
