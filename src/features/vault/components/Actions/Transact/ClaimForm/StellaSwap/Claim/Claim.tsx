@@ -8,6 +8,7 @@ import { claimStellaSwap } from '../../../../../../../data/actions/wallet/offcha
 import type { ChainEntity } from '../../../../../../../data/entities/chain.ts';
 import type { VaultEntity } from '../../../../../../../data/entities/vault.ts';
 import { selectChainById } from '../../../../../../../data/selectors/chains.ts';
+import { selectTransactExecuting } from '../../../../../../../data/selectors/transact.ts';
 import { selectIsStepperStepping } from '../../../../../../../data/selectors/stepper.ts';
 import { ActionConnectSwitch } from '../../../CommonActions/CommonActions.tsx';
 import { TimeCountdown } from '../../TimeCountdown/TimeCountdown.tsx';
@@ -31,7 +32,8 @@ export const Claim = memo(function Claim({ chainId, vaultId, withChain }: ClaimP
     () => Date.now() - lastDispatched < STELLA_SWAP_MIN_TIME_BETWEEN_REQUESTS_MS
   );
   const isStepping = useAppSelector(selectIsStepperStepping);
-  const disable = isStepping || shouldWait;
+  const isExecuting = useAppSelector(selectTransactExecuting);
+  const disable = isStepping || isExecuting || shouldWait;
   const handleClaim = useCallback(() => {
     dispatch(
       stepperStartWithSteps(

@@ -7,6 +7,7 @@ import { stepperStartWithSteps } from '../../../../../../../data/actions/wallet/
 import { claimMerkl } from '../../../../../../../data/actions/wallet/offchain.ts';
 import type { ChainEntity } from '../../../../../../../data/entities/chain.ts';
 import { selectChainById } from '../../../../../../../data/selectors/chains.ts';
+import { selectTransactExecuting } from '../../../../../../../data/selectors/transact.ts';
 import { selectIsStepperStepping } from '../../../../../../../data/selectors/stepper.ts';
 import { ActionConnectSwitch } from '../../../CommonActions/CommonActions.tsx';
 import { TimeCountdown } from '../../TimeCountdown/TimeCountdown.tsx';
@@ -29,7 +30,8 @@ export const Claim = memo(function Claim({ chainId, withChain }: ClaimProps) {
     () => Date.now() - lastDispatched < MERKL_MIN_TIME_BETWEEN_REQUESTS_MS
   );
   const isStepping = useAppSelector(selectIsStepperStepping);
-  const disable = isStepping || shouldWait;
+  const isExecuting = useAppSelector(selectTransactExecuting);
+  const disable = isStepping || isExecuting || shouldWait;
   const handleClaim = useCallback(() => {
     dispatch(
       stepperStartWithSteps(

@@ -5,6 +5,7 @@ import { type BridgeStatus, type Step, StepContent } from '../../reducers/wallet
 import type { BeefyThunk } from '../../store/types.ts';
 import { createAppAsyncThunk } from '../../utils/store-utils.ts';
 import { pollCCTPBridgeStatus } from '../cctp.ts';
+import { transactSetExecuting } from '../transact.ts';
 
 export const stepperReset = createAction('stepper/reset');
 export const stepperAddStep = createAction<{ step: Step }>('stepper/addStep');
@@ -85,6 +86,7 @@ export const stepperUpdate = createAppAsyncThunk('stepper/update', (_, { getStat
 
 export function stepperStartWithSteps(steps: Step[], chainId: ChainEntity['id']): BeefyThunk {
   return dispatch => {
+    dispatch(transactSetExecuting(false));
     dispatch(stepperReset());
     for (const step of steps) {
       dispatch(stepperAddStep({ step }));

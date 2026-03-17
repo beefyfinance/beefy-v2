@@ -11,6 +11,7 @@ import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
 import { useInputForm } from '../../../../../data/hooks/input.ts';
 import { selectBoostById } from '../../../../../data/selectors/boosts.ts';
 import { isLoaderFulfilled } from '../../../../../data/selectors/data-loader-helpers.ts';
+import { selectTransactExecuting } from '../../../../../data/selectors/transact.ts';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
 import { selectErc20TokenByAddress } from '../../../../../data/selectors/tokens.ts';
 import { selectVaultByIdWithReceipt } from '../../../../../data/selectors/vaults.ts';
@@ -63,15 +64,16 @@ export const ActionInputButton = memo(function ActionInputButton({
   );
 
   const isStepping = useAppSelector(selectIsStepperStepping);
+  const isExecuting = useAppSelector(selectTransactExecuting);
 
   const isDisabled = useMemo(
-    () => !formReady || formData.amount.eq(0) || isStepping || balance.eq(0),
-    [balance, formReady, formData.amount, isStepping]
+    () => !formReady || formData.amount.eq(0) || isStepping || isExecuting || balance.eq(0),
+    [balance, formReady, formData.amount, isStepping, isExecuting]
   );
 
   const isDisabledMaxButton = useMemo(
-    () => !formReady || isStepping || balance.eq(0),
-    [balance, formReady, isStepping]
+    () => !formReady || isStepping || isExecuting || balance.eq(0),
+    [balance, formReady, isStepping, isExecuting]
   );
 
   const handleClick = useCallback(() => {
