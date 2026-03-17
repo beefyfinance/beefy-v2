@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
@@ -27,6 +27,7 @@ import {
   selectCrossChainRecoveryQuoteStatus,
   selectRecoveryOpForCurrentVault,
   selectTransactConfirmNeededWithChanges,
+  selectTransactExecuting,
   selectTransactQuoteStatus,
   selectTransactSelectedChainId,
   selectTransactSelectedQuoteOrUndefined,
@@ -105,9 +106,9 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
   const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
-  const [isExecuting, setIsExecuting] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const isExecuting = useAppSelector(selectTransactExecuting);
   const confirmNeededWithChanges = useAppSelector(selectTransactConfirmNeededWithChanges);
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
@@ -127,8 +128,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
     isDisabledByNotEnoughInput;
 
   const handleClick = useCallback(() => {
-    setIsExecuting(true);
-    Promise.resolve(dispatch(transactSteps(quote, t))).catch(() => setIsExecuting(false));
+    dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
 
   return (
@@ -178,14 +178,9 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
   const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
   const recoveryQuoteStatus = useAppSelector(selectCrossChainRecoveryQuoteStatus);
   const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
-  const [isExecuting, setIsExecuting] = useState(false);
+  const isExecuting = useAppSelector(selectTransactExecuting);
   const [isFetchingQuote, setIsFetchingQuote] = useState(false);
 
-  useEffect(() => {
-    if (!isTxInProgress && !isRecoveryExecution) {
-      setIsExecuting(false);
-    }
-  }, [isTxInProgress, isRecoveryExecution]);
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
@@ -212,10 +207,7 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
 
   const handleFinalise = useCallback(() => {
     if (opId) {
-      setIsExecuting(true);
-      Promise.resolve(dispatch(crossChainRecoverySteps(opId, t))).catch(() =>
-        setIsExecuting(false)
-      );
+      dispatch(crossChainRecoverySteps(opId, t));
     }
   }, [dispatch, opId, t]);
 

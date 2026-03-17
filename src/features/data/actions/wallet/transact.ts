@@ -25,6 +25,7 @@ import {
   transactConfirmPending,
   transactConfirmRejected,
   transactConfirmUnneeded,
+  transactSetExecuting,
 } from '../transact.ts';
 import { approve } from './approval.ts';
 import { prefetchGasPrice } from './cross-chain.ts';
@@ -131,8 +132,14 @@ export async function getTransactSteps(
  */
 export function transactSteps(quote: TransactQuote, t: TFunction<Namespace>): BeefyThunk {
   return async function (dispatch, getState) {
-    const steps = await getTransactSteps(quote, t, getState);
-    dispatch(stepperStartWithSteps(steps, quote.inputs[0].token.chainId));
+    dispatch(transactSetExecuting(true));
+    try {
+      const steps = await getTransactSteps(quote, t, getState);
+      dispatch(transactSetExecuting(false));
+      dispatch(stepperStartWithSteps(steps, quote.inputs[0].token.chainId));
+    } finally {
+      dispatch(transactSetExecuting(false));
+    }
   };
 }
 
@@ -141,19 +148,24 @@ export function transactSteps(quote: TransactQuote, t: TFunction<Namespace>): Be
  */
 export function transactStepsClaimGov(vault: VaultGov, t: TFunction<Namespace>): BeefyThunk {
   return async function (dispatch, _getState) {
-    dispatch(
-      stepperStartWithSteps(
-        [
-          {
-            step: 'claim-gov',
-            message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
-            action: claimGovVault(vault),
-            pending: false,
-          },
-        ],
-        vault.chainId
-      )
-    );
+    dispatch(transactSetExecuting(true));
+    try {
+      dispatch(
+        stepperStartWithSteps(
+          [
+            {
+              step: 'claim-gov',
+              message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
+              action: claimGovVault(vault),
+              pending: false,
+            },
+          ],
+          vault.chainId
+        )
+      );
+    } finally {
+      dispatch(transactSetExecuting(false));
+    }
   };
 }
 

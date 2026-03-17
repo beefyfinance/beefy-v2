@@ -15,6 +15,7 @@ import {
   transactInitReady,
   transactSelectQuote,
   transactSelectSelection,
+  transactSetExecuting,
   transactSetInputAmount,
   transactSetSelectedChainId,
   transactSetSlippage,
@@ -104,6 +105,7 @@ const initialTransactState: TransactState = {
     pendingOpIds: [],
     recoveryQuote: initialRecoveryQuoteState,
   },
+  executing: false,
 };
 
 const transactSlice = createSlice({
@@ -190,6 +192,9 @@ const transactSlice = createSlice({
       })
       .addCase(transactSetSlippage, (sliceState, action) => {
         sliceState.swapSlippage = action.payload.slippage;
+      })
+      .addCase(transactSetExecuting, (sliceState, action) => {
+        sliceState.executing = action.payload;
       })
       .addCase(transactInit, (sliceState, action) => {
         const isReady = sliceState.vaultId === action.payload.vaultId;

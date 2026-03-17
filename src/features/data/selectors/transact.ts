@@ -318,6 +318,7 @@ export function selectTokenAmountValue(state: BeefyState, tokenAmount: TokenAmou
   ).multipliedBy(tokenAmount.amount);
 }
 
+export const selectTransactExecuting = (state: BeefyState) => state.ui.transact.executing;
 export const selectTransactConfirmStatus = (state: BeefyState) => state.ui.transact.confirm.status;
 export const selectTransactConfirmError = (state: BeefyState) => state.ui.transact.confirm.error;
 export const selectTransactConfirmChanges = (state: BeefyState) =>

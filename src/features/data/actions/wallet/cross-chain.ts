@@ -40,6 +40,7 @@ import type {
 } from '../../apis/transact/transact-types.ts';
 import { createAppAsyncThunk } from '../../utils/store-utils.ts';
 import { fetchAllowanceAction } from '../allowance.ts';
+import { transactSetExecuting } from '../transact.ts';
 import { bindTransactionEvents, captureWalletErrors, txStart, txWallet } from './common.ts';
 import { approve } from './approval.ts';
 import { stepperSetRecoveryExecution, stepperStartWithSteps } from './stepper.ts';
@@ -503,91 +504,97 @@ export const crossChainFetchRecoveryQuote = createAppAsyncThunk<
 
 export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): BeefyThunk {
   return captureWalletErrors(async (dispatch, getState) => {
-    txStart(dispatch);
-    const state = getState();
-    const op = state.ui.transact.crossChain.pendingOps[opId];
-    if (!op) {
-      throw new Error(`No pending cross-chain op with id ${opId}`);
-    }
+    dispatch(transactSetExecuting(true));
+    try {
+      txStart(dispatch);
+      const state = getState();
+      const op = state.ui.transact.crossChain.pendingOps[opId];
+      if (!op) {
+        throw new Error(`No pending cross-chain op with id ${opId}`);
+      }
 
-    console.debug('[Recovery] Starting recovery steps for op', opId, {
-      bridgedAmount: op.recovery.bridgedAmount,
-      destChainId: op.recovery.destChainId,
-    });
+      console.debug('[Recovery] Starting recovery steps for op', opId, {
+        bridgedAmount: op.recovery.bridgedAmount,
+        destChainId: op.recovery.destChainId,
+      });
 
-    const api = await getTransactApi();
-    const actualBridgedAmount = new BigNumber(op.recovery.bridgedAmount);
+      const api = await getTransactApi();
+      const actualBridgedAmount = new BigNumber(op.recovery.bridgedAmount);
 
-    const steps: Step[] = [];
+      const steps: Step[] = [];
 
-    const rqState = state.ui.transact.crossChain.recoveryQuote;
-    if (rqState.opId === opId && rqState.quote) {
-      const allowanceRequirements = rqState.quote.allowances.filter(
-        a => isTokenErc20(a.token) && a.amount.gt(BIG_ZERO)
-      );
-      if (allowanceRequirements.length > 0) {
-        const walletAddress = selectWalletAddress(state);
-        if (walletAddress) {
-          const uniqueAllowances = uniqBy(
-            allowanceRequirements.map(a => ({
-              token: a.token,
-              spenderAddress: a.spenderAddress,
-            })),
-            a => `${a.token.chainId}-${a.spenderAddress}-${a.token.address}`
-          );
-          const allowancesPerChainSpender = groupBy(
-            uniqueAllowances,
-            a => `${a.token.chainId}-${a.spenderAddress}`
-          );
-          await Promise.all(
-            Object.values(allowancesPerChainSpender).map(allowances =>
-              dispatch(
-                fetchAllowanceAction({
-                  chainId: allowances[0].token.chainId,
-                  spenderAddress: allowances[0].spenderAddress,
-                  tokens: allowances.map(a => a.token),
-                  walletAddress,
-                })
+      const rqState = state.ui.transact.crossChain.recoveryQuote;
+      if (rqState.opId === opId && rqState.quote) {
+        const allowanceRequirements = rqState.quote.allowances.filter(
+          a => isTokenErc20(a.token) && a.amount.gt(BIG_ZERO)
+        );
+        if (allowanceRequirements.length > 0) {
+          const walletAddress = selectWalletAddress(state);
+          if (walletAddress) {
+            const uniqueAllowances = uniqBy(
+              allowanceRequirements.map(a => ({
+                token: a.token,
+                spenderAddress: a.spenderAddress,
+              })),
+              a => `${a.token.chainId}-${a.spenderAddress}-${a.token.address}`
+            );
+            const allowancesPerChainSpender = groupBy(
+              uniqueAllowances,
+              a => `${a.token.chainId}-${a.spenderAddress}`
+            );
+            await Promise.all(
+              Object.values(allowancesPerChainSpender).map(allowances =>
+                dispatch(
+                  fetchAllowanceAction({
+                    chainId: allowances[0].token.chainId,
+                    spenderAddress: allowances[0].spenderAddress,
+                    tokens: allowances.map(a => a.token),
+                    walletAddress,
+                  })
+                )
               )
-            )
-          );
-        }
-        const stateAfterFetch = getState();
-        for (const allowanceTokenAmount of allowanceRequirements) {
-          const allowance = selectAllowanceByTokenAddress(
-            stateAfterFetch,
-            allowanceTokenAmount.token.chainId,
-            allowanceTokenAmount.token.address,
-            allowanceTokenAmount.spenderAddress
-          );
-          if (allowance.lt(allowanceTokenAmount.amount)) {
-            steps.push({
-              step: 'approve',
-              message: t('Vault-ApproveMsg'),
-              action: approve(
-                allowanceTokenAmount.token,
-                allowanceTokenAmount.spenderAddress,
-                allowanceTokenAmount.amount
-              ),
-              pending: false,
-            });
+            );
+          }
+          const stateAfterFetch = getState();
+          for (const allowanceTokenAmount of allowanceRequirements) {
+            const allowance = selectAllowanceByTokenAddress(
+              stateAfterFetch,
+              allowanceTokenAmount.token.chainId,
+              allowanceTokenAmount.token.address,
+              allowanceTokenAmount.spenderAddress
+            );
+            if (allowance.lt(allowanceTokenAmount.amount)) {
+              steps.push({
+                step: 'approve',
+                message: t('Vault-ApproveMsg'),
+                action: approve(
+                  allowanceTokenAmount.token,
+                  allowanceTokenAmount.spenderAddress,
+                  allowanceTokenAmount.amount
+                ),
+                pending: false,
+              });
+            }
           }
         }
       }
+
+      console.debug('[Recovery] Fetching recovery step...');
+      const recoveryStep = await api.fetchRecoveryStep(
+        op.recovery,
+        opId,
+        actualBridgedAmount,
+        getState,
+        t
+      );
+      steps.push(recoveryStep);
+
+      console.debug('[Recovery] Starting stepper with', steps.length, 'steps');
+      dispatch(transactSetExecuting(false));
+      dispatch(stepperStartWithSteps(steps, op.recovery.destChainId));
+      dispatch(stepperSetRecoveryExecution(true));
+    } finally {
+      dispatch(transactSetExecuting(false));
     }
-
-    console.debug('[Recovery] Fetching recovery step...');
-    const recoveryStep = await api.fetchRecoveryStep(
-      op.recovery,
-      opId,
-      actualBridgedAmount,
-      getState,
-      t
-    );
-    steps.push(recoveryStep);
-
-    console.debug('[Recovery] Starting stepper with', steps.length, 'steps');
-    dispatch(stepperStartWithSteps(steps, op.recovery.destChainId));
-    dispatch(stepperSetRecoveryExecution(true));
   });
 }
