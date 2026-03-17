@@ -1,5 +1,54 @@
 [
   {
+    "id": "stakedao-ousd-usde",
+    "name": "OUSD/USDe",
+    "type": "standard",
+    "token": "OUSDUSDe",
+    "tokenAddress": "0xDbdc27b649239f9C5aFdc92e57c2601A0cE71a89",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x951E0B2380FcB69403e8Dc3e054E85F4446B352D",
+    "earnedToken": "mooStakeDao-OUSD-USDe",
+    "earnedTokenAddress": "0x951E0B2380FcB69403e8Dc3e054E85F4446B352D",
+    "oracle": "lps",
+    "oracleId": "curve-ousd-usde",
+    "status": "active",
+    "createdAt": 1773747198,
+    "platformId": "stakedao",
+    "assets": ["OUSD", "USDe"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-683/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-683/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xDbdc27b649239f9C5aFdc92e57c2601A0cE71a89",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xDbdc27b649239f9C5aFdc92e57c2601A0cE71a89",
+            "coins": [
+              "0x2A8e1E676Ec238d8A992307B495b45B3fEAa5e86",
+              "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "stakedao-ousd-pmusd",
     "name": "OUSD/pmUSD",
     "type": "standard",
