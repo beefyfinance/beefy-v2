@@ -4,6 +4,10 @@ import { Button } from '../../../../../../components/Button/Button.tsx';
 import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import {
+  transactClearInput,
+  transactSetSuccessClosed,
+} from '../../../../../data/actions/transact.ts';
 import { transactSteps } from '../../../../../data/actions/wallet/transact.ts';
 import {
   crossChainFetchRecoveryQuote,
@@ -31,6 +35,7 @@ import {
   selectTransactQuoteStatus,
   selectTransactSelectedChainId,
   selectTransactSelectedQuoteOrUndefined,
+  selectTransactSuccessClosed,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -52,6 +57,7 @@ import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../../../../data/selectors/wallet.ts';
+import { stepperReset } from '../../../../../data/actions/wallet/stepper.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -62,6 +68,12 @@ export const DepositActions = memo(function DepositActions() {
   const stepperContent = useAppSelector(selectStepperStepContent);
   const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
   const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
+  const successClosed = useAppSelector(selectTransactSuccessClosed);
+  const isSuccessTx = stepperContent === StepContent.SuccessTx;
+
+  if (successClosed || isSuccessTx) {
+    return <ActionClose />;
+  }
 
   if (stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null) {
     return <ActionRecoveryDeposit />;
@@ -267,6 +279,27 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
         onClick={handleFinalise}
       >
         {t('Transact-FinaliseDeposit')}
+      </Button>
+      <VaultFees />
+    </div>
+  );
+});
+
+const ActionClose = memo(function ActionClose() {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const dispatch = useAppDispatch();
+
+  const handleClose = useCallback(() => {
+    dispatch(transactSetSuccessClosed(false));
+    dispatch(transactClearInput());
+    dispatch(stepperReset());
+  }, [dispatch]);
+
+  return (
+    <div className={classes.feesContainer}>
+      <Button variant="cta" fullWidth={true} borderless={true} onClick={handleClose}>
+        {t('Transactn-Close')}
       </Button>
       <VaultFees />
     </div>

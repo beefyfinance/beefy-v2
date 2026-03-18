@@ -11,7 +11,6 @@ import { selectVaultById } from '../selectors/vaults.ts';
 import type { BeefyState, BeefyThunk } from '../store/types.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { fetchBalanceAction } from './balance.ts';
-import { transactClearInput } from './transact.ts';
 import { crossChainFetchRecoveryQuote, crossChainOpStatusUpdate } from './wallet/cross-chain.ts';
 import {
   stepperSetBridgeStatus,
@@ -79,7 +78,6 @@ export function pollCCTPBridgeStatus({
           console.debug('[CCTP] Bridge confirmed, dstTxHash:', message.dstTxHash);
           dispatch(stepperSetBridgeStatus({ dstTxHash: message.dstTxHash }));
           dispatch(stepperSetStepContent({ stepContent: StepContent.SuccessTx }));
-          dispatch(transactClearInput());
           dispatch(fetchVaultChainBalances(getState));
           return;
         }

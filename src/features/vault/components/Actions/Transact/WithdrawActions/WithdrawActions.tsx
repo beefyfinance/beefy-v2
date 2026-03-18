@@ -2,13 +2,9 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import {
-  transactSteps,
-  transactStepsClaimGov,
-} from '../../../../../data/actions/wallet/transact.ts';
+import { transactSteps } from '../../../../../data/actions/wallet/transact.ts';
 import type {
   CrossChainWithdrawQuote,
   GovComposerZapWithdrawQuote,
@@ -26,14 +22,18 @@ import {
   isGovVault,
   type VaultGov,
 } from '../../../../../data/entities/vault.ts';
+import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { selectGovVaultPendingRewards } from '../../../../../data/selectors/balance.ts';
-import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
+import {
+  selectIsStepperStepping,
+  selectStepperStepContent,
+} from '../../../../../data/selectors/stepper.ts';
 import {
   selectTransactConfirmNeededWithChanges,
   selectTransactExecuting,
   selectTransactQuoteStatus,
   selectTransactSelectedQuoteOrUndefined,
+  selectTransactSuccessClosed,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import {
@@ -41,7 +41,6 @@ import {
   selectIsVaultGov,
   selectVaultById,
 } from '../../../../../data/selectors/vaults.ts';
-import { selectWalletAddress } from '../../../../../data/selectors/wallet.ts';
 import { ActionConnectSwitchWithFees as ActionConnectSwitch } from './ActionConnectSwitch.tsx';
 import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
@@ -52,6 +51,11 @@ import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotic
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
 import { styles } from './styles.ts';
 import { getExecutionChainId } from '../../../../../../helpers/transactUtils.ts';
+import {
+  transactClearInput,
+  transactSetSuccessClosed,
+} from '../../../../../data/actions/transact.ts';
+import { stepperReset } from '../../../../../data/actions/wallet/stepper.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -70,6 +74,12 @@ export const WithdrawActionsStandard = memo(function WithdrawActionsStandard() {
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const option = quote ? quote.option : null;
+  const successClosed = useAppSelector(selectTransactSuccessClosed);
+  const isSuccessTx = useAppSelector(selectStepperStepContent) === StepContent.SuccessTx;
+
+  if (successClosed || isSuccessTx) {
+    return <ActionCloseWithdraw />;
+  }
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
     return <ActionWithdrawDisabled />;
@@ -85,6 +95,12 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
   const vault = useAppSelector(state => selectGovVaultById(state, vaultId));
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
+  const successClosed = useAppSelector(selectTransactSuccessClosed);
+  const isSuccessTx = useAppSelector(selectStepperStepContent) === StepContent.SuccessTx;
+
+  if (successClosed || isSuccessTx) {
+    return <ActionCloseWithdraw />;
+  }
 
   const showWithdraw =
     quote &&
@@ -92,7 +108,6 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
       isGovComposerWithdrawQuote(quote) ||
       isCrossChainWithdrawQuote(quote)) &&
     quoteStatus === TransactStatus.Fulfilled;
-  const showClaim = !isCowcentratedLikeVault(vault);
 
   return (
     <>
@@ -107,9 +122,6 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
             <Button variant="cta" disabled={true} fullWidth={true} borderless={true}>
               {t('Transact-Withdraw')}
             </Button>
-            {showClaim ?
-              <ActionClaim vault={vault} />
-            : null}
             <VaultFees />
           </div>
         </ActionConnectSwitch>
@@ -252,7 +264,7 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
       <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <NotEnoughNotice mode="withdraw" onChange={setIsDisabledByNotEnoughInput} />
-      <div className={classes.buttons}>
+      <div className={classes.feesContainer}>
         <ActionConnectSwitch
           FeesComponent={VaultFees}
           css={styles.feesContainer}
@@ -273,49 +285,34 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
               : 'Transact-Withdraw'
             )}
           </Button>
-          <div className={classes.feesContainer}>
-            {showClaim ?
-              <ActionClaim vault={vault} />
-            : null}
-            <VaultFees />
-          </div>
+
+          {import.meta.env.DEV ?
+            <TenderlyTransactButton option={option} quote={quote} />
+          : null}
+          <VaultFees />
         </ActionConnectSwitch>
-        {import.meta.env.DEV ?
-          <TenderlyTransactButton option={option} quote={quote} />
-        : null}
       </div>
     </>
   );
 });
 
-type ActionClaimProps = {
-  vault: VaultGov;
-};
-const ActionClaim = memo(function ActionClaim({ vault }: ActionClaimProps) {
+const ActionCloseWithdraw = memo(function ActionCloseWithdraw() {
   const { t } = useTranslation();
+  const classes = useStyles();
   const dispatch = useAppDispatch();
-  const walletAddress = useAppSelector(selectWalletAddress);
-  const pendingRewards = useAppSelector(state =>
-    selectGovVaultPendingRewards(state, vault.id, walletAddress)
-  );
-  const isTxInProgress = useAppSelector(selectIsStepperStepping);
-  const isExecuting = useAppSelector(selectTransactExecuting);
-  const isDisabled = useMemo(() => {
-    return isTxInProgress || isExecuting || !pendingRewards.some(r => r.amount.gt(BIG_ZERO));
-  }, [pendingRewards, isTxInProgress, isExecuting]);
-  const handleClaim = useCallback(() => {
-    dispatch(transactStepsClaimGov(vault, t));
-  }, [dispatch, vault, t]);
+
+  const handleClose = useCallback(() => {
+    dispatch(transactSetSuccessClosed(false));
+    dispatch(transactClearInput());
+    dispatch(stepperReset());
+  }, [dispatch]);
 
   return (
-    <Button
-      variant="cta"
-      disabled={isDisabled}
-      fullWidth={true}
-      borderless={true}
-      onClick={handleClaim}
-    >
-      {t('Transact-Claim-RewardsOnly')}
-    </Button>
+    <div className={classes.feesContainer}>
+      <Button variant="cta" fullWidth={true} borderless={true} onClick={handleClose}>
+        {t('Transactn-Close')}
+      </Button>
+      <VaultFees />
+    </div>
   );
 });

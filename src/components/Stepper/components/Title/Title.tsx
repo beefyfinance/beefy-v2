@@ -1,4 +1,8 @@
 import { memo, type ReactNode, useCallback } from 'react';
+import {
+  transactClearInput,
+  transactSetSuccessClosed,
+} from '../../../../features/data/actions/transact.ts';
 import { stepperReset } from '../../../../features/data/actions/wallet/stepper.ts';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useAppDispatch } from '../../../../features/data/store/hooks.ts';
@@ -15,6 +19,8 @@ export const Title = memo(function Title({ text }: TitleProps) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const handleClose = useCallback(() => {
+    dispatch(transactSetSuccessClosed(false));
+    dispatch(transactClearInput());
     dispatch(stepperReset());
   }, [dispatch]);
 
