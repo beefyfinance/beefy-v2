@@ -9,7 +9,6 @@ import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/
 import { errorToString } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
-import zapIcon from '../../../../../../images/icons/zap.svg';
 import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance.ts';
@@ -18,6 +17,7 @@ import {
   selectTransactNumTokens,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
+  selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
@@ -87,27 +87,26 @@ const WithdrawForm = memo(function WithdrawForm() {
   const classes = useStyles();
   const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
   const forceSelection = useAppSelector(selectTransactForceSelection);
+  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
 
   const i18key = useMemo(() => {
+    if (hasCrossChainZap && forceSelection) {
+      return 'Transact-SelectChain';
+    }
     return (
       hasOptions ?
         forceSelection ? 'Transact-SelectToken'
         : 'Transact-SelectAmount'
       : 'Transact-Withdraw'
     );
-  }, [forceSelection, hasOptions]);
+  }, [forceSelection, hasOptions, hasCrossChainZap]);
 
   return (
     <>
       <WithdrawnInWalletNotice css={styles.notice} />
       <WithdrawQueueLoader />
       <div className={classes.labels}>
-        <div className={classes.selectLabel}>
-          {hasOptions ?
-            <img src={zapIcon} alt="Zap" height={12} className={classes.zapIcon} />
-          : null}
-          {t(i18key)}
-        </div>
+        <div className={classes.selectLabel}>{t(i18key)}</div>
         <div className={classes.availableLabel}>
           {t('Transact-Available')}{' '}
           <span className={classes.availableLabelAmount}>

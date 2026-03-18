@@ -437,6 +437,20 @@ export const BridgingContent = memo(function BridgingContent() {
   );
 });
 
+export const RecoveryContent = memo(function RecoveryContent() {
+  const { t } = useTranslation();
+  const classes = useStyles();
+
+  return (
+    <>
+      <Title text={t('Transactn-Recovery')} />
+      <div className={css(styles.content, styles.successContent)}>
+        <div className={classes.message}>{t('Transactn-Recovery-Wait')}</div>
+      </div>
+    </>
+  );
+});
+
 export const SuccessContent = memo(function SuccessContent() {
   const step = useAppSelector(selectStepperCurrentStepData);
   const Component = stepToSuccessContent[step.step] || FallbackSuccessContent;

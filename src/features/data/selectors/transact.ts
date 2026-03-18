@@ -274,7 +274,9 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
 
         return optionWithBalances;
       })
-      .filter(option => !option.hideIfZeroBalance || !option.balanceValue.isZero()),
+      .filter(
+        option => !walletAddress || !option.hideIfZeroBalance || !option.balanceValue.isZero()
+      ),
     [o => o.order, o => o.balanceValue.toNumber()],
     ['asc', 'desc']
   );
@@ -316,10 +318,17 @@ export function selectTokenAmountValue(state: BeefyState, tokenAmount: TokenAmou
   ).multipliedBy(tokenAmount.amount);
 }
 
+export const selectTransactExecuting = (state: BeefyState) => state.ui.transact.executing;
 export const selectTransactConfirmStatus = (state: BeefyState) => state.ui.transact.confirm.status;
 export const selectTransactConfirmError = (state: BeefyState) => state.ui.transact.confirm.error;
 export const selectTransactConfirmChanges = (state: BeefyState) =>
   state.ui.transact.confirm.changes;
+
+/** True when "quote has changed, please confirm" is shown — button should be enabled so user can confirm with new quote */
+export const selectTransactConfirmNeededWithChanges = createSelector(
+  [selectTransactConfirmStatus, selectTransactConfirmChanges],
+  (status, changes) => status === TransactStatus.Fulfilled && changes != null && changes.length > 0
+);
 
 export const selectTransactForceSelection = (state: BeefyState) => state.ui.transact.forceSelection;
 
@@ -547,6 +556,17 @@ export const selectCrossChainPendingOpById = (state: BeefyState, opId: string) =
 export const selectCrossChainRecoverableOps = createSelector(
   selectCrossChainPendingOps,
   (ops): PendingCrossChainOp[] => ops.filter(op => op.status === 'dest-failed')
+);
+
+/** Dest-failed op for the current transact vault, if any (most recent by updatedAt). Used to show recovery UI after modal close. */
+export const selectRecoveryOpForCurrentVault = createSelector(
+  [(state: BeefyState) => state.ui.transact.vaultId, selectCrossChainRecoverableOps],
+  (vaultId, recoverableOps): PendingCrossChainOp | undefined => {
+    if (!vaultId) return undefined;
+    const forVault = recoverableOps.filter(op => op.recovery.vaultId === vaultId);
+    if (forVault.length === 0) return undefined;
+    return orderBy(forVault, 'updatedAt', 'desc')[0];
+  }
 );
 
 export const selectCrossChainActiveOps = createSelector(

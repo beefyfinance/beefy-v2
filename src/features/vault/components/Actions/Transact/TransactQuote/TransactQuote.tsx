@@ -275,7 +275,7 @@ export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
           );
         })}
       </div>
-      <div className={classes.label}>{t('Your Position Will Be')}</div>
+      <div className={classes.label}>{t('Transact-YourPositionWillBe')}</div>
       <div className={classes.cowcentratedSharesDepositContainer}>
         <TokenAmountIcon
           key={shares.token.id}

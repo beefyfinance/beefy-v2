@@ -152,4 +152,6 @@ export type TransactState = {
   quotes: TransactQuotes;
   confirm: TransactConfirm;
   crossChain: TransactCrossChain;
+  /** True while building steps / about to open stepper (disables deposit/withdraw/claim/recovery buttons) */
+  executing: boolean;
 };

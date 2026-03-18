@@ -46,6 +46,12 @@ export const ListItem = memo(function ListItem({
   const handleClick = useCallback(() => onSelect(selectionId), [onSelect, selectionId]);
   const tokenSymbols = useMemo(() => tokens.map(token => token.symbol), [tokens]);
 
+  const balanceValueFormatted = useMemo(() => {
+    if (!balanceValue || balanceValue.isZero()) return null;
+    if (balanceValue.lt(0.01)) return '<$0.01';
+    return formatLargeUsd(balanceValue);
+  }, [balanceValue]);
+
   return (
     <ListItemButton type="button" css={cssProp} onClick={handleClick}>
       <ListItemSide>
@@ -63,8 +69,8 @@ export const ListItem = memo(function ListItem({
             <ListItemBalanceAmount>
               {formatTokenDisplayCondensed(balance, decimals, 8)}
             </ListItemBalanceAmount>
-            {balanceValue ?
-              <ListItemBalanceUsd>{formatLargeUsd(balanceValue)}</ListItemBalanceUsd>
+            {balanceValueFormatted != null ?
+              <ListItemBalanceUsd>{balanceValueFormatted}</ListItemBalanceUsd>
             : null}
           </ListItemBalanceColumn>
         : null}

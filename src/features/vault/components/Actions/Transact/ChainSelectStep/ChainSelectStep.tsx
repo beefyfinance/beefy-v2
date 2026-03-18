@@ -4,10 +4,10 @@ import type BigNumber from 'bignumber.js';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx';
+import { useBreakpoint } from '../../../../../../hooks/useBreakpoint.ts';
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
 import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
 import { TokenImageFromEntity } from '../../../../../../components/TokenImage/TokenImage.tsx';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { formatLargeUsd } from '../../../../../../helpers/format.ts';
 import ChevronRight from '../../../../../../images/icons/chevron-right.svg?react';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
@@ -90,7 +90,7 @@ const ChainList = memo(function ChainList() {
                 key={chainId}
                 chainId={chainId}
                 chainName={chainName}
-                balanceUsd={balanceUsd}
+                balanceUsd={balanceUsd?.gt(0) ? balanceUsd : undefined}
                 tokens={tokens}
                 onSelect={handleSelect}
               />
@@ -105,12 +105,13 @@ const ChainList = memo(function ChainList() {
 type ChainListRowProps = {
   chainId: ChainEntity['id'];
   chainName: string;
-  balanceUsd: BigNumber;
+  balanceUsd?: BigNumber;
   tokens: CrossChainTokenOption[];
   onSelect: (chainId: ChainEntity['id']) => void;
 };
 
-const MAX_VISIBLE_TOKENS = 5;
+const MAX_VISIBLE_TOKENS_DESKTOP = 5;
+const MAX_VISIBLE_TOKENS_MOBILE = 3;
 
 const ChainListRow = memo(function ChainListRow({
   chainId,
@@ -120,9 +121,17 @@ const ChainListRow = memo(function ChainListRow({
   onSelect,
 }: ChainListRowProps) {
   const handleClick = useCallback(() => onSelect(chainId), [onSelect, chainId]);
+  const isMobile = useBreakpoint({ to: 'xs' });
 
-  const overflowCount = tokens.length > MAX_VISIBLE_TOKENS ? tokens.length - 4 : 0;
-  const visibleTokens = overflowCount > 0 ? tokens.slice(0, 4) : tokens;
+  const { visibleTokens, overflowCount } = useMemo(() => {
+    const maxVisible = isMobile ? MAX_VISIBLE_TOKENS_MOBILE : MAX_VISIBLE_TOKENS_DESKTOP;
+    const visibleWhenOverflow = maxVisible - 1;
+    const overflow = tokens.length > maxVisible ? tokens.length - visibleWhenOverflow : 0;
+    return {
+      visibleTokens: overflow > 0 ? tokens.slice(0, visibleWhenOverflow) : tokens,
+      overflowCount: overflow,
+    };
+  }, [tokens, isMobile]);
 
   return (
     <ChainRowButton type="button" onClick={handleClick}>
@@ -140,7 +149,11 @@ const ChainListRow = memo(function ChainListRow({
       </TokenIcons>
       <ListItemRightSide className={rightSideClass}>
         <ListItemBalance className={balanceTextClass}>
-          {formatLargeUsd(balanceUsd ?? BIG_ZERO)}
+          {balanceUsd ?
+            balanceUsd.gt(0.01) ?
+              formatLargeUsd(balanceUsd)
+            : '<$0.01'
+          : null}
         </ListItemBalance>
         <ChevronRight className={cx('list-item-arrow', css(listItemArrow))} />
       </ListItemRightSide>
@@ -180,7 +193,10 @@ const TokenIcons = styled('div', {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    width: '96px',
+    width: '60px',
+    sm: {
+      width: '96px',
+    },
   },
 });
 

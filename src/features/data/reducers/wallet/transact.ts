@@ -15,6 +15,7 @@ import {
   transactInitReady,
   transactSelectQuote,
   transactSelectSelection,
+  transactSetExecuting,
   transactSetInputAmount,
   transactSetSelectedChainId,
   transactSetSlippage,
@@ -30,6 +31,7 @@ import {
 } from '../../actions/wallet/cross-chain.ts';
 import {
   isCrossChainDepositOption,
+  isCrossChainWithdrawOption,
   type TransactOption,
   type TransactQuote,
 } from '../../apis/transact/transact-types.ts';
@@ -103,6 +105,7 @@ const initialTransactState: TransactState = {
     pendingOpIds: [],
     recoveryQuote: initialRecoveryQuoteState,
   },
+  executing: false,
 };
 
 const transactSlice = createSlice({
@@ -189,6 +192,9 @@ const transactSlice = createSlice({
       })
       .addCase(transactSetSlippage, (sliceState, action) => {
         sliceState.swapSlippage = action.payload.slippage;
+      })
+      .addCase(transactSetExecuting, (sliceState, action) => {
+        sliceState.executing = action.payload;
       })
       .addCase(transactInit, (sliceState, action) => {
         const isReady = sliceState.vaultId === action.payload.vaultId;
@@ -278,7 +284,7 @@ const transactSlice = createSlice({
         sliceState.crossChain.pendingOpIds.unshift(op.id);
       })
       .addCase(crossChainOpStatusUpdate, (sliceState, action) => {
-        const { id, status, destTxHash, sourceTxHash } = action.payload;
+        const { id, status, destTxHash, sourceTxHash, recoveryBridgedAmount } = action.payload;
         const op = sliceState.crossChain.pendingOps[id];
         if (op) {
           op.status = status;
@@ -288,6 +294,9 @@ const transactSlice = createSlice({
           }
           if (sourceTxHash) {
             op.sourceTxHash = sourceTxHash;
+          }
+          if (recoveryBridgedAmount !== undefined) {
+            op.recovery.bridgedAmount = recoveryBridgedAmount;
           }
         }
       })
@@ -426,9 +435,12 @@ function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOp
     }
 
     // Add chainId -> selectionId[] mapping
-    // Cross-chain deposit options are indexed by sourceChainId so they appear
-    // when the user picks the source chain in ChainSelectStep
-    const chainKey = isCrossChainDepositOption(option) ? option.sourceChainId : option.chainId;
+    // Cross-chain options are indexed by the chain the user interacts with:
+    // deposits by sourceChainId, withdrawals by destChainId
+    const chainKey =
+      isCrossChainDepositOption(option) ? option.sourceChainId
+      : isCrossChainWithdrawOption(option) ? option.destChainId
+      : option.chainId;
     const byChainId = sliceState.selections.byChainId[chainKey];
     if (!byChainId) {
       sliceState.selections.byChainId[chainKey] = [option.selectionId];

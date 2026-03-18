@@ -90,6 +90,7 @@ export const transactSetSelectedChainId = createAction<ChainEntity['id']>(
 export const transactSetSlippage = createAction<{
   slippage: number;
 }>('transact/setSlippage');
+export const transactSetExecuting = createAction<boolean>('transact/setExecuting');
 
 export type TransactFetchOptionsArgs = {
   vaultId: VaultEntity['id'];

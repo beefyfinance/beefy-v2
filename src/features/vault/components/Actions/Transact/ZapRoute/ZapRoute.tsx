@@ -29,13 +29,19 @@ import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.ts';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
+  selectIsStepperRecoveryExecution,
   selectIsStepperStepping,
   selectStepperCurrentStep,
   selectStepperStepContent,
 } from '../../../../../data/selectors/stepper.ts';
 import { selectPendingAllowances } from '../../../../../data/selectors/allowances.ts';
 import { selectChainById } from '../../../../../data/selectors/chains.ts';
-import { selectTransactQuoteIds } from '../../../../../data/selectors/transact.ts';
+import {
+  selectCrossChainRecoveryQuote,
+  selectCrossChainRecoveryQuoteOpId,
+  selectRecoveryOpForCurrentVault,
+  selectTransactQuoteIds,
+} from '../../../../../data/selectors/transact.ts';
 import { selectZapSwapProviderName } from '../../../../../data/selectors/zap.ts';
 import { QuoteTitle } from '../QuoteTitle/QuoteTitle.tsx';
 import { styles } from './styles.ts';
@@ -86,7 +92,7 @@ const StepStatusIndicator = memo(function StepStatusIndicator({
       );
     case 'failed':
       return (
-        <div className={css(styles.statusBase, styles.statusInProgress)}>
+        <div className={css(styles.statusBase, styles.statusFailed)}>
           <PlayIcon />
         </div>
       );
@@ -331,8 +337,10 @@ const StepContentSplit = memo(function StepContentSplit({
 
 const StepContentUnused = memo(function StepContentUnused({
   step,
+  chainId,
 }: StepContentProps<ZapQuoteStepUnused>) {
   const { t } = useTranslation();
+  const chainName = useChainName(chainId);
   const tokenAmounts = useMemo(() => {
     return step.outputs.map(tokenAmount => (
       <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
@@ -347,8 +355,10 @@ const StepContentUnused = memo(function StepContentUnused({
       <Trans
         t={t}
         i18nKey="Transact-Route-Step-Unused"
+        values={{ chainName }}
         components={{
           tokenAmounts: <ListJoin items={tokenAmounts} />,
+          chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
         }}
       />
     </>
@@ -397,19 +407,47 @@ const StepContentComponents: StepContentMap = {
 function useStepStatuses(
   totalStepsCount: number,
   approvalCount: number,
-  quoteSteps: ZapQuoteStep[]
+  quoteSteps: ZapQuoteStep[],
+  bridgeStepAbsoluteIndex: number
 ): StepStatusState[] {
   const isStepping = useAppSelector(selectIsStepperStepping);
   const stepperContent = useAppSelector(selectStepperStepContent);
   const currentStepIndex = useAppSelector(selectStepperCurrentStep);
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
 
   return useMemo(() => {
-    if (!isStepping && stepperContent !== StepContent.SuccessTx) {
+    const isRecoveryFromOp = recoveryOp != null && !isStepping;
+
+    if (
+      !isStepping &&
+      stepperContent !== StepContent.SuccessTx &&
+      stepperContent !== StepContent.RecoveryTx &&
+      !isRecoveryExecution &&
+      !isRecoveryFromOp
+    ) {
       return Array(totalStepsCount).fill('list') as StepStatusState[];
     }
 
     if (stepperContent === StepContent.SuccessTx) {
       return Array(totalStepsCount).fill('finished') as StepStatusState[];
+    }
+
+    if (stepperContent === StepContent.RecoveryTx || isRecoveryFromOp) {
+      const failedIdx = bridgeStepAbsoluteIndex + 1;
+      return Array.from({ length: totalStepsCount }, (_, i) => {
+        if (i <= bridgeStepAbsoluteIndex) return 'finished';
+        if (i === failedIdx) return 'failed';
+        return 'notStarted';
+      }) as StepStatusState[];
+    }
+
+    if (isRecoveryExecution) {
+      return Array.from({ length: totalStepsCount }, (_, i) => {
+        if (i <= bridgeStepAbsoluteIndex) return 'finished';
+        if (i === bridgeStepAbsoluteIndex + 1) return 'inProgress';
+        return 'notStarted';
+      }) as StepStatusState[];
     }
 
     if (stepperContent === StepContent.BridgingTx) {
@@ -438,7 +476,17 @@ function useStepStatuses(
       if (i === approvalCount) return 'inProgress';
       return 'notStarted';
     }) as StepStatusState[];
-  }, [isStepping, stepperContent, currentStepIndex, totalStepsCount, approvalCount, quoteSteps]);
+  }, [
+    isStepping,
+    stepperContent,
+    currentStepIndex,
+    totalStepsCount,
+    approvalCount,
+    quoteSteps,
+    bridgeStepAbsoluteIndex,
+    isRecoveryExecution,
+    recoveryOp,
+  ]);
 }
 
 type StepProps = {
@@ -473,6 +521,10 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
   const dispatch = useAppDispatch();
   const quotes = useAppSelector(selectTransactQuoteIds);
   const hasMultipleOptions = quotes.length > 1;
+  const stepperContent = useAppSelector(selectStepperStepContent);
+  const recoveryQuote = useAppSelector(selectCrossChainRecoveryQuote);
+  const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
+  const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
 
   const pendingAllowancesLive: AllowanceTokenAmount[] = useAppSelector(state =>
     selectPendingAllowances(state, quote.allowances)
@@ -484,9 +536,36 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
   }
   const pendingAllowances = stepperModal ? snapshotRef.current : pendingAllowancesLive;
 
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const isRecovery =
+    stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null;
+
+  const recoveryQuoteMatchesOp = !recoveryOp || recoveryQuoteOpId === recoveryOp.id;
+
+  const { effectiveSteps, bridgeStepAbsoluteIndex } = useMemo(() => {
+    const bridgeIdx = quote.steps.findIndex(s => s.type === 'bridge');
+    const absoluteBridgeIdx =
+      pendingAllowances.length + (bridgeIdx >= 0 ? bridgeIdx : quote.steps.length);
+
+    if (isRecovery && recoveryQuote && recoveryQuoteMatchesOp && bridgeIdx >= 0) {
+      const preBridgeSteps = quote.steps.slice(0, bridgeIdx + 1);
+      return {
+        effectiveSteps: [...preBridgeSteps, ...recoveryQuote.steps],
+        bridgeStepAbsoluteIndex: absoluteBridgeIdx,
+      };
+    }
+
+    return { effectiveSteps: quote.steps, bridgeStepAbsoluteIndex: absoluteBridgeIdx };
+  }, [quote.steps, isRecovery, recoveryQuote, recoveryQuoteMatchesOp, pendingAllowances.length]);
+
   const approvalCount = pendingAllowances.length;
-  const totalSteps = approvalCount + quote.steps.length;
-  const stepStatuses = useStepStatuses(totalSteps, approvalCount, quote.steps);
+  const totalSteps = approvalCount + effectiveSteps.length;
+  const stepStatuses = useStepStatuses(
+    totalSteps,
+    approvalCount,
+    effectiveSteps,
+    bridgeStepAbsoluteIndex
+  );
   const handleSwitch = useCallback(() => {
     dispatch(transactSwitchStep(TransactStep.QuoteSelect));
   }, [dispatch]);
@@ -519,7 +598,7 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
                 status={stepStatuses[i]}
               />
             ))}
-            {quote.steps.map((step, i) => (
+            {effectiveSteps.map((step, i) => (
               <Step
                 step={step}
                 key={i}

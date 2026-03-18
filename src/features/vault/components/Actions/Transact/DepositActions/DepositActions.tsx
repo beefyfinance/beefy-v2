@@ -6,20 +6,39 @@ import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSteps } from '../../../../../data/actions/wallet/transact.ts';
 import {
+  crossChainFetchRecoveryQuote,
+  crossChainRecoverySteps,
+} from '../../../../../data/actions/wallet/cross-chain.ts';
+import {
   isCowcentratedDepositQuote,
   type TransactOption,
   type TransactQuote,
 } from '../../../../../data/apis/transact/transact-types.ts';
+import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
 import {
+  selectIsStepperRecoveryExecution,
+  selectIsStepperStepping,
+  selectStepperBridgeStatus,
+  selectStepperStepContent,
+} from '../../../../../data/selectors/stepper.ts';
+import {
+  selectCrossChainRecoveryQuoteOpId,
+  selectCrossChainRecoveryQuoteStatus,
+  selectRecoveryOpForCurrentVault,
+  selectTransactConfirmNeededWithChanges,
+  selectTransactExecuting,
   selectTransactQuoteStatus,
   selectTransactSelectedChainId,
   selectTransactSelectedQuoteOrUndefined,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
+import {
+  ActionConnect,
+  ActionConnectSwitch,
+  ActionSwitch,
+} from '../CommonActions/CommonActions.tsx';
 import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
 import { GlpDepositNotice } from '../GlpNotices/GlpNotices.tsx';
@@ -29,6 +48,10 @@ import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
 import { styles } from './styles.ts';
 import { getExecutionChainId } from '../../../../../../helpers/transactUtils.ts';
+import {
+  selectCurrentChainId,
+  selectIsWalletConnected,
+} from '../../../../../data/selectors/wallet.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -36,6 +59,13 @@ export const DepositActions = memo(function DepositActions() {
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const option = quote ? quote.option : null;
+  const stepperContent = useAppSelector(selectStepperStepContent);
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
+
+  if (stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null) {
+    return <ActionRecoveryDeposit />;
+  }
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
     return <ActionDepositDisabled />;
@@ -78,17 +108,22 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const isExecuting = useAppSelector(selectTransactExecuting);
+  const confirmNeededWithChanges = useAppSelector(selectTransactConfirmNeededWithChanges);
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
   const isCowDepositQuote = isCowcentratedDepositQuote(quote);
   const executionChainId = useMemo(() => getExecutionChainId(quote), [quote]);
 
+  const effectiveDisabledByConfirm = isDisabledByConfirm && !confirmNeededWithChanges;
+
   const isDisabled =
     isTxInProgress ||
+    isExecuting ||
     isDisabledByPriceImpact ||
     isDisabledByMaxNative ||
-    isDisabledByConfirm ||
+    effectiveDisabledByConfirm ||
     isDisabledByGlpLock ||
     isDisabledByNotEnoughInput;
 
@@ -128,5 +163,109 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
         <VaultFees />
       </div>
     </>
+  );
+});
+
+const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const dispatch = useAppDispatch();
+  const bridgeStatus = useAppSelector(selectStepperBridgeStatus);
+  const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+  const connectedChainId = useAppSelector(selectCurrentChainId);
+  const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const recoveryQuoteStatus = useAppSelector(selectCrossChainRecoveryQuoteStatus);
+  const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
+  const isExecuting = useAppSelector(selectTransactExecuting);
+  const [isFetchingQuote, setIsFetchingQuote] = useState(false);
+
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+
+  const opIdFromOp = bridgeStatus?.opId ?? recoveryOp?.id;
+  const opId = opIdFromOp ?? recoveryQuoteOpId;
+  const destChainId =
+    bridgeStatus?.destChainId ?? recoveryOp?.recovery.destChainId ?? vault?.chainId;
+  const isOnCorrectChain = connectedChainId === destChainId;
+
+  const hasValidQuote =
+    opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
+
+  const needsNewQuote = recoveryOp != null && !isRecoveryExecution && !hasValidQuote;
+
+  const handleFetchQuote = useCallback(() => {
+    if (opId) {
+      setIsFetchingQuote(true);
+      dispatch(crossChainFetchRecoveryQuote({ opId }))
+        .unwrap()
+        .catch(() => {})
+        .finally(() => setIsFetchingQuote(false));
+    }
+  }, [dispatch, opId]);
+
+  const handleFinalise = useCallback(() => {
+    if (opId) {
+      dispatch(crossChainRecoverySteps(opId, t));
+    }
+  }, [dispatch, opId, t]);
+
+  if (!isWalletConnected) {
+    return (
+      <div className={classes.feesContainer}>
+        <ActionConnect />
+        <VaultFees />
+      </div>
+    );
+  }
+
+  if (!isOnCorrectChain) {
+    return (
+      <div className={classes.feesContainer}>
+        <ActionSwitch
+          chainId={destChainId}
+          variant="recovery"
+          borderless={true}
+          buttonText={t('Transact-RecoverySwitchChain')}
+        />
+        <VaultFees />
+      </div>
+    );
+  }
+
+  if (needsNewQuote) {
+    return (
+      <div className={classes.feesContainer}>
+        <Button
+          variant="recovery"
+          disabled={isTxInProgress || isFetchingQuote || !opId}
+          fullWidth={true}
+          borderless={true}
+          onClick={handleFetchQuote}
+        >
+          {isFetchingQuote ? t('Transact-FetchingQuote') : t('Transact-FetchNewQuote')}
+        </Button>
+        <VaultFees />
+      </div>
+    );
+  }
+
+  const canFinalise = hasValidQuote && opId != null;
+  const finaliseDisabled = !canFinalise || isTxInProgress || isExecuting;
+
+  return (
+    <div className={classes.feesContainer}>
+      <Button
+        variant="recovery"
+        disabled={finaliseDisabled}
+        fullWidth={true}
+        borderless={true}
+        onClick={handleFinalise}
+      >
+        {t('Transact-FinaliseDeposit')}
+      </Button>
+      <VaultFees />
+    </div>
   );
 });

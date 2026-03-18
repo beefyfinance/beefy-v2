@@ -65,28 +65,3 @@ export const VaultFees = memo(function VaultFees({ css: cssProp }: VaultFeesProp
     </div>
   );
 });
-
-export const WithdrawFees = memo(function WithdrawFees({ css: cssProp }: VaultFeesProps) {
-  const classes = useStyles();
-  const { t } = useTranslation();
-  const vaultId = useAppSelector(selectTransactVaultId);
-  const fees = useAppSelector(state => selectFeesByVaultId(state, vaultId));
-  const areFeesLoaded = useAppSelector(selectAreFeesLoaded);
-  return (
-    <div className={css(styles.container, cssProp)}>
-      <div className={classes.transactionFees}>
-        <Label>
-          {t('Transact-Fee-Withdraw')} <LabelTooltip title={t('Transact-Fee-Withdraw-Explainer')} />
-        </Label>
-        <Value>
-          {areFeesLoaded ?
-            fees ?
-              formatLargePercent(fees.withdraw, 2, '0%')
-            : '?'
-          : <TextLoader placeholder={'0.0%'} />}
-        </Value>
-        <MaybeZapFees />
-      </div>
-    </div>
-  );
-});

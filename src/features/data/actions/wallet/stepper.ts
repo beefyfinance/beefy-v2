@@ -5,6 +5,7 @@ import { type BridgeStatus, type Step, StepContent } from '../../reducers/wallet
 import type { BeefyThunk } from '../../store/types.ts';
 import { createAppAsyncThunk } from '../../utils/store-utils.ts';
 import { pollCCTPBridgeStatus } from '../cctp.ts';
+import { transactSetExecuting } from '../transact.ts';
 
 export const stepperReset = createAction('stepper/reset');
 export const stepperAddStep = createAction<{ step: Step }>('stepper/addStep');
@@ -21,6 +22,7 @@ export const stepperSetStepContent = createAction<{ stepContent: StepContent }>(
 );
 export const stepperSetBridgeStatus =
   createAction<Partial<BridgeStatus>>('stepper/setBridgeStatus');
+export const stepperSetRecoveryExecution = createAction<boolean>('stepper/setRecoveryExecution');
 
 type StartStepperParams = ChainEntity['id'];
 
@@ -48,7 +50,8 @@ export const stepperUpdate = createAppAsyncThunk('stepper/update', (_, { getStat
   if (
     walletActionsState.result === 'success' &&
     steps.stepContent !== StepContent.SuccessTx &&
-    steps.stepContent !== StepContent.BridgingTx
+    steps.stepContent !== StepContent.BridgingTx &&
+    steps.stepContent !== StepContent.RecoveryTx
   ) {
     const nextStep = steps.currentStep + 1;
     if (!isEmpty(steps.items[nextStep])) {
@@ -60,12 +63,15 @@ export const stepperUpdate = createAppAsyncThunk('stepper/update', (_, { getStat
 
       if (crossChain && walletActionsState.data?.receipt?.transactionHash) {
         const srcTxHash = walletActionsState.data.receipt.transactionHash;
+        const pendingOps = store.ui.transact.crossChain.pendingOps;
+        const opId = Object.keys(pendingOps).find(id => pendingOps[id].sourceTxHash === srcTxHash);
         dispatch(
           stepperSetBridgeStatus({
             srcChainId: crossChain.sourceChainId,
             srcTxHash,
             destChainId: crossChain.destChainId,
             vaultId: currentItem.extraInfo?.vaultId,
+            opId,
           })
         );
         dispatch(stepperSetStepContent({ stepContent: StepContent.BridgingTx }));
@@ -80,6 +86,7 @@ export const stepperUpdate = createAppAsyncThunk('stepper/update', (_, { getStat
 
 export function stepperStartWithSteps(steps: Step[], chainId: ChainEntity['id']): BeefyThunk {
   return dispatch => {
+    dispatch(transactSetExecuting(false));
     dispatch(stepperReset());
     for (const step of steps) {
       dispatch(stepperAddStep({ step }));

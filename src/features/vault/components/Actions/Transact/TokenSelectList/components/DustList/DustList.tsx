@@ -16,10 +16,11 @@ export const DustList = memo(function DustList({ children, dustTotalUsd }: DustL
   const { open: dustExpanded, handleToggle: toggleDustExpanded, Icon: DustIcon } = useCollapse();
 
   const lowValueLabel = t('Transact-TokenSelect-LowValueTokens');
-  const dustTitle =
+  const rawTitle =
     dustExpanded && isDustHovered ? `Hide ${lowValueLabel}`
     : dustExpanded ? lowValueLabel
     : `Show ${lowValueLabel}`;
+  const dustTitle = rawTitle.charAt(0).toUpperCase() + rawTitle.slice(1).toLowerCase();
 
   const handleMouseEnter = useCallback(() => {
     setIsDustHovered(true);
@@ -81,7 +82,6 @@ const DustTitle = styled('span', {
     flexGrow: 1,
     color: 'text.dark',
     transition: 'color 0.2s',
-    textTransform: 'capitalize',
   },
   variants: {
     hovered: {

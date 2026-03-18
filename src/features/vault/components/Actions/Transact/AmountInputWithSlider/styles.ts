@@ -36,6 +36,14 @@ export const styles = {
     cursor: 'pointer',
   }),
   itemDisabled: css.raw({
+    opacity: 0.5,
+    color: 'text.dark',
+    cursor: 'default',
+  }),
+  sliderDisabled: css.raw({
+    opacity: 0.5,
+    background: '{colors.background.content.light}',
+    cursor: 'default',
     pointerEvents: 'none',
   }),
   active: css.raw({
