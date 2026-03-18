@@ -179,7 +179,6 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
   const recoveryQuoteStatus = useAppSelector(selectCrossChainRecoveryQuoteStatus);
   const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
   const isExecuting = useAppSelector(selectTransactExecuting);
-  const [isFetchingQuote, setIsFetchingQuote] = useState(false);
 
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -195,16 +194,14 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
 
   const needsNewQuote = recoveryOp != null && !isRecoveryExecution && !hasValidQuote;
 
+  const isFetchingQuote =
+    opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Pending;
+
   const handleFetchQuote = useCallback(() => {
     if (opId) {
-      setIsFetchingQuote(true);
-      dispatch(crossChainFetchRecoveryQuote({ opId }))
-        .unwrap()
-        .catch(err => {
-          console.error('Failed to fetch recovery quote', err);
-          throw err;
-        })
-        .finally(() => setIsFetchingQuote(false));
+      dispatch(crossChainFetchRecoveryQuote({ opId })).catch(err => {
+        console.error('Failed to fetch recovery quote', err);
+      });
     }
   }, [dispatch, opId]);
 
