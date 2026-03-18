@@ -200,7 +200,10 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
       setIsFetchingQuote(true);
       dispatch(crossChainFetchRecoveryQuote({ opId }))
         .unwrap()
-        .catch(() => {})
+        .catch(err => {
+          console.error('Failed to fetch recovery quote', err);
+          throw err;
+        })
         .finally(() => setIsFetchingQuote(false));
     }
   }, [dispatch, opId]);
