@@ -333,11 +333,8 @@ export const selectTransactConfirmNeededWithChanges = createSelector(
 export const selectTransactForceSelection = (state: BeefyState) => state.ui.transact.forceSelection;
 
 export const selectTransactVaultHasCrossChainZap = (state: BeefyState) => {
-  const vaultId = state.ui.transact.vaultId;
-  if (!vaultId) return false;
-  const vault = selectVaultById(state, vaultId);
-  const cctpChainIds = getSupportedChainIds();
-  return cctpChainIds.includes(vault.chainId);
+  const byOptionId = state.ui.transact.options.byOptionId;
+  return Object.values(byOptionId).some(option => option.strategyId === 'cross-chain');
 };
 
 export type CrossChainTokenOption = {
