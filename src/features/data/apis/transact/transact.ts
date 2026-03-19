@@ -769,6 +769,13 @@ export class TransactApi implements ITransactApi {
     const destUSDC = cctp.getUSDCForChain(helpers.vault.chainId, state);
     const usdcAddr = destUSDC.address.toLowerCase();
 
+    // Vault natively accepts USDC: any composable strategy can handle direct deposit
+    if (helpers.vault.depositTokenAddress.toLowerCase() === usdcAddr) {
+      return zapStrategies.some(
+        (s, i) => isFulfilledResult(zapOptions[i]) && isComposableStrategy(s)
+      );
+    }
+
     for (let i = 0; i < zapStrategies.length; i++) {
       const result = zapOptions[i];
       if (!isFulfilledResult(result) || !isComposableStrategy(zapStrategies[i])) continue;
@@ -795,6 +802,13 @@ export class TransactApi implements ITransactApi {
     const state = helpers.getState();
     const destUSDC = cctp.getUSDCForChain(helpers.vault.chainId, state);
     const usdcAddr = destUSDC.address.toLowerCase();
+
+    // Vault natively deposits USDC: any composable strategy can withdraw to USDC
+    if (helpers.vault.depositTokenAddress.toLowerCase() === usdcAddr) {
+      return zapStrategies.some(
+        (s, i) => isFulfilledResult(zapOptions[i]) && isComposableStrategy(s)
+      );
+    }
 
     for (let i = 0; i < zapStrategies.length; i++) {
       const result = zapOptions[i];
