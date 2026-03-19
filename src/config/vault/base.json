@@ -13073,6 +13073,38 @@
     "network": "base"
   },
   {
+    "id": "balancerv3-base-reth-wabasweth",
+    "name": "rETH/WETH V3",
+    "type": "standard",
+    "token": "rETH/WETH V3",
+    "tokenAddress": "0xB7B8B3AfC010169779C5C2385ec0eB0477FE3347",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnContractAddress": "0xe86b00E48775299f51502c25C41B1e7aBfEB9f2a",
+    "earnedToken": "mooBalancerBaserETH/waBasWETH",
+    "earnedTokenAddress": "0xe86b00E48775299f51502c25C41B1e7aBfEB9f2a",
+    "oracle": "lps",
+    "oracleId": "balancerv3-base-reth-wabasweth",
+    "status": "active",
+    "createdAt": 1773759758,
+    "platformId": "aura",
+    "assets": ["rETH", "waBasWETH"],
+    "risks": {
+      "updatedAt": 1773759758,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/base/v3/0xB7B8B3AfC010169779C5C2385ec0eB0477FE3347/add-liquidity",
+    "network": "base"
+  },
+  {
     "id": "uniswap-cow-base-weth-base-is-for-everyone-rp",
     "name": "Base is for everyone-WETH Reward Pool",
     "type": "gov",
