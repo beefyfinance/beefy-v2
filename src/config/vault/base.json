@@ -1,5 +1,200 @@
 [
   {
+    "id": "aerodrome-cow-base-usdc-felix-vault",
+    "name": "USDC-FELIX",
+    "type": "standard",
+    "token": "USDC-FELIX",
+    "tokenAddress": "0x8f1990ac49bd54Fcde66dD0f025D2Ad8fff54950",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x9413426Be3ad5245387f5e06Bec2a209d4c14271",
+    "earnedToken": "mooCowAerodromeUSDC-FELIX",
+    "earnedTokenAddress": "0x9413426Be3ad5245387f5e06Bec2a209d4c14271",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-felix",
+    "status": "active",
+    "createdAt": 1773042322,
+    "platformId": "aerodrome",
+    "assets": ["USDC", "FELIX"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-felix-rp",
+    "name": "USDC-FELIX Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeUSDC-FELIX",
+    "tokenAddress": "0x8f1990ac49bd54Fcde66dD0f025D2Ad8fff54950",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x8C45A04aB8a4588287B43852C95191D2888d8C95",
+    "earnedToken": "rCowAerodromeUSDC-FELIX",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-felix",
+    "status": "active",
+    "createdAt": 1773042321,
+    "platformId": "aerodrome",
+    "assets": ["USDC", "FELIX"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-felix",
+    "name": "USDC-FELIX",
+    "type": "cowcentrated",
+    "token": "USDC-FELIX aerodrome",
+    "tokenAddress": "0x1F9bA3e5Ebcd2f4CA3cDEffa5eCdF1c03cf1865d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xf30Bf00edd0C22db54C9274B90D2A4C21FC09b07"
+    ],
+    "earnContractAddress": "0x8f1990ac49bd54Fcde66dD0f025D2Ad8fff54950",
+    "earnedToken": "cowAerodromeUSDC-FELIX",
+    "earnedTokenAddress": "0x8f1990ac49bd54Fcde66dD0f025D2Ad8fff54950",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-felix",
+    "status": "active",
+    "createdAt": 1773042321,
+    "platformId": "beefy",
+    "feeTier": "0.6",
+    "assets": ["USDC", "FELIX"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-felix-rp",
+    "name": "WETH-FELIX Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-FELIX",
+    "tokenAddress": "0x9e0cB29be1D6428552f43Cb8B039b36765d50944",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x524B7507DB72B5A04254B458d7BdAA3E5B837391",
+    "earnedToken": "rCowUniswapBaseWETH-FELIX",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-felix",
+    "status": "active",
+    "createdAt": 1773041590,
+    "platformId": "uniswap",
+    "assets": ["WETH", "FELIX"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-felix",
+    "name": "WETH-FELIX",
+    "type": "cowcentrated",
+    "token": "WETH-FELIX uniswap",
+    "tokenAddress": "0xfd77B6E259025AD609dfA7221f081B898496574c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xf30Bf00edd0C22db54C9274B90D2A4C21FC09b07"
+    ],
+    "earnContractAddress": "0x9e0cB29be1D6428552f43Cb8B039b36765d50944",
+    "earnedToken": "cowUniswapBaseWETH-FELIX",
+    "earnedTokenAddress": "0x9e0cB29be1D6428552f43Cb8B039b36765d50944",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-felix",
+    "status": "active",
+    "createdAt": 1773041590,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["WETH", "FELIX"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-msusd-mseth-vault",
     "name": "msUSD-msETH",
     "type": "standard",
@@ -1586,7 +1781,7 @@
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
-      "notCorrelated": true,
+      "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
@@ -1626,7 +1821,7 @@
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
-      "notCorrelated": true,
+      "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
@@ -1669,7 +1864,7 @@
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
-      "notCorrelated": true,
+      "notCorrelated": false,
       "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
@@ -12875,6 +13070,38 @@
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/base/v3/0x7AB124EC4029316c2A42F713828ddf2a192B36db/add-liquidity",
+    "network": "base"
+  },
+  {
+    "id": "balancerv3-base-reth-wabasweth",
+    "name": "rETH/WETH V3",
+    "type": "standard",
+    "token": "rETH/WETH V3",
+    "tokenAddress": "0xB7B8B3AfC010169779C5C2385ec0eB0477FE3347",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnContractAddress": "0xe86b00E48775299f51502c25C41B1e7aBfEB9f2a",
+    "earnedToken": "mooBalancerBaserETH/waBasWETH",
+    "earnedTokenAddress": "0xe86b00E48775299f51502c25C41B1e7aBfEB9f2a",
+    "oracle": "lps",
+    "oracleId": "balancerv3-base-reth-wabasweth",
+    "status": "active",
+    "createdAt": 1773759758,
+    "platformId": "aura",
+    "assets": ["rETH", "waBasWETH"],
+    "risks": {
+      "updatedAt": 1773759758,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/base/v3/0xB7B8B3AfC010169779C5C2385ec0eB0477FE3347/add-liquidity",
     "network": "base"
   },
   {
