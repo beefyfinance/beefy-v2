@@ -25,7 +25,6 @@ import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url';
 import type { ChainEntity } from '../../entities/chain.ts';
 import { isDefined } from '../../utils/array-utils.ts';
 import { featureFlag_walletConnectChainId } from '../../utils/feature-flags.ts';
-import { withDivvi } from '../divvi/client.ts';
 import { customInjectedWallets } from './custom-injected-wallets.ts';
 import type { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types.ts';
 
@@ -60,29 +59,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     this.onboard = undefined;
     this.onboardWalletInitializers = undefined;
     this.listenForEip6963Wallets();
-  }
-
-  protected listenForEip6963Wallets() {
-    if (typeof window !== 'undefined') {
-      window.addEventListener(
-        'eip6963:announceProvider',
-        this.onEip6963AnnounceProvider.bind(this)
-      );
-      window.dispatchEvent(new CustomEvent('eip6963:requestProvider'));
-    }
-  }
-
-  protected onEip6963AnnounceProvider(e: Event): void {
-    if (!isEip6963Event(e)) {
-      return;
-    }
-
-    this.eip6963Wallets.set(e.detail.info.rdns, e.detail.info.name);
-  }
-
-  /** set whether next tryToAutoConnect will try to automatically connect to EIP6936 wallet */
-  public setAutoConnectToEip6936(value: boolean = true) {
-    this.tryToAutoConnectToEip6936 = value;
   }
 
   private static createWalletConnectModule(
@@ -305,37 +281,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     }
   }
 
-  protected getEip6963Wallet() {
-    if (this.eip6963Wallets.size === 0) {
-      return undefined;
-    }
-
-    for (const rdns of eip6936WalletPriority) {
-      const wallet = this.eip6963Wallets.get(rdns);
-      if (wallet) {
-        return wallet;
-      }
-    }
-
-    return sample(Array.from(this.eip6963Wallets.values()));
-  }
-
-  protected async getWalletForAutoConnect() {
-    // Use last connected wallet if set
-    const lastConnectedWallet = WalletConnectionApi.getLastConnectedWallet();
-    if (lastConnectedWallet) {
-      // wait for injected wallet to be available in case last connected was an injected wallet
-      await this.waitForInjectedWallet();
-      return lastConnectedWallet;
-    }
-
-    // Try to auto connect if wallet announced via EIP-6963
-    if (this.tryToAutoConnectToEip6936 && this.eip6963Wallets.size > 0) {
-      this.tryToAutoConnectToEip6936 = false;
-      return this.getEip6963Wallet();
-    }
-
-    return undefined;
+  /** set whether next tryToAutoConnect will try to automatically connect to EIP6936 wallet */
+  public setAutoConnectToEip6936(value: boolean = true) {
+    this.tryToAutoConnectToEip6936 = value;
   }
 
   /**
@@ -393,11 +341,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     const wrappedProvider =
       this.providerWrapper ? this.providerWrapper(realProvider) : realProvider;
 
-    return withDivvi(
-      createWalletClient({
-        transport: custom(wrappedProvider),
-      })
-    );
+    return createWalletClient({
+      transport: custom(wrappedProvider),
+    });
   }
 
   public async withProviderWrapper<T>(
@@ -507,6 +453,57 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     // Raise events
     this.options.onWalletDisconnected();
+  }
+
+  protected listenForEip6963Wallets() {
+    if (typeof window !== 'undefined') {
+      window.addEventListener(
+        'eip6963:announceProvider',
+        this.onEip6963AnnounceProvider.bind(this)
+      );
+      window.dispatchEvent(new CustomEvent('eip6963:requestProvider'));
+    }
+  }
+
+  protected onEip6963AnnounceProvider(e: Event): void {
+    if (!isEip6963Event(e)) {
+      return;
+    }
+
+    this.eip6963Wallets.set(e.detail.info.rdns, e.detail.info.name);
+  }
+
+  protected getEip6963Wallet() {
+    if (this.eip6963Wallets.size === 0) {
+      return undefined;
+    }
+
+    for (const rdns of eip6936WalletPriority) {
+      const wallet = this.eip6963Wallets.get(rdns);
+      if (wallet) {
+        return wallet;
+      }
+    }
+
+    return sample(Array.from(this.eip6963Wallets.values()));
+  }
+
+  protected async getWalletForAutoConnect() {
+    // Use last connected wallet if set
+    const lastConnectedWallet = WalletConnectionApi.getLastConnectedWallet();
+    if (lastConnectedWallet) {
+      // wait for injected wallet to be available in case last connected was an injected wallet
+      await this.waitForInjectedWallet();
+      return lastConnectedWallet;
+    }
+
+    // Try to auto connect if wallet announced via EIP-6963
+    if (this.tryToAutoConnectToEip6936 && this.eip6963Wallets.size > 0) {
+      this.tryToAutoConnectToEip6936 = false;
+      return this.getEip6963Wallet();
+    }
+
+    return undefined;
   }
 
   private getOnboardWalletInitializers(): WalletInit[] {
