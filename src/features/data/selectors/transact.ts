@@ -274,9 +274,7 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
 
         return optionWithBalances;
       })
-      .filter(
-        option => !walletAddress || !option.hideIfZeroBalance || !option.balanceValue.isZero()
-      ),
+      .filter(option => !option.hideIfZeroBalance || !option.balanceValue.isZero()),
     [o => o.order, o => o.balanceValue.toNumber()],
     ['asc', 'desc']
   );
