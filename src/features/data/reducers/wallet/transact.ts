@@ -151,6 +151,7 @@ const transactSlice = createSlice({
       .addCase(transactClearInput, sliceState => {
         clearInputs(sliceState);
         resetQuotes(sliceState);
+        sliceState.forceSelection = true;
       })
       .addCase(transactClearQuotes, sliceState => {
         resetQuotes(sliceState);
