@@ -32,10 +32,12 @@ import {
   selectRecoveryOpForCurrentVault,
   selectTransactConfirmNeededWithChanges,
   selectTransactExecuting,
+  selectTransactForceSelection,
   selectTransactQuoteStatus,
   selectTransactSelectedChainId,
   selectTransactSelectedQuoteOrUndefined,
   selectTransactSuccessClosed,
+  selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -58,6 +60,7 @@ import {
   selectIsWalletConnected,
 } from '../../../../../data/selectors/wallet.ts';
 import { stepperReset } from '../../../../../data/actions/wallet/stepper.ts';
+import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -80,24 +83,56 @@ export const DepositActions = memo(function DepositActions() {
   }
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
-    return <ActionDepositDisabled />;
+    if (quoteStatus === TransactStatus.Pending) {
+      return <ActionDepositPending />;
+    }
+    return <ActionDepositSelectFlow />;
   }
 
   return <ActionDeposit quote={quote} option={option} />;
 });
 
-const ActionDepositDisabled = memo(function ActionDepositDisabled() {
+/** Quote is loading — keep deposit disabled */
+const ActionDepositPending = memo(function ActionDepositPending() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const selectedChainId = useAppSelector(selectTransactSelectedChainId);
+  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
   const { t } = useTranslation();
   const classes = useStyles();
+  const connectSwitchChainId =
+    hasCrossChainZap && forceSelection ? undefined : (selectedChainId ?? vault.chainId);
 
   return (
     <div className={classes.feesContainer}>
-      <ActionConnectSwitch chainId={selectedChainId ?? vault.chainId}>
+      <ActionConnectSwitch chainId={connectSwitchChainId}>
         <Button variant="cta" disabled={true} fullWidth={true} borderless={true}>
           {t('Transact-Deposit')}
+        </Button>
+      </ActionConnectSwitch>
+      <VaultFees />
+    </div>
+  );
+});
+
+/** No quote yet — CTA opens chain/token select (same as TokenSelectButton) */
+const ActionDepositSelectFlow = memo(function ActionDepositSelectFlow() {
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const selectedChainId = useAppSelector(selectTransactSelectedChainId);
+  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
+  const classes = useStyles();
+  const { ctaLabel, openSelectStep } = useTransactSelectFlowCta('deposit');
+  const connectSwitchChainId =
+    hasCrossChainZap && forceSelection ? undefined : (selectedChainId ?? vault.chainId);
+
+  return (
+    <div className={classes.feesContainer}>
+      <ActionConnectSwitch chainId={connectSwitchChainId}>
+        <Button variant="cta" fullWidth={true} borderless={true} onClick={openSelectStep}>
+          {ctaLabel}
         </Button>
       </ActionConnectSwitch>
       <VaultFees />

@@ -1,14 +1,10 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, type ReactNode, useCallback, useMemo } from 'react';
+import { memo, type ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
 import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
-import {
-  TokenAmount,
-  TokenAmountFromEntity,
-} from '../../../../../../components/TokenAmount/TokenAmount.tsx';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { errorToString } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
@@ -19,7 +15,6 @@ import { TransactStatus } from '../../../../../data/reducers/wallet/transact-typ
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
 import {
   selectTransactForceSelection,
-  selectTransactNumTokens,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactSelected,
@@ -34,6 +29,7 @@ import { DepositBuyLinks } from '../DepositBuyLinks/DepositBuyLinks.tsx';
 import { DepositTokenAmountInput } from '../DepositTokenAmountInput/DepositTokenAmountInput.tsx';
 import { FormFooter } from '../FormFooter/FormFooter.tsx';
 import { TransactQuote } from '../TransactQuote/TransactQuote.tsx';
+import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -113,21 +109,10 @@ const DepositFormInputs = memo(function DepositFormInputs() {
   const { t } = useTranslation();
   const selection = useAppSelector(selectTransactSelected);
   const multipleInputs = selection.tokens.length > 1;
-  const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
   const forceSelection = useAppSelector(selectTransactForceSelection);
   const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
   const availableLabel = t('Transact-Available');
-  const firstSelectLabel = useMemo(() => {
-    if (hasCrossChainZap && forceSelection) {
-      return t('Transact-SelectChain');
-    }
-    return t(
-      hasOptions ?
-        forceSelection ? 'Transact-SelectToken'
-        : 'Transact-SelectAmount'
-      : 'Transact-Deposit'
-    );
-  }, [forceSelection, hasOptions, hasCrossChainZap, t]);
+  const { ctaLabel: firstSelectLabel } = useTransactSelectFlowCta('deposit');
 
   if (forceSelection) {
     return (
@@ -147,11 +132,7 @@ const DepositFormInputs = memo(function DepositFormInputs() {
       token={token}
       availableLabel={availableLabel}
       selectLabel={!multipleInputs && index === 0 ? firstSelectLabel : token.symbol}
-      tokenAvailable={
-        forceSelection ?
-          <TokenAmount amount={BIG_ZERO} decimals={18} />
-        : <TokenInWallet token={token} index={index} />
-      }
+      tokenAvailable={<TokenInWallet token={token} index={index} />}
     />
   ));
 });

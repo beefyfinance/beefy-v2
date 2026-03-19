@@ -238,43 +238,41 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
   );
 
   return orderBy(
-    options
-      .map(option => {
-        const tokens = option.tokens;
-        const balances = tokens.map(token =>
-          selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress)
-        );
-        const prices = tokens.map(token =>
-          selectTokenPriceByAddress(state, token.chainId, token.address)
-        );
-        const balanceValues = balances.map((balance, index) => balance.multipliedBy(prices[index]));
-        const balanceValueTotal = balanceValues.reduce((acc, value) => acc.plus(value), BIG_ZERO);
+    options.map(option => {
+      const tokens = option.tokens;
+      const balances = tokens.map(token =>
+        selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress)
+      );
+      const prices = tokens.map(token =>
+        selectTokenPriceByAddress(state, token.chainId, token.address)
+      );
+      const balanceValues = balances.map((balance, index) => balance.multipliedBy(prices[index]));
+      const balanceValueTotal = balanceValues.reduce((acc, value) => acc.plus(value), BIG_ZERO);
 
-        const optionWithBalances = {
-          ...option,
-          balances,
-          prices,
-          balanceValues,
-          balanceValue: balanceValueTotal,
-          balance: undefined,
-          decimals: 0,
-          price: undefined,
-          tag: undefined,
+      const optionWithBalances = {
+        ...option,
+        balances,
+        prices,
+        balanceValues,
+        balanceValue: balanceValueTotal,
+        balance: undefined,
+        decimals: 0,
+        price: undefined,
+        tag: undefined,
+      };
+
+      if (tokens.length === 1) {
+        return {
+          ...optionWithBalances,
+          ...extractTagFromLpSymbol(tokens, vault),
+          balance: balances[0],
+          decimals: tokens[0].decimals,
+          price: prices[0],
         };
+      }
 
-        if (tokens.length === 1) {
-          return {
-            ...optionWithBalances,
-            ...extractTagFromLpSymbol(tokens, vault),
-            balance: balances[0],
-            decimals: tokens[0].decimals,
-            price: prices[0],
-          };
-        }
-
-        return optionWithBalances;
-      })
-      .filter(option => !option.hideIfZeroBalance || !option.balanceValue.isZero()),
+      return optionWithBalances;
+    }),
     [o => o.order, o => o.balanceValue.toNumber()],
     ['asc', 'desc']
   );
@@ -349,9 +347,9 @@ export type CrossChainChainOption = {
 
 /**
  * Returns the list of chains available for cross-chain deposit, sorted as:
- * 1. Vault's own chain first
- * 2. Remaining chains with balance, sorted by USD balance descending
- * 3. Remaining chains with $0 balance, sorted alphabetically by chain name
+ * 1. Chains with balance before chains without
+ * 2. Among chains with balance, sorted by USD balance descending
+ * 3. Among chains with $0 balance, sorted alphabetically by chain name
  */
 export const selectCrossChainSortedChains = (
   state: BeefyState,
@@ -416,16 +414,14 @@ export const selectCrossChainSortedChains = (
   return orderBy(
     chainsWithBalance,
     [
-      // 1. Vault chain always first
-      o => (o.chainId === vault.chainId ? 0 : 1),
-      // 2. Chains with balance before chains without
+      // 1. Chains with balance before chains without
       o => (o.balanceUsd.isGreaterThan(BIG_ZERO) ? 0 : 1),
-      // 3. Among chains with balance, sort by balance descending
+      // 2. Among chains with balance, sort by balance descending
       o => o.balanceUsd.toNumber(),
-      // 4. Among chains with $0 balance, sort alphabetically by chain name
+      // 3. Among chains with $0 balance, sort alphabetically by chain name
       o => o.chainName.toLowerCase(),
     ],
-    ['asc', 'asc', 'desc', 'asc']
+    ['asc', 'desc', 'asc']
   );
 };
 

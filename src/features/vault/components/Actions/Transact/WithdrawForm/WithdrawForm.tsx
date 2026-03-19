@@ -1,5 +1,5 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
@@ -14,10 +14,8 @@ import { TransactStatus } from '../../../../../data/reducers/wallet/transact-typ
 import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance.ts';
 import {
   selectTransactForceSelection,
-  selectTransactNumTokens,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
-  selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
@@ -27,6 +25,7 @@ import { WithdrawActions } from '../WithdrawActions/WithdrawActions.tsx';
 import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice/WithdrawnInWalletNotice.tsx';
 import { WithdrawQueueLoader } from '../WithdrawQueue/WithdrawQueueLoader.tsx';
 import { WithdrawTokenAmountInput } from '../WithdrawTokenAmountInput/WithdrawTokenAmountInput.tsx';
+import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -85,28 +84,14 @@ const WithdrawFormLoader = memo(function WithdrawFormLoader() {
 const WithdrawForm = memo(function WithdrawForm() {
   const { t } = useTranslation();
   const classes = useStyles();
-  const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
-  const forceSelection = useAppSelector(selectTransactForceSelection);
-  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
-
-  const i18key = useMemo(() => {
-    if (hasCrossChainZap && forceSelection) {
-      return 'Transact-SelectChain';
-    }
-    return (
-      hasOptions ?
-        forceSelection ? 'Transact-SelectToken'
-        : 'Transact-SelectAmount'
-      : 'Transact-Withdraw'
-    );
-  }, [forceSelection, hasOptions, hasCrossChainZap]);
+  const { ctaLabel: selectLabel } = useTransactSelectFlowCta('withdraw');
 
   return (
     <>
       <WithdrawnInWalletNotice css={styles.notice} />
       <WithdrawQueueLoader />
       <div className={classes.labels}>
-        <div className={classes.selectLabel}>{t(i18key)}</div>
+        <div className={classes.selectLabel}>{selectLabel}</div>
         <div className={classes.availableLabel}>
           {t('Transact-Available')}{' '}
           <span className={classes.availableLabelAmount}>

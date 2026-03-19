@@ -75,13 +75,15 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
     for (const option of searchFiltered) {
       const isVaultDeposit = option.tokens.length > 1 || option.order === 0;
       const hasBalance = option.balance && option.balance.gt(BIG_ZERO);
+      const isDustUsd = !hasBalance || option.balanceValue.lt(DUST_THRESHOLD);
 
       if (isVaultDeposit) {
         vaultDeposits.push(option);
-      } else if (showDustSection && hasBalance && option.balanceValue.lt(DUST_THRESHOLD)) {
+      } else if (showDustSection && isDustUsd) {
         dust.push(option);
         dustSum = dustSum.plus(option.balanceValue);
-      } else if (hasBalance || !isWalletConnected) {
+      } else if (hasBalance || !isWalletConnected || search.length > 0) {
+        // With search, dust section is hidden — show $0 / dust-amount tokens in the main list
         other.push(option);
       }
     }

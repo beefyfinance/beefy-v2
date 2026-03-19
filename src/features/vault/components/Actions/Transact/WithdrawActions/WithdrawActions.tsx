@@ -31,9 +31,11 @@ import {
 import {
   selectTransactConfirmNeededWithChanges,
   selectTransactExecuting,
+  selectTransactForceSelection,
   selectTransactQuoteStatus,
   selectTransactSelectedQuoteOrUndefined,
   selectTransactSuccessClosed,
+  selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import {
@@ -56,6 +58,7 @@ import {
   transactSetSuccessClosed,
 } from '../../../../../data/actions/transact.ts';
 import { stepperReset } from '../../../../../data/actions/wallet/stepper.ts';
+import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -82,7 +85,10 @@ export const WithdrawActionsStandard = memo(function WithdrawActionsStandard() {
   }
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
-    return <ActionWithdrawDisabled />;
+    if (quoteStatus === TransactStatus.Pending) {
+      return <ActionWithdrawPending />;
+    }
+    return <ActionWithdrawSelectFlow />;
   }
 
   return <ActionWithdraw quote={quote} option={option} />;
@@ -97,6 +103,9 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const successClosed = useAppSelector(selectTransactSuccessClosed);
   const isSuccessTx = useAppSelector(selectStepperStepContent) === StepContent.SuccessTx;
+  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
+  const connectSwitchChainId = hasCrossChainZap && forceSelection ? undefined : vault.chainId;
 
   if (successClosed || isSuccessTx) {
     return <ActionCloseWithdraw />;
@@ -113,10 +122,11 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
     <>
       {showWithdraw ?
         <ActionClaimWithdraw quote={quote} vault={vault} />
-      : <ActionConnectSwitch
+      : quoteStatus === TransactStatus.Pending ?
+        <ActionConnectSwitch
           css={styles.feesContainer}
           FeesComponent={VaultFees}
-          chainId={vault.chainId}
+          chainId={connectSwitchChainId}
         >
           <div className={classes.feesContainer}>
             <Button variant="cta" disabled={true} fullWidth={true} borderless={true}>
@@ -125,26 +135,76 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
             <VaultFees />
           </div>
         </ActionConnectSwitch>
-      }
+      : <ActionWithdrawGovSelectFlow vault={vault} />}
     </>
   );
 });
 
-const ActionWithdrawDisabled = memo(function ActionWithdrawDisabled() {
+const ActionWithdrawPending = memo(function ActionWithdrawPending() {
   const { t } = useTranslation();
   const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
+  const connectSwitchChainId = hasCrossChainZap && forceSelection ? undefined : vault.chainId;
 
   return (
     <div className={classes.feesContainer}>
-      <ActionConnectSwitch chainId={vault.chainId}>
+      <ActionConnectSwitch chainId={connectSwitchChainId}>
         <Button variant="cta" disabled={true} fullWidth={true} borderless={true}>
           {t('Transact-Withdraw')}
         </Button>
       </ActionConnectSwitch>
       {!isGovVault(vault) && <VaultFees />}
     </div>
+  );
+});
+
+const ActionWithdrawSelectFlow = memo(function ActionWithdrawSelectFlow() {
+  const classes = useStyles();
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
+  const { ctaLabel, openSelectStep } = useTransactSelectFlowCta('withdraw');
+  const connectSwitchChainId = hasCrossChainZap && forceSelection ? undefined : vault.chainId;
+
+  return (
+    <div className={classes.feesContainer}>
+      <ActionConnectSwitch chainId={connectSwitchChainId}>
+        <Button variant="cta" fullWidth={true} borderless={true} onClick={openSelectStep}>
+          {ctaLabel}
+        </Button>
+      </ActionConnectSwitch>
+      {!isGovVault(vault) && <VaultFees />}
+    </div>
+  );
+});
+
+type ActionWithdrawGovSelectFlowProps = { vault: VaultGov };
+const ActionWithdrawGovSelectFlow = memo(function ActionWithdrawGovSelectFlow({
+  vault,
+}: ActionWithdrawGovSelectFlowProps) {
+  const classes = useStyles();
+  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
+  const { ctaLabel, openSelectStep } = useTransactSelectFlowCta('withdraw');
+  const connectSwitchChainId = hasCrossChainZap && forceSelection ? undefined : vault.chainId;
+
+  return (
+    <ActionConnectSwitch
+      css={styles.feesContainer}
+      FeesComponent={VaultFees}
+      chainId={connectSwitchChainId}
+    >
+      <div className={classes.feesContainer}>
+        <Button variant="cta" fullWidth={true} borderless={true} onClick={openSelectStep}>
+          {ctaLabel}
+        </Button>
+        <VaultFees />
+      </div>
+    </ActionConnectSwitch>
   );
 });
 
