@@ -169,7 +169,7 @@ export class TransactApi implements ITransactApi {
       if (
         isZapTransactHelpers(helpers) &&
         cctp.isChainSupported(helpers.vault.chainId) &&
-        zapStrategies.some(isComposableStrategy)
+        this.anyComposableStrategyAcceptsUsdcDeposit(helpers, zapStrategies, zapOptions)
       ) {
         try {
           console.log('[transact] fetchDepositOptionsFor: fetching cross-chain options');
@@ -317,7 +317,7 @@ export class TransactApi implements ITransactApi {
       if (
         isZapTransactHelpers(helpers) &&
         cctp.isChainSupported(helpers.vault.chainId) &&
-        zapStrategies.some(isComposableStrategy)
+        this.anyComposableStrategyAcceptsUsdcWithdraw(helpers, zapStrategies, zapOptions)
       ) {
         try {
           console.log('[transact] fetchWithdrawOptionsFor: fetching cross-chain options');
@@ -755,5 +755,73 @@ export class TransactApi implements ITransactApi {
         t
       );
     }
+  }
+
+  /**
+   * Check if any composable zap strategy returned a deposit option that accepts USDC as a single input.
+   */
+  private anyComposableStrategyAcceptsUsdcDeposit(
+    helpers: ZapTransactHelpers,
+    zapStrategies: IStrategy[],
+    zapOptions: PromiseSettledResult<DepositOption[]>[]
+  ): boolean {
+    const state = helpers.getState();
+    const destUSDC = cctp.getUSDCForChain(helpers.vault.chainId, state);
+    const usdcAddr = destUSDC.address.toLowerCase();
+
+    // Vault natively accepts USDC: any composable strategy can handle direct deposit
+    if (helpers.vault.depositTokenAddress.toLowerCase() === usdcAddr) {
+      return zapStrategies.some(
+        (s, i) => isFulfilledResult(zapOptions[i]) && isComposableStrategy(s)
+      );
+    }
+
+    for (let i = 0; i < zapStrategies.length; i++) {
+      const result = zapOptions[i];
+      if (!isFulfilledResult(result) || !isComposableStrategy(zapStrategies[i])) continue;
+      if (
+        result.value.some(
+          o => o.inputs.length === 1 && o.inputs[0].address.toLowerCase() === usdcAddr
+        )
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Check if any composable zap strategy returned a withdraw option that outputs USDC as a single output.
+   */
+  private anyComposableStrategyAcceptsUsdcWithdraw(
+    helpers: ZapTransactHelpers,
+    zapStrategies: IStrategy[],
+    zapOptions: PromiseSettledResult<WithdrawOption[]>[]
+  ): boolean {
+    const state = helpers.getState();
+    const destUSDC = cctp.getUSDCForChain(helpers.vault.chainId, state);
+    const usdcAddr = destUSDC.address.toLowerCase();
+
+    // Vault natively deposits USDC: any composable strategy can withdraw to USDC
+    if (helpers.vault.depositTokenAddress.toLowerCase() === usdcAddr) {
+      return zapStrategies.some(
+        (s, i) => isFulfilledResult(zapOptions[i]) && isComposableStrategy(s)
+      );
+    }
+
+    for (let i = 0; i < zapStrategies.length; i++) {
+      const result = zapOptions[i];
+      if (!isFulfilledResult(result) || !isComposableStrategy(zapStrategies[i])) continue;
+      if (
+        result.value.some(
+          o => o.wantedOutputs.length === 1 && o.wantedOutputs[0].address.toLowerCase() === usdcAddr
+        )
+      ) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
