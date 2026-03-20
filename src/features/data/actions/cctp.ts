@@ -3,6 +3,7 @@ import { CCTP_CONFIG } from '../../../config/cctp/cctp-config.ts';
 import type { MessageLifecycleState, MessageListResponse } from '../apis/cctp/cctp-api-types.ts';
 import { getCCTPApi } from '../apis/instances.ts';
 import type { ChainEntity } from '../entities/chain.ts';
+import type { TokenEntity } from '../entities/token.ts';
 import { StepContent } from '../reducers/wallet/stepper-types.ts';
 import { selectChainById } from '../selectors/chains.ts';
 import { selectStepperBridgeStatus } from '../selectors/stepper.ts';
@@ -168,15 +169,26 @@ function fetchVaultChainBalances(getState: () => BeefyState): BeefyThunk {
     if (!bridgeStatus) return;
 
     const { destChainId, vaultId } = bridgeStatus;
+    if (!vaultId) return;
+
     const vault = selectVaultById(state, vaultId);
-    const cctpConfig = CCTP_CONFIG.chains[destChainId];
 
-    const tokens = [];
-    if (cctpConfig) {
-      const usdc = selectTokenByAddress(state, destChainId, cctpConfig.usdcAddress);
-      tokens.push(usdc);
+    const vaultChainTokens: TokenEntity[] = [];
+    const vaultChainCctp = CCTP_CONFIG.chains[vault.chainId];
+    if (vaultChainCctp) {
+      vaultChainTokens.push(selectTokenByAddress(state, vault.chainId, vaultChainCctp.usdcAddress));
     }
+    dispatch(
+      fetchBalanceAction({ chainId: vault.chainId, tokens: vaultChainTokens, vaults: [vault] })
+    );
 
-    dispatch(fetchBalanceAction({ chainId: destChainId, tokens, vaults: [vault] }));
+    if (destChainId !== vault.chainId) {
+      const destTokens: TokenEntity[] = [];
+      const destCctp = CCTP_CONFIG.chains[destChainId];
+      if (destCctp) {
+        destTokens.push(selectTokenByAddress(state, destChainId, destCctp.usdcAddress));
+      }
+      dispatch(fetchBalanceAction({ chainId: destChainId, tokens: destTokens }));
+    }
   };
 }

@@ -11,6 +11,8 @@ import {
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.ts';
+import { selectStepperStepContent } from '../../../../../data/selectors/stepper.ts';
 import { selectTransactForceSelection } from '../../../../../data/selectors/transact.ts';
 import { AmountInput, type AmountInputProps } from '../AmountInput/AmountInput.tsx';
 import { styles } from './styles.ts';
@@ -33,6 +35,9 @@ export const AmountInputWithSlider = memo(function AmountInputWithSlider({
   warning,
 }: AmountInputWithSliderProps) {
   const forceSelection = useAppSelector(selectTransactForceSelection);
+  const stepContent = useAppSelector(selectStepperStepContent);
+  const isBridging =
+    stepContent === StepContent.BridgingTx || stepContent === StepContent.SuccessTx;
   const classes = useStyles();
   const sliderValue = useMemo(() => {
     return value
@@ -42,8 +47,9 @@ export const AmountInputWithSlider = memo(function AmountInputWithSlider({
   }, [maxValue, value]);
 
   const error = useMemo(() => {
+    if (isBridging) return false;
     return value.gt(maxValue);
-  }, [maxValue, value]);
+  }, [maxValue, value, isBridging]);
 
   const handlePercentChange = useCallback<(v: number) => void>(
     value => {

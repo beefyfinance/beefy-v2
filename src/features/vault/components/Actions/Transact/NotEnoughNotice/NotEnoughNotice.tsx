@@ -5,6 +5,8 @@ import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { isCowcentratedDepositQuote } from '../../../../../data/apis/transact/transact-types.ts';
+import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.ts';
+import { selectStepperStepContent } from '../../../../../data/selectors/stepper.ts';
 import {
   selectTransactDepositInputAmountExceedsBalance,
   selectTransactSelectedQuote,
@@ -34,12 +36,20 @@ export const NotEnoughNotice = memo(function NotEnoughNotice({
     quote &&
     isCowcentratedDepositQuote(quote) &&
     quote.outputs.every(output => output.amount.lte(BIG_ZERO));
+  const stepContent = useAppSelector(selectStepperStepContent);
+  const isBridging =
+    stepContent === StepContent.BridgingTx || stepContent === StepContent.SuccessTx;
 
   useEffect(() => {
-    onChange(inputAmountExceedsBalance);
-  }, [inputAmountExceedsBalance, onChange]);
+    onChange(isBridging ? false : inputAmountExceedsBalance);
+  }, [inputAmountExceedsBalance, isBridging, onChange]);
 
-  if (!inputAmountExceedsBalance || !isWalletConnected || isInvalidCowcentratedDeposit) {
+  if (
+    !inputAmountExceedsBalance ||
+    !isWalletConnected ||
+    isInvalidCowcentratedDeposit ||
+    isBridging
+  ) {
     return null;
   }
 

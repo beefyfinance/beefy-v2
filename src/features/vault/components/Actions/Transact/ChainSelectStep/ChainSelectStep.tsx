@@ -193,6 +193,7 @@ const TokenIcons = styled('div', {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    isolation: 'isolate',
     width: '60px',
     sm: {
       width: '96px',
