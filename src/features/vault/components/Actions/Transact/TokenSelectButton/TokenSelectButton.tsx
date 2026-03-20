@@ -44,9 +44,7 @@ export const TokenSelectButton = memo(function TokenSelectButton({
   const mode = useAppSelector(selectTransactOptionsMode);
   const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
   const canSwitchToTokenSelect = index === 0 && numTokenOptions > 1;
-  const { openSelectStep } = useTransactSelectFlowCta(
-    mode === TransactMode.Deposit ? 'deposit' : 'withdraw'
-  );
+  const { openSelectStep } = useTransactSelectFlowCta();
 
   const tokenSymbol = useMemo(() => {
     return (

@@ -84,7 +84,7 @@ const WithdrawFormLoader = memo(function WithdrawFormLoader() {
 const WithdrawForm = memo(function WithdrawForm() {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { ctaLabel: selectLabel } = useTransactSelectFlowCta('withdraw');
+  const { ctaLabel: selectLabel } = useTransactSelectFlowCta();
 
   return (
     <>

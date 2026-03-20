@@ -35,7 +35,6 @@ import {
   selectTransactQuoteStatus,
   selectTransactSelectedQuoteOrUndefined,
   selectTransactSuccessClosed,
-  selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import {
@@ -104,8 +103,7 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
   const successClosed = useAppSelector(selectTransactSuccessClosed);
   const isSuccessTx = useAppSelector(selectStepperStepContent) === StepContent.SuccessTx;
   const forceSelection = useAppSelector(selectTransactForceSelection);
-  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
-  const connectSwitchChainId = hasCrossChainZap && forceSelection ? undefined : vault.chainId;
+  const connectSwitchChainId = forceSelection ? undefined : vault.chainId;
 
   if (successClosed || isSuccessTx) {
     return <ActionCloseWithdraw />;
@@ -146,8 +144,7 @@ const ActionWithdrawPending = memo(function ActionWithdrawPending() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const forceSelection = useAppSelector(selectTransactForceSelection);
-  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
-  const connectSwitchChainId = hasCrossChainZap && forceSelection ? undefined : vault.chainId;
+  const connectSwitchChainId = forceSelection ? undefined : vault.chainId;
 
   return (
     <div className={classes.feesContainer}>
@@ -166,14 +163,19 @@ const ActionWithdrawSelectFlow = memo(function ActionWithdrawSelectFlow() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const forceSelection = useAppSelector(selectTransactForceSelection);
-  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
-  const { ctaLabel, openSelectStep } = useTransactSelectFlowCta('withdraw');
-  const connectSwitchChainId = hasCrossChainZap && forceSelection ? undefined : vault.chainId;
+  const { ctaLabel, openSelectStep } = useTransactSelectFlowCta();
+  const connectSwitchChainId = forceSelection ? undefined : vault.chainId;
 
   return (
     <div className={classes.feesContainer}>
       <ActionConnectSwitch chainId={connectSwitchChainId}>
-        <Button variant="cta" fullWidth={true} borderless={true} onClick={openSelectStep}>
+        <Button
+          variant="cta"
+          fullWidth={true}
+          borderless={true}
+          disabled={!forceSelection}
+          onClick={forceSelection ? openSelectStep : undefined}
+        >
           {ctaLabel}
         </Button>
       </ActionConnectSwitch>
@@ -188,9 +190,8 @@ const ActionWithdrawGovSelectFlow = memo(function ActionWithdrawGovSelectFlow({
 }: ActionWithdrawGovSelectFlowProps) {
   const classes = useStyles();
   const forceSelection = useAppSelector(selectTransactForceSelection);
-  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
-  const { ctaLabel, openSelectStep } = useTransactSelectFlowCta('withdraw');
-  const connectSwitchChainId = hasCrossChainZap && forceSelection ? undefined : vault.chainId;
+  const { ctaLabel, openSelectStep } = useTransactSelectFlowCta();
+  const connectSwitchChainId = forceSelection ? undefined : vault.chainId;
 
   return (
     <ActionConnectSwitch
@@ -199,7 +200,13 @@ const ActionWithdrawGovSelectFlow = memo(function ActionWithdrawGovSelectFlow({
       chainId={connectSwitchChainId}
     >
       <div className={classes.feesContainer}>
-        <Button variant="cta" fullWidth={true} borderless={true} onClick={openSelectStep}>
+        <Button
+          variant="cta"
+          fullWidth={true}
+          borderless={true}
+          disabled={!forceSelection}
+          onClick={forceSelection ? openSelectStep : undefined}
+        >
           {ctaLabel}
         </Button>
         <VaultFees />

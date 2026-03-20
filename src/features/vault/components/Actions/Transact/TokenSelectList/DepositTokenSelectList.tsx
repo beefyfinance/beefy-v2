@@ -88,11 +88,28 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
       }
     }
     vaultDeposits.sort((a, b) => b.tokens.length - a.tokens.length);
+    const optionSymbolSortKey = (opt: (typeof searchFiltered)[number]) =>
+      opt.tokens
+        .map(t => t.symbol)
+        .join(' ')
+        .toLowerCase();
+    // Dust: non-zero balances by USD desc (same idea as main list), then $0 A–Z
+    const dustWithBalance = dust.filter(o => o.balance !== undefined && o.balance.gt(BIG_ZERO));
+    const dustZeroBalance = dust.filter(o => o.balance === undefined || !o.balance.gt(BIG_ZERO));
+    dustWithBalance.sort((a, b): number => {
+      const byUsd = b.balanceValue.comparedTo(a.balanceValue) || 0;
+      if (byUsd !== 0) return byUsd;
+      return optionSymbolSortKey(a).localeCompare(optionSymbolSortKey(b)) || 0;
+    });
+    dustZeroBalance.sort(
+      (a, b): number => optionSymbolSortKey(a).localeCompare(optionSymbolSortKey(b)) || 0
+    );
+    const dustSorted = [...dustWithBalance, ...dustZeroBalance];
     const normalList = [...vaultDeposits, ...other];
-    const onlyDust = normalList.length === 0 && dust.length > 0;
+    const onlyDust = normalList.length === 0 && dustSorted.length > 0;
     return {
-      normalOptions: onlyDust ? dust : normalList,
-      dustOptions: onlyDust ? [] : dust,
+      normalOptions: onlyDust ? dustSorted : normalList,
+      dustOptions: onlyDust ? [] : dustSorted,
       dustTotalUsd: dustSum,
     };
   }, [searchFiltered, isWalletConnected, search]);
