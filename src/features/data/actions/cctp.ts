@@ -70,15 +70,29 @@ export function pollCCTPBridgeStatus({
 
         if (message.dstTxHash && message.dstZapSuccess === false) {
           console.debug('[CCTP] Zap failed on destination:', message.lifecycleState);
-          dispatch(handleBridgeFailure(message.dstRefundedAmount, getState));
+          dispatch(handleDestinationRecovery(message.dstRefundedAmount, getState));
           return;
         }
 
         if (message.lifecycleState === 'confirmed' && message.dstTxHash) {
           console.debug('[CCTP] Bridge confirmed, dstTxHash:', message.dstTxHash);
           dispatch(stepperSetBridgeStatus({ dstTxHash: message.dstTxHash }));
-          dispatch(stepperSetStepContent({ stepContent: StepContent.SuccessTx }));
           dispatch(fetchVaultChainBalances(getState));
+
+          // When hookData exceeded the CCTP message size limit, the source tx bridged
+          // USDC directly to the user's wallet instead of through the receiver contract.
+          // Now that the bridge is confirmed, route to recovery so the user can execute
+          // the destination deposit/swap as a separate transaction.
+          const bridgeStatus = selectStepperBridgeStatus(getState());
+          const op =
+            bridgeStatus?.opId ?
+              getState().ui.transact.crossChain.pendingOps[bridgeStatus.opId]
+            : undefined;
+          if (op?.twoStep) {
+            dispatch(handleDestinationRecovery(message.dstAmountIn, getState));
+          } else {
+            dispatch(stepperSetStepContent({ stepContent: StepContent.SuccessTx }));
+          }
           return;
         }
 
@@ -87,7 +101,7 @@ export function pollCCTPBridgeStatus({
             '[CCTP] Terminal state (e.g. abandoned/zap_failed):',
             message.lifecycleState
           );
-          dispatch(handleBridgeFailure(message.dstRefundedAmount, getState));
+          dispatch(handleDestinationRecovery(message.dstRefundedAmount, getState));
           return;
         }
 
@@ -106,7 +120,7 @@ export function pollCCTPBridgeStatus({
   };
 }
 
-function handleBridgeFailure(
+function handleDestinationRecovery(
   dstRefundedAmount: string | null,
   getState: () => BeefyState
 ): BeefyThunk {

@@ -261,13 +261,15 @@ export function buildHookData(destChainId: ChainEntity['id'], zapPayload: ZapPay
     hookData,
   });
 
-  if (hookDataByteSize > MAX_CCTP_MESSAGE_BODY_SIZE) {
-    throw new Error(
-      `CCTP hookData size ${hookDataByteSize} bytes exceeds max message body size of ${MAX_CCTP_MESSAGE_BODY_SIZE} bytes`
-    );
-  }
-
   return hookData;
+}
+
+/**
+ * Check if hookData exceeds the CCTP message body size limit.
+ */
+export function isHookDataOversized(hookData: Hex): boolean {
+  const hookDataByteSize = (hookData.length - 2) / 2;
+  return hookDataByteSize > MAX_CCTP_MESSAGE_BODY_SIZE;
 }
 
 /**
