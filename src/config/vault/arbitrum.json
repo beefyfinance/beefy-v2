@@ -832,7 +832,7 @@
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
-      "notCorrelated": false,
+      "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
@@ -998,7 +998,7 @@
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
-      "notCorrelated": false,
+      "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
