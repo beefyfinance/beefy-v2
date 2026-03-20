@@ -112,7 +112,7 @@ const DepositFormInputs = memo(function DepositFormInputs() {
   const forceSelection = useAppSelector(selectTransactForceSelection);
   const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
   const availableLabel = t('Transact-Available');
-  const { ctaLabel: firstSelectLabel } = useTransactSelectFlowCta('deposit');
+  const { ctaLabel: firstSelectLabel } = useTransactSelectFlowCta();
 
   if (forceSelection) {
     return (

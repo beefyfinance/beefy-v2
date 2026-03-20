@@ -122,16 +122,20 @@ const ActionDepositSelectFlow = memo(function ActionDepositSelectFlow() {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const selectedChainId = useAppSelector(selectTransactSelectedChainId);
   const forceSelection = useAppSelector(selectTransactForceSelection);
-  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
   const classes = useStyles();
-  const { ctaLabel, openSelectStep } = useTransactSelectFlowCta('deposit');
-  const connectSwitchChainId =
-    hasCrossChainZap && forceSelection ? undefined : (selectedChainId ?? vault.chainId);
+  const { ctaLabel, openSelectStep } = useTransactSelectFlowCta();
+  const connectSwitchChainId = forceSelection ? undefined : (selectedChainId ?? vault.chainId);
 
   return (
     <div className={classes.feesContainer}>
       <ActionConnectSwitch chainId={connectSwitchChainId}>
-        <Button variant="cta" fullWidth={true} borderless={true} onClick={openSelectStep}>
+        <Button
+          variant="cta"
+          fullWidth={true}
+          borderless={true}
+          disabled={!forceSelection}
+          onClick={forceSelection ? openSelectStep : undefined}
+        >
           {ctaLabel}
         </Button>
       </ActionConnectSwitch>

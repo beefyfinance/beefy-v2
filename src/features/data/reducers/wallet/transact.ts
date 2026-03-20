@@ -151,7 +151,7 @@ const transactSlice = createSlice({
       .addCase(transactClearInput, sliceState => {
         clearInputs(sliceState);
         resetQuotes(sliceState);
-        sliceState.forceSelection = true;
+        sliceState.forceSelection = sliceState.selections.allSelectionIds.length > 1;
       })
       .addCase(transactClearQuotes, sliceState => {
         resetQuotes(sliceState);
@@ -253,7 +253,8 @@ const transactSlice = createSlice({
           if (defaultOption) {
             sliceState.selectedSelectionId = defaultOption.selectionId;
             sliceState.selectedChainId = defaultOption.chainId;
-            sliceState.forceSelection = options.length > 1;
+            // One *selection* (token path), even if multiple options share it → no forced picker
+            sliceState.forceSelection = sliceState.selections.allSelectionIds.length > 1;
           }
           clearInputs(sliceState);
         }

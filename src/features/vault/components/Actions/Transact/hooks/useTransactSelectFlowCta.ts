@@ -4,21 +4,18 @@ import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectTransactForceSelection,
-  selectTransactNumTokens,
   selectTransactVaultHasCrossChainZap,
 } from '../../../../../data/selectors/transact.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 
-type Mode = 'deposit' | 'withdraw';
-
 /**
  * Same navigation as TokenSelectButton: cross-chain + forceSelection → chain select, else token select.
  * Label mirrors DepositForm / WithdrawForm header logic.
+ * Deposit/withdraw actions skip the network switch CTA while forceSelection (see ActionConnectSwitch chainId).
  */
-export function useTransactSelectFlowCta(mode: Mode) {
+export function useTransactSelectFlowCta() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
   const forceSelection = useAppSelector(selectTransactForceSelection);
   const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
 
@@ -26,11 +23,11 @@ export function useTransactSelectFlowCta(mode: Mode) {
     if (hasCrossChainZap && forceSelection) {
       return t('Transact-SelectChain');
     }
-    if (hasOptions) {
-      return t(forceSelection ? 'Transact-SelectToken' : 'Transact-SelectAmount');
+    if (forceSelection) {
+      return t('Transact-SelectToken');
     }
-    return t(mode === 'deposit' ? 'Transact-Deposit' : 'Transact-Withdraw');
-  }, [forceSelection, hasCrossChainZap, hasOptions, mode, t]);
+    return t('Transact-SelectAmount');
+  }, [forceSelection, hasCrossChainZap, t]);
 
   const openSelectStep = useCallback(() => {
     if (hasCrossChainZap && forceSelection) {
