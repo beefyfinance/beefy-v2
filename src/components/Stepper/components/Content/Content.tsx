@@ -1,7 +1,10 @@
 import { css, cx } from '@repo/styles/css';
 import { type FC, memo, type MouseEventHandler, type ReactNode, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { resetWallet } from '../../../../features/data/actions/wallet/common.ts';
+import {
+  transactClearInput,
+  transactSetSuccessClosed,
+} from '../../../../features/data/actions/transact.ts';
 import { stepperReset } from '../../../../features/data/actions/wallet/stepper.ts';
 import { isWalletActionError } from '../../../../features/data/actions/wallet/wallet-action.ts';
 import type { VaultEntity } from '../../../../features/data/entities/vault.ts';
@@ -135,8 +138,9 @@ export const CloseButton = memo(function CloseButton() {
   const dispatch = useAppDispatch();
 
   const handleClose = useCallback(() => {
+    dispatch(transactSetSuccessClosed(false));
+    dispatch(transactClearInput());
     dispatch(stepperReset());
-    dispatch(resetWallet());
   }, [dispatch]);
 
   return (

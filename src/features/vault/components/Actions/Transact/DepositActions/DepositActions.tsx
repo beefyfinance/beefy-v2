@@ -4,6 +4,10 @@ import { Button } from '../../../../../../components/Button/Button.tsx';
 import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import {
+  transactClearInput,
+  transactSetSuccessClosed,
+} from '../../../../../data/actions/transact.ts';
 import { transactSteps } from '../../../../../data/actions/wallet/transact.ts';
 import {
   crossChainFetchRecoveryQuote,
@@ -28,9 +32,12 @@ import {
   selectRecoveryOpForCurrentVault,
   selectTransactConfirmNeededWithChanges,
   selectTransactExecuting,
+  selectTransactForceSelection,
   selectTransactQuoteStatus,
   selectTransactSelectedChainId,
   selectTransactSelectedQuoteOrUndefined,
+  selectTransactSuccessClosed,
+  selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -52,6 +59,8 @@ import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../../../../data/selectors/wallet.ts';
+import { stepperReset } from '../../../../../data/actions/wallet/stepper.ts';
+import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -62,30 +71,72 @@ export const DepositActions = memo(function DepositActions() {
   const stepperContent = useAppSelector(selectStepperStepContent);
   const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
   const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
+  const successClosed = useAppSelector(selectTransactSuccessClosed);
+  const isSuccessTx = stepperContent === StepContent.SuccessTx;
+
+  if (successClosed || isSuccessTx) {
+    return <ActionClose />;
+  }
 
   if (stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null) {
     return <ActionRecoveryDeposit />;
   }
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
-    return <ActionDepositDisabled />;
+    if (quoteStatus === TransactStatus.Pending) {
+      return <ActionDepositPending />;
+    }
+    return <ActionDepositSelectFlow />;
   }
 
   return <ActionDeposit quote={quote} option={option} />;
 });
 
-const ActionDepositDisabled = memo(function ActionDepositDisabled() {
+/** Quote is loading — keep deposit disabled */
+const ActionDepositPending = memo(function ActionDepositPending() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const selectedChainId = useAppSelector(selectTransactSelectedChainId);
+  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
   const { t } = useTranslation();
   const classes = useStyles();
+  const connectSwitchChainId =
+    hasCrossChainZap && forceSelection ? undefined : (selectedChainId ?? vault.chainId);
 
   return (
     <div className={classes.feesContainer}>
-      <ActionConnectSwitch chainId={selectedChainId ?? vault.chainId}>
+      <ActionConnectSwitch chainId={connectSwitchChainId}>
         <Button variant="cta" disabled={true} fullWidth={true} borderless={true}>
           {t('Transact-Deposit')}
+        </Button>
+      </ActionConnectSwitch>
+      <VaultFees />
+    </div>
+  );
+});
+
+/** No quote yet — CTA opens chain/token select (same as TokenSelectButton) */
+const ActionDepositSelectFlow = memo(function ActionDepositSelectFlow() {
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const selectedChainId = useAppSelector(selectTransactSelectedChainId);
+  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const classes = useStyles();
+  const { ctaLabel, openSelectStep } = useTransactSelectFlowCta();
+  const connectSwitchChainId = forceSelection ? undefined : (selectedChainId ?? vault.chainId);
+
+  return (
+    <div className={classes.feesContainer}>
+      <ActionConnectSwitch chainId={connectSwitchChainId}>
+        <Button
+          variant="cta"
+          fullWidth={true}
+          borderless={true}
+          disabled={!forceSelection}
+          onClick={forceSelection ? openSelectStep : undefined}
+        >
+          {ctaLabel}
         </Button>
       </ActionConnectSwitch>
       <VaultFees />
@@ -267,6 +318,27 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
         onClick={handleFinalise}
       >
         {t('Transact-FinaliseDeposit')}
+      </Button>
+      <VaultFees />
+    </div>
+  );
+});
+
+const ActionClose = memo(function ActionClose() {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const dispatch = useAppDispatch();
+
+  const handleClose = useCallback(() => {
+    dispatch(transactSetSuccessClosed(false));
+    dispatch(transactClearInput());
+    dispatch(stepperReset());
+  }, [dispatch]);
+
+  return (
+    <div className={classes.feesContainer}>
+      <Button variant="cta" fullWidth={true} borderless={true} onClick={handleClose}>
+        {t('Transactn-Close')}
       </Button>
       <VaultFees />
     </div>

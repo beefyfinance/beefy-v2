@@ -41,6 +41,7 @@ import {
   selectCrossChainRecoveryQuoteOpId,
   selectRecoveryOpForCurrentVault,
   selectTransactQuoteIds,
+  selectTransactSuccessClosed,
 } from '../../../../../data/selectors/transact.ts';
 import { selectZapSwapProviderName } from '../../../../../data/selectors/zap.ts';
 import { QuoteTitle } from '../QuoteTitle/QuoteTitle.tsx';
@@ -415,8 +416,13 @@ function useStepStatuses(
   const currentStepIndex = useAppSelector(selectStepperCurrentStep);
   const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
   const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
+  const successClosed = useAppSelector(selectTransactSuccessClosed);
 
   return useMemo(() => {
+    if (successClosed) {
+      return Array(totalStepsCount).fill('finished') as StepStatusState[];
+    }
+
     const isRecoveryFromOp = recoveryOp != null && !isStepping;
 
     if (
@@ -486,6 +492,7 @@ function useStepStatuses(
     bridgeStepAbsoluteIndex,
     isRecoveryExecution,
     recoveryOp,
+    successClosed,
   ]);
 }
 

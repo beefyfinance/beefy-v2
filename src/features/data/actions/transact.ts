@@ -91,6 +91,7 @@ export const transactSetSlippage = createAction<{
   slippage: number;
 }>('transact/setSlippage');
 export const transactSetExecuting = createAction<boolean>('transact/setExecuting');
+export const transactSetSuccessClosed = createAction<boolean>('transact/setSuccessClosed');
 
 export type TransactFetchOptionsArgs = {
   vaultId: VaultEntity['id'];

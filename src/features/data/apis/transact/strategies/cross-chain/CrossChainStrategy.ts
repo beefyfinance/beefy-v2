@@ -25,6 +25,7 @@ import {
   getUSDCForChain,
   isChainSupported,
   buildHookData,
+  isHookDataOversized,
 } from '../../cctp/CCTPProvider.ts';
 import type { ZapPayload } from '../../cctp/types.ts';
 import { slipBy } from '../../helpers/amounts.ts';
@@ -395,7 +396,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       route: breakdown.zapRequest.steps,
     };
     const hookData = buildHookData(destChainId, zapPayload);
-    console.log('[cross-chain] fetchDepositStep: hook data built');
+    const isTwoStep = isHookDataOversized(hookData);
+    console.log('[cross-chain] fetchDepositStep: hook data built', { isTwoStep });
 
     // 5. Balance check: self-transfer to assert minimum USDC before burn
     sourceZapSteps.push(
@@ -417,16 +419,30 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         )
       : 0n;
 
-    const burnStep = buildBurnZapStep(
-      sourceChainId,
-      destChainId,
-      bridgeToken.address,
-      destConfig.receiver as Address,
-      maxFee,
-      hookData
-    );
-    sourceZapSteps.push(burnStep);
-    console.log('[cross-chain] fetchDepositStep: burn step built');
+    if (isTwoStep) {
+      // hookData exceeds CCTP message size limit: bridge USDC to user's wallet,
+      // then recovery flow handles the destination deposit
+      const burnStep = buildBurnZapStepSimple(
+        sourceChainId,
+        destChainId,
+        bridgeToken.address,
+        userAddress as Address,
+        maxFee
+      );
+      sourceZapSteps.push(burnStep);
+      console.log('[cross-chain] fetchDepositStep: 2-step fallback, simple burn to user wallet');
+    } else {
+      const burnStep = buildBurnZapStep(
+        sourceChainId,
+        destChainId,
+        bridgeToken.address,
+        destConfig.receiver as Address,
+        maxFee,
+        hookData
+      );
+      sourceZapSteps.push(burnStep);
+      console.log('[cross-chain] fetchDepositStep: burn step built');
+    }
 
     // 6. Build UserlessZapRequest (source chain)
     // Build dust outputs for source chain (no required outputs - USDC is burned)
@@ -453,10 +469,11 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       steps: sourceZapSteps,
     };
 
-    const metadata = this.buildRecoveryMetadata(quote, {
-      token: destBridgeToken,
-      amount: stepBridgeQuote.toAmount,
-    });
+    const metadata = this.buildRecoveryMetadata(
+      quote,
+      { token: destBridgeToken, amount: stepBridgeQuote.toAmount },
+      isTwoStep
+    );
 
     console.log('[cross-chain] fetchDepositStep: done');
     return {
@@ -778,6 +795,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       stepUsdcAmount: stepUsdcAmount.toString(10),
     });
 
+    let isTwoStep = false;
+
     if (needsDestHook) {
       // Path B: Non-USDC output → burn with hooks (dest swap via CircleBeefyZapReceiver)
       const destZap = selectZapByChainId(state, destChainId);
@@ -843,16 +862,32 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       };
 
       const hookData = buildHookData(destChainId, zapPayload);
-      console.log('[cross-chain] fetchWithdrawStep: dest hook data built');
-      const burnStep = buildBurnZapStep(
-        sourceChainId,
-        destChainId,
-        bridgeToken.address,
-        destConfig.receiver as Address,
-        maxFee,
-        hookData
-      );
-      sourceZapSteps.push(burnStep);
+      isTwoStep = isHookDataOversized(hookData);
+      console.log('[cross-chain] fetchWithdrawStep: dest hook data built', { isTwoStep });
+
+      if (isTwoStep) {
+        // hookData exceeds CCTP message size limit: bridge USDC to user's wallet,
+        // then recovery flow handles the destination swap
+        const burnStep = buildBurnZapStepSimple(
+          sourceChainId,
+          destChainId,
+          bridgeToken.address,
+          userAddress as Address,
+          maxFee
+        );
+        sourceZapSteps.push(burnStep);
+        console.log('[cross-chain] fetchWithdrawStep: 2-step fallback, simple burn to user wallet');
+      } else {
+        const burnStep = buildBurnZapStep(
+          sourceChainId,
+          destChainId,
+          bridgeToken.address,
+          destConfig.receiver as Address,
+          maxFee,
+          hookData
+        );
+        sourceZapSteps.push(burnStep);
+      }
     } else {
       // Path A: USDC output → simple burn (user is mintRecipient, no hooks)
       const burnStep = buildBurnZapStepSimple(
@@ -910,10 +945,11 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     };
 
     // Withdrawals execute on vault's chain but are cross-chain ops (USDC bridged to dest)
-    const metadata = this.buildRecoveryMetadata(quote, {
-      token: destBridgeToken,
-      amount: stepBridgeQuote.toAmount,
-    });
+    const metadata = this.buildRecoveryMetadata(
+      quote,
+      { token: destBridgeToken, amount: stepBridgeQuote.toAmount },
+      isTwoStep
+    );
 
     console.log('[cross-chain] fetchWithdrawStep: done');
     return {
@@ -966,7 +1002,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
   private buildRecoveryMetadata(
     quote: CrossChainDepositQuote | CrossChainWithdrawQuote,
-    bridgedAmount: { token: TokenEntity; amount: BigNumber }
+    bridgedAmount: { token: TokenEntity; amount: BigNumber },
+    twoStep?: boolean
   ): CrossChainExecuteMetadata {
     const { sourceChainId, destChainId, vaultId } = quote.option;
     const direction = quote.option.mode === TransactMode.Deposit ? 'deposit' : 'withdraw';
@@ -1004,6 +1041,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       sourceDisplaySteps: quote.sourceSteps,
       destDisplaySteps: quote.destSteps,
       recovery,
+      twoStep,
     };
   }
 
