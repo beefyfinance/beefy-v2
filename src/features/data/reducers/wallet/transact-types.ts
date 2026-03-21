@@ -118,6 +118,7 @@ export type PendingCrossChainOp = {
   sourceDisplaySteps: ZapQuoteStep[];
   destDisplaySteps: ZapQuoteStep[];
   recovery: CrossChainRecoveryParams;
+  twoStep?: boolean;
   createdAt: number;
   updatedAt: number;
 };

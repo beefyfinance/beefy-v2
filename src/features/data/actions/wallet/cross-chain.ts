@@ -92,6 +92,7 @@ export type CrossChainExecuteMetadata = {
   sourceDisplaySteps: ZapQuoteStep[];
   destDisplaySteps: ZapQuoteStep[];
   recovery: CrossChainRecoveryParams;
+  twoStep?: boolean;
 };
 
 /**
@@ -211,6 +212,7 @@ export const crossChainZapExecuteOrder = (
         sourceDisplaySteps: metadata.sourceDisplaySteps,
         destDisplaySteps: metadata.destDisplaySteps,
         recovery: metadata.recovery,
+        twoStep: metadata.twoStep,
         createdAt: now,
         updatedAt: now,
       })
