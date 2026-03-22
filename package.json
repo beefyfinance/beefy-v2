@@ -32,6 +32,7 @@
     "checkZapAddresses": "vite-node ./scripts/checkZapAddresses.ts",
     "makeExcludeConfig": "vite-node ./scripts/makeExcludeConfig.ts",
     "updatePlatforms": "vite-node ./scripts/updatePlatforms.ts",
+    "updateCctpBridgeFees": "vite-node ./scripts/updateCctpBridgeFees.ts",
     "tsc": "tsc --project tsconfig.app.json",
     "tsc:watch": "tsc --project tsconfig.app.json --watch",
     "tsc:scripts": "tsc --project tsconfig.scripts.json",

@@ -32,8 +32,9 @@ export const ConfirmNotice = memo(function ConfirmNotice({
   const error = useAppSelector(selectTransactConfirmError);
 
   useEffect(() => {
-    onChange(status === TransactStatus.Rejected || status === TransactStatus.Pending);
-  }, [status, onChange]);
+    const shouldDisable = status === TransactStatus.Rejected || status === TransactStatus.Pending;
+    onChange(shouldDisable);
+  }, [status, changes, onChange]);
 
   if (status === TransactStatus.Fulfilled && changes.length > 0) {
     return (

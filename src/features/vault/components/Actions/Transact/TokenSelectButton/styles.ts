@@ -2,17 +2,23 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   button: css.raw({
-    padding: '6px 12px',
+    paddingBlock: '6px',
+    paddingInline: '6px 10px',
     margin: '0',
     border: 'none',
+    borderLeftRadius: '18px',
     boxShadow: 'none',
     outline: 'none',
     background: 'background.content.dark',
-    borderRadius: '8px',
+    borderRadius: '6px',
     display: 'flex',
     alignItems: 'center',
-    gap: '2px',
+    gap: '6px',
     pointerEvents: 'none',
+  }),
+  buttonForceSelection: css.raw({
+    paddingInline: '16px 10px',
+    borderLeftRadius: '6px',
   }),
   buttonMore: css.raw({
     padding: '6px 6px 6px 12px',

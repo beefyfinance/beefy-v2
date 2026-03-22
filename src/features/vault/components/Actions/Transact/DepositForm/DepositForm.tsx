@@ -12,7 +12,6 @@ import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { errorToString } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import zapIcon from '../../../../../../images/icons/zap.svg';
 import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { isVaultActive } from '../../../../../data/entities/vault.ts';
@@ -24,6 +23,7 @@ import {
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactSelected,
+  selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -115,15 +115,19 @@ const DepositFormInputs = memo(function DepositFormInputs() {
   const multipleInputs = selection.tokens.length > 1;
   const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
   const forceSelection = useAppSelector(selectTransactForceSelection);
+  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
   const availableLabel = t('Transact-Available');
   const firstSelectLabel = useMemo(() => {
+    if (hasCrossChainZap && forceSelection) {
+      return t('Transact-SelectChain');
+    }
     return t(
       hasOptions ?
         forceSelection ? 'Transact-SelectToken'
         : 'Transact-SelectAmount'
       : 'Transact-Deposit'
     );
-  }, [forceSelection, hasOptions, t]);
+  }, [forceSelection, hasOptions, hasCrossChainZap, t]);
 
   if (forceSelection) {
     return (
@@ -131,8 +135,7 @@ const DepositFormInputs = memo(function DepositFormInputs() {
         index={0}
         token={selection.tokens[0]}
         availableLabel={availableLabel}
-        selectLabel={t('Transact-SelectToken')}
-        showZapIcon={hasOptions}
+        selectLabel={hasCrossChainZap ? t('Transact-SelectChain') : t('Transact-SelectToken')}
       />
     );
   }
@@ -144,7 +147,6 @@ const DepositFormInputs = memo(function DepositFormInputs() {
       token={token}
       availableLabel={availableLabel}
       selectLabel={!multipleInputs && index === 0 ? firstSelectLabel : token.symbol}
-      showZapIcon={hasOptions && index === 0}
       tokenAvailable={
         forceSelection ?
           <TokenAmount amount={BIG_ZERO} decimals={18} />
@@ -159,7 +161,6 @@ type DepositFormInputProps = {
   index: number;
   selectLabel: string;
   availableLabel: string;
-  showZapIcon: boolean;
   tokenAvailable?: ReactNode;
 };
 
@@ -168,7 +169,6 @@ const DepositFormInput = memo(function DepositFormInput({
   token,
   selectLabel,
   availableLabel,
-  showZapIcon,
   tokenAvailable,
 }: DepositFormInputProps) {
   const classes = useStyles();
@@ -176,12 +176,7 @@ const DepositFormInput = memo(function DepositFormInput({
   return (
     <div>
       <div className={classes.labels}>
-        <div className={classes.selectLabel}>
-          {showZapIcon ?
-            <img src={zapIcon} alt="Zap" height={12} className={classes.zapIcon} />
-          : null}
-          {selectLabel}
-        </div>
+        <div className={classes.selectLabel}>{selectLabel}</div>
         {tokenAvailable ?
           <div className={classes.availableLabel}>
             {availableLabel} <span className={classes.availableLabelAmount}>{tokenAvailable}</span>

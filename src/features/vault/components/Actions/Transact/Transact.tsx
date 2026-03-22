@@ -13,10 +13,12 @@ import { FormStep } from './FormStep/FormStep.tsx';
 import { LoadingStep } from './LoadingStep/LoadingStep.tsx';
 import { QuoteSelectStep } from './QuoteSelectStep/QuoteSelectStep.tsx';
 import { TokenSelectStep } from './TokenSelectStep/TokenSelectStep.tsx';
+import { ChainSelectStep } from './ChainSelectStep/ChainSelectStep.tsx';
 
 const stepToComponent: Record<TransactStep, ComponentType> = {
   [TransactStep.Loading]: LoadingStep,
   [TransactStep.Form]: FormStep,
+  [TransactStep.ChainSelect]: ChainSelectStep,
   [TransactStep.TokenSelect]: TokenSelectStep,
   [TransactStep.QuoteSelect]: QuoteSelectStep,
 };

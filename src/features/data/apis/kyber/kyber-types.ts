@@ -9,6 +9,7 @@ export type QuoteRequest = {
   excludedSources?: string[];
   gasInclude?: boolean;
   gasPrice?: string;
+  onlySinglePath?: boolean;
 } & Partial<ExtraFee>;
 
 export type ExtraFee = {

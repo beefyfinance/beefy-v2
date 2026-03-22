@@ -6,6 +6,7 @@ import { stepperStartWithSteps } from '../../../../../data/actions/wallet/steppe
 import { fulfillRedeem } from '../../../../../data/actions/wallet/erc4626.ts';
 import type { VaultErc4626 } from '../../../../../data/entities/vault.ts';
 import { selectUserVaultPendingWithdrawal } from '../../../../../data/selectors/balance.ts';
+import { selectTransactExecuting } from '../../../../../data/selectors/transact.ts';
 import {
   selectErc20TokenByAddress,
   selectTokenPriceByTokenOracleId,
@@ -30,6 +31,7 @@ export const PendingWithdrawRequests = memo(function PendingWithdrawRequests({
     selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
   );
   const pending = useAppSelector(state => selectUserVaultPendingWithdrawal(state, vaultId));
+  const isExecuting = useAppSelector(selectTransactExecuting);
   const chainId = vault.chainId;
   const handleWithdraw = useCallback(
     (id: bigint) => {
@@ -64,6 +66,7 @@ export const PendingWithdrawRequests = memo(function PendingWithdrawRequests({
             depositToken={depositToken}
             depositTokenPrice={depositTokenPrice}
             onWithdraw={handleWithdraw}
+            withdrawDisabled={isExecuting}
           />
         ))}
       </Requests>
