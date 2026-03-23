@@ -38,7 +38,11 @@ export const selectStepperChainId = (state: BeefyState) => {
 };
 
 export const selectIsStepperStepping = (state: BeefyState) => {
-  return state.ui.stepperState.modal && state.ui.stepperState.stepContent !== StepContent.SuccessTx;
+  return (
+    state.ui.stepperState.modal &&
+    state.ui.stepperState.stepContent !== StepContent.SuccessTx &&
+    state.ui.stepperState.stepContent !== StepContent.RecoveryTx
+  );
 };
 
 export const selectStepperCurrentStep = (state: BeefyState) => {
