@@ -8,9 +8,8 @@ const loaderStyle = css.raw({
   animationDuration: '1800ms',
   animationTimingFunction: 'linear',
   animationIterationCount: 'infinite',
-  mask: 'radial-gradient(farthest-side, transparent calc(100% - 1.1px), #000 calc(100% - 1.1px))',
-  WebkitMask:
-    'radial-gradient(farthest-side, transparent calc(100% - 1.1px), #000 calc(100% - 1.1px))',
+  mask: 'radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px))',
+  WebkitMask: 'radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px))',
 });
 
 export type SpinLoaderProps = {

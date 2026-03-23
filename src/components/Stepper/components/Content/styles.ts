@@ -4,13 +4,19 @@ export const styles = {
   successContent: css.raw({
     backgroundColor: 'stepperSuccessBackground',
   }),
+  bridgingContent: css.raw({
+    backgroundColor: 'stepperBridgingBackground',
+  }),
   errorContent: css.raw({
     backgroundColor: 'stepperErrorBackground',
+  }),
+  recoveryContent: css.raw({
+    backgroundColor: 'stepperRecoveryBackground',
   }),
   content: css.raw({
     marginTop: '12px',
     padding: '16px',
-    borderRadius: '4px',
+    borderRadius: '8px',
     display: 'flex',
     maxWidth: '100%',
     flexDirection: 'column',
@@ -32,7 +38,7 @@ export const styles = {
     fontFamily: 'monospace',
     backgroundColor: 'stepperErrorBackground',
     padding: '4px',
-    borderRadius: '4px',
+    borderRadius: '8px',
     lineHeight: '1.1',
   }),
   messageHighlight: css.raw({
@@ -56,12 +62,15 @@ export const styles = {
     gridAutoFlow: 'column',
     gridAutoColumns: '1fr',
     width: '100%',
-    alignItems: 'center',
-    gap: '8px',
+    alignItems: 'stretch',
+    gap: '10px',
     marginTop: '24px',
+    '& > *': {
+      height: '44px',
+    },
   }),
   link: css.raw({
     textDecoration: 'none',
-    color: 'green.40',
+    color: 'green.80-40',
   }),
 };

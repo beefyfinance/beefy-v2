@@ -81,16 +81,22 @@ const StepperImpl = () => {
 
 const Modal = styled('div', {
   base: {
-    width: '408px',
-    maxWidth: 'calc(100% - 48x)',
-    maxHeight: 'calc(100% - 48px)',
+    position: 'fixed',
+    zIndex: 'modal',
+    flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    flexDirection: 'column',
-    position: 'fixed',
-    top: '24px',
-    left: '24px',
-    zIndex: 'modal',
+    top: '12px',
+    left: '12px',
+    right: '12px',
+    maxHeight: 'calc(100% - 24px)',
+    sm: {
+      width: '408px',
+      top: '24px',
+      left: '24px',
+      right: 'auto',
+      maxHeight: 'calc(100% - 48px)',
+    },
   },
 });
 
@@ -101,6 +107,8 @@ const Inner = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     minHeight: '0',
+    borderRadius: '16px',
+    overflow: 'hidden',
   },
 });
 
