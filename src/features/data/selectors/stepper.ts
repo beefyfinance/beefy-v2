@@ -333,8 +333,7 @@ export function selectZapReturned(state: BeefyState) {
 function resolveDstTokensReturned(
   state: BeefyState,
   events: DstTokenReturned[],
-  chainId: ChainEntity['id'],
-  filterDust: boolean
+  chainId: ChainEntity['id']
 ): TokenAmount[] {
   const native = selectChainNativeToken(state, chainId);
   return events
@@ -348,8 +347,7 @@ function resolveDstTokensReturned(
         token,
       };
     })
-    .filter((t): t is TokenAmount => !!t.token)
-    .filter(_ => !filterDust);
+    .filter((t): t is TokenAmount => !!t.token);
 }
 
 function getReceivedAddresses(
@@ -363,7 +361,7 @@ function getReceivedAddresses(
 ): Set<string> {
   if (op.direction === 'deposit') {
     const vault = selectVaultById(state, op.vaultId);
-    return new Set([vault.contractAddress.toLowerCase()]);
+    return new Set([vault.contractAddress.toLowerCase(), vault.depositTokenAddress.toLowerCase()]);
   }
   if (isTokenNative(op.expectedOutput.token)) {
     const wnative = selectChainWrappedNativeToken(state, op.destChainId);
@@ -394,7 +392,7 @@ export function selectCrossChainDstReceived(state: BeefyState): TokenAmount[] {
     receivedAddresses.has(e.tokenAddress.toLowerCase())
   );
 
-  return resolveDstTokensReturned(state, receivedEvents, destChainId, false);
+  return resolveDstTokensReturned(state, receivedEvents, destChainId);
 }
 
 export function selectCrossChainDstDust(state: BeefyState): TokenAmount[] {
@@ -415,7 +413,7 @@ export function selectCrossChainDstDust(state: BeefyState): TokenAmount[] {
     e => !receivedAddresses.has(e.tokenAddress.toLowerCase())
   );
 
-  return resolveDstTokensReturned(state, dustEvents, destChainId, true);
+  return resolveDstTokensReturned(state, dustEvents, destChainId);
 }
 
 export function selectCrossChainSrcReturned(state: BeefyState): TokenAmount[] {
@@ -425,5 +423,5 @@ export function selectCrossChainSrcReturned(state: BeefyState): TokenAmount[] {
   }
 
   const srcChainId = bridgeStatus.srcChainId;
-  return resolveDstTokensReturned(state, bridgeStatus.srcTokensReturned, srcChainId, true);
+  return resolveDstTokensReturned(state, bridgeStatus.srcTokensReturned, srcChainId);
 }

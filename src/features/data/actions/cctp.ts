@@ -225,10 +225,12 @@ export const fetchCCTPDstTokensReturned = createAppAsyncThunk<
 
   const results: DstTokenReturned[] = [];
   for (const e of tokenReturnedEvents) {
-    results.push({
-      tokenAddress: e.args.token,
-      amount: e.args.amount.toString(10),
-    });
+    if (e.args.amount > 0n) {
+      results.push({
+        tokenAddress: e.args.token,
+        amount: e.args.amount.toString(10),
+      });
+    }
   }
 
   const state: BeefyState = getState();
