@@ -133,6 +133,20 @@ type StepContentProps<T extends ZapQuoteStep> = {
   chainId?: ChainEntity['id'];
 };
 
+const ChainTag = memo(function ChainTag({
+  children,
+  chainId,
+}: {
+  children?: ReactNode;
+  chainId: ChainEntity['id'];
+}) {
+  return (
+    <span className={css(styles.chainTag)}>
+      {children} <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} />
+    </span>
+  );
+});
+
 const ApprovalStepContent = memo(function ApprovalStepContent({
   allowance,
 }: {
@@ -152,7 +166,7 @@ const ApprovalStepContent = memo(function ApprovalStepContent({
       }}
       components={{
         fromAmount: <TokenAmountFromEntity amount={allowance.amount} token={allowance.token} />,
-        chain: <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} />,
+        chain: <ChainTag chainId={chainId} />,
       }}
     />
   );
@@ -206,7 +220,7 @@ const StepContentSwap = memo(function StepContentSwap({
       components={{
         fromAmount: <TokenAmountFromEntity amount={step.fromAmount} token={step.fromToken} />,
         toAmount: <TokenAmountFromEntity amount={step.toAmount} token={step.toToken} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -227,7 +241,7 @@ const StepContentBuild = memo(function StepContentBuild({
       values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -247,7 +261,7 @@ const StepContentDeposit = memo(function StepContentDeposit({
       values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -267,7 +281,7 @@ const StepContentStake = memo(function StepContentStake({
       values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -288,7 +302,7 @@ const StepContentUnstake = memo(function StepContentUnstake({
       values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -309,7 +323,7 @@ const StepContentWithdraw = memo(function StepContentWithdraw({
       values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -330,7 +344,7 @@ const StepContentSplit = memo(function StepContentSplit({
       values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -359,7 +373,7 @@ const StepContentUnused = memo(function StepContentUnused({
         values={{ chainName }}
         components={{
           tokenAmounts: <ListJoin items={tokenAmounts} />,
-          chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+          chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
         }}
       />
     </>
@@ -383,7 +397,7 @@ const StepContentBridge = memo(function StepContentBridge({
       }}
       components={{
         fromAmount: <TokenAmountFromEntity amount={step.fromAmount} token={step.fromToken} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
