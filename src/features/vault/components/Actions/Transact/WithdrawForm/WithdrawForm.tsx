@@ -71,7 +71,7 @@ const WithdrawFormLoader = memo(function WithdrawFormLoader() {
   const isError = status === TransactStatus.Rejected;
 
   return (
-    <Container isLoading={isLoading}>
+    <Container noPadding={isLoading}>
       {isLoading ?
         <LoadingIndicator text={t('Transact-Loading')} height={468} />
       : isError ?
@@ -119,7 +119,7 @@ const Container = styled('div', {
     },
   },
   variants: {
-    isLoading: {
+    noPadding: {
       true: {
         padding: '0',
         sm: {

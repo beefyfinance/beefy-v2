@@ -74,7 +74,7 @@ const DepositFormLoader = memo(function DepositFormLoader() {
   const isError = status === TransactStatus.Rejected;
 
   return (
-    <Container isLoading={isLoading}>
+    <Container noPadding={isLoading && isVaultActive(vault)}>
       {!isVaultActive(vault) ?
         <RetirePauseReason vaultId={vaultId} />
       : isLoading ?
@@ -179,7 +179,7 @@ const Container = styled('div', {
     },
   },
   variants: {
-    isLoading: {
+    noPadding: {
       true: {
         padding: '0',
         sm: {
