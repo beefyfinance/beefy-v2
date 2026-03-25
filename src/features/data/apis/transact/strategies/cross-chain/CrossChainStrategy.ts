@@ -79,7 +79,6 @@ import {
   crossChainZapExecuteOrder,
   crossChainRecoveryExecuteOrder,
 } from '../../../../actions/wallet/cross-chain.ts';
-import { QuoteCrossChainAmountTooLowError } from '../error.ts';
 
 const strategyId = 'cross-chain';
 type StrategyId = typeof strategyId;
@@ -249,19 +248,11 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     };
 
     console.log('[cross-chain] fetchDepositQuote: quoting dest strategy');
-    let destQuote;
-    try {
-      destQuote = await destMatch.strategy.fetchDepositQuote(
-        [{ token: destBridgeToken, amount: bridgeQuote.toAmount, max: false }],
-        destMatch.option,
-        destQuoteSelection
-      );
-    } catch (err) {
-      if (err instanceof Error && err.message.includes('0 input amount')) {
-        throw new QuoteCrossChainAmountTooLowError('deposit');
-      }
-      throw err;
-    }
+    const destQuote = await destMatch.strategy.fetchDepositQuote(
+      [{ token: destBridgeToken, amount: bridgeQuote.toAmount, max: false }],
+      destMatch.option,
+      destQuoteSelection
+    );
     console.log('[cross-chain] fetchDepositQuote: dest quote done');
 
     const destSteps: ZapQuoteStep[] = isZapQuote(destQuote) ? destQuote.steps : [];
@@ -609,18 +600,10 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     });
 
     // B. Quote withdrawal to USDC on vault chain
-    let sourceWithdrawQuote;
-    try {
-      sourceWithdrawQuote = await withdrawMatch.strategy.fetchWithdrawQuote(
-        inputs,
-        withdrawMatch.option
-      );
-    } catch (err) {
-      if (err instanceof Error && err.message.includes('0 input amount')) {
-        throw new QuoteCrossChainAmountTooLowError('withdraw');
-      }
-      throw err;
-    }
+    const sourceWithdrawQuote = await withdrawMatch.strategy.fetchWithdrawQuote(
+      inputs,
+      withdrawMatch.option
+    );
 
     // Sum USDC output from withdrawal
     const usdcOutput = sourceWithdrawQuote.outputs.find(
