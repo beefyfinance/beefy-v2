@@ -74,11 +74,11 @@ const DepositFormLoader = memo(function DepositFormLoader() {
   const isError = status === TransactStatus.Rejected;
 
   return (
-    <Container>
+    <Container noPadding={isLoading && isVaultActive(vault)}>
       {!isVaultActive(vault) ?
         <RetirePauseReason vaultId={vaultId} />
       : isLoading ?
-        <LoadingIndicator text={t('Transact-Loading')} height={344} />
+        <LoadingIndicator text={t('Transact-Loading')} height={468} />
       : isError ?
         <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
       : <DepositForm />}
@@ -176,6 +176,16 @@ const Container = styled('div', {
     padding: '16px',
     sm: {
       padding: '24px',
+    },
+  },
+  variants: {
+    noPadding: {
+      true: {
+        padding: '0',
+        sm: {
+          padding: '0',
+        },
+      },
     },
   },
 });
