@@ -20,6 +20,7 @@ import {
   type HighlightableTabOption,
 } from '../../../Card/CardHighlightableTab.tsx';
 import { FormStepFooter } from '../FormStepFooter/FormStepFooter.tsx';
+import { styled } from '@repo/styles/jsx';
 
 const DepositFormLoader = lazy(() => import('../DepositForm/DepositForm.tsx'));
 const ClaimFormLoader = lazy(() => import('../ClaimForm/ClaimForm.tsx'));
@@ -93,17 +94,23 @@ export const FormStep = memo(function FormStep() {
   }, [dispatch, mode, vaultId]);
 
   return (
-    <div>
+    <Container>
       <CardHeaderTabs
         selected={mode.toString()}
         options={modeOptions}
         onChange={handleModeChange}
         TabComponent={HighlightableTab}
       />
-      <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} height={344} />}>
+      <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} height={468} />}>
         <Component />
         <FormStepFooter />
       </Suspense>
-    </div>
+    </Container>
   );
+});
+
+const Container = styled('div', {
+  base: {
+    minHeight: '524px',
+  },
 });
