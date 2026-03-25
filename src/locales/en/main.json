@@ -760,6 +760,8 @@
   "Transact-Quote-Error": "There was an error fetching quotes",
   "Transact-Quote-Error-Calm-deposit": "New deposits are temporarily unavailable as the current price is outside the <LinkCalm>calm zone</LinkCalm>. Please wait a few minutes and try again.",
   "Transact-Quote-Error-Calm-withdraw": "Withdraws are temporarily unavailable as the current price is outside the <LinkCalm>calm zone</LinkCalm>. Please wait a few minutes and try again.",
+  "Transact-Quote-Error-CrossChain-TooLow-deposit": "Selected amount is too low to start a cross-chain deposit. Increase the amount and try again.",
+  "Transact-Quote-Error-CrossChain-TooLow-withdraw": "Selected amount is too low to start a cross-chain withdrawal. Increase the amount and try again.",
   "Transact-Notice-PriceImpact": "Price impact on this zap is {{priceImpact}}",
   "Transact-Notice-PriceImpact-Confirm": "Confirm zap",
   "Transact-Notice-MaxNative": "You can't deposit 100% of your {{token}} into vault, make sure you leave enough gas for future transactions",

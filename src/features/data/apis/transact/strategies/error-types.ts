@@ -11,7 +11,13 @@ export type SerializedQuoteCowcentratedNotCalmError = {
   action: 'deposit' | 'withdraw';
 };
 
+export type SerializedQuoteCrossChainAmountTooLowError = {
+  name: 'QuoteCrossChainAmountTooLowError';
+  action: 'deposit' | 'withdraw';
+};
+
 export type SerializedError =
   | SerializedAnyError
   | SerializedQuoteCowcentratedNoSingleSideError
-  | SerializedQuoteCowcentratedNotCalmError;
+  | SerializedQuoteCowcentratedNotCalmError
+  | SerializedQuoteCrossChainAmountTooLowError;

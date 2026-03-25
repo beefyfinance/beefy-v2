@@ -14,6 +14,7 @@ import {
 import {
   QuoteCowcentratedNoSingleSideError,
   QuoteCowcentratedNotCalmError,
+  QuoteCrossChainAmountTooLowError,
 } from '../../../../../data/apis/transact/strategies/error.ts';
 import {
   type CowcentratedVaultDepositQuote,
@@ -180,6 +181,8 @@ const QuoteError = memo(function QuoteError() {
           />
         </AlertError>
       );
+    } else if (QuoteCrossChainAmountTooLowError.match(error)) {
+      return <AlertError>{t(`Transact-Quote-Error-CrossChain-TooLow-${error.action}`)}</AlertError>;
     }
   }
 

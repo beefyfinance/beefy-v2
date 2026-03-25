@@ -4,6 +4,7 @@ import {
   type SerializedError,
   type SerializedQuoteCowcentratedNoSingleSideError,
   type SerializedQuoteCowcentratedNotCalmError,
+  type SerializedQuoteCrossChainAmountTooLowError,
 } from './error-types.ts';
 import { miniSerializeError } from '@reduxjs/toolkit';
 
@@ -74,6 +75,29 @@ export class QuoteCowcentratedNotCalmError extends SerializableError {
 
   static match(error: SerializedError): error is SerializedQuoteCowcentratedNotCalmError {
     return error.name === QuoteCowcentratedNotCalmError.name;
+  }
+}
+
+export class QuoteCrossChainAmountTooLowError extends SerializableError {
+  public static readonly name = 'QuoteCrossChainAmountTooLowError';
+  public readonly name = QuoteCrossChainAmountTooLowError.name;
+
+  constructor(public readonly action: 'deposit' | 'withdraw') {
+    super(
+      `Selected amount is too low to start a cross-chain ${action}. Increase the amount and try again.`
+    );
+  }
+
+  serialize(): SerializedQuoteCrossChainAmountTooLowError {
+    return {
+      ...miniSerializeError(this),
+      name: this.name,
+      action: this.action,
+    };
+  }
+
+  static match(error: SerializedError): error is SerializedQuoteCrossChainAmountTooLowError {
+    return error.name === QuoteCrossChainAmountTooLowError.name;
   }
 }
 

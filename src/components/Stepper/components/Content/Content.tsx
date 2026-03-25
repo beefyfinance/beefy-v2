@@ -21,13 +21,13 @@ import {
 } from '../../../../features/data/actions/wallet/cross-chain.ts';
 import { askForNetworkChange } from '../../../../features/data/actions/wallet.ts';
 import { isWalletActionError } from '../../../../features/data/actions/wallet/wallet-action.ts';
-import type { VaultEntity } from '../../../../features/data/entities/vault.ts';
 import type { Step } from '../../../../features/data/reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../../features/data/reducers/wallet/transact-types.ts';
 import { TransactStatus } from '../../../../features/data/reducers/wallet/transact-types.ts';
 import type { BridgeAdditionalData } from '../../../../features/data/reducers/wallet/wallet-action-types.ts';
 import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import { selectVaultById } from '../../../../features/data/selectors/vaults.ts';
+import type { VaultEntity } from '../../../../features/data/entities/vault.ts';
 import {
   selectBoostAdditionalData,
   selectBoostClaimed,
@@ -691,6 +691,18 @@ export const RecoveryContent = memo(function RecoveryContent() {
         {t('Transact-RecoverySwitchChainType', { type: finaliseNoun })}
       </Button>
     );
+  } else if (hasValidQuote) {
+    actionButton = (
+      <Button
+        variant="recovery"
+        fullWidth={true}
+        borderless={true}
+        disabled={isTxInProgress || isExecuting}
+        onClick={handleFinalise}
+      >
+        {t('Transact-Finalise', { type: finaliseNoun })}
+      </Button>
+    );
   } else if (needsNewQuote) {
     actionButton = (
       <Button
@@ -701,19 +713,6 @@ export const RecoveryContent = memo(function RecoveryContent() {
         onClick={handleFetchQuote}
       >
         {isFetchingQuote ? t('Transact-FetchingQuote') : t('Transact-FetchNewQuote')}
-      </Button>
-    );
-  } else {
-    const canFinalise = hasValidQuote && opId != null;
-    actionButton = (
-      <Button
-        variant="recovery"
-        fullWidth={true}
-        borderless={true}
-        disabled={!canFinalise || isTxInProgress || isExecuting}
-        onClick={handleFinalise}
-      >
-        {t('Transact-Finalise', { type: finaliseNoun })}
       </Button>
     );
   }

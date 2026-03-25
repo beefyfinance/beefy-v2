@@ -41,9 +41,19 @@ import type {
 import { createAppAsyncThunk } from '../../utils/store-utils.ts';
 import { fetchAllowanceAction } from '../allowance.ts';
 import { transactSetExecuting } from '../transact.ts';
-import { bindTransactionEvents, captureWalletErrors, txStart, txWallet } from './common.ts';
+import {
+  bindTransactionEvents,
+  captureWalletErrors,
+  selectVaultTokensToRefresh,
+  txStart,
+  txWallet,
+} from './common.ts';
 import { approve } from './approval.ts';
-import { stepperSetRecoveryExecution, stepperStartWithSteps } from './stepper.ts';
+import {
+  stepperSetBridgeStatus,
+  stepperSetRecoveryExecution,
+  stepperStartWithSteps,
+} from './stepper.ts';
 
 type GasPriceCache = {
   chainId: ChainEntity['id'];
@@ -347,6 +357,11 @@ export const crossChainRecoveryExecuteOrder = (
     txWallet(dispatch);
     const transaction = contract.write.executeOrder([castedOrder, castedSteps], options);
 
+    const refreshTokens = uniqBy(
+      [...selectVaultTokensToRefresh(state, vault), ...expectedTokens],
+      'id'
+    );
+
     bindTransactionEvents(
       dispatch,
       transaction,
@@ -362,7 +377,7 @@ export const crossChainRecoveryExecuteOrder = (
         walletAddress: address,
         chainId: destChainId,
         spenderAddress: zap.manager,
-        tokens: expectedTokens,
+        tokens: refreshTokens,
         clearInput: false,
       }
     );
@@ -592,9 +607,13 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
       steps.push(recoveryStep);
 
       console.debug('[Recovery] Starting stepper with', steps.length, 'steps');
+      const bridgeStatus = getState().ui.stepperState.bridgeStatus;
       dispatch(transactSetExecuting(false));
       dispatch(stepperStartWithSteps(steps, op.recovery.destChainId));
       dispatch(stepperSetRecoveryExecution(true));
+      if (bridgeStatus) {
+        dispatch(stepperSetBridgeStatus(bridgeStatus));
+      }
     } finally {
       dispatch(transactSetExecuting(false));
     }

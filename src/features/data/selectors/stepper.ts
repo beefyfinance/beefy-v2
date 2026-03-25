@@ -27,7 +27,10 @@ import {
   selectChainWrappedNativeToken,
   selectTokenByAddressOrUndefined,
 } from './tokens.ts';
-import { selectVaultById } from './vaults.ts';
+import { isStandardVault, isErc4626Vault } from '../entities/vault.ts';
+import { selectTokenByAddress } from './tokens.ts';
+import { selectVaultById, selectVaultPricePerFullShare } from './vaults.ts';
+import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 
 export const selectStepperState = (state: BeefyState) => {
   return state.ui.stepperState;
@@ -209,7 +212,10 @@ export function selectBoostClaimed(state: BeefyState) {
 }
 
 export const selectStepperProgress = (state: BeefyState) => {
-  if (state.ui.stepperState.stepContent === StepContent.BridgingTx) {
+  if (
+    state.ui.stepperState.stepContent === StepContent.BridgingTx ||
+    state.ui.stepperState.stepContent === StepContent.RecoveryTx
+  ) {
     const completedSteps = state.ui.stepperState.items.length;
     return (completedSteps / (completedSteps + 1)) * 100;
   }
@@ -248,6 +254,10 @@ export const selectSuccessBar = (state: BeefyState) => {
   const stepContent = state.ui.stepperState.stepContent;
 
   return stepContent === StepContent.SuccessTx;
+};
+
+export const selectRecoveryBar = (state: BeefyState) => {
+  return state.ui.stepperState.stepContent === StepContent.RecoveryTx;
 };
 
 const tokenReturnedAbi = [
@@ -392,7 +402,25 @@ export function selectCrossChainDstReceived(state: BeefyState): TokenAmount[] {
     receivedAddresses.has(e.tokenAddress.toLowerCase())
   );
 
-  return resolveDstTokensReturned(state, receivedEvents, destChainId);
+  const tokenAmounts = resolveDstTokensReturned(state, receivedEvents, destChainId);
+
+  if (op.direction === 'deposit') {
+    const vault = selectVaultById(state, op.vaultId);
+    if (isStandardVault(vault) || isErc4626Vault(vault)) {
+      const ppfs = selectVaultPricePerFullShare(state, vault.id);
+      const vaultDepositToken = selectTokenByAddress(
+        state,
+        vault.chainId,
+        vault.depositTokenAddress
+      );
+      return tokenAmounts.map(item => ({
+        amount: mooAmountToOracleAmount(item.token, vaultDepositToken, ppfs, item.amount),
+        token: vaultDepositToken,
+      }));
+    }
+  }
+
+  return tokenAmounts;
 }
 
 export function selectCrossChainDstDust(state: BeefyState): TokenAmount[] {
