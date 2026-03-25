@@ -28,7 +28,7 @@ import {
   isHookDataOversized,
 } from '../../cctp/CCTPProvider.ts';
 import type { ZapPayload } from '../../cctp/types.ts';
-import { slipBy } from '../../helpers/amounts.ts';
+import { bridgeSlippageReturned, mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
 import { Balances } from '../../helpers/Balances.ts';
 import {
   createOptionId,
@@ -63,6 +63,7 @@ import {
   type ZapQuoteStep,
   type ZapQuoteStepBridge,
   type ZapQuoteStepSwapAggregator,
+  type ZapQuoteStepUnused,
 } from '../../transact-types.ts';
 import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
 import type { UserlessZapRequest, ZapStep, OrderOutput } from '../../zap/types.ts';
@@ -264,9 +265,25 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     }
     console.log('[cross-chain] fetchDepositQuote: dest quote done');
 
-    const destSteps: ZapQuoteStep[] = isZapQuote(destQuote) ? destQuote.steps : [];
+    let destSteps: ZapQuoteStep[] = isZapQuote(destQuote) ? destQuote.steps : [];
 
-    // D. Build combined quote
+    // D. Slippage buffer: all source USDC is bridged, excess arrives on dest as returned tokens
+    const destSlippageReturn =
+      sourceSteps.length > 0 ?
+        bridgeSlippageReturned(usdcAmount, bridgeUsdcAmount, bridgeQuote, destBridgeToken)
+      : undefined;
+    if (destSlippageReturn) {
+      destSteps = [
+        ...destSteps,
+        { type: 'unused', outputs: [destSlippageReturn] } satisfies ZapQuoteStepUnused,
+      ];
+    }
+    const returned = mergeTokenAmounts(
+      destSlippageReturn ? [destSlippageReturn] : [],
+      destQuote.returned
+    );
+
+    // E. Build combined quote
     const sourceZap = selectZapByChainId(state, sourceChainId);
     if (!sourceZap) {
       throw new Error(`No zap router on source chain ${sourceChainId}`);
@@ -278,7 +295,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       option,
       inputs,
       outputs: destQuote.outputs,
-      returned: destQuote.returned,
+      returned,
       allowances:
         input.amount.gt(BIG_ZERO) ?
           [
@@ -292,7 +309,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       priceImpact: calculatePriceImpact(
         inputs,
         destQuote.outputs,
-        destQuote.returned,
+        returned,
         state,
         totalValueOfTokenAmounts([{ token: bridgeQuote.fromToken, amount: bridgeQuote.fee }], state)
       ),
@@ -701,7 +718,25 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       finalOutputs = [{ token: destBridgeToken, amount: bridgeQuote.toAmount }];
     }
 
-    // E. Build combined quote
+    // E. Slippage buffer: all source USDC is bridged, excess arrives on dest as returned tokens
+    const destSlippageReturn = bridgeSlippageReturned(
+      usdcOutput.amount,
+      slippedUsdcAmount,
+      bridgeQuote,
+      destBridgeToken
+    );
+    if (destSlippageReturn) {
+      destSteps = [
+        ...destSteps,
+        { type: 'unused', outputs: [destSlippageReturn] } satisfies ZapQuoteStepUnused,
+      ];
+    }
+    const returned = mergeTokenAmounts(
+      isZapQuote(sourceWithdrawQuote) ? sourceWithdrawQuote.returned : [],
+      destSlippageReturn ? [destSlippageReturn] : []
+    );
+
+    // F. Build combined quote
     console.log('[cross-chain] fetchWithdrawQuote: done');
     return {
       id: createQuoteId(option.id),
@@ -709,12 +744,12 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       option,
       inputs,
       outputs: finalOutputs,
-      returned: [],
+      returned,
       allowances: sourceWithdrawQuote.allowances,
       priceImpact: calculatePriceImpact(
         inputs,
         finalOutputs,
-        [],
+        returned,
         state,
         totalValueOfTokenAmounts([{ token: bridgeQuote.fromToken, amount: bridgeQuote.fee }], state)
       ),
