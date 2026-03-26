@@ -1,5 +1,36 @@
 [
   {
+    "id": "balancerv3-base-wabaseurc-wabasgho",
+    "name": "EURC/GHO V3",
+    "type": "standard",
+    "token": "EURC/GHO V3",
+    "tokenAddress": "0x9Ab907FB3e098103ca048Ad26E501Bf7B3dfA3EB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerBasewaBasEURC-waBasGHO",
+    "earnedTokenAddress": "0x43FBb61CA7A5DDC3BE955a93D5A1A800638E56e5",
+    "earnContractAddress": "0x43FBb61CA7A5DDC3BE955a93D5A1A800638E56e5",
+    "oracle": "lps",
+    "oracleId": "balancerv3-base-wabaseurc-wabasgho",
+    "createdAt": 1774256840,
+    "status": "active",
+    "platformId": "aura",
+    "assets": ["waBasEURC", "waBasGHO"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": true
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/base/v3/0x9ab907fb3e098103ca048ad26e501bf7b3dfa3eb/add-liquidity",
+    "network": "base"
+  },
+  {
     "id": "pancake-cow-base-virtual-usdc-vault",
     "name": "VIRTUAL-USDC",
     "type": "standard",
