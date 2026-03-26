@@ -140,9 +140,10 @@ const ChainTag = memo(function ChainTag({
   children?: ReactNode;
   chainId: ChainEntity['id'];
 }) {
+  const chainName = useChainName(chainId);
   return (
     <span className={css(styles.chainTag)}>
-      {children} <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} />
+      {children ?? chainName} <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} />
     </span>
   );
 });
@@ -154,7 +155,6 @@ const ApprovalStepContent = memo(function ApprovalStepContent({
 }) {
   const { t } = useTranslation();
   const chainId = allowance.token.chainId;
-  const chainName = useChainName(chainId);
 
   return (
     <Trans
@@ -162,7 +162,6 @@ const ApprovalStepContent = memo(function ApprovalStepContent({
       i18nKey="Transact-Route-Step-Approval"
       values={{
         fromToken: allowance.token.symbol,
-        chainName,
       }}
       components={{
         fromAmount: <TokenAmountFromEntity amount={allowance.amount} token={allowance.token} />,
@@ -199,7 +198,7 @@ const StepContentSwap = memo(function StepContentSwap({
   const platformName = useAppSelector(state =>
     selectZapSwapProviderName(state, providerId, via, t)
   );
-  const chainName = useChainName(chainId);
+
   const textKey =
     via === 'aggregator' && providerId === 'wnative' ?
       step.toToken.type === 'native' ?
@@ -215,7 +214,6 @@ const StepContentSwap = memo(function StepContentSwap({
         fromToken: step.fromToken.symbol,
         toToken: step.toToken.symbol,
         via: platformName,
-        chainName,
       }}
       components={{
         fromAmount: <TokenAmountFromEntity amount={step.fromAmount} token={step.fromToken} />,
@@ -231,14 +229,13 @@ const StepContentBuild = memo(function StepContentBuild({
   chainId,
 }: StepContentProps<ZapQuoteStepBuild>) {
   const { t } = useTranslation();
-  const chainName = useChainName(chainId);
+
   const tokenAmounts = useTokenAmounts(step.inputs);
 
   return (
     <Trans
       t={t}
       i18nKey="Transact-Route-Step-Build"
-      values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
         chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
@@ -252,13 +249,12 @@ const StepContentDeposit = memo(function StepContentDeposit({
   chainId,
 }: StepContentProps<ZapQuoteStepDeposit>) {
   const { t } = useTranslation();
-  const chainName = useChainName(chainId);
+
   const tokenAmounts = useTokenAmounts(step.inputs);
   return (
     <Trans
       t={t}
       i18nKey="Transact-Route-Step-Deposit"
-      values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
         chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
@@ -272,13 +268,12 @@ const StepContentStake = memo(function StepContentStake({
   chainId,
 }: StepContentProps<ZapQuoteStepStake>) {
   const { t } = useTranslation();
-  const chainName = useChainName(chainId);
+
   const tokenAmounts = useTokenAmounts(step.inputs);
   return (
     <Trans
       t={t}
       i18nKey="Transact-Route-Step-Stake"
-      values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
         chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
@@ -292,14 +287,13 @@ const StepContentUnstake = memo(function StepContentUnstake({
   chainId,
 }: StepContentProps<ZapQuoteStepUnstake>) {
   const { t } = useTranslation();
-  const chainName = useChainName(chainId);
+
   const tokenAmounts = useTokenAmounts(step.outputs);
 
   return (
     <Trans
       t={t}
       i18nKey="Transact-Route-Step-Unstake"
-      values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
         chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
@@ -313,14 +307,13 @@ const StepContentWithdraw = memo(function StepContentWithdraw({
   chainId,
 }: StepContentProps<ZapQuoteStepWithdraw>) {
   const { t } = useTranslation();
-  const chainName = useChainName(chainId);
+
   const tokenAmounts = useTokenAmounts(step.outputs);
 
   return (
     <Trans
       t={t}
       i18nKey="Transact-Route-Step-Withdraw"
-      values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
         chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
@@ -334,14 +327,12 @@ const StepContentSplit = memo(function StepContentSplit({
   chainId,
 }: StepContentProps<ZapQuoteStepSplit>) {
   const { t } = useTranslation();
-  const chainName = useChainName(chainId);
   const tokenAmounts = useTokenAmounts(step.outputs);
 
   return (
     <Trans
       t={t}
       i18nKey="Transact-Route-Step-Split"
-      values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
         chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
@@ -355,7 +346,6 @@ const StepContentUnused = memo(function StepContentUnused({
   chainId,
 }: StepContentProps<ZapQuoteStepUnused>) {
   const { t } = useTranslation();
-  const chainName = useChainName(chainId);
   const tokenAmounts = useMemo(() => {
     return step.outputs.map(tokenAmount => (
       <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
@@ -370,7 +360,6 @@ const StepContentUnused = memo(function StepContentUnused({
       <Trans
         t={t}
         i18nKey="Transact-Route-Step-Unused"
-        values={{ chainName }}
         components={{
           tokenAmounts: <ListJoin items={tokenAmounts} />,
           chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
@@ -385,7 +374,6 @@ const StepContentBridge = memo(function StepContentBridge({
   chainId,
 }: StepContentProps<ZapQuoteStepBridge>) {
   const { t } = useTranslation();
-  const chainName = useChainName(chainId);
 
   return (
     <Trans
@@ -393,7 +381,6 @@ const StepContentBridge = memo(function StepContentBridge({
       i18nKey="Transact-Route-Step-Bridge"
       values={{
         fromToken: step.fromToken.symbol,
-        chainName,
       }}
       components={{
         fromAmount: <TokenAmountFromEntity amount={step.fromAmount} token={step.fromToken} />,
