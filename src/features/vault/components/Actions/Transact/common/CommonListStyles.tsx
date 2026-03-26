@@ -78,7 +78,7 @@ export const ListItemButton = styled('button', {
     '&:hover, &:focus-visible': {
       color: 'text.middle',
       '& .list-item-arrow': {
-        color: 'text.lightest',
+        color: 'text.middle',
       },
     },
   },

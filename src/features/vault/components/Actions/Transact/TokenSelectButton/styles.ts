@@ -19,6 +19,15 @@ export const styles = {
   buttonForceSelection: css.raw({
     paddingInline: '16px 10px',
     borderLeftRadius: '6px',
+    color: 'text.dark',
+    cursor: 'pointer',
+    pointerEvents: 'auto',
+    '&:hover, &:focus-visible': {
+      color: 'text.middle',
+      '& svg': {
+        fill: 'text.middle',
+      },
+    },
   }),
   buttonMore: css.raw({
     padding: '6px 6px 6px 12px',
@@ -34,7 +43,7 @@ export const styles = {
   iconMore: css.raw({
     flexShrink: '0',
     flexGrow: '0',
-    fill: 'text.middle',
+    fill: 'text.dark',
   }),
   select: css.raw({
     textStyle: 'body.medium',
@@ -63,6 +72,6 @@ export const styles = {
     alignItems: 'center',
   }),
   forceSelection: css.raw({
-    color: 'text.dark',
+    color: 'inherit',
   }),
 };
