@@ -60,7 +60,7 @@ export const styles = {
   }),
   statusList: css.raw({
     background: '#1c1e32',
-    textStyle: 'sm',
+    textStyle: 'body.sm',
     color: 'text.dark',
     textTransform: 'uppercase',
     letterSpacing: '0.8px',
@@ -82,7 +82,7 @@ export const styles = {
   }),
   statusNotStarted: css.raw({
     background: 'darkBlue.30',
-    textStyle: 'sm',
+    textStyle: 'body.sm',
     color: 'text.dark',
     textAlign: 'center',
   }),

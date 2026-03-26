@@ -374,6 +374,7 @@ const StepContentBridge = memo(function StepContentBridge({
   chainId,
 }: StepContentProps<ZapQuoteStepBridge>) {
   const { t } = useTranslation();
+  const chainName = useChainName(chainId);
 
   return (
     <Trans
@@ -381,6 +382,7 @@ const StepContentBridge = memo(function StepContentBridge({
       i18nKey="Transact-Route-Step-Bridge"
       values={{
         fromToken: step.fromToken.symbol,
+        chainName,
       }}
       components={{
         fromAmount: <TokenAmountFromEntity amount={step.fromAmount} token={step.fromToken} />,
