@@ -85,58 +85,6 @@
     ]
   },
   {
-    "id": "stakedao-sonic-scusd-frxusd",
-    "name": "scUSD/frxUSD",
-    "type": "standard",
-    "token": "xfrxUSD",
-    "tokenAddress": "0xF1232a1aB5661aBdD6E02c6D8Ac9940a23Bb0b84",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnContractAddress": "0x6B739eb6118a6b0b802Cb9d7159992a6Fce722d1",
-    "earnedToken": "mooStakeDaoxfrxUSD",
-    "earnedTokenAddress": "0x6B739eb6118a6b0b802Cb9d7159992a6Fce722d1",
-    "oracle": "lps",
-    "oracleId": "curve-sonic-scusd-frxusd",
-    "status": "eol",
-    "createdAt": 1755850417,
-    "retireReason": "rewards",
-    "retiredAt": 1757948167,
-    "platformId": "stakedao",
-    "assets": ["scUSD", "frxUSD"],
-    "migrationIds": ["l2-convex", "l2-curve"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": true,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": true,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://www.curve.finance/dex/sonic/pools/factory-stable-ng-25/deposit",
-    "removeLiquidityUrl": "https://www.curve.finance/dex/sonic/pools/factory-stable-ng-25/withdraw",
-    "network": "sonic",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0xF1232a1aB5661aBdD6E02c6D8Ac9940a23Bb0b84",
-        "methods": [
-          {
-            "type": "dynamic-deposit",
-            "target": "0xF1232a1aB5661aBdD6E02c6D8Ac9940a23Bb0b84",
-            "coins": [
-              "0xd3DCe716f3eF535C5Ff8d041c1A41C3bd89b97aE",
-              "0x80Eede496655FB9047dd39d9f418d5483ED600df"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "pendle-sonic-wos-18dec25",
     "name": "wOS 18Dec25",
     "type": "standard",
@@ -2827,8 +2775,10 @@
     "earnedTokenAddress": "0x0aD8162B686af063073EABbEA9bC6FdA2D8184A4",
     "oracle": "lps",
     "oracleId": "beetsv3-sonic-beefyusdce-scusd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1738683378,
+    "retireReason": "rewards",
+    "retiredAt": 1774518049,
     "platformId": "beethovenx",
     "assets": ["mooSiloSonicUSDCe", "scUSD"],
     "risks": {
