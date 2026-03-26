@@ -75,6 +75,7 @@ export const buttonRecipe = cva({
       },
       cta: {
         colorPalette: 'buttons.cta',
+        textStyle: 'body.semiBold',
       },
       boost: {
         colorPalette: 'buttons.boost',
