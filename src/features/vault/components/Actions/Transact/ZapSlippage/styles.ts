@@ -44,12 +44,12 @@ export const styles = {
     color: 'indicators.error',
   }),
   selector: css.raw({
-    border: '2px solid bayOfMany',
     borderRadius: '8px',
     display: 'flex',
     alignItems: 'center',
     width: '100%',
     overflow: 'hidden',
+    backgroundColor: 'darkBlue.90',
   }),
   option: css.raw({
     textStyle: 'body',
@@ -57,9 +57,8 @@ export const styles = {
     flexBasis: 'auto',
     flexShrink: '0',
     flexGrow: '1',
-    borderRadius: '8px',
     background: 'transparent',
-    padding: '6px 16px',
+    padding: '8px 10px',
     margin: '0',
     border: 'none',
     boxShadow: 'none',
@@ -68,21 +67,13 @@ export const styles = {
     '&:hover': {
       backgroundColor: 'background.content.light',
     },
-    '&:first-child': {
-      borderTopLeftRadius: '0',
-      borderBottomLeftRadius: '0',
-    },
-    '&:last-child': {
-      borderTopRightRadius: '0',
-      borderBottomRightRadius: '0',
-    },
   }),
   button: css.raw({
     cursor: 'pointer',
   }),
   selected: css.raw({
-    color: 'text.light',
-    backgroundColor: 'background.content.light',
+    color: 'white.100',
+    backgroundColor: 'bayOfMany',
   }),
   custom: css.raw({
     width: '5em',
@@ -99,8 +90,6 @@ export const styles = {
     left: '0',
     width: '100%',
     height: '100%',
-    borderTopRightRadius: '0',
-    borderBottomRightRadius: '0',
   }),
   customInput: css.raw({
     textAlign: 'center',
