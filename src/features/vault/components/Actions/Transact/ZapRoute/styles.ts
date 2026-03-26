@@ -90,4 +90,8 @@ export const styles = {
     display: 'inline',
     verticalAlign: 'middle',
   }),
+  chainTag: css.raw({
+    display: 'inline',
+    whiteSpace: 'nowrap',
+  }),
 };
