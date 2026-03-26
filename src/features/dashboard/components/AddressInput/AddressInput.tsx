@@ -220,14 +220,21 @@ const EndAdornment = memo(function EndAdornment({
 });
 
 const transparentBaseWidth = css.raw({
-  width: '100%',
+  width: '79px',
   transition: 'width 0.2s ease-in-out',
+  minWidth: 0,
+  sm: {
+    width: '100%',
+  },
+
   md: {
     width: '207px',
   },
 });
 
 const transparentActiveWidth = css.raw({
+  width: '100%',
+  minWidth: 0,
   md: {
     width: '423px',
   },
