@@ -64,7 +64,7 @@ export const ListItemButton = styled('button', {
     justifyContent: 'space-between',
     gap: '12px',
     width: '100%',
-    color: 'text.middle',
+    color: 'text.dark',
     background: 'transparent',
     border: 'none',
     boxShadow: 'none',
@@ -76,7 +76,7 @@ export const ListItemButton = styled('button', {
     textAlign: 'left',
     height: '44px',
     '&:hover, &:focus-visible': {
-      color: 'text.lightest',
+      color: 'text.middle',
       '& .list-item-arrow': {
         color: 'text.lightest',
       },
@@ -134,7 +134,7 @@ export const ListItemBalanceColumn = styled('div', {
 
 export const ListItemBalanceAmount = styled('span', {
   base: {
-    color: 'inherit',
+    color: 'text.middle',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
