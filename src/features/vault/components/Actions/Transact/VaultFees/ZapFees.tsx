@@ -60,9 +60,9 @@ const ZapFees = memo(function ZapFees({ quote }: ZapFeesProps) {
       const isWithdrawToUsdc = isCrossChainWithdrawQuote(quote) && quote.destSteps.length === 0;
       const showBridge = bridgeFeeUsd != null && !isWithdrawToUsdc;
       const percentText = formatPercent(fee.value);
-      const bridgeText =
-        showBridge && bridgeFeeUsd != null ? ` + ${formatUsd(bridgeFeeUsd, 2)}` : '';
-      return percentText + bridgeText;
+      const bridgePrefix =
+        showBridge && bridgeFeeUsd != null ? `${formatUsd(bridgeFeeUsd, 2)} + ` : '';
+      return bridgePrefix + percentText;
     }
     if (hasDiscountFee) return null;
     return formatPercent(fee.value);
