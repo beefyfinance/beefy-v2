@@ -16,11 +16,12 @@ import {
   transactSwitchStep,
 } from '../../../../../data/actions/transact.ts';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
-import { TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   type CrossChainChainOption,
   type CrossChainTokenOption,
   selectCrossChainSortedChains,
+  selectTransactMode,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { StepHeader } from '../StepHeader/StepHeader.tsx';
@@ -39,6 +40,7 @@ import { selectListScrollable, listItemArrow } from '../common/CommonListStylesR
 export const ChainSelectStep = memo(function ChainSelectStep() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const mode = useAppSelector(selectTransactMode);
 
   const handleBack = useCallback(() => {
     dispatch(transactSwitchStep(TransactStep.Form));
@@ -46,7 +48,11 @@ export const ChainSelectStep = memo(function ChainSelectStep() {
 
   return (
     <div>
-      <StepHeader onBack={handleBack}>{t('Transact-SelectChain')}</StepHeader>
+      <StepHeader onBack={handleBack}>
+        {mode === TransactMode.Deposit ?
+          t('Transact-SelectChain-Deposit')
+        : t('Transact-SelectChain-Withdraw')}
+      </StepHeader>
       <ChainList />
     </div>
   );
