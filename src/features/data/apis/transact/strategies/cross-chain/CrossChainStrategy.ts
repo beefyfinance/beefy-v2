@@ -17,7 +17,7 @@ import { selectWalletAddress } from '../../../../selectors/wallet.ts';
 import { selectZapByChainId } from '../../../../selectors/zap.ts';
 import {
   buildBurnZapStep,
-  buildBurnZapStepSimple,
+  buildBurnZapStepPassthrough,
   computeMaxFee,
   fetchBridgeQuote,
   getChainConfig,
@@ -25,9 +25,10 @@ import {
   getUSDCForChain,
   isChainSupported,
   buildHookData,
+  isHookDataOversized,
 } from '../../cctp/CCTPProvider.ts';
 import type { ZapPayload } from '../../cctp/types.ts';
-import { slipBy } from '../../helpers/amounts.ts';
+import { bridgeSlippageReturned, mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
 import { Balances } from '../../helpers/Balances.ts';
 import {
   createOptionId,
@@ -62,6 +63,7 @@ import {
   type ZapQuoteStep,
   type ZapQuoteStepBridge,
   type ZapQuoteStepSwapAggregator,
+  type ZapQuoteStepUnused,
 } from '../../transact-types.ts';
 import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
 import type { UserlessZapRequest, ZapStep, OrderOutput } from '../../zap/types.ts';
@@ -254,9 +256,25 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     );
     console.log('[cross-chain] fetchDepositQuote: dest quote done');
 
-    const destSteps: ZapQuoteStep[] = isZapQuote(destQuote) ? destQuote.steps : [];
+    let destSteps: ZapQuoteStep[] = isZapQuote(destQuote) ? destQuote.steps : [];
 
-    // D. Build combined quote
+    // D. Slippage buffer: all source USDC is bridged, excess arrives on dest as returned tokens
+    const destSlippageReturn =
+      sourceSteps.length > 0 ?
+        bridgeSlippageReturned(usdcAmount, bridgeUsdcAmount, bridgeQuote, destBridgeToken)
+      : undefined;
+    if (destSlippageReturn) {
+      destSteps = [
+        ...destSteps,
+        { type: 'unused', outputs: [destSlippageReturn] } satisfies ZapQuoteStepUnused,
+      ];
+    }
+    const returned = mergeTokenAmounts(
+      destSlippageReturn ? [destSlippageReturn] : [],
+      destQuote.returned
+    );
+
+    // E. Build combined quote
     const sourceZap = selectZapByChainId(state, sourceChainId);
     if (!sourceZap) {
       throw new Error(`No zap router on source chain ${sourceChainId}`);
@@ -268,7 +286,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       option,
       inputs,
       outputs: destQuote.outputs,
-      returned: destQuote.returned,
+      returned,
       allowances:
         input.amount.gt(BIG_ZERO) ?
           [
@@ -282,7 +300,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       priceImpact: calculatePriceImpact(
         inputs,
         destQuote.outputs,
-        destQuote.returned,
+        returned,
         state,
         totalValueOfTokenAmounts([{ token: bridgeQuote.fromToken, amount: bridgeQuote.fee }], state)
       ),
@@ -395,7 +413,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       route: breakdown.zapRequest.steps,
     };
     const hookData = buildHookData(destChainId, zapPayload);
-    console.log('[cross-chain] fetchDepositStep: hook data built');
+    const isTwoStep = isHookDataOversized(hookData);
+    console.log('[cross-chain] fetchDepositStep: hook data built', { isTwoStep });
 
     // 5. Balance check: self-transfer to assert minimum USDC before burn
     sourceZapSteps.push(
@@ -417,16 +436,32 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         )
       : 0n;
 
-    const burnStep = buildBurnZapStep(
-      sourceChainId,
-      destChainId,
-      bridgeToken.address,
-      destConfig.receiver as Address,
-      maxFee,
-      hookData
-    );
-    sourceZapSteps.push(burnStep);
-    console.log('[cross-chain] fetchDepositStep: burn step built');
+    if (isTwoStep) {
+      // hookData exceeds CCTP message size limit: bridge USDC to user's wallet via passthrough,
+      // then recovery flow handles the destination deposit
+      const burnStep = buildBurnZapStepPassthrough(
+        sourceChainId,
+        destChainId,
+        bridgeToken.address as Address,
+        userAddress as Address,
+        maxFee
+      );
+      sourceZapSteps.push(burnStep);
+      console.log(
+        '[cross-chain] fetchDepositStep: 2-step fallback, passthrough burn to user wallet'
+      );
+    } else {
+      const burnStep = buildBurnZapStep(
+        sourceChainId,
+        destChainId,
+        bridgeToken.address,
+        destConfig.receiver as Address,
+        maxFee,
+        hookData
+      );
+      sourceZapSteps.push(burnStep);
+      console.log('[cross-chain] fetchDepositStep: burn step built');
+    }
 
     // 6. Build UserlessZapRequest (source chain)
     // Build dust outputs for source chain (no required outputs - USDC is burned)
@@ -453,10 +488,11 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       steps: sourceZapSteps,
     };
 
-    const metadata = this.buildRecoveryMetadata(quote, {
-      token: destBridgeToken,
-      amount: stepBridgeQuote.toAmount,
-    });
+    const metadata = this.buildRecoveryMetadata(
+      quote,
+      { token: destBridgeToken, amount: stepBridgeQuote.toAmount },
+      isTwoStep
+    );
 
     console.log('[cross-chain] fetchDepositStep: done');
     return {
@@ -667,7 +703,25 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       finalOutputs = [{ token: destBridgeToken, amount: bridgeQuote.toAmount }];
     }
 
-    // E. Build combined quote
+    // E. Slippage buffer: all source USDC is bridged, excess arrives on dest as returned tokens
+    const destSlippageReturn = bridgeSlippageReturned(
+      usdcOutput.amount,
+      slippedUsdcAmount,
+      bridgeQuote,
+      destBridgeToken
+    );
+    if (destSlippageReturn) {
+      destSteps = [
+        ...destSteps,
+        { type: 'unused', outputs: [destSlippageReturn] } satisfies ZapQuoteStepUnused,
+      ];
+    }
+    const returned = mergeTokenAmounts(
+      isZapQuote(sourceWithdrawQuote) ? sourceWithdrawQuote.returned : [],
+      destSlippageReturn ? [destSlippageReturn] : []
+    );
+
+    // F. Build combined quote
     console.log('[cross-chain] fetchWithdrawQuote: done');
     return {
       id: createQuoteId(option.id),
@@ -675,12 +729,12 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       option,
       inputs,
       outputs: finalOutputs,
-      returned: [],
+      returned,
       allowances: sourceWithdrawQuote.allowances,
       priceImpact: calculatePriceImpact(
         inputs,
         finalOutputs,
-        [],
+        returned,
         state,
         totalValueOfTokenAmounts([{ token: bridgeQuote.fromToken, amount: bridgeQuote.fee }], state)
       ),
@@ -778,6 +832,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       stepUsdcAmount: stepUsdcAmount.toString(10),
     });
 
+    let isTwoStep = false;
+
     if (needsDestHook) {
       // Path B: Non-USDC output → burn with hooks (dest swap via CircleBeefyZapReceiver)
       const destZap = selectZapByChainId(state, destChainId);
@@ -843,22 +899,40 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       };
 
       const hookData = buildHookData(destChainId, zapPayload);
-      console.log('[cross-chain] fetchWithdrawStep: dest hook data built');
-      const burnStep = buildBurnZapStep(
-        sourceChainId,
-        destChainId,
-        bridgeToken.address,
-        destConfig.receiver as Address,
-        maxFee,
-        hookData
-      );
-      sourceZapSteps.push(burnStep);
+      isTwoStep = isHookDataOversized(hookData);
+      console.log('[cross-chain] fetchWithdrawStep: dest hook data built', { isTwoStep });
+
+      if (isTwoStep) {
+        // hookData exceeds CCTP message size limit: bridge USDC to user's wallet via passthrough,
+        // then recovery flow handles the destination swap
+        const burnStep = buildBurnZapStepPassthrough(
+          sourceChainId,
+          destChainId,
+          bridgeToken.address as Address,
+          userAddress as Address,
+          maxFee
+        );
+        sourceZapSteps.push(burnStep);
+        console.log(
+          '[cross-chain] fetchWithdrawStep: 2-step fallback, passthrough burn to user wallet'
+        );
+      } else {
+        const burnStep = buildBurnZapStep(
+          sourceChainId,
+          destChainId,
+          bridgeToken.address,
+          destConfig.receiver as Address,
+          maxFee,
+          hookData
+        );
+        sourceZapSteps.push(burnStep);
+      }
     } else {
-      // Path A: USDC output → simple burn (user is mintRecipient, no hooks)
-      const burnStep = buildBurnZapStepSimple(
+      // Path A: USDC output → passthrough burn via hook (receiver collects fee, then forwards to user)
+      const burnStep = buildBurnZapStepPassthrough(
         sourceChainId,
         destChainId,
-        bridgeToken.address,
+        bridgeToken.address as Address,
         userAddress as Address,
         maxFee
       );
@@ -910,10 +984,11 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     };
 
     // Withdrawals execute on vault's chain but are cross-chain ops (USDC bridged to dest)
-    const metadata = this.buildRecoveryMetadata(quote, {
-      token: destBridgeToken,
-      amount: stepBridgeQuote.toAmount,
-    });
+    const metadata = this.buildRecoveryMetadata(
+      quote,
+      { token: destBridgeToken, amount: stepBridgeQuote.toAmount },
+      isTwoStep
+    );
 
     console.log('[cross-chain] fetchWithdrawStep: done');
     return {
@@ -966,7 +1041,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
   private buildRecoveryMetadata(
     quote: CrossChainDepositQuote | CrossChainWithdrawQuote,
-    bridgedAmount: { token: TokenEntity; amount: BigNumber }
+    bridgedAmount: { token: TokenEntity; amount: BigNumber },
+    twoStep?: boolean
   ): CrossChainExecuteMetadata {
     const { sourceChainId, destChainId, vaultId } = quote.option;
     const direction = quote.option.mode === TransactMode.Deposit ? 'deposit' : 'withdraw';
@@ -1004,6 +1080,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       sourceDisplaySteps: quote.sourceSteps,
       destDisplaySteps: quote.destSteps,
       recovery,
+      twoStep,
     };
   }
 

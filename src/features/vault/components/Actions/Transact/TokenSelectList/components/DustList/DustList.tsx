@@ -3,6 +3,7 @@ import { memo, useCallback, useState, type ReactNode } from 'react';
 import { formatLargeUsd } from '../../../../../../../../helpers/format.ts';
 import { useCollapse } from '../../../../../../../../components/Collapsable/hooks.ts';
 import { useTranslation } from 'react-i18next';
+import { BIG_ZERO } from '../../../../../../../../helpers/big-number.ts';
 
 export type DustListProps = {
   children: ReactNode;
@@ -18,8 +19,8 @@ export const DustList = memo(function DustList({ children, dustTotalUsd }: DustL
   const lowValueLabel = t('Transact-TokenSelect-LowValueTokens');
   const rawTitle =
     dustExpanded && isDustHovered ? `Hide ${lowValueLabel}`
-    : dustExpanded ? lowValueLabel
-    : `Show ${lowValueLabel}`;
+    : !dustExpanded && isDustHovered ? `Show ${lowValueLabel}`
+    : lowValueLabel;
   const dustTitle = rawTitle.charAt(0).toUpperCase() + rawTitle.slice(1).toLowerCase();
 
   const handleMouseEnter = useCallback(() => {
@@ -39,7 +40,7 @@ export const DustList = memo(function DustList({ children, dustTotalUsd }: DustL
       >
         <DustTitle hovered={isDustHovered}>{dustTitle}</DustTitle>
         <DustRight>
-          <DustSum>{formatLargeUsd(dustTotalUsd)}</DustSum>
+          <DustSum>{dustTotalUsd.gt(BIG_ZERO) ? formatLargeUsd(dustTotalUsd) : null}</DustSum>
           <DustIconWrapper active={dustExpanded || isDustHovered}>
             <DustIcon />
           </DustIconWrapper>
@@ -86,7 +87,7 @@ const DustTitle = styled('span', {
   variants: {
     hovered: {
       true: {
-        color: 'text.light',
+        color: 'text.middle',
       },
     },
   },

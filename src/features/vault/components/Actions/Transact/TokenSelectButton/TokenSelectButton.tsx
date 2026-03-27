@@ -1,5 +1,5 @@
 import { css, type CssStyles } from '@repo/styles/css';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
 import {
@@ -7,11 +7,10 @@ import {
   TokensImageWithChain,
 } from '../../../../../../components/TokenImage/TokenImage.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
-import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
-import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectTransactForceSelection,
   selectTransactNumTokens,
@@ -22,6 +21,7 @@ import {
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { styles } from './styles.ts';
+import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -35,7 +35,6 @@ export const TokenSelectButton = memo(function TokenSelectButton({
   css: cssProp,
 }: TokenSelectButtonProps) {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const classes = useStyles();
   const selection = useAppSelector(selectTransactSelected);
   const vaultId = useAppSelector(selectTransactVaultId);
@@ -45,14 +44,7 @@ export const TokenSelectButton = memo(function TokenSelectButton({
   const mode = useAppSelector(selectTransactOptionsMode);
   const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
   const canSwitchToTokenSelect = index === 0 && numTokenOptions > 1;
-
-  const handleClick = useCallback(() => {
-    if (hasCrossChainZap && forceSelection) {
-      dispatch(transactSwitchStep(TransactStep.ChainSelect));
-    } else {
-      dispatch(transactSwitchStep(TransactStep.TokenSelect));
-    }
-  }, [dispatch, hasCrossChainZap, forceSelection]);
+  const { openSelectStep } = useTransactSelectFlowCta();
 
   const tokenSymbol = useMemo(() => {
     return (
@@ -73,7 +65,7 @@ export const TokenSelectButton = memo(function TokenSelectButton({
   return (
     <button
       type="button"
-      onClick={canSwitchToTokenSelect ? handleClick : undefined}
+      onClick={canSwitchToTokenSelect ? openSelectStep : undefined}
       className={css(
         styles.button,
         cssProp,

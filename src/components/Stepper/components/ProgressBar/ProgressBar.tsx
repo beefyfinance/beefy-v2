@@ -2,6 +2,7 @@ import { css } from '@repo/styles/css';
 import { memo } from 'react';
 import {
   selectErrorBar,
+  selectRecoveryBar,
   selectStepperProgress,
   selectSuccessBar,
 } from '../../../../features/data/selectors/stepper.ts';
@@ -16,7 +17,8 @@ export const ProgressBar = memo(function ProgressBar() {
   const classes = useStyles();
   const showErrorBar = useAppSelector(selectErrorBar);
   const showSuccessBar = useAppSelector(selectSuccessBar);
-  const percent = !showErrorBar && !showSuccessBar ? progress : 100;
+  const showRecoveryBar = useAppSelector(selectRecoveryBar);
+  const percent = showErrorBar || showSuccessBar ? 100 : progress;
 
   return (
     <div className={classes.topBar}>
@@ -25,7 +27,8 @@ export const ProgressBar = memo(function ProgressBar() {
           styles.bar,
           showErrorBar && styles.errorBar,
           showSuccessBar && styles.successBar,
-          !showErrorBar && !showSuccessBar && styles.progressBar
+          showRecoveryBar && styles.recoveryBar,
+          !showErrorBar && !showSuccessBar && !showRecoveryBar && styles.progressBar
         )}
         style={{ width: `${percent}%` }}
       />

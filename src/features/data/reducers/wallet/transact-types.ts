@@ -118,6 +118,7 @@ export type PendingCrossChainOp = {
   sourceDisplaySteps: ZapQuoteStep[];
   destDisplaySteps: ZapQuoteStep[];
   recovery: CrossChainRecoveryParams;
+  twoStep?: boolean;
   createdAt: number;
   updatedAt: number;
 };
@@ -154,4 +155,6 @@ export type TransactState = {
   crossChain: TransactCrossChain;
   /** True while building steps / about to open stepper (disables deposit/withdraw/claim/recovery buttons) */
   executing: boolean;
+  /** True after a successful tx when the stepper has been closed; keeps the route visible with finished steps */
+  successClosed: boolean;
 };

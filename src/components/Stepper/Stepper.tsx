@@ -1,11 +1,14 @@
 import { styled } from '@repo/styles/jsx';
 import { type FC, memo, useEffect } from 'react';
 import {
+  transactClearInput,
+  transactSetSuccessClosed,
+} from '../../features/data/actions/transact.ts';
+import { crossChainClearRecoveryQuote } from '../../features/data/actions/wallet/cross-chain.ts';
+import {
   stepperReset,
   stepperUpdateCurrentStep,
 } from '../../features/data/actions/wallet/stepper.ts';
-import { resetWallet } from '../../features/data/actions/wallet/common.ts';
-import { crossChainClearRecoveryQuote } from '../../features/data/actions/wallet/cross-chain.ts';
 import { StepContent as StepContentEnum } from '../../features/data/reducers/wallet/stepper-types.ts';
 import {
   selectIsStepperRecoveryExecution,
@@ -53,9 +56,10 @@ const StepperImpl = () => {
 
   useEffect(() => {
     if (isRecoveryExecution && content === StepContentEnum.ErrorTx && steps.modal) {
+      dispatch(transactSetSuccessClosed(false));
+      dispatch(transactClearInput());
       dispatch(crossChainClearRecoveryQuote());
       dispatch(stepperReset());
-      dispatch(resetWallet());
     }
   }, [isRecoveryExecution, content, steps.modal, dispatch]);
 
@@ -77,16 +81,22 @@ const StepperImpl = () => {
 
 const Modal = styled('div', {
   base: {
-    width: '408px',
-    maxWidth: 'calc(100% - 48x)',
-    maxHeight: 'calc(100% - 48px)',
+    position: 'fixed',
+    zIndex: 'modal',
+    flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    flexDirection: 'column',
-    position: 'fixed',
-    top: '24px',
-    left: '24px',
-    zIndex: 'modal',
+    top: '12px',
+    left: '12px',
+    right: '12px',
+    maxHeight: 'calc(100% - 24px)',
+    sm: {
+      width: '408px',
+      top: '24px',
+      left: '24px',
+      right: 'auto',
+      maxHeight: 'calc(100% - 48px)',
+    },
   },
 });
 
@@ -97,6 +107,8 @@ const Inner = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     minHeight: '0',
+    borderRadius: '16px',
+    overflow: 'hidden',
   },
 });
 
