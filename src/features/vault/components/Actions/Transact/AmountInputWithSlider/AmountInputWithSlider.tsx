@@ -91,9 +91,10 @@ export const AmountInputWithSlider = memo(function AmountInputWithSlider({
         disabled={forceSelection}
         className={css(
           styles.slider,
-          (!error || !warning) && styles.sliderBackground,
-          error && styles.errorRange,
-          warning && !error && styles.warningRange
+          (!error || !warning) && !forceSelection && styles.sliderBackground,
+          error && !forceSelection && styles.errorRange,
+          warning && !error && !forceSelection && styles.warningRange,
+          forceSelection && styles.sliderDisabled
         )}
         style={{ '--value': `${sliderValue}%` } as CSSProperties}
         onChange={handleSliderChange}

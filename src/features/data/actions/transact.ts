@@ -84,9 +84,13 @@ export const transactConfirmUnneeded = createAction<{
 export const transactSelectQuote = createAction<{
   quoteId: string;
 }>('transact/selectQuote');
+export const transactSetSelectedChainId = createAction<ChainEntity['id']>(
+  'transact/setSelectedChainId'
+);
 export const transactSetSlippage = createAction<{
   slippage: number;
 }>('transact/setSlippage');
+export const transactSetExecuting = createAction<boolean>('transact/setExecuting');
 
 export type TransactFetchOptionsArgs = {
   vaultId: VaultEntity['id'];

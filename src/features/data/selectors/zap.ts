@@ -1,7 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { uniqBy } from 'lodash-es';
 import type { TFunction } from 'react-i18next';
-import { isZapQuoteStepSwap, type ZapQuoteStep } from '../apis/transact/transact-types.ts';
+import {
+  isZapQuoteStepBridge,
+  isZapQuoteStepSwap,
+  type ZapQuoteStep,
+} from '../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import type { VaultEntity } from '../entities/vault.ts';
@@ -132,4 +136,54 @@ export const selectZapQuoteTitle = (state: BeefyState, steps: ZapQuoteStep[], t:
       icon: 'default',
     };
   }
+};
+
+export type ZapQuoteProvider = {
+  name: string;
+  icon: string;
+};
+
+export const selectZapQuoteProviders = (
+  state: BeefyState,
+  steps: ZapQuoteStep[],
+  t: TFunction
+): ZapQuoteProvider[] => {
+  const providers: ZapQuoteProvider[] = [];
+  const seen = new Set<string>();
+
+  const swapSteps = steps.filter(isZapQuoteStepSwap);
+  const nonWraps = swapSteps.filter(step => step.providerId !== 'wnative');
+  const uniqueSwapProviders = uniqBy(
+    nonWraps.map(step => ({ providerId: step.providerId, via: step.via })),
+    p => `${p.providerId}-${p.via}`
+  );
+
+  for (const p of uniqueSwapProviders) {
+    const key = `${p.providerId}-${p.via}`;
+    if (!seen.has(key)) {
+      seen.add(key);
+      providers.push({
+        name: selectZapSwapProviderName(state, p.providerId, p.via, t),
+        icon: p.via === 'aggregator' ? p.providerId : 'default',
+      });
+    }
+  }
+
+  const bridgeSteps = steps.filter(isZapQuoteStepBridge);
+  for (const bridge of bridgeSteps) {
+    const key = `bridge-${bridge.bridgeId}`;
+    if (!seen.has(key)) {
+      seen.add(key);
+      providers.push({
+        name: bridge.bridgeId.toUpperCase(),
+        icon: bridge.bridgeId,
+      });
+    }
+  }
+
+  if (providers.length === 0) {
+    providers.push({ name: t('Transact-Quote-Title'), icon: 'default' });
+  }
+
+  return providers;
 };

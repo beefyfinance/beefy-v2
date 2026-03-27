@@ -45,7 +45,7 @@ async function vaultData(
     tokenContract.read.decimals(),
   ]);
 
-  let provider =
+  const provider =
     mooToken.startsWith('mooCurveLend') ? 'curve-lend'
     : (
       mooToken.startsWith('mooCurve') ||
@@ -58,7 +58,7 @@ async function vaultData(
     : mooToken.startsWith('mooSwapX') ? 'swapx'
     : mooToken.startsWith('mooBeraPaw') ? 'kodiak'
     : id.substring(0, id.indexOf('-'));
-  let platform =
+  const platform =
     mooToken.startsWith('mooConvex') ? 'convex'
     : mooToken.startsWith('mooStakeDao') ? 'stakedao'
     : provider === 'swapx' ? 'ichi'

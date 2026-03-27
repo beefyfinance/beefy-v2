@@ -371,6 +371,7 @@ const config = buildConfig(
             '50-20a': { value: '#53be6433' },
             '60': { value: '#449a4d' },
             '70': { value: '#368a4d' },
+            '70-56a': { value: '#2748468F' },
             '80': { value: '#2a784c' },
             '80-40': { value: '#274846' },
             '80-40a': { value: '#2a784c66' },
@@ -378,6 +379,7 @@ const config = buildConfig(
             '100': { value: '#155042' },
           },
           darkBlue: {
+            '30': { value: '#151728' },
             '40': { value: '#3f4574' },
             '50': { value: '#363b63' },
             '50-56a': { value: '#363b638e' },
@@ -987,6 +989,22 @@ const config = buildConfig(
         },
         disabled: {
           color: '{colors.text.black}',
+        },
+      },
+      recovery: {
+        base: {
+          color: '{colors.text.black}',
+          background: '{colors.gold.50}',
+          border: '{colors.gold.50}',
+        },
+        hover: {
+          background: '{colors.gold.30}',
+          border: '{colors.gold.30}',
+        },
+        disabled: {
+          color: '{colors.text.disabled}',
+          background: '{colors.gold.40-12a}',
+          border: '{colors.gold.40-12a}',
         },
       },
       filter: {

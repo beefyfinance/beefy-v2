@@ -9,6 +9,7 @@ import type {
 } from '../../transact-types.ts';
 import type { IVaultType } from '../../vaults/IVaultType.ts';
 import type { IStrategy } from '../IStrategy.ts';
+import type { QuoteSelectionConfig } from '../strategy-configs.ts';
 
 const strategyId = 'vault';
 type StrategyId = typeof strategyId;
@@ -29,7 +30,8 @@ export class VaultStrategy<T extends IVaultType> implements IStrategy<StrategyId
 
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: DepositOption
+    option: DepositOption,
+    _quoteSelection?: QuoteSelectionConfig //
   ): Promise<DepositQuote> {
     return this.vaultType.fetchDepositQuote(inputs, option);
   }

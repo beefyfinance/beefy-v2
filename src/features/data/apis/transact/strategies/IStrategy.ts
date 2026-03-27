@@ -20,7 +20,12 @@ import type {
 } from '../transact-types.ts';
 import type { VaultTypeFromVault } from '../vaults/IVaultType.ts';
 import type { UserlessZapRequest } from '../zap/types.ts';
-import type { AnyStrategyId, StrategyIdToConfig, ZapStrategyId } from './strategy-configs.ts';
+import type {
+  AnyStrategyId,
+  QuoteSelectionConfig,
+  StrategyIdToConfig,
+  ZapStrategyId,
+} from './strategy-configs.ts';
 
 export interface IStrategy<TId extends AnyStrategyId = AnyStrategyId> {
   readonly id: TId;
@@ -33,7 +38,11 @@ export interface IStrategy<TId extends AnyStrategyId = AnyStrategyId> {
 
   fetchDepositOptions(): Promise<DepositOption[]>;
 
-  fetchDepositQuote(inputs: InputTokenAmount[], option: DepositOption): Promise<DepositQuote>;
+  fetchDepositQuote(
+    inputs: InputTokenAmount[],
+    option: DepositOption,
+    quoteSelection?: QuoteSelectionConfig
+  ): Promise<DepositQuote>;
 
   fetchDepositStep(quote: TransactQuote, t: TFunction<Namespace>): Promise<Step>;
 
@@ -49,7 +58,8 @@ export interface IZapStrategy<TId extends ZapStrategyId = ZapStrategyId> extends
 
   fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: ZapStrategyIdToDepositOption<TId>
+    option: ZapStrategyIdToDepositOption<TId>,
+    quoteSelection?: QuoteSelectionConfig
   ): Promise<ZapStrategyIdToDepositQuote<TId>>;
 
   fetchDepositStep(quote: ZapStrategyIdToDepositQuote<TId>, t: TFunction<Namespace>): Promise<Step>;
@@ -67,7 +77,7 @@ export interface IZapStrategy<TId extends ZapStrategyId = ZapStrategyId> extends
   ): Promise<Step>;
 }
 
-export type IComposerStrategy<TId extends ZapStrategyId = ZapStrategyId> = IZapStrategy<TId>;
+export type IComposerStrategy<TId extends ZapStrategyId = ZapStrategyId> = IComposableStrategy<TId>;
 
 export type UserlessZapDepositBreakdown = {
   zapRequest: UserlessZapRequest;
@@ -80,8 +90,9 @@ export type UserlessZapWithdrawBreakdown = {
   expectedTokens: TokenEntity[];
 };
 
-export interface IComposableStrategy<TId extends ZapStrategyId = ZapStrategyId>
-  extends IZapStrategy<TId> {
+export interface IComposableStrategy<
+  TId extends ZapStrategyId = ZapStrategyId,
+> extends IZapStrategy<TId> {
   getHelpers(): TransactHelpers;
   fetchDepositUserlessZapBreakdown(
     quote: ZapStrategyIdToDepositQuote<TId>
@@ -147,4 +158,11 @@ export type TransactHelpers = ZaplessTransactHelpers | ZapTransactHelpers;
 
 export function isZapTransactHelpers(helpers: TransactHelpers): helpers is ZapTransactHelpers {
   return helpers.zap !== undefined;
+}
+
+export function isComposableStrategy(strategy: IStrategy): strategy is IComposableStrategy {
+  return (
+    'fetchDepositUserlessZapBreakdown' in strategy &&
+    'fetchWithdrawUserlessZapBreakdown' in strategy
+  );
 }
