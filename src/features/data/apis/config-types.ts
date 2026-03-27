@@ -304,15 +304,6 @@ export interface KyberSwapSwapConfig {
   blockedVaults: VaultEntity['id'][];
 }
 
-export interface OdosSwapConfig {
-  id: string;
-  type: 'odos';
-  chainId: ChainEntity['id'];
-  priorityTokens: TokenEntity['id'][];
-  blockedTokens: TokenEntity['id'][];
-  blockedVaults: VaultEntity['id'][];
-}
-
 export interface LiquidSwapSwapConfig {
   id: string;
   type: 'liquid-swap';
@@ -322,11 +313,7 @@ export interface LiquidSwapSwapConfig {
   blockedVaults: VaultEntity['id'][];
 }
 
-export type SwapAggregatorConfig =
-  | OneInchSwapConfig
-  | KyberSwapSwapConfig
-  | OdosSwapConfig
-  | LiquidSwapSwapConfig;
+export type SwapAggregatorConfig = OneInchSwapConfig | KyberSwapSwapConfig | LiquidSwapSwapConfig;
 
 export type SwapAggregatorConfigLoose = ChangeTypeOfKeys<
   SwapAggregatorConfig,

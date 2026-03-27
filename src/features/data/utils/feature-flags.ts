@@ -304,20 +304,6 @@ export function featureFlag_kyberSwapSupport(): {
   return [];
 }
 
-export function featureFlag_odosSwapSupport(): {
-  chainId: string;
-  tokenAddress: string;
-}[] {
-  const params = getSearchParams();
-  if (params.has('__odos_support')) {
-    return (params.get('__odos_support') || '').split(',').map(s => {
-      const [chainId, tokenAddress] = s.split(':');
-      return { chainId, tokenAddress };
-    });
-  }
-  return [];
-}
-
 export function featureFlag_liquidSwapSupport(): {
   chainId: string;
   tokenAddress: string;
@@ -345,11 +331,6 @@ export function featureFlag_disableOneInch(): boolean {
 export function featureFlag_disableKyber(): boolean {
   const params = getSearchParams();
   return featureFlag_disableSwapAggregators() || params.has('__disable_kyber');
-}
-
-export function featureFlag_disableOdos(): boolean {
-  const params = getSearchParams();
-  return featureFlag_disableSwapAggregators() || params.has('__disable_odos');
 }
 
 export function featureFlag_disableLiquidSwap(): boolean {

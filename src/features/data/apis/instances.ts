@@ -8,7 +8,6 @@ import type { ISwapProvider } from './transact/swap/ISwapProvider.ts';
 import {
   featureFlag_disableKyber,
   featureFlag_disableLiquidSwap,
-  featureFlag_disableOdos,
   featureFlag_disableOneInch,
 } from '../utils/feature-flags.ts';
 
@@ -68,7 +67,6 @@ export const getSwapAggregator = createDependencyFactory(
     WNativeSwapProvider,
     OneInchSwapProvider,
     KyberSwapProvider,
-    OdosSwapProvider,
     LiquidSwapSwapProvider,
   }) => {
     const providers: ISwapProvider[] = [new WNativeSwapProvider()];
@@ -79,10 +77,6 @@ export const getSwapAggregator = createDependencyFactory(
 
     if (!featureFlag_disableKyber()) {
       providers.push(new KyberSwapProvider());
-    }
-
-    if (!featureFlag_disableOdos()) {
-      providers.push(new OdosSwapProvider());
     }
 
     if (!featureFlag_disableLiquidSwap()) {
@@ -133,11 +127,6 @@ export const getOneInchApi = createDependencyFactoryWithCacheByChain(
 export const getKyberSwapApi = createDependencyFactoryWithCacheByChain(
   async (chain, { KyberSwapApi }) => new KyberSwapApi(chain),
   () => import('./kyber/kyber.ts')
-);
-
-export const getOdosApi = createDependencyFactoryWithCacheByChain(
-  async (chain, { OdosApi }) => new OdosApi(chain),
-  () => import('./odos/odos.ts')
 );
 
 export const getLiquidSwapApi = createDependencyFactoryWithCacheByChain(
