@@ -262,5 +262,129 @@
     "priorityTokens": ["USDm", "WETH", "USDT0", "cUSD"],
     "blockedTokens": [],
     "blockedVaults": []
+  },
+  {
+    "id": "one-inch-ethereum",
+    "type": "one-inch",
+    "chainId": "ethereum",
+    "priorityTokens": ["ETH", "WETH", "BIFI", "USDC", "USDT", "DAI", "WBTC", "MIM", "wstETH"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "one-inch-bsc",
+    "type": "one-inch",
+    "chainId": "bsc",
+    "priorityTokens": ["BNB", "WBNB", "BUSD", "USDC", "USDT", "DAI", "ETH", "BTCB"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "one-inch-polygon",
+    "type": "one-inch",
+    "chainId": "polygon",
+    "priorityTokens": ["MATIC", "WMATIC", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "one-inch-optimism",
+    "type": "one-inch",
+    "chainId": "optimism",
+    "priorityTokens": [
+      "ETH",
+      "WETH",
+      "mooBIFI",
+      "OP",
+      "opUSDCe",
+      "USDT",
+      "DAI",
+      "MAI",
+      "sUSD",
+      "sETH",
+      "WBTC",
+      "wstETH"
+    ],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "one-inch-arbitrum",
+    "type": "one-inch",
+    "chainId": "arbitrum",
+    "priorityTokens": [
+      "ETH",
+      "ARB",
+      "WETH",
+      "USDC",
+      "arbUSDCe",
+      "USDT",
+      "DAI",
+      "MIM",
+      "WBTC",
+      "wstETH"
+    ],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "one-inch-gnosis",
+    "type": "one-inch",
+    "chainId": "gnosis",
+    "priorityTokens": [],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "one-inch-avax",
+    "type": "one-inch",
+    "chainId": "avax",
+    "priorityTokens": [
+      "AVAX",
+      "WAVAX",
+      "USDC",
+      "USDCe",
+      "USDT",
+      "USDTe",
+      "DAIe",
+      "MIM",
+      "MAI",
+      "WETHe",
+      "WBTCe"
+    ],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "one-inch-zksync",
+    "type": "one-inch",
+    "chainId": "zksync",
+    "priorityTokens": ["ETH", "WETH", "USDC", "WBTC", "BUSD", "VC"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "one-inch-base",
+    "type": "one-inch",
+    "chainId": "base",
+    "priorityTokens": ["ETH", "WETH", "cbETH", "USDbC", "axlUSDC", "DAI", "MIM"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "one-inch-linea",
+    "type": "one-inch",
+    "chainId": "linea",
+    "priorityTokens": ["ETH", "WETH", "USDC", "USDT", "DAI", "WBTC", "wstETH"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "one-inch-sonic",
+    "type": "one-inch",
+    "chainId": "sonic",
+    "priorityTokens": ["S", "WS", "USDCe", "WETH"],
+    "blockedTokens": [],
+    "blockedVaults": []
   }
 ]

@@ -286,6 +286,15 @@ export interface ZapConfig {
   chainId: ChainEntity['id'];
 }
 
+export interface OneInchSwapConfig {
+  id: string;
+  type: 'one-inch';
+  chainId: ChainEntity['id'];
+  priorityTokens: TokenEntity['id'][];
+  blockedTokens: TokenEntity['id'][];
+  blockedVaults: VaultEntity['id'][];
+}
+
 export interface KyberSwapSwapConfig {
   id: string;
   type: 'kyber';
@@ -313,7 +322,11 @@ export interface LiquidSwapSwapConfig {
   blockedVaults: VaultEntity['id'][];
 }
 
-export type SwapAggregatorConfig = KyberSwapSwapConfig | OdosSwapConfig | LiquidSwapSwapConfig;
+export type SwapAggregatorConfig =
+  | OneInchSwapConfig
+  | KyberSwapSwapConfig
+  | OdosSwapConfig
+  | LiquidSwapSwapConfig;
 
 export type SwapAggregatorConfigLoose = ChangeTypeOfKeys<
   SwapAggregatorConfig,

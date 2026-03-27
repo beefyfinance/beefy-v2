@@ -12,6 +12,7 @@ import {
   featureFlag_kyberSwapSupport,
   featureFlag_liquidSwapSupport,
   featureFlag_odosSwapSupport,
+  featureFlag_oneInchSupport,
 } from '../utils/feature-flags.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 
@@ -89,6 +90,7 @@ export const fetchZapAggregatorTokenSupportAction =
 
       // For testing
       const extraSupport = {
+        'one-inch': featureFlag_oneInchSupport(),
         kyber: featureFlag_kyberSwapSupport(),
         odos: featureFlag_odosSwapSupport(),
         'liquid-swap': featureFlag_liquidSwapSupport(),
