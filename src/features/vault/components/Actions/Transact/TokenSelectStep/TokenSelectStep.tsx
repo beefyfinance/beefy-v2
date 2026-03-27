@@ -1,5 +1,6 @@
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { styled } from '@repo/styles/jsx';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
@@ -25,7 +26,7 @@ export const TokenSelectStep = memo(function TokenSelectStep() {
   const backStep = hasCrossChainZap ? TransactStep.ChainSelect : TransactStep.Form;
   const transactChainId = useAppSelector(selectTransactSelectedChainId);
 
-  const selectedChain = transactChainId ?? vault.chainId;
+  const selectedChainId = transactChainId ?? vault.chainId;
 
   const handleBack = useCallback(() => {
     dispatch(transactSwitchStep(backStep));
@@ -34,11 +35,24 @@ export const TokenSelectStep = memo(function TokenSelectStep() {
   return (
     <div>
       <StepHeader onBack={handleBack}>
-        {t('Transact-SelectToken')} <ChainIcon chainId={selectedChain} />
+        <TitleWithIcon>
+          {mode === TransactMode.Deposit ?
+            t('Transact-SelectToken-Deposit')
+          : t('Transact-SelectToken-Withdraw')}
+          <ChainIcon chainId={selectedChainId} />
+        </TitleWithIcon>
       </StepHeader>
       {mode === TransactMode.Deposit ?
         <DepositTokenSelectList />
       : <WithdrawTokenSelectList />}
     </div>
   );
+});
+
+const TitleWithIcon = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+  },
 });
