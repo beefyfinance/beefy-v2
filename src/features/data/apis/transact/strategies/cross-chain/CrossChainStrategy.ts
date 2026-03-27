@@ -17,7 +17,7 @@ import { selectWalletAddress } from '../../../../selectors/wallet.ts';
 import { selectZapByChainId } from '../../../../selectors/zap.ts';
 import {
   buildBurnZapStep,
-  buildBurnZapStepSimple,
+  buildBurnZapStepPassthrough,
   computeMaxFee,
   fetchBridgeQuote,
   getChainConfig,
@@ -437,17 +437,19 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       : 0n;
 
     if (isTwoStep) {
-      // hookData exceeds CCTP message size limit: bridge USDC to user's wallet,
+      // hookData exceeds CCTP message size limit: bridge USDC to user's wallet via passthrough,
       // then recovery flow handles the destination deposit
-      const burnStep = buildBurnZapStepSimple(
+      const burnStep = buildBurnZapStepPassthrough(
         sourceChainId,
         destChainId,
-        bridgeToken.address,
+        bridgeToken.address as Address,
         userAddress as Address,
         maxFee
       );
       sourceZapSteps.push(burnStep);
-      console.log('[cross-chain] fetchDepositStep: 2-step fallback, simple burn to user wallet');
+      console.log(
+        '[cross-chain] fetchDepositStep: 2-step fallback, passthrough burn to user wallet'
+      );
     } else {
       const burnStep = buildBurnZapStep(
         sourceChainId,
@@ -901,17 +903,19 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       console.log('[cross-chain] fetchWithdrawStep: dest hook data built', { isTwoStep });
 
       if (isTwoStep) {
-        // hookData exceeds CCTP message size limit: bridge USDC to user's wallet,
+        // hookData exceeds CCTP message size limit: bridge USDC to user's wallet via passthrough,
         // then recovery flow handles the destination swap
-        const burnStep = buildBurnZapStepSimple(
+        const burnStep = buildBurnZapStepPassthrough(
           sourceChainId,
           destChainId,
-          bridgeToken.address,
+          bridgeToken.address as Address,
           userAddress as Address,
           maxFee
         );
         sourceZapSteps.push(burnStep);
-        console.log('[cross-chain] fetchWithdrawStep: 2-step fallback, simple burn to user wallet');
+        console.log(
+          '[cross-chain] fetchWithdrawStep: 2-step fallback, passthrough burn to user wallet'
+        );
       } else {
         const burnStep = buildBurnZapStep(
           sourceChainId,
@@ -924,11 +928,11 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         sourceZapSteps.push(burnStep);
       }
     } else {
-      // Path A: USDC output → simple burn (user is mintRecipient, no hooks)
-      const burnStep = buildBurnZapStepSimple(
+      // Path A: USDC output → passthrough burn via hook (receiver collects fee, then forwards to user)
+      const burnStep = buildBurnZapStepPassthrough(
         sourceChainId,
         destChainId,
-        bridgeToken.address,
+        bridgeToken.address as Address,
         userAddress as Address,
         maxFee
       );
