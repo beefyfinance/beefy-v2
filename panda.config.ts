@@ -843,6 +843,11 @@ const config = buildConfig(
         lineHeight: '{lineHeights.body}',
         fontWeight: '{fontWeights.medium}',
       },
+      'body.semiBold': {
+        fontSize: '{fontSizes.body}',
+        lineHeight: '{lineHeights.body}',
+        fontWeight: '{fontWeights.semiBold}',
+      },
       'body.bold': {
         fontSize: '{fontSizes.body}',
         lineHeight: '{lineHeights.body}',
