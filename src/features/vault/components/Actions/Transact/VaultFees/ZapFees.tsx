@@ -7,7 +7,6 @@ import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { ZapQuote } from '../../../../../data/apis/transact/transact-types.ts';
 import {
   isCrossChainQuote,
-  isCrossChainWithdrawQuote,
   isZapFeeDiscounted,
   isZapQuote,
 } from '../../../../../data/apis/transact/transact-types.ts';
@@ -66,16 +65,14 @@ const ZapFees = memo(function ZapFees({ quote }: ZapFeesProps) {
       const sourceChainConfig = sourceChainId ? CCTP_CONFIG.chains[sourceChainId] : undefined;
       const bridgeFeeUsd = destChainConfig?.beefyBridgeFeeUsd;
       const fastFeeBps = sourceChainConfig?.fastFeeBps;
-      const isWithdrawToUsdc = isCrossChainWithdrawQuote(quote) && quote.destSteps.length === 0;
-      const showBridge = bridgeFeeUsd != null && !isWithdrawToUsdc;
       const fastFeeDecimal = fastFeeBps != null ? (fastFeeBps * 1.15) / 10000 : undefined;
       const combinedFee = fastFeeDecimal != null ? fee.value + fastFeeDecimal : fee.value;
       const percentText = formatPercent(combinedFee, 3);
-      const bridgePrefix = showBridge ? `${formatUsd(bridgeFeeUsd, 2)} + ` : '';
-      const hasMultipleFees = showBridge || fastFeeDecimal != null;
+      const bridgePrefix = bridgeFeeUsd != null ? `${formatUsd(bridgeFeeUsd, 2)} + ` : '';
+      const hasMultipleFees = bridgeFeeUsd != null || fastFeeDecimal != null;
       const crossChainFees: CrossChainFees = {
         fastFeeDecimal,
-        relayFeeUsd: showBridge ? bridgeFeeUsd : undefined,
+        relayFeeUsd: bridgeFeeUsd,
       };
       return { zapFeeText: bridgePrefix + percentText, hasMultipleFees, crossChainFees };
     }
