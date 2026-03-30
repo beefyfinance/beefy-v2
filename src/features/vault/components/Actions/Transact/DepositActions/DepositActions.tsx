@@ -1,5 +1,6 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AnimatedButton } from '../../../../../../components/Button/AnimatedButton.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
@@ -182,6 +183,8 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
 
+  const isLoading = useMemo(() => isExecuting || isTxInProgress, [isExecuting, isTxInProgress]);
+
   return (
     <>
       {option.chainId === 'emerald' ?
@@ -198,15 +201,20 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
       <NotEnoughNotice mode="deposit" onChange={setIsDisabledByNotEnoughInput} />
       <div className={classes.feesContainer}>
         <ActionConnectSwitch chainId={executionChainId}>
-          <Button
+          <AnimatedButton
             variant="cta"
+            loading={isLoading}
             disabled={isDisabled}
             fullWidth={true}
             borderless={true}
             onClick={handleClick}
           >
-            {t(isMaxAll && !isCowDepositQuote ? 'Transact-DepositAll' : 'Transact-Deposit')}
-          </Button>
+            {isExecuting ?
+              t('Transact-CreatingTransaction')
+            : isTxInProgress ?
+              t('Transact-DepositInProgress')
+            : t(isMaxAll && !isCowDepositQuote ? 'Transact-DepositAll' : 'Transact-Deposit')}
+          </AnimatedButton>
         </ActionConnectSwitch>
         {import.meta.env.DEV ?
           <TenderlyTransactButton option={option} quote={quote} />
@@ -291,7 +299,8 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
   if (needsNewQuote) {
     return (
       <div className={classes.feesContainer}>
-        <Button
+        <AnimatedButton
+          animation={true}
           variant="recovery"
           disabled={isTxInProgress || isFetchingQuote || !opId}
           fullWidth={true}
@@ -299,7 +308,7 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
           onClick={handleFetchQuote}
         >
           {isFetchingQuote ? t('Transact-FetchingQuote') : t('Transact-FetchNewQuote')}
-        </Button>
+        </AnimatedButton>
         <VaultFees />
       </div>
     );
@@ -310,7 +319,8 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
 
   return (
     <div className={classes.feesContainer}>
-      <Button
+      <AnimatedButton
+        animation={true}
         variant="recovery"
         disabled={finaliseDisabled}
         fullWidth={true}
@@ -318,7 +328,7 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
         onClick={handleFinalise}
       >
         {t('Transact-FinaliseDeposit')}
-      </Button>
+      </AnimatedButton>
       <VaultFees />
     </div>
   );
@@ -337,9 +347,15 @@ const ActionClose = memo(function ActionClose() {
 
   return (
     <div className={classes.feesContainer}>
-      <Button variant="cta" fullWidth={true} borderless={true} onClick={handleClose}>
+      <AnimatedButton
+        animation={true}
+        variant="cta"
+        fullWidth={true}
+        borderless={true}
+        onClick={handleClose}
+      >
         {t('Transactn-Close')}
-      </Button>
+      </AnimatedButton>
       <VaultFees />
     </div>
   );

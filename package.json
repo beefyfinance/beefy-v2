@@ -55,6 +55,7 @@
     "@farcaster/miniapp-sdk": "^0.1.10",
     "@floating-ui/react": "^0.27.16",
     "@reduxjs/toolkit": "^2.9.0",
+    "@rive-app/react-canvas": "^4.27.3",
     "@web3-onboard/coinbase": "^2.4.2",
     "@web3-onboard/core": "^2.24.1",
     "@web3-onboard/injected-wallets": "^2.11.3",

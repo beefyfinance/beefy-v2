@@ -1,5 +1,6 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AnimatedButton } from '../../../../../../components/Button/AnimatedButton.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
@@ -252,6 +253,8 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
 
+  const isLoading = useMemo(() => isExecuting || isTxInProgress, [isExecuting, isTxInProgress]);
+
   return (
     <>
       {option.chainId === 'emerald' ?
@@ -267,15 +270,20 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
       <NotEnoughNotice mode="withdraw" onChange={setIsDisabledByNotEnoughInput} />
       <div className={classes.feesContainer}>
         <ActionConnectSwitch chainId={executionChainId}>
-          <Button
+          <AnimatedButton
             variant="cta"
+            loading={isLoading}
             disabled={isDisabled}
             fullWidth={true}
             borderless={true}
             onClick={handleClick}
           >
-            {t(isMaxAll ? 'Transact-WithdrawAll' : 'Transact-Withdraw')}
-          </Button>
+            {isExecuting ?
+              t('Transact-CreatingTransaction')
+            : isTxInProgress ?
+              t('Transact-WithdrawInProgress')
+            : t(isMaxAll ? 'Transact-WithdrawAll' : 'Transact-Withdraw')}
+          </AnimatedButton>
         </ActionConnectSwitch>
         {import.meta.env.DEV ?
           <TenderlyTransactButton option={option} quote={quote} />
@@ -323,6 +331,8 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
 
+  const isLoading = useMemo(() => isExecuting || isTxInProgress, [isExecuting, isTxInProgress]);
+
   return (
     <>
       {option.chainId === 'emerald' ?
@@ -337,21 +347,27 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
           css={styles.feesContainer}
           chainId={option.chainId}
         >
-          <Button
+          <AnimatedButton
             variant="cta"
+            loading={isLoading}
             disabled={isDisabled}
             fullWidth={true}
             borderless={true}
             onClick={handleWithdraw}
           >
-            {t(
-              isMaxAll ?
-                quote.outputs.length > 1 && showClaim ?
-                  'Transact-Claim-WithdrawAll'
-                : 'Transact-WithdrawAll'
-              : 'Transact-Withdraw'
-            )}
-          </Button>
+            {isExecuting ?
+              t('Transact-CreatingTransaction')
+            : isTxInProgress ?
+              t('Transact-WithdrawInProgress')
+            : t(
+                isMaxAll ?
+                  quote.outputs.length > 1 && showClaim ?
+                    'Transact-Claim-WithdrawAll'
+                  : 'Transact-WithdrawAll'
+                : 'Transact-Withdraw'
+              )
+            }
+          </AnimatedButton>
 
           {import.meta.env.DEV ?
             <TenderlyTransactButton option={option} quote={quote} />
@@ -376,9 +392,16 @@ const ActionCloseWithdraw = memo(function ActionCloseWithdraw() {
 
   return (
     <div className={classes.feesContainer}>
-      <Button variant="cta" fullWidth={true} borderless={true} onClick={handleClose}>
+      <AnimatedButton
+        variant="cta"
+        fullWidth={true}
+        borderless={true}
+        onClick={handleClose}
+        loading={true}
+        animation={true}
+      >
         {t('Transactn-Close')}
-      </Button>
+      </AnimatedButton>
       <VaultFees />
     </div>
   );
