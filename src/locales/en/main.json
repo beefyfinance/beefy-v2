@@ -793,7 +793,7 @@
   "Transact-Fee-Zap-Row-Bridge-Desc": "{{percent}} of assets bridged",
   "Transact-Fee-Zap-Row-Relay": "Relay fee",
   "Transact-Fee-Zap-Row-Relay-Desc": "{{amount}} from assets bridged",
-  "Transact-Fee-Zap-Footer": "Number and value of required swaps displayed in the quoted route. Max total Swap Fee 0.1% of assets deposited.",
+  "Transact-Fee-Zap-Footer": "Number and value of required swaps displayed in the quoted route. Max total Swap fee 0.1% of assets transacted.",
   "Transact-Fee-Performance": "Performance fee",
   "Transact-Fee-Performance-Explainer": "The displayed APY accounts for performance fee <PerformanceTooltip/> that is deducted from the generated yield only",
   "Transact-Fee-Holder": "BIFI Stakers",
