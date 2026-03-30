@@ -274,7 +274,13 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
             borderless={true}
             onClick={handleClick}
           >
-            {t(isMaxAll ? 'Transact-WithdrawAll' : 'Transact-Withdraw')}
+            {t(
+              isMaxAll ?
+                confirmNeededWithChanges ? 'Transact-ConfirmWithdrawAll'
+                : 'Transact-WithdrawAll'
+              : confirmNeededWithChanges ? 'Transact-ConfirmWithdraw'
+              : 'Transact-Withdraw'
+            )}
           </Button>
         </ActionConnectSwitch>
         {import.meta.env.DEV ?
@@ -346,9 +352,10 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
           >
             {t(
               isMaxAll ?
-                quote.outputs.length > 1 && showClaim ?
-                  'Transact-Claim-WithdrawAll'
+                quote.outputs.length > 1 && showClaim ? 'Transact-Claim-WithdrawAll'
+                : confirmNeededWithChanges ? 'Transact-ConfirmWithdrawAll'
                 : 'Transact-WithdrawAll'
+              : confirmNeededWithChanges ? 'Transact-ConfirmWithdraw'
               : 'Transact-Withdraw'
             )}
           </Button>

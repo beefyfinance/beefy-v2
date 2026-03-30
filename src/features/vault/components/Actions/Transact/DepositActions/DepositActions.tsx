@@ -205,7 +205,13 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
             borderless={true}
             onClick={handleClick}
           >
-            {t(isMaxAll && !isCowDepositQuote ? 'Transact-DepositAll' : 'Transact-Deposit')}
+            {t(
+              isMaxAll && !isCowDepositQuote ?
+                confirmNeededWithChanges ? 'Transact-ConfirmDepositAll'
+                : 'Transact-DepositAll'
+              : confirmNeededWithChanges ? 'Transact-ConfirmDeposit'
+              : 'Transact-Deposit'
+            )}
           </Button>
         </ActionConnectSwitch>
         {import.meta.env.DEV ?
