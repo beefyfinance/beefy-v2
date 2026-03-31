@@ -8,7 +8,7 @@ import type { ISwapProvider } from './transact/swap/ISwapProvider.ts';
 import {
   featureFlag_disableKyber,
   featureFlag_disableLiquidSwap,
-  featureFlag_disableOdos,
+  featureFlag_disableOneInch,
 } from '../utils/feature-flags.ts';
 
 export const getBeefyApi = createDependencyFactory(
@@ -65,18 +65,18 @@ export const getSwapAggregator = createDependencyFactory(
   async ({
     SwapAggregator,
     WNativeSwapProvider,
+    OneInchSwapProvider,
     KyberSwapProvider,
-    OdosSwapProvider,
     LiquidSwapSwapProvider,
   }) => {
     const providers: ISwapProvider[] = [new WNativeSwapProvider()];
 
-    if (!featureFlag_disableKyber()) {
-      providers.push(new KyberSwapProvider());
+    if (!featureFlag_disableOneInch()) {
+      providers.push(new OneInchSwapProvider());
     }
 
-    if (!featureFlag_disableOdos()) {
-      providers.push(new OdosSwapProvider());
+    if (!featureFlag_disableKyber()) {
+      providers.push(new KyberSwapProvider());
     }
 
     if (!featureFlag_disableLiquidSwap()) {
@@ -119,14 +119,14 @@ export const getMintersApi = createDependencyFactoryWithCacheByChain(
   () => import('./minter/minter.ts')
 );
 
+export const getOneInchApi = createDependencyFactoryWithCacheByChain(
+  async (chain, { OneInchApi }) => new OneInchApi(chain),
+  () => import('./one-inch/one-inch.ts')
+);
+
 export const getKyberSwapApi = createDependencyFactoryWithCacheByChain(
   async (chain, { KyberSwapApi }) => new KyberSwapApi(chain),
   () => import('./kyber/kyber.ts')
-);
-
-export const getOdosApi = createDependencyFactoryWithCacheByChain(
-  async (chain, { OdosApi }) => new OdosApi(chain),
-  () => import('./odos/odos.ts')
 );
 
 export const getLiquidSwapApi = createDependencyFactoryWithCacheByChain(
