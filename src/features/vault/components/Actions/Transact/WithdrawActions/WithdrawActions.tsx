@@ -392,14 +392,7 @@ const ActionCloseWithdraw = memo(function ActionCloseWithdraw() {
 
   return (
     <div className={classes.feesContainer}>
-      <AnimatedButton
-        variant="cta"
-        fullWidth={true}
-        borderless={true}
-        onClick={handleClose}
-        loading={true}
-        animation={true}
-      >
+      <AnimatedButton variant="cta" fullWidth={true} borderless={true} onClick={handleClose}>
         {t('Transactn-Close')}
       </AnimatedButton>
       <VaultFees />

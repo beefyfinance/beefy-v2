@@ -1,5 +1,5 @@
-import { type ComponentProps, memo, useEffect } from 'react';
-import { useRive, Layout, Fit, Alignment, EventType } from '@rive-app/react-canvas';
+import { type ComponentProps, memo, useCallback, useEffect, useState } from 'react';
+import { useRive, useStateMachineInput, Layout, Fit, Alignment } from '@rive-app/react-canvas';
 import { css } from '@repo/styles/css';
 import buttonRiv from '../../images/animations/cow-animation.riv';
 import { Button } from './Button.tsx';
@@ -10,24 +10,62 @@ const LAYOUT = new Layout({
   layoutScaleFactor: 4,
 });
 
+const STATE_MACHINE_NAME = 'State Machine 1';
+
 type AnimatedButtonProps = ComponentProps<typeof Button> & {
   loading?: boolean;
   animation?: boolean;
+  needFire?: boolean;
 };
 
-const RiveAnimation = memo(function RiveAnimation() {
+type RiveAnimationProps = {
+  hovering: boolean;
+  depositInProgress: boolean;
+  needFire: boolean;
+};
+
+const RiveAnimation = memo(function RiveAnimation({
+  hovering,
+  depositInProgress,
+  needFire,
+}: RiveAnimationProps) {
   const { rive, RiveComponent } = useRive({
     src: buttonRiv,
+    stateMachines: STATE_MACHINE_NAME,
     layout: LAYOUT,
     autoplay: true,
   });
 
+  const risingInput = useStateMachineInput(rive, STATE_MACHINE_NAME, 'Rising');
+  const depositInput = useStateMachineInput(rive, STATE_MACHINE_NAME, 'Deposit in progress...');
+  const needFireInput = useStateMachineInput(rive, STATE_MACHINE_NAME, 'NeedFire');
+
   useEffect(() => {
-    if (!rive) return;
-    const onStop = () => rive.play();
-    rive.on(EventType.Stop, onStop);
-    return () => rive.off(EventType.Stop, onStop);
-  }, [rive]);
+    if (risingInput) {
+      risingInput.value = hovering;
+    }
+  }, [risingInput, hovering]);
+
+  useEffect(() => {
+    if (!depositInput) return;
+    depositInput.value = depositInProgress;
+    if (!depositInProgress) return;
+
+    // The state machine resets the boolean after the animation plays once.
+    // Poll and re-trigger to keep it looping while depositInProgress is true.
+    const id = setInterval(() => {
+      if (!depositInput.value) {
+        depositInput.value = true;
+      }
+    }, 150);
+    return () => clearInterval(id);
+  }, [depositInput, depositInProgress]);
+
+  useEffect(() => {
+    if (needFireInput) {
+      needFireInput.value = needFire;
+    }
+  }, [needFireInput, needFire]);
 
   return <RiveComponent style={{ width: '100%', height: '100%' }} />;
 });
@@ -36,19 +74,23 @@ export const AnimatedButton = memo(function AnimatedButton({
   loading,
   children,
   disabled,
-  animation,
+  animation: _animation,
+  needFire,
   ...props
 }: AnimatedButtonProps) {
+  const [hovering, setHovering] = useState(false);
+
+  const handleMouseEnter = useCallback(() => setHovering(true), []);
+  const handleMouseLeave = useCallback(() => setHovering(false), []);
+
   return (
-    <div className={wrapperClass}>
+    <div className={wrapperClass} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <Button {...props} disabled={loading || disabled}>
         {children}
       </Button>
-      {(loading || animation) && (
-        <div className={riveCornerClass}>
-          <RiveAnimation />
-        </div>
-      )}
+      <div className={riveCornerClass}>
+        <RiveAnimation hovering={hovering} depositInProgress={!!loading} needFire={!!needFire} />
+      </div>
     </div>
   );
 });

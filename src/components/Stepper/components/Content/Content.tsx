@@ -53,6 +53,7 @@ import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { explorerTxUrl } from '../../../../helpers/url.ts';
 import { useAppDispatch, useAppSelector } from '../../../../features/data/store/hooks.ts';
 import iconError from '../../../../images/icons/error.svg';
+import { AnimatedButton } from '../../../Button/AnimatedButton.tsx';
 import { Button } from '../../../Button/Button.tsx';
 import { CircularProgress } from '../../../CircularProgress/CircularProgress.tsx';
 import { ListJoin } from '../../../ListJoin.tsx';
@@ -678,7 +679,8 @@ export const RecoveryContent = memo(function RecoveryContent() {
     );
   } else if (hasValidQuote) {
     actionButton = (
-      <Button
+      <AnimatedButton
+        needFire={true}
         variant="recovery"
         fullWidth={true}
         borderless={true}
@@ -686,11 +688,12 @@ export const RecoveryContent = memo(function RecoveryContent() {
         onClick={handleFinalise}
       >
         {t('Transact-Finalise', { type: finaliseNoun })}
-      </Button>
+      </AnimatedButton>
     );
   } else if (needsNewQuote) {
     actionButton = (
-      <Button
+      <AnimatedButton
+        needFire={true}
         variant="recovery"
         fullWidth={true}
         borderless={true}
@@ -698,7 +701,7 @@ export const RecoveryContent = memo(function RecoveryContent() {
         onClick={handleFetchQuote}
       >
         {isFetchingQuote ? t('Transact-FetchingQuote') : t('Transact-FetchNewQuote')}
-      </Button>
+      </AnimatedButton>
     );
   }
 

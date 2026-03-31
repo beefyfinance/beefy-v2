@@ -298,7 +298,7 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
     return (
       <div className={classes.feesContainer}>
         <AnimatedButton
-          animation={true}
+          needFire={true}
           variant="recovery"
           disabled={isTxInProgress || isFetchingQuote || !opId}
           fullWidth={true}
@@ -318,7 +318,7 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
   return (
     <div className={classes.feesContainer}>
       <AnimatedButton
-        animation={true}
+        needFire={true}
         variant="recovery"
         disabled={finaliseDisabled}
         fullWidth={true}
