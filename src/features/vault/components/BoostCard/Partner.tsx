@@ -26,7 +26,9 @@ export const Partner = memo<PartnerSubCardProps>(function PartnerSubCard({ partn
 
 const cardCss = css({
   borderRadius: '12px',
-  backgroundColor: 'background.content.light',
+  backgroundColor: 'background.cardBody',
+  border: '2px solid',
+  borderColor: 'background.content.light',
 });
 
 const headerCss = css({
@@ -35,7 +37,7 @@ const headerCss = css({
   gap: '16px',
   padding: '16px',
   borderRadius: '12px 12px 0 0',
-  backgroundColor: 'background.content.dark',
+  backgroundColor: 'background.content.light',
   justifyContent: 'space-between',
   alignItems: 'center',
 });
