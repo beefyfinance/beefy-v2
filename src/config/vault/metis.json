@@ -11,8 +11,10 @@
     "earnedTokenAddress": "0x18c10E2c181999EEdf855d2F61eC3755aAB96f70",
     "oracle": "tokens",
     "oracleId": "METIS",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1699441549,
+    "retireReason": "rewards",
+    "retiredAt": 1774958532,
     "platformId": "aave",
     "assets": ["METIS"],
     "risks": {
