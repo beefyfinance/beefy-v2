@@ -17,6 +17,12 @@ import { Label } from './Label.tsx';
 import { LabelCustomTooltip } from './LabelTooltip.tsx';
 import { Value } from './Value.tsx';
 
+function formatPercentTrim(value: Parameters<typeof formatPercent>[0], decimals = 3): string {
+  return formatPercent(value, decimals)
+    .replace(/(\.\d*?)0+%$/, '$1%')
+    .replace(/\.%$/, '%');
+}
+
 const useStyles = legacyMakeStyles({
   original: css.raw({
     color: 'text.dark',
@@ -68,7 +74,7 @@ const ZapFees = memo(function ZapFees({ quote }: ZapFeesProps) {
       const fastFeeBps = sourceChainConfig?.fastFeeBps;
       const fastFeeDecimal = fastFeeBps != null ? (fastFeeBps * 1.15) / 10000 : undefined;
       const combinedFee = fastFeeDecimal != null ? fee.value + fastFeeDecimal : fee.value;
-      const percentText = formatPercent(combinedFee, 3);
+      const percentText = formatPercentTrim(combinedFee);
       const bridgePrefix = bridgeFeeUsd != null ? `${formatUsd(bridgeFeeUsd, 2)} + ` : '';
       const hasMultipleFees = bridgeFeeUsd != null || fastFeeDecimal != null;
       const crossChainFees: CrossChainFees = {
@@ -104,7 +110,7 @@ const ZapFees = memo(function ZapFees({ quote }: ZapFeesProps) {
             <TooltipLabel>{t('Transact-Fee-Zap-Row-Bridge')}</TooltipLabel>
             <TooltipValue>
               {t('Transact-Fee-Zap-Row-Bridge-Desc', {
-                percent: formatPercent(crossChainFees.fastFeeDecimal, 3),
+                percent: formatPercentTrim(crossChainFees.fastFeeDecimal),
               })}
             </TooltipValue>
           </TooltipRow>
