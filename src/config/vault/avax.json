@@ -858,8 +858,10 @@
     "earnedTokenAddress": "0x51679975B43B29C7C8B97C5D6168687D130b9894",
     "oracle": "lps",
     "oracleId": "balancerv3-avalanche-waavabtcb-waavawavax",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1745081910,
+    "retireReason": "rewards",
+    "retiredAt": 1774958824,
     "platformId": "balancer",
     "assets": ["waAvaBTCb", "waAvaWAVAX"],
     "risks": {
@@ -924,8 +926,10 @@
     "earnedTokenAddress": "0x636af4eE2B7D0390dCc0073C0e832FccD4C8dB0f",
     "oracle": "lps",
     "oracleId": "balancerv3-avalanche-waavasavax-ggavax-waavawavax",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1744980874,
+    "retireReason": "rewards",
+    "retiredAt": 1774958830,
     "platformId": "balancer",
     "assets": ["waAvaSAVAX", "ggAVAX", "waAvaWAVAX"],
     "risks": {
