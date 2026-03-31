@@ -180,6 +180,15 @@ export function formatPercent(
     );
 }
 
+export function formatPercentTrim(
+  input: Parameters<typeof formatPercent>[0],
+  decimals: number = 3
+): string {
+  return formatPercent(input, decimals)
+    .replace(/(\.\d*?)0+%$/, '$1%')
+    .replace(/\.%$/, '%');
+}
+
 interface FormatLargeNumberOptions {
   /** from what order of magnitude should we start formatting to scale */
   minScale: Scale;

@@ -2,7 +2,7 @@ import { css } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatPercent, formatUsd } from '../../../../../../helpers/format.ts';
+import { formatPercent, formatPercentTrim, formatUsd } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { ZapQuote } from '../../../../../data/apis/transact/transact-types.ts';
@@ -16,12 +16,6 @@ import { CCTP_CONFIG } from '../../../../../../config/cctp/cctp-config.ts';
 import { Label } from './Label.tsx';
 import { LabelCustomTooltip } from './LabelTooltip.tsx';
 import { Value } from './Value.tsx';
-
-function formatPercentTrim(value: Parameters<typeof formatPercent>[0], decimals = 3): string {
-  return formatPercent(value, decimals)
-    .replace(/(\.\d*?)0+%$/, '$1%')
-    .replace(/\.%$/, '%');
-}
 
 const useStyles = legacyMakeStyles({
   original: css.raw({
