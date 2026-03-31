@@ -1,12 +1,9 @@
 import { styled } from '@repo/styles/jsx';
 import { type FC, memo, useEffect } from 'react';
-import {
-  transactClearInput,
-  transactSetSuccessClosed,
-} from '../../features/data/actions/transact.ts';
 import { crossChainClearRecoveryQuote } from '../../features/data/actions/wallet/cross-chain.ts';
 import {
-  stepperReset,
+  stepperSetRecoveryExecution,
+  stepperSetStepContent,
   stepperUpdateCurrentStep,
 } from '../../features/data/actions/wallet/stepper.ts';
 import { StepContent as StepContentEnum } from '../../features/data/reducers/wallet/stepper-types.ts';
@@ -56,10 +53,9 @@ const StepperImpl = () => {
 
   useEffect(() => {
     if (isRecoveryExecution && content === StepContentEnum.ErrorTx && steps.modal) {
-      dispatch(transactSetSuccessClosed(false));
-      dispatch(transactClearInput());
       dispatch(crossChainClearRecoveryQuote());
-      dispatch(stepperReset());
+      dispatch(stepperSetRecoveryExecution(false));
+      dispatch(stepperSetStepContent({ stepContent: StepContentEnum.RecoveryTx }));
     }
   }, [isRecoveryExecution, content, steps.modal, dispatch]);
 

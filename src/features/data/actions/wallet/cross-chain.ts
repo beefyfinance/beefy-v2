@@ -39,6 +39,7 @@ import type {
   ZapQuoteStep,
 } from '../../apis/transact/transact-types.ts';
 import { createAppAsyncThunk } from '../../utils/store-utils.ts';
+import { fetchCCTPDstTokensReturned } from '../cctp.ts';
 import { fetchAllowanceAction } from '../allowance.ts';
 import { transactSetExecuting } from '../transact.ts';
 import {
@@ -395,6 +396,7 @@ export const crossChainRecoveryExecuteOrder = (
                   destTxHash: hash,
                 })
               );
+              dispatch(fetchCCTPDstTokensReturned({ destChainId, dstTxHash: hash }));
             } else {
               dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-failed' }));
             }
@@ -607,13 +609,19 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
       steps.push(recoveryStep);
 
       console.debug('[Recovery] Starting stepper with', steps.length, 'steps');
-      const bridgeStatus = getState().ui.stepperState.bridgeStatus;
+      const existingBridgeStatus = getState().ui.stepperState.bridgeStatus;
       dispatch(transactSetExecuting(false));
       dispatch(stepperStartWithSteps(steps, op.recovery.destChainId));
       dispatch(stepperSetRecoveryExecution(true));
-      if (bridgeStatus) {
-        dispatch(stepperSetBridgeStatus(bridgeStatus));
-      }
+      dispatch(
+        stepperSetBridgeStatus({
+          ...existingBridgeStatus,
+          opId,
+          srcChainId: op.sourceChainId,
+          destChainId: op.destChainId,
+          vaultId: op.vaultId,
+        })
+      );
     } finally {
       dispatch(transactSetExecuting(false));
     }

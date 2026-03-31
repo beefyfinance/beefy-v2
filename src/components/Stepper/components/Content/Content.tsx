@@ -1,14 +1,6 @@
 import { css, cx } from '@repo/styles/css';
 import type BigNumber from 'bignumber.js';
-import {
-  type FC,
-  memo,
-  type MouseEventHandler,
-  type ReactNode,
-  useCallback,
-  useMemo,
-  useState,
-} from 'react';
+import { type FC, memo, type MouseEventHandler, type ReactNode, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   transactClearInput,
@@ -634,11 +626,11 @@ export const RecoveryContent = memo(function RecoveryContent() {
   const recoveryQuoteStatus = useAppSelector(selectCrossChainRecoveryQuoteStatus);
   const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
   const isExecuting = useAppSelector(selectTransactExecuting);
-  const [isFetchingQuote, setIsFetchingQuote] = useState(false);
 
   const opId = bridgeStatus?.opId ?? recoveryQuoteOpId;
   const destChainId = bridgeStatus?.destChainId;
   const isOnCorrectChain = connectedChainId === destChainId;
+  const isFetchingQuote = recoveryQuoteStatus === TransactStatus.Pending;
 
   const hasValidQuote =
     opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
@@ -657,14 +649,7 @@ export const RecoveryContent = memo(function RecoveryContent() {
 
   const handleFetchQuote = useCallback(() => {
     if (opId) {
-      setIsFetchingQuote(true);
-      dispatch(crossChainFetchRecoveryQuote({ opId }))
-        .unwrap()
-        .catch(err => {
-          console.error('Failed to fetch recovery quote', err);
-          throw err;
-        })
-        .finally(() => setIsFetchingQuote(false));
+      dispatch(crossChainFetchRecoveryQuote({ opId }));
     }
   }, [dispatch, opId]);
 

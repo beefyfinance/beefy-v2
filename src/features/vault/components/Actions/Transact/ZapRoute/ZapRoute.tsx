@@ -536,19 +536,20 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
   const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
   const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
 
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const isRecovery =
+    stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null;
+
   const pendingAllowancesLive: AllowanceTokenAmount[] = useAppSelector(state =>
     selectPendingAllowances(state, quote.allowances)
   );
   const stepperModal = useAppSelector(state => state.ui.stepperState.modal);
   const snapshotRef = useRef<AllowanceTokenAmount[]>(pendingAllowancesLive);
-  if (!stepperModal) {
+  if (!stepperModal && !isRecovery) {
     snapshotRef.current = pendingAllowancesLive;
   }
-  const pendingAllowances = stepperModal ? snapshotRef.current : pendingAllowancesLive;
-
-  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
-  const isRecovery =
-    stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null;
+  const pendingAllowances =
+    stepperModal || isRecovery ? snapshotRef.current : pendingAllowancesLive;
 
   const recoveryQuoteMatchesOp = !recoveryOp || recoveryQuoteOpId === recoveryOp.id;
 

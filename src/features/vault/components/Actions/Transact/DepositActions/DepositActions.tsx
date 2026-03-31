@@ -160,6 +160,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const stepperContent = useAppSelector(selectStepperStepContent);
   const isExecuting = useAppSelector(selectTransactExecuting);
   const confirmNeededWithChanges = useAppSelector(selectTransactConfirmNeededWithChanges);
   const isMaxAll = useMemo(() => {
@@ -183,7 +184,11 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
 
-  const isLoading = useMemo(() => isExecuting || isTxInProgress, [isExecuting, isTxInProgress]);
+  const isCreating =
+    isExecuting ||
+    (isTxInProgress &&
+      (stepperContent === StepContent.StartTx || stepperContent === StepContent.WalletTx));
+  const isLoading = isExecuting || isTxInProgress;
 
   return (
     <>
@@ -209,7 +214,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
             borderless={true}
             onClick={handleClick}
           >
-            {isExecuting ?
+            {isCreating ?
               t('Transact-CreatingTransaction')
             : isTxInProgress ?
               t('Transact-DepositInProgress')
@@ -238,7 +243,6 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
   const recoveryQuoteStatus = useAppSelector(selectCrossChainRecoveryQuoteStatus);
   const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
   const isExecuting = useAppSelector(selectTransactExecuting);
-  const [isFetchingQuote, setIsFetchingQuote] = useState(false);
 
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -248,6 +252,7 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
   const destChainId =
     bridgeStatus?.destChainId ?? recoveryOp?.recovery.destChainId ?? vault?.chainId;
   const isOnCorrectChain = connectedChainId === destChainId;
+  const isFetchingQuote = recoveryQuoteStatus === TransactStatus.Pending;
 
   const hasValidQuote =
     opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
@@ -256,14 +261,7 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
 
   const handleFetchQuote = useCallback(() => {
     if (opId) {
-      setIsFetchingQuote(true);
-      dispatch(crossChainFetchRecoveryQuote({ opId }))
-        .unwrap()
-        .catch(err => {
-          console.error('Failed to fetch recovery quote', err);
-          throw err;
-        })
-        .finally(() => setIsFetchingQuote(false));
+      dispatch(crossChainFetchRecoveryQuote({ opId }));
     }
   }, [dispatch, opId]);
 

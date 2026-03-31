@@ -173,13 +173,13 @@ function handleDestinationRecovery(
       );
     }
 
+    dispatch(stepperSetStepContent({ stepContent: StepContent.RecoveryTx }));
+
     try {
       await dispatch(crossChainFetchRecoveryQuote({ opId })).unwrap();
     } catch (err) {
       console.warn('[CCTP] Recovery quote fetch failed (will retry from form):', err);
     }
-
-    dispatch(stepperSetStepContent({ stepContent: StepContent.RecoveryTx }));
   };
 }
 
