@@ -1,4 +1,5 @@
 import { css } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatPercent, formatUsd } from '../../../../../../helpers/format.ts';
@@ -86,75 +87,37 @@ const ZapFees = memo(function ZapFees({ quote }: ZapFeesProps) {
   }, [quote, isCrossChain, hasDiscountFee, fee.value]);
 
   const tooltip = (
-    <div style={{ display: 'table' }}>
-      <div style={{ display: 'table', borderSpacing: '0 2px' }}>
+    <TooltipTable>
+      <TooltipRows>
         {crossChainFees?.relayFeeUsd != null && (
-          <div style={{ display: 'table-row' }}>
-            <span
-              style={{
-                display: 'table-cell',
-                fontWeight: 500,
-                paddingRight: '16px',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {t('Transact-Fee-Zap-Row-Relay')}
-            </span>
-            <span style={{ display: 'table-cell' }}>
+          <TooltipRow>
+            <TooltipLabel>{t('Transact-Fee-Zap-Row-Relay')}</TooltipLabel>
+            <TooltipValue>
               {t('Transact-Fee-Zap-Row-Relay-Desc', {
                 amount: formatUsd(crossChainFees.relayFeeUsd, 2),
               })}
-            </span>
-          </div>
+            </TooltipValue>
+          </TooltipRow>
         )}
         {crossChainFees?.fastFeeDecimal != null && (
-          <div style={{ display: 'table-row' }}>
-            <span
-              style={{
-                display: 'table-cell',
-                fontWeight: 500,
-                paddingRight: '16px',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {t('Transact-Fee-Zap-Row-Bridge')}
-            </span>
-            <span style={{ display: 'table-cell' }}>
+          <TooltipRow>
+            <TooltipLabel>{t('Transact-Fee-Zap-Row-Bridge')}</TooltipLabel>
+            <TooltipValue>
               {t('Transact-Fee-Zap-Row-Bridge-Desc', {
                 percent: formatPercent(crossChainFees.fastFeeDecimal, 3),
               })}
-            </span>
-          </div>
+            </TooltipValue>
+          </TooltipRow>
         )}
-        <div style={{ display: 'table-row' }}>
-          <span
-            style={{
-              display: 'table-cell',
-              fontWeight: 500,
-              paddingRight: '16px',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {t('Transact-Fee-Zap-Row-Swap')}
-          </span>
-          <span style={{ display: 'table-cell' }}>
+        <TooltipRow>
+          <TooltipLabel>{t('Transact-Fee-Zap-Row-Swap')}</TooltipLabel>
+          <TooltipValue>
             {t('Transact-Fee-Zap-Row-Swap-Desc', { percent: formatPercent(fee.value) })}
-          </span>
-        </div>
-      </div>
-      <div
-        style={{
-          display: 'table-caption',
-          captionSide: 'bottom',
-          paddingTop: '12px',
-          marginTop: '8px',
-          borderTop: '1px solid rgba(0,0,0,0.1)',
-          whiteSpace: 'normal',
-        }}
-      >
-        {t('Transact-Fee-Zap-Footer')}
-      </div>
-    </div>
+          </TooltipValue>
+        </TooltipRow>
+      </TooltipRows>
+      <TooltipFooter>{t('Transact-Fee-Zap-Footer')}</TooltipFooter>
+    </TooltipTable>
   );
 
   return (
@@ -175,4 +138,49 @@ const ZapFees = memo(function ZapFees({ quote }: ZapFeesProps) {
       </Value>
     </>
   );
+});
+
+const TooltipTable = styled('div', {
+  base: {
+    display: 'table',
+  },
+});
+
+const TooltipRows = styled('div', {
+  base: {
+    display: 'table',
+    borderSpacing: '0 2px',
+  },
+});
+
+const TooltipRow = styled('div', {
+  base: {
+    display: 'table-row',
+  },
+});
+
+const TooltipLabel = styled('span', {
+  base: {
+    display: 'table-cell',
+    fontWeight: 500,
+    paddingRight: '16px',
+    whiteSpace: 'nowrap',
+  },
+});
+
+const TooltipValue = styled('span', {
+  base: {
+    display: 'table-cell',
+  },
+});
+
+const TooltipFooter = styled('div', {
+  base: {
+    display: 'table-caption',
+    captionSide: 'bottom',
+    paddingTop: '12px',
+    marginTop: '8px',
+    borderTop: '1px solid rgba(0,0,0,0.1)',
+    whiteSpace: 'normal',
+  },
 });
