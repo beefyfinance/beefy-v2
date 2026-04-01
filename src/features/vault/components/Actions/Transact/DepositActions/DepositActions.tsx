@@ -218,6 +218,12 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
               t('Transact-CreatingTransaction')
             : isTxInProgress ?
               t('Transact-DepositInProgress')
+            : confirmNeededWithChanges ?
+              t(
+                isMaxAll && !isCowDepositQuote ?
+                  'Transact-ConfirmDepositAll'
+                : 'Transact-ConfirmDeposit'
+              )
             : t(isMaxAll && !isCowDepositQuote ? 'Transact-DepositAll' : 'Transact-Deposit')}
           </AnimatedButton>
         </ActionConnectSwitch>
