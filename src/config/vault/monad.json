@@ -354,6 +354,43 @@
     ]
   },
   {
+    "id": "morpho-monad-steakhouse-high-yield-usd1",
+    "name": "USD1 (Steakhouse, High Yield USD1)",
+    "type": "standard",
+    "token": "USD1",
+    "tokenAddress": "0x111111d2bf19e43C34263401e0CAd979eD1cdb61",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xd5CC7732f88e61eeB2eA7dA25a22Fdf94cC21110",
+    "earnedToken": "mooMorphoMonadSteakhouseHighYieldUSD1",
+    "earnedTokenAddress": "0xd5CC7732f88e61eeB2eA7dA25a22Fdf94cC21110",
+    "oracle": "tokens",
+    "oracleId": "USD1",
+    "status": "active",
+    "createdAt": 1774990613,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["USD1"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0xBeEFfB65df79Baac701307c9605b7aB207355Fdb/steakhouse-high-yield-usd1",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-monad-wbtc-wmon-vault",
     "name": "WBTC-WMON",
     "type": "standard",
@@ -1397,8 +1434,10 @@
     "earnedTokenAddress": "0x70aB0bc107A0a4341f004fE22cCB94a752fD983B",
     "oracle": "lps",
     "oracleId": "curve-monad-aznd-ausd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1765868876,
+    "retireReason": "rewards",
+    "retiredAt": 1773684924,
     "platformId": "curve",
     "assets": ["AZND", "AUSD"],
     "migrationIds": ["l2-convex", "l2-curve"],
