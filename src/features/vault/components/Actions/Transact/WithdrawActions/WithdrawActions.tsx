@@ -282,6 +282,8 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
               t('Transact-CreatingTransaction')
             : isTxInProgress ?
               t('Transact-WithdrawInProgress')
+            : confirmNeededWithChanges ?
+              t(isMaxAll ? 'Transact-ConfirmWithdrawAll' : 'Transact-ConfirmWithdraw')
             : t(isMaxAll ? 'Transact-WithdrawAll' : 'Transact-Withdraw')}
           </AnimatedButton>
         </ActionConnectSwitch>
@@ -359,6 +361,8 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
               t('Transact-CreatingTransaction')
             : isTxInProgress ?
               t('Transact-WithdrawInProgress')
+            : confirmNeededWithChanges ?
+              t(isMaxAll ? 'Transact-ConfirmWithdrawAll' : 'Transact-ConfirmWithdraw')
             : t(
                 isMaxAll ?
                   quote.outputs.length > 1 && showClaim ?
