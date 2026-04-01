@@ -1,42 +1,32 @@
-import { memo, type ReactNode, useCallback } from 'react';
-import {
-  transactClearInput,
-  transactSetSuccessClosed,
-} from '../../../../features/data/actions/transact.ts';
-import { stepperReset } from '../../../../features/data/actions/wallet/stepper.ts';
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
-import { useAppDispatch } from '../../../../features/data/store/hooks.ts';
-import CloseRoundedIcon from '../../../../images/icons/mui/CloseRounded.svg?react';
-import { styles } from './styles.ts';
-
-const useStyles = legacyMakeStyles(styles);
+import { memo, type ReactNode } from 'react';
+import { styled } from '@repo/styles/jsx';
 
 interface TitleProps {
   text: ReactNode;
 }
 
 export const Title = memo(function Title({ text }: TitleProps) {
-  const classes = useStyles();
-  const dispatch = useAppDispatch();
-  const handleClose = useCallback(() => {
-    dispatch(transactSetSuccessClosed(false));
-    dispatch(transactClearInput());
-    dispatch(stepperReset());
-  }, [dispatch]);
-
   return (
-    <div className={classes.titleContainer}>
-      <div className={classes.title}>{text}</div>
-      <button type="button" className={classes.closeIcon} onClick={handleClose}>
-        <CloseRoundedIcon fontSize="small" color="#dadce8" />
-      </button>
-    </div>
+    <TitleContainer>
+      <TitleText>{text}</TitleText>
+    </TitleContainer>
   );
 });
 
-/*
+const TitleText = styled('div', {
+  base: {
+    textStyle: 'body.medium',
+    color: 'blackMarket',
+    display: 'flex',
+    alignItems: 'center',
+  },
+});
 
-
-
-
-*/
+const TitleContainer = styled('div', {
+  base: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexShrink: '0',
+    marginBottom: '4px',
+  },
+});
