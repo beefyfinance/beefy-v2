@@ -22,12 +22,14 @@ type RiveAnimationProps = {
   hovering: boolean;
   depositInProgress: boolean;
   needFire: boolean;
+  isFired: boolean;
 };
 
 const RiveAnimation = memo(function RiveAnimation({
   hovering,
   depositInProgress,
   needFire,
+  isFired,
 }: RiveAnimationProps) {
   const { rive, RiveComponent } = useRive({
     src: buttonRiv,
@@ -36,9 +38,10 @@ const RiveAnimation = memo(function RiveAnimation({
     autoplay: true,
   });
 
-  const risingInput = useStateMachineInput(rive, STATE_MACHINE_NAME, 'Rising');
-  const depositInput = useStateMachineInput(rive, STATE_MACHINE_NAME, 'Deposit in progress...');
-  const needFireInput = useStateMachineInput(rive, STATE_MACHINE_NAME, 'NeedFire');
+  const risingInput = useStateMachineInput(rive, STATE_MACHINE_NAME, 'isRising');
+  const depositInput = useStateMachineInput(rive, STATE_MACHINE_NAME, 'isInProgress');
+  const needFireInput = useStateMachineInput(rive, STATE_MACHINE_NAME, 'needFire');
+  const isFiredInput = useStateMachineInput(rive, STATE_MACHINE_NAME, 'isFired');
 
   useEffect(() => {
     if (risingInput) {
@@ -67,6 +70,12 @@ const RiveAnimation = memo(function RiveAnimation({
     }
   }, [needFireInput, needFire]);
 
+  useEffect(() => {
+    if (isFiredInput) {
+      isFiredInput.value = isFired;
+    }
+  }, [isFiredInput, isFired]);
+
   return <RiveComponent style={{ width: '100%', height: '100%' }} />;
 });
 
@@ -76,20 +85,44 @@ export const AnimatedButton = memo(function AnimatedButton({
   disabled,
   animation: _animation,
   needFire,
+  onClick,
   ...props
 }: AnimatedButtonProps) {
   const [hovering, setHovering] = useState(false);
+  const [isFired, setIsFired] = useState(false);
 
   const handleMouseEnter = useCallback(() => setHovering(true), []);
   const handleMouseLeave = useCallback(() => setHovering(false), []);
 
+  const handleClick = useCallback<React.MouseEventHandler<HTMLButtonElement>>(
+    e => {
+      if (needFire) {
+        setIsFired(true);
+      }
+      onClick?.(e);
+    },
+    [needFire, onClick]
+  );
+
+  // Reset isFired when needFire goes away
+  useEffect(() => {
+    if (!needFire) {
+      setIsFired(false);
+    }
+  }, [needFire]);
+
   return (
     <div className={wrapperClass} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <Button {...props} disabled={loading || disabled}>
+      <Button {...props} disabled={loading || disabled} onClick={handleClick}>
         {children}
       </Button>
       <div className={riveCornerClass}>
-        <RiveAnimation hovering={hovering} depositInProgress={!!loading} needFire={!!needFire} />
+        <RiveAnimation
+          hovering={hovering}
+          depositInProgress={!!loading}
+          needFire={!!needFire}
+          isFired={isFired}
+        />
       </div>
     </div>
   );
