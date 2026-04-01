@@ -8,6 +8,7 @@ import {
 } from '../../../../features/data/actions/transact.ts';
 import { stepperReset } from '../../../../features/data/actions/wallet/stepper.ts';
 import {
+  crossChainClearRecoveryQuote,
   crossChainFetchRecoveryQuote,
   crossChainRecoverySteps,
 } from '../../../../features/data/actions/wallet/cross-chain.ts';
@@ -161,12 +162,16 @@ export const ErrorContent = memo(function ErrorContent() {
 export const CloseButton = memo(function CloseButton() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
 
   const handleClose = useCallback(() => {
+    if (isRecoveryExecution) {
+      dispatch(crossChainClearRecoveryQuote());
+    }
     dispatch(transactSetSuccessClosed(false));
     dispatch(transactClearInput());
     dispatch(stepperReset());
-  }, [dispatch]);
+  }, [dispatch, isRecoveryExecution]);
 
   return (
     <Button borderless={true} fullWidth={true} variant="default" onClick={handleClose}>
@@ -629,7 +634,13 @@ export const RecoveryContent = memo(function RecoveryContent() {
   const isExecuting = useAppSelector(selectTransactExecuting);
 
   const opId = bridgeStatus?.opId ?? recoveryQuoteOpId;
+  const pendingOp = useAppSelector(state =>
+    opId ? state.ui.transact.crossChain.pendingOps[opId] : undefined
+  );
   const destChainId = bridgeStatus?.destChainId;
+  const destChain = useAppSelector(state =>
+    destChainId ? selectChainById(state, destChainId) : undefined
+  );
   const isOnCorrectChain = connectedChainId === destChainId;
   const isFetchingQuote = recoveryQuoteStatus === TransactStatus.Pending;
 
@@ -639,8 +650,19 @@ export const RecoveryContent = memo(function RecoveryContent() {
 
   const titleKey =
     mode === TransactMode.Withdraw ? 'Transactn-Bridging-Withdraw' : 'Transactn-Bridging-Deposit';
+
+  const messageParams = {
+    amount: pendingOp?.recovery.bridgedAmount ?? '',
+    token: 'USDC',
+    chain: destChain?.name ?? '',
+  };
   const messageKey =
-    mode === TransactMode.Withdraw ? 'Transactn-Recovery-Withdraw' : 'Transactn-Recovery-Deposit';
+    needsNewQuote ?
+      mode === TransactMode.Withdraw ?
+        'Transactn-Recovery-Withdraw-Refresh'
+      : 'Transactn-Recovery-Deposit-Refresh'
+    : mode === TransactMode.Withdraw ? 'Transactn-Recovery-Withdraw'
+    : 'Transactn-Recovery-Deposit';
 
   const handleSwitchChain = useCallback(() => {
     if (destChainId) {
@@ -709,7 +731,7 @@ export const RecoveryContent = memo(function RecoveryContent() {
     <>
       <Title text={t(titleKey)} />
       <div className={css(styles.content, styles.recoveryContent)}>
-        <div className={classes.message}>{t(messageKey)}</div>
+        <div className={classes.message}>{t(messageKey, messageParams)}</div>
       </div>
       {actionButton ?
         <div className={classes.buttons}>{actionButton}</div>
