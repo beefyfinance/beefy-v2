@@ -67,7 +67,7 @@ export const styles = {
     width: '100%',
     alignItems: 'stretch',
     gap: '10px',
-    marginTop: '24px',
+    marginTop: '12px',
     '& > *': {
       height: '44px',
     },
