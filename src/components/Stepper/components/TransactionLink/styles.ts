@@ -2,7 +2,7 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   redirectLinkSuccess: css.raw({
-    textStyle: 'body',
+    textStyle: 'body.medium',
     color: 'green.80-40',
     background: 'none',
     margin: '0',
