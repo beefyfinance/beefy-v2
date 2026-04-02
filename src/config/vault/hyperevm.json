@@ -1,5 +1,159 @@
 [
   {
+    "id": "projectx-cow-hyperevm-whype-usdc-rp",
+    "name": "WHYPE-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowProjectXHyperevmWHYPE-USDC",
+    "tokenAddress": "0xF6EB64C1C1cc6b143B2788DA2b62a8885D506021",
+    "tokenDecimals": 18,
+    "tokenProviderId": "projectx",
+    "earnContractAddress": "0x83A2ee24C43a19E506D9Df6170d8B5af6Fe0D97F",
+    "earnedToken": "rCowProjectXHyperevmWHYPE-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "projectx-cow-hyperevm-whype-usdc",
+    "status": "active",
+    "createdAt": 1769081553,
+    "platformId": "projectx",
+    "assets": ["WHYPE", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "projectx-cow-hyperevm-whype-usdc",
+    "name": "WHYPE-USDC",
+    "type": "cowcentrated",
+    "token": "WHYPE-USDC projectx",
+    "tokenAddress": "0x6c9A33E3b592C0d65B3Ba59355d5Be0d38259285",
+    "tokenDecimals": 18,
+    "tokenProviderId": "projectx",
+    "depositTokenAddresses": [
+      "0x5555555555555555555555555555555555555555",
+      "0xb88339CB7199b77E23DB6E890353E22632Ba630f"
+    ],
+    "earnContractAddress": "0xF6EB64C1C1cc6b143B2788DA2b62a8885D506021",
+    "earnedToken": "cowProjectXHyperevmWHYPE-USDC",
+    "earnedTokenAddress": "0xF6EB64C1C1cc6b143B2788DA2b62a8885D506021",
+    "oracle": "lps",
+    "oracleId": "projectx-cow-hyperevm-whype-usdc",
+    "status": "active",
+    "createdAt": 1769081553,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["WHYPE", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "projectx-cow-hyperevm-ubtc-usdt0-rp",
+    "name": "UBTC-USD₮0 Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowProjectXHyperevmUBTC-USDT0",
+    "tokenAddress": "0xD0766889F0Ab8936da0b07Bf31a4fEAD725E04F2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "projectx",
+    "earnContractAddress": "0x646ab1E6D0939672f810781449650A8058BB3C18",
+    "earnedToken": "rCowProjectXHyperevmUBTC-USDT0",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "projectx-cow-hyperevm-ubtc-usdt0",
+    "status": "active",
+    "createdAt": 1769081553,
+    "platformId": "projectx",
+    "assets": ["UBTC", "USDT0"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "projectx-cow-hyperevm-ubtc-usdt0",
+    "name": "UBTC-USD₮0",
+    "type": "cowcentrated",
+    "token": "UBTC-USD₮0 projectx",
+    "tokenAddress": "0xfd0cb41a4a28b5cA13affe65cd5924F461b3C850",
+    "tokenDecimals": 18,
+    "tokenProviderId": "projectx",
+    "depositTokenAddresses": [
+      "0x9FDBdA0A5e284c32744D2f17Ee5c74B284993463",
+      "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb"
+    ],
+    "earnContractAddress": "0xD0766889F0Ab8936da0b07Bf31a4fEAD725E04F2",
+    "earnedToken": "cowProjectXHyperevmUBTC-USDT0",
+    "earnedTokenAddress": "0xD0766889F0Ab8936da0b07Bf31a4fEAD725E04F2",
+    "oracle": "lps",
+    "oracleId": "projectx-cow-hyperevm-ubtc-usdt0",
+    "status": "active",
+    "createdAt": 1769081553,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["UBTC", "USDT0"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "projectx-cow-hyperevm-ueth-khype-rp",
     "name": "UETH-kHYPE Reward Pool",
     "type": "gov",

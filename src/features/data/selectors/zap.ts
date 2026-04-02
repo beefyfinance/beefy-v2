@@ -32,13 +32,6 @@ export const selectSwapAggregatorsForChain = createSelector(
   }
 );
 
-export const selectOneInchSwapAggregatorForChain = (
-  state: BeefyState,
-  chainId: ChainEntity['id']
-) => {
-  return selectSwapAggregatorForChainType(state, chainId, 'one-inch');
-};
-
 export const selectSwapAggregatorForChainType = <T extends SwapAggregatorEntity['type']>(
   state: BeefyState,
   chainId: ChainEntity['id'],

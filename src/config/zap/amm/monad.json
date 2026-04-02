@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "id": "monad-uniswap",
+    "name": "Uniswap",
+    "type": "uniswap-v2",
+    "routerAddress": "0x4B2ab38DBF28D31D467aA8993f6c2585981D6804",
+    "factoryAddress": "0x182a927119D56008d921126764bF884221b10f59",
+    "pairInitHash": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
+    "minimumLiquidity": "1000",
+    "mintFeeNumerator": "1",
+    "mintFeeDenominator": "5",
+    "swapFeeNumerator": "3",
+    "swapFeeDenominator": "1000",
+    "getAmountOutMode": "getAmountOut"
+  }
+]

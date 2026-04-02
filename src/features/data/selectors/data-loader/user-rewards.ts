@@ -15,7 +15,7 @@ export const selectHasMerklRewardsDispatchedRecentlyForAnyUser = createGlobalDat
 );
 export const selectFetchMerklRewardsLastDispatched = createGlobalDataSelector(
   'merklRewards',
-  loader => loader?.lastDispatched || 0
+  loader => loader?.lastDispatched?.timestamp || 0
 );
 export const selectMerklRewardsForUserShouldLoad = createAddressDataSelector(
   'merklRewards',
@@ -41,7 +41,7 @@ export const selectHasStellaSwapRewardsDispatchedRecentlyForAnyUser = createGlob
 );
 export const selectFetchStellaSwapRewardsLastDispatched = createGlobalDataSelector(
   'stellaSwapRewards',
-  loader => loader?.lastDispatched || 0
+  loader => loader?.lastDispatched?.timestamp || 0
 );
 export const selectStellaSwapRewardsForUserShouldLoad = createAddressDataSelector(
   'stellaSwapRewards',

@@ -50,6 +50,13 @@ export function isZapFeeNonZero(zapFee: ZapFee): boolean {
   return zapFee.value > 0;
 }
 
+export type ZapExtraQuoteResponse = {
+  /** additional information added by beefy api */
+  extra: {
+    fee: ZapFee;
+  };
+};
+
 //
 // Options
 //

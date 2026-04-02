@@ -18,11 +18,7 @@ import { useAppDispatch, useAppSelector } from '../../../../features/data/store/
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import { getNetworkSrc } from '../../../../helpers/networkSrc.ts';
 import iconUnsupportedChain from '../../../../images/icons/navigation/unsuported-chain.svg';
-import {
-  selectBeefyApiKeysWithRejectedData,
-  selectChainIdsWithRejectedData,
-  selectConfigKeysWithRejectedData,
-} from '../../../../features/data/selectors/data-loader-helpers.ts';
+import { selectLoaderStatus } from '../../../../features/data/selectors/data-loader-helpers.ts';
 import { selectHasWalletInitialized } from '../../../../features/data/selectors/data-loader/wallet.ts';
 import { WalletButton } from './WalletButton.tsx';
 
@@ -36,15 +32,7 @@ const WalletContainer = memo(function WalletContainer() {
   const resolverStatus = useResolveAddress(walletAddress);
   const currentChainId = useAppSelector(selectCurrentChainId);
   const isWalletKnown = !!walletAddress;
-
-  const rpcErrors = useAppSelector(state => selectChainIdsWithRejectedData(state));
-  const beefyErrors = useAppSelector(state => selectBeefyApiKeysWithRejectedData(state));
-  const configErrors = useAppSelector(state => selectConfigKeysWithRejectedData(state));
-
-  const hasAnyError = useMemo(
-    () => rpcErrors.length > 0 || beefyErrors.length > 0 || configErrors.length > 0,
-    [rpcErrors, beefyErrors, configErrors]
-  );
+  const status = useAppSelector(selectLoaderStatus);
 
   const handleWalletConnect = useCallback(() => {
     if (walletAddress) {
@@ -69,7 +57,7 @@ const WalletContainer = memo(function WalletContainer() {
       initializing={!walletInitialized}
       connected={isWalletConnected}
       known={isWalletKnown}
-      error={hasAnyError}
+      error={status.rejected}
       onClick={handleWalletConnect}
       disabled={!walletInitialized}
     >

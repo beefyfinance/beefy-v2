@@ -24,7 +24,7 @@ import { SelectLabel } from '../SelectLabel.tsx';
 import { OptionLabel } from '../OptionLabel.tsx';
 import { OptionIcon } from '../OptionIcon.tsx';
 import { OptionBadge } from '../OptionBadge.tsx';
-import { useMediaQuery } from '../../../MediaQueries/useMediaQuery.ts';
+import { useMediaQuery } from '../../../../hooks/useMediaQuery.ts';
 import { indexesFromValues } from './helpers.ts';
 import { SelectMultipleContent } from './SelectMultipleContent.tsx';
 

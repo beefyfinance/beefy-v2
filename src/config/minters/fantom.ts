@@ -21,7 +21,6 @@ export const minters: MinterConfig[] = [
       decimals: 18,
     },
     disableMint: true,
-    canZapInWithOneInch: true,
     canBurn: 'supply',
     reserveBalanceMethod: 'balanceOfWant',
     vaultIds: [

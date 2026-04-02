@@ -1,5 +1,41 @@
 [
   {
+    "id": "morpho-op-gauntlet-prime-usdc",
+    "name": "USDC (Gauntlet, Prime)",
+    "token": "USDC",
+    "tokenAddress": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xb3D2afBBc8485E3C89C8e511470988526763eAA8",
+    "earnedToken": "mooMorphoOpGauntletPrimeUSDC",
+    "earnedTokenAddress": "0xb3D2afBBc8485E3C89C8e511470988526763eAA8",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1768921271,
+    "platformId": "morpho",
+    "curatorId": "gauntlet",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/opmainnet/vault/0xC30ce6A5758786e0F640cC5f881Dd96e9a1C5C59/gauntlet-usdc-prime",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "balancerv3-optimism-sfrxusd-waoptusdcn",
     "name": "sfrxUSD/USDC V3",
     "type": "standard",
@@ -1206,8 +1242,10 @@
     "earnedTokenAddress": "0x0974f018a1704A7bab98f01137F71610B2dCE1c2",
     "oracle": "lps",
     "oracleId": "velo-cow-op-wsteth-op",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1726091643,
+    "retireReason": "tvl",
+    "retiredAt": 1769468077,
     "platformId": "velodrome",
     "assets": ["wstETH", "OP"],
     "risks": {
@@ -1249,8 +1287,10 @@
     "earnedOracleIds": ["VELOV2"],
     "oracle": "lps",
     "oracleId": "velo-cow-op-wsteth-op",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1726091642,
+    "retireReason": "tvl",
+    "retiredAt": 1769468077,
     "platformId": "velodrome",
     "assets": ["wstETH", "OP"],
     "risks": {
@@ -1292,8 +1332,10 @@
     "earnedTokenAddress": "0xada9092d89Bfef51E8f4172B7c16CF9FC374315B",
     "oracle": "lps",
     "oracleId": "velo-cow-op-wsteth-op",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1726091642,
+    "retireReason": "tvl",
+    "retiredAt": 1769468077,
     "platformId": "beefy",
     "feeTier": "0.30",
     "assets": ["wstETH", "OP"],
@@ -2387,8 +2429,10 @@
     "earnedTokenAddress": "0x7E3BF11Dc0D179E3Fd8f8D49A3F454b7987a35C6",
     "oracle": "lps",
     "oracleId": "velodrome-v2-pxeth-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1724617299,
+    "retireReason": "tvl",
+    "retiredAt": 1769468077,
     "platformId": "velodrome",
     "assets": ["pxETH", "WETH"],
     "risks": {
@@ -2425,7 +2469,7 @@
     "earnedToken": "mooSiloOpWETH(ezETH)",
     "earnedTokenAddress": "0xe50d9121d1fefcEFE720731C805C5B6E6B1FC779",
     "oracle": "tokens",
-    "oracleId": "ETH",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1722955942,
     "retireReason": "rewards",
@@ -4800,7 +4844,7 @@
     "retireReason": "tvl",
     "retiredAt": 1734101118,
     "platformId": "velodrome",
-    "assets": ["weETH", "ETH"],
+    "assets": ["weETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -4916,7 +4960,7 @@
     "earnedToken": "mooSiloOpWETH(OP)",
     "earnedTokenAddress": "0xde357f07152BCE64161Ac5dcE7FA235139cd156A",
     "oracle": "tokens",
-    "oracleId": "ETH",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1718736201,
     "retireReason": "rewards",
@@ -5039,7 +5083,7 @@
     "earnedToken": "mooSiloOpWETH(wstETH)",
     "earnedTokenAddress": "0x9F18a883209095CB3a5E600BBAa22be3F0f8880a",
     "oracle": "tokens",
-    "oracleId": "ETH",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1718736201,
     "retireReason": "rewards",
@@ -5925,7 +5969,7 @@
     "retireReason": "rewards",
     "retiredAt": 1752239317,
     "platformId": "aura",
-    "assets": ["wrsETH", "ETH"],
+    "assets": ["wrsETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -6217,7 +6261,7 @@
     "retireReason": "tvl",
     "retiredAt": 1754691706,
     "platformId": "velodrome",
-    "assets": ["wrsETH", "ETH"],
+    "assets": ["wrsETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -6906,7 +6950,7 @@
     "status": "active",
     "createdAt": 1710284095,
     "platformId": "velodrome",
-    "assets": ["POOL", "ETH"],
+    "assets": ["POOL", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -6946,7 +6990,7 @@
     "status": "active",
     "createdAt": 1709856006,
     "platformId": "velodrome",
-    "assets": ["USDC", "ETH"],
+    "assets": ["USDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -6985,7 +7029,7 @@
     "status": "active",
     "createdAt": 1725604111,
     "platformId": "velodrome",
-    "assets": ["msETH", "ETH"],
+    "assets": ["msETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -7925,7 +7969,7 @@
     "retireReason": "tvl",
     "retiredAt": 1746801396,
     "platformId": "velodrome",
-    "assets": ["KUJI", "ETH"],
+    "assets": ["KUJI", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -8467,41 +8511,6 @@
     ]
   },
   {
-    "id": "aura-op-ovn-wusd+",
-    "name": "Overnight Opening Ensemble",
-    "type": "standard",
-    "token": "Overnight Opening Ensemble",
-    "tokenAddress": "0x00b82bc5EdEa6E5E6c77635e31a1A25Aad99f881",
-    "tokenDecimals": 18,
-    "tokenProviderId": "beethovenx",
-    "earnContractAddress": "0xEf6ac74ba097aa0661FC7bB2CF2C43f6817F4Bbb",
-    "earnedToken": "mooAuraOPOVN-wUSD+",
-    "earnedTokenAddress": "0xEf6ac74ba097aa0661FC7bB2CF2C43f6817F4Bbb",
-    "oracle": "lps",
-    "oracleId": "aura-op-ovn-wusd+",
-    "status": "eol",
-    "createdAt": 1698687269,
-    "retireReason": "rewards",
-    "retiredAt": 1706123939,
-    "platformId": "aura",
-    "assets": ["OVN", "wUSD+"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://op.beets.fi/pool/0x00b82bc5edea6e5e6c77635e31a1a25aad99f881000200000000000000000105",
-    "removeLiquidityUrl": "https://op.beets.fi/pool/0x00b82bc5edea6e5e6c77635e31a1a25aad99f881000200000000000000000105",
-    "network": "optimism"
-  },
-  {
     "id": "velodrome-v2-weth-moobifi",
     "name": "mooBIFI-WETH vLP V2",
     "type": "standard",
@@ -8517,7 +8526,7 @@
     "status": "active",
     "createdAt": 1698188042,
     "platformId": "velodrome",
-    "assets": ["mooBIFI", "ETH"],
+    "assets": ["mooBIFI", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -8819,7 +8828,7 @@
     "retireReason": "rewards",
     "retiredAt": 1760538181,
     "platformId": "aura",
-    "assets": ["wstETH", "ETH"],
+    "assets": ["wstETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -8854,7 +8863,7 @@
     "retireReason": "rewards",
     "retiredAt": 1706885963,
     "platformId": "gamma",
-    "assets": ["ETH", "OP"],
+    "assets": ["WETH", "OP"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -8897,7 +8906,7 @@
     "retireReason": "rewards",
     "retiredAt": 1706885963,
     "platformId": "gamma",
-    "assets": ["ETH", "OP"],
+    "assets": ["WETH", "OP"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -8938,7 +8947,7 @@
     "status": "active",
     "createdAt": 1691417919,
     "platformId": "velodrome",
-    "assets": ["HOP", "ETH"],
+    "assets": ["HOP", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9022,7 +9031,7 @@
     "retireReason": "rewards",
     "retiredAt": 1710882786,
     "platformId": "velodrome",
-    "assets": ["UNIDX", "ETH"],
+    "assets": ["UNIDX", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9144,7 +9153,7 @@
     "status": "active",
     "createdAt": 1690458996,
     "platformId": "velodrome",
-    "assets": ["tBTC", "ETH"],
+    "assets": ["tBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9391,7 +9400,7 @@
     "status": "active",
     "createdAt": 1689918804,
     "platformId": "velodrome",
-    "assets": ["VELOV2", "ETH"],
+    "assets": ["VELOV2", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9473,7 +9482,7 @@
     "status": "active",
     "createdAt": 1689918804,
     "platformId": "velodrome",
-    "assets": ["THALES", "ETH"],
+    "assets": ["THALES", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -9805,7 +9814,7 @@
     "retireReason": "tvl",
     "retiredAt": 1694605850,
     "platformId": "velodrome",
-    "assets": ["AELIN", "ETH"],
+    "assets": ["AELIN", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10009,7 +10018,7 @@
     "status": "active",
     "createdAt": 1688096352,
     "platformId": "velodrome",
-    "assets": ["LUSD", "ETH"],
+    "assets": ["LUSD", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10093,7 +10102,7 @@
     "retireReason": "tvl",
     "retiredAt": 1741129638,
     "platformId": "velodrome",
-    "assets": ["sETH", "ETH"],
+    "assets": ["sETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10215,7 +10224,7 @@
     "status": "active",
     "createdAt": 1688079945,
     "platformId": "velodrome",
-    "assets": ["OP", "ETH"],
+    "assets": ["OP", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10463,7 +10472,7 @@
     "status": "active",
     "createdAt": 1688067767,
     "platformId": "velodrome",
-    "assets": ["rETH", "ETH"],
+    "assets": ["rETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10503,7 +10512,7 @@
     "status": "active",
     "createdAt": 1688065647,
     "platformId": "velodrome",
-    "assets": ["wstETH", "ETH"],
+    "assets": ["wstETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10708,7 +10717,7 @@
     "status": "active",
     "createdAt": 1688040372,
     "platformId": "velodrome",
-    "assets": ["alETH", "ETH"],
+    "assets": ["alETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -10790,7 +10799,7 @@
     "status": "active",
     "createdAt": 1688037724,
     "platformId": "velodrome",
-    "assets": ["KWENTA", "ETH"],
+    "assets": ["KWENTA", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11204,7 +11213,7 @@
     "status": "active",
     "createdAt": 1688037723,
     "platformId": "velodrome",
-    "assets": ["ETH", "opUSDCe"],
+    "assets": ["WETH", "opUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11317,7 +11326,7 @@
     "retireReason": "bifiV2",
     "retiredAt": 1689007467,
     "platformId": "velodrome",
-    "assets": ["oldBIFI", "ETH"],
+    "assets": ["oldBIFI", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11399,7 +11408,7 @@
     "status": "active",
     "createdAt": 1688039323,
     "platformId": "velodrome",
-    "assets": ["frxETH", "ETH"],
+    "assets": ["frxETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -11839,21 +11848,21 @@
   },
   {
     "id": "exactly-supply-eth",
-    "name": "ETH",
+    "name": "WETH",
     "type": "standard",
-    "token": "ETH",
+    "token": "WETH",
     "tokenDecimals": 18,
     "earnContractAddress": "0x0Bf7616889d0ae18382d9715eAc00a3302e9aB92",
     "earnedToken": "mooExactlySupplyETH",
     "earnedTokenAddress": "0x0Bf7616889d0ae18382d9715eAc00a3302e9aB92",
     "oracle": "tokens",
-    "oracleId": "ETH",
+    "oracleId": "WETH",
     "status": "eol",
     "createdAt": 1694023422,
     "retireReason": "rewards",
     "retiredAt": 1706885963,
     "platformId": "exactly",
-    "assets": ["ETH"],
+    "assets": ["WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12284,7 +12293,7 @@
     "retireReason": "rewards",
     "retiredAt": 1690357628,
     "platformId": "velodrome",
-    "assets": ["wstETH", "ETH"],
+    "assets": ["wstETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12326,7 +12335,7 @@
     "retireReason": "rewards",
     "retiredAt": 1690357628,
     "platformId": "velodrome",
-    "assets": ["rETH", "ETH"],
+    "assets": ["rETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12589,7 +12598,7 @@
     "retireReason": "rewards",
     "retiredAt": 1690357628,
     "platformId": "velodrome",
-    "assets": ["frxETH", "ETH"],
+    "assets": ["frxETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12967,7 +12976,7 @@
     "retireReason": "tvl",
     "retiredAt": 1700566353,
     "platformId": "velodrome",
-    "assets": ["LUSD", "ETH"],
+    "assets": ["LUSD", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13009,7 +13018,7 @@
     "retireReason": "tvl",
     "retiredAt": 1700164371,
     "platformId": "velodrome",
-    "assets": ["KWENTA", "ETH"],
+    "assets": ["KWENTA", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13051,7 +13060,7 @@
     "retireReason": "tvl",
     "retiredAt": 1690624926,
     "platformId": "velodrome",
-    "assets": ["THALES", "ETH"],
+    "assets": ["THALES", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13212,7 +13221,7 @@
     "retireReason": "rewards",
     "retiredAt": 1698160111,
     "platformId": "curve",
-    "assets": ["wstETH", "ETH"],
+    "assets": ["wstETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13297,7 +13306,7 @@
     "retireReason": "rewards",
     "retiredAt": 1749474917,
     "platformId": "hop",
-    "assets": ["ETH"],
+    "assets": ["WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13441,7 +13450,7 @@
     "retireReason": "rewards",
     "retiredAt": 1690357628,
     "platformId": "velodrome",
-    "assets": ["rETH", "ETH"],
+    "assets": ["rETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13609,7 +13618,7 @@
     "retireReason": "rewards",
     "retiredAt": 1690357628,
     "platformId": "velodrome",
-    "assets": ["ETH", "HOP"],
+    "assets": ["WETH", "HOP"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13717,7 +13726,7 @@
     "retireReason": "tvl",
     "retiredAt": 1742594396,
     "platformId": "velodrome",
-    "assets": ["wstETH", "ETH"],
+    "assets": ["wstETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13759,7 +13768,7 @@
     "retireReason": "rewards",
     "retiredAt": 1710346058,
     "platformId": "aura",
-    "assets": ["wstETH", "ETH"],
+    "assets": ["wstETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -13774,41 +13783,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x7b50775383d3d6f0215a8f290f2c9e2eebbeceb200020000000000000000008b",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x7b50775383d3d6f0215a8f290f2c9e2eebbeceb200020000000000000000008b",
-    "network": "optimism"
-  },
-  {
-    "id": "beets-overnight-pulse",
-    "name": "Overnight Pulse",
-    "type": "standard",
-    "token": "Overnight Pulse",
-    "tokenAddress": "0xb1C9aC57594e9B1EC0f3787D9f6744EF4CB0A024",
-    "tokenDecimals": 18,
-    "tokenProviderId": "beethovenx",
-    "earnContractAddress": "0x42f2ab8885595b5b7f60a0B678B3d8d4Bf9DE113",
-    "earnedToken": "mooBeetsOvernightPulse",
-    "earnedTokenAddress": "0x42f2ab8885595b5b7f60a0B678B3d8d4Bf9DE113",
-    "oracle": "lps",
-    "oracleId": "beets-overnight-pulse",
-    "status": "eol",
-    "createdAt": 1673373128,
-    "retireReason": "rewards",
-    "retiredAt": 1680018611,
-    "platformId": "beethovenx",
-    "assets": ["bbUSD+", "bbDAI+"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": true
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://op.beets.fi/pool/0xb1c9ac57594e9b1ec0f3787d9f6744ef4cb0a02400000000000000000000006e",
-    "removeLiquidityUrl": "https://op.beets.fi/pool/0xb1c9ac57594e9b1ec0f3787d9f6744ef4cb0a02400000000000000000000006e",
     "network": "optimism"
   },
   {
@@ -13906,7 +13880,7 @@
     "retireReason": "tvl",
     "retiredAt": 1688639926,
     "platformId": "velodrome",
-    "assets": ["oldBIFI", "ETH"],
+    "assets": ["oldBIFI", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14359,7 +14333,7 @@
     "retireReason": "rewards",
     "retiredAt": 1760538181,
     "platformId": "aura",
-    "assets": ["ETH", "rETH"],
+    "assets": ["WETH", "rETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14588,9 +14562,9 @@
   },
   {
     "id": "aavev3-op-eth",
-    "name": "ETH",
+    "name": "WETH",
     "type": "standard",
-    "token": "ETH",
+    "token": "WETH",
     "tokenDecimals": 18,
     "earnContractAddress": "0x7eE71053102d54Fc843BaEBaf07277C2b6dB64f1",
     "earnedToken": "mooAaveOpETH",
@@ -14602,7 +14576,7 @@
     "retireReason": "rewards",
     "retiredAt": 1694605850,
     "platformId": "aave",
-    "assets": ["ETH"],
+    "assets": ["WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14725,7 +14699,7 @@
     "retireReason": "tvl",
     "retiredAt": 1690357628,
     "platformId": "velodrome",
-    "assets": ["AELIN", "ETH"],
+    "assets": ["AELIN", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14809,7 +14783,7 @@
     "retireReason": "rewards",
     "retiredAt": 1690357628,
     "platformId": "velodrome",
-    "assets": ["alETH", "ETH"],
+    "assets": ["alETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -14973,7 +14947,7 @@
     "retireReason": "tvl",
     "retiredAt": 1671741623,
     "platformId": "velodrome",
-    "assets": ["DOLA", "ETH"],
+    "assets": ["DOLA", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15099,7 +15073,7 @@
     "retireReason": "tvl",
     "retiredAt": 1676567650,
     "platformId": "velodrome",
-    "assets": ["SNX", "ETH"],
+    "assets": ["SNX", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15387,7 +15361,7 @@
     "retireReason": "rewards",
     "retiredAt": 1724851479,
     "platformId": "stargate",
-    "assets": ["ETH"],
+    "assets": ["WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15423,7 +15397,7 @@
     "retireReason": "rewards",
     "retiredAt": 1713202188,
     "platformId": "velodrome",
-    "assets": ["VELO", "ETH"],
+    "assets": ["VELO", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15465,7 +15439,7 @@
     "retireReason": "rewards",
     "retiredAt": 1713202188,
     "platformId": "velodrome",
-    "assets": ["OP", "ETH"],
+    "assets": ["OP", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15507,7 +15481,7 @@
     "retireReason": "rewards",
     "retiredAt": 1713202188,
     "platformId": "velodrome",
-    "assets": ["ETH", "opUSDCe"],
+    "assets": ["WETH", "opUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15591,7 +15565,7 @@
     "retireReason": "rewards",
     "retiredAt": 1713202188,
     "platformId": "velodrome",
-    "assets": ["sETH", "ETH"],
+    "assets": ["sETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15759,7 +15733,7 @@
     "retireReason": "rewards",
     "retiredAt": 1691870039,
     "platformId": "ripae",
-    "assets": ["pETHo", "ETH"],
+    "assets": ["pETHo", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15801,7 +15775,7 @@
     "retireReason": "tvl",
     "retiredAt": 1675865662,
     "platformId": "ripae",
-    "assets": ["sETHo", "ETH"],
+    "assets": ["sETHo", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -15841,7 +15815,7 @@
     "status": "active",
     "createdAt": 1670252930,
     "platformId": "curve",
-    "assets": ["sETH", "ETH"],
+    "assets": ["sETH", "WETH"],
     "migrationIds": ["l2-curve"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16087,7 +16061,7 @@
     "retireReason": "rewards",
     "retiredAt": 1729892803,
     "platformId": "beethovenx",
-    "assets": ["ETH", "OP", "opUSDCe"],
+    "assets": ["WETH", "OP", "opUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -16135,7 +16109,7 @@
     "retireReason": "rewards",
     "retiredAt": 1679479578,
     "platformId": "beethovenx",
-    "assets": ["ETH", "WBTC", "opUSDCe"],
+    "assets": ["WETH", "WBTC", "opUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,

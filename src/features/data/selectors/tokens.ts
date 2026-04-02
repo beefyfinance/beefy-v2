@@ -1,4 +1,3 @@
-import { bluechipTokens, memeTokens } from '../../../helpers/utils.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { fromUnixTime, sub } from 'date-fns';
@@ -17,7 +16,7 @@ import { isStandardVault, type VaultEntity } from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
 import { valueOrThrow } from '../utils/selector-utils.ts';
-import { selectAllChainIds, selectChainById } from './chains.ts';
+import { selectAllChainIds } from './chains.ts';
 import { selectHistoricalPriceBucketDispatchedRecently } from './historical.ts';
 import { selectIsPricesAvailable } from './data-loader/prices.ts';
 import {
@@ -184,20 +183,49 @@ export const selectChainWrappedNativeToken = (state: BeefyState, chainId: ChainE
   return token;
 };
 
-export const selectIsTokenStable = createCachedSelector(
-  (state: BeefyState, chainId: ChainEntity['id'], _tokenId: TokenEntity['id']) =>
-    selectChainById(state, chainId),
-  (_state: BeefyState, _chainId: ChainEntity['id'], tokenId: TokenEntity['id']) => tokenId,
-  (chain, tokenId) => chain.stableCoins.includes(tokenId)
-)((_state: BeefyState, _chainId: ChainEntity['id'], tokenId: TokenEntity['id']) => tokenId);
+export function isTokenStable(token: TokenEntity): boolean {
+  return token.tags.includes('STABLECOIN');
+}
 
-export const selectIsTokenBluechip = (_: BeefyState, tokenId: TokenEntity['id']) => {
-  return bluechipTokens.includes(tokenId);
-};
+export function isTokenBluechip(token: TokenEntity): boolean {
+  return token.tags.includes('BLUECHIP');
+}
 
-export const selectIsTokenMeme = (_: BeefyState, tokenId: TokenEntity['id']) => {
-  return memeTokens.includes(tokenId);
-};
+export function isTokenMeme(token: TokenEntity): boolean {
+  return token.tags.includes('MEMECOIN');
+}
+
+const makeSelectTokenIsTag = <
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- createSelector uses any
+  TSelectToken extends (state: BeefyState, ...args: any[]) => TokenEntity | undefined,
+>(
+  selector: TSelectToken,
+  tag: string
+) =>
+  createSelector(selector, (token: TokenEntity | undefined) => {
+    if (!token) {
+      console.debug(`makeSelectTokenIsTag: token is undefined for tag ${tag}`);
+      return false;
+    }
+    return token.tags.includes(tag);
+  });
+
+export const selectIsTokenStable = makeSelectTokenIsTag(selectTokenByIdOrUndefined, 'STABLECOIN');
+export const selectIsTokenBluechip = makeSelectTokenIsTag(selectTokenByIdOrUndefined, 'BLUECHIP');
+export const selectIsTokenMeme = makeSelectTokenIsTag(selectTokenByIdOrUndefined, 'MEMECOIN');
+
+export const selectIsTokenStableByAddress = makeSelectTokenIsTag(
+  selectTokenByAddressOrUndefined,
+  'STABLECOIN'
+);
+export const selectIsTokenBluechipByAddress = makeSelectTokenIsTag(
+  selectTokenByAddressOrUndefined,
+  'BLUECHIP'
+);
+export const selectIsTokenMemeByAddress = makeSelectTokenIsTag(
+  selectTokenByAddressOrUndefined,
+  'MEMECOIN'
+);
 
 export const selectTokenPriceByAddress = createSelector(
   selectTokenByAddressOrUndefined,

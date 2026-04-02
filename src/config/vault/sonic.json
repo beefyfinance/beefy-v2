@@ -1,5 +1,38 @@
 [
   {
+    "id": "beetsv3-sonic-waws-sts",
+    "name": "stS-wS V3",
+    "type": "standard",
+    "token": "stS-wS V3",
+    "tokenAddress": "0xa000e477014097B96437B5587f4f1c55C556b2dd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnContractAddress": "0xd8358a58A9c6199087C8a64771f7e79d0A87c31b",
+    "earnedToken": "mooBeetsSonicstS-wS",
+    "earnedTokenAddress": "0xd8358a58A9c6199087C8a64771f7e79d0A87c31b",
+    "oracle": "lps",
+    "oracleId": "beetsv3-sonic-waws-sts",
+    "status": "active",
+    "createdAt": 1769634083,
+    "platformId": "beethovenx",
+    "assets": ["stS", "wawS"],
+    "risks": {
+      "updatedAt": 1765557014,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://beets.fi/pools/sonic/v3/0xa000e477014097b96437b5587f4f1c55c556b2dd/add-liquidity",
+    "removeLiquidityUrl": "https://beets.fi/pools/sonic/v3/0xa000e477014097b96437b5587f4f1c55c556b2dd/remove-liquidity",
+    "network": "sonic"
+  },
+  {
     "id": "stakedao-sonic-sceth-frxeth",
     "name": "scETH/frxETH",
     "type": "standard",
@@ -12,8 +45,10 @@
     "earnedTokenAddress": "0xAF6AC77d8e40035f9879eA6bE48c3DA1F7A84120",
     "oracle": "lps",
     "oracleId": "curve-sonic-sceth-frxeth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1755850437,
+    "retireReason": "rewards",
+    "retiredAt": 1773999152,
     "platformId": "stakedao",
     "assets": ["scETH", "frxETH"],
     "migrationIds": ["l2-convex", "l2-curve"],
@@ -261,7 +296,7 @@
     "retireReason": "rewards",
     "retiredAt": 1760538181,
     "platformId": "silo",
-    "assets": ["S"],
+    "assets": ["WS"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -592,7 +627,7 @@
     "status": "active",
     "createdAt": 1746722433,
     "platformId": "shadow",
-    "assets": ["S", "WBTC"],
+    "assets": ["WS", "WBTC"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -633,7 +668,7 @@
     "status": "active",
     "createdAt": 1746722397,
     "platformId": "shadow",
-    "assets": ["S", "WBTC"],
+    "assets": ["WS", "WBTC"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -677,7 +712,7 @@
     "createdAt": 1746722397,
     "platformId": "beefy",
     "feeTier": "0.15",
-    "assets": ["S", "WBTC"],
+    "assets": ["WS", "WBTC"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -833,7 +868,7 @@
     "status": "active",
     "createdAt": 1746096273,
     "platformId": "silo",
-    "assets": ["S"],
+    "assets": ["WS"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -1069,7 +1104,7 @@
     "retireReason": "rewards",
     "retiredAt": 1749480688,
     "platformId": "defive",
-    "assets": ["beS", "S"],
+    "assets": ["beS", "WS"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -1145,7 +1180,7 @@
     "status": "active",
     "createdAt": 1744663202,
     "platformId": "shadow",
-    "assets": ["beS", "S"],
+    "assets": ["beS", "WS"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -1189,7 +1224,7 @@
     "status": "active",
     "createdAt": 1744663202,
     "platformId": "shadow",
-    "assets": ["beS", "S"],
+    "assets": ["beS", "WS"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -1233,7 +1268,7 @@
     "createdAt": 1744663202,
     "platformId": "beefy",
     "feeTier": "0.01",
-    "assets": ["beS", "S"],
+    "assets": ["beS", "WS"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -1269,7 +1304,7 @@
     "status": "active",
     "createdAt": 1744660905,
     "platformId": "defive",
-    "assets": ["FIVE", "S"],
+    "assets": ["FIVE", "WS"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -1307,7 +1342,7 @@
     "status": "active",
     "createdAt": 1744660905,
     "platformId": "defive",
-    "assets": ["S", "USDCe"],
+    "assets": ["WS", "USDCe"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -1347,7 +1382,7 @@
     "retireReason": "tvl",
     "retiredAt": 1764609392,
     "platformId": "defive",
-    "assets": ["S", "EURC"],
+    "assets": ["WS", "EURC"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -1387,7 +1422,7 @@
     "retireReason": "tvl",
     "retiredAt": 1764609392,
     "platformId": "defive",
-    "assets": ["S", "WETH"],
+    "assets": ["WS", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -1717,8 +1752,10 @@
     "earnedTokenAddress": "0x3eb55e7a434dcA52a064276444c0fE8BF628aadA",
     "oracle": "tokens",
     "oracleId": "sUSDCe",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1742795210,
+    "retireReason": "rewards",
+    "retiredAt": 1773997056,
     "platformId": "aave",
     "assets": ["USDCe"],
     "migrationIds": [],
@@ -1759,7 +1796,7 @@
     "retireReason": "tvl",
     "retiredAt": 1749475130,
     "platformId": "beethovenx",
-    "assets": ["SILO", "S"],
+    "assets": ["SILO", "WS"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -2414,7 +2451,7 @@
     "status": "active",
     "createdAt": 1739903476,
     "platformId": "shadow",
-    "assets": ["BRUSH", "S"],
+    "assets": ["BRUSH", "WS"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -2455,7 +2492,7 @@
     "status": "active",
     "createdAt": 1739903476,
     "platformId": "shadow",
-    "assets": ["BRUSH", "S"],
+    "assets": ["BRUSH", "WS"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -2496,7 +2533,7 @@
     "createdAt": 1739903476,
     "platformId": "beefy",
     "feeTier": "0.50",
-    "assets": ["BRUSH", "S"],
+    "assets": ["BRUSH", "WS"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -2635,7 +2672,7 @@
     "status": "active",
     "createdAt": 1739395223,
     "platformId": "shadow",
-    "assets": ["S", "WETH"],
+    "assets": ["WS", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -2676,7 +2713,7 @@
     "status": "active",
     "createdAt": 1739395223,
     "platformId": "shadow",
-    "assets": ["S", "WETH"],
+    "assets": ["WS", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -2717,7 +2754,7 @@
     "createdAt": 1739395223,
     "platformId": "beefy",
     "feeTier": "0.16",
-    "assets": ["S", "WETH"],
+    "assets": ["WS", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -2755,7 +2792,7 @@
     "retireReason": "rewards",
     "retiredAt": 1757948167,
     "platformId": "shadow",
-    "assets": ["SHADOW", "S"],
+    "assets": ["SHADOW", "WS"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -2963,7 +3000,7 @@
     "status": "active",
     "createdAt": 1737984622,
     "platformId": "ichi",
-    "assets": ["OS", "S"],
+    "assets": ["OS", "WS"],
     "migrationIds": ["sonic-swapx"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2998,7 +3035,7 @@
     "retireReason": "tvl",
     "retiredAt": 1765213686,
     "platformId": "ichi",
-    "assets": ["OS", "S"],
+    "assets": ["OS", "WS"],
     "migrationIds": ["sonic-swapx"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3034,7 +3071,7 @@
     "status": "active",
     "createdAt": 1737673341,
     "platformId": "uniswap",
-    "assets": ["S", "WETH"],
+    "assets": ["WS", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -3075,7 +3112,7 @@
     "createdAt": 1737673341,
     "platformId": "beefy",
     "feeTier": "0.30",
-    "assets": ["S", "WETH"],
+    "assets": ["WS", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -3196,7 +3233,7 @@
     "status": "active",
     "createdAt": 1737673284,
     "platformId": "uniswap",
-    "assets": ["S", "USDCe"],
+    "assets": ["WS", "USDCe"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -3237,7 +3274,7 @@
     "createdAt": 1737673284,
     "platformId": "beefy",
     "feeTier": "0.30",
-    "assets": ["S", "USDCe"],
+    "assets": ["WS", "USDCe"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -3351,7 +3388,7 @@
     "status": "active",
     "createdAt": 1737634835,
     "platformId": "ichi",
-    "assets": ["S", "WETH"],
+    "assets": ["WS", "WETH"],
     "migrationIds": ["sonic-swapx"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3452,7 +3489,7 @@
     "status": "active",
     "createdAt": 1737634616,
     "platformId": "ichi",
-    "assets": ["S", "USDCe"],
+    "assets": ["WS", "USDCe"],
     "migrationIds": ["sonic-swapx"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3485,7 +3522,7 @@
     "status": "active",
     "createdAt": 1737634508,
     "platformId": "ichi",
-    "assets": ["S", "stS"],
+    "assets": ["WS", "stS"],
     "migrationIds": ["sonic-swapx"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3891,7 +3928,7 @@
     "status": "active",
     "createdAt": 1737120172,
     "platformId": "ichi",
-    "assets": ["S", "stS"],
+    "assets": ["WS", "stS"],
     "migrationIds": ["sonic-swapx"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3924,7 +3961,7 @@
     "status": "active",
     "createdAt": 1737122848,
     "platformId": "ichi",
-    "assets": ["SWPx", "S"],
+    "assets": ["SWPx", "WS"],
     "migrationIds": ["sonic-swapx"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3990,7 +4027,7 @@
     "status": "active",
     "createdAt": 1737120173,
     "platformId": "ichi",
-    "assets": ["S", "USDCe"],
+    "assets": ["WS", "USDCe"],
     "migrationIds": ["sonic-swapx"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4276,7 +4313,7 @@
     "status": "active",
     "createdAt": 1735931476,
     "platformId": "shadow",
-    "assets": ["S", "USDCe"],
+    "assets": ["WS", "USDCe"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4319,7 +4356,7 @@
     "status": "active",
     "createdAt": 1735931475,
     "platformId": "shadow",
-    "assets": ["S", "USDCe"],
+    "assets": ["WS", "USDCe"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4363,7 +4400,7 @@
     "createdAt": 1735931475,
     "platformId": "beefy",
     "feeTier": "0.15",
-    "assets": ["S", "USDCe"],
+    "assets": ["WS", "USDCe"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4403,7 +4440,7 @@
     "status": "active",
     "createdAt": 1735910512,
     "platformId": "wagmi",
-    "assets": ["S", "USDCe"],
+    "assets": ["WS", "USDCe"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4444,7 +4481,7 @@
     "createdAt": 1735910512,
     "platformId": "beefy",
     "feeTier": "0.15",
-    "assets": ["S", "USDCe"],
+    "assets": ["WS", "USDCe"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4621,7 +4658,7 @@
     "retireReason": "Balancer2025",
     "retiredAt": 1765469790,
     "platformId": "beethovenx",
-    "assets": ["stS", "S"],
+    "assets": ["stS", "WS"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -4709,7 +4746,7 @@
     "retireReason": "tvl",
     "retiredAt": 1744925964,
     "platformId": "equalizer",
-    "assets": ["stS", "S"],
+    "assets": ["stS", "WS"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -4744,10 +4781,12 @@
     "earnedTokenAddress": "0x2F1C5834baf0cF8F72462Ac05c8184dF9ecDdC8a",
     "oracle": "lps",
     "oracleId": "equalizer-sonic-ws-brush",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1735515200,
+    "retireReason": "rewards",
+    "retiredAt": 1773999140,
     "platformId": "equalizer",
-    "assets": ["BRUSH", "S"],
+    "assets": ["BRUSH", "WS"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -4827,7 +4866,7 @@
     "retireReason": "tvl",
     "retiredAt": 1760538193,
     "platformId": "equalizer",
-    "assets": ["S", "USDCe"],
+    "assets": ["WS", "USDCe"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -4867,7 +4906,7 @@
     "retireReason": "tvl",
     "retiredAt": 1752239333,
     "platformId": "equalizer",
-    "assets": ["S", "WETH"],
+    "assets": ["WS", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,

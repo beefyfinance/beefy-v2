@@ -6,10 +6,10 @@ import type { ChainConfig } from '../config-types.ts';
 import { getErrorMessageFromResponse } from '../transact/helpers/fetch.ts';
 import type {
   IOdosApi,
-  QuoteRequest,
-  QuoteResponse,
-  SwapRequest,
-  SwapResponse,
+  QuoteRequestV3,
+  QuoteResponseV3,
+  SwapRequestV3,
+  SwapResponseV3,
 } from './odos-types.ts';
 
 export const supportedChainIds: ChainConfig['id'][] = [
@@ -19,14 +19,12 @@ export const supportedChainIds: ChainConfig['id'][] = [
   'mantle',
   'polygon',
   'optimism',
-  'mode',
   'avax',
   'linea',
   'arbitrum',
   'bsc',
-  'fantom',
-  'scroll',
   'sonic',
+  'fraxtal',
 ];
 
 export class OdosApi implements IOdosApi {
@@ -34,7 +32,7 @@ export class OdosApi implements IOdosApi {
 
   constructor(protected chain: ChainEntity) {
     if (!supportedChainIds.includes(chain.id)) {
-      throw new Error(`OneInch api is not supported on ${chain.id}`);
+      throw new Error(`Odos api is not supported on ${chain.id}`);
     }
     this.api = `${API_ZAP_URL}/providers/odos/${chain.id}`;
   }
@@ -59,11 +57,17 @@ export class OdosApi implements IOdosApi {
     }
   }
 
-  async postQuote(request: QuoteRequest): Promise<QuoteResponse> {
-    return await this.post<QuoteResponse, QuoteRequest>('/quote', request);
+  async postQuote(request: QuoteRequestV3): Promise<QuoteResponseV3> {
+    return await this.post<QuoteResponseV3, QuoteRequestV3>('/quote', request);
   }
 
-  async postSwap(request: SwapRequest): Promise<SwapResponse> {
-    return await this.post<SwapResponse, SwapRequest>('/swap', request);
+  async postSwap(request: SwapRequestV3): Promise<SwapResponseV3> {
+    const response = await this.post<SwapResponseV3, SwapRequestV3>('/swap', request);
+    if (response.transaction.to !== '0x0D05a7D3448512B78fa8A9e46c4872C88C4a0D05') {
+      throw new Error(
+        `Unexpected Odos Router router address found in transaction data: ${response.transaction.to}`
+      );
+    }
+    return response;
   }
 }

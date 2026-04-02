@@ -38,7 +38,7 @@ import {
   selectVaultById,
 } from '../../../../../data/selectors/vaults.ts';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet.ts';
-import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
+import { ActionConnectSwitchWithFees as ActionConnectSwitch } from './ActionConnectSwitch.tsx';
 import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
 import { GlpWithdrawNotice } from '../GlpNotices/GlpNotices.tsx';

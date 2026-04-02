@@ -1,3 +1,5 @@
+import type { ZapExtraQuoteResponse } from '../transact/transact-types.ts';
+
 export type QuoteRequest = {
   tokenIn: string;
   tokenOut: string;
@@ -47,7 +49,8 @@ export type RouteSummary = {
 export type QuoteResponse = {
   routeSummary: RouteSummary;
   routeAddress: string;
-};
+  /** additional information added by beefy api */
+} & ZapExtraQuoteResponse;
 
 export type SwapRequest = {
   routeSummary: RouteSummary;

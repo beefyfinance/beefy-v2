@@ -1,45 +1,99 @@
-import { getConfigApi, getMigrationApi } from '../apis/instances.ts';
-import type { MigratorExecuteProps } from '../apis/migration/migration-types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
-import type { VaultEntity } from '../entities/vault.ts';
-import type { MigrationConfig } from '../reducers/wallet/migration-types.ts';
-import type { BeefyState } from '../store/types.ts';
+import { getMigrationApi } from '../apis/instances.ts';
+import type {
+  ExecutePayload,
+  MigratorExecuteParams,
+  MigratorLoadParams,
+  MigratorLoadPayload,
+  MigratorUpdateParams,
+  UpdatePayload,
+} from '../apis/migration/migration-types.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
+import { selectVaultById } from '../selectors/vaults.ts';
+import { getAddress } from 'viem';
+import { selectMigrationVaultUserData, selectMigratorById } from '../selectors/migration.ts';
+import { stepperStartWithSteps } from './wallet/stepper.ts';
+import { omit } from 'lodash-es';
 
-export interface FulfilledAllMigratorsPayload {
-  byChainId: {
-    [chainId in ChainEntity['id']]?: MigrationConfig[];
-  };
-  state: BeefyState;
-}
-
-export const fetchAllMigrators = createAppAsyncThunk<FulfilledAllMigratorsPayload, void>(
-  'migration/fetchAllMigrators',
-  async (_, { getState }) => {
-    const api = await getConfigApi();
-    const migrators = await api.fetchAllMigrators();
-    return { byChainId: migrators, state: getState() };
+export const migratorLoad = createAppAsyncThunk<MigratorLoadPayload, MigratorLoadParams>(
+  'migration/load',
+  async ({ migrationId }) => {
+    const migrationApi = await getMigrationApi();
+    const migrator = await migrationApi.getMigrator(migrationId);
+    return omit(migrator, ['update', 'execute']);
+  },
+  {
+    // don't load if already attempted
+    condition({ migrationId }, { getState }) {
+      const state = getState();
+      const migratorState = selectMigratorById(state, migrationId);
+      return migratorState === undefined;
+    },
   }
 );
 
-export const migratorUpdate = createAppAsyncThunk<
-  void,
-  {
-    vaultId: VaultEntity['id'];
-    migrationId: MigrationConfig['id'];
-    walletAddress: string;
-  }
->('migration/update', async ({ vaultId, migrationId, walletAddress }, { dispatch }) => {
-  const migrationApi = await getMigrationApi();
-  const migrator = await migrationApi.getMigrator(migrationId);
-  dispatch(migrator.update({ vaultId, walletAddress }));
-});
+export const migratorUpdate = createAppAsyncThunk<UpdatePayload, MigratorUpdateParams>(
+  'migration/update',
+  async ({ vaultId, migrationId, walletAddress: maybeWalletAddress }, { dispatch, getState }) => {
+    if (!maybeWalletAddress) {
+      throw new Error('Wallet address is required for migrator update');
+    }
 
-export const migratorExecute = createAppAsyncThunk<void, MigratorExecuteProps>(
-  'migration/execute',
-  async ({ vaultId, t, migrationId }, { dispatch }) => {
+    const walletAddress = getAddress(maybeWalletAddress);
     const migrationApi = await getMigrationApi();
     const migrator = await migrationApi.getMigrator(migrationId);
-    dispatch(migrator.execute({ vaultId, t, migrationId }));
+    const state = getState();
+    const vault = selectVaultById(state, vaultId);
+
+    const result = await migrator.update({
+      migrationId,
+      vault,
+      walletAddress,
+      dispatch,
+      getState,
+    });
+
+    return {
+      ...result,
+      vault,
+      walletAddress,
+    };
+  }
+);
+
+export const migratorExecute = createAppAsyncThunk<ExecutePayload, MigratorExecuteParams>(
+  'migration/execute',
+  async (
+    { vaultId, migrationId, walletAddress: maybeWalletAddress, t },
+    { dispatch, getState }
+  ) => {
+    const walletAddress = getAddress(maybeWalletAddress);
+    const migrationApi = await getMigrationApi();
+    const migrator = await migrationApi.getMigrator(migrationId);
+    const state = getState();
+    const vault = selectVaultById(state, vaultId);
+    const data = selectMigrationVaultUserData(state, migrationId, vaultId, walletAddress);
+    if (!data) {
+      throw new Error(
+        `No migration data found for ${walletAddress} on vault ${vaultId} and migrator ${migrationId}`
+      );
+    }
+
+    const result = await migrator.execute({
+      migrationId,
+      vault,
+      walletAddress,
+      dispatch,
+      getState,
+      t,
+      data,
+    });
+
+    dispatch(stepperStartWithSteps(result.steps, vault.chainId));
+
+    return {
+      ...result,
+      vault,
+      walletAddress,
+    };
   }
 );

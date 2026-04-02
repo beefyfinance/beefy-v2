@@ -9,10 +9,10 @@ import { useTranslation } from 'react-i18next';
 
 export interface RpcMenuProps {
   onSelect: (chainId: ChainEntity['id']) => void;
-  rpcErrors: ChainEntity['id'][];
+  chainsWithErrors: ChainEntity['id'][];
 }
 
-export const RpcMenu = memo(function RpcMenu({ onSelect, rpcErrors }: RpcMenuProps) {
+export const RpcMenu = memo(function RpcMenu({ onSelect, chainsWithErrors }: RpcMenuProps) {
   const { t } = useTranslation();
   const chainIds = useAppSelector(state => selectAllChainIds(state));
 
@@ -24,18 +24,18 @@ export const RpcMenu = memo(function RpcMenu({ onSelect, rpcErrors }: RpcMenuPro
   );
 
   const filteredChainIds = useMemo(() => {
-    return chainIds.filter(chainId => !rpcErrors.includes(chainId));
-  }, [chainIds, rpcErrors]);
+    return chainIds.filter(chainId => !chainsWithErrors.includes(chainId));
+  }, [chainIds, chainsWithErrors]);
 
   const connectedChainIds = useMemo(() => {
-    return chainIds.length - rpcErrors.length;
-  }, [chainIds, rpcErrors]);
+    return chainIds.length - chainsWithErrors.length;
+  }, [chainIds, chainsWithErrors]);
 
   return (
     <Scrollable scrollContainer={false} hideShadows>
       <RpcList>
-        {rpcErrors.length > 0 &&
-          rpcErrors.map(chainId => (
+        {chainsWithErrors.length > 0 &&
+          chainsWithErrors.map(chainId => (
             <ChainRpcItem error={true} key={chainId} id={chainId} onSelect={handleSelect} />
           ))}
         <Title>{t('RpcModal-Menu-Edit', { count: connectedChainIds })}</Title>

@@ -7,7 +7,7 @@ import type { VaultCollapseContentProps } from '../types.ts';
 import { styles } from './styles.ts';
 import { ToggleButtons } from '../../../../../../../components/ToggleButtons/ToggleButtons.tsx';
 import { useChartOptions } from '../useChartOptions.ts';
-import { useMediaQuery } from '../../../../../../../components/MediaQueries/useMediaQuery.ts';
+import { useMediaQuery } from '../../../../../../../hooks/useMediaQuery.ts';
 import { SelectSingle } from '../../../../../../../components/Form/Select/Single/SelectSingle.tsx';
 import type { SelectItem } from '../../../../../../../components/Form/Select/types.ts';
 

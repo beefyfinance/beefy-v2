@@ -14,25 +14,19 @@ import { isFetchResponseError } from '../../../../helpers/http/errors.ts';
 
 export const supportedChainIds: ChainConfig['id'][] = [
   'ethereum',
-  'polygon',
   'bsc',
-  'optimism',
-  'fantom',
   'arbitrum',
+  'polygon',
+  'optimism',
   'avax',
-  'cronos',
-  'zksync',
-  'zkevm',
   'base',
   'linea',
-  'aurora',
-  'mantle',
-  'scroll',
   'sonic',
   'berachain',
   'hyperevm',
   'plasma',
   'monad',
+  'megaeth',
 ];
 
 export class KyberSwapApi implements IKyberSwapApi {

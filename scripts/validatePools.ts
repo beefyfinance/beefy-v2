@@ -849,6 +849,9 @@ const checkRisks = (pool: VaultConfig) => {
     const errors = getRisksConfigErrors(pool.risks);
     console.error(`Error: ${pool.id} : risks invalid - \n\t${errors.join('\n\t')}`);
     return false;
+  } else if (pool.curatorId && !pool.risks.curated) {
+    console.error(`Error: ${pool.id} : risks.curated should be true when curatorId is set`);
+    return false;
   }
 
   return true;

@@ -299,7 +299,6 @@ const config = buildConfig(
           missingNetworkIconBackground: { value: 'magenta' },
           modalProgressBarBackground: { value: '#e5e5e5', description: 'txsModal.bgLine' },
           mtPellerin: { value: '#121212' },
-          onRampIconLoading: { value: '#ffffff1e' },
           orangeWarning: { value: '#d19847', description: 'indicators.warning' },
           purpleDarkest: { value: '#121421', description: 'app bg + search input bg' },
           redError: { value: '#da5932', description: 'indicators.error' },
@@ -447,7 +446,7 @@ const config = buildConfig(
             },
             pool: {
               '70': { value: '#4C2CDE' },
-            }
+            },
           },
         },
         sizes: {
@@ -518,7 +517,7 @@ const config = buildConfig(
             boosted: { value: '{colors.gold.30}' },
             warning: { value: '{colors.orange.40}' },
             disabled: { value: '{colors.darkBlue.90-56a}' },
-            underline: { value: '{colors.white.70-64a}' }
+            underline: { value: '{colors.white.70-64a}' },
           },
           background: {
             header: { value: '{colors.headerFooterBackground}' },
@@ -792,6 +791,17 @@ const config = buildConfig(
           '0%': { strokeDasharray: '0px, 200px', strokeDashoffset: '0px' },
           '50%': { strokeDasharray: '100px, 200px', strokeDashoffset: '-15px' },
           '100%': { strokeDasharray: '100px, 200px', strokeDashoffset: '-127px' },
+        },
+        fadeUpdating: {
+          '0%': {
+            opacity: '0.8',
+          },
+          '50%': {
+            opacity: '0.5',
+          },
+          '100%': {
+            opacity: '0.8',
+          },
         },
       },
     },
@@ -1097,6 +1107,7 @@ const config = buildConfig(
       optimism: { primary: '#ff0420', header: 0.2 },
       plasma: { primary: '#162f29', header: 0.2 },
       monad: { primary: '#836EF9', header: 0.2 },
+      megaeth: { primary: '#D9D9D9', header: 0.4 },
       polygon: { primary: '#f5f0fd', header: 0.3 },
       real: { primary: '#ffffff', header: '#1c122c66' },
       rootstock: { primary: '#000000', header: '#1c122c66' },
