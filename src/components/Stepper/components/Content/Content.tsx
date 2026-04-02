@@ -190,12 +190,14 @@ function formatTokenAmountsList(
   items: { amount: BigNumber; token: { decimals: number; symbol: string } }[]
 ): JSX.Element {
   return (
-    <ListJoin
-      items={items.map(
-        item =>
-          `${formatTokenDisplayCondensed(item.amount, item.token.decimals)} ${item.token.symbol}`
-      )}
-    />
+    <span>
+      <ListJoin
+        items={items.map(
+          item =>
+            `${formatTokenDisplayCondensed(item.amount, item.token.decimals)} ${item.token.symbol}`
+        )}
+      />
+    </span>
   );
 }
 
@@ -219,9 +221,9 @@ function formatTokenAmountsWithChain(
         `${formatTokenDisplayCondensed(item.amount, item.token.decimals)} ${item.token.symbol}`
     );
     groups.push(
-      <>
+      <span>
         <ListJoin items={tokenLabels} /> on {chainName}
-      </>
+      </span>
     );
   }
 
@@ -231,9 +233,9 @@ function formatTokenAmountsWithChain(
 
   return groups.slice(1).reduce<JSX.Element>(
     (acc, group) => (
-      <>
+      <span>
         {acc}, and {group}
-      </>
+      </span>
     ),
     groups[0]
   );
