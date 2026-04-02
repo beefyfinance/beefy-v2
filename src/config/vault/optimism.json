@@ -148,8 +148,10 @@
     "earnedTokenAddress": "0x854F11781C7346ab9054eA833D4Fbf2978fca56e",
     "oracle": "lps",
     "oracleId": "balancerv3-optimism-waoptreth-waoptwsteth-sfrxeth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1752845914,
+    "retireReason": "rewards",
+    "retiredAt": 1775133826,
     "platformId": "beethovenx",
     "assets": ["waOptrETH", "waOptwstETH", "sfrxETH"],
     "risks": {
@@ -180,8 +182,10 @@
     "earnedTokenAddress": "0xdbBc3cFf7AC0051f251FD965FCF0AAD9DC73737f",
     "oracle": "lps",
     "oracleId": "balancerv3-optimism-wrseth-waoptweth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1752845256,
+    "retireReason": "rewards",
+    "retiredAt": 1775133848,
     "platformId": "beethovenx",
     "assets": ["wrsETH", "waOptWETH"],
     "risks": {
