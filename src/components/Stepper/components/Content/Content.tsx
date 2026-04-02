@@ -19,6 +19,8 @@ import { TransactMode } from '../../../../features/data/reducers/wallet/transact
 import { TransactStatus } from '../../../../features/data/reducers/wallet/transact-types.ts';
 import type { BridgeAdditionalData } from '../../../../features/data/reducers/wallet/wallet-action-types.ts';
 import { selectChainById } from '../../../../features/data/selectors/chains.ts';
+import { selectUserBalanceOfToken } from '../../../../features/data/selectors/balance.ts';
+import { selectChainNativeToken } from '../../../../features/data/selectors/tokens.ts';
 import { selectVaultById } from '../../../../features/data/selectors/vaults.ts';
 import type { VaultEntity } from '../../../../features/data/entities/vault.ts';
 import {
@@ -644,6 +646,16 @@ export const RecoveryContent = memo(function RecoveryContent() {
   const isOnCorrectChain = connectedChainId === destChainId;
   const isFetchingQuote = recoveryQuoteStatus === TransactStatus.Pending;
 
+  const destNativeToken = useAppSelector(state =>
+    destChainId ? selectChainNativeToken(state, destChainId) : undefined
+  );
+  const destNativeBalance = useAppSelector(state =>
+    destNativeToken ?
+      selectUserBalanceOfToken(state, destNativeToken.chainId, destNativeToken.address)
+    : undefined
+  );
+  const hasNoGas = destNativeBalance !== undefined && destNativeBalance.isZero();
+
   const hasValidQuote =
     opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
   const needsNewQuote = !isRecoveryExecution && !hasValidQuote;
@@ -651,18 +663,17 @@ export const RecoveryContent = memo(function RecoveryContent() {
   const titleKey =
     mode === TransactMode.Withdraw ? 'Transactn-Bridging-Withdraw' : 'Transactn-Bridging-Deposit';
 
+  const directionKey = mode === TransactMode.Withdraw ? 'Withdraw' : 'Deposit';
+  const gasKey = hasNoGas ? '-NoGas' : '';
+  const refreshKey = needsNewQuote ? '-Refresh' : '';
+  const messageKey = `Transactn-Recovery-${directionKey}${gasKey}${refreshKey}` as const;
+
   const messageParams = {
     amount: pendingOp?.recovery.bridgedAmount ?? '',
     token: 'USDC',
     chain: destChain?.name ?? '',
+    gasToken: destNativeToken?.symbol ?? '',
   };
-  const messageKey =
-    needsNewQuote ?
-      mode === TransactMode.Withdraw ?
-        'Transactn-Recovery-Withdraw-Refresh'
-      : 'Transactn-Recovery-Deposit-Refresh'
-    : mode === TransactMode.Withdraw ? 'Transactn-Recovery-Withdraw'
-    : 'Transactn-Recovery-Deposit';
 
   const handleSwitchChain = useCallback(() => {
     if (destChainId) {
