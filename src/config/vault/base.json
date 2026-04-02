@@ -1,5 +1,359 @@
 [
   {
+    "id": "pancake-cow-base-weth-edel-vault",
+    "name": "WETH-EDEL",
+    "type": "standard",
+    "token": "WETH-EDEL",
+    "tokenAddress": "0x7e469d47b5B2934aeeacb0de6d404eFaBD1e0897",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x28e076A3798EcE1D0288411ac488501675F0F42d",
+    "earnedToken": "mooCowPancakeWETH-EDEL",
+    "earnedTokenAddress": "0x28e076A3798EcE1D0288411ac488501675F0F42d",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-weth-edel",
+    "status": "active",
+    "createdAt": 1775132674,
+    "platformId": "pancakeswap",
+    "assets": ["WETH", "EDEL"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-base-weth-edel-rp",
+    "name": "WETH-EDEL Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeWETH-EDEL",
+    "tokenAddress": "0x7e469d47b5B2934aeeacb0de6d404eFaBD1e0897",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xB7359385a9A0070C3029B7C99552fe885664a549",
+    "earnedToken": "rCowPancakeWETH-EDEL",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-weth-edel",
+    "status": "active",
+    "createdAt": 1775132674,
+    "platformId": "pancakeswap",
+    "assets": ["WETH", "EDEL"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-base-weth-edel",
+    "name": "WETH-EDEL",
+    "type": "cowcentrated",
+    "token": "WETH-EDEL pancakeswap",
+    "tokenAddress": "0xC3C35f6E04499BCd92bFd02a49d2B1E7a9936366",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xFb31f85A8367210B2e4Ed2360D2dA9Dc2D2Ccc95"
+    ],
+    "earnContractAddress": "0x7e469d47b5B2934aeeacb0de6d404eFaBD1e0897",
+    "earnedToken": "cowPancakeWETH-EDEL",
+    "earnedTokenAddress": "0x7e469d47b5B2934aeeacb0de6d404eFaBD1e0897",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-weth-edel",
+    "status": "active",
+    "createdAt": 1775132674,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "assets": ["WETH", "EDEL"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-base-sol-weth-vault",
+    "name": "SOL-WETH",
+    "type": "standard",
+    "token": "SOL-WETH",
+    "tokenAddress": "0x7b50A58918935Ce7d583837ca722F679bE8C4516",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x706Aa62e1586d36935113bA980ef2920660580B5",
+    "earnedToken": "mooCowPancakeSOL-WETH",
+    "earnedTokenAddress": "0x706Aa62e1586d36935113bA980ef2920660580B5",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-sol-weth",
+    "status": "active",
+    "createdAt": 1775132674,
+    "platformId": "pancakeswap",
+    "assets": ["SOL", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-base-sol-weth-rp",
+    "name": "SOL-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeSOL-WETH",
+    "tokenAddress": "0x7b50A58918935Ce7d583837ca722F679bE8C4516",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x4f5dB7F4981e98f9c15e7A57800B4694acB102e5",
+    "earnedToken": "rCowPancakeSOL-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-sol-weth",
+    "status": "active",
+    "createdAt": 1775132674,
+    "platformId": "pancakeswap",
+    "assets": ["SOL", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-base-sol-weth",
+    "name": "SOL-WETH",
+    "type": "cowcentrated",
+    "token": "SOL-WETH pancakeswap",
+    "tokenAddress": "0xab07dE353E15b80fa3B4224D5C8fDF3Ac9F50670",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x311935Cd80B76769bF2ecC9D8Ab7635b2139cf82",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "earnContractAddress": "0x7b50A58918935Ce7d583837ca722F679bE8C4516",
+    "earnedToken": "cowPancakeSOL-WETH",
+    "earnedTokenAddress": "0x7b50A58918935Ce7d583837ca722F679bE8C4516",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-sol-weth",
+    "status": "active",
+    "createdAt": 1775132674,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["SOL", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-base-weth-aero-vault",
+    "name": "WETH-AERO",
+    "type": "standard",
+    "token": "WETH-AERO",
+    "tokenAddress": "0x608F0D41c1cbE896Af75dAaDb97b64AC5e9C5392",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xEdB40Ee3D76fCE00b33C7f57B862fCA84B087e04",
+    "earnedToken": "mooCowPancakeWETH-AERO",
+    "earnedTokenAddress": "0xEdB40Ee3D76fCE00b33C7f57B862fCA84B087e04",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-weth-aero",
+    "status": "active",
+    "createdAt": 1775132674,
+    "platformId": "pancakeswap",
+    "assets": ["WETH", "AERO"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-base-weth-aero-rp",
+    "name": "WETH-AERO Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeWETH-AERO",
+    "tokenAddress": "0x608F0D41c1cbE896Af75dAaDb97b64AC5e9C5392",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xD93C5f14681Df842ed856Ca53aa8b6568f5425d4",
+    "earnedToken": "rCowPancakeWETH-AERO",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-weth-aero",
+    "status": "active",
+    "createdAt": 1775132674,
+    "platformId": "pancakeswap",
+    "assets": ["WETH", "AERO"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-base-weth-aero",
+    "name": "WETH-AERO",
+    "type": "cowcentrated",
+    "token": "WETH-AERO pancakeswap",
+    "tokenAddress": "0x20CB8f872ae894F7c9e32e621C186e5AFCe82Fd0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x940181a94A35A4569E4529A3CDfB74e38FD98631"
+    ],
+    "earnContractAddress": "0x608F0D41c1cbE896Af75dAaDb97b64AC5e9C5392",
+    "earnedToken": "cowPancakeWETH-AERO",
+    "earnedTokenAddress": "0x608F0D41c1cbE896Af75dAaDb97b64AC5e9C5392",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-weth-aero",
+    "status": "active",
+    "createdAt": 1775132674,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["WETH", "AERO"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-base-weth-eurc-vault",
     "name": "WETH-EURC",
     "type": "standard",
