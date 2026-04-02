@@ -11,8 +11,9 @@
     "earnedTokenAddress": "0x24a4fc8d00e33A3b7f158e3a455B88e674941DAC",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1769000039,
+    "pausedAt": 1774282007,
     "platformId": "euler",
     "curatorId": "euler",
     "assets": ["USDC"],
@@ -832,7 +833,7 @@
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
-      "notCorrelated": false,
+      "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
@@ -998,7 +999,7 @@
       "curated": false,
       "notAudited": false,
       "notBattleTested": false,
-      "notCorrelated": false,
+      "notCorrelated": true,
       "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
