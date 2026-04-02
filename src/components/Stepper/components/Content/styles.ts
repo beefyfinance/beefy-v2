@@ -13,6 +13,9 @@ export const styles = {
   recoveryContent: css.raw({
     backgroundColor: 'stepperRecoveryBackground',
   }),
+  recoveryActionMessage: css.raw({
+    marginTop: '12px',
+  }),
   content: css.raw({
     marginTop: '12px',
     padding: '16px',
