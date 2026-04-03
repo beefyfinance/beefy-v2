@@ -199,16 +199,50 @@ function formatTokenAmountsList(
   );
 }
 
-function formatTokenAmountsWithChain(
-  items: { amount: BigNumber; token: { decimals: number; symbol: string }; chainName: string }[]
-) {
+type ChainGroupedTokensProps = {
+  items: { amount: BigNumber; token: { decimals: number; symbol: string }; chainName: string }[];
+};
+
+function ChainGroupedTokens({ items }: ChainGroupedTokensProps) {
+  const byChain = new Map<string, typeof items>();
+  for (const item of items) {
+    const group = byChain.get(item.chainName);
+    if (group) {
+      group.push(item);
+    } else {
+      byChain.set(item.chainName, [item]);
+    }
+  }
+
+  const groups: ReactNode[] = [];
+  for (const [chainName, chainItems] of byChain) {
+    const tokenLabels = chainItems.map(
+      item =>
+        `${formatTokenDisplayCondensed(item.amount, item.token.decimals)} ${item.token.symbol}`
+    );
+    groups.push(
+      <>
+        <ListJoin items={tokenLabels} /> on {chainName}
+      </>
+    );
+  }
+
+  if (groups.length === 1) {
+    return <>{groups[0]}</>;
+  }
+
   return (
-    <ListJoin
-      items={items.map(
-        item =>
-          `${formatTokenDisplayCondensed(item.amount, item.token.decimals)} ${item.token.symbol} on ${item.chainName}`
+    <>
+      {groups.reduce<ReactNode>(
+        (acc, group, i) =>
+          i === 0 ? group : (
+            <>
+              {acc}, and {group}
+            </>
+          ),
+        null
       )}
-    />
+    </>
   );
 }
 
@@ -237,7 +271,7 @@ const ZapSuccessContent = memo(function ZapSuccessContent({ step }: SuccessConte
   const dust = useMemo(() => {
     if (!isCrossChain) {
       if (returned.length) {
-        return formatTokenAmountsList(returned);
+        return { element: formatTokenAmountsList(returned), isSingle: returned.length === 1 };
       }
       return undefined;
     }
@@ -254,7 +288,7 @@ const ZapSuccessContent = memo(function ZapSuccessContent({ step }: SuccessConte
       allDust.push({ ...item, chainName: destChain.name });
     }
     if (allDust.length) {
-      return formatTokenAmountsWithChain(allDust);
+      return { element: <ChainGroupedTokens items={allDust} />, isSingle: allDust.length === 1 };
     }
     return undefined;
   }, [isCrossChain, returned, dstDust, srcReturned, srcChain, destChain]);
@@ -303,7 +337,13 @@ const ZapSuccessContent = memo(function ZapSuccessContent({ step }: SuccessConte
 
   const dustLine = useMemo(() => {
     if (dust) {
-      return <Trans t={t} i18nKey="Stepper-Dust" components={{ dust }} />;
+      return (
+        <Trans
+          t={t}
+          i18nKey={dust.isSingle ? 'Stepper-Dust-Single' : 'Stepper-Dust'}
+          components={{ dust: dust.element }}
+        />
+      );
     }
     return undefined;
   }, [dust, t]);
@@ -354,7 +394,13 @@ const ZapSuccessContent = memo(function ZapSuccessContent({ step }: SuccessConte
 
   const messageHighlight = useMemo(() => {
     if (!isCrossChain && dust) {
-      return <Trans t={t} i18nKey="Stepper-Dust" components={{ dust }} />;
+      return (
+        <Trans
+          t={t}
+          i18nKey={dust.isSingle ? 'Stepper-Dust-Single' : 'Stepper-Dust'}
+          components={{ dust: dust.element }}
+        />
+      );
     }
     return undefined;
   }, [isCrossChain, dust, t]);
@@ -743,6 +789,9 @@ export const RecoveryContent = memo(function RecoveryContent() {
       <Title text={t(titleKey)} />
       <div className={css(styles.content, styles.recoveryContent)}>
         <div className={classes.message}>{t(messageKey, messageParams)}</div>
+        <div className={cx(classes.message, css(styles.recoveryActionMessage))}>
+          {t(`Transactn-Recovery-Action${gasKey}${refreshKey}` as const, messageParams)}
+        </div>
       </div>
       {actionButton ?
         <div className={classes.buttons}>{actionButton}</div>
