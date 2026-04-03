@@ -1,5 +1,12 @@
 import BigNumber from 'bignumber.js';
-import { type Address, type Hex, encodeAbiParameters, encodeFunctionData, pad } from 'viem';
+import {
+  type Address,
+  encodeAbiParameters,
+  encodeFunctionData,
+  encodePacked,
+  type Hex,
+  pad,
+} from 'viem';
 import { ZapPayloadAbiParams } from '../../../../../config/abi/CircleBeefyZapReceiverAbi.ts';
 import { CCTPTokenMessengerV2Abi } from '../../../../../config/abi/CCTPTokenMessengerV2Abi.ts';
 import { CCTP_CONFIG, type CCTPChainConfig } from '../../../../../config/cctp/cctp-config.ts';
@@ -10,10 +17,10 @@ import type { BeefyState } from '../../../store/types.ts';
 import { getInsertIndex } from '../helpers/zap.ts';
 import type { ZapStep } from '../zap/types.ts';
 import type { CCTPBridgeQuote, ZapPayload } from './types.ts';
+import { compressHex } from './compress.ts';
 
 const ZERO_BYTES32 = pad('0x00' as Hex, { size: 32 });
-
-const MAX_CCTP_MESSAGE_BODY_SIZE = 8192; // bytes
+const MIN_BURN_MESSAGE_BODY_SIZE = 228; // uint32(4) + bytes32 + bytes32 + uint256(32) + bytes32 + uint256(32) + uint256(32) + uint256(32) (+ bytes hookdata)
 
 export function getSupportedChainIds(): ChainEntity['id'][] {
   return Object.keys(CCTP_CONFIG.chains) as ChainEntity['id'][];
@@ -135,7 +142,8 @@ export function buildDepositForBurnWithHookCalldata(
   mintRecipient: Address,
   burnToken: Address,
   maxFee: bigint,
-  hookData: Hex
+  hookData: Hex,
+  destinationCaller: Address = mintRecipient
 ): { data: Hex; amountIndex: number } {
   const destConfig = getChainConfig(destChainId);
 
@@ -144,7 +152,7 @@ export function buildDepositForBurnWithHookCalldata(
     destDomain: destConfig.domain,
     mintRecipient,
     burnToken,
-    destinationCaller: destConfig.receiver,
+    destinationCaller,
     maxFee: maxFee.toString(),
     minFinalityThreshold: 0,
     hookDataLength: hookData.length,
@@ -158,7 +166,7 @@ export function buildDepositForBurnWithHookCalldata(
       destConfig.domain,
       pad(mintRecipient, { size: 32 }),
       burnToken,
-      pad(destConfig.receiver as Address, { size: 32 }), // destinationCaller: restricted to receiver
+      pad(destinationCaller, { size: 32 }), // destinationCaller: restricted to receiver
       maxFee,
       0, // minFinalityThreshold: fast (≤1000 treated as 1000 = confirmed)
       hookData,
@@ -231,15 +239,21 @@ export function encodeZapPayload(payload: ZapPayload): Hex {
  * Build hookData for CircleBeefyZapReceiver.
  * Format: [20 bytes: receiver address] + [ABI-encoded ZapPayload]
  */
-export function buildHookData(destChainId: ChainEntity['id'], zapPayload: ZapPayload): Hex {
+export function buildHookData(
+  sourceChainId: ChainEntity['id'],
+  destChainId: ChainEntity['id'],
+  zapPayload: ZapPayload
+): { receiver: Address; hookData: Hex } {
+  const sourceConfig = getChainConfig(sourceChainId);
   const destConfig = getChainConfig(destChainId);
   console.debug('[CCTP] buildHookData', {
+    sourceChainId,
     destChainId,
     receiver: destConfig.receiver,
   });
 
   const stepCallDataSizes = zapPayload.route.map((step, i) => {
-    const callDataBytes = (step.data.length - 2) / 2; // subtract 0x prefix, 2 hex chars per byte
+    const callDataBytes = hexToBytesCount(step.data as Hex);
     return { step: i, target: step.target, callDataBytes, tokenCount: step.tokens.length };
   });
   const totalCallDataBytes = stepCallDataSizes.reduce((sum, s) => sum + s.callDataBytes, 0);
@@ -249,25 +263,77 @@ export function buildHookData(destChainId: ChainEntity['id'], zapPayload: ZapPay
   });
 
   const encodedPayload = encodeZapPayload(zapPayload);
-  // hookData = receiver address (20 bytes) + encoded ZapPayload (without 0x prefix)
-  const hookData = `${destConfig.receiver}${encodedPayload.slice(2)}` as Hex;
+  const availableBytes =
+    Math.min(sourceConfig.maxMessageBodySize, destConfig.maxMessageBodySize) -
+    MIN_BURN_MESSAGE_BODY_SIZE;
+  const payloadBytes = hexToBytesCount(encodedPayload);
 
-  const hookDataByteSize = (hookData.length - 2) / 2; // subtract 0x prefix, 2 hex chars per byte
-  console.debug('[CCTP] buildHookData result', {
-    receiverLength: 42, // 0x + 40 chars
-    encodedPayloadLength: encodedPayload.length,
-    totalHookDataLength: hookData.length,
-    hookDataByteSize,
-    hookData,
-  });
+  if (destConfig.receiver2) {
+    const uncompressedHookDataByteSize = payloadBytes + 1;
 
-  if (hookDataByteSize > MAX_CCTP_MESSAGE_BODY_SIZE) {
-    throw new Error(
-      `CCTP hookData size ${hookDataByteSize} bytes exceeds max message body size of ${MAX_CCTP_MESSAGE_BODY_SIZE} bytes`
-    );
+    // no compression needed
+    if (uncompressedHookDataByteSize <= availableBytes) {
+      console.debug('[CCTP] buildHookData result', {
+        type: 'uncompressed',
+        payloadBytes,
+        hookDataBytes: uncompressedHookDataByteSize,
+      });
+      return {
+        receiver: destConfig.receiver2,
+        hookData: encodePacked(['uint8', 'bytes'], [1, encodedPayload]),
+      };
+    }
+
+    // payload is bigger than uint24 max (this would revert anyway)
+    const maxUncompressedBytes = 2 ** 24 - 1; // uint24
+    if (payloadBytes > maxUncompressedBytes) {
+      throw new Error(
+        `CCTP hookData payload size ${uncompressedHookDataByteSize} bytes exceeds max`
+      );
+    }
+
+    // compress
+    const hookData = compressHex(encodedPayload); // already has the 4 byte header
+    const hookDataByteSize = hexToBytesCount(hookData);
+    if (hookDataByteSize > availableBytes) {
+      throw new Error(
+        `CCTP compressed hookData size ${hookDataByteSize} bytes exceeds available message body size of ${availableBytes} bytes`
+      );
+    }
+    console.debug('[CCTP] buildHookData result', {
+      type: 'compressed',
+      payloadBytes,
+      hookDataBytes: hexToBytesCount(hookData),
+    });
+    return {
+      receiver: destConfig.receiver2,
+      hookData,
+    };
+  } else {
+    const hookDataByteSize = payloadBytes + 20;
+    if (hookDataByteSize > availableBytes) {
+      throw new Error(
+        `CCTP hookData size ${hookDataByteSize} bytes exceeds available message body size of ${availableBytes} bytes`
+      );
+    }
+
+    // hookData = receiver address (20 bytes) + encoded ZapPayload (without 0x prefix)
+    const hookData = encodePacked(['address', 'bytes'], [destConfig.receiver, encodedPayload]);
+
+    console.debug('[CCTP] buildHookData result', {
+      type: 'legacy',
+      receiverLength: 42, // 0x + 40 chars
+      encodedPayloadLength: encodedPayload.length,
+      totalHookDataLength: hookData.length,
+      hookDataByteSize,
+      hookData,
+    });
+
+    return {
+      receiver: destConfig.receiver,
+      hookData,
+    };
   }
-
-  return hookData;
 }
 
 /**
@@ -280,7 +346,8 @@ export function buildBurnZapStep(
   usdcAddress: string,
   mintRecipient: Address,
   maxFee: bigint,
-  hookData: Hex
+  hookData: Hex,
+  destinationCaller: Address = mintRecipient
 ): ZapStep {
   const sourceConfig = getChainConfig(sourceChainId);
   console.debug('[CCTP] buildBurnZapStep', {
@@ -297,7 +364,8 @@ export function buildBurnZapStep(
     mintRecipient,
     usdcAddress as Address,
     maxFee,
-    hookData
+    hookData,
+    destinationCaller
   );
 
   const zapStep: ZapStep = {
@@ -360,4 +428,8 @@ export function buildBurnZapStepSimple(
   });
 
   return zapStep;
+}
+
+function hexToBytesCount(data: Hex): number {
+  return (data.length - 2) / 2;
 }
