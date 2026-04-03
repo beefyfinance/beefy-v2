@@ -1,6 +1,7 @@
 import type { TokenAmount } from '../transact-types.ts';
+import type { TokenEntity } from '../../../entities/token.ts';
 import BigNumber from 'bignumber.js';
-import { toWei } from '../../../../../helpers/big-number.ts';
+import { BIG_ZERO, toWei } from '../../../../../helpers/big-number.ts';
 import { groupBy } from 'lodash-es';
 
 export function tokenAmountToWei(tokenAmount: TokenAmount): BigNumber {
@@ -23,6 +24,22 @@ export function slipAllBy(inputs: TokenAmount[], slippage: number): TokenAmount[
     token,
     amount: slipBy(amount, slippage, token.decimals),
   }));
+}
+
+/** Excess that arrives on dest when the full (unslipped) amount crosses the bridge, adjusted for proportional fees */
+export function bridgeSlippageReturned(
+  expectedAmount: BigNumber,
+  slippedAmount: BigNumber,
+  bridgeQuote: { toAmount: BigNumber; fromAmount: BigNumber },
+  destToken: TokenEntity
+): TokenAmount | undefined {
+  if (expectedAmount.lte(slippedAmount)) return undefined;
+  const excess = expectedAmount
+    .minus(slippedAmount)
+    .times(bridgeQuote.toAmount.dividedBy(bridgeQuote.fromAmount))
+    .decimalPlaces(destToken.decimals, BigNumber.ROUND_FLOOR);
+  if (excess.lte(BIG_ZERO)) return undefined;
+  return { token: destToken, amount: excess };
 }
 
 export function mergeTokenAmounts(...tokenAmounts: TokenAmount[][]): TokenAmount[] {

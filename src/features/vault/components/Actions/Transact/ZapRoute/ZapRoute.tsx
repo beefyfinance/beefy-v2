@@ -41,6 +41,7 @@ import {
   selectCrossChainRecoveryQuoteOpId,
   selectRecoveryOpForCurrentVault,
   selectTransactQuoteIds,
+  selectTransactSuccessClosed,
 } from '../../../../../data/selectors/transact.ts';
 import { selectZapSwapProviderName } from '../../../../../data/selectors/zap.ts';
 import { QuoteTitle } from '../QuoteTitle/QuoteTitle.tsx';
@@ -132,6 +133,21 @@ type StepContentProps<T extends ZapQuoteStep> = {
   chainId?: ChainEntity['id'];
 };
 
+const ChainTag = memo(function ChainTag({
+  children,
+  chainId,
+}: {
+  children?: ReactNode;
+  chainId: ChainEntity['id'];
+}) {
+  const chainName = useChainName(chainId);
+  return (
+    <span className={css(styles.chainTag)}>
+      {children ?? chainName} <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} />
+    </span>
+  );
+});
+
 const ApprovalStepContent = memo(function ApprovalStepContent({
   allowance,
 }: {
@@ -139,7 +155,6 @@ const ApprovalStepContent = memo(function ApprovalStepContent({
 }) {
   const { t } = useTranslation();
   const chainId = allowance.token.chainId;
-  const chainName = useChainName(chainId);
 
   return (
     <Trans
@@ -147,11 +162,10 @@ const ApprovalStepContent = memo(function ApprovalStepContent({
       i18nKey="Transact-Route-Step-Approval"
       values={{
         fromToken: allowance.token.symbol,
-        chainName,
       }}
       components={{
         fromAmount: <TokenAmountFromEntity amount={allowance.amount} token={allowance.token} />,
-        chain: <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} />,
+        chain: <ChainTag chainId={chainId} />,
       }}
     />
   );
@@ -184,7 +198,7 @@ const StepContentSwap = memo(function StepContentSwap({
   const platformName = useAppSelector(state =>
     selectZapSwapProviderName(state, providerId, via, t)
   );
-  const chainName = useChainName(chainId);
+
   const textKey =
     via === 'aggregator' && providerId === 'wnative' ?
       step.toToken.type === 'native' ?
@@ -200,12 +214,11 @@ const StepContentSwap = memo(function StepContentSwap({
         fromToken: step.fromToken.symbol,
         toToken: step.toToken.symbol,
         via: platformName,
-        chainName,
       }}
       components={{
         fromAmount: <TokenAmountFromEntity amount={step.fromAmount} token={step.fromToken} />,
         toAmount: <TokenAmountFromEntity amount={step.toAmount} token={step.toToken} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -216,17 +229,16 @@ const StepContentBuild = memo(function StepContentBuild({
   chainId,
 }: StepContentProps<ZapQuoteStepBuild>) {
   const { t } = useTranslation();
-  const chainName = useChainName(chainId);
+
   const tokenAmounts = useTokenAmounts(step.inputs);
 
   return (
     <Trans
       t={t}
       i18nKey="Transact-Route-Step-Build"
-      values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -237,16 +249,15 @@ const StepContentDeposit = memo(function StepContentDeposit({
   chainId,
 }: StepContentProps<ZapQuoteStepDeposit>) {
   const { t } = useTranslation();
-  const chainName = useChainName(chainId);
+
   const tokenAmounts = useTokenAmounts(step.inputs);
   return (
     <Trans
       t={t}
       i18nKey="Transact-Route-Step-Deposit"
-      values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -257,16 +268,15 @@ const StepContentStake = memo(function StepContentStake({
   chainId,
 }: StepContentProps<ZapQuoteStepStake>) {
   const { t } = useTranslation();
-  const chainName = useChainName(chainId);
+
   const tokenAmounts = useTokenAmounts(step.inputs);
   return (
     <Trans
       t={t}
       i18nKey="Transact-Route-Step-Stake"
-      values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -277,17 +287,16 @@ const StepContentUnstake = memo(function StepContentUnstake({
   chainId,
 }: StepContentProps<ZapQuoteStepUnstake>) {
   const { t } = useTranslation();
-  const chainName = useChainName(chainId);
+
   const tokenAmounts = useTokenAmounts(step.outputs);
 
   return (
     <Trans
       t={t}
       i18nKey="Transact-Route-Step-Unstake"
-      values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -298,17 +307,16 @@ const StepContentWithdraw = memo(function StepContentWithdraw({
   chainId,
 }: StepContentProps<ZapQuoteStepWithdraw>) {
   const { t } = useTranslation();
-  const chainName = useChainName(chainId);
+
   const tokenAmounts = useTokenAmounts(step.outputs);
 
   return (
     <Trans
       t={t}
       i18nKey="Transact-Route-Step-Withdraw"
-      values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -319,17 +327,15 @@ const StepContentSplit = memo(function StepContentSplit({
   chainId,
 }: StepContentProps<ZapQuoteStepSplit>) {
   const { t } = useTranslation();
-  const chainName = useChainName(chainId);
   const tokenAmounts = useTokenAmounts(step.outputs);
 
   return (
     <Trans
       t={t}
       i18nKey="Transact-Route-Step-Split"
-      values={{ chainName }}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -340,7 +346,6 @@ const StepContentUnused = memo(function StepContentUnused({
   chainId,
 }: StepContentProps<ZapQuoteStepUnused>) {
   const { t } = useTranslation();
-  const chainName = useChainName(chainId);
   const tokenAmounts = useMemo(() => {
     return step.outputs.map(tokenAmount => (
       <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
@@ -355,10 +360,9 @@ const StepContentUnused = memo(function StepContentUnused({
       <Trans
         t={t}
         i18nKey="Transact-Route-Step-Unused"
-        values={{ chainName }}
         components={{
           tokenAmounts: <ListJoin items={tokenAmounts} />,
-          chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+          chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
         }}
       />
     </>
@@ -382,7 +386,7 @@ const StepContentBridge = memo(function StepContentBridge({
       }}
       components={{
         fromAmount: <TokenAmountFromEntity amount={step.fromAmount} token={step.fromToken} />,
-        chain: chainId ? <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} /> : <></>,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -415,8 +419,13 @@ function useStepStatuses(
   const currentStepIndex = useAppSelector(selectStepperCurrentStep);
   const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
   const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
+  const successClosed = useAppSelector(selectTransactSuccessClosed);
 
   return useMemo(() => {
+    if (successClosed) {
+      return Array(totalStepsCount).fill('finished') as StepStatusState[];
+    }
+
     const isRecoveryFromOp = recoveryOp != null && !isStepping;
 
     if (
@@ -486,6 +495,7 @@ function useStepStatuses(
     bridgeStepAbsoluteIndex,
     isRecoveryExecution,
     recoveryOp,
+    successClosed,
   ]);
 }
 
@@ -526,19 +536,20 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
   const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
   const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
 
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const isRecovery =
+    stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null;
+
   const pendingAllowancesLive: AllowanceTokenAmount[] = useAppSelector(state =>
     selectPendingAllowances(state, quote.allowances)
   );
   const stepperModal = useAppSelector(state => state.ui.stepperState.modal);
   const snapshotRef = useRef<AllowanceTokenAmount[]>(pendingAllowancesLive);
-  if (!stepperModal) {
+  if (!stepperModal && !isRecovery) {
     snapshotRef.current = pendingAllowancesLive;
   }
-  const pendingAllowances = stepperModal ? snapshotRef.current : pendingAllowancesLive;
-
-  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
-  const isRecovery =
-    stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null;
+  const pendingAllowances =
+    stepperModal || isRecovery ? snapshotRef.current : pendingAllowancesLive;
 
   const recoveryQuoteMatchesOp = !recoveryOp || recoveryQuoteOpId === recoveryOp.id;
 

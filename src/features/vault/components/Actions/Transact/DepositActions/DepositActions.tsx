@@ -1,9 +1,14 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AnimatedButton } from '../../../../../../components/Button/AnimatedButton.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import {
+  transactClearInput,
+  transactSetSuccessClosed,
+} from '../../../../../data/actions/transact.ts';
 import { transactSteps } from '../../../../../data/actions/wallet/transact.ts';
 import {
   crossChainFetchRecoveryQuote,
@@ -28,9 +33,12 @@ import {
   selectRecoveryOpForCurrentVault,
   selectTransactConfirmNeededWithChanges,
   selectTransactExecuting,
+  selectTransactForceSelection,
   selectTransactQuoteStatus,
   selectTransactSelectedChainId,
   selectTransactSelectedQuoteOrUndefined,
+  selectTransactSuccessClosed,
+  selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -52,6 +60,8 @@ import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../../../../data/selectors/wallet.ts';
+import { stepperReset } from '../../../../../data/actions/wallet/stepper.ts';
+import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -62,30 +72,72 @@ export const DepositActions = memo(function DepositActions() {
   const stepperContent = useAppSelector(selectStepperStepContent);
   const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
   const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
+  const successClosed = useAppSelector(selectTransactSuccessClosed);
+  const isSuccessTx = stepperContent === StepContent.SuccessTx;
+
+  if (successClosed || isSuccessTx) {
+    return <ActionClose />;
+  }
 
   if (stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null) {
     return <ActionRecoveryDeposit />;
   }
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
-    return <ActionDepositDisabled />;
+    if (quoteStatus === TransactStatus.Pending) {
+      return <ActionDepositPending />;
+    }
+    return <ActionDepositSelectFlow />;
   }
 
   return <ActionDeposit quote={quote} option={option} />;
 });
 
-const ActionDepositDisabled = memo(function ActionDepositDisabled() {
+/** Quote is loading — keep deposit disabled */
+const ActionDepositPending = memo(function ActionDepositPending() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const selectedChainId = useAppSelector(selectTransactSelectedChainId);
+  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
   const { t } = useTranslation();
   const classes = useStyles();
+  const connectSwitchChainId =
+    hasCrossChainZap && forceSelection ? undefined : (selectedChainId ?? vault.chainId);
 
   return (
     <div className={classes.feesContainer}>
-      <ActionConnectSwitch chainId={selectedChainId ?? vault.chainId}>
+      <ActionConnectSwitch chainId={connectSwitchChainId}>
         <Button variant="cta" disabled={true} fullWidth={true} borderless={true}>
           {t('Transact-Deposit')}
+        </Button>
+      </ActionConnectSwitch>
+      <VaultFees />
+    </div>
+  );
+});
+
+/** No quote yet — CTA opens chain/token select (same as TokenSelectButton) */
+const ActionDepositSelectFlow = memo(function ActionDepositSelectFlow() {
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const selectedChainId = useAppSelector(selectTransactSelectedChainId);
+  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const classes = useStyles();
+  const { ctaLabel, openSelectStep } = useTransactSelectFlowCta();
+  const connectSwitchChainId = forceSelection ? undefined : (selectedChainId ?? vault.chainId);
+
+  return (
+    <div className={classes.feesContainer}>
+      <ActionConnectSwitch chainId={connectSwitchChainId}>
+        <Button
+          variant="cta"
+          fullWidth={true}
+          borderless={true}
+          disabled={!forceSelection}
+          onClick={forceSelection ? openSelectStep : undefined}
+        >
+          {ctaLabel}
         </Button>
       </ActionConnectSwitch>
       <VaultFees />
@@ -108,6 +160,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const stepperContent = useAppSelector(selectStepperStepContent);
   const isExecuting = useAppSelector(selectTransactExecuting);
   const confirmNeededWithChanges = useAppSelector(selectTransactConfirmNeededWithChanges);
   const isMaxAll = useMemo(() => {
@@ -131,6 +184,12 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
 
+  const isCreating =
+    isExecuting ||
+    (isTxInProgress &&
+      (stepperContent === StepContent.StartTx || stepperContent === StepContent.WalletTx));
+  const isLoading = isExecuting || isTxInProgress;
+
   return (
     <>
       {option.chainId === 'emerald' ?
@@ -147,15 +206,27 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
       <NotEnoughNotice mode="deposit" onChange={setIsDisabledByNotEnoughInput} />
       <div className={classes.feesContainer}>
         <ActionConnectSwitch chainId={executionChainId}>
-          <Button
+          <AnimatedButton
             variant="cta"
+            loading={isLoading}
+            isCreating={isCreating}
             disabled={isDisabled}
             fullWidth={true}
             borderless={true}
             onClick={handleClick}
           >
-            {t(isMaxAll && !isCowDepositQuote ? 'Transact-DepositAll' : 'Transact-Deposit')}
-          </Button>
+            {isCreating ?
+              t('Transact-CreatingTransaction')
+            : isTxInProgress ?
+              t('Transact-DepositInProgress')
+            : confirmNeededWithChanges ?
+              t(
+                isMaxAll && !isCowDepositQuote ?
+                  'Transact-ConfirmDepositAll'
+                : 'Transact-ConfirmDeposit'
+              )
+            : t(isMaxAll && !isCowDepositQuote ? 'Transact-DepositAll' : 'Transact-Deposit')}
+          </AnimatedButton>
         </ActionConnectSwitch>
         {import.meta.env.DEV ?
           <TenderlyTransactButton option={option} quote={quote} />
@@ -179,7 +250,6 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
   const recoveryQuoteStatus = useAppSelector(selectCrossChainRecoveryQuoteStatus);
   const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
   const isExecuting = useAppSelector(selectTransactExecuting);
-  const [isFetchingQuote, setIsFetchingQuote] = useState(false);
 
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -189,6 +259,7 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
   const destChainId =
     bridgeStatus?.destChainId ?? recoveryOp?.recovery.destChainId ?? vault?.chainId;
   const isOnCorrectChain = connectedChainId === destChainId;
+  const isFetchingQuote = recoveryQuoteStatus === TransactStatus.Pending;
 
   const hasValidQuote =
     opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
@@ -197,14 +268,7 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
 
   const handleFetchQuote = useCallback(() => {
     if (opId) {
-      setIsFetchingQuote(true);
-      dispatch(crossChainFetchRecoveryQuote({ opId }))
-        .unwrap()
-        .catch(err => {
-          console.error('Failed to fetch recovery quote', err);
-          throw err;
-        })
-        .finally(() => setIsFetchingQuote(false));
+      dispatch(crossChainFetchRecoveryQuote({ opId }));
     }
   }, [dispatch, opId]);
 
@@ -240,7 +304,8 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
   if (needsNewQuote) {
     return (
       <div className={classes.feesContainer}>
-        <Button
+        <AnimatedButton
+          needFire={true}
           variant="recovery"
           disabled={isTxInProgress || isFetchingQuote || !opId}
           fullWidth={true}
@@ -248,7 +313,7 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
           onClick={handleFetchQuote}
         >
           {isFetchingQuote ? t('Transact-FetchingQuote') : t('Transact-FetchNewQuote')}
-        </Button>
+        </AnimatedButton>
         <VaultFees />
       </div>
     );
@@ -259,7 +324,8 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
 
   return (
     <div className={classes.feesContainer}>
-      <Button
+      <AnimatedButton
+        needFire={true}
         variant="recovery"
         disabled={finaliseDisabled}
         fullWidth={true}
@@ -267,7 +333,34 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
         onClick={handleFinalise}
       >
         {t('Transact-FinaliseDeposit')}
-      </Button>
+      </AnimatedButton>
+      <VaultFees />
+    </div>
+  );
+});
+
+const ActionClose = memo(function ActionClose() {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const dispatch = useAppDispatch();
+
+  const handleClose = useCallback(() => {
+    dispatch(transactSetSuccessClosed(false));
+    dispatch(transactClearInput());
+    dispatch(stepperReset());
+  }, [dispatch]);
+
+  return (
+    <div className={classes.feesContainer}>
+      <AnimatedButton
+        isConfirmed={true}
+        variant="cta"
+        fullWidth={true}
+        borderless={true}
+        onClick={handleClose}
+      >
+        {t('Transactn-Close')}
+      </AnimatedButton>
       <VaultFees />
     </div>
   );

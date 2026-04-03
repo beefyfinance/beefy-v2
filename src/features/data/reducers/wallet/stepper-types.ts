@@ -56,6 +56,11 @@ export type Step = {
   };
 };
 
+export type DstTokenReturned = {
+  tokenAddress: string;
+  amount: string;
+};
+
 export type BridgeStatus = {
   srcChainId: ChainEntity['id'];
   srcTxHash: string;
@@ -65,6 +70,8 @@ export type BridgeStatus = {
   dstTxHash?: string;
   opId?: string;
   dstRefundedAmount?: string;
+  dstTokensReturned?: DstTokenReturned[];
+  srcTokensReturned?: DstTokenReturned[];
 };
 
 export interface StepperState {

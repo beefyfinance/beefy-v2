@@ -16,6 +16,7 @@ import {
   transactSelectQuote,
   transactSelectSelection,
   transactSetExecuting,
+  transactSetSuccessClosed,
   transactSetInputAmount,
   transactSetSelectedChainId,
   transactSetSlippage,
@@ -106,6 +107,7 @@ const initialTransactState: TransactState = {
     recoveryQuote: initialRecoveryQuoteState,
   },
   executing: false,
+  successClosed: false,
 };
 
 const transactSlice = createSlice({
@@ -149,6 +151,7 @@ const transactSlice = createSlice({
       .addCase(transactClearInput, sliceState => {
         clearInputs(sliceState);
         resetQuotes(sliceState);
+        sliceState.forceSelection = sliceState.selections.allSelectionIds.length > 1;
       })
       .addCase(transactClearQuotes, sliceState => {
         resetQuotes(sliceState);
@@ -195,6 +198,9 @@ const transactSlice = createSlice({
       })
       .addCase(transactSetExecuting, (sliceState, action) => {
         sliceState.executing = action.payload;
+      })
+      .addCase(transactSetSuccessClosed, (sliceState, action) => {
+        sliceState.successClosed = action.payload;
       })
       .addCase(transactInit, (sliceState, action) => {
         const isReady = sliceState.vaultId === action.payload.vaultId;
@@ -247,7 +253,8 @@ const transactSlice = createSlice({
           if (defaultOption) {
             sliceState.selectedSelectionId = defaultOption.selectionId;
             sliceState.selectedChainId = defaultOption.chainId;
-            sliceState.forceSelection = options.length > 1;
+            // One *selection* (token path), even if multiple options share it → no forced picker
+            sliceState.forceSelection = sliceState.selections.allSelectionIds.length > 1;
           }
           clearInputs(sliceState);
         }
@@ -356,6 +363,7 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.inputAmounts = [BIG_ZERO];
   sliceState.inputMaxes = [false];
   sliceState.forceSelection = false;
+  sliceState.successClosed = false;
 
   sliceState.options.status = TransactStatus.Idle;
   sliceState.options.error = undefined;

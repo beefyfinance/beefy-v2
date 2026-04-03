@@ -126,7 +126,7 @@ export const zapExecuteOrder = (
         chainId: vault.chainId,
         spenderAddress: zap.manager,
         tokens: selectZapTokensToRefresh(state, vault, order),
-        clearInput: true,
+        clearInput: false,
         ...(isGovVault(vault) ? { govVaultId: vault.id } : {}),
       }
     );
