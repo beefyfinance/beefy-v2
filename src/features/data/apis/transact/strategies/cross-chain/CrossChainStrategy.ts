@@ -242,7 +242,9 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     });
 
     const destQuoteSelection: QuoteSelectionConfig = {
-      maxUsesPerProvider: { kyber: 1 },
+      maxUsesPerProvider: {
+        /*kyber: 1*/
+      },
       maxUsesStrict: false,
     };
 
@@ -394,7 +396,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       relay: NO_RELAY,
       route: breakdown.zapRequest.steps,
     };
-    const hookData = buildHookData(destChainId, zapPayload);
+    const { hookData, receiver } = buildHookData(sourceChainId, destChainId, zapPayload);
     console.log('[cross-chain] fetchDepositStep: hook data built');
 
     // 5. Balance check: self-transfer to assert minimum USDC before burn
@@ -408,7 +410,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
     // 6. CCTP burn step
     const sourceConfig = getChainConfig(sourceChainId);
-    const destConfig = getChainConfig(destChainId);
     const maxFee =
       sourceConfig.fastFeeBps !== undefined ?
         toWeiBigInt(
@@ -421,7 +422,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       sourceChainId,
       destChainId,
       bridgeToken.address,
-      destConfig.receiver as Address,
+      receiver,
       maxFee,
       hookData
     );
@@ -733,7 +734,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const sourceZapSteps: ZapStep[] = [...breakdown.zapRequest.steps];
 
     const sourceConfig = getChainConfig(sourceChainId);
-    const destConfig = getChainConfig(destChainId);
 
     // 3. Compute step-time USDC from source withdrawal output (slippage-adjusted)
     const usdcOutput = quote.sourceWithdrawQuote.outputs.find(
@@ -842,13 +842,13 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         route: destSwapZap.zaps,
       };
 
-      const hookData = buildHookData(destChainId, zapPayload);
+      const { hookData, receiver } = buildHookData(sourceChainId, destChainId, zapPayload);
       console.log('[cross-chain] fetchWithdrawStep: dest hook data built');
       const burnStep = buildBurnZapStep(
         sourceChainId,
         destChainId,
         bridgeToken.address,
-        destConfig.receiver as Address,
+        receiver,
         maxFee,
         hookData
       );
