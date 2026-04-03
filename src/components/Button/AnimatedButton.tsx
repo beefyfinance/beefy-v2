@@ -1,7 +1,14 @@
-import { type ComponentProps, memo, useCallback, useEffect, useState } from 'react';
-import { useRive, useStateMachineInput, Layout, Fit, Alignment } from '@rive-app/react-canvas';
+import { type ComponentProps, memo, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useRive,
+  useViewModelInstanceBoolean,
+  useViewModelInstanceTrigger,
+  Layout,
+  Fit,
+  Alignment,
+} from '@rive-app/react-canvas';
 import { css } from '@repo/styles/css';
-import buttonRiv from '../../images/animations/cow-animation.riv';
+import buttonRiv from '../../images/animations/cow_only.riv';
 import { Button } from './Button.tsx';
 
 const LAYOUT = new Layout({
@@ -14,67 +21,63 @@ const STATE_MACHINE_NAME = 'State Machine 1';
 
 type AnimatedButtonProps = ComponentProps<typeof Button> & {
   loading?: boolean;
-  animation?: boolean;
+  isCreating?: boolean;
   needFire?: boolean;
+  isConfirmed?: boolean;
 };
 
 type RiveAnimationProps = {
-  hovering: boolean;
   depositInProgress: boolean;
-  needFire: boolean;
-  isFired: boolean;
+  fireNeedFire: boolean;
+  fireIsFired: boolean;
+  isConfirmed: boolean;
 };
 
 const RiveAnimation = memo(function RiveAnimation({
-  hovering,
   depositInProgress,
-  needFire,
-  isFired,
+  fireNeedFire,
+  fireIsFired,
+  isConfirmed,
 }: RiveAnimationProps) {
   const { rive, RiveComponent } = useRive({
     src: buttonRiv,
     stateMachines: STATE_MACHINE_NAME,
     layout: LAYOUT,
     autoplay: true,
+    autoBind: true,
   });
 
-  const risingInput = useStateMachineInput(rive, STATE_MACHINE_NAME, 'isRising');
-  const depositInput = useStateMachineInput(rive, STATE_MACHINE_NAME, 'isInProgress');
-  const needFireInput = useStateMachineInput(rive, STATE_MACHINE_NAME, 'needFire');
-  const isFiredInput = useStateMachineInput(rive, STATE_MACHINE_NAME, 'isFired');
+  const vmi = rive?.viewModelInstance;
+
+  const { setValue: setInProgress } = useViewModelInstanceBoolean('isInProgress', vmi);
+  const { trigger: triggerNeedFire } = useViewModelInstanceTrigger('needFire', vmi);
+  const { trigger: triggerIsFired } = useViewModelInstanceTrigger('isFired', vmi);
+  const { setValue: setIsConfirmed } = useViewModelInstanceBoolean('isConfirmed', vmi);
+
+  // Track previous values to only fire triggers on rising edge
+  const prevRef = useRef({ fireNeedFire: false, fireIsFired: false });
 
   useEffect(() => {
-    if (risingInput) {
-      risingInput.value = hovering;
+    setInProgress(depositInProgress);
+  }, [setInProgress, depositInProgress]);
+
+  useEffect(() => {
+    if (fireNeedFire && !prevRef.current.fireNeedFire) {
+      triggerNeedFire();
     }
-  }, [risingInput, hovering]);
+    prevRef.current.fireNeedFire = fireNeedFire;
+  }, [triggerNeedFire, fireNeedFire]);
 
   useEffect(() => {
-    if (!depositInput) return;
-    depositInput.value = depositInProgress;
-    if (!depositInProgress) return;
-
-    // The state machine resets the boolean after the animation plays once.
-    // Poll and re-trigger to keep it looping while depositInProgress is true.
-    const id = setInterval(() => {
-      if (!depositInput.value) {
-        depositInput.value = true;
-      }
-    }, 150);
-    return () => clearInterval(id);
-  }, [depositInput, depositInProgress]);
-
-  useEffect(() => {
-    if (needFireInput) {
-      needFireInput.value = needFire;
+    if (fireIsFired && !prevRef.current.fireIsFired) {
+      triggerIsFired();
     }
-  }, [needFireInput, needFire]);
+    prevRef.current.fireIsFired = fireIsFired;
+  }, [triggerIsFired, fireIsFired]);
 
   useEffect(() => {
-    if (isFiredInput) {
-      isFiredInput.value = isFired;
-    }
-  }, [isFiredInput, isFired]);
+    setIsConfirmed(isConfirmed);
+  }, [setIsConfirmed, isConfirmed]);
 
   return <RiveComponent style={{ width: '100%', height: '100%' }} />;
 });
@@ -83,16 +86,13 @@ export const AnimatedButton = memo(function AnimatedButton({
   loading,
   children,
   disabled,
-  animation: _animation,
+  isCreating,
   needFire,
+  isConfirmed,
   onClick,
   ...props
 }: AnimatedButtonProps) {
-  const [hovering, setHovering] = useState(false);
   const [isFired, setIsFired] = useState(false);
-
-  const handleMouseEnter = useCallback(() => setHovering(true), []);
-  const handleMouseLeave = useCallback(() => setHovering(false), []);
 
   const handleClick = useCallback<React.MouseEventHandler<HTMLButtonElement>>(
     e => {
@@ -111,19 +111,23 @@ export const AnimatedButton = memo(function AnimatedButton({
     }
   }, [needFire]);
 
+  const showCow = !!isCreating || !!loading || !!needFire || isFired || !!isConfirmed;
+
   return (
-    <div className={wrapperClass} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div className={wrapperClass}>
       <Button {...props} disabled={loading || disabled} onClick={handleClick}>
         {children}
       </Button>
-      <div className={riveCornerClass}>
-        <RiveAnimation
-          hovering={hovering}
-          depositInProgress={!!loading}
-          needFire={!!needFire}
-          isFired={isFired}
-        />
-      </div>
+      {showCow && (
+        <div className={riveCornerClass}>
+          <RiveAnimation
+            depositInProgress={(!!loading && !isCreating) || !!needFire || isFired}
+            fireNeedFire={!!needFire}
+            fireIsFired={isFired}
+            isConfirmed={!!isConfirmed}
+          />
+        </div>
+      )}
     </div>
   );
 });

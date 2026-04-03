@@ -249,11 +249,17 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
     isDisabledByScreamLiquidity ||
     isDisabledByNotEnoughInput;
 
+  const stepperContent = useAppSelector(selectStepperStepContent);
+
   const handleClick = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
 
-  const isLoading = useMemo(() => isExecuting || isTxInProgress, [isExecuting, isTxInProgress]);
+  const isCreating =
+    isExecuting ||
+    (isTxInProgress &&
+      (stepperContent === StepContent.StartTx || stepperContent === StepContent.WalletTx));
+  const isLoading = isExecuting || isTxInProgress;
 
   return (
     <>
@@ -273,12 +279,13 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
           <AnimatedButton
             variant="cta"
             loading={isLoading}
+            isCreating={isCreating}
             disabled={isDisabled}
             fullWidth={true}
             borderless={true}
             onClick={handleClick}
           >
-            {isExecuting ?
+            {isCreating ?
               t('Transact-CreatingTransaction')
             : isTxInProgress ?
               t('Transact-WithdrawInProgress')
@@ -329,11 +336,17 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
     isDisabledByNotEnoughInput;
   const showClaim = !isCowcentratedLikeVault(vault);
 
+  const stepperContent = useAppSelector(selectStepperStepContent);
+
   const handleWithdraw = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
 
-  const isLoading = useMemo(() => isExecuting || isTxInProgress, [isExecuting, isTxInProgress]);
+  const isCreating =
+    isExecuting ||
+    (isTxInProgress &&
+      (stepperContent === StepContent.StartTx || stepperContent === StepContent.WalletTx));
+  const isLoading = isExecuting || isTxInProgress;
 
   return (
     <>
@@ -352,12 +365,13 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
           <AnimatedButton
             variant="cta"
             loading={isLoading}
+            isCreating={isCreating}
             disabled={isDisabled}
             fullWidth={true}
             borderless={true}
             onClick={handleWithdraw}
           >
-            {isExecuting ?
+            {isCreating ?
               t('Transact-CreatingTransaction')
             : isTxInProgress ?
               t('Transact-WithdrawInProgress')
@@ -396,7 +410,13 @@ const ActionCloseWithdraw = memo(function ActionCloseWithdraw() {
 
   return (
     <div className={classes.feesContainer}>
-      <AnimatedButton variant="cta" fullWidth={true} borderless={true} onClick={handleClose}>
+      <AnimatedButton
+        isConfirmed={true}
+        variant="cta"
+        fullWidth={true}
+        borderless={true}
+        onClick={handleClose}
+      >
         {t('Transactn-Close')}
       </AnimatedButton>
       <VaultFees />

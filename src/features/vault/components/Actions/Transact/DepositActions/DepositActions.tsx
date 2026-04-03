@@ -209,6 +209,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
           <AnimatedButton
             variant="cta"
             loading={isLoading}
+            isCreating={isCreating}
             disabled={isDisabled}
             fullWidth={true}
             borderless={true}
@@ -352,7 +353,7 @@ const ActionClose = memo(function ActionClose() {
   return (
     <div className={classes.feesContainer}>
       <AnimatedButton
-        animation={true}
+        isConfirmed={true}
         variant="cta"
         fullWidth={true}
         borderless={true}
