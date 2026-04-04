@@ -1,5 +1,6 @@
 import type { ThunkAction } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
+import type { MessageLifecycleState } from '../../apis/cctp/cctp-api-types.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { TokenEntity } from '../../entities/token.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
@@ -10,6 +11,8 @@ export enum StepContent {
   WaitingTx,
   ErrorTx,
   SuccessTx,
+  BridgingTx,
+  RecoveryTx,
 }
 
 export type Step = {
@@ -46,7 +49,22 @@ export type Step = {
       token: TokenEntity;
       amount: BigNumber;
     };
+    crossChain?: {
+      sourceChainId: ChainEntity['id'];
+      destChainId: ChainEntity['id'];
+    };
   };
+};
+
+export type BridgeStatus = {
+  srcChainId: ChainEntity['id'];
+  srcTxHash: string;
+  destChainId: ChainEntity['id'];
+  vaultId: VaultEntity['id'];
+  lifecycleState?: MessageLifecycleState;
+  dstTxHash?: string;
+  opId?: string;
+  dstRefundedAmount?: string;
 };
 
 export interface StepperState {
@@ -55,4 +73,6 @@ export interface StepperState {
   stepContent: StepContent;
   items: Step[];
   chainId: ChainEntity['id'] | null;
+  bridgeStatus?: BridgeStatus;
+  isRecoveryExecution?: boolean;
 }

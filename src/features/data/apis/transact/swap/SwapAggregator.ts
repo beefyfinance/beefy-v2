@@ -235,6 +235,7 @@ export class SwapAggregator implements ISwapAggregator {
       throw new Error(`Provider ${providerId} not found`);
     }
 
-    return await provider.fetchSwap(request, state);
+    const result = await provider.fetchSwap(request, state);
+    return result;
   }
 }

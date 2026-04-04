@@ -8,6 +8,7 @@ import type { VaultGov } from '../../../../../../../data/entities/vault.ts';
 import { selectIsStepperStepping } from '../../../../../../../data/selectors/stepper.ts';
 import { selectGovVaultById } from '../../../../../../../data/selectors/vaults.ts';
 import { ActionConnectSwitch } from '../../../CommonActions/CommonActions.tsx';
+import { selectTransactExecuting } from '../../../../../../../data/selectors/transact.ts';
 
 type ClaimProps = {
   vaultId: VaultGov['id'];
@@ -18,6 +19,7 @@ export const Claim = memo(function Claim({ vaultId }: ClaimProps) {
   const dispatch = useAppDispatch();
   const vault = useAppSelector(state => selectGovVaultById(state, vaultId));
   const isStepping = useAppSelector(selectIsStepperStepping);
+  const isExecuting = useAppSelector(selectTransactExecuting);
 
   const handleClaim = useCallback(() => {
     dispatch(
@@ -37,7 +39,12 @@ export const Claim = memo(function Claim({ vaultId }: ClaimProps) {
 
   return (
     <ActionConnectSwitch chainId={vault.chainId}>
-      <Button fullWidth={true} variant="cta" onClick={handleClaim} disabled={isStepping}>
+      <Button
+        fullWidth={true}
+        variant="cta"
+        onClick={handleClaim}
+        disabled={isStepping || isExecuting}
+      >
         {t('Rewards-Claim-gov')}
       </Button>
     </ActionConnectSwitch>

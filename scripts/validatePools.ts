@@ -101,6 +101,8 @@ const nonHarvestOnDepositPools = [
   'shadow-cow-sonic-ws-bes-vault',
 ];
 const excludedAbPools = ['gmx-arb-atom-usdc', 'gmx-arb-xrp-usdc', 'gmx-arb-doge-usdc'];
+/** Pool ids to ignore empty (totalSupply === 0) validation */
+const excludedEmptyPools = ['uniswap-cow-monad-ausd-dust-vault'];
 const addressFields: Array<keyof VaultConfig> = [
   'tokenAddress',
   'earnedTokenAddress',
@@ -427,12 +429,12 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
     }
 
     if (new BigNumber(pool.totalSupply || '0').isZero()) {
-      if (pool.status !== 'eol') {
+      if (pool.status !== 'eol' && !excludedEmptyPools.includes(pool.id)) {
         console.error(`Error: ${pool.id} : Pool is empty`);
         exitCode = 1;
         if (!('emptyVault' in updates)) updates['emptyVault'] = {};
         updates.emptyVault[pool.id] = pool.earnContractAddress;
-      } else {
+      } else if (pool.status === 'eol') {
         console.warn(`${pool.id} : eol pool is empty`);
       }
     }

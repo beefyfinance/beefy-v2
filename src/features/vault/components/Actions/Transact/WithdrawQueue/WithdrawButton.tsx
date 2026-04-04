@@ -12,11 +12,13 @@ import { ActionConnect, ActionSwitch } from '../CommonActions/CommonActions.tsx'
 type WithdrawButtonProps = {
   chainId: ChainEntity['id'];
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
+  disabled?: boolean;
 };
 
 export const WithdrawButton = memo(function WithdrawButton({
   chainId,
   onClick,
+  disabled = false,
 }: WithdrawButtonProps) {
   const { t } = useTranslation();
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
@@ -31,7 +33,7 @@ export const WithdrawButton = memo(function WithdrawButton({
   }
 
   return (
-    <Button variant="cta" size="xs" onClick={onClick}>
+    <Button variant="cta" size="xs" onClick={onClick} disabled={disabled}>
       {t('Transact-Withdraw')}
     </Button>
   );

@@ -38,8 +38,13 @@ export const ActionConnect = memo(function ActionConnect(props: ActionButtonProp
 
 export type ActionSwitchProps = {
   chainId: ChainEntity['id'];
+  buttonText?: string;
 } & ActionButtonProps;
-export const ActionSwitch = memo(function ActionSwitch({ chainId, ...props }: ActionSwitchProps) {
+export const ActionSwitch = memo(function ActionSwitch({
+  chainId,
+  buttonText,
+  ...props
+}: ActionSwitchProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const isStepping = useAppSelector(selectIsStepperStepping);
@@ -51,13 +56,13 @@ export const ActionSwitch = memo(function ActionSwitch({ chainId, ...props }: Ac
   return (
     <Button
       {...props}
-      variant="cta"
+      variant={props.variant ?? 'cta'}
       fullWidth={props.fullWidth !== undefined ? props.fullWidth : true}
       borderless={props.fullWidth !== undefined ? props.borderless : true}
       onClick={handleClick}
       disabled={isStepping}
     >
-      {t('Network-Change', { network: chain.name })}
+      {buttonText ?? t('Network-Change', { network: chain.name })}
     </Button>
   );
 });

@@ -5,6 +5,7 @@ import type {
   AmmEntitySolidly,
   AmmEntityUniswapV2,
 } from '../../../entities/zap.ts';
+import type { ChainEntity } from '../../../entities/chain.ts';
 import type { CurveMethod } from './curve/types.ts';
 
 export type SwapAggregatorId = 'kyber' | 'one-inch' | 'liquid-swap';
@@ -12,6 +13,13 @@ export type SwapAggregatorId = 'kyber' | 'one-inch' | 'liquid-swap';
 export type StrategySwapConfig = {
   blockProviders?: SwapAggregatorId[];
   blockTokens?: string[];
+};
+
+export type QuoteSelectionConfig = {
+  /** Limit how many times a given provider can be used across multiple swaps in a single quote */
+  maxUsesPerProvider?: Partial<Record<SwapAggregatorId, number>>;
+  /** If true, throw when maxUsesPerProvider limits can't be satisfied; if false, fall back to best-effort */
+  maxUsesStrict?: boolean;
 };
 
 export type OptionalStrategySwapConfig = {
@@ -89,6 +97,14 @@ export type RewardPoolToVaultStrategyConfig = {
   strategyId: 'reward-pool-to-vault';
 } & OptionalStrategySwapConfig;
 
+export type CrossChainStrategyConfig = {
+  strategyId: 'cross-chain';
+  /** Limit to specific source chains (default: all CCTP-supported chains) */
+  supportedSourceChains?: ChainEntity['id'][];
+  /** Limit to specific destination chains for withdrawals */
+  supportedDestChains?: ChainEntity['id'][];
+} & OptionalStrategySwapConfig;
+
 export type ZapStrategyConfig =
   | SingleStrategyConfig
   | UniswapV2StrategyConfig
@@ -100,7 +116,8 @@ export type ZapStrategyConfig =
   | GovComposerStrategyConfig
   | VaultComposerStrategyConfig
   | RewardPoolToVaultStrategyConfig
-  | BalancerStrategyConfig;
+  | BalancerStrategyConfig
+  | CrossChainStrategyConfig;
 
 export type ZapStrategyId = ZapStrategyConfig['strategyId'];
 

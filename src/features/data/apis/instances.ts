@@ -138,3 +138,8 @@ export const getNameServicesApi = createDependencyFactory(
   async ({ NameServicesApi }) => new NameServicesApi(),
   () => import('./name-services/name-services-api.ts')
 );
+
+export const getCCTPApi = createDependencyFactory(
+  async ({ CCTPApi }) => new CCTPApi(),
+  () => import('./cctp/cctp-api.ts')
+);

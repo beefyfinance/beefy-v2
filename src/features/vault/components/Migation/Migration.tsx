@@ -14,6 +14,7 @@ import {
 import { selectWalletAddressIfKnown } from '../../../data/selectors/wallet.ts';
 import { ActionConnectSwitch } from '../Actions/Transact/CommonActions/CommonActions.tsx';
 import { styles } from './styles.ts';
+import { selectTransactExecuting } from '../../../data/selectors/transact.ts';
 import { selectIsStepperStepping } from '../../../data/selectors/stepper.ts';
 import { styled } from '@repo/styles/jsx';
 import {
@@ -84,6 +85,7 @@ const Migrator = memo(function Migrator({ vaultId, migrationId, walletAddress }:
   );
   const migrator = useAppSelector(state => selectMigratorById(state, migrationId));
   const isBusy = useAppSelector(selectIsStepperStepping);
+  const isExecuting = useAppSelector(selectTransactExecuting);
   const { chainId } = useAppSelector(state => selectVaultById(state, vaultId));
 
   useEffect(() => {
@@ -183,7 +185,7 @@ const Migrator = memo(function Migrator({ vaultId, migrationId, walletAddress }:
             variant="cta"
             fullWidth={true}
             borderless={true}
-            disabled={isBusy || isUpdating}
+            disabled={isBusy || isUpdating || isExecuting}
           >
             {t('Migration-Action')}
           </Button>
