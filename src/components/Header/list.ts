@@ -62,7 +62,7 @@ export const ResourcesNavItems: NavItemConfig[] = [
   {
     title: 'Header-SignMessage',
     Icon: SignMessageIcon,
-    url: '#',
+    url: '/sign-message',
     Component: SignMessageNavItem,
     MobileComponent: SignMessageNavItem,
   },
