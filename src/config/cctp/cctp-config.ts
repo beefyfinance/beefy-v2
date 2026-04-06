@@ -1,4 +1,5 @@
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
+import type { Address } from 'viem';
 
 /**
  * CCTP V2 Finality Thresholds:
@@ -41,13 +42,17 @@ import type { ChainEntity } from '../../features/data/entities/chain.ts';
 
 export type CCTPChainConfig = {
   /** CCTP V2 TokenMessengerV2 proxy address */
-  tokenMessenger: string;
+  tokenMessenger: Address;
   /** CCTP V2 MessageTransmitterV2 proxy address */
-  messageTransmitter: string;
+  messageTransmitter: Address;
+  /** MessageTransmitterV2.maxMessageBodySize() */
+  maxMessageBodySize: number;
   /** CircleBeefyZapReceiver address */
-  receiver: string;
+  receiver: Address;
+  /** CircleBeefyZapReceiver address with compression support */
+  receiver2?: Address;
   /** Native USDC address on this chain */
-  usdcAddress: string;
+  usdcAddress: Address;
   /** Circle CCTP domain ID */
   domain: number;
   /** Estimated bridge times in minutes */
@@ -71,12 +76,14 @@ export type CCTPConfig = {
 // on all EVM chains via CREATE2
 const TOKEN_MESSENGER_V2 = '0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d';
 const MESSAGE_TRANSMITTER_V2 = '0x81d40f21f12a8f0e3252bccb954d722d4c464b64';
+const MAX_MESSAGE_BODY_SIZE = 8192; // bytes (if this ever changes we should read on chain)
 
 export const CCTP_CONFIG: CCTPConfig = {
   chains: {
     arbitrum: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      maxMessageBodySize: MAX_MESSAGE_BODY_SIZE,
       receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
       domain: 3,
@@ -87,6 +94,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     avax: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      maxMessageBodySize: MAX_MESSAGE_BODY_SIZE,
       receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
       domain: 1,
@@ -96,7 +104,9 @@ export const CCTP_CONFIG: CCTPConfig = {
     base: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      maxMessageBodySize: MAX_MESSAGE_BODY_SIZE,
       receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
+      receiver2: '0x52c53e3295bee49DB37c6aE260217c714624E3fC',
       usdcAddress: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
       domain: 6,
       time: { outgoing: 5, incoming: 5 },
@@ -106,6 +116,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     ethereum: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      maxMessageBodySize: MAX_MESSAGE_BODY_SIZE,
       receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
       domain: 0,
@@ -116,6 +127,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     hyperevm: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      maxMessageBodySize: MAX_MESSAGE_BODY_SIZE,
       receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0xb88339CB7199b77E23DB6E890353E22632Ba630f',
       domain: 19,
@@ -125,6 +137,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     linea: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      maxMessageBodySize: MAX_MESSAGE_BODY_SIZE,
       receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0x176211869cA2b568f2A7D4EE941E073a821EE1ff',
       domain: 11,
@@ -135,6 +148,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     monad: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      maxMessageBodySize: MAX_MESSAGE_BODY_SIZE,
       receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0x754704Bc059F8C67012fEd69BC8A327a5aafb603',
       domain: 15,
@@ -144,6 +158,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     optimism: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      maxMessageBodySize: MAX_MESSAGE_BODY_SIZE,
       receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85',
       domain: 2,
@@ -154,6 +169,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     polygon: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      maxMessageBodySize: MAX_MESSAGE_BODY_SIZE,
       receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
       domain: 7,
@@ -163,6 +179,7 @@ export const CCTP_CONFIG: CCTPConfig = {
     sonic: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      maxMessageBodySize: MAX_MESSAGE_BODY_SIZE,
       receiver: '0xBeef940035C062bb8bEe892087aBa6Cde4F9BeEF',
       usdcAddress: '0x29219dd400f2Bf60E5a23d13Be72B486D4038894',
       domain: 13,
