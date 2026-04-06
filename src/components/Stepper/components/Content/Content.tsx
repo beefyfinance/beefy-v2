@@ -1,5 +1,5 @@
 import { css, cx } from '@repo/styles/css';
-import type BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { type FC, memo, type MouseEventHandler, type ReactNode, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
@@ -20,7 +20,11 @@ import { TransactStatus } from '../../../../features/data/reducers/wallet/transa
 import type { BridgeAdditionalData } from '../../../../features/data/reducers/wallet/wallet-action-types.ts';
 import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import { selectUserBalanceOfToken } from '../../../../features/data/selectors/balance.ts';
-import { selectChainNativeToken } from '../../../../features/data/selectors/tokens.ts';
+import {
+  selectChainNativeToken,
+  selectTokenByAddress,
+} from '../../../../features/data/selectors/tokens.ts';
+import { CCTP_CONFIG } from '../../../../config/cctp/cctp-config.ts';
 import { selectVaultById } from '../../../../features/data/selectors/vaults.ts';
 import type { VaultEntity } from '../../../../features/data/entities/vault.ts';
 import {
@@ -56,7 +60,6 @@ import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { explorerTxUrl } from '../../../../helpers/url.ts';
 import { useAppDispatch, useAppSelector } from '../../../../features/data/store/hooks.ts';
 import iconError from '../../../../images/icons/error.svg';
-import { AnimatedButton } from '../../../Button/AnimatedButton.tsx';
 import { Button } from '../../../Button/Button.tsx';
 import { CircularProgress } from '../../../CircularProgress/CircularProgress.tsx';
 import { ListJoin } from '../../../ListJoin.tsx';
@@ -702,24 +705,29 @@ export const RecoveryContent = memo(function RecoveryContent() {
   );
   const hasNoGas = destNativeBalance !== undefined && destNativeBalance.isZero();
 
+  // Resolve USDC token on dest chain for formatting
+  const destCctpConfig = destChainId ? CCTP_CONFIG.chains[destChainId] : undefined;
+  const destUsdcToken = useAppSelector(state =>
+    destChainId && destCctpConfig ?
+      selectTokenByAddress(state, destChainId, destCctpConfig.usdcAddress)
+    : undefined
+  );
+
+  // dstRefundedAmount is the raw wei amount from the CCTP API; format with USDC decimals
+  const rawRefund = bridgeStatus?.dstRefundedAmount;
+  const hasRefundAmount = rawRefund != null && destUsdcToken != null;
+  const formattedAmount = useMemo(() => {
+    if (!hasRefundAmount) return '';
+    const shifted = new BigNumber(rawRefund).shiftedBy(-destUsdcToken.decimals);
+    return formatTokenDisplayCondensed(shifted, destUsdcToken.decimals);
+  }, [hasRefundAmount, rawRefund, destUsdcToken]);
+
   const hasValidQuote =
     opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
   const needsNewQuote = !isRecoveryExecution && !hasValidQuote;
 
   const titleKey =
     mode === TransactMode.Withdraw ? 'Transactn-Bridging-Withdraw' : 'Transactn-Bridging-Deposit';
-
-  const directionKey = mode === TransactMode.Withdraw ? 'Withdraw' : 'Deposit';
-  const gasKey = hasNoGas ? '-NoGas' : '';
-  const refreshKey = needsNewQuote ? '-Refresh' : '';
-  const messageKey = `Transactn-Recovery-${directionKey}${gasKey}${refreshKey}` as const;
-
-  const messageParams = {
-    amount: pendingOp?.recovery.bridgedAmount ?? '',
-    token: 'USDC',
-    chain: destChain?.name ?? '',
-    gasToken: destNativeToken?.symbol ?? '',
-  };
 
   const handleSwitchChain = useCallback(() => {
     if (destChainId) {
@@ -738,6 +746,33 @@ export const RecoveryContent = memo(function RecoveryContent() {
       dispatch(crossChainRecoverySteps(opId, t));
     }
   }, [dispatch, opId, t]);
+
+  // If the API returned no refund amount, show a placeholder message with just a close button
+  if (!hasRefundAmount && pendingOp) {
+    return (
+      <>
+        <Title text={t(titleKey)} />
+        <div className={css(styles.content, styles.recoveryContent)}>
+          <div className={classes.message}>{t('Transactn-Recovery-Unknown')}</div>
+        </div>
+        <div className={classes.buttons}>
+          <CloseButton />
+        </div>
+      </>
+    );
+  }
+
+  const directionKey = mode === TransactMode.Withdraw ? 'Withdraw' : 'Deposit';
+  const gasKey = hasNoGas ? '-NoGas' : '';
+  const refreshKey = needsNewQuote ? '-Refresh' : '';
+  const messageKey = `Transactn-Recovery-${directionKey}${gasKey}${refreshKey}` as const;
+
+  const messageParams = {
+    amount: formattedAmount,
+    token: destUsdcToken?.symbol ?? 'USDC',
+    chain: destChain?.name ?? '',
+    gasToken: destNativeToken?.symbol ?? '',
+  };
 
   const finaliseNoun = mode === TransactMode.Withdraw ? t('Withdraw-noun') : t('Deposit-noun');
 
@@ -758,8 +793,7 @@ export const RecoveryContent = memo(function RecoveryContent() {
     );
   } else if (hasValidQuote) {
     actionButton = (
-      <AnimatedButton
-        needFire={true}
+      <Button
         variant="recovery"
         fullWidth={true}
         borderless={true}
@@ -767,12 +801,11 @@ export const RecoveryContent = memo(function RecoveryContent() {
         onClick={handleFinalise}
       >
         {t('Transact-Finalise', { type: finaliseNoun })}
-      </AnimatedButton>
+      </Button>
     );
   } else if (needsNewQuote) {
     actionButton = (
-      <AnimatedButton
-        needFire={true}
+      <Button
         variant="recovery"
         fullWidth={true}
         borderless={true}
@@ -780,7 +813,7 @@ export const RecoveryContent = memo(function RecoveryContent() {
         onClick={handleFetchQuote}
       >
         {isFetchingQuote ? t('Transact-FetchingQuote') : t('Transact-FetchNewQuote')}
-      </AnimatedButton>
+      </Button>
     );
   }
 

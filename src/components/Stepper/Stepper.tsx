@@ -1,14 +1,8 @@
 import { styled } from '@repo/styles/jsx';
 import { type FC, memo, useEffect } from 'react';
-import { crossChainClearRecoveryQuote } from '../../features/data/actions/wallet/cross-chain.ts';
-import {
-  stepperSetRecoveryExecution,
-  stepperSetStepContent,
-  stepperUpdateCurrentStep,
-} from '../../features/data/actions/wallet/stepper.ts';
+import { stepperUpdateCurrentStep } from '../../features/data/actions/wallet/stepper.ts';
 import { StepContent as StepContentEnum } from '../../features/data/reducers/wallet/stepper-types.ts';
 import {
-  selectIsStepperRecoveryExecution,
   selectStepperCurrentStepData,
   selectStepperState,
   selectStepperStepContent,
@@ -42,7 +36,6 @@ const StepperImpl = () => {
   const content = useAppSelector(selectStepperStepContent);
   const StepContent = stepToComponent[content];
   const steps = useAppSelector(selectStepperState);
-  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
 
   useEffect(() => {
     if (!isEmpty(currentStepData) && steps.modal && currentStepData.pending === false) {
@@ -50,14 +43,6 @@ const StepperImpl = () => {
       dispatch(currentStepData.action);
     }
   }, [currentStepData, dispatch, steps.currentStep, steps.modal]);
-
-  useEffect(() => {
-    if (isRecoveryExecution && content === StepContentEnum.ErrorTx && steps.modal) {
-      dispatch(crossChainClearRecoveryQuote());
-      dispatch(stepperSetRecoveryExecution(false));
-      dispatch(stepperSetStepContent({ stepContent: StepContentEnum.RecoveryTx }));
-    }
-  }, [isRecoveryExecution, content, steps.modal, dispatch]);
 
   if (!steps.modal) {
     return null;

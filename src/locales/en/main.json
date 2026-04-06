@@ -389,6 +389,7 @@
   "Transactn-Recovery-Action-Refresh": "Press the button below to refresh the quote and continue.",
   "Transactn-Recovery-Action-NoGas": "You need some {{gasToken}} on {{chain}} to execute the final swap. Add {{gasToken}} to your wallet, then press the button below to continue.",
   "Transactn-Recovery-Action-NoGas-Refresh": "You need some {{gasToken}} on {{chain}} to execute the final swap. Add {{gasToken}} to your wallet, then press the button below to refresh the quote and continue.",
+  "Transactn-Recovery-Unknown": "Something went wrong with your cross-chain transaction. Please contact support for assistance.",
   "Transactn-Confirmed": "{{currentStep}} / {{totalTxs}} Transaction confirmed",
   "Transactn-ViewTrnsactn": "View transaction",
   "Remember": "Remember: ",
