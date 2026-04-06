@@ -1,14 +1,11 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AnimatedButton } from '../../../../../../components/Button/AnimatedButton.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import {
-  transactSteps,
-  transactStepsClaimGov,
-} from '../../../../../data/actions/wallet/transact.ts';
+import { transactSteps } from '../../../../../data/actions/wallet/transact.ts';
 import type {
   CrossChainWithdrawQuote,
   GovComposerZapWithdrawQuote,
@@ -26,14 +23,19 @@ import {
   isGovVault,
   type VaultGov,
 } from '../../../../../data/entities/vault.ts';
+import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { selectGovVaultPendingRewards } from '../../../../../data/selectors/balance.ts';
-import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
+import {
+  selectIsStepperStepping,
+  selectStepperStepContent,
+} from '../../../../../data/selectors/stepper.ts';
 import {
   selectTransactConfirmNeededWithChanges,
   selectTransactExecuting,
+  selectTransactForceSelection,
   selectTransactQuoteStatus,
   selectTransactSelectedQuoteOrUndefined,
+  selectTransactSuccessClosed,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import {
@@ -41,7 +43,6 @@ import {
   selectIsVaultGov,
   selectVaultById,
 } from '../../../../../data/selectors/vaults.ts';
-import { selectWalletAddress } from '../../../../../data/selectors/wallet.ts';
 import { ActionConnectSwitchWithFees as ActionConnectSwitch } from './ActionConnectSwitch.tsx';
 import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
@@ -52,6 +53,12 @@ import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotic
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
 import { styles } from './styles.ts';
 import { getExecutionChainId } from '../../../../../../helpers/transactUtils.ts';
+import {
+  transactClearInput,
+  transactSetSuccessClosed,
+} from '../../../../../data/actions/transact.ts';
+import { stepperReset } from '../../../../../data/actions/wallet/stepper.ts';
+import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -70,9 +77,18 @@ export const WithdrawActionsStandard = memo(function WithdrawActionsStandard() {
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const option = quote ? quote.option : null;
+  const successClosed = useAppSelector(selectTransactSuccessClosed);
+  const isSuccessTx = useAppSelector(selectStepperStepContent) === StepContent.SuccessTx;
+
+  if (successClosed || isSuccessTx) {
+    return <ActionCloseWithdraw />;
+  }
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
-    return <ActionWithdrawDisabled />;
+    if (quoteStatus === TransactStatus.Pending) {
+      return <ActionWithdrawPending />;
+    }
+    return <ActionWithdrawSelectFlow />;
   }
 
   return <ActionWithdraw quote={quote} option={option} />;
@@ -85,6 +101,14 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
   const vault = useAppSelector(state => selectGovVaultById(state, vaultId));
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
+  const successClosed = useAppSelector(selectTransactSuccessClosed);
+  const isSuccessTx = useAppSelector(selectStepperStepContent) === StepContent.SuccessTx;
+  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const connectSwitchChainId = forceSelection ? undefined : vault.chainId;
+
+  if (successClosed || isSuccessTx) {
+    return <ActionCloseWithdraw />;
+  }
 
   const showWithdraw =
     quote &&
@@ -92,47 +116,103 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
       isGovComposerWithdrawQuote(quote) ||
       isCrossChainWithdrawQuote(quote)) &&
     quoteStatus === TransactStatus.Fulfilled;
-  const showClaim = !isCowcentratedLikeVault(vault);
 
   return (
     <>
       {showWithdraw ?
         <ActionClaimWithdraw quote={quote} vault={vault} />
-      : <ActionConnectSwitch
+      : quoteStatus === TransactStatus.Pending ?
+        <ActionConnectSwitch
           css={styles.feesContainer}
           FeesComponent={VaultFees}
-          chainId={vault.chainId}
+          chainId={connectSwitchChainId}
         >
           <div className={classes.feesContainer}>
             <Button variant="cta" disabled={true} fullWidth={true} borderless={true}>
               {t('Transact-Withdraw')}
             </Button>
-            {showClaim ?
-              <ActionClaim vault={vault} />
-            : null}
             <VaultFees />
           </div>
         </ActionConnectSwitch>
-      }
+      : <ActionWithdrawGovSelectFlow vault={vault} />}
     </>
   );
 });
 
-const ActionWithdrawDisabled = memo(function ActionWithdrawDisabled() {
+const ActionWithdrawPending = memo(function ActionWithdrawPending() {
   const { t } = useTranslation();
   const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const connectSwitchChainId = forceSelection ? undefined : vault.chainId;
 
   return (
     <div className={classes.feesContainer}>
-      <ActionConnectSwitch chainId={vault.chainId}>
+      <ActionConnectSwitch chainId={connectSwitchChainId}>
         <Button variant="cta" disabled={true} fullWidth={true} borderless={true}>
           {t('Transact-Withdraw')}
         </Button>
       </ActionConnectSwitch>
       {!isGovVault(vault) && <VaultFees />}
     </div>
+  );
+});
+
+const ActionWithdrawSelectFlow = memo(function ActionWithdrawSelectFlow() {
+  const classes = useStyles();
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const { ctaLabel, openSelectStep } = useTransactSelectFlowCta();
+  const connectSwitchChainId = forceSelection ? undefined : vault.chainId;
+
+  return (
+    <div className={classes.feesContainer}>
+      <ActionConnectSwitch chainId={connectSwitchChainId}>
+        <Button
+          variant="cta"
+          fullWidth={true}
+          borderless={true}
+          disabled={!forceSelection}
+          onClick={forceSelection ? openSelectStep : undefined}
+        >
+          {ctaLabel}
+        </Button>
+      </ActionConnectSwitch>
+      {!isGovVault(vault) && <VaultFees />}
+    </div>
+  );
+});
+
+type ActionWithdrawGovSelectFlowProps = { vault: VaultGov };
+const ActionWithdrawGovSelectFlow = memo(function ActionWithdrawGovSelectFlow({
+  vault,
+}: ActionWithdrawGovSelectFlowProps) {
+  const classes = useStyles();
+  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const { ctaLabel, openSelectStep } = useTransactSelectFlowCta();
+  const connectSwitchChainId = forceSelection ? undefined : vault.chainId;
+
+  return (
+    <ActionConnectSwitch
+      css={styles.feesContainer}
+      FeesComponent={VaultFees}
+      chainId={connectSwitchChainId}
+    >
+      <div className={classes.feesContainer}>
+        <Button
+          variant="cta"
+          fullWidth={true}
+          borderless={true}
+          disabled={!forceSelection}
+          onClick={forceSelection ? openSelectStep : undefined}
+        >
+          {ctaLabel}
+        </Button>
+        <VaultFees />
+      </div>
+    </ActionConnectSwitch>
   );
 });
 
@@ -169,9 +249,17 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
     isDisabledByScreamLiquidity ||
     isDisabledByNotEnoughInput;
 
+  const stepperContent = useAppSelector(selectStepperStepContent);
+
   const handleClick = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
+
+  const isCreating =
+    isExecuting ||
+    (isTxInProgress &&
+      (stepperContent === StepContent.StartTx || stepperContent === StepContent.WalletTx));
+  const isLoading = isExecuting || isTxInProgress;
 
   return (
     <>
@@ -188,15 +276,23 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
       <NotEnoughNotice mode="withdraw" onChange={setIsDisabledByNotEnoughInput} />
       <div className={classes.feesContainer}>
         <ActionConnectSwitch chainId={executionChainId}>
-          <Button
+          <AnimatedButton
             variant="cta"
+            loading={isLoading}
+            isCreating={isCreating}
             disabled={isDisabled}
             fullWidth={true}
             borderless={true}
             onClick={handleClick}
           >
-            {t(isMaxAll ? 'Transact-WithdrawAll' : 'Transact-Withdraw')}
-          </Button>
+            {isCreating ?
+              t('Transact-CreatingTransaction')
+            : isTxInProgress ?
+              t('Transact-WithdrawInProgress')
+            : confirmNeededWithChanges ?
+              t(isMaxAll ? 'Transact-ConfirmWithdrawAll' : 'Transact-ConfirmWithdraw')
+            : t(isMaxAll ? 'Transact-WithdrawAll' : 'Transact-Withdraw')}
+          </AnimatedButton>
         </ActionConnectSwitch>
         {import.meta.env.DEV ?
           <TenderlyTransactButton option={option} quote={quote} />
@@ -240,9 +336,17 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
     isDisabledByNotEnoughInput;
   const showClaim = !isCowcentratedLikeVault(vault);
 
+  const stepperContent = useAppSelector(selectStepperStepContent);
+
   const handleWithdraw = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
+
+  const isCreating =
+    isExecuting ||
+    (isTxInProgress &&
+      (stepperContent === StepContent.StartTx || stepperContent === StepContent.WalletTx));
+  const isLoading = isExecuting || isTxInProgress;
 
   return (
     <>
@@ -252,70 +356,70 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
       <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <NotEnoughNotice mode="withdraw" onChange={setIsDisabledByNotEnoughInput} />
-      <div className={classes.buttons}>
+      <div className={classes.feesContainer}>
         <ActionConnectSwitch
           FeesComponent={VaultFees}
           css={styles.feesContainer}
           chainId={option.chainId}
         >
-          <Button
+          <AnimatedButton
             variant="cta"
+            loading={isLoading}
+            isCreating={isCreating}
             disabled={isDisabled}
             fullWidth={true}
             borderless={true}
             onClick={handleWithdraw}
           >
-            {t(
-              isMaxAll ?
-                quote.outputs.length > 1 && showClaim ?
-                  'Transact-Claim-WithdrawAll'
-                : 'Transact-WithdrawAll'
-              : 'Transact-Withdraw'
-            )}
-          </Button>
-          <div className={classes.feesContainer}>
-            {showClaim ?
-              <ActionClaim vault={vault} />
-            : null}
-            <VaultFees />
-          </div>
+            {isCreating ?
+              t('Transact-CreatingTransaction')
+            : isTxInProgress ?
+              t('Transact-WithdrawInProgress')
+            : confirmNeededWithChanges ?
+              t(isMaxAll ? 'Transact-ConfirmWithdrawAll' : 'Transact-ConfirmWithdraw')
+            : t(
+                isMaxAll ?
+                  quote.outputs.length > 1 && showClaim ?
+                    'Transact-Claim-WithdrawAll'
+                  : 'Transact-WithdrawAll'
+                : 'Transact-Withdraw'
+              )
+            }
+          </AnimatedButton>
+
+          {import.meta.env.DEV ?
+            <TenderlyTransactButton option={option} quote={quote} />
+          : null}
+          <VaultFees />
         </ActionConnectSwitch>
-        {import.meta.env.DEV ?
-          <TenderlyTransactButton option={option} quote={quote} />
-        : null}
       </div>
     </>
   );
 });
 
-type ActionClaimProps = {
-  vault: VaultGov;
-};
-const ActionClaim = memo(function ActionClaim({ vault }: ActionClaimProps) {
+const ActionCloseWithdraw = memo(function ActionCloseWithdraw() {
   const { t } = useTranslation();
+  const classes = useStyles();
   const dispatch = useAppDispatch();
-  const walletAddress = useAppSelector(selectWalletAddress);
-  const pendingRewards = useAppSelector(state =>
-    selectGovVaultPendingRewards(state, vault.id, walletAddress)
-  );
-  const isTxInProgress = useAppSelector(selectIsStepperStepping);
-  const isExecuting = useAppSelector(selectTransactExecuting);
-  const isDisabled = useMemo(() => {
-    return isTxInProgress || isExecuting || !pendingRewards.some(r => r.amount.gt(BIG_ZERO));
-  }, [pendingRewards, isTxInProgress, isExecuting]);
-  const handleClaim = useCallback(() => {
-    dispatch(transactStepsClaimGov(vault, t));
-  }, [dispatch, vault, t]);
+
+  const handleClose = useCallback(() => {
+    dispatch(transactSetSuccessClosed(false));
+    dispatch(transactClearInput());
+    dispatch(stepperReset());
+  }, [dispatch]);
 
   return (
-    <Button
-      variant="cta"
-      disabled={isDisabled}
-      fullWidth={true}
-      borderless={true}
-      onClick={handleClaim}
-    >
-      {t('Transact-Claim-RewardsOnly')}
-    </Button>
+    <div className={classes.feesContainer}>
+      <AnimatedButton
+        isConfirmed={true}
+        variant="cta"
+        fullWidth={true}
+        borderless={true}
+        onClick={handleClose}
+      >
+        {t('Transactn-Close')}
+      </AnimatedButton>
+      <VaultFees />
+    </div>
   );
 });

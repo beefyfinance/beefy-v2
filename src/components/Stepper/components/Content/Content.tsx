@@ -1,17 +1,37 @@
 import { css, cx } from '@repo/styles/css';
+import type BigNumber from 'bignumber.js';
 import { type FC, memo, type MouseEventHandler, type ReactNode, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { resetWallet } from '../../../../features/data/actions/wallet/common.ts';
+import {
+  transactClearInput,
+  transactSetSuccessClosed,
+} from '../../../../features/data/actions/transact.ts';
 import { stepperReset } from '../../../../features/data/actions/wallet/stepper.ts';
+import {
+  crossChainClearRecoveryQuote,
+  crossChainFetchRecoveryQuote,
+  crossChainRecoverySteps,
+} from '../../../../features/data/actions/wallet/cross-chain.ts';
+import { askForNetworkChange } from '../../../../features/data/actions/wallet.ts';
 import { isWalletActionError } from '../../../../features/data/actions/wallet/wallet-action.ts';
-import type { VaultEntity } from '../../../../features/data/entities/vault.ts';
 import type { Step } from '../../../../features/data/reducers/wallet/stepper-types.ts';
+import { TransactMode } from '../../../../features/data/reducers/wallet/transact-types.ts';
+import { TransactStatus } from '../../../../features/data/reducers/wallet/transact-types.ts';
 import type { BridgeAdditionalData } from '../../../../features/data/reducers/wallet/wallet-action-types.ts';
 import { selectChainById } from '../../../../features/data/selectors/chains.ts';
+import { selectUserBalanceOfToken } from '../../../../features/data/selectors/balance.ts';
+import { selectChainNativeToken } from '../../../../features/data/selectors/tokens.ts';
+import { selectVaultById } from '../../../../features/data/selectors/vaults.ts';
+import type { VaultEntity } from '../../../../features/data/entities/vault.ts';
 import {
   selectBoostAdditionalData,
   selectBoostClaimed,
   selectBridgeSuccess,
+  selectCrossChainDstDust,
+  selectCrossChainDstReceived,
+  selectCrossChainSrcReturned,
+  selectIsStepperRecoveryExecution,
+  selectIsStepperStepping,
   selectMintResult,
   selectStepperBridgeStatus,
   selectStepperCurrentStep,
@@ -19,6 +39,16 @@ import {
   selectStepperItems,
   selectZapReturned,
 } from '../../../../features/data/selectors/stepper.ts';
+import {
+  selectCrossChainRecoveryQuoteOpId,
+  selectCrossChainRecoveryQuoteStatus,
+  selectTransactExecuting,
+  selectTransactMode,
+} from '../../../../features/data/selectors/transact.ts';
+import {
+  selectCurrentChainId,
+  selectIsWalletConnected,
+} from '../../../../features/data/selectors/wallet.ts';
 import { ShareButton } from '../../../../features/vault/components/ShareButton/ShareButton.tsx';
 import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { formatTokenDisplayCondensed } from '../../../../helpers/format.ts';
@@ -26,6 +56,7 @@ import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { explorerTxUrl } from '../../../../helpers/url.ts';
 import { useAppDispatch, useAppSelector } from '../../../../features/data/store/hooks.ts';
 import iconError from '../../../../images/icons/error.svg';
+import { AnimatedButton } from '../../../Button/AnimatedButton.tsx';
 import { Button } from '../../../Button/Button.tsx';
 import { CircularProgress } from '../../../CircularProgress/CircularProgress.tsx';
 import { ListJoin } from '../../../ListJoin.tsx';
@@ -133,11 +164,16 @@ export const ErrorContent = memo(function ErrorContent() {
 export const CloseButton = memo(function CloseButton() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
 
   const handleClose = useCallback(() => {
+    if (isRecoveryExecution) {
+      dispatch(crossChainClearRecoveryQuote());
+    }
+    dispatch(transactSetSuccessClosed(false));
+    dispatch(transactClearInput());
     dispatch(stepperReset());
-    dispatch(resetWallet());
-  }, [dispatch]);
+  }, [dispatch, isRecoveryExecution]);
 
   return (
     <Button borderless={true} fullWidth={true} variant="default" onClick={handleClose}>
@@ -150,36 +186,235 @@ type SuccessContentProps = {
   step: Step;
 };
 
+function formatTokenAmountsList(
+  items: { amount: BigNumber; token: { decimals: number; symbol: string } }[]
+) {
+  return (
+    <ListJoin
+      items={items.map(
+        item =>
+          `${formatTokenDisplayCondensed(item.amount, item.token.decimals)} ${item.token.symbol}`
+      )}
+    />
+  );
+}
+
+type ChainGroupedTokensProps = {
+  items: { amount: BigNumber; token: { decimals: number; symbol: string }; chainName: string }[];
+};
+
+function ChainGroupedTokens({ items }: ChainGroupedTokensProps) {
+  const byChain = new Map<string, typeof items>();
+  for (const item of items) {
+    const group = byChain.get(item.chainName);
+    if (group) {
+      group.push(item);
+    } else {
+      byChain.set(item.chainName, [item]);
+    }
+  }
+
+  const groups: ReactNode[] = [];
+  for (const [chainName, chainItems] of byChain) {
+    const tokenLabels = chainItems.map(
+      item =>
+        `${formatTokenDisplayCondensed(item.amount, item.token.decimals)} ${item.token.symbol}`
+    );
+    groups.push(
+      <>
+        <ListJoin items={tokenLabels} /> on {chainName}
+      </>
+    );
+  }
+
+  if (groups.length === 1) {
+    return <>{groups[0]}</>;
+  }
+
+  return (
+    <>
+      {groups.reduce<ReactNode>(
+        (acc, group, i) =>
+          i === 0 ? group : (
+            <>
+              {acc}, and {group}
+            </>
+          ),
+        null
+      )}
+    </>
+  );
+}
+
 const ZapSuccessContent = memo(function ZapSuccessContent({ step }: SuccessContentProps) {
   const { t } = useTranslation();
   const returned = useAppSelector(selectZapReturned);
+  const srcReturned = useAppSelector(selectCrossChainSrcReturned);
+  const bridgeStatus = useAppSelector(selectStepperBridgeStatus);
+  const pendingOp = useAppSelector(state =>
+    bridgeStatus?.opId ? state.ui.transact.crossChain.pendingOps[bridgeStatus.opId] : undefined
+  );
+  const vault = useAppSelector(state =>
+    pendingOp?.vaultId ? selectVaultById(state, pendingOp.vaultId) : undefined
+  );
+  const srcChain = useAppSelector(state =>
+    pendingOp?.sourceChainId ? selectChainById(state, pendingOp.sourceChainId) : undefined
+  );
+  const destChain = useAppSelector(state =>
+    pendingOp?.destChainId ? selectChainById(state, pendingOp.destChainId) : undefined
+  );
+  const dstReceived = useAppSelector(selectCrossChainDstReceived);
+  const dstDust = useAppSelector(selectCrossChainDstDust);
+
+  const isCrossChain = !!pendingOp && !!vault && !!srcChain && !!destChain;
 
   const dust = useMemo(() => {
-    if (returned.length) {
+    if (!isCrossChain) {
+      if (returned.length) {
+        return { element: formatTokenAmountsList(returned), isSingle: returned.length === 1 };
+      }
+      return undefined;
+    }
+
+    const allDust: {
+      amount: BigNumber;
+      token: { decimals: number; symbol: string };
+      chainName: string;
+    }[] = [];
+    for (const item of srcReturned) {
+      allDust.push({ ...item, chainName: srcChain.name });
+    }
+    for (const item of dstDust) {
+      allDust.push({ ...item, chainName: destChain.name });
+    }
+    if (allDust.length) {
+      return { element: <ChainGroupedTokens items={allDust} />, isSingle: allDust.length === 1 };
+    }
+    return undefined;
+  }, [isCrossChain, returned, dstDust, srcReturned, srcChain, destChain]);
+
+  const title = useMemo(() => {
+    if (isCrossChain) {
+      return pendingOp.direction === 'withdraw' ?
+          t('Stepper-CrossChain-Withdraw-Success-Title')
+        : t('Stepper-CrossChain-Deposit-Success-Title');
+    }
+    return t(`Stepper-${step.step}-Success-Title`);
+  }, [isCrossChain, pendingOp, step.step, t]);
+
+  const receivedLine = useMemo(() => {
+    if (isCrossChain && dstReceived.length) {
+      let displayItems;
+      if (pendingOp.direction === 'deposit' && vault.assetType !== 'single') {
+        displayItems = dstReceived.map(item => ({
+          ...item,
+          token: { ...item.token, symbol: 'LP' },
+        }));
+      } else if (pendingOp.direction === 'withdraw') {
+        const outputSymbol = pendingOp.expectedOutput.token.symbol;
+        displayItems = dstReceived.map(item => ({
+          ...item,
+          token: { ...item.token, symbol: outputSymbol },
+        }));
+      } else {
+        displayItems = dstReceived;
+      }
+      const received = formatTokenAmountsList(displayItems);
       return (
-        <ListJoin
-          items={returned.map(
-            item =>
-              `${formatTokenDisplayCondensed(item.amount, item.token.decimals)} ${
-                item.token.symbol
-              }`
-          )}
+        <Trans
+          t={t}
+          i18nKey={
+            pendingOp.direction === 'withdraw' ?
+              'Stepper-CrossChain-Withdraw-Received'
+            : 'Stepper-CrossChain-Deposit-Received'
+          }
+          components={{ received }}
         />
       );
     }
     return undefined;
-  }, [returned]);
+  }, [isCrossChain, dstReceived, pendingOp, vault, t]);
+
+  const dustLine = useMemo(() => {
+    if (dust) {
+      return (
+        <Trans
+          t={t}
+          i18nKey={dust.isSingle ? 'Stepper-Dust-Single' : 'Stepper-Dust'}
+          components={{ dust: dust.element }}
+        />
+      );
+    }
+    return undefined;
+  }, [dust, t]);
+
+  const message = useMemo(() => {
+    if (isCrossChain) {
+      const { sourceInput, expectedOutput } = pendingOp;
+      const inputAmount = formatTokenDisplayCondensed(
+        sourceInput.amount,
+        sourceInput.token.decimals
+      );
+      const vaultChain = pendingOp.direction === 'deposit' ? destChain : srcChain;
+
+      const mainText =
+        pendingOp.direction === 'withdraw' ?
+          t('Stepper-CrossChain-Withdraw-Success-Content', {
+            amount: inputAmount,
+            token: sourceInput.token.symbol,
+            vaultName: vault.names.singleMeta,
+            vaultChain: vaultChain.name,
+            outputToken: expectedOutput.token.symbol,
+            destChain: destChain.name,
+          })
+        : t('Stepper-CrossChain-Deposit-Success-Content', {
+            amount: inputAmount,
+            token: sourceInput.token.symbol,
+            srcChain: srcChain.name,
+            vaultName: vault.names.singleMeta,
+            vaultChain: vaultChain.name,
+          });
+
+      const hasExtra = receivedLine || dustLine;
+      return (
+        <>
+          <div>{mainText}</div>
+          {hasExtra ?
+            <div style={{ marginTop: '12px' }}>
+              {receivedLine}
+              {receivedLine && dustLine ? ' ' : null}
+              {dustLine}
+            </div>
+          : null}
+        </>
+      );
+    }
+    return t(`Stepper-${step.step}-Success-Content`);
+  }, [isCrossChain, pendingOp, vault, srcChain, destChain, step.step, t, receivedLine, dustLine]);
+
+  const messageHighlight = useMemo(() => {
+    if (!isCrossChain && dust) {
+      return (
+        <Trans
+          t={t}
+          i18nKey={dust.isSingle ? 'Stepper-Dust-Single' : 'Stepper-Dust'}
+          components={{ dust: dust.element }}
+        />
+      );
+    }
+    return undefined;
+  }, [isCrossChain, dust, t]);
+
+  const isDeposit = isCrossChain ? pendingOp.direction === 'deposit' : step.step === 'zap-in';
 
   return (
     <SuccessContentDisplay
-      title={t(`Stepper-${step.step}-Success-Title`)}
-      message={t(`Stepper-${step.step}-Success-Content`)}
-      messageHighlight={
-        dust ? <Trans t={t} i18nKey={`Stepper-Dust`} components={{ dust }} /> : undefined
-      }
-      rememberTitle={step.step === 'zap-in' ? t('Remember') : undefined}
-      rememberMessage={step.step === 'zap-in' ? t('Remember-Msg') : undefined}
-      shareVaultId={step.step === 'zap-in' ? step.extraInfo?.vaultId || undefined : undefined}
+      title={title}
+      message={message}
+      messageHighlight={messageHighlight}
+      rememberTitle={isDeposit ? t('Remember') : undefined}
+      rememberMessage={isDeposit ? t('Remember-Msg') : undefined}
+      shareVaultId={isDeposit ? step.extraInfo?.vaultId || pendingOp?.vaultId : undefined}
     />
   );
 });
@@ -411,27 +646,22 @@ const stepToSuccessContent: StepToSuccessContent = {
 export const BridgingContent = memo(function BridgingContent() {
   const { t } = useTranslation();
   const classes = useStyles();
-  const bridgeStatus = useAppSelector(selectStepperBridgeStatus);
-
-  const statusKey =
-    bridgeStatus?.lifecycleState ?
-      `Transactn-Bridging-Status-${bridgeStatus.lifecycleState}`
-    : undefined;
+  const mode = useAppSelector(selectTransactMode);
+  const titleKey =
+    mode === TransactMode.Withdraw ? 'Transactn-Bridging-Withdraw' : 'Transactn-Bridging-Deposit';
 
   return (
     <>
       <Title
         text={
           <>
-            <SpinLoader size={16} css={css.raw({ marginRight: '8px' })} />
-            {t('Transactn-Bridging')}
+            {t(titleKey)}
+            <SpinLoader size={20} css={css.raw({ marginLeft: '8px' })} />
           </>
         }
       />
-      <div className={css(styles.content, styles.successContent)}>
-        <div className={classes.message}>
-          {statusKey ? t(statusKey) : t('Transactn-Bridging-Wait')}
-        </div>
+      <div className={css(styles.content, styles.bridgingContent)}>
+        <div className={classes.message}>{t('Transactn-Bridging-Wait')}</div>
       </div>
     </>
   );
@@ -440,13 +670,132 @@ export const BridgingContent = memo(function BridgingContent() {
 export const RecoveryContent = memo(function RecoveryContent() {
   const { t } = useTranslation();
   const classes = useStyles();
+  const dispatch = useAppDispatch();
+  const mode = useAppSelector(selectTransactMode);
+  const bridgeStatus = useAppSelector(selectStepperBridgeStatus);
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+  const connectedChainId = useAppSelector(selectCurrentChainId);
+  const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const recoveryQuoteStatus = useAppSelector(selectCrossChainRecoveryQuoteStatus);
+  const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
+  const isExecuting = useAppSelector(selectTransactExecuting);
+
+  const opId = bridgeStatus?.opId ?? recoveryQuoteOpId;
+  const pendingOp = useAppSelector(state =>
+    opId ? state.ui.transact.crossChain.pendingOps[opId] : undefined
+  );
+  const destChainId = bridgeStatus?.destChainId;
+  const destChain = useAppSelector(state =>
+    destChainId ? selectChainById(state, destChainId) : undefined
+  );
+  const isOnCorrectChain = connectedChainId === destChainId;
+  const isFetchingQuote = recoveryQuoteStatus === TransactStatus.Pending;
+
+  const destNativeToken = useAppSelector(state =>
+    destChainId ? selectChainNativeToken(state, destChainId) : undefined
+  );
+  const destNativeBalance = useAppSelector(state =>
+    destNativeToken ?
+      selectUserBalanceOfToken(state, destNativeToken.chainId, destNativeToken.address)
+    : undefined
+  );
+  const hasNoGas = destNativeBalance !== undefined && destNativeBalance.isZero();
+
+  const hasValidQuote =
+    opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
+  const needsNewQuote = !isRecoveryExecution && !hasValidQuote;
+
+  const titleKey =
+    mode === TransactMode.Withdraw ? 'Transactn-Bridging-Withdraw' : 'Transactn-Bridging-Deposit';
+
+  const directionKey = mode === TransactMode.Withdraw ? 'Withdraw' : 'Deposit';
+  const gasKey = hasNoGas ? '-NoGas' : '';
+  const refreshKey = needsNewQuote ? '-Refresh' : '';
+  const messageKey = `Transactn-Recovery-${directionKey}${gasKey}${refreshKey}` as const;
+
+  const messageParams = {
+    amount: pendingOp?.recovery.bridgedAmount ?? '',
+    token: 'USDC',
+    chain: destChain?.name ?? '',
+    gasToken: destNativeToken?.symbol ?? '',
+  };
+
+  const handleSwitchChain = useCallback(() => {
+    if (destChainId) {
+      dispatch(askForNetworkChange({ chainId: destChainId }));
+    }
+  }, [dispatch, destChainId]);
+
+  const handleFetchQuote = useCallback(() => {
+    if (opId) {
+      dispatch(crossChainFetchRecoveryQuote({ opId }));
+    }
+  }, [dispatch, opId]);
+
+  const handleFinalise = useCallback(() => {
+    if (opId) {
+      dispatch(crossChainRecoverySteps(opId, t));
+    }
+  }, [dispatch, opId, t]);
+
+  const finaliseNoun = mode === TransactMode.Withdraw ? t('Withdraw-noun') : t('Deposit-noun');
+
+  let actionButton: ReactNode;
+  if (!isWalletConnected) {
+    actionButton = null;
+  } else if (!isOnCorrectChain && destChainId) {
+    actionButton = (
+      <Button
+        variant="recovery"
+        fullWidth={true}
+        borderless={true}
+        disabled={isTxInProgress}
+        onClick={handleSwitchChain}
+      >
+        {t('Transact-RecoverySwitchChainType', { type: finaliseNoun })}
+      </Button>
+    );
+  } else if (hasValidQuote) {
+    actionButton = (
+      <AnimatedButton
+        needFire={true}
+        variant="recovery"
+        fullWidth={true}
+        borderless={true}
+        disabled={isTxInProgress || isExecuting}
+        onClick={handleFinalise}
+      >
+        {t('Transact-Finalise', { type: finaliseNoun })}
+      </AnimatedButton>
+    );
+  } else if (needsNewQuote) {
+    actionButton = (
+      <AnimatedButton
+        needFire={true}
+        variant="recovery"
+        fullWidth={true}
+        borderless={true}
+        disabled={isTxInProgress || isFetchingQuote || !opId}
+        onClick={handleFetchQuote}
+      >
+        {isFetchingQuote ? t('Transact-FetchingQuote') : t('Transact-FetchNewQuote')}
+      </AnimatedButton>
+    );
+  }
 
   return (
     <>
-      <Title text={t('Transactn-Recovery')} />
-      <div className={css(styles.content, styles.successContent)}>
-        <div className={classes.message}>{t('Transactn-Recovery-Wait')}</div>
+      <Title text={t(titleKey)} />
+      <div className={css(styles.content, styles.recoveryContent)}>
+        <div className={classes.message}>{t(messageKey, messageParams)}</div>
+        <div className={cx(classes.message, css(styles.recoveryActionMessage))}>
+          {t(`Transactn-Recovery-Action${gasKey}${refreshKey}` as const, messageParams)}
+        </div>
       </div>
+      {actionButton ?
+        <div className={classes.buttons}>{actionButton}</div>
+      : null}
     </>
   );
 });

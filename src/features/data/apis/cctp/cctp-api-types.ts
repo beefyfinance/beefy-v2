@@ -1,7 +1,9 @@
 export type MessageLifecycleState =
   | 'discovered'
   | 'awaiting_attestation'
+  | 'pending_attestation'
   | 'attestation_received'
+  | 'awaiting_message_received'
   | 'ready_to_relay'
   | 'pending_tx'
   | 'confirmed'

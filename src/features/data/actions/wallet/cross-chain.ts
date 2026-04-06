@@ -39,11 +39,22 @@ import type {
   ZapQuoteStep,
 } from '../../apis/transact/transact-types.ts';
 import { createAppAsyncThunk } from '../../utils/store-utils.ts';
+import { fetchCCTPDstTokensReturned } from '../cctp.ts';
 import { fetchAllowanceAction } from '../allowance.ts';
 import { transactSetExecuting } from '../transact.ts';
-import { bindTransactionEvents, captureWalletErrors, txStart, txWallet } from './common.ts';
+import {
+  bindTransactionEvents,
+  captureWalletErrors,
+  selectVaultTokensToRefresh,
+  txStart,
+  txWallet,
+} from './common.ts';
 import { approve } from './approval.ts';
-import { stepperSetRecoveryExecution, stepperStartWithSteps } from './stepper.ts';
+import {
+  stepperSetBridgeStatus,
+  stepperSetRecoveryExecution,
+  stepperStartWithSteps,
+} from './stepper.ts';
 
 type GasPriceCache = {
   chainId: ChainEntity['id'];
@@ -92,6 +103,7 @@ export type CrossChainExecuteMetadata = {
   sourceDisplaySteps: ZapQuoteStep[];
   destDisplaySteps: ZapQuoteStep[];
   recovery: CrossChainRecoveryParams;
+  twoStep?: boolean;
 };
 
 /**
@@ -211,6 +223,7 @@ export const crossChainZapExecuteOrder = (
         sourceDisplaySteps: metadata.sourceDisplaySteps,
         destDisplaySteps: metadata.destDisplaySteps,
         recovery: metadata.recovery,
+        twoStep: metadata.twoStep,
         createdAt: now,
         updatedAt: now,
       })
@@ -345,6 +358,11 @@ export const crossChainRecoveryExecuteOrder = (
     txWallet(dispatch);
     const transaction = contract.write.executeOrder([castedOrder, castedSteps], options);
 
+    const refreshTokens = uniqBy(
+      [...selectVaultTokensToRefresh(state, vault), ...expectedTokens],
+      'id'
+    );
+
     bindTransactionEvents(
       dispatch,
       transaction,
@@ -360,7 +378,7 @@ export const crossChainRecoveryExecuteOrder = (
         walletAddress: address,
         chainId: destChainId,
         spenderAddress: zap.manager,
-        tokens: expectedTokens,
+        tokens: refreshTokens,
         clearInput: false,
       }
     );
@@ -378,6 +396,7 @@ export const crossChainRecoveryExecuteOrder = (
                   destTxHash: hash,
                 })
               );
+              dispatch(fetchCCTPDstTokensReturned({ destChainId, dstTxHash: hash }));
             } else {
               dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-failed' }));
             }
@@ -590,9 +609,19 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
       steps.push(recoveryStep);
 
       console.debug('[Recovery] Starting stepper with', steps.length, 'steps');
+      const existingBridgeStatus = getState().ui.stepperState.bridgeStatus;
       dispatch(transactSetExecuting(false));
       dispatch(stepperStartWithSteps(steps, op.recovery.destChainId));
       dispatch(stepperSetRecoveryExecution(true));
+      dispatch(
+        stepperSetBridgeStatus({
+          ...existingBridgeStatus,
+          opId,
+          srcChainId: op.sourceChainId,
+          destChainId: op.destChainId,
+          vaultId: op.vaultId,
+        })
+      );
     } finally {
       dispatch(transactSetExecuting(false));
     }

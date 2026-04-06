@@ -1,23 +1,23 @@
 import BigNumber from 'bignumber.js';
+import { type Abi, parseEventLogs } from 'viem';
 import { CCTP_CONFIG } from '../../../config/cctp/cctp-config.ts';
 import type { MessageLifecycleState, MessageListResponse } from '../apis/cctp/cctp-api-types.ts';
 import { getCCTPApi } from '../apis/instances.ts';
+import { rpcClientManager } from '../apis/rpc-contract/rpc-manager.ts';
 import type { ChainEntity } from '../entities/chain.ts';
+import type { TokenEntity } from '../entities/token.ts';
+import type { DstTokenReturned } from '../reducers/wallet/stepper-types.ts';
 import { StepContent } from '../reducers/wallet/stepper-types.ts';
 import { selectChainById } from '../selectors/chains.ts';
 import { selectStepperBridgeStatus } from '../selectors/stepper.ts';
 import { selectTokenByAddress } from '../selectors/tokens.ts';
 import { selectVaultById } from '../selectors/vaults.ts';
+import { selectWalletAddress } from '../selectors/wallet.ts';
 import type { BeefyState, BeefyThunk } from '../store/types.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { fetchBalanceAction } from './balance.ts';
-import { transactClearInput } from './transact.ts';
 import { crossChainFetchRecoveryQuote, crossChainOpStatusUpdate } from './wallet/cross-chain.ts';
-import {
-  stepperSetBridgeStatus,
-  stepperSetModel,
-  stepperSetStepContent,
-} from './wallet/stepper.ts';
+import { stepperSetBridgeStatus, stepperSetStepContent } from './wallet/stepper.ts';
 
 const POLL_INTERVAL_MS = 2000;
 
@@ -58,38 +58,59 @@ export function pollCCTPBridgeStatus({
         const message = result.messages?.[0];
 
         if (!message) {
-          console.debug('[CCTP] No messages yet, polling again...');
           schedulePoll();
           return;
         }
 
-        console.debug('[CCTP] Bridge status:', message.lifecycleState, {
-          dstZapSuccess: message.dstZapSuccess,
-          dstTxHash: message.dstTxHash,
-        });
         dispatch(stepperSetBridgeStatus({ lifecycleState: message.lifecycleState }));
 
         if (message.dstTxHash && message.dstZapSuccess === false) {
-          console.debug('[CCTP] Zap failed on destination:', message.lifecycleState);
-          dispatch(handleBridgeFailure(message.dstRefundedAmount, getState));
+          dispatch(handleDestinationRecovery(message.dstRefundedAmount, getState));
           return;
         }
 
         if (message.lifecycleState === 'confirmed' && message.dstTxHash) {
-          console.debug('[CCTP] Bridge confirmed, dstTxHash:', message.dstTxHash);
           dispatch(stepperSetBridgeStatus({ dstTxHash: message.dstTxHash }));
-          dispatch(stepperSetStepContent({ stepContent: StepContent.SuccessTx }));
-          dispatch(transactClearInput());
           dispatch(fetchVaultChainBalances(getState));
+
+          const bridgeStatusForDst = selectStepperBridgeStatus(getState());
+          if (bridgeStatusForDst?.destChainId) {
+            dispatch(
+              fetchCCTPDstTokensReturned({
+                destChainId: bridgeStatusForDst.destChainId,
+                dstTxHash: message.dstTxHash,
+              })
+            );
+          }
+
+          if (bridgeStatusForDst?.srcChainId) {
+            dispatch(
+              fetchCrossChainSrcTokensReturned({
+                srcChainId: bridgeStatusForDst.srcChainId,
+                srcTxHash: txHash,
+              })
+            );
+          }
+
+          // When hookData exceeded the CCTP message size limit, the source tx bridged
+          // USDC directly to the user's wallet instead of through the receiver contract.
+          // Now that the bridge is confirmed, route to recovery so the user can execute
+          // the destination deposit/swap as a separate transaction.
+          const bridgeStatus = selectStepperBridgeStatus(getState());
+          const op =
+            bridgeStatus?.opId ?
+              getState().ui.transact.crossChain.pendingOps[bridgeStatus.opId]
+            : undefined;
+          if (op?.twoStep) {
+            dispatch(handleDestinationRecovery(message.dstAmountIn, getState));
+          } else {
+            dispatch(stepperSetStepContent({ stepContent: StepContent.SuccessTx }));
+          }
           return;
         }
 
         if (TERMINAL_STATES.has(message.lifecycleState)) {
-          console.debug(
-            '[CCTP] Terminal state (e.g. abandoned/zap_failed):',
-            message.lifecycleState
-          );
-          dispatch(handleBridgeFailure(message.dstRefundedAmount, getState));
+          dispatch(handleDestinationRecovery(message.dstRefundedAmount, getState));
           return;
         }
 
@@ -108,7 +129,7 @@ export function pollCCTPBridgeStatus({
   };
 }
 
-function handleBridgeFailure(
+function handleDestinationRecovery(
   dstRefundedAmount: string | null,
   getState: () => BeefyState
 ): BeefyThunk {
@@ -152,16 +173,136 @@ function handleBridgeFailure(
       );
     }
 
+    dispatch(stepperSetStepContent({ stepContent: StepContent.RecoveryTx }));
+
     try {
       await dispatch(crossChainFetchRecoveryQuote({ opId })).unwrap();
     } catch (err) {
       console.warn('[CCTP] Recovery quote fetch failed (will retry from form):', err);
     }
-
-    dispatch(stepperSetStepContent({ stepContent: StepContent.RecoveryTx }));
-    dispatch(stepperSetModel({ modal: false }));
   };
 }
+
+const tokenReturnedAbi = [
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'token', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' },
+    ],
+    name: 'TokenReturned',
+    type: 'event',
+  },
+] as const satisfies Abi;
+
+const transferAbi = [
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'from', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'to', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
+    ],
+    name: 'Transfer',
+    type: 'event',
+  },
+] as const satisfies Abi;
+
+export const fetchCCTPDstTokensReturned = createAppAsyncThunk<
+  DstTokenReturned[],
+  { destChainId: ChainEntity['id']; dstTxHash: string }
+>('cctp/fetchCCTPDstTokensReturned', async ({ destChainId, dstTxHash }, { getState }) => {
+  const publicClient = rpcClientManager.getSingleClient(destChainId);
+  const receipt = await publicClient.getTransactionReceipt({
+    hash: dstTxHash as `0x${string}`,
+  });
+
+  const tokenReturnedEvents = parseEventLogs({
+    abi: tokenReturnedAbi,
+    logs: receipt.logs,
+    eventName: 'TokenReturned',
+  });
+
+  const results: DstTokenReturned[] = [];
+  for (const e of tokenReturnedEvents) {
+    if (e.args.amount > 0n) {
+      results.push({
+        tokenAddress: e.args.token,
+        amount: e.args.amount.toString(10),
+      });
+    }
+  }
+
+  const state: BeefyState = getState();
+  const bridgeStatus = selectStepperBridgeStatus(state);
+  const op =
+    bridgeStatus?.opId ? state.ui.transact.crossChain.pendingOps[bridgeStatus.opId] : undefined;
+
+  if (op) {
+    const vault = selectVaultById(state, op.vaultId);
+    const receiptAddress =
+      op.direction === 'deposit' ?
+        vault.contractAddress.toLowerCase()
+      : op.expectedOutput.token.address.toLowerCase();
+
+    const alreadyCaptured = results.some(r => r.tokenAddress.toLowerCase() === receiptAddress);
+
+    if (!alreadyCaptured) {
+      const userAddress = selectWalletAddress(state)?.toLowerCase();
+      if (userAddress) {
+        const transferEvents = parseEventLogs({
+          abi: transferAbi,
+          logs: receipt.logs,
+          eventName: 'Transfer',
+        });
+
+        for (const evt of transferEvents) {
+          if (
+            evt.address.toLowerCase() === receiptAddress &&
+            evt.args.to.toLowerCase() === userAddress
+          ) {
+            results.push({
+              tokenAddress: evt.address,
+              amount: evt.args.value.toString(10),
+            });
+          }
+        }
+      }
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return results;
+});
+
+export const fetchCrossChainSrcTokensReturned = createAppAsyncThunk<
+  DstTokenReturned[],
+  { srcChainId: ChainEntity['id']; srcTxHash: string }
+>('cctp/fetchCrossChainSrcTokensReturned', async ({ srcChainId, srcTxHash }) => {
+  const publicClient = rpcClientManager.getSingleClient(srcChainId);
+  const receipt = await publicClient.getTransactionReceipt({
+    hash: srcTxHash as `0x${string}`,
+  });
+
+  const tokenReturnedEvents = parseEventLogs({
+    abi: tokenReturnedAbi,
+    logs: receipt.logs,
+    eventName: 'TokenReturned',
+  });
+
+  const results: DstTokenReturned[] = [];
+  for (const e of tokenReturnedEvents) {
+    if (e.args.amount > 0n) {
+      results.push({
+        tokenAddress: e.args.token,
+        amount: e.args.amount.toString(10),
+      });
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return results;
+});
 
 function fetchVaultChainBalances(getState: () => BeefyState): BeefyThunk {
   return dispatch => {
@@ -170,15 +311,26 @@ function fetchVaultChainBalances(getState: () => BeefyState): BeefyThunk {
     if (!bridgeStatus) return;
 
     const { destChainId, vaultId } = bridgeStatus;
+    if (!vaultId) return;
+
     const vault = selectVaultById(state, vaultId);
-    const cctpConfig = CCTP_CONFIG.chains[destChainId];
 
-    const tokens = [];
-    if (cctpConfig) {
-      const usdc = selectTokenByAddress(state, destChainId, cctpConfig.usdcAddress);
-      tokens.push(usdc);
+    const vaultChainTokens: TokenEntity[] = [];
+    const vaultChainCctp = CCTP_CONFIG.chains[vault.chainId];
+    if (vaultChainCctp) {
+      vaultChainTokens.push(selectTokenByAddress(state, vault.chainId, vaultChainCctp.usdcAddress));
     }
+    dispatch(
+      fetchBalanceAction({ chainId: vault.chainId, tokens: vaultChainTokens, vaults: [vault] })
+    );
 
-    dispatch(fetchBalanceAction({ chainId: destChainId, tokens, vaults: [vault] }));
+    if (destChainId !== vault.chainId) {
+      const destTokens: TokenEntity[] = [];
+      const destCctp = CCTP_CONFIG.chains[destChainId];
+      if (destCctp) {
+        destTokens.push(selectTokenByAddress(state, destChainId, destCctp.usdcAddress));
+      }
+      dispatch(fetchBalanceAction({ chainId: destChainId, tokens: destTokens }));
+    }
   };
 }

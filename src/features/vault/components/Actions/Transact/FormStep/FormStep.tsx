@@ -100,7 +100,7 @@ export const FormStep = memo(function FormStep() {
         onChange={handleModeChange}
         TabComponent={HighlightableTab}
       />
-      <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} height={344} />}>
+      <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} height={468} />}>
         <Component />
         <FormStepFooter />
       </Suspense>
