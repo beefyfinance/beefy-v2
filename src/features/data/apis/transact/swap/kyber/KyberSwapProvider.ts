@@ -52,7 +52,7 @@ export class KyberSwapProvider implements ISwapProvider {
       amountIn: toWeiString(request.fromAmount, request.fromToken.decimals),
       gasInclude: true,
       saveGas: false,
-      onlySinglePath: true,
+      // onlySinglePath: true,
     };
 
     const quote = await api.getQuote(quoteRequest);

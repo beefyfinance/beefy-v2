@@ -25,7 +25,6 @@ import {
   getUSDCForChain,
   isChainSupported,
   buildHookData,
-  isHookDataOversized,
 } from '../../cctp/CCTPProvider.ts';
 import type { ZapPayload } from '../../cctp/types.ts';
 import { bridgeSlippageReturned, mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
@@ -75,7 +74,7 @@ import {
   isComposableStrategy,
 } from '../IStrategy.ts';
 import type { CrossChainStrategyConfig, QuoteSelectionConfig } from '../strategy-configs.ts';
-import { getTransactApi } from '../../../../apis/instances.ts';
+import { getTransactApi } from '../../../instances.ts';
 import {
   crossChainZapExecuteOrder,
   crossChainRecoveryExecuteOrder,
@@ -244,7 +243,9 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     });
 
     const destQuoteSelection: QuoteSelectionConfig = {
-      maxUsesPerProvider: { kyber: 1 },
+      maxUsesPerProvider: {
+        /*kyber: 1*/
+      },
       maxUsesStrict: false,
     };
 
@@ -412,8 +413,11 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       relay: NO_RELAY,
       route: breakdown.zapRequest.steps,
     };
-    const hookData = buildHookData(destChainId, zapPayload);
-    const isTwoStep = isHookDataOversized(hookData);
+    const {
+      hookData,
+      receiver,
+      oversized: isTwoStep,
+    } = buildHookData(sourceChainId, destChainId, zapPayload);
     console.log('[cross-chain] fetchDepositStep: hook data built', { isTwoStep });
 
     // 5. Balance check: self-transfer to assert minimum USDC before burn
@@ -427,7 +431,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
     // 6. CCTP burn step
     const sourceConfig = getChainConfig(sourceChainId);
-    const destConfig = getChainConfig(destChainId);
     const maxFee =
       sourceConfig.fastFeeBps !== undefined ?
         toWeiBigInt(
@@ -455,7 +458,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         sourceChainId,
         destChainId,
         bridgeToken.address,
-        destConfig.receiver as Address,
+        receiver,
         maxFee,
         hookData
       );
@@ -787,7 +790,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const sourceZapSteps: ZapStep[] = [...breakdown.zapRequest.steps];
 
     const sourceConfig = getChainConfig(sourceChainId);
-    const destConfig = getChainConfig(destChainId);
 
     // 3. Compute step-time USDC from source withdrawal output (slippage-adjusted)
     const usdcOutput = quote.sourceWithdrawQuote.outputs.find(
@@ -898,8 +900,14 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         route: destSwapZap.zaps,
       };
 
-      const hookData = buildHookData(destChainId, zapPayload);
-      isTwoStep = isHookDataOversized(hookData);
+      const { hookData, receiver, oversized } = buildHookData(
+        sourceChainId,
+        destChainId,
+        zapPayload
+      );
+      if (oversized) {
+        isTwoStep = true;
+      }
       console.log('[cross-chain] fetchWithdrawStep: dest hook data built', { isTwoStep });
 
       if (isTwoStep) {
@@ -921,7 +929,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
           sourceChainId,
           destChainId,
           bridgeToken.address,
-          destConfig.receiver as Address,
+          receiver,
           maxFee,
           hookData
         );
@@ -1442,7 +1450,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
           `[cross-chain] findDestStrategyForDeposit: strategy '${strategy.id}' failed`,
           err
         );
-        continue;
       }
     }
     // Fallback: bridge token IS the vault's deposit token → direct deposit (no swap needed)
@@ -1496,7 +1503,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
           `[cross-chain] findVaultStrategyForUSDCWithdraw: strategy '${strategy.id}' failed`,
           err
         );
-        continue;
       }
     }
 
