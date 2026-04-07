@@ -30,11 +30,7 @@ import {
   onlyOneInput,
   onlyOneToken,
 } from '../../helpers/options.ts';
-import {
-  calculatePriceImpact,
-  highestFeeOrZero,
-  selectQuotesRespectingProviderLimits,
-} from '../../helpers/quotes.ts';
+import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
 import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { QuoteRequest } from '../../swap/ISwapProvider.ts';
@@ -73,7 +69,7 @@ import type {
   UserlessZapWithdrawBreakdown,
   ZapTransactHelpers,
 } from '../IStrategy.ts';
-import type { CowcentratedStrategyConfig, QuoteSelectionConfig } from '../strategy-configs.ts';
+import type { CowcentratedStrategyConfig } from '../strategy-configs.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -144,8 +140,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
 
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: CowcentratedZapDepositOption,
-    quoteSelection?: QuoteSelectionConfig
+    option: CowcentratedZapDepositOption
   ): Promise<CowcentratedZapDepositQuote> {
     const input = onlyOneInput(inputs);
 
@@ -154,7 +149,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     }
 
     if (option.swapVia === 'aggregator') {
-      return this.fetchDepositQuoteAggregator(input, option, quoteSelection);
+      return this.fetchDepositQuoteAggregator(input, option);
     } else {
       throw new Error('Cowcentrated strategy: Unsupported swap method');
     }
@@ -559,8 +554,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
 
   protected async fetchDepositQuoteAggregator(
     input: InputTokenAmount,
-    option: CowcentratedZapDepositOption,
-    quoteSelection?: QuoteSelectionConfig
+    option: CowcentratedZapDepositOption
   ): Promise<CowcentratedZapDepositQuote> {
     const { getState, zap, swapAggregator } = this.helpers;
     const state = getState();
@@ -622,22 +616,21 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
         return await swapAggregator.fetchQuotes(quoteRequest, state, this.options.swap);
       })
     );
-    // Validate that we got quotes for every requested swap
-    for (let i = 0; i < quotesPerLpToken.length; i++) {
-      if (quotesPerLpToken[i] === undefined && quoteRequestsPerLpToken[i] !== undefined) {
-        const quoteRequest = quoteRequestsPerLpToken[i]!;
-        throw new Error(
-          `No quotes found for ${quoteRequest.fromToken.symbol} -> ${quoteRequest.toToken.symbol}`
-        );
+    const quotePerLpToken = quotesPerLpToken.map((quotes, i) => {
+      if (quotes === undefined) {
+        const quoteRequest = quoteRequestsPerLpToken[i];
+        if (quoteRequest === undefined) {
+          return undefined;
+        } else {
+          throw new Error(
+            `No quotes found for ${quoteRequest.fromToken.symbol} -> ${quoteRequest.toToken.symbol}`
+          );
+        }
       }
-    }
 
-    // Select best quotes respecting provider limits (fetchQuotes already sorted by toAmount)
-    const quotePerLpToken = selectQuotesRespectingProviderLimits(
-      quotesPerLpToken,
-      this.helpers.getState(),
-      quoteSelection
-    );
+      // fetchQuotes is already sorted by toAmount
+      return first(quotes);
+    });
 
     // Build LP
     const lpTokenAmounts = quotePerLpToken.map((quote, i) => {

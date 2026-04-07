@@ -67,7 +67,7 @@ import {
   type UserlessZapWithdrawBreakdown,
   type ZapTransactHelpers,
 } from '../IStrategy.ts';
-import type { GovComposerStrategyConfig, QuoteSelectionConfig } from '../strategy-configs.ts';
+import type { GovComposerStrategyConfig } from '../strategy-configs.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -147,8 +147,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
 
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: GovComposerDepositOption,
-    quoteSelection?: QuoteSelectionConfig
+    option: GovComposerDepositOption
   ): Promise<GovComposerZapDepositQuote> {
     const { underlyingOption } = option;
     if (underlyingOption.strategyId === 'vault') {
@@ -202,8 +201,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     // Quote to be fetched via underlying strategy
     const underlyingQuote = await this.underlyingStrategy.fetchDepositQuote(
       inputs,
-      underlyingOption,
-      quoteSelection
+      underlyingOption
     );
 
     // const modOutputs = underlyingQuote.outputs.map(output => ({

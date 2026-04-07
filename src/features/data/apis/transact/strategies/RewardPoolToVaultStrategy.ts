@@ -73,7 +73,7 @@ import type {
   ZapStepResponse,
 } from '../zap/types.ts';
 import type { IZapStrategy, ZapTransactHelpers } from './IStrategy.ts';
-import type { QuoteSelectionConfig, RewardPoolToVaultStrategyConfig } from './strategy-configs.ts';
+import type { RewardPoolToVaultStrategyConfig } from './strategy-configs.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -248,8 +248,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
 
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: RewardPoolToVaultDepositOption,
-    _quoteSelection?: QuoteSelectionConfig
+    option: RewardPoolToVaultDepositOption
   ): Promise<RewardPoolToVaultDepositQuote> {
     await this.connectSecondVaultEntity();
     if (isCowcentratedStandardVault(this.mainVault)) {

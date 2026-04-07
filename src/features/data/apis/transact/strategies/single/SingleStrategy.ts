@@ -76,7 +76,7 @@ import type {
   UserlessZapWithdrawBreakdown,
   ZapTransactHelpers,
 } from '../IStrategy.ts';
-import type { QuoteSelectionConfig, SingleStrategyConfig } from '../strategy-configs.ts';
+import type { SingleStrategyConfig } from '../strategy-configs.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -178,8 +178,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
 
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: SingleDepositOption,
-    _quoteSelection?: QuoteSelectionConfig
+    option: SingleDepositOption
   ): Promise<SingleDepositQuote> {
     if (this.isDepositDisabled()) {
       throw new Error('Deposit zap is disabled');

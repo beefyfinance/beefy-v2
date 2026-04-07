@@ -25,7 +25,6 @@ import {
   getUSDCForChain,
   isChainSupported,
   buildHookData,
-  isHookDataOversized,
 } from '../../cctp/CCTPProvider.ts';
 import type { ZapPayload } from '../../cctp/types.ts';
 import { bridgeSlippageReturned, mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
@@ -74,8 +73,8 @@ import {
   type ZapTransactHelpers,
   isComposableStrategy,
 } from '../IStrategy.ts';
-import type { CrossChainStrategyConfig, QuoteSelectionConfig } from '../strategy-configs.ts';
-import { getTransactApi } from '../../../../apis/instances.ts';
+import type { CrossChainStrategyConfig } from '../strategy-configs.ts';
+import { getTransactApi } from '../../../instances.ts';
 import {
   crossChainZapExecuteOrder,
   crossChainRecoveryExecuteOrder,
@@ -146,8 +145,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: CrossChainDepositOption,
-    _quoteSelection?: QuoteSelectionConfig
+    option: CrossChainDepositOption
   ): Promise<CrossChainDepositQuote> {
     const { swapAggregator, getState } = this.helpers;
     const state = getState();
@@ -220,15 +218,10 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         `No composable destination strategy accepts USDC on chain ${destChainId} for vault ${option.vaultId}`
       );
     }
-    const destQuoteSelection: QuoteSelectionConfig = {
-      maxUsesPerProvider: { kyber: 1 },
-      maxUsesStrict: false,
-    };
 
     const destQuote = await destMatch.strategy.fetchDepositQuote(
       [{ token: destBridgeToken, amount: bridgeQuote.toAmount, max: false }],
-      destMatch.option,
-      destQuoteSelection
+      destMatch.option
     );
     let destSteps: ZapQuoteStep[] = isZapQuote(destQuote) ? destQuote.steps : [];
 
@@ -381,8 +374,12 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       relay: NO_RELAY,
       route: breakdown.zapRequest.steps,
     };
-    const hookData = buildHookData(destChainId, zapPayload);
-    const isTwoStep = isHookDataOversized(hookData);
+    const {
+      hookData,
+      receiver,
+      oversized: isTwoStep,
+    } = buildHookData(sourceChainId, destChainId, zapPayload);
+
     // 5. Balance check: self-transfer to assert minimum USDC before burn
     sourceZapSteps.push(
       this.buildBalanceCheckZapStep(
@@ -394,7 +391,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
     // 6. CCTP burn step
     const sourceConfig = getChainConfig(sourceChainId);
-    const destConfig = getChainConfig(destChainId);
     const maxFee =
       sourceConfig.fastFeeBps !== undefined ?
         toWeiBigInt(
@@ -419,7 +415,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         sourceChainId,
         destChainId,
         bridgeToken.address,
-        destConfig.receiver as Address,
+        receiver,
         maxFee,
         hookData
       );
@@ -720,7 +716,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const sourceZapSteps: ZapStep[] = [...breakdown.zapRequest.steps];
 
     const sourceConfig = getChainConfig(sourceChainId);
-    const destConfig = getChainConfig(destChainId);
 
     // 3. Compute step-time USDC from source withdrawal output (slippage-adjusted)
     const usdcOutput = quote.sourceWithdrawQuote.outputs.find(
@@ -826,8 +821,15 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         route: destSwapZap.zaps,
       };
 
-      const hookData = buildHookData(destChainId, zapPayload);
-      isTwoStep = isHookDataOversized(hookData);
+      const { hookData, receiver, oversized } = buildHookData(
+        sourceChainId,
+        destChainId,
+        zapPayload
+      );
+      if (oversized) {
+        isTwoStep = true;
+      }
+
       if (isTwoStep) {
         // hookData exceeds CCTP message size limit: bridge USDC to user's wallet via passthrough,
         // then recovery flow handles the destination swap
@@ -844,7 +846,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
           sourceChainId,
           destChainId,
           bridgeToken.address,
-          destConfig.receiver as Address,
+          receiver,
           maxFee,
           hookData
         );
@@ -1360,7 +1362,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
           `[cross-chain] findDestStrategyForDeposit: strategy '${strategy.id}' failed`,
           err
         );
-        continue;
       }
     }
     // Fallback: bridge token IS the vault's deposit token → direct deposit (no swap needed)
@@ -1410,7 +1411,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
           `[cross-chain] findVaultStrategyForUSDCWithdraw: strategy '${strategy.id}' failed`,
           err
         );
-        continue;
       }
     }
 

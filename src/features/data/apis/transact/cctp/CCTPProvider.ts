@@ -1,5 +1,12 @@
 import BigNumber from 'bignumber.js';
-import { type Address, type Hex, encodeAbiParameters, encodeFunctionData, pad } from 'viem';
+import {
+  type Address,
+  encodeAbiParameters,
+  encodeFunctionData,
+  encodePacked,
+  type Hex,
+  pad,
+} from 'viem';
 import { ZapPayloadAbiParams } from '../../../../../config/abi/CircleBeefyZapReceiverAbi.ts';
 import { CCTPTokenMessengerV2Abi } from '../../../../../config/abi/CCTPTokenMessengerV2Abi.ts';
 import { CCTP_CONFIG, type CCTPChainConfig } from '../../../../../config/cctp/cctp-config.ts';
@@ -10,10 +17,10 @@ import type { BeefyState } from '../../../store/types.ts';
 import { getInsertIndex, NO_RELAY } from '../helpers/zap.ts';
 import type { ZapStep } from '../zap/types.ts';
 import type { CCTPBridgeQuote, ZapPayload } from './types.ts';
+import { compressHex } from './compress.ts';
 
-const ZERO_BYTES32 = pad('0x00' as Hex, { size: 32 });
-
-const MAX_CCTP_MESSAGE_BODY_SIZE = 8192; // bytes
+// uint32(4) + bytes32 + bytes32 + uint256(32) + bytes32 + uint256(32) + uint256(32) + uint256(32) (+ bytes hookdata)
+const MIN_BURN_MESSAGE_BODY_SIZE = 228;
 
 export function getSupportedChainIds(): ChainEntity['id'][] {
   return Object.keys(CCTP_CONFIG.chains) as ChainEntity['id'][];
@@ -81,52 +88,6 @@ export function fetchBridgeQuote(
 }
 
 /**
- * Encode depositForBurn calldata (no hooks, unrestricted relay).
- * Used for simple cross-chain USDC transfers.
- */
-export function buildDepositForBurnCalldata(
-  destChainId: ChainEntity['id'],
-  mintRecipient: Address,
-  burnToken: Address,
-  maxFee: bigint
-): { data: Hex; amountIndex: number } {
-  const destConfig = getChainConfig(destChainId);
-
-  console.debug('[CCTP] buildDepositForBurnCalldata (simple)', {
-    destChainId,
-    destDomain: destConfig.domain,
-    mintRecipient,
-    burnToken,
-    destinationCaller: 'unrestricted (0x0)',
-    maxFee: maxFee.toString(),
-    minFinalityThreshold: 0,
-  });
-
-  const data = encodeFunctionData({
-    abi: CCTPTokenMessengerV2Abi,
-    functionName: 'depositForBurn',
-    args: [
-      0n, // amount: placeholder, ZapRouter inserts actual balance
-      destConfig.domain,
-      pad(mintRecipient, { size: 32 }),
-      burnToken,
-      ZERO_BYTES32, // destinationCaller: unrestricted
-      maxFee,
-      0, // minFinalityThreshold: fast (≤1000 treated as 1000 = confirmed)
-    ],
-  });
-
-  const amountIndex = getInsertIndex(0);
-
-  console.debug('[CCTP] buildDepositForBurnCalldata result', {
-    dataLength: data.length,
-    amountIndex,
-  });
-
-  return { data, amountIndex };
-}
-
-/**
  * Encode depositForBurnWithHook calldata (with hooks, restricted to receiver).
  * Used for cross-chain deposits that trigger a zap on the destination chain.
  */
@@ -135,7 +96,8 @@ export function buildDepositForBurnWithHookCalldata(
   mintRecipient: Address,
   burnToken: Address,
   maxFee: bigint,
-  hookData: Hex
+  hookData: Hex,
+  destinationCaller: Address = mintRecipient
 ): { data: Hex; amountIndex: number } {
   const destConfig = getChainConfig(destChainId);
 
@@ -144,7 +106,7 @@ export function buildDepositForBurnWithHookCalldata(
     destDomain: destConfig.domain,
     mintRecipient,
     burnToken,
-    destinationCaller: destConfig.receiver,
+    destinationCaller,
     maxFee: maxFee.toString(),
     minFinalityThreshold: 0,
     hookDataLength: hookData.length,
@@ -158,7 +120,7 @@ export function buildDepositForBurnWithHookCalldata(
       destConfig.domain,
       pad(mintRecipient, { size: 32 }),
       burnToken,
-      pad(destConfig.receiver as Address, { size: 32 }), // destinationCaller: restricted to receiver
+      pad(destinationCaller, { size: 32 }), // destinationCaller: restricted to receiver
       maxFee,
       0, // minFinalityThreshold: fast (≤1000 treated as 1000 = confirmed)
       hookData,
@@ -229,37 +191,65 @@ export function encodeZapPayload(payload: ZapPayload): Hex {
 
 /**
  * Build hookData for CircleBeefyZapReceiver.
- * Format: [20 bytes: receiver address] + [ABI-encoded ZapPayload]
+ * Format:
+ * v1: [20 bytes: receiver address] + [ABI-encoded ZapPayload]
+ * v2, uncompressed: [uint8(0) + ABI-encoded ZapPayload]
+ * v2, compressed: [uint8(1) + uint24(length) + compressed payload]
  */
-export function buildHookData(destChainId: ChainEntity['id'], zapPayload: ZapPayload): Hex {
+export function buildHookData(
+  sourceChainId: ChainEntity['id'],
+  destChainId: ChainEntity['id'],
+  zapPayload: ZapPayload
+): { receiver: Address; hookData: Hex; oversized: boolean } {
+  const sourceConfig = getChainConfig(sourceChainId);
   const destConfig = getChainConfig(destChainId);
   console.debug('[CCTP] buildHookData', {
+    sourceChainId,
     destChainId,
     receiver: destConfig.receiver,
   });
 
   const encodedPayload = encodeZapPayload(zapPayload);
-  // hookData = receiver address (20 bytes) + encoded ZapPayload (without 0x prefix)
-  const hookData = `${destConfig.receiver}${encodedPayload.slice(2)}` as Hex;
+  const availableBytes =
+    Math.min(sourceConfig.maxMessageBodySize, destConfig.maxMessageBodySize) -
+    MIN_BURN_MESSAGE_BODY_SIZE;
+  const payloadBytes = hexToBytesCount(encodedPayload);
+  const uncompressedHookDataByteSize = payloadBytes + 1;
 
-  const hookDataByteSize = (hookData.length - 2) / 2; // subtract 0x prefix, 2 hex chars per byte
+  // V2: no compression needed [uint8(0) + zap payload]
+  if (uncompressedHookDataByteSize <= availableBytes) {
+    console.debug('[CCTP] buildHookData result', {
+      type: 'uncompressed',
+      payloadBytes,
+      hookDataBytes: uncompressedHookDataByteSize,
+    });
+    return {
+      receiver: destConfig.receiver,
+      hookData: encodePacked(['uint8', 'bytes'], [0, encodedPayload]),
+      oversized: false,
+    };
+  }
+
+  // payload is bigger than uint24 max (this would revert anyway)
+  const maxUncompressedBytes = 2 ** 24 - 1; // uint24
+  if (payloadBytes > maxUncompressedBytes) {
+    throw new Error(`CCTP hookData payload size ${uncompressedHookDataByteSize} bytes exceeds max`);
+  }
+
+  // V2 compressed: [uint8(1) + uint24(length) + compressed payload]
+  const hookData = compressHex(encodedPayload); // already has the 4 byte header
+  const hookDataByteSize = hexToBytesCount(hookData);
   console.debug('[CCTP] buildHookData result', {
-    receiverLength: 42, // 0x + 40 chars
-    encodedPayloadLength: encodedPayload.length,
-    totalHookDataLength: hookData.length,
-    hookDataByteSize,
-    hookData,
+    type: 'compressed',
+    payloadBytes,
+    hookDataBytes: hexToBytesCount(hookData),
   });
 
-  return hookData;
-}
-
-/**
- * Check if hookData exceeds the CCTP message body size limit.
- */
-export function isHookDataOversized(hookData: Hex): boolean {
-  const hookDataByteSize = (hookData.length - 2) / 2;
-  return hookDataByteSize > MAX_CCTP_MESSAGE_BODY_SIZE;
+  return {
+    receiver: destConfig.receiver,
+    hookData,
+    oversized: hookDataByteSize > availableBytes,
+  };
 }
 
 /**
@@ -272,7 +262,8 @@ export function buildBurnZapStep(
   usdcAddress: string,
   mintRecipient: Address,
   maxFee: bigint,
-  hookData: Hex
+  hookData: Hex,
+  destinationCaller: Address = mintRecipient
 ): ZapStep {
   const sourceConfig = getChainConfig(sourceChainId);
   console.debug('[CCTP] buildBurnZapStep', {
@@ -289,7 +280,8 @@ export function buildBurnZapStep(
     mintRecipient,
     usdcAddress as Address,
     maxFee,
-    hookData
+    hookData,
+    destinationCaller
   );
 
   const zapStep: ZapStep = {
@@ -300,51 +292,6 @@ export function buildBurnZapStep(
   };
 
   console.debug('[CCTP] buildBurnZapStep result', {
-    target: zapStep.target,
-    value: zapStep.value,
-    dataLength: zapStep.data.length,
-    tokens: zapStep.tokens,
-  });
-
-  return zapStep;
-}
-
-/**
- * Build a ZapStep that calls depositForBurn on TokenMessengerV2.
- * Used for simple cross-chain USDC transfers (no hooks).
- */
-export function buildBurnZapStepSimple(
-  sourceChainId: ChainEntity['id'],
-  destChainId: ChainEntity['id'],
-  usdcAddress: string,
-  mintRecipient: Address,
-  maxFee: bigint
-): ZapStep {
-  const sourceConfig = getChainConfig(sourceChainId);
-  console.debug('[CCTP] buildBurnZapStepSimple', {
-    sourceChainId,
-    destChainId,
-    usdcAddress,
-    mintRecipient,
-    maxFee: maxFee.toString(),
-    tokenMessenger: sourceConfig.tokenMessenger,
-  });
-
-  const { data, amountIndex } = buildDepositForBurnCalldata(
-    destChainId,
-    mintRecipient,
-    usdcAddress as Address,
-    maxFee
-  );
-
-  const zapStep: ZapStep = {
-    target: sourceConfig.tokenMessenger,
-    value: '0',
-    data,
-    tokens: [{ token: usdcAddress, index: amountIndex }],
-  };
-
-  console.debug('[CCTP] buildBurnZapStepSimple result', {
     target: zapStep.target,
     value: zapStep.value,
     dataLength: zapStep.data.length,
@@ -385,11 +332,16 @@ export function buildBurnZapStepPassthrough(
     route: [],
   };
 
-  const hookData = buildHookData(destChainId, zapPayload);
+  const { hookData, receiver, oversized } = buildHookData(sourceChainId, destChainId, zapPayload);
+  if (oversized) {
+    throw new Error(
+      `CCTP hookData size exceeds maxMessageBodySize for chain ${destChainId}, cannot build passthrough ZapStep`
+    );
+  }
 
   const { data, amountIndex } = buildDepositForBurnWithHookCalldata(
     destChainId,
-    destConfig.receiver as Address,
+    receiver,
     usdcAddress,
     maxFee,
     hookData
@@ -410,4 +362,8 @@ export function buildBurnZapStepPassthrough(
   });
 
   return zapStep;
+}
+
+function hexToBytesCount(data: Hex): number {
+  return (data.length - 2) / 2;
 }

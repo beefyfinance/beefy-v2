@@ -5,7 +5,7 @@
  * Run: npx tsx scripts/updateCctpBridgeFees.ts
  */
 
-import { getContract, type Address } from 'viem';
+import { getContract } from 'viem';
 import { addressBook } from '@beefyfinance/blockchain-addressbook';
 import { getViemClient } from './common/viem.ts';
 import { appToAddressBookId } from './common/config.ts';
@@ -37,7 +37,7 @@ function getUsdcDecimals(chainId: AppChainId): number {
 async function fetchFeeUsd(chainId: AppChainId): Promise<{ feeUsd: number; feeRaw: string }> {
   const chainConfig = CCTP_CONFIG.chains[chainId];
   if (!chainConfig) throw new Error(`No CCTP config for chain ${chainId}`);
-  const receiverAddress = chainConfig.receiver as Address;
+  const receiverAddress = chainConfig.receiver;
   const usdcDecimals = getUsdcDecimals(chainId);
 
   const client = getViemClient(chainId);
