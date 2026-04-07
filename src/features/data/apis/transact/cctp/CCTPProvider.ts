@@ -209,81 +209,47 @@ export function buildHookData(
     receiver: destConfig.receiver,
   });
 
-  const stepCallDataSizes = zapPayload.route.map((step, i) => {
-    const callDataBytes = hexToBytesCount(step.data as Hex);
-    return { step: i, target: step.target, callDataBytes, tokenCount: step.tokens.length };
-  });
-  const totalCallDataBytes = stepCallDataSizes.reduce((sum, s) => sum + s.callDataBytes, 0);
-  console.log('[CCTP] buildHookData step callData sizes', {
-    steps: stepCallDataSizes,
-    totalCallDataBytes,
-  });
-
   const encodedPayload = encodeZapPayload(zapPayload);
   const availableBytes =
     Math.min(sourceConfig.maxMessageBodySize, destConfig.maxMessageBodySize) -
     MIN_BURN_MESSAGE_BODY_SIZE;
   const payloadBytes = hexToBytesCount(encodedPayload);
+  const uncompressedHookDataByteSize = payloadBytes + 1;
 
-  if (destConfig.receiver2) {
-    const uncompressedHookDataByteSize = payloadBytes + 1;
-
-    // V2: no compression needed [uint8(0) + zap payload]
-    if (uncompressedHookDataByteSize <= availableBytes) {
-      console.debug('[CCTP] buildHookData result', {
-        type: 'uncompressed',
-        payloadBytes,
-        hookDataBytes: uncompressedHookDataByteSize,
-      });
-      return {
-        receiver: destConfig.receiver2,
-        hookData: encodePacked(['uint8', 'bytes'], [0, encodedPayload]),
-        oversized: false,
-      };
-    }
-
-    // payload is bigger than uint24 max (this would revert anyway)
-    const maxUncompressedBytes = 2 ** 24 - 1; // uint24
-    if (payloadBytes > maxUncompressedBytes) {
-      throw new Error(
-        `CCTP hookData payload size ${uncompressedHookDataByteSize} bytes exceeds max`
-      );
-    }
-
-    // V2 compressed: [uint8(1) + uint24(length) + compressed payload]
-    const hookData = compressHex(encodedPayload); // already has the 4 byte header
-    const hookDataByteSize = hexToBytesCount(hookData);
+  // V2: no compression needed [uint8(0) + zap payload]
+  if (uncompressedHookDataByteSize <= availableBytes) {
     console.debug('[CCTP] buildHookData result', {
-      type: 'compressed',
+      type: 'uncompressed',
       payloadBytes,
-      hookDataBytes: hexToBytesCount(hookData),
+      hookDataBytes: uncompressedHookDataByteSize,
     });
-
-    return {
-      receiver: destConfig.receiver2,
-      hookData,
-      oversized: hookDataByteSize > availableBytes,
-    };
-  } else {
-    // V1: hookData = receiver address (20 bytes) + encoded ZapPayload (without 0x prefix)
-    const hookData = encodePacked(['address', 'bytes'], [destConfig.receiver, encodedPayload]);
-    const hookDataByteSize = payloadBytes + 20;
-
-    console.debug('[CCTP] buildHookData result', {
-      type: 'legacy',
-      receiverLength: 42, // 0x + 40 chars
-      encodedPayloadLength: encodedPayload.length,
-      totalHookDataLength: hookData.length,
-      hookDataByteSize,
-      hookData,
-    });
-
     return {
       receiver: destConfig.receiver,
-      hookData,
-      oversized: hookDataByteSize > availableBytes,
+      hookData: encodePacked(['uint8', 'bytes'], [0, encodedPayload]),
+      oversized: false,
     };
   }
+
+  // payload is bigger than uint24 max (this would revert anyway)
+  const maxUncompressedBytes = 2 ** 24 - 1; // uint24
+  if (payloadBytes > maxUncompressedBytes) {
+    throw new Error(`CCTP hookData payload size ${uncompressedHookDataByteSize} bytes exceeds max`);
+  }
+
+  // V2 compressed: [uint8(1) + uint24(length) + compressed payload]
+  const hookData = compressHex(encodedPayload); // already has the 4 byte header
+  const hookDataByteSize = hexToBytesCount(hookData);
+  console.debug('[CCTP] buildHookData result', {
+    type: 'compressed',
+    payloadBytes,
+    hookDataBytes: hexToBytesCount(hookData),
+  });
+
+  return {
+    receiver: destConfig.receiver,
+    hookData,
+    oversized: hookDataByteSize > availableBytes,
+  };
 }
 
 /**

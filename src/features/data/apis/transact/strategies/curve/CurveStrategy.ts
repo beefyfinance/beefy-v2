@@ -85,7 +85,7 @@ import type {
   UserlessZapWithdrawBreakdown,
   ZapTransactHelpers,
 } from '../IStrategy.ts';
-import type { CurveStrategyConfig, QuoteSelectionConfig } from '../strategy-configs.ts';
+import type { CurveStrategyConfig } from '../strategy-configs.ts';
 import { CurvePool } from './CurvePool.ts';
 import type { CurveMethod, CurveTokenOption } from './types.ts';
 
@@ -350,8 +350,7 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
 
   public async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: CurveDepositOption,
-    _quoteSelection?: QuoteSelectionConfig
+    option: CurveDepositOption
   ): Promise<CurveDepositQuote> {
     const { zap, getState } = this.helpers;
     const state = getState();

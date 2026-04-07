@@ -73,7 +73,7 @@ import {
   type ZapTransactHelpers,
   isComposableStrategy,
 } from '../IStrategy.ts';
-import type { CrossChainStrategyConfig, QuoteSelectionConfig } from '../strategy-configs.ts';
+import type { CrossChainStrategyConfig } from '../strategy-configs.ts';
 import { getTransactApi } from '../../../instances.ts';
 import {
   crossChainZapExecuteOrder,
@@ -145,8 +145,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: CrossChainDepositOption,
-    _quoteSelection?: QuoteSelectionConfig
+    option: CrossChainDepositOption
   ): Promise<CrossChainDepositQuote> {
     const { swapAggregator, getState } = this.helpers;
     const state = getState();
@@ -219,17 +218,10 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         `No composable destination strategy accepts USDC on chain ${destChainId} for vault ${option.vaultId}`
       );
     }
-    const destQuoteSelection: QuoteSelectionConfig = {
-      maxUsesPerProvider: {
-        /*kyber: 1*/
-      },
-      maxUsesStrict: false,
-    };
 
     const destQuote = await destMatch.strategy.fetchDepositQuote(
       [{ token: destBridgeToken, amount: bridgeQuote.toAmount, max: false }],
-      destMatch.option,
-      destQuoteSelection
+      destMatch.option
     );
     let destSteps: ZapQuoteStep[] = isZapQuote(destQuote) ? destQuote.steps : [];
 
@@ -387,7 +379,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       receiver,
       oversized: isTwoStep,
     } = buildHookData(sourceChainId, destChainId, zapPayload);
-    console.log('[cross-chain] fetchDepositStep: hook data built', { isTwoStep });
 
     // 5. Balance check: self-transfer to assert minimum USDC before burn
     sourceZapSteps.push(
