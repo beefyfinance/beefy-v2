@@ -292,16 +292,15 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
   if (isUnknownFailure) {
     return (
       <div className={classes.feesContainer}>
-        <Button
-          variant="cta"
+        <AnimatedButton
+          loading={true}
+          variant="recovery"
+          disabled={true}
           fullWidth={true}
           borderless={true}
-          onClick={() => {
-            dispatch(stepperReset());
-          }}
         >
-          {t('Transactn-Close')}
-        </Button>
+          {t('Transact-DepositInProgress')}
+        </AnimatedButton>
         <VaultFees />
       </div>
     );
