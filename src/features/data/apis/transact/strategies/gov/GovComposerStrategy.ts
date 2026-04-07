@@ -151,7 +151,6 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     quoteSelection?: QuoteSelectionConfig
   ): Promise<GovComposerZapDepositQuote> {
     const { underlyingOption } = option;
-    console.log('[gov-composer] starting quoting');
     if (underlyingOption.strategyId === 'vault') {
       const underlyingQuote = (await this.underlyingVaultType.fetchDepositQuote(
         inputs,
@@ -200,20 +199,17 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     if (!this.isMatchingDepositOption(underlyingOption)) {
       throw new Error('Invalid underlying deposit option');
     }
-    console.log('[gov-composer] fetching underlying quote');
     // Quote to be fetched via underlying strategy
     const underlyingQuote = await this.underlyingStrategy.fetchDepositQuote(
       inputs,
       underlyingOption,
       quoteSelection
     );
-    console.log('[gov-composer] fetched underlying quote');
 
     // const modOutputs = underlyingQuote.outputs.map(output => ({
     //   token: this.shareToken,
     //   amount: output.amount,
     // }));
-    console.log('[gov-composer] finished quoting');
 
     return {
       ...underlyingQuote,
@@ -730,8 +726,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     };
   }
 
-  protected buildZapUnstakeTx(govVaultAddress: string, amount: BigNumber, max: boolean): ZapStep {
-    if (max) console.log();
+  protected buildZapUnstakeTx(govVaultAddress: string, amount: BigNumber, _max: boolean): ZapStep {
     // TODO Add support for exit when max => we should also be adding every reward token to the list to be returned
     return {
       target: govVaultAddress,

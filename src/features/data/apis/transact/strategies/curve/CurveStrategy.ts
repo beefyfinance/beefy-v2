@@ -557,7 +557,6 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
       ],
       from: this.helpers.zap.router,
     });
-    console.log('fetchDepositStep::vaultDeposit', vaultDeposit);
     steps.push(vaultDeposit.zap);
     minBalances.subtractMany(vaultDeposit.inputs);
     minBalances.addMany(vaultDeposit.minOutputs);
