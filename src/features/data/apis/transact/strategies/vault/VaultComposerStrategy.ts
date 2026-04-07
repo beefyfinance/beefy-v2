@@ -53,7 +53,7 @@ import {
   type UserlessZapWithdrawBreakdown,
   type ZapTransactHelpers,
 } from '../IStrategy.ts';
-import type { QuoteSelectionConfig, VaultComposerStrategyConfig } from '../strategy-configs.ts';
+import type { VaultComposerStrategyConfig } from '../strategy-configs.ts';
 
 const strategyId = 'vault-composer';
 type StrategyId = typeof strategyId;
@@ -120,8 +120,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
 
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: VaultComposerDepositOption,
-    quoteSelection?: QuoteSelectionConfig
+    option: VaultComposerDepositOption
   ): Promise<VaultComposerZapDepositQuote> {
     const { underlyingOption } = option;
     if (underlyingOption.strategyId === 'vault') {
@@ -176,8 +175,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     // Quote to be fetched via underlying strategy
     const underlyingQuote = await this.underlyingStrategy.fetchDepositQuote(
       inputs,
-      underlyingOption,
-      quoteSelection
+      underlyingOption
     );
 
     // const modOutputs = underlyingQuote.outputs.map(output => ({

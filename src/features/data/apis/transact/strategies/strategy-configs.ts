@@ -15,13 +15,6 @@ export type StrategySwapConfig = {
   blockTokens?: string[];
 };
 
-export type QuoteSelectionConfig = {
-  /** Limit how many times a given provider can be used across multiple swaps in a single quote */
-  maxUsesPerProvider?: Partial<Record<SwapAggregatorId, number>>;
-  /** If true, throw when maxUsesPerProvider limits can't be satisfied; if false, fall back to best-effort */
-  maxUsesStrict?: boolean;
-};
-
 export type OptionalStrategySwapConfig = {
   swap?: StrategySwapConfig;
 };
