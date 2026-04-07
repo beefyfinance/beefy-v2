@@ -8,7 +8,6 @@ import {
 } from '../../../../features/data/actions/transact.ts';
 import { stepperReset } from '../../../../features/data/actions/wallet/stepper.ts';
 import {
-  crossChainClearRecoveryQuote,
   crossChainFetchRecoveryQuote,
   crossChainRecoverySteps,
 } from '../../../../features/data/actions/wallet/cross-chain.ts';
@@ -164,19 +163,32 @@ export const ErrorContent = memo(function ErrorContent() {
   );
 });
 
+/** Close the stepper without clearing inputs/quotes (e.g. on error, user can retry) */
 export const CloseButton = memo(function CloseButton() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
 
   const handleClose = useCallback(() => {
-    if (isRecoveryExecution) {
-      dispatch(crossChainClearRecoveryQuote());
-    }
+    dispatch(stepperReset());
+  }, [dispatch]);
+
+  return (
+    <Button borderless={true} fullWidth={true} variant="default" onClick={handleClose}>
+      {t('Transactn-Close')}
+    </Button>
+  );
+});
+
+/** Close the stepper AND clear inputs/quotes (after a successful tx) */
+const CloseAndResetButton = memo(function CloseAndResetButton() {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const handleClose = useCallback(() => {
     dispatch(transactSetSuccessClosed(false));
     dispatch(transactClearInput());
     dispatch(stepperReset());
-  }, [dispatch, isRecoveryExecution]);
+  }, [dispatch]);
 
   return (
     <Button borderless={true} fullWidth={true} variant="default" onClick={handleClose}>
@@ -473,7 +485,7 @@ const BridgeSuccessContent = memo<SuccessContentProps>(function BridgeSuccessCon
         </div>
       </div>
       <div className={classes.buttons}>
-        <CloseButton />
+        <CloseAndResetButton />
       </div>
     </>
   );
@@ -625,7 +637,7 @@ const SuccessContentDisplay = memo(function SuccessContentDisplay({
         {shareVaultId ?
           <ShareButton vaultId={shareVaultId} placement="bottom-start" />
         : null}
-        <CloseButton />
+        <CloseAndResetButton />
       </div>
     </>
   );
@@ -715,6 +727,8 @@ export const RecoveryContent = memo(function RecoveryContent() {
 
   // dstRefundedAmount is the raw wei amount from the CCTP API; format with USDC decimals
   const rawRefund = bridgeStatus?.dstRefundedAmount;
+  const isAbandoned =
+    bridgeStatus?.lifecycleState === 'abandoned' && (rawRefund == null || rawRefund === '0');
   const hasRefundAmount = rawRefund != null && destUsdcToken != null;
   const formattedAmount = useMemo(() => {
     if (!hasRefundAmount) return '';
@@ -747,8 +761,8 @@ export const RecoveryContent = memo(function RecoveryContent() {
     }
   }, [dispatch, opId, t]);
 
-  // If the API returned no refund amount, show a placeholder message with just a close button
-  if (!hasRefundAmount && pendingOp) {
+  // If the bridge was abandoned with no refund data, show an error message with just a close button
+  if (isAbandoned && pendingOp) {
     return (
       <>
         <Title text={t(titleKey)} />

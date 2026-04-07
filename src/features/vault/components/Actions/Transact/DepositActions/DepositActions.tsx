@@ -72,12 +72,6 @@ export const DepositActions = memo(function DepositActions() {
   const stepperContent = useAppSelector(selectStepperStepContent);
   const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
   const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
-  const successClosed = useAppSelector(selectTransactSuccessClosed);
-  const isSuccessTx = stepperContent === StepContent.SuccessTx;
-
-  if (successClosed || isSuccessTx) {
-    return <ActionClose />;
-  }
 
   if (stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null) {
     return <ActionRecoveryDeposit />;
@@ -163,6 +157,9 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const stepperContent = useAppSelector(selectStepperStepContent);
   const isExecuting = useAppSelector(selectTransactExecuting);
   const confirmNeededWithChanges = useAppSelector(selectTransactConfirmNeededWithChanges);
+  const successClosed = useAppSelector(selectTransactSuccessClosed);
+  const isSuccessTx = stepperContent === StepContent.SuccessTx;
+  const isComplete = successClosed || isSuccessTx;
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
@@ -180,9 +177,15 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
     isDisabledByGlpLock ||
     isDisabledByNotEnoughInput;
 
-  const handleClick = useCallback(() => {
+  const handleDeposit = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
+
+  const handleClose = useCallback(() => {
+    dispatch(transactSetSuccessClosed(false));
+    dispatch(transactClearInput());
+    dispatch(stepperReset());
+  }, [dispatch]);
 
   const isCreating =
     isExecuting ||
@@ -208,14 +211,17 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
         <ActionConnectSwitch chainId={executionChainId}>
           <AnimatedButton
             variant="cta"
-            loading={isLoading}
-            isCreating={isCreating}
+            loading={isComplete ? false : isLoading}
+            isCreating={isComplete ? false : isCreating}
+            isConfirmed={isComplete}
             disabled={isDisabled}
             fullWidth={true}
             borderless={true}
-            onClick={handleClick}
+            onClick={isComplete ? handleClose : handleDeposit}
           >
-            {isCreating ?
+            {isComplete ?
+              t('Transactn-Close')
+            : isCreating ?
               t('Transact-CreatingTransaction')
             : isTxInProgress ?
               t('Transact-DepositInProgress')
@@ -266,6 +272,11 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
 
   const needsNewQuote = recoveryOp != null && !isRecoveryExecution && !hasValidQuote;
 
+  // If the bridge was abandoned with no refund data, show a close button (matches stepper's unknown state)
+  const isUnknownFailure =
+    bridgeStatus?.lifecycleState === 'abandoned' &&
+    (bridgeStatus.dstRefundedAmount == null || bridgeStatus.dstRefundedAmount === '0');
+
   const handleFetchQuote = useCallback(() => {
     if (opId) {
       dispatch(crossChainFetchRecoveryQuote({ opId }));
@@ -277,6 +288,24 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
       dispatch(crossChainRecoverySteps(opId, t));
     }
   }, [dispatch, opId, t]);
+
+  if (isUnknownFailure) {
+    return (
+      <div className={classes.feesContainer}>
+        <Button
+          variant="cta"
+          fullWidth={true}
+          borderless={true}
+          onClick={() => {
+            dispatch(stepperReset());
+          }}
+        >
+          {t('Transactn-Close')}
+        </Button>
+        <VaultFees />
+      </div>
+    );
+  }
 
   if (!isWalletConnected) {
     return (
@@ -333,33 +362,6 @@ const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
         onClick={handleFinalise}
       >
         {t('Transact-FinaliseDeposit')}
-      </AnimatedButton>
-      <VaultFees />
-    </div>
-  );
-});
-
-const ActionClose = memo(function ActionClose() {
-  const { t } = useTranslation();
-  const classes = useStyles();
-  const dispatch = useAppDispatch();
-
-  const handleClose = useCallback(() => {
-    dispatch(transactSetSuccessClosed(false));
-    dispatch(transactClearInput());
-    dispatch(stepperReset());
-  }, [dispatch]);
-
-  return (
-    <div className={classes.feesContainer}>
-      <AnimatedButton
-        isConfirmed={true}
-        variant="cta"
-        fullWidth={true}
-        borderless={true}
-        onClick={handleClose}
-      >
-        {t('Transactn-Close')}
       </AnimatedButton>
       <VaultFees />
     </div>

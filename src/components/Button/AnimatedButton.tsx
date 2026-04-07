@@ -31,8 +31,7 @@ const LAYOUT = new Layout({
 const STATE_MACHINE_NAME = 'State Machine 1';
 
 // ---------------------------------------------------------------------------
-// Cow animation state context — single persistent Rive instance shared
-// across all AnimatedButton instances within a CowAnimationProvider.
+// Cow animation state context
 // ---------------------------------------------------------------------------
 
 type CowState = {
@@ -52,21 +51,15 @@ const DEFAULT_COW_STATE: CowState = {
 type CowContextValue = {
   state: CowState;
   setState: (state: CowState) => void;
-  registerPortalTarget: (el: HTMLDivElement | null) => void;
-  unregisterPortalTarget: (el: HTMLDivElement | null) => void;
+  registerPortalTarget: (el: HTMLDivElement) => void;
 };
 
 const CowContext = createContext<CowContextValue>({
   state: DEFAULT_COW_STATE,
   setState: () => {},
   registerPortalTarget: () => {},
-  unregisterPortalTarget: () => {},
 });
 
-/**
- * Wrap a group of AnimatedButtons so they share a single persistent cow
- * animation that doesn't remount when the active button component changes.
- */
 export const CowAnimationProvider = memo(function CowAnimationProvider({
   children,
 }: {
@@ -75,27 +68,13 @@ export const CowAnimationProvider = memo(function CowAnimationProvider({
   const [state, setState] = useState<CowState>(DEFAULT_COW_STATE);
   const [portalTarget, setPortalTarget] = useState<HTMLDivElement | null>(null);
 
-  // Use a stack so when old unmounts and new mounts in the same batch,
-  // we always have the latest target without a null gap.
-  const targetsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  const registerPortalTarget = useCallback((el: HTMLDivElement | null) => {
-    if (el) {
-      targetsRef.current.push(el);
-      setPortalTarget(el);
-    }
-  }, []);
-
-  const unregisterPortalTarget = useCallback((el: HTMLDivElement | null) => {
-    targetsRef.current = targetsRef.current.filter(t => t !== el);
-    // Use the latest remaining target, or null if none
-    const latest = targetsRef.current[targetsRef.current.length - 1] ?? null;
-    setPortalTarget(latest);
+  const registerPortalTarget = useCallback((el: HTMLDivElement) => {
+    setPortalTarget(el);
   }, []);
 
   const contextValue = useMemo(
-    () => ({ state, setState, registerPortalTarget, unregisterPortalTarget }),
-    [state, registerPortalTarget, unregisterPortalTarget]
+    () => ({ state, setState, registerPortalTarget }),
+    [state, registerPortalTarget]
   );
 
   const showCow =
@@ -110,7 +89,7 @@ export const CowAnimationProvider = memo(function CowAnimationProvider({
 });
 
 // ---------------------------------------------------------------------------
-// RiveAnimation — single instance driven by context state
+// RiveAnimation — always mounted, driven by context state
 // ---------------------------------------------------------------------------
 
 const RiveAnimation = memo(function RiveAnimation({
@@ -162,7 +141,7 @@ const RiveAnimation = memo(function RiveAnimation({
 });
 
 // ---------------------------------------------------------------------------
-// AnimatedButton — renders a Button with a portal target for the cow canvas
+// AnimatedButton
 // ---------------------------------------------------------------------------
 
 type AnimatedButtonProps = ComponentProps<typeof Button> & {
@@ -182,7 +161,7 @@ export const AnimatedButton = memo(function AnimatedButton({
   onClick,
   ...props
 }: AnimatedButtonProps) {
-  const { setState, registerPortalTarget, unregisterPortalTarget } = useContext(CowContext);
+  const { setState, registerPortalTarget } = useContext(CowContext);
   const [isFired, setIsFired] = useState(false);
   const portalRef = useRef<HTMLDivElement>(null);
 
@@ -196,24 +175,21 @@ export const AnimatedButton = memo(function AnimatedButton({
     [needFire, onClick]
   );
 
-  // Reset isFired when needFire goes away
   useEffect(() => {
     if (!needFire) {
       setIsFired(false);
     }
   }, [needFire]);
 
-  // Register/unregister this button's portal target
   useEffect(() => {
-    const el = portalRef.current;
-    registerPortalTarget(el);
-    return () => unregisterPortalTarget(el);
-  }, [registerPortalTarget, unregisterPortalTarget]);
+    if (portalRef.current) {
+      registerPortalTarget(portalRef.current);
+    }
+  }, [registerPortalTarget]);
 
-  // Sync state to the shared cow context
   useEffect(() => {
     setState({
-      depositInProgress: (!!loading || !!isCreating) && !needFire && !isFired,
+      depositInProgress: !!loading || !!isCreating || !!needFire || isFired,
       fireNeedFire: !!needFire,
       fireIsFired: isFired,
       isConfirmed: !!isConfirmed,
