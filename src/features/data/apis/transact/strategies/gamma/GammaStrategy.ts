@@ -561,9 +561,6 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
     steps.push(vaultDeposit.zap);
     minBalances.subtractMany(vaultDeposit.inputs);
     minBalances.addMany(vaultDeposit.minOutputs);
-
-    console.log('fetchDepositStep::vaultDeposit', vaultDeposit);
-
     // Build order
     const inputs: OrderInput[] = quote.inputs.map(input => ({
       token: getTokenAddress(input.token),

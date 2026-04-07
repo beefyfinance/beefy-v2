@@ -140,7 +140,6 @@ export class TransactApi implements ITransactApi {
     vaultId: VaultEntity['id'],
     getState: BeefyStateFn
   ): Promise<DepositOption[]> {
-    console.log('[transact] fetchDepositOptionsFor: start', { vaultId });
     const helpers = await this.getHelpersForVault(vaultId, getState);
     const { vaultType } = helpers;
     const options: DepositOption[] = [];
@@ -172,13 +171,9 @@ export class TransactApi implements ITransactApi {
         this.anyComposableStrategyAcceptsUsdcDeposit(helpers, zapStrategies, zapOptions)
       ) {
         try {
-          console.log('[transact] fetchDepositOptionsFor: fetching cross-chain options');
           const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
           const xChainOptions = await xChainStrategy.fetchDepositOptions();
           options.push(...xChainOptions);
-          console.log('[transact] fetchDepositOptionsFor: cross-chain options done', {
-            count: xChainOptions.length,
-          });
         } catch (err) {
           console.warn('Failed to load cross-chain deposit options:', err);
         }
@@ -190,7 +185,6 @@ export class TransactApi implements ITransactApi {
       options.unshift(vaultDepositOption);
     }
 
-    console.log('[transact] fetchDepositOptionsFor: done', { totalOptions: options.length });
     return options;
   }
 
@@ -201,10 +195,6 @@ export class TransactApi implements ITransactApi {
   ): Promise<DepositQuote[]> {
     const vaultId = options[0].vaultId;
     const strategyIds = uniq(options.map(option => option.strategyId));
-    console.log('[transact] fetchDepositQuotesFor: start', {
-      optionCount: options.length,
-      strategyIds,
-    });
     const helpers = await this.getHelpersForVault(vaultId, getState);
 
     // Init each strategy at most once
@@ -221,7 +211,6 @@ export class TransactApi implements ITransactApi {
         }
       })
     );
-    console.log('[transact] fetchDepositQuotesFor: beforeQuote hooks done');
 
     // Get quotes
     const quotes = await Promise.allSettled(
@@ -240,10 +229,6 @@ export class TransactApi implements ITransactApi {
       .map(result => result.value)
       .filter(quote => !!quote)
       .flat();
-    console.log('[transact] fetchDepositQuotesFor: done', {
-      fulfilled: fulfilled.length,
-      rejected: rejected.length,
-    });
 
     if (rejected.length > 0) {
       console.warn('fetchDepositQuotesFor had some rejections', rejected);
@@ -265,21 +250,15 @@ export class TransactApi implements ITransactApi {
     getState: BeefyStateFn,
     t: TFunction<Namespace>
   ): Promise<Step> {
-    console.log('[transact] fetchDepositStep: start', {
-      strategyId: quote.option.strategyId,
-      optionId: quote.option.id,
-    });
     const helpers = await this.getHelpersForVault(quote.option.vaultId, getState);
     const strategy = await this.getStrategyById(quote.option.strategyId, helpers);
 
     // Call beforeStep hooks
     if (strategy.beforeStep) {
       await strategy.beforeStep();
-      console.log('[transact] fetchDepositStep: beforeStep done');
     }
 
     const step = await strategy.fetchDepositStep(quote, t);
-    console.log('[transact] fetchDepositStep: done');
 
     return step;
   }
@@ -288,7 +267,6 @@ export class TransactApi implements ITransactApi {
     vaultId: VaultEntity['id'],
     getState: BeefyStateFn
   ): Promise<WithdrawOption[]> {
-    console.log('[transact] fetchWithdrawOptionsFor: start', { vaultId });
     const helpers = await this.getHelpersForVault(vaultId, getState);
     const { vaultType } = helpers;
     const options: WithdrawOption[] = [];
@@ -320,13 +298,9 @@ export class TransactApi implements ITransactApi {
         this.anyComposableStrategyAcceptsUsdcWithdraw(helpers, zapStrategies, zapOptions)
       ) {
         try {
-          console.log('[transact] fetchWithdrawOptionsFor: fetching cross-chain options');
           const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
           const xChainOptions = await xChainStrategy.fetchWithdrawOptions();
           options.push(...xChainOptions);
-          console.log('[transact] fetchWithdrawOptionsFor: cross-chain options done', {
-            count: xChainOptions.length,
-          });
         } catch (err) {
           console.warn('Failed to load cross-chain withdraw options:', err);
         }
@@ -338,7 +312,6 @@ export class TransactApi implements ITransactApi {
       options.unshift(vaultWithdrawOption);
     }
 
-    console.log('[transact] fetchWithdrawOptionsFor: done', { totalOptions: options.length });
     return options;
   }
 
@@ -349,10 +322,6 @@ export class TransactApi implements ITransactApi {
   ): Promise<WithdrawQuote[]> {
     const vaultId = options[0].vaultId;
     const strategyIds = uniq(options.map(option => option.strategyId));
-    console.log('[transact] fetchWithdrawQuotesFor: start', {
-      optionCount: options.length,
-      strategyIds,
-    });
     const helpers = await this.getHelpersForVault(vaultId, getState);
 
     // Init each strategy at most once
@@ -369,7 +338,6 @@ export class TransactApi implements ITransactApi {
         }
       })
     );
-    console.log('[transact] fetchWithdrawQuotesFor: beforeQuote hooks done');
 
     // Get quotes
     const quotes = await Promise.allSettled(
@@ -384,10 +352,6 @@ export class TransactApi implements ITransactApi {
       .map(result => result.value)
       .filter(quote => !!quote)
       .flat();
-    console.log('[transact] fetchWithdrawQuotesFor: done', {
-      fulfilled: fulfilled.length,
-      rejected: rejected.length,
-    });
 
     if (rejected.length > 0) {
       console.warn('fetchWithdrawQuotesFor had some rejections', rejected);
@@ -428,21 +392,15 @@ export class TransactApi implements ITransactApi {
     getState: BeefyStateFn,
     t: TFunction<Namespace>
   ): Promise<Step> {
-    console.log('[transact] fetchWithdrawStep: start', {
-      strategyId: quote.option.strategyId,
-      optionId: quote.option.id,
-    });
     const helpers = await this.getHelpersForVault(quote.option.vaultId, getState);
     const strategy = await this.getStrategyById(quote.option.strategyId, helpers);
 
     // Call beforeStep hooks
     if (strategy.beforeStep) {
       await strategy.beforeStep();
-      console.log('[transact] fetchWithdrawStep: beforeStep done');
     }
 
     const step = await strategy.fetchWithdrawStep(quote, t);
-    console.log('[transact] fetchWithdrawStep: done');
     return step;
   }
 

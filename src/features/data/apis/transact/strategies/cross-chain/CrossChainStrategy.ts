@@ -153,13 +153,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const input = onlyOneInput(inputs);
     const slippage = selectTransactSlippage(state);
     const { sourceChainId, destChainId, bridgeToken, destBridgeToken } = option;
-    console.log('[cross-chain] fetchDepositQuote: start', {
-      sourceChainId,
-      destChainId,
-      inputToken: input.token.symbol,
-      inputAmount: input.amount.toString(10),
-    });
-
     // A. Source swap: input → USDC on source chain
     const sourceSteps: ZapQuoteStep[] = [];
     let usdcAmount = input.amount;
@@ -191,9 +184,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         toToken: bridgeToken,
         toAmount: bestSwap.toAmount,
       } satisfies ZapQuoteStepSwapAggregator);
-      console.log('[cross-chain] fetchDepositQuote: source swap done', {
-        usdcAmount: usdcAmount.toString(10),
-      });
     }
 
     // B. CCTP bridge quote (slip only when there was a source swap; direct USDC input has no swap slippage)
@@ -218,30 +208,17 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       toAmount: bridgeQuote.toAmount,
       timeEstimate: bridgeQuote.timeEstimate,
     } satisfies ZapQuoteStepBridge);
-    console.log('[cross-chain] fetchDepositQuote: bridge quote done', {
-      bridgeToAmount: bridgeQuote.toAmount.toString(10),
-    });
-
     // C. Destination strategy: find one that accepts destUSDC and quote it
-    console.log('[cross-chain] fetchDepositQuote: fetching dest helpers and strategies');
     const destHelpers = await (
       await getTransactApi()
     ).getHelpersForChain(destChainId, option.vaultId, getState);
     const destStrategies = await (await getTransactApi()).getZapStrategiesForVault(destHelpers);
-    console.log('[cross-chain] fetchDepositQuote: got dest strategies', {
-      count: destStrategies.length,
-    });
-
     const destMatch = await this.findDestStrategyForDeposit(destStrategies, destBridgeToken);
     if (!destMatch) {
       throw new Error(
         `No composable destination strategy accepts USDC on chain ${destChainId} for vault ${option.vaultId}`
       );
     }
-    console.log('[cross-chain] fetchDepositQuote: dest strategy matched', {
-      strategyId: destMatch.strategy.id,
-    });
-
     const destQuoteSelection: QuoteSelectionConfig = {
       maxUsesPerProvider: {
         /*kyber: 1*/
@@ -249,14 +226,11 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       maxUsesStrict: false,
     };
 
-    console.log('[cross-chain] fetchDepositQuote: quoting dest strategy');
     const destQuote = await destMatch.strategy.fetchDepositQuote(
       [{ token: destBridgeToken, amount: bridgeQuote.toAmount, max: false }],
       destMatch.option,
       destQuoteSelection
     );
-    console.log('[cross-chain] fetchDepositQuote: dest quote done');
-
     let destSteps: ZapQuoteStep[] = isZapQuote(destQuote) ? destQuote.steps : [];
 
     // D. Slippage buffer: all source USDC is bridged, excess arrives on dest as returned tokens
@@ -319,8 +293,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const state = getState();
     const { sourceChainId, destChainId, bridgeToken } = quote.option;
     const slippage = selectTransactSlippage(state);
-    console.log('[cross-chain] fetchDepositStep: start', { sourceChainId, destChainId });
-
     const userAddress = selectWalletAddress(state);
     if (!userAddress) {
       throw new Error('No wallet connected');
@@ -353,7 +325,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       swapZap.zaps.forEach(step => sourceZapSteps.push(step));
       minBalances.subtractMany(swapZap.inputs);
       minBalances.addMany(swapZap.minOutputs);
-      console.log('[cross-chain] fetchDepositStep: source swap re-quoted');
     }
 
     // 2. Compute step-time bridge quote from slippage-adjusted USDC balance
@@ -373,7 +344,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       throw new Error('Destination quote is not a zap quote');
     }
 
-    console.log('[cross-chain] fetchDepositStep: loading dest strategy for breakdown');
     const destHelpers = await (
       await getTransactApi()
     ).getHelpersForChain(destChainId, quote.option.vaultId, getState);
@@ -385,7 +355,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       );
     }
 
-    console.log('[cross-chain] fetchDepositStep: fetching dest breakdown');
     const breakdown = await destStrategy.fetchDepositUserlessZapBreakdown(
       stepDestQuote as Parameters<typeof destStrategy.fetchDepositUserlessZapBreakdown>[0]
     );
@@ -450,9 +419,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         maxFee
       );
       sourceZapSteps.push(burnStep);
-      console.log(
-        '[cross-chain] fetchDepositStep: 2-step fallback, passthrough burn to user wallet'
-      );
     } else {
       const burnStep = buildBurnZapStep(
         sourceChainId,
@@ -463,7 +429,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         hookData
       );
       sourceZapSteps.push(burnStep);
-      console.log('[cross-chain] fetchDepositStep: burn step built');
     }
 
     // 6. Build UserlessZapRequest (source chain)
@@ -497,7 +462,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       isTwoStep
     );
 
-    console.log('[cross-chain] fetchDepositStep: done');
     return {
       step: 'zap-in',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
@@ -603,12 +567,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const { swapAggregator, getState } = this.helpers;
     const state = getState();
     const { sourceChainId, destChainId, bridgeToken, destBridgeToken, needsDestHook } = option;
-    console.log('[cross-chain] fetchWithdrawQuote: start', {
-      sourceChainId,
-      destChainId,
-      needsDestHook,
-    });
-
     // A. Find vault strategy that can withdraw to USDC
     const vaultStrategies = await (await getTransactApi()).getZapStrategiesForVault(this.helpers);
     const withdrawMatch = await this.findVaultStrategyForUSDCWithdraw(vaultStrategies, bridgeToken);
@@ -617,10 +575,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         `No composable vault strategy can withdraw to USDC on chain ${sourceChainId} for vault ${option.vaultId}`
       );
     }
-    console.log('[cross-chain] fetchWithdrawQuote: source strategy matched', {
-      strategyId: withdrawMatch.strategy.id,
-    });
-
     // B. Quote withdrawal to USDC on vault chain
     const sourceWithdrawQuote = await withdrawMatch.strategy.fetchWithdrawQuote(
       inputs,
@@ -634,10 +588,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     if (!usdcOutput || usdcOutput.amount.lte(BIG_ZERO)) {
       throw new Error('Withdrawal did not produce USDC');
     }
-    console.log('[cross-chain] fetchWithdrawQuote: source withdraw quoted', {
-      usdcAmount: usdcOutput.amount.toString(10),
-    });
-
     // C. CCTP bridge (use slippage-adjusted USDC so dest quote is pessimistic)
     const slippage = selectTransactSlippage(state);
     const slippedUsdcAmount = slipBy(usdcOutput.amount, slippage, bridgeToken.decimals);
@@ -663,10 +613,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       toAmount: bridgeQuote.toAmount,
       timeEstimate: bridgeQuote.timeEstimate,
     } satisfies ZapQuoteStepBridge);
-    console.log('[cross-chain] fetchWithdrawQuote: bridge quote done', {
-      bridgeToAmount: bridgeQuote.toAmount.toString(10),
-    });
-
     // D. Destination swap (Path B only)
     let destSteps: ZapQuoteStep[] = [];
     let finalOutputs: TokenAmount[];
@@ -701,7 +647,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         } satisfies ZapQuoteStepSwapAggregator,
       ];
       finalOutputs = [{ token: desiredToken, amount: bestDestSwap.toAmount }];
-      console.log('[cross-chain] fetchWithdrawQuote: dest swap quoted');
     } else {
       finalOutputs = [{ token: destBridgeToken, amount: bridgeQuote.toAmount }];
     }
@@ -725,7 +670,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     );
 
     // F. Build combined quote
-    console.log('[cross-chain] fetchWithdrawQuote: done');
     return {
       id: createQuoteId(option.id),
       strategyId: 'cross-chain',
@@ -756,12 +700,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const { sourceChainId, destChainId, bridgeToken, destBridgeToken, needsDestHook } =
       quote.option;
     const slippage = selectTransactSlippage(state);
-    console.log('[cross-chain] fetchWithdrawStep: start', {
-      sourceChainId,
-      destChainId,
-      needsDestHook,
-    });
-
     const userAddress = selectWalletAddress(state);
     if (!userAddress) {
       throw new Error('No wallet connected');
@@ -778,14 +716,11 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       );
     }
 
-    console.log('[cross-chain] fetchWithdrawStep: fetching source breakdown');
     const breakdown = await sourceStrategy.fetchWithdrawUserlessZapBreakdown(
       quote.sourceWithdrawQuote as Parameters<
         typeof sourceStrategy.fetchWithdrawUserlessZapBreakdown
       >[0]
     );
-    console.log('[cross-chain] fetchWithdrawStep: source breakdown done');
-
     // 2. Build source chain ZapSteps: withdrawal steps + CCTP burn
     const sourceZapSteps: ZapStep[] = [...breakdown.zapRequest.steps];
 
@@ -830,10 +765,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         )
       : 0n;
 
-    console.log('[cross-chain] fetchWithdrawStep: step-time bridge quote done', {
-      stepUsdcAmount: stepUsdcAmount.toString(10),
-    });
-
     let isTwoStep = false;
 
     if (needsDestHook) {
@@ -846,7 +777,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       const wantedOutput = quote.option.wantedOutputs[0];
 
       // 5. Reuse stored dest swap step (slippage already applied at quote time)
-      console.log('[cross-chain] fetchWithdrawStep: reusing dest swap from quote');
       const destSwapStep = quote.destSteps
         .filter(isZapQuoteStepSwap)
         .find(isZapQuoteStepSwapAggregator);
@@ -908,7 +838,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       if (oversized) {
         isTwoStep = true;
       }
-      console.log('[cross-chain] fetchWithdrawStep: dest hook data built', { isTwoStep });
 
       if (isTwoStep) {
         // hookData exceeds CCTP message size limit: bridge USDC to user's wallet via passthrough,
@@ -921,9 +850,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
           maxFee
         );
         sourceZapSteps.push(burnStep);
-        console.log(
-          '[cross-chain] fetchWithdrawStep: 2-step fallback, passthrough burn to user wallet'
-        );
       } else {
         const burnStep = buildBurnZapStep(
           sourceChainId,
@@ -998,7 +924,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       isTwoStep
     );
 
-    console.log('[cross-chain] fetchWithdrawStep: done');
     return {
       step: 'zap-out',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
@@ -1430,10 +1355,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     strategies: IStrategy[],
     destUSDC: TokenErc20 | { address: string }
   ): Promise<{ strategy: IStrategy; option: DepositOption } | undefined> {
-    console.log('[cross-chain] findDestStrategyForDeposit: trying', {
-      count: strategies.length,
-      ids: strategies.map(s => s.id),
-    });
     for (const strategy of strategies) {
       try {
         const options = await strategy.fetchDepositOptions();
@@ -1483,10 +1404,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     strategies: IStrategy[],
     sourceUSDC: TokenErc20 | { address: string }
   ): Promise<{ strategy: IStrategy; option: WithdrawOption } | undefined> {
-    console.log('[cross-chain] findVaultStrategyForUSDCWithdraw: trying', {
-      count: strategies.length,
-      ids: strategies.map(s => s.id),
-    });
     for (const strategy of strategies) {
       try {
         const options = await strategy.fetchWithdrawOptions();
