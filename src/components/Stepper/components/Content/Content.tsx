@@ -761,25 +761,14 @@ export const RecoveryContent = memo(function RecoveryContent() {
     }
   }, [dispatch, opId, t]);
 
-  // If the bridge was abandoned with no refund data, show an error message with just a close button
-  if (isAbandoned && pendingOp) {
-    return (
-      <>
-        <Title text={t(titleKey)} />
-        <div className={css(styles.content, styles.recoveryContent)}>
-          <div className={classes.message}>{t('Transactn-Recovery-Unknown')}</div>
-        </div>
-        <div className={classes.buttons}>
-          <CloseButton />
-        </div>
-      </>
-    );
-  }
-
+  const isUnknown = isAbandoned && pendingOp;
   const directionKey = mode === TransactMode.Withdraw ? 'Withdraw' : 'Deposit';
   const gasKey = hasNoGas ? '-NoGas' : '';
   const refreshKey = needsNewQuote ? '-Refresh' : '';
-  const messageKey = `Transactn-Recovery-${directionKey}${gasKey}${refreshKey}` as const;
+  const messageKey =
+    isUnknown ?
+      (`Transactn-Recovery-${directionKey}-Unknown` as const)
+    : (`Transactn-Recovery-${directionKey}${gasKey}${refreshKey}` as const);
 
   const messageParams = {
     amount: formattedAmount,
@@ -791,7 +780,9 @@ export const RecoveryContent = memo(function RecoveryContent() {
   const finaliseNoun = mode === TransactMode.Withdraw ? t('Withdraw-noun') : t('Deposit-noun');
 
   let actionButton: ReactNode;
-  if (!isWalletConnected) {
+  if (isUnknown) {
+    actionButton = <CloseButton />;
+  } else if (!isWalletConnected) {
     actionButton = null;
   } else if (!isOnCorrectChain && destChainId) {
     actionButton = (
@@ -836,9 +827,11 @@ export const RecoveryContent = memo(function RecoveryContent() {
       <Title text={t(titleKey)} />
       <div className={css(styles.content, styles.recoveryContent)}>
         <div className={classes.message}>{t(messageKey, messageParams)}</div>
-        <div className={cx(classes.message, css(styles.recoveryActionMessage))}>
-          {t(`Transactn-Recovery-Action${gasKey}${refreshKey}` as const, messageParams)}
-        </div>
+        {!isUnknown && (
+          <div className={cx(classes.message, css(styles.recoveryActionMessage))}>
+            {t(`Transactn-Recovery-Action${gasKey}${refreshKey}` as const, messageParams)}
+          </div>
+        )}
       </div>
       {actionButton ?
         <div className={classes.buttons}>{actionButton}</div>
