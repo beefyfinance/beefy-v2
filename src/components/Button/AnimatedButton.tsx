@@ -1,4 +1,15 @@
-import { type ComponentProps, memo, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  type ComponentProps,
+  createContext,
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { createPortal } from 'react-dom';
 import {
   useRive,
   useViewModelInstanceBoolean,
@@ -19,26 +30,74 @@ const LAYOUT = new Layout({
 
 const STATE_MACHINE_NAME = 'State Machine 1';
 
-type AnimatedButtonProps = ComponentProps<typeof Button> & {
-  loading?: boolean;
-  isCreating?: boolean;
-  needFire?: boolean;
-  isConfirmed?: boolean;
-};
+// ---------------------------------------------------------------------------
+// Cow animation state context
+// ---------------------------------------------------------------------------
 
-type RiveAnimationProps = {
+type CowState = {
   depositInProgress: boolean;
   fireNeedFire: boolean;
   fireIsFired: boolean;
   isConfirmed: boolean;
 };
 
+const DEFAULT_COW_STATE: CowState = {
+  depositInProgress: false,
+  fireNeedFire: false,
+  fireIsFired: false,
+  isConfirmed: false,
+};
+
+type CowContextValue = {
+  state: CowState;
+  setState: (state: CowState) => void;
+  registerPortalTarget: (el: HTMLDivElement) => void;
+};
+
+const CowContext = createContext<CowContextValue>({
+  state: DEFAULT_COW_STATE,
+  setState: () => {},
+  registerPortalTarget: () => {},
+});
+
+export const CowAnimationProvider = memo(function CowAnimationProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [state, setState] = useState<CowState>(DEFAULT_COW_STATE);
+  const [portalTarget, setPortalTarget] = useState<HTMLDivElement | null>(null);
+
+  const registerPortalTarget = useCallback((el: HTMLDivElement) => {
+    setPortalTarget(el);
+  }, []);
+
+  const contextValue = useMemo(
+    () => ({ state, setState, registerPortalTarget }),
+    [state, registerPortalTarget]
+  );
+
+  const showCow =
+    state.depositInProgress || state.fireNeedFire || state.fireIsFired || state.isConfirmed;
+
+  return (
+    <CowContext.Provider value={contextValue}>
+      {children}
+      {showCow && portalTarget && createPortal(<RiveAnimation {...state} />, portalTarget)}
+    </CowContext.Provider>
+  );
+});
+
+// ---------------------------------------------------------------------------
+// RiveAnimation — always mounted, driven by context state
+// ---------------------------------------------------------------------------
+
 const RiveAnimation = memo(function RiveAnimation({
   depositInProgress,
   fireNeedFire,
   fireIsFired,
   isConfirmed,
-}: RiveAnimationProps) {
+}: CowState) {
   const { rive, RiveComponent } = useRive({
     src: buttonRiv,
     stateMachines: STATE_MACHINE_NAME,
@@ -50,11 +109,10 @@ const RiveAnimation = memo(function RiveAnimation({
   const vmi = rive?.viewModelInstance;
 
   const { setValue: setInProgress } = useViewModelInstanceBoolean('isInProgress', vmi);
+  const { setValue: setIsConfirmed } = useViewModelInstanceBoolean('isConfirmed', vmi);
   const { trigger: triggerNeedFire } = useViewModelInstanceTrigger('needFire', vmi);
   const { trigger: triggerIsFired } = useViewModelInstanceTrigger('isFired', vmi);
-  const { setValue: setIsConfirmed } = useViewModelInstanceBoolean('isConfirmed', vmi);
 
-  // Track previous values to only fire triggers on rising edge
   const prevRef = useRef({ fireNeedFire: false, fireIsFired: false });
 
   useEffect(() => {
@@ -82,6 +140,17 @@ const RiveAnimation = memo(function RiveAnimation({
   return <RiveComponent style={{ width: '100%', height: '100%' }} />;
 });
 
+// ---------------------------------------------------------------------------
+// AnimatedButton
+// ---------------------------------------------------------------------------
+
+type AnimatedButtonProps = ComponentProps<typeof Button> & {
+  loading?: boolean;
+  isCreating?: boolean;
+  needFire?: boolean;
+  isConfirmed?: boolean;
+};
+
 export const AnimatedButton = memo(function AnimatedButton({
   loading,
   children,
@@ -92,7 +161,9 @@ export const AnimatedButton = memo(function AnimatedButton({
   onClick,
   ...props
 }: AnimatedButtonProps) {
+  const { setState, registerPortalTarget } = useContext(CowContext);
   const [isFired, setIsFired] = useState(false);
+  const portalRef = useRef<HTMLDivElement>(null);
 
   const handleClick = useCallback<React.MouseEventHandler<HTMLButtonElement>>(
     e => {
@@ -104,33 +175,40 @@ export const AnimatedButton = memo(function AnimatedButton({
     [needFire, onClick]
   );
 
-  // Reset isFired when needFire goes away
   useEffect(() => {
     if (!needFire) {
       setIsFired(false);
     }
   }, [needFire]);
 
-  const showCow = !!isCreating || !!loading || !!needFire || isFired || !!isConfirmed;
+  useEffect(() => {
+    if (portalRef.current) {
+      registerPortalTarget(portalRef.current);
+    }
+  }, [registerPortalTarget]);
+
+  useEffect(() => {
+    setState({
+      depositInProgress: !!loading || !!isCreating || !!needFire || isFired,
+      fireNeedFire: !!needFire,
+      fireIsFired: isFired,
+      isConfirmed: !!isConfirmed,
+    });
+  }, [setState, loading, isCreating, needFire, isFired, isConfirmed]);
 
   return (
     <div className={wrapperClass}>
       <Button {...props} disabled={loading || disabled} onClick={handleClick}>
         {children}
       </Button>
-      {showCow && (
-        <div className={riveCornerClass}>
-          <RiveAnimation
-            depositInProgress={(!!loading && !isCreating) || !!needFire || isFired}
-            fireNeedFire={!!needFire}
-            fireIsFired={isFired}
-            isConfirmed={!!isConfirmed}
-          />
-        </div>
-      )}
+      <div ref={portalRef} className={riveCornerClass} />
     </div>
   );
 });
+
+// ---------------------------------------------------------------------------
+// Styles
+// ---------------------------------------------------------------------------
 
 const wrapperClass = css({
   position: 'relative',

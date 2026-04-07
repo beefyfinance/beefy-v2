@@ -21,7 +21,6 @@ const SignMessagePage = lazy(() => import('./features/sign-message/SignMessagePa
 const DashboardPage = lazy(() => import('./features/dashboard/DashboardPage.tsx'));
 const TreasuryPage = lazy(() => import('./features/treasury/TreasuryPage.tsx'));
 const NotFoundPage = lazy(() => import('./features/pagenotfound/NotFoundPage.tsx'));
-const CowTest = lazy(() => import('./components/Button/AnimatedButtonTest.tsx'));
 
 export const App = memo(function App() {
   return (
@@ -41,7 +40,6 @@ export const App = memo(function App() {
               <Route path="/dashboard/:address" element={<DashboardPage mode={'url'} />} />
               <Route path="/dashboard" element={<DashboardPage mode={'wallet'} />} />
               <Route path="/treasury" element={<TreasuryPage />} />
-              <Route path="/dev/cow-test" element={<CowTest />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>

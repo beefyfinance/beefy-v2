@@ -77,12 +77,6 @@ export const WithdrawActionsStandard = memo(function WithdrawActionsStandard() {
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const option = quote ? quote.option : null;
-  const successClosed = useAppSelector(selectTransactSuccessClosed);
-  const isSuccessTx = useAppSelector(selectStepperStepContent) === StepContent.SuccessTx;
-
-  if (successClosed || isSuccessTx) {
-    return <ActionCloseWithdraw />;
-  }
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
     if (quoteStatus === TransactStatus.Pending) {
@@ -101,14 +95,8 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
   const vault = useAppSelector(state => selectGovVaultById(state, vaultId));
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
-  const successClosed = useAppSelector(selectTransactSuccessClosed);
-  const isSuccessTx = useAppSelector(selectStepperStepContent) === StepContent.SuccessTx;
   const forceSelection = useAppSelector(selectTransactForceSelection);
   const connectSwitchChainId = forceSelection ? undefined : vault.chainId;
-
-  if (successClosed || isSuccessTx) {
-    return <ActionCloseWithdraw />;
-  }
 
   const showWithdraw =
     quote &&
@@ -231,8 +219,12 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
   const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const stepperContent = useAppSelector(selectStepperStepContent);
   const isExecuting = useAppSelector(selectTransactExecuting);
   const confirmNeededWithChanges = useAppSelector(selectTransactConfirmNeededWithChanges);
+  const successClosed = useAppSelector(selectTransactSuccessClosed);
+  const isSuccessTx = stepperContent === StepContent.SuccessTx;
+  const isComplete = successClosed || isSuccessTx;
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
@@ -249,11 +241,15 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
     isDisabledByScreamLiquidity ||
     isDisabledByNotEnoughInput;
 
-  const stepperContent = useAppSelector(selectStepperStepContent);
-
-  const handleClick = useCallback(() => {
+  const handleWithdraw = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
+
+  const handleClose = useCallback(() => {
+    dispatch(transactSetSuccessClosed(false));
+    dispatch(transactClearInput());
+    dispatch(stepperReset());
+  }, [dispatch]);
 
   const isCreating =
     isExecuting ||
@@ -278,14 +274,17 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
         <ActionConnectSwitch chainId={executionChainId}>
           <AnimatedButton
             variant="cta"
-            loading={isLoading}
-            isCreating={isCreating}
+            loading={isComplete ? false : isLoading}
+            isCreating={isComplete ? false : isCreating}
+            isConfirmed={isComplete}
             disabled={isDisabled}
             fullWidth={true}
             borderless={true}
-            onClick={handleClick}
+            onClick={isComplete ? handleClose : handleWithdraw}
           >
-            {isCreating ?
+            {isComplete ?
+              t('Transactn-Close')
+            : isCreating ?
               t('Transact-CreatingTransaction')
             : isTxInProgress ?
               t('Transact-WithdrawInProgress')
@@ -320,8 +319,12 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
   const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
+  const stepperContent = useAppSelector(selectStepperStepContent);
   const isExecuting = useAppSelector(selectTransactExecuting);
   const confirmNeededWithChanges = useAppSelector(selectTransactConfirmNeededWithChanges);
+  const successClosed = useAppSelector(selectTransactSuccessClosed);
+  const isSuccessTx = stepperContent === StepContent.SuccessTx;
+  const isComplete = successClosed || isSuccessTx;
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
@@ -336,11 +339,15 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
     isDisabledByNotEnoughInput;
   const showClaim = !isCowcentratedLikeVault(vault);
 
-  const stepperContent = useAppSelector(selectStepperStepContent);
-
   const handleWithdraw = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
+
+  const handleClose = useCallback(() => {
+    dispatch(transactSetSuccessClosed(false));
+    dispatch(transactClearInput());
+    dispatch(stepperReset());
+  }, [dispatch]);
 
   const isCreating =
     isExecuting ||
@@ -364,14 +371,17 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
         >
           <AnimatedButton
             variant="cta"
-            loading={isLoading}
-            isCreating={isCreating}
+            loading={isComplete ? false : isLoading}
+            isCreating={isComplete ? false : isCreating}
+            isConfirmed={isComplete}
             disabled={isDisabled}
             fullWidth={true}
             borderless={true}
-            onClick={handleWithdraw}
+            onClick={isComplete ? handleClose : handleWithdraw}
           >
-            {isCreating ?
+            {isComplete ?
+              t('Transactn-Close')
+            : isCreating ?
               t('Transact-CreatingTransaction')
             : isTxInProgress ?
               t('Transact-WithdrawInProgress')
@@ -394,32 +404,5 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
         </ActionConnectSwitch>
       </div>
     </>
-  );
-});
-
-const ActionCloseWithdraw = memo(function ActionCloseWithdraw() {
-  const { t } = useTranslation();
-  const classes = useStyles();
-  const dispatch = useAppDispatch();
-
-  const handleClose = useCallback(() => {
-    dispatch(transactSetSuccessClosed(false));
-    dispatch(transactClearInput());
-    dispatch(stepperReset());
-  }, [dispatch]);
-
-  return (
-    <div className={classes.feesContainer}>
-      <AnimatedButton
-        isConfirmed={true}
-        variant="cta"
-        fullWidth={true}
-        borderless={true}
-        onClick={handleClose}
-      >
-        {t('Transactn-Close')}
-      </AnimatedButton>
-      <VaultFees />
-    </div>
   );
 });

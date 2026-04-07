@@ -1,5 +1,5 @@
 import { css, cx } from '@repo/styles/css';
-import type BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { type FC, memo, type MouseEventHandler, type ReactNode, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
@@ -8,7 +8,6 @@ import {
 } from '../../../../features/data/actions/transact.ts';
 import { stepperReset } from '../../../../features/data/actions/wallet/stepper.ts';
 import {
-  crossChainClearRecoveryQuote,
   crossChainFetchRecoveryQuote,
   crossChainRecoverySteps,
 } from '../../../../features/data/actions/wallet/cross-chain.ts';
@@ -20,7 +19,11 @@ import { TransactStatus } from '../../../../features/data/reducers/wallet/transa
 import type { BridgeAdditionalData } from '../../../../features/data/reducers/wallet/wallet-action-types.ts';
 import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import { selectUserBalanceOfToken } from '../../../../features/data/selectors/balance.ts';
-import { selectChainNativeToken } from '../../../../features/data/selectors/tokens.ts';
+import {
+  selectChainNativeToken,
+  selectTokenByAddress,
+} from '../../../../features/data/selectors/tokens.ts';
+import { CCTP_CONFIG } from '../../../../config/cctp/cctp-config.ts';
 import { selectVaultById } from '../../../../features/data/selectors/vaults.ts';
 import type { VaultEntity } from '../../../../features/data/entities/vault.ts';
 import {
@@ -56,7 +59,6 @@ import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { explorerTxUrl } from '../../../../helpers/url.ts';
 import { useAppDispatch, useAppSelector } from '../../../../features/data/store/hooks.ts';
 import iconError from '../../../../images/icons/error.svg';
-import { AnimatedButton } from '../../../Button/AnimatedButton.tsx';
 import { Button } from '../../../Button/Button.tsx';
 import { CircularProgress } from '../../../CircularProgress/CircularProgress.tsx';
 import { ListJoin } from '../../../ListJoin.tsx';
@@ -161,19 +163,32 @@ export const ErrorContent = memo(function ErrorContent() {
   );
 });
 
+/** Close the stepper without clearing inputs/quotes (e.g. on error, user can retry) */
 export const CloseButton = memo(function CloseButton() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
 
   const handleClose = useCallback(() => {
-    if (isRecoveryExecution) {
-      dispatch(crossChainClearRecoveryQuote());
-    }
+    dispatch(stepperReset());
+  }, [dispatch]);
+
+  return (
+    <Button borderless={true} fullWidth={true} variant="default" onClick={handleClose}>
+      {t('Transactn-Close')}
+    </Button>
+  );
+});
+
+/** Close the stepper AND clear inputs/quotes (after a successful tx) */
+const CloseAndResetButton = memo(function CloseAndResetButton() {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const handleClose = useCallback(() => {
     dispatch(transactSetSuccessClosed(false));
     dispatch(transactClearInput());
     dispatch(stepperReset());
-  }, [dispatch, isRecoveryExecution]);
+  }, [dispatch]);
 
   return (
     <Button borderless={true} fullWidth={true} variant="default" onClick={handleClose}>
@@ -470,7 +485,7 @@ const BridgeSuccessContent = memo<SuccessContentProps>(function BridgeSuccessCon
         </div>
       </div>
       <div className={classes.buttons}>
-        <CloseButton />
+        <CloseAndResetButton />
       </div>
     </>
   );
@@ -622,7 +637,7 @@ const SuccessContentDisplay = memo(function SuccessContentDisplay({
         {shareVaultId ?
           <ShareButton vaultId={shareVaultId} placement="bottom-start" />
         : null}
-        <CloseButton />
+        <CloseAndResetButton />
       </div>
     </>
   );
@@ -702,24 +717,31 @@ export const RecoveryContent = memo(function RecoveryContent() {
   );
   const hasNoGas = destNativeBalance !== undefined && destNativeBalance.isZero();
 
+  // Resolve USDC token on dest chain for formatting
+  const destCctpConfig = destChainId ? CCTP_CONFIG.chains[destChainId] : undefined;
+  const destUsdcToken = useAppSelector(state =>
+    destChainId && destCctpConfig ?
+      selectTokenByAddress(state, destChainId, destCctpConfig.usdcAddress)
+    : undefined
+  );
+
+  // dstRefundedAmount is the raw wei amount from the CCTP API; format with USDC decimals
+  const rawRefund = bridgeStatus?.dstRefundedAmount;
+  const isAbandoned =
+    bridgeStatus?.lifecycleState === 'abandoned' && (rawRefund == null || rawRefund === '0');
+  const hasRefundAmount = rawRefund != null && destUsdcToken != null;
+  const formattedAmount = useMemo(() => {
+    if (!hasRefundAmount) return '';
+    const shifted = new BigNumber(rawRefund).shiftedBy(-destUsdcToken.decimals);
+    return formatTokenDisplayCondensed(shifted, destUsdcToken.decimals);
+  }, [hasRefundAmount, rawRefund, destUsdcToken]);
+
   const hasValidQuote =
     opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
   const needsNewQuote = !isRecoveryExecution && !hasValidQuote;
 
   const titleKey =
     mode === TransactMode.Withdraw ? 'Transactn-Bridging-Withdraw' : 'Transactn-Bridging-Deposit';
-
-  const directionKey = mode === TransactMode.Withdraw ? 'Withdraw' : 'Deposit';
-  const gasKey = hasNoGas ? '-NoGas' : '';
-  const refreshKey = needsNewQuote ? '-Refresh' : '';
-  const messageKey = `Transactn-Recovery-${directionKey}${gasKey}${refreshKey}` as const;
-
-  const messageParams = {
-    amount: pendingOp?.recovery.bridgedAmount ?? '',
-    token: 'USDC',
-    chain: destChain?.name ?? '',
-    gasToken: destNativeToken?.symbol ?? '',
-  };
 
   const handleSwitchChain = useCallback(() => {
     if (destChainId) {
@@ -739,10 +761,29 @@ export const RecoveryContent = memo(function RecoveryContent() {
     }
   }, [dispatch, opId, t]);
 
+  const isUnknown = isAbandoned && pendingOp;
+  const directionKey = mode === TransactMode.Withdraw ? 'Withdraw' : 'Deposit';
+  const gasKey = hasNoGas ? '-NoGas' : '';
+  const refreshKey = needsNewQuote ? '-Refresh' : '';
+  const unknownKey = isUnknown ? '-Unknown' : '';
+  const messageKey =
+    isUnknown ?
+      (`Transactn-Recovery-${directionKey}-Unknown` as const)
+    : (`Transactn-Recovery-${directionKey}${gasKey}${refreshKey}` as const);
+
+  const messageParams = {
+    amount: formattedAmount,
+    token: destUsdcToken?.symbol ?? 'USDC',
+    chain: destChain?.name ?? '',
+    gasToken: destNativeToken?.symbol ?? '',
+  };
+
   const finaliseNoun = mode === TransactMode.Withdraw ? t('Withdraw-noun') : t('Deposit-noun');
 
   let actionButton: ReactNode;
-  if (!isWalletConnected) {
+  if (isUnknown) {
+    actionButton = <CloseButton />;
+  } else if (!isWalletConnected) {
     actionButton = null;
   } else if (!isOnCorrectChain && destChainId) {
     actionButton = (
@@ -758,8 +799,7 @@ export const RecoveryContent = memo(function RecoveryContent() {
     );
   } else if (hasValidQuote) {
     actionButton = (
-      <AnimatedButton
-        needFire={true}
+      <Button
         variant="recovery"
         fullWidth={true}
         borderless={true}
@@ -767,12 +807,11 @@ export const RecoveryContent = memo(function RecoveryContent() {
         onClick={handleFinalise}
       >
         {t('Transact-Finalise', { type: finaliseNoun })}
-      </AnimatedButton>
+      </Button>
     );
   } else if (needsNewQuote) {
     actionButton = (
-      <AnimatedButton
-        needFire={true}
+      <Button
         variant="recovery"
         fullWidth={true}
         borderless={true}
@@ -780,7 +819,7 @@ export const RecoveryContent = memo(function RecoveryContent() {
         onClick={handleFetchQuote}
       >
         {isFetchingQuote ? t('Transact-FetchingQuote') : t('Transact-FetchNewQuote')}
-      </AnimatedButton>
+      </Button>
     );
   }
 
@@ -790,7 +829,10 @@ export const RecoveryContent = memo(function RecoveryContent() {
       <div className={css(styles.content, styles.recoveryContent)}>
         <div className={classes.message}>{t(messageKey, messageParams)}</div>
         <div className={cx(classes.message, css(styles.recoveryActionMessage))}>
-          {t(`Transactn-Recovery-Action${gasKey}${refreshKey}` as const, messageParams)}
+          {t(
+            `Transactn-Recovery-Action${gasKey}${refreshKey}${unknownKey}` as const,
+            messageParams
+          )}
         </div>
       </div>
       {actionButton ?
