@@ -765,6 +765,7 @@ export const RecoveryContent = memo(function RecoveryContent() {
   const directionKey = mode === TransactMode.Withdraw ? 'Withdraw' : 'Deposit';
   const gasKey = hasNoGas ? '-NoGas' : '';
   const refreshKey = needsNewQuote ? '-Refresh' : '';
+  const unknownKey = isUnknown ? '-Unknown' : '';
   const messageKey =
     isUnknown ?
       (`Transactn-Recovery-${directionKey}-Unknown` as const)
@@ -827,11 +828,12 @@ export const RecoveryContent = memo(function RecoveryContent() {
       <Title text={t(titleKey)} />
       <div className={css(styles.content, styles.recoveryContent)}>
         <div className={classes.message}>{t(messageKey, messageParams)}</div>
-        {!isUnknown && (
-          <div className={cx(classes.message, css(styles.recoveryActionMessage))}>
-            {t(`Transactn-Recovery-Action${gasKey}${refreshKey}` as const, messageParams)}
-          </div>
-        )}
+        <div className={cx(classes.message, css(styles.recoveryActionMessage))}>
+          {t(
+            `Transactn-Recovery-Action${gasKey}${refreshKey}${unknownKey}` as const,
+            messageParams
+          )}
+        </div>
       </div>
       {actionButton ?
         <div className={classes.buttons}>{actionButton}</div>
