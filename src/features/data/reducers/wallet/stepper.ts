@@ -1,10 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+  fetchCCTPDstTokensReturned,
+  fetchCrossChainSrcTokensReturned,
+} from '../../actions/cctp.ts';
+import {
   stepperStart,
   stepperAddStep,
   stepperReset,
+  stepperSetBridgeStatus,
   stepperSetChainId,
   stepperSetModel,
+  stepperSetRecoveryExecution,
   stepperSetStepContent,
   stepperUpdateCurrentStep,
   stepperUpdateCurrentStepIndex,
@@ -51,6 +57,25 @@ export const stepperSlice = createSlice({
       })
       .addCase(stepperSetStepContent, (sliceState, action) => {
         sliceState.stepContent = action.payload.stepContent;
+      })
+      .addCase(stepperSetBridgeStatus, (sliceState, action) => {
+        sliceState.bridgeStatus = {
+          ...sliceState.bridgeStatus,
+          ...action.payload,
+        } as StepperState['bridgeStatus'];
+      })
+      .addCase(stepperSetRecoveryExecution, (sliceState, action) => {
+        sliceState.isRecoveryExecution = action.payload;
+      })
+      .addCase(fetchCCTPDstTokensReturned.fulfilled, (sliceState, action) => {
+        if (sliceState.bridgeStatus) {
+          sliceState.bridgeStatus.dstTokensReturned = action.payload;
+        }
+      })
+      .addCase(fetchCrossChainSrcTokensReturned.fulfilled, (sliceState, action) => {
+        if (sliceState.bridgeStatus) {
+          sliceState.bridgeStatus.srcTokensReturned = action.payload;
+        }
       });
   },
 });

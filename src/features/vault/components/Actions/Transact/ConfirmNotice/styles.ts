@@ -12,5 +12,10 @@ export const styles = {
     flexDirection: 'column',
     gap: '1em',
     width: '100%',
+    marginTop: '8px',
+  }),
+  usdValue: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
   }),
 };

@@ -88,6 +88,9 @@ export const buttonRecipe = cva({
       transparent: {
         colorPalette: 'buttons.transparent',
       },
+      recovery: {
+        colorPalette: 'buttons.recovery',
+      },
     },
   },
   compoundVariants: [
@@ -121,6 +124,14 @@ export const buttonRecipe = cva({
     },
     {
       variant: 'cta',
+      css: {
+        _disabled: {
+          opacity: '1',
+        },
+      },
+    },
+    {
+      variant: 'recovery',
       css: {
         _disabled: {
           opacity: '1',

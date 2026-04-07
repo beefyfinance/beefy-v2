@@ -20,6 +20,7 @@ import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react'
 import ReportProblemOutlined from '../../../../../../images/icons/mui/ReportProblemOutlined.svg?react';
 import { transactFetchQuotes, transactSetSlippage } from '../../../../../data/actions/transact.ts';
 import { selectTransactSlippage } from '../../../../../data/selectors/transact.ts';
+import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -83,6 +84,7 @@ type CustomSlippageInputProps = {
   value: number;
   placeholder: string;
   isCustom: boolean;
+  disabled?: boolean;
   css?: CssStyles;
 };
 const CustomSlippageInput = memo(function CustomSlippageInput({
@@ -92,6 +94,7 @@ const CustomSlippageInput = memo(function CustomSlippageInput({
   placeholder,
   css: cssProp,
   isCustom,
+  disabled,
 }: CustomSlippageInputProps) {
   const [inputMode, setInputMode] = useState(false);
   const [input, setInput] = useState('');
@@ -157,6 +160,7 @@ const CustomSlippageInput = memo(function CustomSlippageInput({
         onChange={handleChange}
         onBlur={handleBlur}
         onFocus={handleFocus}
+        disabled={disabled}
         ref={inputRef}
       />
       {showPlaceholder ?
@@ -164,6 +168,7 @@ const CustomSlippageInput = memo(function CustomSlippageInput({
           type="button"
           className={css(styles.option, styles.button, styles.customPlaceholder)}
           onClick={handleClick}
+          disabled={disabled}
         >
           {placeholder}
         </button>
@@ -175,14 +180,20 @@ const CustomSlippageInput = memo(function CustomSlippageInput({
 type ButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 type SlippageButtonProps = Omit<ButtonProps, 'onChange' | 'onClick' | 'value'> & {
   value: number;
+  selected: boolean;
   onChange: (value: number) => void;
 };
 const SlippageButton = memo(function SlippageButton({
   onChange,
   value,
+  selected,
   ...rest
 }: SlippageButtonProps) {
-  const handleClick = useCallback(() => onChange(value * 100), [onChange, value]);
+  const handleClick = useCallback(() => {
+    if (!selected) {
+      onChange(value * 100);
+    }
+  }, [onChange, value, selected]);
   return (
     <button type="button" onClick={handleClick} {...rest}>
       {formatPercent(value, 1)}
@@ -199,6 +210,7 @@ export const ZapSlippage = memo(function ZapSlippage({ css: cssProp }: ZapSlippa
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const slippage = useAppSelector(selectTransactSlippage);
+  const isStepping = useAppSelector(selectIsStepperStepping);
   const handleToggle = useCallback(() => setOpen(o => !o), [setOpen]);
   const Icon = open ? ExpandLess : ExpandMore;
   const selectedIndex = useMemo(
@@ -258,6 +270,8 @@ export const ZapSlippage = memo(function ZapSlippage({ css: cssProp }: ZapSlippa
             <SlippageButton
               key={percent}
               value={percent}
+              selected={!customFocused && selectedIndex === i}
+              disabled={isStepping}
               onChange={handleChange}
               className={css(
                 styles.option,
@@ -273,6 +287,7 @@ export const ZapSlippage = memo(function ZapSlippage({ css: cssProp }: ZapSlippa
             onChange={handleChange}
             onFocus={setCustomFocused}
             isCustom={isCustom}
+            disabled={isStepping}
           />
         </div>
       : null}

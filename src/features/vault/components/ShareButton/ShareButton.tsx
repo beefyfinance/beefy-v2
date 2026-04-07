@@ -155,6 +155,7 @@ const ShareTrigger = styled(DropdownButtonTrigger, {
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: '4px',
     paddingBlock: '8px',
     paddingInline: '14px',
     outline: 'none',

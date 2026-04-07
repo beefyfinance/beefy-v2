@@ -41,6 +41,7 @@ if (process.env.ANALYZE_BUNDLE) {
 // https://vitejs.dev/config/
 // eslint-disable-next-line no-restricted-syntax -- required for Vite
 export default defineConfig({
+  assetsInclude: ['**/*.riv'],
   server: {
     open: true,
   },
