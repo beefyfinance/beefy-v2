@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "pancake-cow-base-cake-usdc",
     "status": "active",
-    "createdAt": 1774388380,
+    "createdAt": 1775132675,
     "platformId": "pancakeswap",
     "assets": ["CAKE", "USDC"],
     "risks": {
@@ -53,7 +53,7 @@
     "oracle": "lps",
     "oracleId": "pancake-cow-base-cake-usdc",
     "status": "active",
-    "createdAt": 1774388379,
+    "createdAt": 1775132675,
     "platformId": "pancakeswap",
     "assets": ["CAKE", "USDC"],
     "risks": {
@@ -95,7 +95,7 @@
     "oracle": "lps",
     "oracleId": "pancake-cow-base-cake-usdc",
     "status": "active",
-    "createdAt": 1774388379,
+    "createdAt": 1775132675,
     "platformId": "beefy",
     "feeTier": "0.25",
     "assets": ["CAKE", "USDC"],
@@ -131,7 +131,7 @@
     "oracle": "lps",
     "oracleId": "pancake-cow-base-cake-weth",
     "status": "active",
-    "createdAt": 1774385705,
+    "createdAt": 1775132675,
     "platformId": "pancakeswap",
     "assets": ["CAKE", "WETH"],
     "risks": {
@@ -171,7 +171,7 @@
     "oracle": "lps",
     "oracleId": "pancake-cow-base-cake-weth",
     "status": "active",
-    "createdAt": 1774385704,
+    "createdAt": 1775132675,
     "platformId": "pancakeswap",
     "assets": ["CAKE", "WETH"],
     "risks": {
@@ -213,7 +213,7 @@
     "oracle": "lps",
     "oracleId": "pancake-cow-base-cake-weth",
     "status": "active",
-    "createdAt": 1774385704,
+    "createdAt": 1775132675,
     "platformId": "beefy",
     "feeTier": "0.25",
     "assets": ["CAKE", "WETH"],
