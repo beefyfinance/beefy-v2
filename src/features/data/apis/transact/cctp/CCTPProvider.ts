@@ -238,16 +238,6 @@ export function buildHookData(destChainId: ChainEntity['id'], zapPayload: ZapPay
     receiver: destConfig.receiver,
   });
 
-  const stepCallDataSizes = zapPayload.route.map((step, i) => {
-    const callDataBytes = (step.data.length - 2) / 2; // subtract 0x prefix, 2 hex chars per byte
-    return { step: i, target: step.target, callDataBytes, tokenCount: step.tokens.length };
-  });
-  const totalCallDataBytes = stepCallDataSizes.reduce((sum, s) => sum + s.callDataBytes, 0);
-  console.log('[CCTP] buildHookData step callData sizes', {
-    steps: stepCallDataSizes,
-    totalCallDataBytes,
-  });
-
   const encodedPayload = encodeZapPayload(zapPayload);
   // hookData = receiver address (20 bytes) + encoded ZapPayload (without 0x prefix)
   const hookData = `${destConfig.receiver}${encodedPayload.slice(2)}` as Hex;

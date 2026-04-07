@@ -56,9 +56,6 @@ export async function getTransactSteps(
   if (isCrossChainOption(quote.option)) {
     const sourceChain = selectChainById(state, quote.option.sourceChainId);
     prefetchGasPrice(sourceChain);
-    console.log('[transact] getTransactSteps: gas price prefetch initiated', {
-      sourceChainId: quote.option.sourceChainId,
-    });
   }
 
   const api = await getTransactApi();
@@ -101,13 +98,11 @@ export async function getTransactSteps(
     promise: requotePromise,
     startedAt: Date.now(),
   };
-  console.log('[transact] getTransactSteps: requote prefetch started');
 
   // Suppress unhandled rejection if step-build fails first and nobody awaits this
   requotePromise.catch(() => {});
 
   // Build the step (~5-8s, re-quote runs in parallel)
-  console.log('[transact] getTransactSteps: building step');
   let originalStep: Step;
   if (isDepositQuote(quote)) {
     originalStep = await api.fetchDepositStep(quote, getState, t);
@@ -116,11 +111,9 @@ export async function getTransactSteps(
   } else {
     throw new Error(`Invalid quote`);
   }
-  console.log('[transact] getTransactSteps: step built');
 
   steps.push(wrapStepConfirmQuote(originalStep, quote, prefetchedRequote));
 
-  console.log('[transact] getTransactSteps: done', { stepCount: steps.length });
   return steps;
 }
 
@@ -181,32 +174,23 @@ function wrapStepConfirmQuote(
   const action: BeefyThunk = async function (dispatch, getState) {
     const requestId = nanoid();
     dispatch(transactConfirmPending({ requestId }));
-    console.log('[transact] wrapStepConfirmQuote: start');
 
     try {
       let quotes: TransactQuote[];
       const prefetchAge = Date.now() - prefetchedRequote.startedAt;
-      console.log('[transact] wrapStepConfirmQuote: prefetch age', {
-        prefetchAge,
-        maxAge: REQUOTE_MAX_AGE_MS,
-      });
 
       if (prefetchAge < REQUOTE_MAX_AGE_MS) {
         // Prefetch is still fresh — try to use it
         try {
-          console.log('[transact] wrapStepConfirmQuote: using prefetched requote');
           quotes = await prefetchedRequote.promise;
         } catch {
           // Prefetch failed — fall back to fresh re-quote
-          console.log('[transact] wrapStepConfirmQuote: prefetch failed, fetching fresh');
           quotes = await fetchFreshRequote(originalQuote, getState);
         }
       } else {
         // Prefetch is stale (user took >30s with approvals) — fetch fresh
-        console.log('[transact] wrapStepConfirmQuote: prefetch stale, fetching fresh');
         quotes = await fetchFreshRequote(originalQuote, getState);
       }
-      console.log('[transact] wrapStepConfirmQuote: requote resolved');
 
       const state = getState();
       const maxSlippage = selectTransactSlippage(state);
@@ -238,9 +222,6 @@ function wrapStepConfirmQuote(
       }
 
       // Perform original action if no changes
-      console.log('[transact] wrapStepConfirmQuote: comparison done', {
-        significantChanges: significantChanges.length,
-      });
       if (significantChanges.length === 0) {
         dispatch(
           transactConfirmUnneeded({
