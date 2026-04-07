@@ -1,5 +1,5 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
@@ -9,13 +9,11 @@ import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/
 import { errorToString } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
-import zapIcon from '../../../../../../images/icons/zap.svg';
 import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance.ts';
 import {
   selectTransactForceSelection,
-  selectTransactNumTokens,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactVaultId,
@@ -27,6 +25,7 @@ import { WithdrawActions } from '../WithdrawActions/WithdrawActions.tsx';
 import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice/WithdrawnInWalletNotice.tsx';
 import { WithdrawQueueLoader } from '../WithdrawQueue/WithdrawQueueLoader.tsx';
 import { WithdrawTokenAmountInput } from '../WithdrawTokenAmountInput/WithdrawTokenAmountInput.tsx';
+import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -72,9 +71,9 @@ const WithdrawFormLoader = memo(function WithdrawFormLoader() {
   const isError = status === TransactStatus.Rejected;
 
   return (
-    <Container>
+    <Container noPadding={isLoading}>
       {isLoading ?
-        <LoadingIndicator text={t('Transact-Loading')} height={344} />
+        <LoadingIndicator text={t('Transact-Loading')} height={468} />
       : isError ?
         <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
       : <WithdrawForm />}
@@ -85,29 +84,14 @@ const WithdrawFormLoader = memo(function WithdrawFormLoader() {
 const WithdrawForm = memo(function WithdrawForm() {
   const { t } = useTranslation();
   const classes = useStyles();
-  const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
-  const forceSelection = useAppSelector(selectTransactForceSelection);
-
-  const i18key = useMemo(() => {
-    return (
-      hasOptions ?
-        forceSelection ? 'Transact-SelectToken'
-        : 'Transact-SelectAmount'
-      : 'Transact-Withdraw'
-    );
-  }, [forceSelection, hasOptions]);
+  const { ctaLabel: selectLabel } = useTransactSelectFlowCta();
 
   return (
     <>
       <WithdrawnInWalletNotice css={styles.notice} />
       <WithdrawQueueLoader />
       <div className={classes.labels}>
-        <div className={classes.selectLabel}>
-          {hasOptions ?
-            <img src={zapIcon} alt="Zap" height={12} className={classes.zapIcon} />
-          : null}
-          {t(i18key)}
-        </div>
+        <div className={classes.selectLabel}>{selectLabel}</div>
         <div className={classes.availableLabel}>
           {t('Transact-Available')}{' '}
           <span className={classes.availableLabelAmount}>
@@ -132,6 +116,16 @@ const Container = styled('div', {
     padding: '16px',
     sm: {
       padding: '24px',
+    },
+  },
+  variants: {
+    noPadding: {
+      true: {
+        padding: '0',
+        sm: {
+          padding: '0',
+        },
+      },
     },
   },
 });

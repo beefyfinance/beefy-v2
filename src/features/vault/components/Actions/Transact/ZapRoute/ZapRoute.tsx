@@ -1,14 +1,16 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import type { ComponentType, ReactNode } from 'react';
-import { Fragment, memo, useCallback, useMemo } from 'react';
+import { Fragment, memo, useCallback, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx';
+import { SpinLoader } from '../../../../../../components/SpinLoader/SpinLoader.tsx';
 import { ListJoin } from '../../../../../../components/ListJoin.tsx';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import {
+  type AllowanceTokenAmount,
   isCowcentratedDepositQuote,
   type TokenAmount,
   type ZapQuote,
@@ -21,15 +23,94 @@ import {
   type ZapQuoteStepUnstake,
   type ZapQuoteStepUnused,
   type ZapQuoteStepWithdraw,
+  type ZapQuoteStepBridge,
 } from '../../../../../data/apis/transact/transact-types.ts';
+import type { ChainEntity } from '../../../../../data/entities/chain.ts';
+import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.ts';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { selectPlatformById } from '../../../../../data/selectors/platforms.ts';
-import { selectTransactQuoteIds } from '../../../../../data/selectors/transact.ts';
+import {
+  selectIsStepperRecoveryExecution,
+  selectIsStepperStepping,
+  selectStepperCurrentStep,
+  selectStepperStepContent,
+} from '../../../../../data/selectors/stepper.ts';
+import { selectPendingAllowances } from '../../../../../data/selectors/allowances.ts';
+import { selectChainById } from '../../../../../data/selectors/chains.ts';
+import {
+  selectCrossChainRecoveryQuote,
+  selectCrossChainRecoveryQuoteOpId,
+  selectRecoveryOpForCurrentVault,
+  selectTransactQuoteIds,
+  selectTransactSuccessClosed,
+} from '../../../../../data/selectors/transact.ts';
 import { selectZapSwapProviderName } from '../../../../../data/selectors/zap.ts';
 import { QuoteTitle } from '../QuoteTitle/QuoteTitle.tsx';
 import { styles } from './styles.ts';
+import CheckmarkIcon from '../../../../../../images/icons/checkmark.svg?react';
+import PlayIcon from '../../../../../../images/icons/play.svg?react';
 
-const useStyles = legacyMakeStyles(styles);
+export type StepStatusState = 'list' | 'finished' | 'inProgress' | 'notStarted' | 'failed';
+
+function getStepChainId(step: ZapQuoteStep): ChainEntity['id'] | undefined {
+  switch (step.type) {
+    case 'swap':
+      return step.fromToken.chainId;
+    case 'bridge':
+      return step.toChainId;
+    case 'build':
+    case 'deposit':
+    case 'stake':
+      return step.inputs[0]?.token.chainId;
+    case 'withdraw':
+    case 'unstake':
+    case 'split':
+    case 'unused':
+      return step.outputs[0]?.token.chainId;
+    default:
+      return undefined;
+  }
+}
+
+const StepStatusIndicator = memo(function StepStatusIndicator({
+  status,
+  number,
+}: {
+  status: StepStatusState;
+  number: number;
+}) {
+  switch (status) {
+    case 'list':
+      return (
+        <div className={css(styles.statusBase, styles.statusList)}>
+          <span>{number}</span>
+        </div>
+      );
+    case 'finished':
+      return (
+        <div className={css(styles.statusBase, styles.statusFinished)}>
+          <CheckmarkIcon />
+        </div>
+      );
+    case 'failed':
+      return (
+        <div className={css(styles.statusBase, styles.statusFailed)}>
+          <PlayIcon />
+        </div>
+      );
+    case 'inProgress':
+      return (
+        <div className={css(styles.statusBase, styles.statusNotStarted)}>
+          <SpinLoader />
+        </div>
+      );
+    case 'notStarted':
+      return (
+        <div className={css(styles.statusBase, styles.statusNotStarted)}>
+          <span>{number}</span>
+        </div>
+      );
+  }
+});
 
 function useTokenAmounts(tokenAmounts: TokenAmount[]): ReactNode[] {
   return useMemo(() => {
@@ -42,19 +123,82 @@ function useTokenAmounts(tokenAmounts: TokenAmount[]): ReactNode[] {
   }, [tokenAmounts]);
 }
 
+function useChainName(chainId: ChainEntity['id'] | undefined): string {
+  return useAppSelector(state => (chainId ? selectChainById(state, chainId).name : ''));
+}
+
 type StepContentProps<T extends ZapQuoteStep> = {
   step: T;
   css?: CssStyles;
+  chainId?: ChainEntity['id'];
 };
+
+const ChainTag = memo(function ChainTag({
+  children,
+  chainId,
+}: {
+  children?: ReactNode;
+  chainId: ChainEntity['id'];
+}) {
+  const chainName = useChainName(chainId);
+  return (
+    <span className={css(styles.chainTag)}>
+      {children ?? chainName} <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} />
+    </span>
+  );
+});
+
+const ApprovalStepContent = memo(function ApprovalStepContent({
+  allowance,
+}: {
+  allowance: AllowanceTokenAmount;
+}) {
+  const { t } = useTranslation();
+  const chainId = allowance.token.chainId;
+
+  return (
+    <Trans
+      t={t}
+      i18nKey="Transact-Route-Step-Approval"
+      values={{
+        fromToken: allowance.token.symbol,
+      }}
+      components={{
+        fromAmount: <TokenAmountFromEntity amount={allowance.amount} token={allowance.token} />,
+        chain: <ChainTag chainId={chainId} />,
+      }}
+    />
+  );
+});
+
+type ApprovalStepProps = {
+  allowance: AllowanceTokenAmount;
+  number: number;
+  status: StepStatusState;
+};
+const ApprovalStep = memo(function ApprovalStep({ allowance, number, status }: ApprovalStepProps) {
+  return (
+    <div className={css(styles.stepRow)}>
+      <div className={css(styles.stepStatusWrapper)}>
+        <StepStatusIndicator status={status} number={number} />
+      </div>
+      <div className={css(styles.stepContent)}>
+        <ApprovalStepContent allowance={allowance} />
+      </div>
+    </div>
+  );
+});
 
 const StepContentSwap = memo(function StepContentSwap({
   step,
+  chainId,
 }: StepContentProps<ZapQuoteStepSwap>) {
   const { t } = useTranslation();
   const { providerId, via } = step;
   const platformName = useAppSelector(state =>
     selectZapSwapProviderName(state, providerId, via, t)
   );
+
   const textKey =
     via === 'aggregator' && providerId === 'wnative' ?
       step.toToken.type === 'native' ?
@@ -74,6 +218,7 @@ const StepContentSwap = memo(function StepContentSwap({
       components={{
         fromAmount: <TokenAmountFromEntity amount={step.fromAmount} token={step.fromToken} />,
         toAmount: <TokenAmountFromEntity amount={step.toAmount} token={step.toToken} />,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -81,34 +226,30 @@ const StepContentSwap = memo(function StepContentSwap({
 
 const StepContentBuild = memo(function StepContentBuild({
   step,
+  chainId,
 }: StepContentProps<ZapQuoteStepBuild>) {
   const { t } = useTranslation();
-  const provider = useAppSelector(state => {
-    const id = step.providerId || step.outputToken.providerId;
-    return id ? selectPlatformById(state, id) : undefined;
-  });
+
   const tokenAmounts = useTokenAmounts(step.inputs);
 
   return (
-    <>
-      <Trans
-        t={t}
-        i18nKey="Transact-Route-Step-Build"
-        values={{
-          provider: provider ? provider.name : 'underlying platform',
-        }}
-        components={{
-          tokenAmounts: <ListJoin items={tokenAmounts} />,
-        }}
-      />
-    </>
+    <Trans
+      t={t}
+      i18nKey="Transact-Route-Step-Build"
+      components={{
+        tokenAmounts: <ListJoin items={tokenAmounts} />,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
+      }}
+    />
   );
 });
 
 const StepContentDeposit = memo(function StepContentDeposit({
   step,
+  chainId,
 }: StepContentProps<ZapQuoteStepDeposit>) {
   const { t } = useTranslation();
+
   const tokenAmounts = useTokenAmounts(step.inputs);
   return (
     <Trans
@@ -116,6 +257,7 @@ const StepContentDeposit = memo(function StepContentDeposit({
       i18nKey="Transact-Route-Step-Deposit"
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -123,8 +265,10 @@ const StepContentDeposit = memo(function StepContentDeposit({
 
 const StepContentStake = memo(function StepContentStake({
   step,
+  chainId,
 }: StepContentProps<ZapQuoteStepStake>) {
   const { t } = useTranslation();
+
   const tokenAmounts = useTokenAmounts(step.inputs);
   return (
     <Trans
@@ -132,6 +276,7 @@ const StepContentStake = memo(function StepContentStake({
       i18nKey="Transact-Route-Step-Stake"
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -139,8 +284,10 @@ const StepContentStake = memo(function StepContentStake({
 
 const StepContentUnstake = memo(function StepContentUnstake({
   step,
+  chainId,
 }: StepContentProps<ZapQuoteStepUnstake>) {
   const { t } = useTranslation();
+
   const tokenAmounts = useTokenAmounts(step.outputs);
 
   return (
@@ -149,6 +296,7 @@ const StepContentUnstake = memo(function StepContentUnstake({
       i18nKey="Transact-Route-Step-Unstake"
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -156,8 +304,10 @@ const StepContentUnstake = memo(function StepContentUnstake({
 
 const StepContentWithdraw = memo(function StepContentWithdraw({
   step,
+  chainId,
 }: StepContentProps<ZapQuoteStepWithdraw>) {
   const { t } = useTranslation();
+
   const tokenAmounts = useTokenAmounts(step.outputs);
 
   return (
@@ -166,6 +316,7 @@ const StepContentWithdraw = memo(function StepContentWithdraw({
       i18nKey="Transact-Route-Step-Withdraw"
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -173,31 +324,26 @@ const StepContentWithdraw = memo(function StepContentWithdraw({
 
 const StepContentSplit = memo(function StepContentSplit({
   step,
+  chainId,
 }: StepContentProps<ZapQuoteStepSplit>) {
   const { t } = useTranslation();
-  const provider = useAppSelector(state =>
-    step.inputToken.providerId ? selectPlatformById(state, step.inputToken.providerId) : undefined
-  );
   const tokenAmounts = useTokenAmounts(step.outputs);
 
   return (
-    <>
-      <Trans
-        t={t}
-        i18nKey="Transact-Route-Step-Split"
-        values={{
-          provider: provider ? provider.name : 'underlying platform',
-        }}
-        components={{
-          tokenAmounts: <ListJoin items={tokenAmounts} />,
-        }}
-      />
-    </>
+    <Trans
+      t={t}
+      i18nKey="Transact-Route-Step-Split"
+      components={{
+        tokenAmounts: <ListJoin items={tokenAmounts} />,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
+      }}
+    />
   );
 });
 
 const StepContentUnused = memo(function StepContentUnused({
   step,
+  chainId,
 }: StepContentProps<ZapQuoteStepUnused>) {
   const { t } = useTranslation();
   const tokenAmounts = useMemo(() => {
@@ -216,9 +362,33 @@ const StepContentUnused = memo(function StepContentUnused({
         i18nKey="Transact-Route-Step-Unused"
         components={{
           tokenAmounts: <ListJoin items={tokenAmounts} />,
+          chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
         }}
       />
     </>
+  );
+});
+
+const StepContentBridge = memo(function StepContentBridge({
+  step,
+  chainId,
+}: StepContentProps<ZapQuoteStepBridge>) {
+  const { t } = useTranslation();
+  const chainName = useChainName(chainId);
+
+  return (
+    <Trans
+      t={t}
+      i18nKey="Transact-Route-Step-Bridge"
+      values={{
+        fromToken: step.fromToken.symbol,
+        chainName,
+      }}
+      components={{
+        fromAmount: <TokenAmountFromEntity amount={step.fromAmount} token={step.fromToken} />,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
+      }}
+    />
   );
 });
 
@@ -235,25 +405,120 @@ const StepContentComponents: StepContentMap = {
   unused: StepContentUnused,
   stake: StepContentStake,
   unstake: StepContentUnstake,
+  bridge: StepContentBridge,
 };
+
+function useStepStatuses(
+  totalStepsCount: number,
+  approvalCount: number,
+  quoteSteps: ZapQuoteStep[],
+  bridgeStepAbsoluteIndex: number
+): StepStatusState[] {
+  const isStepping = useAppSelector(selectIsStepperStepping);
+  const stepperContent = useAppSelector(selectStepperStepContent);
+  const currentStepIndex = useAppSelector(selectStepperCurrentStep);
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
+  const successClosed = useAppSelector(selectTransactSuccessClosed);
+
+  return useMemo(() => {
+    if (successClosed) {
+      return Array(totalStepsCount).fill('finished') as StepStatusState[];
+    }
+
+    const isRecoveryFromOp = recoveryOp != null && !isStepping;
+
+    if (
+      !isStepping &&
+      stepperContent !== StepContent.SuccessTx &&
+      stepperContent !== StepContent.RecoveryTx &&
+      !isRecoveryExecution &&
+      !isRecoveryFromOp
+    ) {
+      return Array(totalStepsCount).fill('list') as StepStatusState[];
+    }
+
+    if (stepperContent === StepContent.SuccessTx) {
+      return Array(totalStepsCount).fill('finished') as StepStatusState[];
+    }
+
+    if (stepperContent === StepContent.RecoveryTx || isRecoveryFromOp) {
+      const failedIdx = bridgeStepAbsoluteIndex + 1;
+      return Array.from({ length: totalStepsCount }, (_, i) => {
+        if (i <= bridgeStepAbsoluteIndex) return 'finished';
+        if (i === failedIdx) return 'failed';
+        return 'notStarted';
+      }) as StepStatusState[];
+    }
+
+    if (isRecoveryExecution) {
+      return Array.from({ length: totalStepsCount }, (_, i) => {
+        if (i <= bridgeStepAbsoluteIndex) return 'finished';
+        if (i === bridgeStepAbsoluteIndex + 1) return 'inProgress';
+        return 'notStarted';
+      }) as StepStatusState[];
+    }
+
+    if (stepperContent === StepContent.BridgingTx) {
+      const bridgeIdx = quoteSteps.findIndex(s => s.type === 'bridge');
+      return Array.from({ length: totalStepsCount }, (_, i) => {
+        if (bridgeIdx >= 0) {
+          const absoluteBridgeIdx = approvalCount + bridgeIdx;
+          if (i < absoluteBridgeIdx) return 'finished';
+          if (i === absoluteBridgeIdx) return 'inProgress';
+          return 'notStarted';
+        }
+        return 'finished';
+      }) as StepStatusState[];
+    }
+
+    if (currentStepIndex < approvalCount) {
+      return Array.from({ length: totalStepsCount }, (_, i) => {
+        if (i < currentStepIndex) return 'finished';
+        if (i === currentStepIndex) return 'inProgress';
+        return 'notStarted';
+      }) as StepStatusState[];
+    }
+
+    return Array.from({ length: totalStepsCount }, (_, i) => {
+      if (i < approvalCount) return 'finished';
+      if (i === approvalCount) return 'inProgress';
+      return 'notStarted';
+    }) as StepStatusState[];
+  }, [
+    isStepping,
+    stepperContent,
+    currentStepIndex,
+    totalStepsCount,
+    approvalCount,
+    quoteSteps,
+    bridgeStepAbsoluteIndex,
+    isRecoveryExecution,
+    recoveryOp,
+    successClosed,
+  ]);
+}
 
 type StepProps = {
   step: ZapQuoteStep;
   number: number;
+  status: StepStatusState;
 };
-const Step = memo(function Step({ step, number }: StepProps) {
-  const classes = useStyles();
+const Step = memo(function Step({ step, number, status }: StepProps) {
   const Component = StepContentComponents[step.type] as ComponentType<
     StepContentProps<ZapQuoteStep>
   >;
+  const chainId = getStepChainId(step);
 
   return (
-    <>
-      <div className={classes.stepNumber}>{number}.</div>
-      <div className={classes.stepContent}>
-        <Component step={step} />
+    <div className={css(styles.stepRow)}>
+      <div className={css(styles.stepStatusWrapper)}>
+        <StepStatusIndicator status={status} number={number} />
       </div>
-    </>
+      <div className={css(styles.stepContent)}>
+        <Component step={step} chainId={chainId} />
+      </div>
+    </div>
   );
 });
 
@@ -263,10 +528,55 @@ export type ZapRouteProps = {
 };
 export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRouteProps) {
   const { t } = useTranslation();
-  const classes = useStyles();
   const dispatch = useAppDispatch();
   const quotes = useAppSelector(selectTransactQuoteIds);
   const hasMultipleOptions = quotes.length > 1;
+  const stepperContent = useAppSelector(selectStepperStepContent);
+  const recoveryQuote = useAppSelector(selectCrossChainRecoveryQuote);
+  const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
+  const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
+
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const isRecovery =
+    stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null;
+
+  const pendingAllowancesLive: AllowanceTokenAmount[] = useAppSelector(state =>
+    selectPendingAllowances(state, quote.allowances)
+  );
+  const stepperModal = useAppSelector(state => state.ui.stepperState.modal);
+  const snapshotRef = useRef<AllowanceTokenAmount[]>(pendingAllowancesLive);
+  if (!stepperModal && !isRecovery) {
+    snapshotRef.current = pendingAllowancesLive;
+  }
+  const pendingAllowances =
+    stepperModal || isRecovery ? snapshotRef.current : pendingAllowancesLive;
+
+  const recoveryQuoteMatchesOp = !recoveryOp || recoveryQuoteOpId === recoveryOp.id;
+
+  const { effectiveSteps, bridgeStepAbsoluteIndex } = useMemo(() => {
+    const bridgeIdx = quote.steps.findIndex(s => s.type === 'bridge');
+    const absoluteBridgeIdx =
+      pendingAllowances.length + (bridgeIdx >= 0 ? bridgeIdx : quote.steps.length);
+
+    if (isRecovery && recoveryQuote && recoveryQuoteMatchesOp && bridgeIdx >= 0) {
+      const preBridgeSteps = quote.steps.slice(0, bridgeIdx + 1);
+      return {
+        effectiveSteps: [...preBridgeSteps, ...recoveryQuote.steps],
+        bridgeStepAbsoluteIndex: absoluteBridgeIdx,
+      };
+    }
+
+    return { effectiveSteps: quote.steps, bridgeStepAbsoluteIndex: absoluteBridgeIdx };
+  }, [quote.steps, isRecovery, recoveryQuote, recoveryQuoteMatchesOp, pendingAllowances.length]);
+
+  const approvalCount = pendingAllowances.length;
+  const totalSteps = approvalCount + effectiveSteps.length;
+  const stepStatuses = useStepStatuses(
+    totalSteps,
+    approvalCount,
+    effectiveSteps,
+    bridgeStepAbsoluteIndex
+  );
   const handleSwitch = useCallback(() => {
     dispatch(transactSwitchStep(TransactStep.QuoteSelect));
   }, [dispatch]);
@@ -280,8 +590,8 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
 
   return (
     <div className={css(cssProp)}>
-      <div className={classes.title}>{t('Transact-ZapRoute')}</div>
-      <div className={classes.routeHolder}>
+      <div className={css(styles.title)}>{t('Transact-ZapRoute')}</div>
+      <div className={css(styles.routeHolder)}>
         <div
           className={css(styles.routeHeader, hasMultipleOptions && styles.routerHeaderClickable)}
           onClick={hasMultipleOptions ? handleSwitch : undefined}
@@ -289,10 +599,23 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
           <QuoteTitle quote={quote} />
           {hasMultipleOptions ? '>' : undefined}
         </div>
-        <div className={classes.routeContent}>
-          <div className={classes.steps}>
-            {quote.steps.map((step, i) => (
-              <Step step={step} key={i} number={i + 1} />
+        <div className={css(styles.routeContent)}>
+          <div className={css(styles.steps)}>
+            {pendingAllowances.map((allowance, i) => (
+              <ApprovalStep
+                allowance={allowance}
+                key={`approval-${allowance.token.address}`}
+                number={i + 1}
+                status={stepStatuses[i]}
+              />
+            ))}
+            {effectiveSteps.map((step, i) => (
+              <Step
+                step={step}
+                key={i}
+                number={approvalCount + i + 1}
+                status={stepStatuses[approvalCount + i]}
+              />
             ))}
           </div>
         </div>

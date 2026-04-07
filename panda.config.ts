@@ -304,7 +304,9 @@ const config = buildConfig(
           redError: { value: '#da5932', description: 'indicators.error' },
           scrollableShadowSolid: { value: '#0000007f' },
           selectOptionActiveBackground: { value: '#ffffff28' },
+          stepperBridgingBackground: { value: '#999cb33d' },
           stepperErrorBackground: { value: '#db323219' },
+          stepperRecoveryBackground: { value: '#ffd1a33d' },
           stepperSuccessBackground: { value: '#59a66226' },
           tagClmBackground: { value: '#0052CC', description: 'tag.clm' },
           tagPausedBackground: { value: '#564a46', description: 'tag.paused' },
@@ -371,6 +373,7 @@ const config = buildConfig(
             '50-20a': { value: '#53be6433' },
             '60': { value: '#449a4d' },
             '70': { value: '#368a4d' },
+            '70-56a': { value: '#2748468F' },
             '80': { value: '#2a784c' },
             '80-40': { value: '#274846' },
             '80-40a': { value: '#2a784c66' },
@@ -378,6 +381,7 @@ const config = buildConfig(
             '100': { value: '#155042' },
           },
           darkBlue: {
+            '30': { value: '#151728' },
             '40': { value: '#3f4574' },
             '50': { value: '#363b63' },
             '50-56a': { value: '#363b638e' },
@@ -987,6 +991,22 @@ const config = buildConfig(
         },
         disabled: {
           color: '{colors.text.black}',
+        },
+      },
+      recovery: {
+        base: {
+          color: '{colors.text.black}',
+          background: '{colors.gold.50}',
+          border: '{colors.gold.50}',
+        },
+        hover: {
+          background: '{colors.gold.30}',
+          border: '{colors.gold.30}',
+        },
+        disabled: {
+          color: '{colors.text.disabled}',
+          background: '{colors.gold.40-12a}',
+          border: '{colors.gold.40-12a}',
         },
       },
       filter: {

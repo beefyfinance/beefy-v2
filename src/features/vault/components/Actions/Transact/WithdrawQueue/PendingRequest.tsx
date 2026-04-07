@@ -16,12 +16,14 @@ type PendingRequestProps = {
   depositTokenPrice: BigNumber;
   request: Erc4626PendingBalanceRequest;
   onWithdraw: (id: bigint) => void;
+  withdrawDisabled?: boolean;
 };
 export const PendingRequest = memo(function PendingRequest({
   depositToken,
   depositTokenPrice,
   request,
   onWithdraw,
+  withdrawDisabled = false,
 }: PendingRequestProps) {
   const { id, assets } = request;
   const value = useMemo(
@@ -43,7 +45,11 @@ export const PendingRequest = memo(function PendingRequest({
       </Amount>
       <Actions>
         <Countdown until={request.claimableTimestamp}>
-          <WithdrawButton chainId={depositToken.chainId} onClick={handleWithdraw} />
+          <WithdrawButton
+            chainId={depositToken.chainId}
+            onClick={handleWithdraw}
+            disabled={withdrawDisabled}
+          />
         </Countdown>
       </Actions>
     </Layout>

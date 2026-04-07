@@ -23,6 +23,7 @@ import {
   selectBridgeConfirmStatus,
 } from '../../../../../data/selectors/bridge.ts';
 import { selectChainById } from '../../../../../data/selectors/chains.ts';
+import { selectTransactExecuting } from '../../../../../data/selectors/transact.ts';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
 import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens.ts';
 import {
@@ -53,6 +54,7 @@ const ConfirmReady = memo(function ConfirmReady() {
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const isWalletOnFromChain = currentChainId === fromChain.id;
   const isStepping = useAppSelector(selectIsStepperStepping);
+  const isExecuting = useAppSelector(selectTransactExecuting);
   const timeEstimate = useMemo(() => {
     return formatMinutesDuration(quote.timeEstimate);
   }, [quote.timeEstimate]);
@@ -156,7 +158,7 @@ const ConfirmReady = memo(function ConfirmReady() {
           isWalletOnFromChain ?
             <Button
               onClick={handleBridge}
-              disabled={isStepping}
+              disabled={isStepping || isExecuting}
               variant="cta"
               fullWidth={true}
               borderless={true}
