@@ -1,5 +1,54 @@
 [
   {
+    "id": "stakedao-ynrwax-ynusdx",
+    "name": "ynRWAx/ynUSDx",
+    "type": "standard",
+    "token": "yn-RWA/USD",
+    "tokenAddress": "0xFFd3b4D343A8964a5C3c1caAc20f319C41A97BFF",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x4E6279463bbeeBAA674dd220C7AD24225ebF108f",
+    "earnedToken": "mooStakeDao-ynRWAx-ynUSDx",
+    "earnedTokenAddress": "0x4E6279463bbeeBAA674dd220C7AD24225ebF108f",
+    "oracle": "lps",
+    "oracleId": "curve-ynrwax-ynusdx",
+    "status": "active",
+    "createdAt": 1775649065,
+    "platformId": "stakedao",
+    "assets": ["ynRWAx", "ynUSDx"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-650/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-650/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xFFd3b4D343A8964a5C3c1caAc20f319C41A97BFF",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xFFd3b4D343A8964a5C3c1caAc20f319C41A97BFF",
+            "coins": [
+              "0x01Ba69727E2860b37bc1a2bd56999c1aFb4C15D8",
+              "0x3DB228FE836D99Ccb25Ec4dfdC80ED6d2CDdCB4b"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "pendle-apyusd-18jun26",
     "name": "apyUSD 18Jun26",
     "type": "standard",
