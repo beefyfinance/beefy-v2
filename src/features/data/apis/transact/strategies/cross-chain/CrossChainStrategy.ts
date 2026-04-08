@@ -67,6 +67,7 @@ import {
 import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
 import type { UserlessZapRequest, ZapStep, OrderOutput } from '../../zap/types.ts';
 import {
+  type ChainTransactHelpers,
   type IStrategy,
   type IZapStrategy,
   type IZapStrategyStatic,
@@ -208,9 +209,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       timeEstimate: bridgeQuote.timeEstimate,
     } satisfies ZapQuoteStepBridge);
     // C. Destination strategy: find one that accepts destUSDC and quote it
-    const destHelpers = await (
-      await getTransactApi()
-    ).getHelpersForChain(destChainId, option.vaultId, getState);
+    const destHelpers = await (await getTransactApi()).getHelpersForVault(option.vaultId, getState);
     const destStrategies = await (await getTransactApi()).getZapStrategiesForVault(destHelpers);
     const destMatch = await this.findDestStrategyForDeposit(destStrategies, destBridgeToken);
     if (!destMatch) {
@@ -338,7 +337,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
     const destHelpers = await (
       await getTransactApi()
-    ).getHelpersForChain(destChainId, quote.option.vaultId, getState);
+    ).getHelpersForVault(quote.option.vaultId, getState);
     const destStrategies = await (await getTransactApi()).getZapStrategiesForVault(destHelpers);
     const destStrategy = destStrategies.find(s => s.id === stepDestQuote.option.strategyId);
     if (!destStrategy || !isComposableStrategy(destStrategy)) {
@@ -985,7 +984,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       recovery = {
         direction: 'withdraw',
         destChainId,
-        vaultId,
         bridgeTokenAddress: bridgedAmount.token.address,
         bridgedAmount: bridgedAmount.amount.toString(10),
         desiredOutputAddress:
@@ -1022,9 +1020,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const state = getState();
     const { destChainId, vaultId, bridgedAmount, bridgeToken } = params;
 
-    const destHelpers = await (
-      await getTransactApi()
-    ).getHelpersForChain(destChainId, vaultId, getState);
+    const destHelpers = await (await getTransactApi()).getHelpersForVault(vaultId, getState);
     const destStrategies = await (await getTransactApi()).getZapStrategiesForVault(destHelpers);
 
     const destMatch = await this.findDestStrategyForDeposit(destStrategies, bridgeToken);
@@ -1087,9 +1083,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     }
 
     // 1. Resolve dest helpers and strategies
-    const destHelpers = await (
-      await getTransactApi()
-    ).getHelpersForChain(destChainId, vaultId, getState);
+    const destHelpers = await (await getTransactApi()).getHelpersForVault(vaultId, getState);
     const destStrategies = await (await getTransactApi()).getZapStrategiesForVault(destHelpers);
 
     // 2. Find composable dest strategy that accepts USDC
@@ -1172,21 +1166,20 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
    */
   async fetchDestinationWithdrawQuote(params: {
     destChainId: ChainEntity['id'];
-    vaultId: VaultEntity['id'];
     bridgedAmount: BigNumber;
     bridgeToken: TokenErc20;
     desiredOutput: TokenEntity;
+    destChainHelpers: ChainTransactHelpers;
   }): Promise<RecoveryQuote> {
-    const { swapAggregator, getState } = this.helpers;
+    const { swapAggregator, getState } = params.destChainHelpers;
     const state = getState();
-    const { vaultId, bridgedAmount, bridgeToken, desiredOutput } = params;
+    const { destChainId, bridgedAmount, bridgeToken, desiredOutput } = params;
 
     const destSwapQuotes = await swapAggregator.fetchQuotes(
       {
         fromToken: bridgeToken,
         fromAmount: bridgedAmount,
         toToken: desiredOutput,
-        vaultId,
       },
       state,
       this.options.swap
@@ -1212,7 +1205,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const outputs: TokenAmount[] = [{ token: desiredOutput, amount: bestSwap.toAmount }];
 
     return {
-      id: createQuoteId(`recovery-withdraw-${vaultId}`),
+      id: createQuoteId(`recovery-withdraw-${destChainId}`),
       inputs,
       outputs,
       returned: [],
@@ -1231,14 +1224,15 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     params: {
       opId: string;
       destChainId: ChainEntity['id'];
-      vaultId: VaultEntity['id'];
+      vaultId: VaultEntity['id']; // source vault — needed by crossChainRecoveryExecuteOrder for tx metadata
       bridgedAmount: BigNumber;
       bridgeToken: TokenErc20;
       desiredOutput: TokenEntity;
+      destChainHelpers: ChainTransactHelpers;
     },
     t: TFunction<Namespace>
   ): Promise<Step> {
-    const { swapAggregator, getState } = this.helpers;
+    const { swapAggregator, getState, zap: destZap } = params.destChainHelpers;
     const state = getState();
     const { opId, destChainId, vaultId, bridgedAmount, bridgeToken, desiredOutput } = params;
     const slippage = selectTransactSlippage(state);
@@ -1254,7 +1248,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         fromToken: bridgeToken,
         fromAmount: bridgedAmount,
         toToken: desiredOutput,
-        vaultId,
       },
       state,
       this.options.swap
@@ -1263,11 +1256,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       throw new Error('No swap quotes available for recovery');
     }
     const bestSwap = destSwapQuotes[0];
-
-    const destZap = selectZapByChainId(state, destChainId);
-    if (!destZap) {
-      throw new Error(`No zap router on chain ${destChainId}`);
-    }
 
     // 2. Build ZapSteps for the swap
     const swapZap = await fetchZapAggregatorSwap(

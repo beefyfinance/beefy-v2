@@ -15,7 +15,7 @@ import type { CrossChainRecoveryParams } from '../../reducers/wallet/transact-ty
 import type { BeefyStateFn } from '../../store/types.ts';
 import type { CurveTokenOption } from './strategies/curve/types.ts';
 import type { ZapStrategyId } from './strategies/strategy-configs.ts';
-import type { IStrategy, TransactHelpers, ZapTransactHelpers } from './strategies/IStrategy.ts';
+import type { ChainTransactHelpers, IStrategy, TransactHelpers } from './strategies/IStrategy.ts';
 import type { QuoteResponse } from './swap/ISwapProvider.ts';
 import type { CCTPBridgeQuote } from './cctp/types.ts';
 
@@ -1065,16 +1065,18 @@ export interface ITransactApi {
 
   getHelpersForChain(
     chainId: ChainEntity['id'],
-    vaultId: VaultEntity['id'],
     getState: BeefyStateFn
-  ): Promise<ZapTransactHelpers>;
+  ): Promise<ChainTransactHelpers>;
+
+  getHelpersForVault(vaultId: VaultEntity['id'], getState: BeefyStateFn): Promise<TransactHelpers>;
 
   getZapStrategiesForVault(helpers: TransactHelpers): Promise<IStrategy[]>;
 
   fetchRecoveryQuote(
     recoveryParams: CrossChainRecoveryParams,
     actualBridgedAmount: BigNumber,
-    getState: BeefyStateFn
+    getState: BeefyStateFn,
+    sourceVaultId: VaultEntity['id']
   ): Promise<RecoveryQuote>;
 
   fetchRecoveryStep(
@@ -1082,6 +1084,7 @@ export interface ITransactApi {
     opId: string,
     actualBridgedAmount: BigNumber,
     getState: BeefyStateFn,
-    t: TFunction<Namespace>
+    t: TFunction<Namespace>,
+    sourceVaultId: VaultEntity['id']
   ): Promise<Step>;
 }
