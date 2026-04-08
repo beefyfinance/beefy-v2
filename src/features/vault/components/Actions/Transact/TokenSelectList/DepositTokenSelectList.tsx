@@ -6,7 +6,7 @@ import { SearchInput } from '../../../../../../components/Form/Input/SearchInput
 import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import buildLpIcon from '../../../../../../images/icons/build-lp.svg';
-import OpenInNewRoundedIcon from '../../../../../../images/icons/mui/OpenInNewRounded.svg?react';
+import OpenInNewRoundedIcon from '../../../../../../images/icons/external-link.svg?react';
 import { transactSelectSelection } from '../../../../../data/actions/transact.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import {

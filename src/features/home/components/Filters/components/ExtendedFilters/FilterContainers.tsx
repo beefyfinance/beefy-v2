@@ -31,9 +31,6 @@ export const Title = styled('div', {
   base: {
     textStyle: 'body.medium',
     color: 'text.middle',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    paddingRight: '8px',
   },
 });
 
@@ -41,7 +38,7 @@ export const ArrowBack = styled(ArrowBackIcon, {
   base: {
     transform: 'rotate(180deg)',
     color: 'text.dark',
-    height: '12px',
+    height: '20px',
     _hover: {
       cursor: 'pointer',
       color: 'text.middle',
@@ -54,7 +51,7 @@ export const ContentHeader = styled('div', {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: '8px',
+    position: 'relative',
   },
 });
 
