@@ -510,7 +510,12 @@ export const crossChainFetchRecoveryQuote = createAppAsyncThunk<
 
   const api = await getTransactApi();
   const actualBridgedAmount = new BigNumber(op.recovery.bridgedAmount);
-  const quote = await api.fetchRecoveryQuote(op.recovery, actualBridgedAmount, getState);
+  const quote = await api.fetchRecoveryQuote(
+    op.recovery,
+    actualBridgedAmount,
+    getState,
+    op.vaultId
+  );
 
   return { quote };
 });
@@ -598,7 +603,8 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
         opId,
         actualBridgedAmount,
         getState,
-        t
+        t,
+        op.vaultId
       );
       steps.push(recoveryStep);
 
