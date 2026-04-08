@@ -64,7 +64,7 @@ export class WNativeSwapProvider implements ISwapProvider {
   }
 
   async getSupportedTokens(
-    _vaultId: VaultEntity['id'],
+    _vaultId: VaultEntity['id'] | undefined,
     chainId: ChainEntity['id'],
     state: BeefyState
   ): Promise<TokenEntity[]> {

@@ -54,7 +54,7 @@ export class SwapAggregator implements ISwapAggregator {
 
   protected async providerSupportedTokens(
     provider: ISwapProvider,
-    vaultId: VaultEntity['id'],
+    vaultId: VaultEntity['id'] | undefined,
     chainId: ChainEntity['id'],
     state: BeefyState,
     options: StrategySwapConfig | undefined
@@ -70,7 +70,7 @@ export class SwapAggregator implements ISwapAggregator {
 
   async fetchTokenSupport(
     wantedTokens: TokenEntity[],
-    vaultId: VaultEntity['id'],
+    vaultId: VaultEntity['id'] | undefined,
     chainId: ChainEntity['id'],
     state: BeefyState,
     options?: StrategySwapConfig
@@ -143,7 +143,7 @@ export class SwapAggregator implements ISwapAggregator {
 
   protected async canSwapBetween(
     provider: ISwapProvider,
-    vaultId: VaultEntity['id'],
+    vaultId: VaultEntity['id'] | undefined,
     tokenA: TokenEntity,
     tokenB: TokenEntity,
     state: BeefyState,

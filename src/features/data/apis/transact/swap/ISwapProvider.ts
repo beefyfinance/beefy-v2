@@ -9,7 +9,7 @@ export type QuoteRequest = {
   fromToken: TokenEntity;
   fromAmount: BigNumber;
   toToken: TokenEntity;
-  vaultId: VaultEntity['id']; // so we can block vaults from aggregators if needed
+  vaultId?: VaultEntity['id']; // so we can block vaults from aggregators if needed
 };
 
 export type QuoteResponse<T = unknown> = {
@@ -50,7 +50,7 @@ export type SwapResponse = {
 export interface ISwapProvider {
   getId(): string;
   getSupportedTokens(
-    vaultId: VaultEntity['id'],
+    vaultId: VaultEntity['id'] | undefined,
     chainId: ChainEntity['id'],
     state: BeefyState
   ): Promise<TokenEntity[]>;
