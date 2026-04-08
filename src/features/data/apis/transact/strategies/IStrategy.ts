@@ -146,6 +146,12 @@ export type ZapTransactHelpers = BaseTransactHelpers & {
 
 export type TransactHelpers = ZaplessTransactHelpers | ZapTransactHelpers;
 
+export type ChainTransactHelpers = {
+  zap: ZapEntity;
+  swapAggregator: ISwapAggregator;
+  getState: () => BeefyState;
+};
+
 export function isZapTransactHelpers(helpers: TransactHelpers): helpers is ZapTransactHelpers {
   return helpers.zap !== undefined;
 }

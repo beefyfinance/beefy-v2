@@ -21,6 +21,7 @@ import {
   type IStrategy,
   isComposableStrategy,
   isZapTransactHelpers,
+  type ChainTransactHelpers,
   type IZapStrategyStatic,
   type TransactHelpers,
   type ZapTransactHelpers,
@@ -85,39 +86,29 @@ export function isComposableStrategyConstructorWithOptions(
 
 export class TransactApi implements ITransactApi {
   /**
-   * Get transact helpers for a vault on a specific chain.
-   * Used by CrossChainStrategy for destination chain operations.
+   * Get chain-level transact helpers (no vault context).
    * Guarantees zap router exists (throws otherwise).
    */
   async getHelpersForChain(
     chainId: ChainEntity['id'],
-    vaultId: VaultEntity['id'],
     getState: BeefyStateFn
-  ): Promise<ZapTransactHelpers> {
+  ): Promise<ChainTransactHelpers> {
     const state = getState();
     const zap = selectZapByChainId(state, chainId);
     if (!zap) {
       throw new Error(`No zap router configured for chain ${chainId}`);
     }
 
-    const vault = selectVaultById(state, vaultId);
-    if (vault.chainId !== chainId) {
-      throw new Error(`Vault ${vaultId} is on chain ${vault.chainId}, not ${chainId}`);
-    }
-
-    const vaultType = await this.getVaultTypeFor(vault, getState);
     const swapAggregator = await getSwapAggregator();
 
     return {
-      vault,
-      vaultType,
       zap,
       swapAggregator,
       getState,
     };
   }
 
-  protected async getHelpersForVault(
+  async getHelpersForVault(
     vaultId: VaultEntity['id'],
     getState: BeefyStateFn
   ): Promise<TransactHelpers> {
@@ -626,14 +617,10 @@ export class TransactApi implements ITransactApi {
   async fetchRecoveryQuote(
     recoveryParams: CrossChainRecoveryParams,
     actualBridgedAmount: BigNumber,
-    getState: BeefyStateFn
+    getState: BeefyStateFn,
+    sourceVaultId: VaultEntity['id']
   ): Promise<RecoveryQuote> {
-    const { destChainId, vaultId } = recoveryParams;
-
-    const helpers = await this.getHelpersForChain(destChainId, vaultId, getState);
-
-    const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
-
+    const { destChainId } = recoveryParams;
     const state = getState();
     const bridgeToken = selectTokenByAddress(
       state,
@@ -641,10 +628,17 @@ export class TransactApi implements ITransactApi {
       recoveryParams.bridgeTokenAddress
     ) as TokenErc20;
 
+    // Always instantiate strategy with the original source vault helpers
+    const helpers = await this.getHelpersForVault(sourceVaultId, getState);
+    if (!isZapTransactHelpers(helpers)) {
+      throw new Error(`No zap router configured for vault ${sourceVaultId}`);
+    }
+    const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
+
     if (recoveryParams.direction === 'deposit') {
       return xChainStrategy.fetchDestinationDepositQuote({
         destChainId,
-        vaultId,
+        vaultId: recoveryParams.vaultId,
         bridgedAmount: actualBridgedAmount,
         bridgeToken,
       });
@@ -652,6 +646,7 @@ export class TransactApi implements ITransactApi {
       if (!recoveryParams.desiredOutputAddress) {
         throw new Error('No recovery quote needed for USDC-output withdrawals');
       }
+      const destChainHelpers = await this.getHelpersForChain(destChainId, getState);
       const desiredOutput = selectTokenByAddress(
         state,
         destChainId,
@@ -659,10 +654,10 @@ export class TransactApi implements ITransactApi {
       );
       return xChainStrategy.fetchDestinationWithdrawQuote({
         destChainId,
-        vaultId,
         bridgedAmount: actualBridgedAmount,
         bridgeToken,
         desiredOutput,
+        destChainHelpers,
       });
     }
   }
@@ -672,14 +667,10 @@ export class TransactApi implements ITransactApi {
     opId: string,
     actualBridgedAmount: BigNumber,
     getState: BeefyStateFn,
-    t: TFunction<Namespace>
+    t: TFunction<Namespace>,
+    sourceVaultId: VaultEntity['id']
   ): Promise<Step> {
-    const { destChainId, vaultId } = recoveryParams;
-
-    const helpers = await this.getHelpersForChain(destChainId, vaultId, getState);
-
-    const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
-
+    const { destChainId } = recoveryParams;
     const state = getState();
     const bridgeToken = selectTokenByAddress(
       state,
@@ -687,15 +678,29 @@ export class TransactApi implements ITransactApi {
       recoveryParams.bridgeTokenAddress
     ) as TokenErc20;
 
+    // Always instantiate strategy with the original source vault helpers
+    const helpers = await this.getHelpersForVault(sourceVaultId, getState);
+    if (!isZapTransactHelpers(helpers)) {
+      throw new Error(`No zap router configured for vault ${sourceVaultId}`);
+    }
+    const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
+
     if (recoveryParams.direction === 'deposit') {
       return xChainStrategy.fetchDestinationDepositStep(
-        { opId, destChainId, vaultId, bridgedAmount: actualBridgedAmount, bridgeToken },
+        {
+          opId,
+          destChainId,
+          vaultId: recoveryParams.vaultId,
+          bridgedAmount: actualBridgedAmount,
+          bridgeToken,
+        },
         t
       );
     } else {
       if (!recoveryParams.desiredOutputAddress) {
         throw new Error('No recovery step needed for USDC-output withdrawals');
       }
+      const destChainHelpers = await this.getHelpersForChain(destChainId, getState);
       const desiredOutput = selectTokenByAddress(
         state,
         destChainId,
@@ -705,10 +710,11 @@ export class TransactApi implements ITransactApi {
         {
           opId,
           destChainId,
-          vaultId,
+          vaultId: sourceVaultId,
           bridgedAmount: actualBridgedAmount,
           bridgeToken,
           desiredOutput,
+          destChainHelpers,
         },
         t
       );

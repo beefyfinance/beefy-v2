@@ -554,7 +554,7 @@ export const selectRecoveryOpForCurrentVault = createSelector(
   [(state: BeefyState) => state.ui.transact.vaultId, selectCrossChainRecoverableOps],
   (vaultId, recoverableOps): PendingCrossChainOp | undefined => {
     if (!vaultId) return undefined;
-    const forVault = recoverableOps.filter(op => op.recovery.vaultId === vaultId);
+    const forVault = recoverableOps.filter(op => op.vaultId === vaultId);
     if (forVault.length === 0) return undefined;
     return orderBy(forVault, 'updatedAt', 'desc')[0];
   }

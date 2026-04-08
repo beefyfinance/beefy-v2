@@ -94,7 +94,6 @@ export type CrossChainDepositRecoveryParams = {
 export type CrossChainWithdrawRecoveryParams = {
   direction: 'withdraw';
   destChainId: ChainEntity['id'];
-  vaultId: VaultEntity['id'];
   bridgeTokenAddress: string;
   bridgedAmount: string;
   desiredOutputAddress?: string;

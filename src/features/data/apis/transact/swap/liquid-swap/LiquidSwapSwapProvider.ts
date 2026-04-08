@@ -115,7 +115,7 @@ export class LiquidSwapSwapProvider implements ISwapProvider {
   }
 
   async getSupportedTokens(
-    vaultId: VaultEntity['id'],
+    vaultId: VaultEntity['id'] | undefined,
     chainId: ChainEntity['id'],
     state: BeefyState
   ): Promise<TokenEntity[]> {
@@ -124,7 +124,7 @@ export class LiquidSwapSwapProvider implements ISwapProvider {
       return [];
     }
 
-    if (config.blockedVaults.includes(vaultId)) {
+    if (vaultId && config.blockedVaults.includes(vaultId)) {
       return [];
     }
 
