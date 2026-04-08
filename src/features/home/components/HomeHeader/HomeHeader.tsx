@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
 import VisibilityOffOutlinedIcon from '../../../../images/icons/eyeOff.svg?react';
 import VisibilityOutlinedIcon from '../../../../images/icons/eyeOn.svg?react';
 import { setToggleHideBalance } from '../../../data/reducers/wallet/wallet.ts';
-import { selectIsBalanceHidden } from '../../../data/selectors/wallet.ts';
+import { selectIsBalanceHidden, selectIsWalletConnected } from '../../../data/selectors/wallet.ts';
 import { PortfolioStats } from './Stats/PortfolioStats.tsx';
 import { PlatformStats } from './Stats/PlatformStats.tsx';
 import { cva } from '@repo/styles/css';
@@ -20,6 +20,7 @@ const modeToComponent: Record<'portfolio' | 'platform', ComponentType> = {
 export const HomeHeader = memo(function HomeHeader() {
   const { t } = useTranslation();
   const hasUserDeposited = useAppSelector(selectUserHasDepositedInAnyVault);
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const hasUserSelected = useRef(false);
   const [mode, setMode] = useState<'portfolio' | 'platform'>(() =>
     hasUserDeposited ? 'portfolio' : 'platform'
@@ -31,11 +32,16 @@ export const HomeHeader = memo(function HomeHeader() {
   }, []);
 
   useEffect(() => {
+    if (!isWalletConnected) {
+      hasUserSelected.current = false;
+      setMode('platform');
+      return;
+    }
     if (hasUserSelected.current) return;
     if (hasUserDeposited) {
       setMode('portfolio');
     }
-  }, [hasUserDeposited]);
+  }, [hasUserDeposited, isWalletConnected]);
 
   return (
     <Container>
