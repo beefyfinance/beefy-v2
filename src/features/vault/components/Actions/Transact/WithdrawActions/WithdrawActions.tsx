@@ -27,6 +27,7 @@ import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.t
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectIsStepperStepping,
+  selectStepperBridgeStatus,
   selectStepperStepContent,
 } from '../../../../../data/selectors/stepper.ts';
 import {
@@ -63,8 +64,32 @@ import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 const useStyles = legacyMakeStyles(styles);
 
 export const WithdrawActions = memo(function WithdrawActions() {
+  const { t } = useTranslation();
+  const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
   const isGovVault = useAppSelector(state => selectIsVaultGov(state, vaultId));
+  const bridgeStatus = useAppSelector(selectStepperBridgeStatus);
+
+  const isUnknownFailure =
+    bridgeStatus?.lifecycleState === 'abandoned' &&
+    (bridgeStatus.dstRefundedAmount == null || bridgeStatus.dstRefundedAmount === '0');
+
+  if (isUnknownFailure) {
+    return (
+      <div className={classes.feesContainer}>
+        <AnimatedButton
+          loading={true}
+          variant="recovery"
+          disabled={true}
+          fullWidth={true}
+          borderless={true}
+        >
+          {t('Transact-WithdrawInProgress')}
+        </AnimatedButton>
+        <VaultFees />
+      </div>
+    );
+  }
 
   if (isGovVault) {
     return <WithdrawActionsGov />;
