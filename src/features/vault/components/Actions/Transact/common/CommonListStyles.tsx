@@ -18,10 +18,9 @@ export const SelectListContainer = styled('div', {
 export const SelectListSearch = styled('div', {
   base: {
     padding: '0 16px',
-    margin: '0 0 16px 0',
+    margin: '0 0 12px 0',
     sm: {
       padding: '0 24px',
-      margin: '0 0 24px 0',
     },
   },
 });
