@@ -33,9 +33,9 @@ const HomePage = memo(function HomePage() {
       <PageLayout
         header={
           <>
-            <Container maxWidth="lg">
+            <HeaderContainer maxWidth="lg">
               <Banners />
-            </Container>
+            </HeaderContainer>
             <HeaderContainer maxWidth="lg">
               <HomeHeader />
             </HeaderContainer>
