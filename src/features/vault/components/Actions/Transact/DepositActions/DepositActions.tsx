@@ -10,10 +10,7 @@ import {
   transactSetSuccessClosed,
 } from '../../../../../data/actions/transact.ts';
 import { transactSteps } from '../../../../../data/actions/wallet/transact.ts';
-import {
-  crossChainFetchRecoveryQuote,
-  crossChainRecoverySteps,
-} from '../../../../../data/actions/wallet/cross-chain.ts';
+import { ActionRecovery } from '../CommonActions/ActionRecovery.tsx';
 import {
   isCowcentratedDepositQuote,
   type TransactOption,
@@ -24,12 +21,9 @@ import { TransactStatus } from '../../../../../data/reducers/wallet/transact-typ
 import {
   selectIsStepperRecoveryExecution,
   selectIsStepperStepping,
-  selectStepperBridgeStatus,
   selectStepperStepContent,
 } from '../../../../../data/selectors/stepper.ts';
 import {
-  selectCrossChainRecoveryQuoteOpId,
-  selectCrossChainRecoveryQuoteStatus,
   selectRecoveryOpForCurrentVault,
   selectTransactConfirmNeededWithChanges,
   selectTransactExecuting,
@@ -42,11 +36,7 @@ import {
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import {
-  ActionConnect,
-  ActionConnectSwitch,
-  ActionSwitch,
-} from '../CommonActions/CommonActions.tsx';
+import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
 import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
 import { GlpDepositNotice } from '../GlpNotices/GlpNotices.tsx';
@@ -56,10 +46,6 @@ import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
 import { styles } from './styles.ts';
 import { getExecutionChainId } from '../../../../../../helpers/transactUtils.ts';
-import {
-  selectCurrentChainId,
-  selectIsWalletConnected,
-} from '../../../../../data/selectors/wallet.ts';
 import { stepperReset } from '../../../../../data/actions/wallet/stepper.ts';
 import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 
@@ -74,7 +60,7 @@ export const DepositActions = memo(function DepositActions() {
   const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
 
   if (stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null) {
-    return <ActionRecoveryDeposit />;
+    return <ActionRecovery mode="deposit" />;
   }
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
@@ -240,129 +226,5 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
         <VaultFees />
       </div>
     </>
-  );
-});
-
-const ActionRecoveryDeposit = memo(function ActionRecoveryDeposit() {
-  const { t } = useTranslation();
-  const classes = useStyles();
-  const dispatch = useAppDispatch();
-  const bridgeStatus = useAppSelector(selectStepperBridgeStatus);
-  const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
-  const isWalletConnected = useAppSelector(selectIsWalletConnected);
-  const connectedChainId = useAppSelector(selectCurrentChainId);
-  const isTxInProgress = useAppSelector(selectIsStepperStepping);
-  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
-  const recoveryQuoteStatus = useAppSelector(selectCrossChainRecoveryQuoteStatus);
-  const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
-  const isExecuting = useAppSelector(selectTransactExecuting);
-
-  const vaultId = useAppSelector(selectTransactVaultId);
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
-  const opIdFromOp = bridgeStatus?.opId ?? recoveryOp?.id;
-  const opId = opIdFromOp ?? recoveryQuoteOpId;
-  const destChainId =
-    bridgeStatus?.destChainId ?? recoveryOp?.recovery.destChainId ?? vault?.chainId;
-  const isOnCorrectChain = connectedChainId === destChainId;
-  const isFetchingQuote = recoveryQuoteStatus === TransactStatus.Pending;
-
-  const hasValidQuote =
-    opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
-
-  const needsNewQuote = recoveryOp != null && !isRecoveryExecution && !hasValidQuote;
-
-  // If the bridge was abandoned with no refund data, show a close button (matches stepper's unknown state)
-  const isUnknownFailure =
-    bridgeStatus?.lifecycleState === 'abandoned' &&
-    (bridgeStatus.dstRefundedAmount == null || bridgeStatus.dstRefundedAmount === '0');
-
-  const handleFetchQuote = useCallback(() => {
-    if (opId) {
-      dispatch(crossChainFetchRecoveryQuote({ opId }));
-    }
-  }, [dispatch, opId]);
-
-  const handleFinalise = useCallback(() => {
-    if (opId) {
-      dispatch(crossChainRecoverySteps(opId, t));
-    }
-  }, [dispatch, opId, t]);
-
-  if (isUnknownFailure) {
-    return (
-      <div className={classes.feesContainer}>
-        <AnimatedButton
-          loading={true}
-          variant="recovery"
-          disabled={true}
-          fullWidth={true}
-          borderless={true}
-        >
-          {t('Transact-DepositInProgress')}
-        </AnimatedButton>
-        <VaultFees />
-      </div>
-    );
-  }
-
-  if (!isWalletConnected) {
-    return (
-      <div className={classes.feesContainer}>
-        <ActionConnect />
-        <VaultFees />
-      </div>
-    );
-  }
-
-  if (!isOnCorrectChain) {
-    return (
-      <div className={classes.feesContainer}>
-        <ActionSwitch
-          chainId={destChainId}
-          variant="recovery"
-          borderless={true}
-          buttonText={t('Transact-RecoverySwitchChain')}
-        />
-        <VaultFees />
-      </div>
-    );
-  }
-
-  if (needsNewQuote) {
-    return (
-      <div className={classes.feesContainer}>
-        <AnimatedButton
-          needFire={true}
-          variant="recovery"
-          disabled={isTxInProgress || isFetchingQuote || !opId}
-          fullWidth={true}
-          borderless={true}
-          onClick={handleFetchQuote}
-        >
-          {isFetchingQuote ? t('Transact-FetchingQuote') : t('Transact-FetchNewQuote')}
-        </AnimatedButton>
-        <VaultFees />
-      </div>
-    );
-  }
-
-  const canFinalise = hasValidQuote && opId != null;
-  const finaliseDisabled = !canFinalise || isTxInProgress || isExecuting;
-
-  return (
-    <div className={classes.feesContainer}>
-      <AnimatedButton
-        needFire={true}
-        variant="recovery"
-        disabled={finaliseDisabled}
-        fullWidth={true}
-        borderless={true}
-        onClick={handleFinalise}
-      >
-        {t('Transact-FinaliseDeposit')}
-      </AnimatedButton>
-      <VaultFees />
-    </div>
   );
 });
