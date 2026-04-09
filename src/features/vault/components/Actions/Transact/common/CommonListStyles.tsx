@@ -147,6 +147,7 @@ export const ListItemBalanceUsd = styled('span', {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
+    lineHeight: '1',
   },
 });
 
