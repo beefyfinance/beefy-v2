@@ -815,7 +815,7 @@
     "earnedTokenAddress": "0xb4B9D861bf734b2c695acd0117a41a6c10F51305",
     "oracle": "tokens",
     "oracleId": "wrsETH",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1725602894,
     "platformId": "mendi",
     "assets": ["wrsETH"],
@@ -839,7 +839,9 @@
     ],
     "lendingOracle": {
       "provider": "pyth"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1775806177
   },
   {
     "id": "nile-cl-weeth-weth-vault",
@@ -2845,7 +2847,7 @@
     "earnedTokenAddress": "0xBF71FbCe0d4Fc460D36fa1d13B397a3cd5c45220",
     "oracle": "tokens",
     "oracleId": "wstETH",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1712056277,
     "platformId": "mendi",
     "assets": ["wstETH"],
@@ -2870,7 +2872,9 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x8eCE1AbA32716FdDe8D6482bfd88E9a0ee01f565"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1775806177
   },
   {
     "id": "mendi-linea-lev-weth",
@@ -2884,7 +2888,7 @@
     "earnedTokenAddress": "0x23EC7f31a5c74D5Fe21aa386A7519028DBD6bA40",
     "oracle": "tokens",
     "oracleId": "WETH",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1712056277,
     "platformId": "mendi",
     "assets": ["WETH"],
@@ -2908,7 +2912,9 @@
     ],
     "lendingOracle": {
       "provider": "pyth"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1775806177
   },
   {
     "id": "mendi-linea-lev-usdc",
@@ -2922,7 +2928,7 @@
     "earnedTokenAddress": "0x9ab545Ab024a8Da2302f5b0D016F4f5501e330d1",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1712056277,
     "platformId": "mendi",
     "assets": ["USDC"],
@@ -2946,7 +2952,9 @@
     ],
     "lendingOracle": {
       "provider": "pyth"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1775806177
   },
   {
     "id": "mendi-linea-lev-usdt",
@@ -2960,7 +2968,7 @@
     "earnedTokenAddress": "0xC3C757EA1429231C437736746Eb77A2344EAcb81",
     "oracle": "tokens",
     "oracleId": "USDT",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1712056277,
     "platformId": "mendi",
     "assets": ["USDT"],
@@ -2984,7 +2992,9 @@
     ],
     "lendingOracle": {
       "provider": "pyth"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1775806177
   },
   {
     "id": "mendi-linea-lev-wbtc",
@@ -2998,7 +3008,7 @@
     "earnedTokenAddress": "0x639041dD8cD48B52C12414235d97E1313cbbceff",
     "oracle": "tokens",
     "oracleId": "WBTC",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1712056277,
     "platformId": "mendi",
     "assets": ["WBTC"],
@@ -3022,7 +3032,9 @@
     ],
     "lendingOracle": {
       "provider": "pyth"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1775806177
   },
   {
     "id": "mendi-linea-ezeth",
@@ -3036,7 +3048,7 @@
     "earnedTokenAddress": "0xf711cdcDDa1C5F919c94573cC4E38b4cE2207750",
     "oracle": "tokens",
     "oracleId": "ezETH",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1711551959,
     "platformId": "mendi",
     "assets": ["ezETH"],
@@ -3061,7 +3073,9 @@
     ],
     "lendingOracle": {
       "provider": "pyth"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1775806177
   },
   {
     "id": "lynex-usdc-mai",
@@ -3362,7 +3376,7 @@
     "earnedTokenAddress": "0x03BdAf7eb1b109E3C3348ee98cde734a82aea8FD",
     "oracle": "tokens",
     "oracleId": "wstETH",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1702481665,
     "platformId": "mendi",
     "assets": ["wstETH"],
@@ -3387,7 +3401,9 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x8eCE1AbA32716FdDe8D6482bfd88E9a0ee01f565"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1775806177
   },
   {
     "id": "mendi-linea-weth",
@@ -3401,7 +3417,7 @@
     "earnedTokenAddress": "0x3d80b49fc4DC9E450efAc1BD34cdEB2F303c2E81",
     "oracle": "tokens",
     "oracleId": "WETH",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1702481665,
     "platformId": "mendi",
     "assets": ["WETH"],
@@ -3425,7 +3441,9 @@
     ],
     "lendingOracle": {
       "provider": "pyth"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1775806177
   },
   {
     "id": "mendi-linea-usdc",
@@ -3439,7 +3457,7 @@
     "earnedTokenAddress": "0xE7e6a718218d737945E6f039c161D3C3c550CBA8",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1702481665,
     "platformId": "mendi",
     "assets": ["USDC"],
@@ -3463,7 +3481,9 @@
     ],
     "lendingOracle": {
       "provider": "pyth"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1775806177
   },
   {
     "id": "mendi-linea-usdt",
@@ -3477,7 +3497,7 @@
     "earnedTokenAddress": "0xc46833F6217Db6586fD129cC2f61361dfCE4c21D",
     "oracle": "tokens",
     "oracleId": "USDT",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1702481665,
     "platformId": "mendi",
     "assets": ["USDT"],
@@ -3501,7 +3521,9 @@
     ],
     "lendingOracle": {
       "provider": "pyth"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1775806177
   },
   {
     "id": "mendi-linea-dai",
@@ -3555,7 +3577,7 @@
     "earnedTokenAddress": "0x879F6c5A0CEC83006771b0c271e644b635dC9666",
     "oracle": "tokens",
     "oracleId": "WBTC",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1702481665,
     "platformId": "mendi",
     "assets": ["WBTC"],
@@ -3579,6 +3601,8 @@
     ],
     "lendingOracle": {
       "provider": "pyth"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1775806177
   }
 ]

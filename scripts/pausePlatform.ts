@@ -8,13 +8,14 @@ const vaultsDir = './src/config/vault/';
 async function pause() {
   const timestamp = Math.floor(Date.now() / 1000);
   const platformId = process.argv[2];
-  for (const [chain] of Object.keys(config)) {
+  for (const chain of Object.keys(config)) {
     const vaultsFile = vaultsDir + chain + '.json';
     const vaults = await loadJson<VaultConfig[]>(vaultsFile);
     vaults.forEach(v => {
       if (v.platformId === platformId && v.status === 'active') {
-        v.status = 'paused';
-        v.pausedAt = timestamp;
+        v.status = 'eol';
+        v.retireReason = 'rewards';
+        v.retiredAt = timestamp;
       }
     });
     await saveJson(vaultsFile, vaults, 'prettier');
