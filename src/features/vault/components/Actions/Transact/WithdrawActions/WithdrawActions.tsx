@@ -6,6 +6,7 @@ import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Bu
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSteps } from '../../../../../data/actions/wallet/transact.ts';
+import { ActionRecovery } from '../CommonActions/ActionRecovery.tsx';
 import type {
   CrossChainWithdrawQuote,
   GovComposerZapWithdrawQuote,
@@ -26,11 +27,12 @@ import {
 import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
+  selectIsStepperRecoveryExecution,
   selectIsStepperStepping,
-  selectStepperBridgeStatus,
   selectStepperStepContent,
 } from '../../../../../data/selectors/stepper.ts';
 import {
+  selectRecoveryOpForCurrentVault,
   selectTransactConfirmNeededWithChanges,
   selectTransactExecuting,
   selectTransactForceSelection,
@@ -64,31 +66,14 @@ import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 const useStyles = legacyMakeStyles(styles);
 
 export const WithdrawActions = memo(function WithdrawActions() {
-  const { t } = useTranslation();
-  const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
   const isGovVault = useAppSelector(state => selectIsVaultGov(state, vaultId));
-  const bridgeStatus = useAppSelector(selectStepperBridgeStatus);
+  const stepperContent = useAppSelector(selectStepperStepContent);
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
 
-  const isUnknownFailure =
-    bridgeStatus?.lifecycleState === 'abandoned' &&
-    (bridgeStatus.dstRefundedAmount == null || bridgeStatus.dstRefundedAmount === '0');
-
-  if (isUnknownFailure) {
-    return (
-      <div className={classes.feesContainer}>
-        <AnimatedButton
-          loading={true}
-          variant="recovery"
-          disabled={true}
-          fullWidth={true}
-          borderless={true}
-        >
-          {t('Transact-WithdrawInProgress')}
-        </AnimatedButton>
-        <VaultFees />
-      </div>
-    );
+  if (stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null) {
+    return <ActionRecovery mode="withdraw" />;
   }
 
   if (isGovVault) {
