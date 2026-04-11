@@ -45,6 +45,7 @@ import {
 import {
   selectCrossChainRecoveryQuoteOpId,
   selectCrossChainRecoveryQuoteStatus,
+  selectRecoveryOpForCurrentVault,
   selectTransactExecuting,
   selectTransactMode,
 } from '../../../../features/data/selectors/transact.ts';
@@ -121,7 +122,40 @@ export const WaitingContent = memo(function WaitingContent() {
 export const ErrorContent = memo(function ErrorContent() {
   const { t } = useTranslation();
   const classes = useStyles();
+  const dispatch = useAppDispatch();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
+
+  // Recovery-aware retry: when a CCTP recovery zap fails (cancel or revert),
+  // offer a context-appropriate retry button alongside Close so the user
+  // can stay in the recovery flow without dismissing the error first.
+  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
+  const bridgeStatus = useAppSelector(selectStepperBridgeStatus);
+  const recoveryQuoteStatus = useAppSelector(selectCrossChainRecoveryQuoteStatus);
+  const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
+  const isExecuting = useAppSelector(selectTransactExecuting);
+  const mode = useAppSelector(selectTransactMode);
+
+  const isRecovery = isRecoveryExecution || recoveryOp != null;
+  const opIdFromOp = bridgeStatus?.opId ?? recoveryOp?.id;
+  const opId = opIdFromOp ?? recoveryQuoteOpId;
+  const hasValidQuote =
+    opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
+  const isFetchingQuote = recoveryQuoteStatus === TransactStatus.Pending;
+  const finaliseNoun = mode === TransactMode.Withdraw ? t('Withdraw-noun') : t('Deposit-noun');
+
+  const handleFinalise = useCallback(() => {
+    if (opId) {
+      dispatch(crossChainRecoverySteps(opId, t));
+    }
+  }, [dispatch, opId, t]);
+
+  const handleFetchQuote = useCallback(() => {
+    if (opId) {
+      dispatch(crossChainFetchRecoveryQuote({ opId }));
+    }
+  }, [dispatch, opId]);
+
   const handleSelectAll = useCallback<MouseEventHandler<HTMLDivElement>>(e => {
     if (e.target instanceof HTMLElement && window.getSelection) {
       const selection = window.getSelection();
@@ -133,6 +167,35 @@ export const ErrorContent = memo(function ErrorContent() {
 
   if (!isWalletActionError(walletActionsState)) {
     return null;
+  }
+
+  let recoveryRetryButton: ReactNode = null;
+  if (isRecovery && opId) {
+    if (hasValidQuote) {
+      recoveryRetryButton = (
+        <Button
+          variant="recovery"
+          fullWidth={true}
+          borderless={true}
+          disabled={isExecuting}
+          onClick={handleFinalise}
+        >
+          {t('Transact-Finalise', { type: finaliseNoun })}
+        </Button>
+      );
+    } else {
+      recoveryRetryButton = (
+        <Button
+          variant="recovery"
+          fullWidth={true}
+          borderless={true}
+          disabled={isFetchingQuote || isExecuting}
+          onClick={handleFetchQuote}
+        >
+          {isFetchingQuote ? t('Transact-FetchingQuote') : t('Transact-FetchNewQuote')}
+        </Button>
+      );
+    }
   }
 
   return (
@@ -156,7 +219,10 @@ export const ErrorContent = memo(function ErrorContent() {
           {walletActionsState.data.error.message}
         </div>
       </div>
-      <div className={classes.buttons}>
+      <div
+        className={cx(classes.buttons, recoveryRetryButton ? classes.buttonsRetryClose : undefined)}
+      >
+        {recoveryRetryButton}
         <CloseButton />
       </div>
     </>

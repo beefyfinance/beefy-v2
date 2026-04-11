@@ -72,6 +72,12 @@ export const styles = {
       height: '44px',
     },
   }),
+  // Variant for the recovery error state: primary retry button takes all
+  // remaining space, Close button is compact (natural width).
+  buttonsRetryClose: css.raw({
+    gridAutoColumns: 'unset',
+    gridTemplateColumns: '1fr auto',
+  }),
   link: css.raw({
     textDecoration: 'none',
     color: 'green.80-40',

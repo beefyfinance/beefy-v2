@@ -15,7 +15,6 @@ import {
 import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
-  selectIsStepperRecoveryExecution,
   selectIsStepperStepping,
   selectStepperBridgeStatus,
   selectStepperStepContent,
@@ -52,7 +51,6 @@ export const ActionRecovery = memo(function ActionRecovery({ mode }: ActionRecov
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const connectedChainId = useAppSelector(selectCurrentChainId);
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
-  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
   const stepperContent = useAppSelector(selectStepperStepContent);
   const recoveryQuoteStatus = useAppSelector(selectCrossChainRecoveryQuoteStatus);
   const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
@@ -64,6 +62,7 @@ export const ActionRecovery = memo(function ActionRecovery({ mode }: ActionRecov
 
   const isSuccessTx = stepperContent === StepContent.SuccessTx;
   const isComplete = successClosed || isSuccessTx;
+  const isStepperError = stepperContent === StepContent.ErrorTx;
 
   const opIdFromOp = bridgeStatus?.opId ?? recoveryOp?.id;
   const opId = opIdFromOp ?? recoveryQuoteOpId;
@@ -75,7 +74,11 @@ export const ActionRecovery = memo(function ActionRecovery({ mode }: ActionRecov
   const hasValidQuote =
     opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
 
-  const needsNewQuote = recoveryOp != null && !isRecoveryExecution && !hasValidQuote;
+  // A recovery tx is considered "in flight" while the stepper is actively
+  // running it. ErrorTx is explicitly excluded so the form CTA stays usable
+  // alongside the stepper's retry button after a failed attempt.
+  const isRecoveryInFlight = isTxInProgress && !isStepperError;
+  const needsNewQuote = recoveryOp != null && !isRecoveryInFlight && !hasValidQuote;
 
   const isUnknownFailure =
     bridgeStatus?.lifecycleState === 'abandoned' &&
@@ -168,7 +171,7 @@ export const ActionRecovery = memo(function ActionRecovery({ mode }: ActionRecov
         <AnimatedButton
           needFire={true}
           variant="recovery"
-          disabled={isTxInProgress || isFetchingQuote || !opId}
+          disabled={isRecoveryInFlight || isFetchingQuote || !opId}
           fullWidth={true}
           borderless={true}
           onClick={handleFetchQuote}
@@ -181,7 +184,7 @@ export const ActionRecovery = memo(function ActionRecovery({ mode }: ActionRecov
   }
 
   const canFinalise = hasValidQuote && opId != null;
-  const finaliseDisabled = !canFinalise || isTxInProgress || isExecuting;
+  const finaliseDisabled = !canFinalise || isRecoveryInFlight || isExecuting;
 
   return (
     <div className={classes.feesContainer}>
