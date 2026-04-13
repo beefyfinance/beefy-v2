@@ -1821,7 +1821,7 @@
       "notVerified": false,
       "synthAsset": false
     },
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
       {
@@ -1939,7 +1939,7 @@
       "notVerified": false,
       "synthAsset": false
     },
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
       {
@@ -2057,7 +2057,7 @@
       "notVerified": false,
       "synthAsset": false
     },
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
       {
@@ -2175,7 +2175,7 @@
       "notVerified": false,
       "synthAsset": false
     },
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
       {
