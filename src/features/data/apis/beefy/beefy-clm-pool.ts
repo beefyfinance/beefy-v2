@@ -4,7 +4,13 @@ import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/Beefy
 import BigNumber from 'bignumber.js';
 import { isTokenEqual, type TokenEntity } from '../../entities/token.ts';
 import type { InputTokenAmount, TokenAmount } from '../transact/transact-types.ts';
-import { BIG_ONE, BIG_ZERO, bigNumberToBigInt, toWei } from '../../../../helpers/big-number.ts';
+import {
+  BIG_ONE,
+  BIG_ZERO,
+  bigNumberToBigInt,
+  fromWei,
+  toWei,
+} from '../../../../helpers/big-number.ts';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
 
 export class BeefyCLMPool {
@@ -187,6 +193,106 @@ export class BeefyCLMPool {
           extraAmountOftoken1.div(total),
         ];
       }
+    }
+  }
+
+  /**
+   * For dual-token input: determines which token has excess relative to the pool ratio
+   * and how much of it to swap to the other token.
+   * Inputs are in human-readable amounts (not wei).
+   */
+  public async getDualInputRebalanceData(
+    inputAmount0: BigNumber,
+    inputAmount1: BigNumber
+  ): Promise<{
+    swapFromTokenIndex: 0 | 1;
+    swapAmount: BigNumber;
+    needsSwap: boolean;
+  }> {
+    const strategyContract = fetchContract(
+      this.strategy,
+      BeefyCowcentratedLiquidityStrategyAbi,
+      this.chain.id
+    );
+    const clmContract = fetchContract(
+      this.address,
+      BeefyCowcentratedLiquidityVaultAbi,
+      this.chain.id
+    );
+
+    const [priceResult, balanceResults] = await Promise.all([
+      strategyContract.read.price(),
+      clmContract.read.balances(),
+    ]);
+
+    const [balance0, balance1] = [
+      new BigNumber(balanceResults[0].toString(10)),
+      new BigNumber(balanceResults[1].toString(10)),
+    ];
+    const price = new BigNumber(priceResult.toString(10));
+    const bal0InToken1 = balance0.times(price).div(this.PRECISION);
+
+    const input0Wei = toWei(inputAmount0, this.tokens[0].decimals);
+    const input1Wei = toWei(inputAmount1, this.tokens[1].decimals);
+
+    // Convert input0 to token1 terms using on-chain price
+    const input0InToken1 = input0Wei.times(price).div(this.PRECISION);
+
+    const totalInToken1 = input0InToken1.plus(input1Wei);
+    const totalPoolInToken1 = bal0InToken1.plus(balance1);
+
+    // Edge case: pool is empty, split 50/50
+    if (totalPoolInToken1.lte(BIG_ZERO)) {
+      const halfInToken1 = totalInToken1.div(2);
+      const excessToken1 = input1Wei.minus(halfInToken1);
+      if (excessToken1.gt(BIG_ZERO)) {
+        // Swap some token1 → token0
+        const swapAmountInToken1 = excessToken1;
+        return {
+          swapFromTokenIndex: 1,
+          swapAmount: fromWei(swapAmountInToken1, this.tokens[1].decimals),
+          needsSwap: true,
+        };
+      } else {
+        // Swap some token0 → token1
+        const excessToken0InToken1 = input0InToken1.minus(halfInToken1);
+        const swapAmountInToken0 = excessToken0InToken1.times(this.PRECISION).div(price);
+        return {
+          swapFromTokenIndex: 0,
+          swapAmount: fromWei(swapAmountInToken0, this.tokens[0].decimals),
+          needsSwap: true,
+        };
+      }
+    }
+
+    // Target: input should match pool ratio
+    // ratio0 = bal0InToken1 / totalPoolInToken1
+    const target0InToken1 = totalInToken1.times(bal0InToken1).div(totalPoolInToken1);
+    const excess0InToken1 = input0InToken1.minus(target0InToken1);
+
+    // Threshold: skip swap if excess is tiny (< 0.1% of total)
+    const threshold = totalInToken1.times(0.001);
+
+    if (excess0InToken1.abs().lte(threshold)) {
+      return { swapFromTokenIndex: 0, swapAmount: BIG_ZERO, needsSwap: false };
+    }
+
+    if (excess0InToken1.gt(BIG_ZERO)) {
+      // Too much token0, swap excess token0 → token1
+      const swapAmountInToken0Wei = excess0InToken1.times(this.PRECISION).div(price);
+      return {
+        swapFromTokenIndex: 0,
+        swapAmount: fromWei(swapAmountInToken0Wei, this.tokens[0].decimals),
+        needsSwap: true,
+      };
+    } else {
+      // Too much token1, swap excess token1 → token0
+      const swapAmountInToken1Wei = excess0InToken1.abs();
+      return {
+        swapFromTokenIndex: 1,
+        swapAmount: fromWei(swapAmountInToken1Wei, this.tokens[1].decimals),
+        needsSwap: true,
+      };
     }
   }
 

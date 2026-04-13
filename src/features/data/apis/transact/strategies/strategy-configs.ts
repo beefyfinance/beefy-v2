@@ -78,6 +78,10 @@ export type CowcentratedStrategyConfig = {
   strategyId: 'cowcentrated';
 } & OptionalStrategySwapConfig;
 
+export type CowcentratedDualStrategyConfig = {
+  strategyId: 'cowcentrated-dual';
+} & OptionalStrategySwapConfig;
+
 export type GovComposerStrategyConfig = {
   strategyId: 'gov-composer';
 } & OptionalStrategySwapConfig;
@@ -106,6 +110,7 @@ export type ZapStrategyConfig =
   | GammaStrategyConfig
   | ConicStrategyConfig
   | CowcentratedStrategyConfig
+  | CowcentratedDualStrategyConfig
   | GovComposerStrategyConfig
   | VaultComposerStrategyConfig
   | RewardPoolToVaultStrategyConfig
