@@ -72,6 +72,10 @@ export const styles = {
       height: '44px',
     },
   }),
+  buttonsRetryClose: css.raw({
+    gridAutoColumns: 'unset',
+    gridTemplateColumns: '1fr auto',
+  }),
   link: css.raw({
     textDecoration: 'none',
     color: 'green.80-40',
