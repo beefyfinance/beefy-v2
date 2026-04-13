@@ -457,6 +457,21 @@ export class TransactApi implements ITransactApi {
       })
     );
 
+    // Auto-inject cowcentrated-dual strategy when cowcentrated is configured.
+    // This avoids updating hundreds of vault JSON configs — any vault with a cowcentrated
+    // zap automatically gets the dual-input variant too.
+    if (vault.zaps.some(z => z.strategyId === 'cowcentrated')) {
+      try {
+        const dualStrategy = await this.buildZapStrategy(
+          { strategyId: 'cowcentrated-dual' as const },
+          helpers
+        );
+        strategies.push(dualStrategy);
+      } catch {
+        // Ignore: dual strategy may fail if aggregator doesn't support the pair
+      }
+    }
+
     return strategies.filter(isDefined);
   }
 
