@@ -318,7 +318,7 @@ export const config = {
   sei: {
     name: 'Sei',
     chainId: 1329,
-    rpc: ['https://sei.drpc.org', 'https://sei-public.nodies.app'],
+    rpc: ['https://evm-rpc.sei-apis.com', 'https://sei.drpc.org'],
     explorerUrl: 'https://seitrace.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeC1253CC6AB22680B3A3C35EA696dD0A6FC4B0D9',
