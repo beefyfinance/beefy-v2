@@ -44,6 +44,7 @@ import type {
 } from './strategies/strategy-configs.ts';
 import { CrossChainStrategy } from './strategies/cross-chain/CrossChainStrategy.ts';
 import { VaultStrategy } from './strategies/vault/VaultStrategy.ts';
+import { buildCowcentratedDualStrategy } from './strategies/cowcentrated/maybeInjectCowcentratedDual.ts';
 import {
   type DepositOption,
   type DepositQuote,
@@ -462,11 +463,7 @@ export class TransactApi implements ITransactApi {
     // zap automatically gets the dual-input variant too.
     if (vault.zaps.some(z => z.strategyId === 'cowcentrated')) {
       try {
-        const dualStrategy = await this.buildZapStrategy(
-          { strategyId: 'cowcentrated-dual' as const },
-          helpers
-        );
-        strategies.push(dualStrategy);
+        strategies.push(buildCowcentratedDualStrategy(helpers));
       } catch {
         // Ignore: dual strategy may fail if aggregator doesn't support the pair
       }
