@@ -11,7 +11,7 @@
     "earnedTokenAddress": "0xE8B582d6Ad0C7c158F1A521DE6f5c6584A239cfe",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "paused",
+    "status": "eol",
     "createdAt": 1772105976,
     "pausedAt": 1776098286,
     "platformId": "aave",
@@ -33,7 +33,9 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "retireReason": "rewards",
+    "retiredAt": 1776158994
   },
   {
     "id": "aavev3-mantle-weth",
@@ -47,7 +49,7 @@
     "earnedTokenAddress": "0xbD4101c66e814ecD27F23574566F819e88A05169",
     "oracle": "tokens",
     "oracleId": "WETH",
-    "status": "paused",
+    "status": "eol",
     "createdAt": 1771347391,
     "pausedAt": 1776098286,
     "platformId": "aave",
@@ -69,7 +71,9 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "retireReason": "rewards",
+    "retiredAt": 1776158994
   },
   {
     "id": "aavev3-mantle-usdt0",
@@ -83,7 +87,7 @@
     "earnedTokenAddress": "0xcb7DCb043efA02FD256b05c3724d7c6486472254",
     "oracle": "tokens",
     "oracleId": "USDT0",
-    "status": "paused",
+    "status": "eol",
     "createdAt": 1771347391,
     "pausedAt": 1776098286,
     "platformId": "aave",
@@ -105,7 +109,9 @@
       {
         "strategyId": "single"
       }
-    ]
+    ],
+    "retireReason": "rewards",
+    "retiredAt": 1776158994
   },
   {
     "id": "uniswap-cow-mantle-usdt-wmnt-rp",
@@ -285,9 +291,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "uniswap-cow-mantle-usdt-weth",
-    "status": "paused",
+    "status": "eol",
     "createdAt": 1721233266,
-    "pausedAt": 1776098286,
+    "retireReason": "rewards",
+    "retiredAt": 1776159291,
     "platformId": "oku",
     "assets": ["USDT", "WETH"],
     "risks": {
@@ -326,9 +333,10 @@
     "earnedTokenAddress": "0xe0c2aED9398857531F0dE6ad868cfB4B7e0e375b",
     "oracle": "lps",
     "oracleId": "uniswap-cow-mantle-usdt-weth",
-    "status": "paused",
+    "status": "eol",
     "createdAt": 1721233266,
-    "pausedAt": 1776098286,
+    "retireReason": "rewards",
+    "retiredAt": 1776159291,
     "platformId": "beefy",
     "feeTier": "0.05",
     "assets": ["USDT", "WETH"],
@@ -447,9 +455,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "uniswap-cow-mantle-meth-weth",
-    "status": "paused",
+    "status": "eol",
     "createdAt": 1721233266,
-    "pausedAt": 1776098286,
+    "retireReason": "rewards",
+    "retiredAt": 1776159291,
     "platformId": "oku",
     "assets": ["mETH", "WETH"],
     "risks": {
@@ -488,9 +497,10 @@
     "earnedTokenAddress": "0xEBDC36506adCFF3c64E7da11215D7Bf1d4700Ee3",
     "oracle": "lps",
     "oracleId": "uniswap-cow-mantle-meth-weth",
-    "status": "paused",
+    "status": "eol",
     "createdAt": 1721233266,
-    "pausedAt": 1776098286,
+    "retireReason": "rewards",
+    "retiredAt": 1776159291,
     "platformId": "beefy",
     "feeTier": "0.01",
     "assets": ["mETH", "WETH"],
@@ -770,7 +780,7 @@
     "earnedTokenAddress": "0x9f99864A33BDD154c2bCC7BF19CB758865CB63c2",
     "oracle": "lps",
     "oracleId": "moe-lend-meth",
-    "status": "paused",
+    "status": "eol",
     "createdAt": 1712664921,
     "pausedAt": 1776098286,
     "platformId": "moe",
@@ -795,7 +805,9 @@
         "strategyId": "uniswap-v2",
         "ammId": "mantle-moe"
       }
-    ]
+    ],
+    "retireReason": "rewards",
+    "retiredAt": 1776159164
   },
   {
     "id": "moe-moe-meth",
@@ -1015,7 +1027,7 @@
     "earnedTokenAddress": "0x3D8C1c151A10aC2b4724A75a4b7441b72A67EB25",
     "oracle": "lps",
     "oracleId": "moe-moe-wmnt",
-    "status": "paused",
+    "status": "eol",
     "createdAt": 1708001964,
     "pausedAt": 1776098286,
     "platformId": "moe",
@@ -1040,7 +1052,9 @@
         "strategyId": "uniswap-v2",
         "ammId": "mantle-moe"
       }
-    ]
+    ],
+    "retireReason": "rewards",
+    "retiredAt": 1776159164
   },
   {
     "id": "moe-meth-weth",
