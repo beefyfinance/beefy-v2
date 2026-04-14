@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ExpandMore from '../../../../../images/icons/mui/ExpandMore.svg?react';
-import ExternalLinkIcon from '../../../../../images/icons/externalLinkRegular.svg?react';
+import ExternalLinkIcon from '../../../../../images/icons/external-link.svg?react';
 import { css } from '@repo/styles/css';
 import { DropdownProvider } from '../../../../../components/Dropdown/DropdownProvider.tsx';
 import { DropdownButtonTrigger } from '../../../../../components/Dropdown/DropdownTrigger.tsx';
