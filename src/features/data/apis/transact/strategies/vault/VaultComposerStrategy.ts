@@ -54,6 +54,7 @@ import {
   type ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { VaultComposerStrategyConfig } from '../strategy-configs.ts';
+import { maybeInjectCowcentratedDual } from '../cowcentrated/maybeInjectCowcentratedDual.ts';
 
 const strategyId = 'vault-composer';
 type StrategyId = typeof strategyId;
@@ -66,7 +67,9 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
 
   protected readonly vault: VaultStandardCowcentrated;
   protected readonly vaultType: IStandardVaultType;
+  protected readonly underlyingStrategies: IComposableStrategy<'cowcentrated'>[];
   protected readonly underlyingStrategy: IComposableStrategy<'cowcentrated'>;
+  protected readonly hasDualUnderlying: boolean;
   protected readonly underlyingVaultType: ICowcentratedVaultType;
   protected readonly shareToken: TokenErc20;
   protected readonly depositToken: TokenEntity;
@@ -88,13 +91,27 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     this.shareToken = selectErc20TokenByAddress(getState(), vault.chainId, vault.contractAddress);
     this.depositToken = selectTokenByAddress(getState(), vault.chainId, vault.depositTokenAddress);
 
-    if (underlying.id !== 'cowcentrated') {
+    if (underlying.id !== 'cowcentrated' && underlying.id !== 'cowcentrated-dual') {
       // TODO support other underlying types or just rename this strategy CowcentratedGovComposerStrategy
       throw new Error('Underlying strategy must be cowcentrated');
     }
-    this.underlyingStrategy = underlying;
+    // Auto-create the dual-input CLM strategy alongside cowcentrated so we don't require
+    // each underlying CLM vault's JSON config to list it explicitly.
+    const expandedUnderlyings = maybeInjectCowcentratedDual([underlying]);
+    this.hasDualUnderlying = expandedUnderlyings.some(u => u.id === 'cowcentrated-dual');
+    // Both cowcentrated and cowcentrated-dual share the same deposit flow shape,
+    // so we cast to the cowcentrated type for simpler method typing.
+    this.underlyingStrategies = expandedUnderlyings as IComposableStrategy<'cowcentrated'>[];
 
-    const { vaultType: underlyingVaultType } = underlying.getHelpers();
+    // Primary strategy: prefer cowcentrated (has withdraw support); fall back to first
+    const primary =
+      this.underlyingStrategies.find(s => s.id === 'cowcentrated') ?? this.underlyingStrategies[0];
+    if (!primary) {
+      throw new Error('No composable underlying strategy provided');
+    }
+    this.underlyingStrategy = primary;
+
+    const { vaultType: underlyingVaultType } = primary.getHelpers();
     if (!isCowcentratedVaultType(underlyingVaultType)) {
       // TODO support other underlying types or just rename this strategy CowcentratedGovComposerStrategy
       throw new Error('Underlying vault type is not cowcentrated');
@@ -102,15 +119,34 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     this.underlyingVaultType = underlyingVaultType;
   }
 
+  /** Look up the underlying strategy matching the given strategy id, or throw. */
+  protected getUnderlyingForId(strategyId: string): IComposableStrategy<'cowcentrated'> {
+    const underlying = this.underlyingStrategies.find(s => s.id === strategyId);
+    if (!underlying) {
+      throw new Error(`No underlying strategy found for id "${strategyId}"`);
+    }
+    return underlying;
+  }
+
   getHelpers(): ZapTransactHelpers {
     return this.helpers;
   }
 
   async fetchDepositOptions(): Promise<VaultComposerDepositOption[]> {
-    const options = await this.underlyingStrategy.fetchDepositOptions();
-    const vaultOption =
-      (await this.underlyingVaultType.fetchDepositOption()) as CowcentratedVaultDepositOption;
-    return [vaultOption, ...options].map(option => ({
+    // Collect deposit options from all underlying strategies.
+    const allOptions = (
+      await Promise.all(this.underlyingStrategies.map(s => s.fetchDepositOptions()))
+    ).flat();
+
+    // Skip direct vault deposit option when cowcentrated-dual handles the 2-token case.
+    const baseOptions =
+      this.hasDualUnderlying ? allOptions : (
+        [
+          (await this.underlyingVaultType.fetchDepositOption()) as CowcentratedVaultDepositOption,
+          ...allOptions,
+        ]
+      );
+    return baseOptions.map(option => ({
       ...option,
       strategyId,
       vaultId: this.vault.id,
@@ -172,11 +208,9 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       throw new Error('Invalid underlying deposit option');
     }
 
-    // Quote to be fetched via underlying strategy
-    const underlyingQuote = await this.underlyingStrategy.fetchDepositQuote(
-      inputs,
-      underlyingOption
-    );
+    // Route to the correct underlying strategy based on the option's strategyId
+    const underlying = this.getUnderlyingForId(underlyingOption.strategyId);
+    const underlyingQuote = await underlying.fetchDepositQuote(inputs, underlyingOption);
 
     // const modOutputs = underlyingQuote.outputs.map(output => ({
     //   token: this.shareToken,
@@ -207,13 +241,13 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
   protected isMatchingDepositOption(
     option: DepositOption
   ): option is ZapStrategyIdToDepositOption<typeof this.underlyingStrategy.id> {
-    return option.strategyId === this.underlyingStrategy.id;
+    return this.underlyingStrategies.some(s => s.id === option.strategyId);
   }
 
   protected isMatchingDepositQuote(
     option: DepositQuote
   ): option is ZapStrategyIdToDepositQuote<typeof this.underlyingStrategy.id> {
-    return option.strategyId === this.underlyingStrategy.id;
+    return this.underlyingStrategies.some(s => s.id === option.strategyId);
   }
 
   async fetchDepositUserlessZapBreakdown(
@@ -280,8 +314,9 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
         throw new Error('Invalid underlying deposit quote');
       }
       // We have the built userless zap-in request
+      const underlying = this.getUnderlyingForId(underlyingQuote.strategyId);
       const { zapRequest, minBalances } =
-        await this.underlyingStrategy.fetchDepositUserlessZapBreakdown(underlyingQuote);
+        await underlying.fetchDepositUserlessZapBreakdown(underlyingQuote);
 
       const vaultDepositZap = await this.vaultType.fetchZapDeposit({
         inputs: [
