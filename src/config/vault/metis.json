@@ -451,7 +451,6 @@
     "oracleId": "netswap-nett-metis",
     "status": "eol",
     "createdAt": 1642362780,
-    "pausedAt": 1776098492,
     "platformId": "netswap",
     "assets": ["METIS", "NETT"],
     "risks": {
@@ -578,7 +577,6 @@
     "oracleId": "netswap-weth-metis",
     "status": "eol",
     "createdAt": 1642364450,
-    "pausedAt": 1776098492,
     "platformId": "netswap",
     "assets": ["WETH", "METIS"],
     "risks": {
@@ -621,7 +619,6 @@
     "oracleId": "netswap-metis-m.usdc",
     "status": "eol",
     "createdAt": 1642365277,
-    "pausedAt": 1776098492,
     "platformId": "netswap",
     "assets": ["mUSDC", "METIS"],
     "risks": {
@@ -664,7 +661,6 @@
     "oracleId": "netswap-m.usdt-m.usdc",
     "status": "eol",
     "createdAt": 1642365937,
-    "pausedAt": 1776098492,
     "platformId": "netswap",
     "assets": ["mUSDC", "mUSDT"],
     "risks": {
