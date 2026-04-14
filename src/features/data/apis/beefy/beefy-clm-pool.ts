@@ -29,7 +29,97 @@ export class BeefyCLMPool {
     inputToken: InputTokenAmount,
     inputTokenPrice: BigNumber,
     token1Price: BigNumber
-  ) {
+  ): Promise<[BigNumber, BigNumber]> {
+    const { price, balancingAmount } = await this.fetchPoolState();
+    const balancingIsToken0 = isTokenEqual(balancingAmount.token, this.tokens[0]);
+
+    const inputAmountInWei = toWei(inputToken.amount, inputToken.token.decimals);
+    const inputInBalancingWei = this.convertToBalancingDenomination(
+      inputToken,
+      inputAmountInWei,
+      inputTokenPrice,
+      token1Price,
+      price,
+      balancingIsToken0
+    );
+
+    return this.computeRatiosCore(inputInBalancingWei, balancingAmount.amount, balancingIsToken0);
+  }
+
+  /**
+   * For dual-token input: determines which token has excess relative to the CLM's deposit ratio
+   * and how much of it to swap to the other token.
+   *
+   * Inputs are in human-readable amounts (not wei).
+   */
+  public async getDualInputRebalanceData(
+    inputAmount0: BigNumber,
+    inputAmount1: BigNumber
+  ): Promise<{
+    swapFromTokenIndex: 0 | 1;
+    swapAmount: BigNumber;
+    needsSwap: boolean;
+  }> {
+    const { price, balancingAmount } = await this.fetchPoolState();
+    const balancingIsToken0 = isTokenEqual(balancingAmount.token, this.tokens[0]);
+
+    const input0Wei = toWei(inputAmount0, this.tokens[0].decimals);
+    const input1Wei = toWei(inputAmount1, this.tokens[1].decimals);
+
+    const input0InToken1 = input0Wei.times(price).div(this.PRECISION);
+    const totalInToken1 = input0InToken1.plus(input1Wei);
+
+    if (totalInToken1.lte(BIG_ZERO)) {
+      return { swapFromTokenIndex: 0, swapAmount: BIG_ZERO, needsSwap: false };
+    }
+
+    const totalInBalancingWei =
+      balancingIsToken0 ? totalInToken1.times(this.PRECISION).div(price) : totalInToken1;
+
+    const ratios = this.computeRatiosCore(
+      totalInBalancingWei,
+      balancingAmount.amount,
+      balancingIsToken0
+    );
+
+    const targetToken1Wei = totalInToken1.times(ratios[1]).integerValue(BigNumber.ROUND_FLOOR);
+    const targetToken0InToken1 = totalInToken1.minus(targetToken1Wei);
+    const targetToken0Wei =
+      price.gt(BIG_ZERO) ?
+        targetToken0InToken1.times(this.PRECISION).div(price).integerValue(BigNumber.ROUND_FLOOR)
+      : BIG_ZERO;
+
+    const excess0Wei = input0Wei.minus(targetToken0Wei);
+    const excess0InToken1 = excess0Wei.times(price).div(this.PRECISION);
+    // Skip swap if excess is tiny (< 0.1% of total value)
+    const threshold = totalInToken1.times(0.001);
+
+    if (excess0InToken1.abs().lte(threshold)) {
+      return { swapFromTokenIndex: 0, swapAmount: BIG_ZERO, needsSwap: false };
+    }
+
+    if (excess0Wei.gt(BIG_ZERO)) {
+      return {
+        swapFromTokenIndex: 0,
+        swapAmount: fromWei(excess0Wei, this.tokens[0].decimals),
+        needsSwap: true,
+      };
+    } else {
+      const swapAmountInToken1Wei = excess0InToken1.abs().integerValue(BigNumber.ROUND_FLOOR);
+      return {
+        swapFromTokenIndex: 1,
+        swapAmount: fromWei(swapAmountInToken1Wei, this.tokens[1].decimals),
+        needsSwap: true,
+      };
+    }
+  }
+
+  private async fetchPoolState(): Promise<{
+    price: BigNumber;
+    balance0: BigNumber;
+    balance1: BigNumber;
+    balancingAmount: TokenAmount;
+  }> {
     const strategyContract = fetchContract(
       this.strategy,
       BeefyCowcentratedLiquidityStrategyAbi,
@@ -46,10 +136,8 @@ export class BeefyCLMPool {
       clmContract.read.balances(),
     ]);
 
-    const [balance0, balance1] = [
-      new BigNumber(balanceResults[0].toString(10)),
-      new BigNumber(balanceResults[1].toString(10)),
-    ];
+    const balance0 = new BigNumber(balanceResults[0].toString(10));
+    const balance1 = new BigNumber(balanceResults[1].toString(10));
     const price = new BigNumber(priceResult.toString(10));
     const bal0inToken1 = balance0.times(price).div(this.PRECISION);
 
@@ -64,223 +152,57 @@ export class BeefyCLMPool {
           amount: bal0inToken1.minus(balance1),
         };
 
-    // If the input token is one of these tokens we can calculate amounts based off clm price ratio
-    const inputAmountInWei = toWei(inputToken.amount, inputToken.token.decimals);
+    return { price, balance0, balance1, balancingAmount };
+  }
 
-    // (1) X = Y * precision / price
-    // (2) X + Y * precision / price = remainingInputAmout
-    // (2-i) Y = (remainingInputAmout - X) * price / precision
-    // (3) X = (remainingInputAmout - X) * price / precision * precision / (price + precision)
-    // (3-i) X = remainingInputAmout - X
-    // (4) X = remainingInputAmount /2 = > jajjs lol of course it's half to one token i'm an idiot
-
-    // If we are depositing token0
+  private convertToBalancingDenomination(
+    inputToken: InputTokenAmount,
+    inputAmountInWei: BigNumber,
+    inputTokenPrice: BigNumber,
+    token1Price: BigNumber,
+    price: BigNumber,
+    balancingIsToken0: boolean
+  ): BigNumber {
     if (isTokenEqual(inputToken.token, this.tokens[0])) {
-      if (isTokenEqual(balancingAmount.token, inputToken.token)) {
-        if (inputAmountInWei.lte(balancingAmount.amount)) {
-          // return [inputAmountInWei, BIG_ZERO];
-          return [BIG_ONE, BIG_ZERO];
-        } else {
-          const amountToBalance = balancingAmount.amount;
-          const remainingInputAmout = inputAmountInWei.minus(amountToBalance);
-
-          const extraAmountOftoken0 = remainingInputAmout.div(2);
-          const extraAmountOftoken1 = remainingInputAmout.div(2);
-
-          const total = amountToBalance.plus(extraAmountOftoken0).plus(extraAmountOftoken1);
-          return [
-            amountToBalance.plus(extraAmountOftoken0).div(total),
-            extraAmountOftoken1.div(total),
-          ];
-        }
-      } else {
-        //convert to token1
-        const inputAmountInBalance1 = inputAmountInWei.times(price).div(this.PRECISION);
-
-        if (inputAmountInBalance1.lte(balancingAmount.amount)) {
-          return [BIG_ZERO, BIG_ONE];
-        } else {
-          const amountToBalance = balancingAmount.amount;
-          const remainingInputAmout = inputAmountInBalance1.minus(amountToBalance);
-
-          const extraAmountOftoken0 = remainingInputAmout.div(2);
-          const extraAmountOftoken1 = remainingInputAmout.div(2);
-
-          const total = amountToBalance.plus(extraAmountOftoken0).plus(extraAmountOftoken1);
-          return [
-            extraAmountOftoken0.div(total),
-            amountToBalance.plus(extraAmountOftoken1).div(total),
-          ];
-        }
-      }
+      return balancingIsToken0 ? inputAmountInWei : (
+          inputAmountInWei.times(price).div(this.PRECISION)
+        );
     }
-
-    // If we are depositing token1
     if (isTokenEqual(inputToken.token, this.tokens[1])) {
-      if (isTokenEqual(balancingAmount.token, inputToken.token)) {
-        if (inputAmountInWei.lte(balancingAmount.amount)) {
-          return [BIG_ZERO, BIG_ONE];
-        } else {
-          const amountToBalance = balancingAmount.amount;
-          const remainingInputAmout = inputAmountInWei.minus(amountToBalance);
-
-          const extraAmountOftoken0 = remainingInputAmout.div(2);
-          const extraAmountOftoken1 = remainingInputAmout.div(2);
-
-          const total = amountToBalance.plus(extraAmountOftoken0).plus(extraAmountOftoken1);
-          return [
-            extraAmountOftoken0.div(total),
-            amountToBalance.plus(extraAmountOftoken1).div(total),
-          ];
-        }
-      } else {
-        //convert to token0
-        const inputAmountInBalance0 = inputAmountInWei.times(this.PRECISION).div(price);
-        if (inputAmountInBalance0.lte(balancingAmount.amount)) {
-          return [BIG_ONE, BIG_ZERO];
-        } else {
-          const amountToBalance = balancingAmount.amount;
-          const remainingInputAmout = inputAmountInBalance0.minus(amountToBalance);
-
-          const extraAmountOftoken0 = remainingInputAmout.div(2);
-          const extraAmountOftoken1 = remainingInputAmout.div(2);
-
-          const total = amountToBalance.plus(extraAmountOftoken0).plus(extraAmountOftoken1);
-          return [
-            amountToBalance.plus(extraAmountOftoken0).div(total),
-            extraAmountOftoken1.div(total),
-          ];
-        }
-      }
+      return balancingIsToken0 ?
+          inputAmountInWei.times(this.PRECISION).div(price)
+        : inputAmountInWei;
     }
-
-    // If the input token is a different token we estimate based on local prices and convert to token1
-    const inputAmountInBalance1 = inputTokenPrice
+    // Foreign token: use oracle prices to derive token1-wei value, convert to balancing side if needed
+    const inputInToken1Wei = inputTokenPrice
       .shiftedBy(-inputToken.token.decimals)
       .times(inputAmountInWei)
       .div(token1Price.shiftedBy(-this.tokens[1].decimals));
-    if (isTokenEqual(balancingAmount.token, this.tokens[1])) {
-      if (inputAmountInBalance1.lte(balancingAmount.amount)) {
-        return [BIG_ZERO, BIG_ONE];
-      } else {
-        const amountToBalance = balancingAmount.amount;
-        const remainingInputAmout = inputAmountInBalance1.minus(amountToBalance);
-
-        const extraAmountOftoken0 = remainingInputAmout.div(2);
-        const extraAmountOftoken1 = remainingInputAmout.div(2);
-
-        const total = amountToBalance.plus(extraAmountOftoken0).plus(extraAmountOftoken1);
-        return [
-          extraAmountOftoken0.div(total),
-          amountToBalance.plus(extraAmountOftoken1).div(total),
-        ];
-      }
-    } else {
-      //convert to token0
-      const inputAmountInBalance0 = inputAmountInBalance1.times(this.PRECISION).div(price);
-      if (inputAmountInBalance0.lte(balancingAmount.amount)) {
-        return [BIG_ONE, BIG_ZERO];
-      } else {
-        const amountToBalance = balancingAmount.amount;
-        const remainingInputAmout = inputAmountInBalance0.minus(amountToBalance);
-
-        const extraAmountOftoken0 = remainingInputAmout.div(2);
-        const extraAmountOftoken1 = remainingInputAmout.div(2);
-
-        const total = amountToBalance.plus(extraAmountOftoken0).plus(extraAmountOftoken1);
-        return [
-          amountToBalance.plus(extraAmountOftoken0).div(total),
-          extraAmountOftoken1.div(total),
-        ];
-      }
-    }
+    return balancingIsToken0 ? inputInToken1Wei.times(this.PRECISION).div(price) : inputInToken1Wei;
   }
 
   /**
-   * For dual-token input: determines which token has excess relative to the CLM's deposit ratio
-   * and how much of it to swap to the other token.
+   * Core deposit-ratio math, independent of I/O and input token.
+   * Given an input value already expressed in the balancing token's wei, returns
+   * [ratioToToken0, ratioToToken1] that sum to 1.
    *
-   * Reuses `getDepositRatioData` to get the CLM's actual deposit split (accounting for
-   * concentrated liquidity position, not just raw pool balances). We treat the combined user
-   * input (converted to token1 terms) as a single token1 input to derive the target split.
-   *
-   * Inputs are in human-readable amounts (not wei).
+   * The balancing side has a deficit the input helps fill, so up to `balancingAmount`
+   * of the input sticks on that side; any excess is split 50/50.
    */
-  public async getDualInputRebalanceData(
-    inputAmount0: BigNumber,
-    inputAmount1: BigNumber
-  ): Promise<{
-    swapFromTokenIndex: 0 | 1;
-    swapAmount: BigNumber;
-    needsSwap: boolean;
-  }> {
-    const strategyContract = fetchContract(
-      this.strategy,
-      BeefyCowcentratedLiquidityStrategyAbi,
-      this.chain.id
-    );
-    const priceResult = await strategyContract.read.price();
-    const price = new BigNumber(priceResult.toString(10));
-
-    const input0Wei = toWei(inputAmount0, this.tokens[0].decimals);
-    const input1Wei = toWei(inputAmount1, this.tokens[1].decimals);
-
-    // Convert input0 to token1 terms using on-chain price
-    const input0InToken1 = input0Wei.times(price).div(this.PRECISION);
-    const totalInToken1 = input0InToken1.plus(input1Wei);
-
-    if (totalInToken1.lte(BIG_ZERO)) {
-      return { swapFromTokenIndex: 0, swapAmount: BIG_ZERO, needsSwap: false };
+  private computeRatiosCore(
+    inputInBalancingWei: BigNumber,
+    balancingAmount: BigNumber,
+    balancingIsToken0: boolean
+  ): [BigNumber, BigNumber] {
+    if (inputInBalancingWei.lte(balancingAmount)) {
+      return balancingIsToken0 ? [BIG_ONE, BIG_ZERO] : [BIG_ZERO, BIG_ONE];
     }
-
-    // Get the CLM's deposit split ratios by treating the combined value as a single token1 input.
-    // getDepositRatioData returns [ratio0, ratio1] where these fractions sum to 1 and tell us
-    // how to split the input into token0 and token1 for deposit.
-    const fakeInput: InputTokenAmount = {
-      token: this.tokens[1],
-      amount: fromWei(totalInToken1, this.tokens[1].decimals),
-      max: false,
-    };
-    // token1 input branch of getDepositRatioData doesn't use oracle prices
-    const ratios = await this.getDepositRatioData(fakeInput, BIG_ONE, BIG_ONE);
-
-    // Target amounts: ratios apply to the input (in token1 terms here).
-    // ratios[0] portion goes to token0, ratios[1] portion stays as token1.
-    const targetToken1Wei = totalInToken1.times(ratios[1]).integerValue(BigNumber.ROUND_FLOOR);
-    const targetToken0InToken1 = totalInToken1.minus(targetToken1Wei);
-    // Convert target token0 value back to token0 wei
-    const targetToken0Wei =
-      price.gt(BIG_ZERO) ?
-        targetToken0InToken1.times(this.PRECISION).div(price).integerValue(BigNumber.ROUND_FLOOR)
-      : BIG_ZERO;
-
-    // Excess in token0 wei (positive = too much token0, negative = too little)
-    const excess0Wei = input0Wei.minus(targetToken0Wei);
-
-    // Threshold: skip swap if excess is tiny (< 0.1% of total value)
-    const excess0InToken1 = excess0Wei.times(price).div(this.PRECISION);
-    const threshold = totalInToken1.times(0.001);
-
-    if (excess0InToken1.abs().lte(threshold)) {
-      return { swapFromTokenIndex: 0, swapAmount: BIG_ZERO, needsSwap: false };
-    }
-
-    if (excess0Wei.gt(BIG_ZERO)) {
-      // Too much token0, swap excess token0 → token1
-      return {
-        swapFromTokenIndex: 0,
-        swapAmount: fromWei(excess0Wei, this.tokens[0].decimals),
-        needsSwap: true,
-      };
-    } else {
-      // Too much token1, swap the equivalent value from token1 → token0
-      const swapAmountInToken1Wei = excess0InToken1.abs().integerValue(BigNumber.ROUND_FLOOR);
-      return {
-        swapFromTokenIndex: 1,
-        swapAmount: fromWei(swapAmountInToken1Wei, this.tokens[1].decimals),
-        needsSwap: true,
-      };
-    }
+    const remaining = inputInBalancingWei.minus(balancingAmount);
+    const half = remaining.div(2);
+    const total = balancingAmount.plus(half).plus(half);
+    return balancingIsToken0 ?
+        [balancingAmount.plus(half).div(total), half.div(total)]
+      : [half.div(total), balancingAmount.plus(half).div(total)];
   }
 
   public async previewDeposit(inputAmount0: BigNumber, inputAmount1: BigNumber) {
