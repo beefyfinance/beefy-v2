@@ -31,6 +31,7 @@ export const Title = styled('div', {
   base: {
     textStyle: 'body.medium',
     color: 'text.middle',
+    textAlign: 'center',
   },
 });
 
@@ -48,10 +49,10 @@ export const ArrowBack = styled(ArrowBackIcon, {
 
 export const ContentHeader = styled('div', {
   base: {
-    display: 'flex',
-    justifyContent: 'center',
+    display: 'grid',
+    gridTemplateColumns: '20px 1fr 20px',
     alignItems: 'center',
-    position: 'relative',
+    width: '100%',
   },
 });
 

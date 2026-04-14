@@ -93,8 +93,6 @@ const BackButton = styled('button', {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
-    left: 0,
   },
 });
 
