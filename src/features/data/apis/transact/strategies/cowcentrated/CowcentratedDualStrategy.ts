@@ -431,7 +431,7 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
       this.options.swap
     );
 
-    // Check that token0 can swap to token1 or vice versa
+    // Both directions must be swappable — rebalance direction depends on user input ratio.
     const token0CanSwapToToken1 = tokenSupport.tokens[1].some(t =>
       isTokenEqual(t, depositTokens[0])
     );
@@ -439,7 +439,7 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
       isTokenEqual(t, depositTokens[1])
     );
 
-    return token0CanSwapToToken1 || token1CanSwapToToken0;
+    return token0CanSwapToToken1 && token1CanSwapToToken0;
   }
 
   protected async fetchZapSwap(
