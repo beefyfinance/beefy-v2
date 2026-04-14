@@ -12,7 +12,7 @@ async function pause() {
     const vaultsFile = vaultsDir + chain + '.json';
     const vaults = await loadJson<VaultConfig[]>(vaultsFile);
     vaults.forEach(v => {
-      if (v.platformId === platformId && v.status === 'active') {
+      if (v.platformId === platformId && v.status !== 'eol') {
         v.status = 'eol';
         v.retireReason = 'rewards';
         v.retiredAt = timestamp;
