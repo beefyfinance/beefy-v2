@@ -449,8 +449,9 @@
     "earnedTokenAddress": "0xC96b496F78d1a45D9cec6d628a75614ed230D6D4",
     "oracle": "lps",
     "oracleId": "netswap-nett-metis",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1642362780,
+    "pausedAt": 1776098492,
     "platformId": "netswap",
     "assets": ["METIS", "NETT"],
     "risks": {
@@ -573,8 +574,9 @@
     "earnedTokenAddress": "0xB84486eA8B34C65cD3bf3DeeB6990AA0a27a2EaF",
     "oracle": "lps",
     "oracleId": "netswap-weth-metis",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1642364450,
+    "pausedAt": 1776098492,
     "platformId": "netswap",
     "assets": ["WETH", "METIS"],
     "risks": {
@@ -613,8 +615,9 @@
     "earnedTokenAddress": "0xD602655aAF104106E880221b124A20891f769dE1",
     "oracle": "lps",
     "oracleId": "netswap-metis-m.usdc",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1642365277,
+    "pausedAt": 1776098492,
     "platformId": "netswap",
     "assets": ["mUSDC", "METIS"],
     "risks": {
@@ -653,8 +656,9 @@
     "earnedTokenAddress": "0x2dC73D17Ae01De6D49aab45668601591FF283dee",
     "oracle": "lps",
     "oracleId": "netswap-m.usdt-m.usdc",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1642365937,
+    "pausedAt": 1776098492,
     "platformId": "netswap",
     "assets": ["mUSDC", "mUSDT"],
     "risks": {
