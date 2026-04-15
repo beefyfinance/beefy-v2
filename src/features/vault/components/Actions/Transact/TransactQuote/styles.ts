@@ -16,13 +16,111 @@ export const styles = {
   slippage: css.raw({
     marginTop: '24px',
   }),
-  returned: css.raw({
-    marginTop: '16px',
+  youReceiveSection: css.raw({
+    marginTop: '24px',
   }),
-  returnedTitle: css.raw({
+  youReceiveTitle: css.raw({
     textStyle: 'body',
     color: 'text.dark',
     marginBottom: '8px',
+  }),
+  youReceiveCard: css.raw({
+    background: 'background.content.light',
+    borderRadius: '8px',
+    padding: '8px 12px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+  }),
+  youReceiveMainRow: css.raw({
+    background: 'transparent',
+    borderRadius: '0',
+    padding: '0',
+  }),
+  youReceiveDivider: css.raw({
+    height: '1px',
+    background: 'darkBlue.50',
+    border: 'none',
+    margin: '0',
+  }),
+  dustToggle: css.raw({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    padding: '4px 0',
+    margin: '0',
+    background: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    outline: 'none',
+    '&:hover': {
+      '& span': {
+        color: 'text.light',
+      },
+    },
+  }),
+  dustToggleLabel: css.raw({
+    textStyle: 'body.md',
+    color: 'text.dark',
+    transition: 'color 0.2s',
+  }),
+  dustToggleChevron: css.raw({
+    display: 'flex',
+    alignItems: 'center',
+    color: 'text.dark',
+    transition: 'color 0.2s',
+    '& svg': {
+      width: '20px',
+      height: '20px',
+      fill: 'currentColor',
+    },
+  }),
+  dustRows: css.raw({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+  }),
+  dustRow: css.raw({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: '44px',
+  }),
+  dustRowAmountGroup: css.raw({
+    display: 'flex',
+    flexDirection: 'column',
+  }),
+  dustRowTokenInfo: css.raw({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+  }),
+  dustRowTokenName: css.raw({
+    textStyle: 'body.medium',
+    color: 'text.light',
+  }),
+  dustRowAmount: css.raw({
+    textStyle: 'body.md.medium',
+    color: 'text.light',
+  }),
+  dustRowValue: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
+  }),
+  totalRow: css.raw({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '4px 0',
+  }),
+  totalLabel: css.raw({
+    textStyle: 'body.medium',
+    color: 'text.dark',
+  }),
+  totalValue: css.raw({
+    textStyle: 'body.medium',
+    color: 'text.light',
   }),
   disabled: css.raw({
     opacity: '40%',

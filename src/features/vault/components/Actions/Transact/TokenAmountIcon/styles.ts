@@ -10,27 +10,26 @@ export const styles = {
     justifyContent: 'space-between',
     gap: '12px',
   }),
+  tokenWithIcon: css.raw({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+  }),
+  token: css.raw({
+    textStyle: 'body.medium',
+    color: 'text.light',
+  }),
   amountWithValue: css.raw({
     display: 'flex',
     flexDirection: 'column',
   }),
   amount: css.raw({
     textStyle: 'body.medium',
-    color: 'text.middle',
+    color: 'text.light',
   }),
   value: css.raw({
     textStyle: 'body.sm',
     color: 'text.dark',
-  }),
-  tokenWithIcon: css.raw({
-    display: 'flex',
-    textAlign: 'right',
-    alignItems: 'center',
-    gap: '8px',
-  }),
-  token: css.raw({
-    textStyle: 'body.medium',
-    color: 'text.middle',
   }),
   icon: css.raw({
     width: '32px',

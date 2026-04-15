@@ -5,9 +5,8 @@ import { memo, useMemo } from 'react';
 import { IconLoader } from '../../../../../../components/IconLoader/IconLoader.tsx';
 import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
 import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
-import { TokenImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
+import { TokensImageWithChain } from '../../../../../../components/TokenImage/TokenImage.tsx';
 import { formatLargeUsd } from '../../../../../../helpers/format.ts';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import {
@@ -15,8 +14,6 @@ import {
   selectTokenPriceByAddress,
 } from '../../../../../data/selectors/tokens.ts';
 import { styles } from './styles.ts';
-
-const useStyles = legacyMakeStyles(styles);
 
 export type TokenAmountIconProps = {
   amount: BigNumber;
@@ -49,12 +46,12 @@ export const TokenAmountIcon = memo(function TokenAmountIcon({
       css={cssProp}
       amountWithValueCss={amountWithValueCss}
       amount={<TokenAmount amount={amount} decimals={token.decimals} css={styles.token} />}
-      value={`~${formatLargeUsd(valueInUsd)}`}
+      value={formatLargeUsd(valueInUsd)}
       tokenSymbol={showSymbol ? token.symbol : null}
       tokenIcon={
-        <TokenImage
+        <TokensImageWithChain
+          tokens={[token]}
           chainId={token.chainId}
-          address={token.address}
           css={styles.icon}
           size={tokenImageSize}
         />
@@ -96,15 +93,14 @@ const TokenAmountIconComponent = memo(function TokenAmountIconComponent({
   css: cssProp,
   amountWithValueCss,
 }: TokenAmountIconComponentProps) {
-  const classes = useStyles();
   return (
     <div className={css(styles.holder, cssProp)}>
       <div className={css(styles.amountWithValue, amountWithValueCss)}>
         {amount}
-        <div className={classes.value}>{value}</div>
+        <div className={css(styles.value)}>{value}</div>
       </div>
-      <div className={classes.tokenWithIcon}>
-        {tokenSymbol && <span className={classes.token}>{tokenSymbol}</span>}
+      <div className={css(styles.tokenWithIcon)}>
+        {tokenSymbol && <span className={css(styles.token)}>{tokenSymbol}</span>}
         {tokenIcon}
       </div>
     </div>
