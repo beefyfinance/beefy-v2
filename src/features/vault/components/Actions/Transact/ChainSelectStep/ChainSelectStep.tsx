@@ -89,7 +89,7 @@ const ChainList = memo(function ChainList() {
         <SearchInput value={search} onValueChange={setSearch} />
       </SelectListSearch>
       <Scrollable css={selectListScrollable}>
-        <SelectListItems>
+        <SelectListItems noGap={true}>
           {filteredChains.length ?
             filteredChains.map(({ chainId, chainName, balanceUsd, tokens }) => (
               <ChainListRow
@@ -175,6 +175,7 @@ const ChainRowButton = styled('button', {
     alignItems: 'center',
     columnGap: '16px',
     width: '100%',
+    height: '44px',
     color: 'text.dark',
     background: 'transparent',
     border: 'none',

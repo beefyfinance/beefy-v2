@@ -245,9 +245,11 @@ const selectStandardTxPercentage = (state: BeefyState) => {
 };
 
 export const selectErrorBar = (state: BeefyState) => {
-  const walletActionsStateResult = state.user.walletActions.result;
-
-  return walletActionsStateResult === 'error';
+  // Don't show error bar while stepper is on recovery screen
+  if (state.ui.stepperState.stepContent === StepContent.RecoveryTx) {
+    return false;
+  }
+  return state.user.walletActions.result === 'error';
 };
 
 export const selectSuccessBar = (state: BeefyState) => {

@@ -9,7 +9,7 @@ import {
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { explorerTxUrl } from '../../../../helpers/url.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
-import OpenInNewRoundedIcon from '../../../../images/icons/mui/OpenInNewRounded.svg?react';
+import OpenInNewRoundedIcon from '../../../../images/icons/external-link.svg?react';
 import { styles } from './styles.ts';
 import { ExternalLink } from '../../../Links/ExternalLink.tsx';
 
