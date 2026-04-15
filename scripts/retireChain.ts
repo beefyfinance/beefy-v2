@@ -139,26 +139,34 @@ async function main() {
 
   const timestamp = Math.floor(Date.now() / 1000);
 
-  // 1. EOL all active vaults
+  // 1. EOL all active/paused vaults and clean up pause fields
   const vaultsFile = `./src/config/vault/${chainId}.json`;
   const vaults = await loadJson<VaultConfig[]>(vaultsFile);
-  const activeVaults = vaults.filter(v => v.status === 'active');
+  const vaultsToRetire = vaults.filter(v => v.status === 'active' || v.status === 'paused');
 
-  if (activeVaults.length > 0) {
-    console.log(`[INFO] Setting ${activeVaults.length} active vaults to eol...`);
+  if (vaultsToRetire.length > 0) {
+    console.log(`[INFO] Setting ${vaultsToRetire.length} active/paused vaults to eol...`);
     const modified = vaults.map(v => {
-      if (v.status !== 'active') return v;
+      if (v.status !== 'active' && v.status !== 'paused') {
+        // Already eol: just clean up stale pause fields
+        const { pausedAt: _pausedAt, pauseReason: _pauseReason, ...rest } = v;
+        if (_pausedAt || _pauseReason) {
+          return sortVaultKeys(rest as VaultConfig);
+        }
+        return v;
+      }
+      const { pausedAt: _pa, pauseReason: _pr, ...rest } = v;
       return sortVaultKeys({
-        ...v,
+        ...rest,
         status: 'eol',
         retireReason: 'rewards',
         retiredAt: timestamp,
-      });
+      } as VaultConfig);
     });
     await saveJson(vaultsFile, modified, 'prettier');
-    console.log(`[INFO] ${activeVaults.length} vaults set to eol`);
+    console.log(`[INFO] ${vaultsToRetire.length} vaults set to eol`);
   } else {
-    console.log(`[INFO] No active vaults on ${chainId}`);
+    console.log(`[INFO] No active/paused vaults on ${chainId}`);
   }
 
   // 2. Update config.ts: add eol timestamp and re-sort chains
