@@ -33,7 +33,6 @@ import {
   selectCrossChainDstDust,
   selectCrossChainDstReceived,
   selectCrossChainSrcReturned,
-  selectIsStepperRecoveryExecution,
   selectIsStepperStepping,
   selectMintResult,
   selectStepperBridgeStatus,
@@ -691,10 +690,11 @@ export const RecoveryContent = memo(function RecoveryContent() {
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const connectedChainId = useAppSelector(selectCurrentChainId);
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
-  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
   const recoveryQuoteStatus = useAppSelector(selectCrossChainRecoveryQuoteStatus);
   const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
   const isExecuting = useAppSelector(selectTransactExecuting);
+  const walletActionsState = useAppSelector(state => state.user.walletActions);
+  const hasError = isWalletActionError(walletActionsState);
 
   const opId = bridgeStatus?.opId ?? recoveryQuoteOpId;
   const pendingOp = useAppSelector(state =>
@@ -738,7 +738,7 @@ export const RecoveryContent = memo(function RecoveryContent() {
 
   const hasValidQuote =
     opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
-  const needsNewQuote = !isRecoveryExecution && !hasValidQuote;
+  const needsNewQuote = !isExecuting && !hasValidQuote;
 
   const titleKey =
     mode === TransactMode.Withdraw ? 'Transactn-Bridging-Withdraw' : 'Transactn-Bridging-Deposit';
@@ -764,7 +764,9 @@ export const RecoveryContent = memo(function RecoveryContent() {
   const isUnknown = isAbandoned && pendingOp;
   const directionKey = mode === TransactMode.Withdraw ? 'Withdraw' : 'Deposit';
   const gasKey = hasNoGas ? '-NoGas' : '';
-  const refreshKey = needsNewQuote ? '-Refresh' : '';
+  // Only append "-Refresh" text when the Refresh button is the primary action
+  const showRefreshButton = needsNewQuote && isWalletConnected && isOnCorrectChain && !isUnknown;
+  const refreshKey = showRefreshButton ? '-Refresh' : '';
   const unknownKey = isUnknown ? '-Unknown' : '';
   const messageKey =
     isUnknown ?
@@ -823,6 +825,9 @@ export const RecoveryContent = memo(function RecoveryContent() {
     );
   }
 
+  // Show Close alongside retry CTA after a failed attempt (!isUnknown: that branch has its own Close)
+  const showCloseButton = hasError && !isUnknown;
+
   return (
     <>
       <Title text={t(titleKey)} />
@@ -836,7 +841,14 @@ export const RecoveryContent = memo(function RecoveryContent() {
         </div>
       </div>
       {actionButton ?
-        <div className={classes.buttons}>{actionButton}</div>
+        <div
+          className={cx(classes.buttons, showCloseButton ? classes.buttonsRetryClose : undefined)}
+        >
+          {actionButton}
+          {showCloseButton ?
+            <CloseButton />
+          : null}
+        </div>
       : null}
     </>
   );
