@@ -120,7 +120,7 @@ export interface IComposerStrategyStatic<TId extends ZapStrategyId = ZapStrategy
   new (
     options: StrategyIdToConfig<TId>,
     helpers: ZapTransactHelpers,
-    underlying: AnyComposableStrategy
+    underlyings: AnyComposableStrategy[]
   ): IComposerStrategy<TId>;
 }
 

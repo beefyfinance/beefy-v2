@@ -44,7 +44,6 @@ import type {
 } from './strategies/strategy-configs.ts';
 import { CrossChainStrategy } from './strategies/cross-chain/CrossChainStrategy.ts';
 import { VaultStrategy } from './strategies/vault/VaultStrategy.ts';
-import { buildCowcentratedDualStrategy } from './strategies/cowcentrated/maybeInjectCowcentratedDual.ts';
 import {
   type DepositOption,
   type DepositQuote,
@@ -458,17 +457,6 @@ export class TransactApi implements ITransactApi {
       })
     );
 
-    // Auto-inject cowcentrated-dual strategy when cowcentrated is configured.
-    // This avoids updating hundreds of vault JSON configs — any vault with a cowcentrated
-    // zap automatically gets the dual-input variant too.
-    if (vault.zaps.some(z => z.strategyId === 'cowcentrated')) {
-      try {
-        strategies.push(buildCowcentratedDualStrategy(helpers));
-      } catch {
-        // Ignore: dual strategy may fail if aggregator doesn't support the pair
-      }
-    }
-
     return strategies.filter(isDefined);
   }
 
@@ -537,12 +525,12 @@ export class TransactApi implements ITransactApi {
     const ctor = await loader();
 
     if (isComposerStrategyStatic(ctor)) {
-      const underlyingStrategy = await this.getComposableStrategyForZap(helpers);
+      const underlyingStrategies = await this.getComposableStrategyForZap(helpers);
       const genericCtor = ctor as IComposerStrategyStatic;
       return new genericCtor(
         strategyConfig as StrategyIdToConfig<ComposerStrategyId>,
         helpers,
-        underlyingStrategy
+        underlyingStrategies
       );
     }
 
@@ -561,7 +549,7 @@ export class TransactApi implements ITransactApi {
 
   private async getComposableStrategyForZap(
     helpers: ZapTransactHelpers
-  ): Promise<AnyComposableStrategy> {
+  ): Promise<AnyComposableStrategy[]> {
     const { getState, vault } = helpers;
     const underlyingVault = selectVaultUnderlyingVault(getState(), vault.id);
     const underlyingHelpers = await this.getHelpersForVault(underlyingVault.id, getState);
@@ -580,19 +568,13 @@ export class TransactApi implements ITransactApi {
       );
     }
 
-    const underlyingStrategy = composableUnderlyingStrategies[0];
-    if (composableUnderlyingStrategies.length > 1) {
-      console.warn(
-        `Underlying vault ${underlyingVault.id} of ${vault.id} has multiple composable strategies, using the first ${underlyingStrategy.ctor.id}`
-      );
-    }
-
-    const ctor = underlyingStrategy.ctor as new (
-      options: ZapStrategyConfig,
-      helpers: ZapTransactHelpers
-    ) => AnyComposableStrategy;
-    const options = underlyingStrategy.options;
-    return new ctor(options, underlyingHelpers);
+    return composableUnderlyingStrategies.map(s => {
+      const ctor = s.ctor as new (
+        options: ZapStrategyConfig,
+        helpers: ZapTransactHelpers
+      ) => AnyComposableStrategy;
+      return new ctor(s.options, underlyingHelpers);
+    });
   }
 
   private async getStrategyById(
