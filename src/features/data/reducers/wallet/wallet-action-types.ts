@@ -28,6 +28,8 @@ export type ZapAdditionalData = BaseAdditionalData & {
   vaultId: VaultEntity['id'];
   /** Expected tokens returned to user */
   expectedTokens: TokenEntity[];
+  /** Whether this zap is a CCTP recovery finalise */
+  recovery?: boolean;
 };
 export type BridgeAdditionalData = BaseAdditionalData & {
   type: 'bridge';
