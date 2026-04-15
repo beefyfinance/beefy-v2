@@ -1,7 +1,7 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
-import { memo, type ReactNode, useEffect, useMemo } from 'react';
+import { memo, type ReactNode, useEffect, useId, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { useCollapse } from '../../../../../../components/Collapsable/hooks.ts';
@@ -269,11 +269,10 @@ const QuoteLoaded = memo(function QuoteLoaded({
     () => quote.returned.filter(r => r.amount.gt(BIG_ZERO)),
     [quote.returned]
   );
-
   const isCowcentratedDeposit = isCowcentratedDepositQuote(quote);
 
   let topCard: ReactNode = null;
-  if (isCowcentratedDeposit) {
+  if (isCowcentratedDepositQuote(quote)) {
     topCard = <CowcentratedLoadedQuote quote={quote} />;
   } else if (!hasTransformation) {
     topCard = <TokenAmountList items={quote.outputs} />;
@@ -328,6 +327,7 @@ const YouReceiveSection = memo(function YouReceiveSection({
 }: YouReceiveSectionProps) {
   const { t } = useTranslation();
   const { open, handleToggle, Icon } = useCollapse();
+  const dustRowsId = useId();
   const hasReturned = returned.length > 0;
   const dustUsdFormatted = useAppSelector(state =>
     formatLargeUsd(totalValueOfTokenAmounts(returned, state))
@@ -354,7 +354,13 @@ const YouReceiveSection = memo(function YouReceiveSection({
         {hasReturned ?
           <>
             <hr className={css(styles.youReceiveDivider)} />
-            <button type="button" className={css(styles.dustToggle)} onClick={handleToggle}>
+            <button
+              type="button"
+              className={css(styles.dustToggle)}
+              onClick={handleToggle}
+              aria-expanded={open}
+              aria-controls={dustRowsId}
+            >
               <span className={css(styles.dustToggleLabel)}>
                 {t('Transact-Returned', { dustValue: dustUsdFormatted })}
               </span>
@@ -363,7 +369,7 @@ const YouReceiveSection = memo(function YouReceiveSection({
               </span>
             </button>
             {open ?
-              <div className={css(styles.dustRows)}>
+              <div id={dustRowsId} className={css(styles.dustRows)}>
                 {returned.map(({ token, amount }) => (
                   <DustTokenRow
                     key={`${token.chainId}-${token.address}`}
