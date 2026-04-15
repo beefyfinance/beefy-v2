@@ -1,5 +1,63 @@
 [
   {
+    "id": "stakedao-musd-2pool",
+    "name": "MUSD/USDC/USDT",
+    "type": "standard",
+    "token": "MUSD/2pool",
+    "tokenAddress": "0xB5571E76693ba60110B5811DD650FFefce1C955f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xD41863B37a584f964C0c9B2309e08fDd4c303130",
+    "earnedToken": "mooStakeDao-MUSD-2Pool",
+    "earnedTokenAddress": "0xD41863B37a584f964C0c9B2309e08fDd4c303130",
+    "oracle": "lps",
+    "oracleId": "curve-musd-2pool",
+    "status": "active",
+    "createdAt": 1776162709,
+    "platformId": "stakedao",
+    "assets": ["MUSD", "USDC", "USDT"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-518/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-518/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xB5571E76693ba60110B5811DD650FFefce1C955f",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xB5571E76693ba60110B5811DD650FFefce1C955f",
+            "coins": [
+              "0xdD468A1DDc392dcdbEf6db6e34E89AA338F9F186",
+              "0x4f493B7dE8aAC7d55F71853688b1F7C8F0243C85"
+            ]
+          },
+          {
+            "type": "pool-dynamic-deposit",
+            "target": "0xe07a16358aa878cbda2d49a88e5106871e0db307",
+            "coins": [
+              "0xdD468A1DDc392dcdbEf6db6e34E89AA338F9F186",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "stakedao-ynrwax-ynusdx",
     "name": "ynRWAx/ynUSDx",
     "type": "standard",

@@ -2,7 +2,7 @@ import { memo, type ReactNode } from 'react';
 import { legacyMakeStyles } from '../../../helpers/mui.ts';
 import { styles } from './styles.ts';
 import { css, type CssStyles } from '@repo/styles/css';
-import OpenInNewRoundedIcon from '../../../images/icons/mui/OpenInNewRounded.svg?react';
+import OpenInNewRoundedIcon from '../../../images/icons/external-link.svg?react';
 import { ExternalLink as BaseExternalLink } from '../../Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);
