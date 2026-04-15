@@ -142,17 +142,16 @@ export const CCTP_CONFIG: CCTPConfig = {
       fastFeeBps: 11,
       beefyBridgeFeeUsd: 1,
     },
-    // monad temporarily disabled — relayer unreliable, no overnight staffing to unstick transfers
-    // monad: {
-    //   tokenMessenger: TOKEN_MESSENGER_V2,
-    //   messageTransmitter: MESSAGE_TRANSMITTER_V2,
-    //   maxMessageBodySize: MAX_MESSAGE_BODY_SIZE,
-    //   receiver: '0x00000076f6B75081EF1526C5d9c20D5430f0Beef',
-    //   usdcAddress: '0x754704Bc059F8C67012fEd69BC8A327a5aafb603',
-    //   domain: 15,
-    //   time: { outgoing: 5, incoming: 5 },
-    //   beefyBridgeFeeUsd: 0.1,
-    // },
+    monad: {
+      tokenMessenger: TOKEN_MESSENGER_V2,
+      messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      maxMessageBodySize: MAX_MESSAGE_BODY_SIZE,
+      receiver: '0x00000076f6B75081EF1526C5d9c20D5430f0Beef',
+      usdcAddress: '0x754704Bc059F8C67012fEd69BC8A327a5aafb603',
+      domain: 15,
+      time: { outgoing: 5, incoming: 5 },
+      beefyBridgeFeeUsd: 0.1,
+    },
     optimism: {
       tokenMessenger: TOKEN_MESSENGER_V2,
       messageTransmitter: MESSAGE_TRANSMITTER_V2,
