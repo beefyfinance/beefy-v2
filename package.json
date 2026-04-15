@@ -49,15 +49,7 @@
     "packages:update": "node ./scripts/updatePackages.js"
   },
   "dependencies": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "@beefyfinance/blockchain-addressbook": "^0.54.196",
-=======
-    "@beefyfinance/blockchain-addressbook": "^0.54.198",
->>>>>>> 81fd09ac2 (Bump AB)
-=======
     "@beefyfinance/blockchain-addressbook": "^0.54.199",
->>>>>>> 30f6db6ad (Fix conflicts)
     "@coinbase/wallet-sdk": "^4.3.7",
     "@deficonnect/web3-connector": "^2.0.3",
     "@farcaster/miniapp-sdk": "^0.1.10",
