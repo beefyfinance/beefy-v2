@@ -101,5 +101,8 @@ const ClearButton = styled(Button, {
   base: {
     gap: '4px',
     width: '30%',
+    '& svg': {
+      flexShrink: 0,
+    },
   },
 });

@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { styles } from './styles.ts';
-import OpenInNewRoundedIcon from '../../images/icons/mui/OpenInNewRounded.svg?react';
+import OpenInNewRoundedIcon from '../../images/icons/external-link.svg?react';
 import CodeRoundedIcon from '../../images/icons/mui/CodeRounded.svg?react';
 import InsertIcon from '../../images/icons/mui/InsertLink.svg?react';
 import type { LinkButtonProps } from './LinkButtonProps.ts';
