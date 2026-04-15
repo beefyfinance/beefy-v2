@@ -11,7 +11,13 @@ import { ChainSquareIcon, Icon } from './Icon.tsx';
 import { styled } from '@repo/styles/jsx';
 import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
-import ExternalLinkRegularIcon from '../../../../images/icons/externalLinkRegular.svg?react';
+import BaseExternalLinkRegularIcon from '../../../../images/icons/externalLinkRegular.svg?react';
+const ExternalLinkRegularIcon = styled(BaseExternalLinkRegularIcon, {
+  base: {
+    width: '20px',
+    height: '20px',
+  },
+});
 const buyPlatforms: Record<
   NonNullable<Token['buyLink']>['platform'],
   { icon: string; title: string }

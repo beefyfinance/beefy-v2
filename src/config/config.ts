@@ -174,18 +174,6 @@ export const config = {
       baseSafetyMargin: 0.1,
     },
   },
-  metis: {
-    name: 'Metis',
-    chainId: 1088,
-    rpc: ['https://andromeda.metis.io/?owner=1088'],
-    explorerUrl: 'https://andromeda-explorer.metis.io',
-    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0xDc34b7e0f1F1512f088D1854a54EAFfD4dCaC7Bd',
-    native: { symbol: 'METIS', oracleId: 'WMETIS', decimals: 18 },
-    gas: {
-      type: 'standard',
-    },
-  },
   zksync: {
     name: 'zkSync',
     chainId: 324,
@@ -252,18 +240,6 @@ export const config = {
       baseSafetyMargin: 0.2,
     },
   },
-  mantle: {
-    name: 'Mantle',
-    chainId: 5000,
-    rpc: ['https://rpc.mantle.xyz'],
-    explorerUrl: 'https://mantlescan.xyz',
-    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0xEa13A590eFd8545a10134d08081d6fC2FA0417a7',
-    native: { symbol: 'MNT', oracleId: 'WMNT', decimals: 18 },
-    gas: {
-      type: 'standard',
-    },
-  },
   fraxtal: {
     name: 'Fraxtal',
     chainId: 252,
@@ -278,6 +254,32 @@ export const config = {
       percentile: 0.7,
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
+    },
+  },
+  metis: {
+    name: 'Metis',
+    chainId: 1088,
+    eol: 1776098525,
+    rpc: ['https://andromeda.metis.io/?owner=1088'],
+    explorerUrl: 'https://andromeda-explorer.metis.io',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0xDc34b7e0f1F1512f088D1854a54EAFfD4dCaC7Bd',
+    native: { symbol: 'METIS', oracleId: 'WMETIS', decimals: 18 },
+    gas: {
+      type: 'standard',
+    },
+  },
+  mantle: {
+    name: 'Mantle',
+    eol: 1776098525,
+    chainId: 5000,
+    rpc: ['https://rpc.mantle.xyz'],
+    explorerUrl: 'https://mantlescan.xyz',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0xEa13A590eFd8545a10134d08081d6fC2FA0417a7',
+    native: { symbol: 'MNT', oracleId: 'WMNT', decimals: 18 },
+    gas: {
+      type: 'standard',
     },
   },
   mode: {
@@ -318,7 +320,7 @@ export const config = {
   sei: {
     name: 'Sei',
     chainId: 1329,
-    rpc: ['https://sei.drpc.org', 'https://sei-public.nodies.app'],
+    rpc: ['https://evm-rpc.sei-apis.com', 'https://sei.drpc.org'],
     explorerUrl: 'https://seitrace.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeC1253CC6AB22680B3A3C35EA696dD0A6FC4B0D9',

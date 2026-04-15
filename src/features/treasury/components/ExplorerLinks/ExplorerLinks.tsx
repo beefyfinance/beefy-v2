@@ -5,7 +5,7 @@ import { DropdownProvider } from '../../../../components/Dropdown/DropdownProvid
 import { DropdownTrigger } from '../../../../components/Dropdown/DropdownTrigger.tsx';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
-import IconExternalLink from '../../../../images/icons/externalLinkRegular.svg?react';
+import IconExternalLink from '../../../../images/icons/external-link.svg?react';
 import type { ChainEntity } from '../../../data/entities/chain.ts';
 import { selectTreasuryWalletAddressesByChainId } from '../../../data/selectors/treasury.ts';
 import { styles } from './styles.ts';
