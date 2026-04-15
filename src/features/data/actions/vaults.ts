@@ -210,6 +210,7 @@ function getCowcentratedVault(
     ...base,
     ...status,
     ...clmBase,
+    zaps: ensureCowcentratedDualZap(base.zaps),
     type: 'cowcentrated',
     subType: 'cowcentrated',
     receiptTokenAddress: config.earnContractAddress,
@@ -222,6 +223,15 @@ function getCowcentratedVault(
     assetType: 'clm',
     hidden: !!clmBase.cowcentratedIds.pools.length,
   };
+}
+
+// Pair every cowcentrated zap with its dual-input sibling so composers and direct
+// CLM deposits expose the 2-token arbitrary-ratio option without per-vault config.
+function ensureCowcentratedDualZap(zaps: VaultBase['zaps']): VaultBase['zaps'] {
+  const hasPrimary = zaps.some(z => z.strategyId === 'cowcentrated');
+  const hasDual = zaps.some(z => z.strategyId === 'cowcentrated-dual');
+  if (!hasPrimary || hasDual) return zaps;
+  return [...zaps, { strategyId: 'cowcentrated-dual' }];
 }
 
 function getErc4626Vault(
