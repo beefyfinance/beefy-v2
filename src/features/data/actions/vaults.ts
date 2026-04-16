@@ -211,7 +211,7 @@ function getCowcentratedVault(
     ...base,
     ...status,
     ...clmBase,
-    zaps: ensureCowcentratedDualZap(base.zaps),
+    zaps: maybeAddCowcentratedDualZap(base.zaps),
     type: 'cowcentrated',
     subType: 'cowcentrated',
     receiptTokenAddress: config.earnContractAddress,
@@ -226,11 +226,9 @@ function getCowcentratedVault(
   };
 }
 
-// Pair every cowcentrated zap with its dual-input sibling so composers and direct
-// CLM deposits expose the 2-token arbitrary-ratio option without per-vault config.
-// The primary's swap config (blockProviders/blockTokens) is propagated so per-vault
-// aggregator restrictions apply to the dual strategy too.
-function ensureCowcentratedDualZap(zaps: VaultBase['zaps']): VaultBase['zaps'] {
+// Auto-pair every cowcentrated zap with its dual-input sibling, inheriting the
+// primary's swap config so per-vault aggregator restrictions apply to both.
+function maybeAddCowcentratedDualZap(zaps: VaultBase['zaps']): VaultBase['zaps'] {
   const primary = zaps.find(z => z.strategyId === 'cowcentrated');
   const hasDual = zaps.some(z => z.strategyId === 'cowcentrated-dual');
   if (!primary || hasDual) return zaps;
