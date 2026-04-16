@@ -245,9 +245,12 @@ const selectStandardTxPercentage = (state: BeefyState) => {
 };
 
 export const selectErrorBar = (state: BeefyState) => {
-  const walletActionsStateResult = state.user.walletActions.result;
-
-  return walletActionsStateResult === 'error';
+  // Gate on stepper's own ErrorTx state so a stale walletActions error from a
+  // previous stepper doesn't paint the next stepper's bar red on open.
+  return (
+    state.ui.stepperState.stepContent === StepContent.ErrorTx &&
+    state.user.walletActions.result === 'error'
+  );
 };
 
 export const selectSuccessBar = (state: BeefyState) => {

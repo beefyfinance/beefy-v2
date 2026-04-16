@@ -367,6 +367,7 @@ export const crossChainRecoveryExecuteOrder = (
         token: depositToken,
         expectedTokens,
         vaultId: vault.id,
+        recovery: true,
       },
       {
         walletAddress: address,
@@ -524,7 +525,8 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch(transactSetExecuting(true));
     try {
-      txStart(dispatch);
+      // txStart deferred to just before stepperStartWithSteps so the previous
+      // error stays visible while RecoveryContent renders during step-build.
       const state = getState();
       const op = state.ui.transact.crossChain.pendingOps[opId];
       if (!op) {
@@ -611,6 +613,7 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
       console.debug('[Recovery] Starting stepper with', steps.length, 'steps');
       const existingBridgeStatus = getState().ui.stepperState.bridgeStatus;
       dispatch(transactSetExecuting(false));
+      txStart(dispatch);
       dispatch(stepperStartWithSteps(steps, op.recovery.destChainId));
       dispatch(stepperSetRecoveryExecution(true));
       dispatch(

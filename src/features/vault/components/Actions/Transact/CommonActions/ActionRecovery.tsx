@@ -7,17 +7,24 @@ import {
   crossChainFetchRecoveryQuote,
   crossChainRecoverySteps,
 } from '../../../../../data/actions/wallet/cross-chain.ts';
+import { stepperReset } from '../../../../../data/actions/wallet/stepper.ts';
+import {
+  transactClearInput,
+  transactSetSuccessClosed,
+} from '../../../../../data/actions/transact.ts';
+import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
-  selectIsStepperRecoveryExecution,
   selectIsStepperStepping,
   selectStepperBridgeStatus,
+  selectStepperStepContent,
 } from '../../../../../data/selectors/stepper.ts';
 import {
   selectCrossChainRecoveryQuoteOpId,
   selectCrossChainRecoveryQuoteStatus,
   selectRecoveryOpForCurrentVault,
   selectTransactExecuting,
+  selectTransactSuccessClosed,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -44,13 +51,17 @@ export const ActionRecovery = memo(function ActionRecovery({ mode }: ActionRecov
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const connectedChainId = useAppSelector(selectCurrentChainId);
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
-  const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
+  const stepperContent = useAppSelector(selectStepperStepContent);
   const recoveryQuoteStatus = useAppSelector(selectCrossChainRecoveryQuoteStatus);
   const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
   const isExecuting = useAppSelector(selectTransactExecuting);
+  const successClosed = useAppSelector(selectTransactSuccessClosed);
 
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+
+  const isSuccessTx = stepperContent === StepContent.SuccessTx;
+  const isComplete = successClosed || isSuccessTx;
 
   const opIdFromOp = bridgeStatus?.opId ?? recoveryOp?.id;
   const opId = opIdFromOp ?? recoveryQuoteOpId;
@@ -62,7 +73,7 @@ export const ActionRecovery = memo(function ActionRecovery({ mode }: ActionRecov
   const hasValidQuote =
     opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
 
-  const needsNewQuote = recoveryOp != null && !isRecoveryExecution && !hasValidQuote;
+  const needsNewQuote = recoveryOp != null && !isExecuting && !hasValidQuote;
 
   const isUnknownFailure =
     bridgeStatus?.lifecycleState === 'abandoned' &&
@@ -81,6 +92,30 @@ export const ActionRecovery = memo(function ActionRecovery({ mode }: ActionRecov
       dispatch(crossChainRecoverySteps(opId, t));
     }
   }, [dispatch, opId, t]);
+
+  const handleClose = useCallback(() => {
+    dispatch(transactSetSuccessClosed(false));
+    dispatch(transactClearInput());
+    dispatch(stepperReset());
+  }, [dispatch]);
+
+  // Show Close + success animation after successful recovery
+  if (isComplete) {
+    return (
+      <div className={classes.feesContainer}>
+        <AnimatedButton
+          variant="cta"
+          isConfirmed={true}
+          fullWidth={true}
+          borderless={true}
+          onClick={handleClose}
+        >
+          {t('Transactn-Close')}
+        </AnimatedButton>
+        <VaultFees />
+      </div>
+    );
+  }
 
   if (isUnknownFailure) {
     return (

@@ -18,7 +18,11 @@ import {
   type VaultEntity,
 } from '../../entities/vault.ts';
 import { StepContent } from '../../reducers/wallet/stepper-types.ts';
-import type { TrxError, TxAdditionalData } from '../../reducers/wallet/wallet-action-types.ts';
+import {
+  isZapAdditionalData,
+  type TrxError,
+  type TxAdditionalData,
+} from '../../reducers/wallet/wallet-action-types.ts';
 import {
   selectChainNativeToken,
   selectGovVaultEarnedTokens,
@@ -174,7 +178,15 @@ function txError(
     console.error(from, txError, error);
   }
   dispatch(createWalletActionErrorAction(txError, additionalData));
-  dispatch(stepperSetStepContent({ stepContent: StepContent.ErrorTx }));
+  const isRecovery = isZapAdditionalData(additionalData) && additionalData.recovery === true;
+  if (isRecovery) {
+    console.debug('[Recovery] Redirecting tx failure to RecoveryTx instead of ErrorTx');
+  }
+  dispatch(
+    stepperSetStepContent({
+      stepContent: isRecovery ? StepContent.RecoveryTx : StepContent.ErrorTx,
+    })
+  );
 }
 
 export const resetWallet = () => {
