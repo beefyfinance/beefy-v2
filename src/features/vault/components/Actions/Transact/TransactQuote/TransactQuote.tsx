@@ -148,7 +148,7 @@ const QuoteFulfilled = memo(function QuoteFulfilled({
       firstInput.token.address !== firstOutput.token.address ||
       firstInput.token.chainId !== firstOutput.token.chainId
     );
-  }, [quote.id, isCowcentratedDeposit]);
+  }, [quote, isCowcentratedDeposit]);
   const showTitle = isCowcentratedDeposit || !isDeposit || !hasTransformation;
 
   return (

@@ -49,12 +49,7 @@ export const TokenAmountIcon = memo(function TokenAmountIcon({
       value={formatLargeUsd(valueInUsd)}
       tokenSymbol={showSymbol ? token.symbol : null}
       tokenIcon={
-        <TokensImageWithChain
-          tokens={[token]}
-          chainId={token.chainId}
-          css={iconStyle}
-          size={tokenImageSize}
-        />
+        <TokensImageWithChain tokens={[token]} chainId={token.chainId} size={tokenImageSize} />
       }
     />
   );
@@ -151,9 +146,4 @@ const Token = styled('span', {
 const amountTextStyle = css.raw({
   textStyle: 'body.medium',
   color: 'text.light',
-});
-
-const iconStyle = css.raw({
-  width: '32px',
-  height: '32px',
 });
