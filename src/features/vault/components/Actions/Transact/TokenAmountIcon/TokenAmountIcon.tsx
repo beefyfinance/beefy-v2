@@ -23,6 +23,7 @@ export type TokenAmountIconProps = {
   showSymbol?: boolean;
   tokenImageSize?: number;
   amountWithValueCss?: CssStyles;
+  variant?: 'card' | 'bare';
 };
 export const TokenAmountIcon = memo(function TokenAmountIcon({
   amount,
@@ -32,6 +33,7 @@ export const TokenAmountIcon = memo(function TokenAmountIcon({
   showSymbol = true,
   tokenImageSize = 24,
   amountWithValueCss,
+  variant = 'card',
 }: TokenAmountIconProps) {
   const token = useAppSelector(state => selectTokenByAddress(state, chainId, tokenAddress));
   const tokenPrice = useAppSelector(state =>
@@ -45,6 +47,7 @@ export const TokenAmountIcon = memo(function TokenAmountIcon({
     <TokenAmountIconComponent
       css={cssProp}
       amountWithValueCss={amountWithValueCss}
+      variant={variant}
       amount={<TokenAmount amount={amount} decimals={token.decimals} css={amountTextStyle} />}
       value={formatLargeUsd(valueInUsd)}
       tokenSymbol={showSymbol ? token.symbol : null}
@@ -79,6 +82,7 @@ type TokenAmountIconComponentProps = {
   tokenIcon?: ReactNode;
   css?: CssStyles;
   amountWithValueCss?: CssStyles;
+  variant?: 'card' | 'bare';
 };
 const TokenAmountIconComponent = memo(function TokenAmountIconComponent({
   amount,
@@ -87,9 +91,10 @@ const TokenAmountIconComponent = memo(function TokenAmountIconComponent({
   tokenIcon,
   css: cssProp,
   amountWithValueCss,
+  variant = 'card',
 }: TokenAmountIconComponentProps) {
   return (
-    <Holder css={cssProp}>
+    <Holder css={cssProp} variant={variant}>
       <AmountWithValue css={amountWithValueCss}>
         {amount}
         <Value>{value}</Value>
@@ -104,13 +109,20 @@ const TokenAmountIconComponent = memo(function TokenAmountIconComponent({
 
 const Holder = styled('div', {
   base: {
-    background: 'background.content.light',
-    borderRadius: '8px',
-    padding: '8px 12px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: '12px',
+  },
+  variants: {
+    variant: {
+      card: {
+        background: 'background.content.light',
+        borderRadius: '8px',
+        padding: '8px 12px',
+      },
+      bare: {},
+    },
   },
 });
 

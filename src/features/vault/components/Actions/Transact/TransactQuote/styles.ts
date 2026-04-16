@@ -32,11 +32,6 @@ export const styles = {
     flexDirection: 'column',
     gap: '2px',
   }),
-  youReceiveMainRow: css.raw({
-    background: 'transparent',
-    borderRadius: '0',
-    padding: '0',
-  }),
   youReceiveDivider: css.raw({
     height: '1px',
     background: 'background.border',
@@ -54,22 +49,20 @@ export const styles = {
     border: 'none',
     cursor: 'pointer',
     outline: 'none',
+    color: 'text.dark',
+    transition: 'color 0.2s',
     '&:hover': {
-      '& span': {
-        color: 'text.light',
-      },
+      color: 'text.light',
     },
   }),
   dustToggleLabel: css.raw({
     textStyle: 'body.md',
-    color: 'text.dark',
-    transition: 'color 0.2s',
+    color: 'inherit',
   }),
   dustToggleChevron: css.raw({
     display: 'flex',
     alignItems: 'center',
-    color: 'text.dark',
-    transition: 'color 0.2s',
+    color: 'inherit',
     '& svg': {
       width: '20px',
       height: '20px',

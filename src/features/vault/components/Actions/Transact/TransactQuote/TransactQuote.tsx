@@ -298,16 +298,12 @@ const QuoteLoaded = memo(function QuoteLoaded({
   );
 });
 
-const TokenAmountList = memo(function TokenAmountList({
-  items,
-}: {
-  items: ReadonlyArray<QuoteTokenAmount>;
-}) {
+const TokenAmountList = memo(function TokenAmountList({ items }: { items: QuoteTokenAmount[] }) {
   return (
     <>
       {items.map(({ token, amount }) => (
         <TokenAmountIcon
-          key={token.address}
+          key={`${token.chainId}-${token.address}`}
           amount={amount}
           chainId={token.chainId}
           tokenAddress={token.address}
@@ -350,7 +346,7 @@ const YouReceiveSection = memo(function YouReceiveSection({
             amount={amount}
             chainId={token.chainId}
             tokenAddress={token.address}
-            css={styles.youReceiveMainRow}
+            variant="bare"
           />
         ))}
         {hasReturned ?
