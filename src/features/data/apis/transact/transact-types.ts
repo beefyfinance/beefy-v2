@@ -151,6 +151,14 @@ export type CowcentratedZapDepositOption = ZapBaseDepositOption & {
   swapVia: 'aggregator';
 };
 
+export type CowcentratedDualZapDepositOption = ZapBaseDepositOption & {
+  strategyId: 'cowcentrated-dual';
+  vaultType: 'cowcentrated';
+  depositToken: TokenEntity;
+  lpTokens: TokenEntity[];
+  swapVia: 'aggregator';
+};
+
 export type CowcentratedZapWithdrawOption = ZapBaseWithdrawOption & {
   strategyId: 'cowcentrated';
   vaultType: 'cowcentrated';
@@ -300,6 +308,7 @@ export type GovComposerDepositOption = ZapBaseDepositOption & {
   strategyId: 'gov-composer';
   underlyingOption:
     | CowcentratedZapDepositOption
+    | CowcentratedDualZapDepositOption
     | SingleDepositOption
     | CowcentratedVaultDepositOption;
 };
@@ -316,6 +325,7 @@ export type VaultComposerDepositOption = ZapBaseDepositOption & {
   strategyId: 'vault-composer';
   underlyingOption:
     | CowcentratedZapDepositOption
+    | CowcentratedDualZapDepositOption
     | SingleDepositOption
     | CowcentratedVaultDepositOption;
 };
@@ -375,6 +385,7 @@ export type DepositOption =
   | SingleDepositOption
   | CurveDepositOption
   | CowcentratedZapDepositOption
+  | CowcentratedDualZapDepositOption
   | ConicDepositOption
   | GovComposerDepositOption
   | VaultComposerDepositOption
@@ -618,15 +629,32 @@ export type CowcentratedZapDepositQuote = BaseZapQuote<CowcentratedZapDepositOpt
   lpQuotes: (QuoteResponse | undefined)[];
 };
 
+export type CowcentratedDualZapDepositQuote = BaseZapQuote<CowcentratedDualZapDepositOption> & {
+  vaultType: 'cowcentrated';
+  isCalm: boolean;
+  used: TokenAmount[];
+  unused: TokenAmount[];
+  position: TokenAmount[];
+  lpQuotes: (QuoteResponse | undefined)[];
+};
+
 export type GovComposerZapDepositQuote = BaseZapQuote<GovComposerDepositOption> & {
   vaultType: 'gov';
-  underlyingQuote: CowcentratedZapDepositQuote | SingleDepositQuote | CowcentratedVaultDepositQuote;
+  underlyingQuote:
+    | CowcentratedZapDepositQuote
+    | CowcentratedDualZapDepositQuote
+    | SingleDepositQuote
+    | CowcentratedVaultDepositQuote;
   subStrategy: 'strategy' | 'vault';
 };
 
 export type VaultComposerZapDepositQuote = BaseZapQuote<VaultComposerDepositOption> & {
   vaultType: 'standard';
-  underlyingQuote: CowcentratedZapDepositQuote | SingleDepositQuote | CowcentratedVaultDepositQuote;
+  underlyingQuote:
+    | CowcentratedZapDepositQuote
+    | CowcentratedDualZapDepositQuote
+    | SingleDepositQuote
+    | CowcentratedVaultDepositQuote;
   subStrategy: 'strategy' | 'vault';
 };
 
@@ -701,6 +729,7 @@ export type ZapDepositQuote =
   | GammaDepositQuote
   | ConicDepositQuote
   | CowcentratedZapDepositQuote
+  | CowcentratedDualZapDepositQuote
   | GovComposerZapDepositQuote
   | VaultComposerZapDepositQuote
   | RewardPoolToVaultDepositQuote
@@ -903,18 +932,21 @@ export function isCowcentratedVaultDepositQuote(
 
 export function isCowcentratedZapDepositQuote(
   quote: TransactQuote
-): quote is CowcentratedVaultDepositQuote {
+): quote is CowcentratedZapDepositQuote | CowcentratedDualZapDepositQuote {
   return (
     isDepositQuote(quote) &&
     isZapQuote(quote) &&
-    quote.strategyId === 'cowcentrated' &&
+    (quote.strategyId === 'cowcentrated' || quote.strategyId === 'cowcentrated-dual') &&
     quote.vaultType === 'cowcentrated'
   );
 }
 
 export function isCowcentratedDepositQuote(
   quote: TransactQuote
-): quote is CowcentratedVaultDepositQuote | CowcentratedZapDepositQuote {
+): quote is
+  | CowcentratedVaultDepositQuote
+  | CowcentratedZapDepositQuote
+  | CowcentratedDualZapDepositQuote {
   return (
     isCowcentratedVaultDepositQuote(quote) ||
     isCowcentratedZapDepositQuote(quote) ||
