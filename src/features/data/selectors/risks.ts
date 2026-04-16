@@ -9,15 +9,8 @@ import type { Token } from '@beefyfinance/blockchain-addressbook';
 
 export type RiskKeys = Exclude<keyof VaultEntity['risks'], 'updatedAt'>;
 export type RiskChange = { key: RiskKeys; value: boolean };
-export type TokenTagRiskKeys = 'largeHolders';
-export type TokenRiskKeys = RiskKeys | TokenTagRiskKeys;
-export type TokenRiskChange = { key: TokenRiskKeys; value: boolean };
-type TokenTags = Exclude<Token['tags'], undefined>[number];
-export type TokenOnlyTags = Extract<
-  TokenTags,
-  'LARGE_HOLDERS' | 'NO_TIMELOCK' | 'SYNTHETIC' | 'CURATED'
->;
-type TokenTagToRiskMap = { [K in TokenTags]?: TokenRiskChange };
+type TokenTag = Exclude<Token['tags'], undefined>[number];
+type TokenTagToRiskMap = { [K in TokenTag]?: RiskChange };
 
 export const platformRiskMap: Record<string, RiskChange> = {
   NO_TIMELOCK: { key: 'notTimelocked', value: true },
@@ -25,7 +18,7 @@ export const platformRiskMap: Record<string, RiskChange> = {
   NOT_BATTLE_TESTED: { key: 'notBattleTested', value: true },
 };
 
-export const tokenTagToRiskMap: Record<string, TokenRiskChange> = {
+export const tokenTagToRiskMap: Record<string, RiskChange> = {
   NO_TIMELOCK: { key: 'notTimelocked', value: true },
   SYNTHETIC: { key: 'synthAsset', value: true },
   CURATED: { key: 'curated', value: true },
@@ -37,22 +30,29 @@ const selectVaultRisks = createSelector(
   selectVaultPlatformOrUndefined,
   selectVaultAssetTokensOrUndefined,
   (vault, platform, tokens) => {
-    const risks: VaultEntity['risks'] & Record<TokenTagRiskKeys, boolean> = {
-      ...vault.risks,
-      largeHolders: false,
-    };
+    if (
+      (!platform || !platform.risks || platform.risks.length === 0) &&
+      (!tokens || tokens.length === 0)
+    ) {
+      return vault.risks;
+    }
+
     const platformRisks =
       platform?.risks
         .map(k => platformRiskMap[k])
-        .filter(change => change !== undefined && risks[change.key] !== change.value) || [];
+        .filter(change => change !== undefined && vault.risks[change.key] !== change.value) || [];
     const tokenRisks =
       tokens
         ?.filter(isDefined)
         .filter(isTokenErc20)
         .flatMap(token => token.tags ?? [])
         .map(k => tokenTagToRiskMap[k])
-        .filter(change => change !== undefined && risks[change.key] !== change.value) || [];
+        .filter(change => change !== undefined && vault.risks[change.key] !== change.value) || [];
+    if (platformRisks.length === 0 && tokenRisks.length === 0) {
+      return vault.risks;
+    }
 
+    const risks = { ...vault.risks };
     for (const change of platformRisks) {
       risks[change.key] = change.value;
     }
