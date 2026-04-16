@@ -229,7 +229,7 @@ function wrapStepConfirmQuote(
         }
       }
 
-      console.log('[invalid-output-debug] wrapStepConfirmQuote compare result', {
+      console.log('[invalid-output-debug] wrapStepConfirmQuote compare result ', {
         originalQuoteId: originalQuote.id,
         newQuoteId: newQuote.id,
         prefetchAge: Date.now() - prefetchedRequote.startedAt,
