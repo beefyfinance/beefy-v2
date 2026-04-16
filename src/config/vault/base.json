@@ -119,7 +119,7 @@
   },
   {
     "id": "pancake-cow-base-usdc-play-vault",
-    "name": "USDC-PLAY",
+    "name": "PLAY-USDC",
     "type": "standard",
     "token": "USDC-PLAY",
     "tokenAddress": "0x408d46dbBF54539F4C3BA664242b3C0D975c52A3",
@@ -133,7 +133,7 @@
     "status": "active",
     "createdAt": 1775865005,
     "platformId": "pancakeswap",
-    "assets": ["USDC", "PLAY"],
+    "assets": ["PLAY", "USDC"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -157,7 +157,7 @@
   },
   {
     "id": "pancake-cow-base-usdc-play-rp",
-    "name": "USDC-PLAY Reward Pool",
+    "name": "PLAY-USDC Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowPancakeBaseUSDC-PLAY",
@@ -173,7 +173,7 @@
     "status": "active",
     "createdAt": 1775865004,
     "platformId": "pancakeswap",
-    "assets": ["USDC", "PLAY"],
+    "assets": ["PLAY", "USDC"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -197,9 +197,9 @@
   },
   {
     "id": "pancake-cow-base-usdc-play",
-    "name": "USDC-PLAY",
+    "name": "PLAY-USDC",
     "type": "cowcentrated",
-    "token": "USDC-PLAY pancakeswap",
+    "token": "PLAY-USDC pancakeswap",
     "tokenAddress": "0x077F7A989cD6865Aa4Eb7659d844bF4B47ECc5aa",
     "tokenDecimals": 18,
     "tokenProviderId": "pancakeswap",
@@ -216,7 +216,7 @@
     "createdAt": 1775865004,
     "platformId": "beefy",
     "feeTier": "0.25",
-    "assets": ["USDC", "PLAY"],
+    "assets": ["PLAY", "USDC"],
     "risks": {
       "complex": true,
       "curated": false,
