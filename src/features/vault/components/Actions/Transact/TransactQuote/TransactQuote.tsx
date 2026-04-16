@@ -362,7 +362,7 @@ const YouReceiveSection = memo(function YouReceiveSection({
               aria-controls={dustRowsId}
             >
               <span className={css(styles.dustToggleLabel)}>
-                {t('Transact-Returned', { dustValue: dustUsdFormatted })}
+                {t('Transact-DustSummary', { dustValue: dustUsdFormatted })}
               </span>
               <span className={css(styles.dustToggleChevron)}>
                 <Icon />

@@ -751,7 +751,7 @@
   "Transact-YouDeposit": "You deposit",
   "Transact-YouWithdraw": "You withdraw",
   "Transact-YouReceive": "You receive",
-  "Transact-Returned": "Also receiving up to {{dustValue}} in dust",
+  "Transact-DustSummary": "Also receiving up to {{dustValue}} in dust",
   "Transact-Total": "Total",
   "Transact-Displaced-boost": "<orange><amount/> {{symbol}}</orange> staked in {{boost}} boost",
   "Transact-Displaced-bridged": "<amount/> deposited {{symbol}} <bridgeLink>bridged</bridgeLink> to {{chain}}",
