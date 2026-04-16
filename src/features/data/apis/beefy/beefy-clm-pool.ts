@@ -136,9 +136,9 @@ export class BeefyCLMPool {
       clmContract.read.balances(),
     ]);
 
-    const balance0 = new BigNumber(balanceResults[0].toString(10));
-    const balance1 = new BigNumber(balanceResults[1].toString(10));
-    const price = new BigNumber(priceResult.toString(10));
+    const balance0 = new BigNumber(balanceResults[0]);
+    const balance1 = new BigNumber(balanceResults[1]);
+    const price = new BigNumber(priceResult);
     const bal0inToken1 = balance0.times(price).div(this.PRECISION);
 
     const balancingAmount: TokenAmount =
@@ -222,17 +222,16 @@ export class BeefyCLMPool {
       clmContract.read.totalSupply(),
     ]);
 
-    //bigint -> bigNumber
     const [liquidity, used0, used1] = [
-      new BigNumber(previewDepositResult[0].toString(10)),
-      new BigNumber(previewDepositResult[1].toString(10)),
-      new BigNumber(previewDepositResult[2].toString(10)),
+      new BigNumber(previewDepositResult[0]),
+      new BigNumber(previewDepositResult[1]),
+      new BigNumber(previewDepositResult[2]),
     ];
     const [balance0, balance1] = [
-      new BigNumber(balancesResult[0].toString(10)),
-      new BigNumber(balancesResult[1].toString(10)),
+      new BigNumber(balancesResult[0]),
+      new BigNumber(balancesResult[1]),
     ];
-    const totalSupply = new BigNumber(totalSupplyResult.toString(10));
+    const totalSupply = new BigNumber(totalSupplyResult);
 
     const newTotalSupply = totalSupply.plus(liquidity);
     const newBalance0 = balance0.plus(used0);
@@ -258,8 +257,8 @@ export class BeefyCLMPool {
     ]);
 
     return {
-      amount0: new BigNumber(withdrawResult[0].toString(10)),
-      amount1: new BigNumber(withdrawResult[1].toString(10)),
+      amount0: new BigNumber(withdrawResult[0]),
+      amount1: new BigNumber(withdrawResult[1]),
       isCalm,
     };
   }
