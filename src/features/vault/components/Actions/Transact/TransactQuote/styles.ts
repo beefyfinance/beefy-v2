@@ -107,11 +107,7 @@ export const styles = {
     alignItems: 'center',
     padding: '4px 0',
   }),
-  totalLabel: css.raw({
-    textStyle: 'body.medium',
-    color: 'text.light',
-  }),
-  totalValue: css.raw({
+  totalText: css.raw({
     textStyle: 'body.medium',
     color: 'text.light',
   }),

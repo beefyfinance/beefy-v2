@@ -27,6 +27,7 @@ import {
   isZapQuote,
   quoteNeedsSlippage,
   type TokenAmount as QuoteTokenAmount,
+  type TransactQuote as TransactQuoteType,
 } from '../../../../../data/apis/transact/transact-types.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { isCowcentratedLikeVault } from '../../../../../data/entities/vault.ts';
@@ -156,7 +157,7 @@ const QuoteFulfilled = memo(function QuoteFulfilled({
       {showTitle ?
         <QuoteTitleRefresh title={title} enableRefresh={true} />
       : null}
-      <QuoteLoaded hasTransformation={hasTransformation} isDeposit={isDeposit} />
+      <QuoteLoaded quote={quote} hasTransformation={hasTransformation} isDeposit={isDeposit} />
     </>
   );
 });
@@ -255,14 +256,15 @@ const QuoteLoading = memo(function QuoteLoading() {
 });
 
 const QuoteLoaded = memo(function QuoteLoaded({
+  quote,
   hasTransformation,
   isDeposit,
 }: {
+  quote: TransactQuoteType;
   hasTransformation: boolean;
   isDeposit: boolean;
 }) {
   const classes = useStyles();
-  const quote = useAppSelector(selectTransactSelectedQuote);
   const isZap = isZapQuote(quote);
   const needsSlippage = quoteNeedsSlippage(quote);
   const returned = useMemo(
@@ -380,8 +382,8 @@ const YouReceiveSection = memo(function YouReceiveSection({
             : null}
             <hr className={classes.youReceiveDivider} />
             <div className={classes.totalRow}>
-              <span className={classes.totalLabel}>{t('Transact-Total')}</span>
-              <span className={classes.totalValue}>{totalUsdFormatted}</span>
+              <span className={classes.totalText}>{t('Transact-Total')}</span>
+              <span className={classes.totalText}>{totalUsdFormatted}</span>
             </div>
           </>
         : null}
@@ -418,7 +420,7 @@ const DustTokenRow = memo(function DustTokenRow({ amount, chainId, tokenAddress 
   );
 });
 
-export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
+const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
   quote,
 }: {
   quote: CowcentratedVaultDepositQuote | CowcentratedZapDepositQuote;
