@@ -206,18 +206,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       throw new Error('Invalid underlying deposit option');
     }
 
-    const underlyingQuote =
-      underlyingOption.strategyId === 'cowcentrated' ?
-        await this.underlyingStrategy.fetchDepositQuote(inputs, underlyingOption)
-      : this.dualUnderlying ? await this.dualUnderlying.fetchDepositQuote(inputs, underlyingOption)
-      : (() => {
-          throw new Error('Dual underlying strategy unavailable');
-        })();
-
-    // const modOutputs = underlyingQuote.outputs.map(output => ({
-    //   token: this.shareToken,
-    //   amount: output.amount,
-    // }));
+    const underlyingQuote = await this.fetchUnderlyingDepositQuote(inputs, underlyingOption);
 
     return {
       ...underlyingQuote,
@@ -244,6 +233,31 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     quote: DepositQuote
   ): quote is ZapStrategyIdToDepositQuote<'cowcentrated' | 'cowcentrated-dual'> {
     return quote.strategyId === 'cowcentrated' || quote.strategyId === 'cowcentrated-dual';
+  }
+
+  protected async fetchUnderlyingDepositQuote(
+    inputs: InputTokenAmount[],
+    option: ZapStrategyIdToDepositOption<'cowcentrated' | 'cowcentrated-dual'>
+  ) {
+    if (option.strategyId === 'cowcentrated') {
+      return this.underlyingStrategy.fetchDepositQuote(inputs, option);
+    }
+    if (!this.dualUnderlying) {
+      throw new Error('Dual underlying strategy unavailable');
+    }
+    return this.dualUnderlying.fetchDepositQuote(inputs, option);
+  }
+
+  protected async fetchUnderlyingDepositBreakdown(
+    quote: ZapStrategyIdToDepositQuote<'cowcentrated' | 'cowcentrated-dual'>
+  ): Promise<UserlessZapDepositBreakdown> {
+    if (quote.strategyId === 'cowcentrated') {
+      return this.underlyingStrategy.fetchDepositUserlessZapBreakdown(quote);
+    }
+    if (!this.dualUnderlying) {
+      throw new Error('Dual underlying strategy unavailable');
+    }
+    return this.dualUnderlying.fetchDepositUserlessZapBreakdown(quote);
   }
 
   async fetchDepositUserlessZapBreakdown(
@@ -317,13 +331,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
         throw new Error('Invalid underlying deposit quote');
       }
       const { zapRequest, minBalances } =
-        underlyingQuote.strategyId === 'cowcentrated' ?
-          await this.underlyingStrategy.fetchDepositUserlessZapBreakdown(underlyingQuote)
-        : this.dualUnderlying ?
-          await this.dualUnderlying.fetchDepositUserlessZapBreakdown(underlyingQuote)
-        : (() => {
-            throw new Error('Dual underlying strategy unavailable');
-          })();
+        await this.fetchUnderlyingDepositBreakdown(underlyingQuote);
 
       const stakeZap = await this.fetchZapStakeStep(
         stakeStep,
