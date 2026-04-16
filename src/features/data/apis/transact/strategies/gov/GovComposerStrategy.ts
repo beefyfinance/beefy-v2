@@ -526,9 +526,10 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       throw new Error('Invalid underlying withdraw option');
     }
 
-    // Quote to be fetched via underlying strategy
+    // Quote to be fetched via underlying strategy.
+    // Normalize to this.depositToken
     const underlyingQuote = await this.underlyingStrategy.fetchWithdrawQuote(
-      inputs,
+      [{ token: this.depositToken, amount: input.amount, max: input.max }],
       underlyingOption
     );
 
