@@ -36,10 +36,6 @@ export const styles = {
     cursor: 'pointer',
     pointerEvents: 'auto',
   }),
-  iconAssets: css.raw({
-    flexShrink: '0',
-    flexGrow: '0',
-  }),
   iconMore: css.raw({
     width: '20px',
     height: '20px',

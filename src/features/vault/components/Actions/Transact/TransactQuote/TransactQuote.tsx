@@ -5,15 +5,17 @@ import { memo, type ReactNode, useEffect, useId, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { useCollapse } from '../../../../../../components/Collapsable/hooks.ts';
+import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
+import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { TokensImageWithChain } from '../../../../../../components/TokenImage/TokenImage.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { formatLargeUsd } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import { totalValueOfTokenAmounts } from '../../../../../data/apis/transact/helpers/quotes.ts';
 import {
   transactClearQuotes,
   transactFetchQuotesIfNeeded,
 } from '../../../../../data/actions/transact.ts';
+import { totalValueOfTokenAmounts } from '../../../../../data/apis/transact/helpers/quotes.ts';
 import {
   QuoteCowcentratedNoSingleSideError,
   QuoteCowcentratedNotCalmError,
@@ -33,6 +35,10 @@ import {
   TransactStatus,
 } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
+  selectTokenByAddress,
+  selectTokenPriceByAddress,
+} from '../../../../../data/selectors/tokens.ts';
+import {
   selectTransactInputAmounts,
   selectTransactInputMaxes,
   selectTransactMode,
@@ -45,18 +51,12 @@ import {
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
-import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
-import { TokensImageWithChain } from '../../../../../../components/TokenImage/TokenImage.tsx';
-import {
-  selectTokenByAddress,
-  selectTokenPriceByAddress,
-} from '../../../../../data/selectors/tokens.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { QuoteTitleRefresh } from '../QuoteTitleRefresh/QuoteTitleRefresh.tsx';
 import { TokenAmountIcon, TokenAmountIconLoader } from '../TokenAmountIcon/TokenAmountIcon.tsx';
 import { ZapRoute } from '../ZapRoute/ZapRoute.tsx';
 import { ZapSlippage } from '../ZapSlippage/ZapSlippage.tsx';
 import { styles } from './styles.ts';
-import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -269,11 +269,11 @@ const QuoteLoaded = memo(function QuoteLoaded({
     () => quote.returned.filter(r => r.amount.gt(BIG_ZERO)),
     [quote.returned]
   );
-  const isCowcentratedDeposit = isCowcentratedDepositQuote(quote);
+  const cowcentratedDepositQuote = isCowcentratedDepositQuote(quote) ? quote : null;
 
   let topCard: ReactNode = null;
-  if (isCowcentratedDepositQuote(quote)) {
-    topCard = <CowcentratedLoadedQuote quote={quote} />;
+  if (cowcentratedDepositQuote) {
+    topCard = <CowcentratedLoadedQuote quote={cowcentratedDepositQuote} />;
   } else if (!hasTransformation) {
     topCard = <TokenAmountList items={quote.outputs} />;
   } else if (!isDeposit) {
@@ -285,7 +285,7 @@ const QuoteLoaded = memo(function QuoteLoaded({
       {topCard ?
         <div className={classes.tokenAmounts}>{topCard}</div>
       : null}
-      {!isCowcentratedDeposit && hasTransformation ?
+      {!cowcentratedDepositQuote && hasTransformation ?
         <YouReceiveSection outputs={quote.outputs} returned={returned} />
       : null}
       {isZap ?
@@ -406,7 +406,7 @@ const DustTokenRow = memo(function DustTokenRow({ amount, chainId, tokenAddress 
   const tokenPrice = useAppSelector(state =>
     selectTokenPriceByAddress(state, chainId, tokenAddress)
   );
-  const valueInUsd = useMemo(() => amount.multipliedBy(tokenPrice), [amount, tokenPrice]);
+  const valueInUsd = amount.multipliedBy(tokenPrice);
 
   return (
     <div className={classes.dustRow}>

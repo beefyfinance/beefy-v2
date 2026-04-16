@@ -39,7 +39,7 @@ export const styles = {
   }),
   youReceiveDivider: css.raw({
     height: '1px',
-    background: 'darkBlue.50',
+    background: 'background.border',
     border: 'none',
     margin: '0',
   }),
