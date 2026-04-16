@@ -116,7 +116,7 @@ export const styles = {
   }),
   totalLabel: css.raw({
     textStyle: 'body.medium',
-    color: 'text.dark',
+    color: 'text.light',
   }),
   totalValue: css.raw({
     textStyle: 'body.medium',
