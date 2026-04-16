@@ -38,19 +38,21 @@ export function calculatePriceImpact(
   inputs: TokenAmount[],
   outputs: TokenAmount[],
   returned: TokenAmount[],
-  state: BeefyState
+  state: BeefyState,
+  knownFeesUsd: BigNumber = BIG_ZERO // bridge fees that don't reflect price movement due to poor swapping/routing
 ): number {
   const inputAmount = inputs.length > 0 ? totalValueOfTokenAmounts(inputs, state) : BIG_ZERO;
   const outputAmount = outputs.length > 0 ? totalValueOfTokenAmounts(outputs, state) : BIG_ZERO;
   const returnedAmount = returned.length > 0 ? totalValueOfTokenAmounts(returned, state) : BIG_ZERO;
   const totalOutputAmount = outputAmount.plus(returnedAmount);
+  const effectiveInput = inputAmount.minus(knownFeesUsd);
 
   // divide by zero check
-  if (inputAmount.isZero()) {
+  if (effectiveInput.lte(BIG_ZERO)) {
     return 100;
   }
 
-  return inputAmount.minus(totalOutputAmount).div(inputAmount).toNumber();
+  return effectiveInput.minus(totalOutputAmount).div(effectiveInput).toNumber();
 }
 
 /**

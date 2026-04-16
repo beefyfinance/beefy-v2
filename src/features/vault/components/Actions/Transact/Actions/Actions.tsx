@@ -5,7 +5,19 @@ export const Actions = styled('div', {
     marginTop: '24px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '24px',
     width: '100%',
+  },
+  variants: {
+    gap: {
+      default: {
+        gap: '24px',
+      },
+      tight: {
+        gap: '8px',
+      },
+    },
+  },
+  defaultVariants: {
+    gap: 'default',
   },
 });

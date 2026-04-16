@@ -20,7 +20,11 @@ export const config = {
   polygon: {
     name: 'Polygon PoS',
     chainId: 137,
-    rpc: ['https://polygon.drpc.org', 'https://polygon-rpc.com'],
+    rpc: [
+      'https://polygon-bor-rpc.publicnode.com',
+      'https://polygon.drpc.org',
+      'https://1rpc.io/matic',
+    ],
     explorerUrl: 'https://polygonscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x9C983dd514087674CA1d22A22B7432b614b4C835',
@@ -170,18 +174,6 @@ export const config = {
       baseSafetyMargin: 0.1,
     },
   },
-  metis: {
-    name: 'Metis',
-    chainId: 1088,
-    rpc: ['https://andromeda.metis.io/?owner=1088'],
-    explorerUrl: 'https://andromeda-explorer.metis.io',
-    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0xDc34b7e0f1F1512f088D1854a54EAFfD4dCaC7Bd',
-    native: { symbol: 'METIS', oracleId: 'WMETIS', decimals: 18 },
-    gas: {
-      type: 'standard',
-    },
-  },
   zksync: {
     name: 'zkSync',
     chainId: 324,
@@ -248,18 +240,6 @@ export const config = {
       baseSafetyMargin: 0.2,
     },
   },
-  mantle: {
-    name: 'Mantle',
-    chainId: 5000,
-    rpc: ['https://rpc.mantle.xyz'],
-    explorerUrl: 'https://mantlescan.xyz',
-    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0xEa13A590eFd8545a10134d08081d6fC2FA0417a7',
-    native: { symbol: 'MNT', oracleId: 'WMNT', decimals: 18 },
-    gas: {
-      type: 'standard',
-    },
-  },
   fraxtal: {
     name: 'Fraxtal',
     chainId: 252,
@@ -274,6 +254,32 @@ export const config = {
       percentile: 0.7,
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
+    },
+  },
+  metis: {
+    name: 'Metis',
+    chainId: 1088,
+    eol: 1776098525,
+    rpc: ['https://andromeda.metis.io/?owner=1088'],
+    explorerUrl: 'https://andromeda-explorer.metis.io',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0xDc34b7e0f1F1512f088D1854a54EAFfD4dCaC7Bd',
+    native: { symbol: 'METIS', oracleId: 'WMETIS', decimals: 18 },
+    gas: {
+      type: 'standard',
+    },
+  },
+  mantle: {
+    name: 'Mantle',
+    eol: 1776098525,
+    chainId: 5000,
+    rpc: ['https://rpc.mantle.xyz'],
+    explorerUrl: 'https://mantlescan.xyz',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0xEa13A590eFd8545a10134d08081d6fC2FA0417a7',
+    native: { symbol: 'MNT', oracleId: 'WMNT', decimals: 18 },
+    gas: {
+      type: 'standard',
     },
   },
   mode: {
@@ -314,7 +320,11 @@ export const config = {
   sei: {
     name: 'Sei',
     chainId: 1329,
-    rpc: ['https://sei.drpc.org', 'https://sei-public.nodies.app'],
+    rpc: [
+      'https://sei-evm-rpc.stakeme.pro',
+      'https://sei.drpc.org',
+      'https://evm-rpc.sei-apis.com',
+    ],
     explorerUrl: 'https://seitrace.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeC1253CC6AB22680B3A3C35EA696dD0A6FC4B0D9',
@@ -377,7 +387,7 @@ export const config = {
   sonic: {
     name: 'Sonic',
     chainId: 146,
-    rpc: ['https://sonic.drpc.org'],
+    rpc: ['https://sonic.drpc.org', 'https://rpc.soniclabs.com'],
     explorerUrl: 'https://sonicscan.org',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeb18FDA456Ae7a51Ead79A3BbB93507bb0d1d80d',
@@ -450,7 +460,7 @@ export const config = {
   monad: {
     name: 'Monad',
     chainId: 143,
-    rpc: ['https://rpc.monad.xyz'],
+    rpc: ['https://rpc3.monad.xyz'],
     explorerUrl: 'https://monadscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xDD10a7949e48dCf5df301DC84268eaaC7F7d3f3D',
@@ -572,7 +582,7 @@ export const config = {
     name: 'Canto',
     chainId: 7700,
     eol: 1734101117,
-    rpc: ['https://canto-rpc.ansybl.io'],
+    rpc: ['https://canto.gravitychain.io'],
     explorerUrl: 'https://tuber.build',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x7c7B7FbccA5699175003ecbe1B41E79F40385469',

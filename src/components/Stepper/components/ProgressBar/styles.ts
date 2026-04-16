@@ -26,4 +26,8 @@ export const styles = {
     backgroundColor: 'green.40',
     borderRadius: '4px 4px 0 0',
   }),
+  recoveryBar: css.raw({
+    backgroundColor: 'gold.50',
+    borderRadius: '4px 0 0 0',
+  }),
 };

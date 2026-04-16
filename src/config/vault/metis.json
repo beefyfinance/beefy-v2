@@ -11,8 +11,10 @@
     "earnedTokenAddress": "0x18c10E2c181999EEdf855d2F61eC3755aAB96f70",
     "oracle": "tokens",
     "oracleId": "METIS",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1699441549,
+    "retireReason": "rewards",
+    "retiredAt": 1774958532,
     "platformId": "aave",
     "assets": ["METIS"],
     "risks": {
@@ -447,7 +449,7 @@
     "earnedTokenAddress": "0xC96b496F78d1a45D9cec6d628a75614ed230D6D4",
     "oracle": "lps",
     "oracleId": "netswap-nett-metis",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1642362780,
     "platformId": "netswap",
     "assets": ["METIS", "NETT"],
@@ -472,7 +474,9 @@
         "strategyId": "uniswap-v2",
         "ammId": "metis-netswap"
       }
-    ]
+    ],
+    "retireReason": "rewards",
+    "retiredAt": 1776158994
   },
   {
     "id": "netswap-nett-m.usdc",
@@ -571,7 +575,7 @@
     "earnedTokenAddress": "0xB84486eA8B34C65cD3bf3DeeB6990AA0a27a2EaF",
     "oracle": "lps",
     "oracleId": "netswap-weth-metis",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1642364450,
     "platformId": "netswap",
     "assets": ["WETH", "METIS"],
@@ -596,7 +600,9 @@
         "strategyId": "uniswap-v2",
         "ammId": "metis-netswap"
       }
-    ]
+    ],
+    "retireReason": "rewards",
+    "retiredAt": 1776158994
   },
   {
     "id": "netswap-metis-m.usdc",
@@ -611,7 +617,7 @@
     "earnedTokenAddress": "0xD602655aAF104106E880221b124A20891f769dE1",
     "oracle": "lps",
     "oracleId": "netswap-metis-m.usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1642365277,
     "platformId": "netswap",
     "assets": ["mUSDC", "METIS"],
@@ -636,7 +642,9 @@
         "strategyId": "uniswap-v2",
         "ammId": "metis-netswap"
       }
-    ]
+    ],
+    "retireReason": "rewards",
+    "retiredAt": 1776158994
   },
   {
     "id": "netswap-m.usdt-m.usdc",
@@ -651,7 +659,7 @@
     "earnedTokenAddress": "0x2dC73D17Ae01De6D49aab45668601591FF283dee",
     "oracle": "lps",
     "oracleId": "netswap-m.usdt-m.usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1642365937,
     "platformId": "netswap",
     "assets": ["mUSDC", "mUSDT"],
@@ -676,7 +684,9 @@
         "strategyId": "uniswap-v2",
         "ammId": "metis-netswap"
       }
-    ]
+    ],
+    "retireReason": "rewards",
+    "retiredAt": 1776158994
   },
   {
     "id": "metis-bifi-maxi",

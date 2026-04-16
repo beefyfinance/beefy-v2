@@ -2,9 +2,25 @@ import type { ChainEntity } from '../entities/chain.ts';
 import { clamp } from '../../../helpers/number.ts';
 import { createFactory } from './factory-utils.ts';
 
-const DEFAULT_CHUNK_SIZE = 468;
-const DEFAULT_CHUNK_SIZE_BY_CHAIN: Record<string, number> = {
+const DEFAULT_CONTRACT_DATA_CHUNK_SIZE = 468;
+const DEFAULT_CONTRACT_DATA_CHUNK_SIZE_BY_CHAIN: Record<string, number> = {
   fantom: 200,
+  monad: 30,
+};
+
+const DEFAULT_BALANCE_CHUNK_SIZE = 1024;
+const DEFAULT_BALANCE_CHUNK_SIZE_BY_CHAIN: Record<string, number> = {
+  monad: 512,
+};
+
+const DEFAULT_ALLOWANCE_CHUNK_SIZE = 500;
+const DEFAULT_ALLOWANCE_CHUNK_SIZE_BY_CHAIN: Record<string, number> = {
+  monad: 256,
+};
+
+const DEFAULT_MULTICALL_BATCH_SIZE = 1024;
+const DEFAULT_MULTICALL_BATCH_SIZE_BY_CHAIN: Record<string, number> = {
+  monad: 512,
 };
 
 const getSearchParams = createFactory((): URLSearchParams => {
@@ -48,11 +64,11 @@ export function featureFlag_getContractDataApiChunkSize(chain: ChainEntity['id']
     return parseInt(globalChunkSize);
   }
 
-  if (chain in DEFAULT_CHUNK_SIZE_BY_CHAIN) {
-    return DEFAULT_CHUNK_SIZE_BY_CHAIN[chain];
+  if (chain in DEFAULT_CONTRACT_DATA_CHUNK_SIZE_BY_CHAIN) {
+    return DEFAULT_CONTRACT_DATA_CHUNK_SIZE_BY_CHAIN[chain];
   }
 
-  return DEFAULT_CHUNK_SIZE;
+  return DEFAULT_CONTRACT_DATA_CHUNK_SIZE;
 }
 
 export function featureFlag_getBalanceApiImplem(): 'eth-multicall' | 'new-multicall' {
@@ -69,8 +85,24 @@ export function featureFlag_getBalanceApiImplem(): 'eth-multicall' | 'new-multic
   return 'new-multicall';
 }
 
-export function featureFlag_getBalanceApiChunkSize(): number {
-  return getParam('__balance_api_chunk_size', 1024, parseInt);
+export function featureFlag_getBalanceApiChunkSize(chain: ChainEntity['id']): number {
+  const params = getSearchParams();
+
+  const chainChunkSize = params.get(`__balance_api_chunk_size_${chain}`);
+  if (chainChunkSize) {
+    return parseInt(chainChunkSize);
+  }
+
+  const globalChunkSize = params.get('__balance_api_chunk_size');
+  if (globalChunkSize) {
+    return parseInt(globalChunkSize);
+  }
+
+  if (chain in DEFAULT_BALANCE_CHUNK_SIZE_BY_CHAIN) {
+    return DEFAULT_BALANCE_CHUNK_SIZE_BY_CHAIN[chain];
+  }
+
+  return DEFAULT_BALANCE_CHUNK_SIZE;
 }
 
 export function featureFlag_getAllowanceApiImplem(): 'eth-multicall' | 'new-multicall' {
@@ -104,8 +136,44 @@ function getParam<T>(key: string, defaultValue: T, parser?: (value: string) => T
   return defaultValue;
 }
 
-export function featureFlag_getAllowanceApiChunkSize(): number {
-  return getParam('__allowance_api_chunk_size', 500, parseInt);
+export function featureFlag_getAllowanceApiChunkSize(chain: ChainEntity['id']): number {
+  const params = getSearchParams();
+
+  const chainChunkSize = params.get(`__allowance_api_chunk_size_${chain}`);
+  if (chainChunkSize) {
+    return parseInt(chainChunkSize);
+  }
+
+  const globalChunkSize = params.get('__allowance_api_chunk_size');
+  if (globalChunkSize) {
+    return parseInt(globalChunkSize);
+  }
+
+  if (chain in DEFAULT_ALLOWANCE_CHUNK_SIZE_BY_CHAIN) {
+    return DEFAULT_ALLOWANCE_CHUNK_SIZE_BY_CHAIN[chain];
+  }
+
+  return DEFAULT_ALLOWANCE_CHUNK_SIZE;
+}
+
+export function featureFlag_getMulticallBatchSize(chain: ChainEntity['id']): number {
+  const params = getSearchParams();
+
+  const chainBatchSize = params.get(`__multicall_batch_size_${chain}`);
+  if (chainBatchSize) {
+    return parseInt(chainBatchSize);
+  }
+
+  const globalBatchSize = params.get('__multicall_batch_size');
+  if (globalBatchSize) {
+    return parseInt(globalBatchSize);
+  }
+
+  if (chain in DEFAULT_MULTICALL_BATCH_SIZE_BY_CHAIN) {
+    return DEFAULT_MULTICALL_BATCH_SIZE_BY_CHAIN[chain];
+  }
+
+  return DEFAULT_MULTICALL_BATCH_SIZE;
 }
 
 export function featureFlag_noDataPolling() {
@@ -208,13 +276,13 @@ export function featureFlag_simulateAllBridgeRateLimit(): boolean {
   return params.has('__simulate_all_bridge_rate_limit');
 }
 
-export function featureFlag_kyberSwapSupport(): {
+export function featureFlag_oneInchSupport(): {
   chainId: string;
   tokenAddress: string;
 }[] {
   const params = getSearchParams();
-  if (params.has('__kyber_support')) {
-    return (params.get('__kyber_support') || '').split(',').map(s => {
+  if (params.has('__oneinch_support')) {
+    return (params.get('__oneinch_support') || '').split(',').map(s => {
       const [chainId, tokenAddress] = s.split(':');
       return { chainId, tokenAddress };
     });
@@ -222,13 +290,13 @@ export function featureFlag_kyberSwapSupport(): {
   return [];
 }
 
-export function featureFlag_odosSwapSupport(): {
+export function featureFlag_kyberSwapSupport(): {
   chainId: string;
   tokenAddress: string;
 }[] {
   const params = getSearchParams();
-  if (params.has('__odos_support')) {
-    return (params.get('__odos_support') || '').split(',').map(s => {
+  if (params.has('__kyber_support')) {
+    return (params.get('__kyber_support') || '').split(',').map(s => {
       const [chainId, tokenAddress] = s.split(':');
       return { chainId, tokenAddress };
     });
@@ -255,14 +323,14 @@ export function featureFlag_disableSwapAggregators(): boolean {
   return params.has('__disable_swap_aggregators');
 }
 
+export function featureFlag_disableOneInch(): boolean {
+  const params = getSearchParams();
+  return featureFlag_disableSwapAggregators() || params.has('__disable_one_inch');
+}
+
 export function featureFlag_disableKyber(): boolean {
   const params = getSearchParams();
   return featureFlag_disableSwapAggregators() || params.has('__disable_kyber');
-}
-
-export function featureFlag_disableOdos(): boolean {
-  const params = getSearchParams();
-  return featureFlag_disableSwapAggregators() || params.has('__disable_odos');
 }
 
 export function featureFlag_disableLiquidSwap(): boolean {

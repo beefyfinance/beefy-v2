@@ -107,6 +107,14 @@ export const excludeChains: ChainMap<{ count: number; hash: string }> = {
     count: 8,
     hash: '2ee7f5283e4bd320cbffd88ad612ef2cdcc76eb9d7354eacc8e1661a1d0c6e61',
   },
+  mantle: {
+    count: 40,
+    hash: '1b55c17632373452cc0556c9202e0786559c5ac0c91a353d1cd1f30186fad463',
+  },
+  metis: {
+    count: 31,
+    hash: 'd202515cf267006a5dff7737f97d7f4d74f5c8c7d05ffec29a0b5dfdb8e1e170',
+  },
 };
 
 export const allChainIds = Object.keys(chainConfigs) as AddressBookChainId[];

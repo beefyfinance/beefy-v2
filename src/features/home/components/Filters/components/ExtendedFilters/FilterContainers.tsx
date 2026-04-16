@@ -31,9 +31,7 @@ export const Title = styled('div', {
   base: {
     textStyle: 'body.medium',
     color: 'text.middle',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    paddingRight: '8px',
+    textAlign: 'center',
   },
 });
 
@@ -41,7 +39,7 @@ export const ArrowBack = styled(ArrowBackIcon, {
   base: {
     transform: 'rotate(180deg)',
     color: 'text.dark',
-    height: '12px',
+    height: '20px',
     _hover: {
       cursor: 'pointer',
       color: 'text.middle',
@@ -51,10 +49,10 @@ export const ArrowBack = styled(ArrowBackIcon, {
 
 export const ContentHeader = styled('div', {
   base: {
-    display: 'flex',
-    justifyContent: 'center',
+    display: 'grid',
+    gridTemplateColumns: '20px 1fr 20px',
     alignItems: 'center',
-    gap: '8px',
+    width: '100%',
   },
 });
 

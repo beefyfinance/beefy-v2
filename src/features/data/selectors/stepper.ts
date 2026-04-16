@@ -8,7 +8,9 @@ import {
   isWalletActionSuccess,
 } from '../actions/wallet/wallet-action.ts';
 import type { TokenAmount } from '../apis/transact/transact-types.ts';
-import { isTokenErc20 } from '../entities/token.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import { isTokenErc20, isTokenNative } from '../entities/token.ts';
+import type { DstTokenReturned } from '../reducers/wallet/stepper-types.ts';
 import { type Step, StepContent } from '../reducers/wallet/stepper-types.ts';
 import {
   type BridgeAdditionalData,
@@ -20,8 +22,15 @@ import {
 import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
 import { selectBoostById } from './boosts.ts';
-import { selectChainNativeToken, selectTokenByAddressOrUndefined } from './tokens.ts';
-import { selectVaultById } from './vaults.ts';
+import {
+  selectChainNativeToken,
+  selectChainWrappedNativeToken,
+  selectTokenByAddressOrUndefined,
+} from './tokens.ts';
+import { isStandardVault, isErc4626Vault } from '../entities/vault.ts';
+import { selectTokenByAddress } from './tokens.ts';
+import { selectVaultById, selectVaultPricePerFullShare } from './vaults.ts';
+import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 
 export const selectStepperState = (state: BeefyState) => {
   return state.ui.stepperState;
@@ -32,7 +41,11 @@ export const selectStepperChainId = (state: BeefyState) => {
 };
 
 export const selectIsStepperStepping = (state: BeefyState) => {
-  return state.ui.stepperState.modal && state.ui.stepperState.stepContent !== StepContent.SuccessTx;
+  return (
+    state.ui.stepperState.modal &&
+    state.ui.stepperState.stepContent !== StepContent.SuccessTx &&
+    state.ui.stepperState.stepContent !== StepContent.RecoveryTx
+  );
 };
 
 export const selectStepperCurrentStep = (state: BeefyState) => {
@@ -50,6 +63,14 @@ export const selectStepperItems = (state: BeefyState) => {
 
 export const selectStepperStepContent = (state: BeefyState) => {
   return state.ui.stepperState.stepContent;
+};
+
+export const selectStepperBridgeStatus = (state: BeefyState) => {
+  return state.ui.stepperState.bridgeStatus;
+};
+
+export const selectIsStepperRecoveryExecution = (state: BeefyState) => {
+  return state.ui.stepperState.isRecoveryExecution === true;
 };
 
 const transferAbi = [
@@ -191,6 +212,14 @@ export function selectBoostClaimed(state: BeefyState) {
 }
 
 export const selectStepperProgress = (state: BeefyState) => {
+  if (
+    state.ui.stepperState.stepContent === StepContent.BridgingTx ||
+    state.ui.stepperState.stepContent === StepContent.RecoveryTx
+  ) {
+    const completedSteps = state.ui.stepperState.items.length;
+    return (completedSteps / (completedSteps + 1)) * 100;
+  }
+
   const currentStep = state.ui.stepperState.currentStep;
   const percentagePerStep = 100 / state.ui.stepperState.items.length;
   const currentTxProgress = selectStandardTxPercentage(state);
@@ -216,15 +245,22 @@ const selectStandardTxPercentage = (state: BeefyState) => {
 };
 
 export const selectErrorBar = (state: BeefyState) => {
-  const walletActionsStateResult = state.user.walletActions.result;
-
-  return walletActionsStateResult === 'error';
+  // Gate on stepper's own ErrorTx state so a stale walletActions error from a
+  // previous stepper doesn't paint the next stepper's bar red on open.
+  return (
+    state.ui.stepperState.stepContent === StepContent.ErrorTx &&
+    state.user.walletActions.result === 'error'
+  );
 };
 
 export const selectSuccessBar = (state: BeefyState) => {
   const stepContent = state.ui.stepperState.stepContent;
 
   return stepContent === StepContent.SuccessTx;
+};
+
+export const selectRecoveryBar = (state: BeefyState) => {
+  return state.ui.stepperState.stepContent === StepContent.RecoveryTx;
 };
 
 const tokenReturnedAbi = [
@@ -305,4 +341,118 @@ export function selectZapReturned(state: BeefyState) {
     .filter(t => t.amount.gte(minAmount));
 
   return tokenAmounts;
+}
+
+function resolveDstTokensReturned(
+  state: BeefyState,
+  events: DstTokenReturned[],
+  chainId: ChainEntity['id']
+): TokenAmount[] {
+  const native = selectChainNativeToken(state, chainId);
+  return events
+    .map(e => {
+      const token =
+        e.tokenAddress === ZERO_ADDRESS ?
+          native
+        : selectTokenByAddressOrUndefined(state, chainId, e.tokenAddress);
+      return {
+        amount: token ? fromWei(e.amount, token.decimals) : BIG_ZERO,
+        token,
+      };
+    })
+    .filter((t): t is TokenAmount => !!t.token);
+}
+
+function getReceivedAddresses(
+  state: BeefyState,
+  op: {
+    direction: string;
+    vaultId: string;
+    destChainId: ChainEntity['id'];
+    expectedOutput: TokenAmount;
+  }
+): Set<string> {
+  if (op.direction === 'deposit') {
+    const vault = selectVaultById(state, op.vaultId);
+    return new Set([vault.contractAddress.toLowerCase(), vault.depositTokenAddress.toLowerCase()]);
+  }
+  if (isTokenNative(op.expectedOutput.token)) {
+    const wnative = selectChainWrappedNativeToken(state, op.destChainId);
+    return new Set([
+      ZERO_ADDRESS.toLowerCase(),
+      op.expectedOutput.token.address.toLowerCase(),
+      wnative.address.toLowerCase(),
+    ]);
+  }
+  return new Set([op.expectedOutput.token.address.toLowerCase()]);
+}
+
+export function selectCrossChainDstReceived(state: BeefyState): TokenAmount[] {
+  const bridgeStatus = selectStepperBridgeStatus(state);
+  if (!bridgeStatus?.dstTokensReturned?.length || !bridgeStatus.opId) {
+    return [];
+  }
+
+  const op = state.ui.transact.crossChain.pendingOps[bridgeStatus.opId];
+  if (!op) {
+    return [];
+  }
+
+  const destChainId = bridgeStatus.destChainId;
+  const receivedAddresses = getReceivedAddresses(state, { ...op, destChainId });
+
+  const receivedEvents = bridgeStatus.dstTokensReturned.filter(e =>
+    receivedAddresses.has(e.tokenAddress.toLowerCase())
+  );
+
+  const tokenAmounts = resolveDstTokensReturned(state, receivedEvents, destChainId);
+
+  if (op.direction === 'deposit') {
+    const vault = selectVaultById(state, op.vaultId);
+    if (isStandardVault(vault) || isErc4626Vault(vault)) {
+      const ppfs = selectVaultPricePerFullShare(state, vault.id);
+      const vaultDepositToken = selectTokenByAddress(
+        state,
+        vault.chainId,
+        vault.depositTokenAddress
+      );
+      return tokenAmounts.map(item => ({
+        amount: mooAmountToOracleAmount(item.token, vaultDepositToken, ppfs, item.amount),
+        token: vaultDepositToken,
+      }));
+    }
+  }
+
+  return tokenAmounts;
+}
+
+export function selectCrossChainDstDust(state: BeefyState): TokenAmount[] {
+  const bridgeStatus = selectStepperBridgeStatus(state);
+  if (!bridgeStatus?.dstTokensReturned?.length || !bridgeStatus.opId) {
+    return [];
+  }
+
+  const op = state.ui.transact.crossChain.pendingOps[bridgeStatus.opId];
+  if (!op) {
+    return [];
+  }
+
+  const destChainId = bridgeStatus.destChainId;
+  const receivedAddresses = getReceivedAddresses(state, { ...op, destChainId });
+
+  const dustEvents = bridgeStatus.dstTokensReturned.filter(
+    e => !receivedAddresses.has(e.tokenAddress.toLowerCase())
+  );
+
+  return resolveDstTokensReturned(state, dustEvents, destChainId);
+}
+
+export function selectCrossChainSrcReturned(state: BeefyState): TokenAmount[] {
+  const bridgeStatus = selectStepperBridgeStatus(state);
+  if (!bridgeStatus?.srcTokensReturned?.length) {
+    return [];
+  }
+
+  const srcChainId = bridgeStatus.srcChainId;
+  return resolveDstTokensReturned(state, bridgeStatus.srcTokensReturned, srcChainId);
 }

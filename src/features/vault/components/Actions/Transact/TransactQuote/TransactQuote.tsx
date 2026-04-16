@@ -23,7 +23,10 @@ import {
   quoteNeedsSlippage,
 } from '../../../../../data/apis/transact/transact-types.ts';
 import { isCowcentratedLikeVault } from '../../../../../data/entities/vault.ts';
-import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
+import {
+  TransactMode,
+  TransactStatus,
+} from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectTransactInputAmounts,
   selectTransactInputMaxes,
@@ -152,6 +155,10 @@ const QuoteError = memo(function QuoteError() {
   const classes = useStyles();
   const { t } = useTranslation();
   const error = useAppSelector(selectTransactQuoteError);
+  const mode = useAppSelector(selectTransactMode);
+  const selectedChainId = useAppSelector(selectTransactSelectedChainId);
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   if (error) {
     if (QuoteCowcentratedNoSingleSideError.match(error)) {
@@ -180,6 +187,12 @@ const QuoteError = memo(function QuoteError() {
           />
         </AlertError>
       );
+    }
+
+    const isCrossChain = selectedChainId && selectedChainId !== vault.chainId;
+    if (isCrossChain && error.message?.includes('0 input amount')) {
+      const action = mode === TransactMode.Deposit ? 'deposit' : 'withdraw';
+      return <AlertError>{t(`Transact-Quote-Error-CrossChain-TooLow-${action}`)}</AlertError>;
     }
   }
 
@@ -275,7 +288,7 @@ export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
           );
         })}
       </div>
-      <div className={classes.label}>{t('Your Position Will Be')}</div>
+      <div className={classes.label}>{t('Transact-YourPositionWillBe')}</div>
       <div className={classes.cowcentratedSharesDepositContainer}>
         <TokenAmountIcon
           key={shares.token.id}

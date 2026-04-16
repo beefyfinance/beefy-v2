@@ -19,6 +19,7 @@ import {
   HighlightableTab,
   type HighlightableTabOption,
 } from '../../../Card/CardHighlightableTab.tsx';
+import { CowAnimationProvider } from '../../../../../../components/Button/AnimatedButton.tsx';
 import { FormStepFooter } from '../FormStepFooter/FormStepFooter.tsx';
 
 const DepositFormLoader = lazy(() => import('../DepositForm/DepositForm.tsx'));
@@ -100,9 +101,11 @@ export const FormStep = memo(function FormStep() {
         onChange={handleModeChange}
         TabComponent={HighlightableTab}
       />
-      <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} height={344} />}>
-        <Component />
-        <FormStepFooter />
+      <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} height={468} />}>
+        <CowAnimationProvider>
+          <Component />
+          <FormStepFooter />
+        </CowAnimationProvider>
       </Suspense>
     </div>
   );

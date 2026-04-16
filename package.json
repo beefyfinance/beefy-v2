@@ -32,6 +32,7 @@
     "checkZapAddresses": "vite-node ./scripts/checkZapAddresses.ts",
     "makeExcludeConfig": "vite-node ./scripts/makeExcludeConfig.ts",
     "updatePlatforms": "vite-node ./scripts/updatePlatforms.ts",
+    "updateCctpBridgeFees": "vite-node ./scripts/updateCctpBridgeFees.ts",
     "tsc": "tsc --project tsconfig.app.json",
     "tsc:watch": "tsc --project tsconfig.app.json --watch",
     "tsc:scripts": "tsc --project tsconfig.scripts.json",
@@ -48,12 +49,13 @@
     "packages:update": "node ./scripts/updatePackages.js"
   },
   "dependencies": {
-    "@beefyfinance/blockchain-addressbook": "^0.54.179",
+    "@beefyfinance/blockchain-addressbook": "^0.54.199",
     "@coinbase/wallet-sdk": "^4.3.7",
     "@deficonnect/web3-connector": "^2.0.3",
     "@farcaster/miniapp-sdk": "^0.1.10",
     "@floating-ui/react": "^0.27.16",
     "@reduxjs/toolkit": "^2.9.0",
+    "@rive-app/react-canvas": "^4.27.3",
     "@web3-onboard/coinbase": "^2.4.2",
     "@web3-onboard/core": "^2.24.1",
     "@web3-onboard/injected-wallets": "^2.11.3",

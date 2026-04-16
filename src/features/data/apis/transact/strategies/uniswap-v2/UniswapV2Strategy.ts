@@ -1,4 +1,4 @@
-import type { IZapStrategyStatic } from '../IStrategy.ts';
+import type { IComposableStrategyStatic } from '../IStrategy.ts';
 import { UniswapLikeStrategy } from '../UniswapLikeStrategy.ts';
 import type { AmmEntity, AmmEntityUniswapV2 } from '../../../../entities/zap.ts';
 import type { UniswapV2StrategyConfig } from '../strategy-configs.ts';
@@ -11,6 +11,7 @@ export class UniswapV2StrategyImpl extends UniswapLikeStrategy<
   UniswapV2StrategyConfig
 > {
   public static readonly id = strategyId;
+  public static readonly composable = true;
   public readonly id = strategyId;
 
   protected isAmmType(amm: AmmEntity): amm is AmmEntityUniswapV2 {
@@ -18,4 +19,5 @@ export class UniswapV2StrategyImpl extends UniswapLikeStrategy<
   }
 }
 
-export const UniswapV2Strategy = UniswapV2StrategyImpl satisfies IZapStrategyStatic<StrategyId>;
+export const UniswapV2Strategy =
+  UniswapV2StrategyImpl satisfies IComposableStrategyStatic<StrategyId>;

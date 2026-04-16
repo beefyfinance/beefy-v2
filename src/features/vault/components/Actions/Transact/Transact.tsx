@@ -1,7 +1,7 @@
 import type { ComponentType } from 'react';
 import { memo, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../data/store/hooks.ts';
-import { transactInit } from '../../../../data/actions/transact.ts';
+import { transactClearInput, transactInit } from '../../../../data/actions/transact.ts';
 import type { VaultEntity } from '../../../../data/entities/vault.ts';
 import { TransactStep } from '../../../../data/reducers/wallet/transact-types.ts';
 import {
@@ -13,10 +13,12 @@ import { FormStep } from './FormStep/FormStep.tsx';
 import { LoadingStep } from './LoadingStep/LoadingStep.tsx';
 import { QuoteSelectStep } from './QuoteSelectStep/QuoteSelectStep.tsx';
 import { TokenSelectStep } from './TokenSelectStep/TokenSelectStep.tsx';
+import { ChainSelectStep } from './ChainSelectStep/ChainSelectStep.tsx';
 
 const stepToComponent: Record<TransactStep, ComponentType> = {
   [TransactStep.Loading]: LoadingStep,
   [TransactStep.Form]: FormStep,
+  [TransactStep.ChainSelect]: ChainSelectStep,
   [TransactStep.TokenSelect]: TokenSelectStep,
   [TransactStep.QuoteSelect]: QuoteSelectStep,
 };
@@ -37,6 +39,12 @@ export const Transact = memo(function Transact({ vaultId }: TransactProps) {
       dispatch(transactInit({ vaultId }));
     }
   }, [dispatch, vaultId, isReady]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(transactClearInput());
+    };
+  }, [dispatch]);
 
   return (
     <Card>

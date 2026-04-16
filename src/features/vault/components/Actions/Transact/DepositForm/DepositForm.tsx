@@ -1,18 +1,13 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, type ReactNode, useCallback, useMemo } from 'react';
+import { memo, type ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
 import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
-import {
-  TokenAmount,
-  TokenAmountFromEntity,
-} from '../../../../../../components/TokenAmount/TokenAmount.tsx';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { errorToString } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import zapIcon from '../../../../../../images/icons/zap.svg';
 import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { isVaultActive } from '../../../../../data/entities/vault.ts';
@@ -20,10 +15,10 @@ import { TransactStatus } from '../../../../../data/reducers/wallet/transact-typ
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
 import {
   selectTransactForceSelection,
-  selectTransactNumTokens,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactSelected,
+  selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -34,6 +29,7 @@ import { DepositBuyLinks } from '../DepositBuyLinks/DepositBuyLinks.tsx';
 import { DepositTokenAmountInput } from '../DepositTokenAmountInput/DepositTokenAmountInput.tsx';
 import { FormFooter } from '../FormFooter/FormFooter.tsx';
 import { TransactQuote } from '../TransactQuote/TransactQuote.tsx';
+import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -78,11 +74,11 @@ const DepositFormLoader = memo(function DepositFormLoader() {
   const isError = status === TransactStatus.Rejected;
 
   return (
-    <Container>
+    <Container noPadding={isLoading && isVaultActive(vault)}>
       {!isVaultActive(vault) ?
         <RetirePauseReason vaultId={vaultId} />
       : isLoading ?
-        <LoadingIndicator text={t('Transact-Loading')} height={344} />
+        <LoadingIndicator text={t('Transact-Loading')} height={468} />
       : isError ?
         <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
       : <DepositForm />}
@@ -113,17 +109,10 @@ const DepositFormInputs = memo(function DepositFormInputs() {
   const { t } = useTranslation();
   const selection = useAppSelector(selectTransactSelected);
   const multipleInputs = selection.tokens.length > 1;
-  const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
   const forceSelection = useAppSelector(selectTransactForceSelection);
+  const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
   const availableLabel = t('Transact-Available');
-  const firstSelectLabel = useMemo(() => {
-    return t(
-      hasOptions ?
-        forceSelection ? 'Transact-SelectToken'
-        : 'Transact-SelectAmount'
-      : 'Transact-Deposit'
-    );
-  }, [forceSelection, hasOptions, t]);
+  const { ctaLabel: firstSelectLabel } = useTransactSelectFlowCta();
 
   if (forceSelection) {
     return (
@@ -131,8 +120,7 @@ const DepositFormInputs = memo(function DepositFormInputs() {
         index={0}
         token={selection.tokens[0]}
         availableLabel={availableLabel}
-        selectLabel={t('Transact-SelectToken')}
-        showZapIcon={hasOptions}
+        selectLabel={hasCrossChainZap ? t('Transact-SelectChain') : t('Transact-SelectToken')}
       />
     );
   }
@@ -144,12 +132,7 @@ const DepositFormInputs = memo(function DepositFormInputs() {
       token={token}
       availableLabel={availableLabel}
       selectLabel={!multipleInputs && index === 0 ? firstSelectLabel : token.symbol}
-      showZapIcon={hasOptions && index === 0}
-      tokenAvailable={
-        forceSelection ?
-          <TokenAmount amount={BIG_ZERO} decimals={18} />
-        : <TokenInWallet token={token} index={index} />
-      }
+      tokenAvailable={<TokenInWallet token={token} index={index} />}
     />
   ));
 });
@@ -159,7 +142,6 @@ type DepositFormInputProps = {
   index: number;
   selectLabel: string;
   availableLabel: string;
-  showZapIcon: boolean;
   tokenAvailable?: ReactNode;
 };
 
@@ -168,7 +150,6 @@ const DepositFormInput = memo(function DepositFormInput({
   token,
   selectLabel,
   availableLabel,
-  showZapIcon,
   tokenAvailable,
 }: DepositFormInputProps) {
   const classes = useStyles();
@@ -176,12 +157,7 @@ const DepositFormInput = memo(function DepositFormInput({
   return (
     <div>
       <div className={classes.labels}>
-        <div className={classes.selectLabel}>
-          {showZapIcon ?
-            <img src={zapIcon} alt="Zap" height={12} className={classes.zapIcon} />
-          : null}
-          {selectLabel}
-        </div>
+        <div className={classes.selectLabel}>{selectLabel}</div>
         {tokenAvailable ?
           <div className={classes.availableLabel}>
             {availableLabel} <span className={classes.availableLabelAmount}>{tokenAvailable}</span>
@@ -200,6 +176,16 @@ const Container = styled('div', {
     padding: '16px',
     sm: {
       padding: '24px',
+    },
+  },
+  variants: {
+    noPadding: {
+      true: {
+        padding: '0',
+        sm: {
+          padding: '0',
+        },
+      },
     },
   },
 });

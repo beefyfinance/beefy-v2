@@ -1,5 +1,28 @@
 [
   {
+    "id": "apyx",
+    "docs": "https://docs.apyx.fi/apyx-overview/apyx-pips-points-program",
+    "points": [
+      {
+        "id": "apyx-points",
+        "name": "Apyx Pips"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "apyx-points",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://app.apyx.fi/rewards"
+      }
+    ]
+  },
+  {
     "id": "spark",
     "docs": "https://docs.spark.fi/points/",
     "points": [

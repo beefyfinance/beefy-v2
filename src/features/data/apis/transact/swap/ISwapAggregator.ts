@@ -34,7 +34,7 @@ export interface ISwapAggregator {
    */
   fetchTokenSupport(
     tokens: TokenEntity[],
-    vaultId: VaultEntity['id'],
+    vaultId: VaultEntity['id'] | undefined,
     chainId: ChainEntity['id'],
     state: BeefyState,
     options?: StrategySwapConfig

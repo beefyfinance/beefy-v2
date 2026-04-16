@@ -1,5 +1,247 @@
 [
   {
+    "id": "curve-monad-cbbtc",
+    "name": "cbBTC/WBTC/LBTC",
+    "type": "standard",
+    "token": "triBTC",
+    "tokenAddress": "0xD2634E05EbEd90Bd0a6c0E93d48d7bd8036653B1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xDa1Da785aB148d544A6Ad93E810b5Eabf718D204",
+    "earnedToken": "mooCurveTriBTC",
+    "earnedTokenAddress": "0xDa1Da785aB148d544A6Ad93E810b5Eabf718D204",
+    "oracle": "lps",
+    "oracleId": "curve-monad-cbbtc",
+    "status": "active",
+    "createdAt": 1772708864,
+    "platformId": "curve",
+    "assets": ["cbBTC", "WBTC", "LBTC"],
+    "migrationIds": ["l2-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-18/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-18/withdraw",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xD2634E05EbEd90Bd0a6c0E93d48d7bd8036653B1",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xD2634E05EbEd90Bd0a6c0E93d48d7bd8036653B1",
+            "coins": [
+              "0xd18B7EC58Cdf4876f6AFebd3Ed1730e4Ce10414b",
+              "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+              "0xecAc9C5F704e954931349Da37F60E39f515c11c1"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "balancerv3-monad-usdt0-ausd-usdc",
+    "name": "USDT0/AUSD/USDC V3",
+    "type": "standard",
+    "token": "USDT0/AUSD/USDC V3",
+    "tokenAddress": "0x2DAA146dfB7EAef0038F9F15B2EC1e4DE003f72b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnContractAddress": "0xd0331a023C35514c2EF99Eb34ED868737e9dCeA3",
+    "earnedToken": "balancerV3-monad-wnUSDT0-wnAUSD-wnUSDC",
+    "earnedTokenAddress": "0xd0331a023C35514c2EF99Eb34ED868737e9dCeA3",
+    "oracle": "lps",
+    "oracleId": "balancerv3-monad-usdt0-ausd-usdc",
+    "status": "active",
+    "createdAt": 1772654139,
+    "platformId": "balancer",
+    "assets": ["wnUSDT0", "wnAUSD", "wnUSDC"],
+    "risks": {
+      "updatedAt": 1772654139,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/monad/v3/0x2DAA146dfB7EAef0038F9F15B2EC1e4DE003f72b/add-liquidity",
+    "network": "monad"
+  },
+  {
+    "id": "balancerv3-monad-wmon-gmon",
+    "name": "WMON/gMON V3",
+    "type": "standard",
+    "token": "WMON/gMON V3",
+    "tokenAddress": "0xc0ABfAa62331DB4BEE1d3904B86310C5D120E045",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnContractAddress": "0xCa6feD1FC796f2Dab0f5eE35474710d917d74D02",
+    "earnedToken": "balancerV3-monad-wnWMON-wngMON",
+    "earnedTokenAddress": "0xCa6feD1FC796f2Dab0f5eE35474710d917d74D02",
+    "oracle": "lps",
+    "oracleId": "balancerv3-monad-wmon-gmon",
+    "status": "active",
+    "createdAt": 1772654139,
+    "platformId": "balancer",
+    "assets": ["wnWMON", "wngMON"],
+    "risks": {
+      "updatedAt": 1772654139,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/monad/v3/0xc0ABfAa62331DB4BEE1d3904B86310C5D120E045/add-liquidity",
+    "network": "monad"
+  },
+  {
+    "id": "balancerv3-monad-wmon-shmon",
+    "name": "WMON/shMON V3",
+    "type": "standard",
+    "token": "WMON/shMON V3",
+    "tokenAddress": "0x340Fa62AE58e90473da64b0af622cdd6113106Cb",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnContractAddress": "0xde5131b894B1614C8AE733C7b3DbEeF40f96EB5F",
+    "earnedToken": "balancerV3-monad-wnWMON-wnshMON",
+    "earnedTokenAddress": "0xde5131b894B1614C8AE733C7b3DbEeF40f96EB5F",
+    "oracle": "lps",
+    "oracleId": "balancerv3-monad-wmon-shmon",
+    "status": "active",
+    "createdAt": 1772654139,
+    "platformId": "balancer",
+    "assets": ["wnWMON", "wnshMON"],
+    "risks": {
+      "updatedAt": 1772654139,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/monad/v3/0x340Fa62AE58e90473da64b0af622cdd6113106Cb/add-liquidity",
+    "network": "monad"
+  },
+  {
+    "id": "balancerv3-monad-wmon-smon",
+    "name": "WMON/sMON V3",
+    "type": "standard",
+    "token": "WMON/sMON V3",
+    "tokenAddress": "0x02b34a02db24179Ac2D77Ae20AA6215C7153E7f8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnContractAddress": "0xca771DE5D6464879eEabdFb94787842F79B51b09",
+    "earnedToken": "balancerV3-monad-wnWMON-wnsMON",
+    "earnedTokenAddress": "0xca771DE5D6464879eEabdFb94787842F79B51b09",
+    "oracle": "lps",
+    "oracleId": "balancerv3-monad-wmon-smon",
+    "status": "active",
+    "createdAt": 1772654139,
+    "platformId": "balancer",
+    "assets": ["wnWMON", "wnsMON"],
+    "risks": {
+      "updatedAt": 1772654139,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/monad/v3/0x02b34a02db24179Ac2D77Ae20AA6215C7153E7f8/add-liquidity",
+    "network": "monad"
+  },
+  {
+    "id": "balancerv3-monad-aznd-ausd-loaznd",
+    "name": "AZND/AUSD/loAZND V3",
+    "type": "standard",
+    "token": "AZND/AUSD/loAZND V3",
+    "tokenAddress": "0xbddb004A6c393C3F83BCCCF7F07eE9d409b214dE",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnContractAddress": "0xd2D5A90a62f850ea9377F57d257fCae566D36f49",
+    "earnedToken": "mooBalancerMonadAZND-wnAUSD-wnloAZND",
+    "earnedTokenAddress": "0xd2D5A90a62f850ea9377F57d257fCae566D36f49",
+    "oracle": "lps",
+    "oracleId": "balancerv3-monad-aznd-ausd-loaznd",
+    "status": "active",
+    "createdAt": 1772654139,
+    "platformId": "balancer",
+    "assets": ["AZND", "wnAUSD", "wnloAZND"],
+    "risks": {
+      "updatedAt": 1772654139,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/monad/v3/0xbddb004A6c393C3F83BCCCF7F07eE9d409b214dE/add-liquidity",
+    "network": "monad"
+  },
+  {
+    "id": "balancerv3-monad-ausd-dust",
+    "name": "DUST-AUSD V3",
+    "type": "standard",
+    "token": "DUST-AUSD V3",
+    "tokenAddress": "0x8f4fb1985Eb6D28b9E3f4aD116a6FFF087b55F43",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnContractAddress": "0xc770B943a98dC10EfA91572E3468C514e1A9AbC7",
+    "earnedToken": "mooBalancerMonadDUST-wnAUSD",
+    "earnedTokenAddress": "0xc770B943a98dC10EfA91572E3468C514e1A9AbC7",
+    "oracle": "lps",
+    "oracleId": "balancerv3-monad-ausd-dust",
+    "status": "active",
+    "createdAt": 1772654139,
+    "platformId": "balancer",
+    "assets": ["DUST", "wnAUSD"],
+    "risks": {
+      "updatedAt": 1772654139,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/monad/v3/0x8f4fb1985Eb6D28b9E3f4aD116a6FFF087b55F43/add-liquidity",
+    "network": "monad"
+  },
+  {
     "id": "uniswap-monad-usdc-dust",
     "name": "DUST-USDC LP",
     "type": "standard",
@@ -104,6 +346,43 @@
     },
     "strategyTypeId": "single",
     "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0xbeeff300E9A9caeC7beEA740ab8758D33b777509/steakhouse-high-yield-usdt0",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-monad-steakhouse-high-yield-usd1",
+    "name": "USD1 (Steakhouse, High Yield USD1)",
+    "type": "standard",
+    "token": "USD1",
+    "tokenAddress": "0x111111d2bf19e43C34263401e0CAd979eD1cdb61",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xd5CC7732f88e61eeB2eA7dA25a22Fdf94cC21110",
+    "earnedToken": "mooMorphoMonadSteakhouseHighYieldUSD1",
+    "earnedTokenAddress": "0xd5CC7732f88e61eeB2eA7dA25a22Fdf94cC21110",
+    "oracle": "tokens",
+    "oracleId": "USD1",
+    "status": "active",
+    "createdAt": 1774990613,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["USD1"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0xBeEFfB65df79Baac701307c9605b7aB207355Fdb/steakhouse-high-yield-usd1",
     "network": "monad",
     "zaps": [
       {
@@ -1104,8 +1383,10 @@
     "earnedTokenAddress": "0x2AeE91C4B3454A0e90F12A62badce251e6e7c2eC",
     "oracle": "lps",
     "oracleId": "curve-monad-mubond-ausd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1765869100,
+    "retireReason": "rewards",
+    "retiredAt": 1773048358,
     "platformId": "curve",
     "assets": ["muBOND", "AUSD"],
     "migrationIds": ["l2-convex", "l2-curve"],
@@ -1153,8 +1434,10 @@
     "earnedTokenAddress": "0x70aB0bc107A0a4341f004fE22cCB94a752fD983B",
     "oracle": "lps",
     "oracleId": "curve-monad-aznd-ausd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1765868876,
+    "retireReason": "rewards",
+    "retiredAt": 1773684924,
     "platformId": "curve",
     "assets": ["AZND", "AUSD"],
     "migrationIds": ["l2-convex", "l2-curve"],
@@ -1538,7 +1821,7 @@
       "notVerified": false,
       "synthAsset": false
     },
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
       {
@@ -1656,7 +1939,7 @@
       "notVerified": false,
       "synthAsset": false
     },
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
       {
@@ -1774,7 +2057,7 @@
       "notVerified": false,
       "synthAsset": false
     },
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
       {
@@ -1892,7 +2175,7 @@
       "notVerified": false,
       "synthAsset": false
     },
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "monad",
     "zaps": [
       {

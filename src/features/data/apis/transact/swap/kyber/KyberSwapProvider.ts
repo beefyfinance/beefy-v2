@@ -52,6 +52,7 @@ export class KyberSwapProvider implements ISwapProvider {
       amountIn: toWeiString(request.fromAmount, request.fromToken.decimals),
       gasInclude: true,
       saveGas: false,
+      // onlySinglePath: true,
     };
 
     const quote = await api.getQuote(quoteRequest);
@@ -116,7 +117,7 @@ export class KyberSwapProvider implements ISwapProvider {
   }
 
   async getSupportedTokens(
-    vaultId: VaultEntity['id'],
+    vaultId: VaultEntity['id'] | undefined,
     chainId: ChainEntity['id'],
     state: BeefyState
   ): Promise<TokenEntity[]> {
@@ -125,7 +126,7 @@ export class KyberSwapProvider implements ISwapProvider {
       return [];
     }
 
-    if (config.blockedVaults.includes(vaultId)) {
+    if (vaultId && config.blockedVaults.includes(vaultId)) {
       return [];
     }
 
