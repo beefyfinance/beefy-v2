@@ -117,7 +117,7 @@
       }
     ]
   },
-   {
+  {
     "id": "pancake-cow-base-usdc-play-vault",
     "name": "USDC-PLAY",
     "type": "standard",
@@ -7936,46 +7936,6 @@
     "zaps": [
       {
         "strategyId": "cowcentrated"
-      }
-    ]
-  },
-  {
-    "id": "aerodrome-cow-base-weth-vvv-vault",
-    "name": "WETH-VVV",
-    "type": "standard",
-    "token": "WETH-VVV",
-    "tokenAddress": "0x38E7B155DE349A4b9E6Fb06AFE6b2d1c89E48214",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnContractAddress": "0xFe28Dc2d54d5B3e54bC7D581FCbDe92071f8a63E",
-    "earnedToken": "mooCowAerodromeWETH-VVV",
-    "earnedTokenAddress": "0xFe28Dc2d54d5B3e54bC7D581FCbDe92071f8a63E",
-    "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-weth-vvv",
-    "status": "eol",
-    "createdAt": 1768211068,
-    "retireReason": "rewards",
-    "retiredAt": 1776083728,
-    "platformId": "aerodrome",
-    "assets": ["WETH", "VVV"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "pool",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
