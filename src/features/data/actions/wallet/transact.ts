@@ -87,6 +87,14 @@ export async function getTransactSteps(
   // Both use independent strategy instances (confirmed safe by audit).
   let requotePromise: Promise<TransactQuote[]>;
   const option = quote.option;
+  console.log('[invalid-output-debug] prefetch kickoff', {
+    strategyId: option.strategyId,
+    vaultId: option.vaultId,
+    quoteId: quote.id,
+    quoteInputTokenId: quote.inputs[0].token.id,
+    quoteInputTokenAddress: quote.inputs[0].token.address,
+    quoteInputTokenSymbol: quote.inputs[0].token.symbol,
+  });
   if (isDepositOption(option)) {
     requotePromise = api.fetchDepositQuotesFor([option], quote.inputs, getState);
   } else if (isWithdrawOption(option)) {
@@ -220,6 +228,25 @@ function wrapStepConfirmQuote(
           });
         }
       }
+
+      console.log('[invalid-output-debug] wrapStepConfirmQuote compare result', {
+        originalQuoteId: originalQuote.id,
+        newQuoteId: newQuote.id,
+        prefetchAge: Date.now() - prefetchedRequote.startedAt,
+        significantChangesCount: significantChanges.length,
+        branch:
+          significantChanges.length === 0 ?
+            'confirmUnneeded (run originalStep)'
+          : 'confirmNeeded (show confirm prompt)',
+        originalOutputs: originalQuote.outputs.map(o => ({
+          tokenId: o.token.id,
+          amount: o.amount.toString(10),
+        })),
+        newOutputs: newQuote.outputs.map(o => ({
+          tokenId: o.token.id,
+          amount: o.amount.toString(10),
+        })),
+      });
 
       // Perform original action if no changes
       if (significantChanges.length === 0) {

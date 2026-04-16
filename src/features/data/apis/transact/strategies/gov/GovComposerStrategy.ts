@@ -526,9 +526,22 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       throw new Error('Invalid underlying withdraw option');
     }
 
-    // Quote to be fetched via underlying strategy
+    console.log('[invalid-output-debug] gov-composer.fetchWithdrawQuote strategy-branch', {
+      inputTokenId: inputs[0].token.id,
+      inputTokenAddress: inputs[0].token.address,
+      inputTokenSymbol: inputs[0].token.symbol,
+      shareTokenId: this.shareToken.id,
+      shareTokenAddress: this.shareToken.address,
+      depositTokenId: this.depositToken.id,
+      depositTokenAddress: this.depositToken.address,
+      inputEqualsShare: isTokenEqual(inputs[0].token, this.shareToken),
+      inputEqualsDeposit: isTokenEqual(inputs[0].token, this.depositToken),
+    });
+
+    // Quote to be fetched via underlying strategy.
+    // Normalize to this.depositToken
     const underlyingQuote = await this.underlyingStrategy.fetchWithdrawQuote(
-      inputs,
+      [{ token: this.depositToken, amount: input.amount, max: input.max }],
       underlyingOption
     );
 
@@ -664,6 +677,18 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     t: TFunction<Namespace>
   ): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
+      const unstakeStep = quote.steps.find(isZapQuoteStepUnstake);
+      console.log('[invalid-output-debug] gov-composer.fetchWithdrawStep.zapAction entry', {
+        quoteId: quote.id,
+        quoteInputTokenId: quote.inputs[0].token.id,
+        quoteInputTokenAddress: quote.inputs[0].token.address,
+        unstakeOutputTokenId: unstakeStep?.outputs[0].token.id,
+        unstakeOutputTokenAddress: unstakeStep?.outputs[0].token.address,
+        unstakeOutputTokenSymbol: unstakeStep?.outputs[0].token.symbol,
+        depositTokenId: this.depositToken.id,
+        depositTokenAddress: this.depositToken.address,
+        subStrategy: quote.subStrategy,
+      });
       const { zapRequest, expectedTokens } = await this.fetchWithdrawUserlessZapBreakdown(quote);
       const walletAction = zapExecuteOrder(this.vault.id, zapRequest, expectedTokens);
       return walletAction(dispatch, getState, extraArgument);
@@ -707,7 +732,23 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     if (outputs.length !== 1) throw new Error('Invalid outputs');
     if (inputs.length !== 1) throw new Error('Invalid inputs');
     if (!isTokenEqual(inputs[0].token, this.shareToken)) throw new Error('Invalid input token');
-    if (!isTokenEqual(outputs[0].token, this.depositToken)) throw new Error('Invalid output token');
+    if (!isTokenEqual(outputs[0].token, this.depositToken)) {
+      console.error(
+        '[invalid-output-debug] getZapUnstake FAIL: outputs[0].token !== depositToken',
+        {
+          outputTokenId: outputs[0].token.id,
+          outputTokenAddress: outputs[0].token.address,
+          outputTokenSymbol: outputs[0].token.symbol,
+          depositTokenId: this.depositToken.id,
+          depositTokenAddress: this.depositToken.address,
+          depositTokenSymbol: this.depositToken.symbol,
+          shareTokenId: this.shareToken.id,
+          shareTokenAddress: this.shareToken.address,
+          outputEqualsShare: isTokenEqual(outputs[0].token, this.shareToken),
+        }
+      );
+      throw new Error('Invalid output token');
+    }
 
     return {
       inputs,
