@@ -228,11 +228,16 @@ function getCowcentratedVault(
 
 // Pair every cowcentrated zap with its dual-input sibling so composers and direct
 // CLM deposits expose the 2-token arbitrary-ratio option without per-vault config.
+// The primary's swap config (blockProviders/blockTokens) is propagated so per-vault
+// aggregator restrictions apply to the dual strategy too.
 function ensureCowcentratedDualZap(zaps: VaultBase['zaps']): VaultBase['zaps'] {
-  const hasPrimary = zaps.some(z => z.strategyId === 'cowcentrated');
+  const primary = zaps.find(z => z.strategyId === 'cowcentrated');
   const hasDual = zaps.some(z => z.strategyId === 'cowcentrated-dual');
-  if (!hasPrimary || hasDual) return zaps;
-  return [...zaps, { strategyId: 'cowcentrated-dual' }];
+  if (!primary || hasDual) return zaps;
+  return [
+    ...zaps,
+    { strategyId: 'cowcentrated-dual', ...(primary.swap && { swap: primary.swap }) },
+  ];
 }
 
 function getErc4626Vault(
