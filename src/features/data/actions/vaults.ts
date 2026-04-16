@@ -11,6 +11,7 @@ import {
   type VaultErc4626BaseOnly,
   type VaultGov,
   type VaultGovBaseOnly,
+  type VaultRisks,
   type VaultStandard,
   type VaultStandardBaseOnly,
   type VaultStatus,
@@ -258,20 +259,11 @@ function isValidErc4626SubType(subType: string | undefined): subType is VaultErc
   return subType === 'erc7540:withdraw';
 }
 
-function risksHasUpdatedAt(risks: VaultConfig['risks']): risks is Required<VaultConfig['risks']> {
-  return isFiniteNumber(risks.updatedAt) && risks.updatedAt > 0;
-}
-
-function risksWithUpdatedAt(
-  risks: VaultConfig['risks'],
-  createdAt: number
-): Required<VaultConfig['risks']> {
-  if (risksHasUpdatedAt(risks)) {
-    return risks;
-  }
+function risksWithUpdatedAt(risks: VaultConfig['risks'], createdAt: number): VaultRisks {
   return {
     ...risks,
-    updatedAt: createdAt,
+    largeHolders: false,
+    updatedAt: isFiniteNumber(risks.updatedAt) && risks.updatedAt > 0 ? risks.updatedAt : createdAt,
   };
 }
 
