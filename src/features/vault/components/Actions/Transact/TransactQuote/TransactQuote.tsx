@@ -1,5 +1,5 @@
 import { css, type CssStyles } from '@repo/styles/css';
-import type BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
 import { memo, type ReactNode, useEffect, useId, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -148,7 +148,7 @@ const QuoteFulfilled = memo(function QuoteFulfilled({
       firstInput.token.address !== firstOutput.token.address ||
       firstInput.token.chainId !== firstOutput.token.chainId
     );
-  }, [quote, isCowcentratedDeposit]);
+  }, [quote.id, isCowcentratedDeposit]);
   const showTitle = isCowcentratedDeposit || !isDeposit || !hasTransformation;
 
   return (
@@ -326,22 +326,24 @@ const YouReceiveSection = memo(function YouReceiveSection({
   returned,
 }: YouReceiveSectionProps) {
   const { t } = useTranslation();
+  const classes = useStyles();
   const { open, handleToggle, Icon } = useCollapse();
   const dustRowsId = useId();
   const hasReturned = returned.length > 0;
-  const dustUsdFormatted = useAppSelector(state =>
-    formatLargeUsd(totalValueOfTokenAmounts(returned, state))
+  const outputsUsdStr = useAppSelector(state =>
+    totalValueOfTokenAmounts(outputs, state).toString()
   );
-  const totalUsdFormatted = useAppSelector(state =>
-    formatLargeUsd(
-      totalValueOfTokenAmounts(outputs, state).plus(totalValueOfTokenAmounts(returned, state))
-    )
+  const dustUsdStr = useAppSelector(state => totalValueOfTokenAmounts(returned, state).toString());
+  const dustUsdFormatted = useMemo(() => formatLargeUsd(new BigNumber(dustUsdStr)), [dustUsdStr]);
+  const totalUsdFormatted = useMemo(
+    () => formatLargeUsd(new BigNumber(outputsUsdStr).plus(dustUsdStr)),
+    [outputsUsdStr, dustUsdStr]
   );
 
   return (
-    <div className={css(styles.youReceiveSection)}>
-      <div className={css(styles.youReceiveTitle)}>{t('Transact-YouReceive')}</div>
-      <div className={css(styles.youReceiveCard)}>
+    <div className={classes.youReceiveSection}>
+      <div className={classes.youReceiveTitle}>{t('Transact-YouReceive')}</div>
+      <div className={classes.youReceiveCard}>
         {outputs.map(({ token, amount }) => (
           <TokenAmountIcon
             key={`${token.chainId}-${token.address}`}
@@ -353,23 +355,23 @@ const YouReceiveSection = memo(function YouReceiveSection({
         ))}
         {hasReturned ?
           <>
-            <hr className={css(styles.youReceiveDivider)} />
+            <hr className={classes.youReceiveDivider} />
             <button
               type="button"
-              className={css(styles.dustToggle)}
+              className={classes.dustToggle}
               onClick={handleToggle}
               aria-expanded={open}
               aria-controls={dustRowsId}
             >
-              <span className={css(styles.dustToggleLabel)}>
+              <span className={classes.dustToggleLabel}>
                 {t('Transact-DustSummary', { dustValue: dustUsdFormatted })}
               </span>
-              <span className={css(styles.dustToggleChevron)}>
+              <span className={classes.dustToggleChevron}>
                 <Icon />
               </span>
             </button>
             {open ?
-              <div id={dustRowsId} className={css(styles.dustRows)}>
+              <div id={dustRowsId} className={classes.dustRows}>
                 {returned.map(({ token, amount }) => (
                   <DustTokenRow
                     key={`${token.chainId}-${token.address}`}
@@ -380,10 +382,10 @@ const YouReceiveSection = memo(function YouReceiveSection({
                 ))}
               </div>
             : null}
-            <hr className={css(styles.youReceiveDivider)} />
-            <div className={css(styles.totalRow)}>
-              <span className={css(styles.totalLabel)}>{t('Transact-Total')}</span>
-              <span className={css(styles.totalValue)}>{totalUsdFormatted}</span>
+            <hr className={classes.youReceiveDivider} />
+            <div className={classes.totalRow}>
+              <span className={classes.totalLabel}>{t('Transact-Total')}</span>
+              <span className={classes.totalValue}>{totalUsdFormatted}</span>
             </div>
           </>
         : null}
@@ -399,6 +401,7 @@ type TokenRowProps = {
 };
 
 const DustTokenRow = memo(function DustTokenRow({ amount, chainId, tokenAddress }: TokenRowProps) {
+  const classes = useStyles();
   const token = useAppSelector(state => selectTokenByAddress(state, chainId, tokenAddress));
   const tokenPrice = useAppSelector(state =>
     selectTokenPriceByAddress(state, chainId, tokenAddress)
@@ -406,13 +409,13 @@ const DustTokenRow = memo(function DustTokenRow({ amount, chainId, tokenAddress 
   const valueInUsd = useMemo(() => amount.multipliedBy(tokenPrice), [amount, tokenPrice]);
 
   return (
-    <div className={css(styles.dustRow)}>
-      <div className={css(styles.dustRowAmountGroup)}>
+    <div className={classes.dustRow}>
+      <div className={classes.dustRowAmountGroup}>
         <TokenAmount amount={amount} decimals={token.decimals} css={styles.dustRowAmount} />
-        <span className={css(styles.dustRowValue)}>{formatLargeUsd(valueInUsd)}</span>
+        <span className={classes.dustRowValue}>{formatLargeUsd(valueInUsd)}</span>
       </div>
-      <div className={css(styles.dustRowTokenInfo)}>
-        <span className={css(styles.dustRowTokenName)}>{token.symbol}</span>
+      <div className={classes.dustRowTokenInfo}>
+        <span className={classes.dustRowTokenName}>{token.symbol}</span>
         <TokensImageWithChain tokens={[token]} chainId={token.chainId} size={24} />
       </div>
     </div>
