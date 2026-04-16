@@ -18,6 +18,7 @@ import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { fetchBalanceAction } from './balance.ts';
 import { crossChainFetchRecoveryQuote, crossChainOpStatusUpdate } from './wallet/cross-chain.ts';
 import { stepperSetBridgeStatus, stepperSetStepContent } from './wallet/stepper.ts';
+import { createWalletActionErrorAction } from './wallet/wallet-action.ts';
 
 const POLL_INTERVAL_MS = 2000;
 
@@ -137,6 +138,7 @@ function handleDestinationRecovery(
     const state = getState();
     const bridgeStatus = selectStepperBridgeStatus(state);
     if (!bridgeStatus) {
+      dispatch(createWalletActionErrorAction({ message: 'Bridge status not found' }, undefined));
       dispatch(stepperSetStepContent({ stepContent: StepContent.ErrorTx }));
       return;
     }
@@ -144,6 +146,9 @@ function handleDestinationRecovery(
     const { opId } = bridgeStatus;
     if (!opId) {
       console.warn('[CCTP] No opId found in bridge status, falling back to error');
+      dispatch(
+        createWalletActionErrorAction({ message: 'No opId found in bridge status' }, undefined)
+      );
       dispatch(stepperSetStepContent({ stepContent: StepContent.ErrorTx }));
       return;
     }
