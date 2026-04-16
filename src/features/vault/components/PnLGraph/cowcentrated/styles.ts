@@ -46,6 +46,7 @@ export const styles = {
   dashboardPnlContainer: css.raw({
     backgroundColor: 'background.content',
     borderRadius: '12px',
+    overflow: 'hidden',
     mdDown: {
       borderRadius: '0px',
     },
