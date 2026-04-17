@@ -99,6 +99,16 @@ const nonHarvestOnDepositPools = [
   'shadow-cow-sonic-wbtc-usdc.e-vault',
   'shadow-cow-sonic-wbtc-weth-vault',
   'shadow-cow-sonic-ws-bes-vault',
+
+  // migrated aero vaults with 10sec action cd
+  'aerodrome-cow-base-cbxrp-cbbtc-v2-vault',
+  'aerodrome-cow-base-weth-cbxrp-v2-vault',
+  'aerodrome-cow-base-sol-cbbtc-vault',
+  'aerodrome-cow-base-sol-usdc-v2-vault',
+  'aerodrome-cow-base-usdc-ghst-v2-vault',
+  'aerodrome-cow-base-weth-drv-vault',
+  'aerodrome-cow-base-weth-vvv-v2-vault',
+  'aerodrome-cow-base-weth-zro-vault',
 ];
 const excludedAbPools = ['gmx-arb-atom-usdc', 'gmx-arb-xrp-usdc', 'gmx-arb-doge-usdc'];
 const addressFields: Array<keyof VaultConfig> = [
