@@ -18,6 +18,7 @@ import {
 import {
   type CowcentratedVaultDepositQuote,
   type CowcentratedZapDepositQuote,
+  type CowcentratedDualZapDepositQuote,
   isCowcentratedDepositQuote,
   isZapQuote,
   quoteNeedsSlippage,
@@ -262,7 +263,10 @@ const QuoteLoaded = memo(function QuoteLoaded() {
 export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
   quote,
 }: {
-  quote: CowcentratedVaultDepositQuote | CowcentratedZapDepositQuote;
+  quote:
+    | CowcentratedVaultDepositQuote
+    | CowcentratedZapDepositQuote
+    | CowcentratedDualZapDepositQuote;
 }) {
   const { t } = useTranslation();
   const shares = quote.outputs[0];
