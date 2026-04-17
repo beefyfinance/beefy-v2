@@ -1,7 +1,7 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
-import { memo, useEffect, useMemo } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
@@ -13,6 +13,8 @@ import {
 } from '../../../../../data/actions/transact.ts';
 import {
   QuoteCowcentratedNoSingleSideError,
+  QuoteCowcentratedNotActionableError,
+  QuoteCowcentratedNotCalmAndNotActionableError,
   QuoteCowcentratedNotCalmError,
 } from '../../../../../data/apis/transact/strategies/error.ts';
 import {
@@ -188,6 +190,12 @@ const QuoteError = memo(function QuoteError() {
           />
         </AlertError>
       );
+    } else if (QuoteCowcentratedNotActionableError.match(error)) {
+      return <QuoteNotActionableError action={error.action} actionableAt={error.actionableAt} />;
+    } else if (QuoteCowcentratedNotCalmAndNotActionableError.match(error)) {
+      return (
+        <AlertError>{t(`Transact-Quote-Error-NotCalmAndNotActionable-${error.action}`)}</AlertError>
+      );
     }
 
     const isCrossChain = selectedChainId && selectedChainId !== vault.chainId;
@@ -204,6 +212,31 @@ const QuoteError = memo(function QuoteError() {
         <p>{error.message}</p>
       : null}
     </AlertError>
+  );
+});
+
+const QuoteNotActionableError = memo(function QuoteNotActionableError({
+  action,
+  actionableAt,
+}: {
+  action: 'deposit' | 'withdraw';
+  actionableAt: number;
+}) {
+  const { t } = useTranslation();
+  const [secondsLeft, setSecondsLeft] = useState(() =>
+    Math.max(0, actionableAt - Math.floor(Date.now() / 1000))
+  );
+
+  useEffect(() => {
+    if (secondsLeft <= 0) return;
+    const interval = setInterval(() => {
+      setSecondsLeft(Math.max(0, actionableAt - Math.floor(Date.now() / 1000)));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [actionableAt, secondsLeft]);
+
+  return (
+    <AlertError>{t(`Transact-Quote-Error-NotActionable-${action}`, { secondsLeft })}</AlertError>
   );
 });
 

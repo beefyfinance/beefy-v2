@@ -61,7 +61,12 @@ import type {
   ZapStepRequest,
   ZapStepResponse,
 } from '../../zap/types.ts';
-import { QuoteCowcentratedNoSingleSideError, QuoteCowcentratedNotCalmError } from '../error.ts';
+import {
+  QuoteCowcentratedNoSingleSideError,
+  QuoteCowcentratedNotActionableError,
+  QuoteCowcentratedNotCalmAndNotActionableError,
+  QuoteCowcentratedNotCalmError,
+} from '../error.ts';
 import type {
   IComposableStrategy,
   IComposableStrategyStatic,
@@ -640,15 +645,33 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       return { token: this.vaultType.depositTokens[i], amount: swapInAmounts[i] };
     });
 
-    const { isCalm, liquidity, used0, used1, unused0, unused1, position1, position0 } =
-      await clmPool.previewDeposit(lpTokenAmounts[0].amount, lpTokenAmounts[1].amount);
+    const {
+      isCalm,
+      liquidity,
+      used0,
+      used1,
+      unused0,
+      unused1,
+      position1,
+      position0,
+      actionableAt,
+    } = await clmPool.previewDeposit(lpTokenAmounts[0].amount, lpTokenAmounts[1].amount);
 
     if (liquidity.lte(BIG_ZERO)) {
       throw new QuoteCowcentratedNoSingleSideError(lpTokenAmounts);
     }
 
+    const actionableAtSeconds = Number(actionableAt);
+    const isNotActionable = actionableAtSeconds > Math.floor(Date.now() / 1000);
+
+    if (!isCalm && isNotActionable) {
+      throw new QuoteCowcentratedNotCalmAndNotActionableError('deposit');
+    }
     if (!isCalm) {
       throw new QuoteCowcentratedNotCalmError('deposit');
+    }
+    if (isNotActionable) {
+      throw new QuoteCowcentratedNotActionableError('deposit', actionableAtSeconds);
     }
 
     const depositUsed = [used0, used1].map((amount, i) => ({
