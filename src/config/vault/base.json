@@ -7716,8 +7716,10 @@
     "earnedTokenAddress": "0x96d28458AcE90f911A1012cd27ced4c12B050fCE",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-usdc-ghst",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1768476681,
+    "retireReason": "rewards",
+    "retiredAt": 1776443421,
     "platformId": "aerodrome",
     "assets": ["USDC", "GHST"],
     "risks": {
@@ -8465,8 +8467,10 @@
     "earnedTokenAddress": "0x5f3b48b6E2B4fbCBCBA52d498C5baEBe6351cC49",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-sol-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1764935180,
+    "retireReason": "rewards",
+    "retiredAt": 1776443421,
     "platformId": "aerodrome",
     "assets": ["SOL", "USDC"],
     "risks": {
@@ -12749,8 +12753,10 @@
     "earnedTokenAddress": "0xA534d0871922009Fc9e4eE0E4ab888d6b5843EB7",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-cbxrp-cbbtc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1751070430,
+    "retireReason": "rewards",
+    "retiredAt": 1776443421,
     "platformId": "aerodrome",
     "assets": ["cbXRP", "cbBTC"],
     "risks": {
@@ -12870,8 +12876,10 @@
     "earnedTokenAddress": "0xEcA41bc5890c22d4BA1aa871762b1B51f3e344d2",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-cbxrp",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1751070430,
+    "retireReason": "rewards",
+    "retiredAt": 1776443421,
     "platformId": "aerodrome",
     "assets": ["cbXRP", "WETH"],
     "risks": {
@@ -26792,7 +26800,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -26837,7 +26845,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -26883,7 +26891,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -28810,7 +28818,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -28853,7 +28861,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -32394,7 +32402,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -32431,7 +32439,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -32468,7 +32476,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -32899,7 +32907,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -32940,7 +32948,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -32981,7 +32989,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
