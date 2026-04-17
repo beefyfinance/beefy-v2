@@ -11,8 +11,6 @@ export const styles = {
   bar: css.raw({
     margin: 0,
     height: '100%',
-  }),
-  barTransition: css.raw({
     transitionTimingFunction: 'ease-in',
     transition: '0.3s',
   }),

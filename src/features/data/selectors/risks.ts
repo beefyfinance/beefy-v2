@@ -22,6 +22,7 @@ export const tokenTagToRiskMap: Record<string, RiskChange> = {
   NO_TIMELOCK: { key: 'notTimelocked', value: true },
   SYNTHETIC: { key: 'synthAsset', value: true },
   CURATED: { key: 'curated', value: true },
+  LARGE_HOLDERS: { key: 'largeHolders', value: true },
 } satisfies TokenTagToRiskMap;
 
 const selectVaultRisks = createSelector(

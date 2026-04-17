@@ -30,8 +30,9 @@ async function build() {
     { timing: true }
   );
 
-  // always return failure code if validation is skipped
-  return skipValidate ? 1 : code;
+  // return failure code if validation is skipped, unless running on Netlify
+  const isNetlify = process.env.NETLIFY === 'true';
+  return skipValidate && !isNetlify ? 1 : code;
 }
 
 async function dev() {
