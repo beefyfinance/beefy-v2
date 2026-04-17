@@ -5,12 +5,14 @@ import { useAppSelector } from '../../../features/data/store/hooks.ts';
 import { Container } from '../../Container/Container.tsx';
 import type { UnstakedClmBannerDashboardProps } from './types.ts';
 import { UnstakedClmBanner } from './UnstakedClmBanner.tsx';
+import { selectWalletAddressIfKnown } from '../../../features/data/selectors/wallet.ts';
 
 export const UnstakedClmBannerDashboard = memo<UnstakedClmBannerDashboardProps>(
   function UnstakedClmBannerDashboard({ address }) {
     const unstakedIds = useAppSelector(state => selectUserUnstakedClms(state, address));
+    const walletAddress = useAppSelector(selectWalletAddressIfKnown);
 
-    if (!unstakedIds.length) {
+    if (!unstakedIds.length || walletAddress?.toLocaleLowerCase() !== address.toLocaleLowerCase()) {
       return null;
     }
 
