@@ -3958,7 +3958,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": true,
+      "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
     },
@@ -3995,7 +3995,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": true,
+      "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
     },
@@ -4777,7 +4777,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": true,
+      "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
     },
@@ -4818,7 +4818,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": true,
+      "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
     },
