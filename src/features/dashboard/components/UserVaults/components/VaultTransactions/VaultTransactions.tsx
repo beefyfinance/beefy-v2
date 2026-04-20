@@ -18,6 +18,8 @@ const useStyles = legacyMakeStyles({
     display: 'grid',
     gridTemplateColumns: 'minmax(0, 1fr)',
     rowGap: '2px',
+    borderRadius: '8px',
+    overflow: 'hidden',
   }),
 });
 
