@@ -215,12 +215,23 @@ export class BeefyCLMPool {
       this.chain.id
     );
 
-    const [previewDepositResult, isCalm, balancesResult, totalSupplyResult] = await Promise.all([
-      clmContract.read.previewDeposit([bigNumberToBigInt(input0), bigNumberToBigInt(input1)]),
-      clmContract.read.isCalm(),
-      clmContract.read.balances(),
-      clmContract.read.totalSupply(),
-    ]);
+    const [previewDepositResult, isCalm, balancesResult, totalSupplyResult, strategy] =
+      await Promise.all([
+        clmContract.read.previewDeposit([bigNumberToBigInt(input0), bigNumberToBigInt(input1)]),
+        clmContract.read.isCalm(),
+        clmContract.read.balances(),
+        clmContract.read.totalSupply(),
+        clmContract.read.strategy(),
+      ]);
+
+    // TODO : find a way to distinguish between this new version that can have actionableAt()
+    // and the old version that doesn't have it, so we don't break the old vaults.
+    const strategyContract = fetchContract(
+      strategy as string,
+      BeefyCowcentratedLiquidityStrategyAbi,
+      this.chain.id
+    );
+    const actionableAt = await strategyContract.read.actionableAt().catch(() => 0n);
 
     const [liquidity, used0, used1] = [
       new BigNumber(previewDepositResult[0]),
@@ -242,7 +253,21 @@ export class BeefyCLMPool {
     const unused0 = input0.minus(used0);
     const unused1 = input1.minus(used1);
 
-    return { liquidity, used0, used1, position0, position1, unused0, unused1, isCalm };
+    console.log(actionableAt);
+    console.log(strategy);
+    console.log(this.address);
+
+    return {
+      liquidity,
+      used0,
+      used1,
+      position0,
+      position1,
+      unused0,
+      unused1,
+      isCalm,
+      actionableAt,
+    };
   }
 
   public async previewWithdraw(liquidity: BigNumber) {
@@ -251,15 +276,22 @@ export class BeefyCLMPool {
       BeefyCowcentratedLiquidityVaultAbi,
       this.chain.id
     );
-    const [withdrawResult, isCalm] = await Promise.all([
+    const strategyContract = fetchContract(
+      this.strategy,
+      BeefyCowcentratedLiquidityStrategyAbi,
+      this.chain.id
+    );
+    const [withdrawResult, isCalm, actionableAt] = await Promise.all([
       clmContract.read.previewWithdraw([bigNumberToBigInt(toWei(liquidity, 18))]),
       clmContract.read.isCalm(),
+      strategyContract.read.actionableAt().catch(() => 0n),
     ]);
 
     return {
       amount0: new BigNumber(withdrawResult[0]),
       amount1: new BigNumber(withdrawResult[1]),
       isCalm,
+      actionableAt,
     };
   }
 }

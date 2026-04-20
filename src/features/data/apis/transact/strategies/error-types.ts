@@ -11,7 +11,20 @@ export type SerializedQuoteCowcentratedNotCalmError = {
   action: 'deposit' | 'withdraw';
 };
 
+export type SerializedQuoteCowcentratedNotActionableError = {
+  name: 'QuoteCowcentratedNotActionableError';
+  action: 'deposit' | 'withdraw';
+  actionableAt: number;
+};
+
+export type SerializedQuoteCowcentratedNotCalmAndNotActionableError = {
+  name: 'QuoteCowcentratedNotCalmAndNotActionableError';
+  action: 'deposit' | 'withdraw';
+};
+
 export type SerializedError =
   | SerializedAnyError
   | SerializedQuoteCowcentratedNoSingleSideError
-  | SerializedQuoteCowcentratedNotCalmError;
+  | SerializedQuoteCowcentratedNotCalmError
+  | SerializedQuoteCowcentratedNotActionableError
+  | SerializedQuoteCowcentratedNotCalmAndNotActionableError;
