@@ -1,16 +1,21 @@
 import { css, type CssStyles } from '@repo/styles/css';
-import type BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
-import { memo, useEffect, useMemo } from 'react';
+import { memo, type ReactNode, useEffect, useId, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
+import { useCollapse } from '../../../../../../components/Collapsable/hooks.ts';
+import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
+import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { TokensImageWithChain } from '../../../../../../components/TokenImage/TokenImage.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { formatLargeUsd } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
   transactClearQuotes,
   transactFetchQuotesIfNeeded,
 } from '../../../../../data/actions/transact.ts';
+import { totalValueOfTokenAmounts } from '../../../../../data/apis/transact/helpers/quotes.ts';
 import {
   QuoteCowcentratedNoSingleSideError,
   QuoteCowcentratedNotCalmError,
@@ -22,12 +27,19 @@ import {
   isCowcentratedDepositQuote,
   isZapQuote,
   quoteNeedsSlippage,
+  type TokenAmount as QuoteTokenAmount,
+  type TransactQuote as TransactQuoteType,
 } from '../../../../../data/apis/transact/transact-types.ts';
+import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { isCowcentratedLikeVault } from '../../../../../data/entities/vault.ts';
 import {
   TransactMode,
   TransactStatus,
 } from '../../../../../data/reducers/wallet/transact-types.ts';
+import {
+  selectTokenByAddress,
+  selectTokenPriceByAddress,
+} from '../../../../../data/selectors/tokens.ts';
 import {
   selectTransactInputAmounts,
   selectTransactInputMaxes,
@@ -41,12 +53,12 @@ import {
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { QuoteTitleRefresh } from '../QuoteTitleRefresh/QuoteTitleRefresh.tsx';
 import { TokenAmountIcon, TokenAmountIconLoader } from '../TokenAmountIcon/TokenAmountIcon.tsx';
 import { ZapRoute } from '../ZapRoute/ZapRoute.tsx';
 import { ZapSlippage } from '../ZapSlippage/ZapSlippage.tsx';
 import { styles } from './styles.ts';
-import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -101,20 +113,53 @@ export const TransactQuote = memo(function TransactQuote({
 
   return (
     <div className={css(cssProp)}>
-      <QuoteTitleRefresh
-        title={title}
-        enableRefresh={status === TransactStatus.Fulfilled || status === TransactStatus.Rejected}
-      />
-      {status === TransactStatus.Pending ?
-        <QuoteLoading />
-      : null}
       {status === TransactStatus.Fulfilled ?
-        <QuoteLoaded />
-      : null}
-      {status === TransactStatus.Rejected ?
-        <QuoteError />
-      : null}
+        <QuoteFulfilled title={title} mode={mode} />
+      : <>
+          <QuoteTitleRefresh title={title} enableRefresh={status === TransactStatus.Rejected} />
+          {status === TransactStatus.Pending ?
+            <QuoteLoading />
+          : null}
+          {status === TransactStatus.Rejected ?
+            <QuoteError />
+          : null}
+        </>
+      }
     </div>
+  );
+});
+
+const QuoteFulfilled = memo(function QuoteFulfilled({
+  title,
+  mode,
+}: {
+  title: string;
+  mode: TransactMode;
+}) {
+  const quote = useAppSelector(selectTransactSelectedQuote);
+  const isDeposit = mode === TransactMode.Deposit;
+  const isCowcentratedDeposit = isCowcentratedDepositQuote(quote);
+  const hasTransformation = useMemo(() => {
+    if (isCowcentratedDeposit) return false;
+    if (quote.returned.some(r => r.amount.gt(BIG_ZERO))) return true;
+    if (quote.outputs.length > 1) return true;
+    const firstInput = quote.inputs[0];
+    const firstOutput = quote.outputs[0];
+    if (!firstInput || !firstOutput) return false;
+    return (
+      firstInput.token.address !== firstOutput.token.address ||
+      firstInput.token.chainId !== firstOutput.token.chainId
+    );
+  }, [quote, isCowcentratedDeposit]);
+  const showTitle = isCowcentratedDeposit || !isDeposit || !hasTransformation;
+
+  return (
+    <>
+      {showTitle ?
+        <QuoteTitleRefresh title={title} enableRefresh={true} />
+      : null}
+      <QuoteLoaded quote={quote} hasTransformation={hasTransformation} isDeposit={isDeposit} />
+    </>
   );
 });
 
@@ -211,45 +256,41 @@ const QuoteLoading = memo(function QuoteLoading() {
   return <TokenAmountIconLoader />;
 });
 
-const QuoteLoaded = memo(function QuoteLoaded() {
-  // const { t } = useTranslation();
+const QuoteLoaded = memo(function QuoteLoaded({
+  quote,
+  hasTransformation,
+  isDeposit,
+}: {
+  quote: TransactQuoteType;
+  hasTransformation: boolean;
+  isDeposit: boolean;
+}) {
   const classes = useStyles();
-  const quote = useAppSelector(selectTransactSelectedQuote);
   const isZap = isZapQuote(quote);
   const needsSlippage = quoteNeedsSlippage(quote);
+  const returned = useMemo(
+    () => quote.returned.filter(r => r.amount.gt(BIG_ZERO)),
+    [quote.returned]
+  );
+  const cowcentratedDepositQuote = isCowcentratedDepositQuote(quote) ? quote : null;
+
+  let topCard: ReactNode = null;
+  if (cowcentratedDepositQuote) {
+    topCard = <CowcentratedLoadedQuote quote={cowcentratedDepositQuote} />;
+  } else if (!hasTransformation) {
+    topCard = <TokenAmountList items={quote.outputs} />;
+  } else if (!isDeposit) {
+    topCard = <TokenAmountList items={quote.inputs} />;
+  }
 
   return (
     <>
-      <div className={classes.tokenAmounts}>
-        {isCowcentratedDepositQuote(quote) ?
-          <CowcentratedLoadedQuote quote={quote} />
-        : <>
-            {quote.outputs.map(({ token, amount }) => (
-              <TokenAmountIcon
-                key={token.address}
-                amount={amount}
-                chainId={token.chainId}
-                tokenAddress={token.address}
-              />
-            ))}
-          </>
-        }
-      </div>
-      {/*      {quote.returned.length ? (
-            <div className={classes.returned}>
-              <div className={classes.returnedTitle}>{t('Transact-Returned')}</div>
-              <div className={classes.tokenAmounts}>
-                {quote.returned.map(({ token, amount }) => (
-                  <TokenAmountIcon
-                    key={token.address}
-                    amount={amount}
-                    chainId={token.chainId}
-                    tokenAddress={token.address}
-                  />
-                ))}
-              </div>
-            </div>
-          ) : null}*/}
+      {topCard ?
+        <div className={classes.tokenAmounts}>{topCard}</div>
+      : null}
+      {!cowcentratedDepositQuote && hasTransformation ?
+        <YouReceiveSection outputs={quote.outputs} returned={returned} />
+      : null}
       {isZap ?
         <ZapRoute quote={quote} css={styles.route} />
       : null}
@@ -260,7 +301,127 @@ const QuoteLoaded = memo(function QuoteLoaded() {
   );
 });
 
-export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
+const TokenAmountList = memo(function TokenAmountList({ items }: { items: QuoteTokenAmount[] }) {
+  return (
+    <>
+      {items.map(({ token, amount }) => (
+        <TokenAmountIcon
+          key={`${token.chainId}-${token.address}`}
+          amount={amount}
+          chainId={token.chainId}
+          tokenAddress={token.address}
+        />
+      ))}
+    </>
+  );
+});
+
+type YouReceiveSectionProps = {
+  outputs: QuoteTokenAmount[];
+  returned: QuoteTokenAmount[];
+};
+const YouReceiveSection = memo(function YouReceiveSection({
+  outputs,
+  returned,
+}: YouReceiveSectionProps) {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const { open, handleToggle, Icon } = useCollapse();
+  const dustRowsId = useId();
+  const hasReturned = returned.length > 0;
+  const outputsUsdStr = useAppSelector(state =>
+    totalValueOfTokenAmounts(outputs, state).toString()
+  );
+  const dustUsdStr = useAppSelector(state => totalValueOfTokenAmounts(returned, state).toString());
+  const dustUsdFormatted = useMemo(() => formatLargeUsd(new BigNumber(dustUsdStr)), [dustUsdStr]);
+  const totalUsdFormatted = useMemo(
+    () => formatLargeUsd(new BigNumber(outputsUsdStr).plus(dustUsdStr)),
+    [outputsUsdStr, dustUsdStr]
+  );
+
+  return (
+    <div className={classes.youReceiveSection}>
+      <div className={classes.youReceiveTitle}>{t('Transact-YouReceive')}</div>
+      <div className={classes.youReceiveCard}>
+        {outputs.map(({ token, amount }) => (
+          <TokenAmountIcon
+            key={`${token.chainId}-${token.address}`}
+            amount={amount}
+            chainId={token.chainId}
+            tokenAddress={token.address}
+            variant="bare"
+          />
+        ))}
+        {hasReturned ?
+          <>
+            <hr className={classes.youReceiveDivider} />
+            <button
+              type="button"
+              className={classes.dustToggle}
+              onClick={handleToggle}
+              aria-expanded={open}
+              aria-controls={dustRowsId}
+            >
+              <span className={classes.dustToggleLabel}>
+                {t('Transact-DustSummary', { dustValue: dustUsdFormatted })}
+              </span>
+              <span className={classes.dustToggleChevron}>
+                <Icon />
+              </span>
+            </button>
+            {open ?
+              <div id={dustRowsId} className={classes.dustRows}>
+                {returned.map(({ token, amount }) => (
+                  <DustTokenRow
+                    key={`${token.chainId}-${token.address}`}
+                    amount={amount}
+                    chainId={token.chainId}
+                    tokenAddress={token.address}
+                  />
+                ))}
+              </div>
+            : null}
+            <hr className={classes.youReceiveDivider} />
+            <div className={classes.totalRow}>
+              <span className={classes.totalText}>{t('Transact-Total')}</span>
+              <span className={classes.totalText}>{totalUsdFormatted}</span>
+            </div>
+          </>
+        : null}
+      </div>
+    </div>
+  );
+});
+
+type TokenRowProps = {
+  amount: BigNumber;
+  chainId: TokenEntity['chainId'];
+  tokenAddress: TokenEntity['address'];
+};
+
+const DustTokenRow = memo(function DustTokenRow({ amount, chainId, tokenAddress }: TokenRowProps) {
+  const classes = useStyles();
+  const token = useAppSelector(state => selectTokenByAddress(state, chainId, tokenAddress));
+  const tokenPrice = useAppSelector(state =>
+    selectTokenPriceByAddress(state, chainId, tokenAddress)
+  );
+  const valueInUsd = amount.multipliedBy(tokenPrice);
+
+  return (
+    <div className={classes.dustRow}>
+      <div className={classes.dustRowAmountGroup}>
+        <TokenAmount amount={amount} decimals={token.decimals} css={styles.dustRowAmount} />
+        <span className={classes.dustRowValue}>{formatLargeUsd(valueInUsd)}</span>
+      </div>
+      <div className={classes.dustRowTokenInfo}>
+        <span className={classes.dustRowTokenName}>{token.symbol}</span>
+        <TokensImageWithChain tokens={[token]} chainId={token.chainId} size={24} />
+      </div>
+    </div>
+  );
+});
+
+const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
   quote,
 }: {
   quote:
