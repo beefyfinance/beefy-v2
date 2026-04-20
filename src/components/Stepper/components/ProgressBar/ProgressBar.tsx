@@ -1,5 +1,5 @@
 import { css } from '@repo/styles/css';
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
 import {
   selectErrorBar,
   selectRecoveryBar,
@@ -20,19 +20,11 @@ export const ProgressBar = memo(function ProgressBar() {
   const showRecoveryBar = useAppSelector(selectRecoveryBar);
   const percent = showErrorBar || showSuccessBar ? 100 : progress;
 
-  // Disable transition on mount so reopening the stepper doesn't animate from old state
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    const id = requestAnimationFrame(() => setMounted(true));
-    return () => cancelAnimationFrame(id);
-  }, []);
-
   return (
     <div className={classes.topBar}>
       <div
         className={css(
           styles.bar,
-          mounted && styles.barTransition,
           showErrorBar && styles.errorBar,
           showSuccessBar && styles.successBar,
           showRecoveryBar && styles.recoveryBar,

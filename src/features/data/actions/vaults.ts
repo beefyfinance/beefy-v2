@@ -11,6 +11,7 @@ import {
   type VaultErc4626BaseOnly,
   type VaultGov,
   type VaultGovBaseOnly,
+  type VaultRisks,
   type VaultStandard,
   type VaultStandardBaseOnly,
   type VaultStatus,
@@ -210,6 +211,7 @@ function getCowcentratedVault(
     ...base,
     ...status,
     ...clmBase,
+    zaps: maybeAddCowcentratedDualZap(base.zaps),
     type: 'cowcentrated',
     subType: 'cowcentrated',
     receiptTokenAddress: config.earnContractAddress,
@@ -222,6 +224,18 @@ function getCowcentratedVault(
     assetType: 'clm',
     hidden: !!clmBase.cowcentratedIds.pools.length,
   };
+}
+
+// Auto-pair every cowcentrated zap with its dual-input sibling, inheriting the
+// primary's swap config so per-vault aggregator restrictions apply to both.
+function maybeAddCowcentratedDualZap(zaps: VaultBase['zaps']): VaultBase['zaps'] {
+  const primary = zaps.find(z => z.strategyId === 'cowcentrated');
+  const hasDual = zaps.some(z => z.strategyId === 'cowcentrated-dual');
+  if (!primary || hasDual) return zaps;
+  return [
+    ...zaps,
+    { strategyId: 'cowcentrated-dual', ...(primary.swap && { swap: primary.swap }) },
+  ];
 }
 
 function getErc4626Vault(
@@ -258,20 +272,11 @@ function isValidErc4626SubType(subType: string | undefined): subType is VaultErc
   return subType === 'erc7540:withdraw';
 }
 
-function risksHasUpdatedAt(risks: VaultConfig['risks']): risks is Required<VaultConfig['risks']> {
-  return isFiniteNumber(risks.updatedAt) && risks.updatedAt > 0;
-}
-
-function risksWithUpdatedAt(
-  risks: VaultConfig['risks'],
-  createdAt: number
-): Required<VaultConfig['risks']> {
-  if (risksHasUpdatedAt(risks)) {
-    return risks;
-  }
+function risksWithUpdatedAt(risks: VaultConfig['risks'], createdAt: number): VaultRisks {
   return {
     ...risks,
-    updatedAt: createdAt,
+    largeHolders: false,
+    updatedAt: isFiniteNumber(risks.updatedAt) && risks.updatedAt > 0 ? risks.updatedAt : createdAt,
   };
 }
 

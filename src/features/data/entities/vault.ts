@@ -31,6 +31,10 @@ export type VaultNames = {
   singleMeta: string;
 };
 
+export type VaultRisks = Required<VaultRisksConfig> & {
+  largeHolders: boolean;
+};
+
 export type VaultBase = {
   /** globally unique id for the vault */
   id: string;
@@ -67,7 +71,7 @@ export type VaultBase = {
   /** used to describe how the strategy works */
   strategyTypeId: string;
   /** risk assessments per category */
-  risks: Required<VaultRisksConfig>;
+  risks: VaultRisks;
   /** where you can buy the deposit token */
   buyTokenUrl?: string | undefined;
   /** where you create the deposit LP token */
@@ -170,7 +174,7 @@ export type VaultCowcentratedBaseOnly = {
   /** the address of the underlying CL pool */
   poolAddress: string;
   /** risk assessments per category */
-  risks: Required<VaultRisksConfig>;
+  risks: VaultRisks;
 };
 
 type VaultCowcentratedOnly = VaultCowcentratedBaseOnly & {
