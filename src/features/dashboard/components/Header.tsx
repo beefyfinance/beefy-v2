@@ -19,7 +19,7 @@ export const Header = memo(function Header({ address, addressLabel, children }: 
       <Container maxWidth="lg">
         <Content>
           <TitleSearch>
-            <Title>
+            <Title data-slot="title">
               <TitlePrefix>
                 {t('Dashboard-Title')}
                 {address && <Slash> /</Slash>}
@@ -28,7 +28,7 @@ export const Header = memo(function Header({ address, addressLabel, children }: 
                 <ShortAddress address={address} addressLabel={addressLabel} />
               : null}
             </Title>
-            <AddressInputContainer>
+            <AddressInputContainer data-slot="search">
               <AddressInput variant="transparent" />
             </AddressInputContainer>
           </TitleSearch>
@@ -59,20 +59,30 @@ const Content = styled('div', {
 
 const TitleSearch = styled('div', {
   base: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
+    display: 'flex',
     alignItems: 'center',
-    gap: '2px',
+    justifyContent: 'space-between',
+    gap: '8px',
     lg: {
       //14px + 4px
       paddingInline: '18px',
+    },
+    // on mobile, when the search input is focused or has a value, hide the title
+    // so the input can take the full row.
+    smDown: {
+      '&:has([data-search-active="true"]) > [data-slot="title"]': {
+        display: 'none',
+      },
+      '&:has([data-search-active="true"]) > [data-slot="search"]': {
+        flexGrow: 1,
+        flexShrink: 1,
+      },
     },
   },
 });
 
 const Title = styled('div', {
   base: {
-    width: '100%',
     minWidth: 0,
     overflow: 'hidden',
     display: 'flex',
@@ -80,6 +90,7 @@ const Title = styled('div', {
     alignItems: 'center',
     textStyle: 'label',
     fontWeight: 500,
+    flexShrink: 1,
   },
 });
 
@@ -100,7 +111,13 @@ const AddressInputContainer = styled('div', {
   base: {
     display: 'flex',
     justifyContent: 'flex-end',
-    width: '100%',
     minWidth: 0,
+    // mobile collapsed: don't shrink (so the icon trigger stays visible)
+    flexShrink: 0,
+    sm: {
+      // tablet+: allow the search area to shrink so the input's growth
+      // is bounded by the available space next to the title
+      flexShrink: 1,
+    },
   },
 });

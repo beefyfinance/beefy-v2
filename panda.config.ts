@@ -786,6 +786,10 @@ const config = buildConfig(
             transform: 'rotate(360deg)',
           },
         },
+        addressInputCaretBlink: {
+          '0%, 50%': { backgroundSize: '2px 12px' },
+          '50.01%, 100%': { backgroundSize: '0 12px' },
+        },
         highlight: {
           to: {
             backgroundPosition: '200% center',
