@@ -12,7 +12,7 @@ import {
   selectTransactSelectedQuote,
   selectTransactWithdrawInputAmountExceedsBalance,
 } from '../../../../../data/selectors/transact.ts';
-import { selectIsWalletConnected } from '../../../../../data/selectors/wallet.ts';
+import { selectIsWalletKnown } from '../../../../../data/selectors/wallet.ts';
 
 export type NotEnoughProps = {
   onChange: (shouldDisable: boolean) => void;
@@ -25,7 +25,7 @@ export const NotEnoughNotice = memo(function NotEnoughNotice({
   mode,
 }: NotEnoughProps) {
   const { t } = useTranslation();
-  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+  const isWalletKnown = useAppSelector(selectIsWalletKnown);
   const inputAmountExceedsBalance = useAppSelector(
     mode === 'deposit' ?
       selectTransactDepositInputAmountExceedsBalance
@@ -44,12 +44,7 @@ export const NotEnoughNotice = memo(function NotEnoughNotice({
     onChange(isBridging ? false : inputAmountExceedsBalance);
   }, [inputAmountExceedsBalance, isBridging, onChange]);
 
-  if (
-    !inputAmountExceedsBalance ||
-    !isWalletConnected ||
-    isInvalidCowcentratedDeposit ||
-    isBridging
-  ) {
+  if (!inputAmountExceedsBalance || !isWalletKnown || isInvalidCowcentratedDeposit || isBridging) {
     return null;
   }
 
