@@ -905,7 +905,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": false,
-      "notTimelocked": true,
+      "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
     },
@@ -941,7 +941,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": false,
-      "notTimelocked": true,
+      "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
     },
@@ -977,7 +977,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": false,
-      "notTimelocked": true,
+      "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
     },
@@ -1013,7 +1013,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": false,
-      "notTimelocked": true,
+      "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
     },
@@ -1049,7 +1049,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": false,
-      "notTimelocked": true,
+      "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
     },
@@ -1085,7 +1085,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": false,
-      "notTimelocked": true,
+      "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
     },
@@ -1122,7 +1122,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": false,
-      "notTimelocked": true,
+      "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
     },
