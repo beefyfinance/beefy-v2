@@ -1,5 +1,123 @@
 [
   {
+    "id": "aerodrome-cow-base-chip-usdc-vault",
+    "name": "CHIP-USDC",
+    "type": "standard",
+    "token": "CHIP-USDC",
+    "tokenAddress": "0x428EF83AC456b46eC0d3868C12e461d95A1869da",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x35601EB2ca69b2B0B4e4578f3b203985888d3607",
+    "earnedToken": "mooCowAerodromeCHIP-USDC",
+    "earnedTokenAddress": "0x35601EB2ca69b2B0B4e4578f3b203985888d3607",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-chip-usdc",
+    "status": "active",
+    "createdAt": 1776783471,
+    "platformId": "aerodrome",
+    "assets": ["CHIP", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-chip-usdc-rp",
+    "name": "CHIP-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeCHIP-USDC",
+    "tokenAddress": "0x428EF83AC456b46eC0d3868C12e461d95A1869da",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x602e6cEaad353c3c48E72213F4eA1E6aA6674328",
+    "earnedToken": "rCowAerodromeCHIP-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-chip-usdc",
+    "status": "active",
+    "createdAt": 1776783470,
+    "platformId": "aerodrome",
+    "assets": ["CHIP", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-chip-usdc",
+    "name": "CHIP-USDC",
+    "type": "cowcentrated",
+    "token": "CHIP-USDC aerodrome",
+    "tokenAddress": "0x592E01EDEb601016a20A3E6cD5bF533eBBadBC8b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x0C1c1C109FE34733fca54b82d7B46B75CFb71F6e",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0x428EF83AC456b46eC0d3868C12e461d95A1869da",
+    "earnedToken": "cowAerodromeCHIP-USDC",
+    "earnedTokenAddress": "0x428EF83AC456b46eC0d3868C12e461d95A1869da",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-chip-usdc",
+    "status": "active",
+    "createdAt": 1776783470,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["CHIP", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-eurc-usdc-vault",
     "name": "EURC-USDC",
     "type": "standard",
