@@ -1,5 +1,123 @@
 [
   {
+    "id": "aerodrome-cow-base-up-cbbtc-v2-vault",
+    "name": "UP-cbBTC",
+    "type": "standard",
+    "token": "UP-cbBTC",
+    "tokenAddress": "0x174623c25a1A30547335c2d9Bd626E4AbB13e58D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xe3E988a0c9220ce4580064c8A9D32Ef060Cc7749",
+    "earnedToken": "mooCowAerodromeUP-cbBTC-v2",
+    "earnedTokenAddress": "0xe3E988a0c9220ce4580064c8A9D32Ef060Cc7749",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-up-cbbtc-v2",
+    "status": "active",
+    "createdAt": 1776718439,
+    "platformId": "aerodrome",
+    "assets": ["UP", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-up-cbbtc-v2-rp",
+    "name": "UP-cbBTC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeUP-cbBTC-v2",
+    "tokenAddress": "0x174623c25a1A30547335c2d9Bd626E4AbB13e58D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x51B8B7B6DfdE9C10297157E14e8082f492f8e25f",
+    "earnedToken": "rCowAerodromeUP-cbBTC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-up-cbbtc-v2",
+    "status": "active",
+    "createdAt": 1776718438,
+    "platformId": "aerodrome",
+    "assets": ["UP", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-up-cbbtc-v2",
+    "name": "UP-cbBTC",
+    "type": "cowcentrated",
+    "token": "UP-cbBTC aerodrome",
+    "tokenAddress": "0x37e1490f7f6F98d263f826E1244C7E7f128632F2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x5b2193fDc451C1f847bE09CA9d13A4Bf60f8c86B",
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    ],
+    "earnContractAddress": "0x174623c25a1A30547335c2d9Bd626E4AbB13e58D",
+    "earnedToken": "cowAerodromeUP-cbBTC-v2",
+    "earnedTokenAddress": "0x174623c25a1A30547335c2d9Bd626E4AbB13e58D",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-up-cbbtc-v2",
+    "status": "active",
+    "createdAt": 1776718438,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["UP", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-eurc-usdc-vault",
     "name": "EURC-USDC",
     "type": "standard",
@@ -4291,8 +4409,10 @@
     "earnedTokenAddress": "0xcee49649b2A84A479Af75364bC61E6C359F67D7c",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-up-cbbtc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770816918,
+    "retireReason": "rewards",
+    "retiredAt": 1776718439,
     "platformId": "aerodrome",
     "assets": ["UP", "cbBTC"],
     "risks": {
@@ -4331,8 +4451,10 @@
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-up-cbbtc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770816918,
+    "retireReason": "rewards",
+    "retiredAt": 1776718439,
     "platformId": "aerodrome",
     "assets": ["UP", "cbBTC"],
     "risks": {
@@ -4373,8 +4495,10 @@
     "earnedTokenAddress": "0x414f708d016b3B3dAC86DcCCB18F2B1698D4e3BA",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-up-cbbtc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770816918,
+    "retireReason": "rewards",
+    "retiredAt": 1776718439,
     "platformId": "beefy",
     "feeTier": "1",
     "assets": ["UP", "cbBTC"],
