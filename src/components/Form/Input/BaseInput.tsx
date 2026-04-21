@@ -148,6 +148,8 @@ const recipe = sva({
           caretColor: 'indicators.success',
           color: 'inherit',
           backgroundColor: 'transparent',
+          textStyle: 'label',
+          fontWeight: 500,
           '&::placeholder': {
             textStyle: 'label',
             opacity: '0.64',
