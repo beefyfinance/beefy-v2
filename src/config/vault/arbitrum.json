@@ -24925,8 +24925,10 @@
     "earnedTokenAddress": "0x5B904f19fb9ccf493b623e5c8cE91603665788b0",
     "oracle": "tokens",
     "oracleId": "GMX",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1666793248,
+    "retireReason": "rewards",
+    "retiredAt": 1776777860,
     "platformId": "gmx",
     "assets": ["GMX"],
     "risks": {
