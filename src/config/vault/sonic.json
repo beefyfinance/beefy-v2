@@ -813,8 +813,10 @@
     "earnedTokenAddress": "0xB5c0570F781BDfde5ADff69866fDa932df855a14",
     "oracle": "tokens",
     "oracleId": "WS",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1746096273,
+    "retireReason": "rewards",
+    "retiredAt": 1776778059,
     "platformId": "silo",
     "assets": ["WS"],
     "risks": {
