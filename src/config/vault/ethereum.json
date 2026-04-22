@@ -6810,8 +6810,10 @@
     "earnedTokenAddress": "0x9E90aD4810C9eaE0ADFc15801838Dc53cC6ed48a",
     "oracle": "lps",
     "oracleId": "aura-alcx-eth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1706114574,
+    "retireReason": "rewards",
+    "retiredAt": 1776690594,
     "platformId": "aura",
     "assets": ["ALCX", "WETH"],
     "risks": {

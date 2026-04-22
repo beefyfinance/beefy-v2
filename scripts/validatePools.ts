@@ -99,17 +99,13 @@ const nonHarvestOnDepositPools = [
   'shadow-cow-sonic-wbtc-usdc.e-vault',
   'shadow-cow-sonic-wbtc-weth-vault',
   'shadow-cow-sonic-ws-bes-vault',
-
-  // migrated aero vaults with 10sec action cd
-  'aerodrome-cow-base-cbxrp-cbbtc-v2-vault',
-  'aerodrome-cow-base-weth-cbxrp-v2-vault',
-  'aerodrome-cow-base-sol-cbbtc-vault',
-  'aerodrome-cow-base-sol-usdc-v2-vault',
-  'aerodrome-cow-base-usdc-ghst-v2-vault',
-  'aerodrome-cow-base-weth-drv-vault',
-  'aerodrome-cow-base-weth-vvv-v2-vault',
-  'aerodrome-cow-base-weth-zro-vault',
 ];
+const isCowAerodromeWith10sec = (pool: VaultConfigWithStrategyData) =>
+  pool.platformId === 'aerodrome' &&
+  pool.type === 'standard' &&
+  pool.strategyTypeId === 'pool' &&
+  pool.createdAt > 1776378070;
+
 const excludedAbPools = ['gmx-arb-atom-usdc', 'gmx-arb-xrp-usdc', 'gmx-arb-doge-usdc'];
 const addressFields: Array<keyof VaultConfig> = [
   'tokenAddress',
@@ -829,6 +825,7 @@ const isHarvestOnDepositCorrect = (
     pool.harvestOnDeposit !== undefined &&
     !nonHarvestOnDepositChains.includes(chain) &&
     !nonHarvestOnDepositPools.includes(pool.id) &&
+    !isCowAerodromeWith10sec(pool) &&
     pool.harvestOnDeposit !== true
   ) {
     console.log(

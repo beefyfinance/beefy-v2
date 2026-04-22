@@ -1,5 +1,163 @@
 [
   {
+    "id": "uniswap-cow-arbitrum-chip-usdc-rp",
+    "name": "CHIP-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArbitrumCHIP-USDC",
+    "tokenAddress": "0x8e4A4Cf748d18dA506a35874751A8BcF9707f29B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x299Ec0E4Dc75cad1015dB1aF16C0d617B44559E6",
+    "earnedToken": "rCowUniswapArbitrumCHIP-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-chip-usdc",
+    "status": "active",
+    "createdAt": 1776785283,
+    "platformId": "uniswap",
+    "assets": ["CHIP", "USDC"],
+    "risks": {
+      "updatedAt": 1776785283,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arbitrum-chip-usdc",
+    "name": "CHIP-USDC",
+    "type": "cowcentrated",
+    "token": "CHIP-USDC uniswap",
+    "tokenAddress": "0x560093B297E9c149e8566f329122C1790b4dA306",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0C1c1C109FE34733fca54b82d7B46B75CFb71F6e",
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+    ],
+    "earnContractAddress": "0x8e4A4Cf748d18dA506a35874751A8BcF9707f29B",
+    "earnedToken": "cowUniswapArbitrumCHIP-USDC",
+    "earnedTokenAddress": "0x8e4A4Cf748d18dA506a35874751A8BcF9707f29B",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-chip-usdc",
+    "status": "active",
+    "createdAt": 1776785283,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["CHIP", "USDC"],
+    "risks": {
+      "updatedAt": 1776785283,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arbitrum-chip-usdt-rp",
+    "name": "CHIP-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArbitrumCHIP-USDT",
+    "tokenAddress": "0x107A385a347f7E509FcF08806C3831913146Ce45",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x3CD5CEAab70C521c1cC4583e38d2FDda3e4633Cb",
+    "earnedToken": "rCowUniswapArbitrumCHIP-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-chip-usdt",
+    "status": "active",
+    "createdAt": 1776784701,
+    "platformId": "uniswap",
+    "assets": ["CHIP", "USDT"],
+    "risks": {
+      "updatedAt": 1776784701,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arbitrum-chip-usdt",
+    "name": "CHIP-USDT",
+    "type": "cowcentrated",
+    "token": "CHIP-USDT uniswap",
+    "tokenAddress": "0xA5Ade02335F6EEd9937EcfE5494B1873c7925feC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0C1c1C109FE34733fca54b82d7B46B75CFb71F6e",
+      "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+    ],
+    "earnContractAddress": "0x107A385a347f7E509FcF08806C3831913146Ce45",
+    "earnedToken": "cowUniswapArbitrumCHIP-USDT",
+    "earnedTokenAddress": "0x107A385a347f7E509FcF08806C3831913146Ce45",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-chip-usdt",
+    "status": "active",
+    "createdAt": 1776784701,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["CHIP", "USDT"],
+    "risks": {
+      "updatedAt": 1776784701,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "euler-arb-euler-usdc",
     "name": "USDC (Euler DAO)",
     "type": "standard",
@@ -803,9 +961,10 @@
     "earnedTokenAddress": "0x1Ec305f7938C99AdB3DEc111230fc4e61a96b864",
     "oracle": "lps",
     "oracleId": "balancerv3-arbitrum-waarbwbtc-ebtc",
-    "status": "paused",
+    "status": "eol",
     "createdAt": 1768586851,
-    "pausedAt": 1776628953,
+    "retireReason": "tvl",
+    "retiredAt": 1776009600,
     "platformId": "aura",
     "assets": ["waArbWBTC", "eBTC"],
     "risks": {
@@ -24924,8 +25083,10 @@
     "earnedTokenAddress": "0x5B904f19fb9ccf493b623e5c8cE91603665788b0",
     "oracle": "tokens",
     "oracleId": "GMX",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1666793248,
+    "retireReason": "rewards",
+    "retiredAt": 1776777860,
     "platformId": "gmx",
     "assets": ["GMX"],
     "risks": {
