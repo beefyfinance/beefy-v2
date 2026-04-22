@@ -118,7 +118,7 @@
     ]
   },
   {
-    "id": "aerodrome-cow-base-up-cbbtc-v2-vault",
+    "id": "aerodrome-cow-base-up-cbbtc-vault-v2",
     "name": "UP-cbBTC",
     "type": "standard",
     "token": "UP-cbBTC",
@@ -156,7 +156,7 @@
     ]
   },
   {
-    "id": "aerodrome-cow-base-up-cbbtc-v2-rp",
+    "id": "aerodrome-cow-base-up-cbbtc-rp-v2",
     "name": "UP-cbBTC Reward Pool",
     "type": "gov",
     "version": 2,
