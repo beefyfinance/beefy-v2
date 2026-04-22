@@ -112,6 +112,9 @@ const nonHarvestOnDepositPools = [
   'aerodrome-cow-base-eurc-usdc-vault',
   'aerodrome-cow-base-usdc-cbbtc-v2-vault',
   'aerodrome-cow-base-weth-cbbtc-v2-vault',
+  'aerodrome-cow-base-up-cbbtc-v2-vault',
+  'aerodrome-cow-base-usdc-weth-v2-vault',
+  'aerodrome-cow-base-chip-usdc-vault',
 ];
 const excludedAbPools = ['gmx-arb-atom-usdc', 'gmx-arb-xrp-usdc', 'gmx-arb-doge-usdc'];
 const addressFields: Array<keyof VaultConfig> = [
