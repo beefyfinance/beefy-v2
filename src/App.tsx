@@ -41,9 +41,7 @@ export const App = memo(function App() {
               <Route path="/dashboard/:address" element={<DashboardPage mode={'url'} />} />
               <Route path="/dashboard" element={<DashboardPage mode={'wallet'} />} />
               <Route path="/treasury" element={<TreasuryPage />} />
-              {import.meta.env.DEV ?
-                <Route path="/_dev/quote-preview" element={<QuotePreviewPage />} />
-              : null}
+              <Route path="/_dev/quote-preview" element={<QuotePreviewPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
