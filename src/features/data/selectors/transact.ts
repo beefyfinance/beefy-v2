@@ -22,6 +22,7 @@ import {
   selectDepositOptionTokensBalanceByChainId,
   selectPastBoostIdsWithUserBalance,
   selectUserBalanceOfToken,
+  selectUserDepositedVaultIds,
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInShareToken,
@@ -52,6 +53,22 @@ export const selectTransactPendingVaultIdOrUndefined = (state: BeefyState) =>
 
 export const selectTransactMode = (state: BeefyState) => state.ui.transact.mode;
 export const selectTransactSlippage = (state: BeefyState) => state.ui.transact.swapSlippage;
+
+export const selectTransactDepositSource = (state: BeefyState) => state.ui.transact.depositSource;
+export const selectTransactDepositFromVaultId = (state: BeefyState) =>
+  state.ui.transact.depositFromVaultId;
+
+export const selectTransactUserDepositedVaultIdsExcludingCurrent = createSelector(
+  (state: BeefyState) => selectUserDepositedVaultIds(state),
+  (state: BeefyState) => state.ui.transact.vaultId,
+  (depositedIds, currentVaultId) =>
+    currentVaultId ? depositedIds.filter(id => id !== currentVaultId) : depositedIds
+);
+
+export const selectTransactUserHasOtherDepositedVaults = createSelector(
+  selectTransactUserDepositedVaultIdsExcludingCurrent,
+  ids => ids.length > 0
+);
 
 export const selectTransactOptionsStatus = (state: BeefyState) => state.ui.transact.options.status;
 export const selectTransactOptionsError = (state: BeefyState) => state.ui.transact.options.error;

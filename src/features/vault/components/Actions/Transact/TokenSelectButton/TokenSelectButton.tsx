@@ -1,5 +1,6 @@
 import { css, type CssStyles } from '@repo/styles/css';
-import { memo, useMemo } from 'react';
+import { styled } from '@repo/styles/jsx';
+import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
 import {
@@ -7,15 +8,25 @@ import {
   TokensImageWithChain,
 } from '../../../../../../components/TokenImage/TokenImage.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import { getPlatformSrc } from '../../../../../../helpers/platformsSrc.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
+import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
-import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { selectTokenByAddress } from '../../../../../data/selectors/tokens.ts';
 import {
+  DepositSource,
+  TransactMode,
+  TransactStep,
+} from '../../../../../data/reducers/wallet/transact-types.ts';
+import {
+  selectTransactDepositFromVaultId,
+  selectTransactDepositSource,
   selectTransactForceSelection,
   selectTransactNumTokens,
   selectTransactOptionsMode,
   selectTransactSelected,
+  selectTransactUserHasOtherDepositedVaults,
   selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
@@ -45,6 +56,13 @@ export const TokenSelectButton = memo(function TokenSelectButton({
   const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
   const canSwitchToTokenSelect = index === 0 && numTokenOptions > 1;
   const { openSelectStep } = useTransactSelectFlowCta();
+  const depositSource = useAppSelector(selectTransactDepositSource);
+  const hasOtherDeposits = useAppSelector(selectTransactUserHasOtherDepositedVaults);
+  const isDepositFromVault =
+    mode === TransactMode.Deposit &&
+    hasOtherDeposits &&
+    depositSource === DepositSource.Vault &&
+    index === 0;
 
   const tokenSymbol = useMemo(() => {
     return (
@@ -61,6 +79,10 @@ export const TokenSelectButton = memo(function TokenSelectButton({
   const isMultiDeposit = useMemo(() => {
     return mode === TransactMode.Deposit && selection.tokens.length > 1;
   }, [mode, selection.tokens.length]);
+
+  if (isDepositFromVault) {
+    return <VaultSelectButton cssProp={cssProp} />;
+  }
 
   return (
     <button
@@ -94,6 +116,89 @@ export const TokenSelectButton = memo(function TokenSelectButton({
       : null}
     </button>
   );
+});
+
+type VaultSelectButtonProps = {
+  cssProp: CssStyles | undefined;
+};
+const VaultSelectButton = memo(function VaultSelectButton({ cssProp }: VaultSelectButtonProps) {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const dispatch = useAppDispatch();
+  const fromVaultId = useAppSelector(selectTransactDepositFromVaultId);
+  const fromVault = useAppSelector(state =>
+    fromVaultId ? selectVaultById(state, fromVaultId) : undefined
+  );
+  const fromDepositToken = useAppSelector(state =>
+    fromVault ?
+      selectTokenByAddress(state, fromVault.chainId, fromVault.depositTokenAddress)
+    : undefined
+  );
+
+  const platformIconSrc = useMemo(() => {
+    if (!fromVault) return undefined;
+    const providerId = fromDepositToken?.providerId;
+    return (providerId && getPlatformSrc(providerId)) || getPlatformSrc(fromVault.platformId);
+  }, [fromDepositToken?.providerId, fromVault]);
+
+  const handleClick = useCallback(() => {
+    dispatch(transactSwitchStep(TransactStep.DepositFromVaultSelect));
+  }, [dispatch]);
+
+  return (
+    <button
+      type="button"
+      onClick={handleClick}
+      className={css(
+        styles.button,
+        cssProp,
+        styles.buttonMore,
+        !fromVault && styles.buttonForceSelection
+      )}
+    >
+      {fromVault ?
+        <div className={classes.select}>
+          <VaultIconWrapper>
+            <AssetsImage
+              chainId={fromVault.chainId}
+              assetSymbols={fromVault.assetIds}
+              css={styles.iconAssets}
+              size={24}
+            />
+            {platformIconSrc ?
+              <VaultPlatformBadge src={platformIconSrc} alt="" />
+            : null}
+          </VaultIconWrapper>
+          {fromVault.names.single}
+        </div>
+      : <div className={css(styles.select, styles.forceSelection)}>
+          {t('Transact-DepositFromVault-Select')}
+        </div>
+      }
+      <ExpandMore className={classes.iconMore} />
+    </button>
+  );
+});
+
+const VaultIconWrapper = styled('div', {
+  base: {
+    position: 'relative',
+    display: 'inline-block',
+    flexShrink: 0,
+    lineHeight: 0,
+  },
+});
+
+const VaultPlatformBadge = styled('img', {
+  base: {
+    position: 'absolute',
+    right: '-2px',
+    bottom: '-2px',
+    width: '12px',
+    height: '12px',
+    borderRadius: '50%',
+    objectFit: 'cover',
+  },
 });
 
 const BreakLp = memo(function BreakLp({ tokens }: { tokens: TokenEntity[] }) {

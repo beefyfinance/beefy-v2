@@ -25,10 +25,12 @@ import {
 } from '../../../../../data/apis/transact/transact-types.ts';
 import { isCowcentratedLikeVault } from '../../../../../data/entities/vault.ts';
 import {
+  DepositSource,
   TransactMode,
   TransactStatus,
 } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
+  selectTransactDepositSource,
   selectTransactInputAmounts,
   selectTransactInputMaxes,
   selectTransactMode,
@@ -38,6 +40,7 @@ import {
   selectTransactSelectedChainId,
   selectTransactSelectedQuote,
   selectTransactSelectedSelectionId,
+  selectTransactUserHasOtherDepositedVaults,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -66,6 +69,10 @@ export const TransactQuote = memo(function TransactQuote({
   const inputMaxes = useAppSelector(selectTransactInputMaxes);
   const chainId = useAppSelector(selectTransactSelectedChainId);
   const status = useAppSelector(selectTransactQuoteStatus);
+  const depositSource = useAppSelector(selectTransactDepositSource);
+  const hasOtherDeposits = useAppSelector(selectTransactUserHasOtherDepositedVaults);
+  const isFromVault =
+    mode === TransactMode.Deposit && hasOtherDeposits && depositSource === DepositSource.Vault;
   const debouncedFetchQuotes = useMemo(
     () =>
       debounce(
@@ -83,6 +90,11 @@ export const TransactQuote = memo(function TransactQuote({
   );
 
   useEffect(() => {
+    if (isFromVault) {
+      // Placeholder: vault-source deposits do not fetch a quote
+      dispatch(transactClearQuotes());
+      return;
+    }
     debouncedFetchQuotes(dispatch, inputAmounts);
   }, [
     dispatch,
@@ -93,6 +105,7 @@ export const TransactQuote = memo(function TransactQuote({
     inputAmounts,
     inputMaxes,
     debouncedFetchQuotes,
+    isFromVault,
   ]);
 
   if (status === TransactStatus.Idle) {

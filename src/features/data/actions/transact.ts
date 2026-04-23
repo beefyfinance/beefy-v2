@@ -18,6 +18,7 @@ import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import { isCowcentratedVault, type VaultEntity } from '../entities/vault.ts';
 import {
+  type DepositSource,
   TransactMode,
   TransactStatus,
   type TransactStep,
@@ -86,6 +87,12 @@ export const transactSelectQuote = createAction<{
 }>('transact/selectQuote');
 export const transactSetSelectedChainId = createAction<ChainEntity['id']>(
   'transact/setSelectedChainId'
+);
+export const transactSwitchDepositSource = createAction<DepositSource>(
+  'transact/switchDepositSource'
+);
+export const transactSelectDepositFromVault = createAction<VaultEntity['id']>(
+  'transact/selectDepositFromVault'
 );
 export const transactSetSlippage = createAction<{
   slippage: number;
