@@ -173,7 +173,8 @@ export class TransactApi implements ITransactApi {
 
     // if not disabled by a zap strategy, add the vault deposit option as the first item
     if (vaultDepositOption) {
-      options.unshift(vaultDepositOption);
+      const deduped = dropSingleIdentityOption(options, vaultDepositOption.inputs[0].address);
+      return [vaultDepositOption, ...deduped];
     }
 
     return options;
@@ -300,7 +301,8 @@ export class TransactApi implements ITransactApi {
 
     // if not disabled by a zap strategy, add the vault withdraw option as the first item
     if (vaultWithdrawOption) {
-      options.unshift(vaultWithdrawOption);
+      const deduped = dropSingleIdentityOption(options, vaultWithdrawOption.inputs[0].address);
+      return [vaultWithdrawOption, ...deduped];
     }
 
     return options;
@@ -612,7 +614,7 @@ export class TransactApi implements ITransactApi {
     recoveryParams: CrossChainRecoveryParams,
     actualBridgedAmount: BigNumber,
     getState: BeefyStateFn,
-    sourceVaultId: VaultEntity['id']
+    pageVaultId: VaultEntity['id']
   ): Promise<RecoveryQuote> {
     const { destChainId } = recoveryParams;
     const state = getState();
@@ -622,37 +624,45 @@ export class TransactApi implements ITransactApi {
       recoveryParams.bridgeTokenAddress
     ) as TokenErc20;
 
-    // Always instantiate strategy with the original source vault helpers
-    const helpers = await this.getHelpersForVault(sourceVaultId, getState);
+    // `pageVaultId` is the UI-context vault (dst for deposits, src for withdraws),
+    // used only for strategy helpers; dst-chain routing uses `destChainHelpers` below.
+    const helpers = await this.getHelpersForVault(pageVaultId, getState);
     if (!isZapTransactHelpers(helpers)) {
-      throw new Error(`No zap router configured for vault ${sourceVaultId}`);
+      throw new Error(`No zap router configured for vault ${pageVaultId}`);
     }
     const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
 
-    if (recoveryParams.direction === 'deposit') {
-      return xChainStrategy.fetchDestinationDepositQuote({
-        destChainId,
-        vaultId: recoveryParams.vaultId,
-        bridgedAmount: actualBridgedAmount,
-        bridgeToken,
-      });
-    } else {
-      if (!recoveryParams.desiredOutputAddress) {
-        throw new Error('No recovery quote needed for USDC-output withdrawals');
+    switch (recoveryParams.destHandlerKind) {
+      case 'passthrough':
+        throw new Error('Passthrough withdraw recovery does not require a quote');
+      case 'swap': {
+        const destChainHelpers = await this.getHelpersForChain(destChainId, getState);
+        const desiredOutput = selectTokenByAddress(
+          state,
+          destChainId,
+          recoveryParams.desiredOutputAddress
+        );
+        return xChainStrategy.fetchDestinationWithdrawQuote({
+          destChainId,
+          bridgedAmount: actualBridgedAmount,
+          bridgeToken,
+          desiredOutput,
+          destChainHelpers,
+        });
       }
-      const destChainHelpers = await this.getHelpersForChain(destChainId, getState);
-      const desiredOutput = selectTokenByAddress(
-        state,
-        destChainId,
-        recoveryParams.desiredOutputAddress
-      );
-      return xChainStrategy.fetchDestinationWithdrawQuote({
-        destChainId,
-        bridgedAmount: actualBridgedAmount,
-        bridgeToken,
-        desiredOutput,
-        destChainHelpers,
-      });
+      case 'vault':
+        return xChainStrategy.fetchDestinationDepositQuote({
+          destChainId,
+          vaultId: recoveryParams.destVaultId,
+          bridgedAmount: actualBridgedAmount,
+          bridgeToken,
+        });
+      default: {
+        const _exhaustive: never = recoveryParams;
+        throw new Error(
+          `fetchRecoveryQuote: unknown destHandlerKind ${JSON.stringify(_exhaustive)}`
+        );
+      }
     }
   }
 
@@ -662,7 +672,7 @@ export class TransactApi implements ITransactApi {
     actualBridgedAmount: BigNumber,
     getState: BeefyStateFn,
     t: TFunction<Namespace>,
-    sourceVaultId: VaultEntity['id']
+    pageVaultId: VaultEntity['id']
   ): Promise<Step> {
     const { destChainId } = recoveryParams;
     const state = getState();
@@ -672,46 +682,53 @@ export class TransactApi implements ITransactApi {
       recoveryParams.bridgeTokenAddress
     ) as TokenErc20;
 
-    // Always instantiate strategy with the original source vault helpers
-    const helpers = await this.getHelpersForVault(sourceVaultId, getState);
+    // See fetchRecoveryQuote for why `pageVaultId` is load-bearing only for metadata.
+    const helpers = await this.getHelpersForVault(pageVaultId, getState);
     if (!isZapTransactHelpers(helpers)) {
-      throw new Error(`No zap router configured for vault ${sourceVaultId}`);
+      throw new Error(`No zap router configured for vault ${pageVaultId}`);
     }
     const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
 
-    if (recoveryParams.direction === 'deposit') {
-      return xChainStrategy.fetchDestinationDepositStep(
-        {
-          opId,
+    switch (recoveryParams.destHandlerKind) {
+      case 'passthrough':
+        throw new Error('Passthrough withdraw recovery does not require a step');
+      case 'swap': {
+        const destChainHelpers = await this.getHelpersForChain(destChainId, getState);
+        const desiredOutput = selectTokenByAddress(
+          state,
           destChainId,
-          vaultId: recoveryParams.vaultId,
-          bridgedAmount: actualBridgedAmount,
-          bridgeToken,
-        },
-        t
-      );
-    } else {
-      if (!recoveryParams.desiredOutputAddress) {
-        throw new Error('No recovery step needed for USDC-output withdrawals');
+          recoveryParams.desiredOutputAddress
+        );
+        return xChainStrategy.fetchDestinationWithdrawStep(
+          {
+            opId,
+            destChainId,
+            vaultId: pageVaultId,
+            bridgedAmount: actualBridgedAmount,
+            bridgeToken,
+            desiredOutput,
+            destChainHelpers,
+          },
+          t
+        );
       }
-      const destChainHelpers = await this.getHelpersForChain(destChainId, getState);
-      const desiredOutput = selectTokenByAddress(
-        state,
-        destChainId,
-        recoveryParams.desiredOutputAddress
-      );
-      return xChainStrategy.fetchDestinationWithdrawStep(
-        {
-          opId,
-          destChainId,
-          vaultId: sourceVaultId,
-          bridgedAmount: actualBridgedAmount,
-          bridgeToken,
-          desiredOutput,
-          destChainHelpers,
-        },
-        t
-      );
+      case 'vault':
+        return xChainStrategy.fetchDestinationDepositStep(
+          {
+            opId,
+            destChainId,
+            vaultId: recoveryParams.destVaultId,
+            bridgedAmount: actualBridgedAmount,
+            bridgeToken,
+          },
+          t
+        );
+      default: {
+        const _exhaustive: never = recoveryParams;
+        throw new Error(
+          `fetchRecoveryStep: unknown destHandlerKind ${JSON.stringify(_exhaustive)}`
+        );
+      }
     }
   }
 
@@ -782,4 +799,29 @@ export class TransactApi implements ITransactApi {
 
     return false;
   }
+}
+
+/**
+ * SingleStrategy emits a token→same-token identity option so composable consumers
+ * (cross-chain) can discover it via fetchOptions, but the picker should only show
+ * the direct vaulttype path when both exist.
+ */
+function dropSingleIdentityOption<
+  T extends {
+    strategyId: string;
+    inputs: { address: string }[];
+    wantedOutputs: { address: string }[];
+  },
+>(options: T[], tokenAddress: string): T[] {
+  const lower = tokenAddress.toLowerCase();
+  return options.filter(
+    o =>
+      !(
+        o.strategyId === 'single' &&
+        o.inputs.length === 1 &&
+        o.wantedOutputs.length === 1 &&
+        o.inputs[0].address.toLowerCase() === lower &&
+        o.wantedOutputs[0].address.toLowerCase() === lower
+      )
+  );
 }
