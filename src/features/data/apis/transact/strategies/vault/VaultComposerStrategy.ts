@@ -180,7 +180,11 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       throw new Error('Invalid underlying deposit option');
     }
 
-    const underlyingQuote = await this.fetchUnderlyingDepositQuote(inputs, underlyingOption);
+    const input = onlyOneInput(inputs);
+    const underlyingQuote = await this.fetchUnderlyingDepositQuote(
+      [{ token: this.depositToken, amount: input.amount, max: input.max }],
+      underlyingOption
+    );
 
     return {
       ...underlyingQuote,
