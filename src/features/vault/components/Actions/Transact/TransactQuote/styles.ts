@@ -115,42 +115,78 @@ export const styles = {
     opacity: '40%',
     pointerEvents: 'none',
   }),
-  cowcentratedDepositContainer: css.raw({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-  }),
-  cowcentratedSharesDepositContainer: css.raw({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2px',
-  }),
   amountReturned: css.raw({
     display: 'flex',
     gap: '2px',
     alignItems: 'center',
     justifyContent: 'space-between',
   }),
-  mainLp: css.raw({
-    borderRadius: '8px 8px 0px 0px',
-  }),
   fullWidth: css.raw({
     width: '100%',
     flexDirection: 'row-reverse',
     backgroundColor: 'background.content.dark',
   }),
-  borderRadiusToken0: css.raw({
-    borderRadius: '0px 0px 0px 8px',
-  }),
-  borderRadiusToken1: css.raw({
-    borderRadius: '0px 0px 8px 0px',
-  }),
-  label: css.raw({
-    textStyle: 'body',
-    color: 'text.dark',
-  }),
   alignItemsEnd: css.raw({
     alignItems: 'flex-end',
+  }),
+  clmPrimaryRow: css.raw({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '12px',
+  }),
+  clmPrimaryAmounts: css.raw({
+    display: 'flex',
+    flexDirection: 'column',
+  }),
+  clmPrimaryAmount: css.raw({
+    textStyle: 'body.medium',
+    color: 'text.light',
+  }),
+  clmPrimaryValue: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
+  }),
+  clmPrimaryTokens: css.raw({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+  }),
+  clmPrimarySymbol: css.raw({
+    textStyle: 'body.medium',
+    color: 'text.light',
+  }),
+  clmPositionGrid: css.raw({
+    display: 'flex',
+    alignItems: 'stretch',
+  }),
+  clmPositionCell: css.raw({
+    flex: '1',
+    minWidth: '0',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '8px',
+    padding: '4px 0',
+  }),
+  clmPositionCellDivider: css.raw({
+    width: '1px',
+    background: 'background.border',
+    margin: '0 12px',
+  }),
+  clmPositionCellAmounts: css.raw({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    minWidth: '0',
+  }),
+  clmPositionCellAmount: css.raw({
+    textStyle: 'body.medium',
+    color: 'text.light',
+  }),
+  clmPositionCellValue: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
   }),
   link: css.raw({
     color: 'text.lightest',
