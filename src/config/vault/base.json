@@ -1,5 +1,43 @@
 [
   {
+    "id": "aerodrome-msusd-frxusd",
+    "name": "msUSD-frxUSD sLP",
+    "type": "standard",
+    "token": "sAMM-msUSD/frxUSD",
+    "tokenAddress": "0xA678C47022f2E5286C51cC433be1599BBA88DF05",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x65D3107cf955cA222321C6d016667E037b3d6FE2",
+    "earnedToken": "mooAerodromeBasemsUSD-frxUSD",
+    "earnedTokenAddress": "0x65D3107cf955cA222321C6d016667E037b3d6FE2",
+    "oracle": "lps",
+    "oracleId": "aerodrome-msusd-frxusd",
+    "status": "active",
+    "createdAt": 1776936819,
+    "platformId": "aerodrome",
+    "assets": ["msUSD", "frxUSD"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x526728dbc96689597f85ae4cd716d4f7fccbae9d&token1=0xe5020a6d073a794b6e7f05678707de47986fb0b6&type=0&chain0=8453&chain1=8453&factory=0x420DD381b31aEf6683db6B902084cB0FFECe40Da",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-chip-usdc-vault",
     "name": "CHIP-USDC",
     "type": "standard",
