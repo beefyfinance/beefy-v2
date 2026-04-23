@@ -272,6 +272,7 @@
   "Vault-RetireReason-beta": "This {{type}} has been retired. This {{type}} was part of CLM Beta, please withdraw your funds and migrate to the new CLM vaults.",
   "Vault-RetireReason-Balancer2025": "All Beefy Balancer V2 products have been retired, following the <Link href=\"https://x.com/Balancer/status/1987955747062239468\">announcement</Link> of the deprecation of V2. Further Beefy updates relating to the Balancer V2 exploit will be shared in the Beefy Discord Server.",
   "Vault-RetireReason-Stream2025": "All products with ongoing exposure to Stream xUSD have been retired, following the <Link href=\"https://x.com/StreamDefi/status/1985556360507822093\">announcement</Link> of a shortfall in xUSD reserve assets. Further Beefy updates relating to the Stream insolvency will be shared in the Beefy Discord Server.",
+  "Vault-RetireReason-AerodromeMigration26": "This {{type}} has been retired. Aerodrome has upgraded this gauge and migrated rewards. To continue earning, please migrate to a replacement CLM following the suggestion in the banner above.",
   "Vault-PauseReason-upgrade": "This {{type}} is paused pending a strategy upgrade. New deposits are temporarily unavailable.",
   "Vault-PauseReason-rewards": "This {{type}} is paused as the underlying platform has temporarily stopped rewards. New deposits are temporarily unavailable.",
   "Vault-PauseReason-viability": "This {{type}} is paused while it's future viability is being investigated. New deposits are temporarily unavailable.",
