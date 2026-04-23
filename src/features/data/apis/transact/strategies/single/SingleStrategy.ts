@@ -152,10 +152,8 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
       return [];
     }
 
-    const supportedAggregatorTokens = await this.aggregatorTokenSupport();
-    const tokens = supportedAggregatorTokens.filter(
-      token => !isTokenEqual(token, this.vaultType.depositToken)
-    );
+    // depositToken included so composable consumers find the identity option; deduped in transact.ts.
+    const tokens = await this.aggregatorTokenSupport();
     const outputs = [this.vaultType.depositToken];
 
     return tokens.map(token => {
@@ -301,10 +299,8 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
       return [];
     }
 
-    const supportedAggregatorTokens = await this.aggregatorTokenSupport();
-    const tokens = supportedAggregatorTokens.filter(
-      token => !isTokenEqual(token, this.vaultType.depositToken)
-    );
+    // depositToken included so composable consumers find the identity option; deduped in transact.ts.
+    const tokens = await this.aggregatorTokenSupport();
     const inputs = [this.vaultType.depositToken];
 
     return tokens.map(token => {
