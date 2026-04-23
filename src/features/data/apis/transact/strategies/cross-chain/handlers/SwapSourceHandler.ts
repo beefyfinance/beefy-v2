@@ -15,8 +15,8 @@ import type { OrderInput, OrderOutput, ZapStep } from '../../../zap/types.ts';
 import type { StrategySwapConfig } from '../../strategy-configs.ts';
 import { collectIntermediateTokens } from './dust.ts';
 import type {
-  HandlerContext,
   ISourceHandler,
+  SourceHandlerContext,
   SourceHandlerQuote,
   SourceHandlerSteps,
 } from './types.ts';
@@ -47,11 +47,11 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
 
   async fetchQuote(
     input: InputTokenAmount,
-    ctx: HandlerContext
+    ctx: SourceHandlerContext
   ): Promise<SourceHandlerQuote<SwapSourceState>> {
-    const { orchestratorHelpers, bridgeToken, pageVaultId, sourceChainId } = ctx;
-    const state = orchestratorHelpers.getState();
-    const { swapAggregator } = orchestratorHelpers;
+    const { helpers, bridgeToken, pageVaultId, sourceChainId } = ctx;
+    const state = helpers.getState();
+    const { swapAggregator } = helpers;
 
     const isDirectBridgeToken =
       input.token.address.toLowerCase() === bridgeToken.address.toLowerCase();
@@ -125,11 +125,11 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
 
   async fetchZapSteps(
     quote: SourceHandlerQuote<SwapSourceState>,
-    ctx: HandlerContext
+    ctx: SourceHandlerContext
   ): Promise<SourceHandlerSteps> {
-    const { orchestratorHelpers, sourceChainId, bridgeToken } = ctx;
-    const state = orchestratorHelpers.getState();
-    const { swapAggregator } = orchestratorHelpers;
+    const { helpers, sourceChainId, bridgeToken } = ctx;
+    const state = helpers.getState();
+    const { swapAggregator } = helpers;
     const slippage = selectTransactSlippage(state);
 
     const { input, swapStep } = quote.state;

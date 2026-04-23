@@ -11,8 +11,8 @@ import {
 import { isComposableStrategy, type IStrategy } from '../../IStrategy.ts';
 import { collectIntermediateTokens } from './dust.ts';
 import type {
-  HandlerContext,
   ISourceHandler,
+  SourceHandlerContext,
   SourceHandlerQuote,
   SourceHandlerSteps,
 } from './types.ts';
@@ -50,7 +50,7 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
 
   async fetchQuote(
     input: InputTokenAmount,
-    ctx: HandlerContext
+    ctx: SourceHandlerContext
   ): Promise<SourceHandlerQuote<VaultSourceState>> {
     const srcHelpers = await ctx.resolveHelpersForVault(this.srcVaultId);
     const strategies = await (await getTransactApi()).getZapStrategiesForVault(srcHelpers);
@@ -106,7 +106,7 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
 
   async fetchZapSteps(
     quote: SourceHandlerQuote<VaultSourceState>,
-    ctx: HandlerContext
+    ctx: SourceHandlerContext
   ): Promise<SourceHandlerSteps> {
     const srcHelpers = await ctx.resolveHelpersForVault(this.srcVaultId);
     const strategies = await (await getTransactApi()).getZapStrategiesForVault(srcHelpers);
