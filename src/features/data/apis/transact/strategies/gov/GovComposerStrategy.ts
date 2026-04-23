@@ -46,7 +46,6 @@ import {
 import {
   type ICowcentratedVaultType,
   type IGovVaultType,
-  isCowcentratedVaultType,
   isGovVaultType,
 } from '../../vaults/IVaultType.ts';
 import type {
@@ -68,6 +67,7 @@ import {
   type ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { GovComposerStrategyConfig } from '../strategy-configs.ts';
+import { resolveCowcentratedUnderlyings } from '../cowcentrated/resolveCowcentratedUnderlyings.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -87,6 +87,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
   protected readonly vault: VaultGov;
   protected readonly vaultType: IGovVaultType;
   protected readonly underlyingStrategy: IComposableStrategy<'cowcentrated'>;
+  protected readonly dualUnderlying: IComposableStrategy<'cowcentrated-dual'> | undefined;
   protected readonly underlyingVaultType: ICowcentratedVaultType;
   protected readonly shareToken: TokenErc20;
   protected readonly depositToken: TokenEntity;
@@ -94,7 +95,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
   constructor(
     protected options: GovComposerStrategyConfig,
     protected helpers: ZapTransactHelpers,
-    underlying: AnyComposableStrategy
+    underlyings: AnyComposableStrategy[]
   ) {
     const { vault, vaultType, getState } = this.helpers;
     if (!isMultiGovVault(vault)) {
@@ -108,17 +109,13 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     this.shareToken = selectErc20TokenByAddress(getState(), vault.chainId, vault.contractAddress);
     this.depositToken = selectTokenByAddress(getState(), vault.chainId, vault.depositTokenAddress);
 
-    if (underlying.id !== 'cowcentrated') {
-      // TODO support other underlying types or just rename this strategy CowcentratedGovComposerStrategy
-      throw new Error('Underlying strategy must be cowcentrated');
-    }
-    this.underlyingStrategy = underlying;
-
-    const { vaultType: underlyingVaultType } = underlying.getHelpers();
-    if (!isCowcentratedVaultType(underlyingVaultType)) {
-      // TODO support other underlying types or just rename this strategy CowcentratedGovComposerStrategy
-      throw new Error('Underlying vault type is not cowcentrated');
-    }
+    const {
+      primary,
+      dual,
+      vaultType: underlyingVaultType,
+    } = resolveCowcentratedUnderlyings(underlyings);
+    this.underlyingStrategy = primary;
+    this.dualUnderlying = dual;
     this.underlyingVaultType = underlyingVaultType;
   }
 
@@ -127,10 +124,21 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
   }
 
   async fetchDepositOptions(): Promise<GovComposerDepositOption[]> {
-    const options = await this.underlyingStrategy.fetchDepositOptions();
-    const vaultOption =
-      (await this.underlyingVaultType.fetchDepositOption()) as CowcentratedVaultDepositOption;
-    return [vaultOption, ...options].map(option => ({
+    const [primaryOptions, dualOptions] = await Promise.all([
+      this.underlyingStrategy.fetchDepositOptions(),
+      this.dualUnderlying?.fetchDepositOptions() ?? Promise.resolve([]),
+    ]);
+    const allOptions = [...primaryOptions, ...dualOptions];
+
+    // Fall back to the vault's 2-token deposit when cowcentrated-dual produced no option.
+    const baseOptions =
+      dualOptions.length > 0 ?
+        allOptions
+      : [
+          (await this.underlyingVaultType.fetchDepositOption()) as CowcentratedVaultDepositOption,
+          ...allOptions,
+        ];
+    return baseOptions.map(option => ({
       ...option,
       strategyId,
       vaultId: this.vault.id,
@@ -138,11 +146,10 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     }));
   }
 
-  // FIXME this will break if this strategy supports multiple underlying strategies
   protected isMatchingDepositOption(
     option: DepositOption
-  ): option is ZapStrategyIdToDepositOption<typeof this.underlyingStrategy.id> {
-    return option.strategyId === this.underlyingStrategy.id;
+  ): option is ZapStrategyIdToDepositOption<'cowcentrated' | 'cowcentrated-dual'> {
+    return option.strategyId === 'cowcentrated' || option.strategyId === 'cowcentrated-dual';
   }
 
   async fetchDepositQuote(
@@ -198,16 +205,8 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     if (!this.isMatchingDepositOption(underlyingOption)) {
       throw new Error('Invalid underlying deposit option');
     }
-    // Quote to be fetched via underlying strategy
-    const underlyingQuote = await this.underlyingStrategy.fetchDepositQuote(
-      inputs,
-      underlyingOption
-    );
 
-    // const modOutputs = underlyingQuote.outputs.map(output => ({
-    //   token: this.shareToken,
-    //   amount: output.amount,
-    // }));
+    const underlyingQuote = await this.fetchUnderlyingDepositQuote(inputs, underlyingOption);
 
     return {
       ...underlyingQuote,
@@ -230,11 +229,35 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     };
   }
 
-  // FIXME this will break if this strategy supports multiple underlying strategies
   protected isMatchingDepositQuote(
-    option: DepositQuote
-  ): option is ZapStrategyIdToDepositQuote<typeof this.underlyingStrategy.id> {
-    return option.strategyId === this.underlyingStrategy.id;
+    quote: DepositQuote
+  ): quote is ZapStrategyIdToDepositQuote<'cowcentrated' | 'cowcentrated-dual'> {
+    return quote.strategyId === 'cowcentrated' || quote.strategyId === 'cowcentrated-dual';
+  }
+
+  protected async fetchUnderlyingDepositQuote(
+    inputs: InputTokenAmount[],
+    option: ZapStrategyIdToDepositOption<'cowcentrated' | 'cowcentrated-dual'>
+  ) {
+    if (option.strategyId === 'cowcentrated') {
+      return this.underlyingStrategy.fetchDepositQuote(inputs, option);
+    }
+    if (!this.dualUnderlying) {
+      throw new Error('Dual underlying strategy unavailable');
+    }
+    return this.dualUnderlying.fetchDepositQuote(inputs, option);
+  }
+
+  protected async fetchUnderlyingDepositBreakdown(
+    quote: ZapStrategyIdToDepositQuote<'cowcentrated' | 'cowcentrated-dual'>
+  ): Promise<UserlessZapDepositBreakdown> {
+    if (quote.strategyId === 'cowcentrated') {
+      return this.underlyingStrategy.fetchDepositUserlessZapBreakdown(quote);
+    }
+    if (!this.dualUnderlying) {
+      throw new Error('Dual underlying strategy unavailable');
+    }
+    return this.dualUnderlying.fetchDepositUserlessZapBreakdown(quote);
   }
 
   async fetchDepositUserlessZapBreakdown(
@@ -308,7 +331,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
         throw new Error('Invalid underlying deposit quote');
       }
       const { zapRequest, minBalances } =
-        await this.underlyingStrategy.fetchDepositUserlessZapBreakdown(underlyingQuote);
+        await this.fetchUnderlyingDepositBreakdown(underlyingQuote);
 
       const stakeZap = await this.fetchZapStakeStep(
         stakeStep,
@@ -526,9 +549,10 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       throw new Error('Invalid underlying withdraw option');
     }
 
-    // Quote to be fetched via underlying strategy
+    // Quote to be fetched via underlying strategy.
+    // Normalize to this.depositToken
     const underlyingQuote = await this.underlyingStrategy.fetchWithdrawQuote(
-      inputs,
+      [{ token: this.depositToken, amount: input.amount, max: input.max }],
       underlyingOption
     );
 

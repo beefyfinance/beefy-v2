@@ -24,6 +24,7 @@ import {
 import {
   type CowcentratedVaultDepositQuote,
   type CowcentratedZapDepositQuote,
+  type CowcentratedDualZapDepositQuote,
   isCowcentratedDepositQuote,
   isCrossChainDepositQuote,
   isZapQuote,
@@ -454,7 +455,10 @@ const DustTokenRow = memo(function DustTokenRow({ amount, chainId, tokenAddress 
 });
 
 type CowcentratedYouReceiveSectionProps = {
-  quote: CowcentratedVaultDepositQuote | CowcentratedZapDepositQuote;
+  quote:
+    | CowcentratedVaultDepositQuote
+    | CowcentratedZapDepositQuote
+    | CowcentratedDualZapDepositQuote;
   returned: QuoteTokenAmount[];
 };
 const CowcentratedYouReceiveSection = memo(function CowcentratedYouReceiveSection({

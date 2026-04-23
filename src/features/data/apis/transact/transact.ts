@@ -525,12 +525,12 @@ export class TransactApi implements ITransactApi {
     const ctor = await loader();
 
     if (isComposerStrategyStatic(ctor)) {
-      const underlyingStrategy = await this.getComposableStrategyForZap(helpers);
+      const underlyingStrategies = await this.getComposableStrategyForZap(helpers);
       const genericCtor = ctor as IComposerStrategyStatic;
       return new genericCtor(
         strategyConfig as StrategyIdToConfig<ComposerStrategyId>,
         helpers,
-        underlyingStrategy
+        underlyingStrategies
       );
     }
 
@@ -549,7 +549,7 @@ export class TransactApi implements ITransactApi {
 
   private async getComposableStrategyForZap(
     helpers: ZapTransactHelpers
-  ): Promise<AnyComposableStrategy> {
+  ): Promise<AnyComposableStrategy[]> {
     const { getState, vault } = helpers;
     const underlyingVault = selectVaultUnderlyingVault(getState(), vault.id);
     const underlyingHelpers = await this.getHelpersForVault(underlyingVault.id, getState);
@@ -568,19 +568,13 @@ export class TransactApi implements ITransactApi {
       );
     }
 
-    const underlyingStrategy = composableUnderlyingStrategies[0];
-    if (composableUnderlyingStrategies.length > 1) {
-      console.warn(
-        `Underlying vault ${underlyingVault.id} of ${vault.id} has multiple composable strategies, using the first ${underlyingStrategy.ctor.id}`
-      );
-    }
-
-    const ctor = underlyingStrategy.ctor as new (
-      options: ZapStrategyConfig,
-      helpers: ZapTransactHelpers
-    ) => AnyComposableStrategy;
-    const options = underlyingStrategy.options;
-    return new ctor(options, underlyingHelpers);
+    return composableUnderlyingStrategies.map(s => {
+      const ctor = s.ctor as new (
+        options: ZapStrategyConfig,
+        helpers: ZapTransactHelpers
+      ) => AnyComposableStrategy;
+      return new ctor(s.options, underlyingHelpers);
+    });
   }
 
   private async getStrategyById(

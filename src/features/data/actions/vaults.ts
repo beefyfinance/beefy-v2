@@ -211,6 +211,7 @@ function getCowcentratedVault(
     ...base,
     ...status,
     ...clmBase,
+    zaps: maybeAddCowcentratedDualZap(base.zaps),
     type: 'cowcentrated',
     subType: 'cowcentrated',
     receiptTokenAddress: config.earnContractAddress,
@@ -223,6 +224,18 @@ function getCowcentratedVault(
     assetType: 'clm',
     hidden: !!clmBase.cowcentratedIds.pools.length,
   };
+}
+
+// Auto-pair every cowcentrated zap with its dual-input sibling, inheriting the
+// primary's swap config so per-vault aggregator restrictions apply to both.
+function maybeAddCowcentratedDualZap(zaps: VaultBase['zaps']): VaultBase['zaps'] {
+  const primary = zaps.find(z => z.strategyId === 'cowcentrated');
+  const hasDual = zaps.some(z => z.strategyId === 'cowcentrated-dual');
+  if (!primary || hasDual) return zaps;
+  return [
+    ...zaps,
+    { strategyId: 'cowcentrated-dual', ...(primary.swap && { swap: primary.swap }) },
+  ];
 }
 
 function getErc4626Vault(

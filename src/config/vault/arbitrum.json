@@ -1,5 +1,167 @@
 [
   {
+    "id": "uniswap-cow-arbitrum-chip-usdc-rp",
+    "name": "CHIP-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArbitrumCHIP-USDC",
+    "tokenAddress": "0x8e4A4Cf748d18dA506a35874751A8BcF9707f29B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x299Ec0E4Dc75cad1015dB1aF16C0d617B44559E6",
+    "earnedToken": "rCowUniswapArbitrumCHIP-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-chip-usdc",
+    "status": "active",
+    "createdAt": 1776785283,
+    "platformId": "uniswap",
+    "assets": ["CHIP", "USDC"],
+    "risks": {
+      "updatedAt": 1776785283,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arbitrum-chip-usdc",
+    "name": "CHIP-USDC",
+    "type": "cowcentrated",
+    "token": "CHIP-USDC uniswap",
+    "tokenAddress": "0x560093B297E9c149e8566f329122C1790b4dA306",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0C1c1C109FE34733fca54b82d7B46B75CFb71F6e",
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+    ],
+    "earnContractAddress": "0x8e4A4Cf748d18dA506a35874751A8BcF9707f29B",
+    "earnedToken": "cowUniswapArbitrumCHIP-USDC",
+    "earnedTokenAddress": "0x8e4A4Cf748d18dA506a35874751A8BcF9707f29B",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-chip-usdc",
+    "status": "active",
+    "createdAt": 1776785283,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["CHIP", "USDC"],
+    "risks": {
+      "updatedAt": 1776785283,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arbitrum-chip-usdt-rp",
+    "name": "CHIP-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArbitrumCHIP-USDT",
+    "tokenAddress": "0x107A385a347f7E509FcF08806C3831913146Ce45",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x3CD5CEAab70C521c1cC4583e38d2FDda3e4633Cb",
+    "earnedToken": "rCowUniswapArbitrumCHIP-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-chip-usdt",
+    "status": "eol",
+    "createdAt": 1776784701,
+    "retireReason": "tvl",
+    "retiredAt": 1776926556,
+    "platformId": "uniswap",
+    "assets": ["CHIP", "USDT"],
+    "risks": {
+      "updatedAt": 1776784701,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arbitrum-chip-usdt",
+    "name": "CHIP-USDT",
+    "type": "cowcentrated",
+    "token": "CHIP-USDT uniswap",
+    "tokenAddress": "0xA5Ade02335F6EEd9937EcfE5494B1873c7925feC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0C1c1C109FE34733fca54b82d7B46B75CFb71F6e",
+      "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+    ],
+    "earnContractAddress": "0x107A385a347f7E509FcF08806C3831913146Ce45",
+    "earnedToken": "cowUniswapArbitrumCHIP-USDT",
+    "earnedTokenAddress": "0x107A385a347f7E509FcF08806C3831913146Ce45",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-chip-usdt",
+    "status": "eol",
+    "createdAt": 1776784701,
+    "retireReason": "tvl",
+    "retiredAt": 1776926556,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["CHIP", "USDT"],
+    "risks": {
+      "updatedAt": 1776784701,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "euler-arb-euler-usdc",
     "name": "USDC (Euler DAO)",
     "type": "standard",
@@ -770,8 +932,9 @@
     "earnedTokenAddress": "0x03F1aA37749D1226B2F147e00f8e219d1179C9c5",
     "oracle": "lps",
     "oracleId": "balancerv3-arbitrum-waarbweth-reth",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1756747503,
+    "pausedAt": 1776628953,
     "platformId": "aura",
     "assets": ["waArbWETH", "rETH"],
     "risks": {
@@ -802,8 +965,10 @@
     "earnedTokenAddress": "0x1Ec305f7938C99AdB3DEc111230fc4e61a96b864",
     "oracle": "lps",
     "oracleId": "balancerv3-arbitrum-waarbwbtc-ebtc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1768586851,
+    "retireReason": "tvl",
+    "retiredAt": 1776009600,
     "platformId": "aura",
     "assets": ["waArbWBTC", "eBTC"],
     "risks": {
@@ -834,8 +999,9 @@
     "earnedTokenAddress": "0xdFcfFE75EF84EdEa4ef62bE6D08fb82acD3d2044",
     "oracle": "lps",
     "oracleId": "balancerv3-arbitrum-waarbusdcn-eure",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1764094750,
+    "pausedAt": 1776628953,
     "platformId": "aura",
     "assets": ["waArbUSDCn", "EURe"],
     "risks": {
@@ -866,8 +1032,9 @@
     "earnedTokenAddress": "0x1C49B46D878fcabA86EcDaC5436d86cdcd85a62B",
     "oracle": "lps",
     "oracleId": "balancerv3-arbitrum-waarbweth-waarbwsteth",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1745365759,
+    "pausedAt": 1776628953,
     "platformId": "aura",
     "assets": ["waArbWETH", "waArbwstETH"],
     "risks": {
@@ -966,8 +1133,9 @@
     "earnedTokenAddress": "0x14B85C31975b4f400dDbb6313957A79e0387f1c6",
     "oracle": "lps",
     "oracleId": "balancerv3-arbitrum-waarbusdcn-waarbusdt-waarbgho",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1745352429,
+    "pausedAt": 1776628953,
     "platformId": "aura",
     "assets": ["waArbUSDCn", "waArbUSDT", "waArbGHO"],
     "risks": {
@@ -3848,7 +4016,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -6001,7 +6169,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -6047,7 +6215,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -6093,7 +6261,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -8294,7 +8462,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -8851,7 +9019,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -8895,7 +9063,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -9655,7 +9823,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -9699,7 +9867,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -10025,42 +10193,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/out?chain=arbitrum",
-    "network": "arbitrum"
-  },
-  {
-    "id": "equilibria-arb-seth-rseth-26sep24",
-    "name": "ETH (rsETHSilo) 26Sep24",
-    "type": "standard",
-    "token": "ETH (rsETHSilo) 26Sep24",
-    "tokenAddress": "0x2aD746fa3faA0AD586021a633d10F4E2785A0349",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pendle",
-    "earnContractAddress": "0x9487044D3208Ff03343429F10307f0a23A27dfeC",
-    "earnedToken": "mooEqb-sETH_rsETHSilo_26SEP24",
-    "earnedTokenAddress": "0x9487044D3208Ff03343429F10307f0a23A27dfeC",
-    "oracle": "lps",
-    "oracleId": "equilibria-arb-seth-rseth-26sep24",
-    "status": "eol",
-    "createdAt": 1720077891,
-    "retireReason": "rewards",
-    "retiredAt": 1726517711,
-    "platformId": "equilibria",
-    "assets": ["ETH"],
-    "migrationIds": ["magpie"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2aD746fa3faA0AD586021a633d10F4E2785A0349/zap/in?chain=arbitrum",
-    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2aD746fa3faA0AD586021a633d10F4E2785A0349/zap/out?chain=arbitrum",
     "network": "arbitrum"
   },
   {
@@ -10449,7 +10581,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -11058,7 +11190,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -11095,7 +11227,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -11132,7 +11264,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -13842,7 +13974,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -14689,7 +14821,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -14730,7 +14862,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -14771,7 +14903,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -24955,8 +25087,10 @@
     "earnedTokenAddress": "0x5B904f19fb9ccf493b623e5c8cE91603665788b0",
     "oracle": "tokens",
     "oracleId": "GMX",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1666793248,
+    "retireReason": "rewards",
+    "retiredAt": 1776777860,
     "platformId": "gmx",
     "assets": ["GMX"],
     "risks": {

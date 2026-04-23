@@ -119,7 +119,7 @@ export const CCTP_CONFIG: CCTPConfig = {
       domain: 0,
       time: { outgoing: 15, incoming: 15 },
       fastFeeBps: 1,
-      beefyBridgeFeeUsd: 1,
+      beefyBridgeFeeUsd: 5,
     },
     hyperevm: {
       tokenMessenger: TOKEN_MESSENGER_V2,
