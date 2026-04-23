@@ -27,13 +27,14 @@ import {
   type CowcentratedDualZapDepositQuote,
   isCowcentratedDepositQuote,
   isCrossChainDepositQuote,
+  isCrossChainWithdrawQuote,
   isZapQuote,
   quoteNeedsSlippage,
   type TokenAmount as QuoteTokenAmount,
   type TransactQuote as TransactQuoteType,
 } from '../../../../../data/apis/transact/transact-types.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
-import { isCowcentratedLikeVault } from '../../../../../data/entities/vault.ts';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../../../../data/entities/vault.ts';
 import {
   TransactMode,
   TransactStatus,
@@ -140,7 +141,10 @@ const QuoteFulfilled = memo(function QuoteFulfilled({
 }) {
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isCrossChain = isCrossChainDepositQuote(quote);
-  const effectiveQuote = isCrossChain ? quote.destQuote : quote;
+  const effectiveQuote =
+    isCrossChain ? quote.destQuote
+    : isCrossChainWithdrawQuote(quote) ? quote.sourceWithdrawQuote
+    : quote;
   const isDeposit = mode === TransactMode.Deposit;
   const isCowcentratedDeposit = isCowcentratedDepositQuote(effectiveQuote);
   const hasTransformation = useMemo(() => {
@@ -167,6 +171,7 @@ const QuoteFulfilled = memo(function QuoteFulfilled({
         effectiveQuote={effectiveQuote}
         hasTransformation={hasTransformation}
         isDeposit={isDeposit}
+        showTitle={showTitle}
       />
     </>
   );
@@ -265,17 +270,22 @@ const QuoteLoading = memo(function QuoteLoading() {
   return <TokenAmountIconLoader />;
 });
 
-const QuoteLoaded = memo(function QuoteLoaded({
-  quote,
-  effectiveQuote,
-  hasTransformation,
-  isDeposit,
-}: {
+export type QuoteLoadedProps = {
   quote: TransactQuoteType;
   effectiveQuote: TransactQuoteType;
   hasTransformation: boolean;
   isDeposit: boolean;
-}) {
+  showTitle?: boolean;
+  showRouteBlocks?: boolean;
+};
+export const QuoteLoaded = memo(function QuoteLoaded({
+  quote,
+  effectiveQuote,
+  hasTransformation,
+  isDeposit,
+  showTitle = true,
+  showRouteBlocks = true,
+}: QuoteLoadedProps) {
   const classes = useStyles();
   const isZap = isZapQuote(quote);
   const needsSlippage = quoteNeedsSlippage(quote);
@@ -285,6 +295,7 @@ const QuoteLoaded = memo(function QuoteLoaded({
   );
   const cowcentratedDepositQuote =
     isCowcentratedDepositQuote(effectiveQuote) ? effectiveQuote : null;
+  const isLpBreakWithdraw = !isDeposit && quote.outputs.length === 2 && quote.inputs.length === 1;
 
   let topCard: ReactNode = null;
   if (cowcentratedDepositQuote) {
@@ -298,18 +309,26 @@ const QuoteLoaded = memo(function QuoteLoaded({
             tokenAddress={used.token.address}
             showSymbol={false}
             css={styles.fullWidth}
-            tokenImageSize={28}
             amountWithValueCss={styles.alignItemsEnd}
           />
         ))}
       </div>
     );
-  } else {
-    if (!hasTransformation) {
-      topCard = <TokenAmountList items={quote.outputs} />;
-    } else if (!isDeposit) {
-      topCard = <TokenAmountList items={quote.inputs} />;
-    }
+  } else if (isLpBreakWithdraw) {
+    topCard = (
+      <div className={classes.youReceiveCard}>
+        <LpSharePrimaryRow
+          amount={quote.inputs[0].amount}
+          chainId={quote.inputs[0].token.chainId}
+          tokenAddress={quote.inputs[0].token.address}
+          vaultId={quote.option.vaultId}
+        />
+      </div>
+    );
+  } else if (!hasTransformation) {
+    topCard = <TokenAmountList items={quote.outputs} />;
+  } else if (!isDeposit) {
+    topCard = <TokenAmountList items={quote.inputs} />;
   }
 
   return (
@@ -320,12 +339,12 @@ const QuoteLoaded = memo(function QuoteLoaded({
       {cowcentratedDepositQuote ?
         <CowcentratedYouReceiveSection quote={cowcentratedDepositQuote} returned={returned} />
       : hasTransformation ?
-        <YouReceiveSection outputs={quote.outputs} returned={returned} />
+        <YouReceiveSection outputs={quote.outputs} returned={returned} showRefresh={!showTitle} />
       : null}
-      {isZap ?
+      {showRouteBlocks && isZap ?
         <ZapRoute quote={quote} css={styles.route} />
       : null}
-      {needsSlippage ?
+      {showRouteBlocks && needsSlippage ?
         <ZapSlippage css={styles.slippage} />
       : null}
     </>
@@ -350,10 +369,12 @@ const TokenAmountList = memo(function TokenAmountList({ items }: { items: QuoteT
 type YouReceiveSectionProps = {
   outputs: QuoteTokenAmount[];
   returned: QuoteTokenAmount[];
+  showRefresh?: boolean;
 };
 const YouReceiveSection = memo(function YouReceiveSection({
   outputs,
   returned,
+  showRefresh = false,
 }: YouReceiveSectionProps) {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -372,7 +393,9 @@ const YouReceiveSection = memo(function YouReceiveSection({
 
   return (
     <div className={classes.youReceiveSection}>
-      <div className={classes.youReceiveTitle}>{t('Transact-YouReceive')}</div>
+      {showRefresh ?
+        <QuoteTitleRefresh title={t('Transact-YouReceive')} enableRefresh={true} />
+      : <div className={classes.youReceiveTitle}>{t('Transact-YouReceive')}</div>}
       <div className={classes.youReceiveCard}>
         {outputs.map(({ token, amount }) => (
           <TokenAmountIcon
@@ -385,9 +408,7 @@ const YouReceiveSection = memo(function YouReceiveSection({
         ))}
         {hasReturned ?
           <>
-            {outputs.length > 0 ?
-              <hr className={classes.youReceiveDivider} />
-            : null}
+            <hr className={classes.youReceiveDivider} />
             <button
               type="button"
               className={classes.dustToggle}
@@ -454,6 +475,37 @@ const DustTokenRow = memo(function DustTokenRow({ amount, chainId, tokenAddress 
   );
 });
 
+type LpSharePrimaryRowProps = TokenRowProps & {
+  vaultId: VaultEntity['id'];
+};
+const LpSharePrimaryRow = memo(function LpSharePrimaryRow({
+  amount,
+  chainId,
+  tokenAddress,
+  vaultId,
+}: LpSharePrimaryRowProps) {
+  const classes = useStyles();
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const token = useAppSelector(state => selectTokenByAddress(state, chainId, tokenAddress));
+  const tokenPrice = useAppSelector(state =>
+    selectTokenPriceByAddress(state, chainId, tokenAddress)
+  );
+  const valueInUsd = amount.multipliedBy(tokenPrice);
+
+  return (
+    <div className={classes.clmPrimaryRow}>
+      <div className={classes.clmPrimaryAmounts}>
+        <TokenAmount amount={amount} decimals={token.decimals} css={styles.clmPrimaryAmount} />
+        <span className={classes.clmPrimaryValue}>{formatLargeUsd(valueInUsd)}</span>
+      </div>
+      <div className={classes.clmPrimaryTokens}>
+        <span className={classes.clmPrimarySymbol}>{token.symbol}</span>
+        <AssetsImageWithChain chainId={chainId} assetSymbols={vault.assetIds} size={24} />
+      </div>
+    </div>
+  );
+});
+
 type CowcentratedYouReceiveSectionProps = {
   quote:
     | CowcentratedVaultDepositQuote
@@ -471,22 +523,15 @@ const CowcentratedYouReceiveSection = memo(function CowcentratedYouReceiveSectio
   const dustRowsId = useId();
   const hasReturned = returned.length > 0;
 
-  const vaultId = useAppSelector(selectTransactVaultId);
+  const vaultId = quote.option.vaultId;
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const shares = quote.outputs[0];
-  const shareToken = useAppSelector(state =>
-    selectTokenByAddress(state, shares.token.chainId, vault.depositTokenAddress)
-  );
 
   const outputs = useMemo(() => [shares], [shares]);
   const outputsUsdStr = useAppSelector(state =>
     totalValueOfTokenAmounts(outputs, state).toString()
   );
   const dustUsdStr = useAppSelector(state => totalValueOfTokenAmounts(returned, state).toString());
-  const shareUsdFormatted = useMemo(
-    () => formatLargeUsd(new BigNumber(outputsUsdStr)),
-    [outputsUsdStr]
-  );
   const dustUsdFormatted = useMemo(() => formatLargeUsd(new BigNumber(dustUsdStr)), [dustUsdStr]);
   const totalUsdFormatted = useMemo(
     () => formatLargeUsd(new BigNumber(outputsUsdStr).plus(dustUsdStr)),
@@ -497,24 +542,12 @@ const CowcentratedYouReceiveSection = memo(function CowcentratedYouReceiveSectio
     <div className={classes.youReceiveSection}>
       <div className={classes.youReceiveTitle}>{t('Transact-YouReceive')}</div>
       <div className={classes.youReceiveCard}>
-        <div className={classes.clmPrimaryRow}>
-          <div className={classes.clmPrimaryAmounts}>
-            <TokenAmount
-              amount={shares.amount}
-              decimals={shareToken.decimals}
-              css={styles.clmPrimaryAmount}
-            />
-            <span className={classes.clmPrimaryValue}>{shareUsdFormatted}</span>
-          </div>
-          <div className={classes.clmPrimaryTokens}>
-            <span className={classes.clmPrimarySymbol}>{shareToken.symbol}</span>
-            <AssetsImageWithChain
-              chainId={shares.token.chainId}
-              assetSymbols={vault.assetIds}
-              size={24}
-            />
-          </div>
-        </div>
+        <LpSharePrimaryRow
+          amount={shares.amount}
+          chainId={shares.token.chainId}
+          tokenAddress={vault.depositTokenAddress}
+          vaultId={vaultId}
+        />
         <hr className={classes.youReceiveDivider} />
         <div className={classes.clmPositionGrid}>
           {quote.position.map((pos, i) => (

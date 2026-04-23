@@ -94,7 +94,7 @@ export const styles = {
     color: 'text.light',
   }),
   dustRowAmount: css.raw({
-    textStyle: 'body.md.medium',
+    textStyle: 'body.medium',
     color: 'text.light',
   }),
   dustRowValue: css.raw({
