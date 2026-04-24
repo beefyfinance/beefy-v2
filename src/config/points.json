@@ -688,8 +688,8 @@
     ],
     "banner": {
       "by": "MegaETH",
-      "title": "Points by MegaETH",
-      "description": "Earn extra incentives awarded by the MegaETH points program. Eligible Beefy vaults accrue MegaETH points linearly over time, depending on the user's TVL.",
+      "title": "Points by MegaETH Terminal",
+      "description": "Earn points on MegaETH Terminal for interacting with ecosystem-aligned apps and assets. Terminal is the surface area for gamified ecosystem discovery on MegaETH where user activities are tracked and rewarded. Eligible Beefy vaults are included within the Terminal points program, subject to hidden usage criteria.",
       "learn": "https://megaeth.com",
       "chainIcon": "megaeth"
     }
