@@ -98,7 +98,7 @@ export const ListItemRightSide = styled('div', {
     flexWrap: 'nowrap',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    gap: '8px',
+    gap: '12px',
     flexShrink: 1,
     minWidth: '80px',
   },

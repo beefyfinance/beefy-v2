@@ -1,5 +1,6 @@
 import { css, type CssStyles, cx } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
+import type BigNumber from 'bignumber.js';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx';
@@ -11,17 +12,11 @@ import ChevronRight from '../../../../../../images/icons/chevron-right.svg?react
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../../../../../helpers/format.ts';
 import { transactSelectDepositFromVault } from '../../../../../data/actions/transact.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
-import {
-  selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInUsdIncludingDisplaced,
-} from '../../../../../data/selectors/balance.ts';
-import { selectTokenByAddress } from '../../../../../data/selectors/tokens.ts';
-import { selectTransactUserDepositedVaultIdsExcludingCurrent } from '../../../../../data/selectors/transact.ts';
+import { selectTransactDepositFromVaultEntries } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
   ListItemBalanceAmount,
-  ListItemBalanceColumn,
   ListItemBalanceUsd,
   ListItemRightSide,
   SelectListContainer,
@@ -40,19 +35,14 @@ export const DepositFromVaultSelectList = memo(function DepositFromVaultSelectLi
 }: DepositFromVaultSelectListProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const vaultIds = useAppSelector(selectTransactUserDepositedVaultIdsExcludingCurrent);
+  const entries = useAppSelector(selectTransactDepositFromVaultEntries);
   const [search, setSearch] = useState('');
 
-  const vaultsFiltered = useAppSelector(state => {
-    if (!search.length) return vaultIds;
+  const entriesFiltered = useMemo(() => {
+    if (search.length === 0) return entries;
     const lowerSearch = search.toLowerCase();
-    return vaultIds.filter(vaultId => {
-      const vault = selectVaultById(state, vaultId);
-      const nameMatches = vault.names.list.toLowerCase().includes(lowerSearch);
-      const assetMatches = vault.assetIds.some(asset => asset.toLowerCase().includes(lowerSearch));
-      return nameMatches || assetMatches;
-    });
-  });
+    return entries.filter(e => e.searchString.includes(lowerSearch));
+  }, [entries, search]);
 
   const handleSelect = useCallback(
     (vaultId: VaultEntity['id']) => {
@@ -68,10 +58,17 @@ export const DepositFromVaultSelectList = memo(function DepositFromVaultSelectLi
       </SelectListSearch>
       <Scrollable css={selectListScrollable}>
         <SelectListItems noGap={true}>
-          {vaultsFiltered.length === 0 ?
+          {entriesFiltered.length === 0 ?
             <SelectListNoResults>{t('Transact-DepositFromVault-NoResults')}</SelectListNoResults>
-          : vaultsFiltered.map(vaultId => (
-              <VaultListItem key={vaultId} vaultId={vaultId} onSelect={handleSelect} />
+          : entriesFiltered.map(entry => (
+              <VaultListItem
+                key={entry.vaultId}
+                vaultId={entry.vaultId}
+                balance={entry.balance}
+                balanceUsd={entry.balanceUsd}
+                decimals={entry.decimals}
+                onSelect={handleSelect}
+              />
             ))
           }
         </SelectListItems>
@@ -82,18 +79,20 @@ export const DepositFromVaultSelectList = memo(function DepositFromVaultSelectLi
 
 type VaultListItemProps = {
   vaultId: VaultEntity['id'];
+  balance: BigNumber;
+  balanceUsd: BigNumber;
+  decimals: number;
   onSelect: (vaultId: VaultEntity['id']) => void;
 };
 
-const VaultListItem = memo(function VaultListItem({ vaultId, onSelect }: VaultListItemProps) {
+const VaultListItem = memo(function VaultListItem({
+  vaultId,
+  balance,
+  balanceUsd,
+  decimals,
+  onSelect,
+}: VaultListItemProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const depositToken = useAppSelector(state =>
-    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
-  );
-  const balance = useAppSelector(state => selectUserVaultBalanceInDepositToken(state, vaultId));
-  const balanceUsd = useAppSelector(state =>
-    selectUserVaultBalanceInUsdIncludingDisplaced(state, vaultId)
-  );
 
   const handleClick = useCallback(() => onSelect(vaultId), [onSelect, vaultId]);
 
@@ -120,14 +119,14 @@ const VaultListItem = memo(function VaultListItem({ vaultId, onSelect }: VaultLi
         </VaultNameAndTags>
       </VaultLeft>
       <ListItemRightSide>
-        <ListItemBalanceColumn>
+        <BalanceColumn>
           <ListItemBalanceAmount>
-            {formatTokenDisplayCondensed(balance, depositToken.decimals, 8)}
+            {formatTokenDisplayCondensed(balance, decimals, 8)}
           </ListItemBalanceAmount>
           {balanceUsdFormatted != null ?
             <ListItemBalanceUsd>{balanceUsdFormatted}</ListItemBalanceUsd>
           : null}
-        </ListItemBalanceColumn>
+        </BalanceColumn>
         <ChevronRight className={cx('list-item-arrow', css(listItemArrow))} />
       </ListItemRightSide>
     </VaultRowButton>
@@ -143,11 +142,12 @@ const VaultRowButton = styled('button', {
     justifyContent: 'space-between',
     gap: '12px',
     width: '100%',
+    height: '57px',
     color: 'text.dark',
     background: 'transparent',
     border: 'none',
     boxShadow: 'none',
-    padding: '8px 0',
+    padding: '0',
     margin: '0',
     cursor: 'pointer',
     userSelect: 'none',
@@ -167,7 +167,7 @@ const VaultLeft = styled('div', {
     display: 'flex',
     flexWrap: 'nowrap',
     alignItems: 'center',
-    gap: '8px',
+    gap: '20px',
     minWidth: 0,
   },
 });
@@ -176,14 +176,15 @@ const VaultNameAndTags = styled('div', {
   base: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '2px',
+    gap: '0',
     minWidth: 0,
   },
 });
 
 const VaultRowName = styled('span', {
   base: {
-    color: 'text.light',
+    color: 'text.dark',
+    fontWeight: 'normal',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -215,8 +216,29 @@ const ChainBadge = styled('div', {
 
 const TagsWrapper = styled('div', {
   base: {
+    '& > div': {
+      marginTop: '0',
+      columnGap: '4px',
+      rowGap: '4px',
+    },
+    '& > div > div': {
+      height: '20px',
+      padding: '0 6px',
+    },
     '& > div > div:first-child': {
       backgroundColor: 'white.100-4a',
     },
+  },
+});
+
+const BalanceColumn = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    gap: '0',
+    flexShrink: 1,
+    minWidth: 0,
+    fontWeight: 'normal',
   },
 });
