@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { orderBy } from 'lodash-es';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { BIG_ZERO, compareBigNumber } from '../../../helpers/big-number.ts';
 import { extractTagFromLpSymbol } from '../../../helpers/tokens.ts';
 import type { PulseHighlightProps } from '../../vault/components/PulseHighlight/PulseHighlight.tsx';
 import type { BoostReward } from '../apis/balance/balance-types.ts';
@@ -22,8 +22,10 @@ import {
   selectDepositOptionTokensBalanceByChainId,
   selectPastBoostIdsWithUserBalance,
   selectUserBalanceOfToken,
+  selectUserDepositedVaultIds,
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
+  selectUserVaultBalanceInUsdIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInShareToken,
 } from './balance.ts';
 import { selectAllVaultBoostIds, selectPreStakeOrActiveBoostIds } from './boosts.ts';
@@ -32,7 +34,7 @@ import {
   selectVaultHasActiveMerklCampaigns,
   selectVaultHasActiveStellaSwapCampaigns,
 } from './rewards.ts';
-import { selectTokenPriceByAddress } from './tokens.ts';
+import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens.ts';
 import {
   selectConnectedUserHasGovRewardsForVault,
   selectConnectedUserHasMerklRewardsForVault,
@@ -52,6 +54,54 @@ export const selectTransactPendingVaultIdOrUndefined = (state: BeefyState) =>
 
 export const selectTransactMode = (state: BeefyState) => state.ui.transact.mode;
 export const selectTransactSlippage = (state: BeefyState) => state.ui.transact.swapSlippage;
+
+export const selectTransactDepositSource = (state: BeefyState) => state.ui.transact.depositSource;
+export const selectTransactDepositFromVaultId = (state: BeefyState) =>
+  state.ui.transact.depositFromVaultId;
+
+export const selectTransactUserDepositedVaultIdsExcludingCurrent = createSelector(
+  (state: BeefyState) => selectUserDepositedVaultIds(state),
+  (state: BeefyState) => state.ui.transact.vaultId,
+  (depositedIds, currentVaultId) =>
+    currentVaultId ? depositedIds.filter(id => id !== currentVaultId) : depositedIds
+);
+
+export const selectTransactUserHasOtherDepositedVaults = createSelector(
+  selectTransactUserDepositedVaultIdsExcludingCurrent,
+  ids => ids.length > 0
+);
+
+export type DepositFromVaultEntry = {
+  vaultId: VaultEntity['id'];
+  /** Balance in the vault's deposit token */
+  balance: BigNumber;
+  /** Balance converted to USD — used for sorting + the USD column */
+  balanceUsd: BigNumber;
+  /** Deposit-token decimals (for formatting the balance) */
+  decimals: number;
+  /** Lower-cased search string combining vault name and asset ids */
+  searchString: string;
+};
+
+/**
+ * User's deposited vaults (excluding the currently-open vault) paired with balances +
+ * a pre-built search string, sorted by USD desc — used as the source for the
+ * "deposit from vault" picker.
+ */
+export const selectTransactDepositFromVaultEntries = (state: BeefyState): DepositFromVaultEntry[] =>
+  selectTransactUserDepositedVaultIdsExcludingCurrent(state)
+    .map(vaultId => {
+      const vault = selectVaultById(state, vaultId);
+      const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+      return {
+        vaultId,
+        balance: selectUserVaultBalanceInDepositToken(state, vaultId),
+        balanceUsd: selectUserVaultBalanceInUsdIncludingDisplaced(state, vaultId) ?? BIG_ZERO,
+        decimals: depositToken.decimals,
+        searchString: `${vault.names.list} ${vault.assetIds.join(' ')}`.toLowerCase(),
+      };
+    })
+    .sort((a, b) => compareBigNumber(b.balanceUsd, a.balanceUsd));
 
 export const selectTransactOptionsStatus = (state: BeefyState) => state.ui.transact.options.status;
 export const selectTransactOptionsError = (state: BeefyState) => state.ui.transact.options.error;

@@ -11,13 +11,23 @@ import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.
 import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { isVaultActive } from '../../../../../data/entities/vault.ts';
-import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
 import {
+  DepositSource,
+  TransactStatus,
+} from '../../../../../data/reducers/wallet/transact-types.ts';
+import {
+  selectUserBalanceOfToken,
+  selectUserVaultBalanceInDepositToken,
+} from '../../../../../data/selectors/balance.ts';
+import { selectTokenByAddress } from '../../../../../data/selectors/tokens.ts';
+import {
+  selectTransactDepositFromVaultId,
+  selectTransactDepositSource,
   selectTransactForceSelection,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactSelected,
+  selectTransactUserHasOtherDepositedVaults,
   selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
@@ -26,6 +36,7 @@ import { RetirePauseReason } from '../../../RetirePauseReason/RetirePauseReason.
 import { Actions } from '../Actions/Actions.tsx';
 import { DepositActions } from '../DepositActions/DepositActions.tsx';
 import { DepositBuyLinks } from '../DepositBuyLinks/DepositBuyLinks.tsx';
+import { DepositSourceToggle } from '../DepositSourceToggle/DepositSourceToggle.tsx';
 import { DepositTokenAmountInput } from '../DepositTokenAmountInput/DepositTokenAmountInput.tsx';
 import { FormFooter } from '../FormFooter/FormFooter.tsx';
 import { TransactQuote } from '../TransactQuote/TransactQuote.tsx';
@@ -64,6 +75,41 @@ const TokenInWallet = memo(function TokenInWallet({ token, index }: TokenInWalle
   return <TokenAmountFromEntity onClick={handleMax} amount={balance} token={token} />;
 });
 
+type VaultBalanceProps = {
+  index: number;
+};
+const VaultBalance = memo(function VaultBalance({ index }: VaultBalanceProps) {
+  const dispatch = useAppDispatch();
+  const fromVaultId = useAppSelector(selectTransactDepositFromVaultId);
+  const vault = useAppSelector(state =>
+    fromVaultId ? selectVaultById(state, fromVaultId) : undefined
+  );
+  const depositToken = useAppSelector(state =>
+    vault ? selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress) : undefined
+  );
+  const balance = useAppSelector(state =>
+    fromVaultId ? selectUserVaultBalanceInDepositToken(state, fromVaultId) : undefined
+  );
+
+  const handleMax = useCallback(() => {
+    if (balance) {
+      dispatch(
+        transactSetInputAmount({
+          index,
+          amount: balance,
+          max: true,
+        })
+      );
+    }
+  }, [balance, dispatch, index]);
+
+  if (!vault || !depositToken || !balance) {
+    return null;
+  }
+
+  return <TokenAmountFromEntity onClick={handleMax} amount={balance} token={depositToken} />;
+});
+
 const DepositFormLoader = memo(function DepositFormLoader() {
   const { t } = useTranslation();
   const status = useAppSelector(selectTransactOptionsStatus);
@@ -93,6 +139,7 @@ const DepositForm = memo(function DepositForm() {
   return (
     <>
       <div className={classes.inputs}>
+        <DepositSourceToggle />
         <DepositFormInputs />
       </div>
       <DepositBuyLinks css={styles.links} />
@@ -111,8 +158,24 @@ const DepositFormInputs = memo(function DepositFormInputs() {
   const multipleInputs = selection.tokens.length > 1;
   const forceSelection = useAppSelector(selectTransactForceSelection);
   const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
+  const hasOtherDeposits = useAppSelector(selectTransactUserHasOtherDepositedVaults);
+  const source = useAppSelector(selectTransactDepositSource);
+  const isFromVault = hasOtherDeposits && source === DepositSource.Vault;
   const availableLabel = t('Transact-Available');
   const { ctaLabel: firstSelectLabel } = useTransactSelectFlowCta();
+  const fromVaultId = useAppSelector(selectTransactDepositFromVaultId);
+
+  if (isFromVault) {
+    return (
+      <DepositFormInput
+        index={0}
+        token={selection.tokens[0]}
+        availableLabel={availableLabel}
+        selectLabel={t('Transact-DepositFromVault-Label')}
+        tokenAvailable={fromVaultId ? <VaultBalance index={0} /> : undefined}
+      />
+    );
+  }
 
   if (forceSelection) {
     return (

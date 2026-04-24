@@ -20,6 +20,8 @@ import {
   transactSetInputAmount,
   transactSetSelectedChainId,
   transactSetSlippage,
+  transactSwitchDepositSource,
+  transactSelectDepositFromVault,
   transactSwitchMode,
   transactSwitchStep,
 } from '../../actions/transact.ts';
@@ -43,7 +45,7 @@ import type {
   TransactSelections,
   TransactState,
 } from './transact-types.ts';
-import { TransactMode, TransactStatus, TransactStep } from './transact-types.ts';
+import { DepositSource, TransactMode, TransactStatus, TransactStep } from './transact-types.ts';
 
 const initialTransactTokens: TransactSelections = {
   allSelectionIds: [],
@@ -96,6 +98,8 @@ const initialTransactState: TransactState = {
   inputMaxes: [false],
   mode: TransactMode.Deposit,
   step: TransactStep.Form,
+  depositSource: DepositSource.Wallet,
+  depositFromVaultId: undefined,
   selections: initialTransactTokens,
   forceSelection: false,
   options: initialTransactOptions,
@@ -121,9 +125,27 @@ const transactSlice = createSlice({
         sliceState.step = TransactStep.Form;
         sliceState.inputAmounts = [BIG_ZERO];
         sliceState.inputMaxes = [false];
+        sliceState.depositSource = DepositSource.Wallet;
+        sliceState.depositFromVaultId = undefined;
       })
       .addCase(transactSwitchStep, (sliceState, action) => {
         sliceState.step = action.payload;
+      })
+      .addCase(transactSwitchDepositSource, (sliceState, action) => {
+        sliceState.depositSource = action.payload;
+        sliceState.step = TransactStep.Form;
+        if (action.payload === DepositSource.Wallet) {
+          sliceState.depositFromVaultId = undefined;
+        }
+        clearInputs(sliceState);
+        resetQuotes(sliceState);
+      })
+      .addCase(transactSelectDepositFromVault, (sliceState, action) => {
+        sliceState.depositFromVaultId = action.payload;
+        sliceState.depositSource = DepositSource.Vault;
+        sliceState.step = TransactStep.Form;
+        clearInputs(sliceState);
+        resetQuotes(sliceState);
       })
       .addCase(transactSetSelectedChainId, (sliceState, action) => {
         const chainId = action.payload;
@@ -364,6 +386,8 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.inputMaxes = [false];
   sliceState.forceSelection = false;
   sliceState.successClosed = false;
+  sliceState.depositSource = DepositSource.Wallet;
+  sliceState.depositFromVaultId = undefined;
 
   sliceState.options.status = TransactStatus.Idle;
   sliceState.options.error = undefined;

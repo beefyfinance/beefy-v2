@@ -9,6 +9,7 @@ import {
   selectTransactVaultIdOrUndefined,
 } from '../../../../data/selectors/transact.ts';
 import { Card } from '../../Card/Card.tsx';
+import { DepositFromVaultSelectStep } from './DepositFromVaultSelectStep/DepositFromVaultSelectStep.tsx';
 import { FormStep } from './FormStep/FormStep.tsx';
 import { LoadingStep } from './LoadingStep/LoadingStep.tsx';
 import { QuoteSelectStep } from './QuoteSelectStep/QuoteSelectStep.tsx';
@@ -21,6 +22,7 @@ const stepToComponent: Record<TransactStep, ComponentType> = {
   [TransactStep.ChainSelect]: ChainSelectStep,
   [TransactStep.TokenSelect]: TokenSelectStep,
   [TransactStep.QuoteSelect]: QuoteSelectStep,
+  [TransactStep.DepositFromVaultSelect]: DepositFromVaultSelectStep,
 };
 
 export type TransactProps = {
