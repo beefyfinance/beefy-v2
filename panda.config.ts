@@ -271,6 +271,7 @@ const config = buildConfig(
           blueJewel: { value: '#495086', description: 'bg hover for some buttons' },
           bridgeQuoteSelectorScrollThumb: { value: '#373b60' },
           chainIconUnselectedBackground: { value: '#2e324c' },
+          pointsSurface: { value: '#19191A', description: 'points banner dark surface' },
           changeNegative: { value: '#e84525' },
           changePositive: { value: '#509658' },
           contentBackgroundLight: { value: '#2d3153', description: 'contentLight' },
@@ -519,6 +520,7 @@ const config = buildConfig(
             dark: { value: '{colors.white.70}' },
             black: { value: '{colors.darkBlue.90}' },
             boosted: { value: '{colors.gold.30}' },
+            points: { value: '{colors.green.40}' },
             warning: { value: '{colors.orange.40}' },
             disabled: { value: '{colors.darkBlue.90-56a}' },
             underline: { value: '{colors.white.70-64a}' },
@@ -535,6 +537,7 @@ const config = buildConfig(
               light: { value: '{colors.contentBackgroundLight}' },
               gray: { value: '{colors.text.dark}' },
               darkest: { value: '{colors.darkBlue.90}' },
+              points: { value: '{colors.pointsSurface}' },
             },
             vaults: {
               standard: { value: '{colors.blackMarket}' },

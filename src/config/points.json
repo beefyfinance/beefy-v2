@@ -671,5 +671,27 @@
         "url": "https://app.re.xyz/points"
       }
     ]
+  },
+  {
+    "id": "megaeth-terminal",
+    "docs": "https://megaeth.com",
+    "points": [
+      {
+        "id": "megaeth-terminal",
+        "name": "MegaETH Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
+    "banner": {
+      "by": "MegaETH",
+      "title": "Points by MegaETH",
+      "description": "Earn extra incentives awarded by the MegaETH points program. Eligible Beefy vaults accrue MegaETH points linearly over time, depending on the user's TVL.",
+      "learn": "https://megaeth.com",
+      "chainIcon": "megaeth"
+    }
   }
 ]

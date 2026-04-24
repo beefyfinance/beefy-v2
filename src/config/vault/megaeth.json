@@ -403,6 +403,7 @@
     "createdAt": 1770665412,
     "platformId": "kumbaya",
     "assets": ["WETH", "USDm"],
+    "pointStructureIds": ["megaeth-terminal"],
     "risks": {
       "complex": true,
       "curated": false,
