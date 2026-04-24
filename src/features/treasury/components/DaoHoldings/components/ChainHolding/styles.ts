@@ -19,17 +19,8 @@ export const styles = {
       borderRadius: '20px 20px 0px 0px',
     },
   }),
-  marketMakerAnnotation: css.raw({
-    textStyle: 'body.sm',
-    position: 'relative',
-    bottom: '0.5em',
-  }),
   icon: css.raw({
     height: '32px',
-  }),
-  mmNameContainer: css.raw({
-    display: 'flex',
-    alignItems: 'center',
   }),
   nameContainer: css.raw({
     display: 'flex',

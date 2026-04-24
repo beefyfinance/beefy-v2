@@ -1,5 +1,5 @@
 import type { ChainEntity } from '../entities/chain.ts';
-import type { MarketMakerHoldingEntity, TreasuryHoldingEntity } from '../entities/treasury.ts';
+import type { TreasuryHoldingEntity } from '../entities/treasury.ts';
 
 export interface AddressHolding {
   address: string;
@@ -9,23 +9,12 @@ export interface AddressHolding {
   };
 }
 
-export interface ExchangeHolding {
-  [tokenId: string]: MarketMakerHoldingEntity;
-}
-
 export type AddressHoldingByChainId = {
   [chainId in ChainEntity['id']]?: {
     [address: string]: AddressHolding;
   };
 };
 
-export type ExchangeHoldingByMarketMakerId = {
-  [marketMakerId: string]: {
-    [exchangeId: string]: ExchangeHolding;
-  };
-};
-
 export interface TreasuryState {
   byChainId: AddressHoldingByChainId;
-  byMarketMakerId: ExchangeHoldingByMarketMakerId;
 }

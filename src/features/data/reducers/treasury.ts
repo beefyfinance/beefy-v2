@@ -4,7 +4,6 @@ import type { TreasuryState } from './treasury-types.ts';
 
 export const initialState: TreasuryState = {
   byChainId: {},
-  byMarketMakerId: {},
 };
 
 export const treasurySlice = createSlice({
@@ -14,7 +13,6 @@ export const treasurySlice = createSlice({
   extraReducers: builder => {
     builder.addCase(fetchTreasury.fulfilled, (sliceState, action) => {
       sliceState.byChainId = action.payload.addressHoldingByChainId;
-      sliceState.byMarketMakerId = action.payload.exchangeHoldingByMarketMakerId;
     });
   },
 });
