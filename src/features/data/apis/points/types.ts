@@ -1,8 +1,6 @@
 export type PointStructureBannerConfig = {
-  /** Name displayed in the "Points by {by}" header */
+  /** Partner name shown after "Points by" in the header */
   by: string;
-  /** Full heading override. Defaults to `Points by ${by}` */
-  title?: string;
   /** Markdown body */
   description: string;
   /** URL for the "Learn more" button. Renders the button only when set. */

@@ -1,4 +1,3 @@
-import { css } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import { memo, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -6,15 +5,6 @@ import { LinkButton } from '../../../../components/LinkButton/LinkButton.tsx';
 import { MarkdownText } from '../../../components/Markdown/MarkdownText.tsx';
 import type { PointStructureEntity } from '../../../data/entities/points.ts';
 import BoostIcon from '../../../../images/icons/boost.svg?react';
-
-const learnMoreButtonCss = css.raw({
-  backgroundColor: 'green.40',
-  color: 'text.black',
-  '&:hover': {
-    backgroundColor: 'green.20',
-    color: 'text.black',
-  },
-});
 
 const networkIconUrls = import.meta.glob<string>('../../../../images/networks/*.svg', {
   eager: true,
@@ -45,20 +35,18 @@ export const PointsBanner = memo(function PointsBanner({ structure }: PointsBann
   const banner = structure.banner;
   if (!banner) return null;
 
-  const heading = banner.title || `Points by ${banner.by}`;
-
   return (
     <Root>
       <Header>
         <Heading>
-          <HeadingText>{heading}</HeadingText>
-          <HeadingIconWrap aria-hidden="true">
-            {renderHeadingIcon(banner.chainIcon, '')}
-          </HeadingIconWrap>
+          <HeadingText>
+            Points by <PartnerName>{banner.by}</PartnerName>
+            <HeadingIconWrap aria-hidden="true">
+              {renderHeadingIcon(banner.chainIcon, '')}
+            </HeadingIconWrap>
+          </HeadingText>
         </Heading>
-        {banner.learn && (
-          <LinkButton href={banner.learn} text={t('Boost-learn-more')} css={learnMoreButtonCss} />
-        )}
+        {banner.learn && <LinkButton href={banner.learn} text={t('Boost-learn-more')} />}
       </Header>
       <Body>
         <MarkdownText text={banner.description} />
@@ -73,9 +61,6 @@ const Root = styled('div', {
     flexDirection: 'column',
     alignItems: 'stretch',
     borderRadius: '12px',
-    borderWidth: '1px',
-    borderStyle: 'solid',
-    borderColor: 'white.70-24a',
     backgroundColor: 'background.content.points',
     overflow: 'hidden',
   },
@@ -83,6 +68,7 @@ const Root = styled('div', {
 
 const Header = styled('div', {
   base: {
+    position: 'relative',
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -91,13 +77,27 @@ const Header = styled('div', {
     gap: '16px',
     padding: '16px',
     backgroundColor: 'background.content.points',
-    backgroundImage:
-      'linear-gradient(to right, var(--colors-white-70-24a) 1px, transparent 1px), linear-gradient(to bottom, var(--colors-white-70-24a) 1px, transparent 1px)',
-    backgroundSize: '51px 100%, 100% 39px',
-    backgroundPosition: '0 0, 0 20px',
-    backgroundRepeat: 'repeat-x, repeat-y',
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      insetInline: 0,
+      top: 0,
+      bottom: '8px',
+      pointerEvents: 'none',
+      backgroundImage:
+        'linear-gradient(to right, var(--colors-white-70-24a) 1px, transparent 1px), linear-gradient(to bottom, var(--colors-white-70-24a) 1px, transparent 1px)',
+      backgroundSize: '51px 100%, 100% 39px',
+      backgroundPosition: '25px 0, 0 20px',
+      backgroundRepeat: 'repeat-x, repeat-y',
+    },
+    '& > *': {
+      position: 'relative',
+    },
     sm: {
       padding: '24px',
+      '&::before': {
+        bottom: 0,
+      },
     },
   },
 });
@@ -122,15 +122,22 @@ const HeadingText = styled('h2', {
   },
 });
 
+const PartnerName = styled('span', {
+  base: {
+    color: 'text.light',
+  },
+});
+
 const HeadingIconWrap = styled('span', {
   base: {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '20px',
-    height: '20px',
+    width: '24px',
+    height: '24px',
+    marginLeft: '4px',
+    verticalAlign: 'middle',
     color: 'text.points',
-    flexShrink: 0,
     '& svg, & img': {
       width: '100%',
       height: '100%',
@@ -145,10 +152,7 @@ const Body = styled('div', {
     flexDirection: 'column',
     gap: '16px',
     padding: '16px',
-    backgroundColor: 'background.content.points',
-    borderTopWidth: '1px',
-    borderTopStyle: 'solid',
-    borderTopColor: 'white.70-24a',
+    backgroundColor: 'background.content',
     color: 'text.middle',
     textStyle: 'body',
     sm: {
