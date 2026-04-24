@@ -10,7 +10,7 @@ import type {
   DestHandlerContext,
   DestHandlerQuote,
   DestHandlerSteps,
-  IDestHandlerReconstruct,
+  IDestHandler,
 } from './types.ts';
 
 /**
@@ -45,7 +45,7 @@ type VaultDestState = {
  * the recovery-context builder stubs that resolver to return the already-
  * resolved dst helpers.
  */
-export class VaultDestHandler implements IDestHandlerReconstruct<VaultDestState> {
+export class VaultDestHandler implements IDestHandler<VaultDestState> {
   readonly kind = 'vault' as const;
 
   constructor(private readonly destVaultId: VaultEntity['id']) {}

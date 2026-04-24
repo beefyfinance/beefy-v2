@@ -14,7 +14,7 @@ import type {
   DestHandlerContext,
   DestHandlerQuote,
   DestHandlerSteps,
-  IDestHandlerReconstruct,
+  IDestHandler,
 } from './types.ts';
 
 /**
@@ -37,7 +37,7 @@ type SwapDestState = {
  * `CrossChainStrategy.stepDestOnly` re-invokes these same methods to build
  * the dst-chain "complete withdraw" step.
  */
-export class SwapDestHandler implements IDestHandlerReconstruct<SwapDestState> {
+export class SwapDestHandler implements IDestHandler<SwapDestState> {
   readonly kind = 'swap' as const;
 
   constructor(
