@@ -11,7 +11,6 @@ import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import {
   isVaultHoldingEntity,
-  type MarketMakerHoldingEntity,
   type TreasuryHoldingEntity,
 } from '../../../../../data/entities/treasury.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
@@ -23,10 +22,6 @@ const useStyles = legacyMakeStyles(styles);
 interface AssetInfoProps {
   chainId: ChainEntity['id'];
   token: TreasuryHoldingEntity;
-}
-
-interface MMAssetInfoProps {
-  holding: MarketMakerHoldingEntity;
 }
 
 export const AssetInfo = memo(function AssetInfo({ chainId, token }: AssetInfoProps) {
@@ -147,36 +142,4 @@ export const AssetName = memo(function AssetName({ name }: AssetNameProps) {
   }
 
   return <div>{name}</div>;
-});
-
-// MM Assets
-export const AssetInfoMM = memo(function AssetInfoMM({ holding }: MMAssetInfoProps) {
-  return (
-    <MMAssetContainer holding={holding}>
-      <>
-        <AssetsImage chainId={'ethereum'} size={24} assetSymbols={[holding.symbol]} />
-        <AssetName name={holding.symbol} />
-      </>
-    </MMAssetContainer>
-  );
-});
-
-type MMAssetContainerProps = PropsWithChildren<{
-  holding: MarketMakerHoldingEntity;
-}>;
-
-const MMAssetContainer = memo(function AssetContainer({
-  holding,
-  children,
-}: MMAssetContainerProps) {
-  const classes = useStyles();
-  return (
-    <div className={classes.asset}>
-      <div className={classes.assetFlex}>{children}</div>
-      <div>
-        <div className={classes.value}>{holding.balance.toFixed(2)}</div>
-        <div className={classes.subValue}>{formatLargeUsd(holding.usdValue)}</div>
-      </div>
-    </div>
-  );
 });

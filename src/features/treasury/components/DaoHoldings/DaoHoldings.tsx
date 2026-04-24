@@ -4,19 +4,17 @@ import { useMediaQuery } from '../../../../hooks/useMediaQuery.ts';
 import { Section } from '../../../../components/Section/Section.tsx';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
-import type { ChainEntity, ChainId } from '../../../data/entities/chain.ts';
+import type { ChainId } from '../../../data/entities/chain.ts';
 import { selectTreasurySorted } from '../../../data/selectors/treasury.ts';
-import { ChainHolding, MMHolding } from './components/ChainHolding/ChainHolding.tsx';
+import { ChainHolding } from './components/ChainHolding/ChainHolding.tsx';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
-type TreasuryColumn =
-  | {
-      id: ChainId;
-      type: 'chain';
-    }
-  | { id: string; type: 'mm' };
+type TreasuryColumn = {
+  id: ChainId;
+  type: 'chain';
+};
 
 function useTreasuryColumns(numColumns: number) {
   const sortedTreasury = useAppSelector(selectTreasurySorted);
@@ -73,11 +71,9 @@ export const DaoHoldings = memo(function DaoHoldings() {
       <div className={classes.masonry}>
         {treasuryColumns.map((columns, i) => (
           <div key={i} className={classes.column}>
-            {columns.map(col =>
-              col.type === 'chain' ?
-                <ChainHolding key={col.id} chainId={col.id as ChainEntity['id']} />
-              : <MMHolding key={col.id} mmId={col.id} />
-            )}
+            {columns.map(col => (
+              <ChainHolding key={col.id} chainId={col.id} />
+            ))}
           </div>
         ))}
       </div>
