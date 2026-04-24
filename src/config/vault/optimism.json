@@ -879,7 +879,7 @@
     "earnedTokenAddress": "0xdAFdaD30D21DEB0235F549C2E2D5e39486D088D0",
     "oracle": "tokens",
     "oracleId": "WETH",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1728297955,
     "platformId": "compound",
     "assets": ["WETH"],
@@ -905,7 +905,9 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x13e3Ee699D1909E989722E753853AE30b17e08c5"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1777011281
   },
   {
     "id": "compound-op-usdt",
@@ -919,7 +921,7 @@
     "earnedTokenAddress": "0x2775323D3A1303424dfbf7aC03547E754A16b129",
     "oracle": "tokens",
     "oracleId": "USDT",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1728297955,
     "platformId": "compound",
     "assets": ["USDT"],
@@ -945,7 +947,9 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0xECef79E109e997bCA29c1c0897ec9d7b03647F5E"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1777011281
   },
   {
     "id": "compound-op-usdc",
@@ -959,7 +963,7 @@
     "earnedTokenAddress": "0x64ceF7ac6e206944fBF50d9E50Fe934cEd9FdF5F",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1728297955,
     "platformId": "compound",
     "assets": ["USDC"],
@@ -985,7 +989,9 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x16a9FA2FDa030272Ce99B29CF780dFA30361E0f3"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1777011281
   },
   {
     "id": "velodrome-v2-hai-pxeth",

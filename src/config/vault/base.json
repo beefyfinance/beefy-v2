@@ -22834,7 +22834,7 @@
     "earnedTokenAddress": "0x7E8b48068c61f4775Ba74F518e9016a4dFE0f004",
     "oracle": "tokens",
     "oracleId": "AERO",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1732037064,
     "platformId": "compound",
     "assets": ["AERO"],
@@ -22860,7 +22860,9 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x4EC5970fC728C5f65ba413992CD5fF6FD70fcfF0"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1777011281
   },
   {
     "id": "uniswap-cow-base-lum-weth-rp",
@@ -36946,7 +36948,7 @@
     "earnedTokenAddress": "0xeF6ED674486E54507d0f711C0d388BD8a1552E6F",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1711975000,
     "platformId": "compound",
     "assets": ["USDC"],
@@ -36972,7 +36974,9 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x7e860098F58bBFC8648a4311b374B1D669a2bc6B"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1777011281
   },
   {
     "id": "aerodrome-aero-l2ve",
@@ -38639,7 +38643,7 @@
     "earnedTokenAddress": "0x62e5B9934dCB87618CFC74B222305D16C997E8c1",
     "oracle": "tokens",
     "oracleId": "WETH",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1698951095,
     "platformId": "compound",
     "assets": ["WETH"],
@@ -38665,7 +38669,9 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1777011281
   },
   {
     "id": "compound-base-usdbc",

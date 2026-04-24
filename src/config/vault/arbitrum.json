@@ -1354,7 +1354,7 @@
     "earnedTokenAddress": "0x79717B36190B229d06CC0d31304c66aB18E1F3ab",
     "oracle": "tokens",
     "oracleId": "WETH",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1732036612,
     "platformId": "compound",
     "assets": ["WETH"],
@@ -1380,7 +1380,9 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1777011281
   },
   {
     "id": "compound-arbitrum-usdt",
@@ -1394,7 +1396,7 @@
     "earnedTokenAddress": "0x9aB0cA1CC39A951176Eb623F39a4FD99a49051e5",
     "oracle": "tokens",
     "oracleId": "USDT",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1732036612,
     "platformId": "compound",
     "assets": ["USDT"],
@@ -1420,7 +1422,9 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x3f3f5dF88dC9F13eac63DF89EC16ef6e7E25DdE7"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1777011281
   },
   {
     "id": "pendle-arb-silo-27mar25",
@@ -20812,7 +20816,7 @@
     "earnedTokenAddress": "0xb9A27ba529634017b12e3cbbbFFb6dB7908a8C8B",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1698772242,
     "platformId": "compound",
     "assets": ["USDC"],
@@ -20838,7 +20842,9 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1777011281
   },
   {
     "id": "sushi-gamma-weth-arb-narrow",
