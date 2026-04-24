@@ -23,7 +23,7 @@ export const LinkButton: FC<LinkButtonProps> = ({
 
   const shouldHideIcon = hideIconOnMobile && mobileView;
   return (
-    <ExternalLink className={css(cssProp, styles.link)} href={href}>
+    <ExternalLink className={css(styles.link, cssProp)} href={href}>
       {type === 'code' && <CodeRoundedIcon fontSize="inherit" className={classes.icon} />}
       {type === 'link' && <InsertIcon fontSize="inherit" className={classes.icon} />}
       <span>{text}</span>

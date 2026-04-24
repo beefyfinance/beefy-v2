@@ -15,6 +15,7 @@ import { fetchAllContractDataByChainAction } from './contract-data.ts';
 import { fetchCurators } from './curators.ts';
 import { fetchPartnersConfig } from './partners.ts';
 import { fetchPlatforms } from './platforms.ts';
+import { initPoints } from './points.ts';
 import { fetchAllPricesAction } from './prices.ts';
 import { initPromos } from './promos.ts';
 import { fetchOffChainCampaignsAction } from './rewards.ts';
@@ -58,6 +59,7 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
 
   // we fetch the configuration for all chain
   const promosPromise = dispatch(initPromos());
+  const pointsPromise = dispatch(initPoints());
   const vaultsPromise = dispatch(fetchAllVaults());
 
   // we can start fetching prices right now and await them later
@@ -109,6 +111,7 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
   // we need the chain list to handle the vault list
   await vaultsPromise;
   await promosPromise;
+  await pointsPromise;
   await addressBookPromise;
 
   // then, we work by chain
