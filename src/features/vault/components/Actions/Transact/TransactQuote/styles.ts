@@ -16,27 +16,104 @@ export const styles = {
   slippage: css.raw({
     marginTop: '24px',
   }),
-  returned: css.raw({
-    marginTop: '16px',
+  youReceiveSection: css.raw({
+    marginTop: '24px',
   }),
-  returnedTitle: css.raw({
+  youReceiveTitle: css.raw({
     textStyle: 'body',
     color: 'text.dark',
     marginBottom: '8px',
   }),
-  disabled: css.raw({
-    opacity: '40%',
-    pointerEvents: 'none',
-  }),
-  cowcentratedDepositContainer: css.raw({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-  }),
-  cowcentratedSharesDepositContainer: css.raw({
+  youReceiveCard: css.raw({
+    background: 'background.content.light',
+    borderRadius: '8px',
+    padding: '8px 12px',
     display: 'flex',
     flexDirection: 'column',
     gap: '2px',
+  }),
+  youReceiveDivider: css.raw({
+    height: '1px',
+    background: 'background.border',
+    border: 'none',
+    margin: '0',
+  }),
+  dustToggle: css.raw({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    padding: '4px 0',
+    margin: '0',
+    background: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    outline: 'none',
+    color: 'text.dark',
+    transition: 'color 0.2s',
+    '&:hover': {
+      color: 'text.light',
+    },
+  }),
+  dustToggleLabel: css.raw({
+    textStyle: 'body.md',
+    color: 'inherit',
+  }),
+  dustToggleChevron: css.raw({
+    display: 'flex',
+    alignItems: 'center',
+    color: 'inherit',
+    '& svg': {
+      width: '20px',
+      height: '20px',
+      fill: 'currentColor',
+    },
+  }),
+  dustRows: css.raw({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+  }),
+  dustRow: css.raw({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: '44px',
+  }),
+  dustRowAmountGroup: css.raw({
+    display: 'flex',
+    flexDirection: 'column',
+  }),
+  dustRowTokenInfo: css.raw({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+  }),
+  dustRowTokenName: css.raw({
+    textStyle: 'body.medium',
+    color: 'text.light',
+  }),
+  dustRowAmount: css.raw({
+    textStyle: 'body.medium',
+    color: 'text.light',
+  }),
+  dustRowValue: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
+  }),
+  totalRow: css.raw({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '4px 0',
+  }),
+  totalText: css.raw({
+    textStyle: 'body.medium',
+    color: 'text.light',
+  }),
+  disabled: css.raw({
+    opacity: '40%',
+    pointerEvents: 'none',
   }),
   amountReturned: css.raw({
     display: 'flex',
@@ -44,26 +121,72 @@ export const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
   }),
-  mainLp: css.raw({
-    borderRadius: '8px 8px 0px 0px',
-  }),
   fullWidth: css.raw({
     width: '100%',
     flexDirection: 'row-reverse',
     backgroundColor: 'background.content.dark',
   }),
-  borderRadiusToken0: css.raw({
-    borderRadius: '0px 0px 0px 8px',
-  }),
-  borderRadiusToken1: css.raw({
-    borderRadius: '0px 0px 8px 0px',
-  }),
-  label: css.raw({
-    textStyle: 'body',
-    color: 'text.dark',
-  }),
   alignItemsEnd: css.raw({
     alignItems: 'flex-end',
+  }),
+  clmPrimaryRow: css.raw({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '12px',
+  }),
+  clmPrimaryAmounts: css.raw({
+    display: 'flex',
+    flexDirection: 'column',
+  }),
+  clmPrimaryAmount: css.raw({
+    textStyle: 'body.medium',
+    color: 'text.light',
+  }),
+  clmPrimaryValue: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
+  }),
+  clmPrimaryTokens: css.raw({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+  }),
+  clmPrimarySymbol: css.raw({
+    textStyle: 'body.medium',
+    color: 'text.light',
+  }),
+  clmPositionGrid: css.raw({
+    display: 'flex',
+    alignItems: 'stretch',
+  }),
+  clmPositionCell: css.raw({
+    flex: '1',
+    minWidth: '0',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '8px',
+    padding: '4px 0',
+  }),
+  clmPositionCellDivider: css.raw({
+    width: '1px',
+    background: 'background.border',
+    margin: '0 12px',
+  }),
+  clmPositionCellAmounts: css.raw({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    minWidth: '0',
+  }),
+  clmPositionCellAmount: css.raw({
+    textStyle: 'body.medium',
+    color: 'text.light',
+  }),
+  clmPositionCellValue: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
   }),
   link: css.raw({
     color: 'text.lightest',

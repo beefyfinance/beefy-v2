@@ -68,11 +68,19 @@ export const AssetsImageWithChain = memo<AssetsImageProps>(function AssetsImageW
   size = defaultSize,
 }) {
   const badgeSize = Math.round(size * chainBadgeSize);
+  const rightOffset = -Math.round(badgeSize * 0.5);
 
   return (
     <div className={css(wrapperStyle, cssProp)} style={{ width: size, height: size }}>
       <AssetsImage chainId={chainId} assetSymbols={[...assetSymbols]} size={size} />
-      {chainId && <ChainIcon chainId={chainId} size={badgeSize} css={chainBadgeStyle} />}
+      {chainId && (
+        <ChainIcon
+          chainId={chainId}
+          size={badgeSize}
+          css={chainBadgeStyle}
+          style={{ right: `${rightOffset}px` }}
+        />
+      )}
     </div>
   );
 });
@@ -85,6 +93,5 @@ const wrapperStyle = css.raw({
 
 const chainBadgeStyle = css.raw({
   position: 'absolute',
-  right: '-2px',
-  bottom: '-2px',
+  bottom: '0',
 });

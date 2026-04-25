@@ -83,7 +83,6 @@ export const TokenSelectButton = memo(function TokenSelectButton({
           <TokensImageWithChain
             chainId={selection.tokens[index].chainId}
             tokens={isMultiDeposit ? [selection.tokens[index]] : selection.tokens}
-            css={styles.iconAssets}
             size={24}
           />
           {tokenSymbol}

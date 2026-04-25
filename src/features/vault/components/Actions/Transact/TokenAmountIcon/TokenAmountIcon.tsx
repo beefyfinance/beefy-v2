@@ -1,22 +1,19 @@
 import { css, type CssStyles } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
 import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { memo, useMemo } from 'react';
 import { IconLoader } from '../../../../../../components/IconLoader/IconLoader.tsx';
 import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
 import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
-import { TokenImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
+import { TokensImageWithChain } from '../../../../../../components/TokenImage/TokenImage.tsx';
 import { formatLargeUsd } from '../../../../../../helpers/format.ts';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
 } from '../../../../../data/selectors/tokens.ts';
-import { styles } from './styles.ts';
-
-const useStyles = legacyMakeStyles(styles);
 
 export type TokenAmountIconProps = {
   amount: BigNumber;
@@ -26,6 +23,7 @@ export type TokenAmountIconProps = {
   showSymbol?: boolean;
   tokenImageSize?: number;
   amountWithValueCss?: CssStyles;
+  variant?: 'card' | 'bare';
 };
 export const TokenAmountIcon = memo(function TokenAmountIcon({
   amount,
@@ -35,6 +33,7 @@ export const TokenAmountIcon = memo(function TokenAmountIcon({
   showSymbol = true,
   tokenImageSize = 24,
   amountWithValueCss,
+  variant = 'card',
 }: TokenAmountIconProps) {
   const token = useAppSelector(state => selectTokenByAddress(state, chainId, tokenAddress));
   const tokenPrice = useAppSelector(state =>
@@ -48,16 +47,12 @@ export const TokenAmountIcon = memo(function TokenAmountIcon({
     <TokenAmountIconComponent
       css={cssProp}
       amountWithValueCss={amountWithValueCss}
-      amount={<TokenAmount amount={amount} decimals={token.decimals} css={styles.token} />}
-      value={`~${formatLargeUsd(valueInUsd)}`}
+      variant={variant}
+      amount={<TokenAmount amount={amount} decimals={token.decimals} css={amountTextStyle} />}
+      value={formatLargeUsd(valueInUsd)}
       tokenSymbol={showSymbol ? token.symbol : null}
       tokenIcon={
-        <TokenImage
-          chainId={token.chainId}
-          address={token.address}
-          css={styles.icon}
-          size={tokenImageSize}
-        />
+        <TokensImageWithChain tokens={[token]} chainId={token.chainId} size={tokenImageSize} />
       }
     />
   );
@@ -87,6 +82,7 @@ type TokenAmountIconComponentProps = {
   tokenIcon?: ReactNode;
   css?: CssStyles;
   amountWithValueCss?: CssStyles;
+  variant?: 'card' | 'bare';
 };
 const TokenAmountIconComponent = memo(function TokenAmountIconComponent({
   amount,
@@ -95,18 +91,71 @@ const TokenAmountIconComponent = memo(function TokenAmountIconComponent({
   tokenIcon,
   css: cssProp,
   amountWithValueCss,
+  variant = 'card',
 }: TokenAmountIconComponentProps) {
-  const classes = useStyles();
   return (
-    <div className={css(styles.holder, cssProp)}>
-      <div className={css(styles.amountWithValue, amountWithValueCss)}>
+    <Holder css={cssProp} variant={variant}>
+      <AmountWithValue css={amountWithValueCss}>
         {amount}
-        <div className={classes.value}>{value}</div>
-      </div>
-      <div className={classes.tokenWithIcon}>
-        {tokenSymbol && <span className={classes.token}>{tokenSymbol}</span>}
+        <Value>{value}</Value>
+      </AmountWithValue>
+      <TokenWithIcon>
+        {tokenSymbol && <Token>{tokenSymbol}</Token>}
         {tokenIcon}
-      </div>
-    </div>
+      </TokenWithIcon>
+    </Holder>
   );
+});
+
+const Holder = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '12px',
+  },
+  variants: {
+    variant: {
+      card: {
+        background: 'background.content.light',
+        borderRadius: '8px',
+        padding: '8px 12px',
+      },
+      bare: {},
+    },
+  },
+});
+
+const AmountWithValue = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+});
+
+const Value = styled('div', {
+  base: {
+    textStyle: 'body.sm',
+    color: 'text.dark',
+  },
+});
+
+const TokenWithIcon = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+  },
+});
+
+const Token = styled('span', {
+  base: {
+    textStyle: 'body.medium',
+    color: 'text.light',
+  },
+});
+
+const amountTextStyle = css.raw({
+  textStyle: 'body.medium',
+  color: 'text.light',
 });
