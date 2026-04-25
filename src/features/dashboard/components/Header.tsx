@@ -19,18 +19,18 @@ export const Header = memo(function Header({ address, addressLabel, children }: 
       <Container maxWidth="lg">
         <Content>
           <TitleSearch>
-            <Title>
-              {t('Dashboard-Title')}
-              {address && (
-                <>
-                  <span>/</span>
-                  <ShortAddress address={address} addressLabel={addressLabel} />
-                </>
-              )}
+            <Title data-slot="title">
+              <TitlePrefix>
+                {t('Dashboard-Title')}
+                {address && <Slash> /</Slash>}
+              </TitlePrefix>
+              {address ?
+                <ShortAddress address={address} addressLabel={addressLabel} />
+              : null}
             </Title>
-            <div>
+            <AddressInputContainer data-slot="search">
               <AddressInput variant="transparent" />
-            </div>
+            </AddressInputContainer>
           </TitleSearch>
           {children}
         </Content>
@@ -60,31 +60,64 @@ const Content = styled('div', {
 const TitleSearch = styled('div', {
   base: {
     display: 'flex',
-    flexDirection: 'column',
-
-    gap: '6px',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '8px',
     lg: {
       //14px + 4px
       paddingInline: '18px',
     },
-
-    md: {
-      justifyContent: 'space-between',
-      flexDirection: 'row',
+    // on mobile, when the search input is focused or has a value, hide the title
+    // so the input can take the full row.
+    smDown: {
+      '&:has([data-search-active="true"]) > [data-slot="title"]': {
+        display: 'none',
+      },
+      '&:has([data-search-active="true"]) > [data-slot="search"]': {
+        flexGrow: 1,
+        flexShrink: 1,
+      },
     },
   },
 });
 
 const Title = styled('div', {
   base: {
+    minWidth: 0,
+    overflow: 'hidden',
     display: 'flex',
     columnGap: '8px',
     alignItems: 'center',
     textStyle: 'label',
     fontWeight: 500,
+    flexShrink: 1,
+  },
+});
+
+const TitlePrefix = styled('span', {
+  base: {
+    flexShrink: 0,
     color: 'text.light',
-    '& span': {
-      color: 'text.dark',
+  },
+});
+
+const Slash = styled('span', {
+  base: {
+    color: 'text.dark',
+  },
+});
+
+const AddressInputContainer = styled('div', {
+  base: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    minWidth: 0,
+    // mobile collapsed: don't shrink (so the icon trigger stays visible)
+    flexShrink: 0,
+    sm: {
+      // tablet+: allow the search area to shrink so the input's growth
+      // is bounded by the available space next to the title
+      flexShrink: 1,
     },
   },
 });

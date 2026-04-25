@@ -125,6 +125,7 @@ export const AddressInput = memo(function AddressInput({ variant = 'default' }: 
       <BaseInput
         ref={anchorEl}
         variant={variant}
+        data-search-active={isActive ? 'true' : undefined}
         className={css(
           variant === 'transparent' ? transparentBaseWidth : defaultBaseWidth,
           isActive && (variant === 'transparent' ? transparentActiveWidth : defaultActiveWidth)
@@ -220,16 +221,47 @@ const EndAdornment = memo(function EndAdornment({
 });
 
 const transparentBaseWidth = css.raw({
-  width: '100%',
+  // mobile: collapsed input shows the "Search" placeholder + icon
+  width: '79px',
+  minWidth: 0,
   transition: 'width 0.2s ease-in-out',
-  md: {
-    width: '207px',
+  sm: {
+    // tablet+: input auto-sizes with text content (placeholder when empty).
+    width: 'auto',
+    transition: 'none',
+    '& .BaseInput-input': {
+      // input hugs its content — placeholder when empty, typed text when not.
+      fieldSizing: 'content',
+      minWidth: 0,
+      maxWidth: '100%',
+      // Fake a thicker caret: hide the native one and paint a 2px green bar
+      // at the input's right edge, sized to the font cap-height (visible
+      // only while focused, with blink). Safe here because field-sizing
+      // keeps the input the exact width of its text, so "right edge of
+      // input" == "end of text".
+      caretColor: 'transparent',
+    },
+    '& .BaseInput-input:focus': {
+      // 2px-wide vertical bar at the right edge, ~12px tall (font cap
+      // height for the 12px label text), vertically centered.
+      backgroundImage:
+        'linear-gradient(to right, {colors.indicators.success}, {colors.indicators.success})',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: '2px 12px',
+      backgroundPosition: 'right center',
+      paddingRight: '2px',
+      animation: 'addressInputCaretBlink 1s steps(1) infinite',
+    },
   },
 });
 
 const transparentActiveWidth = css.raw({
-  md: {
-    width: '423px',
+  // mobile (active): take the full row available
+  width: '100%',
+  minWidth: 0,
+  sm: {
+    // tablet+: handled by field-sizing on the input itself
+    width: 'auto',
   },
 });
 

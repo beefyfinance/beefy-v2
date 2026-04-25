@@ -1,9 +1,10 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@repo/styles/jsx';
 import { formatAddressShort, formatDomain } from '../../../../helpers/format.ts';
 import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 import { useCopyToClipboard } from '../../../../hooks/useCopyToClipboard.ts';
+import CopyIcon from '../../../../images/icons/copy.svg?react';
 
 export type ShortAddressProps = {
   address: string;
@@ -15,7 +16,6 @@ export const ShortAddress = memo(function ShortAddress({
   addressLabel,
 }: ShortAddressProps) {
   const { t } = useTranslation();
-  const [isHover, setIsHover] = useState<boolean>(false);
   const { copy, status } = useCopyToClipboard();
   const mdUp = useBreakpoint({ from: 'sm' });
 
@@ -31,35 +31,39 @@ export const ShortAddress = memo(function ShortAddress({
     return formatAddressShort(address);
   }, [addressLabel, address, mdUp]);
 
-  if (address) {
-    return (
-      <ShortAddressContainer onClick={handleCopyAddressToClipboard}>
-        <Text
-          variant="dark"
-          onMouseEnter={() => setIsHover(true)}
-          onMouseLeave={() => setIsHover(false)}
-        >
-          {shortAddressLabel}
-        </Text>
-
-        {isHover ?
-          <Text variant="light">
-            {status === 'success' ? t('Clipboard-Copied') : t('Clipboard-CopyToClipboard')}
-          </Text>
-        : null}
-      </ShortAddressContainer>
-    );
+  if (!address) {
+    return null;
   }
 
-  return null;
+  const copied = status === 'success';
+
+  return (
+    <ShortAddressContainer onClick={handleCopyAddressToClipboard}>
+      <Text>{copied ? t('Clipboard-Copied') : shortAddressLabel}</Text>
+      {copied ? null : (
+        <IconWrap>
+          <CopyIcon />
+        </IconWrap>
+      )}
+    </ShortAddressContainer>
+  );
 });
 
-const ShortAddressContainer = styled('div', {
+const ShortAddressContainer = styled('button', {
   base: {
+    background: 'transparent',
+    border: 'none',
+    padding: 0,
     display: 'flex',
-    gap: '9px',
+    gap: '6px',
+    alignItems: 'center',
+    minWidth: 0,
+    overflow: 'hidden',
+    flexShrink: 1,
+    color: 'text.dark',
+    cursor: 'pointer',
     _hover: {
-      cursor: 'pointer',
+      color: 'text.light',
     },
   },
 });
@@ -68,15 +72,19 @@ const Text = styled('div', {
   base: {
     textStyle: 'label',
     fontWeight: 500,
+    color: 'inherit',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
-  variants: {
-    variant: {
-      light: {
-        color: 'text.light',
-      },
-      dark: {
-        color: 'text.dark',
-      },
-    },
+});
+
+const IconWrap = styled('div', {
+  base: {
+    display: 'flex',
+    flexShrink: 0,
+    width: '16px',
+    height: '16px',
+    color: 'inherit',
   },
 });

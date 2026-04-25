@@ -18,8 +18,8 @@ export type UseCopyToClipboardReturn = {
 };
 
 export function useCopyToClipboard({
-  clearResultAfter = 5000,
-  timeoutAfter = 5000,
+  clearResultAfter = 3000,
+  timeoutAfter = 3000,
 }: UseCopyToClipboardOptions = {}): UseCopyToClipboardReturn {
   const isMounted = useIsMounted();
   const [status, setStatus] = useState<UseCopyToClipboardReturn['status']>('idle');

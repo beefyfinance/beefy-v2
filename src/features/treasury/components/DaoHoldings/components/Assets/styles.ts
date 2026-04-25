@@ -8,9 +8,6 @@ export const styles = {
     rowGap: '1px',
     '& div:last-child': {
       borderRadius: '0px 0px 8px 8px',
-      lg: {
-        borderRadius: '0px 0px 20px 20px',
-      },
     },
   }),
   filter: css.raw({

@@ -3,7 +3,7 @@ import { css } from '@repo/styles/css';
 export const styles = {
   container: css.raw({
     padding: '16px 24px',
-    borderRadius: '20px',
+    borderRadius: '8px',
     backgroundColor: 'background.content',
     lgDown: {
       padding: '16px',
