@@ -23,6 +23,7 @@
     "pause": "vite-node ./scripts/pausePlatform.ts",
     "setVaultUrls": "vite-node ./scripts/setVaultUrls.ts",
     "setVaultStatus": "vite-node ./scripts/setVaultStatus.ts",
+    "retireChain": "vite-node ./scripts/retireChain.ts",
     "setVaultRisks": "vite-node ./scripts/setVaultRisks.ts",
     "addClmRewardPools": "vite-node ./scripts/addClmRewardPools.ts",
     "addCurveZap": "vite-node ./scripts/addCurveZap.ts",
