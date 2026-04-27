@@ -36,14 +36,12 @@ type VaultDestState = {
  * - Phase 2 Path C: cross-chain withdraw whose dst is a vault
  *   (dst vault != page vault).
  * - The dst-only recovery path when hookData overflows; the orchestrator
- *   re-invokes `fetchQuote` + `fetchZapSteps` via
- *   `CrossChainStrategy.stepDestOnly` to produce the "complete deposit"
- *   step.
+ *   re-invokes `fetchZapSteps` via `CrossChainStrategy.fetchRecoveryStep`
+ *   to produce the "complete deposit" step. `fetchQuote` is skipped — the
+ *   handler quote captured at recovery-quote time is reused.
  *
  * Resolves dst helpers via `ctx.resolveHelpersForVault` so the handler works
- * for the page vault (today) or an arbitrary dst vault (Phase 2+ Path C);
- * the recovery-context builder stubs that resolver to return the already-
- * resolved dst helpers.
+ * for the page vault (today) or an arbitrary dst vault (Phase 2+ Path C).
  */
 export class VaultDestHandler implements IDestHandler<VaultDestState> {
   readonly kind = 'vault' as const;

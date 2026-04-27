@@ -34,8 +34,9 @@ type SwapDestState = {
  * `CircleBeefyZapReceiver` via the CCTP hook. The orchestrator owns oversize
  * detection and will fall back to passthrough + two-step recovery when the
  * hookData exceeds the CCTP message size limit; in that case
- * `CrossChainStrategy.stepDestOnly` re-invokes these same methods to build
- * the dst-chain "complete withdraw" step.
+ * `CrossChainStrategy.fetchRecoveryStep` re-invokes `fetchZapSteps` (the
+ * handler quote captured at recovery-quote time is reused — no second
+ * `fetchQuote`) to build the dst-chain "complete withdraw" step.
  */
 export class SwapDestHandler implements IDestHandler<SwapDestState> {
   readonly kind = 'swap' as const;
