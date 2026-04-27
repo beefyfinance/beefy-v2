@@ -24,6 +24,7 @@ import {
   selectUserBalanceOfToken,
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
+  selectUserVaultBalanceInUsdIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInShareToken,
 } from './balance.ts';
 import { selectAllVaultBoostIds, selectPreStakeOrActiveBoostIds } from './boosts.ts';
@@ -196,6 +197,13 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
 
   return orderBy(
     selectionsWithModifiedSymbols.map(selection => {
+      // Vault-to-vault dst selections refer to a vault the user is depositing
+      // *into* on another chain. No balance to surface; keep the defaults
+      // applied above (balance undefined, balanceValue zero).
+      if (selection.vaultRefId) {
+        return selection;
+      }
+
       if (selection.tokens.length === 1) {
         const token = selection.tokens[0];
         const price = selectTokenPriceByAddress(state, token.chainId, token.address);
@@ -237,45 +245,78 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
     selectionId => state.ui.transact.selections.bySelectionId[selectionId]
   );
 
-  return orderBy(
-    options.map(option => {
-      const tokens = option.tokens;
-      const balances = tokens.map(token =>
-        selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress)
+  const rows = options.map(option => {
+    const tokens = option.tokens;
+    // Vault-to-vault src selections: balance is the user's position in the
+    // referenced vault, including displaced (boosted/bridged) shares. The
+    // normal wallet-balance path under-counts because staked shares move
+    // out of the raw ERC20 balance. We drop the row entirely when the user
+    // has no balance — no point surfacing a vault they can't withdraw from.
+    if (option.vaultRefId) {
+      const shareToken = tokens[0];
+      const shareBalance = selectUserVaultBalanceInShareTokenIncludingDisplaced(
+        state,
+        option.vaultRefId,
+        walletAddress
       );
-      const prices = tokens.map(token =>
-        selectTokenPriceByAddress(state, token.chainId, token.address)
+      if (option.hideIfZeroBalance && (!walletAddress || shareBalance.lte(BIG_ZERO))) {
+        return null;
+      }
+      const balanceValue = selectUserVaultBalanceInUsdIncludingDisplaced(
+        state,
+        option.vaultRefId,
+        walletAddress
       );
-      const balanceValues = balances.map((balance, index) => balance.multipliedBy(prices[index]));
-      const balanceValueTotal = balanceValues.reduce((acc, value) => acc.plus(value), BIG_ZERO);
+      return {
+        ...option,
+        balances: [shareBalance],
+        prices: [BIG_ZERO],
+        balanceValues: [balanceValue],
+        balanceValue,
+        balance: shareBalance as BigNumber | undefined,
+        decimals: shareToken.decimals,
+        price: undefined as BigNumber | undefined,
+        tag: undefined as string | undefined,
+      };
+    }
 
-      const optionWithBalances = {
+    const balances = tokens.map(token =>
+      selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress)
+    );
+    const prices = tokens.map(token =>
+      selectTokenPriceByAddress(state, token.chainId, token.address)
+    );
+    const balanceValues = balances.map((balance, index) => balance.multipliedBy(prices[index]));
+    const balanceValueTotal = balanceValues.reduce((acc, value) => acc.plus(value), BIG_ZERO);
+
+    if (tokens.length === 1) {
+      return {
         ...option,
         balances,
         prices,
         balanceValues,
         balanceValue: balanceValueTotal,
-        balance: undefined,
-        decimals: 0,
-        price: undefined,
-        tag: undefined,
+        ...extractTagFromLpSymbol(tokens, vault),
+        balance: balances[0] as BigNumber | undefined,
+        decimals: tokens[0].decimals,
+        price: prices[0] as BigNumber | undefined,
       };
+    }
 
-      if (tokens.length === 1) {
-        return {
-          ...optionWithBalances,
-          ...extractTagFromLpSymbol(tokens, vault),
-          balance: balances[0],
-          decimals: tokens[0].decimals,
-          price: prices[0],
-        };
-      }
-
-      return optionWithBalances;
-    }),
-    [o => o.order, o => o.balanceValue.toNumber()],
-    ['asc', 'desc']
-  );
+    return {
+      ...option,
+      balances,
+      prices,
+      balanceValues,
+      balanceValue: balanceValueTotal,
+      balance: undefined as BigNumber | undefined,
+      decimals: 0,
+      price: undefined as BigNumber | undefined,
+      tag: undefined as string | undefined,
+    };
+  });
+  const mapped = rows.filter((r): r is NonNullable<typeof r> => r !== null);
+  return orderBy(mapped, [o => o.order, o => o.balanceValue.toNumber()], ['asc', 'desc']);
 };
 
 export const selectTransactOptionById = createSelector(

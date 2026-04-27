@@ -18,6 +18,7 @@ import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { selectIsWalletConnected } from '../../../../../data/selectors/wallet.ts';
 import type { ListItemProps } from './components/ListItem/ListItem.tsx';
 import { ListItem } from './components/ListItem/ListItem.tsx';
+import { VaultListItem } from './components/VaultListItem/VaultListItem.tsx';
 import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
 import {
   BuildLpContent,
@@ -73,6 +74,13 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
     const showDustSection = isWalletConnected && !search.length;
 
     for (const option of searchFiltered) {
+      // Vault-to-vault src selections always live in the main list (never
+      // dust) because their presence is already gated by a non-zero share
+      // balance — filtering them into dust would create a dead section.
+      if (option.vaultRefId) {
+        other.push(option);
+        continue;
+      }
       const isVaultDeposit = option.tokens.length > 1 || option.order === 0;
       const hasBalance = option.balance && option.balance.gt(BIG_ZERO);
       const isDustUsd = !hasBalance || option.balanceValue.lt(DUST_THRESHOLD);
@@ -134,19 +142,31 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
       <Scrollable css={selectListScrollable}>
         <SelectListItems noGap={true}>
           {normalOptions.length ?
-            normalOptions.map(option => (
-              <ListItem
-                key={option.id}
-                selectionId={option.id}
-                tokens={option.tokens}
-                balance={isWalletConnected ? option.balance : undefined}
-                balanceValue={isWalletConnected ? option.balanceValue : undefined}
-                decimals={option.decimals}
-                tag={option.tag}
-                chainId={selectedChain}
-                onSelect={handleTokenSelect}
-              />
-            ))
+            normalOptions.map(option =>
+              option.vaultRefId && option.chainId ?
+                <VaultListItem
+                  key={option.id}
+                  selectionId={option.id}
+                  vaultId={option.vaultRefId}
+                  chainId={option.chainId}
+                  balance={isWalletConnected ? option.balance : undefined}
+                  balanceValue={isWalletConnected ? option.balanceValue : undefined}
+                  decimals={option.decimals}
+                  mode="vault-src"
+                  onSelect={handleTokenSelect}
+                />
+              : <ListItem
+                  key={option.id}
+                  selectionId={option.id}
+                  tokens={option.tokens}
+                  balance={isWalletConnected ? option.balance : undefined}
+                  balanceValue={isWalletConnected ? option.balanceValue : undefined}
+                  decimals={option.decimals}
+                  tag={option.tag}
+                  chainId={selectedChain}
+                  onSelect={handleTokenSelect}
+                />
+            )
           : !dustOptions.length ?
             <SelectListNoResults>{t('Transact-TokenSelect-NoResults')}</SelectListNoResults>
           : null}
