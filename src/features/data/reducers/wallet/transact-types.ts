@@ -39,6 +39,13 @@ export type TransactSelection = {
   tokens: TokenEntity[];
   order: number;
   hideIfZeroBalance: boolean;
+  /**
+   * For cross-chain vault-to-vault options: `src` vault id on deposit
+   * selections, `dst` vault id on withdraw selections.
+   */
+  vaultRefId?: VaultEntity['id'];
+  /** Denormalized so picker rows render a chain badge without a second selector lookup. */
+  chainId?: ChainEntity['id'];
 };
 
 export type TransactSelections = {
@@ -83,25 +90,43 @@ export type CrossChainOpStatus =
   | 'dest-failed'
   | 'dest-recovered';
 
-export type CrossChainDepositRecoveryParams = {
-  direction: 'deposit';
+/**
+ * Recovery params describe what the dst-chain "complete" action needs, not
+ * how the original op was framed (deposit/withdraw, src handler). The
+ * recovery dispatcher branches only on `destHandlerKind`; direction lives on
+ * the wrapping `PendingCrossChainOp`.
+ */
+
+/** USDC was minted directly to the user on the dst chain. Retry attempts are no-ops. */
+export type CrossChainRecoveryPassthrough = {
+  destHandlerKind: 'passthrough';
   destChainId: ChainEntity['id'];
-  vaultId: VaultEntity['id'];
   bridgeTokenAddress: string;
   bridgedAmount: string;
 };
 
-export type CrossChainWithdrawRecoveryParams = {
-  direction: 'withdraw';
+/** Dst-chain aggregator swap from bridge token to `desiredOutputAddress`. */
+export type CrossChainRecoverySwap = {
+  destHandlerKind: 'swap';
   destChainId: ChainEntity['id'];
   bridgeTokenAddress: string;
   bridgedAmount: string;
-  desiredOutputAddress?: string;
+  desiredOutputAddress: string;
+};
+
+/** Dst-chain deposit of bridge token into `destVaultId`. */
+export type CrossChainRecoveryVault = {
+  destHandlerKind: 'vault';
+  destChainId: ChainEntity['id'];
+  destVaultId: VaultEntity['id'];
+  bridgeTokenAddress: string;
+  bridgedAmount: string;
 };
 
 export type CrossChainRecoveryParams =
-  | CrossChainDepositRecoveryParams
-  | CrossChainWithdrawRecoveryParams;
+  | CrossChainRecoveryPassthrough
+  | CrossChainRecoverySwap
+  | CrossChainRecoveryVault;
 
 export type PendingCrossChainOp = {
   id: string;
@@ -109,6 +134,11 @@ export type PendingCrossChainOp = {
   direction: 'deposit' | 'withdraw';
   sourceChainId: ChainEntity['id'];
   destChainId: ChainEntity['id'];
+  /**
+   * The vault page from which the op originated. Deposits: dst vault.
+   * Withdraws: src vault. For vault-to-vault withdraws, the dst vault id
+   * lives on `recovery` when `destHandlerKind === 'vault'`.
+   */
   vaultId: VaultEntity['id'];
   sourceTxHash: string;
   destTxHash?: string;

@@ -32,6 +32,8 @@ import {
 } from '../../actions/wallet/cross-chain.ts';
 import {
   isCrossChainDepositOption,
+  isCrossChainVaultDstWithdrawOption,
+  isCrossChainVaultSrcDepositOption,
   isCrossChainWithdrawOption,
   type TransactOption,
   type TransactQuote,
@@ -430,11 +432,21 @@ function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOp
     // Add selectionId -> address[] mapping
     const existingSelection = sliceState.selections.bySelectionId[option.selectionId];
     if (!existingSelection) {
+      // Vault-to-vault selections carry the referenced vault + its chain so
+      // the picker can render a VaultSelectionRow. Deposits point at the src
+      // vault; withdraws point at the dst vault
+      const vaultRef =
+        isCrossChainVaultSrcDepositOption(option) ?
+          { vaultRefId: option.srcVaultId, chainId: option.sourceChainId }
+        : isCrossChainVaultDstWithdrawOption(option) ?
+          { vaultRefId: option.destVaultId, chainId: option.destChainId }
+        : undefined;
       sliceState.selections.bySelectionId[option.selectionId] = {
         id: option.selectionId,
         tokens: option.mode === TransactMode.Deposit ? option.inputs : option.wantedOutputs,
         order: option.selectionOrder,
         hideIfZeroBalance: !!option.selectionHideIfZeroBalance,
+        ...(vaultRef ?? {}),
       };
 
       sliceState.selections.allSelectionIds.push(option.selectionId);
