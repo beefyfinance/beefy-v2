@@ -18,6 +18,7 @@ import type { ZapStrategyId } from './strategies/strategy-configs.ts';
 import type { ChainTransactHelpers, IStrategy, TransactHelpers } from './strategies/IStrategy.ts';
 import type { QuoteResponse } from './swap/ISwapProvider.ts';
 import type { CCTPBridgeQuote } from './cctp/types.ts';
+import type { DestHandlerQuote } from './strategies/cross-chain/handlers/types.ts';
 
 export type TokenAmount<T extends TokenEntity = TokenEntity> = {
   amount: BigNumber;
@@ -351,8 +352,12 @@ export type CrossChainSrcHandlerKind = 'swap' | 'vault';
 /** Discriminates destination-side behavior for a cross-chain withdraw. */
 export type CrossChainDestHandlerKind = 'passthrough' | 'swap' | 'vault';
 
-/** Deposit option spanning two chains: user provides input on sourceChainId, receives vault tokens on destChainId */
-export type CrossChainDepositOption = ZapBaseDepositOption & {
+/**
+ * Common shape for cross-chain deposit options. Concrete variants discriminate
+ * on `srcHandlerKind` so `srcVaultId` is required on the `'vault'` variant
+ * without a runtime check.
+ */
+type CrossChainDepositOptionBase = ZapBaseDepositOption & {
   strategyId: 'cross-chain';
   /** Chain where the user provides input tokens */
   sourceChainId: ChainEntity['id'];
@@ -362,19 +367,32 @@ export type CrossChainDepositOption = ZapBaseDepositOption & {
   bridgeToken: TokenEntity;
   /** USDC token on the destination chain (bridge output) */
   destBridgeToken: TokenEntity;
-  /**
-   * Source-side handler kind. `swap` swaps a user token to USDC on the src
-   * chain; `vault` withdraws from a src vault to USDC (vault-to-vault).
-   */
-  srcHandlerKind: CrossChainSrcHandlerKind;
   /** Destination-side handler kind. Always `'vault'` for deposits — the dst leg deposits USDC into the target vault. */
   destHandlerKind: 'vault';
-  /** Required when `srcHandlerKind === 'vault'`. The src vault whose shares the user holds. */
-  srcVaultId?: VaultEntity['id'];
 };
 
-/** Withdrawal option delivering tokens on a different chain than the vault */
-export type CrossChainWithdrawOption = ZapBaseWithdrawOption & {
+/** Swap-src deposit: a user token is swapped to USDC on the src chain. */
+export type CrossChainSwapSrcDepositOption = CrossChainDepositOptionBase & {
+  srcHandlerKind: 'swap';
+};
+
+/** Vault-src deposit: shares of `srcVaultId` are withdrawn to USDC on the src chain. */
+export type CrossChainVaultSrcDepositOption = CrossChainDepositOptionBase & {
+  srcHandlerKind: 'vault';
+  srcVaultId: VaultEntity['id'];
+};
+
+/** Deposit option spanning two chains: user provides input on sourceChainId, receives vault tokens on destChainId */
+export type CrossChainDepositOption =
+  | CrossChainSwapSrcDepositOption
+  | CrossChainVaultSrcDepositOption;
+
+/**
+ * Common shape for cross-chain withdraw options. Concrete variants discriminate
+ * on `destHandlerKind` so `destVaultId` is required on the `'vault'` variant
+ * without a runtime check.
+ */
+type CrossChainWithdrawOptionBase = ZapBaseWithdrawOption & {
   strategyId: 'cross-chain';
   /** Chain where the vault lives (same as option.chainId) */
   sourceChainId: ChainEntity['id'];
@@ -386,15 +404,29 @@ export type CrossChainWithdrawOption = ZapBaseWithdrawOption & {
   destBridgeToken: TokenEntity;
   /** Source-side handler kind. Always `'vault'` for withdraws — the src leg withdraws from the page vault. */
   srcHandlerKind: 'vault';
-  /**
-   * Destination-side handler kind. `passthrough` mints USDC to the user,
-   * `swap` swaps USDC to a target token, `vault` deposits into a dst vault
-   * (Path C).
-   */
-  destHandlerKind: CrossChainDestHandlerKind;
-  /** Required when `destHandlerKind === 'vault'`. The dst vault to deposit into. */
-  destVaultId?: VaultEntity['id'];
 };
+
+/** Passthrough-dst withdraw: USDC is minted directly to the user on the dst chain (Path A). */
+export type CrossChainPassthroughDstWithdrawOption = CrossChainWithdrawOptionBase & {
+  destHandlerKind: 'passthrough';
+};
+
+/** Swap-dst withdraw: USDC is swapped to a target token on the dst chain (Path B). */
+export type CrossChainSwapDstWithdrawOption = CrossChainWithdrawOptionBase & {
+  destHandlerKind: 'swap';
+};
+
+/** Vault-dst withdraw (Path C): USDC is deposited into `destVaultId` on the dst chain. */
+export type CrossChainVaultDstWithdrawOption = CrossChainWithdrawOptionBase & {
+  destHandlerKind: 'vault';
+  destVaultId: VaultEntity['id'];
+};
+
+/** Withdrawal option delivering tokens on a different chain than the vault */
+export type CrossChainWithdrawOption =
+  | CrossChainPassthroughDstWithdrawOption
+  | CrossChainSwapDstWithdrawOption
+  | CrossChainVaultDstWithdrawOption;
 
 export type DepositOption =
   | StandardVaultDepositOption
@@ -463,25 +495,14 @@ export function isCrossChainOption(
 
 export function isCrossChainVaultSrcDepositOption(
   option: TransactOption
-): option is CrossChainDepositOption & { srcHandlerKind: 'vault'; srcVaultId: VaultEntity['id'] } {
-  return (
-    isCrossChainDepositOption(option) &&
-    option.srcHandlerKind === 'vault' &&
-    option.srcVaultId !== undefined
-  );
+): option is CrossChainVaultSrcDepositOption {
+  return isCrossChainDepositOption(option) && option.srcHandlerKind === 'vault';
 }
 
 export function isCrossChainVaultDstWithdrawOption(
   option: TransactOption
-): option is CrossChainWithdrawOption & {
-  destHandlerKind: 'vault';
-  destVaultId: VaultEntity['id'];
-} {
-  return (
-    isCrossChainWithdrawOption(option) &&
-    option.destHandlerKind === 'vault' &&
-    option.destVaultId !== undefined
-  );
+): option is CrossChainVaultDstWithdrawOption {
+  return isCrossChainWithdrawOption(option) && option.destHandlerKind === 'vault';
 }
 
 //
@@ -643,6 +664,15 @@ export type RecoveryQuote = {
   priceImpact: number;
   fee: ZapFee;
   allowances: AllowanceTokenAmount[];
+  /**
+   * Inner `DestHandlerQuote` captured at quote time and reused at step time
+   * so `fetchZapSteps` runs against the same route the user saw (no second
+   * aggregator call between display and execution). The `<unknown>` `Q`
+   * keeps the per-handler `.state` opaque to callers — only the producing
+   * handler should read it. NOT serializable (carries BigNumber etc.) — do
+   * not persist or feed through `structuredClone`.
+   */
+  destHandlerQuote: DestHandlerQuote<unknown>;
 };
 
 export type StandardVaultDepositQuote = BaseQuote<StandardVaultDepositOption> & {
@@ -1168,16 +1198,16 @@ export interface ITransactApi {
   getZapStrategiesForVault(helpers: TransactHelpers): Promise<IStrategy[]>;
 
   fetchRecoveryQuote(
-    recoveryParams: CrossChainRecoveryParams,
+    recovery: CrossChainRecoveryParams,
     actualBridgedAmount: BigNumber,
     getState: BeefyStateFn,
     pageVaultId: VaultEntity['id']
   ): Promise<RecoveryQuote>;
 
   fetchRecoveryStep(
-    recoveryParams: CrossChainRecoveryParams,
+    recovery: CrossChainRecoveryParams,
+    quote: RecoveryQuote,
     opId: string,
-    actualBridgedAmount: BigNumber,
     getState: BeefyStateFn,
     t: TFunction<Namespace>,
     pageVaultId: VaultEntity['id']

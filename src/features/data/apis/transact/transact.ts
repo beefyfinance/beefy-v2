@@ -6,10 +6,8 @@ import type { ChainEntity } from '../../entities/chain.ts';
 import { isCowcentratedLikeVault, type VaultEntity } from '../../entities/vault.ts';
 import type { Step } from '../../reducers/wallet/stepper-types.ts';
 import { selectVaultById, selectVaultUnderlyingVault } from '../../selectors/vaults.ts';
-import { selectTokenByAddress } from '../../selectors/tokens.ts';
 import { selectSwapAggregatorsExistForChain, selectZapByChainId } from '../../selectors/zap.ts';
 import type { CrossChainRecoveryParams } from '../../reducers/wallet/transact-types.ts';
-import type { TokenErc20 } from '../../entities/token.ts';
 import type { BeefyStateFn } from '../../store/types.ts';
 import { isDefined } from '../../utils/array-utils.ts';
 import { getSwapAggregator } from '../instances.ts';
@@ -611,125 +609,43 @@ export class TransactApi implements ITransactApi {
   }
 
   async fetchRecoveryQuote(
-    recoveryParams: CrossChainRecoveryParams,
+    recovery: CrossChainRecoveryParams,
     actualBridgedAmount: BigNumber,
     getState: BeefyStateFn,
     pageVaultId: VaultEntity['id']
   ): Promise<RecoveryQuote> {
-    const { destChainId } = recoveryParams;
-    const state = getState();
-    const bridgeToken = selectTokenByAddress(
-      state,
-      destChainId,
-      recoveryParams.bridgeTokenAddress
-    ) as TokenErc20;
+    if (recovery.destHandlerKind === 'passthrough') {
+      throw new Error('Passthrough withdraw recovery does not require a quote');
+    }
 
-    // `pageVaultId` is the UI-context vault (dst for deposits, src for withdraws),
-    // used only for strategy helpers; dst-chain routing uses `destChainHelpers` below.
     const helpers = await this.getHelpersForVault(pageVaultId, getState);
     if (!isZapTransactHelpers(helpers)) {
       throw new Error(`No zap router configured for vault ${pageVaultId}`);
     }
     const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
-
-    switch (recoveryParams.destHandlerKind) {
-      case 'passthrough':
-        throw new Error('Passthrough withdraw recovery does not require a quote');
-      case 'swap': {
-        const destChainHelpers = await this.getHelpersForChain(destChainId, getState);
-        const desiredOutput = selectTokenByAddress(
-          state,
-          destChainId,
-          recoveryParams.desiredOutputAddress
-        );
-        return xChainStrategy.fetchDestinationWithdrawQuote({
-          destChainId,
-          bridgedAmount: actualBridgedAmount,
-          bridgeToken,
-          desiredOutput,
-          destChainHelpers,
-        });
-      }
-      case 'vault':
-        return xChainStrategy.fetchDestinationDepositQuote({
-          destChainId,
-          vaultId: recoveryParams.destVaultId,
-          bridgedAmount: actualBridgedAmount,
-          bridgeToken,
-        });
-      default: {
-        const _exhaustive: never = recoveryParams;
-        throw new Error(
-          `fetchRecoveryQuote: unknown destHandlerKind ${JSON.stringify(_exhaustive)}`
-        );
-      }
-    }
+    const destChainHelpers = await this.getHelpersForChain(recovery.destChainId, getState);
+    return xChainStrategy.fetchRecoveryQuote(recovery, actualBridgedAmount, destChainHelpers);
   }
 
   async fetchRecoveryStep(
-    recoveryParams: CrossChainRecoveryParams,
+    recovery: CrossChainRecoveryParams,
+    quote: RecoveryQuote,
     opId: string,
-    actualBridgedAmount: BigNumber,
     getState: BeefyStateFn,
     t: TFunction<Namespace>,
     pageVaultId: VaultEntity['id']
   ): Promise<Step> {
-    const { destChainId } = recoveryParams;
-    const state = getState();
-    const bridgeToken = selectTokenByAddress(
-      state,
-      destChainId,
-      recoveryParams.bridgeTokenAddress
-    ) as TokenErc20;
+    if (recovery.destHandlerKind === 'passthrough') {
+      throw new Error('Passthrough withdraw recovery does not require a step');
+    }
 
-    // See fetchRecoveryQuote for why `pageVaultId` is load-bearing only for metadata.
     const helpers = await this.getHelpersForVault(pageVaultId, getState);
     if (!isZapTransactHelpers(helpers)) {
       throw new Error(`No zap router configured for vault ${pageVaultId}`);
     }
     const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
-
-    switch (recoveryParams.destHandlerKind) {
-      case 'passthrough':
-        throw new Error('Passthrough withdraw recovery does not require a step');
-      case 'swap': {
-        const destChainHelpers = await this.getHelpersForChain(destChainId, getState);
-        const desiredOutput = selectTokenByAddress(
-          state,
-          destChainId,
-          recoveryParams.desiredOutputAddress
-        );
-        return xChainStrategy.fetchDestinationWithdrawStep(
-          {
-            opId,
-            destChainId,
-            vaultId: pageVaultId,
-            bridgedAmount: actualBridgedAmount,
-            bridgeToken,
-            desiredOutput,
-            destChainHelpers,
-          },
-          t
-        );
-      }
-      case 'vault':
-        return xChainStrategy.fetchDestinationDepositStep(
-          {
-            opId,
-            destChainId,
-            vaultId: recoveryParams.destVaultId,
-            bridgedAmount: actualBridgedAmount,
-            bridgeToken,
-          },
-          t
-        );
-      default: {
-        const _exhaustive: never = recoveryParams;
-        throw new Error(
-          `fetchRecoveryStep: unknown destHandlerKind ${JSON.stringify(_exhaustive)}`
-        );
-      }
-    }
+    const destChainHelpers = await this.getHelpersForChain(recovery.destChainId, getState);
+    return xChainStrategy.fetchRecoveryStep(recovery, quote, destChainHelpers, opId, t);
   }
 
   /**
