@@ -1,5 +1,40 @@
 [
   {
+    "id": "aavev3-megaeth-usdm",
+    "name": "USDm",
+    "type": "standard",
+    "token": "USDm",
+    "tokenAddress": "0xFAfDdbb3FC7688494971a79cc65DCa3EF82079E7",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x1BacB8870b57D07CCF84C2CA2825C219B6380A86",
+    "earnedToken": "mooAaveV3MegaETHUSDm",
+    "earnedTokenAddress": "0x1BacB8870b57D07CCF84C2CA2825C219B6380A86",
+    "oracle": "tokens",
+    "oracleId": "USDm",
+    "status": "active",
+    "createdAt": 1777310723,
+    "platformId": "aave",
+    "assets": ["USDm"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "kumbaya-cow-megaeth-duck-weth-rp",
     "name": "DUCK-WETH Reward Pool",
     "type": "gov",
