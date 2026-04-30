@@ -22083,47 +22083,6 @@
     ]
   },
   {
-    "id": "chronos-wusdr-usdc",
-    "name": "wUSDR-USDC.e vLP",
-    "type": "standard",
-    "token": "vAMM-wUSDR/USDC.e",
-    "tokenAddress": "0x278f76df86EfdcbE0f2573AE54e917505621E312",
-    "tokenDecimals": 18,
-    "tokenProviderId": "chronos",
-    "earnContractAddress": "0xA5fc91bE851AdAbA6db55A60FEc68716dC46C6CE",
-    "earnedToken": "mooChronos_wUSDR-USDC",
-    "earnedTokenAddress": "0xA5fc91bE851AdAbA6db55A60FEc68716dC46C6CE",
-    "oracle": "lps",
-    "oracleId": "chronos-wusdr-usdc",
-    "status": "eol",
-    "createdAt": 1684143581,
-    "retireReason": "rewards",
-    "retiredAt": 1691431139,
-    "platformId": "chronos",
-    "assets": ["wUSDR", "arbUSDCe"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": true,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0x278f76df86EfdcbE0f2573AE54e917505621E312",
-    "removeLiquidityUrl": "https://app.chronos.exchange/liquidity/0x278f76df86EfdcbE0f2573AE54e917505621E312",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "arbitrum-chronos"
-      }
-    ]
-  },
-  {
     "id": "ramses-eth-ram",
     "name": "RAM-ETH vLP",
     "type": "standard",
