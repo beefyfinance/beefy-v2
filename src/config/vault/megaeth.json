@@ -77,6 +77,160 @@
     ]
   },
   {
+    "id": "prism-cow-megaeth-mega-usdm-rp",
+    "name": "MEGA-USDm Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPrismMegaethMEGA-USDM",
+    "tokenAddress": "0x3808e89223F26dDBAcBF3Cf36F99E37E537fb3De",
+    "tokenDecimals": 18,
+    "tokenProviderId": "prism",
+    "earnContractAddress": "0x00f88397182D20CF90f1232e67D6895E48f334b9",
+    "earnedToken": "rCowPrismMegaethMEGA-USDM",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "prism-cow-megaeth-mega-usdm",
+    "status": "active",
+    "createdAt": 1777555418,
+    "platformId": "prism",
+    "assets": ["MEGA", "USDm"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "prism-cow-megaeth-mega-usdm",
+    "name": "MEGA-USDm",
+    "type": "cowcentrated",
+    "token": "MEGA-USDm prism",
+    "tokenAddress": "0x36C06217A9855a2cE68CF183A9A4F0186db5E9f6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "prism",
+    "depositTokenAddresses": [
+      "0x28B7E77f82B25B95953825F1E3eA0E36c1c29861",
+      "0xFAfDdbb3FC7688494971a79cc65DCa3EF82079E7"
+    ],
+    "earnContractAddress": "0x3808e89223F26dDBAcBF3Cf36F99E37E537fb3De",
+    "earnedToken": "cowPrismMegaethMEGA-USDM",
+    "earnedTokenAddress": "0x3808e89223F26dDBAcBF3Cf36F99E37E537fb3De",
+    "oracle": "lps",
+    "oracleId": "prism-cow-megaeth-mega-usdm",
+    "status": "active",
+    "createdAt": 1777555418,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["MEGA", "USDm"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "kumbaya-cow-megaeth-mega-usdt0-rp",
+    "name": "MEGA-USDT0 Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowKumbayaMegaethMEGA-USDT0",
+    "tokenAddress": "0x53223778137650B7E2162a796A4B6d07d9Be2c01",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kumbaya",
+    "earnContractAddress": "0x20B049aC987Be82a9c52B5C5387358380Ee9936D",
+    "earnedToken": "rCowKumbayaMegaethMEGA-USDT0",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "kumbaya-cow-megaeth-mega-usdt0",
+    "status": "active",
+    "createdAt": 1777550332,
+    "platformId": "kumbaya",
+    "assets": ["MEGA", "USDT0"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "kumbaya-cow-megaeth-mega-usdt0",
+    "name": "MEGA-USDT0",
+    "type": "cowcentrated",
+    "token": "MEGA-USDT0 kumbaya",
+    "tokenAddress": "0xcBd0042ccf3Daee086b8EA2F260C04624F5A7B65",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kumbaya",
+    "depositTokenAddresses": [
+      "0x28B7E77f82B25B95953825F1E3eA0E36c1c29861",
+      "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb"
+    ],
+    "earnContractAddress": "0x53223778137650B7E2162a796A4B6d07d9Be2c01",
+    "earnedToken": "cowKumbayaMegaethMEGA-USDT0",
+    "earnedTokenAddress": "0x53223778137650B7E2162a796A4B6d07d9Be2c01",
+    "oracle": "lps",
+    "oracleId": "kumbaya-cow-megaeth-mega-usdt0",
+    "status": "active",
+    "createdAt": 1777550332,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["MEGA", "USDT0"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aavev3-megaeth-usdm",
     "name": "USDm",
     "type": "standard",
