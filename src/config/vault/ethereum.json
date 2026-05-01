@@ -1,5 +1,54 @@
 [
   {
+    "id": "stakedao-ynrwax-usdc",
+    "name": "ynRWAx/USDC",
+    "type": "standard",
+    "token": "ynRWAx/USD",
+    "tokenAddress": "0xf05Bc5C38a8F5E3D98c72f11bC59E713F8a32228",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x8B04ABB8574719c12618BDf56fF03be0c7255b76",
+    "earnedToken": "mooStakeDao-ynRWAx-USDC",
+    "earnedTokenAddress": "0x8B04ABB8574719c12618BDf56fF03be0c7255b76",
+    "oracle": "lps",
+    "oracleId": "curve-ynrwax-usdc",
+    "status": "active",
+    "createdAt": 1777626566,
+    "platformId": "stakedao",
+    "assets": ["ynRWAx", "USDC"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-578/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-578/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xf05Bc5C38a8F5E3D98c72f11bC59E713F8a32228",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xf05Bc5C38a8F5E3D98c72f11bC59E713F8a32228",
+            "coins": [
+              "0x01Ba69727E2860b37bc1a2bd56999c1aFb4C15D8",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "stakedao-musd-2pool",
     "name": "MUSD/USDC/USDT",
     "type": "standard",
