@@ -14,6 +14,7 @@ import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenErc20 } from '../../../entities/token.ts';
 import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import type { BeefyState } from '../../../store/types.ts';
+import { CrossChainBridgeBelowFeeError } from '../strategies/error.ts';
 import { getInsertIndex, NO_RELAY } from '../helpers/zap.ts';
 import type { ZapStep } from '../zap/types.ts';
 import type { CCTPBridgeQuote, ZapPayload } from './types.ts';
@@ -73,6 +74,11 @@ export function fetchBridgeQuote(
 
   // Truncate to token precision so downstream strategies never see sub-wei amounts
   const fromAmount = amount.decimalPlaces(fromToken.decimals, BigNumber.ROUND_FLOOR);
+  if (fromAmount.lte(fee)) {
+    throw new CrossChainBridgeBelowFeeError(
+      `CCTP bridge: input ${fromAmount.toString()} ${fromToken.symbol} on ${fromChainId} does not cover the bridge fee ${fee.toString()} ${fromToken.symbol} required to reach ${toChainId}`
+    );
+  }
   const toAmount = fromAmount.minus(fee).decimalPlaces(toToken.decimals, BigNumber.ROUND_FLOOR);
 
   return {
