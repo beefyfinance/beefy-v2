@@ -30,6 +30,7 @@ import {
   TransactStatus,
 } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
+  selectTransactCrossChainPreflight,
   selectTransactInputAmounts,
   selectTransactInputMaxes,
   selectTransactMode,
@@ -67,11 +68,17 @@ export const TransactQuote = memo(function TransactQuote({
   const inputMaxes = useAppSelector(selectTransactInputMaxes);
   const chainId = useAppSelector(selectTransactSelectedChainId);
   const status = useAppSelector(selectTransactQuoteStatus);
+  const preflightOk = useAppSelector(state => selectTransactCrossChainPreflight(state).ok);
   const debouncedFetchQuotes = useMemo(
     () =>
       debounce(
-        (dispatch: ReturnType<typeof useAppDispatch>, inputAmounts: BigNumber[]) => {
-          if (inputAmounts.every(amount => amount.lte(BIG_ZERO))) {
+        (
+          dispatch: ReturnType<typeof useAppDispatch>,
+          inputAmounts: BigNumber[],
+          preflightOk: boolean
+        ) => {
+          const inputIsZero = inputAmounts.every(amount => amount.lte(BIG_ZERO));
+          if (inputIsZero || !preflightOk) {
             dispatch(transactClearQuotes());
           } else {
             dispatch(transactFetchQuotesIfNeeded());
@@ -84,7 +91,7 @@ export const TransactQuote = memo(function TransactQuote({
   );
 
   useEffect(() => {
-    debouncedFetchQuotes(dispatch, inputAmounts);
+    debouncedFetchQuotes(dispatch, inputAmounts, preflightOk);
   }, [
     dispatch,
     mode,
@@ -93,6 +100,7 @@ export const TransactQuote = memo(function TransactQuote({
     selection,
     inputAmounts,
     inputMaxes,
+    preflightOk,
     debouncedFetchQuotes,
   ]);
 

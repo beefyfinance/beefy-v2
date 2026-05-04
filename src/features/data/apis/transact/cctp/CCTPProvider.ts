@@ -56,6 +56,21 @@ export function computeMaxFee(amount: BigNumber, feeBps: number, decimals: numbe
   return calculatedFee.multipliedBy(1.15).decimalPlaces(decimals, BigNumber.ROUND_CEIL);
 }
 
+export function getBridgeFeeForUsdcAmount(
+  fromChainId: ChainEntity['id'],
+  toChainId: ChainEntity['id'],
+  usdcAmount: BigNumber,
+  usdcDecimals: number
+): BigNumber {
+  const fromConfig = getChainConfig(fromChainId);
+  const toConfig = getChainConfig(toChainId);
+  const cctpFee =
+    fromConfig.fastFeeBps !== undefined ?
+      computeMaxFee(usdcAmount, fromConfig.fastFeeBps, usdcDecimals)
+    : new BigNumber(0);
+  return cctpFee.plus(toConfig.beefyBridgeFeeUsd);
+}
+
 export function fetchBridgeQuote(
   fromChainId: ChainEntity['id'],
   toChainId: ChainEntity['id'],
@@ -66,11 +81,7 @@ export function fetchBridgeQuote(
   const fromConfig = getChainConfig(fromChainId);
   const toConfig = getChainConfig(toChainId);
   const timeEstimate = fromConfig.time.outgoing + toConfig.time.incoming;
-  const cctpFee =
-    fromConfig.fastFeeBps !== undefined ?
-      computeMaxFee(amount, fromConfig.fastFeeBps, fromToken.decimals)
-    : new BigNumber(0);
-  const fee = cctpFee.plus(toConfig.beefyBridgeFeeUsd);
+  const fee = getBridgeFeeForUsdcAmount(fromChainId, toChainId, amount, fromToken.decimals);
 
   // Truncate to token precision so downstream strategies never see sub-wei amounts
   const fromAmount = amount.decimalPlaces(fromToken.decimals, BigNumber.ROUND_FLOOR);

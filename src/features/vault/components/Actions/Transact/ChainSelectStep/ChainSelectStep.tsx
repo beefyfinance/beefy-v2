@@ -20,6 +20,8 @@ import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/
 import {
   type CrossChainChainOption,
   type CrossChainTokenOption,
+} from '../../../../../data/apis/transact/transact-types.ts';
+import {
   selectCrossChainSortedChains,
   selectTransactMode,
   selectTransactVaultId,
