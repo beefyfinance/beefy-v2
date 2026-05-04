@@ -1,5 +1,54 @@
 [
   {
+    "id": "stakedao-ynethx-weth",
+    "name": "ynETHx/WETH",
+    "type": "standard",
+    "token": "ynETHx/ETH",
+    "tokenAddress": "0xD65ed4BcE447195187f37cE7D82f56AdF1826F8F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xc24391Ab15D086E49AC81a5cD995aC9f16FCd78D",
+    "earnedToken": "mooStakeDao-ynETHx-WETH",
+    "earnedTokenAddress": "0xc24391Ab15D086E49AC81a5cD995aC9f16FCd78D",
+    "oracle": "lps",
+    "oracleId": "curve-ynethx-weth",
+    "status": "active",
+    "createdAt": 1777880978,
+    "platformId": "stakedao",
+    "assets": ["ynETHx", "WETH"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-303/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-303/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xD65ed4BcE447195187f37cE7D82f56AdF1826F8F",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xD65ed4BcE447195187f37cE7D82f56AdF1826F8F",
+            "coins": [
+              "0x657d9ABA1DBb59e53f9F3eCAA878447dCfC96dCb",
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "stakedao-ynrwax-usdc",
     "name": "ynRWAx/USDC",
     "type": "standard",

@@ -1,5 +1,123 @@
 [
   {
+    "id": "aerodrome-cow-base-usdc-cbmega-vault",
+    "name": "USDC-cbMEGA",
+    "type": "standard",
+    "token": "USDC-cbMEGA",
+    "tokenAddress": "0x9c42591D19cF0e97305057E78f31762381C8c136",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xCBdBD5AD178D88D5e4106d35210900a6B121dcD0",
+    "earnedToken": "mooCowAerodromeUSDC-cbMEGA",
+    "earnedTokenAddress": "0xCBdBD5AD178D88D5e4106d35210900a6B121dcD0",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-cbmega",
+    "status": "active",
+    "createdAt": 1777581147,
+    "platformId": "aerodrome",
+    "assets": ["USDC", "cbMEGA"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-cbmega-rp",
+    "name": "USDC-cbMEGA Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeUSDC-cbMEGA",
+    "tokenAddress": "0x9c42591D19cF0e97305057E78f31762381C8c136",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x4bBde0f1427a0944f397499251e4892A1994bA1D",
+    "earnedToken": "rCowAerodromeUSDC-cbMEGA",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-cbmega",
+    "status": "active",
+    "createdAt": 1777581146,
+    "platformId": "aerodrome",
+    "assets": ["USDC", "cbMEGA"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-cbmega",
+    "name": "USDC-cbMEGA",
+    "type": "cowcentrated",
+    "token": "USDC-cbMEGA aerodrome",
+    "tokenAddress": "0x0150e3d89E161518C044ad191c4bdf6b40Df6E83",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xcb111E6A2a3bde90856D299d61341ac302167D23"
+    ],
+    "earnContractAddress": "0x9c42591D19cF0e97305057E78f31762381C8c136",
+    "earnedToken": "cowAerodromeUSDC-cbMEGA",
+    "earnedTokenAddress": "0x9c42591D19cF0e97305057E78f31762381C8c136",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-cbmega",
+    "status": "active",
+    "createdAt": 1777581146,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["USDC", "cbMEGA"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-weth-morpho-v2-vault",
     "name": "WETH-MORPHO",
     "type": "standard",

@@ -98,7 +98,7 @@
     "risks": {
       "complex": true,
       "curated": false,
-      "notAudited": false,
+      "notAudited": true,
       "notBattleTested": false,
       "notCorrelated": true,
       "notTimelocked": true,
@@ -138,7 +138,7 @@
     "risks": {
       "complex": true,
       "curated": false,
-      "notAudited": false,
+      "notAudited": true,
       "notBattleTested": false,
       "notCorrelated": true,
       "notTimelocked": true,
@@ -175,10 +175,10 @@
     "risks": {
       "complex": true,
       "curated": false,
-      "notAudited": false,
+      "notAudited": true,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -215,10 +215,10 @@
     "risks": {
       "complex": true,
       "curated": false,
-      "notAudited": false,
+      "notAudited": true,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
