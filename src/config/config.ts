@@ -27,7 +27,7 @@ export const config = {
     ],
     explorerUrl: 'https://polygonscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x9C983dd514087674CA1d22A22B7432b614b4C835',
+    appMulticallContractAddress: '0x3dbBa7859994DCb7f4e0DF3cDaCC78f756A59bA9',
     native: { symbol: 'POL', oracleId: 'WMATIC', decimals: 18 },
     gas: {
       type: 'eip1559',
