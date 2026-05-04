@@ -12,6 +12,7 @@ import {
   transactFetchQuotesIfNeeded,
 } from '../../../../../data/actions/transact.ts';
 import {
+  CrossChainBridgeBelowFeeError,
   QuoteCowcentratedNoSingleSideError,
   QuoteCowcentratedNotCalmError,
 } from '../../../../../data/apis/transact/strategies/error.ts';
@@ -157,11 +158,12 @@ const QuoteError = memo(function QuoteError() {
   const { t } = useTranslation();
   const error = useAppSelector(selectTransactQuoteError);
   const mode = useAppSelector(selectTransactMode);
-  const selectedChainId = useAppSelector(selectTransactSelectedChainId);
-  const vaultId = useAppSelector(selectTransactVaultId);
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   if (error) {
+    if (CrossChainBridgeBelowFeeError.match(error)) {
+      const action = mode === TransactMode.Deposit ? 'deposit' : 'withdraw';
+      return <AlertError>{t(`Transact-Quote-Error-CrossChain-TooLow-${action}`)}</AlertError>;
+    }
     if (QuoteCowcentratedNoSingleSideError.match(error)) {
       return (
         <AlertError>
@@ -171,7 +173,8 @@ const QuoteError = memo(function QuoteError() {
           })}
         </AlertError>
       );
-    } else if (QuoteCowcentratedNotCalmError.match(error)) {
+    }
+    if (QuoteCowcentratedNotCalmError.match(error)) {
       return (
         <AlertError>
           <Trans
@@ -188,12 +191,6 @@ const QuoteError = memo(function QuoteError() {
           />
         </AlertError>
       );
-    }
-
-    const isCrossChain = selectedChainId && selectedChainId !== vault.chainId;
-    if (isCrossChain && error.message?.includes('0 input amount')) {
-      const action = mode === TransactMode.Deposit ? 'deposit' : 'withdraw';
-      return <AlertError>{t(`Transact-Quote-Error-CrossChain-TooLow-${action}`)}</AlertError>;
     }
   }
 
