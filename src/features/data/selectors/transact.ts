@@ -340,21 +340,27 @@ export const selectTransactVaultHasCrossChainZap = (state: BeefyState) => {
   return Object.values(byOptionId).some(option => option.strategyId === 'cross-chain');
 };
 
-// extra margin on top of swap slippage so only obvious misses are rejected
 const CROSS_CHAIN_PREFLIGHT_SAFETY_BUFFER = 0.05;
 
-export function selectTransactCrossChainPreflight(state: BeefyState): { ok: true } | { ok: false } {
+export function selectTransactCrossChainPreflight(state: BeefyState): boolean {
   const selectionId = state.ui.transact.selectedSelectionId;
-  if (!selectionId) return { ok: true };
+  if (!selectionId) return true;
 
   const selection = selectTransactSelectionById(state, selectionId);
-  if (!selection) return { ok: true };
+  if (!selection) return true;
 
   const inputAmounts = selectTransactInputAmounts(state);
-  if (inputAmounts.some(amount => amount.lte(BIG_ZERO))) return { ok: true };
+  if (inputAmounts.length === 0 || inputAmounts.some(amount => amount.lte(BIG_ZERO))) {
+    return true;
+  }
 
   const options = selectTransactOptionsForSelectionId(state, selectionId);
-  if (options.length === 0 || !options.every(isCrossChainOption)) return { ok: true };
+  if (options.length === 0 || !options.every(isCrossChainOption)) return true;
+  const option = options[0];
+
+  const slippage = selectTransactSlippage(state);
+  const slippageDivisor = 1 - slippage - CROSS_CHAIN_PREFLIGHT_SAFETY_BUFFER;
+  if (slippageDivisor <= 0) return true;
 
   const inputUsd = BigNumber.sum(
     ...selection.tokens.map((token, i) =>
@@ -362,22 +368,20 @@ export function selectTransactCrossChainPreflight(state: BeefyState): { ok: true
     )
   );
 
-  const slippage = selectTransactSlippage(state);
-  const slippageDivisor = 1 - slippage - CROSS_CHAIN_PREFLIGHT_SAFETY_BUFFER;
-  if (slippageDivisor <= 0) return { ok: true };
-
-  const couldClearFee = options.some(option => {
-    const feeUsdc = getBridgeFeeForUsdcAmount(
-      option.sourceChainId,
-      option.destChainId,
-      inputUsd,
-      option.bridgeToken.decimals
-    );
-    const requiredInputUsd = feeUsdc.dividedBy(slippageDivisor);
-    return inputUsd.gte(requiredInputUsd);
-  });
-
-  return couldClearFee ? { ok: true } : { ok: false };
+  const usdcPriceUsd = selectTokenPriceByAddress(
+    state,
+    option.bridgeToken.chainId,
+    option.bridgeToken.address
+  );
+  const feeUsdc = getBridgeFeeForUsdcAmount(
+    option.sourceChainId,
+    option.destChainId,
+    inputUsd,
+    option.bridgeToken.decimals
+  );
+  const feeUsd = feeUsdc.multipliedBy(usdcPriceUsd);
+  const requiredInputUsd = feeUsd.dividedBy(slippageDivisor);
+  return inputUsd.gte(requiredInputUsd);
 }
 
 /**

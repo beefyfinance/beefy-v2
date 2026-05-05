@@ -17,10 +17,10 @@ export const CrossChainBelowFeeNotice = memo(function CrossChainBelowFeeNotice({
   css: cssProp,
 }: CrossChainBelowFeeNoticeProps) {
   const { t } = useTranslation();
-  const preflight = useAppSelector(selectTransactCrossChainPreflight);
+  const preflightOk = useAppSelector(selectTransactCrossChainPreflight);
   const mode = useAppSelector(selectTransactMode);
 
-  if (preflight.ok) {
+  if (preflightOk) {
     return null;
   }
 

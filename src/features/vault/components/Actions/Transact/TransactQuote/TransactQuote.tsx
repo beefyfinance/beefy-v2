@@ -68,7 +68,7 @@ export const TransactQuote = memo(function TransactQuote({
   const inputMaxes = useAppSelector(selectTransactInputMaxes);
   const chainId = useAppSelector(selectTransactSelectedChainId);
   const status = useAppSelector(selectTransactQuoteStatus);
-  const preflightOk = useAppSelector(state => selectTransactCrossChainPreflight(state).ok);
+  const preflightOk = useAppSelector(selectTransactCrossChainPreflight);
   const debouncedFetchQuotes = useMemo(
     () =>
       debounce(
