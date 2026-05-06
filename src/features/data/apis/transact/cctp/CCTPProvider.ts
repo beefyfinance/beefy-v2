@@ -14,6 +14,7 @@ import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenErc20 } from '../../../entities/token.ts';
 import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import type { BeefyState } from '../../../store/types.ts';
+import { CrossChainBridgeBelowFeeError } from '../strategies/error.ts';
 import { getInsertIndex, NO_RELAY } from '../helpers/zap.ts';
 import type { ZapStep } from '../zap/types.ts';
 import type { CCTPBridgeQuote, ZapPayload } from './types.ts';
@@ -55,6 +56,21 @@ export function computeMaxFee(amount: BigNumber, feeBps: number, decimals: numbe
   return calculatedFee.multipliedBy(1.15).decimalPlaces(decimals, BigNumber.ROUND_CEIL);
 }
 
+export function getBridgeFeeForUsdcAmount(
+  fromChainId: ChainEntity['id'],
+  toChainId: ChainEntity['id'],
+  usdcAmount: BigNumber,
+  usdcDecimals: number
+): BigNumber {
+  const fromConfig = getChainConfig(fromChainId);
+  const toConfig = getChainConfig(toChainId);
+  const cctpFee =
+    fromConfig.fastFeeBps !== undefined ?
+      computeMaxFee(usdcAmount, fromConfig.fastFeeBps, usdcDecimals)
+    : new BigNumber(0);
+  return cctpFee.plus(toConfig.beefyBridgeFeeUsd);
+}
+
 export function fetchBridgeQuote(
   fromChainId: ChainEntity['id'],
   toChainId: ChainEntity['id'],
@@ -65,14 +81,15 @@ export function fetchBridgeQuote(
   const fromConfig = getChainConfig(fromChainId);
   const toConfig = getChainConfig(toChainId);
   const timeEstimate = fromConfig.time.outgoing + toConfig.time.incoming;
-  const cctpFee =
-    fromConfig.fastFeeBps !== undefined ?
-      computeMaxFee(amount, fromConfig.fastFeeBps, fromToken.decimals)
-    : new BigNumber(0);
-  const fee = cctpFee.plus(toConfig.beefyBridgeFeeUsd);
+  const fee = getBridgeFeeForUsdcAmount(fromChainId, toChainId, amount, fromToken.decimals);
 
   // Truncate to token precision so downstream strategies never see sub-wei amounts
   const fromAmount = amount.decimalPlaces(fromToken.decimals, BigNumber.ROUND_FLOOR);
+  if (fromAmount.lte(fee)) {
+    throw new CrossChainBridgeBelowFeeError(
+      `CCTP bridge: input ${fromAmount.toString()} ${fromToken.symbol} on ${fromChainId} does not cover the bridge fee ${fee.toString()} ${fromToken.symbol} required to reach ${toChainId}`
+    );
+  }
   const toAmount = fromAmount.minus(fee).decimalPlaces(toToken.decimals, BigNumber.ROUND_FLOOR);
 
   return {

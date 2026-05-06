@@ -24,6 +24,7 @@ import {
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { RetirePauseReason } from '../../../RetirePauseReason/RetirePauseReason.tsx';
 import { Actions } from '../Actions/Actions.tsx';
+import { CrossChainBelowFeeNotice } from '../CrossChainBelowFeeNotice/CrossChainBelowFeeNotice.tsx';
 import { DepositActions } from '../DepositActions/DepositActions.tsx';
 import { DepositBuyLinks } from '../DepositBuyLinks/DepositBuyLinks.tsx';
 import { DepositTokenAmountInput } from '../DepositTokenAmountInput/DepositTokenAmountInput.tsx';
@@ -96,6 +97,7 @@ const DepositForm = memo(function DepositForm() {
         <DepositFormInputs />
       </div>
       <DepositBuyLinks css={styles.links} />
+      <CrossChainBelowFeeNotice css={styles.quote} />
       <TransactQuote title={t('Transact-YouDeposit')} css={styles.quote} />
       <Actions>
         <DepositActions />

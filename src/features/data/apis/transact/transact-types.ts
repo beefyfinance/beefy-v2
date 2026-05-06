@@ -439,6 +439,18 @@ export function isCrossChainOption(
   return option.strategyId === 'cross-chain';
 }
 
+export type CrossChainTokenOption = {
+  token: TokenEntity;
+  balanceUsd: BigNumber;
+};
+
+export type CrossChainChainOption = {
+  chainId: ChainEntity['id'];
+  chainName: string;
+  balanceUsd: BigNumber;
+  tokens: CrossChainTokenOption[];
+};
+
 //
 // Quotes
 //

@@ -19,6 +19,7 @@ import {
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
+import { CrossChainBelowFeeNotice } from '../CrossChainBelowFeeNotice/CrossChainBelowFeeNotice.tsx';
 import { FormFooter } from '../FormFooter/FormFooter.tsx';
 import { TransactQuote } from '../TransactQuote/TransactQuote.tsx';
 import { WithdrawActions } from '../WithdrawActions/WithdrawActions.tsx';
@@ -102,6 +103,7 @@ const WithdrawForm = memo(function WithdrawForm() {
       <div className={classes.inputs}>
         <WithdrawTokenAmountInput />
       </div>
+      <CrossChainBelowFeeNotice css={styles.quote} />
       <TransactQuote title={t('Transact-YouWithdraw')} css={styles.quote} />
       <Actions>
         <WithdrawActions />
