@@ -42,6 +42,7 @@ import {
   selectZapReturned,
 } from '../../../../features/data/selectors/stepper.ts';
 import {
+  selectCrossChainRecoveryQuoteIsStale,
   selectCrossChainRecoveryQuoteOpId,
   selectCrossChainRecoveryQuoteStatus,
   selectTransactExecuting,
@@ -692,6 +693,7 @@ export const RecoveryContent = memo(function RecoveryContent() {
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const recoveryQuoteStatus = useAppSelector(selectCrossChainRecoveryQuoteStatus);
   const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
+  const recoveryQuoteIsStale = useAppSelector(selectCrossChainRecoveryQuoteIsStale);
   const isExecuting = useAppSelector(selectTransactExecuting);
   const walletActionsState = useAppSelector(state => state.user.walletActions);
   const hasError = isWalletActionError(walletActionsState);
@@ -737,7 +739,10 @@ export const RecoveryContent = memo(function RecoveryContent() {
   }, [hasRefundAmount, rawRefund, destUsdcToken]);
 
   const hasValidQuote =
-    opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
+    opId != null &&
+    recoveryQuoteOpId === opId &&
+    recoveryQuoteStatus === TransactStatus.Fulfilled &&
+    !recoveryQuoteIsStale;
   const needsNewQuote = !isExecuting && !hasValidQuote;
 
   const titleKey =

@@ -39,6 +39,8 @@ export type TransactSelection = {
   tokens: TokenEntity[];
   order: number;
   hideIfZeroBalance: boolean;
+  /** Cross-chain v2v: src vaultId on deposit, dst vaultId on withdraw. */
+  vaultRefId?: VaultEntity['id'];
 };
 
 export type TransactSelections = {
@@ -83,25 +85,33 @@ export type CrossChainOpStatus =
   | 'dest-failed'
   | 'dest-recovered';
 
-export type CrossChainDepositRecoveryParams = {
-  direction: 'deposit';
+export type CrossChainRecoveryPassthrough = {
+  destHandlerKind: 'passthrough';
   destChainId: ChainEntity['id'];
-  vaultId: VaultEntity['id'];
   bridgeTokenAddress: string;
   bridgedAmount: string;
 };
 
-export type CrossChainWithdrawRecoveryParams = {
-  direction: 'withdraw';
+export type CrossChainRecoverySwap = {
+  destHandlerKind: 'swap';
   destChainId: ChainEntity['id'];
   bridgeTokenAddress: string;
   bridgedAmount: string;
-  desiredOutputAddress?: string;
+  desiredOutputAddress: string;
+};
+
+export type CrossChainRecoveryVault = {
+  destHandlerKind: 'vault';
+  destChainId: ChainEntity['id'];
+  destVaultId: VaultEntity['id'];
+  bridgeTokenAddress: string;
+  bridgedAmount: string;
 };
 
 export type CrossChainRecoveryParams =
-  | CrossChainDepositRecoveryParams
-  | CrossChainWithdrawRecoveryParams;
+  | CrossChainRecoveryPassthrough
+  | CrossChainRecoverySwap
+  | CrossChainRecoveryVault;
 
 export type PendingCrossChainOp = {
   id: string;
@@ -109,6 +119,7 @@ export type PendingCrossChainOp = {
   direction: 'deposit' | 'withdraw';
   sourceChainId: ChainEntity['id'];
   destChainId: ChainEntity['id'];
+  /** Page-vault id. For v2v withdraws, the destination vault is on recovery.destVaultId. */
   vaultId: VaultEntity['id'];
   sourceTxHash: string;
   destTxHash?: string;
@@ -127,6 +138,7 @@ export type CrossChainRecoveryQuoteState = {
   quote: RecoveryQuote | undefined;
   status: TransactStatus;
   error: SerializedError | undefined;
+  isStale: boolean;
 };
 
 export type TransactCrossChain = {

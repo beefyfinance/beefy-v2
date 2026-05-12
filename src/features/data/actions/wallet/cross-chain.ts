@@ -394,6 +394,7 @@ export const crossChainRecoveryExecuteOrder = (
               dispatch(fetchCCTPDstTokensReturned({ destChainId, dstTxHash: hash }));
             } else {
               dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-failed' }));
+              dispatch(crossChainMarkRecoveryQuoteStale());
             }
           })
           .catch(err => {
@@ -403,6 +404,7 @@ export const crossChainRecoveryExecuteOrder = (
       })
       .catch(() => {
         dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-failed' }));
+        dispatch(crossChainMarkRecoveryQuoteStale());
       });
   });
 };
@@ -484,6 +486,8 @@ export const crossChainOpDismiss = createAction<{ id: string }>('cross-chain/dis
 
 export const crossChainClearRecoveryQuote = createAction('cross-chain/clearRecoveryQuote');
 
+export const crossChainMarkRecoveryQuoteStale = createAction('cross-chain/markRecoveryQuoteStale');
+
 // ---------------------------------------------------------------------------
 // Recovery: quote + step thunks
 // ---------------------------------------------------------------------------
@@ -539,13 +543,18 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
       });
 
       const api = await getTransactApi();
-      const actualBridgedAmount = new BigNumber(op.recovery.bridgedAmount);
 
       const steps: Step[] = [];
 
       const rqState = state.ui.transact.crossChain.recoveryQuote;
-      if (rqState.opId === opId && rqState.quote) {
-        const allowanceRequirements = rqState.quote.allowances.filter(
+      if (!(rqState.opId === opId && rqState.quote && !rqState.isStale)) {
+        throw new Error(
+          `No recovery quote available for op ${opId} — fetch it before building steps`
+        );
+      }
+      const recoveryQuote = rqState.quote;
+      {
+        const allowanceRequirements = recoveryQuote.allowances.filter(
           a => isTokenErc20(a.token) && a.amount.gt(BIG_ZERO)
         );
         if (allowanceRequirements.length > 0) {
@@ -602,8 +611,8 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
       console.debug('[Recovery] Fetching recovery step...');
       const recoveryStep = await api.fetchRecoveryStep(
         op.recovery,
+        recoveryQuote,
         opId,
-        actualBridgedAmount,
         getState,
         t,
         op.vaultId

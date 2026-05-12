@@ -56,7 +56,7 @@
     "status": "active",
     "createdAt": 1778054187,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "0.3",
     "assets": ["MEGA", "USDm"],
     "risks": {
       "complex": true,

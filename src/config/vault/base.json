@@ -1,5 +1,123 @@
 [
   {
+    "id": "pancake-cow-base-sol-cbbtc-vault",
+    "name": "SOL-cbBTC",
+    "type": "standard",
+    "token": "SOL-cbBTC",
+    "tokenAddress": "0x914C252c38281c06F370b8553Fc4CdC2A36cad68",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xd47f71d0802342d87Aaf3471D83DDe6b31de4499",
+    "earnedToken": "mooCowPancakeBaseSOL-cbBTC",
+    "earnedTokenAddress": "0xd47f71d0802342d87Aaf3471D83DDe6b31de4499",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-sol-cbbtc",
+    "status": "active",
+    "createdAt": 1778019338,
+    "platformId": "pancakeswap",
+    "assets": ["SOL", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-base-sol-cbbtc-rp",
+    "name": "SOL-cbBTC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBaseSOL-cbBTC",
+    "tokenAddress": "0x914C252c38281c06F370b8553Fc4CdC2A36cad68",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xdD1174b8ffCB2f4A4F9556f4456C6b978dE2a7c6",
+    "earnedToken": "rCowPancakeBaseSOL-cbBTC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-sol-cbbtc",
+    "status": "active",
+    "createdAt": 1778019337,
+    "platformId": "pancakeswap",
+    "assets": ["SOL", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-base-sol-cbbtc",
+    "name": "SOL-cbBTC",
+    "type": "cowcentrated",
+    "token": "SOL-cbBTC pancakeswap",
+    "tokenAddress": "0x415c88A05B75d1a65822d899f4A78b4C0D7CbefD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x311935Cd80B76769bF2ecC9D8Ab7635b2139cf82",
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    ],
+    "earnContractAddress": "0x914C252c38281c06F370b8553Fc4CdC2A36cad68",
+    "earnedToken": "cowPancakeBaseSOL-cbBTC",
+    "earnedTokenAddress": "0x914C252c38281c06F370b8553Fc4CdC2A36cad68",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-sol-cbbtc",
+    "status": "active",
+    "createdAt": 1778019337,
+    "platformId": "beefy",
+    "feeTier": "0.01",
+    "assets": ["SOL", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-usdc-cbmega-vault",
     "name": "USDC-cbMEGA",
     "type": "standard",
@@ -16994,8 +17112,10 @@
     "earnedTokenAddress": "0x7DaB05b3340CF7DD3c7De9a0A77416B7eDd03Ddf",
     "oracle": "tokens",
     "oracleId": "TRUE",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1745532338,
+    "retireReason": "rewards",
+    "retiredAt": 1778474959,
     "platformId": "true",
     "assets": ["TRUE"],
     "risks": {
@@ -17030,8 +17150,10 @@
     "earnedTokenAddress": "0xd2878E0857267aE4B79081C4079426d259E4c035",
     "oracle": "lps",
     "oracleId": "true-true-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1745532338,
+    "retireReason": "rewards",
+    "retiredAt": 1778474959,
     "platformId": "true",
     "assets": ["TRUE", "WETH"],
     "risks": {

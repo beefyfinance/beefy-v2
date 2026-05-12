@@ -116,8 +116,10 @@
     "earnedTokenAddress": "0x7488aee5d31cE64aCe5681be7ad1aFDFaa51a554",
     "oracle": "lps",
     "oracleId": "balancerv3-optimism-reth-waoptweth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1752850675,
+    "retireReason": "rewards",
+    "retiredAt": 1778478276,
     "platformId": "aura",
     "assets": ["rETH", "waOptWETH"],
     "risks": {

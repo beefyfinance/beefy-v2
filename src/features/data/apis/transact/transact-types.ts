@@ -18,6 +18,10 @@ import type { ZapStrategyId } from './strategies/strategy-configs.ts';
 import type { ChainTransactHelpers, IStrategy, TransactHelpers } from './strategies/IStrategy.ts';
 import type { QuoteResponse } from './swap/ISwapProvider.ts';
 import type { CCTPBridgeQuote } from './cctp/types.ts';
+import type {
+  DestHandlerQuote,
+  SourceHandlerQuote,
+} from './strategies/cross-chain/handlers/types.ts';
 
 export type TokenAmount<T extends TokenEntity = TokenEntity> = {
   amount: BigNumber;
@@ -346,33 +350,70 @@ export type RewardPoolToVaultWithdrawOption = ZapBaseWithdrawOption & {
   strategyId: 'reward-pool-to-vault';
 };
 
-/** Deposit option spanning two chains: user provides input on sourceChainId, receives vault tokens on destChainId */
-export type CrossChainDepositOption = ZapBaseDepositOption & {
+/** Discriminates source-side behavior for a cross-chain deposit. */
+export type CrossChainSrcHandlerKind = 'swap' | 'vault';
+/** Discriminates destination-side behavior for a cross-chain withdraw. */
+export type CrossChainDestHandlerKind = 'passthrough' | 'swap' | 'vault';
+
+/** Common shape for cross-chain deposit options; variants discriminate on `srcHandlerKind`. */
+type CrossChainDepositOptionBase = ZapBaseDepositOption & {
   strategyId: 'cross-chain';
-  /** Chain where the user provides input tokens */
   sourceChainId: ChainEntity['id'];
-  /** Chain where the vault lives (same as option.chainId) */
   destChainId: ChainEntity['id'];
-  /** USDC token on the source chain (bridge input) */
   bridgeToken: TokenEntity;
-  /** USDC token on the destination chain (bridge output) */
   destBridgeToken: TokenEntity;
+  destHandlerKind: 'vault';
+  destVaultId: VaultEntity['id'];
+};
+
+/** Swap-src deposit: a user token is swapped to USDC on the src chain. */
+export type CrossChainSwapSrcDepositOption = CrossChainDepositOptionBase & {
+  srcHandlerKind: 'swap';
+};
+
+/** Vault-src deposit: shares of `srcVaultId` are withdrawn to USDC on the src chain. */
+export type CrossChainVaultSrcDepositOption = CrossChainDepositOptionBase & {
+  srcHandlerKind: 'vault';
+  srcVaultId: VaultEntity['id'];
+};
+
+/** Deposit option spanning two chains: user provides input on sourceChainId, receives vault tokens on destChainId */
+export type CrossChainDepositOption =
+  | CrossChainSwapSrcDepositOption
+  | CrossChainVaultSrcDepositOption;
+
+/** Common shape for cross-chain withdraw options; variants discriminate on `destHandlerKind`. */
+type CrossChainWithdrawOptionBase = ZapBaseWithdrawOption & {
+  strategyId: 'cross-chain';
+  sourceChainId: ChainEntity['id'];
+  destChainId: ChainEntity['id'];
+  bridgeToken: TokenEntity;
+  destBridgeToken: TokenEntity;
+  srcHandlerKind: 'vault';
+  srcVaultId: VaultEntity['id'];
+};
+
+/** Passthrough-dst withdraw: USDC is minted directly to the user on the dst chain. */
+export type CrossChainPassthroughDstWithdrawOption = CrossChainWithdrawOptionBase & {
+  destHandlerKind: 'passthrough';
+};
+
+/** Swap-dst withdraw: USDC is swapped to a target token on the dst chain. */
+export type CrossChainSwapDstWithdrawOption = CrossChainWithdrawOptionBase & {
+  destHandlerKind: 'swap';
+};
+
+/** Vault-dst withdraw: USDC is deposited into `destVaultId` on the dst chain. */
+export type CrossChainVaultDstWithdrawOption = CrossChainWithdrawOptionBase & {
+  destHandlerKind: 'vault';
+  destVaultId: VaultEntity['id'];
 };
 
 /** Withdrawal option delivering tokens on a different chain than the vault */
-export type CrossChainWithdrawOption = ZapBaseWithdrawOption & {
-  strategyId: 'cross-chain';
-  /** Chain where the vault lives (same as option.chainId) */
-  sourceChainId: ChainEntity['id'];
-  /** Chain where the user wants to receive tokens */
-  destChainId: ChainEntity['id'];
-  /** USDC token on the source chain (bridge input) */
-  bridgeToken: TokenEntity;
-  /** USDC token on the destination chain (bridge output) */
-  destBridgeToken: TokenEntity;
-  /** Whether destination needs a hook (non-USDC output requires swap on dest) */
-  needsDestHook: boolean;
-};
+export type CrossChainWithdrawOption =
+  | CrossChainPassthroughDstWithdrawOption
+  | CrossChainSwapDstWithdrawOption
+  | CrossChainVaultDstWithdrawOption;
 
 export type DepositOption =
   | StandardVaultDepositOption
@@ -439,6 +480,17 @@ export function isCrossChainOption(
   return option.strategyId === 'cross-chain';
 }
 
+export function isCrossChainVaultSrcDepositOption(
+  option: TransactOption
+): option is CrossChainVaultSrcDepositOption {
+  return isCrossChainDepositOption(option) && option.srcHandlerKind === 'vault';
+}
+
+export function isCrossChainVaultDstWithdrawOption(
+  option: TransactOption
+): option is CrossChainVaultDstWithdrawOption {
+  return isCrossChainWithdrawOption(option) && option.destHandlerKind === 'vault';
+}
 export type CrossChainTokenOption = {
   token: TokenEntity;
   balanceUsd: BigNumber;
@@ -610,6 +662,11 @@ export type RecoveryQuote = {
   priceImpact: number;
   fee: ZapFee;
   allowances: AllowanceTokenAmount[];
+  /**
+   * Captured at quote time, reused at step time so fetchZapSteps runs against the same route.
+   * NOT serializable (BigNumber etc.) — do not persist or structuredClone.
+   */
+  destHandlerQuote: DestHandlerQuote;
 };
 
 export type StandardVaultDepositQuote = BaseQuote<StandardVaultDepositOption> & {
@@ -700,11 +757,6 @@ export type CurveDepositQuote = BaseZapQuote<CurveDepositOption> & {
   viaToken: CurveTokenOption;
 };
 
-// export type BalancerSwapDepositQuote = BaseZapQuote<BalancerSwapDepositOption> & {
-//   via: 'aggregator' | 'direct';
-//   viaToken: BalancerTokenOption;
-// };
-
 export type BalancerDepositQuote = BaseZapQuote<BalancerDepositOption>;
 
 export type GammaDepositQuote = BaseZapQuote<GammaDepositOption> & {
@@ -717,14 +769,13 @@ export type ConicDepositQuote = BaseZapQuote<ConicDepositOption>;
 
 /** Quote for a cross-chain deposit: source swap → bridge → dest swap + deposit */
 export type CrossChainDepositQuote = BaseZapQuote<CrossChainDepositOption> & {
-  /** Steps on the source chain (swap input → USDC, bridge) */
+  srcHandlerKind: CrossChainSrcHandlerKind;
+  destHandlerKind: 'vault';
   sourceSteps: ZapQuoteStep[];
-  /** Steps on the destination chain (from dest strategy) */
   destSteps: ZapQuoteStep[];
-  /** The full destination strategy quote (needed for step building) */
-  destQuote: DepositQuote;
-  /** The CCTP bridge quote */
   bridgeQuote: CCTPBridgeQuote;
+  srcHandlerQuote: SourceHandlerQuote;
+  destHandlerQuote: DestHandlerQuote;
 };
 
 export type VaultDepositQuote =
@@ -852,14 +903,13 @@ export type VaultComposerZapWithdrawQuote = BaseZapQuote<VaultComposerWithdrawOp
 
 /** Quote for a cross-chain withdrawal: vault withdraw → swap to USDC → bridge → optional dest swap */
 export type CrossChainWithdrawQuote = BaseZapQuote<CrossChainWithdrawOption> & {
-  /** Steps on the source chain (vault withdraw → swap to USDC → bridge) */
+  srcHandlerKind: 'vault';
+  destHandlerKind: CrossChainDestHandlerKind;
   sourceSteps: ZapQuoteStep[];
-  /** Steps on the destination chain (swap USDC → desired token). Empty if USDC output. */
   destSteps: ZapQuoteStep[];
-  /** The source chain withdrawal quote (from vault's existing strategy) */
-  sourceWithdrawQuote: WithdrawQuote;
-  /** The CCTP bridge quote */
   bridgeQuote: CCTPBridgeQuote;
+  srcHandlerQuote: SourceHandlerQuote;
+  destHandlerQuote: DestHandlerQuote;
 };
 
 export type ZapWithdrawQuote =
@@ -882,11 +932,11 @@ export type ZapQuote = ZapDepositQuote | ZapWithdrawQuote;
 export type TransactQuote = DepositQuote | WithdrawQuote;
 
 export function isCrossChainDepositQuote(quote: TransactQuote): quote is CrossChainDepositQuote {
-  return quote.strategyId === 'cross-chain' && 'destQuote' in quote;
+  return quote.strategyId === 'cross-chain' && quote.option.mode === TransactMode.Deposit;
 }
 
 export function isCrossChainWithdrawQuote(quote: TransactQuote): quote is CrossChainWithdrawQuote {
-  return quote.strategyId === 'cross-chain' && 'sourceWithdrawQuote' in quote;
+  return quote.strategyId === 'cross-chain' && quote.option.mode === TransactMode.Withdraw;
 }
 
 export function isCrossChainQuote(
@@ -1117,18 +1167,18 @@ export interface ITransactApi {
   getZapStrategiesForVault(helpers: TransactHelpers): Promise<IStrategy[]>;
 
   fetchRecoveryQuote(
-    recoveryParams: CrossChainRecoveryParams,
+    recovery: CrossChainRecoveryParams,
     actualBridgedAmount: BigNumber,
     getState: BeefyStateFn,
-    sourceVaultId: VaultEntity['id']
+    pageVaultId: VaultEntity['id']
   ): Promise<RecoveryQuote>;
 
   fetchRecoveryStep(
-    recoveryParams: CrossChainRecoveryParams,
+    recovery: CrossChainRecoveryParams,
+    quote: RecoveryQuote,
     opId: string,
-    actualBridgedAmount: BigNumber,
     getState: BeefyStateFn,
     t: TFunction<Namespace>,
-    sourceVaultId: VaultEntity['id']
+    pageVaultId: VaultEntity['id']
   ): Promise<Step>;
 }

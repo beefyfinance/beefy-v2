@@ -20,6 +20,7 @@ import {
   selectStepperStepContent,
 } from '../../../../../data/selectors/stepper.ts';
 import {
+  selectCrossChainRecoveryQuoteIsStale,
   selectCrossChainRecoveryQuoteOpId,
   selectCrossChainRecoveryQuoteStatus,
   selectRecoveryOpForCurrentVault,
@@ -54,6 +55,7 @@ export const ActionRecovery = memo(function ActionRecovery({ mode }: ActionRecov
   const stepperContent = useAppSelector(selectStepperStepContent);
   const recoveryQuoteStatus = useAppSelector(selectCrossChainRecoveryQuoteStatus);
   const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
+  const recoveryQuoteIsStale = useAppSelector(selectCrossChainRecoveryQuoteIsStale);
   const isExecuting = useAppSelector(selectTransactExecuting);
   const successClosed = useAppSelector(selectTransactSuccessClosed);
 
@@ -71,7 +73,10 @@ export const ActionRecovery = memo(function ActionRecovery({ mode }: ActionRecov
   const isFetchingQuote = recoveryQuoteStatus === TransactStatus.Pending;
 
   const hasValidQuote =
-    opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
+    opId != null &&
+    recoveryQuoteOpId === opId &&
+    recoveryQuoteStatus === TransactStatus.Fulfilled &&
+    !recoveryQuoteIsStale;
 
   const needsNewQuote = recoveryOp != null && !isExecuting && !hasValidQuote;
 

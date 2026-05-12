@@ -48,13 +48,10 @@ const overrides: Record<
   'bifi-maxi': { stratOwner: undefined }, // harvester 0xDe30
   'beltv2-4belt': { vaultOwner: undefined }, // moonpot deployer
   'bifi-vault': { beefyFeeRecipient: undefined }, // TODO: remove
-  'aero-cow-eurc-cbbtc-vault': { harvestOnDeposit: undefined },
-  'compound-base-eth': { harvestOnDeposit: undefined },
   'beefy-besonic': { vaultOwner: undefined }, // temp disabled while waiting for rewards to refill
 };
 
 const oldValidOwners = [
-  addressBook.fantom.platforms.beefyfinance.devMultisig,
   addressBook.polygon.platforms.beefyfinance.devMultisig,
   addressBook.arbitrum.platforms.beefyfinance.devMultisig,
 ];
@@ -66,9 +63,6 @@ const oldValidRewardPoolOwners: ChainMap<Address[]> = {
     '0x7313533ed72D2678bFD9393480D0A30f9AC45c1f',
     '0x97bfa4b212A153E15dCafb799e733bc7d1b70E72',
   ],
-  metis: ['0x2cC364255206A7e14bF59ADB1fc5770DbA48CB3f'],
-  cronos: ['0xF9eBb381dC153D0966B2BaEe776de2F400405755'],
-  moonbeam: ['0x00AeC34489A7ADE91A0507B6b9dBb0a50938B7c0'],
   ethereum: [
     '0x1c9270ac5C42E51611d7b97b1004313D52c80293',
     '0x8237f3992526036787E8178Def36291Ab94638CD',
@@ -89,16 +83,12 @@ const nonHarvestOnDepositChains = ['ethereum', 'avax', 'rootstock'];
 const nonHarvestOnDepositPools = [
   'aero-cow-weth-cbbtc-vault',
   'aero-cow-usdc-cbbtc-vault',
-  'compound-op-usdt',
-  'compound-op-usdc',
-  'compound-op-eth',
-  'compound-base-usdc',
-  'compound-base-aero',
   'aero-cow-eurc-usdc-vault',
-  'compound-polygon-usdc',
+  'aero-cow-eurc-cbbtc-vault',
   'shadow-cow-sonic-wbtc-usdc.e-vault',
   'shadow-cow-sonic-wbtc-weth-vault',
   'shadow-cow-sonic-ws-bes-vault',
+  'pancake-cow-base-sol-cbbtc-vault',
 ];
 const isCowAerodromeWith10sec = (pool: VaultConfigWithStrategyData) =>
   pool.platformId === 'aerodrome' &&

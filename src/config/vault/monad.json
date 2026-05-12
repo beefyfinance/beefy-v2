@@ -1,7 +1,44 @@
 [
   {
+    "id": "morpho-v2-monad-august-usdc-v2",
+    "name": "USDC (August v2)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xA3d999114BCE3d9771703f06C490e77EE83E589a",
+    "earnedToken": "mooMorphoV2MonadAugustUSDCV2",
+    "earnedTokenAddress": "0xA3d999114BCE3d9771703f06C490e77EE83E589a",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1777942008,
+    "platformId": "morpho",
+    "curatorId": "august-digital",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0x80017bF0f793EBbE9679Cd61ff0e395B62CAbB59/august-usdc-v2",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "morpho-v2-monad-hyperithm-apex-cbbtc",
-    "name": "cbBTC (Hyperithm, Apex)",
+    "name": "cbBTC (Hyperithm, Apex V2)",
     "type": "standard",
     "token": "cbBTC",
     "tokenAddress": "0xd18B7EC58Cdf4876f6AFebd3Ed1730e4Ce10414b",

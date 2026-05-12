@@ -15,7 +15,11 @@ import {
 } from '../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
-import { TransactStatus, type PendingCrossChainOp } from '../reducers/wallet/transact-types.ts';
+import {
+  TransactStatus,
+  type PendingCrossChainOp,
+  type TransactSelection,
+} from '../reducers/wallet/transact-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { valueOrThrow } from '../utils/selector-utils.ts';
 import {
@@ -26,6 +30,7 @@ import {
   selectUserBalanceOfToken,
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
+  selectUserVaultBalanceInUsdIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInShareToken,
 } from './balance.ts';
 import { selectAllVaultBoostIds, selectPreStakeOrActiveBoostIds } from './boosts.ts';
@@ -201,6 +206,10 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
 
   return orderBy(
     selectionsWithModifiedSymbols.map(selection => {
+      if (selection.vaultRefId) {
+        return selection;
+      }
+
       if (selection.tokens.length === 1) {
         const token = selection.tokens[0];
         const price = selectTokenPriceByAddress(state, token.chainId, token.address);
@@ -215,7 +224,6 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
           ...selection,
           balance,
           decimals: token.decimals,
-          price,
           balanceValue: balance.multipliedBy(price),
         };
       }
@@ -225,6 +233,13 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
     [o => o.order, o => o.balanceValue.toNumber()],
     ['asc', 'desc']
   );
+};
+
+export type SelectionRow = TransactSelection & {
+  balanceValue: BigNumber;
+  balance: BigNumber | undefined;
+  decimals: number;
+  tag: string | undefined;
 };
 
 export const selectTransactDepositTokensForChainIdWithBalances = (
@@ -242,44 +257,70 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
     selectionId => state.ui.transact.selections.bySelectionId[selectionId]
   );
 
-  return orderBy(
-    options
-      .map(option => {
-        const tokens = option.tokens;
-        const balances = tokens.map(token =>
-          selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress)
-        );
-        const prices = tokens.map(token =>
-          selectTokenPriceByAddress(state, token.chainId, token.address)
-        );
-        const balanceValues = balances.map((balance, index) => balance.multipliedBy(prices[index]));
-        const balanceValueTotal = balanceValues.reduce((acc, value) => acc.plus(value), BIG_ZERO);
+  const rows = options.map((option): SelectionRow => {
+    const tokens = option.tokens;
 
-        const optionWithBalances = {
+    if (option.vaultRefId) {
+      if (!walletAddress) {
+        return {
           ...option,
-          balances,
-          prices,
-          balanceValues,
-          balanceValue: balanceValueTotal,
-          balance: undefined,
-          decimals: 0,
-          price: undefined,
+          balanceValue: BIG_ZERO,
+          balance: BIG_ZERO,
+          decimals: tokens[0].decimals,
           tag: undefined,
         };
+      }
+      const shareBalance = selectUserVaultBalanceInShareTokenIncludingDisplaced(
+        state,
+        option.vaultRefId,
+        walletAddress
+      );
+      const balanceValue = selectUserVaultBalanceInUsdIncludingDisplaced(
+        state,
+        option.vaultRefId,
+        walletAddress
+      );
+      return {
+        ...option,
+        balanceValue,
+        balance: shareBalance,
+        decimals: tokens[0].decimals,
+        tag: undefined,
+      };
+    }
 
-        if (tokens.length === 1) {
-          return {
-            ...optionWithBalances,
-            ...extractTagFromLpSymbol(tokens, vault),
-            balance: balances[0],
-            decimals: tokens[0].decimals,
-            price: prices[0],
-          };
-        }
+    const balances = tokens.map(token =>
+      selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress)
+    );
+    const prices = tokens.map(token =>
+      selectTokenPriceByAddress(state, token.chainId, token.address)
+    );
+    const balanceValueTotal = balances.reduce(
+      (acc, balance, index) => acc.plus(balance.multipliedBy(prices[index])),
+      BIG_ZERO
+    );
 
-        return optionWithBalances;
-      })
-      .filter(option => !option.hideIfZeroBalance || !option.balanceValue.isZero()),
+    const base: SelectionRow = {
+      ...option,
+      balanceValue: balanceValueTotal,
+      balance: undefined,
+      decimals: 0,
+      tag: undefined,
+    };
+
+    if (tokens.length === 1) {
+      return {
+        ...base,
+        ...extractTagFromLpSymbol(tokens, vault),
+        balance: balances[0],
+        decimals: tokens[0].decimals,
+      };
+    }
+
+    return base;
+  });
+  return orderBy(
+    rows.filter(row => !row.hideIfZeroBalance || !row.balanceValue.isZero()),
     [o => o.order, o => o.balanceValue.toNumber()],
     ['asc', 'desc']
   );
@@ -616,5 +657,8 @@ export const selectCrossChainRecoveryQuoteOpId = (state: BeefyState) =>
 
 export const selectCrossChainRecoveryQuoteError = (state: BeefyState) =>
   state.ui.transact.crossChain.recoveryQuote.error;
+
+export const selectCrossChainRecoveryQuoteIsStale = (state: BeefyState) =>
+  state.ui.transact.crossChain.recoveryQuote.isStale;
 
 export const selectTransactSuccessClosed = (state: BeefyState) => state.ui.transact.successClosed;
