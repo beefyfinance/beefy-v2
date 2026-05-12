@@ -332,7 +332,6 @@ const config = buildConfig(
           transactDebuggerItemAltBackground: { value: '#222222' },
           transactErrorBackground: { value: '#da59327c' },
           transactWarningBackground: { value: '#d198477c' },
-          treasuryHeaderSystem9: { value: '#f3f3c87f' },
           vaultClmPoolBackground: { value: '#252c63', description: 'vaults clm + vaults clmPool' },
           vaultClmVaultBackground: { value: '#1e2a48', description: 'vaults clmVault' },
           vaultGovBackground: { value: '#322460', description: 'vaults gov' },
@@ -785,6 +784,10 @@ const config = buildConfig(
           to: {
             transform: 'rotate(360deg)',
           },
+        },
+        addressInputCaretBlink: {
+          '0%, 50%': { backgroundSize: '2px 12px' },
+          '50.01%, 100%': { backgroundSize: '0 12px' },
         },
         highlight: {
           to: {

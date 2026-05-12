@@ -1,41 +1,49 @@
-import { memo, type ReactNode } from 'react';
+import { memo, type ReactNode, useState } from 'react';
 import { Container } from '../../../components/Container/Container.tsx';
 import { ShortAddress } from './ShortAddress/ShortAddress.tsx';
 import { AddressInput } from './AddressInput/AddressInput.tsx';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@repo/styles/jsx';
 
-type HeaderProps = {
+type AddressProps = {
   address: string;
   addressLabel?: string;
-  children?: ReactNode;
 };
 
-export const Header = memo(function Header({ address, addressLabel, children }: HeaderProps) {
-  const { t } = useTranslation();
+type HeaderProps = {
+  children?: ReactNode;
+} & AddressProps;
 
+export const Header = memo(function Header({ children, ...addressProps }: HeaderProps) {
   return (
     <HeaderContainer>
       <Container maxWidth="lg">
         <Content>
-          <TitleSearch>
-            <Title>
-              {t('Dashboard-Title')}
-              {address && (
-                <>
-                  <span>/</span>
-                  <ShortAddress address={address} addressLabel={addressLabel} />
-                </>
-              )}
-            </Title>
-            <div>
-              <AddressInput variant="transparent" />
-            </div>
-          </TitleSearch>
+          <TitleSearchRow {...addressProps} />
           {children}
         </Content>
       </Container>
     </HeaderContainer>
+  );
+});
+
+const TitleSearchRow = memo(function ({ address, addressLabel }: AddressProps) {
+  const { t } = useTranslation();
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <TitleSearch expanded={expanded}>
+      <Title collapsed={expanded}>
+        <TitlePrefix>
+          {t('Dashboard-Title')}
+          {address && <Slash> /</Slash>}
+        </TitlePrefix>
+        {address ?
+          <ShortAddress address={address} addressLabel={addressLabel} />
+        : null}
+      </Title>
+      <AddressInput variant="transparent" active={expanded} setActive={setExpanded} />
+    </TitleSearch>
   );
 });
 
@@ -60,31 +68,55 @@ const Content = styled('div', {
 const TitleSearch = styled('div', {
   base: {
     display: 'flex',
-    flexDirection: 'column',
-
-    gap: '6px',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '8px',
     lg: {
-      //14px + 4px
       paddingInline: '18px',
     },
-
-    md: {
-      justifyContent: 'space-between',
-      flexDirection: 'row',
+  },
+  variants: {
+    expanded: {
+      true: {
+        smDown: {
+          gap: 0,
+        },
+      },
     },
   },
 });
 
 const Title = styled('div', {
   base: {
+    minWidth: 0,
+    overflow: 'hidden',
     display: 'flex',
     columnGap: '8px',
     alignItems: 'center',
     textStyle: 'label',
     fontWeight: 500,
-    color: 'text.light',
-    '& span': {
-      color: 'text.dark',
+    flexShrink: 1,
+  },
+  variants: {
+    collapsed: {
+      true: {
+        smDown: {
+          flexBasis: 0,
+        },
+      },
     },
+  },
+});
+
+const TitlePrefix = styled('span', {
+  base: {
+    flexShrink: 0,
+    color: 'text.light',
+  },
+});
+
+const Slash = styled('span', {
+  base: {
+    color: 'text.dark',
   },
 });

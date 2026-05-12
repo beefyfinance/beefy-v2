@@ -1,4 +1,3 @@
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChainExposureLoader } from '../ChainExposure/ChainExposure.tsx';
@@ -6,11 +5,9 @@ import { PlatformExposureLoader } from '../PlatformExposure/PlatformExposure.tsx
 import { Section } from '../../../../components/Section/Section.tsx';
 import { StablesExposure } from '../StablesExposure/StablesExposure.tsx';
 import { TokenExposureLoader } from '../TokenExposure/TokenExposure.tsx';
-import { styles } from './styles.ts';
 import { MobileUserExposure } from './components/MobileUserExposure/MobileUserExposure.tsx';
 import { Hidden } from '../../../../components/MediaQueries/Hidden.tsx';
-
-const useStyles = legacyMakeStyles(styles);
+import { styled } from '@repo/styles/jsx';
 
 export type UserExposureProps = {
   address: string;
@@ -18,11 +15,10 @@ export type UserExposureProps = {
 
 export const UserExposure = memo(function UserExposure({ address }: UserExposureProps) {
   const { t } = useTranslation();
-  const classes = useStyles();
 
   return (
     <Section title={t('Overview')}>
-      <div className={classes.pieChartsContainer}>
+      <ChartsContainer>
         <Hidden to="sm">
           <ChainExposureLoader address={address} title={t('Exposure-Chain')} />
           <PlatformExposureLoader address={address} title={t('Exposure-Platform')} />
@@ -34,10 +30,26 @@ export const UserExposure = memo(function UserExposure({ address }: UserExposure
         <Hidden from="lg">
           <StablesExposure address={address} />
         </Hidden>
-      </div>
+      </ChartsContainer>
       <Hidden to="md">
         <StablesExposure address={address} />
       </Hidden>
     </Section>
   );
+});
+
+const ChartsContainer = styled('div', {
+  base: {
+    marginBottom: '24px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3,1fr)',
+    columnGap: '24px',
+    rowGap: '24px',
+    lgDown: {
+      gridTemplateColumns: 'repeat(2,1fr)',
+    },
+    mdDown: {
+      gridTemplateColumns: '1fr',
+    },
+  },
 });

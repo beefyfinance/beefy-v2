@@ -1,4 +1,4 @@
-import CloseRounded from '../../../../images/icons/mui/CloseRounded.svg?react';
+import CloseRounded from '../../../../images/icons/clear.svg?react';
 import Search from '../../../../images/icons/search.svg?react';
 import {
   type ChangeEvent,
@@ -26,22 +26,31 @@ import { BaseInput } from '../../../../components/Form/Input/BaseInput.tsx';
 import { CircularProgress } from '../../../../components/CircularProgress/CircularProgress.tsx';
 import EnterIcon from '../../../../images/icons/enter.svg?react';
 import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
+import { styled } from '@repo/styles/jsx';
 
 type AddressInputProps = {
+  active?: boolean;
+  setActive?: (active: boolean) => void;
   variant?: 'default' | 'transparent';
 };
 
-export const AddressInput = memo(function AddressInput({ variant = 'default' }: AddressInputProps) {
+export const AddressInput = memo(function AddressInput({
+  variant = 'default',
+  active: controlledActive = false,
+  setActive: controlledSetActive,
+}: AddressInputProps) {
   const [userInput, setUserInput] = useState<string>('');
   const [inputMode, setInputMode] = useState<'address' | 'domain'>('address');
   const resolverStatus = useResolveDomain(inputMode === 'domain' ? userInput : '');
   const [isDomainValid, setIsDomainValid] = useState<boolean>(false);
   const [isDomainResolving, setIsDomainResolving] = useState<boolean>(false);
   const [hasFocus, setHasFocus] = useState<boolean>(false);
+  const [localActive, localSetActive] = useState<boolean>(false);
+  const isActive = controlledSetActive === undefined ? localActive : controlledActive;
+  const setActive = controlledSetActive ?? localSetActive;
   const { t } = useTranslation();
   const anchorEl = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
-
   const isMobile = useBreakpoint({ to: 'xs' });
 
   const placeholder = useMemo(() => {
@@ -92,6 +101,11 @@ export const AddressInput = memo(function AddressInput({ variant = 'default' }: 
     setHasFocus(false);
   }, [setHasFocus]);
 
+  const inputLength = userInput.length;
+  useEffect(() => {
+    setActive(inputLength !== 0 || hasFocus);
+  }, [inputLength, hasFocus, setActive]);
+
   useEffect(() => {
     if (isMaybeDomain(userInput)) {
       setInputMode('domain');
@@ -118,16 +132,14 @@ export const AddressInput = memo(function AddressInput({ variant = 'default' }: 
     }
   }, [inputMode, resolverStatus, setIsDomainValid, setIsDomainResolving]);
 
-  const isActive = userInput.length !== 0 || hasFocus;
-
   return (
     <>
       <BaseInput
         ref={anchorEl}
         variant={variant}
         className={css(
-          variant === 'transparent' ? transparentBaseWidth : defaultBaseWidth,
-          isActive && (variant === 'transparent' ? transparentActiveWidth : defaultActiveWidth)
+          variant === 'transparent' ? transparentRoot : defaultRoot,
+          isActive && (variant === 'transparent' ? transparentRootActive : defaultRootActive)
         )}
         value={userInput}
         onChange={handleChange}
@@ -135,17 +147,26 @@ export const AddressInput = memo(function AddressInput({ variant = 'default' }: 
         onBlur={handleBlur}
         fullWidth={true}
         onKeyDown={handleGoToDashboardOnEnterKey}
+        startAdornment={
+          variant === 'default' ?
+            <IconDiv variant={variant} state="disabled">
+              <Search />
+            </IconDiv>
+          : null
+        }
         endAdornment={
-          <EndAdornment
+          <SearchIndicatorButton
             domainResolving={isDomainResolving}
             isValid={isValid}
             userInput={userInput}
             handleClear={handleClear}
             inputMode={inputMode}
+            variant={variant}
           />
         }
         placeholder={placeholder}
       />
+
       {(
         hasFocus &&
         !isValid &&
@@ -166,21 +187,23 @@ export const AddressInput = memo(function AddressInput({ variant = 'default' }: 
   );
 });
 
-interface EndAdornmentProps {
+interface SearchIndicatorButtonProps {
   isValid: boolean;
   userInput: string;
   handleClear: () => void;
   domainResolving: boolean;
   inputMode: 'address' | 'domain';
+  variant: 'default' | 'transparent';
 }
 
-const EndAdornment = memo(function EndAdornment({
+const SearchIndicatorButton = memo(function SearchIndicatorButton({
   isValid,
   userInput,
   handleClear,
   domainResolving,
   inputMode,
-}: EndAdornmentProps) {
+  variant,
+}: SearchIndicatorButtonProps) {
   const navigate = useNavigate();
 
   const handleGoToDashboard = useCallback(() => {
@@ -188,57 +211,83 @@ const EndAdornment = memo(function EndAdornment({
     handleClear();
   }, [userInput, handleClear, navigate]);
 
+  let children = (
+    <IconDiv variant={variant} state="disabled">
+      <Search />
+    </IconDiv>
+  );
+
   if (domainResolving && inputMode === 'domain') {
-    return (
+    children = (
       <LoaderContainer>
         <CircularProgress size={20} />
       </LoaderContainer>
     );
-  }
-
-  if (isValid) {
-    return (
+  } else if (isValid) {
+    children = (
       <IconButton state="active" enter={true} onClick={handleGoToDashboard}>
         <EnterIcon />
       </IconButton>
     );
-  }
-
-  if (userInput.length !== 0) {
-    return (
+  } else if (userInput.length !== 0) {
+    children = (
       <IconButton state="active" onClick={handleClear}>
         <CloseRounded />
       </IconButton>
     );
+  } else if (variant === 'default') {
+    children = <></>;
   }
 
-  return (
-    <IconDiv state="disabled">
-      <Search />
-    </IconDiv>
-  );
+  return <SearchIndicatorLayout variant={variant}>{children}</SearchIndicatorLayout>;
 });
 
-const transparentBaseWidth = css.raw({
-  width: '100%',
+const SearchIndicatorLayout = styled('div', {
+  base: {},
+  variants: {
+    variant: {
+      default: {},
+      transparent: {
+        marginLeft: '8px',
+      },
+    },
+  },
+  defaultVariants: {
+    variant: 'transparent',
+  },
+});
+
+const transparentRoot = css.raw({
+  // mobile: collapsed input shows the "Search" placeholder + icon
+  width: '79px',
+  minWidth: 0,
   transition: 'width 0.2s ease-in-out',
-  md: {
-    width: '207px',
+  gap: 0,
+  '& .BaseInput-input': {
+    fieldSizing: 'content',
+    minWidth: 0,
+  },
+  sm: {
+    width: 'auto',
+    transition: 'none',
   },
 });
 
-const transparentActiveWidth = css.raw({
-  md: {
-    width: '423px',
+const transparentRootActive = css.raw({
+  // mobile (active): take the full row available
+  width: '100%',
+  sm: {
+    // tablet+: handled by field-sizing on the input itself
+    width: 'auto',
   },
 });
 
-const defaultBaseWidth = css.raw({
+const defaultRoot = css.raw({
   transition: 'width 0.2s ease-in-out',
   width: '272px',
 });
 
-const defaultActiveWidth = css.raw({
+const defaultRootActive = css.raw({
   width: '100%',
   md: {
     width: '443px',
