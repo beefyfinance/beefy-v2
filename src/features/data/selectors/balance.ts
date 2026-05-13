@@ -14,6 +14,7 @@ import {
   isGovVault,
   isSingleGovVault,
   isStandardVault,
+  isVaultActive,
   isVaultWithReceipt,
   type VaultEntity,
   type VaultGov,
@@ -853,10 +854,12 @@ export const selectUserUnstakedClms = createSelector(
     }
 
     return allCowcentratedVaults
-      .filter(clm =>
-        userBalance.tokenAmount.byChainId[clm.chainId]?.byTokenAddress[
-          clm.receiptTokenAddress.toLocaleLowerCase()
-        ]?.balance.gt(BIG_ZERO)
+      .filter(
+        clm =>
+          isVaultActive(clm) &&
+          userBalance.tokenAmount.byChainId[clm.chainId]?.byTokenAddress[
+            clm.receiptTokenAddress.toLocaleLowerCase()
+          ]?.balance.gt(BIG_ZERO)
       )
       .map(vault => vault.id);
   }

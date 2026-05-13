@@ -7,6 +7,6 @@ const pathToUrl = import.meta.glob<string>('../images/partners/*.svg', {
 });
 const keyToUrl = createGlobLoader(pathToUrl);
 
-export function getPartnerSrc(mmId: string) {
-  return keyToUrl([mmId]);
+export function getPartnerSrc(partnerId: string) {
+  return keyToUrl([partnerId]);
 }

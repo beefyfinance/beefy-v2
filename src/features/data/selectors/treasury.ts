@@ -24,10 +24,6 @@ export const selectTreasury = (state: BeefyState) => {
   return state.ui.treasury.byChainId;
 };
 
-export const selectMMAssets = (state: BeefyState) => {
-  return state.ui.treasury.byMarketMakerId;
-};
-
 export const selectTreasurySorted = function (state: BeefyState) {
   const treasuryPerChain = keys(selectTreasury(state)).map(chainId => {
     const assets = selectTreasuryAssetsByChainId(state, chainId);
@@ -59,41 +55,13 @@ export const selectTreasurySorted = function (state: BeefyState) {
     };
   });
 
-  const treasuryPerMM = Object.keys(selectMMAssets(state)).map(mmId => {
-    const mmHoldings = selectTreasuryHoldingsByMMId(state, mmId);
-    let exchanges = 0;
-    let assetCount = 0;
-    let usdTotal = BIG_ZERO;
-    Object.entries(mmHoldings).forEach(([_, exchangeAssets]) => {
-      const filteredAssets = Object.values(exchangeAssets).filter(asset => asset.usdValue.gte(10));
-      if (filteredAssets.length > 0) {
-        filteredAssets.forEach(asset => {
-          usdTotal = usdTotal.plus(asset.usdValue);
-        });
-        exchanges++;
-        assetCount += filteredAssets.length;
-      }
-    });
-    return {
-      usdTotal,
-      categoryCount: exchanges,
-      assetCount,
-      type: 'mm' as const,
-      id: mmId,
-    };
-  });
-
-  return [...treasuryPerChain, ...treasuryPerMM]
+  return [...treasuryPerChain]
     .filter(chain => chain.categoryCount > 0)
     .sort((a, b) => compareBigNumber(b.usdTotal, a.usdTotal));
 };
 
 export const selectTreasuryHoldingsByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
   return state.ui.treasury.byChainId[chainId];
-};
-
-export const selectTreasuryHoldingsByMMId = (state: BeefyState, mmId: string) => {
-  return state.ui.treasury.byMarketMakerId[mmId];
 };
 
 export const selectTreasuryBalanceByChainId = createCachedSelector(
@@ -112,21 +80,6 @@ export const selectTreasuryBalanceByChainId = createCachedSelector(
     }, BIG_ZERO);
   }
 )((_state: BeefyState, chainId: ChainEntity['id']) => chainId);
-
-export const selectTreasuryBalanceByMMId = createCachedSelector(
-  (state: BeefyState, mmId: string) => selectTreasuryHoldingsByMMId(state, mmId),
-  treasuryByMMId => {
-    return Object.values(treasuryByMMId).reduce((totals, tokens) => {
-      for (const token of Object.values(tokens)) {
-        if (isFiniteBigNumber(token.usdValue)) {
-          totals = totals.plus(token.usdValue);
-        }
-      }
-
-      return totals;
-    }, BIG_ZERO);
-  }
-)((_state: BeefyState, mmId: string) => mmId);
 
 export const selectTreasuryAssetsByChainId = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id']) =>
@@ -160,7 +113,6 @@ const bifiOracles = ['BIFI', 'mooBIFI', 'rBIFI', 'basemooBIFI', 'opmooBIFI'];
 
 export const selectTreasuryStats = (state: BeefyState) => {
   const treasury = selectTreasury(state);
-  const marketMakerHoldings = selectMMAssets(state);
   let holdings = BIG_ZERO;
   const holdingAssets = new Set();
   let beefyHeld = BIG_ZERO;
@@ -252,28 +204,6 @@ export const selectTreasuryStats = (state: BeefyState) => {
     }
   }
 
-  for (const exchangeData of Object.values(marketMakerHoldings)) {
-    for (const exchangeHoldings of Object.values(exchangeData)) {
-      for (const holding of Object.values(exchangeHoldings)) {
-        if (holding) {
-          if (isFiniteBigNumber(holding.usdValue)) {
-            if (bifiOracles.includes(holding.oracleId)) {
-              beefyHeld = beefyHeld.plus(
-                getBifiBalanceInTokens(state, holding.oracleId, holding.balance)
-              );
-            }
-            // @dev oracleId != token id
-            if (selectIsTokenStable(state, 'ethereum', holding.oracleId)) {
-              stables = stables.plus(holding.usdValue);
-            }
-            holdings = holdings.plus(holding.usdValue);
-            holdingAssets.add(holding.symbol);
-          }
-        }
-      }
-    }
-  }
-
   return { holdings, assets: holdingAssets.size, beefyHeld, stables };
 };
 
@@ -295,7 +225,6 @@ const getBifiBalanceInTokens = (
 
 export const selectTreasuryTokensExposure = (state: BeefyState) => {
   const treasury = selectTreasury(state);
-  const mmHoldings = selectMMAssets(state);
 
   const exposure = entries(treasury).reduce(
     (totals, [chainId, wallets]) => {
@@ -357,27 +286,6 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
     {} as Record<string, BigNumber>
   );
 
-  Object.values(mmHoldings).forEach(mmData => {
-    Object.values(mmData).forEach(exchange => {
-      Object.values(exchange).forEach(holding => {
-        if (isFiniteBigNumber(holding.usdValue)) {
-          // @dev oracleId != token id
-          if (selectIsTokenStable(state, 'ethereum', holding.oracleId)) {
-            exposure['stables'] = (exposure['stables'] || BIG_ZERO).plus(holding.usdValue);
-          } else if (bifiOracles.includes(holding.oracleId)) {
-            exposure['BIFI'] = (exposure['BIFI'] || BIG_ZERO).plus(holding.usdValue);
-          } else {
-            const assetId =
-              holding.symbol ?
-                selectWrappedToNativeSymbolOrTokenSymbol(state, holding.symbol)
-              : holding.name;
-            exposure[assetId] = (exposure[assetId] || BIG_ZERO).plus(holding.usdValue);
-          }
-        }
-      });
-    });
-  });
-
   const treasuryValue = Object.keys(exposure).reduce(
     (cur, tot) => exposure[tot].plus(cur),
     BIG_ZERO
@@ -396,18 +304,12 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
 
 export const selectTreasuryExposureByChain = (state: BeefyState) => {
   const treasury = selectTreasury(state);
-  const mmHoldings = selectMMAssets(state);
 
   const chains: Partial<Record<ChainId, BigNumber>> = {};
 
   for (const chainId of keys(treasury)) {
     const totalUsdPerChain = selectTreasuryBalanceByChainId(state, chainId);
     chains[chainId] = totalUsdPerChain;
-  }
-
-  for (const mmId of Object.keys(mmHoldings)) {
-    const totalUsdPerMM = selectTreasuryBalanceByMMId(state, mmId);
-    chains['ethereum'] = (chains.ethereum || BIG_ZERO).plus(totalUsdPerMM);
   }
 
   const totalTreasury = keys(chains).reduce(
@@ -430,7 +332,6 @@ export const selectTreasuryExposureByChain = (state: BeefyState) => {
 
 export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
   const treasury = selectTreasury(state);
-  const mmHoldings = selectMMAssets(state);
 
   const exposure = keys(treasury).reduce(
     (totals, chainId) => {
@@ -455,13 +356,10 @@ export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
     {} as Record<string, BigNumber>
   );
 
-  const totalMM = Object.keys(mmHoldings).reduce((totals, mmId) => {
-    return totals.plus(selectTreasuryBalanceByMMId(state, mmId));
-  }, BIG_ZERO);
-
-  const totalTreasury = Object.keys(exposure)
-    .reduce((cur, tot) => exposure[tot].plus(cur), BIG_ZERO)
-    .plus(totalMM);
+  const totalTreasury = Object.keys(exposure).reduce(
+    (cur, tot) => exposure[tot].plus(cur),
+    BIG_ZERO
+  );
 
   const treasuryExposureByAvailability = Object.keys(exposure).map(key => {
     return {
@@ -469,12 +367,6 @@ export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
       value: exposure[key],
       percentage: exposure[key].dividedBy(totalTreasury).toNumber(),
     };
-  });
-
-  treasuryExposureByAvailability.push({
-    key: 'managed',
-    value: totalMM,
-    percentage: totalMM.dividedBy(totalTreasury).toNumber(),
   });
 
   return treasuryExposureByAvailability;

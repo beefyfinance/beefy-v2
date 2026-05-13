@@ -355,7 +355,7 @@
   },
   {
     "id": "morpho-monad-steakhouse-prime-weth",
-    "name": "WETH (Steakhouse, Prime WETH)",
+    "name": "WETH (Steakhouse, Prime V2)",
     "type": "standard",
     "token": "WETH",
     "tokenAddress": "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242",
@@ -392,7 +392,7 @@
   },
   {
     "id": "morpho-monad-steakhouse-high-yield-usdt",
-    "name": "USDT0 (Steakhouse, High Yield USDT)",
+    "name": "USDT0 (Steakhouse, High Yield V2)",
     "type": "standard",
     "token": "USDT0",
     "tokenAddress": "0xe7cd86e13AC4309349F30B3435a9d337750fC82D",
@@ -429,7 +429,7 @@
   },
   {
     "id": "morpho-monad-steakhouse-high-yield-usd1",
-    "name": "USD1 (Steakhouse, High Yield USD1)",
+    "name": "USD1 (Steakhouse, High Yield V2)",
     "type": "standard",
     "token": "USD1",
     "tokenAddress": "0x111111d2bf19e43C34263401e0CAd979eD1cdb61",
@@ -732,7 +732,7 @@
   },
   {
     "id": "morpho-monad-hyperithm-usdc",
-    "name": "USDC (Hyperithm, Degen)",
+    "name": "USDC (Hyperithm, Apex V2)",
     "type": "standard",
     "token": "USDC",
     "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
@@ -759,7 +759,7 @@
       "synthAsset": false
     },
     "strategyTypeId": "single",
-    "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0x78999cc96d2Ba0341588C60CcB0E91c6C33CF371/hyperithm-usdc-degen",
+    "underlyingPlatformUrl": "https://app.morpho.org/monad/vault/0x78999cc96d2Ba0341588C60CcB0E91c6C33CF371/hyperithm-usdc-apex",
     "network": "monad",
     "zaps": [
       {
@@ -2471,7 +2471,7 @@
   },
   {
     "id": "morpho-monad-steakhouse-usdc",
-    "name": "USDC (Steakhouse, High Yield USDC)",
+    "name": "USDC (Steakhouse, High Yield V2)",
     "type": "standard",
     "token": "USDC",
     "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
@@ -2509,7 +2509,7 @@
   },
   {
     "id": "morpho-monad-steakhouse-ausd",
-    "name": "AUSD (Steakhouse, High Yield AUSD)",
+    "name": "AUSD (Steakhouse, High Yield V2)",
     "type": "standard",
     "token": "AUSD",
     "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",

@@ -1,5 +1,82 @@
 [
   {
+    "id": "uniswap-cow-bsc-usdt-opg-rp",
+    "name": "USDT-OPG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBSCUSDT-OPG",
+    "tokenAddress": "0x3F142c3Fab8DE3639b220f91C782F2015BE4D784",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xBfE49A7aF6fFB64c1424c417AE0C645ed9Ed20E5",
+    "earnedToken": "rCowUniswapBSCUSDT-OPG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-opg",
+    "status": "active",
+    "createdAt": 1778526638,
+    "platformId": "uniswap",
+    "assets": ["USDT", "OPG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-usdt-opg",
+    "name": "USDT-OPG",
+    "type": "cowcentrated",
+    "token": "USDT-OPG uniswap",
+    "tokenAddress": "0x0a4b571C4932d84dE11A6BCA96bb9BA5bF27Ff1C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x55d398326f99059fF775485246999027B3197955",
+      "0x5feCcD17C393CaF1001D18164236A37E731FCb9d"
+    ],
+    "earnContractAddress": "0x3F142c3Fab8DE3639b220f91C782F2015BE4D784",
+    "earnedToken": "cowUniswapBSCUSDT-OPG",
+    "earnedTokenAddress": "0x3F142c3Fab8DE3639b220f91C782F2015BE4D784",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-opg",
+    "status": "active",
+    "createdAt": 1778526638,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["USDT", "OPG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-bsc-zec-wbnb-rp",
     "name": "ZEC-WBNB Reward Pool",
     "type": "gov",

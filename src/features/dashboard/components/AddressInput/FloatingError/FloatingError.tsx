@@ -30,7 +30,7 @@ export const FloatingError = memo(function FloatingError({
         reference={reference}
         arrowEnabled={true}
         variant="dark"
-        autoWidth={true}
+        autoWidth={false}
         arrowOffset={15}
       >
         <DropdownContent>{t('Dashboard-SearchInput-Invalid-Domain')}</DropdownContent>
@@ -38,7 +38,11 @@ export const FloatingError = memo(function FloatingError({
     );
   }
 
-  if (inputMode === 'address' && userInput.toLowerCase().startsWith('0x')) {
+  if (
+    inputMode === 'address' &&
+    userInput.toLowerCase().startsWith('0x') &&
+    userInput.length >= 20
+  ) {
     return (
       <DropdownProvider
         open={!isAddressValid}
@@ -46,7 +50,7 @@ export const FloatingError = memo(function FloatingError({
         reference={reference}
         arrowEnabled={true}
         variant="dark"
-        autoWidth={true}
+        autoWidth={false}
         arrowOffset={15}
       >
         <DropdownContent>{t('Dashboard-SearchInput-Invalid-Address')}</DropdownContent>

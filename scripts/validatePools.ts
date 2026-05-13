@@ -91,7 +91,7 @@ const nonHarvestOnDepositPools = [
   'pancake-cow-base-sol-cbbtc-vault',
 ];
 const isCowAerodromeWith10sec = (pool: VaultConfigWithStrategyData) =>
-  pool.platformId === 'aerodrome' &&
+  ['velodrome', 'aerodrome'].includes(pool.platformId) &&
   pool.type === 'standard' &&
   pool.strategyTypeId === 'pool' &&
   pool.createdAt > 1776378070;

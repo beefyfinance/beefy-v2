@@ -1,5 +1,116 @@
 [
   {
+    "id": "morpho-v2-base-clearstar-reactor-usdc",
+    "name": "USDC (Clearstar, Reactor V2)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x3D4f7cC6C534c9b34914DFFceC52Bb8214455a74",
+    "earnedToken": "mooMorphoV2BaseClearstarReactorUSDC",
+    "earnedTokenAddress": "0x3D4f7cC6C534c9b34914DFFceC52Bb8214455a74",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1778575765,
+    "platformId": "morpho",
+    "curatorId": "clearstar",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/base/vault/0x116e1A65717A534B73EcB7d4F6543c65DBCd0E46/clearstar-reactor-usdc",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-v2-base-steakhouse-prime-weth",
+    "name": "WETH (Steakhouse, Prime V2)",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0x4200000000000000000000000000000000000006",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0xd0ab1bb92B689236DC0Bc7a2f9aEDC5F90cE4389",
+    "earnedToken": "mooMorphoV2BaseSteakhousePrimeWETH",
+    "earnedTokenAddress": "0xd0ab1bb92B689236DC0Bc7a2f9aEDC5F90cE4389",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1778575765,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["WETH"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/base/vault/0xbeef00f0A818894a2Cf111644A5098421611100E/steakhouse-prime-weth",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-v2-base-gauntlet-balanced-weth",
+    "name": "WETH (Gauntlet, Balanced V2)",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0x4200000000000000000000000000000000000006",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x1DA48d1c79D527859ACD341A0B9456b27f4b6f5B",
+    "earnedToken": "mooMorphoV2BaseGauntletBalancedWETH",
+    "earnedTokenAddress": "0x1DA48d1c79D527859ACD341A0B9456b27f4b6f5B",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1778575765,
+    "platformId": "morpho",
+    "curatorId": "gauntlet",
+    "assets": ["WETH"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/base/vault/0xFeFeC33668E22677c4762d0853d56245a800ff08/gauntlet-weth-balanced",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-base-sol-cbbtc-vault",
     "name": "SOL-cbBTC",
     "type": "standard",
@@ -9583,7 +9694,7 @@
   },
   {
     "id": "morpho-base-steakhouse-prime-eurc",
-    "name": "EURC (Steakhouse, Prime)",
+    "name": "EURC (Steakhouse, Prime V2)",
     "token": "EURC",
     "tokenAddress": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
     "tokenDecimals": 6,
@@ -9619,7 +9730,7 @@
   },
   {
     "id": "morpho-base-gauntlet-prime-usdc",
-    "name": "USDC (Gauntlet, Prime)",
+    "name": "USDC (Gauntlet, Prime V2)",
     "token": "USDC",
     "tokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
     "tokenDecimals": 6,
@@ -9655,7 +9766,7 @@
   },
   {
     "id": "morpho-base-gauntlet-frontier-usdc",
-    "name": "USDC (Gauntlet, Frontier)",
+    "name": "USDC (Gauntlet, Frontier V2)",
     "token": "USDC",
     "tokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
     "tokenDecimals": 6,
@@ -9691,7 +9802,7 @@
   },
   {
     "id": "morpho-base-steakhouse-high-yield-usdc",
-    "name": "USDC (Steakhouse, High Yield)",
+    "name": "USDC (Steakhouse, High Yield V2)",
     "token": "USDC",
     "tokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
     "tokenDecimals": 6,
@@ -17492,9 +17603,10 @@
     "earnedTokenAddress": "0x5f2ca2433275d10e796C73915c2C522f12689332",
     "oracle": "lps",
     "oracleId": "balancerv3-base-wabasgho-wabasusdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1745253197,
-    "pausedAt": 1776628953,
+    "retireReason": "rewards",
+    "retiredAt": 1778660578,
     "platformId": "aura",
     "assets": ["waBasGHO", "waBasUSDC"],
     "risks": {

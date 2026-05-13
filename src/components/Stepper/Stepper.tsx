@@ -9,15 +9,13 @@ import {
 } from '../../features/data/selectors/stepper.ts';
 import { isEmpty } from '../../helpers/utils.ts';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
-import {
-  BridgingContent,
-  ErrorContent,
-  RecoveryContent,
-  StepsCountContent,
-  StepsStartContent,
-  SuccessContent,
-  WaitingContent,
-} from './components/Content/Content.tsx';
+import { BridgingContent } from './components/Content/BridgingContent.tsx';
+import { ErrorContent } from './components/Content/ErrorContent.tsx';
+import { RecoveryContent } from './components/Content/RecoveryContent.tsx';
+import { StepsCountContent } from './components/Content/StepsCountContent.tsx';
+import { StepsStartContent } from './components/Content/StepsStartContent.tsx';
+import { SuccessContent } from './components/Content/Success/SuccessContent.tsx';
+import { WaitingContent } from './components/Content/WaitingContent.tsx';
 import { ProgressBar } from './components/ProgressBar/ProgressBar.tsx';
 
 const stepToComponent: Record<StepContentEnum, FC> = {

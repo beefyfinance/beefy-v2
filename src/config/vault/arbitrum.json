@@ -274,7 +274,7 @@
   },
   {
     "id": "morpho-arb-steakhouse-usdc",
-    "name": "USDC (Steakhouse, High Yield USDC)",
+    "name": "USDC (Steakhouse, High Yield)",
     "token": "USDC",
     "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
     "tokenDecimals": 6,
@@ -382,7 +382,7 @@
   },
   {
     "id": "morpho-arb-hyperithm-usdc",
-    "name": "USDC (Hyperithm)",
+    "name": "USDC (Hyperithm, Apex)",
     "token": "USDC",
     "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
     "tokenDecimals": 6,
