@@ -15,6 +15,7 @@ import { fetchAllContractDataByChainAction } from './contract-data.ts';
 import { fetchCurators } from './curators.ts';
 import { fetchPartnersConfig } from './partners.ts';
 import { fetchPlatforms } from './platforms.ts';
+import { initPoints } from './points.ts';
 import { fetchAllPricesAction } from './prices.ts';
 import { initPromos } from './promos.ts';
 import { fetchOffChainCampaignsAction } from './rewards.ts';
@@ -83,6 +84,8 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
     dispatch(fetchOffChainCampaignsAction());
 
     dispatch(fetchAvgApyAction());
+
+    dispatch(initPoints());
 
     // Zap (we need the data to know if zap is available for each vault)
     dispatch(fetchZapConfigsAction());

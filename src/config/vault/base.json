@@ -444,7 +444,7 @@
     "status": "active",
     "createdAt": 1777573923,
     "platformId": "beefy",
-    "feeTier": "0.05",
+    "feeTier": "0.27",
     "assets": ["WETH", "MORPHO"],
     "risks": {
       "complex": true,

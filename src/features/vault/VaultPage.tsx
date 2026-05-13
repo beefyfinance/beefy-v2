@@ -20,6 +20,7 @@ import { InsuranceCards } from './components/InsuranceCards/InsuranceCards.tsx';
 import { LeverageCards } from './components/LeverageCards/LeverageCards.tsx';
 import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdown/LiquidityPoolBreakdown.tsx';
 import { PnLGraphIfWallet } from './components/PnLGraph/PnLGraphIfWallet.tsx';
+import { PointsBannerLoader } from './components/PointsBanner/PointsBannerLoader.tsx';
 import { RiskChecklistCard } from './components/RiskChecklistCard/RiskChecklistCard.tsx';
 import { VaultHeader } from './components/VaultHeader/VaultHeader.tsx';
 import { VaultsStats } from './components/VaultsStats/VaultsStats.tsx';
@@ -73,6 +74,7 @@ const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) 
             </div>
             <div className={classes.columnInfo}>
               <PromoCardLoader vaultId={vaultId} />
+              <PointsBannerLoader vaultId={vaultId} />
               <PnLGraphIfWallet vaultId={vaultId} />
               <HistoricGraphsLoader vaultId={vaultId} />
               <LiquidityPoolBreakdownLoader vaultId={vaultId} />

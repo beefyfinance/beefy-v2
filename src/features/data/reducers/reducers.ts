@@ -16,6 +16,7 @@ import { historicalSlice } from './historical.ts';
 import { mintersSlice } from './minters.ts';
 import { partnersSlice } from './partners.ts';
 import { platformsSlice } from './platforms.ts';
+import { pointsReducer } from './points.ts';
 import { promosReducer } from './promos.ts';
 import { proposalsSlice } from './proposals.ts';
 import { rewardsReducer } from './rewards.ts';
@@ -53,6 +54,7 @@ const entitiesReducer = combineReducers({
   fees: feesSlice.reducer,
   minters: mintersSlice.reducer,
   platforms: platformsSlice.reducer,
+  points: pointsReducer,
   promos: promosReducer,
   proposals: proposalsSlice.reducer,
   tokens: tokensSlice.reducer,
