@@ -37,6 +37,43 @@
     ]
   },
   {
+    "id": "uniswap-cow-arbitrum-wbtc-cbbtc-rp",
+    "name": "WBTC-cbBTC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArbitrumWBTC-cbBTC",
+    "tokenAddress": "0x618D9328EB1D06dFfD2CB4B67523b2cB5740e32f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x6B29227D91F1317bb945FbCC87B37ef39d04C5f8",
+    "earnedToken": "rCowUniswapArbitrumWBTC-cbBTC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-wbtc-cbbtc",
+    "status": "active",
+    "createdAt": 1778774244,
+    "platformId": "uniswap",
+    "assets": ["WBTC", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arbitrum-mor-weth",
     "name": "MOR-WETH",
     "type": "cowcentrated",
@@ -66,6 +103,46 @@
       "notBattleTested": false,
       "notCorrelated": true,
       "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arbitrum-wbtc-cbbtc",
+    "name": "WBTC-cbBTC",
+    "type": "cowcentrated",
+    "token": "WBTC-cbBTC uniswap",
+    "tokenAddress": "0x9B42809aaaE8d088eE01FE637E948784730F0386",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    ],
+    "earnContractAddress": "0x618D9328EB1D06dFfD2CB4B67523b2cB5740e32f",
+    "earnedToken": "cowUniswapArbitrumWBTC-cbBTC",
+    "earnedTokenAddress": "0x618D9328EB1D06dFfD2CB4B67523b2cB5740e32f",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-wbtc-cbbtc",
+    "status": "active",
+    "createdAt": 1778774244,
+    "platformId": "beefy",
+    "feeTier": "0.01",
+    "assets": ["WBTC", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
       "notVerified": false,
       "synthAsset": false
     },
