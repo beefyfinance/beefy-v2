@@ -90,6 +90,7 @@ import type {
   ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { GammaStrategyConfig } from '../strategy-configs.ts';
+import { canRouteToAllOf } from '../strategy-eligibility.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -1054,6 +1055,14 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
       pending: false,
       extraInfo: { zap: true, vaultId: quote.option.vaultId },
     };
+  }
+
+  async canAcceptTokenAsDeposit(token: TokenEntity): Promise<boolean> {
+    return canRouteToAllOf(this.helpers, this.options.swap, this.lpTokens, token);
+  }
+
+  async canEmitTokenAsWithdraw(token: TokenEntity): Promise<boolean> {
+    return canRouteToAllOf(this.helpers, this.options.swap, this.lpTokens, token);
   }
 
   protected async aggregatorTokenSupport() {

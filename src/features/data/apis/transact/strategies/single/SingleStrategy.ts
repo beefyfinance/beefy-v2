@@ -7,6 +7,7 @@ import {
   isTokenEqual,
   isTokenErc20,
   isTokenNative,
+  type TokenEntity,
   type TokenErc20,
   type TokenNative,
 } from '../../../../entities/token.ts';
@@ -77,6 +78,7 @@ import type {
   ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { SingleStrategyConfig } from '../strategy-configs.ts';
+import { canRouteToAllOf } from '../strategy-eligibility.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -598,6 +600,16 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     const expectedTokens = vaultDeposit.outputs.map(output => output.token);
 
     return { zapRequest, expectedTokens, minBalances };
+  }
+
+  async canAcceptTokenAsDeposit(token: TokenEntity): Promise<boolean> {
+    if (this.isDepositDisabled()) return false;
+    return canRouteToAllOf(this.helpers, this.options.swap, [this.vaultType.depositToken], token);
+  }
+
+  async canEmitTokenAsWithdraw(token: TokenEntity): Promise<boolean> {
+    if (this.isWithdrawDisabled()) return false;
+    return canRouteToAllOf(this.helpers, this.options.swap, [this.vaultType.depositToken], token);
   }
 
   async fetchWithdrawUserlessZapBreakdown(

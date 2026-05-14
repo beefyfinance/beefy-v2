@@ -18,6 +18,7 @@ export enum TransactStep {
   ChainSelect,
   TokenSelect,
   QuoteSelect,
+  DepositFromVaultSelect,
 }
 
 export enum TransactMode {
@@ -25,6 +26,11 @@ export enum TransactMode {
   Withdraw,
   Claim,
   Boost,
+}
+
+export enum DepositSource {
+  Wallet = 'wallet',
+  Vault = 'vault',
 }
 
 export enum TransactStatus {
@@ -158,6 +164,7 @@ export type TransactState = {
   inputMaxes: boolean[];
   mode: TransactMode;
   step: TransactStep;
+  depositSource: DepositSource;
   forceSelection: boolean;
   selections: TransactSelections;
   options: TransactOptions;

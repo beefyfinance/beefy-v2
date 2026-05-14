@@ -938,6 +938,7 @@ export const selectDepositOptionTokensBalanceByChainId = (
   return selectionIds.reduce((acc, selectionId) => {
     const selection = state.ui.transact.selections.bySelectionId[selectionId];
     if (!selection) return acc;
+    if (selection.vaultRefId) return acc;
     return selection.tokens.reduce((sum, token) => {
       const balance = selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress);
       const price = selectTokenPriceByAddress(state, token.chainId, token.address);

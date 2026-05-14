@@ -77,7 +77,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -1089,6 +1089,23 @@ const config = buildConfig(
         active: {
           background: 'transparent',
           border: 'transparent',
+        },
+      },
+      card: {
+        base: {
+          color: '{colors.text.light}',
+          background: '{colors.background.content.dark}',
+          border: '{colors.background.border}',
+        },
+        hover: {
+          color: '{colors.text.light}',
+          background: '{colors.background.content.dark}',
+          border: '{colors.background.content.light}',
+        },
+        active: {
+          color: '{colors.text.light}',
+          background: '{colors.darkBlue.50}',
+          border: '{colors.background.content.light}',
         },
       },
     },

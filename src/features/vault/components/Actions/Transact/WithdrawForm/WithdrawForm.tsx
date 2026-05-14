@@ -117,7 +117,8 @@ const Container = styled('div', {
   base: {
     padding: '16px',
     sm: {
-      padding: '24px',
+      paddingInline: '24px',
+      paddingBlock: '20px 24px',
     },
   },
   variants: {

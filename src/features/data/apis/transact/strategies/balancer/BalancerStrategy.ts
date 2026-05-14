@@ -106,6 +106,7 @@ import type {
   ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { BalancerStrategyConfig } from '../strategy-configs.ts';
+import { canRouteToAllOf, canRouteToAnyOf } from '../strategy-eligibility.ts';
 
 type ZapHelpers = {
   slippage: number;
@@ -1560,6 +1561,25 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
       pending: false,
       extraInfo: { zap: true, vaultId: quote.option.vaultId },
     };
+  }
+
+  async canAcceptTokenAsDeposit(token: TokenEntity): Promise<boolean> {
+    return this.canRouteAcrossEitherEmissionPath(token);
+  }
+
+  async canEmitTokenAsWithdraw(token: TokenEntity): Promise<boolean> {
+    return this.canRouteAcrossEitherEmissionPath(token);
+  }
+
+  protected async canRouteAcrossEitherEmissionPath(token: TokenEntity): Promise<boolean> {
+    if (this.singleTokenOptions.some(t => isTokenEqual(t, token))) return true;
+    if (
+      this.allTokenOptions.length > 0 &&
+      (await canRouteToAllOf(this.helpers, this.options.swap, this.allTokenOptions, token))
+    ) {
+      return true;
+    }
+    return canRouteToAnyOf(this.helpers, this.options.swap, this.singleTokenOptions, token);
   }
 
   protected async aggregatorTokensCanSwapToAllOf(allTokens: TokenEntity[]): Promise<TokenEntity[]> {

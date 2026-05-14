@@ -1,5 +1,4 @@
 import type { UnknownAction } from 'redux';
-import { fetchFees } from '../actions/fees.ts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
 import { transactInit, transactInitReady, transactSwitchMode } from '../actions/transact.ts';
 import { fetchUserOffChainRewardsForVaultAction } from '../actions/user-rewards/user-rewards.ts';
@@ -27,7 +26,7 @@ import { selectMayHaveOffchainUserRewards } from '../selectors/user-rewards.ts';
 import { selectVaultById } from '../selectors/vaults.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
 import { startAppListening } from './listener-middleware.ts';
-import { selectAreFeesLoaded, selectShouldInitFees } from '../selectors/data-loader/fees.ts';
+import { selectAreFeesLoaded } from '../selectors/data-loader/fees.ts';
 import {
   selectIsZapLoaded,
   selectShouldInitZapAggregatorTokenSupport,
@@ -101,22 +100,14 @@ export function addTransactListeners() {
       if (selectShouldInitZapAmms(getState())) {
         loaders.push(dispatch(fetchZapAmmsAction()));
       }
-
       if (selectShouldInitZapConfigs(getState())) {
         loaders.push(dispatch(fetchZapConfigsAction()));
       }
-
       if (selectShouldInitZapSwapAggregators(getState())) {
         loaders.push(dispatch(fetchZapSwapAggregatorsAction()));
       }
-
       if (selectShouldInitZapAggregatorTokenSupport(getState())) {
         loaders.push(dispatch(fetchZapAggregatorTokenSupportAction()));
-      }
-
-      // Deposit/Withdraw: Init fees data loader
-      if (selectShouldInitFees(getState())) {
-        loaders.push(dispatch(fetchFees()));
       }
 
       // Claim: Init user off-chain rewards data loader

@@ -11,7 +11,12 @@ import {
 } from '../../../../../../helpers/big-number.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
-import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../../entities/token.ts';
+import {
+  isTokenEqual,
+  isTokenErc20,
+  isTokenNative,
+  type TokenEntity,
+} from '../../../../entities/token.ts';
 import { isCowcentratedVault, type VaultCowcentrated } from '../../../../entities/vault.ts';
 import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
@@ -70,6 +75,7 @@ import type {
   ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { CowcentratedStrategyConfig } from '../strategy-configs.ts';
+import { canRouteToAllOf } from '../strategy-eligibility.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -412,6 +418,14 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       isCalm: vaultWithdrawn.isCalm,
       vaultType: vaultWithdrawn.vaultType,
     };
+  }
+
+  async canAcceptTokenAsDeposit(token: TokenEntity): Promise<boolean> {
+    return canRouteToAllOf(this.helpers, this.options.swap, this.vaultType.depositTokens, token);
+  }
+
+  async canEmitTokenAsWithdraw(token: TokenEntity): Promise<boolean> {
+    return canRouteToAllOf(this.helpers, this.options.swap, this.vaultType.depositTokens, token);
   }
 
   async fetchWithdrawUserlessZapBreakdown(

@@ -20,6 +20,7 @@ import {
   transactSetInputAmount,
   transactSetSelectedChainId,
   transactSetSlippage,
+  transactSwitchDepositSource,
   transactSwitchMode,
   transactSwitchStep,
 } from '../../actions/transact.ts';
@@ -46,7 +47,7 @@ import type {
   TransactSelections,
   TransactState,
 } from './transact-types.ts';
-import { TransactMode, TransactStatus, TransactStep } from './transact-types.ts';
+import { DepositSource, TransactMode, TransactStatus, TransactStep } from './transact-types.ts';
 
 const initialTransactTokens: TransactSelections = {
   allSelectionIds: [],
@@ -100,6 +101,7 @@ const initialTransactState: TransactState = {
   inputMaxes: [false],
   mode: TransactMode.Deposit,
   step: TransactStep.Form,
+  depositSource: DepositSource.Wallet,
   selections: initialTransactTokens,
   forceSelection: false,
   options: initialTransactOptions,
@@ -125,9 +127,18 @@ const transactSlice = createSlice({
         sliceState.step = TransactStep.Form;
         sliceState.inputAmounts = [BIG_ZERO];
         sliceState.inputMaxes = [false];
+        sliceState.depositSource = DepositSource.Wallet;
       })
       .addCase(transactSwitchStep, (sliceState, action) => {
         sliceState.step = action.payload;
+      })
+      .addCase(transactSwitchDepositSource, (sliceState, action) => {
+        sliceState.depositSource = action.payload;
+        sliceState.step = TransactStep.Form;
+        sliceState.selectedSelectionId = first(sliceState.selections.allSelectionIds);
+        sliceState.forceSelection = true;
+        clearInputs(sliceState);
+        resetQuotes(sliceState);
       })
       .addCase(transactSetSelectedChainId, (sliceState, action) => {
         const chainId = action.payload;
@@ -373,6 +384,7 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.inputMaxes = [false];
   sliceState.forceSelection = false;
   sliceState.successClosed = false;
+  sliceState.depositSource = DepositSource.Wallet;
 
   sliceState.options.status = TransactStatus.Idle;
   sliceState.options.error = undefined;

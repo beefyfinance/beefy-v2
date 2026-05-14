@@ -123,6 +123,14 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     return this.helpers;
   }
 
+  async canAcceptTokenAsDeposit(token: TokenEntity): Promise<boolean> {
+    return this.underlyingStrategy.canAcceptTokenAsDeposit(token);
+  }
+
+  async canEmitTokenAsWithdraw(token: TokenEntity): Promise<boolean> {
+    return this.underlyingStrategy.canEmitTokenAsWithdraw(token);
+  }
+
   async fetchDepositOptions(): Promise<GovComposerDepositOption[]> {
     const [primaryOptions, dualOptions] = await Promise.all([
       this.underlyingStrategy.fetchDepositOptions(),

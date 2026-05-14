@@ -1,6 +1,7 @@
-import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
-import type { TokenErc20 } from '../../../../../entities/token.ts';
+import { BIG_ZERO, fromWei, toWei } from '../../../../../../../helpers/big-number.ts';
+import { isTokenEqual, type TokenErc20 } from '../../../../../entities/token.ts';
 import type { VaultEntity } from '../../../../../entities/vault.ts';
+import { selectVaultPricePerFullShare } from '../../../../../selectors/vaults.ts';
 import { getTransactApi } from '../../../../instances.ts';
 import {
   isZapQuote,
@@ -50,7 +51,23 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
       );
     }
 
-    const underlyingQuote = await match.strategy.fetchWithdrawQuote([input], match.option);
+    /** Adapt share-token input to the strategy's declared input token */
+    const expectedToken = match.option.inputs[0];
+    const adaptedInput: InputTokenAmount =
+      isTokenEqual(expectedToken, input.token) ? input : (
+        {
+          token: expectedToken,
+          amount: fromWei(
+            toWei(input.amount, input.token.decimals).multipliedBy(
+              selectVaultPricePerFullShare(srcHelpers.getState(), this.srcVaultId)
+            ),
+            expectedToken.decimals
+          ),
+          max: input.max,
+        }
+      );
+
+    const underlyingQuote = await match.strategy.fetchWithdrawQuote([adaptedInput], match.option);
     if (!isZapQuote(underlyingQuote)) {
       throw new Error(
         `[cross-chain/vault-source] Composable strategy '${match.strategy.id}' returned a non-zap withdraw quote`

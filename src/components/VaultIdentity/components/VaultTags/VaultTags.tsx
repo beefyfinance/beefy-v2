@@ -75,15 +75,23 @@ const VaultPromoTag = memo(function VaultBoostTag({ promoId, onlyIcon }: VaultPr
 
 type VaultPlatformTagProps = {
   vaultId: VaultEntity['id'];
+  css?: CssStyles;
 };
-const VaultPlatformTag = memo(function VaultPlatformTag({ vaultId }: VaultPlatformTagProps) {
+export const VaultPlatformTag = memo(function VaultPlatformTag({
+  vaultId,
+  css: cssProp,
+}: VaultPlatformTagProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isGov = isGovVault(vault);
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
 
   return (
     <VaultTag
-      css={css.raw(isGov && styles.platformTagGov, isCowcentratedLike && styles.platformTagClm)}
+      css={css.raw(
+        isGov && styles.platformTagGov,
+        isCowcentratedLike && styles.platformTagClm,
+        cssProp
+      )}
       text={<VaultPlatform vaultId={vaultId} />}
     />
   );

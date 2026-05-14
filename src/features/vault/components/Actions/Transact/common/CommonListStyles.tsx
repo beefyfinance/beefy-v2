@@ -10,7 +10,7 @@ export const SelectListContainer = styled('div', {
     borderRadius: '0 0 12px 12px',
     overflow: 'hidden',
     sm: {
-      padding: '24px 0 0 0',
+      padding: '20px 0 0 0',
     },
   },
 });
@@ -98,7 +98,7 @@ export const ListItemRightSide = styled('div', {
     flexWrap: 'nowrap',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    gap: '8px',
+    gap: '12px',
     flexShrink: 1,
     minWidth: '80px',
   },

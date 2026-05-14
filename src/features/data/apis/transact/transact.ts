@@ -8,7 +8,7 @@ import type { Step } from '../../reducers/wallet/stepper-types.ts';
 import { selectVaultById, selectVaultUnderlyingVault } from '../../selectors/vaults.ts';
 import { selectSwapAggregatorsExistForChain, selectZapByChainId } from '../../selectors/zap.ts';
 import type { CrossChainRecoveryParams } from '../../reducers/wallet/transact-types.ts';
-import type { BeefyStateFn } from '../../store/types.ts';
+import type { BeefyState, BeefyStateFn } from '../../store/types.ts';
 import { isDefined } from '../../utils/array-utils.ts';
 import { getSwapAggregator } from '../instances.ts';
 import * as cctp from './cctp/CCTPProvider.ts';
@@ -83,6 +83,12 @@ export function isComposableStrategyConstructorWithOptions(
 }
 
 export class TransactApi implements ITransactApi {
+  // Per-state cache: lets v2v dst enumeration share helpers across the ~hundreds of candidates.
+  private helpersCache = new WeakMap<
+    BeefyState,
+    Map<VaultEntity['id'], Promise<Omit<TransactHelpers, 'getState'>>>
+  >();
+
   async getHelpersForChain(
     chainId: ChainEntity['id'],
     getState: BeefyStateFn
@@ -107,18 +113,24 @@ export class TransactApi implements ITransactApi {
     getState: BeefyStateFn
   ): Promise<TransactHelpers> {
     const state = getState();
-    const vault = selectVaultById(state, vaultId);
-    const vaultType = await this.getVaultTypeFor(vault, getState);
-    const zap = selectZapByChainId(state, vault.chainId);
-    const swapAggregator = await getSwapAggregator();
-
-    return {
-      vault,
-      vaultType,
-      zap,
-      swapAggregator,
-      getState,
-    };
+    let perState = this.helpersCache.get(state);
+    if (!perState) {
+      perState = new Map();
+      this.helpersCache.set(state, perState);
+    }
+    let cached = perState.get(vaultId);
+    if (!cached) {
+      cached = (async () => {
+        const vault = selectVaultById(state, vaultId);
+        const vaultType = await this.getVaultTypeFor(vault, getState);
+        const zap = selectZapByChainId(state, vault.chainId);
+        const swapAggregator = await getSwapAggregator();
+        return { vault, vaultType, zap, swapAggregator };
+      })();
+      perState.set(vaultId, cached);
+    }
+    const partial = await cached;
+    return { ...partial, getState };
   }
 
   async fetchDepositOptionsFor(
@@ -409,7 +421,10 @@ export class TransactApi implements ITransactApi {
     return options.flat().length > 0;
   }
 
-  async getZapStrategiesForVault(helpers: TransactHelpers): Promise<IStrategy[]> {
+  async getZapStrategiesForVault(
+    helpers: TransactHelpers,
+    filter?: (zapConfig: ZapStrategyConfig) => boolean
+  ): Promise<IStrategy[]> {
     const { vault } = helpers;
 
     if (!vault.zaps || vault.zaps.length === 0) {
@@ -421,8 +436,11 @@ export class TransactApi implements ITransactApi {
       return [];
     }
 
+    const zaps = filter ? vault.zaps.filter(filter) : vault.zaps;
+    if (zaps.length === 0) return [];
+
     const strategies = await Promise.all(
-      vault.zaps.map(async zapConfig => {
+      zaps.map(async zapConfig => {
         if (!zapConfig.strategyId) {
           console.warn(`Vault ${vault.id} has a zap config but no strategyId specified`);
           return undefined;

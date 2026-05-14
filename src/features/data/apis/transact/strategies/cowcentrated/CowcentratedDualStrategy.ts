@@ -11,7 +11,12 @@ import {
 } from '../../../../../../helpers/big-number.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
-import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../../entities/token.ts';
+import {
+  isTokenEqual,
+  isTokenErc20,
+  isTokenNative,
+  type TokenEntity,
+} from '../../../../entities/token.ts';
 import { isCowcentratedVault, type VaultCowcentrated } from '../../../../entities/vault.ts';
 import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
@@ -401,6 +406,14 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
       pending: false,
       extraInfo: { zap: true, vaultId: quote.option.vaultId },
     };
+  }
+
+  async canAcceptTokenAsDeposit(_token: TokenEntity): Promise<boolean> {
+    return false;
+  }
+
+  async canEmitTokenAsWithdraw(_token: TokenEntity): Promise<boolean> {
+    return false;
   }
 
   async fetchWithdrawOptions(): Promise<never[]> {
