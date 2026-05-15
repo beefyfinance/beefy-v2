@@ -12,6 +12,7 @@ import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import {
   type AllowanceTokenAmount,
   isCowcentratedDepositQuote,
+  isCrossChainQuote,
   type TokenAmount,
   type ZapQuote,
   type ZapQuoteStep,
@@ -143,18 +144,20 @@ const ChainTag = memo(function ChainTag({
   const chainName = useChainName(chainId);
   return (
     <span className={css(styles.chainTag)}>
-      {children ?? chainName} <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} />
+      {children ?? <>on {chainName}</>}{' '}
+      <ChainIcon chainId={chainId} size={16} css={styles.chainIcon} />
     </span>
   );
 });
 
 const ApprovalStepContent = memo(function ApprovalStepContent({
   allowance,
+  chainId,
 }: {
   allowance: AllowanceTokenAmount;
+  chainId?: ChainEntity['id'];
 }) {
   const { t } = useTranslation();
-  const chainId = allowance.token.chainId;
 
   return (
     <Trans
@@ -165,7 +168,7 @@ const ApprovalStepContent = memo(function ApprovalStepContent({
       }}
       components={{
         fromAmount: <TokenAmountFromEntity amount={allowance.amount} token={allowance.token} />,
-        chain: <ChainTag chainId={chainId} />,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}
     />
   );
@@ -175,15 +178,22 @@ type ApprovalStepProps = {
   allowance: AllowanceTokenAmount;
   number: number;
   status: StepStatusState;
+  isCrossChain: boolean;
 };
-const ApprovalStep = memo(function ApprovalStep({ allowance, number, status }: ApprovalStepProps) {
+const ApprovalStep = memo(function ApprovalStep({
+  allowance,
+  number,
+  status,
+  isCrossChain,
+}: ApprovalStepProps) {
+  const chainId = isCrossChain ? allowance.token.chainId : undefined;
   return (
     <div className={css(styles.stepRow)}>
       <div className={css(styles.stepStatusWrapper)}>
         <StepStatusIndicator status={status} number={number} />
       </div>
       <div className={css(styles.stepContent)}>
-        <ApprovalStepContent allowance={allowance} />
+        <ApprovalStepContent allowance={allowance} chainId={chainId} />
       </div>
     </div>
   );
@@ -503,12 +513,13 @@ type StepProps = {
   step: ZapQuoteStep;
   number: number;
   status: StepStatusState;
+  isCrossChain: boolean;
 };
-const Step = memo(function Step({ step, number, status }: StepProps) {
+const Step = memo(function Step({ step, number, status, isCrossChain }: StepProps) {
   const Component = StepContentComponents[step.type] as ComponentType<
     StepContentProps<ZapQuoteStep>
   >;
-  const chainId = getStepChainId(step);
+  const chainId = isCrossChain ? getStepChainId(step) : undefined;
 
   return (
     <div className={css(styles.stepRow)}>
@@ -577,6 +588,7 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
     effectiveSteps,
     bridgeStepAbsoluteIndex
   );
+  const isCrossChain = isCrossChainQuote(quote);
   const handleSwitch = useCallback(() => {
     dispatch(transactSwitchStep(TransactStep.QuoteSelect));
   }, [dispatch]);
@@ -607,6 +619,7 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
                 key={`approval-${allowance.token.address}`}
                 number={i + 1}
                 status={stepStatuses[i]}
+                isCrossChain={isCrossChain}
               />
             ))}
             {effectiveSteps.map((step, i) => (
@@ -615,6 +628,7 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
                 key={i}
                 number={approvalCount + i + 1}
                 status={stepStatuses[approvalCount + i]}
+                isCrossChain={isCrossChain}
               />
             ))}
           </div>
