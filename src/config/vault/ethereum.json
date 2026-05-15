@@ -1,5 +1,54 @@
 [
   {
+    "id": "curve-mseth-oeth",
+    "name": "msETH/OETH",
+    "type": "standard",
+    "token": "msETHOETH",
+    "tokenAddress": "0xB5b93dde9D87563184d31F3b7f85dd58404E2ee0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xC28f78fEDCf9e1C9A83aF8BFfeEd010C5253F437",
+    "earnedToken": "mooCurve-msETH-OETH",
+    "earnedTokenAddress": "0xC28f78fEDCf9e1C9A83aF8BFfeEd010C5253F437",
+    "oracle": "lps",
+    "oracleId": "curve-mseth-oeth",
+    "status": "active",
+    "createdAt": 1778822024,
+    "platformId": "convex",
+    "assets": ["msETH", "OETH"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-374/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-374/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xB5b93dde9D87563184d31F3b7f85dd58404E2ee0",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xB5b93dde9D87563184d31F3b7f85dd58404E2ee0",
+            "coins": [
+              "0x64351fC9810aDAd17A690E4e1717Df5e7e085160",
+              "0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "stakedao-pmusd-ireet",
     "name": "pmUSD/iREET",
     "type": "standard",
