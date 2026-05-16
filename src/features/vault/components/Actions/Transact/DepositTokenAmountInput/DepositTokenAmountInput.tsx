@@ -4,20 +4,32 @@ import { memo, useCallback, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
-import type { VaultEntity } from '../../../../../data/entities/vault.ts';
+import {
+  isVaultWithPricePerFullShare,
+  type VaultEntity,
+} from '../../../../../data/entities/vault.ts';
 import {
   selectUserBalanceOfToken,
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInShareToken,
-  selectVaultSharesToDepositTokenData,
 } from '../../../../../data/selectors/balance.ts';
-import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens.ts';
+import {
+  selectTokenByAddress,
+  selectTokenPriceByTokenOracleId,
+} from '../../../../../data/selectors/tokens.ts';
 import {
   selectTransactDepositFromVaultId,
   selectTransactInputIndexAmount,
   selectTransactIsDepositFromVault,
 } from '../../../../../data/selectors/transact.ts';
-import { mooAmountToOracleAmount, oracleAmountToMooAmount } from '../../../../../data/utils/ppfs.ts';
+import {
+  selectVaultByIdWithReceipt,
+  selectVaultPricePerFullShare,
+} from '../../../../../data/selectors/vaults.ts';
+import {
+  mooAmountToOracleAmount,
+  oracleAmountToMooAmount,
+} from '../../../../../data/utils/ppfs.ts';
 import type { AmountInputProps } from '../AmountInput/AmountInput.tsx';
 import { AmountInputWithSlider } from '../AmountInputWithSlider/AmountInputWithSlider.tsx';
 import { TokenSelectButton } from '../TokenSelectButton/TokenSelectButton.tsx';
@@ -91,9 +103,14 @@ const V2vDepositTokenAmountInput = memo(function V2vDepositTokenAmountInput({
   css: cssProp,
 }: V2vProps) {
   const dispatch = useAppDispatch();
-  const shareData = useAppSelector(state =>
-    selectVaultSharesToDepositTokenData(state, fromVaultId)
+  const vault = useAppSelector(state => selectVaultByIdWithReceipt(state, fromVaultId));
+  const receiptToken = useAppSelector(state =>
+    selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress)
   );
+  const depositToken = useAppSelector(state =>
+    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
+  );
+  const ppfs = useAppSelector(state => selectVaultPricePerFullShare(state, fromVaultId));
   const shareBalance = useAppSelector(state =>
     selectUserVaultBalanceInShareToken(state, fromVaultId)
   );
@@ -102,34 +119,30 @@ const V2vDepositTokenAmountInput = memo(function V2vDepositTokenAmountInput({
   );
   const storeAmount = useAppSelector(state => selectTransactInputIndexAmount(state, index));
   const price = useAppSelector(state =>
-    selectTokenPriceByTokenOracleId(state, shareData.depositToken.oracleId)
+    selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
   );
 
-  const value = useMemo(() => {
-    if (!shareData.shareToken) return storeAmount;
-    return mooAmountToOracleAmount(
-      shareData.shareToken,
-      shareData.depositToken,
-      shareData.ppfs,
-      storeAmount
-    );
-  }, [shareData, storeAmount]);
+  const value = useMemo(
+    () =>
+      isVaultWithPricePerFullShare(vault) ?
+        mooAmountToOracleAmount(receiptToken, depositToken, ppfs, storeAmount)
+      : storeAmount,
+    [vault, receiptToken, depositToken, ppfs, storeAmount]
+  );
 
   const handleChange = useCallback<NonNullable<AmountInputProps['onChange']>>(
     (typedValue, isMax) => {
-      // store-of-record is share-math; at max dispatch exact share-balance to avoid round-trip wei loss
-      const amount =
-        isMax || !shareData.shareToken ?
-          shareBalance
-        : oracleAmountToMooAmount(
-            shareData.shareToken,
-            shareData.depositToken,
-            shareData.ppfs,
-            typedValue
-          );
+      let amount: BigNumber;
+      if (isMax) {
+        amount = shareBalance;
+      } else if (isVaultWithPricePerFullShare(vault)) {
+        amount = oracleAmountToMooAmount(receiptToken, depositToken, ppfs, typedValue);
+      } else {
+        amount = typedValue.decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR);
+      }
       dispatch(transactSetInputAmount({ index, amount, max: isMax }));
     },
-    [dispatch, shareData, shareBalance, index]
+    [dispatch, vault, receiptToken, depositToken, ppfs, shareBalance, index]
   );
 
   return (
@@ -139,7 +152,7 @@ const V2vDepositTokenAmountInput = memo(function V2vDepositTokenAmountInput({
       price={price}
       maxValue={depositBalance}
       onChange={handleChange}
-      tokenDecimals={shareData.depositToken.decimals}
+      tokenDecimals={depositToken.decimals}
       endAdornment={<TokenSelectButton index={index} />}
     />
   );
