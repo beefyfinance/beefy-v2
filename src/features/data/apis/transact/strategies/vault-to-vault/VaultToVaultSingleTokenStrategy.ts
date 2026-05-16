@@ -62,6 +62,7 @@ type StrategyId = typeof strategyId;
 type V2VQuoteBody = {
   sourceSteps: ZapQuoteStep[];
   destSteps: ZapQuoteStep[];
+  trailingSteps: ZapQuoteStep[];
   outputs: TokenAmount[];
   returned: TokenAmount[];
   allowances: AllowanceTokenAmount[];
@@ -234,9 +235,11 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
 
     const destHandlerQuote = await destHandler.fetchQuote(inputAmount, destCtx);
 
-    const sourceSteps = srcHandlerQuote.sourceSteps;
-    const destSteps = destHandlerQuote.destSteps;
+    const sourceSteps = srcHandlerQuote.sourceSteps.filter(s => s.type !== 'unused');
+    const destSteps = destHandlerQuote.destSteps.filter(s => s.type !== 'unused');
     const returned = mergeTokenAmounts(srcHandlerQuote.returned, destHandlerQuote.returned);
+    const trailingSteps: ZapQuoteStep[] =
+      returned.length > 0 ? [{ type: 'unused', outputs: returned }] : [];
 
     const inputForPricing = convertVaultShareToDepositTokenAmount(
       state,
@@ -247,10 +250,16 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
     return {
       sourceSteps,
       destSteps,
+      trailingSteps,
       outputs: destHandlerQuote.outputs,
       returned,
       allowances: srcHandlerQuote.allowances,
-      priceImpact: calculatePriceImpact([inputForPricing], destHandlerQuote.outputs, returned, state),
+      priceImpact: calculatePriceImpact(
+        [inputForPricing],
+        destHandlerQuote.outputs,
+        returned,
+        state
+      ),
       fee: highestFeeOrZero([...sourceSteps, ...destSteps]),
       srcHandlerQuote,
       destHandlerQuote,
@@ -308,7 +317,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
       option,
       inputs,
       ...body,
-      steps: [...body.sourceSteps, ...body.destSteps],
+      steps: [...body.sourceSteps, ...body.destSteps, ...body.trailingSteps],
     };
   }
 
@@ -323,7 +332,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
       option,
       inputs,
       ...body,
-      steps: [...body.sourceSteps, ...body.destSteps],
+      steps: [...body.sourceSteps, ...body.destSteps, ...body.trailingSteps],
     };
   }
 
