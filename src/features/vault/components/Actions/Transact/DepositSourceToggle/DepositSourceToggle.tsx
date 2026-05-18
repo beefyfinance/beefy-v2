@@ -13,6 +13,7 @@ import {
 } from '../../../../../data/selectors/transact.ts';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { styled } from '@repo/styles/jsx';
 
 export const DepositSourceToggle = memo(function DepositSourceToggle() {
   const { t } = useTranslation();
@@ -51,13 +52,21 @@ export const DepositSourceToggle = memo(function DepositSourceToggle() {
   }
 
   return (
-    <ToggleButtons
-      value={source}
-      options={options}
-      onChange={handleChange}
-      variant="card"
-      fullWidth={true}
-      disabled={isDisabled}
-    />
+    <Container>
+      <ToggleButtons
+        value={source}
+        options={options}
+        onChange={handleChange}
+        variant="card"
+        fullWidth={true}
+        disabled={isDisabled}
+      />
+    </Container>
   );
+});
+
+const Container = styled('div', {
+  base: {
+    height: '82px',
+  },
 });

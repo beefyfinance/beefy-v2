@@ -22159,47 +22159,6 @@
     "network": "arbitrum"
   },
   {
-    "id": "arbidex-arb-usdc",
-    "name": "ARB-USDC.e LP",
-    "type": "standard",
-    "token": "ARB-USDC.e LP",
-    "tokenAddress": "0xD65Ef54B1ff5D9a452B32Ac0c304d1674F761061",
-    "tokenDecimals": 18,
-    "tokenProviderId": "arbidex",
-    "earnContractAddress": "0x698610AdFf053f6bAc0D1800780A3FCf6b16C31f",
-    "earnedToken": "mooArbidexARB-USDC",
-    "earnedTokenAddress": "0x698610AdFf053f6bAc0D1800780A3FCf6b16C31f",
-    "oracle": "lps",
-    "oracleId": "arbidex-arb-usdc",
-    "status": "eol",
-    "createdAt": 1682622717,
-    "retireReason": "rewards",
-    "retiredAt": 1696060775,
-    "platformId": "arbidex",
-    "assets": ["ARB", "arbUSDCe"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": true,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://arbidex.fi/swap/",
-    "addLiquidityUrl": "https://arbidex.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0x912CE59144191C1204E64559FE8253a0e49E6548/",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "arbitrum-arbidex"
-      }
-    ]
-  },
-  {
     "id": "hop-arb-reth",
     "name": "rETH LP",
     "type": "standard",

@@ -56,6 +56,10 @@ const platformTagOverride = css.raw({
   backgroundColor: 'white.100-4a',
 });
 
+const rightSideOverride = css.raw({
+  flexShrink: 0,
+});
+
 export type DepositFromVaultSelectListProps = {
   css?: CssStyles;
 };
@@ -127,7 +131,7 @@ export const DepositFromVaultSelectList = memo(function DepositFromVaultSelectLi
   );
 
   return (
-    <SelectListContainer css={cssProp}>
+    <SelectListContainer css={cssProp} tall={true}>
       <SelectListSearch>
         <SearchInput value={search} onValueChange={setSearch} />
       </SelectListSearch>
@@ -199,7 +203,7 @@ const VaultListItem = memo(function VaultListItem({
           <VaultPlatformTag vaultId={vaultId} css={platformTagOverride} />
         </VaultNameAndTags>
       </VaultLeft>
-      <ListItemRightSide>
+      <ListItemRightSide css={rightSideOverride}>
         <BalanceColumn>
           <ListItemBalanceAmount>
             {formatTokenDisplayCondensed(balance, decimals, 8)}
@@ -293,6 +297,7 @@ const VaultLeft = styled('div', {
     alignItems: 'center',
     gap: '20px',
     minWidth: 0,
+    flex: '1 1 auto',
   },
 });
 

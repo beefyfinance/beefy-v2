@@ -74,4 +74,11 @@ export const styles = {
   forceSelection: css.raw({
     color: 'inherit',
   }),
+  vaultButton: css.raw({
+    minWidth: '0',
+    maxWidth: '170px',
+  }),
+  vaultSelect: css.raw({
+    minWidth: '0',
+  }),
 };

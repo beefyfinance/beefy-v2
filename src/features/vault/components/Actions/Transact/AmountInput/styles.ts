@@ -65,6 +65,7 @@ export const styles = {
     flexGrow: '0',
     flexShrink: '0',
     flexBasis: 'auto',
+    minWidth: '0',
   }),
   startAdornment: css.raw({
     flexGrow: '0',

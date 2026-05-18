@@ -13,6 +13,14 @@ export const SelectListContainer = styled('div', {
       padding: '20px 0 0 0',
     },
   },
+  variants: {
+    tall: {
+      true: {
+        // total form height is 626px, need to subtract 56px from the header to match height in the lists
+        height: '570px',
+      },
+    },
+  },
 });
 
 export const SelectListSearch = styled('div', {

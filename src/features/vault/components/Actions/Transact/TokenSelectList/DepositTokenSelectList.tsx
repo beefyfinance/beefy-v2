@@ -13,6 +13,7 @@ import {
   type SelectionRow,
   selectTransactDepositTokensForChainIdWithBalances,
   selectTransactSelectedChainId,
+  selectTransactUserHasOtherDepositedVaults,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -50,6 +51,7 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
   const selectedChain = transactChainId ?? vault.chainId;
   const [search, setSearch] = useState('');
   const isWalletKnown = useAppSelector(selectIsWalletKnown);
+  const hasOtherDeposits = useAppSelector(selectTransactUserHasOtherDepositedVaults);
   const optionsForChain = useAppSelector(state =>
     selectTransactDepositTokensForChainIdWithBalances(state, selectedChain, vaultId)
   );
@@ -129,7 +131,7 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
   );
 
   return (
-    <SelectListContainer css={cssProp}>
+    <SelectListContainer css={cssProp} tall={hasOtherDeposits}>
       <SelectListSearch>
         <SearchInput value={search} onValueChange={setSearch} />
       </SelectListSearch>

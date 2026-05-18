@@ -130,20 +130,21 @@ const VaultSelectButton = memo(function VaultSelectButton({ cssProp }: VaultSele
       onClick={handleClick}
       className={css(
         styles.button,
+        styles.vaultButton,
         cssProp,
         styles.buttonMore,
         !fromVault && styles.buttonForceSelection
       )}
     >
       {fromVault ?
-        <div className={classes.select}>
+        <div className={css(styles.select, styles.vaultSelect)}>
           <VaultIconWrapper>
             <VaultIcon vaultId={fromVault.id} size={24} />
             <VaultChainBadge>
               <ChainIcon chainId={fromVault.chainId} size={10} />
             </VaultChainBadge>
           </VaultIconWrapper>
-          {fromVault.names.single}
+          <VaultName>{fromVault.names.single}</VaultName>
         </div>
       : <div className={css(styles.select, styles.forceSelection)}>
           {t('Transact-DepositFromVault-Select')}
@@ -152,6 +153,15 @@ const VaultSelectButton = memo(function VaultSelectButton({ cssProp }: VaultSele
       <ExpandMore className={classes.iconMore} />
     </button>
   );
+});
+
+const VaultName = styled('span', {
+  base: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    minWidth: 0,
+  },
 });
 
 const VaultIconWrapper = styled('div', {
