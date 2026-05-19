@@ -1,5 +1,103 @@
 [
   {
+    "id": "stakedao-frxusd-aznd",
+    "name": "frxUSD/AZND",
+    "type": "standard",
+    "token": "frxAZND",
+    "tokenAddress": "0x16a973F8e466F44e9eA67e7e2d3166bD460ea852",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xB1DfA5239A3619cfde62E4a0053B81080dfC63e2",
+    "earnedToken": "mooStakeDao-frxUSD-AZND",
+    "earnedTokenAddress": "0xB1DfA5239A3619cfde62E4a0053B81080dfC63e2",
+    "oracle": "lps",
+    "oracleId": "curve-frxusd-aznd",
+    "status": "active",
+    "createdAt": 1779091443,
+    "platformId": "stakedao",
+    "assets": ["frxUSD", "AZND"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-819/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-819/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x16a973F8e466F44e9eA67e7e2d3166bD460ea852",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x16a973F8e466F44e9eA67e7e2d3166bD460ea852",
+            "coins": [
+              "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+              "0x52c66B5E7f8Fde20843De900C5C8B4b0F23708A0"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "stakedao-frxusd-mubond",
+    "name": "frxUSD/muBOND",
+    "type": "standard",
+    "token": "frxmuBOND",
+    "tokenAddress": "0x01646F6fe0d75CEd6E514faB0Ea2F4ed5e1A5C9F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xC2578655Ae7397C7EfC4bc8e0B876C08275694d3",
+    "earnedToken": "mooStakeDao-frxUSD-muBOND",
+    "earnedTokenAddress": "0xC2578655Ae7397C7EfC4bc8e0B876C08275694d3",
+    "oracle": "lps",
+    "oracleId": "curve-frxusd-mubond",
+    "status": "active",
+    "createdAt": 1779091428,
+    "platformId": "stakedao",
+    "assets": ["frxUSD", "muBOND"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-822/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-822/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x01646F6fe0d75CEd6E514faB0Ea2F4ed5e1A5C9F",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x01646F6fe0d75CEd6E514faB0Ea2F4ed5e1A5C9F",
+            "coins": [
+              "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+              "0x09AD9c6DcadCc3aB0b3E107E8E7DA69c2eEa8599"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curve-mseth-oeth",
     "name": "msETH/OETH",
     "type": "standard",
