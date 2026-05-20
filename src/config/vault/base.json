@@ -1,5 +1,82 @@
 [
   {
+    "id": "uniswap-cow-base-weth-mor-rp",
+    "name": "MOR-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseMOR-WETH",
+    "tokenAddress": "0x5365c568ABA52688bc2c7930E2b980AA8A8DE2f8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x822386a7EE14E1cfD314AdDb1DCe2AE3706A63EC",
+    "earnedToken": "rCowUniswapBaseMOR-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-mor",
+    "status": "active",
+    "createdAt": 1779100659,
+    "platformId": "uniswap",
+    "assets": ["MOR", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-mor",
+    "name": "MOR-WETH",
+    "type": "cowcentrated",
+    "token": "MOR-WETH uniswap",
+    "tokenAddress": "0x37ecD41f5a01B23a3d9bb3b4DdfEF4eD455d6fd3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x7431aDa8a591C955a994a21710752EF9b882b8e3"
+    ],
+    "earnContractAddress": "0x5365c568ABA52688bc2c7930E2b980AA8A8DE2f8",
+    "earnedToken": "cowUniswapBaseMOR-WETH",
+    "earnedTokenAddress": "0x5365c568ABA52688bc2c7930E2b980AA8A8DE2f8",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-mor",
+    "status": "active",
+    "createdAt": 1779100659,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["MOR", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-usdc-opg-vault",
     "name": "USDC-OPG",
     "type": "standard",

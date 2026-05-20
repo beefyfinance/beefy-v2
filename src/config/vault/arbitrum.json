@@ -1,5 +1,82 @@
 [
   {
+    "id": "uniswap-cow-arbitrum-mor-weth-rp",
+    "name": "MOR-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArbitrumMOR-WETH",
+    "tokenAddress": "0x2AC513Bc6432063B391E5b12F04eAba71Aaf30dC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x451391ec8f8B4dEf10E5d8dd0e148A2D2Dd38160",
+    "earnedToken": "rCowUniswapArbitrumMOR-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-mor-weth",
+    "status": "active",
+    "createdAt": 1779100673,
+    "platformId": "uniswap",
+    "assets": ["MOR", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arbitrum-mor-weth",
+    "name": "MOR-WETH",
+    "type": "cowcentrated",
+    "token": "MOR-WETH uniswap",
+    "tokenAddress": "0xE5Cf22EE4988d54141B77050967E1052Bd9c7F7A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x092bAaDB7DEf4C3981454dD9c0A0D7FF07bCFc86",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnContractAddress": "0x2AC513Bc6432063B391E5b12F04eAba71Aaf30dC",
+    "earnedToken": "cowUniswapArbitrumMOR-WETH",
+    "earnedTokenAddress": "0x2AC513Bc6432063B391E5b12F04eAba71Aaf30dC",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-mor-weth",
+    "status": "active",
+    "createdAt": 1779100673,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "assets": ["MOR", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arbitrum-chip-usdc-rp",
     "name": "CHIP-USDC Reward Pool",
     "type": "gov",
@@ -932,9 +1009,8 @@
     "earnedTokenAddress": "0x03F1aA37749D1226B2F147e00f8e219d1179C9c5",
     "oracle": "lps",
     "oracleId": "balancerv3-arbitrum-waarbweth-reth",
-    "status": "paused",
+    "status": "active",
     "createdAt": 1756747503,
-    "pausedAt": 1776628953,
     "platformId": "aura",
     "assets": ["waArbWETH", "rETH"],
     "risks": {
@@ -1032,9 +1108,8 @@
     "earnedTokenAddress": "0x1C49B46D878fcabA86EcDaC5436d86cdcd85a62B",
     "oracle": "lps",
     "oracleId": "balancerv3-arbitrum-waarbweth-waarbwsteth",
-    "status": "paused",
+    "status": "active",
     "createdAt": 1745365759,
-    "pausedAt": 1776628953,
     "platformId": "aura",
     "assets": ["waArbWETH", "waArbwstETH"],
     "risks": {
