@@ -319,6 +319,20 @@ export const selectVaultSharesToDepositTokenData = createCachedSelector(
 )((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 /**
+ * Total shares including boosts (excludes bridged and pending withdrawal)
+ * (For gov vaults this will be in deposit token since there are no shares)
+ */
+export const selectUserVaultBalanceInShareTokenIncludingBoosts = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, maybeWalletAddress),
+  (...balances) => {
+    return bigNumberOrStaticZero(balances.reduce((acc, balance) => acc.plus(balance), BIG_ZERO));
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
+
+/**
  * Total shares including boosts, bridged and pending withdrawal
  * (For gov vaults this will be in deposit token since there are no shares)
  */

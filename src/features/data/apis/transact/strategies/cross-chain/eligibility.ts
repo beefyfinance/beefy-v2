@@ -5,7 +5,7 @@ import type { ChainEntity } from '../../../../entities/chain.ts';
 import type { TokenEntity } from '../../../../entities/token.ts';
 import type { VaultEntity } from '../../../../entities/vault.ts';
 import { isVaultActive } from '../../../../entities/vault.ts';
-import { selectUserVaultBalanceInShareTokenIncludingDisplaced } from '../../../../selectors/balance.ts';
+import { selectUserVaultBalanceInShareTokenIncludingBoosts } from '../../../../selectors/balance.ts';
 import { selectVaultById } from '../../../../selectors/vaults.ts';
 import type { BeefyState } from '../../../../store/types.ts';
 import { getTransactApi } from '../../../instances.ts';
@@ -75,14 +75,14 @@ async function anyComposableStrategyAccepts(
   return verdicts.some(Boolean);
 }
 
-// Includes displaced (boosted/bridged) shares so src-vault candidates surface even when the user is currently staking.
+// Includes boost stakes (not bridged or pending) so src-vault candidates surface even when the user is currently staking.
 export function userHasPositionIn(
   vaultId: VaultEntity['id'],
   state: BeefyState,
   walletAddress: string | undefined
 ): boolean {
   if (!walletAddress) return false;
-  const shares: BigNumber = selectUserVaultBalanceInShareTokenIncludingDisplaced(
+  const shares: BigNumber = selectUserVaultBalanceInShareTokenIncludingBoosts(
     state,
     vaultId,
     walletAddress
