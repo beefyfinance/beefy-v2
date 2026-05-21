@@ -7,6 +7,7 @@ import { shouldVaultShowInterest, type VaultEntity } from '../../../../data/enti
 import { selectVaultTotalApyOrUndefined } from '../../../../data/selectors/apy.ts';
 import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../data/selectors/boosts.ts';
 import { selectChainById } from '../../../../data/selectors/chains.ts';
+import { selectVaultPlatformOrUndefined } from '../../../../data/selectors/platforms.ts';
 import { selectErc4626VaultById } from '../../../../data/selectors/vaults.ts';
 import { CardTitle } from '../../Card/CardTitle.tsx';
 import { ApyDetails } from '../ApyDetails/ApyDetails.tsx';
@@ -20,6 +21,7 @@ type Erc4626ExplainerProps = {
 const Erc4626Explainer = memo(function Erc4626Explainer({ vaultId }: Erc4626ExplainerProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectErc4626VaultById(state, vaultId));
+  const platform = useAppSelector(state => selectVaultPlatformOrUndefined(state, vaultId));
   const boost = useAppSelector(state => selectCurrentBoostByVaultIdOrUndefined(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const apys = useAppSelector(state => selectVaultTotalApyOrUndefined(state, vaultId));
@@ -50,7 +52,10 @@ const Erc4626Explainer = memo(function Erc4626Explainer({ vaultId }: Erc4626Expl
       description={<Erc4626Description vaultId={vaultId} />}
       details={
         showApy ?
-          <ApyDetails type={getApyLabelsTypeForVault(vault, apys.totalType)} values={apys} />
+          <ApyDetails
+            type={getApyLabelsTypeForVault(vault, apys.totalType, platform)}
+            values={apys}
+          />
         : null
       }
     />

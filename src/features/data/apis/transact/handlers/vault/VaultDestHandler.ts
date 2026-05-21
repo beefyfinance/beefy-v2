@@ -1,17 +1,17 @@
 import type BigNumber from 'bignumber.js';
-import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
-import type { TokenErc20 } from '../../../../../entities/token.ts';
-import type { VaultEntity } from '../../../../../entities/vault.ts';
-import { getTransactApi } from '../../../../instances.ts';
-import { isZapQuote, type DepositOption, type ZapDepositQuote } from '../../../transact-types.ts';
-import { isComposableStrategy, type IStrategy } from '../../IStrategy.ts';
-import { collectIntermediateTokens } from './dust.ts';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import type { TokenErc20 } from '../../../../entities/token.ts';
+import type { VaultEntity } from '../../../../entities/vault.ts';
+import { getTransactApi } from '../../../instances.ts';
+import { isZapQuote, type DepositOption, type ZapDepositQuote } from '../../transact-types.ts';
+import { isComposableStrategy, type IStrategy } from '../../strategies/IStrategy.ts';
+import { collectIntermediateTokens } from '../dust.ts';
 import type {
   DestHandlerContext,
   DestHandlerQuote,
   DestHandlerSteps,
   IDestHandler,
-} from './types.ts';
+} from '../types.ts';
 
 type StrategyMatch = { strategy: IStrategy; option: DepositOption };
 
@@ -21,7 +21,7 @@ type VaultDestState = {
 };
 
 /**
- * Vault dest handler: deposit bridge token into a vault on the dst chain.
+ * Vault dest handler: deposit the handler's `inputToken` into a vault on the dst chain.
  * fetchZapSteps may run via the dst-only recovery path when hookData oversizes.
  */
 export class VaultDestHandler implements IDestHandler<VaultDestState> {
@@ -30,34 +30,34 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
   constructor(private readonly destVaultId: VaultEntity['id']) {}
 
   async fetchQuote(
-    bridgeTokenIn: BigNumber,
+    inputAmount: BigNumber,
     ctx: DestHandlerContext
   ): Promise<DestHandlerQuote<VaultDestState>> {
     const destHelpers = await ctx.resolveHelpersForVault(this.destVaultId);
     const destStrategies = await (await getTransactApi()).getZapStrategiesForVault(destHelpers);
 
-    const match = await VaultDestHandler.findStrategyForBridgeTokenDeposit(
+    const match = await VaultDestHandler.findStrategyForInputDeposit(
       destStrategies,
-      ctx.destBridgeToken
+      ctx.inputToken
     );
     if (!match) {
       throw new Error(
-        `[cross-chain/vault-dest] No composable destination strategy accepts bridge token on chain ${ctx.destChainId} for vault ${this.destVaultId}`
+        `[vault-dest] No composable destination strategy accepts input token on chain ${ctx.destChainId} for vault ${this.destVaultId}`
       );
     }
 
     const destQuote = await match.strategy.fetchDepositQuote(
-      [{ token: ctx.destBridgeToken, amount: bridgeTokenIn, max: false }],
+      [{ token: ctx.inputToken, amount: inputAmount, max: false }],
       match.option
     );
     if (!isZapQuote(destQuote)) {
       throw new Error(
-        `[cross-chain/vault-dest] Composable strategy '${match.strategy.id}' returned a non-zap deposit quote`
+        `[vault-dest] Composable strategy '${match.strategy.id}' returned a non-zap deposit quote`
       );
     }
 
     const dustTokens = collectIntermediateTokens({
-      bridgeToken: ctx.destBridgeToken,
+      anchorToken: ctx.inputToken,
       picks: {
         outputs: destQuote.outputs,
         inputs: destQuote.inputs,
@@ -87,7 +87,7 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
     const destStrategy = destStrategies.find(s => s.id === destQuote.strategyId);
     if (!destStrategy || !isComposableStrategy(destStrategy)) {
       throw new Error(
-        `[cross-chain/vault-dest] Destination strategy '${destQuote.strategyId}' on chain ${ctx.destChainId} is not composable`
+        `[vault-dest] Destination strategy '${destQuote.strategyId}' on chain ${ctx.destChainId} is not composable`
       );
     }
 
@@ -99,26 +99,26 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
     };
   }
 
-  /** Find a composable dst strategy accepting the bridge token; identity case is handled by SingleStrategy's identity option. */
-  private static async findStrategyForBridgeTokenDeposit(
+  /** Find a composable dst strategy accepting the input token; identity case is handled by SingleStrategy's identity option. */
+  private static async findStrategyForInputDeposit(
     strategies: IStrategy[],
-    destBridgeToken: TokenErc20 | { address: string }
+    inputToken: TokenErc20 | { address: string }
   ): Promise<StrategyMatch | undefined> {
     for (const strategy of strategies) {
       if (!isComposableStrategy(strategy)) continue;
       try {
         const options = await strategy.fetchDepositOptions();
-        const bridgeTokenOption = options.find(
+        const matched = options.find(
           o =>
             o.inputs.length === 1 &&
-            o.inputs[0].address.toLowerCase() === destBridgeToken.address.toLowerCase()
+            o.inputs[0].address.toLowerCase() === inputToken.address.toLowerCase()
         );
-        if (bridgeTokenOption) {
-          return { strategy, option: bridgeTokenOption };
+        if (matched) {
+          return { strategy, option: matched };
         }
       } catch (err) {
         console.warn(
-          `[cross-chain] findStrategyForBridgeTokenDeposit: strategy '${strategy.id}' failed`,
+          `[vault-dest] findStrategyForInputDeposit: strategy '${strategy.id}' failed`,
           err
         );
       }

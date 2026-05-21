@@ -75,7 +75,7 @@ const Header = styled('div', {
     padding: '16px',
     backgroundColor: 'background.content.points',
     backgroundImage:
-      'linear-gradient(to right, var(--colors-white-70-24a) 1px, transparent 1px), linear-gradient(to bottom, var(--colors-white-70-24a) 1px, transparent 1px)',
+      'linear-gradient(to right, {colors.white.70-24a} 1px, transparent 1px), linear-gradient(to bottom, {colors.white.70-24a} 1px, transparent 1px)',
     backgroundSize: '51px 100%, 100% 39px',
     backgroundPosition: '25px 0, 0 20px',
     backgroundRepeat: 'repeat-x, repeat-y',

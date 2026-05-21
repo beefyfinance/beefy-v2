@@ -29,6 +29,7 @@ const compareVaultKeys = makeKeyComparer([
   'pausedAt',
   'platformId',
   'feeTier',
+  'tickSpacing',
   'curatorId',
   'assets',
   'migrationIds',

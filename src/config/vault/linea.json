@@ -106,6 +106,7 @@
     "retiredAt": 1769468077,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 50,
     "assets": ["LINEA", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -227,6 +228,7 @@
     "createdAt": 1757547444,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 50,
     "assets": ["LINEA", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -348,6 +350,7 @@
     "createdAt": 1757251543,
     "platformId": "beefy",
     "feeTier": "0.2",
+    "tickSpacing": 50,
     "assets": ["USDT", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -469,6 +472,7 @@
     "createdAt": 1757250076,
     "platformId": "beefy",
     "feeTier": "0.2",
+    "tickSpacing": 10,
     "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -590,6 +594,7 @@
     "createdAt": 1757250076,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 50,
     "assets": ["USDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -951,6 +956,7 @@
     "retiredAt": 1743510776,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["weETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1079,6 +1085,7 @@
     "retiredAt": 1743510776,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["wrsETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1206,6 +1213,7 @@
     "retiredAt": 1743510776,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["ezETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1333,6 +1341,7 @@
     "retiredAt": 1778468701,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1460,6 +1469,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["WBTC", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1582,11 +1592,12 @@
     "oracle": "lps",
     "oracleId": "nile-cl-usdc-usdt",
     "status": "eol",
+    "createdAt": 1722886922,
     "retireReason": "rewards",
     "retiredAt": 1754377956,
-    "createdAt": 1722886922,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 1,
     "assets": ["USDC", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1714,6 +1725,7 @@
     "retiredAt": 1775466735,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["USDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1841,6 +1853,7 @@
     "retiredAt": 1775466730,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["USDT", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1960,6 +1973,7 @@
     "createdAt": 1721749383,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2116,6 +2130,7 @@
     "retiredAt": 1769468077,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDC", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2157,6 +2172,7 @@
     "createdAt": 1718657097,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2198,6 +2214,7 @@
     "createdAt": 1718657097,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,

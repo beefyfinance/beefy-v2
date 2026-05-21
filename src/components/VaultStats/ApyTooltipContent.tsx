@@ -3,9 +3,10 @@ import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import { selectVaultPlatformOrUndefined } from '../../features/data/selectors/platforms.ts';
 import {
   getApyComponents,
-  getApyLabelsForType,
+  getApyLabelsForVault,
   getApyLabelsTypeForVault,
 } from '../../helpers/apy.ts';
 import { type FormattedAvgApy, type FormattedTotalApy } from '../../helpers/format.ts';
@@ -28,8 +29,9 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
   header = false,
 }: TotalApyTooltipContentProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const platform = useAppSelector(state => selectVaultPlatformOrUndefined(state, vaultId));
   const rows = useMemo(() => {
-    const labels = getApyLabelsForType(getApyLabelsTypeForVault(vault, rates.totalType));
+    const labels = getApyLabelsForVault(vault, rates.totalType, platform);
     const allComponents = getApyComponents();
     const components = allComponents[type];
     const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';
@@ -51,7 +53,7 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
     });
 
     return items;
-  }, [vault, isBoosted, rates, type]);
+  }, [vault, platform, isBoosted, rates, type]);
 
   return <InterestTooltipContent rows={rows} header={header ? 'Current' : undefined} />;
 });
@@ -71,9 +73,10 @@ export const AverageApyTooltipContent = memo(function AverageApyTooltipContent({
 }: AverageApyTooltipContentProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const platform = useAppSelector(state => selectVaultPlatformOrUndefined(state, vaultId));
 
   const { rows, noteDays } = useMemo(() => {
-    const labelType = getApyLabelsTypeForVault(vault, totalType);
+    const labelType = getApyLabelsTypeForVault(vault, totalType, platform);
     const items: {
       label: string | string[];
       value: string;
@@ -100,7 +103,7 @@ export const AverageApyTooltipContent = memo(function AverageApyTooltipContent({
       rows: items.length ? items : undefined,
       noteDays: items.length && partialDays !== undefined ? Math.max(1, partialDays) : undefined,
     };
-  }, [vault, averages, totalType]);
+  }, [vault, platform, averages, totalType]);
 
   if (!rows) {
     return null;

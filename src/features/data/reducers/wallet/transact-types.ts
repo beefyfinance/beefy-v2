@@ -45,8 +45,6 @@ export type TransactSelection = {
   tokens: TokenEntity[];
   order: number;
   hideIfZeroBalance: boolean;
-  /** Cross-chain v2v: src vaultId on deposit, dst vaultId on withdraw. */
-  vaultRefId?: VaultEntity['id'];
 };
 
 export type TransactSelections = {

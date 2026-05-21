@@ -18,10 +18,7 @@ import type { ZapStrategyId } from './strategies/strategy-configs.ts';
 import type { ChainTransactHelpers, IStrategy, TransactHelpers } from './strategies/IStrategy.ts';
 import type { QuoteResponse } from './swap/ISwapProvider.ts';
 import type { CCTPBridgeQuote } from './cctp/types.ts';
-import type {
-  DestHandlerQuote,
-  SourceHandlerQuote,
-} from './strategies/cross-chain/handlers/types.ts';
+import type { DestHandlerQuote, SourceHandlerQuote } from './handlers/types.ts';
 
 export type TokenAmount<T extends TokenEntity = TokenEntity> = {
   amount: BigNumber;
@@ -415,6 +412,34 @@ export type CrossChainWithdrawOption =
   | CrossChainSwapDstWithdrawOption
   | CrossChainVaultDstWithdrawOption;
 
+/**
+ * Same-chain vault-to-vault deposit option: routes user's vault A shares through
+ * a routing token into the page vault (B) within a single atomic zap.
+ */
+export type VaultToVaultSingleTokenDepositOption = ZapBaseDepositOption & {
+  strategyId: 'vault-to-vault-single-token';
+  /** Source vault — the user's existing position being unwound. */
+  srcVaultId: VaultEntity['id'];
+  /** Destination vault — always the page vault. */
+  destVaultId: VaultEntity['id'];
+  /** Token used as the routing handoff between source and destination legs. */
+  routingToken: TokenEntity;
+};
+
+/**
+ * Same-chain vault-to-vault withdraw option: routes the page vault's shares
+ * through a routing token into a target vault on the same chain.
+ */
+export type VaultToVaultSingleTokenWithdrawOption = ZapBaseWithdrawOption & {
+  strategyId: 'vault-to-vault-single-token';
+  /** Source vault — always the page vault. */
+  srcVaultId: VaultEntity['id'];
+  /** Destination vault — the user's chosen target. */
+  destVaultId: VaultEntity['id'];
+  /** Token used as the routing handoff between source and destination legs. */
+  routingToken: TokenEntity;
+};
+
 export type DepositOption =
   | StandardVaultDepositOption
   | GovVaultDepositOption
@@ -432,7 +457,8 @@ export type DepositOption =
   | VaultComposerDepositOption
   | RewardPoolToVaultDepositOption
   | BalancerDepositOption
-  | CrossChainDepositOption;
+  | CrossChainDepositOption
+  | VaultToVaultSingleTokenDepositOption;
 
 export type WithdrawOption =
   | StandardVaultWithdrawOption
@@ -450,7 +476,8 @@ export type WithdrawOption =
   | VaultComposerWithdrawOption
   | RewardPoolToVaultWithdrawOption
   | BalancerWithdrawOption
-  | CrossChainWithdrawOption;
+  | CrossChainWithdrawOption
+  | VaultToVaultSingleTokenWithdrawOption;
 
 export type TransactOption = DepositOption | WithdrawOption;
 
@@ -491,6 +518,47 @@ export function isCrossChainVaultDstWithdrawOption(
 ): option is CrossChainVaultDstWithdrawOption {
   return isCrossChainWithdrawOption(option) && option.destHandlerKind === 'vault';
 }
+
+export function isVaultToVaultSingleTokenDepositOption(
+  option: TransactOption
+): option is VaultToVaultSingleTokenDepositOption {
+  return (
+    option.strategyId === 'vault-to-vault-single-token' && option.mode === TransactMode.Deposit
+  );
+}
+
+export function isVaultToVaultSingleTokenWithdrawOption(
+  option: TransactOption
+): option is VaultToVaultSingleTokenWithdrawOption {
+  return (
+    option.strategyId === 'vault-to-vault-single-token' && option.mode === TransactMode.Withdraw
+  );
+}
+
+export type VaultSourceDepositOption =
+  | CrossChainVaultSrcDepositOption
+  | VaultToVaultSingleTokenDepositOption;
+
+export type VaultDestWithdrawOption =
+  | CrossChainVaultDstWithdrawOption
+  | VaultToVaultSingleTokenWithdrawOption;
+
+export function isVaultSourceDepositOption(
+  option: TransactOption
+): option is VaultSourceDepositOption {
+  return (
+    isCrossChainVaultSrcDepositOption(option) || isVaultToVaultSingleTokenDepositOption(option)
+  );
+}
+
+export function isVaultDestWithdrawOption(
+  option: TransactOption
+): option is VaultDestWithdrawOption {
+  return (
+    isCrossChainVaultDstWithdrawOption(option) || isVaultToVaultSingleTokenWithdrawOption(option)
+  );
+}
+
 export type CrossChainTokenOption = {
   token: TokenEntity;
   balanceUsd: BigNumber;
@@ -784,6 +852,15 @@ export type VaultDepositQuote =
   | CowcentratedVaultDepositQuote
   | Erc4626VaultDepositQuote;
 
+/** Quote for a same-chain vault-to-vault deposit: src vault withdraw → intermediary → page vault deposit. */
+export type VaultToVaultSingleTokenDepositQuote =
+  BaseZapQuote<VaultToVaultSingleTokenDepositOption> & {
+    sourceSteps: ZapQuoteStep[];
+    destSteps: ZapQuoteStep[];
+    srcHandlerQuote: SourceHandlerQuote;
+    destHandlerQuote: DestHandlerQuote;
+  };
+
 export type ZapDepositQuote =
   | SingleDepositQuote
   | UniswapV2DepositQuote
@@ -797,7 +874,8 @@ export type ZapDepositQuote =
   | VaultComposerZapDepositQuote
   | RewardPoolToVaultDepositQuote
   | BalancerDepositQuote
-  | CrossChainDepositQuote;
+  | CrossChainDepositQuote
+  | VaultToVaultSingleTokenDepositQuote;
 
 export type DepositQuote = VaultDepositQuote | ZapDepositQuote;
 
@@ -912,6 +990,15 @@ export type CrossChainWithdrawQuote = BaseZapQuote<CrossChainWithdrawOption> & {
   destHandlerQuote: DestHandlerQuote;
 };
 
+/** Quote for a same-chain vault-to-vault withdraw: page vault withdraw → intermediary → dst vault deposit. */
+export type VaultToVaultSingleTokenWithdrawQuote =
+  BaseZapQuote<VaultToVaultSingleTokenWithdrawOption> & {
+    sourceSteps: ZapQuoteStep[];
+    destSteps: ZapQuoteStep[];
+    srcHandlerQuote: SourceHandlerQuote;
+    destHandlerQuote: DestHandlerQuote;
+  };
+
 export type ZapWithdrawQuote =
   | SingleWithdrawQuote
   | UniswapV2WithdrawQuote
@@ -923,7 +1010,8 @@ export type ZapWithdrawQuote =
   | GovComposerZapWithdrawQuote
   | VaultComposerZapWithdrawQuote
   | BalancerWithdrawQuote
-  | CrossChainWithdrawQuote;
+  | CrossChainWithdrawQuote
+  | VaultToVaultSingleTokenWithdrawQuote;
 
 export type WithdrawQuote = VaultWithdrawQuote | ZapWithdrawQuote;
 

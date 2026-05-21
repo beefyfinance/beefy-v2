@@ -100,6 +100,7 @@
     "createdAt": 1752655421,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 100,
     "assets": ["WETH", "USDT0"],
     "risks": {
       "updatedAt": 1765557014,
@@ -226,6 +227,7 @@
     "updatedAt": 1752655420,
     "platformId": "beefy",
     "feeTier": "0.27",
+    "tickSpacing": 200,
     "assets": ["WETH", "LSK"],
     "risks": {
       "updatedAt": 1765557014,
@@ -349,6 +351,7 @@
     "createdAt": 1734022386,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 100,
     "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -558,6 +561,7 @@
     "retiredAt": 1764609953,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 100,
     "assets": ["USDT", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -687,6 +691,7 @@
     "retiredAt": 1764609953,
     "platformId": "beefy",
     "feeTier": ".01",
+    "tickSpacing": 1,
     "assets": ["USDT", "USDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -816,6 +821,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["WETH", "XVELO"],
     "risks": {
       "updatedAt": 1765557014,
@@ -904,6 +910,7 @@
     "retiredAt": 1761205953,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["LSK", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -992,6 +999,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["USDT", "WETH"],
     "risks": {
       "updatedAt": 1765557014,

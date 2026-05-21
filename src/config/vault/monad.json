@@ -563,6 +563,7 @@
     "createdAt": 1769465726,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBTC", "WMON"],
     "risks": {
       "complex": true,
@@ -935,6 +936,7 @@
     "createdAt": 1768320940,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["DUST", "AUSD"],
     "risks": {
       "updatedAt": 1768320940,
@@ -1307,6 +1309,7 @@
     "createdAt": 1766105431,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USD1", "USDC"],
     "risks": {
       "complex": true,
@@ -1425,6 +1428,7 @@
     "createdAt": 1766105404,
     "platformId": "beefy",
     "feeTier": "0.25",
+    "tickSpacing": 50,
     "assets": ["USD1", "WMON"],
     "risks": {
       "complex": true,
@@ -1965,6 +1969,7 @@
     "createdAt": 1764765410,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["wstETH", "WMON"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2083,6 +2088,7 @@
     "createdAt": 1764765192,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "WMON"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2201,6 +2207,7 @@
     "createdAt": 1764765004,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["AUSD", "WMON"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2319,6 +2326,7 @@
     "createdAt": 1764764803,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDC", "WMON"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2398,6 +2406,7 @@
     "createdAt": 1764764709,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["WBTC", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2604,6 +2613,7 @@
     "createdAt": 1764167577,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["USDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2683,6 +2693,7 @@
     "createdAt": 1764108468,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["WMON", "USDC"],
     "risks": {
       "updatedAt": 1765557014,

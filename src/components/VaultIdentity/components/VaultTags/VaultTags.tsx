@@ -102,6 +102,7 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
   longLabel,
   fee,
   platformName,
+  tickSpacing,
   hideLabel,
   hideFee,
   css: cssProp,
@@ -111,22 +112,22 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
   longLabel: string;
   fee: string;
   platformName: string;
+  tickSpacing: number;
   hideLabel?: boolean;
   hideFee?: boolean;
   css?: CssStyles;
   onlyIcon?: boolean;
 }) {
   const classes = useStyles();
-  // const tooltipTitle = useMemo(() => {
-  //   return fee ? `${longLabel} | ${fee}` : longLabel;
-  // }, [longLabel, fee]);
+  const tooltipContent =
+    tickSpacing !== undefined ?
+      `${platformName} trading fee: ${fee}\nPool tick spacing: ${tickSpacing}`
+    : `${platformName} trading fee: ${fee}`;
 
   return (
     <VaultTagWithTooltip
       order="text-icon"
-      tooltip={
-        <BasicTooltipContent title={longLabel} content={`${platformName} trading fee: ${fee}`} />
-      }
+      tooltip={<BasicTooltipContent title={longLabel} content={tooltipContent} />}
       placement="bottom"
       css={css.raw(styles.vaultTagClm, cssProp)}
       icon={
@@ -197,6 +198,7 @@ const VaultClmPoolOrVaultTag = memo(function VaultClmPoolTag({
       fee={hasDynamicFee ? cowcentratedVault.feeTier : `${cowcentratedVault.feeTier}%`}
       longLabel={`Cowcentrated Liquidity Manager ${typeLabel}`}
       platformName={provider?.name || 'LP'}
+      tickSpacing={cowcentratedVault?.tickSpacing}
       hideFee={hideFee}
       hideLabel={hideLabel}
       css={cssProp}
@@ -232,6 +234,7 @@ const VaultClmTag = memo(function VaultClmTag({
       fee={hasDynamicFee ? vault.feeTier : `${vault.feeTier}%`}
       longLabel={'Cowcentrated Liquidity Manager'}
       platformName={provider?.name || 'LP'}
+      tickSpacing={vault.tickSpacing}
       hideFee={hideFee || hasDynamicFee}
       hideLabel={hideLabel}
       css={cssProp}

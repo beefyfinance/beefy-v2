@@ -1059,6 +1059,7 @@
     "retiredAt": 1761587666,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 1,
     "assets": ["USDT", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1191,6 +1192,7 @@
     "retiredAt": 1761587666,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["BTCb", "WAVAX"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1319,6 +1321,7 @@
     "retiredAt": 1761587666,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["WETHe", "WAVAX"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1451,6 +1454,7 @@
     "retiredAt": 1761587666,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["WAVAX", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1529,6 +1533,7 @@
     "createdAt": 1727102130,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETHe", "WAVAX"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1607,6 +1612,7 @@
     "createdAt": 1727102130,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WAVAX", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1685,6 +1691,7 @@
     "createdAt": 1727102130,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDT", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1763,6 +1770,7 @@
     "createdAt": 1727102130,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["BTCb", "USDC"],
     "risks": {
       "updatedAt": 1765557014,

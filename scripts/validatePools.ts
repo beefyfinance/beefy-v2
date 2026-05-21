@@ -322,6 +322,13 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
       }
     }
 
+    if (pool.type === 'cowcentrated') {
+      if (!pool.tickSpacing) {
+        console.error(`Error: ${pool.id} : tickSpacing missing for cowcentrated vault`);
+        exitCode = 1;
+      }
+    }
+
     if (!pool.createdAt) {
       console.error(
         `Error: ${pool.id} : Pool createdAt timestamp missing - required for UI: vault sorting`

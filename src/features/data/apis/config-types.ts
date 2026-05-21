@@ -84,6 +84,7 @@ export interface VaultConfig {
   };
   pointStructureIds?: string[];
   feeTier?: string;
+  tickSpacing?: number;
   /** tmp: exclude from being loaded */
   hidden?: boolean;
   poolTogether?: string;

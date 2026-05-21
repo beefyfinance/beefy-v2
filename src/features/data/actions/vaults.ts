@@ -304,6 +304,9 @@ function getCowcentratedBases(configs: VaultConfig[]) {
       if (!config.feeTier) {
         throw new Error(`Cowcentrated vault ${config.id} must have a fee tier (feeTier)`);
       }
+      if (!config.tickSpacing) {
+        throw new Error(`Cowcentrated vault ${config.id} must have tick spacing (tickSpacing)`);
+      }
       if (!config.tokenAddress) {
         throw new Error(
           `Cowcentrated vault ${config.id} must have underlying CL address (tokenAddress)`
@@ -331,6 +334,7 @@ function getCowcentratedBases(configs: VaultConfig[]) {
         },
         depositTokenAddresses: config.depositTokenAddresses,
         feeTier: config.feeTier,
+        tickSpacing: config.tickSpacing,
         poolAddress: config.tokenAddress,
         risks: risksWithUpdatedAt(risks, config.createdAt),
       };

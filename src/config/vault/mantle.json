@@ -172,6 +172,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WMNT", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -254,6 +255,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WMNT", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -336,6 +338,7 @@
     "retiredAt": 1776159291,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDT", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -418,6 +421,7 @@
     "retiredAt": 1735665006,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDC", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -500,6 +504,7 @@
     "retiredAt": 1776159291,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["mETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,

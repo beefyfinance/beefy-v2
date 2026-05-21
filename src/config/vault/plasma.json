@@ -715,6 +715,7 @@
     "createdAt": 1758937740,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["XAUt0", "USDT0"],
     "risks": {
       "updatedAt": 1765557014,
@@ -794,6 +795,7 @@
     "createdAt": 1758937416,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["WETH", "USDT0"],
     "risks": {
       "updatedAt": 1765557014,
@@ -873,6 +875,7 @@
     "createdAt": 1758935249,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["USDT0", "WXPL"],
     "risks": {
       "updatedAt": 1765557014,

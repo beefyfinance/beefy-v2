@@ -62,6 +62,7 @@
     "retiredAt": 1770142323,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDCn", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -141,6 +142,7 @@
     "createdAt": 1753383353,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["USDC", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -224,6 +226,7 @@
     "retiredAt": 1769468077,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["iSEI", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -307,6 +310,7 @@
     "retiredAt": 1774636446,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["USDCn", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -390,6 +394,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["USDT", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -473,6 +478,7 @@
     "retiredAt": 1735665006,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["iSEI", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -556,6 +562,7 @@
     "retiredAt": 1744925964,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["iSEI", "USDCn"],
     "risks": {
       "updatedAt": 1765557014,
@@ -881,6 +888,7 @@
     "retiredAt": 1767991369,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDT", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -964,6 +972,7 @@
     "retiredAt": 1774636446,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDCn", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1047,6 +1056,7 @@
     "retiredAt": 1774636446,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDCn"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1126,6 +1136,7 @@
     "createdAt": 1722523990,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1209,6 +1220,7 @@
     "retiredAt": 1774636446,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDCn", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,

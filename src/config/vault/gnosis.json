@@ -62,6 +62,7 @@
     "retiredAt": 1756838084,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["bCSPX", "sDAI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -186,6 +187,7 @@
     "retiredAt": 1761205953,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["wbTSLA", "sDAI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -265,6 +267,7 @@
     "createdAt": 1744216500,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDCe", "sDAI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -348,6 +351,7 @@
     "retiredAt": 1769424250,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "wstETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -431,6 +435,7 @@
     "retiredAt": 1769424250,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDCe", "WXDAI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -510,6 +515,7 @@
     "createdAt": 1744216500,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["wstETH", "sDAI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -589,6 +595,7 @@
     "createdAt": 1744216500,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["wstETH", "GNO"],
     "risks": {
       "updatedAt": 1765557014,

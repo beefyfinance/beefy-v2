@@ -42,6 +42,11 @@ import type {
 } from './strategies/strategy-configs.ts';
 import { CrossChainStrategy } from './strategies/cross-chain/CrossChainStrategy.ts';
 import { VaultStrategy } from './strategies/vault/VaultStrategy.ts';
+import { VaultToVaultSingleTokenStrategy } from './strategies/vault-to-vault/VaultToVaultSingleTokenStrategy.ts';
+import {
+  getRoutingTokensForChain,
+  hasRoutingTokensForChain,
+} from '../../../../config/vault-to-vault/routing-tokens.ts';
 import {
   type DepositOption,
   type DepositQuote,
@@ -173,6 +178,23 @@ export class TransactApi implements ITransactApi {
           console.warn('Failed to load cross-chain deposit options:', err);
         }
       }
+
+      // Same-chain v2v deposit options
+      if (
+        isZapTransactHelpers(helpers) &&
+        hasRoutingTokensForChain(helpers.vault.chainId) &&
+        this.anyComposableStrategyAcceptsAnyRoutingDeposit(helpers, zapStrategies, zapOptions)
+      ) {
+        try {
+          const v2vStrategy = new VaultToVaultSingleTokenStrategy(
+            { strategyId: 'vault-to-vault-single-token' },
+            helpers
+          );
+          options.push(...(await v2vStrategy.fetchDepositOptions()));
+        } catch (err) {
+          console.warn('Failed to load same-chain v2v deposit options:', err);
+        }
+      }
     }
 
     // if not disabled by a zap strategy, add the vault deposit option as the first item
@@ -294,6 +316,23 @@ export class TransactApi implements ITransactApi {
           options.push(...xChainOptions);
         } catch (err) {
           console.warn('Failed to load cross-chain withdraw options:', err);
+        }
+      }
+
+      // Same-chain v2v withdraw options
+      if (
+        isZapTransactHelpers(helpers) &&
+        hasRoutingTokensForChain(helpers.vault.chainId) &&
+        this.anyComposableStrategyAcceptsAnyRoutingWithdraw(helpers, zapStrategies, zapOptions)
+      ) {
+        try {
+          const v2vStrategy = new VaultToVaultSingleTokenStrategy(
+            { strategyId: 'vault-to-vault-single-token' },
+            helpers
+          );
+          options.push(...(await v2vStrategy.fetchWithdrawOptions()));
+        } catch (err) {
+          console.warn('Failed to load same-chain v2v withdraw options:', err);
         }
       }
     }
@@ -592,9 +631,9 @@ export class TransactApi implements ITransactApi {
       throw new Error(`Strategy "${strategyId}" requires zap contract`);
     }
 
-    // Cross-chain strategy is not in vault.zaps — instantiate inline
-    if (strategyId === 'cross-chain') {
-      return await this.buildZapStrategy({ strategyId: 'cross-chain' }, helpers);
+    // Synthetic strategies that aren't stored in vault.zaps — instantiate inline
+    if (strategyId === 'cross-chain' || strategyId === 'vault-to-vault-single-token') {
+      return await this.buildZapStrategy({ strategyId }, helpers);
     }
 
     if (!vault.zaps) {
@@ -702,6 +741,78 @@ export class TransactApi implements ITransactApi {
       if (
         result.value.some(
           o => o.wantedOutputs.length === 1 && o.wantedOutputs[0].address.toLowerCase() === usdcAddr
+        )
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private anyComposableStrategyAcceptsAnyRoutingDeposit(
+    helpers: ZapTransactHelpers,
+    zapStrategies: IStrategy[],
+    zapOptions: PromiseSettledResult<DepositOption[]>[]
+  ): boolean {
+    const state = helpers.getState();
+    const routingTokens = getRoutingTokensForChain(helpers.vault.chainId, state);
+    if (!routingTokens.length) return false;
+
+    const vaultDepositAddr = helpers.vault.depositTokenAddress.toLowerCase();
+    const routingAddrs = new Set(routingTokens.map(t => t.address.toLowerCase()));
+
+    if (routingAddrs.has(vaultDepositAddr)) {
+      return zapStrategies.some(
+        (s, i) => isFulfilledResult(zapOptions[i]) && isComposableStrategy(s)
+      );
+    }
+
+    for (let i = 0; i < zapStrategies.length; i++) {
+      const result = zapOptions[i];
+      if (!isFulfilledResult(result) || !isComposableStrategy(zapStrategies[i])) continue;
+      if (
+        result.value.some(
+          o => o.inputs.length === 1 && routingAddrs.has(o.inputs[0].address.toLowerCase())
+        )
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Same-chain v2v withdraw gate: at least one of the page vault's composable strategies must
+   * be able to emit at least one of the chain's configured routing tokens as a single output.
+   */
+  private anyComposableStrategyAcceptsAnyRoutingWithdraw(
+    helpers: ZapTransactHelpers,
+    zapStrategies: IStrategy[],
+    zapOptions: PromiseSettledResult<WithdrawOption[]>[]
+  ): boolean {
+    const state = helpers.getState();
+    const routingTokens = getRoutingTokensForChain(helpers.vault.chainId, state);
+    if (!routingTokens.length) return false;
+
+    const vaultDepositAddr = helpers.vault.depositTokenAddress.toLowerCase();
+    const routingAddrs = new Set(routingTokens.map(t => t.address.toLowerCase()));
+
+    if (routingAddrs.has(vaultDepositAddr)) {
+      return zapStrategies.some(
+        (s, i) => isFulfilledResult(zapOptions[i]) && isComposableStrategy(s)
+      );
+    }
+
+    for (let i = 0; i < zapStrategies.length; i++) {
+      const result = zapOptions[i];
+      if (!isFulfilledResult(result) || !isComposableStrategy(zapStrategies[i])) continue;
+      if (
+        result.value.some(
+          o =>
+            o.wantedOutputs.length === 1 &&
+            routingAddrs.has(o.wantedOutputs[0].address.toLowerCase())
         )
       ) {
         return true;

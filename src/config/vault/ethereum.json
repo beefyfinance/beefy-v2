@@ -1,5 +1,79 @@
 [
   {
+    "id": "morpho-v2-ethereum-steakhouse-prime-usdt",
+    "name": "USDT (Steakhouse, Prime V2)",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x11bAa40e8821E4Df0b09C7087246C8E97d179938",
+    "earnedToken": "mooMorphoV2EthereumSteakhousePrimeUSDT",
+    "earnedTokenAddress": "0x11bAa40e8821E4Df0b09C7087246C8E97d179938",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1779272441,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["USDT"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/ethereum/vault/0xbeef003C68896c7D2c3c60d363e8d71a49Ab2bf9/steakhouse-prime-usdt",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-v2-ethereum-steakhouse-prime-usdc",
+    "name": "USDC (Steakhouse, Prime V2)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x48C845d0818bAA17d22b2c0bE41915ec084599bD",
+    "earnedToken": "mooMorphoV2EthereumSteakhousePrimeUSDC",
+    "earnedTokenAddress": "0x48C845d0818bAA17d22b2c0bE41915ec084599bD",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1779271435,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/ethereum/vault/0xbeef088055857739C12CD3765F20b7679Def0f51/steakhouse-prime-usdc",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "stakedao-frxusd-usg",
     "name": "USG/frxUSD",
     "type": "standard",

@@ -11,6 +11,7 @@ import {
 } from '../../../../../data/actions/transact.ts';
 import { transactSteps } from '../../../../../data/actions/wallet/transact.ts';
 import { ActionRecovery } from '../CommonActions/ActionRecovery.tsx';
+import { RecoveryQuoteErrorAlert } from '../RecoveryQuoteErrorAlert/RecoveryQuoteErrorAlert.tsx';
 import {
   isCowcentratedDepositQuote,
   type TransactOption,
@@ -75,7 +76,12 @@ export const DepositActions = memo(function DepositActions() {
   const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
 
   if (stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null) {
-    return <ActionRecovery mode="deposit" />;
+    return (
+      <>
+        <RecoveryQuoteErrorAlert action="deposit" />
+        <ActionRecovery mode="deposit" />
+      </>
+    );
   }
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {

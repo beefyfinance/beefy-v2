@@ -19,9 +19,11 @@ import {
   isVaultRetired,
   type VaultEntity,
 } from '../../../../../data/entities/vault.ts';
+import { selectVaultMatchesText } from '../../../../../data/selectors/filtered-vaults.ts';
 import { selectTransactDepositFromVaultEntries } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import type { BeefyState } from '../../../../../data/store/types.ts';
+import { simplifySearchText } from '../../../../../../helpers/string.ts';
 import {
   ListItemBalanceAmount,
   ListItemBalanceUsd,
@@ -73,17 +75,15 @@ export const DepositFromVaultSelectList = memo(function DepositFromVaultSelectLi
   const vaultById = useAppSelector((state: BeefyState) => state.entities.vaults.byId);
   const [search, setSearch] = useState('');
 
-  const searchFiltered = useMemo(() => {
-    if (!search.length) return entries;
-    const lowerSearch = search.toLowerCase();
-    return entries.filter(entry =>
-      entry.tokens
-        .map(token => token.symbol)
-        .join(' ')
-        .toLowerCase()
-        .includes(lowerSearch)
-    );
-  }, [entries, search]);
+  const searchFiltered = useAppSelector((state: BeefyState) => {
+    const searchText = simplifySearchText(search);
+    if (searchText.length === 0) return entries;
+    return entries.filter(entry => {
+      const vault = vaultById[entry.vaultId];
+      if (!vault) return false;
+      return selectVaultMatchesText(state, vault, searchText);
+    });
+  });
 
   const groups = useMemo(() => {
     const buckets = new Map<
@@ -91,7 +91,7 @@ export const DepositFromVaultSelectList = memo(function DepositFromVaultSelectLi
       { entries: typeof searchFiltered; totalUsd: BigNumber }
     >();
     for (const entry of searchFiltered) {
-      const vault = vaultById[entry.vaultRefId!];
+      const vault = vaultById[entry.vaultId];
       if (!vault) continue;
       const groupId = categorizeVault(vault);
       const bucket = buckets.get(groupId);
@@ -199,13 +199,13 @@ const VaultListItem = memo(function VaultListItem({
           </ChainBadge>
         </IconWrapper>
         <VaultNameAndTags>
-          <VaultRowName>{vault.names.list}</VaultRowName>
+          <VaultRowName className="vault-row-name">{vault.names.list}</VaultRowName>
           <VaultPlatformTag vaultId={vaultId} css={platformTagOverride} />
         </VaultNameAndTags>
       </VaultLeft>
       <ListItemRightSide css={rightSideOverride}>
         <BalanceColumn>
-          <ListItemBalanceAmount>
+          <ListItemBalanceAmount className="vault-row-balance">
             {formatTokenDisplayCondensed(balance, decimals, 8)}
           </ListItemBalanceAmount>
           {balanceUsdFormatted != null ?
@@ -286,6 +286,12 @@ const VaultRowButton = styled('button', {
       '& .list-item-arrow': {
         color: 'text.middle',
       },
+      '& .vault-row-name': {
+        color: 'text.light',
+      },
+      '& .vault-row-balance': {
+        color: 'text.light',
+      },
     },
   },
 });
@@ -312,15 +318,11 @@ const VaultNameAndTags = styled('div', {
 
 const VaultRowName = styled('span', {
   base: {
-    textStyle: 'body',
+    textStyle: 'body.medium',
     color: 'text.dark',
-    fontWeight: 'normal',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    _hover: {
-      color: 'text.light',
-    },
   },
 });
 

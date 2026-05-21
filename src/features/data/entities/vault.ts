@@ -171,6 +171,8 @@ export type VaultCowcentratedBaseOnly = {
   depositTokenAddresses: string[];
   /** the trading fee of the underlying pool */
   feeTier: string;
+  /** the tick spacing of the underlying CL pool */
+  tickSpacing: number;
   /** the address of the underlying CL pool */
   poolAddress: string;
   /** risk assessments per category */

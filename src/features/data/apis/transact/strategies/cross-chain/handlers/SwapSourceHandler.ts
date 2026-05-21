@@ -13,23 +13,23 @@ import {
 import { fetchZapAggregatorSwap } from '../../../zap/swap.ts';
 import type { OrderInput, OrderOutput, ZapStep } from '../../../zap/types.ts';
 import type { StrategySwapConfig } from '../../strategy-configs.ts';
-import { collectIntermediateTokens } from './dust.ts';
+import { collectIntermediateTokens } from '../../../handlers/dust.ts';
 import type {
   ISourceHandler,
   SourceHandlerContext,
   SourceHandlerQuote,
   SourceHandlerSteps,
-} from './types.ts';
+} from '../../../handlers/types.ts';
 
 type SwapSourceState = {
   input: InputTokenAmount;
-  /** Present only when the input token is not already the bridge token. */
+  /** Present only when the input token is not already the output token. */
   swapStep: ZapQuoteStepSwapAggregator | undefined;
 };
 
 /**
- * Swap source handler: aggregator swap from input token to bridge token before CCTP burn.
- * Produces at most one swap step (none if input is already the bridge token).
+ * Swap source handler: aggregator swap from input token to the handler's output token before
+ * the CCTP burn. Produces at most one swap step (none if input is already the output token).
  */
 export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
   readonly kind = 'swap' as const;
@@ -40,22 +40,21 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
     input: InputTokenAmount,
     ctx: SourceHandlerContext
   ): Promise<SourceHandlerQuote<SwapSourceState>> {
-    const { helpers, bridgeToken, pageVaultId, sourceChainId } = ctx;
+    const { helpers, outputToken, pageVaultId, sourceChainId } = ctx;
     const state = helpers.getState();
     const { swapAggregator } = helpers;
 
-    const isDirectBridgeToken =
-      input.token.address.toLowerCase() === bridgeToken.address.toLowerCase();
+    const isDirectOutput = input.token.address.toLowerCase() === outputToken.address.toLowerCase();
     const sourceSteps: ZapQuoteStep[] = [];
-    let bridgeTokenOut = input.amount;
+    let outputAmount = input.amount;
     let swapStep: ZapQuoteStepSwapAggregator | undefined;
 
-    if (!isDirectBridgeToken) {
+    if (!isDirectOutput) {
       const quotes = await swapAggregator.fetchQuotes(
         {
           fromToken: input.token,
           fromAmount: input.amount,
-          toToken: bridgeToken,
+          toToken: outputToken,
           vaultId: pageVaultId,
         },
         state,
@@ -65,7 +64,7 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
         throw new Error('No swap quotes available for source chain swap');
       }
       const bestSwap = quotes[0];
-      bridgeTokenOut = bestSwap.toAmount;
+      outputAmount = bestSwap.toAmount;
       swapStep = {
         type: 'swap',
         via: 'aggregator',
@@ -74,7 +73,7 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
         quote: bestSwap,
         fromToken: input.token,
         fromAmount: input.amount,
-        toToken: bridgeToken,
+        toToken: outputToken,
         toAmount: bestSwap.toAmount,
       };
       sourceSteps.push(swapStep);
@@ -97,18 +96,18 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
       : [];
 
     const dustTokens = collectIntermediateTokens({
-      bridgeToken,
+      anchorToken: outputToken,
       inputs: [input],
       swapSteps: swapStep ? [swapStep] : undefined,
     });
 
     return {
       sourceSteps,
-      bridgeTokenOut,
+      outputAmount,
       allowances,
       returned: [],
       dustTokens,
-      slippageAppliesToBridge: !isDirectBridgeToken,
+      slippageAppliesToOutput: !isDirectOutput,
       state: { input, swapStep },
     };
   }
@@ -117,7 +116,7 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
     quote: SourceHandlerQuote<SwapSourceState>,
     ctx: SourceHandlerContext
   ): Promise<SourceHandlerSteps> {
-    const { helpers, sourceChainId, bridgeToken } = ctx;
+    const { helpers, sourceChainId, outputToken } = ctx;
     const state = helpers.getState();
     const { swapAggregator } = helpers;
     const slippage = selectTransactSlippage(state);
@@ -150,7 +149,7 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
       minBalances.addMany(swapZap.minOutputs);
     }
 
-    const minBridgeAmount = minBalances.get(bridgeToken);
+    const minOutputAmount = minBalances.get(outputToken);
 
     const orderInputs: OrderInput[] = [
       {
@@ -161,8 +160,8 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
 
     const orderOutputs: OrderOutput[] = [
       {
-        token: getTokenAddress(bridgeToken),
-        minOutputAmount: toWeiString(minBridgeAmount, bridgeToken.decimals),
+        token: getTokenAddress(outputToken),
+        minOutputAmount: toWeiString(minOutputAmount, outputToken.decimals),
       },
     ];
 

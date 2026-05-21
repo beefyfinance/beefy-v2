@@ -216,6 +216,7 @@
     "retiredAt": 1727186611,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["WPOL", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1185,6 +1186,7 @@
     "createdAt": 1719408542,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBTC", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1228,6 +1230,7 @@
     "retiredAt": 1777371637,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBTC", "WPOL"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1271,6 +1274,7 @@
     "retiredAt": 1732017299,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["LCD", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1312,6 +1316,7 @@
     "createdAt": 1719408542,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["oldLINK", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1353,6 +1358,7 @@
     "createdAt": 1719408542,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["oldLINK", "WPOL"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1394,6 +1400,7 @@
     "createdAt": 1719408542,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["AAVE", "ETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1435,6 +1442,7 @@
     "createdAt": 1719408542,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["AAVE", "WPOL"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1476,6 +1484,7 @@
     "createdAt": 1718739941,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["ETH", "pUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1517,6 +1526,7 @@
     "createdAt": 1718739941,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["ETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1558,6 +1568,7 @@
     "createdAt": 1718739941,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["ETH", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1599,6 +1610,7 @@
     "createdAt": 1718739941,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBTC", "pUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1640,6 +1652,7 @@
     "createdAt": 1718739941,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBTC", "ETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1681,6 +1694,7 @@
     "createdAt": 1718739941,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WPOL", "ETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1722,6 +1736,7 @@
     "createdAt": 1718739941,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WPOL", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1763,6 +1778,7 @@
     "createdAt": 1718739941,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WPOL", "pUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1804,6 +1820,7 @@
     "createdAt": 1718739941,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WPOL", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1845,6 +1862,7 @@
     "createdAt": 1718739941,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["LDO", "WPOL"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1886,6 +1904,7 @@
     "createdAt": 1718739941,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["LDO", "ETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1927,6 +1946,7 @@
     "createdAt": 1718739941,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["oldLINK", "pUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1968,6 +1988,7 @@
     "createdAt": 1718739941,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["oldLINK", "ETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2009,6 +2030,7 @@
     "createdAt": 1718739941,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["UNI", "ETH"],
     "risks": {
       "updatedAt": 1765557014,

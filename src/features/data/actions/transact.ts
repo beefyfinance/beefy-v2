@@ -238,11 +238,16 @@ export const transactFetchQuotes = createAppAsyncThunk<
       });
     } else {
       let inputToken: TokenEntity;
-      if (isCowcentratedVault(vault)) {
-        // For CLM vaults, user enters number of shares to withdraw
+      const opt = options[0];
+      if (
+        opt?.strategyId === 'cross-chain' ||
+        opt?.strategyId === 'vault-to-vault-single-token'
+      ) {
+        // Withdraw from page vault via a vault-source strategy: option declares its shareToken as input.
+        inputToken = opt.inputs[0];
+      } else if (isCowcentratedVault(vault)) {
         inputToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
       } else {
-        // For standard/gov vaults, user enters number of deposit token to withdraw
         inputToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
       }
       quoteInputAmounts.push({

@@ -12,6 +12,7 @@ import {
 import { selectVaultTotalApy } from '../../../../data/selectors/apy.ts';
 import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../data/selectors/boosts.ts';
 import { selectChainById } from '../../../../data/selectors/chains.ts';
+import { selectVaultPlatformOrUndefined } from '../../../../data/selectors/platforms.ts';
 import {
   selectCowcentratedLikeVaultById,
   selectVaultStrategyAddressOrUndefined,
@@ -31,6 +32,7 @@ const CowcentratedExplainer = memo(function CowcentratedExplainer({
 }: CowcentratedExplainerProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
+  const platform = useAppSelector(state => selectVaultPlatformOrUndefined(state, vaultId));
   const boost = useAppSelector(state => selectCurrentBoostByVaultIdOrUndefined(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const apys = useAppSelector(state => selectVaultTotalApy(state, vaultId));
@@ -93,7 +95,10 @@ const CowcentratedExplainer = memo(function CowcentratedExplainer({
       description={<CowcentratedLikeDescription vaultId={vaultId} />}
       details={
         showApy ?
-          <ApyDetails type={getApyLabelsTypeForVault(vault, apys.totalType)} values={apys} />
+          <ApyDetails
+            type={getApyLabelsTypeForVault(vault, apys.totalType, platform)}
+            values={apys}
+          />
         : null
       }
     />

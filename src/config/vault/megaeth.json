@@ -57,6 +57,7 @@
     "createdAt": 1778054187,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["MEGA", "USDm"],
     "risks": {
       "complex": true,
@@ -135,6 +136,7 @@
     "createdAt": 1777543532,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["MEGA", "USDm"],
     "risks": {
       "complex": true,
@@ -213,6 +215,7 @@
     "createdAt": 1777555418,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["MEGA", "USDm"],
     "risks": {
       "complex": true,
@@ -290,6 +293,7 @@
     "createdAt": 1777550332,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["MEGA", "USDT0"],
     "risks": {
       "complex": true,
@@ -402,6 +406,7 @@
     "createdAt": 1770726819,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["DUCK", "WETH"],
     "risks": {
       "complex": true,
@@ -479,6 +484,7 @@
     "createdAt": 1770726819,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["KPI", "WETH"],
     "risks": {
       "complex": true,
@@ -556,6 +562,7 @@
     "createdAt": 1770665412,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["WETH", "USDm"],
     "risks": {
       "complex": true,
@@ -633,6 +640,7 @@
     "createdAt": 1770665412,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["WETH", "BTCb"],
     "risks": {
       "complex": true,
@@ -710,6 +718,7 @@
     "createdAt": 1770665412,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["WETH", "USDT0"],
     "risks": {
       "complex": true,
@@ -788,6 +797,7 @@
     "createdAt": 1770665412,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["WETH", "USDm"],
     "risks": {
       "complex": true,
@@ -865,6 +875,7 @@
     "createdAt": 1770665412,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["BTCb", "USDm"],
     "risks": {
       "complex": true,

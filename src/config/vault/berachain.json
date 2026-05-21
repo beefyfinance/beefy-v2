@@ -867,6 +867,7 @@
     "retiredAt": 1744925964,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -950,6 +951,7 @@
     "retiredAt": 1777371850,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["WBTC", "HONEY"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1033,6 +1035,7 @@
     "retiredAt": 1767991369,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDCe", "HONEY"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1116,6 +1119,7 @@
     "retiredAt": 1767991369,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["WBERA", "USDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1195,6 +1199,7 @@
     "createdAt": 1738930533,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["WETH", "HONEY"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1274,6 +1279,7 @@
     "createdAt": 1738895503,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["WBERA", "HONEY"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1353,6 +1359,7 @@
     "createdAt": 1738892368,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["WBERA", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
