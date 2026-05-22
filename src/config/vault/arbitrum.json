@@ -135,6 +135,7 @@
     "createdAt": 1778774244,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["WBTC", "cbBTC"],
     "risks": {
       "complex": true,
