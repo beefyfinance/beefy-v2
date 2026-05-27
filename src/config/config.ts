@@ -470,7 +470,6 @@ export const config = {
     },
   },
   megaeth: {
-    new: true,
     name: 'MegaETH',
     chainId: 4326,
     rpc: ['https://mainnet.megaeth.com/rpc'],

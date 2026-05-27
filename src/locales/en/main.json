@@ -267,6 +267,7 @@
   "Vault-RetireReason-upgrade": "This {{type}} is retired. Please move to the new and improved version.",
   "Vault-RetireReason-rewards": "This {{type}} is retired. The underlying platform stopped rewarding.",
   "Vault-RetireReason-exploit": "This {{type}} is retired. Funds sit idle in the {{type}}, withdrawn from the underlying platform.",
+  "Vault-RetireReason-exploitNoPanic": "This {{type}} is retired due to an exploit in its underlying protocols or assets. Beefy will engage with the affected teams to ensure our users are accounted for in any recovery or compensation efforts.",
   "Vault-RetireReason-tvl": "This {{type}} is retired. TVL has fallen too low.",
   "Vault-RetireReason-default": "This {{type}} is retired. You may withdraw your funds.",
   "Vault-RetireReason-bifiV2": "This {{type}} has been retired. The BIFI token has migrated to a new version. <Link href=\"https://snapshot.org/#/beefydao.eth/proposal/0x55e6ad9dd3ebcca3334e23872fa8e2ab1e926466b3d2d0af6f462cc45b1541a2\">Read More</Link>.",

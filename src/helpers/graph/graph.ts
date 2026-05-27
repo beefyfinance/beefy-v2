@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { formatChartDate, formatTime } from '../date.ts';
 import { formatLargeUsd } from '../format.ts';
 import type { GraphBucket, GraphBucketParamMap } from './types.ts';
 
@@ -46,10 +46,9 @@ export function makeUnderlyingTickFormatter(domain: [number, number]) {
 
 export function makeDateTimeTickFormatter(timeBucket: GraphBucket) {
   if (timeBucket === '1h_1d') {
-    return (value: number) => format(value, 'HH:mm');
+    return (value: number) => formatTime(value);
   }
-  return (value: number) =>
-    new Date(value).toLocaleDateString(undefined, { month: 'numeric', day: 'numeric' });
+  return (value: number) => formatChartDate(value);
 }
 
 const bucketParamMap = {

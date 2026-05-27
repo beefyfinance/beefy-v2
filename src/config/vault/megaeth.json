@@ -96,7 +96,6 @@
     "createdAt": 1777543532,
     "platformId": "kumbaya",
     "assets": ["MEGA", "USDm"],
-    "pointStructureIds": ["megaeth-terminal"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -175,7 +174,6 @@
     "createdAt": 1777555418,
     "platformId": "prism",
     "assets": ["MEGA", "USDm"],
-    "pointStructureIds": ["megaeth-terminal"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -757,7 +755,6 @@
     "createdAt": 1770665412,
     "platformId": "kumbaya",
     "assets": ["WETH", "USDm"],
-    "pointStructureIds": ["megaeth-terminal"],
     "risks": {
       "complex": true,
       "curated": false,

@@ -2,8 +2,9 @@ import { memo, useMemo } from 'react';
 import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
 import type { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types.ts';
 import type { LineTogglesState } from '../LineToggles/LineToggles.tsx';
-import { format, fromUnixTime } from 'date-fns';
+import { fromUnixTime } from 'date-fns';
 import { useTranslation } from 'react-i18next';
+import { formatDateTime } from '../../../../../helpers/date.ts';
 import { getBucketParams } from '../utils.ts';
 import { styles } from './styles.ts';
 import { css } from '@repo/styles/css';
@@ -62,9 +63,7 @@ export const TooltipContent = memo(function TooltipContent<TStat extends ChartSt
 
   return (
     <div className={classes.content}>
-      <div className={classes.timestamp}>
-        {format(fromUnixTime(timestamp), 'MMM d, yyyy h:mm a')}
-      </div>
+      <div className={classes.timestamp}>{formatDateTime(fromUnixTime(timestamp))}</div>
       <div className={classes.itemContainer}>
         <div className={classes.label}>{t([`Graph-${vaultType}-${stat}`, `Graph-${stat}`])}:</div>
         <div className={classes.value}>
