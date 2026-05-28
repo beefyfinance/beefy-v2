@@ -319,22 +319,22 @@ export class TransactApi implements ITransactApi {
         }
       }
 
-      // Same-chain v2v withdraw options
-      if (
-        isZapTransactHelpers(helpers) &&
-        hasRoutingTokensForChain(helpers.vault.chainId) &&
-        this.anyComposableStrategyAcceptsAnyRoutingWithdraw(helpers, zapStrategies, zapOptions)
-      ) {
-        try {
-          const v2vStrategy = new VaultToVaultSingleTokenStrategy(
-            { strategyId: 'vault-to-vault-single-token' },
-            helpers
-          );
-          options.push(...(await v2vStrategy.fetchWithdrawOptions()));
-        } catch (err) {
-          console.warn('Failed to load same-chain v2v withdraw options:', err);
-        }
-      }
+      // Same-chain v2v withdraw options — disabled for the time being
+      // if (
+      //   isZapTransactHelpers(helpers) &&
+      //   hasRoutingTokensForChain(helpers.vault.chainId) &&
+      //   this.anyComposableStrategyAcceptsAnyRoutingWithdraw(helpers, zapStrategies, zapOptions)
+      // ) {
+      //   try {
+      //     const v2vStrategy = new VaultToVaultSingleTokenStrategy(
+      //       { strategyId: 'vault-to-vault-single-token' },
+      //       helpers
+      //     );
+      //     options.push(...(await v2vStrategy.fetchWithdrawOptions()));
+      //   } catch (err) {
+      //     console.warn('Failed to load same-chain v2v withdraw options:', err);
+      //   }
+      // }
     }
 
     // if not disabled by a zap strategy, add the vault withdraw option as the first item
@@ -783,44 +783,45 @@ export class TransactApi implements ITransactApi {
     return false;
   }
 
-  /**
-   * Same-chain v2v withdraw gate: at least one of the page vault's composable strategies must
-   * be able to emit at least one of the chain's configured routing tokens as a single output.
-   */
-  private anyComposableStrategyAcceptsAnyRoutingWithdraw(
-    helpers: ZapTransactHelpers,
-    zapStrategies: IStrategy[],
-    zapOptions: PromiseSettledResult<WithdrawOption[]>[]
-  ): boolean {
-    const state = helpers.getState();
-    const routingTokens = getRoutingTokensForChain(helpers.vault.chainId, state);
-    if (!routingTokens.length) return false;
-
-    const vaultDepositAddr = helpers.vault.depositTokenAddress.toLowerCase();
-    const routingAddrs = new Set(routingTokens.map(t => t.address.toLowerCase()));
-
-    if (routingAddrs.has(vaultDepositAddr)) {
-      return zapStrategies.some(
-        (s, i) => isFulfilledResult(zapOptions[i]) && isComposableStrategy(s)
-      );
-    }
-
-    for (let i = 0; i < zapStrategies.length; i++) {
-      const result = zapOptions[i];
-      if (!isFulfilledResult(result) || !isComposableStrategy(zapStrategies[i])) continue;
-      if (
-        result.value.some(
-          o =>
-            o.wantedOutputs.length === 1 &&
-            routingAddrs.has(o.wantedOutputs[0].address.toLowerCase())
-        )
-      ) {
-        return true;
-      }
-    }
-
-    return false;
-  }
+  // Same-chain v2v withdraw gate — disabled along with the call site above.
+  // /**
+  //  * At least one of the page vault's composable strategies must be able to emit
+  //  * at least one of the chain's configured routing tokens as a single output.
+  //  */
+  // private anyComposableStrategyAcceptsAnyRoutingWithdraw(
+  //   helpers: ZapTransactHelpers,
+  //   zapStrategies: IStrategy[],
+  //   zapOptions: PromiseSettledResult<WithdrawOption[]>[]
+  // ): boolean {
+  //   const state = helpers.getState();
+  //   const routingTokens = getRoutingTokensForChain(helpers.vault.chainId, state);
+  //   if (!routingTokens.length) return false;
+  //
+  //   const vaultDepositAddr = helpers.vault.depositTokenAddress.toLowerCase();
+  //   const routingAddrs = new Set(routingTokens.map(t => t.address.toLowerCase()));
+  //
+  //   if (routingAddrs.has(vaultDepositAddr)) {
+  //     return zapStrategies.some(
+  //       (s, i) => isFulfilledResult(zapOptions[i]) && isComposableStrategy(s)
+  //     );
+  //   }
+  //
+  //   for (let i = 0; i < zapStrategies.length; i++) {
+  //     const result = zapOptions[i];
+  //     if (!isFulfilledResult(result) || !isComposableStrategy(zapStrategies[i])) continue;
+  //     if (
+  //       result.value.some(
+  //         o =>
+  //           o.wantedOutputs.length === 1 &&
+  //           routingAddrs.has(o.wantedOutputs[0].address.toLowerCase())
+  //       )
+  //     ) {
+  //       return true;
+  //     }
+  //   }
+  //
+  //   return false;
+  // }
 }
 
 /**
