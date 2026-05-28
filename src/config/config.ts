@@ -444,7 +444,7 @@ export const config = {
   plasma: {
     name: 'Plasma',
     chainId: 9745,
-    rpc: ['https://rpc.plasma.to'],
+    rpc: ['https://rpc.plasma.to', 'https://plasma.drpc.org'],
     explorerUrl: 'https://plasmascan.to/',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x25B6B1a6e7948a983f8e0999FFB4E68Bc7385520',

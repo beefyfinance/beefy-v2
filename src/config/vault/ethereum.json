@@ -1,5 +1,54 @@
 [
   {
+    "id": "stakedao-ynusdx-scrvusd",
+    "name": "ynUSDx/scrvUSD",
+    "type": "standard",
+    "token": "USD/crvUSD",
+    "tokenAddress": "0xA256D38e73ccE6e00447fa64a95069ea7d32f841",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x71218655131360D4826838f4Dac5dBe869ad9aED",
+    "earnedToken": "mooStakeDao-ynUSDx-scrvUSD",
+    "earnedTokenAddress": "0x71218655131360D4826838f4Dac5dBe869ad9aED",
+    "oracle": "lps",
+    "oracleId": "curve-ynusdx-scrvusd",
+    "status": "active",
+    "createdAt": 1779944973,
+    "platformId": "stakedao",
+    "assets": ["ynUSDx", "scrvUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-590/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-590/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xA256D38e73ccE6e00447fa64a95069ea7d32f841",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xA256D38e73ccE6e00447fa64a95069ea7d32f841",
+            "coins": [
+              "0x3DB228FE836D99Ccb25Ec4dfdC80ED6d2CDdCB4b",
+              "0x0655977FEb2f289A4aB78af67BAB0d17aAb84367"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "morpho-v2-ethereum-steakhouse-prime-usdt",
     "name": "USDT (Steakhouse, Prime V2)",
     "type": "standard",
