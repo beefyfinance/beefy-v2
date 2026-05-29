@@ -92,6 +92,8 @@ type BaseOption = {
   inputs: TokenEntity[];
   wantedOutputs: TokenEntity[];
   async?: boolean;
+  // feeable=false marks a free path (same-token, break-only/multi-token withdraw, dual deposit); the fee decorator skips it.
+  feeable?: boolean;
 };
 
 type BaseDepositOption = BaseOption & {

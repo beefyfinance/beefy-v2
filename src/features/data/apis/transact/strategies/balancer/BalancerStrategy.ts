@@ -56,11 +56,7 @@ import {
   onlyOneInput,
   onlyOneTokenAmount,
 } from '../../helpers/options.ts';
-import {
-  calculatePriceImpact,
-  highestFeeOrZero,
-  totalValueOfTokenAmounts,
-} from '../../helpers/quotes.ts';
+import { calculatePriceImpact, totalValueOfTokenAmounts, ZERO_FEE } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, includeWrappedAndNative, pickTokens } from '../../helpers/tokens.ts';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
@@ -470,14 +466,14 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
     return {
       id: createQuoteId(option.id),
       strategyId,
-      priceImpact: calculatePriceImpact(inputs, outputs, returned, state), // includes the zap fee
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       option,
       inputs,
       outputs,
       returned,
       allowances,
       steps,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
     };
   }
 
@@ -949,6 +945,7 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
       type,
       via: 'break-only',
       viaTokens: this.allTokenOptions,
+      feeable: false,
     };
 
     const supportedAggregatorTokens = await this.aggregatorTokensCanSwapToAllOf(
@@ -1249,10 +1246,11 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
       },
     ];
 
-    const { liquidity, swaps, outputs } = await this.fetchWithdrawLiquiditySwaps(
-      liquidityWithdrawn,
-      option
-    );
+    const {
+      liquidity,
+      swaps,
+      outputs: withdrawOutputs,
+    } = await this.fetchWithdrawLiquiditySwaps(liquidityWithdrawn, option);
 
     // Build quote steps
     const steps: ZapQuoteStep[] = [
@@ -1302,13 +1300,14 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
       });
     }
 
+    const outputs = withdrawOutputs;
     const baseQuote: Omit<BalancerWithdrawQuote, 'type' | 'viaToken' | 'option'> = {
       id: createQuoteId(option.id),
       strategyId: this.id,
       priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       inputs,
       allowances,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
       steps,
       outputs,
       returned,

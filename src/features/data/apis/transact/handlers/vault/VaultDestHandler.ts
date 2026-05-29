@@ -34,7 +34,9 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
     ctx: DestHandlerContext
   ): Promise<DestHandlerQuote<VaultDestState>> {
     const destHelpers = await ctx.resolveHelpersForVault(this.destVaultId);
-    const destStrategies = await (await getTransactApi()).getZapStrategiesForVault(destHelpers);
+    const destStrategies = await (
+      await getTransactApi()
+    ).getInnerZapStrategiesForVault(destHelpers);
 
     const match = await VaultDestHandler.findStrategyForInputDeposit(
       destStrategies,
@@ -81,7 +83,9 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
     ctx: DestHandlerContext
   ): Promise<DestHandlerSteps> {
     const destHelpers = await ctx.resolveHelpersForVault(this.destVaultId);
-    const destStrategies = await (await getTransactApi()).getZapStrategiesForVault(destHelpers);
+    const destStrategies = await (
+      await getTransactApi()
+    ).getInnerZapStrategiesForVault(destHelpers);
 
     const { destQuote } = quote.state;
     const destStrategy = destStrategies.find(s => s.id === destQuote.strategyId);

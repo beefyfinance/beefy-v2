@@ -27,6 +27,13 @@ import {
 import type { ZapPayload } from '../../cctp/types.ts';
 import { bridgeSlippageReturned, mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
 import {
+  buildFeeZapSteps,
+  feeContext,
+  feeFromQuoteSteps,
+  maybeFeeQuoteStep,
+  type ZapFeeEndpoint,
+} from '../../helpers/fee.ts';
+import {
   createOptionId,
   createQuoteId,
   createSelectionId,
@@ -35,7 +42,6 @@ import {
 import {
   calculatePriceImpact,
   convertVaultShareToDepositTokenAmount,
-  highestFeeOrZero,
   totalValueOfTokenAmounts,
 } from '../../helpers/quotes.ts';
 import { NO_RELAY } from '../../helpers/zap.ts';
@@ -46,6 +52,7 @@ import {
   type CrossChainWithdrawOption,
   type CrossChainWithdrawQuote,
   type InputTokenAmount,
+  isZapQuoteStepFee,
   type RecoveryQuote,
   SelectionOrder,
   type TokenAmount,
@@ -415,11 +422,28 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
     const srcHandlerQuote = await srcHandler.fetchQuote(input, srcCtx);
 
+    // Fee charged once on the source bridge token, after the source handler and before bridging.
+    const feeInput: ZapFeeEndpoint =
+      option.srcHandlerKind === 'vault' ?
+        { kind: 'vault', vaultId: option.srcVaultId }
+      : { kind: 'token', token: input.token };
+    const feeOutput: ZapFeeEndpoint =
+      option.destHandlerKind === 'vault' ?
+        { kind: 'vault', vaultId: option.destVaultId }
+      : { kind: 'token', token: option.wantedOutputs[0] };
+    const feeStep = maybeFeeQuoteStep(
+      state,
+      feeContext(this.helpers, { input: feeInput, output: feeOutput }, srcCtx.sourceChainId),
+      srcCtx.outputToken,
+      srcHandlerQuote.outputAmount
+    );
+    const netBridgeToken = feeStep ? feeStep.netAmount : srcHandlerQuote.outputAmount;
+
     // CCTP bridge — slip only when src produced the bridge token via swap/withdraw.
     const bridgeUsdcAmount =
       srcHandlerQuote.slippageAppliesToOutput ?
-        slipBy(srcHandlerQuote.outputAmount, srcCtx.slippage, srcCtx.outputToken.decimals)
-      : srcHandlerQuote.outputAmount;
+        slipBy(netBridgeToken, srcCtx.slippage, srcCtx.outputToken.decimals)
+      : netBridgeToken;
     const bridgeQuote = fetchBridgeQuote(
       srcCtx.sourceChainId,
       destCtx.destChainId,
@@ -430,6 +454,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
     const sourceSteps: ZapQuoteStep[] = [
       ...srcHandlerQuote.sourceSteps,
+      ...(feeStep ? [feeStep] : []),
       {
         type: 'bridge',
         bridgeId: 'cctp',
@@ -447,7 +472,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
     // Slippage buffer — excess bridge token arrives on dst as an `unused` step.
     const destSlippageReturn = bridgeSlippageReturned(
-      srcHandlerQuote.outputAmount,
+      netBridgeToken,
       bridgeUsdcAmount,
       bridgeQuote,
       destCtx.inputToken
@@ -485,7 +510,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         state,
         totalValueOfTokenAmounts([{ token: bridgeQuote.fromToken, amount: bridgeQuote.fee }], state)
       ),
-      fee: highestFeeOrZero([...sourceSteps, ...destSteps]),
+      fee: feeFromQuoteSteps([...sourceSteps, ...destSteps]),
       srcHandlerQuote,
       destHandlerQuote,
     };
@@ -546,6 +571,20 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const srcSteps = await srcHandler.fetchZapSteps(srcHandlerQuote, srcCtx);
     const minBridgeToken = findBridgeTokenMin(srcSteps.orderOutputs, bridgeToken);
 
+    // Fee re-derived on the slippage-floored bridge amount; the quote shows the pre-slippage amount.
+    const feeQuoteStep = quote.sourceSteps.find(isZapQuoteStepFee);
+    const feeZaps =
+      feeQuoteStep ?
+        buildFeeZapSteps({
+          state,
+          token: bridgeToken,
+          grossAmount: minBridgeToken,
+          recipient: feeQuoteStep.recipient,
+          bps: feeQuoteStep.bps,
+        })
+      : undefined;
+    const netMinBridgeToken = feeZaps ? feeZaps.netAmount : minBridgeToken;
+
     const { burnStep, isTwoStep, expectedTokens } = await this.composeBurnStep(
       destHandler,
       destHandlerQuote,
@@ -555,16 +594,21 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         sourceChainId,
         destChainId,
         bridgeToken,
-        minBridgeToken,
+        minBridgeToken: netMinBridgeToken,
       }
     );
 
     const balanceCheck = buildBalanceCheckZapStep(
       bridgeToken.address,
       sourceZap.router,
-      toWeiString(minBridgeToken, bridgeToken.decimals)
+      toWeiString(netMinBridgeToken, bridgeToken.decimals)
     );
-    const sourceZapSteps: ZapStep[] = [...srcSteps.zapSteps, balanceCheck, burnStep];
+    const sourceZapSteps: ZapStep[] = [
+      ...srcSteps.zapSteps,
+      ...(feeZaps ? feeZaps.zaps : []),
+      balanceCheck,
+      burnStep,
+    ];
 
     // Source outputs = dust only; bridge token is burned by CCTP.
     const sourceOutputs = buildDustOutputs(srcHandlerQuote.dustTokens);
@@ -886,7 +930,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       returned: handlerQuote.returned,
       steps: handlerQuote.destSteps,
       priceImpact: calculatePriceImpact(inputs, handlerQuote.outputs, handlerQuote.returned, state),
-      fee: highestFeeOrZero(handlerQuote.destSteps),
+      fee: feeFromQuoteSteps(handlerQuote.destSteps),
       allowances: handlerQuote.allowances,
       destHandlerQuote: handlerQuote,
     };

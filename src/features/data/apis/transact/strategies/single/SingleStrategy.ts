@@ -52,7 +52,6 @@ import {
   type SingleWithdrawOption,
   type SingleWithdrawQuote,
   type TokenAmount,
-  type ZapFee,
   type ZapQuoteStep,
   type ZapQuoteStepSwapAggregator,
 } from '../../transact-types.ts';
@@ -265,14 +264,14 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
       id: createQuoteId(option.id),
       strategyId: 'single',
       swapQuote: bestQuote,
-      priceImpact: calculatePriceImpact(inputs, outputs, [], state), // includes the zap fee
+      priceImpact: calculatePriceImpact(inputs, outputs, [], state),
       option,
       inputs,
       outputs,
       returned: [],
       allowances,
       steps,
-      fee: bestQuote.fee,
+      fee: ZERO_FEE,
     };
   }
 
@@ -406,7 +405,6 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     const swapInputAmount = withdrawnAmountAfterFee;
     const swapOutputToken = onlyOneToken(option.wantedOutputs);
     let outputs: TokenAmount[] = [{ token: swapInputToken, amount: swapInputAmount }];
-    let fee: ZapFee = ZERO_FEE;
 
     if (!isTokenEqual(swapInputToken, swapOutputToken)) {
       const swapQuotes = await swapAggregator.fetchQuotes(
@@ -438,20 +436,19 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
 
       // set outputs
       outputs = [{ token: bestQuote.toToken, amount: bestQuote.toAmount }];
-      fee = bestQuote.fee;
     }
 
     return {
       id: createQuoteId(option.id),
       strategyId: 'single',
-      priceImpact: calculatePriceImpact(inputs, outputs, [], state), // includes the zap fee.
+      priceImpact: calculatePriceImpact(inputs, outputs, [], state),
       option,
       inputs,
       outputs,
       returned: [],
       allowances,
       steps,
-      fee,
+      fee: ZERO_FEE,
     };
   }
 
@@ -658,7 +655,6 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
       amount: toWeiString(input.amount, input.token.decimals),
     }));
 
-    // The required output is the swap output
     const requiredOutputs: OrderOutput[] = quote.outputs.map(output => ({
       token: getTokenAddress(output.token),
       minOutputAmount: toWeiString(

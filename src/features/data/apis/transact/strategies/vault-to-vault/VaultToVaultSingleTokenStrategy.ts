@@ -10,6 +10,12 @@ import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 import { getRoutingTokensForChain } from '../../../../../../config/vault-to-vault/routing-tokens.ts';
 import { mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
 import {
+  buildFeeZapSteps,
+  feeContext,
+  feeFromQuoteSteps,
+  maybeFeeQuoteStep,
+} from '../../helpers/fee.ts';
+import {
   createOptionId,
   createQuoteId,
   createSelectionId,
@@ -18,12 +24,12 @@ import {
 import {
   calculatePriceImpact,
   convertVaultShareToDepositTokenAmount,
-  highestFeeOrZero,
 } from '../../helpers/quotes.ts';
 import { NO_RELAY } from '../../helpers/zap.ts';
 import { buildDustOutputs, mergeOutputs } from '../../handlers/dust.ts';
 import { VaultSourceHandler } from '../../handlers/vault/VaultSourceHandler.ts';
 import { VaultDestHandler } from '../../handlers/vault/VaultDestHandler.ts';
+import { findBridgeTokenMin } from '../cross-chain/handlers/utils.ts';
 import type {
   DestHandlerContext,
   DestHandlerQuote,
@@ -36,6 +42,7 @@ import {
   SelectionOrder,
   type AllowanceTokenAmount,
   type InputTokenAmount,
+  isZapQuoteStepFee,
   type TokenAmount,
   type VaultToVaultSingleTokenDepositOption,
   type VaultToVaultSingleTokenDepositQuote,
@@ -228,14 +235,29 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
 
     const srcHandlerQuote = await srcHandler.fetchQuote(input, srcCtx);
 
+    // Fee charged once on the routing token, between source and dest handlers
+    const feeStep = maybeFeeQuoteStep(
+      state,
+      feeContext(this.helpers, {
+        input: { kind: 'vault', vaultId: option.srcVaultId },
+        output: { kind: 'vault', vaultId: option.destVaultId },
+      }),
+      routingToken,
+      srcHandlerQuote.outputAmount
+    );
+    const netRoutingAmount = feeStep ? feeStep.netAmount : srcHandlerQuote.outputAmount;
+
     const inputAmount =
       srcHandlerQuote.slippageAppliesToOutput ?
-        slipBy(srcHandlerQuote.outputAmount, slippage, routingToken.decimals)
-      : srcHandlerQuote.outputAmount;
+        slipBy(netRoutingAmount, slippage, routingToken.decimals)
+      : netRoutingAmount;
 
     const destHandlerQuote = await destHandler.fetchQuote(inputAmount, destCtx);
 
-    const sourceSteps = srcHandlerQuote.sourceSteps.filter(s => s.type !== 'unused');
+    const sourceSteps = [
+      ...srcHandlerQuote.sourceSteps.filter(s => s.type !== 'unused'),
+      ...(feeStep ? [feeStep] : []),
+    ];
     const destSteps = destHandlerQuote.destSteps.filter(s => s.type !== 'unused');
     const returned = mergeTokenAmounts(srcHandlerQuote.returned, destHandlerQuote.returned);
     const trailingSteps: ZapQuoteStep[] =
@@ -260,7 +282,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
         returned,
         state
       ),
-      fee: highestFeeOrZero([...sourceSteps, ...destSteps]),
+      fee: feeFromQuoteSteps([...sourceSteps, ...destSteps]),
       srcHandlerQuote,
       destHandlerQuote,
     };
@@ -278,8 +300,22 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
     const srcHandler: ISourceHandler = new VaultSourceHandler(quote.option.srcVaultId);
     const destHandler: IDestHandler = new VaultDestHandler(quote.option.destVaultId);
 
+    const state = this.helpers.getState();
     const srcSteps = await srcHandler.fetchZapSteps(quote.srcHandlerQuote, srcCtx);
     const destSteps = await destHandler.fetchZapSteps(quote.destHandlerQuote, destCtx);
+
+    // Fee re-derived on the slippage-floored routing amount
+    const feeQuoteStep = quote.sourceSteps.find(isZapQuoteStepFee);
+    const feeZaps =
+      feeQuoteStep ?
+        buildFeeZapSteps({
+          state,
+          token: routingToken,
+          grossAmount: findBridgeTokenMin(srcSteps.orderOutputs, routingToken),
+          recipient: feeQuoteStep.recipient,
+          bps: feeQuoteStep.bps,
+        }).zaps
+      : [];
 
     const srcDust = buildDustOutputs(quote.srcHandlerQuote.dustTokens);
     const destDust = buildDustOutputs(quote.destHandlerQuote.dustTokens);
@@ -291,7 +327,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
         outputs: orderOutputs,
         relay: NO_RELAY,
       },
-      steps: [...srcSteps.zapSteps, ...destSteps.zapSteps],
+      steps: [...srcSteps.zapSteps, ...feeZaps, ...destSteps.zapSteps],
     };
 
     const isDeposit = quote.option.mode === TransactMode.Deposit;

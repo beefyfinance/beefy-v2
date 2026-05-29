@@ -43,6 +43,7 @@ import type {
 import { CrossChainStrategy } from './strategies/cross-chain/CrossChainStrategy.ts';
 import { VaultStrategy } from './strategies/vault/VaultStrategy.ts';
 import { VaultToVaultSingleTokenStrategy } from './strategies/vault-to-vault/VaultToVaultSingleTokenStrategy.ts';
+import { ChargeFeeStrategy } from './strategies/ChargeFeeStrategy.ts';
 import {
   getRoutingTokensForChain,
   hasRoutingTokensForChain,
@@ -59,6 +60,19 @@ import {
 } from './transact-types.ts';
 import { type VaultTypeFromVault } from './vaults/IVaultType.ts';
 import { getVaultTypeBuilder } from './vaults/vaults.ts';
+
+// Wraps the outermost composable strategy with the fee decorator (leaves stay fee-agnostic).
+// chargesZapFee is false for inner builds; basic strategies handle their own fees.
+function maybeWrapFee(
+  strategy: IStrategy,
+  helpers: ZapTransactHelpers,
+  chargesZapFee: boolean
+): IStrategy {
+  if (chargesZapFee && isComposableStrategy(strategy)) {
+    return new ChargeFeeStrategy(strategy, helpers);
+  }
+  return strategy;
+}
 
 type StrategyConstructorWithOptions<TId extends ZapStrategyId = ZapStrategyId> = {
   [K in TId]: {
@@ -464,6 +478,22 @@ export class TransactApi implements ITransactApi {
     helpers: TransactHelpers,
     filter?: (zapConfig: ZapStrategyConfig) => boolean
   ): Promise<IStrategy[]> {
+    return this.buildZapStrategiesForVault(helpers, true, filter);
+  }
+
+  // Inner/nested strategies (v2v + cross-chain handlers, eligibility probe) — fee-free, never wrapped.
+  async getInnerZapStrategiesForVault(
+    helpers: TransactHelpers,
+    filter?: (zapConfig: ZapStrategyConfig) => boolean
+  ): Promise<IStrategy[]> {
+    return this.buildZapStrategiesForVault(helpers, false, filter);
+  }
+
+  private async buildZapStrategiesForVault(
+    helpers: TransactHelpers,
+    chargesZapFee: boolean,
+    filter?: (zapConfig: ZapStrategyConfig) => boolean
+  ): Promise<IStrategy[]> {
     const { vault } = helpers;
 
     if (!vault.zaps || vault.zaps.length === 0) {
@@ -486,7 +516,7 @@ export class TransactApi implements ITransactApi {
         }
 
         try {
-          return await this.buildZapStrategy(zapConfig, helpers);
+          return await this.buildZapStrategy(zapConfig, helpers, chargesZapFee);
         } catch (err: unknown) {
           console.error(
             `Vault ${vault.id} failed to build strategy "${zapConfig.strategyId}"`,
@@ -555,7 +585,8 @@ export class TransactApi implements ITransactApi {
 
   private async buildZapStrategy<T extends ZapStrategyConfig>(
     strategyConfig: T,
-    helpers: ZapTransactHelpers
+    helpers: ZapTransactHelpers,
+    chargesZapFee: boolean
   ): Promise<IStrategy> {
     const loader = strategyLoadersById[strategyConfig.strategyId];
     if (!loader) {
@@ -567,21 +598,25 @@ export class TransactApi implements ITransactApi {
     if (isComposerStrategyStatic(ctor)) {
       const underlyingStrategies = await this.getComposableStrategyForZap(helpers);
       const genericCtor = ctor as IComposerStrategyStatic;
-      return new genericCtor(
-        strategyConfig as StrategyIdToConfig<ComposerStrategyId>,
+      return maybeWrapFee(
+        new genericCtor(
+          strategyConfig as StrategyIdToConfig<ComposerStrategyId>,
+          helpers,
+          underlyingStrategies
+        ),
         helpers,
-        underlyingStrategies
+        chargesZapFee
       );
     }
 
     if (isComposableStrategyStatic(ctor)) {
       const genericCtor = ctor as IComposableStrategyStatic;
-      return new genericCtor(strategyConfig, helpers);
+      return maybeWrapFee(new genericCtor(strategyConfig, helpers), helpers, chargesZapFee);
     }
 
     if (isBasicZapStrategyStatic(ctor)) {
       const genericCtor = ctor as IZapStrategyStatic;
-      return new genericCtor(strategyConfig, helpers);
+      return maybeWrapFee(new genericCtor(strategyConfig, helpers), helpers, chargesZapFee);
     }
 
     throw new Error(`Strategy "${strategyConfig.strategyId}" is an unknown type`);
@@ -633,7 +668,7 @@ export class TransactApi implements ITransactApi {
 
     // Synthetic strategies that aren't stored in vault.zaps — instantiate inline
     if (strategyId === 'cross-chain' || strategyId === 'vault-to-vault-single-token') {
-      return await this.buildZapStrategy({ strategyId }, helpers);
+      return await this.buildZapStrategy({ strategyId }, helpers, true);
     }
 
     if (!vault.zaps) {
@@ -645,7 +680,7 @@ export class TransactApi implements ITransactApi {
       throw new Error(`Vault ${vault.id} has no zap with strategy "${strategyId}"`);
     }
 
-    return await this.buildZapStrategy(zap, helpers);
+    return await this.buildZapStrategy(zap, helpers, true);
   }
 
   async fetchRecoveryQuote(

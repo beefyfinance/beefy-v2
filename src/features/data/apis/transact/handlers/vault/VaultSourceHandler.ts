@@ -44,7 +44,7 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
     ctx: SourceHandlerContext
   ): Promise<SourceHandlerQuote<VaultSourceState>> {
     const srcHelpers = await ctx.resolveHelpersForVault(this.srcVaultId);
-    const strategies = await (await getTransactApi()).getZapStrategiesForVault(srcHelpers);
+    const strategies = await (await getTransactApi()).getInnerZapStrategiesForVault(srcHelpers);
 
     const match = await VaultSourceHandler.findStrategyForOutputWithdraw(
       strategies,
@@ -98,7 +98,7 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
     ctx: SourceHandlerContext
   ): Promise<SourceHandlerSteps> {
     const srcHelpers = await ctx.resolveHelpersForVault(this.srcVaultId);
-    const strategies = await (await getTransactApi()).getZapStrategiesForVault(srcHelpers);
+    const strategies = await (await getTransactApi()).getInnerZapStrategiesForVault(srcHelpers);
 
     const { underlyingQuote } = quote.state;
     const strategy = strategies.find(s => s.id === underlyingQuote.strategyId);
