@@ -6,6 +6,7 @@ import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx'
 import { SpinLoader } from '../../../../../../components/SpinLoader/SpinLoader.tsx';
 import { ListJoin } from '../../../../../../components/ListJoin.tsx';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { ExplorerAddressLink } from '../../../../../../components/Tenderly/Links/ExplorerAddressLink.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
@@ -17,6 +18,7 @@ import {
   type ZapQuoteStep,
   type ZapQuoteStepBuild,
   type ZapQuoteStepDeposit,
+  type ZapQuoteStepFee,
   type ZapQuoteStepSplit,
   type ZapQuoteStepStake,
   type ZapQuoteStepSwap,
@@ -57,6 +59,8 @@ function getStepChainId(step: ZapQuoteStep): ChainEntity['id'] | undefined {
       return step.fromToken.chainId;
     case 'bridge':
       return step.toChainId;
+    case 'fee':
+      return step.token.chainId;
     case 'build':
     case 'deposit':
     case 'stake':
@@ -392,6 +396,28 @@ const StepContentBridge = memo(function StepContentBridge({
   );
 });
 
+const StepContentFee = memo(function StepContentFee({
+  step,
+  chainId,
+}: StepContentProps<ZapQuoteStepFee>) {
+  const { t } = useTranslation();
+
+  return (
+    <Trans
+      t={t}
+      i18nKey="Transact-Route-Step-Fee"
+      values={{
+        feeToken: step.token.symbol,
+      }}
+      components={{
+        feeAmount: <TokenAmountFromEntity amount={step.feeAmount} token={step.token} />,
+        recipient: <ExplorerAddressLink chainId={step.token.chainId} address={step.recipient} />,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
+      }}
+    />
+  );
+});
+
 type StepContentMap = {
   [K in ZapQuoteStep as K['type']]: ComponentType<StepContentProps<K>>;
 };
@@ -406,6 +432,7 @@ const StepContentComponents: StepContentMap = {
   stake: StepContentStake,
   unstake: StepContentUnstake,
   bridge: StepContentBridge,
+  fee: StepContentFee,
 };
 
 function useStepStatuses(

@@ -86,6 +86,11 @@ const ZapFees = memo(function ZapFees({ quote }: ZapFeesProps) {
     };
   }, [quote, isCrossChain, hasDiscountFee, fee.value]);
 
+  // No fee to display (e.g. dual-token CLM deposit, or a fee-suppressed inner quote).
+  if (!isCrossChain && fee.value === 0 && !hasDiscountFee) {
+    return null;
+  }
+
   const tooltip = (
     <TooltipTable>
       <TooltipRows>
