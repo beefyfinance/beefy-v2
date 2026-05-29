@@ -651,6 +651,16 @@ export type ZapQuoteStepBridge = {
   timeEstimate: number;
 };
 
+export type ZapQuoteStepFee = {
+  type: 'fee';
+  token: TokenEntity;
+  grossAmount: BigNumber;
+  feeAmount: BigNumber;
+  netAmount: BigNumber;
+  recipient: string;
+  bps: number;
+};
+
 export type ZapQuoteStep =
   | ZapQuoteStepWithdraw
   | ZapQuoteStepSwap
@@ -660,7 +670,8 @@ export type ZapQuoteStep =
   | ZapQuoteStepUnused
   | ZapQuoteStepStake
   | ZapQuoteStepUnstake
-  | ZapQuoteStepBridge;
+  | ZapQuoteStepBridge
+  | ZapQuoteStepFee;
 
 export function isZapQuoteStepSwap(step: ZapQuoteStep): step is ZapQuoteStepSwap {
   return step.type === 'swap';
@@ -692,6 +703,10 @@ export function isZapQuoteStepUnstake(step: ZapQuoteStep): step is ZapQuoteStepU
 
 export function isZapQuoteStepBridge(step: ZapQuoteStep): step is ZapQuoteStepBridge {
   return step.type === 'bridge';
+}
+
+export function isZapQuoteStepFee(step: ZapQuoteStep): step is ZapQuoteStepFee {
+  return step.type === 'fee';
 }
 
 export function isZapQuoteStepSwapPool(step: ZapQuoteStepSwap): step is ZapQuoteStepSwapPool {

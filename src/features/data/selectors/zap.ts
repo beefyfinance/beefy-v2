@@ -17,6 +17,14 @@ import { selectPlatformByIdOrUndefined } from './platforms.ts';
 export const selectZapByChainId = (state: BeefyState, chainId: ChainEntity['id']) =>
   state.entities.zaps.zaps.byChainId[chainId] || undefined;
 
+export const selectZapFeeConfigByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
+  const zap = selectZapByChainId(state, chainId);
+  if (!zap) {
+    return undefined;
+  }
+  return { recipient: zap.feeRecipient, bps: zap.feeBps };
+};
+
 export const selectSwapAggregatorById = (state: BeefyState, id: SwapAggregatorEntity['id']) =>
   state.entities.zaps.aggregators.byId[id] || undefined;
 

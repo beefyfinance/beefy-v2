@@ -6,13 +6,7 @@ import { selectTokenPriceByAddress } from '../../../selectors/tokens.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { mooAmountToOracleAmount } from '../../../utils/ppfs.ts';
 import type { QuoteResponse } from '../swap/ISwapProvider.ts';
-import {
-  isZapQuoteStepSwap,
-  isZapQuoteStepSwapAggregator,
-  type TokenAmount,
-  type ZapFee,
-  type ZapQuoteStep,
-} from '../transact-types.ts';
+import { type TokenAmount, type ZapFee } from '../transact-types.ts';
 
 export const ZERO_FEE: ZapFee = { value: 0 };
 
@@ -71,21 +65,6 @@ export function calculatePriceImpact(
   }
 
   return effectiveInput.minus(totalOutputAmount).div(effectiveInput).toNumber();
-}
-
-/**
- * Returns the highest fee from the given steps for display in the UI
- */
-export function highestFeeOrZero(steps: ZapQuoteStep[]): ZapFee {
-  return steps.reduce((maxFee, step) => {
-    // only aggregator swap step has fee so far
-    if (isZapQuoteStepSwap(step) && isZapQuoteStepSwapAggregator(step)) {
-      if (step.fee.value > maxFee.value) {
-        return step.fee;
-      }
-    }
-    return maxFee;
-  }, ZERO_FEE);
 }
 
 /**

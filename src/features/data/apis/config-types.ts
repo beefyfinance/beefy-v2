@@ -285,6 +285,8 @@ export interface ZapConfig {
   router: string;
   manager: string;
   chainId: ChainEntity['id'];
+  feeRecipient: string;
+  feeBps?: number;
 }
 
 export interface OneInchSwapConfig {
