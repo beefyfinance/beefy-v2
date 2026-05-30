@@ -1,5 +1,40 @@
 [
   {
+    "id": "aavev3-base-cbeth",
+    "name": "cbETH",
+    "type": "standard",
+    "token": "cbETH",
+    "tokenAddress": "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x406C482bCCf0B8e06f0C18083046F843F8F6c01F",
+    "earnedToken": "mooAaveV3BasecbETH",
+    "earnedTokenAddress": "0x406C482bCCf0B8e06f0C18083046F843F8F6c01F",
+    "oracle": "tokens",
+    "oracleId": "cbETH",
+    "status": "active",
+    "createdAt": 1780091497,
+    "platformId": "aave",
+    "assets": ["cbETH"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-uxrp-weth-rp",
     "name": "uXRP-WETH Reward Pool",
     "type": "gov",
