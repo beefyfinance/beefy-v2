@@ -289,6 +289,39 @@ export interface ZapConfig {
   feeBps?: number;
 }
 
+export type ZapFeeEndpointMatcher = {
+  token?: {
+    ids?: string[];
+    addresses?: string[];
+    symbols?: string[];
+    oracleIds?: string[];
+    tags?: string[];
+  };
+  vault?: {
+    ids?: string[];
+    platformIds?: string[];
+    strategyTypeIds?: string[];
+    assetTypes?: string[];
+    assetIds?: string[];
+    statuses?: string[];
+  };
+};
+
+export type ZapFeeConditionParams = { from?: ZapFeeEndpointMatcher; to?: ZapFeeEndpointMatcher };
+
+export type ZapFeeRule = {
+  id: string;
+  kind: 'waive' | 'discount';
+  // Short campaign blurb, shown next to the fee when this rule applies (display not yet wired).
+  description?: string;
+  bps?: number;
+  chainIds?: ChainEntity['id'][];
+  startsAt?: number;
+  endsAt?: number;
+  condition?: string;
+  params?: ZapFeeConditionParams;
+};
+
 export interface OneInchSwapConfig {
   id: string;
   type: 'one-inch';

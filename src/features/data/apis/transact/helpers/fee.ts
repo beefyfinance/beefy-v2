@@ -7,18 +7,17 @@ import { isTokenNative, type TokenEntity } from '../../../entities/token.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectChainWrappedNativeToken } from '../../../selectors/tokens.ts';
 import { selectVaultById } from '../../../selectors/vaults.ts';
-import { selectZapFeeConfigByChainId } from '../../../selectors/zap.ts';
+import { selectZapFeeConfigByChainId, selectZapFeeRules } from '../../../selectors/zap.ts';
 import type { BeefyState } from '../../../store/types.ts';
-import {
-  isZapQuoteStepFee,
-  type ZapFee,
-  type ZapQuoteStep,
-  type ZapQuoteStepFee,
-} from '../transact-types.ts';
+import type {
+  ZapFeeConditionParams,
+  ZapFeeEndpointMatcher,
+  ZapFeeRule,
+} from '../../config-types.ts';
+import type { ZapFee, ZapFeeCharge, ZapQuoteStepFee } from '../transact-types.ts';
 import type { UserlessZapOrder, ZapStep } from '../zap/types.ts';
 import type { TransactHelpers } from '../strategies/IStrategy.ts';
 import { slipBy } from './amounts.ts';
-import { ZERO_FEE } from './quotes.ts';
 import { nativeAndWrappedAreSame } from './tokens.ts';
 import { getTokenAddress } from './zap.ts';
 
@@ -32,30 +31,10 @@ export type ZapFeeEndpoint =
 export type ZapFeeContext = {
   chainId: ChainEntity['id'];
   vaultId: VaultEntity['id'];
-  // User-facing endpoints of the zap (never the mid-route bridge/routing token); waivers match on these.
+  // User-facing endpoints of the zap (never the mid-route bridge/routing token); campaigns match on these.
   input: ZapFeeEndpoint;
   output: ZapFeeEndpoint;
 };
-
-// Endpoint matcher: a token/vault endpoint matches if any listed fact matches.
-export type ZapFeeEndpointMatcher = {
-  token?: {
-    ids?: string[];
-    addresses?: string[];
-    symbols?: string[];
-    oracleIds?: string[];
-    tags?: string[];
-  };
-  vault?: {
-    ids?: string[];
-    platformIds?: string[];
-    strategyTypeIds?: string[];
-    assetTypes?: string[];
-    assetIds?: string[];
-  };
-};
-
-type ZapFeeConditionParams = { from?: ZapFeeEndpointMatcher; to?: ZapFeeEndpointMatcher };
 
 function endpointMatches(
   state: BeefyState,
@@ -87,11 +66,12 @@ function endpointMatches(
     !!v.platformIds?.includes(vault.platformId) ||
     !!v.strategyTypeIds?.includes(vault.strategyTypeId) ||
     !!v.assetTypes?.includes(vault.assetType) ||
-    !!v.assetIds?.some(id => vault.assetIds.includes(id))
+    !!v.assetIds?.some(id => vault.assetIds.includes(id)) ||
+    !!v.statuses?.includes(vault.status)
   );
 }
 
-// Named fee-waiver conditions; config references them by key. Unknown key = no waiver (fail-closed).
+// Named fee-campaign conditions; config references them by key. Unknown key = no match (fail-closed).
 const zapFeeConditions: Record<
   string,
   (state: BeefyState, ctx: ZapFeeContext, params: ZapFeeConditionParams) => boolean
@@ -106,10 +86,72 @@ const zapFeeConditions: Record<
     endpointMatches(state, ctx.output, params.to),
 };
 
-export type ZapFeeWaiver = { id: string; condition: string; params: ZapFeeConditionParams };
+const warnedInvalidZapFeeRuleIds = new Set<string>();
 
-// Fee waivers (remote-config later); empty = none. Unknown condition = ignored (fail-closed).
-const zapFeeWaivers: ZapFeeWaiver[] = [];
+// Validate a config-authored rule against the code vocabulary; invalid ones are dropped (fail-closed).
+function validateZapFeeRule(rule: ZapFeeRule): boolean {
+  if (typeof rule?.id !== 'string') {
+    return false;
+  }
+  if (rule.kind !== 'waive' && rule.kind !== 'discount') {
+    return false;
+  }
+  if (rule.kind === 'discount' && (!Number.isInteger(rule.bps) || (rule.bps ?? -1) < 0)) {
+    return false;
+  }
+  if (rule.condition !== undefined) {
+    if (!(rule.condition in zapFeeConditions)) {
+      return false;
+    }
+    if (rule.condition === 'zapFromFree' && !rule.params?.from) {
+      return false;
+    }
+    if (rule.condition === 'zapToFree' && !rule.params?.to) {
+      return false;
+    }
+    if (rule.condition === 'subsetToSubsetFree' && !(rule.params?.from && rule.params?.to)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function getActiveZapFeeRules(state: BeefyState): ZapFeeRule[] {
+  return selectZapFeeRules(state).filter(rule => {
+    if (validateZapFeeRule(rule)) {
+      return true;
+    }
+    const id = typeof rule?.id === 'string' ? rule.id : 'unknown';
+    if (!warnedInvalidZapFeeRuleIds.has(id)) {
+      warnedInvalidZapFeeRuleIds.add(id);
+      console.warn(`Ignoring invalid zap fee rule "${id}"`);
+    }
+    return false;
+  });
+}
+
+// Applies when the time window + chain scope hold and the optional condition matches (absent = any).
+function ruleApplies(
+  state: BeefyState,
+  ctx: ZapFeeContext,
+  rule: ZapFeeRule,
+  nowSeconds: number
+): boolean {
+  if (rule.startsAt !== undefined && nowSeconds < rule.startsAt) {
+    return false;
+  }
+  if (rule.endsAt !== undefined && nowSeconds > rule.endsAt) {
+    return false;
+  }
+  if (rule.chainIds && !rule.chainIds.includes(ctx.chainId)) {
+    return false;
+  }
+  if (!rule.condition) {
+    return true;
+  }
+  const condition = zapFeeConditions[rule.condition];
+  return condition ? condition(state, ctx, rule.params ?? {}) : false;
+}
 
 function computeFeeSplit(
   grossAmount: BigNumber,
@@ -123,47 +165,79 @@ function computeFeeSplit(
   return { feeAmount, netAmount: grossAmount.minus(feeAmount) };
 }
 
-function resolveZapFee(
+// Lowest effective bps wins
+function computeZapFee(
   state: BeefyState,
   ctx: ZapFeeContext
-): { bps: number; recipient: string } | undefined {
+): { effectiveBps: number; baseBps: number; recipient: string; winner?: ZapFeeRule } | undefined {
   const config = selectZapFeeConfigByChainId(state, ctx.chainId);
   if (!config?.recipient) {
     return undefined;
   }
-  const bps = config.bps ?? ZAP_FEE_BPS;
-  if (bps <= 0) {
+  const baseBps = config.bps ?? ZAP_FEE_BPS;
+  if (baseBps <= 0) {
     return undefined;
   }
-  if (
-    zapFeeWaivers.some(waiver => {
-      const condition = zapFeeConditions[waiver.condition];
-      return condition ? condition(state, ctx, waiver.params) : false;
-    })
-  ) {
-    return undefined;
+
+  const nowSeconds = Math.floor(Date.now() / 1000);
+  let effectiveBps = baseBps;
+  let winner: ZapFeeRule | undefined;
+  for (const rule of getActiveZapFeeRules(state)) {
+    if (!ruleApplies(state, ctx, rule, nowSeconds)) {
+      continue;
+    }
+    const ruleBps = rule.kind === 'discount' ? Math.min(rule.bps ?? baseBps, baseBps) : 0;
+    if (ruleBps < effectiveBps) {
+      effectiveBps = ruleBps;
+      winner = rule;
+    }
+    if (effectiveBps <= 0) {
+      break;
+    }
   }
-  return { bps, recipient: config.recipient };
+
+  return { effectiveBps, baseBps, recipient: config.recipient, winner };
 }
 
-function buildFeeQuoteStep(
-  token: TokenEntity,
-  grossAmount: BigNumber,
-  recipient: string,
-  bps: number
-): ZapQuoteStepFee {
-  const { feeAmount, netAmount } = computeFeeSplit(grossAmount, token, bps);
-  return { type: 'fee', token, grossAmount, feeAmount, netAmount, recipient, bps };
-}
-
-export function maybeFeeQuoteStep(
+// One computation → two outputs: `display` is the UI fee on quote.fee; `step` is the execution fee in
+// quote.steps. A full waive yields display only (value 0 + original), so the row shows it with no step.
+export function resolveZapFee(
   state: BeefyState,
   ctx: ZapFeeContext,
   token: TokenEntity,
   grossAmount: BigNumber
-): ZapQuoteStepFee | undefined {
-  const fee = resolveZapFee(state, ctx);
-  return fee ? buildFeeQuoteStep(token, grossAmount, fee.recipient, fee.bps) : undefined;
+): { display: ZapFee; step?: ZapQuoteStepFee } | undefined {
+  const fee = computeZapFee(state, ctx);
+  if (!fee) {
+    return undefined;
+  }
+  const { feeAmount, netAmount } = computeFeeSplit(grossAmount, token, fee.effectiveBps);
+  const reduced = fee.effectiveBps < fee.baseBps;
+  const charge: ZapFeeCharge = {
+    token,
+    recipient: fee.recipient,
+    bps: fee.effectiveBps,
+    grossAmount,
+    feeAmount,
+    netAmount,
+  };
+  const display: ZapFee = {
+    value: fee.effectiveBps / BPS_DENOMINATOR,
+    ...(reduced ?
+      {
+        campaign: {
+          original: fee.baseBps / BPS_DENOMINATOR,
+          ...(fee.winner?.description ? { description: fee.winner.description } : {}),
+          ...(fee.winner?.id ? { id: fee.winner.id } : {}),
+        },
+      }
+    : {}),
+  };
+  const step: ZapQuoteStepFee | undefined =
+    fee.effectiveBps > 0 ?
+      { type: 'fee', ...charge, ...(reduced ? { originalBps: fee.baseBps } : {}) }
+    : undefined;
+  return { display, step };
 }
 
 // ERC20: single transfer. Native: wrap to wnative then transfer, so the recipient always gets the ERC20.
@@ -176,6 +250,9 @@ export function buildFeeZapSteps(args: {
 }): { zaps: ZapStep[]; feeAmount: BigNumber; netAmount: BigNumber } {
   const { state, token, grossAmount, recipient, bps } = args;
   const { feeAmount, netAmount } = computeFeeSplit(grossAmount, token, bps);
+  if (feeAmount.isZero()) {
+    return { zaps: [], feeAmount, netAmount };
+  }
   const feeAmountWei = toWeiString(feeAmount, token.decimals);
 
   if (!isTokenNative(token)) {
@@ -209,11 +286,6 @@ export function feeZapStepsFromQuoteStep(
     bps: feeStep.bps,
   });
   return { zaps, feeAmount };
-}
-
-export function feeFromQuoteSteps(steps: ZapQuoteStep[]): ZapFee {
-  const feeStep = steps.find(isZapQuoteStepFee);
-  return feeStep ? { value: feeStep.bps / BPS_DENOMINATOR } : ZERO_FEE;
 }
 
 // chainId defaults to the vault chain; endpoints are the user-facing input/output (not bridge tokens).

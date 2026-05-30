@@ -25,6 +25,8 @@ export const selectZapFeeConfigByChainId = (state: BeefyState, chainId: ChainEnt
   return { recipient: zap.feeRecipient, bps: zap.feeBps };
 };
 
+export const selectZapFeeRules = (state: BeefyState) => state.entities.zaps.feeCampaigns;
+
 export const selectSwapAggregatorById = (state: BeefyState, id: SwapAggregatorEntity['id']) =>
   state.entities.zaps.aggregators.byId[id] || undefined;
 

@@ -37,21 +37,29 @@ export type AllowanceTokenAmount = {
   spenderAddress: string;
 };
 
-export type ZapFeeNormal = {
-  /** 0.0005 = 0.05% */
+export type ZapFeeCharge = {
+  token: TokenEntity;
+  recipient: string;
+  bps: number;
+  grossAmount: BigNumber;
+  feeAmount: BigNumber;
+  netAmount: BigNumber;
+};
+
+export type ZapFee = {
   value: number;
+  // Present only when a campaign reduced the fee; original + blurb co-vary, so they live together.
+  campaign?: {
+    original: number;
+    description?: string;
+    id?: string;
+  };
 };
-export type ZapFeeDiscounted = ZapFeeNormal & {
-  original: number;
-};
-export type ZapFee = ZapFeeNormal | ZapFeeDiscounted;
 
-export function isZapFeeDiscounted(zapFee: ZapFee): zapFee is ZapFeeDiscounted {
-  return 'original' in zapFee;
-}
-
-export function isZapFeeNonZero(zapFee: ZapFee): boolean {
-  return zapFee.value > 0;
+export function isZapFeeDiscounted(
+  zapFee: ZapFee
+): zapFee is ZapFee & { campaign: NonNullable<ZapFee['campaign']> } {
+  return zapFee.campaign !== undefined;
 }
 
 export type ZapExtraQuoteResponse = {
@@ -653,14 +661,9 @@ export type ZapQuoteStepBridge = {
   timeEstimate: number;
 };
 
-export type ZapQuoteStepFee = {
+export type ZapQuoteStepFee = ZapFeeCharge & {
   type: 'fee';
-  token: TokenEntity;
-  grossAmount: BigNumber;
-  feeAmount: BigNumber;
-  netAmount: BigNumber;
-  recipient: string;
-  bps: number;
+  originalBps?: number;
 };
 
 export type ZapQuoteStep =

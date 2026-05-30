@@ -8,6 +8,7 @@ import { ListJoin } from '../../../../../../components/ListJoin.tsx';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { ExplorerAddressLink } from '../../../../../../components/Tenderly/Links/ExplorerAddressLink.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { formatPercent } from '../../../../../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import {
@@ -396,6 +397,27 @@ const StepContentBridge = memo(function StepContentBridge({
   );
 });
 
+const StepFeeRate = memo(function StepFeeRate({
+  bps,
+  originalBps,
+}: {
+  bps: number;
+  originalBps: number | undefined;
+}) {
+  const discounted = originalBps !== undefined && originalBps !== bps;
+  return (
+    <>
+      {formatPercent(bps / 10000, 2)}
+      {discounted ?
+        <>
+          {' '}
+          <span className={css(styles.feeOriginal)}>{formatPercent(originalBps / 10000, 2)}</span>
+        </>
+      : null}
+    </>
+  );
+});
+
 const StepContentFee = memo(function StepContentFee({
   step,
   chainId,
@@ -411,6 +433,7 @@ const StepContentFee = memo(function StepContentFee({
       }}
       components={{
         feeAmount: <TokenAmountFromEntity amount={step.feeAmount} token={step.token} />,
+        rate: <StepFeeRate bps={step.bps} originalBps={step.originalBps} />,
         recipient: <ExplorerAddressLink chainId={step.token.chainId} address={step.recipient} />,
         chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
       }}

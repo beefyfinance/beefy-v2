@@ -8,9 +8,8 @@ import type { BeefyThunk } from '../../../store/types.ts';
 import {
   applyWithdrawFeeToOrder,
   feeContext,
-  feeFromQuoteSteps,
   feeZapStepsFromQuoteStep,
-  maybeFeeQuoteStep,
+  resolveZapFee,
 } from '../helpers/fee.ts';
 import { isOptionFeeable } from '../helpers/options.ts';
 import { calculatePriceImpact } from '../helpers/quotes.ts';
@@ -86,26 +85,25 @@ export class ChargeFeeStrategy<
     option: ZapStrategyIdToDepositOption<TId>
   ): Promise<ZapStrategyIdToDepositQuote<TId>> {
     const state = this.helpers.getState();
-    const feeable = isOptionFeeable(option);
-    const feeStep =
-      feeable && inputs.length === 1 ?
-        maybeFeeQuoteStep(
-          state,
-          feeContext(this.helpers, {
-            input: { kind: 'token', token: inputs[0].token },
-            output: { kind: 'vault', vaultId: this.helpers.vault.id },
-          }),
-          inputs[0].token,
-          inputs[0].amount
-        )
+    const feeable = isOptionFeeable(option) && inputs.length === 1;
+    const ctx =
+      feeable ?
+        feeContext(this.helpers, {
+          input: { kind: 'token', token: inputs[0].token },
+          output: { kind: 'vault', vaultId: this.helpers.vault.id },
+        })
       : undefined;
-    if (!feeStep) {
-      return this.inner.fetchDepositQuote(inputs, option);
+    const resolved = ctx ? resolveZapFee(state, ctx, inputs[0].token, inputs[0].amount) : undefined;
+    const netInput = resolved?.step?.netAmount ?? inputs[0].amount;
+    const innerQuote = await this.inner.fetchDepositQuote(
+      resolved ? [{ ...inputs[0], amount: netInput }] : inputs,
+      option
+    );
+    if (!resolved) {
+      return innerQuote;
     }
 
-    // Inner routes on the net input; the public quote keeps gross inputs + the fee step for display.
-    const innerInputs = [{ ...inputs[0], amount: feeStep.netAmount }];
-    const innerQuote = await this.inner.fetchDepositQuote(innerInputs, option);
+    // Public quote keeps gross inputs + the UI fee; the fee step (if any) is fee-first for execution.
     return {
       ...innerQuote,
       inputs,
@@ -114,8 +112,8 @@ export class ChargeFeeStrategy<
         ...allowance,
         amount: inputs[0].amount,
       })),
-      steps: [feeStep, ...innerQuote.steps],
-      fee: feeFromQuoteSteps([feeStep]),
+      steps: resolved.step ? [resolved.step, ...innerQuote.steps] : innerQuote.steps,
+      fee: resolved.display,
       priceImpact: calculatePriceImpact(inputs, innerQuote.outputs, innerQuote.returned, state),
     } as ZapStrategyIdToDepositQuote<TId>;
   }
@@ -174,30 +172,34 @@ export class ChargeFeeStrategy<
   ): Promise<ZapStrategyIdToWithdrawQuote<TId>> {
     const state = this.helpers.getState();
     const innerQuote = await this.inner.fetchWithdrawQuote(inputs, option);
-    const feeable = isOptionFeeable(option);
-    const feeStep =
-      feeable && innerQuote.outputs.length === 1 ?
-        maybeFeeQuoteStep(
-          state,
-          feeContext(this.helpers, {
-            input: { kind: 'vault', vaultId: this.helpers.vault.id },
-            output: { kind: 'token', token: innerQuote.outputs[0].token },
-          }),
-          innerQuote.outputs[0].token,
-          innerQuote.outputs[0].amount
-        )
+    const feeable = isOptionFeeable(option) && innerQuote.outputs.length === 1;
+    const ctx =
+      feeable ?
+        feeContext(this.helpers, {
+          input: { kind: 'vault', vaultId: this.helpers.vault.id },
+          output: { kind: 'token', token: innerQuote.outputs[0].token },
+        })
       : undefined;
-    if (!feeStep) {
+    const resolved =
+      ctx ?
+        resolveZapFee(state, ctx, innerQuote.outputs[0].token, innerQuote.outputs[0].amount)
+      : undefined;
+    if (!resolved) {
       return innerQuote;
     }
 
-    // Fee-last: the public quote shows the net output; the inner quote (gross) is rebuilt at step time.
-    const netOutputs = [{ token: innerQuote.outputs[0].token, amount: feeStep.netAmount }];
+    // Fee-last: the public quote shows the net output; the inner (gross) is rebuilt at step time.
+    const netOutputs = [
+      {
+        token: innerQuote.outputs[0].token,
+        amount: resolved.step?.netAmount ?? innerQuote.outputs[0].amount,
+      },
+    ];
     return {
       ...innerQuote,
       outputs: netOutputs,
-      steps: [...innerQuote.steps, feeStep],
-      fee: feeFromQuoteSteps([feeStep]),
+      steps: resolved.step ? [...innerQuote.steps, resolved.step] : innerQuote.steps,
+      fee: resolved.display,
       priceImpact: calculatePriceImpact(innerQuote.inputs, netOutputs, innerQuote.returned, state),
     } as ZapStrategyIdToWithdrawQuote<TId>;
   }

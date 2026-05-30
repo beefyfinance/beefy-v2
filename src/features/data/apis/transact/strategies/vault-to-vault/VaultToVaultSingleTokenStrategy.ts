@@ -9,12 +9,7 @@ import { selectWalletAddress } from '../../../../selectors/wallet.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 import { getRoutingTokensForChain } from '../../../../../../config/vault-to-vault/routing-tokens.ts';
 import { mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
-import {
-  buildFeeZapSteps,
-  feeContext,
-  feeFromQuoteSteps,
-  maybeFeeQuoteStep,
-} from '../../helpers/fee.ts';
+import { buildFeeZapSteps, feeContext, resolveZapFee } from '../../helpers/fee.ts';
 import {
   createOptionId,
   createQuoteId,
@@ -24,6 +19,7 @@ import {
 import {
   calculatePriceImpact,
   convertVaultShareToDepositTokenAmount,
+  ZERO_FEE,
 } from '../../helpers/quotes.ts';
 import { NO_RELAY } from '../../helpers/zap.ts';
 import { buildDustOutputs, mergeOutputs } from '../../handlers/dust.ts';
@@ -236,16 +232,12 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
     const srcHandlerQuote = await srcHandler.fetchQuote(input, srcCtx);
 
     // Fee charged once on the routing token, between source and dest handlers
-    const feeStep = maybeFeeQuoteStep(
-      state,
-      feeContext(this.helpers, {
-        input: { kind: 'vault', vaultId: option.srcVaultId },
-        output: { kind: 'vault', vaultId: option.destVaultId },
-      }),
-      routingToken,
-      srcHandlerQuote.outputAmount
-    );
-    const netRoutingAmount = feeStep ? feeStep.netAmount : srcHandlerQuote.outputAmount;
+    const feeCtx = feeContext(this.helpers, {
+      input: { kind: 'vault', vaultId: option.srcVaultId },
+      output: { kind: 'vault', vaultId: option.destVaultId },
+    });
+    const fee = resolveZapFee(state, feeCtx, routingToken, srcHandlerQuote.outputAmount);
+    const netRoutingAmount = fee?.step?.netAmount ?? srcHandlerQuote.outputAmount;
 
     const inputAmount =
       srcHandlerQuote.slippageAppliesToOutput ?
@@ -256,7 +248,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
 
     const sourceSteps = [
       ...srcHandlerQuote.sourceSteps.filter(s => s.type !== 'unused'),
-      ...(feeStep ? [feeStep] : []),
+      ...(fee?.step ? [fee.step] : []),
     ];
     const destSteps = destHandlerQuote.destSteps.filter(s => s.type !== 'unused');
     const returned = mergeTokenAmounts(srcHandlerQuote.returned, destHandlerQuote.returned);
@@ -282,7 +274,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
         returned,
         state
       ),
-      fee: feeFromQuoteSteps([...sourceSteps, ...destSteps]),
+      fee: fee?.display ?? ZERO_FEE,
       srcHandlerQuote,
       destHandlerQuote,
     };
@@ -305,15 +297,15 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
     const destSteps = await destHandler.fetchZapSteps(quote.destHandlerQuote, destCtx);
 
     // Fee re-derived on the slippage-floored routing amount
-    const feeQuoteStep = quote.sourceSteps.find(isZapQuoteStepFee);
+    const feeStep = quote.sourceSteps.find(isZapQuoteStepFee);
     const feeZaps =
-      feeQuoteStep ?
+      feeStep ?
         buildFeeZapSteps({
           state,
           token: routingToken,
           grossAmount: findBridgeTokenMin(srcSteps.orderOutputs, routingToken),
-          recipient: feeQuoteStep.recipient,
-          bps: feeQuoteStep.bps,
+          recipient: feeStep.recipient,
+          bps: feeStep.bps,
         }).zaps
       : [];
 
