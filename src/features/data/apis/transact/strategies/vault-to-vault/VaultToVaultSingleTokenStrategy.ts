@@ -9,7 +9,7 @@ import { selectWalletAddress } from '../../../../selectors/wallet.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 import { getRoutingTokensForChain } from '../../../../../../config/vault-to-vault/routing-tokens.ts';
 import { mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
-import { buildFeeZapSteps, feeContext, resolveZapFee } from '../../helpers/fee.ts';
+import { buildFeeZapSteps, optionFeeEndpoints, resolveZapFee } from '../../helpers/fee.ts';
 import {
   createOptionId,
   createQuoteId,
@@ -231,12 +231,11 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
 
     const srcHandlerQuote = await srcHandler.fetchQuote(input, srcCtx);
 
-    // Fee charged once on the routing token, between source and dest handlers
-    const feeCtx = feeContext({
-      input: { kind: 'vault', vaultId: option.srcVaultId },
-      output: { kind: 'vault', vaultId: option.destVaultId },
-    });
-    const fee = resolveZapFee(state, feeCtx, routingToken, srcHandlerQuote.outputAmount);
+    // Fee charged once on the routing token, between source and dest handlers. Matching endpoints come from
+    // the option; the skim stays the runtime routing token / amount.
+    const feeCtx = optionFeeEndpoints(option);
+    const fee =
+      feeCtx ? resolveZapFee(state, feeCtx, routingToken, srcHandlerQuote.outputAmount) : undefined;
     const netRoutingAmount = fee?.step?.netAmount ?? srcHandlerQuote.outputAmount;
 
     const inputAmount =

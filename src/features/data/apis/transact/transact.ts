@@ -361,6 +361,14 @@ export class TransactApi implements ITransactApi {
       }
     }
 
+    // Add fee campaign info to feeable options
+    const state = getState();
+    for (const option of options) {
+      if (isOptionFeeable(option)) {
+        option.feeCampaign = resolveOptionFeeCampaign(state, option);
+      }
+    }
+
     // if not disabled by a zap strategy, add the vault withdraw option as the first item
     if (vaultWithdrawOption) {
       const deduped = dropSingleIdentityOption(options, vaultWithdrawOption.inputs[0].address);

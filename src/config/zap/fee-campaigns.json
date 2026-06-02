@@ -2,43 +2,35 @@
   {
     "id": "waive-clearstar-usdc",
     "description": "No zap fee on deposits into the Clearstar USDC vault.",
-    "kind": "waive",
-    "condition": "zapOut",
-    "params": { "to": { "vault": { "ids": ["morpho-v2-base-clearstar-reactor-usdc"] } } }
+    "bps": 0,
+    "output": { "vault": { "ids": ["morpho-v2-base-clearstar-reactor-usdc"] } }
   },
   {
     "id": "discount-morpho-base",
     "description": "Reduced zap fee on Morpho vaults on Base.",
-    "kind": "discount",
     "bps": 2,
-    "condition": "zapOut",
     "featured": true,
-    "params": { "to": { "vault": { "platformIds": ["morpho"], "chainIds": ["base"] } } }
+    "output": { "vault": { "platformIds": ["morpho"], "chainIds": ["base"] } }
   },
   {
     "id": "optimism-window-free",
     "description": "Zap fees waived into Optimism vaults for a limited time.",
-    "kind": "waive",
-    "condition": "zapOut",
+    "bps": 0,
     "featured": true,
     "endsAt": 1798761600,
-    "params": { "to": { "vault": { "chainIds": ["optimism"] } } }
+    "output": { "vault": { "chainIds": ["optimism"] } }
   },
   {
     "id": "migrate-eol-free",
     "description": "No zap fee when migrating from a retired vault to an active one.",
-    "kind": "waive",
-    "condition": "migrate",
-    "params": {
-      "from": { "vault": { "statuses": ["eol", "paused"] } },
-      "to": { "vault": { "statuses": ["active"] } }
-    }
+    "bps": 0,
+    "input": { "vault": { "statuses": ["eol", "paused"] } },
+    "output": { "vault": { "statuses": ["active"] } }
   },
   {
     "id": "zapin-usdc-free",
     "description": "No zap fee when zapping in from USDC.",
-    "kind": "waive",
-    "condition": "zapIn",
-    "params": { "from": { "token": { "symbols": ["USDC"] } } }
+    "bps": 0,
+    "input": { "token": { "symbols": ["USDC"] } }
   }
 ]

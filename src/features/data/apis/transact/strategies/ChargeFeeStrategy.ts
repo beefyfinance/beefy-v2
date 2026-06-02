@@ -7,8 +7,8 @@ import { selectTransactSlippage } from '../../../selectors/transact.ts';
 import type { BeefyThunk } from '../../../store/types.ts';
 import {
   applyWithdrawFeeToOrder,
-  feeContext,
   feeZapStepsFromQuoteStep,
+  optionFeeEndpoints,
   resolveZapFee,
 } from '../helpers/fee.ts';
 import { isOptionFeeable } from '../helpers/options.ts';
@@ -85,14 +85,8 @@ export class ChargeFeeStrategy<
     option: ZapStrategyIdToDepositOption<TId>
   ): Promise<ZapStrategyIdToDepositQuote<TId>> {
     const state = this.helpers.getState();
-    const feeable = isOptionFeeable(option) && inputs.length === 1;
     const ctx =
-      feeable ?
-        feeContext({
-          input: { kind: 'token', token: inputs[0].token },
-          output: { kind: 'vault', vaultId: this.helpers.vault.id },
-        })
-      : undefined;
+      isOptionFeeable(option) && inputs.length === 1 ? optionFeeEndpoints(option) : undefined;
     const resolved = ctx ? resolveZapFee(state, ctx, inputs[0].token, inputs[0].amount) : undefined;
     const netInput = resolved?.step?.netAmount ?? inputs[0].amount;
     const innerQuote = await this.inner.fetchDepositQuote(
@@ -173,13 +167,8 @@ export class ChargeFeeStrategy<
     const state = this.helpers.getState();
     const innerQuote = await this.inner.fetchWithdrawQuote(inputs, option);
     const feeable = isOptionFeeable(option) && innerQuote.outputs.length === 1;
-    const ctx =
-      feeable ?
-        feeContext({
-          input: { kind: 'vault', vaultId: this.helpers.vault.id },
-          output: { kind: 'token', token: innerQuote.outputs[0].token },
-        })
-      : undefined;
+    // Matching endpoints come from the option; the skim stays the runtime inner-quote output token / amount.
+    const ctx = feeable ? optionFeeEndpoints(option) : undefined;
     const resolved =
       ctx ?
         resolveZapFee(state, ctx, innerQuote.outputs[0].token, innerQuote.outputs[0].amount)

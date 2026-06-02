@@ -31,21 +31,11 @@ import {
 } from '../common/CommonListStyles.tsx';
 import { selectListScrollable, buildLpLink } from '../common/CommonListStylesRaw.ts';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
-import { formatPercent } from '../../../../../../helpers/format.ts';
 import { DustList } from './components/DustList/DustList.tsx';
-import type { OptionFeeCampaign } from '../../../../../data/apis/transact/transact-types.ts';
+import { campaignTag } from '../common/campaignTag.ts';
 
 // 1 USD
 const DUST_THRESHOLD = new BigNumber('1');
-
-function campaignTag(campaign: OptionFeeCampaign | undefined): string | undefined {
-  if (!campaign) {
-    return undefined;
-  }
-  return campaign.effectiveBps === 0 ?
-      'Free zap'
-    : `Zap fee ${formatPercent(campaign.effectiveBps / 10000, 2)}`;
-}
 
 export type DepositTokenSelectListProps = {
   css?: CssStyles;

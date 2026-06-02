@@ -9,11 +9,7 @@ import { selectChainWrappedNativeToken } from '../../../selectors/tokens.ts';
 import { selectVaultById } from '../../../selectors/vaults.ts';
 import { selectValidZapFeeRules, selectZapFeeConfigByChainId } from '../../../selectors/zap.ts';
 import type { BeefyState } from '../../../store/types.ts';
-import type {
-  ZapFeeConditionParams,
-  ZapFeeEndpointMatcher,
-  ZapFeeRule,
-} from '../../config-types.ts';
+import type { ZapFeeEndpointMatcher, ZapFeeRule } from '../../config-types.ts';
 import type {
   OptionFeeCampaign,
   ZapFee,
@@ -28,15 +24,15 @@ import {
   tokenMatchesMatcher,
   vaultMatchesMatcher,
   ZAP_FEE_BPS,
-  type ZapFeeConditionId,
   type ZapFeeMatch,
 } from './fee-rules.ts';
 import { nativeAndWrappedAreSame } from './tokens.ts';
 import { getTokenAddress } from './zap.ts';
 import {
-  isCrossChainDepositOption,
-  isVaultToVaultSingleTokenDepositOption,
-  type DepositOption,
+  isCrossChainOption,
+  isDepositOption,
+  isVaultToVaultSingleTokenOption,
+  type TransactOption,
 } from '../transact-types.ts';
 
 const BPS_DENOMINATOR = 10000;
@@ -80,23 +76,9 @@ function endpointMatches(
   );
 }
 
-// Named fee-campaign conditions; config references them by key. Unknown key = no match (fail-closed).
-const zapFeeConditions: Record<
-  ZapFeeConditionId,
-  (state: BeefyState, ctx: ZapFeeContext, params: ZapFeeConditionParams) => boolean
-> = {
-  zapIn: (state, ctx, params) => !!params.from && endpointMatches(state, ctx.input, params.from),
-  zapOut: (state, ctx, params) => !!params.to && endpointMatches(state, ctx.output, params.to),
-  migrate: (state, ctx, params) =>
-    !!params.from &&
-    !!params.to &&
-    endpointMatches(state, ctx.input, params.from) &&
-    endpointMatches(state, ctx.output, params.to),
-};
-
-// Applies when the time window holds and the optional condition matches (absent = any). Chain scoping
-// lives inside the condition's endpoint matchers, not here.
-function ruleApplies(
+// Matches when the time window holds and every constrained side matches the concrete endpoint. An absent
+// side (input or output) is unconstrained and passes; chain scoping lives inside the endpoint matchers.
+function ruleAppliesToZap(
   state: BeefyState,
   ctx: ZapFeeContext,
   rule: ZapFeeRule,
@@ -105,11 +87,13 @@ function ruleApplies(
   if (!isWithinZapFeeWindow(rule, nowSeconds)) {
     return false;
   }
-  if (!rule.condition) {
-    return true;
+  if (rule.input && !endpointMatches(state, ctx.input, rule.input)) {
+    return false;
   }
-  const condition = zapFeeConditions[rule.condition as ZapFeeConditionId];
-  return condition ? condition(state, ctx, rule.params ?? {}) : false;
+  if (rule.output && !endpointMatches(state, ctx.output, rule.output)) {
+    return false;
+  }
+  return true;
 }
 
 function computeFeeSplit(
@@ -139,60 +123,61 @@ function computeZapFee(state: BeefyState, ctx: ZapFeeContext): ZapFeeMatch | und
   }
   const nowSeconds = Math.floor(Date.now() / 1000);
   return pickLowestZapFee(selectValidZapFeeRules(state), baseBps, config.recipient, rule =>
-    ruleApplies(state, ctx, rule, nowSeconds)
+    ruleAppliesToZap(state, ctx, rule, nowSeconds)
   );
 }
 
-// Endpoints for a deposit option's fee context. MUST mirror the feeContext built in each strategy at
-// quote time (ChargeFeeStrategy, CrossChainStrategy, VaultToVaultSingleTokenStrategy), or the displayed
-// campaign would diverge from the charged fee. Returns undefined for shapes that aren't fee-charged here.
-function depositOptionFeeEndpoints(
-  option: DepositOption
-): { input: ZapFeeEndpoint; output: ZapFeeEndpoint } | undefined {
-  if (isVaultToVaultSingleTokenDepositOption(option)) {
-    // Mirror VaultToVaultSingleTokenStrategy: src vault → dest vault.
+// The fee-matching endpoints for any option — the single source used by both the display badge
+// (resolveOptionFeeCampaign) and the charge path (the strategies). Direction-agnostic: the vault side is the
+// page/handoff vault, the token side is the user's wallet token, and which is input vs output follows the
+// option's own (already direction-correct) fields. Returns undefined for shapes not fee-charged here.
+export function optionFeeEndpoints(option: TransactOption): ZapFeeContext | undefined {
+  if (isVaultToVaultSingleTokenOption(option)) {
     return {
       input: { kind: 'vault', vaultId: option.srcVaultId },
       output: { kind: 'vault', vaultId: option.destVaultId },
     };
   }
-  if (isCrossChainDepositOption(option)) {
-    // Mirror CrossChainStrategy: input is the source vault (vault-src) or the user token (swap-src);
-    // output is always the dest vault. (Charge path reads the runtime input token, equal to inputs[0] here.)
-    if (option.srcHandlerKind === 'vault') {
-      return {
-        input: { kind: 'vault', vaultId: option.srcVaultId },
-        output: { kind: 'vault', vaultId: option.destVaultId },
-      };
-    }
-    const token = option.inputs[0];
-    if (!token) {
+  if (isCrossChainOption(option)) {
+    // Narrow on the *HandlerKind discriminants (the deposit/withdraw types are asymmetric in which *VaultId
+    // they carry) — same derivation CrossChainStrategy.quoteCrossChain uses.
+    const input: ZapFeeEndpoint =
+      option.srcHandlerKind === 'vault' ?
+        { kind: 'vault', vaultId: option.srcVaultId }
+      : { kind: 'token', token: option.inputs[0] };
+    const output: ZapFeeEndpoint =
+      option.destHandlerKind === 'vault' ?
+        { kind: 'vault', vaultId: option.destVaultId }
+      : { kind: 'token', token: option.wantedOutputs[0] };
+    return { input, output };
+  }
+  // Plain shape: a single token on the wallet side, the page vault on the other.
+  if (isDepositOption(option)) {
+    if (option.inputs.length !== 1) {
       return undefined;
     }
     return {
-      input: { kind: 'token', token },
-      output: { kind: 'vault', vaultId: option.destVaultId },
+      input: { kind: 'token', token: option.inputs[0] },
+      output: { kind: 'vault', vaultId: option.vaultId },
     };
   }
-  // Mirror ChargeFeeStrategy same-chain deposit: single input token → page vault.
-  const token = option.inputs[0];
-  if (option.inputs.length !== 1 || !token) {
+  if (option.wantedOutputs.length !== 1) {
     return undefined;
   }
   return {
-    input: { kind: 'token', token },
-    output: { kind: 'vault', vaultId: option.vaultId },
+    input: { kind: 'vault', vaultId: option.vaultId },
+    output: { kind: 'token', token: option.wantedOutputs[0] },
   };
 }
 
-// Display-only campaign for a deposit option. Resolved once at option-build time; returns undefined unless
-// a campaign actually reduces the fee. The charged fee is recomputed at quote time via resolveZapFee, so
-// this never drives execution.
+// Display-only campaign for an option (deposit or withdraw). Resolved once at option-build time; returns
+// undefined unless a campaign actually reduces the fee. The charged fee is recomputed at quote time via
+// resolveZapFee over the same optionFeeEndpoints, so this never drives execution.
 export function resolveOptionFeeCampaign(
   state: BeefyState,
-  option: DepositOption
+  option: TransactOption
 ): OptionFeeCampaign | undefined {
-  const endpoints = depositOptionFeeEndpoints(option);
+  const endpoints = optionFeeEndpoints(option);
   if (!endpoints) {
     return undefined;
   }
@@ -290,18 +275,6 @@ export function feeZapStepsFromQuoteStep(
     bps: feeStep.bps,
   });
   return { zaps, feeAmount };
-}
-
-// Endpoints are the user-facing input/output (not bridge/routing tokens); the charged chain is derived
-// from the input endpoint inside computeZapFee.
-export function feeContext(endpoints: {
-  input: ZapFeeEndpoint;
-  output: ZapFeeEndpoint;
-}): ZapFeeContext {
-  return {
-    input: endpoints.input,
-    output: endpoints.output,
-  };
 }
 
 // Push the slip-aware fee transfer and lower the fee-token order output to slipBy(gross) − execFee.

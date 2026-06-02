@@ -26,12 +26,7 @@ import {
 } from '../../cctp/CCTPProvider.ts';
 import type { ZapPayload } from '../../cctp/types.ts';
 import { bridgeSlippageReturned, mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
-import {
-  buildFeeZapSteps,
-  feeContext,
-  resolveZapFee,
-  type ZapFeeEndpoint,
-} from '../../helpers/fee.ts';
+import { buildFeeZapSteps, optionFeeEndpoints, resolveZapFee } from '../../helpers/fee.ts';
 import {
   createOptionId,
   createQuoteId,
@@ -422,17 +417,13 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
     const srcHandlerQuote = await srcHandler.fetchQuote(input, srcCtx);
 
-    // Fee charged once on the source bridge token, after the source handler and before bridging.
-    const feeInput: ZapFeeEndpoint =
-      option.srcHandlerKind === 'vault' ?
-        { kind: 'vault', vaultId: option.srcVaultId }
-      : { kind: 'token', token: input.token };
-    const feeOutput: ZapFeeEndpoint =
-      option.destHandlerKind === 'vault' ?
-        { kind: 'vault', vaultId: option.destVaultId }
-      : { kind: 'token', token: option.wantedOutputs[0] };
-    const feeCtx = feeContext({ input: feeInput, output: feeOutput });
-    const fee = resolveZapFee(state, feeCtx, srcCtx.outputToken, srcHandlerQuote.outputAmount);
+    // Fee charged once on the source bridge token, after the source handler and before bridging. Matching
+    // endpoints come from the option; the skim stays the runtime bridge token / amount.
+    const feeCtx = optionFeeEndpoints(option);
+    const fee =
+      feeCtx ?
+        resolveZapFee(state, feeCtx, srcCtx.outputToken, srcHandlerQuote.outputAmount)
+      : undefined;
     const netBridgeToken = fee?.step?.netAmount ?? srcHandlerQuote.outputAmount;
 
     // CCTP bridge — slip only when src produced the bridge token via swap/withdraw.

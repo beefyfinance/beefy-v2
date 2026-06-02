@@ -4,9 +4,6 @@ import type { ZapFeeEndpointMatcher, ZapFeeRule } from '../../config-types.ts';
 
 export const ZAP_FEE_BPS = 5;
 
-export const ZAP_FEE_CONDITION_IDS = ['zapIn', 'zapOut', 'migrate'] as const;
-export type ZapFeeConditionId = (typeof ZAP_FEE_CONDITION_IDS)[number];
-
 export type ZapFeeMatch = {
   effectiveBps: number;
   baseBps: number;
@@ -50,46 +47,36 @@ export function isValidZapFeeRule(rule: ZapFeeRule): boolean {
   if (typeof rule?.id !== 'string') {
     return false;
   }
-  if (rule.kind !== 'waive' && rule.kind !== 'discount') {
+  if (!Number.isInteger(rule.bps) || rule.bps < 0) {
     return false;
   }
-  if (rule.kind === 'discount' && (!Number.isInteger(rule.bps) || (rule.bps ?? -1) < 0)) {
+  // At least one side must be constrained; a rule with neither would match every zap (fail-open).
+  if (!rule.input && !rule.output) {
     return false;
   }
-  // A featured rule with no condition would badge every vault on every chain — disallowed.
-  if (rule.featured && rule.condition === undefined) {
+  // Reject empty matchers (chain-less + fact-less) — they would match anything (fail-open).
+  if (rule.input && endpointMatcherIsEmpty(rule.input)) {
     return false;
   }
-  if (rule.condition !== undefined) {
-    if (!(ZAP_FEE_CONDITION_IDS as readonly string[]).includes(rule.condition)) {
-      return false;
-    }
-    if (rule.condition === 'zapIn' && !rule.params?.from) {
-      return false;
-    }
-    if (rule.condition === 'zapOut' && !rule.params?.to) {
-      return false;
-    }
-    if (rule.condition === 'migrate' && !(rule.params?.from && rule.params?.to)) {
-      return false;
-    }
-    // Reject empty sub-matchers (chain-less + fact-less) — they would match anything (fail-open).
-    if (rule.params?.from && endpointMatcherIsEmpty(rule.params.from)) {
-      return false;
-    }
-    if (rule.params?.to && endpointMatcherIsEmpty(rule.params.to)) {
-      return false;
-    }
+  if (rule.output && endpointMatcherIsEmpty(rule.output)) {
+    return false;
   }
   return true;
 }
 
-// Only input-agnostic rules may be featured on the vault list: no "free" that secretly needs a specific input.
-export function isInputAgnosticZapFeeRule(rule: ZapFeeRule): boolean {
-  if (rule.params?.from) {
-    return false;
+// A rule can badge a vault only if exactly one side is constrained and that side carries a vault matcher; the
+// badge anchors to that side (output → deposit badge, input → exit badge). Multi-sided rules apply at quote
+// time but aren't featurable (no single, honest badge). The `featured` flag is the team's opt-in.
+export function featurableVaultSide(rule: ZapFeeRule): 'input' | 'output' | undefined {
+  const hasInput = !!rule.input;
+  const hasOutput = !!rule.output;
+  if (hasInput === hasOutput) {
+    return undefined;
   }
-  return rule.condition === undefined || rule.condition === 'zapOut';
+  if (hasInput) {
+    return rule.input?.vault ? 'input' : undefined;
+  }
+  return rule.output?.vault ? 'output' : undefined;
 }
 
 export function isWithinZapFeeWindow(rule: ZapFeeRule, nowSeconds: number): boolean {
@@ -152,25 +139,6 @@ export function tokenMatchesMatcher(token: TokenEntity, matcher: TokenMatcher): 
   );
 }
 
-// Input unknown on the vault list, so in/migrate conditions (which need the input side) can never apply here.
-export function featuredRuleApplies(
-  rule: ZapFeeRule,
-  vault: VaultEntity,
-  nowSeconds: number
-): boolean {
-  if (!isWithinZapFeeWindow(rule, nowSeconds)) {
-    return false;
-  }
-  if (rule.condition === undefined) {
-    return true;
-  }
-  if (rule.condition === 'zapOut') {
-    const matcher = rule.params?.to?.vault;
-    return !!matcher && vaultMatchesMatcher(vault, matcher);
-  }
-  return false;
-}
-
 // Lowest effective bps wins; caller supplies the match predicate (state-bound at quote, pure for featured).
 export function pickLowestZapFee(
   rules: ZapFeeRule[],
@@ -184,7 +152,7 @@ export function pickLowestZapFee(
     if (!matches(rule)) {
       continue;
     }
-    const ruleBps = rule.kind === 'discount' ? Math.min(rule.bps ?? baseBps, baseBps) : 0;
+    const ruleBps = Math.min(rule.bps, baseBps);
     if (ruleBps < effectiveBps) {
       effectiveBps = ruleBps;
       winner = rule;
@@ -196,7 +164,10 @@ export function pickLowestZapFee(
   return { effectiveBps, baseBps, recipient, winner };
 }
 
-export function matchFeaturedZapCampaign(
+// Deposit-side ("free to deposit here") badge: lowest featured rule whose single constrained side is the
+// output and whose output.vault matches this vault. (Exit/input-side is the symmetric mirror, added with the
+// badge UI.) Rules passed in are already featured + featurable (see selectFeaturedZapFeeRules).
+export function matchFeaturedVaultCampaign(
   rules: ZapFeeRule[],
   feeConfig: { recipient: string; bps?: number },
   vault: VaultEntity,
@@ -209,7 +180,11 @@ export function matchFeaturedZapCampaign(
   if (baseBps <= 0) {
     return undefined;
   }
-  return pickLowestZapFee(rules, baseBps, feeConfig.recipient, rule =>
-    featuredRuleApplies(rule, vault, nowSeconds)
-  );
+  return pickLowestZapFee(rules, baseBps, feeConfig.recipient, rule => {
+    if (!isWithinZapFeeWindow(rule, nowSeconds) || featurableVaultSide(rule) !== 'output') {
+      return false;
+    }
+    const matcher = rule.output?.vault;
+    return !!matcher && vaultMatchesMatcher(vault, matcher);
+  });
 }

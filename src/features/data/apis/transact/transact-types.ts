@@ -552,6 +552,12 @@ export function isVaultToVaultSingleTokenWithdrawOption(
   );
 }
 
+export function isVaultToVaultSingleTokenOption(
+  option: TransactOption
+): option is VaultToVaultSingleTokenDepositOption | VaultToVaultSingleTokenWithdrawOption {
+  return option.strategyId === 'vault-to-vault-single-token';
+}
+
 export type VaultSourceDepositOption =
   | CrossChainVaultSrcDepositOption
   | VaultToVaultSingleTokenDepositOption;

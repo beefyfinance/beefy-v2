@@ -309,21 +309,19 @@ export type ZapFeeEndpointMatcher = {
   };
 };
 
-export type ZapFeeConditionParams = { from?: ZapFeeEndpointMatcher; to?: ZapFeeEndpointMatcher };
-
+// Endpoint-scoped: a rule constrains the input side and/or output side; direction (deposit/withdraw) is
+// emergent. The resulting fee is `bps` (clamped to <= base; 0 = free). At least one of input/output is required.
 export type ZapFeeRule = {
   id: string;
-  kind: 'waive' | 'discount';
-  // Opt-in: feature this campaign on the vault list; engine enforces input-agnostic (mis-flagged rules still apply at quote time).
+  bps: number;
+  input?: ZapFeeEndpointMatcher;
+  output?: ZapFeeEndpointMatcher;
+  // Opt-in: feature this campaign on the vault list (single-sided-with-vault rules only; engine derives the side).
   featured?: boolean;
   // Short campaign blurb, shown next to the fee when this rule applies (display not yet wired).
   description?: string;
-  bps?: number;
   startsAt?: number;
   endsAt?: number;
-  // Scope by endpoint: condition picks the side (zapIn=input, zapOut=output, migrate=both); chain lives in params' matchers.
-  condition?: string;
-  params?: ZapFeeConditionParams;
 };
 
 export interface OneInchSwapConfig {

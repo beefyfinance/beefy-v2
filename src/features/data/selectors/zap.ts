@@ -3,9 +3,9 @@ import { uniqBy } from 'lodash-es';
 import { createCachedSelector } from 're-reselect';
 import type { TFunction } from 'react-i18next';
 import {
-  isInputAgnosticZapFeeRule,
+  featurableVaultSide,
   isValidZapFeeRule,
-  matchFeaturedZapCampaign,
+  matchFeaturedVaultCampaign,
 } from '../apis/transact/helpers/fee-rules.ts';
 import {
   isZapQuoteStepBridge,
@@ -51,20 +51,21 @@ export const selectValidZapFeeRules = createSelector([selectZapFeeRules], rules 
   })
 );
 
-// Featured = valid + opt-in flag + input-agnostic; a mis-flagged input-dependent rule still applies at
-// quote time but is excluded here so the vault list never advertises a discount the user may not get.
+// Featured = valid + opt-in flag + single-sided with a vault matcher (so the badge anchors to exactly one
+// vault). A mis-flagged multi-sided/token-only rule still applies at quote time but is excluded here, since
+// the vault list can't derive an honest single badge for it.
 export const selectFeaturedZapFeeRules = createSelector([selectValidZapFeeRules], rules =>
   rules.filter(rule => {
     if (!rule.featured) {
       return false;
     }
-    if (isInputAgnosticZapFeeRule(rule)) {
+    if (featurableVaultSide(rule) !== undefined) {
       return true;
     }
     if (!warnedNonFeaturableZapFeeRuleIds.has(rule.id)) {
       warnedNonFeaturableZapFeeRuleIds.add(rule.id);
       console.warn(
-        `Zap fee rule "${rule.id}" is flagged featured but is input-dependent; excluded from the vault list`
+        `Zap fee rule "${rule.id}" is flagged featured but isn't single-sided with a vault matcher; excluded from the vault list`
       );
     }
     return false;
@@ -91,7 +92,7 @@ export const selectVaultZapCampaign = createCachedSelector(
     if (!vault || !zap?.feeRecipient) {
       return undefined;
     }
-    const fee = matchFeaturedZapCampaign(
+    const fee = matchFeaturedVaultCampaign(
       rules,
       { recipient: zap.feeRecipient, bps: zap.feeBps },
       vault,
