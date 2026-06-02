@@ -1105,6 +1105,10 @@ export function isZapQuote(quote: TransactQuote): quote is ZapQuote {
   return 'steps' in quote;
 }
 
+export function isZapOption(option: TransactOption): boolean {
+  return option.strategyId !== 'vault';
+}
+
 export function isCowcentratedVaultDepositQuote(
   quote: TransactQuote
 ): quote is CowcentratedVaultDepositQuote {

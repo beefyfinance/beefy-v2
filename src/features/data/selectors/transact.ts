@@ -11,10 +11,14 @@ import {
   isCrossChainOption,
   isVaultDestWithdrawOption,
   isVaultSourceDepositOption,
+  isZapOption,
+  isZapQuote,
   type TokenAmount,
   type TransactOption,
   type TransactQuote,
+  type ZapFee,
 } from '../apis/transact/transact-types.ts';
+import { computeOptionZapFee } from '../apis/transact/helpers/fee.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
 import {
@@ -169,9 +173,7 @@ export const selectTransactSelected = createSelector(
 );
 
 /** True when the active selection's withdraw is sourced from the page vault (option declares its shareToken as input). */
-export const selectTransactIsActiveSelectionVaultSourceWithdraw = (
-  state: BeefyState
-): boolean => {
+export const selectTransactIsActiveSelectionVaultSourceWithdraw = (state: BeefyState): boolean => {
   const selectionId = state.ui.transact.selectedSelectionId;
   if (!selectionId) return false;
   const options = selectTransactOptionsForSelectionId(state, selectionId);
@@ -456,6 +458,31 @@ export const selectTransactOptionsForSelectionId = createSelector(
   (optionIds, byOptionId) => optionIds.map(id => byOptionId[id])
 );
 
+// Selected quote's fee if present (exact); otherwise a pre-quote preview from a representative zap option.
+export const selectTransactSelectedZapFee = (
+  state: BeefyState
+): { option: TransactOption; fee: ZapFee } | undefined => {
+  const selectionId = state.ui.transact.selectedSelectionId;
+  if (!selectionId) {
+    return undefined;
+  }
+
+  const quote = selectTransactSelectedQuoteOrUndefined(state);
+  if (quote && isZapQuote(quote) && quote.option.selectionId === selectionId) {
+    return { option: quote.option, fee: quote.fee };
+  }
+
+  const optionIds = state.ui.transact.options.bySelectionId[selectionId];
+  if (!optionIds) {
+    return undefined;
+  }
+  const option = optionIds.map(id => state.ui.transact.options.byOptionId[id]).find(isZapOption);
+  if (!option) {
+    return undefined;
+  }
+  return { option, fee: computeOptionZapFee(state, option) };
+};
+
 export function selectTokenAmountsTotalValue(
   state: BeefyState,
   tokenAmounts: TokenAmount[]
@@ -518,11 +545,7 @@ export function selectTransactCrossChainPreflight(state: BeefyState): boolean {
     option.srcHandlerKind === 'vault' ?
       selectTokenAmountValue(
         state,
-        convertVaultShareToDepositTokenAmount(
-          state,
-          option.srcVaultId,
-          inputAmounts[0] || BIG_ZERO
-        )
+        convertVaultShareToDepositTokenAmount(state, option.srcVaultId, inputAmounts[0] || BIG_ZERO)
       )
     : BigNumber.sum(
         ...option.inputs.map((token, i) =>

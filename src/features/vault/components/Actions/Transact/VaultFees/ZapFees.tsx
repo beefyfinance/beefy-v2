@@ -5,13 +5,12 @@ import { Trans, useTranslation } from 'react-i18next';
 import { formatPercent, formatPercentTrim, formatUsd } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
-import type { ZapQuote } from '../../../../../data/apis/transact/transact-types.ts';
+import type { TransactOption, ZapFee } from '../../../../../data/apis/transact/transact-types.ts';
 import {
-  isCrossChainQuote,
+  isCrossChainOption,
   isZapFeeDiscounted,
-  isZapQuote,
 } from '../../../../../data/apis/transact/transact-types.ts';
-import { selectTransactSelectedQuoteOrUndefined } from '../../../../../data/selectors/transact.ts';
+import { selectTransactSelectedZapFee } from '../../../../../data/selectors/transact.ts';
 import { CCTP_CONFIG } from '../../../../../../config/cctp/cctp-config.ts';
 import { Label } from './Label.tsx';
 import { LabelCustomTooltip } from './LabelTooltip.tsx';
@@ -32,18 +31,18 @@ const useStyles = legacyMakeStyles({
 });
 
 export const MaybeZapFees = memo(function MaybeZapFees() {
-  const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
-  const isZap = quote && isZapQuote(quote);
+  const ctx = useAppSelector(selectTransactSelectedZapFee);
 
-  if (!isZap) {
+  if (!ctx) {
     return null;
   }
 
-  return <ZapFees quote={quote} />;
+  return <ZapFees option={ctx.option} fee={ctx.fee} />;
 });
 
 type ZapFeesProps = {
-  quote: ZapQuote;
+  option: TransactOption;
+  fee: ZapFee;
 };
 
 type CrossChainFees = {
@@ -57,17 +56,16 @@ type FeeDisplay = {
   original?: string;
 };
 
-const ZapFees = memo(function ZapFees({ quote }: ZapFeesProps) {
+const ZapFees = memo(function ZapFees({ option, fee }: ZapFeesProps) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { fee } = quote;
   const hasDiscountFee = isZapFeeDiscounted(fee);
-  const isCrossChain = isCrossChainQuote(quote);
+  const isCrossChain = isCrossChainOption(option);
 
   const { display, hasMultipleFees, crossChainFees } = useMemo(() => {
     if (isCrossChain) {
-      const sourceChainId = quote.option.sourceChainId;
-      const destChainId = quote.option.destChainId;
+      const sourceChainId = option.sourceChainId;
+      const destChainId = option.destChainId;
       const destChainConfig = destChainId ? CCTP_CONFIG.chains[destChainId] : undefined;
       const sourceChainConfig = sourceChainId ? CCTP_CONFIG.chains[sourceChainId] : undefined;
       const bridgeFeeUsd = destChainConfig?.beefyBridgeFeeUsd;
@@ -106,12 +104,7 @@ const ZapFees = memo(function ZapFees({ quote }: ZapFeesProps) {
       hasMultipleFees: false,
       crossChainFees: undefined,
     };
-  }, [quote, isCrossChain, hasDiscountFee, fee.value, fee.campaign?.original]);
-
-  // No fee to display (e.g. dual-token CLM deposit, or a fee-suppressed inner quote).
-  if (!isCrossChain && fee.value === 0 && !hasDiscountFee) {
-    return null;
-  }
+  }, [option, isCrossChain, hasDiscountFee, fee.value, fee.campaign?.original]);
 
   const tooltip = (
     <TooltipTable>

@@ -27,6 +27,7 @@ import {
   type ZapFeeMatch,
 } from './fee-rules.ts';
 import { nativeAndWrappedAreSame } from './tokens.ts';
+import { isOptionFeeable } from './options.ts';
 import { getTokenAddress } from './zap.ts';
 import {
   isCrossChainOption,
@@ -188,6 +189,33 @@ export function resolveOptionFeeCampaign(
   return { effectiveBps: fee.effectiveBps, baseBps: fee.baseBps };
 }
 
+// The UI fee object (quote.fee shape): the effective % plus, when a campaign reduced it, the original.
+function buildZapFeeDisplay(fee: ZapFeeMatch): ZapFee {
+  const reduced = fee.effectiveBps < fee.baseBps;
+  return {
+    value: fee.effectiveBps / BPS_DENOMINATOR,
+    ...(reduced ?
+      {
+        campaign: {
+          original: fee.baseBps / BPS_DENOMINATOR,
+          ...(fee.winner?.description ? { description: fee.winner.description } : {}),
+          ...(fee.winner?.id ? { id: fee.winner.id } : {}),
+        },
+      }
+    : {}),
+  };
+}
+
+// Amount-independent zap fee % for an option; {value: 0} when nothing is charged (so the row shows "0%").
+export function computeOptionZapFee(state: BeefyState, option: TransactOption): ZapFee {
+  const endpoints = optionFeeEndpoints(option);
+  if (!endpoints || !isOptionFeeable(option)) {
+    return { value: 0 };
+  }
+  const fee = computeZapFee(state, endpoints);
+  return fee ? buildZapFeeDisplay(fee) : { value: 0 };
+}
+
 // One computation → two outputs: `display` is the UI fee on quote.fee; `step` is the execution fee in
 // quote.steps. A full waive yields display only (value 0 + original), so the row shows it with no step.
 export function resolveZapFee(
@@ -210,23 +238,11 @@ export function resolveZapFee(
     feeAmount,
     netAmount,
   };
-  const display: ZapFee = {
-    value: fee.effectiveBps / BPS_DENOMINATOR,
-    ...(reduced ?
-      {
-        campaign: {
-          original: fee.baseBps / BPS_DENOMINATOR,
-          ...(fee.winner?.description ? { description: fee.winner.description } : {}),
-          ...(fee.winner?.id ? { id: fee.winner.id } : {}),
-        },
-      }
-    : {}),
-  };
   const step: ZapQuoteStepFee | undefined =
     fee.effectiveBps > 0 ?
       { type: 'fee', ...charge, ...(reduced ? { originalBps: fee.baseBps } : {}) }
     : undefined;
-  return { display, step };
+  return { display: buildZapFeeDisplay(fee), step };
 }
 
 // ERC20: single transfer. Native: wrap to wnative then transfer, so the recipient always gets the ERC20.
