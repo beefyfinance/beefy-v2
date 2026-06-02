@@ -1,5 +1,79 @@
 [
   {
+    "id": "morpho-v2-ethereum-steakhouse-reservoir-usdc",
+    "name": "USDC (Steakhouse, Reservoir V2)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xb8e63b5a00b59DcA4DC275a1f91a5f14D7C2058f",
+    "earnedToken": "mooMorphoV2EthereumSteakhouseReservoirUSDC",
+    "earnedTokenAddress": "0xb8e63b5a00b59DcA4DC275a1f91a5f14D7C2058f",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1780328838,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/ethereum/vault/0xBEeFF047C03714965a54b671A37C18beF6b96210/steakhouse-reservoir-usdc",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-v2-ethereum-steakhouse-reservoir-rusd",
+    "name": "rUSD (Steakhouse, Reservoir V2)",
+    "type": "standard",
+    "token": "rUSD",
+    "tokenAddress": "0x09D4214C03D01F49544C0448DBE3A27f768F2b34",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x5B3a6FB1415fDf0235209d5795fec286e21fAcD8",
+    "earnedToken": "mooMorphoV2EthereumSteakhouseReservoirrUSD",
+    "earnedTokenAddress": "0x5B3a6FB1415fDf0235209d5795fec286e21fAcD8",
+    "oracle": "tokens",
+    "oracleId": "ethrUSD",
+    "status": "active",
+    "createdAt": 1780328838,
+    "platformId": "morpho",
+    "curatorId": "steakhouse",
+    "assets": ["rUSD"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": true
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/ethereum/vault/0xBEeFf08E1887A11D91B9Ca68c133c08Ae3c4B44f/steakhouse-reservoir-rusd",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "stakedao-ynusdx-scrvusd",
     "name": "ynUSDx/scrvUSD",
     "type": "standard",
@@ -6142,58 +6216,6 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xC374f7eC85F8C7DE3207a10bB1978bA104bdA3B2/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xC374f7eC85F8C7DE3207a10bB1978bA104bdA3B2/zap/out?chain=ethereum",
     "network": "ethereum"
-  },
-  {
-    "id": "convex-usd3-rgusd",
-    "name": "USD3/rgUSD",
-    "type": "standard",
-    "token": "USD3rgUSD",
-    "tokenAddress": "0xde73E407EFC75EdBAfc5bcD62Ebb1E7A9b38EBCD",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnContractAddress": "0x12eE065896cc5b24fa81fA4a10F935a445bf744f",
-    "earnedToken": "mooConvexUSD3-rgUSD",
-    "earnedTokenAddress": "0x12eE065896cc5b24fa81fA4a10F935a445bf744f",
-    "oracle": "lps",
-    "oracleId": "convex-usd3-rgusd",
-    "status": "eol",
-    "createdAt": 1718618127,
-    "retireReason": "rewards",
-    "retiredAt": 1721673133,
-    "platformId": "convex",
-    "assets": ["USD3", "rgUSD"],
-    "migrationIds": ["ethereum-convex", "ethereum-curve"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-twocrypto-27/deposit",
-    "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-twocrypto-27/withdraw",
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0xde73E407EFC75EdBAfc5bcD62Ebb1E7A9b38EBCD",
-        "methods": [
-          {
-            "type": "fixed-deposit-uint256",
-            "target": "0xde73E407EFC75EdBAfc5bcD62Ebb1E7A9b38EBCD",
-            "coins": [
-              "0x0d86883FAf4FfD7aEb116390af37746F45b6f378",
-              "0x78da5799CF427Fee11e9996982F4150eCe7a99A7"
-            ]
-          }
-        ]
-      }
-    ]
   },
   {
     "id": "stargate-v2-eth-weth",
