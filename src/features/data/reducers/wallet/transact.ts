@@ -451,6 +451,7 @@ function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOp
         tokens: option.mode === TransactMode.Deposit ? option.inputs : option.wantedOutputs,
         order: option.selectionOrder,
         hideIfZeroBalance: !!option.selectionHideIfZeroBalance,
+        ...(option.feeCampaign ? { feeCampaign: option.feeCampaign } : {}),
       };
 
       sliceState.selections.allSelectionIds.push(option.selectionId);

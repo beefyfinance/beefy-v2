@@ -431,11 +431,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       option.destHandlerKind === 'vault' ?
         { kind: 'vault', vaultId: option.destVaultId }
       : { kind: 'token', token: option.wantedOutputs[0] };
-    const feeCtx = feeContext(
-      this.helpers,
-      { input: feeInput, output: feeOutput },
-      srcCtx.sourceChainId
-    );
+    const feeCtx = feeContext({ input: feeInput, output: feeOutput });
     const fee = resolveZapFee(state, feeCtx, srcCtx.outputToken, srcHandlerQuote.outputAmount);
     const netBridgeToken = fee?.step?.netAmount ?? srcHandlerQuote.outputAmount;
 

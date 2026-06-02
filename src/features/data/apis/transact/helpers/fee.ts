@@ -7,149 +7,108 @@ import { isTokenNative, type TokenEntity } from '../../../entities/token.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectChainWrappedNativeToken } from '../../../selectors/tokens.ts';
 import { selectVaultById } from '../../../selectors/vaults.ts';
-import { selectZapFeeConfigByChainId, selectZapFeeRules } from '../../../selectors/zap.ts';
+import { selectValidZapFeeRules, selectZapFeeConfigByChainId } from '../../../selectors/zap.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import type {
   ZapFeeConditionParams,
   ZapFeeEndpointMatcher,
   ZapFeeRule,
 } from '../../config-types.ts';
-import type { ZapFee, ZapFeeCharge, ZapQuoteStepFee } from '../transact-types.ts';
+import type {
+  OptionFeeCampaign,
+  ZapFee,
+  ZapFeeCharge,
+  ZapQuoteStepFee,
+} from '../transact-types.ts';
 import type { UserlessZapOrder, ZapStep } from '../zap/types.ts';
-import type { TransactHelpers } from '../strategies/IStrategy.ts';
 import { slipBy } from './amounts.ts';
+import {
+  isWithinZapFeeWindow,
+  pickLowestZapFee,
+  tokenMatchesMatcher,
+  vaultMatchesMatcher,
+  ZAP_FEE_BPS,
+  type ZapFeeConditionId,
+  type ZapFeeMatch,
+} from './fee-rules.ts';
 import { nativeAndWrappedAreSame } from './tokens.ts';
 import { getTokenAddress } from './zap.ts';
+import {
+  isCrossChainDepositOption,
+  isVaultToVaultSingleTokenDepositOption,
+  type DepositOption,
+} from '../transact-types.ts';
 
-const ZAP_FEE_BPS = 5;
 const BPS_DENOMINATOR = 10000;
 
 export type ZapFeeEndpoint =
   | { kind: 'token'; token: TokenEntity }
-  | { kind: 'vault'; vaultId: VaultEntity['id'] };
+  | { kind: 'vault'; vaultId: VaultEntity['id'] }
+  | { kind: 'any' };
 
 export type ZapFeeContext = {
-  chainId: ChainEntity['id'];
-  vaultId: VaultEntity['id'];
   // User-facing endpoints of the zap (never the mid-route bridge/routing token); campaigns match on these.
+  // The charged chain is derived from the input endpoint (see chargedChainId).
   input: ZapFeeEndpoint;
   output: ZapFeeEndpoint;
 };
+
+// The chain the fee is charged on = the input endpoint's chain ({any} = unknown ⇒ no charge).
+function chargedChainId(state: BeefyState, input: ZapFeeEndpoint): ChainEntity['id'] | undefined {
+  if (input.kind === 'token') {
+    return input.token.chainId;
+  }
+  if (input.kind === 'vault') {
+    return selectVaultById(state, input.vaultId).chainId;
+  }
+  return undefined;
+}
 
 function endpointMatches(
   state: BeefyState,
   endpoint: ZapFeeEndpoint,
   matcher: ZapFeeEndpointMatcher
 ): boolean {
-  if (endpoint.kind === 'token') {
-    const t = matcher.token;
-    if (!t) {
-      return false;
-    }
-    const { token } = endpoint;
-    const address = token.address.toLowerCase();
-    return (
-      !!t.ids?.includes(token.id) ||
-      !!t.addresses?.some(a => a.toLowerCase() === address) ||
-      !!t.symbols?.includes(token.symbol) ||
-      !!t.oracleIds?.includes(token.oracleId) ||
-      !!t.tags?.some(tag => token.tags.includes(tag))
-    );
-  }
-  const v = matcher.vault;
-  if (!v) {
+  if (endpoint.kind === 'any') {
     return false;
   }
-  const vault = selectVaultById(state, endpoint.vaultId);
+  if (endpoint.kind === 'token') {
+    return !!matcher.token && tokenMatchesMatcher(endpoint.token, matcher.token);
+  }
   return (
-    !!v.ids?.includes(vault.id) ||
-    !!v.platformIds?.includes(vault.platformId) ||
-    !!v.strategyTypeIds?.includes(vault.strategyTypeId) ||
-    !!v.assetTypes?.includes(vault.assetType) ||
-    !!v.assetIds?.some(id => vault.assetIds.includes(id)) ||
-    !!v.statuses?.includes(vault.status)
+    !!matcher.vault && vaultMatchesMatcher(selectVaultById(state, endpoint.vaultId), matcher.vault)
   );
 }
 
 // Named fee-campaign conditions; config references them by key. Unknown key = no match (fail-closed).
 const zapFeeConditions: Record<
-  string,
+  ZapFeeConditionId,
   (state: BeefyState, ctx: ZapFeeContext, params: ZapFeeConditionParams) => boolean
 > = {
-  zapFromFree: (state, ctx, params) =>
-    !!params.from && endpointMatches(state, ctx.input, params.from),
-  zapToFree: (state, ctx, params) => !!params.to && endpointMatches(state, ctx.output, params.to),
-  subsetToSubsetFree: (state, ctx, params) =>
+  zapIn: (state, ctx, params) => !!params.from && endpointMatches(state, ctx.input, params.from),
+  zapOut: (state, ctx, params) => !!params.to && endpointMatches(state, ctx.output, params.to),
+  migrate: (state, ctx, params) =>
     !!params.from &&
     !!params.to &&
     endpointMatches(state, ctx.input, params.from) &&
     endpointMatches(state, ctx.output, params.to),
 };
 
-const warnedInvalidZapFeeRuleIds = new Set<string>();
-
-// Validate a config-authored rule against the code vocabulary; invalid ones are dropped (fail-closed).
-function validateZapFeeRule(rule: ZapFeeRule): boolean {
-  if (typeof rule?.id !== 'string') {
-    return false;
-  }
-  if (rule.kind !== 'waive' && rule.kind !== 'discount') {
-    return false;
-  }
-  if (rule.kind === 'discount' && (!Number.isInteger(rule.bps) || (rule.bps ?? -1) < 0)) {
-    return false;
-  }
-  if (rule.condition !== undefined) {
-    if (!(rule.condition in zapFeeConditions)) {
-      return false;
-    }
-    if (rule.condition === 'zapFromFree' && !rule.params?.from) {
-      return false;
-    }
-    if (rule.condition === 'zapToFree' && !rule.params?.to) {
-      return false;
-    }
-    if (rule.condition === 'subsetToSubsetFree' && !(rule.params?.from && rule.params?.to)) {
-      return false;
-    }
-  }
-  return true;
-}
-
-function getActiveZapFeeRules(state: BeefyState): ZapFeeRule[] {
-  return selectZapFeeRules(state).filter(rule => {
-    if (validateZapFeeRule(rule)) {
-      return true;
-    }
-    const id = typeof rule?.id === 'string' ? rule.id : 'unknown';
-    if (!warnedInvalidZapFeeRuleIds.has(id)) {
-      warnedInvalidZapFeeRuleIds.add(id);
-      console.warn(`Ignoring invalid zap fee rule "${id}"`);
-    }
-    return false;
-  });
-}
-
-// Applies when the time window + chain scope hold and the optional condition matches (absent = any).
+// Applies when the time window holds and the optional condition matches (absent = any). Chain scoping
+// lives inside the condition's endpoint matchers, not here.
 function ruleApplies(
   state: BeefyState,
   ctx: ZapFeeContext,
   rule: ZapFeeRule,
   nowSeconds: number
 ): boolean {
-  if (rule.startsAt !== undefined && nowSeconds < rule.startsAt) {
-    return false;
-  }
-  if (rule.endsAt !== undefined && nowSeconds > rule.endsAt) {
-    return false;
-  }
-  if (rule.chainIds && !rule.chainIds.includes(ctx.chainId)) {
+  if (!isWithinZapFeeWindow(rule, nowSeconds)) {
     return false;
   }
   if (!rule.condition) {
     return true;
   }
-  const condition = zapFeeConditions[rule.condition];
+  const condition = zapFeeConditions[rule.condition as ZapFeeConditionId];
   return condition ? condition(state, ctx, rule.params ?? {}) : false;
 }
 
@@ -165,12 +124,12 @@ function computeFeeSplit(
   return { feeAmount, netAmount: grossAmount.minus(feeAmount) };
 }
 
-// Lowest effective bps wins
-function computeZapFee(
-  state: BeefyState,
-  ctx: ZapFeeContext
-): { effectiveBps: number; baseBps: number; recipient: string; winner?: ZapFeeRule } | undefined {
-  const config = selectZapFeeConfigByChainId(state, ctx.chainId);
+function computeZapFee(state: BeefyState, ctx: ZapFeeContext): ZapFeeMatch | undefined {
+  const chainId = chargedChainId(state, ctx.input);
+  if (!chainId) {
+    return undefined;
+  }
+  const config = selectZapFeeConfigByChainId(state, chainId);
   if (!config?.recipient) {
     return undefined;
   }
@@ -178,25 +137,70 @@ function computeZapFee(
   if (baseBps <= 0) {
     return undefined;
   }
-
   const nowSeconds = Math.floor(Date.now() / 1000);
-  let effectiveBps = baseBps;
-  let winner: ZapFeeRule | undefined;
-  for (const rule of getActiveZapFeeRules(state)) {
-    if (!ruleApplies(state, ctx, rule, nowSeconds)) {
-      continue;
-    }
-    const ruleBps = rule.kind === 'discount' ? Math.min(rule.bps ?? baseBps, baseBps) : 0;
-    if (ruleBps < effectiveBps) {
-      effectiveBps = ruleBps;
-      winner = rule;
-    }
-    if (effectiveBps <= 0) {
-      break;
-    }
-  }
+  return pickLowestZapFee(selectValidZapFeeRules(state), baseBps, config.recipient, rule =>
+    ruleApplies(state, ctx, rule, nowSeconds)
+  );
+}
 
-  return { effectiveBps, baseBps, recipient: config.recipient, winner };
+// Endpoints for a deposit option's fee context. MUST mirror the feeContext built in each strategy at
+// quote time (ChargeFeeStrategy, CrossChainStrategy, VaultToVaultSingleTokenStrategy), or the displayed
+// campaign would diverge from the charged fee. Returns undefined for shapes that aren't fee-charged here.
+function depositOptionFeeEndpoints(
+  option: DepositOption
+): { input: ZapFeeEndpoint; output: ZapFeeEndpoint } | undefined {
+  if (isVaultToVaultSingleTokenDepositOption(option)) {
+    // Mirror VaultToVaultSingleTokenStrategy: src vault → dest vault.
+    return {
+      input: { kind: 'vault', vaultId: option.srcVaultId },
+      output: { kind: 'vault', vaultId: option.destVaultId },
+    };
+  }
+  if (isCrossChainDepositOption(option)) {
+    // Mirror CrossChainStrategy: input is the source vault (vault-src) or the user token (swap-src);
+    // output is always the dest vault. (Charge path reads the runtime input token, equal to inputs[0] here.)
+    if (option.srcHandlerKind === 'vault') {
+      return {
+        input: { kind: 'vault', vaultId: option.srcVaultId },
+        output: { kind: 'vault', vaultId: option.destVaultId },
+      };
+    }
+    const token = option.inputs[0];
+    if (!token) {
+      return undefined;
+    }
+    return {
+      input: { kind: 'token', token },
+      output: { kind: 'vault', vaultId: option.destVaultId },
+    };
+  }
+  // Mirror ChargeFeeStrategy same-chain deposit: single input token → page vault.
+  const token = option.inputs[0];
+  if (option.inputs.length !== 1 || !token) {
+    return undefined;
+  }
+  return {
+    input: { kind: 'token', token },
+    output: { kind: 'vault', vaultId: option.vaultId },
+  };
+}
+
+// Display-only campaign for a deposit option. Resolved once at option-build time; returns undefined unless
+// a campaign actually reduces the fee. The charged fee is recomputed at quote time via resolveZapFee, so
+// this never drives execution.
+export function resolveOptionFeeCampaign(
+  state: BeefyState,
+  option: DepositOption
+): OptionFeeCampaign | undefined {
+  const endpoints = depositOptionFeeEndpoints(option);
+  if (!endpoints) {
+    return undefined;
+  }
+  const fee = computeZapFee(state, endpoints);
+  if (!fee || fee.effectiveBps >= fee.baseBps) {
+    return undefined;
+  }
+  return { effectiveBps: fee.effectiveBps, baseBps: fee.baseBps };
 }
 
 // One computation → two outputs: `display` is the UI fee on quote.fee; `step` is the execution fee in
@@ -288,15 +292,13 @@ export function feeZapStepsFromQuoteStep(
   return { zaps, feeAmount };
 }
 
-// chainId defaults to the vault chain; endpoints are the user-facing input/output (not bridge tokens).
-export function feeContext(
-  helpers: TransactHelpers,
-  endpoints: { input: ZapFeeEndpoint; output: ZapFeeEndpoint },
-  chainId: ChainEntity['id'] = helpers.vault.chainId
-): ZapFeeContext {
+// Endpoints are the user-facing input/output (not bridge/routing tokens); the charged chain is derived
+// from the input endpoint inside computeZapFee.
+export function feeContext(endpoints: {
+  input: ZapFeeEndpoint;
+  output: ZapFeeEndpoint;
+}): ZapFeeContext {
   return {
-    chainId,
-    vaultId: helpers.vault.id,
     input: endpoints.input,
     output: endpoints.output,
   };

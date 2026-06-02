@@ -291,6 +291,7 @@ export interface ZapConfig {
 
 export type ZapFeeEndpointMatcher = {
   token?: {
+    chainIds?: ChainEntity['id'][];
     ids?: string[];
     addresses?: string[];
     symbols?: string[];
@@ -298,6 +299,7 @@ export type ZapFeeEndpointMatcher = {
     tags?: string[];
   };
   vault?: {
+    chainIds?: ChainEntity['id'][];
     ids?: string[];
     platformIds?: string[];
     strategyTypeIds?: string[];
@@ -312,12 +314,14 @@ export type ZapFeeConditionParams = { from?: ZapFeeEndpointMatcher; to?: ZapFeeE
 export type ZapFeeRule = {
   id: string;
   kind: 'waive' | 'discount';
+  // Opt-in: feature this campaign on the vault list; engine enforces input-agnostic (mis-flagged rules still apply at quote time).
+  featured?: boolean;
   // Short campaign blurb, shown next to the fee when this rule applies (display not yet wired).
   description?: string;
   bps?: number;
-  chainIds?: ChainEntity['id'][];
   startsAt?: number;
   endsAt?: number;
+  // Scope by endpoint: condition picks the side (zapIn=input, zapOut=output, migrate=both); chain lives in params' matchers.
   condition?: string;
   params?: ZapFeeConditionParams;
 };

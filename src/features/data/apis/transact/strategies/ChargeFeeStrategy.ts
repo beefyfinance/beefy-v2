@@ -88,7 +88,7 @@ export class ChargeFeeStrategy<
     const feeable = isOptionFeeable(option) && inputs.length === 1;
     const ctx =
       feeable ?
-        feeContext(this.helpers, {
+        feeContext({
           input: { kind: 'token', token: inputs[0].token },
           output: { kind: 'vault', vaultId: this.helpers.vault.id },
         })
@@ -175,7 +175,7 @@ export class ChargeFeeStrategy<
     const feeable = isOptionFeeable(option) && innerQuote.outputs.length === 1;
     const ctx =
       feeable ?
-        feeContext(this.helpers, {
+        feeContext({
           input: { kind: 'vault', vaultId: this.helpers.vault.id },
           output: { kind: 'token', token: innerQuote.outputs[0].token },
         })

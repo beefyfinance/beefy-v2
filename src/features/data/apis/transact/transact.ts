@@ -48,6 +48,8 @@ import {
   getRoutingTokensForChain,
   hasRoutingTokensForChain,
 } from '../../../../config/vault-to-vault/routing-tokens.ts';
+import { resolveOptionFeeCampaign } from './helpers/fee.ts';
+import { isOptionFeeable } from './helpers/options.ts';
 import {
   type DepositOption,
   type DepositQuote,
@@ -208,6 +210,14 @@ export class TransactApi implements ITransactApi {
         } catch (err) {
           console.warn('Failed to load same-chain v2v deposit options:', err);
         }
+      }
+    }
+
+    // Add fee campaign data to options (for display during selection)
+    const state = getState();
+    for (const option of options) {
+      if (isOptionFeeable(option)) {
+        option.feeCampaign = resolveOptionFeeCampaign(state, option);
       }
     }
 

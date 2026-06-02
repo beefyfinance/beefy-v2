@@ -1,6 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { uniqBy } from 'lodash-es';
+import { createCachedSelector } from 're-reselect';
 import type { TFunction } from 'react-i18next';
+import {
+  isInputAgnosticZapFeeRule,
+  isValidZapFeeRule,
+  matchFeaturedZapCampaign,
+} from '../apis/transact/helpers/fee-rules.ts';
 import {
   isZapQuoteStepBridge,
   isZapQuoteStepSwap,
@@ -13,6 +19,7 @@ import type { AmmEntity, SwapAggregatorEntity } from '../entities/zap.ts';
 import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
 import { selectPlatformByIdOrUndefined } from './platforms.ts';
+import { selectVaultByIdOrUndefined } from './vaults.ts';
 
 export const selectZapByChainId = (state: BeefyState, chainId: ChainEntity['id']) =>
   state.entities.zaps.zaps.byChainId[chainId] || undefined;
@@ -26,6 +33,82 @@ export const selectZapFeeConfigByChainId = (state: BeefyState, chainId: ChainEnt
 };
 
 export const selectZapFeeRules = (state: BeefyState) => state.entities.zaps.feeCampaigns;
+
+const warnedInvalidZapFeeRuleIds = new Set<string>();
+const warnedNonFeaturableZapFeeRuleIds = new Set<string>();
+
+export const selectValidZapFeeRules = createSelector([selectZapFeeRules], rules =>
+  rules.filter(rule => {
+    if (isValidZapFeeRule(rule)) {
+      return true;
+    }
+    const id = typeof rule?.id === 'string' ? rule.id : 'unknown';
+    if (!warnedInvalidZapFeeRuleIds.has(id)) {
+      warnedInvalidZapFeeRuleIds.add(id);
+      console.warn(`Ignoring invalid zap fee rule "${id}"`);
+    }
+    return false;
+  })
+);
+
+// Featured = valid + opt-in flag + input-agnostic; a mis-flagged input-dependent rule still applies at
+// quote time but is excluded here so the vault list never advertises a discount the user may not get.
+export const selectFeaturedZapFeeRules = createSelector([selectValidZapFeeRules], rules =>
+  rules.filter(rule => {
+    if (!rule.featured) {
+      return false;
+    }
+    if (isInputAgnosticZapFeeRule(rule)) {
+      return true;
+    }
+    if (!warnedNonFeaturableZapFeeRuleIds.has(rule.id)) {
+      warnedNonFeaturableZapFeeRuleIds.add(rule.id);
+      console.warn(
+        `Zap fee rule "${rule.id}" is flagged featured but is input-dependent; excluded from the vault list`
+      );
+    }
+    return false;
+  })
+);
+
+export type ZapVaultCampaign = {
+  effectiveBps: number;
+  baseBps: number;
+  free: boolean;
+  description?: string;
+  id?: string;
+};
+
+export const selectVaultZapCampaign = createCachedSelector(
+  (state: BeefyState, _vaultId: VaultEntity['id']) => selectFeaturedZapFeeRules(state),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultByIdOrUndefined(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultByIdOrUndefined(state, vaultId);
+    return vault ? selectZapByChainId(state, vault.chainId) : undefined;
+  },
+  () => Math.trunc(Date.now() / 600000), // re-evaluate campaign windows on a 10-min bucket
+  (rules, vault, zap, _bucket): ZapVaultCampaign | undefined => {
+    if (!vault || !zap?.feeRecipient) {
+      return undefined;
+    }
+    const fee = matchFeaturedZapCampaign(
+      rules,
+      { recipient: zap.feeRecipient, bps: zap.feeBps },
+      vault,
+      Math.floor(Date.now() / 1000)
+    );
+    if (!fee || fee.effectiveBps >= fee.baseBps) {
+      return undefined;
+    }
+    return {
+      effectiveBps: fee.effectiveBps,
+      baseBps: fee.baseBps,
+      free: fee.effectiveBps === 0,
+      ...(fee.winner?.description ? { description: fee.winner.description } : {}),
+      ...(fee.winner?.id ? { id: fee.winner.id } : {}),
+    };
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectSwapAggregatorById = (state: BeefyState, id: SwapAggregatorEntity['id']) =>
   state.entities.zaps.aggregators.byId[id] || undefined;

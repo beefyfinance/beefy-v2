@@ -232,7 +232,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
     const srcHandlerQuote = await srcHandler.fetchQuote(input, srcCtx);
 
     // Fee charged once on the routing token, between source and dest handlers
-    const feeCtx = feeContext(this.helpers, {
+    const feeCtx = feeContext({
       input: { kind: 'vault', vaultId: option.srcVaultId },
       output: { kind: 'vault', vaultId: option.destVaultId },
     });

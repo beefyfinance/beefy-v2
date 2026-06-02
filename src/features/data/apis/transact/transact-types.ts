@@ -102,6 +102,13 @@ type BaseOption = {
   async?: boolean;
   // feeable=false marks a free path (same-token, break-only/multi-token withdraw, dual deposit); the fee decorator skips it.
   feeable?: boolean;
+  // Display-only: a reduced zap fee from a featured campaign, resolved at option-build time. The charged fee is still computed at quote time.
+  feeCampaign?: OptionFeeCampaign;
+};
+
+export type OptionFeeCampaign = {
+  effectiveBps: number;
+  baseBps: number;
 };
 
 type BaseDepositOption = BaseOption & {
