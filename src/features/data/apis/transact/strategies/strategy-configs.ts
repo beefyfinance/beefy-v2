@@ -102,6 +102,10 @@ export type CrossChainStrategyConfig = {
   supportedDestChains?: ChainEntity['id'][];
 } & OptionalStrategySwapConfig;
 
+export type VaultToVaultSingleTokenStrategyConfig = {
+  strategyId: 'vault-to-vault-single-token';
+} & OptionalStrategySwapConfig;
+
 export type ZapStrategyConfig =
   | SingleStrategyConfig
   | UniswapV2StrategyConfig
@@ -115,7 +119,8 @@ export type ZapStrategyConfig =
   | VaultComposerStrategyConfig
   | RewardPoolToVaultStrategyConfig
   | BalancerStrategyConfig
-  | CrossChainStrategyConfig;
+  | CrossChainStrategyConfig
+  | VaultToVaultSingleTokenStrategyConfig;
 
 export type ZapStrategyId = ZapStrategyConfig['strategyId'];
 

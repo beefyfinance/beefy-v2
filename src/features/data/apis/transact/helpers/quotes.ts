@@ -1,7 +1,10 @@
 import type BigNumber from 'bignumber.js';
 import { BIG_ZERO, compareBigNumber } from '../../../../../helpers/big-number.ts';
+import type { VaultEntity } from '../../../entities/vault.ts';
+import { selectVaultSharesToDepositTokenData } from '../../../selectors/balance.ts';
 import { selectTokenPriceByAddress } from '../../../selectors/tokens.ts';
 import type { BeefyState } from '../../../store/types.ts';
+import { mooAmountToOracleAmount } from '../../../utils/ppfs.ts';
 import type { QuoteResponse } from '../swap/ISwapProvider.ts';
 import {
   isZapQuoteStepSwap,
@@ -12,6 +15,21 @@ import {
 } from '../transact-types.ts';
 
 export const ZERO_FEE: ZapFee = { value: 0 };
+
+/** Convert a v2v source share amount to the deposit-token TokenAmount via ppfs (pass-through for vaults without a receipt token). */
+export function convertVaultShareToDepositTokenAmount(
+  state: BeefyState,
+  srcVaultId: VaultEntity['id'],
+  shareAmount: BigNumber
+): TokenAmount {
+  const { depositToken, shareToken, ppfs } = selectVaultSharesToDepositTokenData(state, srcVaultId);
+  if (shareAmount.lte(BIG_ZERO)) return { token: depositToken, amount: BIG_ZERO };
+  if (!shareToken) return { token: depositToken, amount: shareAmount };
+  return {
+    token: depositToken,
+    amount: mooAmountToOracleAmount(shareToken, depositToken, ppfs, shareAmount),
+  };
+}
 
 /**
  * Returns the total value of the token amounts in USD

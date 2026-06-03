@@ -14,9 +14,9 @@ import { isVaultActive } from '../../../../../data/entities/vault.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectUserBalanceOfToken,
-  selectUserVaultBalanceInDepositToken,
+  selectUserVaultBalanceInDepositTokenWithToken,
+  selectUserVaultBalanceInShareToken,
 } from '../../../../../data/selectors/balance.ts';
-import { selectTokenByAddress } from '../../../../../data/selectors/tokens.ts';
 import {
   selectTransactDepositFromVaultId,
   selectTransactForceSelection,
@@ -37,6 +37,7 @@ import { FormFooter } from '../FormFooter/FormFooter.tsx';
 import { TransactQuote } from '../TransactQuote/TransactQuote.tsx';
 import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 import { styles } from './styles.ts';
+import { DepositFromVaultBoostNotice } from '../DepositFromVaultBoostNotice/DepositFromVaultBoostNotice.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -76,33 +77,37 @@ type VaultBalanceProps = {
 const VaultBalance = memo(function VaultBalance({ index }: VaultBalanceProps) {
   const dispatch = useAppDispatch();
   const fromVaultId = useAppSelector(selectTransactDepositFromVaultId);
-  const vault = useAppSelector(state =>
-    fromVaultId ? selectVaultById(state, fromVaultId) : undefined
+  const depositBalance = useAppSelector(state =>
+    fromVaultId ? selectUserVaultBalanceInDepositTokenWithToken(state, fromVaultId) : undefined
   );
-  const depositToken = useAppSelector(state =>
-    vault ? selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress) : undefined
-  );
-  const balance = useAppSelector(state =>
-    fromVaultId ? selectUserVaultBalanceInDepositToken(state, fromVaultId) : undefined
+  const shareBalance = useAppSelector(state =>
+    fromVaultId ? selectUserVaultBalanceInShareToken(state, fromVaultId) : undefined
   );
 
   const handleMax = useCallback(() => {
-    if (balance) {
+    if (shareBalance) {
+      // dispatch exact share-balance: store-of-record is share-math even though display is deposit-token
       dispatch(
         transactSetInputAmount({
           index,
-          amount: balance,
+          amount: shareBalance,
           max: true,
         })
       );
     }
-  }, [balance, dispatch, index]);
+  }, [shareBalance, dispatch, index]);
 
-  if (!vault || !depositToken || !balance) {
+  if (!depositBalance || !shareBalance) {
     return null;
   }
 
-  return <TokenAmountFromEntity onClick={handleMax} amount={balance} token={depositToken} />;
+  return (
+    <TokenAmountFromEntity
+      onClick={handleMax}
+      amount={depositBalance.amount}
+      token={depositBalance.token}
+    />
+  );
 });
 
 const DepositFormLoader = memo(function DepositFormLoader() {
@@ -141,6 +146,7 @@ const DepositForm = memo(function DepositForm() {
       <CrossChainBelowFeeNotice css={styles.quote} />
       <TransactQuote title={t('Transact-YouDeposit')} css={styles.quote} />
       <Actions>
+        <DepositFromVaultBoostNotice />
         <DepositActions />
       </Actions>
       <FormFooter />

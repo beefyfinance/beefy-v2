@@ -1,8 +1,8 @@
 import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import BigNumber from 'bignumber.js';
-import { format } from 'date-fns';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { formatDateTime } from '../../../../../../../helpers/date.ts';
 import {
   formatLargeUsd,
   formatTokenDisplayCondensed,
@@ -50,7 +50,7 @@ export const PnLTooltip = memo(function PnLTooltip({ active, payload }: TooltipP
   const classes = useStyles();
   const { t } = useTranslation();
   if (active && payload && payload.length) {
-    const formattedDate = format(new Date(payload[0].payload.datetime), 'MMM d, yyyy h:mm a');
+    const formattedDate = formatDateTime(new Date(payload[0].payload.datetime));
     const shares = new BigNumber(payload[0].payload.underlyingBalance);
     const usdBalance = new BigNumber(payload[0].payload.usdBalance);
 

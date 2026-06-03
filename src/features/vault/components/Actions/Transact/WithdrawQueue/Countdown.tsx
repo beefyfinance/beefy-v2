@@ -1,9 +1,8 @@
 import { memo, type ReactNode, useMemo } from 'react';
-import { format } from 'date-fns';
 import { DivWithTooltip } from '../../../../../../components/Tooltip/DivWithTooltip.tsx';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent.tsx';
 import { TimeUntil } from '../../../../../../components/TimeUntil/TimeUntil.tsx';
-import type { FormatTimeLabels } from '../../../../../../helpers/date.ts';
+import { formatDateTime, type FormatTimeLabels } from '../../../../../../helpers/date.ts';
 import { StatusPill } from '../../../../../../components/StatusPill.tsx';
 
 type CountdownProps = {
@@ -21,7 +20,7 @@ const labels: FormatTimeLabels = {
 export const Countdown = memo(function Countdown({ until, children }: CountdownProps) {
   const { time, renderFuture } = useMemo(() => {
     const date = new Date(until * 1000);
-    const formatted = format(date, 'MMM d, yyyy h:mm a');
+    const formatted = formatDateTime(date);
     return {
       time: date,
       renderFuture: (timeLeft: string) => (

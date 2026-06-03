@@ -4,24 +4,24 @@ import type {
   DestHandlerQuote,
   DestHandlerSteps,
   IDestHandler,
-} from './types.ts';
+} from '../../../handlers/types.ts';
 
 type PassthroughState = Record<string, never>;
 
 /**
- * Passthrough dest handler: empty dst route, bridge token delivered straight to user.
- * No recovery — bridge token IS the expected output, nothing to redo.
+ * Passthrough dest handler: empty dst route, the handler's input token delivered straight to user.
+ * No recovery — the input token IS the expected output, nothing to redo.
  */
 export class PassthroughDestHandler implements IDestHandler<PassthroughState> {
   readonly kind = 'passthrough' as const;
 
   async fetchQuote(
-    bridgeTokenIn: BigNumber,
+    inputAmount: BigNumber,
     ctx: DestHandlerContext
   ): Promise<DestHandlerQuote<PassthroughState>> {
     return {
       destSteps: [],
-      outputs: [{ token: ctx.destBridgeToken, amount: bridgeTokenIn }],
+      outputs: [{ token: ctx.inputToken, amount: inputAmount }],
       returned: [],
       dustTokens: [],
       allowances: [],
@@ -35,8 +35,8 @@ export class PassthroughDestHandler implements IDestHandler<PassthroughState> {
   ): Promise<DestHandlerSteps> {
     return {
       zapSteps: [],
-      orderOutputs: [{ token: ctx.destBridgeToken.address, minOutputAmount: '0' }],
-      expectedTokens: [ctx.destBridgeToken],
+      orderOutputs: [{ token: ctx.inputToken.address, minOutputAmount: '0' }],
+      expectedTokens: [ctx.inputToken],
     };
   }
 }

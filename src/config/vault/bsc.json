@@ -1,5 +1,83 @@
 [
   {
+    "id": "uniswap-cow-bsc-zest-usdt-rp",
+    "name": "ZEST-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBscZEST-USDT",
+    "tokenAddress": "0x4AF07fCe264429446B88ac78C393799842fe85A8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xD0ffeA1BACb84c2FAd3A145cBDC02de1bd397206",
+    "earnedToken": "rCowUniswapBscZEST-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-zest-usdt",
+    "status": "active",
+    "createdAt": 1779206004,
+    "platformId": "uniswap",
+    "assets": ["ZEST", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-zest-usdt",
+    "name": "ZEST-USDT",
+    "type": "cowcentrated",
+    "token": "ZEST-USDT uniswap",
+    "tokenAddress": "0x6d299F4bAD5392af1e55e3E86A0339399543032b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x5506599c722389A60580B5213ea1Da60D64754a1",
+      "0x55d398326f99059fF775485246999027B3197955"
+    ],
+    "earnContractAddress": "0x4AF07fCe264429446B88ac78C393799842fe85A8",
+    "earnedToken": "cowUniswapBscZEST-USDT",
+    "earnedTokenAddress": "0x4AF07fCe264429446B88ac78C393799842fe85A8",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-zest-usdt",
+    "status": "active",
+    "createdAt": 1779206004,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["ZEST", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-bsc-usdt-opg-rp",
     "name": "USDT-OPG Reward Pool",
     "type": "gov",

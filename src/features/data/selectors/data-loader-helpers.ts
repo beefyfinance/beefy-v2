@@ -65,6 +65,10 @@ export function hasLoaderFulfilledOnce(state: LoaderState | undefined): boolean 
   return !!state && state.lastFulfilled !== undefined;
 }
 
+export function hasLoaderSettledOnce(state: LoaderState | undefined): boolean {
+  return !!state && (state.lastFulfilled !== undefined || state.lastRejected !== undefined);
+}
+
 function hasLoaderFulfilledRecentlyImpl(
   state: LoaderState | undefined,
   recentSeconds: number = DEFAULT_FULFILLED_RECENT_SECONDS

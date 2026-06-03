@@ -1,17 +1,18 @@
 import { uniqBy } from 'lodash-es';
-import type { TokenEntity } from '../../../../../entities/token.ts';
-import { pickTokens, uniqueTokens } from '../../../helpers/tokens.ts';
-import { getTokenAddress } from '../../../helpers/zap.ts';
+import type { TokenEntity } from '../../../entities/token.ts';
+import { pickTokens, uniqueTokens } from '../helpers/tokens.ts';
+import { getTokenAddress } from '../helpers/zap.ts';
 import {
   isZapQuoteStepSwap,
   type InputTokenAmount,
   type TokenAmount,
   type ZapQuoteStep,
-} from '../../../transact-types.ts';
-import type { OrderOutput } from '../../../zap/types.ts';
+} from '../transact-types.ts';
+import type { OrderOutput } from '../zap/types.ts';
 
 export type IntermediateTokenConfig = {
-  bridgeToken: TokenEntity;
+  /** Caller's boundary token — the source handler's output, or the dest handler's input. */
+  anchorToken: TokenEntity;
   inputs?: InputTokenAmount[];
   picks?: { outputs: TokenAmount[]; inputs: InputTokenAmount[]; returned: TokenAmount[] };
   swapSteps?: ZapQuoteStep[];
@@ -19,7 +20,7 @@ export type IntermediateTokenConfig = {
 
 /** Collect tokens to emit as dust outputs (min=0 router refunds). */
 export function collectIntermediateTokens(config: IntermediateTokenConfig): TokenEntity[] {
-  const tokens: TokenEntity[] = [config.bridgeToken];
+  const tokens: TokenEntity[] = [config.anchorToken];
 
   if (config.inputs) {
     tokens.push(...config.inputs.map(i => i.token));

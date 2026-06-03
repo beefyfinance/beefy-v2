@@ -32,18 +32,11 @@ export function useTransactSelectFlowCta() {
     if (needsVaultPick) {
       return t('Transact-DepositFromVault-Select');
     }
-    if (isDepositFromVault) {
-      // Vault picked: placeholder Select amount (no quote fetched in vault-mode)
-      return t('Transact-DepositFromVault-Label');
-    }
-    if (hasCrossChainZap && forceSelection) {
-      return t('Transact-SelectChain');
-    }
-    if (forceSelection) {
-      return t('Transact-SelectToken');
+    if (forceSelection && !fromVaultId) {
+      return t(hasCrossChainZap ? 'Transact-SelectChain' : 'Transact-SelectToken');
     }
     return t('Transact-SelectAmount');
-  }, [forceSelection, hasCrossChainZap, isDepositFromVault, needsVaultPick, t]);
+  }, [forceSelection, hasCrossChainZap, fromVaultId, needsVaultPick, t]);
 
   const openSelectStep = useCallback(() => {
     if (needsVaultPick) {

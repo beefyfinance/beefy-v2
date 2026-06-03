@@ -4,7 +4,7 @@ import type { Address } from 'viem';
 import { toWeiBigInt, toWeiString } from '../../../../../../helpers/big-number.ts';
 import type { TokenEntity, TokenErc20 } from '../../../../entities/token.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
-import type { VaultEntity } from '../../../../entities/vault.ts';
+import { isVaultWithReceipt, type VaultEntity } from '../../../../entities/vault.ts';
 import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
 import type { CrossChainRecoveryParams } from '../../../../reducers/wallet/transact-types.ts';
@@ -34,6 +34,7 @@ import {
 } from '../../helpers/options.ts';
 import {
   calculatePriceImpact,
+  convertVaultShareToDepositTokenAmount,
   highestFeeOrZero,
   totalValueOfTokenAmounts,
 } from '../../helpers/quotes.ts';
@@ -69,13 +70,13 @@ import {
   crossChainZapExecuteOrder,
 } from '../../../../actions/wallet/cross-chain.ts';
 import { enumerateDstVaultCandidates, enumerateSrcVaultCandidates } from './enumeration.ts';
-import { buildDustOutputs, mergeOutputs } from './handlers/dust.ts';
+import { buildDustOutputs, mergeOutputs } from '../../handlers/dust.ts';
 import { buildBalanceCheckZapStep, findBridgeTokenMin } from './handlers/utils.ts';
 import { PassthroughDestHandler } from './handlers/PassthroughDestHandler.ts';
 import { SwapDestHandler } from './handlers/SwapDestHandler.ts';
 import { SwapSourceHandler } from './handlers/SwapSourceHandler.ts';
-import { VaultDestHandler } from './handlers/VaultDestHandler.ts';
-import { VaultSourceHandler } from './handlers/VaultSourceHandler.ts';
+import { VaultDestHandler } from '../../handlers/vault/VaultDestHandler.ts';
+import { VaultSourceHandler } from '../../handlers/vault/VaultSourceHandler.ts';
 import type {
   DestHandlerContext,
   DestHandlerQuote,
@@ -83,13 +84,13 @@ import type {
   ISourceHandler,
   SourceHandlerContext,
   SourceHandlerQuote,
-} from './handlers/types.ts';
+} from '../../handlers/types.ts';
 
 const strategyId = 'cross-chain';
 type StrategyId = typeof strategyId;
 
 /** Phased rollout: vault-to-vault paths dark until picker UX ships. */
-const VAULT_TO_VAULT_ENABLED: boolean = false;
+const VAULT_TO_VAULT_ENABLED: boolean = true;
 
 type CrossChainQuoteBody = {
   bridgeQuote: CCTPBridgeQuote;
@@ -131,7 +132,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     return {
       helpers: this.helpers,
       sourceChainId: option.sourceChainId,
-      bridgeToken: option.bridgeToken,
+      outputToken: option.bridgeToken,
       slippage: selectTransactSlippage(this.helpers.getState()),
       pageVaultId: this.helpers.vault.id,
       resolveHelpersForVault: vaultId => this.resolveHelpersForVault(vaultId),
@@ -146,7 +147,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
   private makeDestContext(args: {
     helpers: ChainTransactHelpers;
     destChainId: ChainEntity['id'];
-    destBridgeToken: TokenEntity;
+    inputToken: TokenEntity;
   }): DestHandlerContext {
     return {
       ...args,
@@ -259,7 +260,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     // completes the dst leg via `fetchRecoveryStep`.
     const fallbackPayload: ZapPayload = {
       recipient: userAddress,
-      outputs: [{ token: destCtx.destBridgeToken.address, minOutputAmount: '0' }],
+      outputs: [{ token: destCtx.inputToken.address, minOutputAmount: '0' }],
       relay: NO_RELAY,
       route: [],
     };
@@ -278,7 +279,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       ),
       // Passthrough → bridge token IS the user's chosen output; nothing to recover.
       isTwoStep: destHandler.kind !== 'passthrough',
-      expectedTokens: [destCtx.destBridgeToken],
+      expectedTokens: [destCtx.inputToken],
     };
   }
 
@@ -407,7 +408,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const destCtx = this.makeDestContext({
       helpers: this.helpers,
       destChainId: option.destChainId,
-      destBridgeToken: option.destBridgeToken,
+      inputToken: option.destBridgeToken,
     });
     const srcHandler = this.makeSourceHandler(option);
     const destHandler = this.makeDestHandler(option);
@@ -416,15 +417,15 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
     // CCTP bridge — slip only when src produced the bridge token via swap/withdraw.
     const bridgeUsdcAmount =
-      srcHandlerQuote.slippageAppliesToBridge ?
-        slipBy(srcHandlerQuote.bridgeTokenOut, srcCtx.slippage, srcCtx.bridgeToken.decimals)
-      : srcHandlerQuote.bridgeTokenOut;
+      srcHandlerQuote.slippageAppliesToOutput ?
+        slipBy(srcHandlerQuote.outputAmount, srcCtx.slippage, srcCtx.outputToken.decimals)
+      : srcHandlerQuote.outputAmount;
     const bridgeQuote = fetchBridgeQuote(
       srcCtx.sourceChainId,
       destCtx.destChainId,
       bridgeUsdcAmount,
-      srcCtx.bridgeToken as TokenErc20,
-      destCtx.destBridgeToken as TokenErc20
+      srcCtx.outputToken as TokenErc20,
+      destCtx.inputToken as TokenErc20
     );
 
     const sourceSteps: ZapQuoteStep[] = [
@@ -434,8 +435,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         bridgeId: 'cctp',
         fromChainId: srcCtx.sourceChainId,
         toChainId: destCtx.destChainId,
-        fromToken: srcCtx.bridgeToken,
-        toToken: destCtx.destBridgeToken,
+        fromToken: srcCtx.outputToken,
+        toToken: destCtx.inputToken,
         fromAmount: bridgeQuote.fromAmount,
         toAmount: bridgeQuote.toAmount,
         timeEstimate: bridgeQuote.timeEstimate,
@@ -446,10 +447,10 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
     // Slippage buffer — excess bridge token arrives on dst as an `unused` step.
     const destSlippageReturn = bridgeSlippageReturned(
-      srcHandlerQuote.bridgeTokenOut,
+      srcHandlerQuote.outputAmount,
       bridgeUsdcAmount,
       bridgeQuote,
-      destCtx.destBridgeToken
+      destCtx.inputToken
     );
     const destSteps: ZapQuoteStep[] =
       destSlippageReturn ?
@@ -465,6 +466,11 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       destHandlerQuote.returned
     );
 
+    const inputForPricing =
+      option.srcHandlerKind === 'vault' ?
+        convertVaultShareToDepositTokenAmount(state, option.srcVaultId, input.amount)
+      : input;
+
     return {
       bridgeQuote,
       sourceSteps,
@@ -473,7 +479,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       returned,
       allowances: srcHandlerQuote.allowances,
       priceImpact: calculatePriceImpact(
-        [input],
+        [inputForPricing],
         destHandlerQuote.outputs,
         returned,
         state,
@@ -530,7 +536,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const destCtx = this.makeDestContext({
       helpers: this.helpers,
       destChainId: quote.option.destChainId,
-      destBridgeToken: quote.option.destBridgeToken,
+      inputToken: quote.option.destBridgeToken,
     });
     const srcHandler = this.makeSourceHandler(quote.option);
     const destHandler = this.makeDestHandler(quote.option);
@@ -610,7 +616,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
   async fetchWithdrawOptions(): Promise<CrossChainWithdrawOption[]> {
     const { vault, swapAggregator, getState } = this.helpers;
     const state = getState();
-    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    if (!isVaultWithReceipt(vault)) return [];
+    const shareToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
     const options: CrossChainWithdrawOption[] = [];
 
     if (!isChainSupported(vault.chainId)) return [];
@@ -635,7 +642,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
           destChainId,
           selectionId: usdcSelectionId,
           selectionOrder: SelectionOrder.CrossChain,
-          inputs: [depositToken],
+          inputs: [shareToken],
           wantedOutputs: [destUSDC],
           bridgeToken: sourceUSDC,
           destBridgeToken: destUSDC,
@@ -668,7 +675,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
             destChainId,
             selectionId,
             selectionOrder: SelectionOrder.CrossChain,
-            inputs: [depositToken],
+            inputs: [shareToken],
             wantedOutputs: [token],
             bridgeToken: sourceUSDC,
             destBridgeToken: destUSDC,
@@ -681,7 +688,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       })
     );
 
-    if (VAULT_TO_VAULT_ENABLED) {
+    // eslint-disable-next-line no-constant-condition
+    if (VAULT_TO_VAULT_ENABLED && false) {
       const v2vOptions = await this.enumerateVaultDstWithdrawOptions();
       options.push(...v2vOptions);
     }
@@ -697,8 +705,9 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const { vault, getState } = this.helpers;
     const state = getState();
     if (!isChainSupported(vault.chainId)) return [];
+    if (!isVaultWithReceipt(vault)) return [];
 
-    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const shareToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
     const sourceUSDC = getUSDCForChain(vault.chainId, state);
     const results: CrossChainWithdrawOption[] = [];
 
@@ -727,7 +736,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         destChainId: candidate.chainId,
         selectionId,
         selectionOrder: SelectionOrder.CrossChain,
-        inputs: [depositToken],
+        inputs: [shareToken],
         wantedOutputs: [destShareToken],
         bridgeToken: sourceUSDC,
         destBridgeToken: destUSDC,
@@ -859,7 +868,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const destCtx = this.makeDestContext({
       helpers: destChainHelpers,
       destChainId: recovery.destChainId,
-      destBridgeToken,
+      inputToken: destBridgeToken,
     });
     const handler = this.makeRecoveryHandler(recovery, destChainHelpers);
     const quoteVaultId =
@@ -868,7 +877,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const handlerQuote = await handler.fetchQuote(bridgedAmount, destCtx);
     const state = destCtx.helpers.getState();
     const inputs: InputTokenAmount[] = [
-      { token: destCtx.destBridgeToken, amount: bridgedAmount, max: false },
+      { token: destCtx.inputToken, amount: bridgedAmount, max: false },
     ];
     return {
       id: createQuoteId(`recovery-${destCtx.destChainId}-${quoteVaultId}`),
@@ -902,7 +911,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const destCtx = this.makeDestContext({
       helpers: destChainHelpers,
       destChainId: recovery.destChainId,
-      destBridgeToken,
+      inputToken: destBridgeToken,
     });
     const handler = this.makeRecoveryHandler(recovery, destChainHelpers);
     const attributedVaultId =
@@ -919,8 +928,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       order: {
         inputs: [
           {
-            token: destCtx.destBridgeToken.address,
-            amount: toWeiString(bridgedAmount, destCtx.destBridgeToken.decimals),
+            token: destCtx.inputToken.address,
+            amount: toWeiString(bridgedAmount, destCtx.inputToken.decimals),
           },
         ],
         outputs,

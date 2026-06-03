@@ -9,21 +9,21 @@ import { type ZapQuoteStepSwapAggregator } from '../../../transact-types.ts';
 import { fetchZapAggregatorSwap } from '../../../zap/swap.ts';
 import type { OrderOutput } from '../../../zap/types.ts';
 import type { StrategySwapConfig } from '../../strategy-configs.ts';
-import { collectIntermediateTokens } from './dust.ts';
+import { collectIntermediateTokens } from '../../../handlers/dust.ts';
 import type {
   DestHandlerContext,
   DestHandlerQuote,
   DestHandlerSteps,
   IDestHandler,
-} from './types.ts';
+} from '../../../handlers/types.ts';
 
 type SwapDestState = {
   swapStep: ZapQuoteStepSwapAggregator;
 };
 
 /**
- * Swap dest handler: aggregator swap from bridge token to desired output on the dst chain.
- * fetchZapSteps may run via the dst-only recovery path when hookData oversizes.
+ * Swap dest handler: aggregator swap from the handler's input token to the desired output token
+ * on the dst chain. fetchZapSteps may run via the dst-only recovery path when hookData oversizes.
  */
 export class SwapDestHandler implements IDestHandler<SwapDestState> {
   readonly kind = 'swap' as const;
@@ -34,17 +34,17 @@ export class SwapDestHandler implements IDestHandler<SwapDestState> {
   ) {}
 
   async fetchQuote(
-    bridgeTokenIn: BigNumber,
+    inputAmount: BigNumber,
     ctx: DestHandlerContext
   ): Promise<DestHandlerQuote<SwapDestState>> {
-    const { helpers, destBridgeToken, destChainId, pageVaultId } = ctx;
+    const { helpers, inputToken, destChainId, pageVaultId } = ctx;
     const state = helpers.getState();
     const { swapAggregator } = helpers;
 
     const quotes = await swapAggregator.fetchQuotes(
       {
-        fromToken: destBridgeToken,
-        fromAmount: bridgeTokenIn,
+        fromToken: inputToken,
+        fromAmount: inputAmount,
         toToken: this.desiredOutput,
         vaultId: pageVaultId,
       },
@@ -62,14 +62,14 @@ export class SwapDestHandler implements IDestHandler<SwapDestState> {
       providerId: bestSwap.providerId,
       fee: bestSwap.fee,
       quote: bestSwap,
-      fromToken: destBridgeToken,
-      fromAmount: bridgeTokenIn,
+      fromToken: inputToken,
+      fromAmount: inputAmount,
       toToken: this.desiredOutput,
       toAmount: bestSwap.toAmount,
     };
 
     const dustTokens = collectIntermediateTokens({
-      bridgeToken: destBridgeToken,
+      anchorToken: inputToken,
       swapSteps: [swapStep],
     });
 
@@ -79,11 +79,11 @@ export class SwapDestHandler implements IDestHandler<SwapDestState> {
     }
 
     const allowances =
-      bridgeTokenIn.gt(BIG_ZERO) && isTokenErc20(destBridgeToken) ?
+      inputAmount.gt(BIG_ZERO) && isTokenErc20(inputToken) ?
         [
           {
-            token: destBridgeToken,
-            amount: bridgeTokenIn,
+            token: inputToken,
+            amount: inputAmount,
             spenderAddress: destZap.manager,
           },
         ]

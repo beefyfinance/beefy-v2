@@ -1,5 +1,5 @@
 import { token } from '@repo/styles/tokens';
-import { format, fromUnixTime } from 'date-fns';
+import { fromUnixTime } from 'date-fns';
 import { max as lodashMax } from 'lodash-es';
 import { memo, useCallback, useMemo } from 'react';
 import {
@@ -15,6 +15,7 @@ import {
 } from 'recharts';
 import { useBreakpoint } from '../../../../../hooks/useBreakpoint.ts';
 import { XAxisTick } from '../../../../../components/XAxisTick/XAxisTick.tsx';
+import { formatChartDate, formatTime } from '../../../../../helpers/date.ts';
 import {
   formatLargePercent,
   formatTokenDisplayCondensed,
@@ -190,7 +191,7 @@ export const Graph = memo(function Graph<TStat extends ChartStat>({
 const formatDateTimeTick = (timestamp: number, bucket: ApiTimeBucket) => {
   const date = fromUnixTime(timestamp);
   if (bucket === '1h_1d') {
-    return format(date, 'HH:mm');
+    return formatTime(date);
   }
-  return date.toLocaleDateString(undefined, { month: 'numeric', day: 'numeric' });
+  return formatChartDate(date);
 };

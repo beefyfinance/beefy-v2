@@ -9,11 +9,13 @@ import {
   fetchZapConfigsAction,
   fetchZapSwapAggregatorsAction,
 } from '../actions/zap.ts';
+import { getV2VRelevantChainsFor } from '../apis/transact/strategies/cross-chain/eligibility.ts';
 import { isVaultActive } from '../entities/vault.ts';
 import { TransactMode, TransactStep } from '../reducers/wallet/transact-types.ts';
 import { selectUserVaultBalanceInShareTokenInBoosts } from '../selectors/balance.ts';
 import { selectBoostById, selectIsVaultPreStakedOrBoosted } from '../selectors/boosts.ts';
 import { selectAllChainIds } from '../selectors/chains.ts';
+import { selectHasBalanceSettledForChainUser } from '../selectors/data-loader/balance.ts';
 import { selectIsConfigAvailable } from '../selectors/data-loader/config.ts';
 import { selectIsPricesAvailable } from '../selectors/data-loader/prices.ts';
 import {
@@ -126,9 +128,18 @@ export function addTransactListeners() {
       }
 
       // Wait for all data to be loaded (in case we didn't dispatch the above loaders)
-      await condition(
-        (_, currentState) => selectAreFeesLoaded(currentState) && selectIsZapLoaded(currentState)
-      );
+      await condition((_, currentState) => {
+        if (!selectAreFeesLoaded(currentState)) return false;
+        if (!selectIsZapLoaded(currentState)) return false;
+
+        const walletAddress = selectWalletAddress(currentState);
+        if (!walletAddress) return true;
+
+        const relevantChainIds = getV2VRelevantChainsFor(currentState, action.payload.vaultId);
+        return relevantChainIds.every(chainId =>
+          selectHasBalanceSettledForChainUser(currentState, chainId, walletAddress)
+        );
+      });
 
       if (shouldCancel()) {
         return;

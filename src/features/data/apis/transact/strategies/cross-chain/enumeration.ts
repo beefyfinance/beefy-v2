@@ -11,8 +11,8 @@ import { getUSDCForChain } from '../../cctp/CCTPProvider.ts';
 import {
   isCrossChainHopEligible,
   userHasPositionIn,
-  vaultAcceptsBridgeTokenDeposit,
-  vaultCanWithdrawToBridgeToken,
+  vaultAcceptsTokenDeposit,
+  vaultCanWithdrawToToken,
 } from './eligibility.ts';
 
 // Per-vault eligibility checks construct strategy instances and consult the swap aggregator
@@ -50,7 +50,7 @@ export async function enumerateSrcVaultCandidates(
 
   const verdicts = await Promise.allSettled(
     survivors.map(({ vaultId, chainId }) =>
-      vaultCanWithdrawToBridgeToken(vaultId, state, getUSDCForChain(chainId, state))
+      vaultCanWithdrawToToken(vaultId, state, getUSDCForChain(chainId, state))
     )
   );
   const rejected = verdicts.flatMap((v, i) =>
@@ -88,7 +88,7 @@ export async function enumerateDstVaultCandidates(
 
   const verdicts = await Promise.allSettled(
     survivors.map(({ vaultId, chainId }) =>
-      vaultAcceptsBridgeTokenDeposit(vaultId, state, getUSDCForChain(chainId, state))
+      vaultAcceptsTokenDeposit(vaultId, state, getUSDCForChain(chainId, state))
     )
   );
   const rejected = verdicts.flatMap((v, i) =>

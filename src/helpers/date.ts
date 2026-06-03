@@ -204,3 +204,79 @@ export function isLessThanDurationAgoUnix(unixDate: number, duration: Duration):
 export function getUnixNow(): number {
   return Math.trunc(Date.now() / 1000);
 }
+
+// App is English-only (see i18n.ts), but we want US/EU date-order conventions
+// to follow the user's region. Pin to `en-<REGION>` so months stay in English
+// while ordering (MM/DD vs DD/MM) follows the browser's regional setting.
+const resolvedLocale = (() => {
+  const region = new Intl.Locale(navigator.language).region;
+  return region ? `en-${region}` : 'en-US';
+})();
+
+const dateTimeFormatter = new Intl.DateTimeFormat(resolvedLocale, {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false,
+});
+
+const dateTimeWithSecondsFormatter = new Intl.DateTimeFormat(resolvedLocale, {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: false,
+});
+
+const dateFormatter = new Intl.DateTimeFormat(resolvedLocale, {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+
+const timeFormatter = new Intl.DateTimeFormat(resolvedLocale, {
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false,
+});
+
+const timeWithSecondsFormatter = new Intl.DateTimeFormat(resolvedLocale, {
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: false,
+});
+
+// Numeric for chart axes where tick width is constrained
+const chartDateFormatter = new Intl.DateTimeFormat(resolvedLocale, {
+  month: 'numeric',
+  day: 'numeric',
+});
+
+export function formatDateTime(date: Date | number): string {
+  return dateTimeFormatter.format(date);
+}
+
+export function formatDateTimeWithSeconds(date: Date | number): string {
+  return dateTimeWithSecondsFormatter.format(date);
+}
+
+export function formatDate(date: Date | number): string {
+  return dateFormatter.format(date);
+}
+
+export function formatTime(date: Date | number): string {
+  return timeFormatter.format(date);
+}
+
+export function formatTimeWithSeconds(date: Date | number): string {
+  return timeWithSecondsFormatter.format(date);
+}
+
+export function formatChartDate(date: Date | number): string {
+  return chartDateFormatter.format(date);
+}
