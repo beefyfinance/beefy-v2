@@ -264,8 +264,10 @@
     "earnedTokenAddress": "0xd2D5A90a62f850ea9377F57d257fCae566D36f49",
     "oracle": "lps",
     "oracleId": "balancerv3-monad-aznd-ausd-loaznd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1772654139,
+    "retireReason": "tvl",
+    "retiredAt": 1780413682,
     "platformId": "balancer",
     "assets": ["AZND", "wnAUSD", "wnloAZND"],
     "risks": {
@@ -296,8 +298,10 @@
     "earnedTokenAddress": "0xc770B943a98dC10EfA91572E3468C514e1A9AbC7",
     "oracle": "lps",
     "oracleId": "balancerv3-monad-ausd-dust",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1772654139,
+    "retireReason": "tvl",
+    "retiredAt": 1780413682,
     "platformId": "balancer",
     "assets": ["DUST", "wnAUSD"],
     "risks": {
