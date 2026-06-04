@@ -23,7 +23,6 @@ import {
   pickLowestZapFee,
   tokenMatchesMatcher,
   vaultMatchesMatcher,
-  ZAP_FEE_BPS,
   type ZapFeeMatch,
 } from './fee-rules.ts';
 import { nativeAndWrappedAreSame } from './tokens.ts';
@@ -113,7 +112,7 @@ function computeZapFee(state: BeefyState, ctx: ZapFeeContext): ZapFeeMatch | und
   if (!config?.recipient) {
     return undefined;
   }
-  const baseBps = config.bps ?? ZAP_FEE_BPS;
+  const baseBps = config.bps;
   if (baseBps <= 0) {
     return undefined;
   }

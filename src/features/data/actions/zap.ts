@@ -8,6 +8,7 @@ import type {
   ZapConfig,
   ZapFeeRule,
 } from '../apis/config-types.ts';
+import { clampZapFeeBps } from '../apis/transact/helpers/fee-rules.ts';
 import { getBeefyApi, getConfigApi, getTransactApi } from '../apis/instances.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { VaultEntity } from '../entities/vault.ts';
@@ -30,7 +31,11 @@ export const fetchZapConfigsAction = createAppAsyncThunk<FetchAllZapsFulfilledPa
     const api = await getConfigApi();
     const zaps = await api.fetchZapConfigs();
 
-    return { zaps: zaps.filter(zap => zap.router !== ZERO_ADDRESS) };
+    return {
+      zaps: zaps
+        .filter(zap => zap.router !== ZERO_ADDRESS)
+        .map(zap => ({ ...zap, feeBps: clampZapFeeBps(zap.feeBps) })),
+    };
   }
 );
 

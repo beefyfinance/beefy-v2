@@ -286,7 +286,7 @@ export interface ZapConfig {
   manager: string;
   chainId: ChainEntity['id'];
   feeRecipient: string;
-  feeBps?: number;
+  feeBps: number;
 }
 
 export type ZapFeeEndpointMatcher = {

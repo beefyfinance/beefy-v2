@@ -2,7 +2,16 @@ import type { TokenEntity } from '../../../entities/token.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import type { ZapFeeEndpointMatcher, ZapFeeRule } from '../../config-types.ts';
 
-export const ZAP_FEE_BPS = 5;
+// Max allowed feeBps; a higher value in zaps.json is treated as a typo and clamped.
+export const ZAP_FEE_BPS_MAX = 5;
+
+export function clampZapFeeBps(bps: number): number {
+  if (bps <= ZAP_FEE_BPS_MAX) {
+    return bps;
+  }
+  console.warn(`zap feeBps ${bps} exceeds max ${ZAP_FEE_BPS_MAX}; clamping`);
+  return ZAP_FEE_BPS_MAX;
+}
 
 export type ZapFeeMatch = {
   effectiveBps: number;
@@ -155,14 +164,14 @@ export function pickLowestZapFee(
 
 export function matchFeaturedVaultCampaign(
   rules: ZapFeeRule[],
-  feeConfig: { recipient: string; bps?: number },
+  feeConfig: { recipient: string; bps: number },
   vault: VaultEntity,
   nowSeconds: number
 ): ZapFeeMatch | undefined {
   if (!feeConfig.recipient) {
     return undefined;
   }
-  const baseBps = feeConfig.bps ?? ZAP_FEE_BPS;
+  const baseBps = feeConfig.bps;
   if (baseBps <= 0) {
     return undefined;
   }

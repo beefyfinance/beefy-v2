@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import { orderBy } from 'lodash-es';
+import { isEqual, orderBy } from 'lodash-es';
 import { BIG_ONE, BIG_ZERO, compareBigNumber } from '../../../helpers/big-number.ts';
 import { extractTagFromLpSymbol } from '../../../helpers/tokens.ts';
 import type { PulseHighlightProps } from '../../vault/components/PulseHighlight/PulseHighlight.tsx';
@@ -458,30 +458,31 @@ export const selectTransactOptionsForSelectionId = createSelector(
   (optionIds, byOptionId) => optionIds.map(id => byOptionId[id])
 );
 
-// Selected quote's fee if present (exact); otherwise a pre-quote preview from option
-export const selectTransactSelectedZapFee = (
-  state: BeefyState
-): { option: TransactOption; fee: ZapFee } | undefined => {
-  const selectionId = state.ui.transact.selectedSelectionId;
-  if (!selectionId) {
-    return undefined;
-  }
+export const selectTransactSelectedZapFee = createSelector(
+  (state: BeefyState) => state,
+  (state): { option: TransactOption; fee: ZapFee } | undefined => {
+    const selectionId = state.ui.transact.selectedSelectionId;
+    if (!selectionId) {
+      return undefined;
+    }
 
-  const quote = selectTransactSelectedQuoteOrUndefined(state);
-  if (quote && isZapQuote(quote) && quote.option.selectionId === selectionId) {
-    return { option: quote.option, fee: quote.fee };
-  }
+    const quote = selectTransactSelectedQuoteOrUndefined(state);
+    if (quote && isZapQuote(quote) && quote.option.selectionId === selectionId) {
+      return { option: quote.option, fee: quote.fee };
+    }
 
-  const optionIds = state.ui.transact.options.bySelectionId[selectionId];
-  if (!optionIds) {
-    return undefined;
-  }
-  const option = optionIds.map(id => state.ui.transact.options.byOptionId[id]).find(isZapOption);
-  if (!option) {
-    return undefined;
-  }
-  return { option, fee: computeOptionZapFee(state, option) };
-};
+    const optionIds = state.ui.transact.options.bySelectionId[selectionId];
+    if (!optionIds) {
+      return undefined;
+    }
+    const option = optionIds.map(id => state.ui.transact.options.byOptionId[id]).find(isZapOption);
+    if (!option) {
+      return undefined;
+    }
+    return { option, fee: computeOptionZapFee(state, option) };
+  },
+  { memoizeOptions: { resultEqualityCheck: isEqual } }
+);
 
 export function selectTokenAmountsTotalValue(
   state: BeefyState,
