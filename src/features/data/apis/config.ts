@@ -117,4 +117,14 @@ export class ConfigAPI {
   public async fetchBridges(): Promise<BridgeConfig[]> {
     return (await import('../../../config/bridges.json')).default;
   }
+
+  public async fetchFeaturedVaults(): Promise<VaultConfig['id'][]> {
+    const featured = (await import('../../../config/featured-vaults.json')).default as Record<
+      string,
+      boolean
+    >;
+    return entries(featured)
+      .filter(([, enabled]) => enabled)
+      .map(([id]) => id);
+  }
 }

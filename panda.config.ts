@@ -77,7 +77,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -787,6 +787,10 @@ const config = buildConfig(
           to: {
             transform: 'rotate(360deg)',
           },
+        },
+        featuredVaultMarqueeLoop: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
         addressInputCaretBlink: {
           '0%, 50%': { backgroundSize: '2px 12px' },

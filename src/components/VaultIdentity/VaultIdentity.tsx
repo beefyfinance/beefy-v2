@@ -61,7 +61,7 @@ export const VaultNetwork = memo(function VaultNetwork({
         cssProp
       )}
     >
-      <img alt={chain.name} src={getNetworkSrc(chainId)} width={24} height={24} />
+      <img alt={chain.name} src={getNetworkSrc(chainId)} width={20} height={20} />
     </div>
   );
 });
