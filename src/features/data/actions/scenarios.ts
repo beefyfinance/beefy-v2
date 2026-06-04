@@ -28,6 +28,7 @@ import {
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
   fetchZapConfigsAction,
+  fetchZapFeeCampaignsAction,
   fetchZapSwapAggregatorsAction,
 } from './zap.ts';
 import { fetchWeeklyRevenueStats } from './revenue.ts';
@@ -93,6 +94,7 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
 
     // Zap (we need the data to know if zap is available for each vault)
     dispatch(fetchZapConfigsAction());
+    dispatch(fetchZapFeeCampaignsAction());
     dispatch(fetchZapSwapAggregatorsAction());
     dispatch(fetchZapAggregatorTokenSupportAction());
     dispatch(fetchZapAmmsAction());

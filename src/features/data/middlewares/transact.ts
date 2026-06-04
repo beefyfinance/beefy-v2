@@ -7,6 +7,7 @@ import {
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
   fetchZapConfigsAction,
+  fetchZapFeeCampaignsAction,
   fetchZapSwapAggregatorsAction,
 } from '../actions/zap.ts';
 import { getV2VRelevantChainsFor } from '../apis/transact/strategies/cross-chain/eligibility.ts';
@@ -104,6 +105,7 @@ export function addTransactListeners() {
       }
       if (selectShouldInitZapConfigs(getState())) {
         loaders.push(dispatch(fetchZapConfigsAction()));
+        loaders.push(dispatch(fetchZapFeeCampaignsAction()));
       }
       if (selectShouldInitZapSwapAggregators(getState())) {
         loaders.push(dispatch(fetchZapSwapAggregatorsAction()));

@@ -39,7 +39,7 @@ import {
   onlyOneInput,
   onlyOneToken,
 } from '../helpers/options.ts';
-import { calculatePriceImpact, highestFeeOrZero, ZERO_FEE } from '../helpers/quotes.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../helpers/quotes.ts';
 import {
   allTokensAreDistinct,
   includeWrappedAndNative,
@@ -64,7 +64,6 @@ import {
   type UniswapLikeDepositQuote,
   type UniswapLikeWithdrawOption,
   type UniswapLikeWithdrawQuote,
-  type ZapFee,
   type ZapQuoteStep,
   type ZapQuoteStepBuild,
   type ZapQuoteStepSplit,
@@ -396,7 +395,7 @@ export abstract class UniswapLikeStrategy<
     return {
       id: createQuoteId(option.id),
       strategyId: this.id,
-      priceImpact: calculatePriceImpact(inputs, outputs, returned, state), // includes the zap fee
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       option,
       inputs,
       outputs,
@@ -557,14 +556,14 @@ export abstract class UniswapLikeStrategy<
     return {
       id: createQuoteId(option.id),
       strategyId: this.id,
-      priceImpact: calculatePriceImpact(inputs, outputs, returned, state), // includes the zap fee
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       option,
       inputs,
       outputs,
       returned,
       allowances,
       steps,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
       lpQuotes: quotePerLpToken,
     };
   }
@@ -891,6 +890,7 @@ export abstract class UniswapLikeStrategy<
       strategyId: this.id,
       depositToken: this.vaultType.depositToken,
       lpTokens: this.lpTokens,
+      feeable: false,
     };
 
     return [breakOption].concat(
@@ -986,11 +986,10 @@ export abstract class UniswapLikeStrategy<
 
     let outputs: TokenAmount[];
     let returned: TokenAmount[];
-    let fee: ZapFee;
     let steps: ZapQuoteStep[];
 
     if (option.swapVia === 'pool') {
-      ({ outputs, returned, steps, fee } = await this.fetchWithdrawQuotePool(
+      ({ outputs, returned, steps } = await this.fetchWithdrawQuotePool(
         option,
         breakOutputs,
         breakReturned,
@@ -998,7 +997,7 @@ export abstract class UniswapLikeStrategy<
         pool
       ));
     } else if (option.swapVia === 'aggregator') {
-      ({ outputs, returned, steps, fee } = await this.fetchWithdrawQuoteAggregator(
+      ({ outputs, returned, steps } = await this.fetchWithdrawQuoteAggregator(
         option,
         breakOutputs,
         breakReturned,
@@ -1008,10 +1007,8 @@ export abstract class UniswapLikeStrategy<
       outputs = breakOutputs;
       steps = breakSteps;
       returned = breakReturned;
-      fee = ZERO_FEE;
     }
 
-    // return break only
     return {
       id: createQuoteId(option.id),
       strategyId: this.id,
@@ -1022,7 +1019,7 @@ export abstract class UniswapLikeStrategy<
       returned,
       allowances,
       steps,
-      fee,
+      fee: ZERO_FEE,
     };
   }
 
@@ -1108,7 +1105,7 @@ export abstract class UniswapLikeStrategy<
       outputs,
       returned: breakReturned,
       steps,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
     };
   }
 
@@ -1183,7 +1180,7 @@ export abstract class UniswapLikeStrategy<
       outputs,
       returned: breakReturned,
       steps,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
     };
   }
 

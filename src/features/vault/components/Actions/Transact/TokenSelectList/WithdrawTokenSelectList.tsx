@@ -22,6 +22,7 @@ import {
   SelectListSearch,
 } from '../common/CommonListStyles.tsx';
 import { selectListScrollable } from '../common/CommonListStylesRaw.ts';
+import { campaignTag } from '../common/campaignTag.ts';
 
 export type WithdrawTokenSelectListProps = {
   css?: CssStyles;
@@ -111,7 +112,7 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
                   balance={option.balance}
                   balanceValue={option.balanceValue}
                   decimals={option.decimals}
-                  tag={option.tag}
+                  tag={campaignTag(option.feeCampaign) ?? option.tag}
                   chainId={selectedChain}
                   onSelect={handleTokenSelect}
                 />

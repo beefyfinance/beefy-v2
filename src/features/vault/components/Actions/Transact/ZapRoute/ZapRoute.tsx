@@ -6,7 +6,9 @@ import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx'
 import { SpinLoader } from '../../../../../../components/SpinLoader/SpinLoader.tsx';
 import { ListJoin } from '../../../../../../components/ListJoin.tsx';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { ExplorerAddressLink } from '../../../../../../components/Tenderly/Links/ExplorerAddressLink.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { formatPercent } from '../../../../../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import {
@@ -17,6 +19,7 @@ import {
   type ZapQuoteStep,
   type ZapQuoteStepBuild,
   type ZapQuoteStepDeposit,
+  type ZapQuoteStepFee,
   type ZapQuoteStepSplit,
   type ZapQuoteStepStake,
   type ZapQuoteStepSwap,
@@ -57,6 +60,8 @@ function getStepChainId(step: ZapQuoteStep): ChainEntity['id'] | undefined {
       return step.fromToken.chainId;
     case 'bridge':
       return step.toChainId;
+    case 'fee':
+      return step.token.chainId;
     case 'build':
     case 'deposit':
     case 'stake':
@@ -392,6 +397,50 @@ const StepContentBridge = memo(function StepContentBridge({
   );
 });
 
+const StepFeeRate = memo(function StepFeeRate({
+  bps,
+  originalBps,
+}: {
+  bps: number;
+  originalBps: number | undefined;
+}) {
+  const discounted = originalBps !== undefined && originalBps !== bps;
+  return (
+    <>
+      {formatPercent(bps / 10000, 2)}
+      {discounted ?
+        <>
+          {' '}
+          <span className={css(styles.feeOriginal)}>{formatPercent(originalBps / 10000, 2)}</span>
+        </>
+      : null}
+    </>
+  );
+});
+
+const StepContentFee = memo(function StepContentFee({
+  step,
+  chainId,
+}: StepContentProps<ZapQuoteStepFee>) {
+  const { t } = useTranslation();
+
+  return (
+    <Trans
+      t={t}
+      i18nKey="Transact-Route-Step-Fee"
+      values={{
+        feeToken: step.token.symbol,
+      }}
+      components={{
+        feeAmount: <TokenAmountFromEntity amount={step.feeAmount} token={step.token} />,
+        rate: <StepFeeRate bps={step.bps} originalBps={step.originalBps} />,
+        recipient: <ExplorerAddressLink chainId={step.token.chainId} address={step.recipient} />,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
+      }}
+    />
+  );
+});
+
 type StepContentMap = {
   [K in ZapQuoteStep as K['type']]: ComponentType<StepContentProps<K>>;
 };
@@ -406,6 +455,7 @@ const StepContentComponents: StepContentMap = {
   stake: StepContentStake,
   unstake: StepContentUnstake,
   bridge: StepContentBridge,
+  fee: StepContentFee,
 };
 
 function useStepStatuses(
@@ -554,19 +604,20 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
   const recoveryQuoteMatchesOp = !recoveryOp || recoveryQuoteOpId === recoveryOp.id;
 
   const { effectiveSteps, bridgeStepAbsoluteIndex } = useMemo(() => {
-    const bridgeIdx = quote.steps.findIndex(s => s.type === 'bridge');
+    const displaySteps = quote.steps.filter(s => s.type !== 'fee');
+    const bridgeIdx = displaySteps.findIndex(s => s.type === 'bridge');
     const absoluteBridgeIdx =
-      pendingAllowances.length + (bridgeIdx >= 0 ? bridgeIdx : quote.steps.length);
+      pendingAllowances.length + (bridgeIdx >= 0 ? bridgeIdx : displaySteps.length);
 
     if (isRecovery && recoveryQuote && recoveryQuoteMatchesOp && bridgeIdx >= 0) {
-      const preBridgeSteps = quote.steps.slice(0, bridgeIdx + 1);
+      const preBridgeSteps = displaySteps.slice(0, bridgeIdx + 1);
       return {
-        effectiveSteps: [...preBridgeSteps, ...recoveryQuote.steps],
+        effectiveSteps: [...preBridgeSteps, ...recoveryQuote.steps.filter(s => s.type !== 'fee')],
         bridgeStepAbsoluteIndex: absoluteBridgeIdx,
       };
     }
 
-    return { effectiveSteps: quote.steps, bridgeStepAbsoluteIndex: absoluteBridgeIdx };
+    return { effectiveSteps: displaySteps, bridgeStepAbsoluteIndex: absoluteBridgeIdx };
   }, [quote.steps, isRecovery, recoveryQuote, recoveryQuoteMatchesOp, pendingAllowances.length]);
 
   const approvalCount = pendingAllowances.length;

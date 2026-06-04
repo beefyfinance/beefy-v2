@@ -37,21 +37,28 @@ export type AllowanceTokenAmount = {
   spenderAddress: string;
 };
 
-export type ZapFeeNormal = {
-  /** 0.0005 = 0.05% */
+export type ZapFeeCharge = {
+  token: TokenEntity;
+  recipient: string;
+  bps: number;
+  grossAmount: BigNumber;
+  feeAmount: BigNumber;
+  netAmount: BigNumber;
+};
+
+export type ZapFee = {
   value: number;
+  campaign?: {
+    original: number;
+    description?: string;
+    id?: string;
+  };
 };
-export type ZapFeeDiscounted = ZapFeeNormal & {
-  original: number;
-};
-export type ZapFee = ZapFeeNormal | ZapFeeDiscounted;
 
-export function isZapFeeDiscounted(zapFee: ZapFee): zapFee is ZapFeeDiscounted {
-  return 'original' in zapFee;
-}
-
-export function isZapFeeNonZero(zapFee: ZapFee): boolean {
-  return zapFee.value > 0;
+export function isZapFeeDiscounted(
+  zapFee: ZapFee
+): zapFee is ZapFee & { campaign: NonNullable<ZapFee['campaign']> } {
+  return zapFee.campaign !== undefined;
 }
 
 export type ZapExtraQuoteResponse = {
@@ -92,6 +99,13 @@ type BaseOption = {
   inputs: TokenEntity[];
   wantedOutputs: TokenEntity[];
   async?: boolean;
+  feeable?: boolean;
+  feeCampaign?: OptionFeeCampaign;
+};
+
+export type OptionFeeCampaign = {
+  effectiveBps: number;
+  baseBps: number;
 };
 
 type BaseDepositOption = BaseOption & {
@@ -535,6 +549,12 @@ export function isVaultToVaultSingleTokenWithdrawOption(
   );
 }
 
+export function isVaultToVaultSingleTokenOption(
+  option: TransactOption
+): option is VaultToVaultSingleTokenDepositOption | VaultToVaultSingleTokenWithdrawOption {
+  return option.strategyId === 'vault-to-vault-single-token';
+}
+
 export type VaultSourceDepositOption =
   | CrossChainVaultSrcDepositOption
   | VaultToVaultSingleTokenDepositOption;
@@ -651,6 +671,11 @@ export type ZapQuoteStepBridge = {
   timeEstimate: number;
 };
 
+export type ZapQuoteStepFee = ZapFeeCharge & {
+  type: 'fee';
+  originalBps?: number;
+};
+
 export type ZapQuoteStep =
   | ZapQuoteStepWithdraw
   | ZapQuoteStepSwap
@@ -660,7 +685,8 @@ export type ZapQuoteStep =
   | ZapQuoteStepUnused
   | ZapQuoteStepStake
   | ZapQuoteStepUnstake
-  | ZapQuoteStepBridge;
+  | ZapQuoteStepBridge
+  | ZapQuoteStepFee;
 
 export function isZapQuoteStepSwap(step: ZapQuoteStep): step is ZapQuoteStepSwap {
   return step.type === 'swap';
@@ -692,6 +718,10 @@ export function isZapQuoteStepUnstake(step: ZapQuoteStep): step is ZapQuoteStepU
 
 export function isZapQuoteStepBridge(step: ZapQuoteStep): step is ZapQuoteStepBridge {
   return step.type === 'bridge';
+}
+
+export function isZapQuoteStepFee(step: ZapQuoteStep): step is ZapQuoteStepFee {
+  return step.type === 'fee';
 }
 
 export function isZapQuoteStepSwapPool(step: ZapQuoteStepSwap): step is ZapQuoteStepSwapPool {
@@ -1070,6 +1100,10 @@ export type QuoteOutputTokenAmountChange = TokenAmount & {
 
 export function isZapQuote(quote: TransactQuote): quote is ZapQuote {
   return 'steps' in quote;
+}
+
+export function isZapOption(option: TransactOption): boolean {
+  return option.strategyId !== 'vault';
 }
 
 export function isCowcentratedVaultDepositQuote(

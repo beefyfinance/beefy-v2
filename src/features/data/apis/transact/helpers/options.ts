@@ -83,3 +83,7 @@ export function onlyOneToken(tokens: TokenEntity[]) {
   }
   return tokens[0];
 }
+
+export function isOptionFeeable(option: { feeable?: boolean }): boolean {
+  return option.feeable !== false;
+}

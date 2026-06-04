@@ -94,4 +94,8 @@ export const styles = {
     display: 'inline',
     whiteSpace: 'nowrap',
   }),
+  feeOriginal: css.raw({
+    color: 'text.dark',
+    textDecoration: 'line-through',
+  }),
 };
