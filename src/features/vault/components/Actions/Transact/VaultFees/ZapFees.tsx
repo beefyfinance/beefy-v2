@@ -146,7 +146,6 @@ const ZapFees = memo(function ZapFees({ option, fee }: ZapFeesProps) {
           </TooltipValue>
         </TooltipRow>
       </TooltipRows>
-      <TooltipFooter>{t('Transact-Fee-Zap-Footer')}</TooltipFooter>
     </TooltipTable>
   );
 
@@ -200,16 +199,5 @@ const TooltipLabel = styled('span', {
 const TooltipValue = styled('span', {
   base: {
     display: 'table-cell',
-  },
-});
-
-const TooltipFooter = styled('div', {
-  base: {
-    display: 'table-caption',
-    captionSide: 'bottom',
-    paddingTop: '12px',
-    marginTop: '8px',
-    borderTop: '1px solid rgba(0,0,0,0.1)',
-    whiteSpace: 'normal',
   },
 });
