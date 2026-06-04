@@ -51,9 +51,6 @@ export const selectValidZapFeeRules = createSelector([selectZapFeeRules], rules 
   })
 );
 
-// Featured = valid + opt-in flag + single-sided with a vault matcher (so the badge anchors to exactly one
-// vault). A mis-flagged multi-sided/token-only rule still applies at quote time but is excluded here, since
-// the vault list can't derive an honest single badge for it.
 export const selectFeaturedZapFeeRules = createSelector([selectValidZapFeeRules], rules =>
   rules.filter(rule => {
     if (!rule.featured) {

@@ -165,15 +165,6 @@ const ZapFees = memo(function ZapFees({ option, fee }: ZapFeesProps) {
           </>
         : display.current}
       </Value>
-      {/* TEMP debug: which campaign is applied */}
-      {hasDiscountFee ?
-        <>
-          <Label>Campaign (debug)</Label>
-          <Value>
-            {[fee.campaign.id, fee.campaign.description].filter(Boolean).join(' · ') || '—'}
-          </Value>
-        </>
-      : null}
     </>
   );
 });

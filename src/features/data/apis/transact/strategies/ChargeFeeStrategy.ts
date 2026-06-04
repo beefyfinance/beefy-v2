@@ -31,7 +31,6 @@ import type {
 } from './IStrategy.ts';
 import type { ZapStrategyId } from './strategy-configs.ts';
 
-// Decorator that adds the Beefy zap fee around a composable strategy; the inner stays fee-agnostic.
 export class ChargeFeeStrategy<
   TId extends ZapStrategyId = ZapStrategyId,
 > implements IComposableStrategy<TId> {
@@ -97,7 +96,6 @@ export class ChargeFeeStrategy<
       return innerQuote;
     }
 
-    // Public quote keeps gross inputs + the UI fee; the fee step (if any) is fee-first for execution.
     return {
       ...innerQuote,
       inputs,
@@ -121,7 +119,6 @@ export class ChargeFeeStrategy<
       return this.inner.fetchDepositUserlessZapBreakdown(quote);
     }
 
-    // Reconstruct the inner (net-input, fee-free) quote the inner originally produced.
     const innerQuote = {
       ...quote,
       inputs: quote.inputs.map(input =>
@@ -167,7 +164,6 @@ export class ChargeFeeStrategy<
     const state = this.helpers.getState();
     const innerQuote = await this.inner.fetchWithdrawQuote(inputs, option);
     const feeable = isOptionFeeable(option) && innerQuote.outputs.length === 1;
-    // Matching endpoints come from the option; the skim stays the runtime inner-quote output token / amount.
     const ctx = feeable ? optionFeeEndpoints(option) : undefined;
     const resolved =
       ctx ?
@@ -177,7 +173,6 @@ export class ChargeFeeStrategy<
       return innerQuote;
     }
 
-    // Fee-last: the public quote shows the net output; the inner (gross) is rebuilt at step time.
     const netOutputs = [
       {
         token: innerQuote.outputs[0].token,

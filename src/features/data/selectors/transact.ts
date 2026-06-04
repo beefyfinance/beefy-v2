@@ -458,7 +458,7 @@ export const selectTransactOptionsForSelectionId = createSelector(
   (optionIds, byOptionId) => optionIds.map(id => byOptionId[id])
 );
 
-// Selected quote's fee if present (exact); otherwise a pre-quote preview from a representative zap option.
+// Selected quote's fee if present (exact); otherwise a pre-quote preview from option
 export const selectTransactSelectedZapFee = (
   state: BeefyState
 ): { option: TransactOption; fee: ZapFee } | undefined => {

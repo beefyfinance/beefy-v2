@@ -604,19 +604,20 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
   const recoveryQuoteMatchesOp = !recoveryOp || recoveryQuoteOpId === recoveryOp.id;
 
   const { effectiveSteps, bridgeStepAbsoluteIndex } = useMemo(() => {
-    const bridgeIdx = quote.steps.findIndex(s => s.type === 'bridge');
+    const displaySteps = quote.steps.filter(s => s.type !== 'fee');
+    const bridgeIdx = displaySteps.findIndex(s => s.type === 'bridge');
     const absoluteBridgeIdx =
-      pendingAllowances.length + (bridgeIdx >= 0 ? bridgeIdx : quote.steps.length);
+      pendingAllowances.length + (bridgeIdx >= 0 ? bridgeIdx : displaySteps.length);
 
     if (isRecovery && recoveryQuote && recoveryQuoteMatchesOp && bridgeIdx >= 0) {
-      const preBridgeSteps = quote.steps.slice(0, bridgeIdx + 1);
+      const preBridgeSteps = displaySteps.slice(0, bridgeIdx + 1);
       return {
-        effectiveSteps: [...preBridgeSteps, ...recoveryQuote.steps],
+        effectiveSteps: [...preBridgeSteps, ...recoveryQuote.steps.filter(s => s.type !== 'fee')],
         bridgeStepAbsoluteIndex: absoluteBridgeIdx,
       };
     }
 
-    return { effectiveSteps: quote.steps, bridgeStepAbsoluteIndex: absoluteBridgeIdx };
+    return { effectiveSteps: displaySteps, bridgeStepAbsoluteIndex: absoluteBridgeIdx };
   }, [quote.steps, isRecovery, recoveryQuote, recoveryQuoteMatchesOp, pendingAllowances.length]);
 
   const approvalCount = pendingAllowances.length;

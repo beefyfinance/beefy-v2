@@ -44,13 +44,10 @@ export type ZapFeeEndpoint =
   | { kind: 'any' };
 
 export type ZapFeeContext = {
-  // User-facing endpoints of the zap (never the mid-route bridge/routing token); campaigns match on these.
-  // The charged chain is derived from the input endpoint (see chargedChainId).
   input: ZapFeeEndpoint;
   output: ZapFeeEndpoint;
 };
 
-// The chain the fee is charged on = the input endpoint's chain ({any} = unknown ⇒ no charge).
 function chargedChainId(state: BeefyState, input: ZapFeeEndpoint): ChainEntity['id'] | undefined {
   if (input.kind === 'token') {
     return input.token.chainId;
@@ -77,8 +74,6 @@ function endpointMatches(
   );
 }
 
-// Matches when the time window holds and every constrained side matches the concrete endpoint. An absent
-// side (input or output) is unconstrained and passes; chain scoping lives inside the endpoint matchers.
 function ruleAppliesToZap(
   state: BeefyState,
   ctx: ZapFeeContext,
@@ -128,10 +123,6 @@ function computeZapFee(state: BeefyState, ctx: ZapFeeContext): ZapFeeMatch | und
   );
 }
 
-// The fee-matching endpoints for any option — the single source used by both the display badge
-// (resolveOptionFeeCampaign) and the charge path (the strategies). Direction-agnostic: the vault side is the
-// page/handoff vault, the token side is the user's wallet token, and which is input vs output follows the
-// option's own (already direction-correct) fields. Returns undefined for shapes not fee-charged here.
 export function optionFeeEndpoints(option: TransactOption): ZapFeeContext | undefined {
   if (isVaultToVaultSingleTokenOption(option)) {
     return {
@@ -140,8 +131,6 @@ export function optionFeeEndpoints(option: TransactOption): ZapFeeContext | unde
     };
   }
   if (isCrossChainOption(option)) {
-    // Narrow on the *HandlerKind discriminants (the deposit/withdraw types are asymmetric in which *VaultId
-    // they carry) — same derivation CrossChainStrategy.quoteCrossChain uses.
     const input: ZapFeeEndpoint =
       option.srcHandlerKind === 'vault' ?
         { kind: 'vault', vaultId: option.srcVaultId }
@@ -171,9 +160,6 @@ export function optionFeeEndpoints(option: TransactOption): ZapFeeContext | unde
   };
 }
 
-// Display-only campaign for an option (deposit or withdraw). Resolved once at option-build time; returns
-// undefined unless a campaign actually reduces the fee. The charged fee is recomputed at quote time via
-// resolveZapFee over the same optionFeeEndpoints, so this never drives execution.
 export function resolveOptionFeeCampaign(
   state: BeefyState,
   option: TransactOption
@@ -189,7 +175,6 @@ export function resolveOptionFeeCampaign(
   return { effectiveBps: fee.effectiveBps, baseBps: fee.baseBps };
 }
 
-// The UI fee object (quote.fee shape): the effective % plus, when a campaign reduced it, the original.
 function buildZapFeeDisplay(fee: ZapFeeMatch): ZapFee {
   const reduced = fee.effectiveBps < fee.baseBps;
   return {
@@ -206,7 +191,6 @@ function buildZapFeeDisplay(fee: ZapFeeMatch): ZapFee {
   };
 }
 
-// Amount-independent zap fee % for an option; {value: 0} when nothing is charged (so the row shows "0%").
 export function computeOptionZapFee(state: BeefyState, option: TransactOption): ZapFee {
   const endpoints = optionFeeEndpoints(option);
   if (!endpoints || !isOptionFeeable(option)) {
@@ -216,8 +200,6 @@ export function computeOptionZapFee(state: BeefyState, option: TransactOption): 
   return fee ? buildZapFeeDisplay(fee) : { value: 0 };
 }
 
-// One computation → two outputs: `display` is the UI fee on quote.fee; `step` is the execution fee in
-// quote.steps. A full waive yields display only (value 0 + original), so the row shows it with no step.
 export function resolveZapFee(
   state: BeefyState,
   ctx: ZapFeeContext,
@@ -293,7 +275,6 @@ export function feeZapStepsFromQuoteStep(
   return { zaps, feeAmount };
 }
 
-// Push the slip-aware fee transfer and lower the fee-token order output to slipBy(gross) − execFee.
 export function applyWithdrawFeeToOrder(
   order: UserlessZapOrder,
   steps: ZapStep[],
@@ -317,7 +298,6 @@ export function applyWithdrawFeeToOrder(
   if (!entry) {
     throw new Error('applyWithdrawFeeToOrder: fee-basis output not found in order');
   }
-  // Lower only: the inner floored at slipBy(gross); the fixed fee transfer needs slipBy(gross) − execFee.
   if (new BigNumber(entry.minOutputAmount).gt(floorWei)) {
     entry.minOutputAmount = floorWei;
   }

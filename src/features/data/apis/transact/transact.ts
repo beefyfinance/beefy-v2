@@ -63,8 +63,6 @@ import {
 import { type VaultTypeFromVault } from './vaults/IVaultType.ts';
 import { getVaultTypeBuilder } from './vaults/vaults.ts';
 
-// Wraps the outermost composable strategy with the fee decorator (leaves stay fee-agnostic).
-// chargesZapFee is false for inner builds; basic strategies handle their own fees.
 function maybeWrapFee(
   strategy: IStrategy,
   helpers: ZapTransactHelpers,
@@ -213,7 +211,6 @@ export class TransactApi implements ITransactApi {
       }
     }
 
-    // Add fee campaign data to options (for display during selection)
     const state = getState();
     for (const option of options) {
       if (isOptionFeeable(option)) {
@@ -361,7 +358,6 @@ export class TransactApi implements ITransactApi {
       // }
     }
 
-    // Add fee campaign info to feeable options
     const state = getState();
     for (const option of options) {
       if (isOptionFeeable(option)) {
