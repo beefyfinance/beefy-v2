@@ -39,7 +39,7 @@ export const ExtendedFiltersButtonDropdown = memo(function ExtendedFiltersButton
     [setIsOpen, dispatch]
   );
 
-  const { context, refs, floatingStyles } = useFloating<HTMLButtonElement>({
+  const { context, refs, floatingStyles, placement } = useFloating<HTMLButtonElement>({
     placement: 'bottom-end',
     whileElementsMounted(referenceEl, floatingEl, update) {
       return autoUpdate(referenceEl, floatingEl, update, {
@@ -79,6 +79,7 @@ export const ExtendedFiltersButtonDropdown = memo(function ExtendedFiltersButton
           <FiltersDropdownOuter
             ref={refs.setFloating}
             style={floatingStyles}
+            side={placement.startsWith('top') ? 'top' : 'bottom'}
             {...getFloatingProps()}
           >
             <FiltersDropdownInner>
@@ -120,6 +121,22 @@ const FiltersDropdownOuter = styled(DropdownOuter, {
   base: {
     // should match height of highest possible content
     height: '390px',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  variants: {
+    // keep the visible content hugging the button so it doesn't detach when flipped above
+    side: {
+      top: {
+        justifyContent: 'flex-end',
+      },
+      bottom: {
+        justifyContent: 'flex-start',
+      },
+    },
+  },
+  defaultVariants: {
+    side: 'bottom',
   },
 });
 
