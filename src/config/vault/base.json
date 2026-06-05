@@ -1,5 +1,124 @@
 [
   {
+    "id": "pancake-cow-base-sol-jitosol-vault",
+    "name": "SOL-JitoSOL",
+    "type": "standard",
+    "token": "SOL-JitoSOL",
+    "tokenAddress": "0x1A96B8c81C75DB99BBD32500Db391B0F571ED7A2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x5b350Ab55E8ACb156Ce802915BE35d8f8981546F",
+    "earnedToken": "mooCowPancakeBaseSOL-JitoSOL",
+    "earnedTokenAddress": "0x5b350Ab55E8ACb156Ce802915BE35d8f8981546F",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-sol-jitosol",
+    "status": "active",
+    "createdAt": 1780685006,
+    "platformId": "pancakeswap",
+    "assets": ["SOL", "JitoSOL"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-base-sol-jitosol-rp",
+    "name": "SOL-JitoSOL Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBaseSOL-JitoSOL",
+    "tokenAddress": "0x1A96B8c81C75DB99BBD32500Db391B0F571ED7A2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x13A7B585D635da1ec3Fcf5038ed5FF37d038359d",
+    "earnedToken": "rCowPancakeBaseSOL-JitoSOL",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-sol-jitosol",
+    "status": "active",
+    "createdAt": 1780685005,
+    "platformId": "pancakeswap",
+    "assets": ["SOL", "JitoSOL"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-base-sol-jitosol",
+    "name": "SOL-JitoSOL",
+    "type": "cowcentrated",
+    "token": "SOL-JitoSOL pancakeswap",
+    "tokenAddress": "0x155613e7A75a2aB73500f9B2c45910469500FF56",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x311935Cd80B76769bF2ecC9D8Ab7635b2139cf82",
+      "0x97bE14Dd8f994A5364573BC035D85309E7CB34de"
+    ],
+    "earnContractAddress": "0x1A96B8c81C75DB99BBD32500Db391B0F571ED7A2",
+    "earnedToken": "cowPancakeBaseSOL-JitoSOL",
+    "earnedTokenAddress": "0x1A96B8c81C75DB99BBD32500Db391B0F571ED7A2",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-base-sol-jitosol",
+    "status": "active",
+    "createdAt": 1780685005,
+    "platformId": "beefy",
+    "feeTier": "0.01",
+    "tickSpacing": 1,
+    "assets": ["SOL", "JitoSOL"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-base-sol-cbbtc-v2-vault",
     "name": "SOL-cbBTC",
     "type": "standard",
