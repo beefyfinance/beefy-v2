@@ -12046,8 +12046,10 @@
     "earnedTokenAddress": "0x6A92f0220DeAb514f6bcFa4a0CDB9d3e4FDE1C3E",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-usdc-aaa",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1768476681,
+    "retireReason": "rewards",
+    "retiredAt": 1780663277,
     "platformId": "aerodrome",
     "assets": ["USDC", "AAA"],
     "risks": {
@@ -12086,8 +12088,10 @@
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-usdc-aaa",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1768476681,
+    "retireReason": "rewards",
+    "retiredAt": 1780663277,
     "platformId": "aerodrome",
     "assets": ["USDC", "AAA"],
     "risks": {
