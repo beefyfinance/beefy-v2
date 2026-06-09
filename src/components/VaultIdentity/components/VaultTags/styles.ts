@@ -25,6 +25,11 @@ export const styles = {
     alignItems: 'center',
     justifyContent: 'center',
   }),
+  vaultTagIconImage: css.raw({
+    width: '12px',
+    height: '12px',
+    display: 'block',
+  }),
   vaultTagText: css.raw({
     flexShrink: '1',
     overflow: 'hidden',
@@ -66,11 +71,6 @@ export const styles = {
       fontWeight: 'semiBold',
     },
   }),
-  vaultTagClmIcon: css.raw({
-    width: '12',
-    height: '12',
-    display: 'block',
-  }),
   vaultTagClmTextAutoHide: css.raw({
     mdDown: {
       display: 'none',
@@ -84,6 +84,13 @@ export const styles = {
   }),
   vaultTagPool: css.raw({
     backgroundColor: 'tags.pool.background',
+  }),
+  vaultTagFreeZap: css.raw({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    backgroundColor: 'tags.freeZap.background',
+    color: 'tags.freeZap.text',
   }),
   divider: css.raw({
     height: '8px',

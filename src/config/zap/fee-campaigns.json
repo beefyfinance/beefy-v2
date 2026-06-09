@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "pcs-base-free-zap",
+    "description": "No zap fee on deposits into PCS Base campaign.",
+    "featured": true,
+    "bps": 0,
+    "output": {
+      "vault": { "ids": ["pancake-cow-base-sol-usdc-vault", "pancake-cow-base-sol-cbbtc-v2-vault", "pancake-cow-base-sol-jitosol-vault"] }
+    }
+  }
+]

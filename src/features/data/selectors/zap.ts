@@ -77,7 +77,7 @@ export type ZapVaultCampaign = {
   id?: string;
 };
 
-export const selectVaultZapCampaign = createCachedSelector(
+export const selectZapCampaignByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id']) => selectFeaturedZapFeeRules(state),
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultByIdOrUndefined(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id']) => {

@@ -1,6 +1,6 @@
 {
-  "velo-cow-op-wsteth-usdc-v2-vault": true,
-  "uniswap-cow-base-aero-weth-rp": true,
-  "pendle-reusde-25jun26": true,
-  "uniswap-cow-weth-degen-rp": true
+  "aerodrome-cow-base-tea-usdc-vault": true,
+  "pancake-cow-base-sol-usdc-vault": true,
+  "pancake-cow-base-sol-cbbtc-v2-vault": true,
+  "pancake-cow-base-sol-jitosol-vault": true
 }

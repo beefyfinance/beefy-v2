@@ -89,6 +89,7 @@ const nonHarvestOnDepositPools = [
   'shadow-cow-sonic-wbtc-weth-vault',
   'shadow-cow-sonic-ws-bes-vault',
   'pancake-cow-base-sol-cbbtc-vault',
+  'pancake-cow-base-sol-jitosol-vault',
 ];
 const isCowAerodromeWith10sec = (pool: VaultConfigWithStrategyData) =>
   ['velodrome', 'aerodrome'].includes(pool.platformId) &&

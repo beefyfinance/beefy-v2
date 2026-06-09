@@ -32,7 +32,6 @@ import {
 import { selectListScrollable, buildLpLink } from '../common/CommonListStylesRaw.ts';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { DustList } from './components/DustList/DustList.tsx';
-import { campaignTag } from '../common/campaignTag.ts';
 
 // 1 USD
 const DUST_THRESHOLD = new BigNumber('1');
@@ -147,7 +146,7 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
                 balance={isWalletKnown ? option.balance : undefined}
                 balanceValue={isWalletKnown ? option.balanceValue : undefined}
                 decimals={option.decimals}
-                tag={campaignTag(option.feeCampaign) ?? option.tag}
+                tag={option.tag}
                 chainId={selectedChain}
                 onSelect={handleTokenSelect}
               />
@@ -165,7 +164,7 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
                   balance={option.balance}
                   balanceValue={option.balanceValue}
                   decimals={option.decimals}
-                  tag={campaignTag(option.feeCampaign) ?? option.tag}
+                  tag={option.tag}
                   chainId={selectedChain}
                   onSelect={handleTokenSelect}
                 />
