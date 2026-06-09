@@ -1,7 +1,7 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
-import { memo, useEffect, useMemo } from 'react';
+import { memo, useEffect, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
@@ -9,6 +9,7 @@ import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
   transactClearQuotes,
+  transactFetchQuotes,
   transactFetchQuotesIfNeeded,
 } from '../../../../../data/actions/transact.ts';
 import {
@@ -40,6 +41,7 @@ import {
   selectTransactSelectedChainId,
   selectTransactSelectedQuote,
   selectTransactSelectedSelectionId,
+  selectTransactSlippage,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -69,6 +71,7 @@ export const TransactQuote = memo(function TransactQuote({
   const chainId = useAppSelector(selectTransactSelectedChainId);
   const status = useAppSelector(selectTransactQuoteStatus);
   const preflightOk = useAppSelector(selectTransactCrossChainPreflight);
+  const slippage = useAppSelector(selectTransactSlippage);
   const debouncedFetchQuotes = useMemo(
     () =>
       debounce(
@@ -103,6 +106,20 @@ export const TransactQuote = memo(function TransactQuote({
     preflightOk,
     debouncedFetchQuotes,
   ]);
+
+  // slippage isn't part of the if-needed change check, so force a re-quote when it changes
+  const skipInitialSlippageRequote = useRef(true);
+  useEffect(() => {
+    if (skipInitialSlippageRequote.current) {
+      skipInitialSlippageRequote.current = false;
+      return;
+    }
+    const inputIsZero = inputAmounts.every(amount => amount.lte(BIG_ZERO));
+    if (!inputIsZero && preflightOk) {
+      dispatch(transactFetchQuotes());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally keyed on slippage only
+  }, [slippage]);
 
   if (status === TransactStatus.Idle) {
     return <QuoteIdle title={title} css={cssProp} />;

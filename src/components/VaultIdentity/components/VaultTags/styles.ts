@@ -92,6 +92,18 @@ export const styles = {
     backgroundColor: 'tags.freeZap.background',
     color: 'tags.freeZap.text',
   }),
+  vaultTagMigrate: css.raw({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    backgroundColor: 'tags.migrate.background',
+    color: 'tags.migrate.text',
+  }),
+  vaultTagMigrateIcon: css.raw({
+    width: '12px',
+    height: '12px',
+    display: 'block',
+  }),
   divider: css.raw({
     height: '8px',
     width: '1px',

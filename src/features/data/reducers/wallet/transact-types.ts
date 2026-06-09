@@ -27,6 +27,7 @@ export enum TransactMode {
   Withdraw,
   Claim,
   Boost,
+  Migrate,
 }
 
 export enum DepositSource {

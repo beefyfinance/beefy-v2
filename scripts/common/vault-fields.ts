@@ -33,6 +33,7 @@ const compareVaultKeys = makeKeyComparer([
   'curatorId',
   'assets',
   'migrationIds',
+  'replacementVaultId',
   'risks',
   'strategyTypeId',
   'isGovVault',

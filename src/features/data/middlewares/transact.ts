@@ -1,6 +1,10 @@
 import type { UnknownAction } from 'redux';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
-import { transactInit, transactInitReady, transactSwitchMode } from '../actions/transact.ts';
+import {
+  transactInit,
+  transactInitReady,
+  transactSwitchMode,
+} from '../actions/transact.ts';
 import { fetchUserOffChainRewardsForVaultAction } from '../actions/user-rewards/user-rewards.ts';
 import {
   calculateZapAvailabilityAction,
@@ -22,6 +26,7 @@ import { selectIsPricesAvailable } from '../selectors/data-loader/prices.ts';
 import {
   selectTransactMode,
   selectTransactPendingVaultIdOrUndefined,
+  selectTransactShouldShowMigrate,
   selectTransactStep,
   selectTransactVaultIdOrUndefined,
 } from '../selectors/transact.ts';
@@ -147,7 +152,11 @@ export function addTransactListeners() {
         return;
       }
 
-      dispatch(transactInitReady({ vaultId: action.payload.vaultId }));
+      const initialMode =
+        selectTransactShouldShowMigrate(getState(), action.payload.vaultId) ?
+          TransactMode.Migrate
+        : TransactMode.Deposit;
+      dispatch(transactInitReady({ vaultId: action.payload.vaultId, mode: initialMode }));
     },
   });
 

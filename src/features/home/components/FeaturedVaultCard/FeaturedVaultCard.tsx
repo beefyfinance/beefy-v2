@@ -1,4 +1,4 @@
-import { css } from '@repo/styles/css';
+import { css, type CssStyles } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import { memo } from 'react';
 import { Link } from 'react-router';
@@ -17,10 +17,14 @@ import { useAppSelector } from '../../../data/store/hooks.ts';
 
 export type FeaturedVaultCardProps = {
   vaultId: VaultEntity['id'];
+  showChainBadge?: boolean;
+  css?: CssStyles;
 };
 
 export const FeaturedVaultCard = memo(function FeaturedVaultCard({
   vaultId,
+  showChainBadge = true,
+  css: cssProp,
 }: FeaturedVaultCardProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
@@ -29,15 +33,18 @@ export const FeaturedVaultCard = memo(function FeaturedVaultCard({
   const imageSize = vault.assetIds.length === 1 ? 32 : 40;
 
   return (
-    <Card to={`/vault/${vaultId}`}>
-      <ChainBadge
-        className={css(
-          { colorPalette: `network.${vault.chainId}` },
-          isGradient && chainBadgeGradient
-        )}
-      >
-        <ChainIcon chainId={vault.chainId} size={20} />
-      </ChainBadge>
+    <Card to={`/vault/${vaultId}`} css={cssProp}>
+      {showChainBadge && (
+        <ChainBadge
+          className={css(
+            { colorPalette: `network.${vault.chainId}` },
+            isGradient && chainBadgeGradient
+          )}
+        >
+          <ChainIcon chainId={vault.chainId} size={20} />
+        </ChainBadge>
+      )}
+
       <Identity>
         <HeadTop>
           <Marquee className={nameContentClass}>{punctuationWrap(vault.names.list)}</Marquee>

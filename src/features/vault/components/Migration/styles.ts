@@ -5,6 +5,7 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     borderRadius: '12px',
+    overflow: 'hidden',
     backgroundColor: 'background.content',
   }),
   header: css.raw({

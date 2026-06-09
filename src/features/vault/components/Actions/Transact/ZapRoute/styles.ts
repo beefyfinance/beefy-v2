@@ -94,6 +94,29 @@ export const styles = {
     display: 'inline',
     whiteSpace: 'nowrap',
   }),
+  expandIcon: css.raw({
+    fill: 'text.middle',
+    height: '20px',
+    width: '20px',
+    flexShrink: 0,
+  }),
+  routeHolderDisabled: css.raw({
+    opacity: '0.5',
+    pointerEvents: 'none',
+  }),
+  routeHeaderDisabled: css.raw({
+    cursor: 'default',
+  }),
+  placeholderTitle: css.raw({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    textStyle: 'body',
+    color: 'text.dark',
+  }),
+  placeholderIcon: css.raw({
+    display: 'block',
+  }),
   feeOriginal: css.raw({
     color: 'text.dark',
     textDecoration: 'line-through',

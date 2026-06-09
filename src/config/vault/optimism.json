@@ -4474,6 +4474,7 @@
     "feeTier": "0.05",
     "tickSpacing": 200,
     "assets": ["OP", "WETH"],
+    "replacementVaultId": "velo-cow-op-op-weth-v2",
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -4562,6 +4563,7 @@
     "feeTier": "0.05",
     "tickSpacing": 100,
     "assets": ["wstETH", "USDC"],
+    "replacementVaultId": "velo-cow-op-wsteth-usdc-v2",
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,

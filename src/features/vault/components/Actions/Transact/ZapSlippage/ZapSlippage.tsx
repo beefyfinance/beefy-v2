@@ -18,7 +18,7 @@ import ErrorOutline from '../../../../../../images/icons/mui/ErrorOutline.svg?re
 import ExpandLess from '../../../../../../images/icons/mui/ExpandLess.svg?react';
 import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
 import ReportProblemOutlined from '../../../../../../images/icons/mui/ReportProblemOutlined.svg?react';
-import { transactFetchQuotes, transactSetSlippage } from '../../../../../data/actions/transact.ts';
+import { transactSetSlippage } from '../../../../../data/actions/transact.ts';
 import { selectTransactSlippage } from '../../../../../data/selectors/transact.ts';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
 import { styles } from './styles.ts';
@@ -222,7 +222,6 @@ export const ZapSlippage = memo(function ZapSlippage({ css: cssProp }: ZapSlippa
   const handleChange = useCallback<CustomSlippageInputProps['onChange']>(
     value => {
       dispatch(transactSetSlippage({ slippage: value ? value / 100 : DEFAULT_SLIPPAGE }));
-      dispatch(transactFetchQuotes());
     },
     [dispatch]
   );

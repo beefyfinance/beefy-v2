@@ -1,6 +1,7 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import type { ComponentType, ReactNode } from 'react';
 import { Fragment, memo, useCallback, useMemo, useRef } from 'react';
+import { useCollapse } from '../../../../../../components/Collapsable/hooks.ts';
 import { Trans, useTranslation } from 'react-i18next';
 import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx';
 import { SpinLoader } from '../../../../../../components/SpinLoader/SpinLoader.tsx';
@@ -48,6 +49,9 @@ import {
 } from '../../../../../data/selectors/transact.ts';
 import { selectZapSwapProviderName } from '../../../../../data/selectors/zap.ts';
 import { QuoteTitle } from '../QuoteTitle/QuoteTitle.tsx';
+import { QuoteTitleRefresh } from '../QuoteTitleRefresh/QuoteTitleRefresh.tsx';
+import { ProviderIcon } from '../ProviderIcon/ProviderIcon.tsx';
+import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
 import { styles } from './styles.ts';
 import CheckmarkIcon from '../../../../../../images/icons/checkmark.svg?react';
 import PlayIcon from '../../../../../../images/icons/play.svg?react';
@@ -575,12 +579,20 @@ const Step = memo(function Step({ step, number, status }: StepProps) {
 export type ZapRouteProps = {
   quote: ZapQuote;
   css?: CssStyles;
+  expandable?: boolean;
+  enableRefresh?: boolean;
 };
-export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRouteProps) {
+export const ZapRoute = memo(function ZapRoute({
+  quote,
+  css: cssProp,
+  expandable = false,
+  enableRefresh = false,
+}: ZapRouteProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const quotes = useAppSelector(selectTransactQuoteIds);
   const hasMultipleOptions = quotes.length > 1;
+  const { open, handleToggle, Icon } = useCollapse(false);
   const stepperContent = useAppSelector(selectStepperStepContent);
   const recoveryQuote = useAppSelector(selectCrossChainRecoveryQuote);
   const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
@@ -639,36 +651,74 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
     return null;
   }
 
+  const headerClickable = expandable || hasMultipleOptions;
+  const onHeaderClick =
+    expandable ? handleToggle
+    : hasMultipleOptions ? handleSwitch
+    : undefined;
+  const showContent = !expandable || open;
+
+  return (
+    <div className={css(cssProp)}>
+      {enableRefresh ?
+        <QuoteTitleRefresh title={t('Transact-ZapRoute')} enableRefresh={true} />
+      : <div className={css(styles.title)}>{t('Transact-ZapRoute')}</div>}
+      <div className={css(styles.routeHolder)}>
+        <div
+          className={css(styles.routeHeader, headerClickable && styles.routerHeaderClickable)}
+          onClick={onHeaderClick}
+        >
+          <QuoteTitle quote={quote} />
+          {expandable ?
+            <Icon className={css(styles.expandIcon)} />
+          : hasMultipleOptions ?
+            '>'
+          : undefined}
+        </div>
+        {showContent ?
+          <div className={css(styles.routeContent)}>
+            <div className={css(styles.steps)}>
+              {pendingAllowances.map((allowance, i) => (
+                <ApprovalStep
+                  allowance={allowance}
+                  key={`approval-${allowance.token.address}`}
+                  number={i + 1}
+                  status={stepStatuses[i]}
+                />
+              ))}
+              {effectiveSteps.map((step, i) => (
+                <Step
+                  step={step}
+                  key={i}
+                  number={approvalCount + i + 1}
+                  status={stepStatuses[approvalCount + i]}
+                />
+              ))}
+            </div>
+          </div>
+        : null}
+      </div>
+    </div>
+  );
+});
+
+export type ZapRoutePlaceholderProps = {
+  css?: CssStyles;
+};
+export const ZapRoutePlaceholder = memo(function ZapRoutePlaceholder({
+  css: cssProp,
+}: ZapRoutePlaceholderProps) {
+  const { t } = useTranslation();
   return (
     <div className={css(cssProp)}>
       <div className={css(styles.title)}>{t('Transact-ZapRoute')}</div>
-      <div className={css(styles.routeHolder)}>
-        <div
-          className={css(styles.routeHeader, hasMultipleOptions && styles.routerHeaderClickable)}
-          onClick={hasMultipleOptions ? handleSwitch : undefined}
-        >
-          <QuoteTitle quote={quote} />
-          {hasMultipleOptions ? '>' : undefined}
-        </div>
-        <div className={css(styles.routeContent)}>
-          <div className={css(styles.steps)}>
-            {pendingAllowances.map((allowance, i) => (
-              <ApprovalStep
-                allowance={allowance}
-                key={`approval-${allowance.token.address}`}
-                number={i + 1}
-                status={stepStatuses[i]}
-              />
-            ))}
-            {effectiveSteps.map((step, i) => (
-              <Step
-                step={step}
-                key={i}
-                number={approvalCount + i + 1}
-                status={stepStatuses[approvalCount + i]}
-              />
-            ))}
+      <div className={css(styles.routeHolder, styles.routeHolderDisabled)}>
+        <div className={css(styles.routeHeader, styles.routeHeaderDisabled)}>
+          <div className={css(styles.placeholderTitle)}>
+            <ProviderIcon provider="default" width={24} css={styles.placeholderIcon} />
+            {t('Transact-Quote-Title')}
           </div>
+          <ExpandMore className={css(styles.expandIcon)} />
         </div>
       </div>
     </div>

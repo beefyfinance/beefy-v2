@@ -74,6 +74,7 @@ export interface VaultConfig {
   showWarning?: boolean | null;
   warning?: string | null;
   migrationIds?: string[];
+  replacementVaultId?: string;
   /** Map of chain->address of bridged receipt tokens */
   bridged?: Record<ChainEntity['id'], string>;
   /* Oracle can be ChainLink | Pyth, then the oracle address*/

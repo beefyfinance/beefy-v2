@@ -126,6 +126,7 @@ const transactSlice = createSlice({
         sliceState.inputAmounts = [BIG_ZERO];
         sliceState.inputMaxes = [false];
         sliceState.depositSource = DepositSource.Wallet;
+        resetQuotes(sliceState);
       })
       .addCase(transactSwitchStep, (sliceState, action) => {
         sliceState.step = action.payload;
@@ -237,7 +238,8 @@ const transactSlice = createSlice({
           sliceState.vaultId = action.payload.vaultId;
           sliceState.pendingVaultId = undefined;
           sliceState.step = TransactStep.Form;
-          sliceState.mode = TransactMode.Deposit;
+          // default tab is computed once data has loaded (Migrate when migratable, else Deposit)
+          sliceState.mode = action.payload.mode;
         }
       })
       .addCase(transactFetchOptions.pending, (sliceState, action) => {
