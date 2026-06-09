@@ -48,6 +48,7 @@ import {
   getRoutingTokensForChain,
   hasRoutingTokensForChain,
 } from '../../../../config/vault-to-vault/routing-tokens.ts';
+import { isVaultBlacklistedForV2V } from '../../../../config/vault-to-vault/blacklist.ts';
 import { resolveOptionFeeCampaign } from './helpers/fee.ts';
 import { isOptionFeeable } from './helpers/options.ts';
 import {
@@ -180,6 +181,7 @@ export class TransactApi implements ITransactApi {
 
       // Cross-chain deposit options
       if (
+        !isVaultBlacklistedForV2V(helpers.vault.id) &&
         isZapTransactHelpers(helpers) &&
         cctp.isChainSupported(helpers.vault.chainId) &&
         this.anyComposableStrategyAcceptsUsdcDeposit(helpers, zapStrategies, zapOptions)
@@ -195,6 +197,7 @@ export class TransactApi implements ITransactApi {
 
       // Same-chain v2v deposit options
       if (
+        !isVaultBlacklistedForV2V(helpers.vault.id) &&
         isZapTransactHelpers(helpers) &&
         hasRoutingTokensForChain(helpers.vault.chainId) &&
         this.anyComposableStrategyAcceptsAnyRoutingDeposit(helpers, zapStrategies, zapOptions)
@@ -327,6 +330,7 @@ export class TransactApi implements ITransactApi {
 
       // Cross-chain withdraw options
       if (
+        !isVaultBlacklistedForV2V(helpers.vault.id) &&
         isZapTransactHelpers(helpers) &&
         cctp.isChainSupported(helpers.vault.chainId) &&
         this.anyComposableStrategyAcceptsUsdcWithdraw(helpers, zapStrategies, zapOptions)
@@ -342,6 +346,7 @@ export class TransactApi implements ITransactApi {
 
       // Same-chain v2v withdraw options — disabled for the time being
       // if (
+      //   !isVaultBlacklistedForV2V(helpers.vault.id) &&
       //   isZapTransactHelpers(helpers) &&
       //   hasRoutingTokensForChain(helpers.vault.chainId) &&
       //   this.anyComposableStrategyAcceptsAnyRoutingWithdraw(helpers, zapStrategies, zapOptions)
