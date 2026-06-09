@@ -1,15 +1,6 @@
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 
-/**
- * Vaults excluded from vault-to-vault (v2v) zaps on both the source and destination
- * side, for same-chain and cross-chain flows.
- *
- * These are end-of-life / exploited vaults sourced from `eol_vaults_exploited.csv`.
- * Even where funds can still be withdrawn, we never surface them as a v2v option so
- * users are not routed into (or made to migrate through) a compromised vault.
- *
- * Keyed by vault `id` (case-sensitive — must match the `id` in `src/config/vault/*.json`).
- */
+// Hand-curated EOL vaults to hide from v2v options
 export const V2V_VAULT_BLACKLIST: ReadonlySet<VaultEntity['id']> = new Set([
   // arbitrum
   'aura-arb-gho-usdc-usdt',
