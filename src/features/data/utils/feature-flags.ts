@@ -209,6 +209,11 @@ export function featureFlag_logging() {
   return params.has('__logging');
 }
 
+export function featureFlag_walletDebug() {
+  const params = getSearchParams();
+  return params.has('__wallet_debug');
+}
+
 export function featureFlag_replayReduxActions() {
   const isAuthorizedDomain =
     window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
