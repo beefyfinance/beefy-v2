@@ -16,11 +16,7 @@ import {
   createSelectionId,
   onlyOneInput,
 } from '../../helpers/options.ts';
-import {
-  calculatePriceImpact,
-  convertVaultShareToDepositTokenAmount,
-  ZERO_FEE,
-} from '../../helpers/quotes.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { NO_RELAY } from '../../helpers/zap.ts';
 import { buildDustOutputs, mergeOutputs } from '../../handlers/dust.ts';
 import { VaultSourceHandler } from '../../handlers/vault/VaultSourceHandler.ts';
@@ -129,7 +125,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
     const routingTokens = getRoutingTokensForChain(vault.chainId, state);
     if (!routingTokens.length) return [];
 
-    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const destShareToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
     const results: VaultToVaultSingleTokenDepositOption[] = [];
 
     for (const routingToken of routingTokens) {
@@ -158,7 +154,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
           selectionOrder: SelectionOrder.VaultToVault,
           selectionHideIfZeroBalance: true,
           inputs: [shareToken],
-          wantedOutputs: [depositToken],
+          wantedOutputs: [destShareToken],
           srcVaultId: candidate.vaultId,
           destVaultId: vault.id,
           routingToken,
@@ -254,12 +250,6 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
     const trailingSteps: ZapQuoteStep[] =
       returned.length > 0 ? [{ type: 'unused', outputs: returned }] : [];
 
-    const inputForPricing = convertVaultShareToDepositTokenAmount(
-      state,
-      option.srcVaultId,
-      input.amount
-    );
-
     return {
       sourceSteps,
       destSteps,
@@ -267,12 +257,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
       outputs: destHandlerQuote.outputs,
       returned,
       allowances: srcHandlerQuote.allowances,
-      priceImpact: calculatePriceImpact(
-        [inputForPricing],
-        destHandlerQuote.outputs,
-        returned,
-        state
-      ),
+      priceImpact: calculatePriceImpact([input], destHandlerQuote.outputs, returned, state),
       fee: fee?.display ?? ZERO_FEE,
       srcHandlerQuote,
       destHandlerQuote,

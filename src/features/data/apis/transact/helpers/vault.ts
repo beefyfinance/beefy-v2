@@ -3,7 +3,6 @@ import BigNumber from 'bignumber.js';
 import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi.ts';
 import { toWei } from '../../../../../helpers/big-number.ts';
 import type { VaultStandard, VaultWithPricePerFullShare } from '../../../entities/vault.ts';
-import { selectUserBalanceOfToken } from '../../../selectors/balance.ts';
 import { selectFeesByVaultId } from '../../../selectors/fees.ts';
 import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectVaultPricePerFullShare } from '../../../selectors/vaults.ts';
@@ -11,29 +10,19 @@ import type { BeefyState } from '../../../store/types.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import type { InputTokenAmount } from '../transact-types.ts';
 
-export function getVaultWithdrawnFromState(
+/** Estimate the deposit-token amount withdrawn for a share-denominated input, using state ppfs */
+export function getVaultSharesWithdrawnFromState(
   userInput: InputTokenAmount,
   vault: VaultWithPricePerFullShare,
-  state: BeefyState,
-  userAddress?: string
+  state: BeefyState
 ) {
   const withdrawAll = userInput.max;
   const withdrawnToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const requestedAmountWei = toWei(userInput.amount, withdrawnToken.decimals);
   const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
-  const totalSharesWei = toWei(
-    selectUserBalanceOfToken(state, shareToken.chainId, shareToken.address, userAddress),
-    shareToken.decimals
-  );
+  const sharesToWithdrawWei = toWei(userInput.amount, shareToken.decimals);
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
   const vaultFees = selectFeesByVaultId(state, vault.id);
   const withdrawFee = vaultFees?.withdraw || 0;
-
-  let sharesToWithdrawWei = totalSharesWei; // max
-  if (!withdrawAll) {
-    // try to round up, so we withdraw at least the requested amount
-    sharesToWithdrawWei = requestedAmountWei.dividedBy(ppfs).decimalPlaces(0, BigNumber.ROUND_CEIL);
-  }
 
   const withdrawnAmountWei = sharesToWithdrawWei
     .multipliedBy(ppfs)
@@ -44,17 +33,17 @@ export function getVaultWithdrawnFromState(
   const withdrawnAmountAfterFeeWei = withdrawnAmountWei.minus(withdrawnAmountFeeWei);
 
   return {
-    withdrawAll, // user wants to withdraw all
-    requestedAmountWei, // what user typed in the box
-    sharesToWithdrawWei, // how many shares to withdraw
-    withdrawnAmountWei, // how much of the deposit token will be withdrawn (before fee)
-    withdrawnAmountAfterFeeWei, // how much of the deposit token will be withdrawn (after fee)
+    withdrawAll,
+    sharesToWithdrawWei,
+    withdrawnAmountWei,
+    withdrawnAmountAfterFeeWei,
     withdrawnToken,
     shareToken,
   };
 }
 
-export async function getVaultWithdrawnFromContract(
+/** Estimate the deposit-token amount withdrawn for a share-denominated input, using contract balance/totalSupply */
+export async function getVaultSharesWithdrawnFromContract(
   userInput: InputTokenAmount,
   vault: VaultStandard,
   state: BeefyState,
@@ -62,33 +51,25 @@ export async function getVaultWithdrawnFromContract(
 ) {
   const withdrawAll = userInput.max;
   const withdrawnToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const requestedAmountWei = toWei(userInput.amount, withdrawnToken.decimals);
   const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
   const vaultContract = fetchContract(vault.contractAddress, StandardVaultAbi, vault.chainId);
-
   const vaultFees = selectFeesByVaultId(state, vault.id);
   const withdrawFee = vaultFees?.withdraw || 0;
 
-  const [balance, totalSupply, userBalance] = await Promise.all([
+  const [balance, totalSupply, userShares] = await Promise.all([
     vaultContract.read.balance(),
     vaultContract.read.totalSupply(),
     vaultContract.read.balanceOf([userAddress as Address]),
   ]);
-
-  const totalSharesWei = new BigNumber(userBalance.toString(10));
   const vaultTotalSupplyWei = new BigNumber(totalSupply.toString(10));
   const vaultBalanceWei = new BigNumber(balance.toString(10));
+  const userSharesWei = new BigNumber(userShares.toString(10));
 
-  let sharesToWithdrawWei = totalSharesWei; // max
-  if (!withdrawAll) {
-    // try to round up, so we withdraw at least the requested amount
-    sharesToWithdrawWei = requestedAmountWei
-      .multipliedBy(vaultTotalSupplyWei)
-      .dividedBy(vaultBalanceWei)
-      .decimalPlaces(0, BigNumber.ROUND_CEIL);
-    if (sharesToWithdrawWei.gt(totalSharesWei)) {
-      sharesToWithdrawWei = totalSharesWei;
-    }
+  // max means the live on-chain balance; typed amounts fail here rather than reverting after signing
+  const sharesToWithdrawWei =
+    withdrawAll ? userSharesWei : toWei(userInput.amount, shareToken.decimals);
+  if (!withdrawAll && sharesToWithdrawWei.gt(userSharesWei)) {
+    throw new Error('Withdrawal amount exceeds current share balance');
   }
 
   const withdrawnAmountWei = sharesToWithdrawWei
@@ -100,11 +81,10 @@ export async function getVaultWithdrawnFromContract(
   const withdrawnAmountAfterFeeWei = withdrawnAmountWei.minus(withdrawnAmountFeeWei);
 
   return {
-    withdrawAll, // user wants to withdraw all
-    requestedAmountWei, // what user typed in the box
-    sharesToWithdrawWei, // how many shares to withdraw
-    withdrawnAmountWei, // how much of the deposit token will be withdrawn (before fee)
-    withdrawnAmountAfterFeeWei, // how much of the deposit token will be withdrawn (after fee)
+    withdrawAll,
+    sharesToWithdrawWei,
+    withdrawnAmountWei,
+    withdrawnAmountAfterFeeWei,
     withdrawnToken,
     shareToken,
   };

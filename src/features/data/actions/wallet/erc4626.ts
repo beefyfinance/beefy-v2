@@ -30,7 +30,8 @@ import {
 import { isTokenErc20 } from '../../entities/token.ts';
 import { Erc4626VaultAbi } from '../../../../config/abi/Erc4626VaultAbi.ts';
 import { selectUserVaultPendingWithdrawal } from '../../selectors/balance.ts';
-import { selectVaultById } from '../../selectors/vaults.ts';
+import { selectVaultById, selectVaultPricePerFullShare } from '../../selectors/vaults.ts';
+import { mooAmountToOracleAmount } from '../../utils/ppfs.ts';
 import { formatTokenDisplay } from '../../../../helpers/format.ts';
 import { bigintRange } from '../../../../helpers/bigint.ts';
 import { readContract } from 'viem/actions';
@@ -122,7 +123,7 @@ async function checkSlashedNotRealized(
   }
 }
 
-export const requestRedeem = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => {
+export const requestRedeem = (vault: VaultEntity, shareAmount: BigNumber, max: boolean) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     if (!isErc4626AsyncWithdrawVault(vault)) {
@@ -139,6 +140,14 @@ export const requestRedeem = (vault: VaultEntity, oracleAmount: BigNumber, max: 
     if (!isTokenErc20(depositToken)) {
       throw new Error('Deposit token is not an ERC20 token');
     }
+    const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.contractAddress);
+    // deposit-token estimate for tx tracking display only
+    const oracleAmount = mooAmountToOracleAmount(
+      shareToken,
+      depositToken,
+      selectVaultPricePerFullShare(state, vault.id),
+      shareAmount
+    );
 
     const account = getAddress(address);
     const walletApi = await getWalletConnectionApi();
@@ -154,11 +163,9 @@ export const requestRedeem = (vault: VaultEntity, oracleAmount: BigNumber, max: 
 
     await checkSlashedNotRealized(contract, publicClient);
 
-    const wantedAssets = toWeiBigInt(oracleAmount, depositToken.decimals);
-    const [wantedShares, maxShares] = await Promise.all([
-      contract.read.convertToShares([wantedAssets]),
-      contract.read.balanceOf([account]),
-    ]);
+    const wantedShares = toWeiBigInt(shareAmount, shareToken.decimals);
+    // cap at on-chain balance to protect against state drift on async withdrawals
+    const maxShares = await contract.read.balanceOf([account]);
     const redeemShares =
       max ? maxShares
       : wantedShares > maxShares ? maxShares

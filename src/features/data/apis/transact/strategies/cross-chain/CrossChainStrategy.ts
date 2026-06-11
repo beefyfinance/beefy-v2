@@ -33,12 +33,7 @@ import {
   createSelectionId,
   onlyOneInput,
 } from '../../helpers/options.ts';
-import {
-  calculatePriceImpact,
-  convertVaultShareToDepositTokenAmount,
-  totalValueOfTokenAmounts,
-  ZERO_FEE,
-} from '../../helpers/quotes.ts';
+import { calculatePriceImpact, totalValueOfTokenAmounts, ZERO_FEE } from '../../helpers/quotes.ts';
 import { NO_RELAY } from '../../helpers/zap.ts';
 import {
   type AllowanceTokenAmount,
@@ -290,7 +285,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
   async fetchDepositOptions(): Promise<CrossChainDepositOption[]> {
     const { vault, swapAggregator, getState } = this.helpers;
     const state = getState();
-    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const destShareToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
     const options: CrossChainDepositOption[] = [];
 
     await Promise.allSettled(
@@ -320,7 +315,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
             selectionId,
             selectionOrder: SelectionOrder.CrossChain,
             inputs: [token],
-            wantedOutputs: [depositToken],
+            wantedOutputs: [destShareToken],
             bridgeToken: sourceUSDC,
             destBridgeToken: destUSDC,
             srcHandlerKind: 'swap',
@@ -350,7 +345,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const walletAddress = selectWalletAddress(state);
     if (!walletAddress) return [];
 
-    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const destShareToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
     const destUSDC = getUSDCForChain(vault.chainId, state);
     const results: CrossChainDepositOption[] = [];
 
@@ -384,7 +379,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         // otherwise we surface a row they cannot act on.
         selectionHideIfZeroBalance: true,
         inputs: [shareToken],
-        wantedOutputs: [depositToken],
+        wantedOutputs: [destShareToken],
         bridgeToken: sourceUSDC,
         destBridgeToken: destUSDC,
         srcHandlerKind: 'vault',
@@ -478,11 +473,6 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       destHandlerQuote.returned
     );
 
-    const inputForPricing =
-      option.srcHandlerKind === 'vault' ?
-        convertVaultShareToDepositTokenAmount(state, option.srcVaultId, input.amount)
-      : input;
-
     return {
       bridgeQuote,
       sourceSteps,
@@ -491,7 +481,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       returned,
       allowances: srcHandlerQuote.allowances,
       priceImpact: calculatePriceImpact(
-        [inputForPricing],
+        [input],
         destHandlerQuote.outputs,
         returned,
         state,

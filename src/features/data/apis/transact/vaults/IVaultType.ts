@@ -61,6 +61,9 @@ export interface IStandardVaultType extends IVaultType {
   readonly vault: VaultStandard;
   readonly depositToken: TokenEntity;
   readonly shareToken: TokenErc20;
+
+  /** Estimate the shares minted for a deposit-token amount entering the vault, using state ppfs */
+  estimateDepositShares(input: TokenAmount): TokenAmount<TokenErc20>;
 }
 
 export interface IGovVaultType extends IVaultType {
@@ -81,6 +84,9 @@ export interface IErc4626VaultType extends IVaultType {
   readonly vault: VaultErc4626;
   readonly depositToken: TokenEntity;
   readonly shareToken: TokenErc20;
+
+  /** Estimate the shares minted for a deposit-token amount entering the vault, using state ppfs */
+  estimateDepositShares(input: TokenAmount): TokenAmount<TokenErc20>;
 }
 
 export type VaultType =

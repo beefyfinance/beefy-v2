@@ -96,7 +96,9 @@ type BaseOption = {
   selectionId: string;
   selectionOrder: SelectionOrder;
   selectionHideIfZeroBalance?: boolean;
+  /** token(s) the user hands over; for withdraws this is the vault's receipt token (gov: deposit token) */
   inputs: TokenEntity[];
+  /** token(s) the user receives; for deposits this is the receiving vault's receipt token (gov: deposit token) */
   wantedOutputs: TokenEntity[];
   async?: boolean;
   feeable?: boolean;
@@ -739,7 +741,9 @@ type BaseQuote<T extends TransactOption> = {
   strategyId: T['strategyId'];
   priceImpact: number;
   allowances: AllowanceTokenAmount[];
+  /** what the user hands over; for withdraws share-denominated in the vault's receipt token (gov: deposit token) */
   inputs: InputTokenAmount[];
+  /** what the user receives; for deposits share-denominated in the vault's receipt token (gov: deposit token) */
   outputs: TokenAmount[];
   returned: TokenAmount[];
   option: T;

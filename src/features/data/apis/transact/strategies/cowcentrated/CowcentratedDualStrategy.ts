@@ -127,7 +127,7 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
         selectionId,
         selectionOrder: SelectionOrder.AllTokensInPool,
         inputs,
-        wantedOutputs: this.vaultType.depositTokens,
+        wantedOutputs: [this.vaultType.shareToken],
         mode: TransactMode.Deposit,
         strategyId: this.id,
         depositToken: this.vaultType.shareToken,

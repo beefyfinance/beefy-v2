@@ -114,3 +114,13 @@ export function nativeAndWrappedAreSame(chainId: ChainEntity['id']) {
 export function pickTokens(...inputs: TokenAmount[][]): TokenEntity[] {
   return uniqueTokens(inputs.flat().map(({ token }) => token));
 }
+
+export function isTokenAmountEqual(a: TokenAmount, b: TokenAmount): boolean {
+  return isTokenEqual(a.token, b.token) && a.amount.isEqualTo(b.amount);
+}
+
+export function areTokenAmountsEqual(a: TokenAmount[], b: TokenAmount[]): boolean {
+  return (
+    a.length === b.length && a.every((tokenAmount, i) => isTokenAmountEqual(tokenAmount, b[i]))
+  );
+}

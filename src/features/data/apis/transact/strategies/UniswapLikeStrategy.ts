@@ -37,6 +37,7 @@ import {
   createSelectionId,
   onlyAssetCount,
   onlyOneInput,
+  onlyVaultShareInput,
   onlyOneToken,
 } from '../helpers/options.ts';
 import { calculatePriceImpact, ZERO_FEE } from '../helpers/quotes.ts';
@@ -47,7 +48,7 @@ import {
   pickTokens,
   tokensToLp,
 } from '../helpers/tokens.ts';
-import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
+import { getVaultSharesWithdrawnFromState } from '../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../helpers/zap.ts';
 import type { QuoteRequest } from '../swap/ISwapProvider.ts';
 import {
@@ -220,7 +221,7 @@ export abstract class UniswapLikeStrategy<
       .map(token => ({ token, swap: 'aggregator' as const }));
 
     const zapTokens = [...poolTokens, ...aggregatorTokens];
-    const outputs = [this.vaultType.depositToken];
+    const outputs = [this.vaultType.shareToken];
 
     return zapTokens.map(({ token, swap }) => {
       const inputs = [token];
@@ -382,10 +383,7 @@ export abstract class UniswapLikeStrategy<
 
     // Build quote outputs
     const outputs: TokenAmount[] = [
-      {
-        token: depositToken,
-        amount: liquidityAmount,
-      },
+      this.vaultType.estimateDepositShares({ token: depositToken, amount: liquidityAmount }),
     ];
 
     // Build dust outputs
@@ -543,10 +541,7 @@ export abstract class UniswapLikeStrategy<
 
     // Build quote outputs
     const outputs: TokenAmount[] = [
-      {
-        token: depositToken,
-        amount: liquidityAmount,
-      },
+      this.vaultType.estimateDepositShares({ token: depositToken, amount: liquidityAmount }),
     ];
 
     // Build dust outputs
@@ -875,7 +870,7 @@ export abstract class UniswapLikeStrategy<
       .map(token => ({ token, swap: 'aggregator' as const }));
 
     const zapTokens = [...poolTokens, ...aggregatorTokens];
-    const inputs = [this.vaultType.depositToken];
+    const inputs = [this.vaultType.shareToken];
 
     const breakSelectionId = createSelectionId(this.vault.chainId, this.lpTokens);
     const breakOption: UniswapLikeWithdrawOption<TAmm> = {
@@ -923,17 +918,14 @@ export abstract class UniswapLikeStrategy<
     inputs: InputTokenAmount[],
     option: UniswapLikeWithdrawOption<TAmm>
   ): Promise<UniswapLikeWithdrawQuote<UniswapLikeWithdrawOption<TAmm>>> {
-    const input = onlyOneInput(inputs);
-    if (input.amount.lte(BIG_ZERO)) {
-      throw new Error('Quote called with 0 input amount');
-    }
+    const input = onlyVaultShareInput(inputs, this.vaultType.shareToken);
 
     const { zap, getState } = this.helpers;
 
     // Common: Withdraw from vault
     const state = getState();
     const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, this.vault, state);
+      getVaultSharesWithdrawnFromState(input, this.vault, state);
     const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
     const chain = selectChainById(state, this.vault.chainId);
     const breakSteps: ZapQuoteStep[] = [
@@ -1259,6 +1251,7 @@ export abstract class UniswapLikeStrategy<
     // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
     const dustOutputs: OrderOutput[] = pickTokens(
       vaultWithdraw.inputs,
+      vaultWithdraw.outputs,
       quote.outputs,
       quote.inputs,
       quote.returned,

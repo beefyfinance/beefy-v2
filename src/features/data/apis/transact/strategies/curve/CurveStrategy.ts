@@ -41,12 +41,13 @@ import {
   createQuoteId,
   createSelectionId,
   onlyOneInput,
+  onlyVaultShareInput,
   onlyOneToken,
   onlyOneTokenAmount,
 } from '../../helpers/options.ts';
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
-import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
+import { getVaultSharesWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { QuoteResponse } from '../../swap/ISwapProvider.ts';
 import {
@@ -214,7 +215,7 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
   }
 
   public async fetchDepositOptions(): Promise<CurveDepositOption[]> {
-    const outputs = [this.vaultType.depositToken];
+    const outputs = [this.vaultType.shareToken];
 
     const baseOptions: CurveDepositOption[] = this.possibleTokens.map(depositToken => {
       const inputs = [depositToken.token];
@@ -410,7 +411,7 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
     });
 
     // Build quote outputs
-    const outputs: TokenAmount[] = [depositLiquidity.output];
+    const outputs: TokenAmount[] = [this.vaultType.estimateDepositShares(depositLiquidity.output)];
     const returned: TokenAmount[] = [];
 
     // Build quote
@@ -636,7 +637,7 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
   }
 
   async fetchWithdrawOptions(): Promise<CurveWithdrawOption[]> {
-    const inputs = [this.vaultType.depositToken];
+    const inputs = [this.vaultType.shareToken];
 
     const baseOptions: CurveWithdrawOption[] = this.possibleTokens.map(depositToken => {
       const outputs = [depositToken.token];
@@ -774,10 +775,7 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
     inputs: InputTokenAmount[],
     option: CurveWithdrawOption
   ): Promise<CurveWithdrawQuote> {
-    const input = onlyOneInput(inputs);
-    if (input.amount.lte(BIG_ZERO)) {
-      throw new Error('Quote called with 0 input amount');
-    }
+    const input = onlyVaultShareInput(inputs, this.vaultType.shareToken);
 
     if (option.wantedOutputs.length !== 1) {
       throw new Error('Can only swap to 1 output token');
@@ -788,7 +786,7 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
     // Common: Withdraw from vault
     const state = getState();
     const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, this.vault, state);
+      getVaultSharesWithdrawnFromState(input, this.vault, state);
     const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
     const liquidityWithdrawn = { amount: withdrawnAmountAfterFee, token: withdrawnToken };
     const wantedToken = onlyOneToken(option.wantedOutputs);
@@ -1006,6 +1004,7 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
     // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
     const dustOutputs: OrderOutput[] = pickTokens(
       vaultWithdraw.inputs,
+      vaultWithdraw.outputs,
       quote.outputs,
       quote.inputs,
       quote.returned,

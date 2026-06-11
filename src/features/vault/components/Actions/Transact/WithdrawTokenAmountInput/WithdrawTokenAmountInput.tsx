@@ -4,6 +4,7 @@ import { memo, useCallback, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
 import {
+  isGovVault,
   isVaultWithPricePerFullShare,
   type VaultEntity,
 } from '../../../../../data/entities/vault.ts';
@@ -18,10 +19,10 @@ import {
 } from '../../../../../data/selectors/tokens.ts';
 import {
   selectTransactInputIndexAmount,
-  selectTransactIsActiveSelectionVaultSourceWithdraw,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import {
+  selectVaultById,
   selectVaultByIdWithReceipt,
   selectVaultPricePerFullShare,
 } from '../../../../../data/selectors/vaults.ts';
@@ -41,14 +42,14 @@ export const WithdrawTokenAmountInput = memo(function WithdrawTokenAmountInput({
   css: cssProp,
 }: WithdrawTokenAmountInputProps) {
   const vaultId = useAppSelector(selectTransactVaultId);
-  const isVaultSourceWithdraw = useAppSelector(selectTransactIsActiveSelectionVaultSourceWithdraw);
-  if (vaultId && isVaultSourceWithdraw) {
-    return <VaultSourceWithdrawTokenAmountInput vaultId={vaultId} css={cssProp} />;
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  if (isGovVault(vault)) {
+    return <GovWithdrawTokenAmountInput css={cssProp} />;
   }
-  return <StandardWithdrawTokenAmountInput css={cssProp} />;
+  return <SharesWithdrawTokenAmountInput vaultId={vaultId} css={cssProp} />;
 });
 
-const StandardWithdrawTokenAmountInput = memo(function StandardWithdrawTokenAmountInput({
+const GovWithdrawTokenAmountInput = memo(function GovWithdrawTokenAmountInput({
   css: cssProp,
 }: WithdrawTokenAmountInputProps) {
   const dispatch = useAppDispatch();
@@ -87,15 +88,16 @@ const StandardWithdrawTokenAmountInput = memo(function StandardWithdrawTokenAmou
   );
 });
 
-type VaultSourceProps = {
+type SharesProps = {
   vaultId: VaultEntity['id'];
   css?: CssStyles;
 };
 
-const VaultSourceWithdrawTokenAmountInput = memo(function VaultSourceWithdrawTokenAmountInput({
+// store-of-record is the share amount; user sees/types the deposit-token equivalent
+const SharesWithdrawTokenAmountInput = memo(function SharesWithdrawTokenAmountInput({
   vaultId,
   css: cssProp,
-}: VaultSourceProps) {
+}: SharesProps) {
   const dispatch = useAppDispatch();
   const vault = useAppSelector(state => selectVaultByIdWithReceipt(state, vaultId));
   const receiptToken = useAppSelector(state =>

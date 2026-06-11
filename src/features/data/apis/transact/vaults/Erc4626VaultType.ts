@@ -21,6 +21,8 @@ import type { Step } from '../../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
 import { selectFeesByVaultId } from '../../../selectors/fees.ts';
 import { selectTokenByAddress } from '../../../selectors/tokens.ts';
+import { selectVaultPricePerFullShare } from '../../../selectors/vaults.ts';
+import { oracleAmountToMooAmount } from '../../../utils/ppfs.ts';
 import type { BeefyState, BeefyStateFn } from '../../../store/types.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import {
@@ -30,7 +32,7 @@ import {
   onlyInputCount,
   onlyOneInput,
 } from '../helpers/options.ts';
-import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
+import { getVaultSharesWithdrawnFromState } from '../helpers/vault.ts';
 import { getInsertIndex, getTokenAddress } from '../helpers/zap.ts';
 import {
   type AllowanceTokenAmount,
@@ -84,6 +86,21 @@ export class Erc4626VaultType implements IErc4626VaultType {
           .multipliedBy(depositFeePercent)
           .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR)
       : BIG_ZERO;
+  }
+
+  estimateDepositShares(input: TokenAmount): TokenAmount<TokenErc20> {
+    const state = this.getState();
+    const depositFee = this.calculateDepositFee(input, state);
+    const ppfs = selectVaultPricePerFullShare(state, this.vault.id);
+    return {
+      token: this.shareToken,
+      amount: oracleAmountToMooAmount(
+        this.shareToken,
+        this.depositToken,
+        ppfs,
+        input.amount.minus(depositFee)
+      ),
+    };
   }
 
   async fetchZapDeposit(request: VaultDepositRequest): Promise<VaultDepositResponse> {
@@ -168,7 +185,7 @@ export class Erc4626VaultType implements IErc4626VaultType {
       selectionOrder: SelectionOrder.Want,
       selectionHideIfZeroBalance: false,
       inputs,
-      wantedOutputs: inputs,
+      wantedOutputs: [this.shareToken],
       strategyId: 'vault',
       vaultType: 'erc4626',
       async: false,
@@ -193,12 +210,7 @@ export class Erc4626VaultType implements IErc4626VaultType {
       throw new Error('Quote called with invalid input token type');
     }
 
-    const state = this.getState();
-    const fee = this.calculateDepositFee(input, state);
-    const output = {
-      token: input.token,
-      amount: input.amount.minus(fee),
-    };
+    const output = this.estimateDepositShares(input);
     const allowances = [
       {
         token: input.token,
@@ -235,8 +247,10 @@ export class Erc4626VaultType implements IErc4626VaultType {
   }
 
   async fetchWithdrawOption(): Promise<Erc4626VaultWithdrawOption> {
-    const inputs = [this.depositToken];
-    const selectionId = createSelectionId(this.vault.chainId, inputs);
+    const inputs = [this.shareToken];
+    const wantedOutputs = [this.depositToken];
+    // selection groups by output token, so the option dedupes with strategy options
+    const selectionId = createSelectionId(this.vault.chainId, wantedOutputs);
 
     return {
       id: createOptionId('vault-erc4626', this.vault.id, selectionId),
@@ -245,7 +259,7 @@ export class Erc4626VaultType implements IErc4626VaultType {
       selectionId,
       selectionOrder: SelectionOrder.Want,
       inputs,
-      wantedOutputs: inputs,
+      wantedOutputs,
       strategyId: 'vault',
       vaultType: 'erc4626',
       async: isErc4626AsyncWithdrawVault(this.vault),
@@ -263,20 +277,20 @@ export class Erc4626VaultType implements IErc4626VaultType {
       throw new Error('Quote called with 0 input amount');
     }
 
-    if (!isTokenEqual(input.token, this.depositToken)) {
+    if (!isTokenEqual(input.token, this.shareToken)) {
       throw new Error('Quote called with invalid input token');
     }
 
-    if (!isTokenErc20(input.token)) {
-      throw new Error('Quote called with invalid input token type');
-    }
-
     const state = this.getState();
-    const { withdrawnAmountAfterFeeWei } = getVaultWithdrawnFromState(input, this.vault, state);
+    const { withdrawnAmountAfterFeeWei } = getVaultSharesWithdrawnFromState(
+      input,
+      this.vault,
+      state
+    );
     const outputs = [
       {
-        token: input.token,
-        amount: fromWei(withdrawnAmountAfterFeeWei, input.token.decimals),
+        token: this.depositToken,
+        amount: fromWei(withdrawnAmountAfterFeeWei, this.depositToken.decimals),
       },
     ];
     const allowances: AllowanceTokenAmount[] = [];

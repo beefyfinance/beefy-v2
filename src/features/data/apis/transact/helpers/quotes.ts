@@ -2,7 +2,7 @@ import type BigNumber from 'bignumber.js';
 import { BIG_ZERO, compareBigNumber } from '../../../../../helpers/big-number.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectVaultSharesToDepositTokenData } from '../../../selectors/balance.ts';
-import { selectTokenPriceByAddress } from '../../../selectors/tokens.ts';
+import { selectTokenPriceByAddressWithReceiptFallback } from '../../../selectors/tokens.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { mooAmountToOracleAmount } from '../../../utils/ppfs.ts';
 import type { QuoteResponse } from '../swap/ISwapProvider.ts';
@@ -36,7 +36,11 @@ export function totalValueOfTokenAmounts(
     (sum, tokenAmount) =>
       sum.plus(
         tokenAmount.amount.multipliedBy(
-          selectTokenPriceByAddress(state, tokenAmount.token.chainId, tokenAmount.token.address)
+          selectTokenPriceByAddressWithReceiptFallback(
+            state,
+            tokenAmount.token.chainId,
+            tokenAmount.token.address
+          )
         )
       ),
     BIG_ZERO

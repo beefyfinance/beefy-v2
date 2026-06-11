@@ -20,7 +20,12 @@ import {
 } from '../apis/transact/transact-types.ts';
 import { computeOptionZapFee } from '../apis/transact/helpers/fee.ts';
 import type { ChainEntity } from '../entities/chain.ts';
-import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
+import { isTokenEqual } from '../entities/token.ts';
+import {
+  isSingleGovVault,
+  isVaultWithPricePerFullShare,
+  type VaultEntity,
+} from '../entities/vault.ts';
 import {
   DepositSource,
   TransactMode,
@@ -36,7 +41,6 @@ import {
   selectDepositOptionTokensBalanceByChainId,
   selectPastBoostIdsWithUserBalance,
   selectUserBalanceOfToken,
-  selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInShareToken,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
   selectUserVaultBalanceInUsdIncludingDisplaced,
@@ -48,7 +52,11 @@ import {
   selectVaultHasActiveMerklCampaigns,
   selectVaultHasActiveStellaSwapCampaigns,
 } from './rewards.ts';
-import { selectTokenPriceByAddress } from './tokens.ts';
+import {
+  selectErc20TokenByAddress,
+  selectTokenPriceByAddress,
+  selectTokenPriceByAddressWithReceiptFallback,
+} from './tokens.ts';
 import {
   selectConnectedUserHasGovRewardsForVault,
   selectConnectedUserHasMerklRewardsForVault,
@@ -172,17 +180,6 @@ export const selectTransactSelected = createSelector(
   (selectionId, bySelectionId) => bySelectionId[selectionId] || undefined
 );
 
-/** True when the active selection's withdraw is sourced from the page vault (option declares its shareToken as input). */
-export const selectTransactIsActiveSelectionVaultSourceWithdraw = (state: BeefyState): boolean => {
-  const selectionId = state.ui.transact.selectedSelectionId;
-  if (!selectionId) return false;
-  const options = selectTransactOptionsForSelectionId(state, selectionId);
-  if (options.length === 0) return false;
-  return options.every(
-    o => o.strategyId === 'cross-chain' || o.strategyId === 'vault-to-vault-single-token'
-  );
-};
-
 export const selectTransactDepositInputAmountExceedsBalance = (state: BeefyState) => {
   const selection = selectTransactSelected(state);
   const inputAmounts = selectTransactInputAmounts(state);
@@ -203,13 +200,8 @@ export const selectTransactDepositInputAmountExceedsBalance = (state: BeefyState
 
 export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyState) => {
   const vaultId = selectTransactVaultId(state);
-  const isVaultSourceWithdraw = selectTransactIsActiveSelectionVaultSourceWithdraw(state);
-  // Vault-source withdraw (cross-chain or same-chain v2v) dispatches in share-math.
-  // Composer-path withdraws still dispatch in deposit-token math.
-  const userBalance =
-    isVaultSourceWithdraw ?
-      selectUserVaultBalanceInShareToken(state, vaultId)
-      : selectUserVaultBalanceInDepositToken(state, vaultId);
+  // store-of-record is share-math; the selector falls back to deposit-token balance for gov vaults
+  const userBalance = selectUserVaultBalanceInShareToken(state, vaultId);
   const value = selectTransactInputIndexAmount(state, 0);
 
   return value.gt(userBalance);
@@ -494,11 +486,35 @@ export function selectTokenAmountsTotalValue(
 }
 
 export function selectTokenAmountValue(state: BeefyState, tokenAmount: TokenAmount): BigNumber {
-  return selectTokenPriceByAddress(
+  return selectTokenPriceByAddressWithReceiptFallback(
     state,
     tokenAmount.token.chainId,
     tokenAmount.token.address
   ).multipliedBy(tokenAmount.amount);
+}
+
+/** Map a share-denominated amount of the given vault to its deposit-token equivalent for display; pass-through otherwise */
+export function selectTokenAmountForDisplay(
+  state: BeefyState,
+  tokenAmount: TokenAmount,
+  vaultId: VaultEntity['id']
+): TokenAmount {
+  const vault = selectVaultById(state, vaultId);
+  if (isVaultWithPricePerFullShare(vault)) {
+    const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
+    if (isTokenEqual(tokenAmount.token, shareToken)) {
+      return convertVaultShareToDepositTokenAmount(state, vault.id, tokenAmount.amount);
+    }
+  }
+  return tokenAmount;
+}
+
+export function selectTokenAmountsForDisplay(
+  state: BeefyState,
+  tokenAmounts: TokenAmount[],
+  vaultId: VaultEntity['id']
+): TokenAmount[] {
+  return tokenAmounts.map(tokenAmount => selectTokenAmountForDisplay(state, tokenAmount, vaultId));
 }
 
 export const selectTransactExecuting = (state: BeefyState) => state.ui.transact.executing;
@@ -548,7 +564,7 @@ export function selectTransactCrossChainPreflight(state: BeefyState): boolean {
         state,
         convertVaultShareToDepositTokenAmount(state, option.srcVaultId, inputAmounts[0] || BIG_ZERO)
       )
-      : BigNumber.sum(
+    : BigNumber.sum(
         ...option.inputs.map((token, i) =>
           selectTokenAmountValue(state, { token, amount: inputAmounts[i] || BIG_ZERO })
         )
@@ -591,7 +607,7 @@ export const selectCrossChainSortedChains = (
     const totalBalanceUsd =
       walletAddress ?
         selectDepositOptionTokensBalanceByChainId(state, chainId, walletAddress)
-        : BIG_ZERO;
+      : BIG_ZERO;
 
     const selectionIds = state.ui.transact.selections.byChainId[chainId];
     const seenAddresses = new Set<string>();
@@ -691,11 +707,11 @@ export const selectTransactShouldShowClaimsNotification = createSelector(
     userHasUnclaimedStellaSwapRewards
   ): PulseHighlightProps['variant'] | false => {
     return (
-      userHasUnclaimedGovRewards ||
-      userHasUnclaimedMerklRewards ||
-      userHasUnclaimedStellaSwapRewards
-    ) ?
-      'success'
+        userHasUnclaimedGovRewards ||
+          userHasUnclaimedMerklRewards ||
+          userHasUnclaimedStellaSwapRewards
+      ) ?
+        'success'
       : false;
   }
 );

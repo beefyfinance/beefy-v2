@@ -38,7 +38,12 @@ import {
   onlyInputCount,
   onlyOneInput,
 } from '../helpers/options.ts';
-import { getVaultWithdrawnFromContract, getVaultWithdrawnFromState } from '../helpers/vault.ts';
+import {
+  getVaultSharesWithdrawnFromContract,
+  getVaultSharesWithdrawnFromState,
+} from '../helpers/vault.ts';
+import { selectVaultPricePerFullShare } from '../../../selectors/vaults.ts';
+import { oracleAmountToMooAmount } from '../../../utils/ppfs.ts';
 import { getInsertIndex, getTokenAddress } from '../helpers/zap.ts';
 import {
   type AllowanceTokenAmount,
@@ -92,6 +97,21 @@ export class StandardVaultType implements IStandardVaultType {
           .multipliedBy(depositFeePercent)
           .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR)
       : BIG_ZERO;
+  }
+
+  estimateDepositShares(input: TokenAmount): TokenAmount<TokenErc20> {
+    const state = this.getState();
+    const depositFee = this.calculateDepositFee(input, state);
+    const ppfs = selectVaultPricePerFullShare(state, this.vault.id);
+    return {
+      token: this.shareToken,
+      amount: oracleAmountToMooAmount(
+        this.shareToken,
+        this.depositToken,
+        ppfs,
+        input.amount.minus(depositFee)
+      ),
+    };
   }
 
   async fetchZapDeposit(request: VaultDepositRequest): Promise<VaultDepositResponse> {
@@ -245,7 +265,7 @@ export class StandardVaultType implements IStandardVaultType {
       selectionOrder: SelectionOrder.Want,
       selectionHideIfZeroBalance: isCowcentratedStandardVault(this.vault),
       inputs,
-      wantedOutputs: inputs,
+      wantedOutputs: [this.shareToken],
       strategyId: 'vault',
       vaultType: 'standard',
       mode: TransactMode.Deposit,
@@ -265,12 +285,7 @@ export class StandardVaultType implements IStandardVaultType {
       throw new Error('Quote called with invalid input token');
     }
 
-    const state = this.getState();
-    const fee = this.calculateDepositFee(input, state);
-    const output = {
-      token: input.token,
-      amount: input.amount.minus(fee),
-    };
+    const output = this.estimateDepositShares(input);
     const allowances =
       isTokenErc20(input.token) ?
         [
@@ -310,8 +325,10 @@ export class StandardVaultType implements IStandardVaultType {
   }
 
   async fetchWithdrawOption(): Promise<StandardVaultWithdrawOption> {
-    const inputs = [this.depositToken];
-    const selectionId = createSelectionId(this.vault.chainId, inputs);
+    const inputs = [this.shareToken];
+    const wantedOutputs = [this.depositToken];
+    // selection groups by output token, so the option dedupes with strategy options
+    const selectionId = createSelectionId(this.vault.chainId, wantedOutputs);
 
     return {
       id: createOptionId('vault-standard', this.vault.id, selectionId),
@@ -320,7 +337,7 @@ export class StandardVaultType implements IStandardVaultType {
       selectionId,
       selectionOrder: SelectionOrder.Want,
       inputs,
-      wantedOutputs: inputs,
+      wantedOutputs,
       strategyId: 'vault',
       vaultType: 'standard',
       mode: TransactMode.Withdraw,
@@ -337,16 +354,20 @@ export class StandardVaultType implements IStandardVaultType {
       throw new Error('Quote called with 0 input amount');
     }
 
-    if (!isTokenEqual(input.token, this.depositToken)) {
+    if (!isTokenEqual(input.token, this.shareToken)) {
       throw new Error('Quote called with invalid input token');
     }
 
     const state = this.getState();
-    const { withdrawnAmountAfterFeeWei } = getVaultWithdrawnFromState(input, this.vault, state);
+    const { withdrawnAmountAfterFeeWei } = getVaultSharesWithdrawnFromState(
+      input,
+      this.vault,
+      state
+    );
     const outputs = [
       {
-        token: input.token,
-        amount: fromWei(withdrawnAmountAfterFeeWei, input.token.decimals),
+        token: this.depositToken,
+        amount: fromWei(withdrawnAmountAfterFeeWei, this.depositToken.decimals),
       },
     ];
     const allowances: AllowanceTokenAmount[] = [];
@@ -380,18 +401,14 @@ export class StandardVaultType implements IStandardVaultType {
 
   async fetchZapWithdraw(request: VaultWithdrawRequest): Promise<VaultWithdrawResponse> {
     const input = onlyOneInput(request.inputs);
-    if (!isTokenEqual(input.token, this.depositToken)) {
-      throw new Error('Input token is not the deposit token');
+    if (!isTokenEqual(input.token, this.shareToken)) {
+      throw new Error('Input token is not the share token');
     }
 
     const state = this.getState();
-    const address = selectWalletAddressOrThrow(state);
-    const { sharesToWithdrawWei, withdrawnAmountAfterFeeWei } = await getVaultWithdrawnFromContract(
-      input,
-      this.vault,
-      state,
-      address
-    );
+    const userAddress = selectWalletAddressOrThrow(state);
+    const { sharesToWithdrawWei, withdrawnAmountAfterFeeWei } =
+      await getVaultSharesWithdrawnFromContract(input, this.vault, state, userAddress);
 
     const inputs = [
       {

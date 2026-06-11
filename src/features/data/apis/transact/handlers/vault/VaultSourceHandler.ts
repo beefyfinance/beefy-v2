@@ -1,12 +1,6 @@
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { isTokenEqual, type TokenErc20 } from '../../../../entities/token.ts';
 import type { VaultEntity } from '../../../../entities/vault.ts';
-import {
-  selectVaultByIdWithReceipt,
-  selectVaultPricePerFullShare,
-} from '../../../../selectors/vaults.ts';
-import type { BeefyState } from '../../../../store/types.ts';
-import { mooAmountToOracleAmount } from '../../../../utils/ppfs.ts';
 import { getTransactApi } from '../../../instances.ts';
 import {
   isZapQuote,
@@ -56,8 +50,13 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
       );
     }
 
-    const adaptedInput = this.adaptInputToStrategy(input, match, srcHelpers.getState());
-    const underlyingQuote = await match.strategy.fetchWithdrawQuote([adaptedInput], match.option);
+    const expectedToken = match.option.inputs[0];
+    if (!isTokenEqual(expectedToken, input.token)) {
+      throw new Error(
+        `[vault-source] Strategy '${match.strategy.id}' expects ${expectedToken.symbol} input but got ${input.token.symbol} for vault ${this.srcVaultId}`
+      );
+    }
+    const underlyingQuote = await match.strategy.fetchWithdrawQuote([input], match.option);
     if (!isZapQuote(underlyingQuote)) {
       throw new Error(
         `[vault-source] Composable strategy '${match.strategy.id}' returned a non-zap withdraw quote`
@@ -114,37 +113,6 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
       zapSteps: breakdown.zapRequest.steps,
       orderInputs: breakdown.zapRequest.order.inputs,
       orderOutputs: breakdown.zapRequest.order.outputs,
-    };
-  }
-
-  // Adapt source vault's shareToken input to what the matched underlying strategy declares
-  private adaptInputToStrategy(
-    input: InputTokenAmount,
-    match: StrategyMatch,
-    state: BeefyState
-  ): InputTokenAmount {
-    const expectedToken = match.option.inputs[0];
-    if (isTokenEqual(expectedToken, input.token)) return input;
-
-    const srcVault = selectVaultByIdWithReceipt(state, this.srcVaultId);
-    const inputIsShare =
-      input.token.address.toLowerCase() === srcVault.receiptTokenAddress.toLowerCase();
-    const expectedIsDeposit =
-      expectedToken.address.toLowerCase() === srcVault.depositTokenAddress.toLowerCase();
-    if (!inputIsShare || !expectedIsDeposit) {
-      throw new Error(
-        `[vault-source] Boundary translator cannot adapt input ${input.token.symbol} → ${expectedToken.symbol} for vault ${this.srcVaultId} (matched strategy '${match.strategy.id}'). Expected source vault shareToken → depositToken.`
-      );
-    }
-    return {
-      token: expectedToken,
-      amount: mooAmountToOracleAmount(
-        input.token,
-        expectedToken,
-        selectVaultPricePerFullShare(state, this.srcVaultId),
-        input.amount
-      ),
-      max: input.max,
     };
   }
 

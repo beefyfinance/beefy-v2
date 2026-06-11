@@ -24,7 +24,9 @@ import {
   isCowcentratedDepositQuote,
   isZapQuote,
   quoteNeedsSlippage,
+  type TransactQuote as TransactQuoteType,
 } from '../../../../../data/apis/transact/transact-types.ts';
+import { areTokenAmountsEqual } from '../../../../../data/apis/transact/helpers/tokens.ts';
 import { isCowcentratedLikeVault } from '../../../../../data/entities/vault.ts';
 import {
   TransactMode,
@@ -39,6 +41,7 @@ import {
   selectTransactQuoteStatus,
   selectTransactSelected,
   selectTransactSelectedChainId,
+  selectTokenAmountsForDisplay,
   selectTransactSelectedQuote,
   selectTransactSelectedSelectionId,
   selectTransactSlippage,
@@ -233,6 +236,27 @@ const QuoteLoading = memo(function QuoteLoading() {
   return <TokenAmountIconLoader />;
 });
 
+const QuoteOutputs = memo(function QuoteOutputs({ quote }: { quote: TransactQuoteType }) {
+  // receipt-token amounts render as their deposit-token equivalent
+  const displayOutputs = useAppSelector(
+    state => selectTokenAmountsForDisplay(state, quote.outputs, quote.option.vaultId),
+    areTokenAmountsEqual
+  );
+
+  return (
+    <>
+      {displayOutputs.map(({ token, amount }) => (
+        <TokenAmountIcon
+          key={token.address}
+          amount={amount}
+          chainId={token.chainId}
+          tokenAddress={token.address}
+        />
+      ))}
+    </>
+  );
+});
+
 const QuoteLoaded = memo(function QuoteLoaded() {
   // const { t } = useTranslation();
   const classes = useStyles();
@@ -245,17 +269,7 @@ const QuoteLoaded = memo(function QuoteLoaded() {
       <div className={classes.tokenAmounts}>
         {isCowcentratedDepositQuote(quote) ?
           <CowcentratedLoadedQuote quote={quote} />
-        : <>
-            {quote.outputs.map(({ token, amount }) => (
-              <TokenAmountIcon
-                key={token.address}
-                amount={amount}
-                chainId={token.chainId}
-                tokenAddress={token.address}
-              />
-            ))}
-          </>
-        }
+        : <QuoteOutputs quote={quote} />}
       </div>
       {/*      {quote.returned.length ? (
             <div className={classes.returned}>

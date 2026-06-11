@@ -1,6 +1,7 @@
 import type { VaultEntity, VaultGov, VaultStandard } from '../../../entities/vault.ts';
 import type { ChainEntity } from '../../../entities/chain.ts';
-import type { TokenEntity } from '../../../entities/token.ts';
+import { isTokenEqual, type TokenEntity } from '../../../entities/token.ts';
+import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
 import { nanoid } from '@reduxjs/toolkit';
 import { sortTokens } from './tokens.ts';
 import type { InputTokenAmount, TokenAmount } from '../transact-types.ts';
@@ -68,6 +69,20 @@ export function onlyOneInput(inputs: InputTokenAmount[]) {
     throw new Error(`Invalid input count ${inputs.length}, expected 1`);
   }
   return inputs[0];
+}
+
+export function onlyVaultShareInput(
+  inputs: InputTokenAmount[],
+  shareToken: TokenEntity
+): InputTokenAmount {
+  const input = onlyOneInput(inputs);
+  if (input.amount.lte(BIG_ZERO)) {
+    throw new Error('Quote called with 0 input amount');
+  }
+  if (!isTokenEqual(input.token, shareToken)) {
+    throw new Error('Quote called with invalid input token');
+  }
+  return input;
 }
 
 export function onlyOneTokenAmount(outputs: TokenAmount[]) {

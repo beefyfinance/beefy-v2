@@ -92,7 +92,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       selectionId,
       selectionOrder: SelectionOrder.AllTokensInPool,
       inputs,
-      wantedOutputs: inputs,
+      wantedOutputs: [this.shareToken],
       strategyId: 'vault',
       vaultType: 'cowcentrated',
       mode: TransactMode.Deposit,

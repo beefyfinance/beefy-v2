@@ -150,6 +150,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       ...option,
       strategyId,
       vaultId: this.vault.id,
+      wantedOutputs: [this.shareToken],
       underlyingOption: option,
       // same-token vault deposit is free; CLM-zap paths inherit feeable from the underlying option
       feeable: option.strategyId === 'vault' ? false : option.feeable,
@@ -184,6 +185,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
         },
       ];
 
+      // stake is 1:1 so the gov receipt relabel needs no amount conversion
       const modOutputs = underlyingQuote.outputs.map(output => ({
         ...output,
         token: this.shareToken,
@@ -218,16 +220,22 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
 
     const underlyingQuote = await this.fetchUnderlyingDepositQuote(inputs, underlyingOption);
 
+    // stake is 1:1 so the gov receipt relabel needs no amount conversion
+    const outputs = underlyingQuote.outputs.map(output => ({
+      ...output,
+      token: this.shareToken,
+    }));
+
     return {
       ...underlyingQuote,
-      outputs: underlyingQuote.outputs,
+      outputs,
       steps: underlyingQuote.steps.concat({
         type: 'stake',
         inputs: underlyingQuote.outputs,
       }),
       priceImpact: calculatePriceImpact(
         underlyingQuote.inputs,
-        underlyingQuote.outputs,
+        outputs,
         underlyingQuote.returned,
         this.helpers.getState()
       ),
@@ -485,6 +493,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       ...option,
       strategyId,
       vaultId: this.vault.id,
+      inputs: [this.shareToken],
       underlyingOption: option,
       // same-token vault withdraw is free; CLM-zap paths inherit feeable from the underlying option
       feeable: option.strategyId === 'vault' ? false : option.feeable,

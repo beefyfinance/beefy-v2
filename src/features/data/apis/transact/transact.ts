@@ -220,7 +220,11 @@ export class TransactApi implements ITransactApi {
 
     // if not disabled by a zap strategy, add the vault deposit option as the first item
     if (vaultDepositOption) {
-      const deduped = dropSingleIdentityOption(options, vaultDepositOption.inputs[0].address);
+      const deduped = dropSingleIdentityOption(
+        options,
+        vaultDepositOption.inputs[0].address,
+        'inputs'
+      );
       return [vaultDepositOption, ...deduped];
     }
 
@@ -367,7 +371,11 @@ export class TransactApi implements ITransactApi {
 
     // if not disabled by a zap strategy, add the vault withdraw option as the first item
     if (vaultWithdrawOption) {
-      const deduped = dropSingleIdentityOption(options, vaultWithdrawOption.inputs[0].address);
+      const deduped = dropSingleIdentityOption(
+        options,
+        vaultWithdrawOption.wantedOutputs[0].address,
+        'wantedOutputs'
+      );
       return [vaultWithdrawOption, ...deduped];
     }
 
@@ -874,8 +882,9 @@ export class TransactApi implements ITransactApi {
 }
 
 /**
- * Drop SingleStrategy's identity (depositToken→depositToken) option — emitted so
- *  cross-chain can find the vault via fetchOptions; the picker uses the vault-type path instead.
+ * Drop SingleStrategy's identity option (deposit: depositToken→depositToken, withdraw:
+ * shareToken→depositToken) — emitted so cross-chain can find the vault via fetchOptions;
+ * the picker uses the vault-type path instead.
  */
 function dropSingleIdentityOption<
   T extends {
@@ -883,7 +892,7 @@ function dropSingleIdentityOption<
     inputs: { address: string }[];
     wantedOutputs: { address: string }[];
   },
->(options: T[], tokenAddress: string): T[] {
+>(options: T[], tokenAddress: string, matchOn: 'inputs' | 'wantedOutputs'): T[] {
   const lower = tokenAddress.toLowerCase();
   return options.filter(
     o =>
@@ -891,8 +900,7 @@ function dropSingleIdentityOption<
         o.strategyId === 'single' &&
         o.inputs.length === 1 &&
         o.wantedOutputs.length === 1 &&
-        o.inputs[0].address.toLowerCase() === lower &&
-        o.wantedOutputs[0].address.toLowerCase() === lower
+        o[matchOn][0].address.toLowerCase() === lower
       )
   );
 }

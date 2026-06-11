@@ -25,6 +25,7 @@ import {
   selectVaultById,
   selectVaultByIdWithReceiptOrUndefined,
   selectVaultPricePerFullShare,
+  selectVaultWithReceiptByAddressOrUndefined,
 } from './vaults.ts';
 import { selectIsAddressBookLoaded } from './data-loader/tokens.ts';
 
@@ -227,6 +228,7 @@ export const selectIsTokenMemeByAddress = makeSelectTokenIsTag(
   'MEMECOIN'
 );
 
+/** Returns BIG_ZERO for vault receipt tokens without their own oracle entry — use selectTokenPriceByAddressWithReceiptFallback when the amount may be share-denominated */
 export const selectTokenPriceByAddress = createSelector(
   selectTokenByAddressOrUndefined,
   (state: BeefyState) => state.entities.tokens.prices.byOracleId,
@@ -256,6 +258,20 @@ export const selectVaultReceiptTokenPrice = (
     vault.depositTokenAddress
   );
   return depositTokenPrice.times(receiptTokenPPFS);
+};
+
+/** Price by address, falling back to deposit token price × ppfs for otherwise-unpriced vault receipt tokens */
+export const selectTokenPriceByAddressWithReceiptFallback = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  address: TokenEntity['address']
+): BigNumber => {
+  const price = selectTokenPriceByAddress(state, chainId, address);
+  if (price.gt(BIG_ZERO)) {
+    return price;
+  }
+  const vault = selectVaultWithReceiptByAddressOrUndefined(state, chainId, address);
+  return vault ? selectVaultReceiptTokenPrice(state, vault.id) : price;
 };
 
 export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEntity['oracleId']) =>

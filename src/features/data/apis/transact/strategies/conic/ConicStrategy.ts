@@ -39,6 +39,7 @@ import {
   createSelectionId,
   onlyAssetCount,
   onlyOneInput,
+  onlyVaultShareInput,
   onlyOneToken,
   onlyOneTokenAmount,
 } from '../../helpers/options.ts';
@@ -50,7 +51,7 @@ import {
   pickTokens,
   wnativeToNative,
 } from '../../helpers/tokens.ts';
-import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
+import { getVaultSharesWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import {
   type ConicDepositOption,
@@ -58,6 +59,7 @@ import {
   type ConicWithdrawOption,
   type ConicWithdrawQuote,
   type InputTokenAmount,
+  isZapQuoteStepBuild,
   isZapQuoteStepSwap,
   isZapQuoteStepSwapAggregator,
   SelectionOrder,
@@ -124,7 +126,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
   }
 
   async fetchDepositOptions(): Promise<ConicDepositOption[]> {
-    const outputs = [this.vaultType.depositToken];
+    const outputs = [this.vaultType.shareToken];
     return this.tokens.map(token => {
       const inputs = [token];
       const selectionId = createSelectionId(this.vault.chainId, inputs);
@@ -178,7 +180,9 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
 
     const lpToken = this.vaultType.depositToken;
     const swapAmountOut = fromWei(swapAmountOutResult.toString(10), lpToken.decimals);
-    const outputs: TokenAmount[] = [{ token: lpToken, amount: swapAmountOut }];
+    const outputs: TokenAmount[] = [
+      this.vaultType.estimateDepositShares({ token: lpToken, amount: swapAmountOut }),
+    ];
     const returned: TokenAmount[] = [];
 
     const steps: ZapQuoteStep[] = [
@@ -214,10 +218,14 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
       const slippage = selectTransactSlippage(state);
 
       const input = onlyOneInput(quote.inputs);
-      const output = onlyOneTokenAmount(quote.outputs);
+      // contract min is denominated in the conic LP, taken from the build step (quote outputs are shares)
+      const buildStep = quote.steps.find(isZapQuoteStepBuild);
+      if (!buildStep) {
+        throw new Error('Invalid quote steps');
+      }
       const amountOutMin = toWeiString(
-        slipBy(output.amount, slippage, output.token.decimals),
-        output.token.decimals
+        slipBy(buildStep.outputAmount, slippage, buildStep.outputToken.decimals),
+        buildStep.outputToken.decimals
       );
       const isNative = isTokenNative(input.token);
       const data =
@@ -263,10 +271,11 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
 
       // CNC is rewarded by Conic if deposit rebalanced pool
       const CNC = { token: this.cnc, amount: BIG_ZERO };
+      const conicLp = { token: this.vaultType.depositToken, amount: BIG_ZERO };
       // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
       const dustOutputs: OrderOutput[] = quote.outputs
         .concat(quote.inputs)
-        .concat([CNC])
+        .concat([CNC, conicLp])
         .map(input => ({
           token: getTokenAddress(input.token),
           minOutputAmount: '0',
@@ -300,7 +309,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
   }
 
   async fetchWithdrawOptions(): Promise<ConicWithdrawOption[]> {
-    const inputs = [this.vaultType.depositToken];
+    const inputs = [this.vaultType.shareToken];
 
     return this.tokens.map(token => {
       const outputs = [token];
@@ -326,10 +335,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
     const { zap, swapAggregator, getState } = this.helpers;
 
     // Input
-    const input = onlyOneInput(inputs);
-    if (input.amount.lte(BIG_ZERO)) {
-      throw new Error('Quote called with 0 input amount');
-    }
+    const input = onlyVaultShareInput(inputs, this.vaultType.shareToken);
 
     // Output
     const desiredToken = onlyOneToken(option.wantedOutputs);
@@ -337,7 +343,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
     // Token Allowances
     const state = getState();
     const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, this.vault, state);
+      getVaultSharesWithdrawnFromState(input, this.vault, state);
     const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
     const allowances = [
       {
@@ -508,7 +514,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
         extraDustOutputs.push({ token: swapQuoteStep.quote.fromToken, amount: BIG_ZERO });
       }
 
-      // Build order (note: input to order is shares, but quote inputs are the deposit token)
+      // Build order
       const inputs: OrderInput[] = vaultWithdraw.inputs.map(input => ({
         token: getTokenAddress(input.token),
         amount: toWeiString(input.amount, input.token.decimals),
@@ -527,6 +533,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
       const dustOutputs: OrderOutput[] = pickTokens(
         extraDustOutputs,
         vaultWithdraw.inputs,
+        vaultWithdraw.outputs,
         quote.inputs,
         quote.outputs,
         quote.returned

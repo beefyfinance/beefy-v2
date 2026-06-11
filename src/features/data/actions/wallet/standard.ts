@@ -16,8 +16,9 @@ import {
   selectErc20TokenByAddress,
   selectTokenByAddress,
 } from '../../selectors/tokens.ts';
-import { getVaultWithdrawnFromContract } from '../../apis/transact/helpers/vault.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
+import { selectVaultPricePerFullShare } from '../../selectors/vaults.ts';
+import { mooAmountToOracleAmount } from '../../utils/ppfs.ts';
 import { StandardVaultAbi } from '../../../../config/abi/StandardVaultAbi.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import type { Address } from 'viem';
@@ -89,7 +90,7 @@ export const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => 
   });
 };
 
-export const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) => {
+export const withdraw = (vault: VaultStandard, shareAmount: BigNumber, max: boolean) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -103,16 +104,14 @@ export const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boo
     const walletClient = await walletApi.getConnectedViemClient();
     const chain = selectChainById(state, vault.chainId);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-
-    const { sharesToWithdrawWei } = await getVaultWithdrawnFromContract(
-      {
-        token: depositToken,
-        amount: oracleAmount,
-        max,
-      },
-      vault,
-      state,
-      address
+    const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
+    const sharesToWithdrawWei = toWei(shareAmount, shareToken.decimals);
+    // deposit-token estimate for tx tracking display only
+    const oracleAmount = mooAmountToOracleAmount(
+      shareToken,
+      depositToken,
+      selectVaultPricePerFullShare(state, vault.id),
+      shareAmount
     );
 
     const native = selectChainNativeToken(state, vault.chainId);

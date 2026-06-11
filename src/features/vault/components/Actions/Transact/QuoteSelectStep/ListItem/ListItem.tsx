@@ -5,7 +5,11 @@ import { TokenAmountFromEntity } from '../../../../../../../components/TokenAmou
 import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../../data/store/hooks.ts';
 import ChevronRight from '../../../../../../../images/icons/mui/ChevronRight.svg?react';
-import { selectTransactQuoteById } from '../../../../../../data/selectors/transact.ts';
+import { areTokenAmountsEqual } from '../../../../../../data/apis/transact/helpers/tokens.ts';
+import {
+  selectTokenAmountsForDisplay,
+  selectTransactQuoteById,
+} from '../../../../../../data/selectors/transact.ts';
 import { QuoteTitle } from '../../QuoteTitle/QuoteTitle.tsx';
 import { styles } from './styles.ts';
 
@@ -20,12 +24,16 @@ export const ListItem = memo(function ListItem({ quoteId, css: cssProp, onSelect
   const classes = useStyles();
   const quote = useAppSelector(state => selectTransactQuoteById(state, quoteId));
   const handleClick = useCallback(() => onSelect(quoteId), [onSelect, quoteId]);
+  const displayOutputs = useAppSelector(
+    state => selectTokenAmountsForDisplay(state, quote.outputs, quote.option.vaultId),
+    areTokenAmountsEqual
+  );
   const outputs = useMemo(
     () =>
-      quote.outputs.map(output => (
+      displayOutputs.map(output => (
         <TokenAmountFromEntity token={output.token} amount={output.amount} key={output.token.id} />
       )),
-    [quote]
+    [displayOutputs]
   );
 
   return (
