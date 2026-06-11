@@ -7,9 +7,9 @@
     "output": {
       "vault": {
         "ids": [
-          "pancake-cow-base-sol-usdc-vault",
-          "pancake-cow-base-sol-cbbtc-v2-vault",
-          "pancake-cow-base-sol-jitosol-vault"
+          "pancakeswap-cow-base-sol-usdc-vault",
+          "pancakeswap-cow-base-sol-cbbtc-vault",
+          "pancakeswap-cow-base-sol-jitosol-vault"
         ]
       }
     }

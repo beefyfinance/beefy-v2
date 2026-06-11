@@ -90,6 +90,9 @@ const nonHarvestOnDepositPools = [
   'shadow-cow-sonic-ws-bes-vault',
   'pancake-cow-base-sol-cbbtc-vault',
   'pancake-cow-base-sol-jitosol-vault',
+  'pancakeswap-cow-base-sol-usdc-vault',
+  'pancakeswap-cow-base-sol-cbbtc-vault',
+  'pancakeswap-cow-base-sol-jitosol-vault',
 ];
 const isCowAerodromeWith10sec = (pool: VaultConfigWithStrategyData) =>
   ['velodrome', 'aerodrome'].includes(pool.platformId) &&
