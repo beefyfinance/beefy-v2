@@ -431,13 +431,18 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   }
 
   public async disconnect() {
-    // before the await, so a failed disconnectWallet() can't leave it stale
+    // set before the await: onboard emits [] mid-teardown so onWalletDisconnect fires once
     this.hasConnectedWallet = false;
     // Disconnect Wallet
     if (this.onboard) {
       const { wallets } = this.onboard.state.get();
       if (wallets.length) {
-        await this.onboard.disconnectWallet({ label: wallets[0].label });
+        try {
+          await this.onboard.disconnectWallet({ label: wallets[0].label });
+        } catch (err) {
+          this.hasConnectedWallet = this.isConnected();
+          throw err;
+        }
       }
     }
 
@@ -579,8 +584,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       const isConnected = !!wallet && wallet.accounts.length > 0 && wallet.chains.length > 0;
 
       if (!isConnected) {
-        // onboard emits disconnected-looking states mid-connect (e.g. first emission after
-        // subscribing is unconditional); only a connected -> disconnected transition is real
+        // onboard emits disconnected-looking states mid-connect
+        // only connected -> disconnected transition is real
         if (this.hasConnectedWallet) {
           this.hasConnectedWallet = false;
           this.options.onWalletDisconnected();
