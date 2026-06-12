@@ -10,7 +10,6 @@ import {
 } from '../reducers/wallet/wallet.ts';
 import { selectAllChainIds } from '../selectors/chains.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
-import { featureFlag_walletDebug } from '../utils/feature-flags.ts';
 import { startAppListening } from './listener-middleware.ts';
 
 const hasWalletChanged = isAnyOf(
@@ -31,7 +30,7 @@ export function addWalletListeners() {
   startAppListening({
     matcher: hasWalletChanged,
     effect: async (
-      action,
+      _action,
       { dispatch, delay, cancelActiveListeners, getState, getOriginalState }
     ) => {
       const state = getState();
@@ -39,23 +38,10 @@ export function addWalletListeners() {
       const previousAddress = selectWalletAddress(getOriginalState());
       const hasWalletChanged = walletAddress !== previousAddress;
       if (hasWalletChanged) {
-        if (featureFlag_walletDebug()) {
-          console.debug(
-            `[wallet ${(performance.now() / 1000).toFixed(3)}s]`,
-            `address changed ${previousAddress} -> ${walletAddress} (action: ${action.type})`,
-            walletAddress ? 'refetching all balances' : 'no address, skipping refetch'
-          );
-        }
-
         const formAddress = previousAddress ?? lastWalletAddress;
         lastWalletAddress = walletAddress ?? previousAddress;
         if (walletAddress && formAddress && walletAddress !== formAddress) {
           // switched to a different account: form inputs/quotes were built for the old one
-          if (featureFlag_walletDebug()) {
-            console.debug(
-              `[wallet] account changed ${formAddress} -> ${walletAddress}, clearing transact input`
-            );
-          }
           dispatch(transactClearInput());
         }
 

@@ -9,28 +9,12 @@ import {
 } from '../reducers/wallet/wallet.ts';
 import { selectAllChains } from '../selectors/chains.ts';
 import { selectIsInMiniApp, selectIsWalletConnected } from '../selectors/wallet.ts';
-import {
-  featureFlag_walletAddressOverride,
-  featureFlag_walletDebug,
-} from '../utils/feature-flags.ts';
+import { featureFlag_walletAddressOverride } from '../utils/feature-flags.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { transactSetSuccessClosed } from './transact.ts';
 import { stepperReset } from './wallet/stepper.ts';
 import { createWalletActionResetAction } from './wallet/wallet-action.ts';
 import { selectHasWalletInitialized } from '../selectors/data-loader/wallet.ts';
-import type { BeefyState } from '../store/types.ts';
-
-function debugWalletState(state: BeefyState, event: string, payload?: unknown) {
-  if (featureFlag_walletDebug()) {
-    const { address, connectedAddress } = state.user.wallet;
-    console.debug(
-      `[wallet ${(performance.now() / 1000).toFixed(3)}s]`,
-      event,
-      payload ?? '',
-      `(before: address=${address}, connectedAddress=${connectedAddress})`
-    );
-  }
-}
 
 export const initWallet = createAppAsyncThunk(
   'wallet/initWallet',
@@ -41,32 +25,20 @@ export const initWallet = createAppAsyncThunk(
     // instantiate and do the proper piping between both worlds
     const walletApi = await getWalletConnectionApi({
       chains,
-      onConnect: (chainId, address) => {
-        debugWalletState(getState(), 'onConnect', { chainId, address });
-        dispatch(userDidConnect({ chainId, address: featureFlag_walletAddressOverride(address) }));
-      },
-      onAccountChanged: address => {
-        debugWalletState(getState(), 'onAccountChanged', { address });
-        dispatch(accountHasChanged({ address: featureFlag_walletAddressOverride(address) }));
-      },
-      onChainChanged: (chainId, address) => {
-        debugWalletState(getState(), 'onChainChanged', { chainId, address });
-        dispatch(chainHasChanged({ chainId, address: featureFlag_walletAddressOverride(address) }));
-      },
-      onUnsupportedChainSelected: (networkChainId, address) => {
-        debugWalletState(getState(), 'onUnsupportedChainSelected', { networkChainId, address });
+      onConnect: (chainId, address) =>
+        dispatch(userDidConnect({ chainId, address: featureFlag_walletAddressOverride(address) })),
+      onAccountChanged: address =>
+        dispatch(accountHasChanged({ address: featureFlag_walletAddressOverride(address) })),
+      onChainChanged: (chainId, address) =>
+        dispatch(chainHasChanged({ chainId, address: featureFlag_walletAddressOverride(address) })),
+      onUnsupportedChainSelected: (networkChainId, address) =>
         dispatch(
           chainHasChangedToUnsupported({
             networkChainId,
             address: featureFlag_walletAddressOverride(address),
           })
-        );
-      },
+        ),
       onWalletDisconnected: () => {
-        debugWalletState(getState(), 'onWalletDisconnected: dispatching reset bundle');
-        if (featureFlag_walletDebug()) {
-          console.trace('[wallet] onWalletDisconnected call stack');
-        }
         dispatch(createWalletActionResetAction());
         dispatch(transactSetSuccessClosed(false));
         dispatch(stepperReset());
@@ -88,7 +60,6 @@ export const tryToAutoReconnect = createAppAsyncThunk(
   async (_, { getState }) => {
     const state = getState();
     if (!selectIsWalletConnected(state)) {
-      debugWalletState(state, 'tryToAutoReconnect: attempting');
       const walletConnection = await getWalletConnectionApi();
       await walletConnection.tryToAutoReconnect();
     }
@@ -111,9 +82,8 @@ export const tryToAutoConnectToEip6936Wallet = createAppAsyncThunk(
 
 export const askForWalletConnection = createAppAsyncThunk(
   'wallet/askForWalletConnection',
-  async (_, { getState }) => {
+  async () => {
     try {
-      debugWalletState(getState(), 'askForWalletConnection: starting');
       const walletConnection = await getWalletConnectionApi();
       await walletConnection.askUserToConnectIfNeeded();
     } catch (err) {

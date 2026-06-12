@@ -24,10 +24,7 @@ import appLogo from '../../../../images/bifi-logos/header-logo.svg';
 import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url';
 import type { ChainEntity } from '../../entities/chain.ts';
 import { isDefined } from '../../utils/array-utils.ts';
-import {
-  featureFlag_walletConnectChainId,
-  featureFlag_walletDebug,
-} from '../../utils/feature-flags.ts';
+import { featureFlag_walletConnectChainId } from '../../utils/feature-flags.ts';
 import { customInjectedWallets } from './custom-injected-wallets.ts';
 import type { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types.ts';
 
@@ -39,12 +36,6 @@ declare const window: {
 const walletConnectImages: Record<string, string> = {
   '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489': fireblocksLogo,
 };
-
-function debugWallet(...args: unknown[]) {
-  if (featureFlag_walletDebug()) {
-    console.debug(`[wallet ${(performance.now() / 1000).toFixed(3)}s]`, ...args);
-  }
-}
 
 function isEip6963Event(e: Event): e is EIP6963AnnounceProviderEvent {
   return (
@@ -322,7 +313,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         autoSelect: { label: autoConnectWallet, disableModals: true },
       });
     } catch (err) {
-      debugWallet('tryToAutoReconnect failed, clearing lastConnectedWallet', err);
       // We clear last connected wallet here so that attempting to reconnect opens the modal
       // rather than trying to reconnect to previous wallet that just failed/was rejected.
       WalletConnectionApi.setLastConnectedWallet(undefined);
@@ -379,7 +369,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     // Automatically pick last connected wallet if available
     const autoConnectWallet = await this.getWalletForAutoConnect();
-    debugWallet('askUserToConnectIfNeeded', { autoConnectWallet });
 
     // Connect
     try {
@@ -389,9 +378,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
           { autoSelect: { label: autoConnectWallet, disableModals: false } }
         : undefined
       );
-      debugWallet('askUserToConnectIfNeeded: connect resolved');
     } catch (err) {
-      debugWallet('askUserToConnectIfNeeded failed, clearing lastConnectedWallet', err);
       // We clear last connected wallet here so that attempting to reconnect opens the modal
       // rather than trying to reconnect to previous wallet that just failed/was rejected.
       WalletConnectionApi.setLastConnectedWallet(undefined);
@@ -444,7 +431,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   }
 
   public async disconnect() {
-    debugWallet('disconnect() called (explicit)');
     // before the await, so a failed disconnectWallet() can't leave it stale
     this.hasConnectedWallet = false;
     // Disconnect Wallet
@@ -589,15 +575,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   private subscribeToOnboardEvents(onboard: OnboardAPI) {
     const wallets = onboard.state.select('wallets');
     return wallets.subscribe(wallets => {
-      debugWallet(
-        'onboard wallets emission',
-        wallets.map(w => ({
-          label: w.label,
-          accounts: w.accounts.map(a => a.address),
-          chains: w.chains.map(c => c.id),
-          provider: !!w.provider,
-        }))
-      );
       const wallet = wallets[0];
       const isConnected = !!wallet && wallet.accounts.length > 0 && wallet.chains.length > 0;
 
@@ -606,10 +583,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         // subscribing is unconditional); only a connected -> disconnected transition is real
         if (this.hasConnectedWallet) {
           this.hasConnectedWallet = false;
-          debugWallet('-> onWalletDisconnected');
           this.options.onWalletDisconnected();
-        } else {
-          debugWallet('-> ignored (was not connected)');
         }
         return;
       }
@@ -625,10 +599,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
 
       if (chain) {
-        debugWallet(`-> onChainChanged (${chain.id}, ${account.address})`);
         this.options.onChainChanged(chain.id, account.address);
       } else {
-        debugWallet(`-> onUnsupportedChainSelected (${networkChainId}, ${account.address})`);
         this.options.onUnsupportedChainSelected(networkChainId, account.address);
       }
     });
