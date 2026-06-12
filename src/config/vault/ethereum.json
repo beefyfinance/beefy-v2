@@ -1,5 +1,54 @@
 [
   {
+    "id": "stakedao-usg-sdola",
+    "name": "USG/sDOLA",
+    "type": "standard",
+    "token": "USGsDOLA",
+    "tokenAddress": "0x317837AED98bea887074d1f97Fd3C83eBCA6905b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xFfa2E326c59709F9751A8bb617C0E8026fc9DCd7",
+    "earnedToken": "mooStakeDao-USG-sDOLA",
+    "earnedTokenAddress": "0xFfa2E326c59709F9751A8bb617C0E8026fc9DCd7",
+    "oracle": "lps",
+    "oracleId": "curve-usg-sdola",
+    "status": "active",
+    "createdAt": 1781242771,
+    "platformId": "stakedao",
+    "assets": ["USG", "sDOLA"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-895/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-895/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x317837AED98bea887074d1f97Fd3C83eBCA6905b",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x317837AED98bea887074d1f97Fd3C83eBCA6905b",
+            "coins": [
+              "0xB1c2Db5d6cA03FCe73dBd304d320bF76C55Ae1B1",
+              "0xb45ad160634c528Cc3D2926d9807104FA3157305"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "morpho-v2-ethereum-steakhouse-reservoir-usdc",
     "name": "USDC (Steakhouse, Reservoir V2)",
     "type": "standard",
