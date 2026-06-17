@@ -23497,6 +23497,125 @@
     ]
   },
   {
+    "id": "aerodrome-cow-base-ctr-usdc-vault",
+    "name": "CTR-USDC",
+    "type": "standard",
+    "token": "CTR-USDC",
+    "tokenAddress": "0x795F9f5892190b7B4b8C0Cba9905399FeefDCE11",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xb24189f9B68F654016e2C8F8166b12b516e29cb6",
+    "earnedToken": "mooCowAerodromeCTR-USDC",
+    "earnedTokenAddress": "0xb24189f9B68F654016e2C8F8166b12b516e29cb6",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-ctr-usdc",
+    "status": "active",
+    "createdAt": 1781278469,
+    "platformId": "aerodrome",
+    "assets": ["CTR", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-ctr-usdc-rp",
+    "name": "CTR-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeCTR-USDC",
+    "tokenAddress": "0x795F9f5892190b7B4b8C0Cba9905399FeefDCE11",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xbEDC28C4dbae074bA41BA8Ab56786187ca0f015e",
+    "earnedToken": "rCowAerodromeCTR-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-ctr-usdc",
+    "status": "active",
+    "createdAt": 1781278453,
+    "platformId": "aerodrome",
+    "assets": ["CTR", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-ctr-usdc",
+    "name": "CTR-USDC",
+    "type": "cowcentrated",
+    "token": "CTR-USDC aerodrome",
+    "tokenAddress": "0x0ab02e160f0df68dc049B012c514857306960Eae",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x11030f79109269d796fd0FB956D6244e502757f7",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0x795F9f5892190b7B4b8C0Cba9905399FeefDCE11",
+    "earnedToken": "cowAerodromeCTR-USDC",
+    "earnedTokenAddress": "0x795F9f5892190b7B4b8C0Cba9905399FeefDCE11",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-ctr-usdc",
+    "status": "active",
+    "createdAt": 1781278447,
+    "platformId": "beefy",
+    "feeTier": "0.01",
+    "tickSpacing": 1,
+    "assets": ["CTR", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-tea-usdc-vault",
     "name": "TEA-USDC",
     "type": "standard",
