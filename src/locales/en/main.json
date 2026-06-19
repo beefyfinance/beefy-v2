@@ -288,6 +288,7 @@
   "Vault-RetireReason-AerodromeMigration26": "This {{type}} has been retired. Aerodrome has upgraded this gauge and migrated rewards. To continue earning, please migrate to a replacement CLM following the suggestion in the banner above.",
   "Vault-PauseReason-upgrade": "This {{type}} is paused pending a strategy upgrade. New deposits are temporarily unavailable.",
   "Vault-PauseReason-rewards": "This {{type}} is paused as the underlying platform has temporarily stopped rewards. New deposits are temporarily unavailable.",
+  "Vault-PauseReason-liquidityPanic": "This {{type}} is paused due to potential liquidity concerns that remain under investigation. New deposits are temporarily unavailable. All funds have been removed from deployment and remain withdrawable in the Beefy strategy.",
   "Vault-PauseReason-viability": "This {{type}} is paused while it's future viability is being investigated. New deposits are temporarily unavailable.",
   "Vault-PauseReason-ren-sunset": "This {{type}} is paused to new deposits due to the sunsetting of Ren 1.0",
   "Vault-PauseReason-default": "This {{type}} is paused. New deposits are temporarily unavailable.",
