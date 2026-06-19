@@ -2681,59 +2681,6 @@
     ]
   },
   {
-    "id": "curve-poly-crvusd-dai",
-    "name": "crvUSD/DAI",
-    "type": "standard",
-    "token": "crvusddai",
-    "tokenAddress": "0x62c949ee985b125Ff2d7ddcf4Fe7AEcB0a040E2a",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnContractAddress": "0xC97f5E2169CB182ab32F9BdE30a60051008a459f",
-    "earnedToken": "mooCurveCrvUSD-DAI",
-    "earnedTokenAddress": "0xC97f5E2169CB182ab32F9BdE30a60051008a459f",
-    "oracle": "lps",
-    "oracleId": "curve-poly-crvusd-dai",
-    "status": "eol",
-    "createdAt": 1707298143,
-    "retireReason": "rewards",
-    "retiredAt": 1724851479,
-    "platformId": "curve",
-    "assets": ["crvUSD", "DAI"],
-    "migrationIds": ["l2-convex", "l2-curve"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-29/swap",
-    "addLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-29/deposit",
-    "removeLiquidityUrl": "https://curve.finance/#/polygon/pools/factory-stable-ng-29/withdraw",
-    "network": "polygon",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0x62c949ee985b125Ff2d7ddcf4Fe7AEcB0a040E2a",
-        "methods": [
-          {
-            "type": "dynamic-deposit",
-            "target": "0x62c949ee985b125Ff2d7ddcf4Fe7AEcB0a040E2a",
-            "coins": [
-              "0xc4Ce1D6F5D98D65eE25Cf85e9F2E9DcFEe6Cb5d6",
-              "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "quick-gamma-fxcbeth-weth",
     "name": "cbETH-ETH Pegged LP",
     "type": "standard",

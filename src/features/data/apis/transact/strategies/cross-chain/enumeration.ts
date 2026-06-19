@@ -1,3 +1,4 @@
+import { isVaultBlacklistedForV2V } from '../../../../../../config/vault-to-vault/blacklist.ts';
 import { isFulfilledResult, isRejectedResult } from '../../../../../../helpers/promises.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
 import type { VaultEntity } from '../../../../entities/vault.ts';
@@ -40,6 +41,7 @@ export async function enumerateSrcVaultCandidates(
   const survivors: { vaultId: VaultEntity['id']; chainId: ChainEntity['id'] }[] = [];
   for (const vaultId of userVaultIds) {
     if (vaultId === destVaultId) continue;
+    if (isVaultBlacklistedForV2V(vaultId)) continue;
     const vault = selectVaultById(state, vaultId);
     if (!vault) continue;
     if (!allowedChains.has(vault.chainId)) continue;
@@ -82,6 +84,7 @@ export async function enumerateDstVaultCandidates(
     if (!isCrossChainHopEligible(srcVault.chainId, chainId)) continue;
     const vaultIds = selectVaultIdsByChainIdIncludingHidden(state, chainId);
     for (const vaultId of vaultIds) {
+      if (isVaultBlacklistedForV2V(vaultId)) continue;
       survivors.push({ vaultId, chainId });
     }
   }

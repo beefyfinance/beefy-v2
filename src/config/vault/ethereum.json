@@ -1,5 +1,63 @@
 [
   {
+    "id": "stakedao-mim-2pool",
+    "name": "MIM/USDC/USDT",
+    "type": "standard",
+    "token": "MIM2pool",
+    "tokenAddress": "0x579a9A9d43f9C112dEe359e09a87a44F2718a483",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xF15e182a37A8Be577eE7840dF30cCA16184627F4",
+    "earnedToken": "mooStakeDao-MIM-2pool",
+    "earnedTokenAddress": "0xF15e182a37A8Be577eE7840dF30cCA16184627F4",
+    "oracle": "lps",
+    "oracleId": "curve-mim-2pool",
+    "status": "active",
+    "createdAt": 1781848898,
+    "platformId": "stakedao",
+    "assets": ["MIM", "USDC", "USDT"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-936/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-936/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x579a9A9d43f9C112dEe359e09a87a44F2718a483",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x579a9A9d43f9C112dEe359e09a87a44F2718a483",
+            "coins": [
+              "0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3",
+              "0x4f493B7dE8aAC7d55F71853688b1F7C8F0243C85"
+            ]
+          },
+          {
+            "type": "pool-dynamic-deposit",
+            "target": "0xe07a16358aa878cbda2d49a88e5106871e0db307",
+            "coins": [
+              "0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "stakedao-scrvusd-susde",
     "name": "scrvUSD/sUSDe",
     "type": "standard",
