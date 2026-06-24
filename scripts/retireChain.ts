@@ -11,6 +11,7 @@ import { sortVaultKeys } from './common/vault-fields.ts';
 type RunArgs = {
   help?: boolean;
   chain: string;
+  reason: string;
 };
 
 const runArgsConfig: ArgumentConfig<RunArgs> = {
@@ -24,6 +25,12 @@ const runArgsConfig: ArgumentConfig<RunArgs> = {
     type: String,
     defaultOption: true,
     description: 'Chain id to retire (e.g. mantle, metis)',
+  },
+  reason: {
+    type: String,
+    alias: 'r',
+    defaultValue: 'rewards',
+    description: "retireReason applied to EOL'd vaults (e.g. rewards, tvl)",
   },
 };
 
@@ -159,7 +166,7 @@ async function main() {
       return sortVaultKeys({
         ...rest,
         status: 'eol',
-        retireReason: 'rewards',
+        retireReason: args.reason,
         retiredAt: timestamp,
       } as VaultConfig);
     });
