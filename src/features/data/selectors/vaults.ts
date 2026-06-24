@@ -121,16 +121,21 @@ function getMatchingWrapperId(
 }
 
 /**
- * Resolve the old/new wrapper pair for the replacement-vault migration card, given the OLD page
+ * Resolve the old/new vault pair for the replacement-vault migration card, given the OLD page
  * vault. The card only shows on the OLD vault page, so this only resolves when the page vault is
  * the source (old) side.
  *
- * `replacementVaultId` is set on the naked CLM, but users hold a wrapper (gov "-rp" pool or
- * standard "-vault"). So we map the page wrapper -> its CLM -> the replacement CLM -> the wrapper
- * of the SAME kind (pool->pool, vault->vault).
+ * Two cases:
+ * - CLM wrappers: `replacementVaultId` is set on the naked CLM, but users hold a wrapper (gov "-rp"
+ *   pool or standard "-vault"). So we map the page wrapper -> its CLM -> the replacement CLM -> the
+ *   wrapper of the SAME kind (pool->pool, vault->vault).
+ * - Common vaults (standard / gov / erc4626): users hold the vault directly, so `replacementVaultId`
+ *   is set on the vault itself and points straight at the new vault.
  *
- * Returns undefined if the page vault is not a cowcentrated wrapper declaring a replacement, or if
- * the matching wrapper on the new side does not exist.
+ * Returns undefined if the page vault declares no (resolvable) replacement, e.g. a CLM wrapper whose
+ * matching wrapper on the new side does not exist, or a (common) vault whose replacement target is
+ * unknown, self-referential, or paused/retired. The old vault's own status is not gated: an active
+ * vault may steer holders to its replacement.
  */
 export const selectVaultReplacementMigration = createCachedSelector(
   (_state: BeefyState, pageVaultId: VaultEntity['id']) => pageVaultId,
@@ -138,22 +143,29 @@ export const selectVaultReplacementMigration = createCachedSelector(
   (pageVaultId, byId): VaultReplacementMigration | undefined => {
     const pageVault = byId[pageVaultId];
     if (!pageVault) return undefined;
-    // only wrapper vaults (gov pool / standard vault) are user-holdable; naked CLM is hidden
-    let kind: 'pool' | 'vault';
-    if (isCowcentratedGovVault(pageVault)) {
-      kind = 'pool';
-    } else if (isCowcentratedStandardVault(pageVault)) {
-      kind = 'vault';
-    } else {
-      return undefined;
+
+    // CLM wrappers (gov pool / standard vault) are the user-holdable side; the replacement is
+    // declared on their hidden naked CLM, so map page wrapper -> CLM -> replacement CLM -> wrapper
+    // of the SAME kind.
+    if (isCowcentratedGovVault(pageVault) || isCowcentratedStandardVault(pageVault)) {
+      const kind = isCowcentratedGovVault(pageVault) ? 'pool' : 'vault';
+      const newClmId = byId[pageVault.cowcentratedIds.clm]?.replacementVaultId;
+      if (!newClmId) return undefined;
+
+      const newWrapperId = getMatchingWrapperId(byId, newClmId, kind);
+      return newWrapperId ? { oldVaultId: pageVaultId, newVaultId: newWrapperId } : undefined;
     }
 
-    // the page wrapper's CLM declares a replacement CLM
-    const newClmId = byId[pageVault.cowcentratedIds.clm]?.replacementVaultId;
-    if (!newClmId) return undefined;
+    // naked CLM is hidden / not user-holdable; only common vaults declare the replacement directly
+    if (isCowcentratedLikeVault(pageVault)) return undefined;
 
-    const newWrapperId = getMatchingWrapperId(byId, newClmId, kind);
-    return newWrapperId ? { oldVaultId: pageVaultId, newVaultId: newWrapperId } : undefined;
+    const newVaultId = pageVault.replacementVaultId;
+    if (!newVaultId || newVaultId === pageVaultId) return undefined;
+
+    const newVault = byId[newVaultId];
+    if (!newVault || isVaultPausedOrRetired(newVault)) return undefined;
+
+    return { oldVaultId: pageVaultId, newVaultId };
   }
 )((_state: BeefyState, pageVaultId: VaultEntity['id']) => pageVaultId);
 

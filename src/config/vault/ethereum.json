@@ -31,7 +31,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x90B70c407f1077F8eb92Bf423b44CD92329b737a/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x90B70c407f1077F8eb92Bf423b44CD92329b737a/zap/out?chain=ethereum",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xdDC0f880ff6e4e22E4B74632fBb43Ce4DF6cCC5a"]
+      }
+    ]
   },
   {
     "id": "pendle-reusd-10dec26",
@@ -49,7 +55,7 @@
     "status": "active",
     "createdAt": 1782299143,
     "platformId": "pendle",
-    "assets": ["reUSD"],
+    "assets": ["reUSDxyz"],
     "pointStructureIds": ["re.xyz", "ethena"],
     "migrationIds": [],
     "risks": {
@@ -65,7 +71,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x13285bCbc27F92b47B4EDB99D744C07B48C977c0/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x13285bCbc27F92b47B4EDB99D744C07B48C977c0/zap/out?chain=ethereum",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x5086bf358635B81D8C47C66d1C8b9E567Db70c72"]
+      }
+    ]
   },
   {
     "id": "stakedao-mim-2pool",
@@ -1704,7 +1716,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xaC24A6f0068d9701EAEa76AB0B418021017F8D59/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xaC24A6f0068d9701EAEa76AB0B418021017F8D59/zap/out?chain=ethereum",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x88887bE419578051FF9F4eb6C858A951921D8888"]
+      }
+    ]
   },
   {
     "id": "pendle-cusd-23jul26",
@@ -1738,7 +1756,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9EaAedA23177B7168c55a3A0F937f67919733449/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9EaAedA23177B7168c55a3A0F937f67919733449/zap/out?chain=ethereum",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xcCcc62962d17b8914c62D74FfB843d73B2a3cccC"]
+      }
+    ]
   },
   {
     "id": "stakedao-frxusd-ousd",
@@ -2135,6 +2159,7 @@
     "platformId": "magpie",
     "assets": ["reUSDe"],
     "migrationIds": ["magpie"],
+    "replacementVaultId": "pendle-reusde-10dec26",
     "pointStructureIds": ["re.xyz", "ethena"],
     "risks": {
       "complex": false,
@@ -2149,7 +2174,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6CB9A013604A567a5834fadD411165B1ca616783/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6CB9A013604A567a5834fadD411165B1ca616783/zap/out?chain=ethereum",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xdDC0f880ff6e4e22E4B74632fBb43Ce4DF6cCC5a"]
+      }
+    ]
   },
   {
     "id": "pendle-reusd-25jun26",
@@ -2170,6 +2201,7 @@
     "assets": ["reUSDxyz"],
     "icons": ["reUSDxyz"],
     "migrationIds": ["magpie"],
+    "replacementVaultId": "pendle-reusd-10dec26",
     "pointStructureIds": ["re.xyz", "ethena"],
     "risks": {
       "complex": false,
@@ -2184,7 +2216,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf5929a1C332ceaB7918A4593a43Db2B9aC20095f/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf5929a1C332ceaB7918A4593a43Db2B9aC20095f/zap/out?chain=ethereum",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x5086bf358635B81D8C47C66d1C8b9E567Db70c72"]
+      }
+    ]
   },
   {
     "id": "balancerv3-ethereum-oseth-waethweth",
