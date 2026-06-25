@@ -31,6 +31,7 @@ import {
   createSelectionId,
   onlyInputCount,
   onlyOneInput,
+  onlyVaultShareInput,
 } from '../helpers/options.ts';
 import { getVaultSharesWithdrawnFromState } from '../helpers/vault.ts';
 import { getInsertIndex, getTokenAddress } from '../helpers/zap.ts';
@@ -271,15 +272,7 @@ export class Erc4626VaultType implements IErc4626VaultType {
     inputs: InputTokenAmount[],
     option: Erc4626VaultWithdrawOption
   ): Promise<Erc4626VaultWithdrawQuote> {
-    const input = onlyOneInput(inputs);
-
-    if (input.amount.lte(BIG_ZERO)) {
-      throw new Error('Quote called with 0 input amount');
-    }
-
-    if (!isTokenEqual(input.token, this.shareToken)) {
-      throw new Error('Quote called with invalid input token');
-    }
+    const input = onlyVaultShareInput(inputs, this.shareToken);
 
     const state = this.getState();
     const { withdrawnAmountAfterFeeWei } = getVaultSharesWithdrawnFromState(

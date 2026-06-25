@@ -37,6 +37,7 @@ import {
   createSelectionId,
   onlyInputCount,
   onlyOneInput,
+  onlyVaultShareInput,
 } from '../helpers/options.ts';
 import {
   getVaultSharesWithdrawnFromContract,
@@ -348,15 +349,7 @@ export class StandardVaultType implements IStandardVaultType {
     inputs: InputTokenAmount[],
     option: StandardVaultWithdrawOption
   ): Promise<StandardVaultWithdrawQuote> {
-    const input = onlyOneInput(inputs);
-
-    if (input.amount.lte(BIG_ZERO)) {
-      throw new Error('Quote called with 0 input amount');
-    }
-
-    if (!isTokenEqual(input.token, this.shareToken)) {
-      throw new Error('Quote called with invalid input token');
-    }
+    const input = onlyVaultShareInput(inputs, this.shareToken);
 
     const state = this.getState();
     const { withdrawnAmountAfterFeeWei } = getVaultSharesWithdrawnFromState(
