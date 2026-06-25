@@ -865,6 +865,7 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
     }));
 
     // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
+    // (built LP omitted: depositAll consumes it in full, so no residue can be stranded)
     const dustOutputs: OrderOutput[] = pickTokens(quote.outputs, quote.inputs, quote.returned).map(
       token => ({
         token: getTokenAddress(token),
