@@ -55,10 +55,7 @@ const Layout = styled('div', {
   base: {
     display: 'flex',
     flexWrap: 'wrap',
-    gap: '12px',
-    sm: {
-      gap: '8px',
-    },
+    gap: '10px',
   },
 });
 
@@ -89,7 +86,7 @@ const Bottom = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    gap: 'inherit',
+    gap: '8px',
     md: {
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fit, minmax(0px, 1fr))',
@@ -97,7 +94,7 @@ const Bottom = styled('div', {
     lg: {
       display: 'flex',
       flexDirection: 'inherit',
-      gap: 'inherit',
+      gap: '8px',
       width: '100%',
     },
   },

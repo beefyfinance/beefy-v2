@@ -52,7 +52,7 @@ const HeaderContainer = styled('div', {
     backgroundColor: 'background.header',
     paddingBlock: '12px 16px',
     sm: {
-      paddingBlock: '8px 24px',
+      paddingBlock: '8px 12px',
     },
   },
 });

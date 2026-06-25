@@ -114,7 +114,7 @@ const Container = styled('div', {
     gap: '6px',
     paddingBlock: '12px 16px',
     sm: {
-      paddingBlock: '8px 24px',
+      paddingBlock: '8px 12px',
     },
   },
 });

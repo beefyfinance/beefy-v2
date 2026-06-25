@@ -49,10 +49,10 @@ export const styles = {
     textStyle: 'body.medium',
   }),
   error: css.raw({
-    border: '1px solid {colors.indicators.error}',
+    border: '1px solid {colors.transactErrorBackground}',
   }),
   warning: css.raw({
-    border: '1px solid {colors.indicators.warning}',
+    border: '1px solid {colors.transactWarningBackground}',
   }),
   fullWidth: css.raw({
     width: '100%',

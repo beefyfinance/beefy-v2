@@ -200,7 +200,7 @@ const Section = styled('div', {
     flexDirection: 'column',
     rowGap: '12px',
     paddingTop: '12px',
-    marginBottom: '14px',
+    marginBottom: '10px',
     borderRadius: '16px',
     overflow: 'hidden',
     background: 'background.content.dark',
