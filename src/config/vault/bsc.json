@@ -1,7 +1,7 @@
 [
   {
     "id": "uniswap-cow-bsc-usdt-cap-rp",
-    "name": "USDT-CAP Reward Pool",
+    "name": "CAP-USDT Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapBSCCAP-USDT",
@@ -17,7 +17,7 @@
     "status": "active",
     "createdAt": 1782499257,
     "platformId": "uniswap",
-    "assets": ["USDT", "CAP"],
+    "assets": ["CAP", "USDT"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -58,7 +58,7 @@
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 60,
-    "assets": ["USDT", "CAP"],
+    "assets": ["CAP", "USDT"],
     "risks": {
       "complex": true,
       "curated": false,
