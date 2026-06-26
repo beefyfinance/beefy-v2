@@ -736,6 +736,43 @@
     ]
   },
   {
+    "id": "euler-monad-alphagrowth-ausd",
+    "name": "AUSD (AlphaGrowth)",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x7C80e8F83cb8AbA22B9606219129b88d0365a8Da",
+    "earnedToken": "mooEulerMonadAlphaGrowthAUSD",
+    "earnedTokenAddress": "0x7C80e8F83cb8AbA22B9606219129b88d0365a8Da",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1782322658,
+    "platformId": "euler",
+    "curatorId": "alphagrowth",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://euler.alphagrowth.io/lend/0x438cedcE647491B1d93a73d491eC19A50194c222?network=143",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "morpho-monad-hyperithm-usdc",
     "name": "USDC (Hyperithm, Apex V2)",
     "type": "standard",
