@@ -6,9 +6,26 @@ import { selectTokenPriceByAddress } from '../../../selectors/tokens.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { mooAmountToOracleAmount } from '../../../utils/ppfs.ts';
 import type { QuoteResponse } from '../swap/ISwapProvider.ts';
-import { type TokenAmount, type ZapFee } from '../transact-types.ts';
+import {
+  isCrossChainDepositQuote,
+  type TokenAmount,
+  type TransactQuote,
+  type ZapFee,
+} from '../transact-types.ts';
+import type { VaultDestState } from '../handlers/vault/VaultDestHandler.ts';
 
 export const ZERO_FEE: ZapFee = { value: 0 };
+
+/**
+ * The quote to render the result against. Unwraps a cross-chain deposit to its real dest-chain deposit quote so a CLM
+ * destination shows its position breakdown rather than just the share token; all other quotes pass through unchanged.
+ */
+export function getEffectiveQuote(quote: TransactQuote): TransactQuote {
+  if (!isCrossChainDepositQuote(quote)) {
+    return quote;
+  }
+  return (quote.destHandlerQuote.state as VaultDestState).destQuote;
+}
 
 /** Convert a v2v source share amount to the deposit-token TokenAmount via ppfs (pass-through for vaults without a receipt token). */
 export function convertVaultShareToDepositTokenAmount(

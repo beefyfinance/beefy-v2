@@ -17,7 +17,10 @@ import {
   transactFetchQuotes,
   transactFetchQuotesIfNeeded,
 } from '../../../../../data/actions/transact.ts';
-import { totalValueOfTokenAmounts } from '../../../../../data/apis/transact/helpers/quotes.ts';
+import {
+  getEffectiveQuote,
+  totalValueOfTokenAmounts,
+} from '../../../../../data/apis/transact/helpers/quotes.ts';
 import {
   CrossChainBridgeBelowFeeError,
   QuoteCowcentratedNoSingleSideError,
@@ -173,19 +176,10 @@ export const TransactQuote = memo(function TransactQuote({
   );
 });
 
-// unwrap a cross-chain deposit to its dest-chain quote so a CLM destination shows its position breakdown, not just the share
-function unwrapEffectiveQuote(quote: TransactQuoteType): TransactQuoteType {
-  if (!isCrossChainDepositQuote(quote)) {
-    return quote;
-  }
-  const state = quote.destHandlerQuote.state as { destQuote?: TransactQuoteType } | undefined;
-  return state?.destQuote ?? quote;
-}
-
 const QuoteFulfilled = memo(function QuoteFulfilled({ title }: { title: string }) {
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isCrossChain = isCrossChainDepositQuote(quote);
-  const effectiveQuote = unwrapEffectiveQuote(quote);
+  const effectiveQuote = getEffectiveQuote(quote);
   const isCowcentratedDeposit = isCowcentratedDepositQuote(effectiveQuote);
   const hasTransformation = useMemo(() => {
     if (isCowcentratedDeposit && !isCrossChain) return false;

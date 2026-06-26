@@ -16,7 +16,7 @@ import type {
 type StrategyMatch = { strategy: IStrategy; option: DepositOption };
 
 /** Strategy is re-resolved at step time (via destQuote.strategyId) to avoid stale state across RPC calls. */
-type VaultDestState = {
+export type VaultDestState = {
   destQuote: ZapDepositQuote;
 };
 
