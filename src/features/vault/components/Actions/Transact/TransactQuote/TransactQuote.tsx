@@ -314,19 +314,17 @@ const QuoteLoading = memo(function QuoteLoading() {
   return <TokenAmountIconLoader />;
 });
 
-export type QuoteLoadedProps = {
+type QuoteLoadedProps = {
   quote: TransactQuoteType;
   effectiveQuote: TransactQuoteType;
   hasTransformation: boolean;
   showTitle?: boolean;
-  showRouteBlocks?: boolean;
 };
-export const QuoteLoaded = memo(function QuoteLoaded({
+const QuoteLoaded = memo(function QuoteLoaded({
   quote,
   effectiveQuote,
   hasTransformation,
   showTitle = true,
-  showRouteBlocks = true,
 }: QuoteLoadedProps) {
   const classes = useStyles();
   const isZap = isZapQuote(quote);
@@ -357,10 +355,10 @@ export const QuoteLoaded = memo(function QuoteLoaded({
       : hasTransformation ?
         <YouReceiveSection outputs={quote.outputs} returned={returned} showRefresh={!showTitle} />
       : null}
-      {showRouteBlocks && isZap ?
+      {isZap ?
         <ZapRoute quote={quote} css={styles.route} />
       : null}
-      {showRouteBlocks && needsSlippage ?
+      {needsSlippage ?
         <ZapSlippage css={styles.slippage} />
       : null}
     </>
