@@ -157,6 +157,16 @@ export const TransactQuote = memo(function TransactQuote({
   );
 });
 
+// a cross-chain deposit wraps the real dest-chain deposit quote in its vault dest handler; unwrap it so a CLM
+// destination shows its position breakdown the same as a same-chain deposit (otherwise we'd only show the share)
+function unwrapEffectiveQuote(quote: TransactQuoteType): TransactQuoteType {
+  if (!isCrossChainDepositQuote(quote)) {
+    return quote;
+  }
+  const state = quote.destHandlerQuote.state as { destQuote?: TransactQuoteType } | undefined;
+  return state?.destQuote ?? quote;
+}
+
 const QuoteFulfilled = memo(function QuoteFulfilled({
   title,
   mode,
@@ -166,8 +176,7 @@ const QuoteFulfilled = memo(function QuoteFulfilled({
 }) {
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isCrossChain = isCrossChainDepositQuote(quote);
-  // cross-chain quotes are flat post-CCTP refactor; no nested dest/source quote to unwrap
-  const effectiveQuote = quote;
+  const effectiveQuote = unwrapEffectiveQuote(quote);
   const isDeposit = mode === TransactMode.Deposit;
   const isCowcentratedDeposit = isCowcentratedDepositQuote(effectiveQuote);
   const hasTransformation = useMemo(() => {
