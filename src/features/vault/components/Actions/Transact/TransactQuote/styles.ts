@@ -126,9 +126,6 @@ export const styles = {
     flexDirection: 'row-reverse',
     backgroundColor: 'background.content.dark',
   }),
-  alignItemsEnd: css.raw({
-    alignItems: 'flex-end',
-  }),
   clmPrimaryRow: css.raw({
     display: 'flex',
     alignItems: 'center',

@@ -191,7 +191,9 @@ const QuoteFulfilled = memo(function QuoteFulfilled({
       firstInput.token.chainId !== firstOutput.token.chainId
     );
   }, [quote, isCowcentratedDeposit, isCrossChain]);
-  const showTitle = isCowcentratedDeposit || !isDeposit || !hasTransformation;
+  // CLM deposits are a transformation too (input token -> position), so they hide the top title like other zaps;
+  // the "You receive" card carries the refresh and the whole story (share + position breakdown)
+  const showTitle = !isDeposit || (!hasTransformation && !isCowcentratedDeposit);
 
   return (
     <>
@@ -335,24 +337,9 @@ export const QuoteLoaded = memo(function QuoteLoaded({
         o.token.address === firstInputToken.address && o.token.chainId === firstInputToken.chainId
     );
 
+  // CLM deposits (cowcentratedDepositQuote) intentionally render no top card — the position lives in "You receive"
   let topCard: ReactNode = null;
-  if (cowcentratedDepositQuote) {
-    topCard = (
-      <div className={classes.amountReturned}>
-        {cowcentratedDepositQuote.used.map(used => (
-          <TokenAmountIcon
-            key={used.token.id}
-            amount={used.amount}
-            chainId={used.token.chainId}
-            tokenAddress={used.token.address}
-            showSymbol={false}
-            css={styles.fullWidth}
-            amountWithValueCss={styles.alignItemsEnd}
-          />
-        ))}
-      </div>
-    );
-  } else if (isLpBreakWithdraw) {
+  if (isLpBreakWithdraw) {
     topCard = (
       <div className={classes.youReceiveCard}>
         <LpSharePrimaryRow
@@ -363,7 +350,7 @@ export const QuoteLoaded = memo(function QuoteLoaded({
         />
       </div>
     );
-  } else if (!hasTransformation) {
+  } else if (!cowcentratedDepositQuote && !hasTransformation) {
     topCard = <TokenAmountList items={quote.outputs} />;
   } else if (!isDeposit) {
     topCard = <TokenAmountList items={quote.inputs} />;
@@ -375,7 +362,11 @@ export const QuoteLoaded = memo(function QuoteLoaded({
         <div className={classes.tokenAmounts}>{topCard}</div>
       : null}
       {cowcentratedDepositQuote ?
-        <CowcentratedYouReceiveSection quote={cowcentratedDepositQuote} returned={returned} />
+        <CowcentratedYouReceiveSection
+          quote={cowcentratedDepositQuote}
+          returned={returned}
+          showRefresh={!showTitle}
+        />
       : hasTransformation ?
         <YouReceiveSection outputs={quote.outputs} returned={returned} showRefresh={!showTitle} />
       : null}
@@ -550,10 +541,12 @@ type CowcentratedYouReceiveSectionProps = {
     | CowcentratedZapDepositQuote
     | CowcentratedDualZapDepositQuote;
   returned: QuoteTokenAmount[];
+  showRefresh?: boolean;
 };
 const CowcentratedYouReceiveSection = memo(function CowcentratedYouReceiveSection({
   quote,
   returned,
+  showRefresh = false,
 }: CowcentratedYouReceiveSectionProps) {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -578,7 +571,9 @@ const CowcentratedYouReceiveSection = memo(function CowcentratedYouReceiveSectio
 
   return (
     <div className={classes.youReceiveSection}>
-      <div className={classes.youReceiveTitle}>{t('Transact-YouReceive')}</div>
+      {showRefresh ?
+        <QuoteTitleRefresh title={t('Transact-YouReceive')} enableRefresh={true} />
+      : <div className={classes.youReceiveTitle}>{t('Transact-YouReceive')}</div>}
       <div className={classes.youReceiveCard}>
         <LpSharePrimaryRow
           amount={shares.amount}
