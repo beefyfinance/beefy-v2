@@ -96,9 +96,9 @@ type BaseOption = {
   selectionId: string;
   selectionOrder: SelectionOrder;
   selectionHideIfZeroBalance?: boolean;
-  /** token(s) the user hands over; for withdraws this is the vault's receipt token (gov: deposit token) */
+  /** token(s) the user hands over; for withdraws this is the vault's receipt token */
   inputs: TokenEntity[];
-  /** token(s) the user receives; for deposits this is the receiving vault's receipt token (gov: deposit token) */
+  /** token(s) the user receives; for deposits this is the receiving vault's receipt token */
   wantedOutputs: TokenEntity[];
   async?: boolean;
   feeable?: boolean;
