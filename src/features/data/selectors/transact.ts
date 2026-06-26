@@ -55,7 +55,7 @@ import {
 import {
   selectErc20TokenByAddress,
   selectTokenPriceByAddress,
-  selectTokenPriceByAddressWithReceiptFallback,
+  selectTokenPriceByAddressReceiptAware,
 } from './tokens.ts';
 import {
   selectConnectedUserHasGovRewardsForVault,
@@ -486,7 +486,7 @@ export function selectTokenAmountsTotalValue(
 }
 
 export function selectTokenAmountValue(state: BeefyState, tokenAmount: TokenAmount): BigNumber {
-  return selectTokenPriceByAddressWithReceiptFallback(
+  return selectTokenPriceByAddressReceiptAware(
     state,
     tokenAmount.token.chainId,
     tokenAmount.token.address

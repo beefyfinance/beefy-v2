@@ -881,11 +881,8 @@ export class TransactApi implements ITransactApi {
   // }
 }
 
-/**
- * Drop SingleStrategy's identity option (deposit: depositToken→depositToken, withdraw:
- * shareToken→depositToken) — emitted so cross-chain can find the vault via fetchOptions;
- * the picker uses the vault-type path instead.
- */
+// Drop SingleStrategy's identity option (deposit depositToken→shareToken, withdraw
+// shareToken→depositToken): emitted for cross-chain discovery, the picker uses the vault path.
 function dropSingleIdentityOption<
   T extends {
     strategyId: string;

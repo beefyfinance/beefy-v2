@@ -228,7 +228,7 @@ export const selectIsTokenMemeByAddress = makeSelectTokenIsTag(
   'MEMECOIN'
 );
 
-/** Returns BIG_ZERO for vault receipt tokens without their own oracle entry — use selectTokenPriceByAddressWithReceiptFallback when the amount may be share-denominated */
+/** Vault receipt tokens resolve to the underlying (deposit-token) price here — no ppfs premium; use selectTokenPriceByAddressReceiptAware for the true share price */
 export const selectTokenPriceByAddress = createSelector(
   selectTokenByAddressOrUndefined,
   (state: BeefyState) => state.entities.tokens.prices.byOracleId,
@@ -260,18 +260,20 @@ export const selectVaultReceiptTokenPrice = (
   return depositTokenPrice.times(receiptTokenPPFS);
 };
 
-/** Price by address, falling back to deposit token price × ppfs for otherwise-unpriced vault receipt tokens */
-export const selectTokenPriceByAddressWithReceiptFallback = (
+/** Price by address; standard/erc4626 receipt tokens are repriced to their share value (depositPrice × ppfs), since the base selector returns only the underlying price for them */
+export const selectTokenPriceByAddressReceiptAware = (
   state: BeefyState,
   chainId: ChainEntity['id'],
   address: TokenEntity['address']
 ): BigNumber => {
-  const price = selectTokenPriceByAddress(state, chainId, address);
-  if (price.gt(BIG_ZERO)) {
-    return price;
-  }
   const vault = selectVaultWithReceiptByAddressOrUndefined(state, chainId, address);
-  return vault ? selectVaultReceiptTokenPrice(state, vault.id) : price;
+  if (vault && (vault.type === 'standard' || vault.type === 'erc4626')) {
+    const receiptPrice = selectVaultReceiptTokenPrice(state, vault.id);
+    if (receiptPrice.gt(BIG_ZERO)) {
+      return receiptPrice;
+    }
+  }
+  return selectTokenPriceByAddress(state, chainId, address);
 };
 
 export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
