@@ -35,7 +35,11 @@ import {
   type TransactQuote as TransactQuoteType,
 } from '../../../../../data/apis/transact/transact-types.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
-import { isCowcentratedLikeVault, type VaultEntity } from '../../../../../data/entities/vault.ts';
+import {
+  isCowcentratedLikeVault,
+  isCowcentratedVault,
+  type VaultEntity,
+} from '../../../../../data/entities/vault.ts';
 import {
   TransactMode,
   TransactStatus,
@@ -138,12 +142,11 @@ export const TransactQuote = memo(function TransactQuote({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally keyed on slippage only
   }, [slippage]);
 
-  // CLM vaults/pools always transform on BOTH tabs (deposit -> position; withdraw -> the underlying pair, since their
-  // base option is AllTokensInPool, never Want), so preview "You receive" from the placeholder/loading onward — keeps
-  // the title stable instead of flipping when the quote lands.
-  const isClmLike = isCowcentratedLikeVault(vault);
-  const isClmDeposit = mode === TransactMode.Deposit && isClmLike;
-  const preFulfilledTitle = isClmLike ? t('Transact-YouReceive') : title;
+  // a base CLM always transforms (deposit -> position, withdraw -> pair); its wrappers expose a plain Want option, so
+  // only preview "You receive" for the base CLM to keep the title stable without mis-previewing a direct want deposit
+  const isClmVault = isCowcentratedVault(vault);
+  const isClmDeposit = mode === TransactMode.Deposit && isClmVault;
+  const preFulfilledTitle = isClmVault ? t('Transact-YouReceive') : title;
 
   if (status === TransactStatus.Idle) {
     return <QuoteIdle title={preFulfilledTitle} isClmDeposit={isClmDeposit} css={cssProp} />;
@@ -170,8 +173,7 @@ export const TransactQuote = memo(function TransactQuote({
   );
 });
 
-// a cross-chain deposit wraps the real dest-chain deposit quote in its vault dest handler; unwrap it so a CLM
-// destination shows its position breakdown the same as a same-chain deposit (otherwise we'd only show the share)
+// unwrap a cross-chain deposit to its dest-chain quote so a CLM destination shows its position breakdown, not just the share
 function unwrapEffectiveQuote(quote: TransactQuoteType): TransactQuoteType {
   if (!isCrossChainDepositQuote(quote)) {
     return quote;
@@ -197,8 +199,7 @@ const QuoteFulfilled = memo(function QuoteFulfilled({ title }: { title: string }
       firstInput.token.chainId !== firstOutput.token.chainId
     );
   }, [quote, isCowcentratedDeposit, isCrossChain]);
-  // Only a simple, non-transforming deposit/withdraw shows the "You deposit"/"You withdraw" title + card; any
-  // transformation (zap, CLM, LP break, multi-output withdraw) shows just "You receive", which carries the refresh.
+  // only a simple (non-transforming) deposit/withdraw keeps a title + card; any transformation shows just "You receive"
   const showTitle = !hasTransformation && !isCowcentratedDeposit;
 
   return (
@@ -343,8 +344,6 @@ export const QuoteLoaded = memo(function QuoteLoaded({
   const cowcentratedDepositQuote =
     isCowcentratedDepositQuote(effectiveQuote) ? effectiveQuote : null;
 
-  // Only a simple, non-transforming deposit/withdraw gets a top card (the single in/out token). Every
-  // transformation — zap, CLM, LP break, multi-output withdraw — shows its result in "You receive" only.
   const topCard: ReactNode =
     !cowcentratedDepositQuote && !hasTransformation ?
       <TokenAmountList items={quote.outputs} />
