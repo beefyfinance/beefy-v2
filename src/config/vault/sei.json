@@ -62,6 +62,7 @@
     "retiredAt": 1770142323,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDCn", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -97,8 +98,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "dragonswap-cow-sei-usdc-wsei",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1753383353,
+    "retireReason": "tvl",
+    "retiredAt": 1782156397,
     "platformId": "dragon",
     "assets": ["USDC", "WSEI"],
     "risks": {
@@ -137,10 +140,13 @@
     "earnedTokenAddress": "0xd787Af46950a035440a66F54E62d3b0945e674A3",
     "oracle": "lps",
     "oracleId": "dragonswap-cow-sei-usdc-wsei",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1753383353,
+    "retireReason": "tvl",
+    "retiredAt": 1782156397,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["USDC", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -224,6 +230,7 @@
     "retiredAt": 1769468077,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["iSEI", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -307,6 +314,7 @@
     "retiredAt": 1774636446,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["USDCn", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -390,6 +398,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["USDT", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -473,6 +482,7 @@
     "retiredAt": 1735665006,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["iSEI", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -556,6 +566,7 @@
     "retiredAt": 1744925964,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["iSEI", "USDCn"],
     "risks": {
       "updatedAt": 1765557014,
@@ -881,6 +892,7 @@
     "retiredAt": 1767991369,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDT", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -964,6 +976,7 @@
     "retiredAt": 1774636446,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDCn", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1047,6 +1060,7 @@
     "retiredAt": 1774636446,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDCn"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1082,8 +1096,10 @@
     "earnedOracleIds": [],
     "oracle": "lps",
     "oracleId": "uniswap-cow-sei-weth-wsei",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1722523990,
+    "retireReason": "tvl",
+    "retiredAt": 1782156397,
     "platformId": "oku",
     "assets": ["WETH", "WSEI"],
     "risks": {
@@ -1122,10 +1138,13 @@
     "earnedTokenAddress": "0x946907408c076180bD2c6aEAd56908fe93Cc8629",
     "oracle": "lps",
     "oracleId": "uniswap-cow-sei-weth-wsei",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1722523990,
+    "retireReason": "tvl",
+    "retiredAt": 1782156397,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1209,6 +1228,7 @@
     "retiredAt": 1774636446,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDCn", "WSEI"],
     "risks": {
       "updatedAt": 1765557014,

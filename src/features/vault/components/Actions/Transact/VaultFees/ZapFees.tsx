@@ -1,17 +1,16 @@
 import { css } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import { memo, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { formatPercent, formatPercentTrim, formatUsd } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
-import type { ZapQuote } from '../../../../../data/apis/transact/transact-types.ts';
+import type { TransactOption, ZapFee } from '../../../../../data/apis/transact/transact-types.ts';
 import {
-  isCrossChainQuote,
+  isCrossChainOption,
   isZapFeeDiscounted,
-  isZapQuote,
 } from '../../../../../data/apis/transact/transact-types.ts';
-import { selectTransactSelectedQuoteOrUndefined } from '../../../../../data/selectors/transact.ts';
+import { selectTransactSelectedZapFee } from '../../../../../data/selectors/transact.ts';
 import { CCTP_CONFIG } from '../../../../../../config/cctp/cctp-config.ts';
 import { Label } from './Label.tsx';
 import { LabelCustomTooltip } from './LabelTooltip.tsx';
@@ -32,18 +31,18 @@ const useStyles = legacyMakeStyles({
 });
 
 export const MaybeZapFees = memo(function MaybeZapFees() {
-  const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
-  const isZap = quote && isZapQuote(quote);
+  const ctx = useAppSelector(selectTransactSelectedZapFee);
 
-  if (!isZap) {
+  if (!ctx) {
     return null;
   }
 
-  return <ZapFees quote={quote} />;
+  return <ZapFees option={ctx.option} fee={ctx.fee} />;
 });
 
 type ZapFeesProps = {
-  quote: ZapQuote;
+  option: TransactOption;
+  fee: ZapFee;
 };
 
 type CrossChainFees = {
@@ -51,40 +50,61 @@ type CrossChainFees = {
   relayFeeUsd: number | undefined;
 };
 
-const ZapFees = memo(function ZapFees({ quote }: ZapFeesProps) {
+type FeeDisplay = {
+  prefix: string;
+  current: string;
+  original?: string;
+};
+
+const ZapFees = memo(function ZapFees({ option, fee }: ZapFeesProps) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { fee } = quote;
   const hasDiscountFee = isZapFeeDiscounted(fee);
-  const isCrossChain = isCrossChainQuote(quote);
+  const isCrossChain = isCrossChainOption(option);
 
-  const { zapFeeText, hasMultipleFees, crossChainFees } = useMemo(() => {
+  const { display, hasMultipleFees, crossChainFees } = useMemo(() => {
     if (isCrossChain) {
-      const sourceChainId = quote.option.sourceChainId;
-      const destChainId = quote.option.destChainId;
+      const sourceChainId = option.sourceChainId;
+      const destChainId = option.destChainId;
       const destChainConfig = destChainId ? CCTP_CONFIG.chains[destChainId] : undefined;
       const sourceChainConfig = sourceChainId ? CCTP_CONFIG.chains[sourceChainId] : undefined;
       const bridgeFeeUsd = destChainConfig?.beefyBridgeFeeUsd;
       const fastFeeBps = sourceChainConfig?.fastFeeBps;
       const fastFeeDecimal = fastFeeBps != null ? (fastFeeBps * 1.15) / 10000 : undefined;
-      const combinedFee = fastFeeDecimal != null ? fee.value + fastFeeDecimal : fee.value;
-      const percentText = formatPercentTrim(combinedFee);
+      const withFastFee = (zapValue: number) =>
+        fastFeeDecimal != null ? zapValue + fastFeeDecimal : zapValue;
       const bridgePrefix = bridgeFeeUsd != null ? `${formatUsd(bridgeFeeUsd, 2)} + ` : '';
       const hasMultipleFees = bridgeFeeUsd != null || fastFeeDecimal != null;
       const crossChainFees: CrossChainFees = {
         fastFeeDecimal,
         relayFeeUsd: bridgeFeeUsd,
       };
-      return { zapFeeText: bridgePrefix + percentText, hasMultipleFees, crossChainFees };
+      // Original strikes the combined total (zap + fast), not the zap fee alone.
+      const display: FeeDisplay = {
+        prefix: bridgePrefix,
+        current: formatPercentTrim(withFastFee(fee.value)),
+        original:
+          hasDiscountFee ? formatPercentTrim(withFastFee(fee.campaign.original)) : undefined,
+      };
+      return { display, hasMultipleFees, crossChainFees };
     }
-    if (hasDiscountFee)
-      return { zapFeeText: null, hasMultipleFees: false, crossChainFees: undefined };
+    if (hasDiscountFee) {
+      return {
+        display: {
+          prefix: '',
+          current: formatPercent(fee.value, 2),
+          original: formatPercent(fee.campaign.original, 2),
+        } satisfies FeeDisplay,
+        hasMultipleFees: false,
+        crossChainFees: undefined,
+      };
+    }
     return {
-      zapFeeText: formatPercent(fee.value),
+      display: { prefix: '', current: formatPercent(fee.value) } satisfies FeeDisplay,
       hasMultipleFees: false,
       crossChainFees: undefined,
     };
-  }, [quote, isCrossChain, hasDiscountFee, fee.value]);
+  }, [option, isCrossChain, hasDiscountFee, fee.value, fee.campaign?.original]);
 
   const tooltip = (
     <TooltipTable>
@@ -110,13 +130,22 @@ const ZapFees = memo(function ZapFees({ quote }: ZapFeesProps) {
           </TooltipRow>
         )}
         <TooltipRow>
-          <TooltipLabel>{t('Transact-Fee-Zap-Row-Swap')}</TooltipLabel>
+          <TooltipLabel>{t('Transact-Fee-Zap-Row-Zap')}</TooltipLabel>
           <TooltipValue>
-            {t('Transact-Fee-Zap-Row-Swap-Desc', { percent: formatPercent(fee.value) })}
+            {hasDiscountFee ?
+              <Trans
+                t={t}
+                i18nKey="Transact-Fee-Zap-Row-Zap-Desc-Discounted"
+                values={{
+                  percent: formatPercent(fee.value),
+                  original: formatPercent(fee.campaign.original),
+                }}
+                components={{ Original: <span className={classes.original} /> }}
+              />
+            : t('Transact-Fee-Zap-Row-Zap-Desc', { percent: formatPercent(fee.value) })}
           </TooltipValue>
         </TooltipRow>
       </TooltipRows>
-      <TooltipFooter>{t('Transact-Fee-Zap-Footer')}</TooltipFooter>
     </TooltipTable>
   );
 
@@ -127,14 +156,13 @@ const ZapFees = memo(function ZapFees({ quote }: ZapFeesProps) {
         <LabelCustomTooltip tooltip={tooltip} />
       </Label>
       <Value>
-        {zapFeeText != null ?
-          zapFeeText
-        : hasDiscountFee ?
+        {display.prefix}
+        {display.original != null ?
           <>
-            <span className={classes.discounted}>{formatPercent(fee.value, 2)}</span>
-            <span className={classes.original}>{formatPercent(fee.original, 2)}</span>
+            <span className={classes.discounted}>{display.current}</span>
+            <span className={classes.original}>{display.original}</span>
           </>
-        : formatPercent(fee.value)}
+        : display.current}
       </Value>
     </>
   );
@@ -171,16 +199,5 @@ const TooltipLabel = styled('span', {
 const TooltipValue = styled('span', {
   base: {
     display: 'table-cell',
-  },
-});
-
-const TooltipFooter = styled('div', {
-  base: {
-    display: 'table-caption',
-    captionSide: 'bottom',
-    paddingTop: '12px',
-    marginTop: '8px',
-    borderTop: '1px solid rgba(0,0,0,0.1)',
-    whiteSpace: 'normal',
   },
 });

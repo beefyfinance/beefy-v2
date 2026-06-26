@@ -67,6 +67,7 @@
     "retiredAt": 1743199524,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 60,
     "assets": ["stDOT", "xcDOT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -500,6 +501,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["xcUSDC", "xcUSDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -543,6 +545,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["WETHwh", "WGLMR"],
     "risks": {
       "updatedAt": 1765557014,
@@ -586,6 +589,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["xcUSDC", "WGLMR"],
     "risks": {
       "updatedAt": 1765557014,
@@ -629,6 +633,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETHwh", "xcUSDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -672,6 +677,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["xcDOT", "WETHwh"],
     "risks": {
       "updatedAt": 1765557014,
@@ -715,6 +721,7 @@
     "retiredAt": 1743199524,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["xcDOT", "xcUSDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -758,6 +765,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["axlUSDC", "xcUSDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -801,6 +809,7 @@
     "retiredAt": 1744925964,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["xcUSDC", "xcUSDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -844,6 +853,7 @@
     "retiredAt": 1743199524,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["xcUSDC", "WGLMR"],
     "risks": {
       "updatedAt": 1765557014,
@@ -887,6 +897,7 @@
     "retiredAt": 1772618132,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["xcDOT", "WGLMR"],
     "risks": {
       "updatedAt": 1765557014,

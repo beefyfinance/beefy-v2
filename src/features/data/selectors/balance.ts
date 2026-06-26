@@ -5,6 +5,10 @@ import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import { getUnixNow } from '../../../helpers/date.ts';
 import { entries, keys } from '../../../helpers/object.ts';
 import type { BoostReward } from '../apis/balance/balance-types.ts';
+import {
+  isVaultDestWithdrawOption,
+  isVaultSourceDepositOption,
+} from '../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token.ts';
@@ -14,6 +18,7 @@ import {
   isGovVault,
   isSingleGovVault,
   isStandardVault,
+  isVaultActive,
   isVaultWithReceipt,
   type VaultEntity,
   type VaultGov,
@@ -47,6 +52,7 @@ import {
   selectGovVaultById,
   selectVaultById,
   selectVaultIdsByChainIdIncludingHidden,
+  selectVaultReplacementMigration,
 } from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
 
@@ -314,6 +320,20 @@ export const selectVaultSharesToDepositTokenData = createCachedSelector(
 )((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 /**
+ * Total shares including boosts (excludes bridged and pending withdrawal)
+ * (For gov vaults this will be in deposit token since there are no shares)
+ */
+export const selectUserVaultBalanceInShareTokenIncludingBoosts = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, maybeWalletAddress),
+  (...balances) => {
+    return bigNumberOrStaticZero(balances.reduce((acc, balance) => acc.plus(balance), BIG_ZERO));
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
+
+/**
  * Total shares including boosts, bridged and pending withdrawal
  * (For gov vaults this will be in deposit token since there are no shares)
  */
@@ -330,6 +350,30 @@ export const selectUserVaultBalanceInShareTokenIncludingDisplaced = createCached
     return bigNumberOrStaticZero(balances.reduce((acc, balance) => acc.plus(balance), BIG_ZERO));
   }
 )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
+
+/**
+ * Whether to show the "Migrate" tag/gradient for a vault: it must be the OLD wrapper of a
+ * replacement-vault migration AND the user must hold a non-zero balance in it (including boost and
+ * displaced shares). Lives here (not in selectors/vaults) because it depends on user balances.
+ */
+export const selectUserHasBalanceToMigrate = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): boolean => {
+  const migration = selectVaultReplacementMigration(state, vaultId);
+  if (!migration) {
+    return false;
+  }
+  const walletAddress = selectWalletAddress(state);
+  if (!walletAddress) {
+    return false;
+  }
+  return selectUserVaultBalanceInShareTokenIncludingDisplaced(
+    state,
+    migration.oldVaultId,
+    walletAddress
+  ).gt(BIG_ZERO);
+};
 
 /**
  * Total not in active boost
@@ -853,10 +897,12 @@ export const selectUserUnstakedClms = createSelector(
     }
 
     return allCowcentratedVaults
-      .filter(clm =>
-        userBalance.tokenAmount.byChainId[clm.chainId]?.byTokenAddress[
-          clm.receiptTokenAddress.toLocaleLowerCase()
-        ]?.balance.gt(BIG_ZERO)
+      .filter(
+        clm =>
+          isVaultActive(clm) &&
+          userBalance.tokenAmount.byChainId[clm.chainId]?.byTokenAddress[
+            clm.receiptTokenAddress.toLocaleLowerCase()
+          ]?.balance.gt(BIG_ZERO)
       )
       .map(vault => vault.id);
   }
@@ -935,6 +981,7 @@ export const selectDepositOptionTokensBalanceByChainId = (
   return selectionIds.reduce((acc, selectionId) => {
     const selection = state.ui.transact.selections.bySelectionId[selectionId];
     if (!selection) return acc;
+    if (isVaultSourceSelection(state, selectionId)) return acc;
     return selection.tokens.reduce((sum, token) => {
       const balance = selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress);
       const price = selectTokenPriceByAddress(state, token.chainId, token.address);
@@ -942,3 +989,11 @@ export const selectDepositOptionTokensBalanceByChainId = (
     }, acc);
   }, BIG_ZERO);
 };
+
+function isVaultSourceSelection(state: BeefyState, selectionId: string): boolean {
+  const optionIds = state.ui.transact.options.bySelectionId[selectionId];
+  if (!optionIds?.length) return false;
+  const option = state.ui.transact.options.byOptionId[optionIds[0]];
+  if (!option) return false;
+  return isVaultSourceDepositOption(option) || isVaultDestWithdrawOption(option);
+}

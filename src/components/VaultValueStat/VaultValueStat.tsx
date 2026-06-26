@@ -11,14 +11,22 @@ type ValueHolderVariantProps = StyledVariantProps<typeof ValueHolder>;
 export type VaultValueStatProps = {
   /** label to show on mobile (when there are no colum headers) */
   label: string;
-  /** hide the mobile label */
-  hideLabel?: boolean;
+  /**
+   * Controls label visibility:
+   * - `false` — don't render the label
+   * - `true` — keep it visible at all breakpoints
+   * - a breakpoint (`'sm' | 'md' | 'lg'`) — visible below it, hidden from it up
+   * @default 'lg'
+   */
+  showLabel?: boolean | 'sm' | 'md' | 'lg';
   /** tooltip content to show for entire stat */
   tooltip?: ReactNode;
   /** value for line one */
   value: ReactNode;
   /** value for line 2 */
   subValue?: ReactNode;
+  /** hide the sub value line entirely */
+  hideSubValue?: boolean;
   /** set to true to show loading indicator for the sub value slot also */
   expectSubValue?: boolean;
   /** blur the values */
@@ -39,20 +47,21 @@ export const VaultValueStat = memo(function VaultValueStat({
   tooltip,
   value,
   subValue,
+  hideSubValue = false,
   expectSubValue = false,
   blur = false,
   loading = false,
   boosted,
-  hideLabel = false,
+  showLabel = 'lg',
   Icon,
   textWrap = true,
   ...rest
 }: VaultValueStatProps) {
-  const showSubValue = expectSubValue || !!subValue;
+  const showSubValue = !hideSubValue && (expectSubValue || !!subValue);
 
   return (
     <Layout {...rest}>
-      {!hideLabel && <Label>{label}</Label>}
+      {showLabel !== false && <Label to={showLabel === true ? 'never' : showLabel}>{label}</Label>}
       <Values tooltip={tooltip} disabled={!tooltip}>
         <ValueHolder kind="primary" textWrap={textWrap} boosted={boosted}>
           {loading ?
@@ -283,6 +292,7 @@ const Label = styled('div', {
           display: 'none',
         },
       },
+      never: {},
     },
     textStyle: {
       'body.sm': {

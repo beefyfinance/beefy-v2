@@ -11,6 +11,7 @@ import {
 } from '../../../../../data/actions/transact.ts';
 import { transactSteps } from '../../../../../data/actions/wallet/transact.ts';
 import { ActionRecovery } from '../CommonActions/ActionRecovery.tsx';
+import { RecoveryQuoteErrorAlert } from '../RecoveryQuoteErrorAlert/RecoveryQuoteErrorAlert.tsx';
 import {
   isCowcentratedDepositQuote,
   type TransactOption,
@@ -26,8 +27,10 @@ import {
 import {
   selectRecoveryOpForCurrentVault,
   selectTransactConfirmNeededWithChanges,
+  selectTransactDepositFromVaultId,
   selectTransactExecuting,
   selectTransactForceSelection,
+  selectTransactIsDepositFromVault,
   selectTransactQuoteStatus,
   selectTransactSelectedChainId,
   selectTransactSelectedQuoteOrUndefined,
@@ -51,6 +54,19 @@ import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
+/** In deposit-from-vault mode, CTA should switch the wallet to the source vault's chain. */
+function useFromVaultChainId() {
+  const isDepositFromVault = useAppSelector(selectTransactIsDepositFromVault);
+  const fromVaultId = useAppSelector(selectTransactDepositFromVaultId);
+  const fromVault = useAppSelector(state =>
+    fromVaultId ? selectVaultById(state, fromVaultId) : undefined
+  );
+  if (!isDepositFromVault || !fromVault) {
+    return undefined;
+  }
+  return fromVault.chainId;
+}
+
 export const DepositActions = memo(function DepositActions() {
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
@@ -60,7 +76,12 @@ export const DepositActions = memo(function DepositActions() {
   const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
 
   if (stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null) {
-    return <ActionRecovery mode="deposit" />;
+    return (
+      <>
+        <RecoveryQuoteErrorAlert action="deposit" />
+        <ActionRecovery mode="deposit" />
+      </>
+    );
   }
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
@@ -80,10 +101,13 @@ const ActionDepositPending = memo(function ActionDepositPending() {
   const selectedChainId = useAppSelector(selectTransactSelectedChainId);
   const forceSelection = useAppSelector(selectTransactForceSelection);
   const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
+  const fromVaultChainId = useFromVaultChainId();
   const { t } = useTranslation();
   const classes = useStyles();
   const connectSwitchChainId =
-    hasCrossChainZap && forceSelection ? undefined : (selectedChainId ?? vault.chainId);
+    hasCrossChainZap && forceSelection ? undefined : (
+      (fromVaultChainId ?? selectedChainId ?? vault.chainId)
+    );
 
   return (
     <div className={classes.feesContainer}>
@@ -97,15 +121,16 @@ const ActionDepositPending = memo(function ActionDepositPending() {
   );
 });
 
-/** No quote yet — CTA opens chain/token select (same as TokenSelectButton) */
+/** No quote yet — CTA opens chain/token/vault select (same as TokenSelectButton) */
 const ActionDepositSelectFlow = memo(function ActionDepositSelectFlow() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const selectedChainId = useAppSelector(selectTransactSelectedChainId);
-  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const fromVaultChainId = useFromVaultChainId();
   const classes = useStyles();
-  const { ctaLabel, openSelectStep } = useTransactSelectFlowCta();
-  const connectSwitchChainId = forceSelection ? undefined : (selectedChainId ?? vault.chainId);
+  const { ctaLabel, openSelectStep, isSelecting } = useTransactSelectFlowCta();
+  const connectSwitchChainId =
+    isSelecting ? undefined : (fromVaultChainId ?? selectedChainId ?? vault.chainId);
 
   return (
     <div className={classes.feesContainer}>
@@ -114,8 +139,8 @@ const ActionDepositSelectFlow = memo(function ActionDepositSelectFlow() {
           variant="cta"
           fullWidth={true}
           borderless={true}
-          disabled={!forceSelection}
-          onClick={forceSelection ? openSelectStep : undefined}
+          disabled={!isSelecting}
+          onClick={isSelecting ? openSelectStep : undefined}
         >
           {ctaLabel}
         </Button>

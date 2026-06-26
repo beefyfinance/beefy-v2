@@ -11,7 +11,7 @@ import { selectAllChains } from '../selectors/chains.ts';
 import { selectIsInMiniApp, selectIsWalletConnected } from '../selectors/wallet.ts';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
-import { transactClearInput, transactSetSuccessClosed } from './transact.ts';
+import { transactSetSuccessClosed } from './transact.ts';
 import { stepperReset } from './wallet/stepper.ts';
 import { createWalletActionResetAction } from './wallet/wallet-action.ts';
 import { selectHasWalletInitialized } from '../selectors/data-loader/wallet.ts';
@@ -41,7 +41,6 @@ export const initWallet = createAppAsyncThunk(
       onWalletDisconnected: () => {
         dispatch(createWalletActionResetAction());
         dispatch(transactSetSuccessClosed(false));
-        dispatch(transactClearInput());
         dispatch(stepperReset());
         dispatch(walletHasDisconnected());
       },

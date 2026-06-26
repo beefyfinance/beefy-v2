@@ -76,6 +76,7 @@ type ModeToFooters = {
 const modeToFooters: ModeToFooters = {
   [TransactMode.Deposit]: [selectBoostDepositNotice, selectDepositClaimNotice],
   [TransactMode.Withdraw]: [selectWithdrawBoostNotice],
+  [TransactMode.Migrate]: [selectWithdrawBoostNotice],
 };
 
 const selectFooter = (state: BeefyState) => {

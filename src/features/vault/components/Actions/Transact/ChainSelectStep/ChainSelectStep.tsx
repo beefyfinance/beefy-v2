@@ -20,8 +20,11 @@ import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/
 import {
   type CrossChainChainOption,
   type CrossChainTokenOption,
+} from '../../../../../data/apis/transact/transact-types.ts';
+import {
   selectCrossChainSortedChains,
   selectTransactMode,
+  selectTransactUserHasOtherDepositedVaults,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { StepHeader } from '../StepHeader/StepHeader.tsx';
@@ -65,6 +68,9 @@ const ChainList = memo(function ChainList() {
   const sortedChains: CrossChainChainOption[] = useAppSelector(state =>
     selectCrossChainSortedChains(state, vaultId)
   );
+  const mode = useAppSelector(selectTransactMode);
+  const hasOtherDeposits = useAppSelector(selectTransactUserHasOtherDepositedVaults);
+  const tall = mode === TransactMode.Deposit && hasOtherDeposits;
   const [search, setSearch] = useState('');
 
   const handleSelect = useCallback(
@@ -84,7 +90,7 @@ const ChainList = memo(function ChainList() {
   }, [sortedChains, search]);
 
   return (
-    <SelectListContainer>
+    <SelectListContainer tall={tall}>
       <SelectListSearch>
         <SearchInput value={search} onValueChange={setSearch} />
       </SelectListSearch>

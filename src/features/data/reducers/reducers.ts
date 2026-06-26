@@ -10,12 +10,14 @@ import { bridgesSlice } from './bridges.ts';
 import { chainsSlice } from './chains.ts';
 import { curatorsSlice } from './curators.ts';
 import { dataLoaderSlice } from './data-loader.ts';
+import { featuredVaultsSlice } from './featured-vaults.ts';
 import { feesSlice } from './fees.ts';
 import { bigNumberTransform, filteredVaultsSlice } from './filtered-vaults.ts';
 import { historicalSlice } from './historical.ts';
 import { mintersSlice } from './minters.ts';
 import { partnersSlice } from './partners.ts';
 import { platformsSlice } from './platforms.ts';
+import { pointsReducer } from './points.ts';
 import { promosReducer } from './promos.ts';
 import { proposalsSlice } from './proposals.ts';
 import { rewardsReducer } from './rewards.ts';
@@ -50,9 +52,11 @@ const entitiesReducer = combineReducers({
   bridges: bridgesSlice.reducer,
   chains: chainsSlice.reducer,
   curators: curatorsSlice.reducer,
+  featuredVaults: featuredVaultsSlice.reducer,
   fees: feesSlice.reducer,
   minters: mintersSlice.reducer,
   platforms: platformsSlice.reducer,
+  points: pointsReducer,
   promos: promosReducer,
   proposals: proposalsSlice.reducer,
   tokens: tokensSlice.reducer,

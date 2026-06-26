@@ -106,6 +106,7 @@
     "retiredAt": 1769468077,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 50,
     "assets": ["LINEA", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -227,6 +228,7 @@
     "createdAt": 1757547444,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 50,
     "assets": ["LINEA", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -348,6 +350,7 @@
     "createdAt": 1757251543,
     "platformId": "beefy",
     "feeTier": "0.2",
+    "tickSpacing": 50,
     "assets": ["USDT", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -469,6 +472,7 @@
     "createdAt": 1757250076,
     "platformId": "beefy",
     "feeTier": "0.2",
+    "tickSpacing": 10,
     "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -590,6 +594,7 @@
     "createdAt": 1757250076,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 50,
     "assets": ["USDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -623,8 +628,10 @@
     "earnedTokenAddress": "0xCB66c807c6c9044eaD222E62B3C7e4CD83242CB4",
     "oracle": "lps",
     "oracleId": "etherex-usdc-rex33",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1756144824,
+    "retireReason": "tvl",
+    "retiredAt": 1780413682,
     "platformId": "etherex",
     "assets": ["REX33", "USDC"],
     "risks": {
@@ -701,8 +708,10 @@
     "earnedTokenAddress": "0x5eF29a6d2dFA626ddA507BE605DEa43C6AEA34F9",
     "oracle": "lps",
     "oracleId": "etherex-usdc-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1754603201,
+    "retireReason": "tvl",
+    "retiredAt": 1780413682,
     "platformId": "etherex",
     "assets": ["USDC", "USDT"],
     "risks": {
@@ -951,6 +960,7 @@
     "retiredAt": 1743510776,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["weETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1079,6 +1089,7 @@
     "retiredAt": 1743510776,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["wrsETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1206,6 +1217,7 @@
     "retiredAt": 1743510776,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["ezETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1242,7 +1254,7 @@
     "status": "eol",
     "createdAt": 1722886923,
     "retireReason": "rewards",
-    "retiredAt": 1754377956,
+    "retiredAt": 1778468701,
     "platformId": "nile",
     "assets": ["WBTC", "WETH"],
     "risks": {
@@ -1285,7 +1297,7 @@
     "status": "eol",
     "createdAt": 1722886922,
     "retireReason": "rewards",
-    "retiredAt": 1754377956,
+    "retiredAt": 1778468701,
     "platformId": "nile",
     "assets": ["WBTC", "WETH"],
     "risks": {
@@ -1327,10 +1339,13 @@
     "earnedTokenAddress": "0xC1b75C175efcd75057b4325B8133FAd9453843d2",
     "oracle": "lps",
     "oracleId": "nile-cl-wbtc-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1722886922,
+    "retireReason": "rewards",
+    "retiredAt": 1778468701,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1458,6 +1473,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["WBTC", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1580,11 +1596,12 @@
     "oracle": "lps",
     "oracleId": "nile-cl-usdc-usdt",
     "status": "eol",
+    "createdAt": 1722886922,
     "retireReason": "rewards",
     "retiredAt": 1754377956,
-    "createdAt": 1722886922,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 1,
     "assets": ["USDC", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1712,6 +1729,7 @@
     "retiredAt": 1775466735,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["USDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1839,6 +1857,7 @@
     "retiredAt": 1775466730,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["USDT", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1958,6 +1977,7 @@
     "createdAt": 1721749383,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2114,6 +2134,7 @@
     "retiredAt": 1769468077,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDC", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2155,6 +2176,7 @@
     "createdAt": 1718657097,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2196,6 +2218,7 @@
     "createdAt": 1718657097,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2710,8 +2733,10 @@
     "earnedTokenAddress": "0x84237d2a5f8bD4e9D89F6156043E79d9D7Ed4367",
     "oracle": "lps",
     "oracleId": "lynex-usdc-mendi",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1712227180,
+    "retireReason": "tvl",
+    "retiredAt": 1780413682,
     "platformId": "lynex",
     "assets": ["MENDI", "USDC"],
     "risks": {

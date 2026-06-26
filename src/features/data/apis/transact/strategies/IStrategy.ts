@@ -90,6 +90,8 @@ export interface IComposableStrategy<
   fetchWithdrawUserlessZapBreakdown(
     quote: ZapStrategyIdToWithdrawQuote<TId>
   ): Promise<UserlessZapWithdrawBreakdown>;
+  canAcceptTokenAsDeposit(token: TokenEntity): Promise<boolean>;
+  canEmitTokenAsWithdraw(token: TokenEntity): Promise<boolean>;
 }
 
 export type AnyComposableStrategy<TId extends ZapStrategyId = ZapStrategyId> = {

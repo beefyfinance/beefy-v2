@@ -100,7 +100,7 @@ const RightSide = styled('div', {
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
-    columnGap: '10px',
+    columnGap: '8px',
     flexShrink: 1,
     minWidth: 0,
   },

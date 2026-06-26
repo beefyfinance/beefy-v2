@@ -9,14 +9,20 @@ export type DustListProps = {
   children: ReactNode;
 
   dustTotalUsd: BigNumber;
+  /** i18n key for the low-value items label (e.g. tokens vs vaults). Defaults to tokens. */
+  labelKey?: string;
 };
 
-export const DustList = memo(function DustList({ children, dustTotalUsd }: DustListProps) {
+export const DustList = memo(function DustList({
+  children,
+  dustTotalUsd,
+  labelKey = 'Transact-TokenSelect-LowValueTokens',
+}: DustListProps) {
   const { t } = useTranslation();
   const [isDustHovered, setIsDustHovered] = useState(false);
   const { open: dustExpanded, handleToggle: toggleDustExpanded, Icon: DustIcon } = useCollapse();
 
-  const lowValueLabel = t('Transact-TokenSelect-LowValueTokens');
+  const lowValueLabel = t(labelKey);
   const rawTitle =
     dustExpanded && isDustHovered ? `Hide ${lowValueLabel}`
     : !dustExpanded && isDustHovered ? `Show ${lowValueLabel}`

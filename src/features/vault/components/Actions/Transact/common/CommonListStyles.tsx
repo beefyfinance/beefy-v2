@@ -10,7 +10,15 @@ export const SelectListContainer = styled('div', {
     borderRadius: '0 0 12px 12px',
     overflow: 'hidden',
     sm: {
-      padding: '24px 0 0 0',
+      padding: '20px 0 0 0',
+    },
+  },
+  variants: {
+    tall: {
+      true: {
+        // total form height is 626px, need to subtract 56px from the header to match height in the lists
+        height: '570px',
+      },
     },
   },
 });
@@ -98,7 +106,7 @@ export const ListItemRightSide = styled('div', {
     flexWrap: 'nowrap',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    gap: '8px',
+    gap: '12px',
     flexShrink: 1,
     minWidth: '80px',
   },

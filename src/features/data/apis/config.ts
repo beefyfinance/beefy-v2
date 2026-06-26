@@ -14,6 +14,7 @@ import type {
   SwapAggregatorConfigLoose,
   VaultConfig,
   ZapConfig,
+  ZapFeeRule,
 } from './config-types.ts';
 import { mapValues } from 'lodash-es';
 import { entries, keys } from '../../../helpers/object.ts';
@@ -72,6 +73,10 @@ export class ConfigAPI {
     return (await import('../../../config/zap/zaps.json')).default as ZapConfig[];
   }
 
+  public async fetchZapFeeCampaigns(): Promise<ZapFeeRule[]> {
+    return (await import('../../../config/zap/fee-campaigns.json')).default as ZapFeeRule[];
+  }
+
   public async fetchAllVaults(): Promise<{
     [chainId in ChainEntity['id']]: VaultConfig[];
   }> {
@@ -116,5 +121,15 @@ export class ConfigAPI {
 
   public async fetchBridges(): Promise<BridgeConfig[]> {
     return (await import('../../../config/bridges.json')).default;
+  }
+
+  public async fetchFeaturedVaults(): Promise<VaultConfig['id'][]> {
+    const featured = (await import('../../../config/featured-vaults.json')).default as Record<
+      string,
+      boolean
+    >;
+    return entries(featured)
+      .filter(([, enabled]) => enabled)
+      .map(([id]) => id);
   }
 }

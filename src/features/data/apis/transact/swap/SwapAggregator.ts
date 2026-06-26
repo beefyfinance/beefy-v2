@@ -91,7 +91,6 @@ export class SwapAggregator implements ISwapAggregator {
       )
     );
 
-    // @dev any is same as wanted[0] if there is only 1 token to check
     if (supportPerWanted.length === 1) {
       return {
         tokens: supportPerWanted,
@@ -138,6 +137,28 @@ export class SwapAggregator implements ISwapAggregator {
         token => token.symbol.toLowerCase(),
       ],
       ['desc', 'desc', 'asc']
+    );
+  }
+
+  async canSwapTokenPair(
+    fromToken: TokenEntity,
+    toToken: TokenEntity,
+    vaultId: VaultEntity['id'] | undefined,
+    chainId: ChainEntity['id'],
+    state: BeefyState,
+    options?: StrategySwapConfig
+  ): Promise<boolean> {
+    const allowedProviders = this.allowedProviders(options);
+    const tokensPerProvider = await Promise.all(
+      allowedProviders.map(provider =>
+        this.providerSupportedTokens(provider, vaultId, chainId, state, options)
+      )
+    );
+    return tokensPerProvider.some(
+      providerTokens =>
+        providerTokens.length > 1 &&
+        providerTokens.some(t => isTokenEqual(t, fromToken)) &&
+        providerTokens.some(t => isTokenEqual(t, toToken))
     );
   }
 

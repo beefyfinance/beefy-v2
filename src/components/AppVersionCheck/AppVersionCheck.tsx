@@ -30,12 +30,7 @@ export const AppVersionCheck = memo(function AppVersionCheck() {
   const message = useMemo(() => {
     if (app.updateAvailable) {
       const key = app.reloadFailed ? 'Update-Available-Failed' : 'Update-Available';
-      return t(key, {
-        currentDate: new Date(app.currentVersion.timestamp).toLocaleString(),
-        currentVersion: app.currentVersion.git || app.currentVersion.content,
-        newDate: new Date(app.newVersion.timestamp).toLocaleString(),
-        newVersion: app.newVersion.git || app.newVersion.content,
-      });
+      return t(key);
     }
     return undefined;
   }, [t, app]);

@@ -304,6 +304,7 @@
     "retiredAt": 1743511150,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 60,
     "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -433,6 +434,7 @@
     "retiredAt": 1743511150,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 5,
     "assets": ["WETH", "wstETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -562,6 +564,7 @@
     "retiredAt": 1743510776,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 60,
     "assets": ["WETH", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -691,6 +694,7 @@
     "retiredAt": 1744925964,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 60,
     "assets": ["USDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -776,6 +780,7 @@
     "retiredAt": 1743510776,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["SCR", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -905,6 +910,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 60,
     "assets": ["USDC", "SCR"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1034,6 +1040,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 60,
     "assets": ["WETH", "SCR"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1119,6 +1126,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["WETH", "SCR"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1284,6 +1292,7 @@
     "retiredAt": 1743510776,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1369,6 +1378,7 @@
     "retiredAt": 1743510776,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDC", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1454,6 +1464,7 @@
     "retiredAt": 1743510776,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,

@@ -2,171 +2,239 @@
   {
     "chainId": "ethereum",
     "router": "0x5Cc9400FfB4Da168Cf271e912F589462C3A00d1F",
-    "manager": "0xEdFEc19ee32f5130084C0aCab91FeA604C137912"
+    "manager": "0xEdFEc19ee32f5130084C0aCab91FeA604C137912",
+    "feeRecipient": "0x0921E4fA2F85B6461fa83961d28DC7e1f9A32B40",
+    "feeBps": 5
   },
   {
     "chainId": "polygon",
     "router": "0xE90053b8136f18206fcf4F48E0C3B6AeD9b1aD71",
-    "manager": "0x2813223eCCE2E3A270C6162fDc56Be4414EcdbF6"
+    "manager": "0x2813223eCCE2E3A270C6162fDc56Be4414EcdbF6",
+    "feeRecipient": "0xee357b59df44A9d55F21A9f90fbA81e2aC894514",
+    "feeBps": 5
   },
   {
     "chainId": "bsc",
     "router": "0x1C482130A1205213ad130404221Dc9b5350Fe4BD",
-    "manager": "0xc2B9c646Bd36CBbC6D0d700991663F5D092CC79f"
+    "manager": "0xc2B9c646Bd36CBbC6D0d700991663F5D092CC79f",
+    "feeRecipient": "0x234f7F81434e340910A84F45F8e89D07fa86611A",
+    "feeBps": 5
   },
   {
     "chainId": "optimism",
     "router": "0xE82343A116d2179F197111D92f9B53611B43C01c",
-    "manager": "0x5a32F67C5eD74dc1b2e031b1bc2c3E965073424F"
+    "manager": "0x5a32F67C5eD74dc1b2e031b1bc2c3E965073424F",
+    "feeRecipient": "0x029028A29a5F06BFF37825f97900542465bcb1ac",
+    "feeBps": 5
   },
   {
     "chainId": "fantom",
     "router": "0x13761d473fF1478957ADb80CB4E58e0AF76d2C51",
-    "manager": "0x0F10ef4aFbc2a8081307e5b4D017141FD3fCfb7d"
+    "manager": "0x0F10ef4aFbc2a8081307e5b4D017141FD3fCfb7d",
+    "feeRecipient": "0xf2EeC1baC39306C0761c816d1D33cF7C9Ad6C0Fe",
+    "feeBps": 5
   },
   {
     "chainId": "arbitrum",
     "router": "0xf49F7bB6F4F50d272A0914a671895c4384696E5A",
-    "manager": "0x3395BDAE49853Bc7Ab9377d2A93f42BC3A18680e"
+    "manager": "0x3395BDAE49853Bc7Ab9377d2A93f42BC3A18680e",
+    "feeRecipient": "0xDc8968C9F935Fa3a19e57544a6DAe88217E5e164",
+    "feeBps": 5
   },
   {
     "chainId": "avax",
     "router": "0x2E72e1436F1a2B2e0d2fa4394Ac06857c7b281B3",
-    "manager": "0x7B86a441D1482BCF326658CEe9b6f189cd4297ff"
+    "manager": "0x7B86a441D1482BCF326658CEe9b6f189cd4297ff",
+    "feeRecipient": "0x2A9c05F5E7b96a93119c2234Af03E2315f02e8b4",
+    "feeBps": 5
   },
   {
     "chainId": "cronos",
     "router": "0xED9d262985E18710DDDAC0dfC10a3f900679063B",
-    "manager": "0x3feB5C7b553119f06109f991504F467f646caE43"
+    "manager": "0x3feB5C7b553119f06109f991504F467f646caE43",
+    "feeRecipient": "0xa9721Ae5042482D7a884A2138f580459B680920f",
+    "feeBps": 5
   },
   {
     "chainId": "moonbeam",
     "router": "0xEC6eEDbe6B006E1cFA2e22Cb46a132888bFc62D8",
-    "manager": "0x384257e94dcbBDfD7a5EF23AD4E7b4B9E6FcF1F5"
+    "manager": "0x384257e94dcbBDfD7a5EF23AD4E7b4B9E6FcF1F5",
+    "feeRecipient": "0x3E7F60B442CEAE0FE5e48e07EB85Cfb1Ed60e81A",
+    "feeBps": 5
   },
   {
     "chainId": "moonriver",
     "router": "0x57Be6EE3642EA9F6aFad527c73c4f7ACEe7cBD9C",
-    "manager": "0x6995c6FA2538C0261a5127e5E23b4e42b97Db04D"
+    "manager": "0x6995c6FA2538C0261a5127e5E23b4e42b97Db04D",
+    "feeRecipient": "0x617f12E04097F16e73934e84f35175a1B8196551",
+    "feeBps": 5
   },
   {
     "chainId": "metis",
     "router": "0x718591BF31ac44Be363D4900ea1fA6F355fc58dc",
-    "manager": "0x9F9F46aD541aFe75731D956f525e0a4d866F32E0"
+    "manager": "0x9F9F46aD541aFe75731D956f525e0a4d866F32E0",
+    "feeRecipient": "0x0f9602B7E7146a9BaE16dB948281BebDb7C2D095",
+    "feeBps": 5
   },
   {
     "chainId": "fuse",
     "router": "0xd3DFCD52001D0662DFA8A9eEa5C3379BA0b4452C",
-    "manager": "0x957803E12453B5881c9A543fF305a3151c9DdaC9"
+    "manager": "0x957803E12453B5881c9A543fF305a3151c9DdaC9",
+    "feeRecipient": "0x1C124c2CaB83b3C3B5D0f0899CeeA5e06964599F",
+    "feeBps": 5
   },
   {
     "chainId": "kava",
     "router": "0x6f66F246Bb436B6f4E66A992C2218b57cD906109",
-    "manager": "0xD3D46FF34cD495d5B91b8F3C5C552E81E5e3eab5"
+    "manager": "0xD3D46FF34cD495d5B91b8F3C5C552E81E5e3eab5",
+    "feeRecipient": "0x07F29FE11FbC17876D9376E3CD6F2112e81feA6F",
+    "feeBps": 5
   },
   {
     "chainId": "canto",
     "router": "0xFF529D914449459ecc443aF359e4fB4E3497176c",
-    "manager": "0xdb4E95b5B7bFC858FED1976082853eA74e3706e7"
+    "manager": "0xdb4E95b5B7bFC858FED1976082853eA74e3706e7",
+    "feeRecipient": "0xF09d213EE8a8B159C884b276b86E08E26B3bfF75",
+    "feeBps": 5
   },
   {
     "chainId": "zksync",
     "router": "0x744A1Ca08f0787bFF426cA3A734711EAc2772675",
-    "manager": "0xAD579b6c9F0b66101806957018B7D965c6B1fa92"
+    "manager": "0xAD579b6c9F0b66101806957018B7D965c6B1fa92",
+    "feeRecipient": "0x9F9FE15FDa14eAA2d878Ed667C805A7CC13c2560",
+    "feeBps": 5
   },
   {
     "chainId": "zkevm",
     "router": "0xE3d8531f197540e7b09D102107Eef46C4da13aC6",
-    "manager": "0x0930B420E375B0d210BfC51B26808cb9d2a33CB7"
+    "manager": "0x0930B420E375B0d210BfC51B26808cb9d2a33CB7",
+    "feeRecipient": "0x6fdfb18D09d5fa9a76ac76cb6Cdc53c8F23C3B29",
+    "feeBps": 5
   },
   {
     "chainId": "base",
     "router": "0x6F19Da51d488926C007B9eBaa5968291a2eC6a63",
-    "manager": "0x3fBD1da78369864c67d62c242d30983d6900c0f0"
+    "manager": "0x3fBD1da78369864c67d62c242d30983d6900c0f0",
+    "feeRecipient": "0x88D19A03C429029901d917510f8f582D2E5F803B",
+    "feeBps": 5
   },
   {
     "chainId": "gnosis",
     "router": "0x992Ccc9D9b8b76310E044660E96171116820F019",
-    "manager": "0xA59BB0da9565e03f53AeFC94fcC205c52Fc925B7"
+    "manager": "0xA59BB0da9565e03f53AeFC94fcC205c52Fc925B7",
+    "feeRecipient": "0x37Ed06D71dFFB97b6E89469EBf29552DA46E52fA",
+    "feeBps": 5
   },
   {
     "chainId": "linea",
     "router": "0xf2068e1FE1A80E7f5Ba80D6ABD6e8618aD4E959E",
-    "manager": "0x19e730Ab391b79F03CFA2ffc2C5e3fc617F0eEfe"
+    "manager": "0x19e730Ab391b79F03CFA2ffc2C5e3fc617F0eEfe",
+    "feeRecipient": "0x008f84b4f7B625636dD3E75045704b077D8db445",
+    "feeBps": 5
   },
   {
     "chainId": "mantle",
     "router": "0x445d3D1E75824197bd6A7F46434F67D754FA25C3",
-    "manager": "0x71c1203fD77fbB109aA06ef5F07f3CE592E96370"
+    "manager": "0x71c1203fD77fbB109aA06ef5F07f3CE592E96370",
+    "feeRecipient": "0x997A95C097Ade5Cb48649D38F929A5e422dFe96E",
+    "feeBps": 5
   },
   {
     "chainId": "fraxtal",
     "router": "0x63B257a372AA04c8a078D43BCAAdaD359ce1faa2",
-    "manager": "0xBFd177B973AC0F760782abedFDdec1C18e163aeE"
+    "manager": "0xBFd177B973AC0F760782abedFDdec1C18e163aeE",
+    "feeRecipient": "0x944819832B287bFb85BB94a163480516a33E819d",
+    "feeBps": 5
   },
   {
     "chainId": "mode",
     "router": "0xf2068e1FE1A80E7f5Ba80D6ABD6e8618aD4E959E",
-    "manager": "0x19e730Ab391b79F03CFA2ffc2C5e3fc617F0eEfe"
+    "manager": "0x19e730Ab391b79F03CFA2ffc2C5e3fc617F0eEfe",
+    "feeRecipient": "0x60CCB0C81D3c8341aAEf520a16a7032Ac63879a6",
+    "feeBps": 5
   },
   {
     "chainId": "manta",
     "router": "0x6f66F246Bb436B6f4E66A992C2218b57cD906109",
-    "manager": "0xD3D46FF34cD495d5B91b8F3C5C552E81E5e3eab5"
+    "manager": "0xD3D46FF34cD495d5B91b8F3C5C552E81E5e3eab5",
+    "feeRecipient": "0x3f33bfA32C5DbdF4Ab6900d45dDbacff0d2F31dE",
+    "feeBps": 5
   },
   {
     "chainId": "sei",
     "router": "0x0465375274301FFCDf3274e59544d535e03B3688",
-    "manager": "0x7B9f2Da828b12fCF7B4154465979a89830C8F57d"
+    "manager": "0x7B9f2Da828b12fCF7B4154465979a89830C8F57d",
+    "feeRecipient": "0x60CCB0C81D3c8341aAEf520a16a7032Ac63879a6",
+    "feeBps": 5
   },
   {
     "chainId": "rootstock",
     "router": "0x2E0A7064A5bA7B9b7499997D91885BaDd5FC45f6",
-    "manager": "0xC01cE221D1da322A5B8322fC195b407FEa32240E"
+    "manager": "0xC01cE221D1da322A5B8322fC195b407FEa32240E",
+    "feeRecipient": "0x2052e5744d1dC4D095e758120779E0f5a660f655",
+    "feeBps": 5
   },
   {
     "chainId": "scroll",
     "router": "0x75c9D65e7C0d6b40F356452f8A11aeD525B67197",
-    "manager": "0x3d38fa251b0C5dAC8B31Aef9dE7a54B4dE114342"
+    "manager": "0x3d38fa251b0C5dAC8B31Aef9dE7a54B4dE114342",
+    "feeRecipient": "0x2E52C94502f728A634a7b8eFf5941FB066d3eE76",
+    "feeBps": 5
   },
   {
     "chainId": "lisk",
     "router": "0xaF0f1B33Ef5A61b88F84BA2Ed2388f2C69fEaB55",
-    "manager": "0x60242b3c90a3F477a0FC5B4095f5946583Fbd6ce"
+    "manager": "0x60242b3c90a3F477a0FC5B4095f5946583Fbd6ce",
+    "feeRecipient": "0xe1E7940d77b7Ed600005eb16Fe05833c2C2E7214",
+    "feeBps": 5
   },
   {
     "chainId": "sonic",
     "router": "0x03C2E2e84031d913d45B1F5b5dDC8E50Fcb28652",
-    "manager": "0x5B8F906E9E3355155F05A9c46c5bF3e6D1dEBE5E"
+    "manager": "0x5B8F906E9E3355155F05A9c46c5bF3e6D1dEBE5E",
+    "feeRecipient": "0x10E13f11419165beB0F456eC8a230899E4013BBD",
+    "feeBps": 5
   },
   {
     "chainId": "berachain",
     "router": "0xe103ab2f922aa1a56EC058AbfDA2CeEa1e95bCd7",
-    "manager": "0xd0019D13d2F2eb3BA81bca1650cD45cD2Db6526E"
+    "manager": "0xd0019D13d2F2eb3BA81bca1650cD45cD2Db6526E",
+    "feeRecipient": "0x10E13f11419165beB0F456eC8a230899E4013BBD",
+    "feeBps": 5
   },
   {
     "chainId": "saga",
     "router": "0xcA7b72437193665d078aEeaDFFa565E1A2E71c3B",
-    "manager": "0xFeEFCc6CEB8dB58575f7075Ff91D322037e43808"
+    "manager": "0xFeEFCc6CEB8dB58575f7075Ff91D322037e43808",
+    "feeRecipient": "0xA55e75C4815Ff39eFD76C257857441d9FD99b45b",
+    "feeBps": 5
   },
   {
     "chainId": "hyperevm",
     "router": "0xF08cc9422a43Be7c1d6663DF2890Cf7E36E79307",
-    "manager": "0x455891384DE7A55E34C748461ef91433D6Ed0d09"
+    "manager": "0x455891384DE7A55E34C748461ef91433D6Ed0d09",
+    "feeRecipient": "0xA55e75C4815Ff39eFD76C257857441d9FD99b45b",
+    "feeBps": 5
   },
   {
     "chainId": "plasma",
     "router": "0x03C2E2e84031d913d45B1F5b5dDC8E50Fcb28652",
-    "manager": "0x5B8F906E9E3355155F05A9c46c5bF3e6D1dEBE5E"
+    "manager": "0x5B8F906E9E3355155F05A9c46c5bF3e6D1dEBE5E",
+    "feeRecipient": "0xA55e75C4815Ff39eFD76C257857441d9FD99b45b",
+    "feeBps": 5
   },
   {
     "chainId": "monad",
     "router": "0x542Bf9f89c3Ba0edb7aE5EB4Cf582d349fCdC608",
-    "manager": "0xDBCE7119b8F1fCF8e5145087AB314A82Cb931e52"
+    "manager": "0xDBCE7119b8F1fCF8e5145087AB314A82Cb931e52",
+    "feeRecipient": "0xA55e75C4815Ff39eFD76C257857441d9FD99b45b",
+    "feeBps": 5
   },
   {
     "chainId": "megaeth",
     "router": "0x6f66F246Bb436B6f4E66A992C2218b57cD906109",
-    "manager": "0xD3D46FF34cD495d5B91b8F3C5C552E81E5e3eab5"
+    "manager": "0xD3D46FF34cD495d5B91b8F3C5C552E81E5e3eab5",
+    "feeRecipient": "0xA55e75C4815Ff39eFD76C257857441d9FD99b45b",
+    "feeBps": 5
   }
 ]

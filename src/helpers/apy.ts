@@ -1,4 +1,5 @@
 import type { ApiApyDataAprComponents } from '../features/data/apis/beefy/beefy-api-types.ts';
+import type { PlatformEntity } from '../features/data/entities/platform.ts';
 import {
   isCowcentratedGovVault,
   isErc4626Vault,
@@ -71,7 +72,7 @@ export const getApyComponents = createFactory(() => {
   } as const;
 });
 
-export type ApyLabelsType = VaultEntity['type'] | 'cowcentrated-compounds';
+export type ApyLabelsType = VaultEntity['type'] | 'cowcentrated-compounds' | 'lending';
 
 export type ApyLabels = {
   [K in TotalApyKey | 'breakdown']: string[];
@@ -158,14 +159,32 @@ export const getApiApyDataComponents = createFactory(() => {
 
 export function getApyLabelsTypeForVault(
   vault: VaultEntity,
-  totalType: 'apy' | 'apr'
+  totalType: 'apy' | 'apr',
+  platform: PlatformEntity | undefined
 ): ApyLabelsType {
   if (isCowcentratedGovVault(vault) && totalType === 'apy') {
     return 'cowcentrated-compounds';
+  }
+  if (platform?.type === 'money-market') {
+    return 'lending';
   }
   if (isErc4626Vault(vault)) {
     return 'standard';
   }
 
   return vault.type;
+}
+
+/**
+ * Returns label fallback chains for a vault. For money-market platforms the
+ * resolved label type is `lending`, so `getApyLabelsForType` prepends
+ * higher-priority `Vault-Apy-Lending-*` keys (e.g. the `trading` APR component
+ * renders as "Lending APR" / "Lending Daily" instead of "Trading APR").
+ */
+export function getApyLabelsForVault(
+  vault: VaultEntity,
+  totalType: 'apy' | 'apr',
+  platform: PlatformEntity | undefined
+): ApyLabels {
+  return getApyLabelsForType(getApyLabelsTypeForVault(vault, totalType, platform));
 }

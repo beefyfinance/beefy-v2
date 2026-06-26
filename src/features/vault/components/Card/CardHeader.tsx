@@ -9,11 +9,21 @@ export const CardHeader = styled('div', {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '16px',
     gap: '8px',
     width: '100%',
-    sm: {
-      padding: '24px',
+  },
+  variants: {
+    padding: {
+      none: {},
+      default: {
+        padding: '16px',
+        sm: {
+          padding: '24px',
+        },
+      },
     },
+  },
+  defaultVariants: {
+    padding: 'default',
   },
 });

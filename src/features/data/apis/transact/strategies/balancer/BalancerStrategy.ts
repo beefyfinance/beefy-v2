@@ -56,11 +56,7 @@ import {
   onlyOneInput,
   onlyOneTokenAmount,
 } from '../../helpers/options.ts';
-import {
-  calculatePriceImpact,
-  highestFeeOrZero,
-  totalValueOfTokenAmounts,
-} from '../../helpers/quotes.ts';
+import { calculatePriceImpact, totalValueOfTokenAmounts, ZERO_FEE } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, includeWrappedAndNative, pickTokens } from '../../helpers/tokens.ts';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
@@ -106,6 +102,7 @@ import type {
   ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { BalancerStrategyConfig } from '../strategy-configs.ts';
+import { canRouteToAllOf, canRouteToAnyOf } from '../strategy-eligibility.ts';
 
 type ZapHelpers = {
   slippage: number;
@@ -469,14 +466,14 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
     return {
       id: createQuoteId(option.id),
       strategyId,
-      priceImpact: calculatePriceImpact(inputs, outputs, returned, state), // includes the zap fee
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       option,
       inputs,
       outputs,
       returned,
       allowances,
       steps,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
     };
   }
 
@@ -948,6 +945,7 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
       type,
       via: 'break-only',
       viaTokens: this.allTokenOptions,
+      feeable: false,
     };
 
     const supportedAggregatorTokens = await this.aggregatorTokensCanSwapToAllOf(
@@ -1248,10 +1246,11 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
       },
     ];
 
-    const { liquidity, swaps, outputs } = await this.fetchWithdrawLiquiditySwaps(
-      liquidityWithdrawn,
-      option
-    );
+    const {
+      liquidity,
+      swaps,
+      outputs: withdrawOutputs,
+    } = await this.fetchWithdrawLiquiditySwaps(liquidityWithdrawn, option);
 
     // Build quote steps
     const steps: ZapQuoteStep[] = [
@@ -1301,13 +1300,14 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
       });
     }
 
+    const outputs = withdrawOutputs;
     const baseQuote: Omit<BalancerWithdrawQuote, 'type' | 'viaToken' | 'option'> = {
       id: createQuoteId(option.id),
       strategyId: this.id,
       priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       inputs,
       allowances,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
       steps,
       outputs,
       returned,
@@ -1560,6 +1560,25 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
       pending: false,
       extraInfo: { zap: true, vaultId: quote.option.vaultId },
     };
+  }
+
+  async canAcceptTokenAsDeposit(token: TokenEntity): Promise<boolean> {
+    return this.canRouteAcrossEitherEmissionPath(token);
+  }
+
+  async canEmitTokenAsWithdraw(token: TokenEntity): Promise<boolean> {
+    return this.canRouteAcrossEitherEmissionPath(token);
+  }
+
+  protected async canRouteAcrossEitherEmissionPath(token: TokenEntity): Promise<boolean> {
+    if (this.singleTokenOptions.some(t => isTokenEqual(t, token))) return true;
+    if (
+      this.allTokenOptions.length > 0 &&
+      (await canRouteToAllOf(this.helpers, this.options.swap, this.allTokenOptions, token))
+    ) {
+      return true;
+    }
+    return canRouteToAnyOf(this.helpers, this.options.swap, this.singleTokenOptions, token);
   }
 
   protected async aggregatorTokensCanSwapToAllOf(allTokens: TokenEntity[]): Promise<TokenEntity[]> {

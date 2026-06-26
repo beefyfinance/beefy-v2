@@ -1,11 +1,11 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import type BigNumber from 'bignumber.js';
-import { format } from 'date-fns';
 import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchHistoricalPrices } from '../../features/data/actions/historical.ts';
 import { selectPriceWithChange } from '../../features/data/selectors/tokens.ts';
 import { BIG_ZERO } from '../../helpers/big-number.ts';
+import { formatDateTime } from '../../helpers/date.ts';
 import { formatLargePercent, formatLargeUsd, formatUsd } from '../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
 import { DivWithTooltip } from '../Tooltip/DivWithTooltip.tsx';
@@ -89,7 +89,7 @@ const WithChange = memo(function WithChange({
     }`,
     {
       change: formatUsd(diffAbs, diffAbs.gte(0.01) ? 2 : 4),
-      date: format(previousDate, 'MMM d, yyyy h:mm a'),
+      date: formatDateTime(previousDate),
     }
   );
 

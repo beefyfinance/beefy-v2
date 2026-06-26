@@ -12,6 +12,7 @@ import { selectVaultIdForVaultPage } from '../data/selectors/vaults.ts';
 import { Actions } from './components/Actions/Actions.tsx';
 import { VaultBanners } from './components/Banners/VaultBanners.tsx';
 import { PromoCardLoader } from './components/BoostCard/PromoCardLoader.tsx';
+import { FreeZapPromotionCardLoader } from './components/FreeZapCard/FreeZapPromotionCardLoader.tsx';
 import { Details } from './components/Details/Details.tsx';
 import { Explainer } from './components/Explainer/Explainer.tsx';
 import { GamingCards } from './components/GamingCards/GamingCards.tsx';
@@ -20,6 +21,7 @@ import { InsuranceCards } from './components/InsuranceCards/InsuranceCards.tsx';
 import { LeverageCards } from './components/LeverageCards/LeverageCards.tsx';
 import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdown/LiquidityPoolBreakdown.tsx';
 import { PnLGraphIfWallet } from './components/PnLGraph/PnLGraphIfWallet.tsx';
+import { PointsBannerLoader } from './components/PointsBanner/PointsBannerLoader.tsx';
 import { RiskChecklistCard } from './components/RiskChecklistCard/RiskChecklistCard.tsx';
 import { VaultHeader } from './components/VaultHeader/VaultHeader.tsx';
 import { VaultsStats } from './components/VaultsStats/VaultsStats.tsx';
@@ -72,7 +74,9 @@ const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) 
               </Hidden>
             </div>
             <div className={classes.columnInfo}>
+              <FreeZapPromotionCardLoader vaultId={vaultId} />
               <PromoCardLoader vaultId={vaultId} />
+              <PointsBannerLoader vaultId={vaultId} />
               <PnLGraphIfWallet vaultId={vaultId} />
               <HistoricGraphsLoader vaultId={vaultId} />
               <LiquidityPoolBreakdownLoader vaultId={vaultId} />

@@ -29,6 +29,9 @@ const strategyLoadersByIdUnchecked = {
   balancer: async () => (await import('./balancer/BalancerStrategy.ts')).BalancerStrategy,
   'cross-chain': async () =>
     (await import('./cross-chain/CrossChainStrategy.ts')).CrossChainStrategy,
+  'vault-to-vault-single-token': async () =>
+    (await import('./vault-to-vault/VaultToVaultSingleTokenStrategy.ts'))
+      .VaultToVaultSingleTokenStrategy,
 } as const satisfies Record<ZapStrategyId, AnyLoader>;
 
 type StrategyIdToStaticPromise = typeof strategyLoadersByIdUnchecked;

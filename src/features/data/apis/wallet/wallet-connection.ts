@@ -50,7 +50,7 @@ const eip6936WalletPriority = ['xyz.farcaster.', 'com.coinbase.'];
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | undefined;
   protected onboardWalletInitializers: WalletInit[] | undefined;
-  protected ignoreDisconnectFromAutoConnect = false;
+  protected hasConnectedWallet = false;
   protected providerWrapper: ((provider: EIP1193Provider) => EIP1193Provider) | undefined;
   protected tryToAutoConnectToEip6936: boolean = false;
   protected eip6963Wallets = new Map<string, string>();
@@ -309,7 +309,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     // Attempt to connect
     try {
       console.debug(`tryToAutoReconnect: Trying ${autoConnectWallet}`);
-      this.ignoreDisconnectFromAutoConnect = true;
       await WalletConnectionApi.connect(onboard, {
         autoSelect: { label: autoConnectWallet, disableModals: true },
       });
@@ -319,8 +318,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       WalletConnectionApi.setLastConnectedWallet(undefined);
       // Rethrow so called knows connection failed
       throw err;
-    } finally {
-      this.ignoreDisconnectFromAutoConnect = false;
     }
   }
 
@@ -434,11 +431,18 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   }
 
   public async disconnect() {
+    // set before the await: onboard emits [] mid-teardown so onWalletDisconnect fires once
+    this.hasConnectedWallet = false;
     // Disconnect Wallet
     if (this.onboard) {
       const { wallets } = this.onboard.state.get();
       if (wallets.length) {
-        await this.onboard.disconnectWallet({ label: wallets[0].label });
+        try {
+          await this.onboard.disconnectWallet({ label: wallets[0].label });
+        } catch (err) {
+          this.hasConnectedWallet = this.isConnected();
+          throw err;
+        }
       }
     }
 
@@ -576,32 +580,33 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   private subscribeToOnboardEvents(onboard: OnboardAPI) {
     const wallets = onboard.state.select('wallets');
     return wallets.subscribe(wallets => {
-      if (wallets.length === 0) {
-        if (this.ignoreDisconnectFromAutoConnect) {
-          console.debug('Ignoring disconnect event from auto reconnect wallet attempt');
-          return (this.ignoreDisconnectFromAutoConnect = false);
-        }
-        this.options.onWalletDisconnected();
-      } else {
-        const wallet = wallets[0];
+      const wallet = wallets[0];
+      const isConnected = !!wallet && wallet.accounts.length > 0 && wallet.chains.length > 0;
 
-        if (wallet.accounts.length === 0 || wallet.chains.length === 0) {
+      if (!isConnected) {
+        // onboard emits disconnected-looking states mid-connect
+        // only connected -> disconnected transition is real
+        if (this.hasConnectedWallet) {
+          this.hasConnectedWallet = false;
           this.options.onWalletDisconnected();
-        } else {
-          // Save last connected wallet
-          WalletConnectionApi.setLastConnectedWallet(wallet.label);
-
-          // Raise events
-          const account = wallet.accounts[0];
-          const networkChainId = maybeHexToNumber(wallet.chains[0].id);
-          const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
-
-          if (chain) {
-            this.options.onChainChanged(chain.id, account.address);
-          } else {
-            this.options.onUnsupportedChainSelected(networkChainId, account.address);
-          }
         }
+        return;
+      }
+
+      this.hasConnectedWallet = true;
+
+      // Save last connected wallet
+      WalletConnectionApi.setLastConnectedWallet(wallet.label);
+
+      // Raise events
+      const account = wallet.accounts[0];
+      const networkChainId = maybeHexToNumber(wallet.chains[0].id);
+      const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
+
+      if (chain) {
+        this.options.onChainChanged(chain.id, account.address);
+      } else {
+        this.options.onUnsupportedChainSelected(networkChainId, account.address);
       }
     });
   }

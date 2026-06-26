@@ -182,6 +182,7 @@
     "retiredAt": 1727186611,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["MANTA", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -225,6 +226,7 @@
     "retiredAt": 1734101088,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["STONE", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -268,6 +270,7 @@
     "retiredAt": 1734101088,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -311,6 +314,7 @@
     "retiredAt": 1727186611,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDC", "USDT"],
     "risks": {
       "updatedAt": 1765557014,

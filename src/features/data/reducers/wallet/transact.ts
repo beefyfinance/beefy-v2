@@ -20,12 +20,14 @@ import {
   transactSetInputAmount,
   transactSetSelectedChainId,
   transactSetSlippage,
+  transactSwitchDepositSource,
   transactSwitchMode,
   transactSwitchStep,
 } from '../../actions/transact.ts';
 import {
   crossChainClearRecoveryQuote,
   crossChainFetchRecoveryQuote,
+  crossChainMarkRecoveryQuoteStale,
   crossChainOpDismiss,
   crossChainOpInitiated,
   crossChainOpStatusUpdate,
@@ -43,7 +45,7 @@ import type {
   TransactSelections,
   TransactState,
 } from './transact-types.ts';
-import { TransactMode, TransactStatus, TransactStep } from './transact-types.ts';
+import { DepositSource, TransactMode, TransactStatus, TransactStep } from './transact-types.ts';
 
 const initialTransactTokens: TransactSelections = {
   allSelectionIds: [],
@@ -83,6 +85,7 @@ const initialRecoveryQuoteState: CrossChainRecoveryQuoteState = {
   quote: undefined,
   status: TransactStatus.Idle,
   error: undefined,
+  isStale: false,
 };
 
 const initialTransactState: TransactState = {
@@ -96,6 +99,7 @@ const initialTransactState: TransactState = {
   inputMaxes: [false],
   mode: TransactMode.Deposit,
   step: TransactStep.Form,
+  depositSource: DepositSource.Wallet,
   selections: initialTransactTokens,
   forceSelection: false,
   options: initialTransactOptions,
@@ -121,9 +125,19 @@ const transactSlice = createSlice({
         sliceState.step = TransactStep.Form;
         sliceState.inputAmounts = [BIG_ZERO];
         sliceState.inputMaxes = [false];
+        sliceState.depositSource = DepositSource.Wallet;
+        resetQuotes(sliceState);
       })
       .addCase(transactSwitchStep, (sliceState, action) => {
         sliceState.step = action.payload;
+      })
+      .addCase(transactSwitchDepositSource, (sliceState, action) => {
+        sliceState.depositSource = action.payload;
+        sliceState.step = TransactStep.Form;
+        sliceState.selectedSelectionId = first(sliceState.selections.allSelectionIds);
+        sliceState.forceSelection = true;
+        clearInputs(sliceState);
+        resetQuotes(sliceState);
       })
       .addCase(transactSetSelectedChainId, (sliceState, action) => {
         const chainId = action.payload;
@@ -171,7 +185,6 @@ const transactSlice = createSlice({
         if (sliceState.confirm.requestId === action.payload.requestId) {
           sliceState.confirm.status = TransactStatus.Fulfilled;
           sliceState.confirm.changes = action.payload.changes;
-          // replace quote
           delete sliceState.quotes.byQuoteId[action.payload.originalQuoteId];
           sliceState.quotes.byQuoteId[action.payload.newQuote.id] = action.payload.newQuote;
           sliceState.quotes.allQuoteIds = Object.keys(sliceState.quotes.byQuoteId);
@@ -225,7 +238,8 @@ const transactSlice = createSlice({
           sliceState.vaultId = action.payload.vaultId;
           sliceState.pendingVaultId = undefined;
           sliceState.step = TransactStep.Form;
-          sliceState.mode = TransactMode.Deposit;
+          // default tab is computed once data has loaded (Migrate when migratable, else Deposit)
+          sliceState.mode = action.payload.mode;
         }
       })
       .addCase(transactFetchOptions.pending, (sliceState, action) => {
@@ -315,12 +329,14 @@ const transactSlice = createSlice({
         );
       })
       .addCase(crossChainFetchRecoveryQuote.pending, (sliceState, action) => {
-        sliceState.crossChain.recoveryQuote = {
-          opId: action.meta.arg.opId,
-          quote: undefined,
-          status: TransactStatus.Pending,
-          error: undefined,
-        };
+        const rq = sliceState.crossChain.recoveryQuote;
+        if (rq.opId !== action.meta.arg.opId) {
+          rq.quote = undefined;
+        }
+        rq.opId = action.meta.arg.opId;
+        rq.status = TransactStatus.Pending;
+        rq.error = undefined;
+        rq.isStale = false;
       })
       .addCase(crossChainFetchRecoveryQuote.rejected, (sliceState, action) => {
         const rq = sliceState.crossChain.recoveryQuote;
@@ -335,7 +351,11 @@ const transactSlice = createSlice({
         if (rq.opId === action.meta.arg.opId) {
           rq.status = TransactStatus.Fulfilled;
           rq.quote = action.payload.quote;
+          rq.isStale = false;
         }
+      })
+      .addCase(crossChainMarkRecoveryQuoteStale, sliceState => {
+        sliceState.crossChain.recoveryQuote.isStale = true;
       })
       .addCase(crossChainClearRecoveryQuote, sliceState => {
         sliceState.crossChain.recoveryQuote = initialRecoveryQuoteState;
@@ -364,6 +384,7 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.inputMaxes = [false];
   sliceState.forceSelection = false;
   sliceState.successClosed = false;
+  sliceState.depositSource = DepositSource.Wallet;
 
   sliceState.options.status = TransactStatus.Idle;
   sliceState.options.error = undefined;
@@ -416,18 +437,15 @@ function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOp
       continue;
     }
 
-    // Add optionId => option mapping
     sliceState.options.byOptionId[option.id] = option;
     sliceState.options.allOptionIds.push(option.id);
 
-    // Add selectionId -> optionId[] mapping
     if (!(option.selectionId in sliceState.options.bySelectionId)) {
       sliceState.options.bySelectionId[option.selectionId] = [option.id];
     } else {
       sliceState.options.bySelectionId[option.selectionId].push(option.id);
     }
 
-    // Add selectionId -> address[] mapping
     const existingSelection = sliceState.selections.bySelectionId[option.selectionId];
     if (!existingSelection) {
       sliceState.selections.bySelectionId[option.selectionId] = {
@@ -435,6 +453,7 @@ function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOp
         tokens: option.mode === TransactMode.Deposit ? option.inputs : option.wantedOutputs,
         order: option.selectionOrder,
         hideIfZeroBalance: !!option.selectionHideIfZeroBalance,
+        ...(option.feeCampaign ? { feeCampaign: option.feeCampaign } : {}),
       };
 
       sliceState.selections.allSelectionIds.push(option.selectionId);
@@ -443,7 +462,6 @@ function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOp
       existingSelection.hideIfZeroBalance = false;
     }
 
-    // Add chainId -> selectionId[] mapping
     // Cross-chain options are indexed by the chain the user interacts with:
     // deposits by sourceChainId, withdrawals by destChainId
     const chainKey =

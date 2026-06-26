@@ -11,7 +11,12 @@ import {
 } from '../../../../../../helpers/big-number.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
-import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../../entities/token.ts';
+import {
+  isTokenEqual,
+  isTokenErc20,
+  isTokenNative,
+  type TokenEntity,
+} from '../../../../entities/token.ts';
 import { isCowcentratedVault, type VaultCowcentrated } from '../../../../entities/vault.ts';
 import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
@@ -28,7 +33,7 @@ import {
   createSelectionId,
   onlyInputCount,
 } from '../../helpers/options.ts';
-import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
 import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { QuoteRequest } from '../../swap/ISwapProvider.ts';
@@ -129,6 +134,7 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
         lpTokens: this.vaultType.depositTokens,
         vaultType: 'cowcentrated',
         swapVia: 'aggregator',
+        feeable: false, // dual-token deposit is free (no single-input fee basis)
       },
     ];
   }
@@ -269,7 +275,7 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
       returned,
       allowances,
       steps,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
       lpQuotes:
         rebalance.needsSwap ?
           [steps.filter(isZapQuoteStepSwap).find(isZapQuoteStepSwapAggregator)?.quote]
@@ -401,6 +407,14 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
       pending: false,
       extraInfo: { zap: true, vaultId: quote.option.vaultId },
     };
+  }
+
+  async canAcceptTokenAsDeposit(_token: TokenEntity): Promise<boolean> {
+    return false;
+  }
+
+  async canEmitTokenAsWithdraw(_token: TokenEntity): Promise<boolean> {
+    return false;
   }
 
   async fetchWithdrawOptions(): Promise<never[]> {

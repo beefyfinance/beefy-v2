@@ -426,8 +426,10 @@
     "earnedTokenAddress": "0xEce17085CedeAc9414ab7Da38e5175e882c4F483",
     "oracle": "lps",
     "oracleId": "black-avax-rsavax",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1754382664,
+    "retireReason": "rewards",
+    "retiredAt": 1780642325,
     "platformId": "blackhole",
     "assets": ["rsAVAX", "WAVAX"],
     "migrationIds": [],
@@ -668,8 +670,10 @@
     "earnedTokenAddress": "0x0483130D4EFBC2e082653F88Bd52adF987545455",
     "oracle": "lps",
     "oracleId": "black-btcb-wavax",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1753093757,
+    "retireReason": "tvl",
+    "retiredAt": 1780413682,
     "platformId": "blackhole",
     "assets": ["BTCb", "WAVAX"],
     "migrationIds": [],
@@ -1059,6 +1063,7 @@
     "retiredAt": 1761587666,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 1,
     "assets": ["USDT", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1191,6 +1196,7 @@
     "retiredAt": 1761587666,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["BTCb", "WAVAX"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1319,6 +1325,7 @@
     "retiredAt": 1761587666,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["WETHe", "WAVAX"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1451,6 +1458,7 @@
     "retiredAt": 1761587666,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["WAVAX", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1529,6 +1537,7 @@
     "createdAt": 1727102130,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETHe", "WAVAX"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1607,6 +1616,7 @@
     "createdAt": 1727102130,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WAVAX", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1685,6 +1695,7 @@
     "createdAt": 1727102130,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDT", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1763,6 +1774,7 @@
     "createdAt": 1727102130,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["BTCb", "USDC"],
     "risks": {
       "updatedAt": 1765557014,

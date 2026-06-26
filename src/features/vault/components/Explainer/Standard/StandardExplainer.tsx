@@ -7,6 +7,7 @@ import { shouldVaultShowInterest, type VaultEntity } from '../../../../data/enti
 import { selectVaultTotalApyOrUndefined } from '../../../../data/selectors/apy.ts';
 import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../data/selectors/boosts.ts';
 import { selectChainById } from '../../../../data/selectors/chains.ts';
+import { selectVaultPlatformOrUndefined } from '../../../../data/selectors/platforms.ts';
 import {
   selectStandardVaultById,
   selectVaultStrategyAddressOrUndefined,
@@ -79,6 +80,7 @@ const StandardExplainerDetails = memo(function StandardExplainerDetails({
   vaultId,
 }: StandardExplainerProps) {
   const vault = useAppSelector(state => selectStandardVaultById(state, vaultId));
+  const platform = useAppSelector(state => selectVaultPlatformOrUndefined(state, vaultId));
   const apys = useAppSelector(state => selectVaultTotalApyOrUndefined(state, vaultId));
   const showApy = apys && apys.totalApy > 0 && shouldVaultShowInterest(vault);
   const showLendingOracle = !!vault.lendingOracle;
@@ -88,13 +90,18 @@ const StandardExplainerDetails = memo(function StandardExplainerDetails({
   }
 
   if (showApy && !showLendingOracle) {
-    return <ApyDetails type={getApyLabelsTypeForVault(vault, apys.totalType)} values={apys} />;
+    return (
+      <ApyDetails type={getApyLabelsTypeForVault(vault, apys.totalType, platform)} values={apys} />
+    );
   }
 
   return (
     <>
       {showApy && (
-        <ApyDetails type={getApyLabelsTypeForVault(vault, apys.totalType)} values={apys} />
+        <ApyDetails
+          type={getApyLabelsTypeForVault(vault, apys.totalType, platform)}
+          values={apys}
+        />
       )}
       {showLendingOracle && <LendingOracle vaultId={vault.id} />}
     </>

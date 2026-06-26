@@ -1,5 +1,352 @@
 [
   {
+    "id": "kumbaya-cow-megaeth-mega-usdm-0.3-rp",
+    "name": "MEGA-USDm Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowKumbayaMegaETHMEGA-USDm-0.3",
+    "tokenAddress": "0xa629dB8732334a30A13325Dad1B6eB9118122Ad3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kumbaya",
+    "earnContractAddress": "0x8d0ab1D0D8c62eF7b45C0a04d1B6f25b438E0a1b",
+    "earnedToken": "rCowKumbayaMegaETHMEGA-USDm-0.3",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "kumbaya-cow-megaeth-mega-usdm-0.3",
+    "status": "active",
+    "createdAt": 1778054187,
+    "platformId": "kumbaya",
+    "assets": ["MEGA", "USDm"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "kumbaya-cow-megaeth-mega-usdm-0.3",
+    "name": "MEGA-USDm",
+    "type": "cowcentrated",
+    "token": "MEGA-USDm (0.3%) kumbaya",
+    "tokenAddress": "0xA8275D88521B346c42dB84D5B760ef4b9E527764",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kumbaya",
+    "depositTokenAddresses": [
+      "0x28B7E77f82B25B95953825F1E3eA0E36c1c29861",
+      "0xFAfDdbb3FC7688494971a79cc65DCa3EF82079E7"
+    ],
+    "earnContractAddress": "0xa629dB8732334a30A13325Dad1B6eB9118122Ad3",
+    "earnedToken": "cowKumbayaMegaETHMEGA-USDm-0.3",
+    "earnedTokenAddress": "0xa629dB8732334a30A13325Dad1B6eB9118122Ad3",
+    "oracle": "lps",
+    "oracleId": "kumbaya-cow-megaeth-mega-usdm-0.3",
+    "status": "active",
+    "createdAt": 1778054187,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["MEGA", "USDm"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "kumbaya-cow-megaeth-mega-usdm-rp",
+    "name": "MEGA-USDm Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowKumbayaMegaETHMEGA-USDm",
+    "tokenAddress": "0xDeE9cacF23611d667B6F0143ca5eae6a88693d6c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kumbaya",
+    "earnContractAddress": "0x8197Af78a8f1DEE9B649fF0d191fB0b51d2D775B",
+    "earnedToken": "rCowKumbayaMegaETHMEGA-USDm",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "kumbaya-cow-megaeth-mega-usdm",
+    "status": "active",
+    "createdAt": 1777543532,
+    "platformId": "kumbaya",
+    "assets": ["MEGA", "USDm"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "kumbaya-cow-megaeth-mega-usdm",
+    "name": "MEGA-USDm",
+    "type": "cowcentrated",
+    "token": "MEGA-USDm kumbaya",
+    "tokenAddress": "0x5fB29184C49546c13A14A3958f21E5759f0821f2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kumbaya",
+    "depositTokenAddresses": [
+      "0x28B7E77f82B25B95953825F1E3eA0E36c1c29861",
+      "0xFAfDdbb3FC7688494971a79cc65DCa3EF82079E7"
+    ],
+    "earnContractAddress": "0xDeE9cacF23611d667B6F0143ca5eae6a88693d6c",
+    "earnedToken": "cowKumbayaMegaETHMEGA-USDm",
+    "earnedTokenAddress": "0xDeE9cacF23611d667B6F0143ca5eae6a88693d6c",
+    "oracle": "lps",
+    "oracleId": "kumbaya-cow-megaeth-mega-usdm",
+    "status": "active",
+    "createdAt": 1777543532,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["MEGA", "USDm"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "prism-cow-megaeth-mega-usdm-rp",
+    "name": "MEGA-USDm Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPrismMegaethMEGA-USDM",
+    "tokenAddress": "0x3808e89223F26dDBAcBF3Cf36F99E37E537fb3De",
+    "tokenDecimals": 18,
+    "tokenProviderId": "prism",
+    "earnContractAddress": "0x00f88397182D20CF90f1232e67D6895E48f334b9",
+    "earnedToken": "rCowPrismMegaethMEGA-USDM",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "prism-cow-megaeth-mega-usdm",
+    "status": "active",
+    "createdAt": 1777555418,
+    "platformId": "prism",
+    "assets": ["MEGA", "USDm"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "prism-cow-megaeth-mega-usdm",
+    "name": "MEGA-USDm",
+    "type": "cowcentrated",
+    "token": "MEGA-USDm prism",
+    "tokenAddress": "0x36C06217A9855a2cE68CF183A9A4F0186db5E9f6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "prism",
+    "depositTokenAddresses": [
+      "0x28B7E77f82B25B95953825F1E3eA0E36c1c29861",
+      "0xFAfDdbb3FC7688494971a79cc65DCa3EF82079E7"
+    ],
+    "earnContractAddress": "0x3808e89223F26dDBAcBF3Cf36F99E37E537fb3De",
+    "earnedToken": "cowPrismMegaethMEGA-USDM",
+    "earnedTokenAddress": "0x3808e89223F26dDBAcBF3Cf36F99E37E537fb3De",
+    "oracle": "lps",
+    "oracleId": "prism-cow-megaeth-mega-usdm",
+    "status": "active",
+    "createdAt": 1777555418,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["MEGA", "USDm"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "kumbaya-cow-megaeth-mega-usdt0-rp",
+    "name": "MEGA-USDT0 Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowKumbayaMegaethMEGA-USDT0",
+    "tokenAddress": "0x53223778137650B7E2162a796A4B6d07d9Be2c01",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kumbaya",
+    "earnContractAddress": "0x20B049aC987Be82a9c52B5C5387358380Ee9936D",
+    "earnedToken": "rCowKumbayaMegaethMEGA-USDT0",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "kumbaya-cow-megaeth-mega-usdt0",
+    "status": "active",
+    "createdAt": 1777550332,
+    "platformId": "kumbaya",
+    "assets": ["MEGA", "USDT0"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "kumbaya-cow-megaeth-mega-usdt0",
+    "name": "MEGA-USDT0",
+    "type": "cowcentrated",
+    "token": "MEGA-USDT0 kumbaya",
+    "tokenAddress": "0xcBd0042ccf3Daee086b8EA2F260C04624F5A7B65",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kumbaya",
+    "depositTokenAddresses": [
+      "0x28B7E77f82B25B95953825F1E3eA0E36c1c29861",
+      "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb"
+    ],
+    "earnContractAddress": "0x53223778137650B7E2162a796A4B6d07d9Be2c01",
+    "earnedToken": "cowKumbayaMegaethMEGA-USDT0",
+    "earnedTokenAddress": "0x53223778137650B7E2162a796A4B6d07d9Be2c01",
+    "oracle": "lps",
+    "oracleId": "kumbaya-cow-megaeth-mega-usdt0",
+    "status": "active",
+    "createdAt": 1777550332,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["MEGA", "USDT0"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aavev3-megaeth-usdm",
+    "name": "USDm",
+    "type": "standard",
+    "token": "USDm",
+    "tokenAddress": "0xFAfDdbb3FC7688494971a79cc65DCa3EF82079E7",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x1BacB8870b57D07CCF84C2CA2825C219B6380A86",
+    "earnedToken": "mooAaveV3MegaETHUSDm",
+    "earnedTokenAddress": "0x1BacB8870b57D07CCF84C2CA2825C219B6380A86",
+    "oracle": "tokens",
+    "oracleId": "USDm",
+    "status": "active",
+    "createdAt": 1777310723,
+    "platformId": "aave",
+    "assets": ["USDm"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "megaeth",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "kumbaya-cow-megaeth-duck-weth-rp",
     "name": "DUCK-WETH Reward Pool",
     "type": "gov",
@@ -57,6 +404,7 @@
     "createdAt": 1770726819,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["DUCK", "WETH"],
     "risks": {
       "complex": true,
@@ -134,6 +482,7 @@
     "createdAt": 1770726819,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["KPI", "WETH"],
     "risks": {
       "complex": true,
@@ -211,6 +560,7 @@
     "createdAt": 1770665412,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["WETH", "USDm"],
     "risks": {
       "complex": true,
@@ -288,6 +638,7 @@
     "createdAt": 1770665412,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["WETH", "BTCb"],
     "risks": {
       "complex": true,
@@ -365,6 +716,7 @@
     "createdAt": 1770665412,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["WETH", "USDT0"],
     "risks": {
       "complex": true,
@@ -442,6 +794,7 @@
     "createdAt": 1770665412,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["WETH", "USDm"],
     "risks": {
       "complex": true,
@@ -519,6 +872,7 @@
     "createdAt": 1770665412,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["BTCb", "USDm"],
     "risks": {
       "complex": true,

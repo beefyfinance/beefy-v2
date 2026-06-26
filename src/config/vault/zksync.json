@@ -414,6 +414,7 @@
     "createdAt": 1719318645,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["ZK", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -455,6 +456,7 @@
     "createdAt": 1719318645,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["ZK", "USDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -496,6 +498,7 @@
     "createdAt": 1719318645,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -539,6 +542,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -582,6 +586,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDT"],
     "risks": {
       "updatedAt": 1765557014,

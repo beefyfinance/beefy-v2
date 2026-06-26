@@ -23,6 +23,7 @@
     "pause": "vite-node ./scripts/pausePlatform.ts",
     "setVaultUrls": "vite-node ./scripts/setVaultUrls.ts",
     "setVaultStatus": "vite-node ./scripts/setVaultStatus.ts",
+    "retireChain": "vite-node ./scripts/retireChain.ts",
     "setVaultRisks": "vite-node ./scripts/setVaultRisks.ts",
     "addClmRewardPools": "vite-node ./scripts/addClmRewardPools.ts",
     "addCurveZap": "vite-node ./scripts/addCurveZap.ts",
@@ -49,7 +50,7 @@
     "packages:update": "node ./scripts/updatePackages.js"
   },
   "dependencies": {
-    "@beefyfinance/blockchain-addressbook": "^0.54.203",
+    "@beefyfinance/blockchain-addressbook": "^0.55.10",
     "@coinbase/wallet-sdk": "^4.3.7",
     "@deficonnect/web3-connector": "^2.0.3",
     "@farcaster/miniapp-sdk": "^0.1.10",

@@ -1,7 +1,7 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
-import { Fragment, memo, type ReactNode, useEffect, useId, useMemo } from 'react';
+import { Fragment, memo, type ReactNode, useEffect, useId, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { AssetsImageWithChain } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
@@ -14,10 +14,12 @@ import { formatLargeUsd } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import {
   transactClearQuotes,
+  transactFetchQuotes,
   transactFetchQuotesIfNeeded,
 } from '../../../../../data/actions/transact.ts';
 import { totalValueOfTokenAmounts } from '../../../../../data/apis/transact/helpers/quotes.ts';
 import {
+  CrossChainBridgeBelowFeeError,
   QuoteCowcentratedNoSingleSideError,
   QuoteCowcentratedNotCalmError,
 } from '../../../../../data/apis/transact/strategies/error.ts';
@@ -27,7 +29,6 @@ import {
   type CowcentratedDualZapDepositQuote,
   isCowcentratedDepositQuote,
   isCrossChainDepositQuote,
-  isCrossChainWithdrawQuote,
   isZapQuote,
   quoteNeedsSlippage,
   type TokenAmount as QuoteTokenAmount,
@@ -44,6 +45,7 @@ import {
   selectTokenPriceByAddress,
 } from '../../../../../data/selectors/tokens.ts';
 import {
+  selectTransactCrossChainPreflight,
   selectTransactInputAmounts,
   selectTransactInputMaxes,
   selectTransactMode,
@@ -53,6 +55,7 @@ import {
   selectTransactSelectedChainId,
   selectTransactSelectedQuote,
   selectTransactSelectedSelectionId,
+  selectTransactSlippage,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -81,11 +84,18 @@ export const TransactQuote = memo(function TransactQuote({
   const inputMaxes = useAppSelector(selectTransactInputMaxes);
   const chainId = useAppSelector(selectTransactSelectedChainId);
   const status = useAppSelector(selectTransactQuoteStatus);
+  const preflightOk = useAppSelector(selectTransactCrossChainPreflight);
+  const slippage = useAppSelector(selectTransactSlippage);
   const debouncedFetchQuotes = useMemo(
     () =>
       debounce(
-        (dispatch: ReturnType<typeof useAppDispatch>, inputAmounts: BigNumber[]) => {
-          if (inputAmounts.every(amount => amount.lte(BIG_ZERO))) {
+        (
+          dispatch: ReturnType<typeof useAppDispatch>,
+          inputAmounts: BigNumber[],
+          preflightOk: boolean
+        ) => {
+          const inputIsZero = inputAmounts.every(amount => amount.lte(BIG_ZERO));
+          if (inputIsZero || !preflightOk) {
             dispatch(transactClearQuotes());
           } else {
             dispatch(transactFetchQuotesIfNeeded());
@@ -98,7 +108,7 @@ export const TransactQuote = memo(function TransactQuote({
   );
 
   useEffect(() => {
-    debouncedFetchQuotes(dispatch, inputAmounts);
+    debouncedFetchQuotes(dispatch, inputAmounts, preflightOk);
   }, [
     dispatch,
     mode,
@@ -107,8 +117,23 @@ export const TransactQuote = memo(function TransactQuote({
     selection,
     inputAmounts,
     inputMaxes,
+    preflightOk,
     debouncedFetchQuotes,
   ]);
+
+  // slippage isn't part of the if-needed change check, so force a re-quote when it changes
+  const skipInitialSlippageRequote = useRef(true);
+  useEffect(() => {
+    if (skipInitialSlippageRequote.current) {
+      skipInitialSlippageRequote.current = false;
+      return;
+    }
+    const inputIsZero = inputAmounts.every(amount => amount.lte(BIG_ZERO));
+    if (!inputIsZero && preflightOk) {
+      dispatch(transactFetchQuotes());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally keyed on slippage only
+  }, [slippage]);
 
   if (status === TransactStatus.Idle) {
     return <QuoteIdle title={title} css={cssProp} />;
@@ -141,10 +166,8 @@ const QuoteFulfilled = memo(function QuoteFulfilled({
 }) {
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isCrossChain = isCrossChainDepositQuote(quote);
-  const effectiveQuote =
-    isCrossChain ? quote.destQuote
-    : isCrossChainWithdrawQuote(quote) ? quote.sourceWithdrawQuote
-    : quote;
+  // cross-chain quotes are flat post-CCTP refactor; no nested dest/source quote to unwrap
+  const effectiveQuote = quote;
   const isDeposit = mode === TransactMode.Deposit;
   const isCowcentratedDeposit = isCowcentratedDepositQuote(effectiveQuote);
   const hasTransformation = useMemo(() => {
@@ -216,11 +239,12 @@ const QuoteError = memo(function QuoteError() {
   const { t } = useTranslation();
   const error = useAppSelector(selectTransactQuoteError);
   const mode = useAppSelector(selectTransactMode);
-  const selectedChainId = useAppSelector(selectTransactSelectedChainId);
-  const vaultId = useAppSelector(selectTransactVaultId);
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   if (error) {
+    if (CrossChainBridgeBelowFeeError.match(error)) {
+      const action = mode === TransactMode.Deposit ? 'deposit' : 'withdraw';
+      return <AlertError>{t(`Transact-Quote-Error-CrossChain-TooLow-${action}`)}</AlertError>;
+    }
     if (QuoteCowcentratedNoSingleSideError.match(error)) {
       return (
         <AlertError>
@@ -230,7 +254,8 @@ const QuoteError = memo(function QuoteError() {
           })}
         </AlertError>
       );
-    } else if (QuoteCowcentratedNotCalmError.match(error)) {
+    }
+    if (QuoteCowcentratedNotCalmError.match(error)) {
       return (
         <AlertError>
           <Trans
@@ -247,12 +272,6 @@ const QuoteError = memo(function QuoteError() {
           />
         </AlertError>
       );
-    }
-
-    const isCrossChain = selectedChainId && selectedChainId !== vault.chainId;
-    if (isCrossChain && error.message?.includes('0 input amount')) {
-      const action = mode === TransactMode.Deposit ? 'deposit' : 'withdraw';
-      return <AlertError>{t(`Transact-Quote-Error-CrossChain-TooLow-${action}`)}</AlertError>;
     }
   }
 

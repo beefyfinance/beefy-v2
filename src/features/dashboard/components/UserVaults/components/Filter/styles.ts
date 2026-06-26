@@ -15,7 +15,7 @@ export const styles = {
     lg: {
       position: 'sticky',
       top: 0,
-      zIndex: '[1]',
+      zIndex: '[2]',
     },
   }),
   sortColumns: css.raw({
