@@ -382,16 +382,19 @@ const TokenAmountList = memo(function TokenAmountList({ items }: { items: QuoteT
   );
 });
 
-type YouReceiveSectionProps = {
+// shared "You receive" shell: title + card chrome + dust toggle/total footer + USD math; the card body is passed in
+type YouReceiveCardProps = {
   outputs: QuoteTokenAmount[];
   returned: QuoteTokenAmount[];
   showRefresh?: boolean;
+  children: ReactNode;
 };
-const YouReceiveSection = memo(function YouReceiveSection({
+const YouReceiveCard = memo(function YouReceiveCard({
   outputs,
   returned,
   showRefresh = false,
-}: YouReceiveSectionProps) {
+  children,
+}: YouReceiveCardProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const { open, handleToggle, Icon } = useCollapse();
@@ -413,15 +416,7 @@ const YouReceiveSection = memo(function YouReceiveSection({
         <QuoteTitleRefresh title={t('Transact-YouReceive')} enableRefresh={true} />
       : <div className={classes.youReceiveTitle}>{t('Transact-YouReceive')}</div>}
       <div className={classes.youReceiveCard}>
-        {outputs.map(({ token, amount }) => (
-          <TokenAmountIcon
-            key={`${token.chainId}-${token.address}`}
-            amount={amount}
-            chainId={token.chainId}
-            tokenAddress={token.address}
-            variant="bare"
-          />
-        ))}
+        {children}
         {hasReturned ?
           <>
             <hr className={classes.youReceiveDivider} />
@@ -442,11 +437,12 @@ const YouReceiveSection = memo(function YouReceiveSection({
             {open ?
               <div id={dustRowsId} className={classes.dustRows}>
                 {returned.map(({ token, amount }) => (
-                  <DustTokenRow
+                  <TokenAmountIcon
                     key={`${token.chainId}-${token.address}`}
                     amount={amount}
                     chainId={token.chainId}
                     tokenAddress={token.address}
+                    variant="bare"
                   />
                 ))}
               </div>
@@ -463,33 +459,48 @@ const YouReceiveSection = memo(function YouReceiveSection({
   );
 });
 
+type YouReceiveSectionProps = {
+  outputs: QuoteTokenAmount[];
+  returned: QuoteTokenAmount[];
+  showRefresh?: boolean;
+};
+const YouReceiveSection = memo(function YouReceiveSection({
+  outputs,
+  returned,
+  showRefresh = false,
+}: YouReceiveSectionProps) {
+  return (
+    <YouReceiveCard outputs={outputs} returned={returned} showRefresh={showRefresh}>
+      {outputs.map(({ token, amount }) => (
+        <TokenAmountIcon
+          key={`${token.chainId}-${token.address}`}
+          amount={amount}
+          chainId={token.chainId}
+          tokenAddress={token.address}
+          variant="bare"
+        />
+      ))}
+    </YouReceiveCard>
+  );
+});
+
 type TokenRowProps = {
   amount: BigNumber;
   chainId: TokenEntity['chainId'];
   tokenAddress: TokenEntity['address'];
 };
 
-const DustTokenRow = memo(function DustTokenRow({ amount, chainId, tokenAddress }: TokenRowProps) {
-  const classes = useStyles();
+function useTokenAmountUsd(
+  chainId: TokenEntity['chainId'],
+  tokenAddress: TokenEntity['address'],
+  amount: BigNumber
+) {
   const token = useAppSelector(state => selectTokenByAddress(state, chainId, tokenAddress));
   const tokenPrice = useAppSelector(state =>
     selectTokenPriceByAddress(state, chainId, tokenAddress)
   );
-  const valueInUsd = amount.multipliedBy(tokenPrice);
-
-  return (
-    <div className={classes.dustRow}>
-      <div className={classes.dustRowAmountGroup}>
-        <TokenAmount amount={amount} decimals={token.decimals} css={styles.dustRowAmount} />
-        <span className={classes.dustRowValue}>{formatLargeUsd(valueInUsd)}</span>
-      </div>
-      <div className={classes.dustRowTokenInfo}>
-        <span className={classes.dustRowTokenName}>{token.symbol}</span>
-        <TokensImageWithChain tokens={[token]} chainId={token.chainId} size={24} />
-      </div>
-    </div>
-  );
-});
+  return { token, valueInUsd: amount.multipliedBy(tokenPrice) };
+}
 
 type LpSharePrimaryRowProps = TokenRowProps & {
   vaultId: VaultEntity['id'];
@@ -502,20 +513,16 @@ const LpSharePrimaryRow = memo(function LpSharePrimaryRow({
 }: LpSharePrimaryRowProps) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const token = useAppSelector(state => selectTokenByAddress(state, chainId, tokenAddress));
-  const tokenPrice = useAppSelector(state =>
-    selectTokenPriceByAddress(state, chainId, tokenAddress)
-  );
-  const valueInUsd = amount.multipliedBy(tokenPrice);
+  const { token, valueInUsd } = useTokenAmountUsd(chainId, tokenAddress, amount);
 
   return (
     <div className={classes.clmPrimaryRow}>
       <div className={classes.clmPrimaryAmounts}>
-        <TokenAmount amount={amount} decimals={token.decimals} css={styles.clmPrimaryAmount} />
-        <span className={classes.clmPrimaryValue}>{formatLargeUsd(valueInUsd)}</span>
+        <TokenAmount amount={amount} decimals={token.decimals} css={styles.cellAmount} />
+        <span className={classes.cellValue}>{formatLargeUsd(valueInUsd)}</span>
       </div>
       <div className={classes.clmPrimaryTokens}>
-        <span className={classes.clmPrimarySymbol}>{token.symbol}</span>
+        <span className={classes.cellAmount}>{token.symbol}</span>
         <AssetsImageWithChain chainId={chainId} assetSymbols={vault.assetIds} size={24} />
       </div>
     </div>
@@ -535,92 +542,35 @@ const CowcentratedYouReceiveSection = memo(function CowcentratedYouReceiveSectio
   returned,
   showRefresh = false,
 }: CowcentratedYouReceiveSectionProps) {
-  const { t } = useTranslation();
   const classes = useStyles();
-  const { open, handleToggle, Icon } = useCollapse();
-  const dustRowsId = useId();
-  const hasReturned = returned.length > 0;
-
-  const vaultId = quote.option.vaultId;
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, quote.option.vaultId));
   const shares = quote.outputs[0];
-
   const outputs = useMemo(() => [shares], [shares]);
-  const outputsUsdStr = useAppSelector(state =>
-    totalValueOfTokenAmounts(outputs, state).toString()
-  );
-  const dustUsdStr = useAppSelector(state => totalValueOfTokenAmounts(returned, state).toString());
-  const dustUsdFormatted = useMemo(() => formatLargeUsd(new BigNumber(dustUsdStr)), [dustUsdStr]);
-  const totalUsdFormatted = useMemo(
-    () => formatLargeUsd(new BigNumber(outputsUsdStr).plus(dustUsdStr)),
-    [outputsUsdStr, dustUsdStr]
-  );
 
   return (
-    <div className={classes.youReceiveSection}>
-      {showRefresh ?
-        <QuoteTitleRefresh title={t('Transact-YouReceive')} enableRefresh={true} />
-      : <div className={classes.youReceiveTitle}>{t('Transact-YouReceive')}</div>}
-      <div className={classes.youReceiveCard}>
-        <LpSharePrimaryRow
-          amount={shares.amount}
-          chainId={shares.token.chainId}
-          tokenAddress={vault.depositTokenAddress}
-          vaultId={vaultId}
-        />
-        <hr className={classes.youReceiveDivider} />
-        <div className={classes.clmPositionGrid}>
-          {quote.position.map((pos, i) => (
-            <Fragment key={`${pos.token.chainId}-${pos.token.address}`}>
-              {i > 0 ?
-                <div className={classes.clmPositionCellDivider} />
-              : null}
-              <ClmPositionCell
-                amount={pos.amount}
-                chainId={pos.token.chainId}
-                tokenAddress={pos.token.address}
-              />
-            </Fragment>
-          ))}
-        </div>
-        {hasReturned ?
-          <>
-            <hr className={classes.youReceiveDivider} />
-            <button
-              type="button"
-              className={classes.dustToggle}
-              onClick={handleToggle}
-              aria-expanded={open}
-              aria-controls={open ? dustRowsId : undefined}
-            >
-              <span className={classes.dustToggleLabel}>
-                {t('Transact-DustSummary', { dustValue: dustUsdFormatted })}
-              </span>
-              <span className={classes.dustToggleChevron}>
-                <Icon />
-              </span>
-            </button>
-            {open ?
-              <div id={dustRowsId} className={classes.dustRows}>
-                {returned.map(({ token, amount }) => (
-                  <DustTokenRow
-                    key={`${token.chainId}-${token.address}`}
-                    amount={amount}
-                    chainId={token.chainId}
-                    tokenAddress={token.address}
-                  />
-                ))}
-              </div>
+    <YouReceiveCard outputs={outputs} returned={returned} showRefresh={showRefresh}>
+      <LpSharePrimaryRow
+        amount={shares.amount}
+        chainId={shares.token.chainId}
+        tokenAddress={vault.depositTokenAddress}
+        vaultId={quote.option.vaultId}
+      />
+      <hr className={classes.youReceiveDivider} />
+      <div className={classes.clmPositionGrid}>
+        {quote.position.map((pos, i) => (
+          <Fragment key={`${pos.token.chainId}-${pos.token.address}`}>
+            {i > 0 ?
+              <div className={classes.clmPositionCellDivider} />
             : null}
-            <hr className={classes.youReceiveDivider} />
-            <div className={classes.totalRow}>
-              <span className={classes.totalText}>{t('Transact-Total')}</span>
-              <span className={classes.totalText}>{totalUsdFormatted}</span>
-            </div>
-          </>
-        : null}
+            <ClmPositionCell
+              amount={pos.amount}
+              chainId={pos.token.chainId}
+              tokenAddress={pos.token.address}
+            />
+          </Fragment>
+        ))}
       </div>
-    </div>
+    </YouReceiveCard>
   );
 });
 
@@ -630,18 +580,14 @@ const ClmPositionCell = memo(function ClmPositionCell({
   tokenAddress,
 }: TokenRowProps) {
   const classes = useStyles();
-  const token = useAppSelector(state => selectTokenByAddress(state, chainId, tokenAddress));
-  const tokenPrice = useAppSelector(state =>
-    selectTokenPriceByAddress(state, chainId, tokenAddress)
-  );
-  const valueInUsd = amount.multipliedBy(tokenPrice);
+  const { token, valueInUsd } = useTokenAmountUsd(chainId, tokenAddress, amount);
 
   return (
     <div className={classes.clmPositionCell}>
       <TokensImageWithChain tokens={[token]} chainId={token.chainId} size={24} />
       <div className={classes.clmPositionCellAmounts}>
-        <TokenAmount amount={amount} decimals={token.decimals} css={styles.clmPositionCellAmount} />
-        <span className={classes.clmPositionCellValue}>{formatLargeUsd(valueInUsd)}</span>
+        <TokenAmount amount={amount} decimals={token.decimals} css={styles.cellAmount} />
+        <span className={classes.cellValue}>{formatLargeUsd(valueInUsd)}</span>
       </div>
     </div>
   );

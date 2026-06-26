@@ -74,30 +74,11 @@ export const styles = {
     flexDirection: 'column',
     gap: '2px',
   }),
-  dustRow: css.raw({
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    height: '44px',
-  }),
-  dustRowAmountGroup: css.raw({
-    display: 'flex',
-    flexDirection: 'column',
-  }),
-  dustRowTokenInfo: css.raw({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-  }),
-  dustRowTokenName: css.raw({
+  cellAmount: css.raw({
     textStyle: 'body.medium',
     color: 'text.light',
   }),
-  dustRowAmount: css.raw({
-    textStyle: 'body.medium',
-    color: 'text.light',
-  }),
-  dustRowValue: css.raw({
+  cellValue: css.raw({
     textStyle: 'body.sm',
     color: 'text.dark',
   }),
@@ -136,22 +117,10 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
   }),
-  clmPrimaryAmount: css.raw({
-    textStyle: 'body.medium',
-    color: 'text.light',
-  }),
-  clmPrimaryValue: css.raw({
-    textStyle: 'body.sm',
-    color: 'text.dark',
-  }),
   clmPrimaryTokens: css.raw({
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-  }),
-  clmPrimarySymbol: css.raw({
-    textStyle: 'body.medium',
-    color: 'text.light',
   }),
   clmPositionGrid: css.raw({
     display: 'flex',
@@ -176,14 +145,6 @@ export const styles = {
     flexDirection: 'column',
     alignItems: 'flex-end',
     minWidth: '0',
-  }),
-  clmPositionCellAmount: css.raw({
-    textStyle: 'body.medium',
-    color: 'text.light',
-  }),
-  clmPositionCellValue: css.raw({
-    textStyle: 'body.sm',
-    color: 'text.dark',
   }),
   link: css.raw({
     color: 'text.lightest',
