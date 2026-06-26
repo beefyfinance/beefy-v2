@@ -38,11 +38,7 @@ import {
   type TransactQuote as TransactQuoteType,
 } from '../../../../../data/apis/transact/transact-types.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
-import {
-  isCowcentratedLikeVault,
-  isCowcentratedVault,
-  type VaultEntity,
-} from '../../../../../data/entities/vault.ts';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../../../../data/entities/vault.ts';
 import {
   TransactMode,
   TransactStatus,
@@ -145,11 +141,10 @@ export const TransactQuote = memo(function TransactQuote({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally keyed on slippage only
   }, [slippage]);
 
-  // a base CLM always transforms (deposit -> position, withdraw -> pair); its wrappers expose a plain Want option, so
-  // only preview "You receive" for the base CLM to keep the title stable without mis-previewing a direct want deposit
-  const isClmVault = isCowcentratedVault(vault);
-  const isClmDeposit = mode === TransactMode.Deposit && isClmVault;
-  const preFulfilledTitle = isClmVault ? t('Transact-YouReceive') : title;
+  // preview "You receive" for all CLM vaults AND pools so the placeholder title matches the (transforming) result
+  const isClmLike = isCowcentratedLikeVault(vault);
+  const isClmDeposit = mode === TransactMode.Deposit && isClmLike;
+  const preFulfilledTitle = isClmLike ? t('Transact-YouReceive') : title;
 
   if (status === TransactStatus.Idle) {
     return <QuoteIdle title={preFulfilledTitle} isClmDeposit={isClmDeposit} css={cssProp} />;
