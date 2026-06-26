@@ -138,10 +138,12 @@ export const TransactQuote = memo(function TransactQuote({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally keyed on slippage only
   }, [slippage]);
 
-  // CLM deposits always transform into the position (no "You deposit" step), so preview "You receive" from the
-  // placeholder/loading onward — keeps the title stable and stops the idle card promising a layout we no longer show
-  const isClmDeposit = mode === TransactMode.Deposit && isCowcentratedLikeVault(vault);
-  const preFulfilledTitle = isClmDeposit ? t('Transact-YouReceive') : title;
+  // CLM vaults/pools always transform on BOTH tabs (deposit -> position; withdraw -> the underlying pair, since their
+  // base option is AllTokensInPool, never Want), so preview "You receive" from the placeholder/loading onward — keeps
+  // the title stable instead of flipping when the quote lands.
+  const isClmLike = isCowcentratedLikeVault(vault);
+  const isClmDeposit = mode === TransactMode.Deposit && isClmLike;
+  const preFulfilledTitle = isClmLike ? t('Transact-YouReceive') : title;
 
   if (status === TransactStatus.Idle) {
     return <QuoteIdle title={preFulfilledTitle} isClmDeposit={isClmDeposit} css={cssProp} />;
