@@ -314,7 +314,17 @@ export const QuoteLoaded = memo(function QuoteLoaded({
   );
   const cowcentratedDepositQuote =
     isCowcentratedDepositQuote(effectiveQuote) ? effectiveQuote : null;
-  const isLpBreakWithdraw = !isDeposit && quote.outputs.length === 2 && quote.inputs.length === 1;
+  // a real LP/CLM break returns 2 different underlyings; gov withdraw-all returns the input token + rewards, which must not be framed as a break
+  const firstInputToken = quote.inputs[0]?.token;
+  const isLpBreakWithdraw =
+    !isDeposit &&
+    quote.outputs.length === 2 &&
+    quote.inputs.length === 1 &&
+    !!firstInputToken &&
+    !quote.outputs.some(
+      o =>
+        o.token.address === firstInputToken.address && o.token.chainId === firstInputToken.chainId
+    );
 
   let topCard: ReactNode = null;
   if (cowcentratedDepositQuote) {
@@ -433,7 +443,7 @@ const YouReceiveSection = memo(function YouReceiveSection({
               className={classes.dustToggle}
               onClick={handleToggle}
               aria-expanded={open}
-              aria-controls={dustRowsId}
+              aria-controls={open ? dustRowsId : undefined}
             >
               <span className={classes.dustToggleLabel}>
                 {t('Transact-DustSummary', { dustValue: dustUsdFormatted })}
@@ -590,7 +600,7 @@ const CowcentratedYouReceiveSection = memo(function CowcentratedYouReceiveSectio
               className={classes.dustToggle}
               onClick={handleToggle}
               aria-expanded={open}
-              aria-controls={dustRowsId}
+              aria-controls={open ? dustRowsId : undefined}
             >
               <span className={classes.dustToggleLabel}>
                 {t('Transact-DustSummary', { dustValue: dustUsdFormatted })}
