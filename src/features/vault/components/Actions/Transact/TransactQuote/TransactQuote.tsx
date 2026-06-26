@@ -150,7 +150,7 @@ export const TransactQuote = memo(function TransactQuote({
   return (
     <div className={css(cssProp)}>
       {status === TransactStatus.Fulfilled ?
-        <QuoteFulfilled title={title} mode={mode} />
+        <QuoteFulfilled title={title} />
       : <>
           <QuoteTitleRefresh
             title={preFulfilledTitle}
@@ -178,17 +178,10 @@ function unwrapEffectiveQuote(quote: TransactQuoteType): TransactQuoteType {
   return state?.destQuote ?? quote;
 }
 
-const QuoteFulfilled = memo(function QuoteFulfilled({
-  title,
-  mode,
-}: {
-  title: string;
-  mode: TransactMode;
-}) {
+const QuoteFulfilled = memo(function QuoteFulfilled({ title }: { title: string }) {
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isCrossChain = isCrossChainDepositQuote(quote);
   const effectiveQuote = unwrapEffectiveQuote(quote);
-  const isDeposit = mode === TransactMode.Deposit;
   const isCowcentratedDeposit = isCowcentratedDepositQuote(effectiveQuote);
   const hasTransformation = useMemo(() => {
     if (isCowcentratedDeposit && !isCrossChain) return false;
@@ -202,9 +195,9 @@ const QuoteFulfilled = memo(function QuoteFulfilled({
       firstInput.token.chainId !== firstOutput.token.chainId
     );
   }, [quote, isCowcentratedDeposit, isCrossChain]);
-  // CLM deposits are a transformation too (input token -> position), so they hide the top title like other zaps;
-  // the "You receive" card carries the refresh and the whole story (share + position breakdown)
-  const showTitle = !isDeposit || (!hasTransformation && !isCowcentratedDeposit);
+  // Only a simple, non-transforming deposit/withdraw shows the "You deposit"/"You withdraw" title + card; any
+  // transformation (zap, CLM, LP break, multi-output withdraw) shows just "You receive", which carries the refresh.
+  const showTitle = !hasTransformation && !isCowcentratedDeposit;
 
   return (
     <>
@@ -215,7 +208,6 @@ const QuoteFulfilled = memo(function QuoteFulfilled({
         quote={quote}
         effectiveQuote={effectiveQuote}
         hasTransformation={hasTransformation}
-        isDeposit={isDeposit}
         showTitle={showTitle}
       />
     </>
@@ -329,7 +321,6 @@ export type QuoteLoadedProps = {
   quote: TransactQuoteType;
   effectiveQuote: TransactQuoteType;
   hasTransformation: boolean;
-  isDeposit: boolean;
   showTitle?: boolean;
   showRouteBlocks?: boolean;
 };
@@ -337,7 +328,6 @@ export const QuoteLoaded = memo(function QuoteLoaded({
   quote,
   effectiveQuote,
   hasTransformation,
-  isDeposit,
   showTitle = true,
   showRouteBlocks = true,
 }: QuoteLoadedProps) {
@@ -350,36 +340,13 @@ export const QuoteLoaded = memo(function QuoteLoaded({
   );
   const cowcentratedDepositQuote =
     isCowcentratedDepositQuote(effectiveQuote) ? effectiveQuote : null;
-  // a real LP/CLM break returns 2 different underlyings; gov withdraw-all returns the input token + rewards, which must not be framed as a break
-  const firstInputToken = quote.inputs[0]?.token;
-  const isLpBreakWithdraw =
-    !isDeposit &&
-    quote.outputs.length === 2 &&
-    quote.inputs.length === 1 &&
-    !!firstInputToken &&
-    !quote.outputs.some(
-      o =>
-        o.token.address === firstInputToken.address && o.token.chainId === firstInputToken.chainId
-    );
 
-  // CLM deposits (cowcentratedDepositQuote) intentionally render no top card — the position lives in "You receive"
-  let topCard: ReactNode = null;
-  if (isLpBreakWithdraw) {
-    topCard = (
-      <div className={classes.youReceiveCard}>
-        <LpSharePrimaryRow
-          amount={quote.inputs[0].amount}
-          chainId={quote.inputs[0].token.chainId}
-          tokenAddress={quote.inputs[0].token.address}
-          vaultId={quote.option.vaultId}
-        />
-      </div>
-    );
-  } else if (!cowcentratedDepositQuote && !hasTransformation) {
-    topCard = <TokenAmountList items={quote.outputs} />;
-  } else if (!isDeposit) {
-    topCard = <TokenAmountList items={quote.inputs} />;
-  }
+  // Only a simple, non-transforming deposit/withdraw gets a top card (the single in/out token). Every
+  // transformation — zap, CLM, LP break, multi-output withdraw — shows its result in "You receive" only.
+  const topCard: ReactNode =
+    !cowcentratedDepositQuote && !hasTransformation ?
+      <TokenAmountList items={quote.outputs} />
+    : null;
 
   return (
     <>

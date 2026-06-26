@@ -527,7 +527,6 @@ const ScenarioCard = memo(function ScenarioCard({ scenario }: { scenario: Scenar
           quote={scenario.quote}
           effectiveQuote={scenario.effectiveQuote}
           hasTransformation={scenario.hasTransformation}
-          isDeposit={scenario.isDeposit}
           showTitle={showTitle}
           showRouteBlocks={false}
         />
