@@ -45,7 +45,6 @@ import {
 } from '../../helpers/options.ts';
 import { calculatePriceImpact, totalValueOfTokenAmounts, ZERO_FEE } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, pickTokens, tokensToLp } from '../../helpers/tokens.ts';
-import { getVaultSharesWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { QuoteRequest } from '../../swap/ISwapProvider.ts';
 import {
@@ -677,9 +676,9 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
 
     // Common: Withdraw from vault
     const state = getState();
-    const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultSharesWithdrawnFromState(input, this.vault, state);
-    const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
+    const withdrawn = this.vaultType.estimateWithdrawOutput(input);
+    const withdrawnAmountAfterFee = withdrawn.amount;
+    const withdrawnAmountAfterFeeWei = toWei(withdrawnAmountAfterFee, withdrawn.token.decimals);
     const breakSteps: ZapQuoteStep[] = [
       {
         type: 'withdraw',
@@ -695,8 +694,8 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
     // Common: Token Allowances
     const allowances = [
       {
-        token: shareToken,
-        amount: fromWei(sharesToWithdrawWei, shareToken.decimals),
+        token: this.vaultType.shareToken,
+        amount: input.amount,
         spenderAddress: zap.manager,
       },
     ];

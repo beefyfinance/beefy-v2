@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { first } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';
-import { encodeFunctionData } from 'viem';
+import { type Address, encodeFunctionData } from 'viem';
 import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi.ts';
 import {
   BIG_ZERO,
@@ -39,12 +39,8 @@ import {
   onlyOneInput,
   onlyVaultShareInput,
 } from '../helpers/options.ts';
-import {
-  getVaultSharesWithdrawnFromContract,
-  getVaultSharesWithdrawnFromState,
-} from '../helpers/vault.ts';
 import { selectVaultPricePerFullShare } from '../../../selectors/vaults.ts';
-import { oracleAmountToMooAmount } from '../../../utils/ppfs.ts';
+import { mooAmountToOracleAmount, oracleAmountToMooAmount } from '../../../utils/ppfs.ts';
 import { getInsertIndex, getTokenAddress } from '../helpers/zap.ts';
 import {
   type AllowanceTokenAmount,
@@ -100,6 +96,16 @@ export class StandardVaultType implements IStandardVaultType {
       : BIG_ZERO;
   }
 
+  protected calculateWithdrawFee(input: TokenAmount, state: BeefyState): BigNumber {
+    const fees = selectFeesByVaultId(state, this.vault.id);
+    const withdrawFeePercent = fees?.withdraw || 0;
+    return withdrawFeePercent > 0 ?
+        input.amount
+          .multipliedBy(withdrawFeePercent)
+          .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR)
+      : BIG_ZERO;
+  }
+
   estimateDepositShares(input: TokenAmount): TokenAmount<TokenErc20> {
     const state = this.getState();
     const depositFee = this.calculateDepositFee(input, state);
@@ -115,14 +121,26 @@ export class StandardVaultType implements IStandardVaultType {
     };
   }
 
-  async fetchZapDeposit(request: VaultDepositRequest): Promise<VaultDepositResponse> {
-    onlyInputCount(request.inputs, 1);
+  estimateWithdrawOutput(input: TokenAmount): TokenAmount<TokenEntity> {
+    const state = this.getState();
+    const ppfs = selectVaultPricePerFullShare(state, this.vault.id);
+    const grossAssets = mooAmountToOracleAmount(
+      this.shareToken,
+      this.depositToken,
+      ppfs,
+      input.amount
+    );
+    const withdrawFee = this.calculateWithdrawFee(
+      { token: this.depositToken, amount: grossAssets },
+      state
+    );
+    return {
+      token: this.depositToken,
+      amount: grossAssets.minus(withdrawFee),
+    };
+  }
 
-    const input = first(request.inputs)!; // we checked length above
-    if (!isTokenEqual(input.token, this.depositToken)) {
-      throw new Error('Input token is not the deposit token');
-    }
-
+  protected async resolveDepositLive(input: TokenAmount): Promise<TokenAmount<TokenErc20>> {
     const state = this.getState();
     const vaultContract = fetchContract(
       this.vault.contractAddress,
@@ -136,13 +154,21 @@ export class StandardVaultType implements IStandardVaultType {
     const expectedShares = inputWeiAfterFee
       .shiftedBy(this.shareToken.decimals)
       .dividedToIntegerBy(ppfs);
+    return {
+      token: this.shareToken,
+      amount: fromWei(expectedShares, this.shareToken.decimals),
+    };
+  }
 
-    const outputs = [
-      {
-        token: this.shareToken,
-        amount: fromWei(expectedShares, this.shareToken.decimals),
-      },
-    ];
+  async fetchZapDeposit(request: VaultDepositRequest): Promise<VaultDepositResponse> {
+    onlyInputCount(request.inputs, 1);
+
+    const input = first(request.inputs)!; // we checked length above
+    if (!isTokenEqual(input.token, this.depositToken)) {
+      throw new Error('Input token is not the deposit token');
+    }
+
+    const outputs = [await this.resolveDepositLive(input)];
 
     return {
       inputs: request.inputs,
@@ -350,19 +376,7 @@ export class StandardVaultType implements IStandardVaultType {
     option: StandardVaultWithdrawOption
   ): Promise<StandardVaultWithdrawQuote> {
     const input = onlyVaultShareInput(inputs, this.shareToken);
-
-    const state = this.getState();
-    const { withdrawnAmountAfterFeeWei } = getVaultSharesWithdrawnFromState(
-      input,
-      this.vault,
-      state
-    );
-    const outputs = [
-      {
-        token: this.depositToken,
-        amount: fromWei(withdrawnAmountAfterFeeWei, this.depositToken.decimals),
-      },
-    ];
+    const outputs = [this.estimateWithdrawOutput(input)];
     const allowances: AllowanceTokenAmount[] = [];
 
     return {
@@ -392,16 +406,53 @@ export class StandardVaultType implements IStandardVaultType {
     };
   }
 
+  protected async resolveWithdrawLive(
+    input: InputTokenAmount
+  ): Promise<{ sharesToWithdrawWei: BigNumber; output: TokenAmount }> {
+    const state = this.getState();
+    const userAddress = selectWalletAddressOrThrow(state);
+    const vaultContract = fetchContract(
+      this.vault.contractAddress,
+      StandardVaultAbi,
+      this.vault.chainId
+    );
+    const [balance, totalSupply, userShares] = await Promise.all([
+      vaultContract.read.balance(),
+      vaultContract.read.totalSupply(),
+      vaultContract.read.balanceOf([userAddress as Address]),
+    ]);
+    const vaultBalanceWei = new BigNumber(balance.toString(10));
+    const vaultTotalSupplyWei = new BigNumber(totalSupply.toString(10));
+    const userSharesWei = new BigNumber(userShares.toString(10));
+
+    // max means the live on-chain balance; typed amounts fail here rather than reverting after signing
+    const sharesToWithdrawWei =
+      input.max ? userSharesWei : toWei(input.amount, this.shareToken.decimals);
+    if (!input.max && sharesToWithdrawWei.gt(userSharesWei)) {
+      throw new Error('Withdrawal amount exceeds current share balance');
+    }
+
+    const grossAssets = fromWei(
+      sharesToWithdrawWei.multipliedBy(vaultBalanceWei).dividedToIntegerBy(vaultTotalSupplyWei),
+      this.depositToken.decimals
+    );
+    const withdrawFee = this.calculateWithdrawFee(
+      { token: this.depositToken, amount: grossAssets },
+      state
+    );
+    return {
+      sharesToWithdrawWei,
+      output: { token: this.depositToken, amount: grossAssets.minus(withdrawFee) },
+    };
+  }
+
   async fetchZapWithdraw(request: VaultWithdrawRequest): Promise<VaultWithdrawResponse> {
     const input = onlyOneInput(request.inputs);
     if (!isTokenEqual(input.token, this.shareToken)) {
       throw new Error('Input token is not the share token');
     }
 
-    const state = this.getState();
-    const userAddress = selectWalletAddressOrThrow(state);
-    const { sharesToWithdrawWei, withdrawnAmountAfterFeeWei } =
-      await getVaultSharesWithdrawnFromContract(input, this.vault, state, userAddress);
+    const { sharesToWithdrawWei, output } = await this.resolveWithdrawLive(input);
 
     const inputs = [
       {
@@ -410,12 +461,7 @@ export class StandardVaultType implements IStandardVaultType {
         max: input.max,
       },
     ];
-    const outputs = [
-      {
-        token: this.depositToken,
-        amount: fromWei(withdrawnAmountAfterFeeWei, this.depositToken.decimals),
-      },
-    ];
+    const outputs = [output];
 
     return {
       inputs,

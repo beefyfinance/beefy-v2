@@ -7,6 +7,7 @@ import {
   BIG_ZERO,
   bigNumberToBigInt,
   fromWei,
+  toWei,
   toWeiString,
 } from '../../../../../../helpers/big-number.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
@@ -51,7 +52,6 @@ import {
   pickTokens,
   wnativeToNative,
 } from '../../helpers/tokens.ts';
-import { getVaultSharesWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import {
   type ConicDepositOption,
@@ -342,13 +342,14 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
 
     // Token Allowances
     const state = getState();
-    const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultSharesWithdrawnFromState(input, this.vault, state);
-    const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
+    const withdrawn = this.vaultType.estimateWithdrawOutput(input);
+    const withdrawnToken = withdrawn.token;
+    const withdrawnAmountAfterFee = withdrawn.amount;
+    const sharesToWithdrawWei = toWei(input.amount, this.vaultType.shareToken.decimals);
     const allowances = [
       {
-        token: shareToken,
-        amount: fromWei(sharesToWithdrawWei, shareToken.decimals),
+        token: this.vaultType.shareToken,
+        amount: input.amount,
         spenderAddress: zap.manager,
       },
     ];

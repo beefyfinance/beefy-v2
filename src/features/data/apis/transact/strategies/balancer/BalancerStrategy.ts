@@ -5,7 +5,6 @@ import {
   BIG_ZERO,
   bigNumberToStringDeep,
   compareBigNumber,
-  fromWei,
   fromWeiToTokenAmount,
   toWeiFromTokenAmount,
   toWeiString,
@@ -59,7 +58,6 @@ import {
 } from '../../helpers/options.ts';
 import { calculatePriceImpact, totalValueOfTokenAmounts, ZERO_FEE } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, includeWrappedAndNative, pickTokens } from '../../helpers/tokens.ts';
-import { getVaultSharesWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { QuoteRequest, QuoteResponse } from '../../swap/ISwapProvider.ts';
 import {
@@ -1230,16 +1228,14 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
 
     // Common: Withdraw from vault
     const state = getState();
-    const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultSharesWithdrawnFromState(input, this.vault, state);
-    const liquidityWithdrawn = fromWeiToTokenAmount(withdrawnAmountAfterFeeWei, withdrawnToken);
+    const liquidityWithdrawn = this.vaultType.estimateWithdrawOutput(input);
     const returned: TokenAmount[] = [];
 
     // Common: Token Allowances
     const allowances = [
       {
-        token: shareToken,
-        amount: fromWei(sharesToWithdrawWei, shareToken.decimals),
+        token: this.vaultType.shareToken,
+        amount: input.amount,
         spenderAddress: zap.manager,
       },
     ];

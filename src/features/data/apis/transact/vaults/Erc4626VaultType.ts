@@ -22,7 +22,7 @@ import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
 import { selectFeesByVaultId } from '../../../selectors/fees.ts';
 import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectVaultPricePerFullShare } from '../../../selectors/vaults.ts';
-import { oracleAmountToMooAmount } from '../../../utils/ppfs.ts';
+import { mooAmountToOracleAmount, oracleAmountToMooAmount } from '../../../utils/ppfs.ts';
 import type { BeefyState, BeefyStateFn } from '../../../store/types.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import {
@@ -33,7 +33,6 @@ import {
   onlyOneInput,
   onlyVaultShareInput,
 } from '../helpers/options.ts';
-import { getVaultSharesWithdrawnFromState } from '../helpers/vault.ts';
 import { getInsertIndex, getTokenAddress } from '../helpers/zap.ts';
 import {
   type AllowanceTokenAmount,
@@ -89,6 +88,16 @@ export class Erc4626VaultType implements IErc4626VaultType {
       : BIG_ZERO;
   }
 
+  protected calculateWithdrawFee(input: TokenAmount, state: BeefyState): BigNumber {
+    const fees = selectFeesByVaultId(state, this.vault.id);
+    const withdrawFeePercent = fees?.withdraw || 0;
+    return withdrawFeePercent > 0 ?
+        input.amount
+          .multipliedBy(withdrawFeePercent)
+          .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR)
+      : BIG_ZERO;
+  }
+
   estimateDepositShares(input: TokenAmount): TokenAmount<TokenErc20> {
     const state = this.getState();
     const depositFee = this.calculateDepositFee(input, state);
@@ -104,17 +113,26 @@ export class Erc4626VaultType implements IErc4626VaultType {
     };
   }
 
-  async fetchZapDeposit(request: VaultDepositRequest): Promise<VaultDepositResponse> {
-    onlyInputCount(request.inputs, 1);
+  estimateWithdrawOutput(input: TokenAmount): TokenAmount<TokenEntity> {
+    const state = this.getState();
+    const ppfs = selectVaultPricePerFullShare(state, this.vault.id);
+    const grossAssets = mooAmountToOracleAmount(
+      this.shareToken,
+      this.depositToken,
+      ppfs,
+      input.amount
+    );
+    const withdrawFee = this.calculateWithdrawFee(
+      { token: this.depositToken, amount: grossAssets },
+      state
+    );
+    return {
+      token: this.depositToken,
+      amount: grossAssets.minus(withdrawFee),
+    };
+  }
 
-    const input = first(request.inputs)!; // we checked length above
-    if (!isTokenEqual(input.token, this.depositToken)) {
-      throw new Error('Input token is not the deposit token');
-    }
-    if (isTokenNative(input.token)) {
-      throw new Error('ERC4626 does not support native token deposits');
-    }
-
+  protected async resolveDepositLive(input: TokenAmount): Promise<TokenAmount<TokenErc20>> {
     const state = this.getState();
     const vaultContract = fetchContract(
       this.vault.contractAddress,
@@ -128,13 +146,24 @@ export class Erc4626VaultType implements IErc4626VaultType {
     const expectedShares = inputWeiAfterFee
       .shiftedBy(this.shareToken.decimals)
       .dividedToIntegerBy(ppfs);
+    return {
+      token: this.shareToken,
+      amount: fromWei(expectedShares, this.shareToken.decimals),
+    };
+  }
 
-    const outputs = [
-      {
-        token: this.shareToken,
-        amount: fromWei(expectedShares, this.shareToken.decimals),
-      },
-    ];
+  async fetchZapDeposit(request: VaultDepositRequest): Promise<VaultDepositResponse> {
+    onlyInputCount(request.inputs, 1);
+
+    const input = first(request.inputs)!; // we checked length above
+    if (!isTokenEqual(input.token, this.depositToken)) {
+      throw new Error('Input token is not the deposit token');
+    }
+    if (isTokenNative(input.token)) {
+      throw new Error('ERC4626 does not support native token deposits');
+    }
+
+    const outputs = [await this.resolveDepositLive(input)];
 
     return {
       inputs: request.inputs,
@@ -273,19 +302,7 @@ export class Erc4626VaultType implements IErc4626VaultType {
     option: Erc4626VaultWithdrawOption
   ): Promise<Erc4626VaultWithdrawQuote> {
     const input = onlyVaultShareInput(inputs, this.shareToken);
-
-    const state = this.getState();
-    const { withdrawnAmountAfterFeeWei } = getVaultSharesWithdrawnFromState(
-      input,
-      this.vault,
-      state
-    );
-    const outputs = [
-      {
-        token: this.depositToken,
-        amount: fromWei(withdrawnAmountAfterFeeWei, this.depositToken.decimals),
-      },
-    ];
+    const outputs = [this.estimateWithdrawOutput(input)];
     const allowances: AllowanceTokenAmount[] = [];
 
     return {

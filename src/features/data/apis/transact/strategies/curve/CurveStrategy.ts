@@ -5,7 +5,6 @@ import {
   BIG_ZERO,
   bigNumberToStringDeep,
   compareBigNumber,
-  fromWei,
   toWei,
   toWeiString,
 } from '../../../../../../helpers/big-number.ts';
@@ -47,7 +46,6 @@ import {
 } from '../../helpers/options.ts';
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
-import { getVaultSharesWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { QuoteResponse } from '../../swap/ISwapProvider.ts';
 import {
@@ -785,18 +783,17 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
 
     // Common: Withdraw from vault
     const state = getState();
-    const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultSharesWithdrawnFromState(input, this.vault, state);
-    const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
-    const liquidityWithdrawn = { amount: withdrawnAmountAfterFee, token: withdrawnToken };
+    const withdrawn = this.vaultType.estimateWithdrawOutput(input);
+    const withdrawnAmountAfterFee = withdrawn.amount;
+    const liquidityWithdrawn = withdrawn;
     const wantedToken = onlyOneToken(option.wantedOutputs);
     const returned: TokenAmount[] = [];
 
     // Common: Token Allowances
     const allowances = [
       {
-        token: shareToken,
-        amount: fromWei(sharesToWithdrawWei, shareToken.decimals),
+        token: this.vaultType.shareToken,
+        amount: input.amount,
         spenderAddress: zap.manager,
       },
     ];

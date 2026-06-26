@@ -56,14 +56,21 @@ export interface IVaultType {
   fetchZapWithdraw(request: VaultWithdrawRequest): Promise<VaultWithdrawResponse>;
 }
 
-export interface IStandardVaultType extends IVaultType {
-  readonly id: 'standard';
-  readonly vault: VaultStandard;
+/** Vault types whose single deposit token converts to/from a share token via ppfs */
+export interface IPpfsVaultType extends IVaultType {
   readonly depositToken: TokenEntity;
   readonly shareToken: TokenErc20;
 
   /** Estimate the shares minted for a deposit-token amount entering the vault, using state ppfs */
   estimateDepositShares(input: TokenAmount): TokenAmount<TokenErc20>;
+
+  /** Estimate the deposit-token amount withdrawn for a share-denominated input, using state ppfs */
+  estimateWithdrawOutput(input: TokenAmount): TokenAmount<TokenEntity>;
+}
+
+export interface IStandardVaultType extends IPpfsVaultType {
+  readonly id: 'standard';
+  readonly vault: VaultStandard;
 }
 
 export interface IGovVaultType extends IVaultType {
@@ -79,14 +86,9 @@ export interface ICowcentratedVaultType extends IVaultType {
   readonly shareToken: TokenErc20;
 }
 
-export interface IErc4626VaultType extends IVaultType {
+export interface IErc4626VaultType extends IPpfsVaultType {
   readonly id: 'erc4626';
   readonly vault: VaultErc4626;
-  readonly depositToken: TokenEntity;
-  readonly shareToken: TokenErc20;
-
-  /** Estimate the shares minted for a deposit-token amount entering the vault, using state ppfs */
-  estimateDepositShares(input: TokenAmount): TokenAmount<TokenErc20>;
 }
 
 export type VaultType =
@@ -121,4 +123,10 @@ export function isCowcentratedVaultType(vaultType: VaultType): vaultType is ICow
 
 export function isErc4626VaultType(vaultType: VaultType): vaultType is IErc4626VaultType {
   return vaultType.id === 'erc4626';
+}
+
+export function isPpfsVaultType(
+  vaultType: VaultType
+): vaultType is IStandardVaultType | IErc4626VaultType {
+  return vaultType.id === 'standard' || vaultType.id === 'erc4626';
 }
