@@ -86,6 +86,9 @@ export const TransactQuote = memo(function TransactQuote({
   const status = useAppSelector(selectTransactQuoteStatus);
   const preflightOk = useAppSelector(selectTransactCrossChainPreflight);
   const slippage = useAppSelector(selectTransactSlippage);
+  const { t } = useTranslation();
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const debouncedFetchQuotes = useMemo(
     () =>
       debounce(
@@ -135,8 +138,13 @@ export const TransactQuote = memo(function TransactQuote({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally keyed on slippage only
   }, [slippage]);
 
+  // CLM deposits always transform into the position (no "You deposit" step), so preview "You receive" from the
+  // placeholder/loading onward — keeps the title stable and stops the idle card promising a layout we no longer show
+  const isClmDeposit = mode === TransactMode.Deposit && isCowcentratedLikeVault(vault);
+  const preFulfilledTitle = isClmDeposit ? t('Transact-YouReceive') : title;
+
   if (status === TransactStatus.Idle) {
-    return <QuoteIdle title={title} css={cssProp} />;
+    return <QuoteIdle title={preFulfilledTitle} isClmDeposit={isClmDeposit} css={cssProp} />;
   }
 
   return (
@@ -144,7 +152,10 @@ export const TransactQuote = memo(function TransactQuote({
       {status === TransactStatus.Fulfilled ?
         <QuoteFulfilled title={title} mode={mode} />
       : <>
-          <QuoteTitleRefresh title={title} enableRefresh={status === TransactStatus.Rejected} />
+          <QuoteTitleRefresh
+            title={preFulfilledTitle}
+            enableRefresh={status === TransactStatus.Rejected}
+          />
           {status === TransactStatus.Pending ?
             <QuoteLoading />
           : null}
@@ -211,7 +222,11 @@ const QuoteFulfilled = memo(function QuoteFulfilled({
   );
 });
 
-const QuoteIdle = memo(function QuoteIdle({ title, css: cssProp }: TransactQuoteProps) {
+const QuoteIdle = memo(function QuoteIdle({
+  title,
+  isClmDeposit,
+  css: cssProp,
+}: TransactQuoteProps & { isClmDeposit: boolean }) {
   const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -219,28 +234,38 @@ const QuoteIdle = memo(function QuoteIdle({ title, css: cssProp }: TransactQuote
   return (
     <div className={css(styles.disabled, cssProp)}>
       <QuoteTitleRefresh title={title} enableRefresh={true} />
-      <div className={classes.tokenAmounts}>
-        {isCowcentratedLikeVault(vault) ?
-          <div className={classes.amountReturned}>
-            {vault.depositTokenAddresses.map(tokenAddress => {
-              return (
-                <TokenAmountIcon
-                  key={tokenAddress}
-                  amount={BIG_ZERO}
-                  chainId={vault.chainId}
-                  tokenAddress={tokenAddress}
-                  css={styles.fullWidth}
-                />
-              );
-            })}
-          </div>
-        : <TokenAmountIcon
+      {isClmDeposit ?
+        <div className={classes.youReceiveCard}>
+          <LpSharePrimaryRow
             amount={BIG_ZERO}
             chainId={vault.chainId}
             tokenAddress={vault.depositTokenAddress}
+            vaultId={vault.id}
           />
-        }
-      </div>
+        </div>
+      : <div className={classes.tokenAmounts}>
+          {isCowcentratedLikeVault(vault) ?
+            <div className={classes.amountReturned}>
+              {vault.depositTokenAddresses.map(tokenAddress => {
+                return (
+                  <TokenAmountIcon
+                    key={tokenAddress}
+                    amount={BIG_ZERO}
+                    chainId={vault.chainId}
+                    tokenAddress={tokenAddress}
+                    css={styles.fullWidth}
+                  />
+                );
+              })}
+            </div>
+          : <TokenAmountIcon
+              amount={BIG_ZERO}
+              chainId={vault.chainId}
+              tokenAddress={vault.depositTokenAddress}
+            />
+          }
+        </div>
+      }
     </div>
   );
 });
