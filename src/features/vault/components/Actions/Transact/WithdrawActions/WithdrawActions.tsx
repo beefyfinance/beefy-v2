@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { AnimatedButton } from '../../../../../../components/Button/AnimatedButton.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSteps } from '../../../../../data/actions/wallet/transact.ts';
@@ -36,6 +37,7 @@ import {
   selectTransactConfirmNeededWithChanges,
   selectTransactExecuting,
   selectTransactForceSelection,
+  selectTransactInputAmounts,
   selectTransactQuoteStatus,
   selectTransactSelectedQuoteOrUndefined,
   selectTransactSuccessClosed,
@@ -158,12 +160,20 @@ const ActionWithdrawPending = memo(function ActionWithdrawPending() {
 });
 
 const ActionWithdrawSelectFlow = memo(function ActionWithdrawSelectFlow() {
+  const { t } = useTranslation();
   const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const forceSelection = useAppSelector(selectTransactForceSelection);
+  const inputAmounts = useAppSelector(selectTransactInputAmounts);
   const { ctaLabel, openSelectStep } = useTransactSelectFlowCta();
   const connectSwitchChainId = forceSelection ? undefined : vault.chainId;
+
+  const hasInputAmount = useMemo(
+    () => inputAmounts.some(amount => amount.gt(BIG_ZERO)),
+    [inputAmounts]
+  );
+  const label = !forceSelection && hasInputAmount ? t('Transact-Withdraw') : ctaLabel;
 
   return (
     <div className={classes.feesContainer}>
@@ -175,7 +185,7 @@ const ActionWithdrawSelectFlow = memo(function ActionWithdrawSelectFlow() {
           disabled={!forceSelection}
           onClick={forceSelection ? openSelectStep : undefined}
         >
-          {ctaLabel}
+          {label}
         </Button>
       </ActionConnectSwitch>
       {!isGovVault(vault) && <VaultFees />}
@@ -187,10 +197,18 @@ type ActionWithdrawGovSelectFlowProps = { vault: VaultGov };
 const ActionWithdrawGovSelectFlow = memo(function ActionWithdrawGovSelectFlow({
   vault,
 }: ActionWithdrawGovSelectFlowProps) {
+  const { t } = useTranslation();
   const classes = useStyles();
   const forceSelection = useAppSelector(selectTransactForceSelection);
+  const inputAmounts = useAppSelector(selectTransactInputAmounts);
   const { ctaLabel, openSelectStep } = useTransactSelectFlowCta();
   const connectSwitchChainId = forceSelection ? undefined : vault.chainId;
+
+  const hasInputAmount = useMemo(
+    () => inputAmounts.some(amount => amount.gt(BIG_ZERO)),
+    [inputAmounts]
+  );
+  const label = !forceSelection && hasInputAmount ? t('Transact-Withdraw') : ctaLabel;
 
   return (
     <ActionConnectSwitch
@@ -206,7 +224,7 @@ const ActionWithdrawGovSelectFlow = memo(function ActionWithdrawGovSelectFlow({
           disabled={!forceSelection}
           onClick={forceSelection ? openSelectStep : undefined}
         >
-          {ctaLabel}
+          {label}
         </Button>
         <VaultFees />
       </div>

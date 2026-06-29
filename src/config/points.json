@@ -1,5 +1,28 @@
 [
   {
+    "id": "3jane",
+    "docs": "https://docs.3jane.xyz/jane/liquidity-mining",
+    "points": [
+      {
+        "id": "3jane-points",
+        "name": "JANE tokens"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "3jane-points",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://app.3jane.xyz/farm"
+      }
+    ]
+  },
+  {
     "id": "apyx",
     "docs": "https://docs.apyx.fi/apyx-overview/apyx-pips-points-program",
     "points": [

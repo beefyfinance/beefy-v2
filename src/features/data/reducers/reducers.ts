@@ -40,6 +40,7 @@ import { userRewardsReducer } from './wallet/user-rewards.ts';
 import type { WalletActionsState } from './wallet/wallet-action-types.ts';
 import { walletActionsReducer } from './wallet/wallet-action.ts';
 import { walletSlice } from './wallet/wallet.ts';
+import { windowReducer } from './window.ts';
 import { zapsSlice } from './zaps.ts';
 import type { BeefyState } from '../store/types.ts';
 import { revenueSlice } from './revenue.ts';
@@ -115,6 +116,7 @@ const uiReducer = combineReducers({
   vaultsList: vaultsListReducer,
   version: versionReducer,
   revenue: revenueSlice.reducer,
+  window: windowReducer,
 });
 
 export const rootReducer = combineReducers({

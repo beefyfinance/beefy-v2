@@ -357,46 +357,6 @@
     ]
   },
   {
-    "id": "pancake-cow-base-sol-jitosol-vault",
-    "name": "SOL-JitoSOL",
-    "type": "standard",
-    "token": "SOL-JitoSOL",
-    "tokenAddress": "0xC77ADce7ae9A2c694d335ce75f8840Ef7263E274",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pancakeswap",
-    "earnContractAddress": "0x1B193EF7dd5A337A752F887e8E6FF14FC2C432c4",
-    "earnedToken": "mooCowPancakeBaseSOL-JitoSOL",
-    "earnedTokenAddress": "0x1B193EF7dd5A337A752F887e8E6FF14FC2C432c4",
-    "oracle": "lps",
-    "oracleId": "pancake-cow-base-sol-jitosol",
-    "status": "eol",
-    "createdAt": 1780926971,
-    "retireReason": "replaced",
-    "retiredAt": 1781079968,
-    "platformId": "pancakeswap",
-    "assets": ["SOL", "JitoSOL"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "compounds",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
     "id": "pancake-cow-base-sol-jitosol-rp",
     "name": "SOL-JitoSOL Reward Pool",
     "type": "gov",
@@ -432,9 +392,6 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
