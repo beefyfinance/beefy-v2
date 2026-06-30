@@ -12,7 +12,7 @@ import {
   type TransactQuote,
   type ZapFee,
 } from '../transact-types.ts';
-import type { VaultDestState } from '../handlers/vault/VaultDestHandler.ts';
+import { isVaultDestState } from '../handlers/types.ts';
 
 export const ZERO_FEE: ZapFee = { value: 0 };
 
@@ -24,7 +24,8 @@ export function getEffectiveQuote(quote: TransactQuote): TransactQuote {
   if (!isCrossChainDepositQuote(quote)) {
     return quote;
   }
-  return (quote.destHandlerQuote.state as VaultDestState).destQuote;
+  const { state } = quote.destHandlerQuote;
+  return isVaultDestState(state) ? state.destQuote : quote;
 }
 
 /** Convert a v2v source share amount to the deposit-token TokenAmount via ppfs (pass-through for vaults without a receipt token). */

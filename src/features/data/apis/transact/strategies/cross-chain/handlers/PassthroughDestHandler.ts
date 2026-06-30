@@ -4,9 +4,8 @@ import type {
   DestHandlerQuote,
   DestHandlerSteps,
   IDestHandler,
+  PassthroughState,
 } from '../../../handlers/types.ts';
-
-type PassthroughState = Record<string, never>;
 
 /**
  * Passthrough dest handler: empty dst route, the handler's input token delivered straight to user.
@@ -25,7 +24,7 @@ export class PassthroughDestHandler implements IDestHandler<PassthroughState> {
       returned: [],
       dustTokens: [],
       allowances: [],
-      state: {},
+      state: { kind: 'passthrough' },
     };
   }
 
