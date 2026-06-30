@@ -6,8 +6,9 @@ import { OptionLabel } from '../OptionLabel.tsx';
 import { OptionBadge } from '../OptionBadge.tsx';
 import { OptionIcon } from '../OptionIcon.tsx';
 
-interface SelectSingleContentProps<TItem extends SelectItem = SelectItem>
-  extends CommonProps<TItem> {
+interface SelectSingleContentProps<
+  TItem extends SelectItem = SelectItem,
+> extends CommonProps<TItem> {
   options: TItem[];
   selectedIndex: number | null;
   activeIndex: number | null;

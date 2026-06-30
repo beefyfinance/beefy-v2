@@ -38,6 +38,7 @@ import type { WalletActionsState } from '../reducers/wallet/wallet-action-types.
 import type { WalletState } from '../reducers/wallet/wallet-types.ts';
 import type { ZapsState } from '../reducers/zaps-types.ts';
 import type { RevenueState } from '../reducers/revenue.ts';
+import type { WindowState } from '../reducers/window.ts';
 import type { PointsState } from '../reducers/points-types.ts';
 
 export interface BeefyState {
@@ -88,6 +89,7 @@ export interface BeefyState {
     vaultsList: VaultsListState;
     version: VersionState;
     revenue: RevenueState;
+    window: WindowState;
   };
 }
 

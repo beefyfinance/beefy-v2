@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
 import { Fragment, memo, type ReactNode, useEffect, useId, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
+import { AlertError, AlertWarning } from '../../../../../../components/Alerts/Alerts.tsx';
 import { AssetsImageWithChain } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
 import { useCollapse } from '../../../../../../components/Collapsable/hooks.ts';
 import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
@@ -67,6 +67,7 @@ import { QuoteTitleRefresh } from '../QuoteTitleRefresh/QuoteTitleRefresh.tsx';
 import { TokenAmountIcon, TokenAmountIconLoader } from '../TokenAmountIcon/TokenAmountIcon.tsx';
 import { ZapRoute } from '../ZapRoute/ZapRoute.tsx';
 import { ZapSlippage } from '../ZapSlippage/ZapSlippage.tsx';
+import { NOT_CALM_REFRESH_SECONDS, useNotCalmAutoRefresh } from '../hooks/useNotCalmAutoRefresh.ts';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -92,6 +93,12 @@ export const TransactQuote = memo(function TransactQuote({
   const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const inputIsZero = useMemo(
+    () => inputAmounts.every(amount => amount.lte(BIG_ZERO)),
+    [inputAmounts]
+  );
+  const { showStickyNotCalmWarning, showNotCalmRefresh } = useNotCalmAutoRefresh();
+
   const debouncedFetchQuotes = useMemo(
     () =>
       debounce(
@@ -134,7 +141,6 @@ export const TransactQuote = memo(function TransactQuote({
       skipInitialSlippageRequote.current = false;
       return;
     }
-    const inputIsZero = inputAmounts.every(amount => amount.lte(BIG_ZERO));
     if (!inputIsZero && preflightOk) {
       dispatch(transactFetchQuotes());
     }
@@ -157,13 +163,15 @@ export const TransactQuote = memo(function TransactQuote({
       : <>
           <QuoteTitleRefresh
             title={preFulfilledTitle}
-            enableRefresh={status === TransactStatus.Rejected}
+            enableRefresh={status === TransactStatus.Rejected || showStickyNotCalmWarning}
+            autoRefresh={showNotCalmRefresh}
+            autoRefreshSeconds={NOT_CALM_REFRESH_SECONDS}
           />
-          {status === TransactStatus.Pending ?
+          {status === TransactStatus.Pending && !showStickyNotCalmWarning ?
             <QuoteLoading />
           : null}
-          {status === TransactStatus.Rejected ?
-            <QuoteError />
+          {status === TransactStatus.Rejected || showStickyNotCalmWarning ?
+            <QuoteError showNotCalmDeposit={showStickyNotCalmWarning} />
           : null}
         </>
       }
@@ -217,7 +225,12 @@ const QuoteIdle = memo(function QuoteIdle({
 
   return (
     <div className={css(styles.disabled, cssProp)}>
-      <QuoteTitleRefresh title={title} enableRefresh={true} />
+      <QuoteTitleRefresh
+        title={title}
+        enableRefresh={true}
+        autoRefresh={false}
+        autoRefreshSeconds={NOT_CALM_REFRESH_SECONDS}
+      />
       {isClmDeposit ?
         <div className={classes.youReceiveCard}>
           <LpSharePrimaryRow
@@ -254,11 +267,37 @@ const QuoteIdle = memo(function QuoteIdle({
   );
 });
 
-const QuoteError = memo(function QuoteError() {
+type QuoteErrorProps = {
+  showNotCalmDeposit?: boolean;
+};
+
+const QuoteError = memo(function QuoteError({ showNotCalmDeposit = false }: QuoteErrorProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const error = useAppSelector(selectTransactQuoteError);
   const mode = useAppSelector(selectTransactMode);
+
+  if (
+    showNotCalmDeposit ||
+    (error && QuoteCowcentratedNotCalmError.match(error) && error.action === 'deposit')
+  ) {
+    return (
+      <AlertWarning>
+        <Trans
+          t={t}
+          i18nKey="Transact-Quote-Error-Calm-deposit"
+          components={{
+            LinkCalm: (
+              <ExternalLink
+                className={classes.link}
+                href={'https://docs.beefy.finance/beefy-products/clm#calmness-check'}
+              />
+            ),
+          }}
+        />
+      </AlertWarning>
+    );
+  }
 
   if (error) {
     if (CrossChainBridgeBelowFeeError.match(error)) {

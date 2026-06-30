@@ -1,5 +1,55 @@
 [
   {
+    "id": "stakedao-frxusd-usd3",
+    "name": "USD3/frxUSD",
+    "type": "standard",
+    "token": "USD3frxUSD",
+    "tokenAddress": "0x7BA89Bc658c07569cfa6d7947adAA80181a24568",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xD6bDD48Be79932904a1C53068dD232F875a0b611",
+    "earnedToken": "mooStakeDao-frxUSD-USD3",
+    "earnedTokenAddress": "0xD6bDD48Be79932904a1C53068dD232F875a0b611",
+    "oracle": "lps",
+    "oracleId": "curve-frxusd-usd3",
+    "status": "active",
+    "createdAt": 1782715893,
+    "platformId": "stakedao",
+    "assets": ["USD3", "frxUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-906/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-906/withdraw",
+    "pointStructureIds": ["3jane"],
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x7BA89Bc658c07569cfa6d7947adAA80181a24568",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x7BA89Bc658c07569cfa6d7947adAA80181a24568",
+            "coins": [
+              "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+              "0x056B269Eb1f75477a8666ae8C7fE01b64dD55eCc"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "morpho-v2-ethereum-clearstar-3jane-ecosystem-vault-usdc",
     "name": "USDC (Clearstar, 3Jane Ecosystem Vault V2)",
     "type": "standard",
