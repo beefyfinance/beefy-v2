@@ -8,6 +8,8 @@ import { defaultSize, maxSupportedAssets } from './config.ts';
 import { css, type CssStyles } from '@repo/styles/css';
 import { ChainIcon } from '../ChainIcon/ChainIcon.tsx';
 
+const chainBadgeSize = 0.5;
+
 type CommonProps = {
   size?: number;
   css?: CssStyles;
@@ -59,28 +61,23 @@ export const MissingAssetsImage = memo<MissingAssetsImageProps>(function Missing
   );
 });
 
-const chainBadgeSize = 0.5;
+export type AssetsImageWithChainProps = {
+  chainId?: ChainEntity['id'];
+  assetSymbols: string[];
+} & CommonProps;
 
-export const AssetsImageWithChain = memo<AssetsImageProps>(function AssetsImageWithChain({
+export const AssetsImageWithChain = memo<AssetsImageWithChainProps>(function AssetsImageWithChain({
   chainId,
   assetSymbols,
   css: cssProp,
   size = defaultSize,
 }) {
   const badgeSize = Math.round(size * chainBadgeSize);
-  const rightOffset = -Math.round(badgeSize * 0.5);
 
   return (
     <div className={css(wrapperStyle, cssProp)} style={{ width: size, height: size }}>
-      <AssetsImage chainId={chainId} assetSymbols={[...assetSymbols]} size={size} />
-      {chainId && (
-        <ChainIcon
-          chainId={chainId}
-          size={badgeSize}
-          css={chainBadgeStyle}
-          style={{ right: `${rightOffset}px` }}
-        />
-      )}
+      <AssetsImage chainId={chainId} assetSymbols={assetSymbols} size={size} />
+      {chainId && <ChainIcon chainId={chainId} size={badgeSize} css={chainBadgeStyle} />}
     </div>
   );
 });
@@ -94,4 +91,6 @@ const wrapperStyle = css.raw({
 const chainBadgeStyle = css.raw({
   position: 'absolute',
   bottom: '0',
+  right: '0',
+  transform: 'translate(50%, 0)',
 });
