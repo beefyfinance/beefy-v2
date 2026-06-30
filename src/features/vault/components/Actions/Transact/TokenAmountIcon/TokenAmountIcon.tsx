@@ -24,6 +24,8 @@ export type TokenAmountIconProps = {
   tokenImageSize?: number;
   amountWithValueCss?: CssStyles;
   variant?: 'card' | 'bare';
+  /** icon+symbol on left instead of right */
+  reverse?: boolean;
 };
 export const TokenAmountIcon = memo(function TokenAmountIcon({
   amount,
@@ -34,6 +36,7 @@ export const TokenAmountIcon = memo(function TokenAmountIcon({
   tokenImageSize = 24,
   amountWithValueCss,
   variant = 'card',
+  reverse = false,
 }: TokenAmountIconProps) {
   const token = useAppSelector(state => selectTokenByAddress(state, chainId, tokenAddress));
   const tokenPrice = useAppSelector(state =>
@@ -48,6 +51,7 @@ export const TokenAmountIcon = memo(function TokenAmountIcon({
       css={cssProp}
       amountWithValueCss={amountWithValueCss}
       variant={variant}
+      reverse={reverse}
       amount={<TokenAmount amount={amount} decimals={token.decimals} css={amountTextStyle} />}
       value={formatLargeUsd(valueInUsd)}
       tokenSymbol={showSymbol ? token.symbol : null}
@@ -58,19 +62,21 @@ export const TokenAmountIcon = memo(function TokenAmountIcon({
   );
 });
 
-export type TokenAmountIconLoaderProps = {
-  css?: CssStyles;
-};
+export type TokenAmountIconLoaderProps = Pick<
+  TokenAmountIconProps,
+  'css' | 'showSymbol' | 'tokenImageSize' | 'amountWithValueCss' | 'variant' | 'reverse'
+>;
 export const TokenAmountIconLoader = memo(function TokenAmountIconLoader({
-  css: cssProp,
+  tokenImageSize = 24,
+  ...rest
 }: TokenAmountIconLoaderProps) {
   return (
     <TokenAmountIconComponent
-      css={cssProp}
+      {...rest}
       amount={<TextLoader placeholder="1234.5678" />}
       value={<TextLoader placeholder="~$1245.56" />}
       tokenSymbol={<TextLoader placeholder="ABC-XYZ LP" />}
-      tokenIcon={<IconLoader size={32} />}
+      tokenIcon={<IconLoader size={tokenImageSize} />}
     />
   );
 });
@@ -83,6 +89,7 @@ type TokenAmountIconComponentProps = {
   css?: CssStyles;
   amountWithValueCss?: CssStyles;
   variant?: 'card' | 'bare';
+  reverse?: boolean;
 };
 const TokenAmountIconComponent = memo(function TokenAmountIconComponent({
   amount,
@@ -92,10 +99,11 @@ const TokenAmountIconComponent = memo(function TokenAmountIconComponent({
   css: cssProp,
   amountWithValueCss,
   variant = 'card',
+  reverse = false,
 }: TokenAmountIconComponentProps) {
   return (
-    <Holder css={cssProp} variant={variant}>
-      <AmountWithValue css={amountWithValueCss}>
+    <Holder css={cssProp} variant={variant} reverse={reverse}>
+      <AmountWithValue css={amountWithValueCss} reverse={reverse}>
         {amount}
         <Value>{value}</Value>
       </AmountWithValue>
@@ -123,6 +131,12 @@ const Holder = styled('div', {
       },
       bare: {},
     },
+    reverse: {
+      true: {
+        flexDirection: 'row-reverse',
+      },
+      false: {},
+    },
   },
 });
 
@@ -130,6 +144,14 @@ const AmountWithValue = styled('div', {
   base: {
     display: 'flex',
     flexDirection: 'column',
+  },
+  variants: {
+    reverse: {
+      true: {
+        alignItems: 'flex-end',
+      },
+      false: {},
+    },
   },
 });
 

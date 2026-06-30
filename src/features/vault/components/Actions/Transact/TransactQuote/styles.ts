@@ -74,14 +74,6 @@ export const styles = {
     flexDirection: 'column',
     gap: '2px',
   }),
-  cellAmount: css.raw({
-    textStyle: 'body.medium',
-    color: 'text.light',
-  }),
-  cellValue: css.raw({
-    textStyle: 'body.sm',
-    color: 'text.dark',
-  }),
   totalRow: css.raw({
     display: 'flex',
     justifyContent: 'space-between',
@@ -107,21 +99,6 @@ export const styles = {
     flexDirection: 'row-reverse',
     backgroundColor: 'background.content.dark',
   }),
-  clmPrimaryRow: css.raw({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: '12px',
-  }),
-  clmPrimaryAmounts: css.raw({
-    display: 'flex',
-    flexDirection: 'column',
-  }),
-  clmPrimaryTokens: css.raw({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-  }),
   clmPositionGrid: css.raw({
     display: 'flex',
     alignItems: 'stretch',
@@ -129,9 +106,6 @@ export const styles = {
   clmPositionCell: css.raw({
     flex: '1',
     minWidth: '0',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
     gap: '8px',
     padding: '4px 0',
   }),
@@ -139,12 +113,6 @@ export const styles = {
     width: '1px',
     background: 'background.border',
     margin: '0 12px',
-  }),
-  clmPositionCellAmounts: css.raw({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-end',
-    minWidth: '0',
   }),
   link: css.raw({
     color: 'text.lightest',
