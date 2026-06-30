@@ -16,14 +16,6 @@ export const styles = {
   slippage: css.raw({
     marginTop: '24px',
   }),
-  youReceiveSection: css.raw({
-    marginTop: '24px',
-  }),
-  youReceiveTitle: css.raw({
-    textStyle: 'body',
-    color: 'text.dark',
-    marginBottom: '8px',
-  }),
   youReceiveCard: css.raw({
     background: 'background.content.light',
     borderRadius: '8px',
@@ -31,12 +23,6 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '2px',
-  }),
-  youReceiveDivider: css.raw({
-    height: '1px',
-    background: 'background.border',
-    border: 'none',
-    margin: '0',
   }),
   dustToggle: css.raw({
     display: 'flex',

@@ -1,4 +1,5 @@
 import { css, type CssStyles } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
 import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
 import { Fragment, memo, type ReactNode, useEffect, useId, useMemo, useRef } from 'react';
@@ -16,6 +17,7 @@ import {
 } from '../../../../../data/actions/transact.ts';
 import {
   getEffectiveQuote,
+  quoteHasTransformation,
   totalValueOfTokenAmounts,
 } from '../../../../../data/apis/transact/helpers/quotes.ts';
 import {
@@ -28,14 +30,13 @@ import {
   type CowcentratedZapDepositQuote,
   type CowcentratedDualZapDepositQuote,
   isCowcentratedDepositQuote,
-  isCrossChainDepositQuote,
   isZapQuote,
   quoteNeedsSlippage,
   type TokenAmount as QuoteTokenAmount,
   type TransactQuote as TransactQuoteType,
 } from '../../../../../data/apis/transact/transact-types.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
-import { isCowcentratedLikeVault } from '../../../../../data/entities/vault.ts';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../../../../data/entities/vault.ts';
 import {
   TransactMode,
   TransactStatus,
@@ -145,149 +146,147 @@ export const TransactQuote = memo(function TransactQuote({
   const isClmDeposit = mode === TransactMode.Deposit && isClmLike;
   const preFulfilledTitle = isClmLike ? t('Transact-YouReceive') : title;
 
-  if (status === TransactStatus.Idle) {
-    return <QuoteIdle title={preFulfilledTitle} isClmDeposit={isClmDeposit} css={cssProp} />;
+  if (status === TransactStatus.Fulfilled) {
+    return <QuoteFulfilled title={title} css={cssProp} />;
   }
 
   return (
-    <div className={css(cssProp)}>
-      {status === TransactStatus.Fulfilled ?
-        <QuoteFulfilled title={title} />
-      : <>
-          <QuoteTitleRefresh
-            title={preFulfilledTitle}
-            enableRefresh={status === TransactStatus.Rejected || showStickyNotCalmWarning}
-            autoRefresh={showNotCalmRefresh}
-            autoRefreshSeconds={NOT_CALM_REFRESH_SECONDS}
-          />
-          {status === TransactStatus.Pending && !showStickyNotCalmWarning ?
-            <QuoteLoading />
-          : null}
-          {status === TransactStatus.Rejected || showStickyNotCalmWarning ?
-            <QuoteError showNotCalmDeposit={showStickyNotCalmWarning} />
-          : null}
-        </>
+    <QuotePanel
+      css={cssProp}
+      disabled={status === TransactStatus.Idle}
+      title={preFulfilledTitle}
+      enableRefresh={
+        status === TransactStatus.Idle ||
+        status === TransactStatus.Rejected ||
+        showStickyNotCalmWarning
       }
-    </div>
+      autoRefresh={status !== TransactStatus.Idle && showNotCalmRefresh}
+    >
+      {status === TransactStatus.Idle ?
+        <QuoteIdleBody vault={vault} isClmDeposit={isClmDeposit} />
+      : showStickyNotCalmWarning ?
+        <CalmAlert i18nKey="Transact-Quote-Error-Calm-deposit" variant="warning" />
+      : status === TransactStatus.Pending ?
+        <TokenAmountIconLoader />
+      : <QuoteError />}
+    </QuotePanel>
   );
 });
 
-const QuoteFulfilled = memo(function QuoteFulfilled({ title }: { title: string }) {
-  const quote = useAppSelector(selectTransactSelectedQuote);
-  const isCrossChain = isCrossChainDepositQuote(quote);
-  const effectiveQuote = getEffectiveQuote(quote);
-  const isCowcentratedDeposit = isCowcentratedDepositQuote(effectiveQuote);
-  const hasTransformation = useMemo(() => {
-    if (isCowcentratedDeposit && !isCrossChain) return false;
-    if (quote.returned.some(r => r.amount.gt(BIG_ZERO))) return true;
-    if (quote.outputs.length > 1) return true;
-    const firstInput = quote.inputs[0];
-    const firstOutput = quote.outputs[0];
-    if (!firstInput || !firstOutput) return false;
-    return (
-      firstInput.token.address !== firstOutput.token.address ||
-      firstInput.token.chainId !== firstOutput.token.chainId
-    );
-  }, [quote, isCowcentratedDeposit, isCrossChain]);
-  // only a simple (non-transforming) deposit/withdraw keeps a title + card; any transformation shows just "You receive"
-  const showTitle = !hasTransformation && !isCowcentratedDeposit;
-
-  return (
-    <>
-      {showTitle ?
-        <QuoteTitleRefresh title={title} enableRefresh={true} />
-      : null}
-      <QuoteLoaded
-        quote={quote}
-        effectiveQuote={effectiveQuote}
-        hasTransformation={hasTransformation}
-        showTitle={showTitle}
-      />
-    </>
-  );
-});
-
-const QuoteIdle = memo(function QuoteIdle({
-  title,
-  isClmDeposit,
-  css: cssProp,
-}: TransactQuoteProps & { isClmDeposit: boolean }) {
-  const classes = useStyles();
-  const vaultId = useAppSelector(selectTransactVaultId);
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
-  return (
-    <div className={css(styles.disabled, cssProp)}>
-      <QuoteTitleRefresh
-        title={title}
-        enableRefresh={true}
-        autoRefresh={false}
-        autoRefreshSeconds={NOT_CALM_REFRESH_SECONDS}
-      />
-      {isClmDeposit ?
-        <div className={classes.youReceiveCard}>
-          <TokenAmountIcon
-            amount={BIG_ZERO}
-            chainId={vault.chainId}
-            tokenAddress={vault.depositTokenAddress}
-            variant="bare"
-          />
-        </div>
-      : <div className={classes.tokenAmounts}>
-          {isCowcentratedLikeVault(vault) ?
-            <div className={classes.amountReturned}>
-              <TokenAmountList
-                variant="card"
-                itemCss={styles.fullWidth}
-                items={vault.depositTokenAddresses.map(address => ({
-                  amount: BIG_ZERO,
-                  token: { chainId: vault.chainId, address },
-                }))}
-              />
-            </div>
-          : <TokenAmountIcon
-              amount={BIG_ZERO}
-              chainId={vault.chainId}
-              tokenAddress={vault.depositTokenAddress}
-            />
-          }
-        </div>
-      }
-    </div>
-  );
-});
-
-type QuoteErrorProps = {
-  showNotCalmDeposit?: boolean;
+type QuotePanelProps = {
+  title: string;
+  enableRefresh: boolean;
+  autoRefresh?: boolean;
+  disabled?: boolean;
+  css?: CssStyles;
+  children: ReactNode;
 };
 
-const QuoteError = memo(function QuoteError({ showNotCalmDeposit = false }: QuoteErrorProps) {
+const QuotePanel = memo(function QuotePanel({
+  title,
+  enableRefresh,
+  autoRefresh = false,
+  disabled = false,
+  css: cssProp,
+  children,
+}: QuotePanelProps) {
+  return (
+    <div className={css(disabled && styles.disabled, cssProp)}>
+      <QuoteTitleRefresh
+        title={title}
+        enableRefresh={enableRefresh}
+        autoRefresh={autoRefresh}
+        autoRefreshSeconds={NOT_CALM_REFRESH_SECONDS}
+      />
+      {children}
+    </div>
+  );
+});
+
+const QuoteFulfilled = memo(function QuoteFulfilled({ title, css: cssProp }: TransactQuoteProps) {
+  const { t } = useTranslation();
+  const quote = useAppSelector(selectTransactSelectedQuote);
+  const effectiveQuote = getEffectiveQuote(quote);
+  const hasTransformation = useMemo(() => quoteHasTransformation(quote), [quote]);
+
+  return (
+    <QuotePanel
+      css={cssProp}
+      title={hasTransformation ? t('Transact-YouReceive') : title}
+      enableRefresh={true}
+    >
+      <QuoteLoaded quote={quote} effectiveQuote={effectiveQuote} />
+    </QuotePanel>
+  );
+});
+
+type QuoteIdleBodyProps = {
+  vault: VaultEntity;
+  isClmDeposit: boolean;
+};
+const QuoteIdleBody = memo(function QuoteIdleBody({ vault, isClmDeposit }: QuoteIdleBodyProps) {
   const classes = useStyles();
+
+  // only clm withdraw has the 2-token idle screen
+  if (isCowcentratedLikeVault(vault) && !isClmDeposit) {
+    return (
+      <div className={classes.tokenAmounts}>
+        <div className={classes.amountReturned}>
+          <TokenAmountList
+            variant="card"
+            itemCss={styles.fullWidth}
+            items={vault.depositTokenAddresses.map(address => ({
+              amount: BIG_ZERO,
+              token: { chainId: vault.chainId, address },
+            }))}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={classes.youReceiveCard}>
+      <TokenAmountIcon
+        amount={BIG_ZERO}
+        chainId={vault.chainId}
+        tokenAddress={vault.depositTokenAddress}
+        variant="bare"
+      />
+    </div>
+  );
+});
+
+type CalmAlertProps = {
+  i18nKey: string;
+  variant: 'warning' | 'error';
+};
+const CalmAlert = memo(function CalmAlert({ i18nKey, variant }: CalmAlertProps) {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const Alert = variant === 'warning' ? AlertWarning : AlertError;
+  return (
+    <Alert>
+      <Trans
+        t={t}
+        i18nKey={i18nKey}
+        components={{
+          LinkCalm: (
+            <ExternalLink
+              className={classes.link}
+              href="https://docs.beefy.finance/beefy-products/clm#calmness-check"
+            />
+          ),
+        }}
+      />
+    </Alert>
+  );
+});
+
+const QuoteError = memo(function QuoteError() {
   const { t } = useTranslation();
   const error = useAppSelector(selectTransactQuoteError);
   const mode = useAppSelector(selectTransactMode);
-
-  if (
-    showNotCalmDeposit ||
-    (error && QuoteCowcentratedNotCalmError.match(error) && error.action === 'deposit')
-  ) {
-    return (
-      <AlertWarning>
-        <Trans
-          t={t}
-          i18nKey="Transact-Quote-Error-Calm-deposit"
-          components={{
-            LinkCalm: (
-              <ExternalLink
-                className={classes.link}
-                href={'https://docs.beefy.finance/beefy-products/clm#calmness-check'}
-              />
-            ),
-          }}
-        />
-      </AlertWarning>
-    );
-  }
 
   if (error) {
     if (CrossChainBridgeBelowFeeError.match(error)) {
@@ -306,20 +305,10 @@ const QuoteError = memo(function QuoteError({ showNotCalmDeposit = false }: Quot
     }
     if (QuoteCowcentratedNotCalmError.match(error)) {
       return (
-        <AlertError>
-          <Trans
-            t={t}
-            i18nKey={`Transact-Quote-Error-Calm-${error.action}`}
-            components={{
-              LinkCalm: (
-                <ExternalLink
-                  className={classes.link}
-                  href={'https://docs.beefy.finance/beefy-products/clm#calmness-check'}
-                />
-              ),
-            }}
-          />
-        </AlertError>
+        <CalmAlert
+          i18nKey={`Transact-Quote-Error-Calm-${error.action}`}
+          variant={error.action === 'deposit' ? 'warning' : 'error'}
+        />
       );
     }
   }
@@ -334,23 +323,11 @@ const QuoteError = memo(function QuoteError({ showNotCalmDeposit = false }: Quot
   );
 });
 
-const QuoteLoading = memo(function QuoteLoading() {
-  return <TokenAmountIconLoader />;
-});
-
 type QuoteLoadedProps = {
   quote: TransactQuoteType;
   effectiveQuote: TransactQuoteType;
-  hasTransformation: boolean;
-  showTitle?: boolean;
 };
-const QuoteLoaded = memo(function QuoteLoaded({
-  quote,
-  effectiveQuote,
-  hasTransformation,
-  showTitle = true,
-}: QuoteLoadedProps) {
-  const classes = useStyles();
+const QuoteLoaded = memo(function QuoteLoaded({ quote, effectiveQuote }: QuoteLoadedProps) {
   const isZap = isZapQuote(quote);
   const needsSlippage = quoteNeedsSlippage(quote);
   const returned = useMemo(
@@ -360,25 +337,11 @@ const QuoteLoaded = memo(function QuoteLoaded({
   const cowcentratedDepositQuote =
     isCowcentratedDepositQuote(effectiveQuote) ? effectiveQuote : null;
 
-  const topCard: ReactNode =
-    !cowcentratedDepositQuote && !hasTransformation ?
-      <TokenAmountList items={quote.outputs} />
-    : null;
-
   return (
     <>
-      {topCard ?
-        <div className={classes.tokenAmounts}>{topCard}</div>
-      : null}
       {cowcentratedDepositQuote ?
-        <CowcentratedYouReceiveSection
-          quote={cowcentratedDepositQuote}
-          returned={returned}
-          showRefresh={!showTitle}
-        />
-      : hasTransformation ?
-        <YouReceiveSection outputs={quote.outputs} returned={returned} showRefresh={!showTitle} />
-      : null}
+        <CowcentratedYouReceiveSection quote={cowcentratedDepositQuote} returned={returned} />
+      : <YouReceiveSection outputs={quote.outputs} returned={returned} />}
       {isZap ?
         <ZapRoute quote={quote} css={styles.route} />
       : null}
@@ -389,7 +352,7 @@ const QuoteLoaded = memo(function QuoteLoaded({
   );
 });
 
-const tokenAmountKey = (token: Pick<TokenEntity, 'chainId' | 'address'>) =>
+const tokenKey = (token: Pick<TokenEntity, 'chainId' | 'address'>) =>
   `${token.chainId}-${token.address}`;
 
 type TokenAmountListItem = {
@@ -412,7 +375,7 @@ const TokenAmountList = memo(function TokenAmountList({
     <>
       {items.map(({ token, amount }) => (
         <TokenAmountIcon
-          key={tokenAmountKey(token)}
+          key={tokenKey(token)}
           amount={amount}
           chainId={token.chainId}
           tokenAddress={token.address}
@@ -424,17 +387,24 @@ const TokenAmountList = memo(function TokenAmountList({
   );
 });
 
-// shared "You receive" shell: title + card chrome + dust toggle/total footer + USD math; the card body is passed in
+const CardDivider = styled('hr', {
+  base: {
+    height: '1px',
+    background: 'background.border',
+    border: 'none',
+    margin: '0',
+  },
+});
+
+// shared "You receive" card: card chrome + dust toggle/total footer + USD math; the card body is passed in
 type YouReceiveCardProps = {
   outputs: QuoteTokenAmount[];
   returned: QuoteTokenAmount[];
-  showRefresh?: boolean;
   children: ReactNode;
 };
 const YouReceiveCard = memo(function YouReceiveCard({
   outputs,
   returned,
-  showRefresh = false,
   children,
 }: YouReceiveCardProps) {
   const { t } = useTranslation();
@@ -453,42 +423,37 @@ const YouReceiveCard = memo(function YouReceiveCard({
   );
 
   return (
-    <div className={classes.youReceiveSection}>
-      {showRefresh ?
-        <QuoteTitleRefresh title={t('Transact-YouReceive')} enableRefresh={true} />
-      : <div className={classes.youReceiveTitle}>{t('Transact-YouReceive')}</div>}
-      <div className={classes.youReceiveCard}>
-        {children}
-        {hasReturned ?
-          <>
-            <hr className={classes.youReceiveDivider} />
-            <button
-              type="button"
-              className={classes.dustToggle}
-              onClick={handleToggle}
-              aria-expanded={open}
-              aria-controls={open ? dustRowsId : undefined}
-            >
-              <span className={classes.dustToggleLabel}>
-                {t('Transact-DustSummary', { dustValue: dustUsdFormatted })}
-              </span>
-              <span className={classes.dustToggleChevron}>
-                <Icon />
-              </span>
-            </button>
-            {open ?
-              <div id={dustRowsId} className={classes.dustRows}>
-                <TokenAmountList items={returned} variant="bare" />
-              </div>
-            : null}
-            <hr className={classes.youReceiveDivider} />
-            <div className={classes.totalRow}>
-              <span className={classes.totalText}>{t('Transact-Total')}</span>
-              <span className={classes.totalText}>{totalUsdFormatted}</span>
+    <div className={classes.youReceiveCard}>
+      {children}
+      {hasReturned ?
+        <>
+          <CardDivider />
+          <button
+            type="button"
+            className={classes.dustToggle}
+            onClick={handleToggle}
+            aria-expanded={open}
+            aria-controls={open ? dustRowsId : undefined}
+          >
+            <span className={classes.dustToggleLabel}>
+              {t('Transact-DustSummary', { dustValue: dustUsdFormatted })}
+            </span>
+            <span className={classes.dustToggleChevron}>
+              <Icon />
+            </span>
+          </button>
+          {open ?
+            <div id={dustRowsId} className={classes.dustRows}>
+              <TokenAmountList items={returned} variant="bare" />
             </div>
-          </>
-        : null}
-      </div>
+          : null}
+          <CardDivider />
+          <div className={classes.totalRow}>
+            <span className={classes.totalText}>{t('Transact-Total')}</span>
+            <span className={classes.totalText}>{totalUsdFormatted}</span>
+          </div>
+        </>
+      : null}
     </div>
   );
 });
@@ -496,25 +461,17 @@ const YouReceiveCard = memo(function YouReceiveCard({
 type YouReceiveSectionProps = {
   outputs: QuoteTokenAmount[];
   returned: QuoteTokenAmount[];
-  showRefresh?: boolean;
 };
 const YouReceiveSection = memo(function YouReceiveSection({
   outputs,
   returned,
-  showRefresh = false,
 }: YouReceiveSectionProps) {
   return (
-    <YouReceiveCard outputs={outputs} returned={returned} showRefresh={showRefresh}>
+    <YouReceiveCard outputs={outputs} returned={returned}>
       <TokenAmountList items={outputs} variant="bare" />
     </YouReceiveCard>
   );
 });
-
-type TokenRowProps = {
-  amount: BigNumber;
-  chainId: TokenEntity['chainId'];
-  tokenAddress: TokenEntity['address'];
-};
 
 type CowcentratedYouReceiveSectionProps = {
   quote:
@@ -522,12 +479,10 @@ type CowcentratedYouReceiveSectionProps = {
     | CowcentratedZapDepositQuote
     | CowcentratedDualZapDepositQuote;
   returned: QuoteTokenAmount[];
-  showRefresh?: boolean;
 };
 const CowcentratedYouReceiveSection = memo(function CowcentratedYouReceiveSection({
   quote,
   returned,
-  showRefresh = false,
 }: CowcentratedYouReceiveSectionProps) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, quote.option.vaultId));
@@ -535,46 +490,32 @@ const CowcentratedYouReceiveSection = memo(function CowcentratedYouReceiveSectio
   const outputs = useMemo(() => [shares], [shares]);
 
   return (
-    <YouReceiveCard outputs={outputs} returned={returned} showRefresh={showRefresh}>
+    <YouReceiveCard outputs={outputs} returned={returned}>
       <TokenAmountIcon
         amount={shares.amount}
         chainId={shares.token.chainId}
         tokenAddress={vault.depositTokenAddress}
         variant="bare"
       />
-      <hr className={classes.youReceiveDivider} />
+      <CardDivider />
       <div className={classes.clmPositionGrid}>
         {quote.position.map((pos, i) => (
-          <Fragment key={`${pos.token.chainId}-${pos.token.address}`}>
+          <Fragment key={tokenKey(pos.token)}>
             {i > 0 ?
               <div className={classes.clmPositionCellDivider} />
             : null}
-            <ClmPositionCell
+            <TokenAmountIcon
               amount={pos.amount}
               chainId={pos.token.chainId}
               tokenAddress={pos.token.address}
+              variant="bare"
+              reverse={true}
+              showSymbol={false}
+              css={styles.clmPositionCell}
             />
           </Fragment>
         ))}
       </div>
     </YouReceiveCard>
-  );
-});
-
-const ClmPositionCell = memo(function ClmPositionCell({
-  amount,
-  chainId,
-  tokenAddress,
-}: TokenRowProps) {
-  return (
-    <TokenAmountIcon
-      amount={amount}
-      chainId={chainId}
-      tokenAddress={tokenAddress}
-      variant="bare"
-      reverse={true}
-      showSymbol={false}
-      css={styles.clmPositionCell}
-    />
   );
 });

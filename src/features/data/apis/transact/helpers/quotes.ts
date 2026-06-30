@@ -7,6 +7,7 @@ import type { BeefyState } from '../../../store/types.ts';
 import { mooAmountToOracleAmount } from '../../../utils/ppfs.ts';
 import type { QuoteResponse } from '../swap/ISwapProvider.ts';
 import {
+  isCowcentratedDepositQuote,
   isCrossChainDepositQuote,
   type TokenAmount,
   type TransactQuote,
@@ -26,6 +27,28 @@ export function getEffectiveQuote(quote: TransactQuote): TransactQuote {
   }
   const { state } = quote.destHandlerQuote;
   return isVaultDestState(state) ? state.destQuote : quote;
+}
+
+/** false for any quote where there is exactly one matching input+output token else true*/
+export function quoteHasTransformation(quote: TransactQuote): boolean {
+  if (isCowcentratedDepositQuote(getEffectiveQuote(quote))) {
+    return true;
+  }
+  if (quote.returned.some(r => r.amount.gt(BIG_ZERO))) {
+    return true;
+  }
+  if (quote.outputs.length > 1) {
+    return true;
+  }
+  const firstInput = quote.inputs[0];
+  const firstOutput = quote.outputs[0];
+  if (!firstInput || !firstOutput) {
+    return false;
+  }
+  return (
+    firstInput.token.address !== firstOutput.token.address ||
+    firstInput.token.chainId !== firstOutput.token.chainId
+  );
 }
 
 /** Convert a v2v source share amount to the deposit-token TokenAmount via ppfs (pass-through for vaults without a receipt token). */
