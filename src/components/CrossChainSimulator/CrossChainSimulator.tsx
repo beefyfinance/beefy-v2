@@ -1,10 +1,11 @@
 /**
- * DEV-only floating panel to force cross-chain zap scenarios for screenshots.
+ * Floating panel to force cross-chain zap scenarios for screenshots.
  *
- * Renders nothing in production (mounted behind `import.meta.env.DEV` in App.tsx)
- * and nothing unless a cross-chain-capable vault (chain in CCTP config with USDC
- * loaded) is currently open in the transact form. Picking a scenario seeds Redux
- * to force the exact Stepper / recovery UI — no wallet, tx, or bridge involved.
+ * Intentionally enabled in ALL build modes (this branch is a throwaway that never
+ * merges to a dev/main branch), so it also works on production/preview builds.
+ * Renders nothing unless a cross-chain-capable vault (chain in CCTP config with
+ * USDC loaded) is currently open in the transact form. Picking a scenario seeds
+ * Redux to force the exact Stepper / recovery UI — no wallet, tx, or bridge.
  */
 import { type CSSProperties, memo, useEffect, useMemo, useState } from 'react';
 import { CCTP_CONFIG } from '../../config/cctp/cctp-config.ts';
@@ -114,10 +115,6 @@ export const CrossChainSimulator = memo(function CrossChainSimulator() {
       scenario.apply(ctx);
     });
   };
-
-  if (!import.meta.env.DEV) {
-    return null;
-  }
 
   if (!open) {
     return (

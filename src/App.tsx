@@ -50,11 +50,11 @@ export const App = memo(function App() {
       </HelmetProvider>
       <AppVersionCheck />
       {import.meta.env.DEV ?
-        <>
-          <Tenderly />
-          <CrossChainSimulator />
-        </>
+        <Tenderly />
       : null}
+      {/* Intentionally NOT gated by import.meta.env.DEV — this throwaway branch never
+          merges, so the cross-chain scenario simulator stays available in every build. */}
+      <CrossChainSimulator />
     </BreakpointProvider>
   );
 });

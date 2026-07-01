@@ -9,9 +9,9 @@ Deliverables for reviewing every cross-chain (CCTP) zap scenario: what the UI sh
 
 ## The DEV scenario simulator
 
-A dev-only floating panel (`🧪 CC sim`, bottom-right) that seeds Redux to force each Stepper / recovery state **without any wallet, transaction, or CCTP bridge**. It is gated by `import.meta.env.DEV` and stripped from production builds.
+A floating panel (`🧪 CC sim`, bottom-right) that seeds Redux to force each Stepper / recovery state **without any wallet, transaction, or CCTP bridge**. It is **enabled in every build mode** (dev, `npm run build` + preview, and deployed previews) — intentionally *not* gated by `import.meta.env.DEV`, since this branch is a throwaway that never merges. To make it dev-only again, wrap `<CrossChainSimulator/>` in `App.tsx` with `import.meta.env.DEV` and restore the guard in the component.
 
-Code: `src/components/CrossChainSimulator/` (`CrossChainSimulator.tsx`, `scenarios.ts`, `seed.ts`), mounted in `src/App.tsx` next to `<Tenderly/>`. It relies on one tiny non-DEV addition — the `crossChainSeedRecoveryQuote` action (`actions/wallet/cross-chain.ts`) + its reducer case (`reducers/wallet/transact.ts`) — which is inert in production (never dispatched).
+Code: `src/components/CrossChainSimulator/` (`CrossChainSimulator.tsx`, `scenarios.ts`, `seed.ts`), mounted in `src/App.tsx`. It relies on one tiny addition — the `crossChainSeedRecoveryQuote` action (`actions/wallet/cross-chain.ts`) + its reducer case (`reducers/wallet/transact.ts`).
 
 ### How to use
 1. `npm start` (dev server) and open a vault **on a CCTP chain** (Arbitrum, Base, Ethereum, Optimism, Linea, Polygon, Avalanche, Sonic, Monad, HyperEVM). The vault page must show the deposit/withdraw form (so a vault context is set).

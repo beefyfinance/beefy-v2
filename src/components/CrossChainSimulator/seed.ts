@@ -4,8 +4,9 @@
  * These helpers dispatch PLAIN Redux actions to force the Stepper / recovery UI
  * into an exact visual state without any wallet, transaction, or CCTP bridge, so
  * every cross-chain scenario can be screenshotted (including ones that are hard
- * or impossible to reproduce live). Nothing here runs in production — the whole
- * module is only imported behind `import.meta.env.DEV`.
+ * or impossible to reproduce live). Intentionally shipped in every build on this
+ * throwaway branch (not gated by `import.meta.env.DEV`) so it works on preview
+ * and production builds too.
  */
 import BigNumber from 'bignumber.js';
 import { fetchBalanceAction } from '../../features/data/actions/balance.ts';
