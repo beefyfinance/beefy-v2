@@ -3648,7 +3648,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9dAA2878A8739E66e08e7ad35316C5143c0ea7C7/zap/in?chain=bnbchain",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9dAA2878A8739E66e08e7ad35316C5143c0ea7C7/zap/out?chain=bnbchain",
     "pointStructureIds": ["solv", "babylon"],
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x1346b618dC92810EC74163e4c27004c921D446a5"]
+      }
+    ]
   },
   {
     "id": "pendle-bsc-solvbtc.bbn-27mar25",
@@ -3685,7 +3691,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9dAA2878A8739E66e08e7ad35316C5143c0ea7C7/zap/in?chain=bnbchain",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9dAA2878A8739E66e08e7ad35316C5143c0ea7C7/zap/out?chain=bnbchain",
     "pointStructureIds": ["solv", "babylon"],
-    "network": "bsc"
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x1346b618dC92810EC74163e4c27004c921D446a5"]
+      }
+    ]
   },
   {
     "id": "pancake-cow-bsc-wsteth-wbnb-vault",

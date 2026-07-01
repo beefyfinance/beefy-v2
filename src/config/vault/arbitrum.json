@@ -694,7 +694,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf78452e0f5C0B95fc5dC8353B8CD1e06E53fa25B/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf78452e0f5C0B95fc5dC8353B8CD1e06E53fa25B/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x5979D7b546E38E414F7E9822514be443A4800529"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-reth-25jun26",
@@ -730,7 +736,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xd7Eac6c9109D8c3977EBCe4e7DBf0A5A9532E240/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xd7Eac6c9109D8c3977EBCe4e7DBf0A5A9532E240/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8"]
+      }
+    ]
   },
   {
     "id": "pendle-eqb-arb-reth-25jun26",
@@ -766,7 +778,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xd7Eac6c9109D8c3977EBCe4e7DBf0A5A9532E240/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xd7Eac6c9109D8c3977EBCe4e7DBf0A5A9532E240/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8"]
+      }
+    ]
   },
   {
     "id": "pendle-eqb-arb-dusdc-18dec25",
@@ -802,7 +820,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xD6D4648a192c5179B4175e0e431822b64aEDF6fC/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xD6D4648a192c5179B4175e0e431822b64aEDF6fC/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xaf88d065e77c8cC2239327C5EDb3A432268e5831"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-gusdc-18dec25",
@@ -838,7 +862,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x18ffB61c6d223bd91ec15acC248bb7e670aBcc48/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x18ffB61c6d223bd91ec15acC248bb7e670aBcc48/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xd3443ee1e91aF28e5FB858Fbd0D72A63bA8046E0"]
+      }
+    ]
   },
   {
     "id": "pendle-eqb-arb-gusdc-18dec25",
@@ -874,7 +904,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x18ffB61c6d223bd91ec15acC248bb7e670aBcc48/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x18ffB61c6d223bd91ec15acC248bb7e670aBcc48/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xd3443ee1e91aF28e5FB858Fbd0D72A63bA8046E0"]
+      }
+    ]
   },
   {
     "id": "curve-arb-usdc-eure",
@@ -1227,7 +1263,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x4505ec38982Bb796B34D050ca8d765aCFF1aBdee/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x4505ec38982Bb796B34D050ca8d765aCFF1aBdee/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xaf88d065e77c8cC2239327C5EDb3A432268e5831"]
+      }
+    ]
   },
   {
     "id": "curve-arb-asdcrv-v2.1",
@@ -1313,7 +1355,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x22e0F26320aCE985e3CB2434095F18Bfe114E28e/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x22e0F26320aCE985e3CB2434095F18Bfe114E28e/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xd3443ee1e91aF28e5FB858Fbd0D72A63bA8046E0"]
+      }
+    ]
   },
   {
     "id": "pendle-eqb-arb-gusdc-26jun25",
@@ -1348,7 +1396,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x22e0F26320aCE985e3CB2434095F18Bfe114E28e/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x22e0F26320aCE985e3CB2434095F18Bfe114E28e/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xd3443ee1e91aF28e5FB858Fbd0D72A63bA8046E0"]
+      }
+    ]
   },
   {
     "id": "compound-arbitrum-eth",
@@ -1467,7 +1521,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x3be83Cc235455Ae1B624Cf6e326505769AD8f9eA/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x3be83Cc235455Ae1B624Cf6e326505769AD8f9eA/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x0341C0C0ec423328621788d4854119B97f44E391"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-reth-26jun25",
@@ -1502,7 +1562,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x14FbC760eFaF36781cB0eb3Cb255aD976117B9Bd/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x14FbC760eFaF36781cB0eb3Cb255aD976117B9Bd/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-dusdc-26jun25",
@@ -1538,7 +1604,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x0bD6890b3Bb15f16430546147734b254d0B03059/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x0bD6890b3Bb15f16430546147734b254d0B03059/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xaf88d065e77c8cC2239327C5EDb3A432268e5831"]
+      }
+    ]
   },
   {
     "id": "pendle-eqb-arb-dwbtc-26jun25",
@@ -1574,7 +1646,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x8cAB5Fd029ae2FBF28c53E965E4194C7260aDF0C/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x8cAB5Fd029ae2FBF28c53E965E4194C7260aDF0C/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f"]
+      }
+    ]
   },
   {
     "id": "silo-arb-silo",
@@ -2141,7 +2219,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xA9104b8B6698979568852C30231871e28A482b3C/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xA9104b8B6698979568852C30231871e28A482b3C/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xd85E038593d7A098614721EaE955EC2022B9B91B"]
+      }
+    ]
   },
   {
     "id": "aura-arb-gho-usdc-usdt",
@@ -4625,7 +4709,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x281fE15fd3E08A282f52D5cf09a4d13c3709E66D/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x281fE15fd3E08A282f52D5cf09a4d13c3709E66D/zap/out?chain=arbitrum",
     "pointStructureIds": ["ethena"],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34"]
+      }
+    ]
   },
   {
     "id": "aura-arb-wusdm-gyd",
@@ -7134,7 +7224,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xa877a0E177b54A37066c1786F91a1DAb68F094AF/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xa877a0E177b54A37066c1786F91a1DAb68F094AF/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xd3443ee1e91aF28e5FB858Fbd0D72A63bA8046E0"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-unieth-26dec24",
@@ -7171,7 +7267,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x279b44E48226d40Ec389129061cb0B56C5c09e46/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x279b44E48226d40Ec389129061cb0B56C5c09e46/zap/out?chain=arbitrum",
     "pointStructureIds": ["bedrock"],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x3d15fD46CE9e551498328B1C83071D9509E2C3a0"]
+      }
+    ]
   },
   {
     "id": "aura-arb-susde-sfrax",
@@ -10264,7 +10366,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"]
+      }
+    ]
   },
   {
     "id": "balancer-gyro-arb-wsteth-weth",
@@ -13398,7 +13506,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2Dfaf9a5E4F293BceedE49f2dBa29aACDD88E0C4/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2Dfaf9a5E4F293BceedE49f2dBa29aACDD88E0C4/zap/out?chain=arbitrum",
     "pointStructureIds": ["ethena"],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34"]
+      }
+    ]
   },
   {
     "id": "pancake-cow-arb-weth-usdc",
@@ -14187,7 +14301,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf9F9779d8fF604732EBA9AD345E6A27EF5c2a9d6/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf9F9779d8fF604732EBA9AD345E6A27EF5c2a9d6/zap/out?chain=arbitrum",
     "pointStructureIds": ["etherfi"],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-rseth-26sep24",
@@ -14223,7 +14343,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xED99fC8bdB8E9e7B8240f62f69609a125A0Fbf14/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xED99fC8bdB8E9e7B8240f62f69609a125A0Fbf14/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x4186BFC76E2E237523CBC30FD220FE055156b41F"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-ezeth-26sep24",
@@ -14260,7 +14386,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3dB08a6e9cB4391348b0B404F493E7ae264c0/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3dB08a6e9cB4391348b0B404F493E7ae264c0/zap/out?chain=arbitrum",
     "pointStructureIds": [],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x2416092f143378750bb29b79eD961ab195CcEea5"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-dusdc-26sep24",
@@ -14296,7 +14428,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2fB73D98B1D60B35FD12508933578098f352cE7e/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2fB73D98B1D60B35FD12508933578098f352cE7e/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xaf88d065e77c8cC2239327C5EDb3A432268e5831"]
+      }
+    ]
   },
   {
     "id": "camelot-pendle-weth",
@@ -17282,7 +17420,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xED99fC8bdB8E9e7B8240f62f69609a125A0Fbf14/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xED99fC8bdB8E9e7B8240f62f69609a125A0Fbf14/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x4186BFC76E2E237523CBC30FD220FE055156b41F"]
+      }
+    ]
   },
   {
     "id": "stargate-v2-arb-weth",
@@ -17696,7 +17840,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x1d38d4204159aa5e767afba8f76be22117de61e5/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x1d38d4204159aa5e767afba8f76be22117de61e5/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x4186BFC76E2E237523CBC30FD220FE055156b41F"]
+      }
+    ]
   },
   {
     "id": "equilibria-arb-eeth-26sep24",
@@ -17733,7 +17883,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf9F9779d8fF604732EBA9AD345E6A27EF5c2a9d6/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf9F9779d8fF604732EBA9AD345E6A27EF5c2a9d6/zap/out?chain=arbitrum",
     "pointStructureIds": ["etherfi"],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe"]
+      }
+    ]
   },
   {
     "id": "equilibria-arb-ezeth-26sep24",
@@ -17769,7 +17925,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3db08a6e9cb4391348b0b404f493e7ae264c0/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3db08a6e9cb4391348b0b404f493e7ae264c0/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x2416092f143378750bb29b79eD961ab195CcEea5"]
+      }
+    ]
   },
   {
     "id": "uniswap-cow-arb-silo-weth",
@@ -18434,7 +18596,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x952083cde7aaa11ab8449057f7de23a970aa8472/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x952083cde7aaa11ab8449057f7de23a970aa8472/zap/out?chain=arbitrum",
     "pointStructureIds": ["etherfi"],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe"]
+      }
+    ]
   },
   {
     "id": "equilibria-arb-rseth-27jun24",
@@ -18470,7 +18638,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6ae79089b2cf4be441480801bb741a531d94312b/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6ae79089b2cf4be441480801bb741a531d94312b/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x4186BFC76E2E237523CBC30FD220FE055156b41F"]
+      }
+    ]
   },
   {
     "id": "uniswap-cow-arb-wbtc-eth",
@@ -18682,7 +18856,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5e03c94fc5fb2e21882000a96df0b63d2c4312e2/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5e03c94fc5fb2e21882000a96df0b63d2c4312e2/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x2416092f143378750bb29b79eD961ab195CcEea5"]
+      }
+    ]
   },
   {
     "id": "aavev3-arb-usdc",
@@ -18893,7 +19073,13 @@
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x551c423c441db0b691b5630f04d2080caee25963/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x551c423c441db0b691b5630f04d2080caee25963/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f"]
+      }
+    ]
   },
   {
     "id": "curve-arb-asdcrv",
@@ -19115,7 +19301,13 @@
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x99e9028e274feafa2e1d8787e1ee6de39c6f7724/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x99e9028e274feafa2e1d8787e1ee6de39c6f7724/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"]
+      }
+    ]
   },
   {
     "id": "silo-eth-pendle-weeth",
@@ -19241,7 +19433,13 @@
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xaccd9a7cb5518326bed715f90bd32cdf2fec2d14/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xaccd9a7cb5518326bed715f90bd32cdf2fec2d14/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"]
+      }
+    ]
   },
   {
     "id": "equilibria-arb-rseth",
@@ -19277,7 +19475,13 @@
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6f02c88650837c8dfe89f66723c4743e9cf833cd/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6f02c88650837c8dfe89f66723c4743e9cf833cd/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x4186BFC76E2E237523CBC30FD220FE055156b41F"]
+      }
+    ]
   },
   {
     "id": "equilibria-arb-eeth",
@@ -19314,7 +19518,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xe11f9786b06438456b044b3e21712228adcaa0d1/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xe11f9786b06438456b044b3e21712228adcaa0d1/zap/out?chain=arbitrum",
     "pointStructureIds": ["etherfi"],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe"]
+      }
+    ]
   },
   {
     "id": "equilibria-arb-reth",
@@ -19350,7 +19560,13 @@
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x14fbc760efaf36781cb0eb3cb255ad976117b9bd/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x14fbc760efaf36781cb0eb3cb255ad976117b9bd/zap/in?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8"]
+      }
+    ]
   },
   {
     "id": "curve-arb-tricrvarb",
@@ -20012,7 +20228,13 @@
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x7d49e5adc0eaad9c027857767638613253ef125f/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x7d49e5adc0eaad9c027857767638613253ef125f/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f"]
+      }
+    ]
   },
   {
     "id": "silo-eth-wsteth",
