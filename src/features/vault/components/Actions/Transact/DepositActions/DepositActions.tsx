@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { AnimatedButton } from '../../../../../../components/Button/AnimatedButton.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
@@ -30,6 +31,7 @@ import {
   selectTransactDepositFromVaultId,
   selectTransactExecuting,
   selectTransactForceSelection,
+  selectTransactInputAmounts,
   selectTransactIsDepositFromVault,
   selectTransactQuoteStatus,
   selectTransactSelectedChainId,
@@ -123,14 +125,22 @@ const ActionDepositPending = memo(function ActionDepositPending() {
 
 /** No quote yet — CTA opens chain/token/vault select (same as TokenSelectButton) */
 const ActionDepositSelectFlow = memo(function ActionDepositSelectFlow() {
+  const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const selectedChainId = useAppSelector(selectTransactSelectedChainId);
+  const inputAmounts = useAppSelector(selectTransactInputAmounts);
   const fromVaultChainId = useFromVaultChainId();
   const classes = useStyles();
   const { ctaLabel, openSelectStep, isSelecting } = useTransactSelectFlowCta();
   const connectSwitchChainId =
     isSelecting ? undefined : (fromVaultChainId ?? selectedChainId ?? vault.chainId);
+
+  const hasInputAmount = useMemo(
+    () => inputAmounts.some(amount => amount.gt(BIG_ZERO)),
+    [inputAmounts]
+  );
+  const label = !isSelecting && hasInputAmount ? t('Transact-Deposit') : ctaLabel;
 
   return (
     <div className={classes.feesContainer}>
@@ -142,7 +152,7 @@ const ActionDepositSelectFlow = memo(function ActionDepositSelectFlow() {
           disabled={!isSelecting}
           onClick={isSelecting ? openSelectStep : undefined}
         >
-          {ctaLabel}
+          {label}
         </Button>
       </ActionConnectSwitch>
       <VaultFees />

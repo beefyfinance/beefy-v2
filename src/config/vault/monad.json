@@ -673,8 +673,10 @@
     "earnedTokenAddress": "0x5bE4113647bCCD2150339a6EB18250a0593AAEE9",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1768921272,
+    "retireReason": "rewards",
+    "retiredAt": 1782887305,
     "platformId": "euler",
     "curatorId": "euler",
     "assets": ["USDC"],
@@ -710,8 +712,10 @@
     "earnedTokenAddress": "0xe661B68c26745e48A18C9a7B0D743BC659C4C9F4",
     "oracle": "tokens",
     "oracleId": "AUSD",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1768921272,
+    "retireReason": "rewards",
+    "retiredAt": 1782887305,
     "platformId": "euler",
     "curatorId": "euler",
     "assets": ["AUSD"],
@@ -728,6 +732,43 @@
     },
     "strategyTypeId": "single",
     "underlyingPlatformUrl": "https://app.euler.finance/earn/0x598035A2E984993229f6FA4C8C3eCf6c52aD51b5?network=monad",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "euler-monad-alphagrowth-ausd",
+    "name": "AUSD (AlphaGrowth)",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x7C80e8F83cb8AbA22B9606219129b88d0365a8Da",
+    "earnedToken": "mooEulerMonadAlphaGrowthAUSD",
+    "earnedTokenAddress": "0x7C80e8F83cb8AbA22B9606219129b88d0365a8Da",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1782322658,
+    "platformId": "euler",
+    "curatorId": "alphagrowth",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://euler.alphagrowth.io/lend/0x438cedcE647491B1d93a73d491eC19A50194c222?network=143",
     "network": "monad",
     "zaps": [
       {

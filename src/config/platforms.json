@@ -551,6 +551,15 @@
     "type": "money-market"
   },
   {
+    "id": "aave-v4",
+    "name": "Aave V4",
+    "website": "https://aave.com/",
+    "twitter": "aave",
+    "documentation": "https://docs.aave.com/",
+    "description": "Aave V4 is Aave's modular, non-custodial lending platform. It uses Hub and Spokes to route assets into controlled borrow markets, where depositors earn lending yield and incentives.",
+    "type": "money-market"
+  },
+  {
     "id": "quickswap",
     "name": "QuickSwap",
     "website": "https://quickswap.exchange/#/swap",

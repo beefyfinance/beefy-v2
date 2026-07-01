@@ -3,12 +3,18 @@ import { memo, useLayoutEffect, useRef, useState, type CSSProperties, type React
 import { useResizeDetector } from 'react-resize-detector';
 
 const DEFAULT_SPEED_PX_PER_S = 40;
+const DEFAULT_GAP_PX = 48;
 
 export type MarqueeProps = {
   /** content to scroll (duplicated for a gap-less, seamless loop) */
   children: ReactNode;
   /** scroll speed in px/second — longer content takes proportionally longer @default 40 */
   speed?: number;
+  /**
+   * gap in px between the end of one copy and the start of the next (the loop seam).
+   * Lower it to keep items flowing tightly one after another @default 48
+   */
+  gap?: number;
   /** applied to the scrolling content element — use it to style `children` */
   className?: string;
 };
@@ -41,6 +47,7 @@ function useMarqueeOverflow() {
 export const Marquee = memo(function Marquee({
   children,
   speed = DEFAULT_SPEED_PX_PER_S,
+  gap = DEFAULT_GAP_PX,
   className,
 }: MarqueeProps) {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -58,9 +65,12 @@ export const Marquee = memo(function Marquee({
     // the scroll speed constant regardless of content length.
     const distance = track.scrollWidth / 2;
     setDuration(distance / speed);
-  }, [isOverflowing, innerWidth, speed]);
+  }, [isOverflowing, innerWidth, speed, gap]);
 
-  const style = { '--marquee-duration': `${duration}s` } as CSSProperties;
+  const style = {
+    '--marquee-duration': `${duration}s`,
+    '--marquee-gap': `${gap}px`,
+  } as CSSProperties;
 
   return (
     <Viewport ref={viewportRef} overflowing={isOverflowing} style={style}>
@@ -139,7 +149,7 @@ const Content = styled('div', {
   variants: {
     overflowing: {
       true: {
-        paddingRight: '48px',
+        paddingRight: 'var(--marquee-gap, 48px)',
       },
     },
   },

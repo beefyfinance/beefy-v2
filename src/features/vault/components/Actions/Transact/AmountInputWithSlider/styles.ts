@@ -76,15 +76,19 @@ export const styles = {
       'linear-gradient(to right, {colors.text.light} 0%,{colors.text.light} var(--value),{colors.background.content.light} var(--value), {colors.background.content.light} 100%)',
   }),
   errorRange: css.raw({
-    background: '{colors.transactErrorBackground}',
+    background:
+      'linear-gradient({colors.transactErrorBackground}, {colors.transactErrorBackground}), {colors.purpleDarkest}',
     '&::-webkit-slider-thumb': {
-      background: 'indicators.error',
+      background:
+        'linear-gradient({colors.transactErrorBackground}, {colors.transactErrorBackground}), {colors.purpleDarkest}',
     },
   }),
   warningRange: css.raw({
-    background: '{colors.transactWarningBackground}',
+    background:
+      'linear-gradient({colors.transactWarningBackground}, {colors.transactWarningBackground}), {colors.purpleDarkest}',
     '&::-webkit-slider-thumb': {
-      background: 'indicators.warning',
+      background:
+        'linear-gradient({colors.transactWarningBackground}, {colors.transactWarningBackground}), {colors.purpleDarkest}',
     },
   }),
 };

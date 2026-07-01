@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
 import { useStore } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { setGlobalDevModeChecks } from 'reselect';
@@ -21,6 +22,9 @@ export const store = configureStore({
 
 // listeners get added after store is created otherwise there is a type-loop
 addListeners();
+
+// track tab focus/visibility
+setupListeners(store.dispatch);
 
 // start loading global data ASAP
 store.dispatch(initAppData);
