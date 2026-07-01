@@ -31,6 +31,7 @@ import {
   crossChainOpDismiss,
   crossChainOpInitiated,
   crossChainOpStatusUpdate,
+  crossChainSeedRecoveryQuote,
 } from '../../actions/wallet/cross-chain.ts';
 import {
   isCrossChainDepositOption,
@@ -359,6 +360,16 @@ const transactSlice = createSlice({
       })
       .addCase(crossChainClearRecoveryQuote, sliceState => {
         sliceState.crossChain.recoveryQuote = initialRecoveryQuoteState;
+      })
+      // DEV-only (cross-chain scenario simulator): inject a fulfilled recovery quote.
+      .addCase(crossChainSeedRecoveryQuote, (sliceState, action) => {
+        sliceState.crossChain.recoveryQuote = {
+          opId: action.payload.opId,
+          quote: action.payload.quote,
+          status: TransactStatus.Fulfilled,
+          error: undefined,
+          isStale: false,
+        };
       });
   },
 });
