@@ -133,9 +133,9 @@ function getMatchingWrapperId(
  *   is set on the vault itself and points straight at the new vault.
  *
  * Returns undefined if the page vault declares no (resolvable) replacement, e.g. a CLM wrapper whose
- * matching wrapper on the new side does not exist, or a (common) vault whose replacement target is
- * unknown, self-referential, or paused/retired. The old vault's own status is not gated: an active
- * vault may steer holders to its replacement.
+ * matching wrapper on the new side does not exist, or either a CLM wrapper or a (common) vault whose
+ * replacement target is unknown, self-referential, or paused/retired. The old vault's own status is
+ * not gated: an active vault may steer holders to its replacement.
  */
 export const selectVaultReplacementMigration = createCachedSelector(
   (_state: BeefyState, pageVaultId: VaultEntity['id']) => pageVaultId,
@@ -153,7 +153,14 @@ export const selectVaultReplacementMigration = createCachedSelector(
       if (!newClmId) return undefined;
 
       const newWrapperId = getMatchingWrapperId(byId, newClmId, kind);
-      return newWrapperId ? { oldVaultId: pageVaultId, newVaultId: newWrapperId } : undefined;
+      if (!newWrapperId || newWrapperId === pageVaultId) return undefined;
+
+      // getCowcentratedPool/Vault prefer the active wrapper but fall back to the most recent
+      // (possibly paused/retired) one, so gate the resolved wrapper the same as common vaults.
+      const newWrapper = byId[newWrapperId];
+      if (!newWrapper || isVaultPausedOrRetired(newWrapper)) return undefined;
+
+      return { oldVaultId: pageVaultId, newVaultId: newWrapperId };
     }
 
     // naked CLM is hidden / not user-holdable; only common vaults declare the replacement directly

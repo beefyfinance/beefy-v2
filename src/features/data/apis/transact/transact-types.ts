@@ -257,7 +257,6 @@ export type PendleV2DepositOption = ZapBaseDepositOption & {
       }
     | {
         via: 'aggregator';
-        viaTokens: TokenEntity[];
       }
   );
 
@@ -270,7 +269,6 @@ export type PendleV2WithdrawOption = ZapBaseWithdrawOption & {
       }
     | {
         via: 'aggregator';
-        viaTokens: TokenEntity[];
       }
   );
 

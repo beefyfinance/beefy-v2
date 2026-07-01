@@ -117,6 +117,13 @@ type WithdrawLiquidity = {
   quote?: QuoteResponse;
 };
 
+type AggregatorTokenSupport = {
+  /** User input tokens routable to at least one deposit token via an aggregator */
+  inputTokens: TokenEntity[];
+  /** Deposit tokens the LP can be minted from / redeemed to after an aggregator swap */
+  viaTokens: TokenEntity[];
+};
+
 const strategyId = 'pendle-v2';
 type StrategyId = typeof strategyId;
 
@@ -134,6 +141,8 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
   protected readonly market: PendleMarket;
   protected readonly vault: VaultStandard;
   protected readonly vaultType: IStandardVaultType;
+  /** Aggregator token support is constant for the strategy, so resolve it once */
+  private aggregatorSupport: Promise<AggregatorTokenSupport> | undefined;
 
   constructor(
     protected options: PendleV2StrategyConfig,
@@ -218,11 +227,10 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
       };
     });
 
-    const { any: allAggregatorTokens, map: tokenToDepositTokens } =
-      await this.aggregatorTokenSupport();
+    const { inputTokens, viaTokens } = await this.aggregatorTokenSupport();
 
-    const aggregatorOptions: PendleV2DepositOption[] = allAggregatorTokens
-      .filter(token => tokenToDepositTokens[token.address].length > 0)
+    const aggregatorOptions: PendleV2DepositOption[] = inputTokens
+      .filter(token => viaTokens.some(via => !isTokenEqual(via, token)))
       .map(token => {
         const inputs = [token];
         const selectionId = createSelectionId(this.vault.chainId, inputs);
@@ -237,7 +245,6 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
           mode: TransactMode.Deposit,
           strategyId,
           via: 'aggregator',
-          viaTokens: tokenToDepositTokens[token.address],
         };
       });
 
@@ -331,7 +338,12 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
     if (option.via === 'direct') {
       return this.getDepositLiquidityDirect(input, option.viaToken);
     }
-    return this.getDepositLiquidityAggregator(state, input, option.viaTokens);
+    const { viaTokens } = await this.aggregatorTokenSupport();
+    return this.getDepositLiquidityAggregator(
+      state,
+      input,
+      viaTokens.filter(via => !isTokenEqual(via, input.token))
+    );
   }
 
   public async fetchDepositQuote(
@@ -629,11 +641,10 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
       };
     });
 
-    const { any: allAggregatorTokens, map: tokenToDepositTokens } =
-      await this.aggregatorTokenSupport();
+    const { inputTokens, viaTokens } = await this.aggregatorTokenSupport();
 
-    const aggregatorOptions: PendleV2WithdrawOption[] = allAggregatorTokens
-      .filter(token => tokenToDepositTokens[token.address].length > 0)
+    const aggregatorOptions: PendleV2WithdrawOption[] = inputTokens
+      .filter(token => viaTokens.some(via => !isTokenEqual(via, token)))
       .map(token => {
         const outputs = [token];
         const selectionId = createSelectionId(this.vault.chainId, outputs);
@@ -648,7 +659,6 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
           mode: TransactMode.Withdraw,
           strategyId,
           via: 'aggregator',
-          viaTokens: tokenToDepositTokens[token.address],
         };
       });
 
@@ -729,7 +739,13 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
     if (option.via === 'direct') {
       return this.getWithdrawLiquidityDirect(input, wanted, option.viaToken);
     }
-    return this.getWithdrawLiquidityAggregator(state, input, wanted, option.viaTokens);
+    const { viaTokens } = await this.aggregatorTokenSupport();
+    return this.getWithdrawLiquidityAggregator(
+      state,
+      input,
+      wanted,
+      viaTokens.filter(via => !isTokenEqual(via, wanted))
+    );
   }
 
   public async fetchWithdrawQuote(
@@ -1008,10 +1024,14 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
     return canRouteToAnyOf(this.helpers, this.options.swap, tokens, token);
   }
 
-  protected async aggregatorTokenSupport() {
+  protected aggregatorTokenSupport(): Promise<AggregatorTokenSupport> {
+    return (this.aggregatorSupport ??= this.computeAggregatorTokenSupport());
+  }
+
+  protected async computeAggregatorTokenSupport(): Promise<AggregatorTokenSupport> {
     const { swapAggregator, getState } = this.helpers;
     const state = getState();
-    const supportedAggregatorTokens = await swapAggregator.fetchTokenSupport(
+    const support = await swapAggregator.fetchTokenSupport(
       this.possibleTokens,
       this.vault.id,
       this.vault.chainId,
@@ -1019,25 +1039,17 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
       this.options.swap
     );
 
-    return {
-      ...supportedAggregatorTokens,
-      map: Object.fromEntries(
-        supportedAggregatorTokens.any.map(
-          t =>
-            [
-              t.address,
-              this.possibleTokens.filter(
-                (o, i) =>
-                  // disable native as a swap target — zap can't insert balance of native in calldata
-                  !isTokenNative(o) &&
-                  !isTokenEqual(o, t) &&
-                  supportedAggregatorTokens.tokens[i].length > 1 &&
-                  supportedAggregatorTokens.tokens[i].some(st => isTokenEqual(st, o))
-              ),
-            ] as [string, TokenEntity[]]
-        )
-      ),
-    };
+    // Deposit tokens an aggregator swap can route through: the input token itself is excluded
+    // per-option at quote time, so this set is constant for the strategy.
+    const viaTokens = this.possibleTokens.filter(
+      (token, i) =>
+        // disable native as a swap target — zap can't insert balance of native in calldata
+        !isTokenNative(token) &&
+        support.tokens[i].length > 1 &&
+        support.tokens[i].some(st => isTokenEqual(st, token))
+    );
+
+    return { inputTokens: support.any, viaTokens };
   }
 }
 
