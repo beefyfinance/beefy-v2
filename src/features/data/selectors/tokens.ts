@@ -229,7 +229,6 @@ export const selectIsTokenMemeByAddress = makeSelectTokenIsTag(
   'MEMECOIN'
 );
 
-/** Vault receipt tokens resolve to the underlying (deposit-token) price here — no ppfs premium; use selectTokenPriceByAddressReceiptAware for the true share price */
 export const selectTokenPriceByAddress = createSelector(
   selectTokenByAddressOrUndefined,
   (state: BeefyState) => state.entities.tokens.prices.byOracleId,
@@ -243,7 +242,7 @@ export const selectTokenPriceByTokenOracleId = (
   oracleId: TokenEntity['oracleId']
 ) => state.entities.tokens.prices.byOracleId[oracleId] || BIG_ZERO;
 
-/** No decimals shift: only correct against amounts parsed with depositToken.decimals (boost totalSupply in apy.ts); use selectTokenPriceByAddressReceiptAware for true share-unit prices */
+/** Deposit price × ppfs, no decimals shift — only for apy.ts boost math; use selectVaultShareTokenPrice otherwise */
 export const selectVaultReceiptTokenPrice = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
