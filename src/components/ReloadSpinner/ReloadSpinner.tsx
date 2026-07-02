@@ -14,7 +14,11 @@ const DASHES = [
   'M16.4512 11.6338C16.2117 12.5621 15.7775 13.4109 15.1963 14.1357L14.0166 12.9561C14.3147 12.5571 14.5551 12.1125 14.7236 11.6338H16.4512Z',
 ];
 
+/** true: visible + clickable; false: not rendered; disabled: visible, not clickable */
+export type ReloadSpinnerState = boolean | 'disabled';
+
 export type ReloadSpinnerProps = {
+  state?: ReloadSpinnerState;
   autoRefresh?: boolean;
   autoRefreshSeconds?: number;
   onClick?: () => void;
@@ -22,6 +26,7 @@ export type ReloadSpinnerProps = {
 };
 
 export const ReloadSpinner = memo(function ReloadSpinner({
+  state = true,
   autoRefresh = false,
   autoRefreshSeconds = DEFAULT_AUTO_REFRESH_SECONDS,
   onClick,
@@ -46,7 +51,7 @@ export const ReloadSpinner = memo(function ReloadSpinner({
     }
 
     // split the duration into (dash count + 1) steps: one disables each dash, the last triggers
-    // the spin (e.g. 10s / 5 → disable a dash at 2s, 4s, 6s, 8s; spin at 10s)
+    // the refresh + spin (e.g. 10s / 5 → disable a dash at 2s, 4s, 6s, 8s; refresh at 10s)
     const totalMs = autoRefreshSeconds * 1000;
     const stepMs = totalMs / (DASHES.length + 1);
     const timers: number[] = [];
@@ -54,11 +59,16 @@ export const ReloadSpinner = memo(function ReloadSpinner({
     for (let i = 1; i <= DASHES.length; i++) {
       timers.push(window.setTimeout(() => setDisabledCount(i), stepMs * i));
     }
-    timers.push(window.setTimeout(() => setSpinning(true), totalMs));
+    timers.push(
+      window.setTimeout(() => {
+        setSpinning(true);
+        onClick?.();
+      }, totalMs)
+    );
     timers.push(window.setTimeout(() => setCycleNonce(n => n + 1), totalMs + REFRESH_SPIN_MS));
 
     return () => timers.forEach(window.clearTimeout);
-  }, [autoRefresh, autoRefreshSeconds, cycleNonce]);
+  }, [autoRefresh, autoRefreshSeconds, cycleNonce, onClick]);
 
   const handleClick = useCallback(() => {
     setSpinning(true);
@@ -66,8 +76,18 @@ export const ReloadSpinner = memo(function ReloadSpinner({
     onClick?.();
   }, [onClick]);
 
+  if (state === false) {
+    return null;
+  }
+
   return (
-    <Button type="button" css={cssProp} onClick={handleClick}>
+    <Button
+      type="button"
+      css={cssProp}
+      onClick={handleClick}
+      disabled={state !== true}
+      dimmed={state === 'disabled'}
+    >
       <Icon viewBox="0 0 20 20" fill="currentColor" aria-hidden={true}>
         <Rotor
           spinning={spinning}
@@ -100,6 +120,16 @@ const Button = styled('button', {
     width: '24px',
     height: '24px',
     position: 'relative',
+    _disabled: {
+      cursor: 'default',
+    },
+  },
+  variants: {
+    dimmed: {
+      true: {
+        opacity: '0.4',
+      },
+    },
   },
 });
 
