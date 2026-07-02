@@ -94,6 +94,20 @@ const nonHarvestOnDepositPools = [
   'pancakeswap-cow-base-sol-cbbtc-vault',
   'pancakeswap-cow-base-sol-jitosol-vault',
   'morpho-v2-monad-hyperithm-apex-cbbtc',
+  // pancake cow base vaults intentionally run harvest-on-deposit off
+  'pancake-cow-base-virtual-opg-vault',
+  'pancake-cow-base-usdc-play-vault',
+  'pancake-cow-base-cake-usdc-vault',
+  'pancake-cow-base-cake-weth-vault',
+  'pancake-cow-base-weth-edel-vault',
+  'pancake-cow-base-sol-weth-vault',
+  'pancake-cow-base-weth-aero-vault',
+  'pancake-cow-base-weth-eurc-vault',
+  'pancake-cow-base-eurc-usdc-vault',
+  'pancake-cow-base-virtual-usdc-vault',
+  'pancake-cow-base-weth-usdc-vault',
+  'pancake-cow-base-weth-cbbtc-vault',
+  'pancake-cow-base-usdc-cbbtc-vault',
 ];
 const isCowAerodromeWith10sec = (pool: VaultConfigWithStrategyData) =>
   ['velodrome', 'aerodrome'].includes(pool.platformId) &&
