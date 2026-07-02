@@ -314,6 +314,42 @@
     ]
   },
   {
+    "id": "aavev4-ethereum-frxusd",
+    "name": "frxUSD",
+    "type": "standard",
+    "token": "frxUSD",
+    "tokenAddress": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x59e3460c619D1484B73A4d08fe83834dF0E9a860",
+    "earnedToken": "mooAaveV4CorefrxUSD",
+    "earnedTokenAddress": "0x59e3460c619D1484B73A4d08fe83834dF0E9a860",
+    "oracle": "tokens",
+    "oracleId": "frxUSD",
+    "status": "active",
+    "createdAt": 1781618039,
+    "platformId": "aave-v4",
+    "assets": ["frxUSD"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://pro.aave.com/explore/asset/1/0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "stakedao-usg-sdola",
     "name": "USG/sDOLA",
     "type": "standard",
@@ -2269,12 +2305,13 @@
     "earnedTokenAddress": "0x9D678b6215F783f8306BD256934b4AE696C8493C",
     "oracle": "lps",
     "oracleId": "pendle-reusde-25jun26",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1767597699,
+    "retireReason": "rewards",
+    "retiredAt": 1782886702,
     "platformId": "magpie",
     "assets": ["reUSDe"],
     "migrationIds": ["magpie"],
-    "pointStructureIds": ["re.xyz", "ethena"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -2288,6 +2325,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6CB9A013604A567a5834fadD411165B1ca616783/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6CB9A013604A567a5834fadD411165B1ca616783/zap/out?chain=ethereum",
+    "pointStructureIds": ["re.xyz", "ethena"],
     "network": "ethereum"
   },
   {
@@ -2303,13 +2341,13 @@
     "earnedTokenAddress": "0xe82dd383D450054bF685331739eAddEc11eb69DA",
     "oracle": "lps",
     "oracleId": "pendle-reusd-25jun26",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1767597699,
+    "retireReason": "rewards",
+    "retiredAt": 1782886702,
     "platformId": "magpie",
     "assets": ["reUSDxyz"],
-    "icons": ["reUSDxyz"],
     "migrationIds": ["magpie"],
-    "pointStructureIds": ["re.xyz", "ethena"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -2323,7 +2361,9 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf5929a1C332ceaB7918A4593a43Db2B9aC20095f/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf5929a1C332ceaB7918A4593a43Db2B9aC20095f/zap/out?chain=ethereum",
-    "network": "ethereum"
+    "pointStructureIds": ["re.xyz", "ethena"],
+    "network": "ethereum",
+    "icons": ["reUSDxyz"]
   },
   {
     "id": "balancerv3-ethereum-oseth-waethweth",
