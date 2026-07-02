@@ -26,7 +26,10 @@ import {
   quoteNeedsSlippage,
   type TransactQuote as TransactQuoteType,
 } from '../../../../../data/apis/transact/transact-types.ts';
-import { areTokenAmountsEqual } from '../../../../../data/apis/transact/helpers/tokens.ts';
+import {
+  areTokenAmountsEqual,
+  isTokenAmountEqual,
+} from '../../../../../data/apis/transact/helpers/tokens.ts';
 import { isCowcentratedLikeVault } from '../../../../../data/entities/vault.ts';
 import {
   TransactMode,
@@ -41,6 +44,7 @@ import {
   selectTransactQuoteStatus,
   selectTransactSelected,
   selectTransactSelectedChainId,
+  selectTokenAmountForDisplay,
   selectTokenAmountsForDisplay,
   selectTransactSelectedQuote,
   selectTransactSelectedSelectionId,
@@ -307,7 +311,10 @@ export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
   const { t } = useTranslation();
   const shares = quote.outputs[0];
   const vaultId = useAppSelector(selectTransactVaultId);
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const displayShares = useAppSelector(
+    state => selectTokenAmountForDisplay(state, shares, vaultId),
+    isTokenAmountEqual
+  );
   const classes = useStyles();
 
   return (
@@ -331,10 +338,10 @@ export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
       <div className={classes.label}>{t('Transact-YourPositionWillBe')}</div>
       <div className={classes.cowcentratedSharesDepositContainer}>
         <TokenAmountIcon
-          key={shares.token.id}
-          amount={shares.amount}
-          chainId={shares.token.chainId}
-          tokenAddress={vault.depositTokenAddress}
+          key={displayShares.token.id}
+          amount={displayShares.amount}
+          chainId={displayShares.token.chainId}
+          tokenAddress={displayShares.token.address}
           css={styles.mainLp}
         />
         <div className={classes.amountReturned}>

@@ -10,14 +10,13 @@ import { type TokenAmount, type ZapFee } from '../transact-types.ts';
 
 export const ZERO_FEE: ZapFee = { value: 0 };
 
-/** Convert a v2v source share amount to the deposit-token TokenAmount via ppfs (pass-through for vaults without a receipt token). */
+/** Convert a vault share amount to its deposit-token equivalent via ppfs; pass-through for vaults without a receipt token. */
 export function convertVaultShareToDepositTokenAmount(
   state: BeefyState,
   srcVaultId: VaultEntity['id'],
   shareAmount: BigNumber
 ): TokenAmount {
   const { depositToken, shareToken, ppfs } = selectVaultSharesToDepositTokenData(state, srcVaultId);
-  if (shareAmount.lte(BIG_ZERO)) return { token: depositToken, amount: BIG_ZERO };
   if (!shareToken) return { token: depositToken, amount: shareAmount };
   return {
     token: depositToken,

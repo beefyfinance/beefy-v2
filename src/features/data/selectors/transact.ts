@@ -21,11 +21,7 @@ import {
 import { computeOptionZapFee } from '../apis/transact/helpers/fee.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import { isTokenEqual } from '../entities/token.ts';
-import {
-  isSingleGovVault,
-  isVaultWithPricePerFullShare,
-  type VaultEntity,
-} from '../entities/vault.ts';
+import { isSingleGovVault, isVaultWithReceipt, type VaultEntity } from '../entities/vault.ts';
 import {
   DepositSource,
   TransactMode,
@@ -493,14 +489,14 @@ export function selectTokenAmountValue(state: BeefyState, tokenAmount: TokenAmou
   ).multipliedBy(tokenAmount.amount);
 }
 
-/** Map a share-denominated amount of the given vault to its deposit-token equivalent for display; pass-through otherwise */
+/** Map a receipt-token amount of the given vault to its deposit-token equivalent for display (sign-preserving); pass-through otherwise */
 export function selectTokenAmountForDisplay(
   state: BeefyState,
   tokenAmount: TokenAmount,
   vaultId: VaultEntity['id']
 ): TokenAmount {
   const vault = selectVaultById(state, vaultId);
-  if (isVaultWithPricePerFullShare(vault)) {
+  if (isVaultWithReceipt(vault)) {
     const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
     if (isTokenEqual(tokenAmount.token, shareToken)) {
       return convertVaultShareToDepositTokenAmount(state, vault.id, tokenAmount.amount);
