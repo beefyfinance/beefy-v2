@@ -324,6 +324,11 @@ export const selectVaultPricePerFullShare = createSelector(
   price => price || BIG_ONE
 );
 
+export const selectVaultPricePerFullShareOrUndefined = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => state.entities.vaults.contractData.byVaultId[vaultId]?.pricePerFullShare;
+
 export const selectVaultStrategyAddress = (state: BeefyState, vaultId: VaultEntity['id']) =>
   valueOrThrow(
     state.entities.vaults.contractData.byVaultId[vaultId]?.strategyAddress,

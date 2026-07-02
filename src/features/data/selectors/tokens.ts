@@ -25,6 +25,7 @@ import {
   selectVaultById,
   selectVaultByIdWithReceiptOrUndefined,
   selectVaultPricePerFullShare,
+  selectVaultPricePerFullShareOrUndefined,
   selectVaultWithReceiptByAddressOrUndefined,
 } from './vaults.ts';
 import { selectIsAddressBookLoaded } from './data-loader/tokens.ts';
@@ -268,10 +269,12 @@ export const selectTokenPriceByAddressReceiptAware = (
 ): BigNumber => {
   const vault = selectVaultWithReceiptByAddressOrUndefined(state, chainId, address);
   if (vault && (vault.type === 'standard' || vault.type === 'erc4626')) {
-    const receiptPrice = selectVaultReceiptTokenPrice(state, vault.id);
-    if (receiptPrice.gt(BIG_ZERO)) {
-      return receiptPrice;
+    const ppfs = selectVaultPricePerFullShareOrUndefined(state, vault.id);
+    // ppfs not loaded: report unpriced rather than the (lower) underlying price
+    if (!ppfs) {
+      return BIG_ZERO;
     }
+    return selectVaultReceiptTokenPrice(state, vault.id, ppfs);
   }
   return selectTokenPriceByAddress(state, chainId, address);
 };
