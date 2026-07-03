@@ -22,8 +22,8 @@ const useStyles = legacyMakeStyles({
     textDecoration: 'line-through',
   }),
   discounted: css.raw({
-    color: 'text.light',
-    background: 'zapDiscountedFeesBackground',
+    color: 'tags.freeZap.text',
+    background: 'tags.freeZap.background',
     padding: '0 4px',
     borderRadius: '4px',
     marginRight: '10px',

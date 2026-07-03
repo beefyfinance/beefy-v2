@@ -1,22 +1,19 @@
 import { css, type CssStyles } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
 import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { memo, useMemo } from 'react';
 import { IconLoader } from '../../../../../../components/IconLoader/IconLoader.tsx';
 import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
 import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
-import { TokenImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
+import { TokensImageWithChain } from '../../../../../../components/TokenImage/TokenImage.tsx';
 import { formatLargeUsd } from '../../../../../../helpers/format.ts';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
 } from '../../../../../data/selectors/tokens.ts';
-import { styles } from './styles.ts';
-
-const useStyles = legacyMakeStyles(styles);
 
 export type TokenAmountIconProps = {
   amount: BigNumber;
@@ -26,6 +23,9 @@ export type TokenAmountIconProps = {
   showSymbol?: boolean;
   tokenImageSize?: number;
   amountWithValueCss?: CssStyles;
+  variant?: 'card' | 'bare';
+  /** icon+symbol on left instead of right */
+  reverse?: boolean;
 };
 export const TokenAmountIcon = memo(function TokenAmountIcon({
   amount,
@@ -35,6 +35,8 @@ export const TokenAmountIcon = memo(function TokenAmountIcon({
   showSymbol = true,
   tokenImageSize = 24,
   amountWithValueCss,
+  variant = 'card',
+  reverse = false,
 }: TokenAmountIconProps) {
   const token = useAppSelector(state => selectTokenByAddress(state, chainId, tokenAddress));
   const tokenPrice = useAppSelector(state =>
@@ -48,34 +50,33 @@ export const TokenAmountIcon = memo(function TokenAmountIcon({
     <TokenAmountIconComponent
       css={cssProp}
       amountWithValueCss={amountWithValueCss}
-      amount={<TokenAmount amount={amount} decimals={token.decimals} css={styles.token} />}
-      value={`~${formatLargeUsd(valueInUsd)}`}
+      variant={variant}
+      reverse={reverse}
+      amount={<TokenAmount amount={amount} decimals={token.decimals} css={amountTextStyle} />}
+      value={formatLargeUsd(valueInUsd)}
       tokenSymbol={showSymbol ? token.symbol : null}
       tokenIcon={
-        <TokenImage
-          chainId={token.chainId}
-          address={token.address}
-          css={styles.icon}
-          size={tokenImageSize}
-        />
+        <TokensImageWithChain tokens={[token]} chainId={token.chainId} size={tokenImageSize} />
       }
     />
   );
 });
 
-export type TokenAmountIconLoaderProps = {
-  css?: CssStyles;
-};
+export type TokenAmountIconLoaderProps = Pick<
+  TokenAmountIconProps,
+  'css' | 'showSymbol' | 'tokenImageSize' | 'amountWithValueCss' | 'variant' | 'reverse'
+>;
 export const TokenAmountIconLoader = memo(function TokenAmountIconLoader({
-  css: cssProp,
+  tokenImageSize = 24,
+  ...rest
 }: TokenAmountIconLoaderProps) {
   return (
     <TokenAmountIconComponent
-      css={cssProp}
+      {...rest}
       amount={<TextLoader placeholder="1234.5678" />}
       value={<TextLoader placeholder="~$1245.56" />}
       tokenSymbol={<TextLoader placeholder="ABC-XYZ LP" />}
-      tokenIcon={<IconLoader size={32} />}
+      tokenIcon={<IconLoader size={tokenImageSize} />}
     />
   );
 });
@@ -87,6 +88,8 @@ type TokenAmountIconComponentProps = {
   tokenIcon?: ReactNode;
   css?: CssStyles;
   amountWithValueCss?: CssStyles;
+  variant?: 'card' | 'bare';
+  reverse?: boolean;
 };
 const TokenAmountIconComponent = memo(function TokenAmountIconComponent({
   amount,
@@ -95,18 +98,86 @@ const TokenAmountIconComponent = memo(function TokenAmountIconComponent({
   tokenIcon,
   css: cssProp,
   amountWithValueCss,
+  variant = 'card',
+  reverse = false,
 }: TokenAmountIconComponentProps) {
-  const classes = useStyles();
   return (
-    <div className={css(styles.holder, cssProp)}>
-      <div className={css(styles.amountWithValue, amountWithValueCss)}>
+    <Holder css={cssProp} variant={variant} reverse={reverse}>
+      <AmountWithValue css={amountWithValueCss} reverse={reverse}>
         {amount}
-        <div className={classes.value}>{value}</div>
-      </div>
-      <div className={classes.tokenWithIcon}>
-        {tokenSymbol && <span className={classes.token}>{tokenSymbol}</span>}
+        <Value>{value}</Value>
+      </AmountWithValue>
+      <TokenWithIcon>
+        {tokenSymbol && <Token>{tokenSymbol}</Token>}
         {tokenIcon}
-      </div>
-    </div>
+      </TokenWithIcon>
+    </Holder>
   );
+});
+
+const Holder = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '12px',
+  },
+  variants: {
+    variant: {
+      card: {
+        background: 'background.content.light',
+        borderRadius: '8px',
+        padding: '8px 12px',
+      },
+      bare: {},
+    },
+    reverse: {
+      true: {
+        flexDirection: 'row-reverse',
+      },
+      false: {},
+    },
+  },
+});
+
+const AmountWithValue = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  variants: {
+    reverse: {
+      true: {
+        alignItems: 'flex-end',
+      },
+      false: {},
+    },
+  },
+});
+
+const Value = styled('div', {
+  base: {
+    textStyle: 'body.sm',
+    color: 'text.dark',
+  },
+});
+
+const TokenWithIcon = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+  },
+});
+
+const Token = styled('span', {
+  base: {
+    textStyle: 'body.medium',
+    color: 'text.light',
+  },
+});
+
+const amountTextStyle = css.raw({
+  textStyle: 'body.medium',
+  color: 'text.light',
 });

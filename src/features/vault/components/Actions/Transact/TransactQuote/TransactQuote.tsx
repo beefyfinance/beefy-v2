@@ -1,17 +1,26 @@
 import { css, type CssStyles } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
 import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
-import { memo, useEffect, useMemo, useRef } from 'react';
+import { Fragment, memo, type ReactNode, useEffect, useId, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertError, AlertWarning } from '../../../../../../components/Alerts/Alerts.tsx';
+import type { ReloadSpinnerState } from '../../../../../../components/ReloadSpinner/ReloadSpinner.tsx';
+import { useCollapse } from '../../../../../../components/Collapsable/hooks.ts';
+import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { formatLargeUsd } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
   transactClearQuotes,
   transactFetchQuotes,
   transactFetchQuotesIfNeeded,
 } from '../../../../../data/actions/transact.ts';
+import {
+  getEffectiveQuote,
+  quoteHasTransformation,
+  totalValueOfTokenAmounts,
+} from '../../../../../data/apis/transact/helpers/quotes.ts';
 import {
   CrossChainBridgeBelowFeeError,
   QuoteCowcentratedNoSingleSideError,
@@ -24,8 +33,11 @@ import {
   isCowcentratedDepositQuote,
   isZapQuote,
   quoteNeedsSlippage,
+  type TokenAmount as QuoteTokenAmount,
+  type TransactQuote as TransactQuoteType,
 } from '../../../../../data/apis/transact/transact-types.ts';
-import { isCowcentratedLikeVault } from '../../../../../data/entities/vault.ts';
+import type { TokenEntity } from '../../../../../data/entities/token.ts';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../../../../data/entities/vault.ts';
 import {
   TransactMode,
   TransactStatus,
@@ -40,18 +52,19 @@ import {
   selectTransactSelected,
   selectTransactSelectedChainId,
   selectTransactSelectedQuote,
+  selectTransactSelectedQuoteOrUndefined,
   selectTransactSelectedSelectionId,
   selectTransactSlippage,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { QuoteTitleRefresh } from '../QuoteTitleRefresh/QuoteTitleRefresh.tsx';
 import { TokenAmountIcon, TokenAmountIconLoader } from '../TokenAmountIcon/TokenAmountIcon.tsx';
 import { ZapRoute } from '../ZapRoute/ZapRoute.tsx';
 import { ZapSlippage } from '../ZapSlippage/ZapSlippage.tsx';
 import { NOT_CALM_REFRESH_SECONDS, useNotCalmAutoRefresh } from '../hooks/useNotCalmAutoRefresh.ts';
 import { styles } from './styles.ts';
-import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -73,6 +86,9 @@ export const TransactQuote = memo(function TransactQuote({
   const status = useAppSelector(selectTransactQuoteStatus);
   const preflightOk = useAppSelector(selectTransactCrossChainPreflight);
   const slippage = useAppSelector(selectTransactSlippage);
+  const { t } = useTranslation();
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const inputIsZero = useMemo(
     () => inputAmounts.every(amount => amount.lte(BIG_ZERO)),
     [inputAmounts]
@@ -127,101 +143,143 @@ export const TransactQuote = memo(function TransactQuote({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally keyed on slippage only
   }, [slippage]);
 
-  if (status === TransactStatus.Idle) {
-    return <QuoteIdle title={title} css={cssProp} />;
+  // preview "You receive" for all CLM vaults AND pools so the placeholder title matches the (transforming) result
+  const quote = useAppSelector(
+    state => status === TransactStatus.Fulfilled && selectTransactSelectedQuoteOrUndefined(state)
+  );
+  const isTransformTitle = useMemo(
+    () => isCowcentratedLikeVault(vault) || (!!quote && quoteHasTransformation(quote)),
+    [vault, quote]
+  );
+
+  // single QuotePanel across all statuses so ReloadSpinner stays mounted and its click spin isn't lost
+  return (
+    <QuotePanel
+      css={cssProp}
+      disabled={status === TransactStatus.Idle}
+      title={isTransformTitle ? t('Transact-YouReceive') : title}
+      enableRefresh={status === TransactStatus.Pending ? 'disabled' : true}
+      autoRefresh={
+        (status === TransactStatus.Pending || status === TransactStatus.Rejected) &&
+        showNotCalmRefresh
+      }
+    >
+      {status === TransactStatus.Fulfilled ?
+        <QuoteFulfilledBody />
+      : status === TransactStatus.Idle ?
+        <QuoteIdleBody vault={vault} mode={mode} />
+      : showStickyNotCalmWarning ?
+        <CalmAlert i18nKey="Transact-Quote-Error-Calm-deposit" variant="warning" />
+      : status === TransactStatus.Pending ?
+        <TokenAmountIconLoader />
+      : <QuoteError />}
+    </QuotePanel>
+  );
+});
+
+type QuotePanelProps = {
+  title: string;
+  enableRefresh: ReloadSpinnerState;
+  autoRefresh?: boolean;
+  disabled?: boolean;
+  css?: CssStyles;
+  children: ReactNode;
+};
+
+const QuotePanel = memo(function QuotePanel({
+  title,
+  enableRefresh,
+  autoRefresh = false,
+  disabled = false,
+  css: cssProp,
+  children,
+}: QuotePanelProps) {
+  return (
+    <div className={css(disabled && styles.disabled, cssProp)}>
+      <QuoteTitleRefresh
+        title={title}
+        enableRefresh={enableRefresh}
+        autoRefresh={autoRefresh}
+        autoRefreshSeconds={NOT_CALM_REFRESH_SECONDS}
+      />
+      {children}
+    </div>
+  );
+});
+
+const QuoteFulfilledBody = memo(function QuoteFulfilledBody() {
+  const quote = useAppSelector(selectTransactSelectedQuote);
+  const effectiveQuote = getEffectiveQuote(quote);
+  return <QuoteLoaded quote={quote} effectiveQuote={effectiveQuote} />;
+});
+
+type QuoteIdleBodyProps = {
+  vault: VaultEntity;
+  mode: TransactMode;
+};
+const QuoteIdleBody = memo(function QuoteIdleBody({ vault, mode }: QuoteIdleBodyProps) {
+  const classes = useStyles();
+
+  // only clm withdraw has the 2-token idle screen
+  if (mode === TransactMode.Withdraw && isCowcentratedLikeVault(vault)) {
+    return (
+      <div className={classes.tokenAmounts}>
+        <div className={classes.amountReturned}>
+          <TokenAmountList
+            variant="card"
+            itemCss={styles.fullWidth}
+            items={vault.depositTokenAddresses.map(address => ({
+              amount: BIG_ZERO,
+              token: { chainId: vault.chainId, address },
+            }))}
+          />
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className={css(cssProp)}>
-      <QuoteTitleRefresh
-        title={title}
-        enableRefresh={true}
-        autoRefresh={showNotCalmRefresh}
-        autoRefreshSeconds={NOT_CALM_REFRESH_SECONDS}
+    <div className={classes.youReceiveCard}>
+      <TokenAmountIcon
+        amount={BIG_ZERO}
+        chainId={vault.chainId}
+        tokenAddress={vault.depositTokenAddress}
+        variant="bare"
       />
-      {status === TransactStatus.Pending && !showStickyNotCalmWarning ?
-        <QuoteLoading />
-      : null}
-      {status === TransactStatus.Fulfilled ?
-        <QuoteLoaded />
-      : null}
-      {status === TransactStatus.Rejected || showStickyNotCalmWarning ?
-        <QuoteError showNotCalmDeposit={showStickyNotCalmWarning} />
-      : null}
     </div>
   );
 });
 
-const QuoteIdle = memo(function QuoteIdle({ title, css: cssProp }: TransactQuoteProps) {
-  const classes = useStyles();
-  const vaultId = useAppSelector(selectTransactVaultId);
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
-  return (
-    <div className={css(styles.disabled, cssProp)}>
-      <QuoteTitleRefresh
-        title={title}
-        enableRefresh={true}
-        autoRefresh={false}
-        autoRefreshSeconds={NOT_CALM_REFRESH_SECONDS}
-      />
-      <div className={classes.tokenAmounts}>
-        {isCowcentratedLikeVault(vault) ?
-          <div className={classes.amountReturned}>
-            {vault.depositTokenAddresses.map(tokenAddress => {
-              return (
-                <TokenAmountIcon
-                  key={tokenAddress}
-                  amount={BIG_ZERO}
-                  chainId={vault.chainId}
-                  tokenAddress={tokenAddress}
-                  css={styles.fullWidth}
-                />
-              );
-            })}
-          </div>
-        : <TokenAmountIcon
-            amount={BIG_ZERO}
-            chainId={vault.chainId}
-            tokenAddress={vault.depositTokenAddress}
-          />
-        }
-      </div>
-    </div>
-  );
-});
-
-type QuoteErrorProps = {
-  showNotCalmDeposit?: boolean;
+type CalmAlertProps = {
+  i18nKey: string;
+  variant: 'warning' | 'error';
 };
-
-const QuoteError = memo(function QuoteError({ showNotCalmDeposit = false }: QuoteErrorProps) {
+const CalmAlert = memo(function CalmAlert({ i18nKey, variant }: CalmAlertProps) {
+  const { t } = useTranslation();
   const classes = useStyles();
+  const Alert = variant === 'warning' ? AlertWarning : AlertError;
+  return (
+    <Alert>
+      <Trans
+        t={t}
+        i18nKey={i18nKey}
+        components={{
+          LinkCalm: (
+            <ExternalLink
+              className={classes.link}
+              href="https://docs.beefy.finance/beefy-products/clm#calmness-check"
+            />
+          ),
+        }}
+      />
+    </Alert>
+  );
+});
+
+const QuoteError = memo(function QuoteError() {
   const { t } = useTranslation();
   const error = useAppSelector(selectTransactQuoteError);
   const mode = useAppSelector(selectTransactMode);
-
-  if (
-    showNotCalmDeposit ||
-    (error && QuoteCowcentratedNotCalmError.match(error) && error.action === 'deposit')
-  ) {
-    return (
-      <AlertWarning>
-        <Trans
-          t={t}
-          i18nKey="Transact-Quote-Error-Calm-deposit"
-          components={{
-            LinkCalm: (
-              <ExternalLink
-                className={classes.link}
-                href={'https://docs.beefy.finance/beefy-products/clm#calmness-check'}
-              />
-            ),
-          }}
-        />
-      </AlertWarning>
-    );
-  }
 
   if (error) {
     if (CrossChainBridgeBelowFeeError.match(error)) {
@@ -240,20 +298,10 @@ const QuoteError = memo(function QuoteError({ showNotCalmDeposit = false }: Quot
     }
     if (QuoteCowcentratedNotCalmError.match(error)) {
       return (
-        <AlertError>
-          <Trans
-            t={t}
-            i18nKey={`Transact-Quote-Error-Calm-${error.action}`}
-            components={{
-              LinkCalm: (
-                <ExternalLink
-                  className={classes.link}
-                  href={'https://docs.beefy.finance/beefy-products/clm#calmness-check'}
-                />
-              ),
-            }}
-          />
-        </AlertError>
+        <CalmAlert
+          i18nKey={`Transact-Quote-Error-Calm-${error.action}`}
+          variant={error.action === 'deposit' ? 'warning' : 'error'}
+        />
       );
     }
   }
@@ -268,49 +316,25 @@ const QuoteError = memo(function QuoteError({ showNotCalmDeposit = false }: Quot
   );
 });
 
-const QuoteLoading = memo(function QuoteLoading() {
-  return <TokenAmountIconLoader />;
-});
-
-const QuoteLoaded = memo(function QuoteLoaded() {
-  // const { t } = useTranslation();
-  const classes = useStyles();
-  const quote = useAppSelector(selectTransactSelectedQuote);
+type QuoteLoadedProps = {
+  quote: TransactQuoteType;
+  effectiveQuote: TransactQuoteType;
+};
+const QuoteLoaded = memo(function QuoteLoaded({ quote, effectiveQuote }: QuoteLoadedProps) {
   const isZap = isZapQuote(quote);
   const needsSlippage = quoteNeedsSlippage(quote);
+  const returned = useMemo(
+    () => quote.returned.filter(r => r.amount.gt(BIG_ZERO)),
+    [quote.returned]
+  );
+  const cowcentratedDepositQuote =
+    isCowcentratedDepositQuote(effectiveQuote) ? effectiveQuote : null;
 
   return (
     <>
-      <div className={classes.tokenAmounts}>
-        {isCowcentratedDepositQuote(quote) ?
-          <CowcentratedLoadedQuote quote={quote} />
-        : <>
-            {quote.outputs.map(({ token, amount }) => (
-              <TokenAmountIcon
-                key={token.address}
-                amount={amount}
-                chainId={token.chainId}
-                tokenAddress={token.address}
-              />
-            ))}
-          </>
-        }
-      </div>
-      {/*      {quote.returned.length ? (
-            <div className={classes.returned}>
-              <div className={classes.returnedTitle}>{t('Transact-Returned')}</div>
-              <div className={classes.tokenAmounts}>
-                {quote.returned.map(({ token, amount }) => (
-                  <TokenAmountIcon
-                    key={token.address}
-                    amount={amount}
-                    chainId={token.chainId}
-                    tokenAddress={token.address}
-                  />
-                ))}
-              </div>
-            </div>
-          ) : null}*/}
+      {cowcentratedDepositQuote ?
+        <CowcentratedYouReceiveSection quote={cowcentratedDepositQuote} returned={returned} />
+      : <YouReceiveSection outputs={quote.outputs} returned={returned} />}
       {isZap ?
         <ZapRoute quote={quote} css={styles.route} />
       : null}
@@ -321,67 +345,178 @@ const QuoteLoaded = memo(function QuoteLoaded() {
   );
 });
 
-export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
-  quote,
-}: {
+const tokenKey = (token: Pick<TokenEntity, 'chainId' | 'address'>) =>
+  `${token.chainId}-${token.address}`;
+
+type TokenAmountListItem = {
+  amount: BigNumber;
+  token: Pick<TokenEntity, 'chainId' | 'address'>;
+};
+
+type TokenAmountListProps = {
+  items: TokenAmountListItem[];
+  variant?: 'card' | 'bare';
+  itemCss?: CssStyles;
+};
+
+const TokenAmountList = memo(function TokenAmountList({
+  items,
+  variant,
+  itemCss,
+}: TokenAmountListProps) {
+  return (
+    <>
+      {items.map(({ token, amount }) => (
+        <TokenAmountIcon
+          key={tokenKey(token)}
+          amount={amount}
+          chainId={token.chainId}
+          tokenAddress={token.address}
+          variant={variant}
+          css={itemCss}
+        />
+      ))}
+    </>
+  );
+});
+
+const CardDivider = styled('hr', {
+  base: {
+    height: '1px',
+    background: 'background.border',
+    border: 'none',
+    margin: '0',
+  },
+});
+
+// dust worth under a cent isn't worth surfacing — hides the dust line and the total it feeds
+const DUST_MIN_USD = 0.01;
+
+// shared "You receive" card: card chrome + dust toggle/total footer + USD math; the card body is passed in
+type YouReceiveCardProps = {
+  outputs: QuoteTokenAmount[];
+  returned: QuoteTokenAmount[];
+  children: ReactNode;
+};
+const YouReceiveCard = memo(function YouReceiveCard({
+  outputs,
+  returned,
+  children,
+}: YouReceiveCardProps) {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const { open, handleToggle, Icon } = useCollapse();
+  const dustRowsId = useId();
+  const outputsUsd = useAppSelector(
+    state => totalValueOfTokenAmounts(outputs, state),
+    (prev, next) => prev.eq(next)
+  );
+  const dustUsd = useAppSelector(
+    state => totalValueOfTokenAmounts(returned, state),
+    (prev, next) => prev.eq(next)
+  );
+  const { dustUsdFormatted, totalUsdFormatted, showDust } = useMemo(() => {
+    return {
+      dustUsdFormatted: formatLargeUsd(dustUsd),
+      totalUsdFormatted: formatLargeUsd(outputsUsd.plus(dustUsd)),
+      showDust: returned.length > 0 && dustUsd.gte(DUST_MIN_USD),
+    };
+  }, [dustUsd, outputsUsd, returned]);
+
+  return (
+    <div className={classes.youReceiveCard}>
+      {children}
+      {showDust ?
+        <>
+          <CardDivider />
+          <button
+            type="button"
+            className={classes.dustToggle}
+            onClick={handleToggle}
+            aria-expanded={open}
+            aria-controls={open ? dustRowsId : undefined}
+          >
+            <span className={classes.dustToggleLabel}>
+              {t('Transact-DustSummary', { dustValue: dustUsdFormatted })}
+            </span>
+            <span className={classes.dustToggleChevron}>
+              <Icon />
+            </span>
+          </button>
+          {open ?
+            <div id={dustRowsId} className={classes.dustRows}>
+              <TokenAmountList items={returned} variant="bare" />
+            </div>
+          : null}
+          <CardDivider />
+          <div className={classes.totalRow}>
+            <span className={classes.totalText}>{t('Transact-Total')}</span>
+            <span className={classes.totalText}>{totalUsdFormatted}</span>
+          </div>
+        </>
+      : null}
+    </div>
+  );
+});
+
+type YouReceiveSectionProps = {
+  outputs: QuoteTokenAmount[];
+  returned: QuoteTokenAmount[];
+};
+const YouReceiveSection = memo(function YouReceiveSection({
+  outputs,
+  returned,
+}: YouReceiveSectionProps) {
+  return (
+    <YouReceiveCard outputs={outputs} returned={returned}>
+      <TokenAmountList items={outputs} variant="bare" />
+    </YouReceiveCard>
+  );
+});
+
+type CowcentratedYouReceiveSectionProps = {
   quote:
     | CowcentratedVaultDepositQuote
     | CowcentratedZapDepositQuote
     | CowcentratedDualZapDepositQuote;
-}) {
-  const { t } = useTranslation();
-  const shares = quote.outputs[0];
-  const vaultId = useAppSelector(selectTransactVaultId);
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  returned: QuoteTokenAmount[];
+};
+const CowcentratedYouReceiveSection = memo(function CowcentratedYouReceiveSection({
+  quote,
+  returned,
+}: CowcentratedYouReceiveSectionProps) {
   const classes = useStyles();
+  const vault = useAppSelector(state => selectVaultById(state, quote.option.vaultId));
+  const shares = quote.outputs[0];
+  const outputs = useMemo(() => [shares], [shares]);
 
   return (
-    <div className={classes.cowcentratedDepositContainer}>
-      <div className={classes.amountReturned}>
-        {quote.used.map(used => {
-          return (
+    <YouReceiveCard outputs={outputs} returned={returned}>
+      <TokenAmountIcon
+        amount={shares.amount}
+        chainId={shares.token.chainId}
+        tokenAddress={vault.depositTokenAddress}
+        variant="bare"
+      />
+      <CardDivider />
+      <div className={classes.clmPositionGrid}>
+        {quote.position.map((pos, i) => (
+          <Fragment key={tokenKey(pos.token)}>
+            {i > 0 ?
+              <div className={classes.clmPositionCellDivider} />
+            : null}
             <TokenAmountIcon
-              key={used.token.id}
-              amount={used.amount}
-              chainId={used.token.chainId}
-              tokenAddress={used.token.address}
+              amount={pos.amount}
+              chainId={pos.token.chainId}
+              tokenAddress={pos.token.address}
+              variant="bare"
+              reverse={true}
               showSymbol={false}
-              css={styles.fullWidth}
-              tokenImageSize={28}
-              amountWithValueCss={styles.alignItemsEnd}
+              css={styles.clmPositionCell}
             />
-          );
-        })}
+          </Fragment>
+        ))}
       </div>
-      <div className={classes.label}>{t('Transact-YourPositionWillBe')}</div>
-      <div className={classes.cowcentratedSharesDepositContainer}>
-        <TokenAmountIcon
-          key={shares.token.id}
-          amount={shares.amount}
-          chainId={shares.token.chainId}
-          tokenAddress={vault.depositTokenAddress}
-          css={styles.mainLp}
-        />
-        <div className={classes.amountReturned}>
-          {quote.position.map((position, i) => {
-            return (
-              <TokenAmountIcon
-                key={position.token.id}
-                amount={position.amount}
-                chainId={position.token.chainId}
-                tokenAddress={position.token.address}
-                css={css.raw(
-                  styles.fullWidth,
-                  i === 0 ? styles.borderRadiusToken0 : styles.borderRadiusToken1
-                )}
-                showSymbol={false}
-                tokenImageSize={28}
-                amountWithValueCss={styles.alignItemsEnd}
-              />
-            );
-          })}
-        </div>
-      </div>
-    </div>
+    </YouReceiveCard>
   );
 });

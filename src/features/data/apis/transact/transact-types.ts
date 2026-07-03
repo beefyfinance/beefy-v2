@@ -1053,6 +1053,14 @@ export function isCrossChainDepositQuote(quote: TransactQuote): quote is CrossCh
   return quote.strategyId === 'cross-chain' && quote.option.mode === TransactMode.Deposit;
 }
 
+export function isVaultToVaultSingleTokenDepositQuote(
+  quote: TransactQuote
+): quote is VaultToVaultSingleTokenDepositQuote {
+  return (
+    quote.strategyId === 'vault-to-vault-single-token' && quote.option.mode === TransactMode.Deposit
+  );
+}
+
 export function isCrossChainWithdrawQuote(quote: TransactQuote): quote is CrossChainWithdrawQuote {
   return quote.strategyId === 'cross-chain' && quote.option.mode === TransactMode.Withdraw;
 }

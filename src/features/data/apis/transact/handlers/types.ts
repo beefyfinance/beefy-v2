@@ -6,16 +6,15 @@ import type {
   AllowanceTokenAmount,
   InputTokenAmount,
   TokenAmount,
+  ZapDepositQuote,
   ZapQuoteStep,
+  ZapQuoteStepSwapAggregator,
 } from '../transact-types.ts';
 import type { OrderInput, OrderOutput, ZapStep } from '../zap/types.ts';
 import type { ChainTransactHelpers, ZapTransactHelpers } from '../strategies/IStrategy.ts';
 
 /** Source handler kind: 'swap' (token-in → output), 'vault' (vault-share-in → output). */
 export type SourceHandlerKind = 'swap' | 'vault';
-
-/** Dest handler kind: 'passthrough' (input → user), 'swap' (input → target token), 'vault' (input → vault deposit). */
-export type DestHandlerKind = 'passthrough' | 'swap' | 'vault';
 
 export type SourceHandlerQuote<Q = unknown> = {
   /** For UI preview of the src-side portion of the route. */
@@ -43,7 +42,19 @@ export type SourceHandlerSteps = {
   orderOutputs: OrderOutput[];
 };
 
-export type DestHandlerQuote<Q = unknown> = {
+/** 'vault' (input → vault deposit) */
+export type VaultDestState = { kind: 'vault'; destQuote: ZapDepositQuote };
+/**  'swap' (input → target token) */
+export type SwapDestState = { kind: 'swap'; swapStep: ZapQuoteStepSwapAggregator };
+/** 'passthrough' (input → user) */
+export type PassthroughState = { kind: 'passthrough' };
+export type DestState = VaultDestState | SwapDestState | PassthroughState;
+
+export function isVaultDestState(state: DestState): state is VaultDestState {
+  return state.kind === 'vault';
+}
+
+export type DestHandlerQuote<Q = DestState> = {
   destSteps: ZapQuoteStep[];
   /** Final user outputs on the dst chain (vault shares, target token, or the handler's input token depending on handler). */
   outputs: TokenAmount[];
@@ -104,8 +115,8 @@ export type DestHandlerSteps = {
   expectedTokens: TokenEntity[];
 };
 
-export interface IDestHandler<Q = unknown> {
-  readonly kind: DestHandlerKind;
+export interface IDestHandler<Q extends DestState = DestState> {
+  readonly kind: Q['kind'];
   fetchQuote(inputAmount: BigNumber, ctx: DestHandlerContext): Promise<DestHandlerQuote<Q>>;
   fetchZapSteps(quote: DestHandlerQuote<Q>, ctx: DestHandlerContext): Promise<DestHandlerSteps>;
 }
