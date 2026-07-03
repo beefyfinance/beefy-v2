@@ -15,11 +15,8 @@ import type {
   DestHandlerQuote,
   DestHandlerSteps,
   IDestHandler,
+  SwapDestState,
 } from '../../../handlers/types.ts';
-
-type SwapDestState = {
-  swapStep: ZapQuoteStepSwapAggregator;
-};
 
 /**
  * Swap dest handler: aggregator swap from the handler's input token to the desired output token
@@ -95,7 +92,7 @@ export class SwapDestHandler implements IDestHandler<SwapDestState> {
       returned: [],
       dustTokens,
       allowances,
-      state: { swapStep },
+      state: { kind: 'swap', swapStep },
     };
   }
 

@@ -3,7 +3,7 @@ import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import type { TokenErc20 } from '../../../../entities/token.ts';
 import type { VaultEntity } from '../../../../entities/vault.ts';
 import { getTransactApi } from '../../../instances.ts';
-import { isZapQuote, type DepositOption, type ZapDepositQuote } from '../../transact-types.ts';
+import { isZapQuote, type DepositOption } from '../../transact-types.ts';
 import { isComposableStrategy, type IStrategy } from '../../strategies/IStrategy.ts';
 import { collectIntermediateTokens } from '../dust.ts';
 import type {
@@ -11,14 +11,10 @@ import type {
   DestHandlerQuote,
   DestHandlerSteps,
   IDestHandler,
+  VaultDestState,
 } from '../types.ts';
 
 type StrategyMatch = { strategy: IStrategy; option: DepositOption };
-
-/** Strategy is re-resolved at step time (via destQuote.strategyId) to avoid stale state across RPC calls. */
-type VaultDestState = {
-  destQuote: ZapDepositQuote;
-};
 
 /**
  * Vault dest handler: deposit the handler's `inputToken` into a vault on the dst chain.
@@ -74,7 +70,7 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
       returned: destQuote.returned,
       dustTokens,
       allowances: destQuote.allowances.filter(a => a.amount.gt(BIG_ZERO)),
-      state: { destQuote },
+      state: { kind: 'vault', destQuote },
     };
   }
 

@@ -1,13 +1,16 @@
 import { type CssStyles } from '@repo/styles/css';
 import { memo, useCallback } from 'react';
-import { ReloadSpinner } from '../../../../../../components/ReloadSpinner/ReloadSpinner.tsx';
+import {
+  ReloadSpinner,
+  type ReloadSpinnerState,
+} from '../../../../../../components/ReloadSpinner/ReloadSpinner.tsx';
 import { useAppDispatch } from '../../../../../data/store/hooks.ts';
 import { transactFetchQuotes } from '../../../../../data/actions/transact.ts';
 import { styled } from '@repo/styles/jsx';
 
 export type QuoteTitleRefreshProps = {
   title: string;
-  enableRefresh?: boolean;
+  enableRefresh?: ReloadSpinnerState;
   autoRefresh?: boolean;
   autoRefreshSeconds?: number;
   onRefresh?: () => void;
@@ -34,13 +37,12 @@ export const QuoteTitleRefresh = memo(function QuoteTitleRefresh({
   return (
     <Holder css={cssProp}>
       <Title>{title}</Title>
-      {enableRefresh ?
-        <ReloadSpinner
-          autoRefresh={autoRefresh}
-          autoRefreshSeconds={autoRefreshSeconds}
-          onClick={handleRefresh}
-        />
-      : null}
+      <ReloadSpinner
+        state={enableRefresh}
+        autoRefresh={autoRefresh}
+        autoRefreshSeconds={autoRefreshSeconds}
+        onClick={handleRefresh}
+      />
     </Holder>
   );
 });

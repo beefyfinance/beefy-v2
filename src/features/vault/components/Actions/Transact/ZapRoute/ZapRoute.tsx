@@ -616,15 +616,18 @@ export const ZapRoute = memo(function ZapRoute({
   const recoveryQuoteMatchesOp = !recoveryOp || recoveryQuoteOpId === recoveryOp.id;
 
   const { effectiveSteps, bridgeStepAbsoluteIndex } = useMemo(() => {
-    const displaySteps = quote.steps.filter(s => s.type !== 'fee');
+    const displaySteps = quote.steps.filter(s => s.type !== 'fee' && s.type !== 'unused');
     const bridgeIdx = displaySteps.findIndex(s => s.type === 'bridge');
     const absoluteBridgeIdx =
       pendingAllowances.length + (bridgeIdx >= 0 ? bridgeIdx : displaySteps.length);
 
     if (isRecovery && recoveryQuote && recoveryQuoteMatchesOp && bridgeIdx >= 0) {
       const preBridgeSteps = displaySteps.slice(0, bridgeIdx + 1);
+      const recoverySteps = recoveryQuote.steps.filter(
+        s => s.type !== 'fee' && s.type !== 'unused'
+      );
       return {
-        effectiveSteps: [...preBridgeSteps, ...recoveryQuote.steps.filter(s => s.type !== 'fee')],
+        effectiveSteps: [...preBridgeSteps, ...recoverySteps],
         bridgeStepAbsoluteIndex: absoluteBridgeIdx,
       };
     }
