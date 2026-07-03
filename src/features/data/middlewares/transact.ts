@@ -1,6 +1,13 @@
+import { isAnyOf } from '@reduxjs/toolkit';
 import type { UnknownAction } from 'redux';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
-import { transactInit, transactInitReady, transactSwitchMode } from '../actions/transact.ts';
+import {
+  transactFetchOptions,
+  transactInit,
+  transactInitReady,
+  transactInvalidateOptions,
+  transactSwitchMode,
+} from '../actions/transact.ts';
 import { fetchUserOffChainRewardsForVaultAction } from '../actions/user-rewards/user-rewards.ts';
 import {
   calculateZapAvailabilityAction,
@@ -11,8 +18,16 @@ import {
   fetchZapSwapAggregatorsAction,
 } from '../actions/zap.ts';
 import { getV2VRelevantChainsFor } from '../apis/transact/strategies/cross-chain/eligibility.ts';
+import type { VaultEntity } from '../entities/vault.ts';
 import { isVaultActive } from '../entities/vault.ts';
-import { TransactMode, TransactStep } from '../reducers/wallet/transact-types.ts';
+import { TransactMode, TransactStatus, TransactStep } from '../reducers/wallet/transact-types.ts';
+import {
+  accountHasChanged,
+  chainHasChanged,
+  chainHasChangedToUnsupported,
+  userDidConnect,
+  walletHasDisconnected,
+} from '../reducers/wallet/wallet.ts';
 import { selectUserVaultBalanceInShareTokenInBoosts } from '../selectors/balance.ts';
 import { selectBoostById, selectIsVaultPreStakedOrBoosted } from '../selectors/boosts.ts';
 import { selectAllChainIds } from '../selectors/chains.ts';
@@ -21,6 +36,8 @@ import { selectIsConfigAvailable } from '../selectors/data-loader/config.ts';
 import { selectIsPricesAvailable } from '../selectors/data-loader/prices.ts';
 import {
   selectTransactMode,
+  selectTransactOptionsStatus,
+  selectTransactOptionsWalletAddress,
   selectTransactPendingVaultIdOrUndefined,
   selectTransactShouldShowMigrate,
   selectTransactStep,
@@ -29,6 +46,7 @@ import {
 import { selectMayHaveOffchainUserRewards } from '../selectors/user-rewards.ts';
 import { selectVaultById } from '../selectors/vaults.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
+import type { BeefyState } from '../store/types.ts';
 import { startAppListening } from './listener-middleware.ts';
 import { selectAreFeesLoaded } from '../selectors/data-loader/fees.ts';
 import {
@@ -39,6 +57,42 @@ import {
   selectShouldInitZapSwapAggregators,
 } from '../selectors/data-loader/zap.ts';
 import { selectIsAddressBookLoaded } from '../selectors/data-loader/tokens.ts';
+
+/**
+ * Vault-source options enumerate deposited-vault-ids, which are recalculated on
+ * a debounce after each balance load: wait until that has caught up too.
+ */
+function selectIsTransactUserDataReady(
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress: string
+): boolean {
+  const relevantChainIds = getV2VRelevantChainsFor(state, vaultId);
+  if (
+    !relevantChainIds.every(chainId =>
+      selectHasBalanceSettledForChainUser(state, chainId, walletAddress)
+    )
+  ) {
+    return false;
+  }
+
+  const byAddress = state.ui.dataLoader.byAddress[walletAddress.toLowerCase()];
+  const lastBalanceFulfilled = Math.max(
+    ...relevantChainIds.map(
+      chainId => byAddress?.byChainId[chainId]?.balance.lastFulfilled?.timestamp ?? 0
+    )
+  );
+  if (lastBalanceFulfilled === 0) {
+    return true;
+  }
+
+  const depositedVaults = byAddress?.global.depositedVaults;
+  const lastRecalculated = Math.max(
+    depositedVaults?.lastFulfilled?.timestamp ?? 0,
+    depositedVaults?.lastRejected?.timestamp ?? 0
+  );
+  return lastRecalculated > lastBalanceFulfilled;
+}
 
 export function addTransactListeners() {
   /** calculate zap availability after all needed data is loaded */
@@ -138,10 +192,7 @@ export function addTransactListeners() {
         const walletAddress = selectWalletAddress(currentState);
         if (!walletAddress) return true;
 
-        const relevantChainIds = getV2VRelevantChainsFor(currentState, action.payload.vaultId);
-        return relevantChainIds.every(chainId =>
-          selectHasBalanceSettledForChainUser(currentState, chainId, walletAddress)
-        );
+        return selectIsTransactUserDataReady(currentState, action.payload.vaultId, walletAddress);
       });
 
       if (shouldCancel()) {
@@ -153,6 +204,74 @@ export function addTransactListeners() {
           TransactMode.Migrate
         : TransactMode.Deposit;
       dispatch(transactInitReady({ vaultId: action.payload.vaultId, mode: initialMode }));
+    },
+  });
+
+  /** refetch options when the connected wallet changes after they were computed, so vault-source options are included */
+  startAppListening({
+    // connects/account switches arrive as chainHasChanged: match broadly and diff the address
+    matcher: isAnyOf(
+      userDidConnect,
+      accountHasChanged,
+      walletHasDisconnected,
+      chainHasChanged,
+      chainHasChangedToUnsupported
+    ),
+    effect: async (
+      _,
+      { dispatch, condition, getState, getOriginalState, cancelActiveListeners }
+    ) => {
+      const walletAddress = selectWalletAddress(getState());
+      const previousAddress = selectWalletAddress(getOriginalState());
+      if (walletAddress === previousAddress) {
+        return;
+      }
+
+      const vaultId = selectTransactVaultIdOrUndefined(getState());
+      if (!vaultId) {
+        return;
+      }
+
+      if (
+        walletAddress &&
+        selectTransactOptionsWalletAddress(getState()) === walletAddress &&
+        selectTransactOptionsStatus(getState()) === TransactStatus.Fulfilled
+      ) {
+        // some wallets emit a disconnect+reconnect pair while switching networks
+        return;
+      }
+
+      cancelActiveListeners();
+
+      if (!walletAddress) {
+        // on disconnect, only rescue options left idle by an interrupted wait below
+        if (selectTransactOptionsStatus(getState()) !== TransactStatus.Idle) {
+          return;
+        }
+      } else {
+        dispatch(transactInvalidateOptions());
+        await condition((_, currentState) =>
+          selectIsTransactUserDataReady(currentState, vaultId, walletAddress)
+        );
+        if (selectTransactVaultIdOrUndefined(getState()) !== vaultId) {
+          return;
+        }
+      }
+
+      // invalidate again: a fetch started with pre-readiness data during the wait
+      // would otherwise dedupe this corrective refetch
+      dispatch(transactInvalidateOptions());
+      const mode = selectTransactMode(getState());
+      dispatch(
+        transactFetchOptions({
+          vaultId,
+          // claim/boost options can not be fetched: prefetch deposit options instead
+          mode:
+            mode === TransactMode.Claim || mode === TransactMode.Boost ?
+              TransactMode.Deposit
+            : mode,
+        })
+      );
     },
   });
 

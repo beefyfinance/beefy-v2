@@ -74,6 +74,7 @@ export const transactSetInputAmount = createAction<{
 }>('transact/setInputAmount');
 export const transactClearInput = createAction('transact/clearInput');
 export const transactClearQuotes = createAction('transact/clearQuotes');
+export const transactInvalidateOptions = createAction('transact/invalidateOptions');
 export const transactConfirmPending = createAction<{
   requestId: string;
 }>('transact/confirmPending');
@@ -114,6 +115,7 @@ export type TransactFetchOptionsArgs = {
 
 export type TransactFetchOptionsPayload = {
   options: TransactOption[];
+  walletAddress: string | undefined;
 };
 
 const optionsForByMode = {
@@ -176,6 +178,7 @@ export const transactFetchOptions = createAppAsyncThunk<
 
     return {
       options: options,
+      walletAddress: wallet,
     };
   },
   {
