@@ -389,6 +389,9 @@ const CardDivider = styled('hr', {
   },
 });
 
+// dust worth under a cent isn't worth surfacing — hides the dust line and the total it feeds
+const DUST_MIN_USD = 0.01;
+
 // shared "You receive" card: card chrome + dust toggle/total footer + USD math; the card body is passed in
 type YouReceiveCardProps = {
   outputs: QuoteTokenAmount[];
@@ -404,7 +407,6 @@ const YouReceiveCard = memo(function YouReceiveCard({
   const classes = useStyles();
   const { open, handleToggle, Icon } = useCollapse();
   const dustRowsId = useId();
-  const hasReturned = returned.length > 0;
   const outputsUsdStr = useAppSelector(state =>
     totalValueOfTokenAmounts(outputs, state).toString()
   );
@@ -414,11 +416,12 @@ const YouReceiveCard = memo(function YouReceiveCard({
     () => formatLargeUsd(new BigNumber(outputsUsdStr).plus(dustUsdStr)),
     [outputsUsdStr, dustUsdStr]
   );
+  const showDust = returned.length > 0 && new BigNumber(dustUsdStr).gte(DUST_MIN_USD);
 
   return (
     <div className={classes.youReceiveCard}>
       {children}
-      {hasReturned ?
+      {showDust ?
         <>
           <CardDivider />
           <button
