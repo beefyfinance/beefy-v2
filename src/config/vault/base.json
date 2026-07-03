@@ -6542,7 +6542,7 @@
       "notVerified": false,
       "synthAsset": false
     },
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
@@ -6661,7 +6661,7 @@
       "notVerified": false,
       "synthAsset": false
     },
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
@@ -6780,7 +6780,7 @@
       "notVerified": false,
       "synthAsset": false
     },
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
