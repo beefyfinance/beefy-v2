@@ -349,7 +349,6 @@ const config = buildConfig(
           vaultInactiveVaultbackground: { value: '#242032', description: 'vaults inactive' },
           vaultPausedBackground: { value: '#d153470c' },
           vaultTagDividerBackground: { value: '#D9D9D949' },
-          zapDiscountedFeesBackground: { value: '#59a662' },
           yellow: {
             '40': { value: '#d6d05d' },
             '40-12': { value: '#3F3C4E' },
