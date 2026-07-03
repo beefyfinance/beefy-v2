@@ -64,7 +64,8 @@ export const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '4px 0',
+    // top only — the card's own 8px bottom padding provides the space below, matching the top
+    paddingTop: '4px',
   }),
   totalText: css.raw({
     textStyle: 'body.medium',
