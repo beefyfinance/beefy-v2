@@ -59,6 +59,8 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '2px',
+    // breathing room below the last row so it isn't tight against the divider (matches the toggle's spacing above)
+    paddingBottom: '4px',
   }),
   totalRow: css.raw({
     display: 'flex',
