@@ -9,6 +9,7 @@ import type { QuoteResponse } from '../swap/ISwapProvider.ts';
 import {
   isCowcentratedDepositQuote,
   isCrossChainDepositQuote,
+  isVaultToVaultSingleTokenDepositQuote,
   type TokenAmount,
   type TransactQuote,
   type ZapFee,
@@ -18,11 +19,12 @@ import { isVaultDestState } from '../handlers/types.ts';
 export const ZERO_FEE: ZapFee = { value: 0 };
 
 /**
- * The quote to render the result against. Unwraps a cross-chain deposit to its real dest-chain deposit quote so a CLM
- * destination shows its position breakdown rather than just the share token; all other quotes pass through unchanged.
+ * The quote to render the result against. Unwraps a dest-composed deposit (cross-chain, or same-chain vault-to-vault)
+ * to its real dest deposit quote so a CLM destination shows its position breakdown rather than just the share token;
+ * all other quotes pass through unchanged.
  */
 export function getEffectiveQuote(quote: TransactQuote): TransactQuote {
-  if (!isCrossChainDepositQuote(quote)) {
+  if (!isCrossChainDepositQuote(quote) && !isVaultToVaultSingleTokenDepositQuote(quote)) {
     return quote;
   }
   const { state } = quote.destHandlerQuote;
