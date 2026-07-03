@@ -144,34 +144,30 @@ export const TransactQuote = memo(function TransactQuote({
   }, [slippage]);
 
   // preview "You receive" for all CLM vaults AND pools so the placeholder title matches the (transforming) result
-  const isClmLike = isCowcentratedLikeVault(vault);
-  const isClmDeposit = mode === TransactMode.Deposit && isClmLike;
-  const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
-  const hasTransformation = useMemo(() => !!quote && quoteHasTransformation(quote), [quote]);
-  const isFulfilled = status === TransactStatus.Fulfilled;
+  const quote = useAppSelector(
+    state => status === TransactStatus.Fulfilled && selectTransactSelectedQuoteOrUndefined(state)
+  );
+  const isTransformTitle = useMemo(
+    () => isCowcentratedLikeVault(vault) || (!!quote && quoteHasTransformation(quote)),
+    [vault, quote]
+  );
 
   // single QuotePanel across all statuses so ReloadSpinner stays mounted and its click spin isn't lost
   return (
     <QuotePanel
       css={cssProp}
       disabled={status === TransactStatus.Idle}
-      title={
-        (
-          isFulfilled ? hasTransformation : isClmLike
-        ) ?
-          t('Transact-YouReceive')
-        : title
-      }
+      title={isTransformTitle ? t('Transact-YouReceive') : title}
       enableRefresh={status === TransactStatus.Pending ? 'disabled' : true}
       autoRefresh={
         (status === TransactStatus.Pending || status === TransactStatus.Rejected) &&
         showNotCalmRefresh
       }
     >
-      {isFulfilled ?
+      {status === TransactStatus.Fulfilled ?
         <QuoteFulfilledBody />
       : status === TransactStatus.Idle ?
-        <QuoteIdleBody vault={vault} isClmDeposit={isClmDeposit} />
+        <QuoteIdleBody vault={vault} mode={mode} />
       : showStickyNotCalmWarning ?
         <CalmAlert i18nKey="Transact-Quote-Error-Calm-deposit" variant="warning" />
       : status === TransactStatus.Pending ?
@@ -219,13 +215,13 @@ const QuoteFulfilledBody = memo(function QuoteFulfilledBody() {
 
 type QuoteIdleBodyProps = {
   vault: VaultEntity;
-  isClmDeposit: boolean;
+  mode: TransactMode;
 };
-const QuoteIdleBody = memo(function QuoteIdleBody({ vault, isClmDeposit }: QuoteIdleBodyProps) {
+const QuoteIdleBody = memo(function QuoteIdleBody({ vault, mode }: QuoteIdleBodyProps) {
   const classes = useStyles();
 
   // only clm withdraw has the 2-token idle screen
-  if (isCowcentratedLikeVault(vault) && !isClmDeposit) {
+  if (mode === TransactMode.Withdraw && isCowcentratedLikeVault(vault)) {
     return (
       <div className={classes.tokenAmounts}>
         <div className={classes.amountReturned}>
