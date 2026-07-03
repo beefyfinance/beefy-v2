@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
-import { transactFetchQuotes } from '../../../../../data/actions/transact.ts';
 import { QuoteCowcentratedNotCalmError } from '../../../../../data/apis/transact/strategies/error.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
-  selectTransactCrossChainPreflight,
   selectTransactInputAmounts,
   selectTransactInputMaxes,
   selectTransactMode,
@@ -15,27 +12,29 @@ import {
   selectTransactSelectedSelectionId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectIsWindowFocused } from '../../../../../data/selectors/window.ts';
-import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
 
 export const NOT_CALM_REFRESH_SECONDS = 10;
 
 export type NotCalmAutoRefresh = {
   /** Keep the calm warning visible while a not-calm retry re-quote is in flight (no loader flicker). */
   showStickyNotCalmWarning: boolean;
-  /** Run the title's auto-refresh countdown ring while we're retrying a not-calm deposit. */
+  /** Run the title's auto-refresh countdown while we're retrying a not-calm deposit. */
   showNotCalmRefresh: boolean;
 };
 
 /**
  * CLM "not calm" deposit auto-refresh. When a deposit quote fails the on-chain calmness check we
- * re-quote every NOT_CALM_REFRESH_SECONDS until a calm quote comes back, pausing while the tab is
- * backgrounded. The visible countdown ring is drawn by ReloadSpinner, so all we need here is the
- * re-quote timer plus a sticky flag that keeps the warning from flickering to a loader during the
- * retry's brief Pending. Resets when the user changes what they're transacting.
+ * re-quote every NOT_CALM_REFRESH_SECONDS until a calm quote comes back. The countdown ring AND the
+ * re-quote itself are driven by ReloadSpinner (it fires onClick when the countdown completes), so
+ * all we need here is the retrying flag — paused while the tab is backgrounded so we don't re-quote
+ * the zap api unattended (the countdown re-arms from scratch when the tab is refocused) — plus a
+ * sticky flag that keeps the warning from flickering to a loader during the retry's brief Pending.
+ * Resets when the user changes what they're transacting.
  */
 export function useNotCalmAutoRefresh(): NotCalmAutoRefresh {
-  const dispatch = useAppDispatch();
   const mode = useAppSelector(selectTransactMode);
+  const isWindowFocused = useAppSelector(selectIsWindowFocused);
   const selectionId = useAppSelector(selectTransactSelectedSelectionId);
   const selection = useAppSelector(selectTransactSelected);
   const inputAmounts = useAppSelector(selectTransactInputAmounts);
@@ -43,8 +42,6 @@ export function useNotCalmAutoRefresh(): NotCalmAutoRefresh {
   const chainId = useAppSelector(selectTransactSelectedChainId);
   const status = useAppSelector(selectTransactQuoteStatus);
   const quoteError = useAppSelector(selectTransactQuoteError);
-  const preflightOk = useAppSelector(selectTransactCrossChainPreflight);
-  const isWindowFocused = useAppSelector(selectIsWindowFocused);
 
   const isNotCalmDepositError =
     !!quoteError &&
@@ -62,21 +59,6 @@ export function useNotCalmAutoRefresh(): NotCalmAutoRefresh {
     }
   }, [isNotCalmDepositError, status]);
 
-  // Re-quote on a timer while not calm; pause while the tab is backgrounded so we don't re-quote the
-  // zap api unattended (the timer re-arms from scratch when the tab is refocused).
-  useEffect(() => {
-    if (!isNotCalmDepositError || !isWindowFocused) {
-      return;
-    }
-    const id = window.setTimeout(() => {
-      const inputIsZero = inputAmounts.every(amount => amount.lte(BIG_ZERO));
-      if (!inputIsZero && preflightOk) {
-        dispatch(transactFetchQuotes());
-      }
-    }, NOT_CALM_REFRESH_SECONDS * 1000);
-    return () => window.clearTimeout(id);
-  }, [isNotCalmDepositError, isWindowFocused, inputAmounts, preflightOk, dispatch]);
-
   // Reset whenever the user changes what they're transacting.
   const skipInitialReset = useRef(true);
   useEffect(() => {
@@ -89,6 +71,6 @@ export function useNotCalmAutoRefresh(): NotCalmAutoRefresh {
 
   return {
     showStickyNotCalmWarning: status === TransactStatus.Pending && retrying,
-    showNotCalmRefresh: retrying,
+    showNotCalmRefresh: retrying && isWindowFocused,
   };
 }

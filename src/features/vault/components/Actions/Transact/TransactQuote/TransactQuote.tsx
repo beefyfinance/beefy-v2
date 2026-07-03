@@ -5,6 +5,7 @@ import { debounce } from 'lodash-es';
 import { Fragment, memo, type ReactNode, useEffect, useId, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertError, AlertWarning } from '../../../../../../components/Alerts/Alerts.tsx';
+import type { ReloadSpinnerState } from '../../../../../../components/ReloadSpinner/ReloadSpinner.tsx';
 import { useCollapse } from '../../../../../../components/Collapsable/hooks.ts';
 import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
@@ -51,6 +52,7 @@ import {
   selectTransactSelected,
   selectTransactSelectedChainId,
   selectTransactSelectedQuote,
+  selectTransactSelectedQuoteOrUndefined,
   selectTransactSelectedSelectionId,
   selectTransactSlippage,
   selectTransactVaultId,
@@ -144,25 +146,31 @@ export const TransactQuote = memo(function TransactQuote({
   // preview "You receive" for all CLM vaults AND pools so the placeholder title matches the (transforming) result
   const isClmLike = isCowcentratedLikeVault(vault);
   const isClmDeposit = mode === TransactMode.Deposit && isClmLike;
-  const preFulfilledTitle = isClmLike ? t('Transact-YouReceive') : title;
+  const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
+  const hasTransformation = useMemo(() => !!quote && quoteHasTransformation(quote), [quote]);
+  const isFulfilled = status === TransactStatus.Fulfilled;
 
-  if (status === TransactStatus.Fulfilled) {
-    return <QuoteFulfilled title={title} css={cssProp} />;
-  }
-
+  // single QuotePanel across all statuses so ReloadSpinner stays mounted and its click spin isn't lost
   return (
     <QuotePanel
       css={cssProp}
       disabled={status === TransactStatus.Idle}
-      title={preFulfilledTitle}
-      enableRefresh={
-        status === TransactStatus.Idle ||
-        status === TransactStatus.Rejected ||
-        showStickyNotCalmWarning
+      title={
+        (
+          isFulfilled ? hasTransformation : isClmLike
+        ) ?
+          t('Transact-YouReceive')
+        : title
       }
-      autoRefresh={status !== TransactStatus.Idle && showNotCalmRefresh}
+      enableRefresh={status === TransactStatus.Pending ? 'disabled' : true}
+      autoRefresh={
+        (status === TransactStatus.Pending || status === TransactStatus.Rejected) &&
+        showNotCalmRefresh
+      }
     >
-      {status === TransactStatus.Idle ?
+      {isFulfilled ?
+        <QuoteFulfilledBody />
+      : status === TransactStatus.Idle ?
         <QuoteIdleBody vault={vault} isClmDeposit={isClmDeposit} />
       : showStickyNotCalmWarning ?
         <CalmAlert i18nKey="Transact-Quote-Error-Calm-deposit" variant="warning" />
@@ -175,7 +183,7 @@ export const TransactQuote = memo(function TransactQuote({
 
 type QuotePanelProps = {
   title: string;
-  enableRefresh: boolean;
+  enableRefresh: ReloadSpinnerState;
   autoRefresh?: boolean;
   disabled?: boolean;
   css?: CssStyles;
@@ -203,21 +211,10 @@ const QuotePanel = memo(function QuotePanel({
   );
 });
 
-const QuoteFulfilled = memo(function QuoteFulfilled({ title, css: cssProp }: TransactQuoteProps) {
-  const { t } = useTranslation();
+const QuoteFulfilledBody = memo(function QuoteFulfilledBody() {
   const quote = useAppSelector(selectTransactSelectedQuote);
   const effectiveQuote = getEffectiveQuote(quote);
-  const hasTransformation = useMemo(() => quoteHasTransformation(quote), [quote]);
-
-  return (
-    <QuotePanel
-      css={cssProp}
-      title={hasTransformation ? t('Transact-YouReceive') : title}
-      enableRefresh={true}
-    >
-      <QuoteLoaded quote={quote} effectiveQuote={effectiveQuote} />
-    </QuotePanel>
-  );
+  return <QuoteLoaded quote={quote} effectiveQuote={effectiveQuote} />;
 });
 
 type QuoteIdleBodyProps = {
