@@ -1,6 +1,6 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
 import { Fragment, memo, type ReactNode, useEffect, useId, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -407,16 +407,21 @@ const YouReceiveCard = memo(function YouReceiveCard({
   const classes = useStyles();
   const { open, handleToggle, Icon } = useCollapse();
   const dustRowsId = useId();
-  const outputsUsdStr = useAppSelector(state =>
-    totalValueOfTokenAmounts(outputs, state).toString()
+  const outputsUsd = useAppSelector(
+    state => totalValueOfTokenAmounts(outputs, state),
+    (prev, next) => prev.eq(next)
   );
-  const dustUsdStr = useAppSelector(state => totalValueOfTokenAmounts(returned, state).toString());
-  const dustUsdFormatted = useMemo(() => formatLargeUsd(new BigNumber(dustUsdStr)), [dustUsdStr]);
-  const totalUsdFormatted = useMemo(
-    () => formatLargeUsd(new BigNumber(outputsUsdStr).plus(dustUsdStr)),
-    [outputsUsdStr, dustUsdStr]
+  const dustUsd = useAppSelector(
+    state => totalValueOfTokenAmounts(returned, state),
+    (prev, next) => prev.eq(next)
   );
-  const showDust = returned.length > 0 && new BigNumber(dustUsdStr).gte(DUST_MIN_USD);
+  const { dustUsdFormatted, totalUsdFormatted, showDust } = useMemo(() => {
+    return {
+      dustUsdFormatted: formatLargeUsd(dustUsd),
+      totalUsdFormatted: formatLargeUsd(outputsUsd.plus(dustUsd)),
+      showDust: returned.length > 0 && dustUsd.gte(DUST_MIN_USD),
+    };
+  }, [dustUsd, outputsUsd, returned]);
 
   return (
     <div className={classes.youReceiveCard}>
