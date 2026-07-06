@@ -51,7 +51,7 @@ const Layout = styled('div', {
     gap: '12px',
     color: 'text.middle',
     paddingRight: '12px', // 12px icon gap
-    textStyle: 'body.medium',
+    textStyle: 'body',
     sm: {
       paddingRight: '32px', // 20px icon + 12px gap
     },

@@ -43,6 +43,6 @@ const Title = styled('div', {
   base: {
     flexGrow: 1,
     color: 'text.lightest',
-    textStyle: 'body.medium',
+    textStyle: 'body',
   },
 });
