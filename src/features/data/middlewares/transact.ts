@@ -7,6 +7,7 @@ import {
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
   fetchZapConfigsAction,
+  fetchZapFeeCampaignsAction,
   fetchZapSwapAggregatorsAction,
 } from '../actions/zap.ts';
 import { getV2VRelevantChainsFor } from '../apis/transact/strategies/cross-chain/eligibility.ts';
@@ -21,6 +22,7 @@ import { selectIsPricesAvailable } from '../selectors/data-loader/prices.ts';
 import {
   selectTransactMode,
   selectTransactPendingVaultIdOrUndefined,
+  selectTransactShouldShowMigrate,
   selectTransactStep,
   selectTransactVaultIdOrUndefined,
 } from '../selectors/transact.ts';
@@ -104,6 +106,7 @@ export function addTransactListeners() {
       }
       if (selectShouldInitZapConfigs(getState())) {
         loaders.push(dispatch(fetchZapConfigsAction()));
+        loaders.push(dispatch(fetchZapFeeCampaignsAction()));
       }
       if (selectShouldInitZapSwapAggregators(getState())) {
         loaders.push(dispatch(fetchZapSwapAggregatorsAction()));
@@ -145,7 +148,11 @@ export function addTransactListeners() {
         return;
       }
 
-      dispatch(transactInitReady({ vaultId: action.payload.vaultId }));
+      const initialMode =
+        selectTransactShouldShowMigrate(getState(), action.payload.vaultId) ?
+          TransactMode.Migrate
+        : TransactMode.Deposit;
+      dispatch(transactInitReady({ vaultId: action.payload.vaultId, mode: initialMode }));
     },
   });
 

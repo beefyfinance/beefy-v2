@@ -160,9 +160,15 @@ export const AmountInput = memo(function AmountInput({
     if (!allowInputAboveBalance && maxValue && value.gt(maxValue)) {
       setInput(numberToString(maxValue, tokenDecimals));
       setValue(maxValue, true);
+      return;
     }
 
-    setInput(numberToString(value, tokenDecimals));
+    // Resync the display only when `value` differs from what's typed, so in-progress edits like
+    // backspacing "0.0003" to "0.000" aren't collapsed to "".
+    setInput(current => {
+      const typed = numberInputStringToNumber(current);
+      return typed.isFinite() && typed.eq(value) ? current : numberToString(value, tokenDecimals);
+    });
   }, [value, maxValue, setValue, allowInputAboveBalance, tokenDecimals]);
 
   return (

@@ -13,6 +13,7 @@ import { fetchBridges } from './bridges.ts';
 import { fetchChainConfigs } from './chains.ts';
 import { fetchAllContractDataByChainAction } from './contract-data.ts';
 import { fetchCurators } from './curators.ts';
+import { fetchFeaturedVaults } from './featured-vaults.ts';
 import { fetchFees } from './fees.ts';
 import { fetchPartnersConfig } from './partners.ts';
 import { fetchPlatforms } from './platforms.ts';
@@ -27,6 +28,7 @@ import {
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
   fetchZapConfigsAction,
+  fetchZapFeeCampaignsAction,
   fetchZapSwapAggregatorsAction,
 } from './zap.ts';
 import { fetchWeeklyRevenueStats } from './revenue.ts';
@@ -76,6 +78,8 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
 
     dispatch(fetchCurators());
 
+    dispatch(fetchFeaturedVaults());
+
     dispatch(fetchBridges());
 
     dispatch(fetchVaultsLastHarvests());
@@ -90,6 +94,7 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
 
     // Zap (we need the data to know if zap is available for each vault)
     dispatch(fetchZapConfigsAction());
+    dispatch(fetchZapFeeCampaignsAction());
     dispatch(fetchZapSwapAggregatorsAction());
     dispatch(fetchZapAggregatorTokenSupportAction());
     dispatch(fetchZapAmmsAction());

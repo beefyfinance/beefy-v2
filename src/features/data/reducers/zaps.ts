@@ -6,6 +6,7 @@ import {
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
   fetchZapConfigsAction,
+  fetchZapFeeCampaignsAction,
   fetchZapSwapAggregatorsAction,
 } from '../actions/zap.ts';
 import type { VaultEntity } from '../entities/vault.ts';
@@ -34,6 +35,7 @@ const initialZapsState: ZapsState = {
   vaults: {
     byId: {},
   },
+  feeCampaigns: [],
 };
 
 export const zapsSlice = createSlice({
@@ -48,6 +50,9 @@ export const zapsSlice = createSlice({
         for (const zap of action.payload.zaps) {
           sliceState.zaps.byChainId[zap.chainId] = zap;
         }
+      })
+      .addCase(fetchZapFeeCampaignsAction.fulfilled, (sliceState, action) => {
+        sliceState.feeCampaigns = action.payload.feeCampaigns;
       })
       .addCase(fetchZapSwapAggregatorsAction.fulfilled, (sliceState, action) => {
         for (const aggregator of action.payload.aggregators) {

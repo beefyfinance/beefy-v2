@@ -77,7 +77,7 @@ const config = buildConfig(
           'not dead',
           'not op_mini all',
         ]
-      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+        : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
     // Plugins
@@ -256,6 +256,16 @@ const config = buildConfig(
               'linear-gradient(348.15deg, rgba(255, 255, 255, 0) -166.22%, rgba(255, 255, 255, 0.7) 113.41%), linear-gradient(0deg, #FFD54F, #FFD54F)',
             description: 'tag.boost',
           },
+          migrate: {
+            value:
+              'linear-gradient(270deg, rgba(255, 137, 21, 0.256) 0%, rgba(255, 133, 0, 0) 25%)',
+            description: 'vault card tint for migratable vaults',
+          },
+          freeZap: {
+            value:
+              'linear-gradient(270deg, rgba(59, 152, 176, 0.204) 0%, rgba(39, 127, 154, 0.00) 25%)',
+            description: 'vault card tint for free zap vaults',
+          },
         },
         colors: {
           //darkBlue100-64a
@@ -331,7 +341,7 @@ const config = buildConfig(
           tooltipDropdownBoxShadow: { value: '#00000033' },
           transactDebuggerBackground: { value: '#111111' },
           transactDebuggerItemAltBackground: { value: '#222222' },
-          transactErrorBackground: { value: '#da59327c' },
+          transactErrorBackground: { value: '#d85c3066' },
           transactWarningBackground: { value: '#d198477c' },
           vaultClmPoolBackground: { value: '#252c63', description: 'vaults clm + vaults clmPool' },
           vaultClmVaultBackground: { value: '#1e2a48', description: 'vaults clmVault' },
@@ -339,7 +349,6 @@ const config = buildConfig(
           vaultInactiveVaultbackground: { value: '#242032', description: 'vaults inactive' },
           vaultPausedBackground: { value: '#d153470c' },
           vaultTagDividerBackground: { value: '#D9D9D949' },
-          zapDiscountedFeesBackground: { value: '#59a662' },
           yellow: {
             '40': { value: '#d6d05d' },
             '40-12': { value: '#3F3C4E' },
@@ -410,6 +419,7 @@ const config = buildConfig(
             '80': { value: '#df6539' },
             '80-40a': { value: '#df653966' },
             '90': { value: '#d85c30' },
+            '90-40a': { value: '#d85c3066' },
             '100': { value: '#cf5024' },
           },
           white: {
@@ -451,6 +461,9 @@ const config = buildConfig(
             pool: {
               '70': { value: '#4C2CDE' },
             },
+          },
+          petrol: {
+            '20': { value: '#B7DDE1' },
           },
         },
         sizes: {
@@ -519,6 +532,7 @@ const config = buildConfig(
             dark: { value: '{colors.white.70}' },
             black: { value: '{colors.darkBlue.90}' },
             boosted: { value: '{colors.gold.30}' },
+            freeZap: { value: '{colors.petrol.20}' },
             points: { value: '{colors.green.40}' },
             warning: { value: '{colors.orange.40}' },
             disabled: { value: '{colors.darkBlue.90-56a}' },
@@ -569,6 +583,14 @@ const config = buildConfig(
             retired: { background: { value: '{colors.tagRetiredBackground}' } },
             paused: { background: { value: '{colors.tagPausedBackground}' } },
             boost: { background: { value: '{gradients.boost}' } },
+            migrate: {
+              background: { value: '{colors.orange.50}' },
+              text: { value: '{colors.darkBlue.90}' },
+            },
+            freeZap: {
+              background: { value: '{colors.petrol.20}' },
+              text: { value: '{colors.darkBlue.90}' },
+            },
             platform: {
               gov: { background: { value: '{colors.tagPlatformGovBackground}' } },
               clm: { background: { value: '{colors.tagPlatformClmBackground}' } },
@@ -787,6 +809,10 @@ const config = buildConfig(
           to: {
             transform: 'rotate(360deg)',
           },
+        },
+        featuredVaultMarqueeLoop: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
         addressInputCaretBlink: {
           '0%, 50%': { backgroundSize: '2px 12px' },
@@ -1123,7 +1149,7 @@ const config = buildConfig(
       arbitrum: { primary: '#2d374b', header: '#289fef33' },
       aurora: { primary: '#70d44b', header: 0.2 },
       avax: { primary: '#e74142', header: 0.2 },
-      base: { primary: '#ffffff', header: '#0052ff33' },
+      base: { primary: '#ffffff', header: '#0000ff5e' },
       berachain: { primary: '#814625', header: 1 },
       bsc: { primary: '#f0b90b', header: 0.2 },
       canto: { primary: '#06fc99', header: 0.2 },

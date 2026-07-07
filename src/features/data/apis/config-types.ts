@@ -74,6 +74,7 @@ export interface VaultConfig {
   showWarning?: boolean | null;
   warning?: string | null;
   migrationIds?: string[];
+  replacementVaultId?: string;
   /** Map of chain->address of bridged receipt tokens */
   bridged?: Record<ChainEntity['id'], string>;
   /* Oracle can be ChainLink | Pyth, then the oracle address*/
@@ -285,7 +286,44 @@ export interface ZapConfig {
   router: string;
   manager: string;
   chainId: ChainEntity['id'];
+  feeRecipient: string;
+  feeBps: number;
 }
+
+export type ZapFeeEndpointMatcher = {
+  token?: {
+    chainIds?: ChainEntity['id'][];
+    ids?: string[];
+    addresses?: string[];
+    symbols?: string[];
+    oracleIds?: string[];
+    tags?: string[];
+  };
+  vault?: {
+    chainIds?: ChainEntity['id'][];
+    ids?: string[];
+    platformIds?: string[];
+    strategyTypeIds?: string[];
+    assetTypes?: string[];
+    assetIds?: string[];
+    statuses?: string[];
+  };
+};
+
+// Endpoint-scoped: a rule constrains the input side and/or output side; direction (deposit/withdraw) is
+// emergent. The resulting fee is `bps` (clamped to <= base; 0 = free). At least one of input/output is required.
+export type ZapFeeRule = {
+  id: string;
+  bps: number;
+  input?: ZapFeeEndpointMatcher;
+  output?: ZapFeeEndpointMatcher;
+  // Opt-in: feature this campaign on the vault list (single-sided-with-vault rules only; engine derives the side).
+  featured?: boolean;
+  // Short campaign blurb, shown next to the fee when this rule applies (display not yet wired).
+  description?: string;
+  startsAt?: number;
+  endsAt?: number;
+};
 
 export interface OneInchSwapConfig {
   id: string;

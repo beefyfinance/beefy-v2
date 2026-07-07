@@ -6,6 +6,7 @@ import {
 } from '../../../../../features/data/selectors/stepper.ts';
 import { useAppSelector } from '../../../../../features/data/store/hooks.ts';
 import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
+import { formatTokenDisplayCondensed } from '../../../../../helpers/format.ts';
 import { formatTokenAmountsList } from '../common/formatTokenAmountsList.tsx';
 import { SuccessContentDisplay } from './SuccessContentDisplay.tsx';
 import type { SuccessContentProps } from './types.ts';
@@ -16,7 +17,7 @@ export const BoostUnstakeSuccessContent = memo(function BoostUnstakeSuccessConte
   const { t } = useTranslation();
   const data = useAppSelector(selectBoostAdditionalData);
   const token = data?.token.symbol || 'UNKNOWN';
-  const amount = data?.amount || BIG_ZERO;
+  const amount = formatTokenDisplayCondensed(data?.amount || BIG_ZERO, data?.token.decimals || 18);
   const claimedTokenAmounts = useAppSelector(selectBoostClaimed);
   const claimed = useMemo(() => {
     if (claimedTokenAmounts.length) {

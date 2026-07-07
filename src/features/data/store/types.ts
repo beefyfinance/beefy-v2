@@ -8,6 +8,7 @@ import type { BridgesState } from '../reducers/bridges-types.ts';
 import type { ChainsState } from '../reducers/chains-types.ts';
 import type { CuratorsState } from '../reducers/curators.ts';
 import type { DataLoaderState } from '../reducers/data-loader-types.ts';
+import type { FeaturedVaultsState } from '../reducers/featured-vaults-types.ts';
 import type { FeesState } from '../reducers/fees-types.ts';
 import type { FilteredVaultsState } from '../reducers/filtered-vaults-types.ts';
 import type { HistoricalState } from '../reducers/historical-types.ts';
@@ -37,6 +38,7 @@ import type { WalletActionsState } from '../reducers/wallet/wallet-action-types.
 import type { WalletState } from '../reducers/wallet/wallet-types.ts';
 import type { ZapsState } from '../reducers/zaps-types.ts';
 import type { RevenueState } from '../reducers/revenue.ts';
+import type { WindowState } from '../reducers/window.ts';
 import type { PointsState } from '../reducers/points-types.ts';
 
 export interface BeefyState {
@@ -45,9 +47,11 @@ export interface BeefyState {
     bridges: BridgesState;
     chains: ChainsState;
     curators: CuratorsState;
+    featuredVaults: FeaturedVaultsState;
     fees: FeesState;
     minters: MintersState;
     platforms: PlatformsState;
+
     points: PointsState;
     promos: PromosState;
     proposals: ProposalsState;
@@ -85,6 +89,7 @@ export interface BeefyState {
     vaultsList: VaultsListState;
     version: VersionState;
     revenue: RevenueState;
+    window: WindowState;
   };
 }
 

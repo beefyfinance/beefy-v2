@@ -52,6 +52,7 @@ import {
   selectGovVaultById,
   selectVaultById,
   selectVaultIdsByChainIdIncludingHidden,
+  selectVaultReplacementMigration,
 } from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
 
@@ -349,6 +350,30 @@ export const selectUserVaultBalanceInShareTokenIncludingDisplaced = createCached
     return bigNumberOrStaticZero(balances.reduce((acc, balance) => acc.plus(balance), BIG_ZERO));
   }
 )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
+
+/**
+ * Whether to show the "Migrate" tag/gradient for a vault: it must be the OLD wrapper of a
+ * replacement-vault migration AND the user must hold a non-zero balance in it (including boost and
+ * displaced shares). Lives here (not in selectors/vaults) because it depends on user balances.
+ */
+export const selectUserHasBalanceToMigrate = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): boolean => {
+  const migration = selectVaultReplacementMigration(state, vaultId);
+  if (!migration) {
+    return false;
+  }
+  const walletAddress = selectWalletAddress(state);
+  if (!walletAddress) {
+    return false;
+  }
+  return selectUserVaultBalanceInShareTokenIncludingDisplaced(
+    state,
+    migration.oldVaultId,
+    walletAddress
+  ).gt(BIG_ZERO);
+};
 
 /**
  * Total not in active boost

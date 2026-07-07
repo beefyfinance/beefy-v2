@@ -395,6 +395,7 @@ function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBas
     risks: risksWithUpdatedAt(config.risks, config.createdAt),
     depositFee: config.depositFee || 0,
     migrationIds: config.migrationIds || [],
+    replacementVaultId: config.replacementVaultId || undefined,
     hidden: false,
     poolTogether: config.poolTogether,
     breakdownId: config.oracle === 'tokens' ? config.id : config.oracleId, // use vault id when deposit token is not a LP

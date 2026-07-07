@@ -1,12 +1,16 @@
 import { css } from '@repo/styles/css';
 import type BigNumber from 'bignumber.js';
-import { formatISO9075 } from 'date-fns';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TokenAmount } from '../../../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { TokenImage } from '../../../../../../../../components/TokenImage/TokenImage.tsx';
 import { VaultNetwork } from '../../../../../../../../components/VaultIdentity/VaultIdentity.tsx';
 import { BIG_ZERO } from '../../../../../../../../helpers/big-number.ts';
+import {
+  formatDate,
+  formatDateTimeWithSeconds,
+  formatTimeWithSeconds,
+} from '../../../../../../../../helpers/date.ts';
 import {
   formatLargeUsd,
   formatTokenDisplayCondensed,
@@ -40,10 +44,7 @@ type TransactionProps = {
 };
 
 type TransactionStatProps<
-  T extends
-    | TimelineEntryStandard
-    | TimelineEntryCowcentratedPool
-    | TimelineEntryCowcentratedVault =
+  T extends TimelineEntryStandard | TimelineEntryCowcentratedPool | TimelineEntryCowcentratedVault =
     | TimelineEntryStandard
     | TimelineEntryCowcentratedPool
     | TimelineEntryCowcentratedVault,
@@ -184,9 +185,9 @@ export const Transaction = memo(function Transaction({ tx }: TransactionProps) {
         />
         {transactionHash ?
           <ExternalLink href={explorerTxUrl(chain, transactionHash)} className={classes.link}>
-            {formatISO9075(datetime)}
+            {formatDateTimeWithSeconds(datetime)}
           </ExternalLink>
-        : formatISO9075(datetime)}
+        : formatDateTimeWithSeconds(datetime)}
       </div>
       <InfoGrid>
         {/*Amount */}
@@ -237,12 +238,12 @@ export const TransactionMobile = memo(function TransactionMobile({ tx }: Transac
         <div className={classes.statMobile}>
           {transactionHash ?
             <ExternalLink href={explorerTxUrl(chain, transactionHash)} className={classes.link}>
-              {formatISO9075(datetime, { representation: 'date' })}
+              {formatDate(datetime)}
             </ExternalLink>
-          : formatISO9075(datetime, { representation: 'date' })}
+          : formatDate(datetime)}
         </div>
         <div className={css(styles.statMobile, styles.textDark)}>
-          {formatISO9075(datetime, { representation: 'time' })}
+          {formatTimeWithSeconds(datetime)}
         </div>
       </InfoGrid>
       <InfoGrid>

@@ -44,7 +44,7 @@ import {
   onlyOneToken,
   onlyOneTokenAmount,
 } from '../../helpers/options.ts';
-import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
@@ -417,14 +417,14 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
     return {
       id: createQuoteId(option.id),
       strategyId: 'curve',
-      priceImpact: calculatePriceImpact(inputs, outputs, returned, state), // includes the zap fee
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       option,
       inputs,
       outputs,
       returned,
       allowances,
       steps,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
       via: option.via,
       viaToken: depositLiquidity.via,
     };
@@ -871,7 +871,7 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
       steps,
       via: option.via,
       viaToken: withdrawnLiquidity.via,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
     };
   }
 

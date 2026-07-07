@@ -1,12 +1,15 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import type { ComponentType, ReactNode } from 'react';
 import { Fragment, memo, useCallback, useMemo, useRef } from 'react';
+import { useCollapse } from '../../../../../../components/Collapsable/hooks.ts';
 import { Trans, useTranslation } from 'react-i18next';
 import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx';
 import { SpinLoader } from '../../../../../../components/SpinLoader/SpinLoader.tsx';
 import { ListJoin } from '../../../../../../components/ListJoin.tsx';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { ExplorerAddressLink } from '../../../../../../components/Tenderly/Links/ExplorerAddressLink.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { formatPercent } from '../../../../../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import {
@@ -17,6 +20,7 @@ import {
   type ZapQuoteStep,
   type ZapQuoteStepBuild,
   type ZapQuoteStepDeposit,
+  type ZapQuoteStepFee,
   type ZapQuoteStepSplit,
   type ZapQuoteStepStake,
   type ZapQuoteStepSwap,
@@ -45,6 +49,9 @@ import {
 } from '../../../../../data/selectors/transact.ts';
 import { selectZapSwapProviderName } from '../../../../../data/selectors/zap.ts';
 import { QuoteTitle } from '../QuoteTitle/QuoteTitle.tsx';
+import { QuoteTitleRefresh } from '../QuoteTitleRefresh/QuoteTitleRefresh.tsx';
+import { ProviderIcon } from '../ProviderIcon/ProviderIcon.tsx';
+import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
 import { styles } from './styles.ts';
 import CheckmarkIcon from '../../../../../../images/icons/checkmark.svg?react';
 import PlayIcon from '../../../../../../images/icons/play.svg?react';
@@ -57,6 +64,8 @@ function getStepChainId(step: ZapQuoteStep): ChainEntity['id'] | undefined {
       return step.fromToken.chainId;
     case 'bridge':
       return step.toChainId;
+    case 'fee':
+      return step.token.chainId;
     case 'build':
     case 'deposit':
     case 'stake':
@@ -392,6 +401,50 @@ const StepContentBridge = memo(function StepContentBridge({
   );
 });
 
+const StepFeeRate = memo(function StepFeeRate({
+  bps,
+  originalBps,
+}: {
+  bps: number;
+  originalBps: number | undefined;
+}) {
+  const discounted = originalBps !== undefined && originalBps !== bps;
+  return (
+    <>
+      {formatPercent(bps / 10000, 2)}
+      {discounted ?
+        <>
+          {' '}
+          <span className={css(styles.feeOriginal)}>{formatPercent(originalBps / 10000, 2)}</span>
+        </>
+      : null}
+    </>
+  );
+});
+
+const StepContentFee = memo(function StepContentFee({
+  step,
+  chainId,
+}: StepContentProps<ZapQuoteStepFee>) {
+  const { t } = useTranslation();
+
+  return (
+    <Trans
+      t={t}
+      i18nKey="Transact-Route-Step-Fee"
+      values={{
+        feeToken: step.token.symbol,
+      }}
+      components={{
+        feeAmount: <TokenAmountFromEntity amount={step.feeAmount} token={step.token} />,
+        rate: <StepFeeRate bps={step.bps} originalBps={step.originalBps} />,
+        recipient: <ExplorerAddressLink chainId={step.token.chainId} address={step.recipient} />,
+        chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
+      }}
+    />
+  );
+});
+
 type StepContentMap = {
   [K in ZapQuoteStep as K['type']]: ComponentType<StepContentProps<K>>;
 };
@@ -406,6 +459,7 @@ const StepContentComponents: StepContentMap = {
   stake: StepContentStake,
   unstake: StepContentUnstake,
   bridge: StepContentBridge,
+  fee: StepContentFee,
 };
 
 function useStepStatuses(
@@ -525,12 +579,20 @@ const Step = memo(function Step({ step, number, status }: StepProps) {
 export type ZapRouteProps = {
   quote: ZapQuote;
   css?: CssStyles;
+  expandable?: boolean;
+  enableRefresh?: boolean;
 };
-export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRouteProps) {
+export const ZapRoute = memo(function ZapRoute({
+  quote,
+  css: cssProp,
+  expandable = false,
+  enableRefresh = false,
+}: ZapRouteProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const quotes = useAppSelector(selectTransactQuoteIds);
   const hasMultipleOptions = quotes.length > 1;
+  const { open, handleToggle, Icon } = useCollapse(false);
   const stepperContent = useAppSelector(selectStepperStepContent);
   const recoveryQuote = useAppSelector(selectCrossChainRecoveryQuote);
   const recoveryQuoteOpId = useAppSelector(selectCrossChainRecoveryQuoteOpId);
@@ -554,19 +616,23 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
   const recoveryQuoteMatchesOp = !recoveryOp || recoveryQuoteOpId === recoveryOp.id;
 
   const { effectiveSteps, bridgeStepAbsoluteIndex } = useMemo(() => {
-    const bridgeIdx = quote.steps.findIndex(s => s.type === 'bridge');
+    const displaySteps = quote.steps.filter(s => s.type !== 'fee' && s.type !== 'unused');
+    const bridgeIdx = displaySteps.findIndex(s => s.type === 'bridge');
     const absoluteBridgeIdx =
-      pendingAllowances.length + (bridgeIdx >= 0 ? bridgeIdx : quote.steps.length);
+      pendingAllowances.length + (bridgeIdx >= 0 ? bridgeIdx : displaySteps.length);
 
     if (isRecovery && recoveryQuote && recoveryQuoteMatchesOp && bridgeIdx >= 0) {
-      const preBridgeSteps = quote.steps.slice(0, bridgeIdx + 1);
+      const preBridgeSteps = displaySteps.slice(0, bridgeIdx + 1);
+      const recoverySteps = recoveryQuote.steps.filter(
+        s => s.type !== 'fee' && s.type !== 'unused'
+      );
       return {
-        effectiveSteps: [...preBridgeSteps, ...recoveryQuote.steps],
+        effectiveSteps: [...preBridgeSteps, ...recoverySteps],
         bridgeStepAbsoluteIndex: absoluteBridgeIdx,
       };
     }
 
-    return { effectiveSteps: quote.steps, bridgeStepAbsoluteIndex: absoluteBridgeIdx };
+    return { effectiveSteps: displaySteps, bridgeStepAbsoluteIndex: absoluteBridgeIdx };
   }, [quote.steps, isRecovery, recoveryQuote, recoveryQuoteMatchesOp, pendingAllowances.length]);
 
   const approvalCount = pendingAllowances.length;
@@ -588,36 +654,74 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
     return null;
   }
 
+  const headerClickable = expandable || hasMultipleOptions;
+  const onHeaderClick =
+    expandable ? handleToggle
+    : hasMultipleOptions ? handleSwitch
+    : undefined;
+  const showContent = !expandable || open;
+
+  return (
+    <div className={css(cssProp)}>
+      {enableRefresh ?
+        <QuoteTitleRefresh title={t('Transact-ZapRoute')} enableRefresh={true} />
+      : <div className={css(styles.title)}>{t('Transact-ZapRoute')}</div>}
+      <div className={css(styles.routeHolder)}>
+        <div
+          className={css(styles.routeHeader, headerClickable && styles.routerHeaderClickable)}
+          onClick={onHeaderClick}
+        >
+          <QuoteTitle quote={quote} />
+          {expandable ?
+            <Icon className={css(styles.expandIcon)} />
+          : hasMultipleOptions ?
+            '>'
+          : undefined}
+        </div>
+        {showContent ?
+          <div className={css(styles.routeContent)}>
+            <div className={css(styles.steps)}>
+              {pendingAllowances.map((allowance, i) => (
+                <ApprovalStep
+                  allowance={allowance}
+                  key={`approval-${allowance.token.address}`}
+                  number={i + 1}
+                  status={stepStatuses[i]}
+                />
+              ))}
+              {effectiveSteps.map((step, i) => (
+                <Step
+                  step={step}
+                  key={i}
+                  number={approvalCount + i + 1}
+                  status={stepStatuses[approvalCount + i]}
+                />
+              ))}
+            </div>
+          </div>
+        : null}
+      </div>
+    </div>
+  );
+});
+
+export type ZapRoutePlaceholderProps = {
+  css?: CssStyles;
+};
+export const ZapRoutePlaceholder = memo(function ZapRoutePlaceholder({
+  css: cssProp,
+}: ZapRoutePlaceholderProps) {
+  const { t } = useTranslation();
   return (
     <div className={css(cssProp)}>
       <div className={css(styles.title)}>{t('Transact-ZapRoute')}</div>
-      <div className={css(styles.routeHolder)}>
-        <div
-          className={css(styles.routeHeader, hasMultipleOptions && styles.routerHeaderClickable)}
-          onClick={hasMultipleOptions ? handleSwitch : undefined}
-        >
-          <QuoteTitle quote={quote} />
-          {hasMultipleOptions ? '>' : undefined}
-        </div>
-        <div className={css(styles.routeContent)}>
-          <div className={css(styles.steps)}>
-            {pendingAllowances.map((allowance, i) => (
-              <ApprovalStep
-                allowance={allowance}
-                key={`approval-${allowance.token.address}`}
-                number={i + 1}
-                status={stepStatuses[i]}
-              />
-            ))}
-            {effectiveSteps.map((step, i) => (
-              <Step
-                step={step}
-                key={i}
-                number={approvalCount + i + 1}
-                status={stepStatuses[approvalCount + i]}
-              />
-            ))}
+      <div className={css(styles.routeHolder, styles.routeHolderDisabled)}>
+        <div className={css(styles.routeHeader, styles.routeHeaderDisabled)}>
+          <div className={css(styles.placeholderTitle)}>
+            <ProviderIcon provider="default" width={24} css={styles.placeholderIcon} />
+            {t('Transact-Quote-Title')}
           </div>
+          <ExpandMore className={css(styles.expandIcon)} />
         </div>
       </div>
     </div>

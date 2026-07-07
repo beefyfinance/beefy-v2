@@ -29,7 +29,7 @@ export const VaultDashboardStats = memo(function VaultStats({ vaultId, address }
           <VaultAtDepositStat
             pnlData={pnlData}
             textWrap={false}
-            hideLabel={true}
+            showLabel={false}
             vaultId={vaultId}
             walletAddress={address}
             align="right"
@@ -39,7 +39,7 @@ export const VaultDashboardStats = memo(function VaultStats({ vaultId, address }
           <VaultDepositNowStat
             pnlData={pnlData}
             textWrap={false}
-            hideLabel={true}
+            showLabel={false}
             vaultId={vaultId}
             walletAddress={address}
             align="right"
@@ -47,7 +47,7 @@ export const VaultDashboardStats = memo(function VaultStats({ vaultId, address }
         </div>
         <div className={css(styles.column, styles.columnDashboard, styles.hideSm)}>
           <VaultYieldRewardsStat
-            hideLabel={true}
+            showLabel={false}
             vaultId={vaultId}
             walletAddress={address}
             align="right"
@@ -57,18 +57,18 @@ export const VaultDashboardStats = memo(function VaultStats({ vaultId, address }
           <VaultPnlStat
             walletAddress={address}
             pnlData={pnlData}
-            hideLabel={true}
+            showLabel={false}
             vaultId={vaultId}
             align="right"
           />
         </div>
         <div className={css(styles.column, styles.columnDashboard, styles.hideMd)}>
-          <VaultApyStat type="yearly" hideLabel={true} vaultId={vaultId} align="right" />
+          <VaultApyStat type="yearly" showLabel={false} vaultId={vaultId} align="right" />
         </div>
         <div className={css(styles.column, styles.columnDashboard, styles.hideMd)}>
           <VaultDailyUsdStat
             textWrap={false}
-            hideLabel={true}
+            showLabel={false}
             vaultId={vaultId}
             walletAddress={address}
             align="right"

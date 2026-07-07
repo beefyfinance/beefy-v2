@@ -50,8 +50,7 @@ const DepositedInVault = memo(function DepositedInVault() {
   const handleMax = useCallback(() => {
     if (!depositTokenAmount) return;
     // store-of-record is share-math for vault-source withdraws; dispatch exact share-balance to avoid round-trip wei loss
-    const amount =
-      isVaultSourceWithdraw && shareBalance ? shareBalance : depositTokenAmount.amount;
+    const amount = isVaultSourceWithdraw && shareBalance ? shareBalance : depositTokenAmount.amount;
     dispatch(
       transactSetInputAmount({
         index: 0,

@@ -1,3 +1,4 @@
+import { isVaultBlacklistedForV2V } from '../../../../../../config/vault-to-vault/blacklist.ts';
 import { isFulfilledResult, isRejectedResult } from '../../../../../../helpers/promises.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
 import type { TokenEntity } from '../../../../entities/token.ts';
@@ -33,6 +34,7 @@ export async function enumerateSameChainSrcCandidates(
   const survivors: SameChainVaultCandidate[] = [];
   for (const vaultId of userVaultIds) {
     if (vaultId === destVaultId) continue;
+    if (isVaultBlacklistedForV2V(vaultId)) continue;
     const vault = selectVaultById(state, vaultId);
     if (!vault) continue;
     if (vault.chainId !== destVault.chainId) continue;
@@ -67,6 +69,7 @@ export async function enumerateSameChainDstCandidates(
   const survivors: SameChainVaultCandidate[] = [];
   for (const vaultId of vaultIds) {
     if (vaultId === srcVaultId) continue;
+    if (isVaultBlacklistedForV2V(vaultId)) continue;
     const vault = selectVaultById(state, vaultId);
     if (!vault || !isVaultActive(vault)) continue;
     survivors.push({ vaultId, chainId: srcVault.chainId });

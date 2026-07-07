@@ -33,7 +33,7 @@ import {
   createSelectionId,
   onlyInputCount,
 } from '../../helpers/options.ts';
-import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
 import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { QuoteRequest } from '../../swap/ISwapProvider.ts';
@@ -134,6 +134,7 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
         lpTokens: this.vaultType.depositTokens,
         vaultType: 'cowcentrated',
         swapVia: 'aggregator',
+        feeable: false, // dual-token deposit is free (no single-input fee basis)
       },
     ];
   }
@@ -274,7 +275,7 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
       returned,
       allowances,
       steps,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
       lpQuotes:
         rebalance.needsSwap ?
           [steps.filter(isZapQuoteStepSwap).find(isZapQuoteStepSwapAggregator)?.quote]

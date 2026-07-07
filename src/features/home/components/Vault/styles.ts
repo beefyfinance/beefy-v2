@@ -25,6 +25,14 @@ export const styles = {
   vaultRetired: css.raw({
     backgroundColor: 'background.vaults.inactive',
   }),
+  vaultMigrate: css.raw({
+    backgroundImage: '{gradients.migrate}',
+    backgroundRepeat: 'no-repeat',
+  }),
+  vaultFreeZap: css.raw({
+    backgroundImage: '{gradients.freeZap}',
+    backgroundRepeat: 'no-repeat',
+  }),
   vaultInner: css.raw({
     display: 'grid',
     gridTemplateColumns: '1fr',

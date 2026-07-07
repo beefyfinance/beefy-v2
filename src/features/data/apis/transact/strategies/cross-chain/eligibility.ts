@@ -63,7 +63,7 @@ async function anyComposableStrategyAccepts(
   const helpers = await api.getHelpersForVault(vaultId, () => state);
   if (!isZapTransactHelpers(helpers)) return false;
 
-  const strategies = await api.getZapStrategiesForVault(helpers, eligibilityZap);
+  const strategies = await api.getInnerZapStrategiesForVault(helpers, eligibilityZap);
   const composables = strategies.filter(isComposableStrategy);
   if (composables.length === 0) return false;
 

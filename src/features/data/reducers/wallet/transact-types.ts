@@ -1,4 +1,5 @@
 import type {
+  OptionFeeCampaign,
   QuoteOutputTokenAmountChange,
   RecoveryQuote,
   TokenAmount,
@@ -26,6 +27,7 @@ export enum TransactMode {
   Withdraw,
   Claim,
   Boost,
+  Migrate,
 }
 
 export enum DepositSource {
@@ -45,6 +47,7 @@ export type TransactSelection = {
   tokens: TokenEntity[];
   order: number;
   hideIfZeroBalance: boolean;
+  feeCampaign?: OptionFeeCampaign;
 };
 
 export type TransactSelections = {

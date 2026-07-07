@@ -155,9 +155,6 @@ export const fetchUserMerklRewardsAction = createAppAsyncThunk<
     const response = await api.fetchRewards({
       user: walletAddress,
       chainId: supportedChainIds.map(chainId => selectChainById(state, chainId).networkChainId),
-      test: false,
-      claimableOnly: true,
-      breakdownPage: 0, // TODO if any breakdown has >= 1000 entries, we need to handle pagination
       reloadChainId:
         reloadChainId ? selectChainById(state, reloadChainId).networkChainId : undefined,
     });

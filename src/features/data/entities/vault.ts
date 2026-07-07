@@ -82,6 +82,8 @@ export type VaultBase = {
   depositFee: number;
   /** what helper can be used to migrate user from underlying platform to beefy */
   migrationIds: string[];
+  /** id of the vault that replaces this (old) vault; set on the OLD vault, points to the NEW vault */
+  replacementVaultId?: string;
   /** whether vault should be hidden from user */
   hidden: boolean;
   /** link to pooltogether game */

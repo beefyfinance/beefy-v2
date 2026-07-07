@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { format } from 'date-fns';
+import { formatDateTime } from '../../../../../../../helpers/date.ts';
 import { formatTokenDisplayCondensed, formatUsd } from '../../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { featureFlag_detailedTooltips } from '../../../../../../data/utils/feature-flags.ts';
@@ -69,7 +69,7 @@ export const OverviewTooltip = memo(function OverviewTooltip({
 
   return (
     <div className={classes.content}>
-      <div>{format(timestamp, 'MMM d, yyyy h:mm a')}</div>
+      <div>{formatDateTime(timestamp)}</div>
       <div className={classes.itemContainer}>
         <div className={classes.label}>{t('Graph-cowcentrated-overview-tooltip-position')}:</div>
         <div className={classes.value}>{formatTokenDisplayCondensed(underlying, 18)}</div>
@@ -124,7 +124,7 @@ export const FeesTooltip = memo(function FeesTooltip({
 
   return (
     <div className={classes.content}>
-      <div>{format(timestamp, 'MMM d, yyyy h:mm a')}</div>
+      <div>{formatDateTime(timestamp * 1000)}</div>
       {tokens.map((token, i) => (
         <div className={classes.itemContainer} key={token.id}>
           <div className={classes.label}>{token.symbol}:</div>

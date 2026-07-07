@@ -35,7 +35,7 @@ import {
   onlyOneInput,
   onlyOneToken,
 } from '../../helpers/options.ts';
-import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
 import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { QuoteRequest } from '../../swap/ISwapProvider.ts';
@@ -390,12 +390,11 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       },
     ];
 
-    const { outputs, returned, steps, fee } = await this.fetchWithdrawQuoteAggregator(
-      option,
-      vaultWithdrawn.outputs,
-      [],
-      withdrawSteps
-    );
+    const {
+      outputs: aggregatorOutputs,
+      returned,
+      steps,
+    } = await this.fetchWithdrawQuoteAggregator(option, vaultWithdrawn.outputs, [], withdrawSteps);
 
     if (returned.length > 0) {
       steps.push({
@@ -404,6 +403,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       });
     }
 
+    const outputs = aggregatorOutputs;
     return {
       id: createQuoteId(option.id),
       strategyId: this.id,
@@ -414,7 +414,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       returned,
       allowances,
       steps,
-      fee,
+      fee: ZERO_FEE,
       isCalm: vaultWithdrawn.isCalm,
       vaultType: vaultWithdrawn.vaultType,
     };
@@ -724,14 +724,14 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     return {
       id: createQuoteId(option.id),
       strategyId: this.id,
-      priceImpact: calculatePriceImpact(inputs, outputs, returned, state), // includes the zap fee
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       option,
       inputs,
       outputs,
       returned,
       allowances,
       steps,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
       lpQuotes: quotePerLpToken,
       vaultType: 'cowcentrated',
       isCalm,
@@ -823,7 +823,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       outputs,
       returned: mergeTokenAmounts(breakReturned, unused),
       steps,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
     };
   }
 

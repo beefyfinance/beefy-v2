@@ -10,6 +10,7 @@ import {
   selectTransactShouldShowBoostNotification,
   selectTransactShouldShowClaims,
   selectTransactShouldShowClaimsNotification,
+  selectTransactShouldShowMigrate,
   selectTransactShouldShowWithdrawNotification,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
@@ -26,12 +27,14 @@ const DepositFormLoader = lazy(() => import('../DepositForm/DepositForm.tsx'));
 const ClaimFormLoader = lazy(() => import('../ClaimForm/ClaimForm.tsx'));
 const WithdrawFormLoader = lazy(() => import('../WithdrawForm/WithdrawForm.tsx'));
 const BoostForm = lazy(() => import('../../Boosts/Boosts.tsx'));
+const MigrateFormLoader = lazy(() => import('../MigrateForm/MigrateForm.tsx'));
 
 const modeToComponent: Record<TransactMode, ComponentType> = {
   [TransactMode.Deposit]: DepositFormLoader,
   [TransactMode.Claim]: ClaimFormLoader,
   [TransactMode.Withdraw]: WithdrawFormLoader,
   [TransactMode.Boost]: BoostForm,
+  [TransactMode.Migrate]: MigrateFormLoader,
 };
 
 export const FormStep = memo(function FormStep() {
@@ -41,6 +44,7 @@ export const FormStep = memo(function FormStep() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const showClaim = useAppSelector(state => selectTransactShouldShowClaims(state, vaultId));
   const showBoost = useAppSelector(state => selectTransactShouldShowBoost(state, vaultId));
+  const showMigrate = useAppSelector(state => selectTransactShouldShowMigrate(state, vaultId));
   const Component = modeToComponent[mode];
   const handleModeChange = useCallback(
     (newMode: string) => {
@@ -51,6 +55,9 @@ export const FormStep = memo(function FormStep() {
   const modeOptions = useMemo(
     () =>
       [
+        ...(showMigrate ?
+          [{ value: TransactMode.Migrate.toString(), label: t('Transact-Migrate') }]
+        : []),
         { value: TransactMode.Deposit.toString(), label: t('Transact-Deposit') },
         ...(showClaim ?
           [
@@ -85,7 +92,7 @@ export const FormStep = memo(function FormStep() {
           },
         },
       ] satisfies Array<HighlightableTabOption>,
-    [t, vaultId, showClaim, showBoost]
+    [t, vaultId, showClaim, showBoost, showMigrate]
   );
 
   useEffect(() => {

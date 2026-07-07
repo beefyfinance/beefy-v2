@@ -151,6 +151,8 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       strategyId,
       vaultId: this.vault.id,
       underlyingOption: option,
+      // same-token vault deposit is free; CLM-zap paths inherit feeable from the underlying option
+      feeable: option.strategyId === 'vault' ? false : option.feeable,
     }));
   }
 
@@ -484,6 +486,8 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       strategyId,
       vaultId: this.vault.id,
       underlyingOption: option,
+      // same-token vault withdraw is free; CLM-zap paths inherit feeable from the underlying option
+      feeable: option.strategyId === 'vault' ? false : option.feeable,
     }));
   }
 
@@ -703,7 +707,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
 
     return {
       step: 'zap-out',
-      message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+      message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
       action: zapAction,
       pending: false,
       extraInfo: { zap: true, vaultId: quote.option.vaultId },

@@ -264,8 +264,10 @@
     "earnedTokenAddress": "0xd2D5A90a62f850ea9377F57d257fCae566D36f49",
     "oracle": "lps",
     "oracleId": "balancerv3-monad-aznd-ausd-loaznd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1772654139,
+    "retireReason": "tvl",
+    "retiredAt": 1780413682,
     "platformId": "balancer",
     "assets": ["AZND", "wnAUSD", "wnloAZND"],
     "risks": {
@@ -296,8 +298,10 @@
     "earnedTokenAddress": "0xc770B943a98dC10EfA91572E3468C514e1A9AbC7",
     "oracle": "lps",
     "oracleId": "balancerv3-monad-ausd-dust",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1772654139,
+    "retireReason": "tvl",
+    "retiredAt": 1780413682,
     "platformId": "balancer",
     "assets": ["DUST", "wnAUSD"],
     "risks": {
@@ -669,8 +673,10 @@
     "earnedTokenAddress": "0x5bE4113647bCCD2150339a6EB18250a0593AAEE9",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1768921272,
+    "retireReason": "rewards",
+    "retiredAt": 1782887305,
     "platformId": "euler",
     "curatorId": "euler",
     "assets": ["USDC"],
@@ -706,8 +712,10 @@
     "earnedTokenAddress": "0xe661B68c26745e48A18C9a7B0D743BC659C4C9F4",
     "oracle": "tokens",
     "oracleId": "AUSD",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1768921272,
+    "retireReason": "rewards",
+    "retiredAt": 1782887305,
     "platformId": "euler",
     "curatorId": "euler",
     "assets": ["AUSD"],
@@ -724,6 +732,43 @@
     },
     "strategyTypeId": "single",
     "underlyingPlatformUrl": "https://app.euler.finance/earn/0x598035A2E984993229f6FA4C8C3eCf6c52aD51b5?network=monad",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "euler-monad-alphagrowth-ausd",
+    "name": "AUSD (AlphaGrowth)",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x7C80e8F83cb8AbA22B9606219129b88d0365a8Da",
+    "earnedToken": "mooEulerMonadAlphaGrowthAUSD",
+    "earnedTokenAddress": "0x7C80e8F83cb8AbA22B9606219129b88d0365a8Da",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1782322658,
+    "platformId": "euler",
+    "curatorId": "alphagrowth",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://euler.alphagrowth.io/lend/0x438cedcE647491B1d93a73d491eC19A50194c222?network=143",
     "network": "monad",
     "zaps": [
       {
@@ -1084,6 +1129,146 @@
     "migrationIds": [],
     "risks": {
       "updatedAt": 1768320940,
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev3-monad-usdt0",
+    "name": "USDT0",
+    "type": "standard",
+    "token": "USDT0",
+    "tokenAddress": "0xe7cd86e13AC4309349F30B3435a9d337750fC82D",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x02E252198f646F5e5b58d927DCbF0D59A03dfD62",
+    "earnedToken": "mooAaveV3MonadUSDT0",
+    "earnedTokenAddress": "0x02E252198f646F5e5b58d927DCbF0D59A03dfD62",
+    "oracle": "tokens",
+    "oracleId": "USDT0",
+    "status": "active",
+    "createdAt": 1783024408,
+    "platformId": "aave",
+    "assets": ["USDT0"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev3-monad-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xb3e09fb538186983661f1c581B3eDc2778d24EF8",
+    "earnedToken": "mooAaveV3MonadUSDC",
+    "earnedTokenAddress": "0xb3e09fb538186983661f1c581B3eDc2778d24EF8",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1783028982,
+    "platformId": "aave",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev3-monad-weth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0xa9dDA9f2F716d0A580F3E18FaCF6308873ec89b6",
+    "earnedToken": "mooAaveV3MonadWETH",
+    "earnedTokenAddress": "0xa9dDA9f2F716d0A580F3E18FaCF6308873ec89b6",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1783029044,
+    "platformId": "aave",
+    "assets": ["WETH"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev3-monad-ausd",
+    "name": "AUSD",
+    "type": "standard",
+    "token": "AUSD",
+    "tokenAddress": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xE359CD97c542F22636CF8297F48eBB36e2685491",
+    "earnedToken": "mooAaveV3MonadAUSD",
+    "earnedTokenAddress": "0xE359CD97c542F22636CF8297F48eBB36e2685491",
+    "oracle": "tokens",
+    "oracleId": "AUSD",
+    "status": "active",
+    "createdAt": 1783115185,
+    "platformId": "aave",
+    "assets": ["AUSD"],
+    "migrationIds": [],
+    "risks": {
       "complex": false,
       "curated": false,
       "notAudited": false,
@@ -1635,10 +1820,9 @@
     "earnedTokenAddress": "0x189518d8130060C75072c954caf962D12EeA19F8",
     "oracle": "lps",
     "oracleId": "curve-monad-mon-lsts",
-    "status": "eol",
+    "status": "active",
     "createdAt": 1765271343,
-    "retireReason": "tvl",
-    "retiredAt": 1769468077,
+    "updatedAt": 1782965080,
     "platformId": "curve",
     "assets": ["WMON", "shMON", "sMON", "gMON"],
     "migrationIds": ["l2-convex", "l2-curve"],
@@ -1689,8 +1873,10 @@
     "earnedTokenAddress": "0x2b59b672569A6bb4D0058b569a13aF87c6bB9a3b",
     "oracle": "lps",
     "oracleId": "curve-monad-bitcoin",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1765173950,
+    "retireReason": "rewards",
+    "retiredAt": 1779435113,
     "platformId": "curve",
     "assets": ["WBTC", "LBTC", "BTCb"],
     "migrationIds": ["l2-convex", "l2-curve"],

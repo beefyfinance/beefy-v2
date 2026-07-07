@@ -3,7 +3,6 @@ import { memo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import {
   CrossChainBridgeBelowFeeError,
   QuoteCowcentratedNoSingleSideError,
@@ -15,9 +14,7 @@ import {
   selectCrossChainRecoveryQuoteStatus,
 } from '../../../../../data/selectors/transact.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
-import { styles } from './styles.ts';
-
-const useStyles = legacyMakeStyles(styles);
+import { styled } from '@repo/styles/jsx';
 
 export type RecoveryQuoteErrorAlertProps = {
   action: 'deposit' | 'withdraw';
@@ -29,7 +26,6 @@ export const RecoveryQuoteErrorAlert = memo(function RecoveryQuoteErrorAlert({
   css: cssProp,
 }: RecoveryQuoteErrorAlertProps) {
   const { t } = useTranslation();
-  const classes = useStyles();
   const status = useAppSelector(selectCrossChainRecoveryQuoteStatus);
   const error = useAppSelector(selectCrossChainRecoveryQuoteError);
 
@@ -62,10 +58,7 @@ export const RecoveryQuoteErrorAlert = memo(function RecoveryQuoteErrorAlert({
           i18nKey={`Transact-Quote-Error-Calm-${action}`}
           components={{
             LinkCalm: (
-              <ExternalLink
-                className={classes.link}
-                href={'https://docs.beefy.finance/beefy-products/clm#calmness-check'}
-              />
+              <CalmLink href={'https://docs.beefy.finance/beefy-products/clm#calmness-check'} />
             ),
           }}
         />
@@ -81,4 +74,11 @@ export const RecoveryQuoteErrorAlert = memo(function RecoveryQuoteErrorAlert({
       : null}
     </AlertError>
   );
+});
+
+const CalmLink = styled(ExternalLink, {
+  base: {
+    color: 'text.lightest',
+    textDecoration: 'underline',
+  },
 });

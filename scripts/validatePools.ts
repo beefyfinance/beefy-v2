@@ -89,7 +89,18 @@ const nonHarvestOnDepositPools = [
   'shadow-cow-sonic-wbtc-weth-vault',
   'shadow-cow-sonic-ws-bes-vault',
   'pancake-cow-base-sol-cbbtc-vault',
+  'pancake-cow-base-sol-jitosol-vault',
+  'pancakeswap-cow-base-sol-usdc-vault',
+  'pancakeswap-cow-base-sol-cbbtc-vault',
+  'pancakeswap-cow-base-sol-jitosol-vault',
+  'morpho-v2-monad-hyperithm-apex-cbbtc',
 ];
+const isCowPancakeWithHodOff = (pool: VaultConfigWithStrategyData) =>
+  ['base'].includes(pool.network) &&
+  ['pancakeswap'].includes(pool.platformId) &&
+  pool.type === 'standard' &&
+  pool.strategyTypeId === 'compounds';
+
 const isCowAerodromeWith10sec = (pool: VaultConfigWithStrategyData) =>
   ['velodrome', 'aerodrome'].includes(pool.platformId) &&
   pool.type === 'standard' &&
@@ -822,6 +833,7 @@ const isHarvestOnDepositCorrect = (
     pool.harvestOnDeposit !== undefined &&
     !nonHarvestOnDepositChains.includes(chain) &&
     !nonHarvestOnDepositPools.includes(pool.id) &&
+    !isCowPancakeWithHodOff(pool) &&
     !isCowAerodromeWith10sec(pool) &&
     pool.harvestOnDeposit !== true
   ) {

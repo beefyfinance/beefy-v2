@@ -10,6 +10,7 @@ import { bridgesSlice } from './bridges.ts';
 import { chainsSlice } from './chains.ts';
 import { curatorsSlice } from './curators.ts';
 import { dataLoaderSlice } from './data-loader.ts';
+import { featuredVaultsSlice } from './featured-vaults.ts';
 import { feesSlice } from './fees.ts';
 import { bigNumberTransform, filteredVaultsSlice } from './filtered-vaults.ts';
 import { historicalSlice } from './historical.ts';
@@ -39,6 +40,7 @@ import { userRewardsReducer } from './wallet/user-rewards.ts';
 import type { WalletActionsState } from './wallet/wallet-action-types.ts';
 import { walletActionsReducer } from './wallet/wallet-action.ts';
 import { walletSlice } from './wallet/wallet.ts';
+import { windowReducer } from './window.ts';
 import { zapsSlice } from './zaps.ts';
 import type { BeefyState } from '../store/types.ts';
 import { revenueSlice } from './revenue.ts';
@@ -51,6 +53,7 @@ const entitiesReducer = combineReducers({
   bridges: bridgesSlice.reducer,
   chains: chainsSlice.reducer,
   curators: curatorsSlice.reducer,
+  featuredVaults: featuredVaultsSlice.reducer,
   fees: feesSlice.reducer,
   minters: mintersSlice.reducer,
   platforms: platformsSlice.reducer,
@@ -113,6 +116,7 @@ const uiReducer = combineReducers({
   vaultsList: vaultsListReducer,
   version: versionReducer,
   revenue: revenueSlice.reducer,
+  window: windowReducer,
 });
 
 export const rootReducer = combineReducers({

@@ -13,7 +13,12 @@ import type {
   TransactOption,
   TransactQuote,
 } from '../apis/transact/transact-types.ts';
-import { isDepositOption, isWithdrawOption } from '../apis/transact/transact-types.ts';
+import {
+  isDepositOption,
+  isVaultSourceDepositOption,
+  isVaultToVaultSingleTokenDepositOption,
+  isWithdrawOption,
+} from '../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import { isCowcentratedVault, type VaultEntity } from '../entities/vault.ts';
@@ -38,7 +43,7 @@ import {
   selectTransactSelectionById,
   selectTransactVaultId,
 } from '../selectors/transact.ts';
-import { selectVaultById } from '../selectors/vaults.ts';
+import { selectVaultById, selectVaultReplacementMigration } from '../selectors/vaults.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
 import type { BeefyState } from '../store/types.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
@@ -49,8 +54,13 @@ export type TransactInitArgs = {
   vaultId: VaultEntity['id'];
 };
 
+export type TransactInitReadyArgs = {
+  vaultId: VaultEntity['id'];
+  mode: TransactMode;
+};
+
 export const transactInit = createAction<TransactInitArgs>('transact/init');
-export const transactInitReady = createAction<TransactInitArgs>('transact/init/ready');
+export const transactInitReady = createAction<TransactInitReadyArgs>('transact/init/ready');
 export const transactSwitchMode = createAction<TransactMode>('transact/switchMode');
 export const transactSwitchStep = createAction<TransactStep>('transact/switchStep');
 export const transactSelectSelection = createAction<{
@@ -109,6 +119,7 @@ export type TransactFetchOptionsPayload = {
 const optionsForByMode = {
   [TransactMode.Deposit]: 'fetchDepositOptionsFor',
   [TransactMode.Withdraw]: 'fetchWithdrawOptionsFor',
+  [TransactMode.Migrate]: 'fetchDepositOptionsFor',
 } as const satisfies Partial<Record<TransactMode, keyof ITransactApi>>;
 
 export const transactFetchOptions = createAppAsyncThunk<
@@ -124,7 +135,20 @@ export const transactFetchOptions = createAppAsyncThunk<
     const api = await getTransactApi();
     const state = getState();
     const method = optionsForByMode[mode];
-    const options = await api[method](vaultId, getState);
+
+    let options: TransactOption[];
+    if (mode === TransactMode.Migrate) {
+      const migration = selectVaultReplacementMigration(state, vaultId);
+      if (!migration) {
+        throw new Error(`No replacement migration for ${vaultId}`);
+      }
+      const allOptions = await api[method](migration.newVaultId, getState);
+      options = allOptions.filter(
+        o => isVaultToVaultSingleTokenDepositOption(o) && o.srcVaultId === vaultId
+      );
+    } else {
+      options = await api[method](vaultId, getState);
+    }
 
     if (!options || options.length === 0) {
       throw new Error(`No transact options available.`);
@@ -227,8 +251,8 @@ export const transactFetchQuotes = createAppAsyncThunk<
     }
 
     const quoteInputAmounts: InputTokenAmount[] = [];
-    if (mode === TransactMode.Deposit) {
-      // For deposit, user enters number of the selected token(s) to deposit
+    if (mode === TransactMode.Deposit || mode === TransactMode.Migrate) {
+      // Deposit (and Migrate, a v2v deposit) quote the selected token(s) as the input
       selection.tokens.forEach((token, index) => {
         quoteInputAmounts.push({
           token,
@@ -239,10 +263,7 @@ export const transactFetchQuotes = createAppAsyncThunk<
     } else {
       let inputToken: TokenEntity;
       const opt = options[0];
-      if (
-        opt?.strategyId === 'cross-chain' ||
-        opt?.strategyId === 'vault-to-vault-single-token'
-      ) {
+      if (opt?.strategyId === 'cross-chain' || opt?.strategyId === 'vault-to-vault-single-token') {
         // Withdraw from page vault via a vault-source strategy: option declares its shareToken as input.
         inputToken = opt.inputs[0];
       } else if (isCowcentratedVault(vault)) {
@@ -335,7 +356,9 @@ export const transactFetchQuotesIfNeeded = createAppAsyncThunk(
 
       shouldFetch =
         option.chainId !== chainId ||
-        option.vaultId !== vaultId ||
+        // v2v (migrate) options target the replacement vault, not the page vault, so their
+        // vaultId never matches selectionId/inputs already capture any real change
+        (!isVaultSourceDepositOption(option) && option.vaultId !== vaultId) ||
         option.selectionId !== selectionId ||
         !matchingInputs;
     }

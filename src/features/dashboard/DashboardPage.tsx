@@ -183,10 +183,10 @@ const Content = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     sm: {
-      paddingBlock: '14px 28px',
+      paddingBlock: '12px 28px',
     },
     lg: {
-      paddingBlock: '14px 48px',
+      paddingBlock: '12px 48px',
     },
   },
 });

@@ -24,6 +24,7 @@ import { fetchBridges } from '../actions/bridges.ts';
 import { fetchChainConfigs } from '../actions/chains.ts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { fetchCurators } from '../actions/curators.ts';
+import { fetchFeaturedVaults } from '../actions/featured-vaults.ts';
 import { fetchFees } from '../actions/fees.ts';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters.ts';
 import { fetchPlatforms } from '../actions/platforms.ts';
@@ -127,6 +128,7 @@ export const initialDataLoaderState: DataLoaderState = {
     chainConfig: dataLoaderStateInit,
     curators: dataLoaderStateInit,
     currentCowcentratedRanges: dataLoaderStateInit,
+    featuredVaults: dataLoaderStateInit,
     fees: dataLoaderStateInit,
     lastHarvests: dataLoaderStateInit,
     merklCampaigns: dataLoaderStateInit,
@@ -606,6 +608,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchZapAmmsAction, 'zapAmms');
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook');
     addGlobalAsyncThunkActions(builder, fetchCurators, 'curators');
+    addGlobalAsyncThunkActions(builder, fetchFeaturedVaults, 'featuredVaults');
     addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms');
     addGlobalAsyncThunkActions(builder, fetchBridges, 'bridges');
     addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury');
