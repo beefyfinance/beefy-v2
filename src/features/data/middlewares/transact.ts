@@ -219,7 +219,7 @@ export function addTransactListeners() {
     ),
     effect: async (
       _,
-      { dispatch, condition, getState, getOriginalState, cancelActiveListeners }
+      { dispatch, condition, delay, getState, getOriginalState, cancelActiveListeners }
     ) => {
       const walletAddress = selectWalletAddress(getState());
       const previousAddress = selectWalletAddress(getOriginalState());
@@ -232,30 +232,35 @@ export function addTransactListeners() {
         return;
       }
 
+      // cancel before the guard below so a reconnect can abort a pending disconnect
+      cancelActiveListeners();
+
       if (
         walletAddress &&
         selectTransactOptionsWalletAddress(getState()) === walletAddress &&
         selectTransactOptionsStatus(getState()) === TransactStatus.Fulfilled
       ) {
-        // some wallets emit a disconnect+reconnect pair while switching networks
+        // options already match this wallet: e.g. the disconnect+reconnect pair
+        // some wallets emit while switching networks
         return;
       }
 
-      cancelActiveListeners();
-
-      if (!walletAddress) {
-        // on disconnect, only rescue options left idle by an interrupted wait below
-        if (selectTransactOptionsStatus(getState()) !== TransactStatus.Idle) {
-          return;
-        }
-      } else {
+      if (walletAddress) {
         dispatch(transactInvalidateOptions());
         await condition((_, currentState) =>
           selectIsTransactUserDataReady(currentState, vaultId, walletAddress)
         );
-        if (selectTransactVaultIdOrUndefined(getState()) !== vaultId) {
+      } else {
+        // a network switch can surface as a transient disconnect; give a reconnect
+        // a moment to supersede this run before we drop the wallet's options
+        await delay(100);
+        if (selectWalletAddress(getState())) {
           return;
         }
+      }
+
+      if (selectTransactVaultIdOrUndefined(getState()) !== vaultId) {
+        return;
       }
 
       // invalidate again: a fetch started with pre-readiness data during the wait
@@ -270,6 +275,8 @@ export function addTransactListeners() {
             mode === TransactMode.Claim || mode === TransactMode.Boost ?
               TransactMode.Deposit
             : mode,
+          // the wallet listener already refreshed all balances on this address change
+          refreshBalances: false,
         })
       );
     },
