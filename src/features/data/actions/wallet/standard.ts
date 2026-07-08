@@ -17,8 +17,7 @@ import {
   selectTokenByAddress,
 } from '../../selectors/tokens.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
-import { selectVaultPricePerFullShare } from '../../selectors/vaults.ts';
-import { mooAmountToOracleAmount } from '../../utils/ppfs.ts';
+import { resolveStandardWithdrawLive } from '../../apis/transact/helpers/ppfs-vault.ts';
 import { StandardVaultAbi } from '../../../../config/abi/StandardVaultAbi.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import type { Address } from 'viem';
@@ -106,13 +105,14 @@ export const withdraw = (vault: VaultStandard, shareAmount: BigNumber, max: bool
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
     const sharesToWithdrawWei = toWei(shareAmount, shareToken.decimals);
-    // deposit-token estimate for tx tracking display only
-    const oracleAmount = mooAmountToOracleAmount(
-      shareToken,
-      depositToken,
-      selectVaultPricePerFullShare(state, vault.id),
-      shareAmount
+    // live deposit-token amount for tx-tracking; matches the zap path (fails fast on over-balance)
+    const { output } = await resolveStandardWithdrawLive(
+      state,
+      { vault, depositToken, shareToken },
+      { token: shareToken, amount: shareAmount, max },
+      address
     );
+    const oracleAmount = output.amount;
 
     const native = selectChainNativeToken(state, vault.chainId);
     const isNativeToken = depositToken.id === native.id;

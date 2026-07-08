@@ -3,7 +3,7 @@ import {
   isErc4626Vault,
   type VaultEntity,
 } from '../../entities/vault.ts';
-import type BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import {
   captureWalletErrors,
   selectVaultTokensToRefresh,
@@ -30,8 +30,8 @@ import {
 import { isTokenErc20 } from '../../entities/token.ts';
 import { Erc4626VaultAbi } from '../../../../config/abi/Erc4626VaultAbi.ts';
 import { selectUserVaultPendingWithdrawal } from '../../selectors/balance.ts';
-import { selectVaultById, selectVaultPricePerFullShare } from '../../selectors/vaults.ts';
-import { mooAmountToOracleAmount } from '../../utils/ppfs.ts';
+import { selectVaultById } from '../../selectors/vaults.ts';
+import { resolveErc4626WithdrawOutputLive } from '../../apis/transact/helpers/ppfs-vault.ts';
 import { formatTokenDisplay } from '../../../../helpers/format.ts';
 import { bigintRange } from '../../../../helpers/bigint.ts';
 import { readContract } from 'viem/actions';
@@ -141,13 +141,6 @@ export const requestRedeem = (vault: VaultEntity, shareAmount: BigNumber, max: b
       throw new Error('Deposit token is not an ERC20 token');
     }
     const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.contractAddress);
-    // deposit-token estimate for tx tracking display only
-    const oracleAmount = mooAmountToOracleAmount(
-      shareToken,
-      depositToken,
-      selectVaultPricePerFullShare(state, vault.id),
-      shareAmount
-    );
 
     const account = getAddress(address);
     const walletApi = await getWalletConnectionApi();
@@ -170,6 +163,16 @@ export const requestRedeem = (vault: VaultEntity, shareAmount: BigNumber, max: b
       max ? maxShares
       : wantedShares > maxShares ? maxShares
       : wantedShares;
+
+    // live deposit-token amount for tx-tracking, based on the shares actually redeemed
+    const redeemSharesBn = new BigNumber(redeemShares.toString());
+    const oracleAmount = (
+      await resolveErc4626WithdrawOutputLive(
+        state,
+        { vault, depositToken, shareToken },
+        redeemSharesBn
+      )
+    ).amount;
 
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
