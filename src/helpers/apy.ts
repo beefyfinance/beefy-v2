@@ -1,5 +1,4 @@
 import type { ApiApyDataAprComponents } from '../features/data/apis/beefy/beefy-api-types.ts';
-import type { PlatformEntity } from '../features/data/entities/platform.ts';
 import {
   isCowcentratedGovVault,
   isErc4626Vault,
@@ -40,6 +39,7 @@ const DISPLAY_ORDER = ((i = 0) =>
     rewardPoolTrading: i++,
     rewardPool: i++,
     trading: i++,
+    lending: i++,
     merkl: i++,
     stellaSwap: i++,
     lineaIgnition: i++,
@@ -72,7 +72,7 @@ export const getApyComponents = createFactory(() => {
   } as const;
 });
 
-export type ApyLabelsType = VaultEntity['type'] | 'cowcentrated-compounds' | 'lending';
+export type ApyLabelsType = VaultEntity['type'] | 'cowcentrated-compounds';
 
 export type ApyLabels = {
   [K in TotalApyKey | 'breakdown']: string[];
@@ -116,6 +116,7 @@ export const getApiApyDataComponents = createFactory(() => {
   const compoundableComponents = ['vault', 'clm'] as const satisfies Array<ApiApyDataAprComponents>;
   const nonCompoundableComponents = [
     'trading',
+    'lending',
     'merkl',
     'stellaSwap',
     'lineaIgnition',
@@ -159,14 +160,10 @@ export const getApiApyDataComponents = createFactory(() => {
 
 export function getApyLabelsTypeForVault(
   vault: VaultEntity,
-  totalType: 'apy' | 'apr',
-  platform: PlatformEntity | undefined
+  totalType: 'apy' | 'apr'
 ): ApyLabelsType {
   if (isCowcentratedGovVault(vault) && totalType === 'apy') {
     return 'cowcentrated-compounds';
-  }
-  if (platform?.type === 'money-market') {
-    return 'lending';
   }
   if (isErc4626Vault(vault)) {
     return 'standard';
@@ -175,16 +172,6 @@ export function getApyLabelsTypeForVault(
   return vault.type;
 }
 
-/**
- * Returns label fallback chains for a vault. For money-market platforms the
- * resolved label type is `lending`, so `getApyLabelsForType` prepends
- * higher-priority `Vault-Apy-Lending-*` keys (e.g. the `trading` APR component
- * renders as "Lending APR" / "Lending Daily" instead of "Trading APR").
- */
-export function getApyLabelsForVault(
-  vault: VaultEntity,
-  totalType: 'apy' | 'apr',
-  platform: PlatformEntity | undefined
-): ApyLabels {
-  return getApyLabelsForType(getApyLabelsTypeForVault(vault, totalType, platform));
+export function getApyLabelsForVault(vault: VaultEntity, totalType: 'apy' | 'apr'): ApyLabels {
+  return getApyLabelsForType(getApyLabelsTypeForVault(vault, totalType));
 }
