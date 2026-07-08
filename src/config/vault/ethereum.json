@@ -1374,13 +1374,7 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x3C53faE231ad3c0408A8b6D33138bBFf1cAeC330/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x3C53faE231ad3c0408A8b6D33138bBFf1cAeC330/zap/out?chain=ethereum",
     "pointStructureIds": ["apyx"],
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "pendle-v2",
-        "depositTokens": ["0x38EEb52F0771140d10c4E9A9a72349A329Fe8a6A"]
-      }
-    ]
+    "network": "ethereum"
   },
   {
     "id": "pendle-apxusd-18jun26",
@@ -1416,13 +1410,7 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x50DCE085af29CABa28f7308beA57C4043757b491/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x50DCE085af29CABa28f7308beA57C4043757b491/zap/out?chain=ethereum",
     "pointStructureIds": ["apyx"],
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "pendle-v2",
-        "depositTokens": ["0x98A878b1Cd98131B271883B390f68D2c90674665"]
-      }
-    ]
+    "network": "ethereum"
   },
   {
     "id": "stakedao-ousd-usde",
@@ -4917,13 +4905,7 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9A63FA80b5DDFd3Cab23803fdB93ad2c18F3d5aa/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9A63FA80b5DDFd3Cab23803fdB93ad2c18F3d5aa/zap/out?chain=ethereum",
     "pointStructureIds": ["syrup"],
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "pendle-v2",
-        "depositTokens": ["0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b"]
-      }
-    ]
+    "network": "ethereum"
   },
   {
     "id": "morpho-gauntlet-usdc",

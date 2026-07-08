@@ -7275,13 +7275,7 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x279b44E48226d40Ec389129061cb0B56C5c09e46/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x279b44E48226d40Ec389129061cb0B56C5c09e46/zap/out?chain=arbitrum",
     "pointStructureIds": ["bedrock"],
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "pendle-v2",
-        "depositTokens": ["0x3d15fD46CE9e551498328B1C83071D9509E2C3a0"]
-      }
-    ]
+    "network": "arbitrum"
   },
   {
     "id": "aura-arb-susde-sfrax",

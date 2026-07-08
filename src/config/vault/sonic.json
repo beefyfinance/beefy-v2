@@ -182,13 +182,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x7e2bcdB749D90Aa1E9E7262872AC8B1e062B2C4D/zap/in?chain=sonic",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x7e2bcdB749D90Aa1E9E7262872AC8B1e062B2C4D/zap/out?chain=sonic",
-    "network": "sonic",
-    "zaps": [
-      {
-        "strategyId": "pendle-v2",
-        "depositTokens": ["0xE8a41c62BB4d5863C6eadC96792cFE90A1f37C47"]
-      }
-    ]
+    "network": "sonic"
   },
   {
     "id": "silov2-sonic-ws-valamore",
