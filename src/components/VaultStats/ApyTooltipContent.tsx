@@ -3,7 +3,6 @@ import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
-import { selectVaultPlatformOrUndefined } from '../../features/data/selectors/platforms.ts';
 import {
   getApyComponents,
   getApyLabelsForVault,
@@ -29,9 +28,8 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
   header = false,
 }: TotalApyTooltipContentProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const platform = useAppSelector(state => selectVaultPlatformOrUndefined(state, vaultId));
   const rows = useMemo(() => {
-    const labels = getApyLabelsForVault(vault, rates.totalType, platform);
+    const labels = getApyLabelsForVault(vault, rates.totalType);
     const allComponents = getApyComponents();
     const components = allComponents[type];
     const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';
@@ -53,7 +51,7 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
     });
 
     return items;
-  }, [vault, platform, isBoosted, rates, type]);
+  }, [vault, isBoosted, rates, type]);
 
   return <InterestTooltipContent rows={rows} header={header ? 'Current' : undefined} />;
 });
@@ -73,10 +71,9 @@ export const AverageApyTooltipContent = memo(function AverageApyTooltipContent({
 }: AverageApyTooltipContentProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const platform = useAppSelector(state => selectVaultPlatformOrUndefined(state, vaultId));
 
   const { rows, noteDays } = useMemo(() => {
-    const labelType = getApyLabelsTypeForVault(vault, totalType, platform);
+    const labelType = getApyLabelsTypeForVault(vault, totalType);
     const items: {
       label: string | string[];
       value: string;
@@ -103,7 +100,7 @@ export const AverageApyTooltipContent = memo(function AverageApyTooltipContent({
       rows: items.length ? items : undefined,
       noteDays: items.length && partialDays !== undefined ? Math.max(1, partialDays) : undefined,
     };
-  }, [vault, platform, averages, totalType]);
+  }, [vault, averages, totalType]);
 
   if (!rows) {
     return null;
