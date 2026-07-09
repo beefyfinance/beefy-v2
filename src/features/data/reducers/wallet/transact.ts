@@ -13,6 +13,7 @@ import {
   transactFetchQuotes,
   transactInit,
   transactInitReady,
+  transactInvalidateOptions,
   transactSelectQuote,
   transactSelectSelection,
   transactSetExecuting,
@@ -60,6 +61,7 @@ const initialTransactOptions: TransactOptions = {
   status: TransactStatus.Idle,
   requestId: undefined,
   error: undefined,
+  walletAddress: undefined,
   allOptionIds: [],
   byOptionId: {},
   bySelectionId: {},
@@ -233,6 +235,11 @@ const transactSlice = createSlice({
           sliceState.options = initialTransactState['options'];
         }
       })
+      .addCase(transactInvalidateOptions, sliceState => {
+        resetForm(sliceState);
+        sliceState.step = TransactStep.Form;
+        sliceState.options = initialTransactOptions;
+      })
       .addCase(transactInitReady, (sliceState, action) => {
         if (sliceState.pendingVaultId === action.payload.vaultId) {
           sliceState.vaultId = action.payload.vaultId;
@@ -259,6 +266,7 @@ const transactSlice = createSlice({
       .addCase(transactFetchOptions.fulfilled, (sliceState, action) => {
         if (sliceState.options.requestId === action.meta.requestId) {
           sliceState.options.status = TransactStatus.Fulfilled;
+          sliceState.options.walletAddress = action.payload.walletAddress;
           const { options } = action.payload;
 
           addOptionsToState(sliceState, options);
