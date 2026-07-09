@@ -74,6 +74,7 @@ export const transactSetInputAmount = createAction<{
 }>('transact/setInputAmount');
 export const transactClearInput = createAction('transact/clearInput');
 export const transactClearQuotes = createAction('transact/clearQuotes');
+export const transactInvalidateOptions = createAction('transact/invalidateOptions');
 export const transactConfirmPending = createAction<{
   requestId: string;
 }>('transact/confirmPending');
@@ -110,10 +111,13 @@ export const transactSetSuccessClosed = createAction<boolean>('transact/setSucce
 export type TransactFetchOptionsArgs = {
   vaultId: VaultEntity['id'];
   mode: TransactMode;
+  /** skip when the caller has already refreshed the user's balances (default: refresh) */
+  refreshBalances?: boolean;
 };
 
 export type TransactFetchOptionsPayload = {
   options: TransactOption[];
+  walletAddress: string | undefined;
 };
 
 const optionsForByMode = {
@@ -127,7 +131,7 @@ export const transactFetchOptions = createAppAsyncThunk<
   TransactFetchOptionsArgs
 >(
   'transact/fetchOptions',
-  async ({ vaultId, mode }, { getState, dispatch }) => {
+  async ({ vaultId, mode, refreshBalances = true }, { getState, dispatch }) => {
     if (mode === TransactMode.Claim || mode === TransactMode.Boost) {
       throw new Error(`Claim or Boost mode not supported.`);
     }
@@ -156,7 +160,7 @@ export const transactFetchOptions = createAppAsyncThunk<
 
     // update balances
     const wallet = selectWalletAddress(state);
-    if (wallet) {
+    if (wallet && refreshBalances) {
       const vault = selectVaultById(state, vaultId);
       const tokens = getUniqueTokensForOptions(options, state);
       const tokensByChain = groupBy(tokens, token => token.chainId);
@@ -176,6 +180,7 @@ export const transactFetchOptions = createAppAsyncThunk<
 
     return {
       options: options,
+      walletAddress: wallet,
     };
   },
   {
