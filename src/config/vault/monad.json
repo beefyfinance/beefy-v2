@@ -1,5 +1,54 @@
 [
   {
+    "id": "curve-monad-ausd-avusd",
+    "name": "AUSD/avUSD",
+    "type": "standard",
+    "token": "AUSDAVUSD",
+    "tokenAddress": "0xa98edC41c867184367691234D46ae04B7Dae4545",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xfaAfd6668C7c01d8976f947491BbcE0d68AF77c5",
+    "earnedToken": "mooCurve-AUSD-avUSD",
+    "earnedTokenAddress": "0xfaAfd6668C7c01d8976f947491BbcE0d68AF77c5",
+    "oracle": "lps",
+    "oracleId": "curve-monad-ausd-avusd",
+    "status": "active",
+    "createdAt": 1783572918,
+    "platformId": "curve",
+    "assets": ["AUSD", "avUSD"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-26/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-26/withdraw",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xa98edC41c867184367691234D46ae04B7Dae4545",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xa98edC41c867184367691234D46ae04B7Dae4545",
+            "coins": [
+              "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+              "0x0D9D741FE423Cd5419e4BCb6cB2FfA87AFa93bA4"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "morpho-v2-monad-august-usdc-v2",
     "name": "USDC (August v2)",
     "type": "standard",
