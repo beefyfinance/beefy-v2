@@ -1,5 +1,6 @@
 import { styled } from '@repo/styles/jsx';
-import { lazy, memo, useEffect, useRef } from 'react';
+import { lazy, memo, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Navigate, useNavigate, useParams } from 'react-router';
 import { Container } from '../../components/Container/Container.tsx';
 import { PlatformMeta } from '../../components/Meta/PlatformMeta.tsx';
@@ -34,7 +35,7 @@ const PlatformPage = memo(function PlatformPage() {
     return <Navigate to={`/platform/${idOrStatus}`} replace={true} />;
   }
 
-  return <PlatformContent platformId={idOrStatus} />;
+  return <PlatformContent key={idOrStatus} platformId={idOrStatus} />;
 });
 
 type PlatformContentProps = {
@@ -42,35 +43,43 @@ type PlatformContentProps = {
 };
 
 const PlatformContent = memo(function PlatformContent({ platformId }: PlatformContentProps) {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const platform = useAppSelector(state => selectPlatformById(state, platformId));
   const platformIds = useAppSelector(selectFilterPlatformIds);
-  const syncedRef = useRef(false);
+  const isPreset = platformIds.length === 1 && platformIds[0] === platformId;
+  // only render once the preset has been applied, so persisted filters never paint
+  const [synced, setSynced] = useState(false);
 
   useEffect(() => {
     dispatch(filteredVaultsActions.reset({ platformIds: [platformId] }));
-    syncedRef.current = false;
   }, [dispatch, platformId]);
 
   // exit to home (keeping filters) if the platform filter no longer matches the url
   useEffect(() => {
-    if (platformIds.length === 1 && platformIds[0] === platformId) {
-      syncedRef.current = true;
-    } else if (syncedRef.current) {
+    if (isPreset) {
+      setSynced(true);
+    } else if (synced) {
       navigate('/', { replace: true });
     }
-  }, [navigate, platformIds, platformId]);
+  }, [isPreset, synced, navigate]);
+
+  if (!synced) {
+    return <PageLayout content={<Loading />} />;
+  }
 
   return (
     <>
       <PlatformMeta platformId={platformId} />
       <PageLayout
+        header={
+          <Container maxWidth="lg">
+            <Title>{t('Meta-Platform-Title', { platform: platform.name })}</Title>
+          </Container>
+        }
         content={
           <Content>
-            <Container maxWidth="lg">
-              <Title>{platform.name}</Title>
-            </Container>
             <Container maxWidth="lg">
               <Filters />
             </Container>
@@ -84,8 +93,7 @@ const PlatformContent = memo(function PlatformContent({ platformId }: PlatformCo
 
 const Title = styled('h1', {
   base: {
-    textStyle: 'h1',
-    color: 'text.light',
+    paddingBlock: '12px',
   },
 });
 

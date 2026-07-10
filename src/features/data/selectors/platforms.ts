@@ -56,20 +56,20 @@ export const selectConcentratedLiquidityManagerPlatforms = createSelector(
 export const selectPlatformIdForPlatformPage = createSelector(
   (_state: BeefyState, platformId: string | undefined) => platformId,
   (state: BeefyState, _platformId: string | undefined) => selectIsConfigAvailable(state),
-  (state: BeefyState) => state.entities.platforms.allIds,
+  (state: BeefyState) => state.entities.platforms.activeIds,
   (state: BeefyState) => state.entities.platforms.byId,
-  (platformId, isLoaded, allIds, byId): string => {
+  (platformId, isLoaded, activeIds, byId): string => {
     if (!platformId) {
       return 'not-found';
     }
     if (!isLoaded) {
       return 'loading';
     }
-    if (byId[platformId]) {
-      return platformId;
-    }
+    // only platforms with at least one active vault have a page, same as the filter dropdown
     const platformIdLowercase = platformId.toLowerCase();
-    const matchingId = allIds.find(id => id.toLowerCase() === platformIdLowercase);
+    const matchingId = activeIds.find(
+      id => id.toLowerCase() === platformIdLowercase && byId[id] !== undefined
+    );
     return matchingId ?? 'not-found';
   }
 );

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { type PlatformEntity } from '../../features/data/entities/platform.ts';
 import { selectPlatformById } from '../../features/data/selectors/platforms.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
+import { formatTextTruncated } from '../../helpers/format.ts';
 import { Meta } from './Meta.tsx';
 
 export type PlatformMetaProps = {
@@ -17,7 +18,9 @@ export const PlatformMeta = memo(function PlatformMeta({ platformId }: PlatformM
     <Meta
       title={t('Meta-Platform-Title', { platform: platform.name })}
       description={
-        platform.description || t('Meta-Platform-Description', { platform: platform.name })
+        platform.description ?
+          formatTextTruncated(platform.description, 200)
+        : t('Meta-Platform-Description', { platform: platform.name })
       }
     />
   );

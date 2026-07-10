@@ -26,7 +26,7 @@ export const ScrollRestorer = memo(function ScrollRestorer() {
         // Handle vault-specific logic
         if (currentPath.startsWith('/vault/')) {
           const vaultId = currentPath.split('/')[2];
-          if (prevPath === '/') {
+          if (prevPath === '/' || prevPath.startsWith('/platform/')) {
             dispatch(setVaultsLast(vaultId));
           } else if (prevPath.startsWith('/dashboard/')) {
             dispatch(setDashboardLast(vaultId));
@@ -35,7 +35,12 @@ export const ScrollRestorer = memo(function ScrollRestorer() {
         break;
       }
       case NavigationType.Pop: {
-        if (currentPath !== '/' && !currentPath.startsWith('/dashboard/')) {
+        // '/' and '/platform/' scroll to the last viewed vault via VirtualVaultsList instead
+        if (
+          currentPath !== '/' &&
+          !currentPath.startsWith('/platform/') &&
+          !currentPath.startsWith('/dashboard/')
+        ) {
           const savedScroll = state.current.lastScroll.get(currentPath) ?? 0;
           window.scrollTo(0, savedScroll);
         }
