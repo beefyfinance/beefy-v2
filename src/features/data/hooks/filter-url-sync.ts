@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavigationType, useLocation, useNavigate, useNavigationType } from 'react-router';
-import { routerMode } from '../../../components/Router/Router.tsx';
+import { routerMode } from '../../../components/Router/router-mode.ts';
 import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
 import type { FilteredVaultsPreset } from '../reducers/filtered-vaults-types.ts';
 import { filteredVaultsActions } from '../reducers/filtered-vaults.ts';
@@ -46,6 +46,7 @@ export function useFilterUrlSync(pathPreset?: FilteredVaultsPreset): boolean {
   const writeTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const syncRef = useRef({ stateSearch, userCategory, onlyUnstakedClm });
 
+  // latest values for the effects below; must stay declared first (effects run in declaration order)
   useEffect(() => {
     syncRef.current = { stateSearch, userCategory, onlyUnstakedClm };
   });
