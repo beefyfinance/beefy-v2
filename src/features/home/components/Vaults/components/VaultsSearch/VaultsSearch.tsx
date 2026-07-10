@@ -6,13 +6,17 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
-import { selectFilterSearchText } from '../../../../../data/selectors/filtered-vaults.ts';
+import {
+  selectFilterReseted,
+  selectFilterSearchText,
+} from '../../../../../data/selectors/filtered-vaults.ts';
 
 export const VaultsSearch = memo(function VaultsSearch() {
   const { t } = useTranslation();
   const isDesktop = useBreakpoint({ from: 'lg' });
   const dispatch = useAppDispatch();
   const searchText = useAppSelector(selectFilterSearchText);
+  const reseted = useAppSelector(selectFilterReseted);
   const [value, setValue] = useState(searchText);
 
   const setFilter = useMemo(
@@ -29,11 +33,11 @@ export const VaultsSearch = memo(function VaultsSearch() {
   );
 
   useEffect(() => {
-    // reset local value when filter is reset
-    if (searchText === '') {
-      setValue('');
+    // adopt the store value when filters were reset/preset (e.g. from the url)
+    if (reseted) {
+      setValue(searchText);
     }
-  }, [searchText, setValue]);
+  }, [reseted, searchText, setValue]);
 
   return (
     <SearchInput

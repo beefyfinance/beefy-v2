@@ -12,6 +12,7 @@ import type { PlatformEntity } from '../entities/platform.ts';
 import { type VaultEntity } from '../entities/vault.ts';
 import type { FilteredVaultsState, SortWithSubSort } from '../reducers/filtered-vaults-types.ts';
 import type { BeefyState } from '../store/types.ts';
+import { serializeFilters } from '../utils/filter-url.ts';
 import type { KeysOfType } from '../utils/types-utils.ts';
 import { selectVaultTotalApy } from './apy.ts';
 import { selectUserDepositedVaultIds } from './balance.ts';
@@ -27,7 +28,15 @@ import { selectVaultUnderlyingTvlUsd } from './tvl.ts';
 import { selectAllActiveVaultIds, selectAllVisibleVaultIds, selectVaultById } from './vaults.ts';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
+export const selectFilterReseted = (state: BeefyState) => state.ui.filteredVaults.reseted;
 export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
+
+export const selectFilterUrlSearch = createSelector(selectFilterOptions, filters =>
+  serializeFilters(filters)
+);
+export const selectFilterUrlSearchOmitPlatform = createSelector(selectFilterOptions, filters =>
+  serializeFilters(filters, { omitPlatform: true })
+);
 export const selectFilterChainIds = (state: BeefyState) => state.ui.filteredVaults.chainIds;
 export const selectFilterSearchSortField = (state: BeefyState) => state.ui.filteredVaults.sort;
 export const selectFilterSearchSortDirection = (state: BeefyState) =>

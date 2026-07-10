@@ -20,6 +20,10 @@ export const ScrollRestorer = memo(function ScrollRestorer() {
     switch (navigationType) {
       case NavigationType.Push:
       case NavigationType.Replace: {
+        // filter/url sync replaces search params in place; not a page navigation
+        if (navigationType === NavigationType.Replace && currentPath === prevPath) {
+          break;
+        }
         state.current.lastScroll.set(prevPath, window.scrollY);
         window.scrollTo(0, 0);
 

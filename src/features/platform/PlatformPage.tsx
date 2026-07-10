@@ -1,13 +1,14 @@
-import { lazy, memo, useEffect, useRef, useState } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router';
+import { lazy, memo, useEffect, useMemo, useRef } from 'react';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
 import { PlatformMeta } from '../../components/Meta/PlatformMeta.tsx';
 import { PageLayout } from '../../components/PageLayout/PageLayout.tsx';
-import { useAppDispatch, useAppSelector } from '../data/store/hooks.ts';
+import { useAppSelector } from '../data/store/hooks.ts';
 import { type PlatformEntity } from '../data/entities/platform.ts';
-import { recalculateFilteredVaultsAction } from '../data/actions/filtered-vaults.ts';
-import { filteredVaultsActions } from '../data/reducers/filtered-vaults.ts';
-import { selectFilterPlatformIds } from '../data/selectors/filtered-vaults.ts';
+import { useFilterUrlSync } from '../data/hooks/filter-url-sync.ts';
+import type { FilteredVaultsPreset } from '../data/reducers/filtered-vaults-types.ts';
+import { selectFilterOptions, selectFilterPlatformIds } from '../data/selectors/filtered-vaults.ts';
 import { selectPlatformIdForPlatformPage } from '../data/selectors/platforms.ts';
+import { parseFilterSearch, serializeFilters } from '../data/utils/filter-url.ts';
 import { HomeContent } from '../home/HomePage.tsx';
 import { Loading } from '../home/components/Loading/Loading.tsx';
 
@@ -37,30 +38,26 @@ type PlatformContentProps = {
 };
 
 const PlatformContent = memo(function PlatformContent({ platformId }: PlatformContentProps) {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const filters = useAppSelector(selectFilterOptions);
   const platformIds = useAppSelector(selectFilterPlatformIds);
+  const pathPreset = useMemo<FilteredVaultsPreset>(
+    () => ({ platformIds: [platformId] }),
+    [platformId]
+  );
+  const synced = useFilterUrlSync(pathPreset);
   const isPreset = platformIds.length === 1 && platformIds[0] === platformId;
-  // only render once the preset is applied and the list recalculated, so stale results never paint
-  const [synced, setSynced] = useState(false);
-  // keep sub-filters (e.g. chain) when the state is already scoped to this platform (browser back)
-  const skipResetRef = useRef(isPreset);
-
-  useEffect(() => {
-    if (!skipResetRef.current) {
-      dispatch(filteredVaultsActions.reset({ platformIds: [platformId] }));
-    }
-    void dispatch(recalculateFilteredVaultsAction({ filtersChanged: true })).then(() => {
-      setSynced(true);
-    });
-  }, [dispatch, platformId]);
+  const exitedRef = useRef(false);
 
   // exit to home (keeping filters) if the platform filter no longer matches the url
   useEffect(() => {
-    if (synced && !isPreset) {
-      navigate('/', { replace: true });
+    if (synced && !isPreset && !exitedRef.current) {
+      exitedRef.current = true;
+      const { carry } = parseFilterSearch(location.search);
+      navigate('/' + serializeFilters(filters, { carry }));
     }
-  }, [synced, isPreset, navigate]);
+  }, [synced, isPreset, navigate, filters, location.search]);
 
   if (!synced) {
     return <PageLayout content={<Loading />} />;

@@ -3,6 +3,7 @@ import { memo } from 'react';
 import { Container } from '../../components/Container/Container.tsx';
 import { HomeMeta } from '../../components/Meta/HomeMeta.tsx';
 import { useAppSelector } from '../data/store/hooks.ts';
+import { useFilterUrlSync } from '../data/hooks/filter-url-sync.ts';
 import { selectIsVaultListAvailable } from '../data/selectors/vaults-list.ts';
 import { Banners } from './components/Banners/Banners.tsx';
 import { FeaturedVaults } from './components/FeaturedVaults/FeaturedVaults.tsx';
@@ -47,6 +48,8 @@ export const HomeContent = memo(function HomeContent() {
 });
 
 const HomePage = memo(function HomePage() {
+  useFilterUrlSync();
+
   return (
     <>
       <HomeMeta />
