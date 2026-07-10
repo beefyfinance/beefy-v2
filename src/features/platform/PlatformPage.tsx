@@ -1,21 +1,14 @@
-import { styled } from '@repo/styles/jsx';
 import { lazy, memo, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Navigate, useNavigate, useParams } from 'react-router';
-import { Container } from '../../components/Container/Container.tsx';
 import { PlatformMeta } from '../../components/Meta/PlatformMeta.tsx';
 import { PageLayout } from '../../components/PageLayout/PageLayout.tsx';
 import { useAppDispatch, useAppSelector } from '../data/store/hooks.ts';
 import { type PlatformEntity } from '../data/entities/platform.ts';
 import { filteredVaultsActions } from '../data/reducers/filtered-vaults.ts';
 import { selectFilterPlatformIds } from '../data/selectors/filtered-vaults.ts';
-import {
-  selectPlatformById,
-  selectPlatformIdForPlatformPage,
-} from '../data/selectors/platforms.ts';
-import { Filters } from '../home/components/Filters/Filters.tsx';
+import { selectPlatformIdForPlatformPage } from '../data/selectors/platforms.ts';
+import { HomeContent } from '../home/HomePage.tsx';
 import { Loading } from '../home/components/Loading/Loading.tsx';
-import { Vaults } from '../home/components/Vaults/Vaults.tsx';
 
 const NotFoundPage = lazy(() => import('../pagenotfound/NotFoundPage.tsx'));
 
@@ -43,10 +36,8 @@ type PlatformContentProps = {
 };
 
 const PlatformContent = memo(function PlatformContent({ platformId }: PlatformContentProps) {
-  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const platform = useAppSelector(state => selectPlatformById(state, platformId));
   const platformIds = useAppSelector(selectFilterPlatformIds);
   const isPreset = platformIds.length === 1 && platformIds[0] === platformId;
   // only render once the preset has been applied, so persisted filters never paint
@@ -72,42 +63,9 @@ const PlatformContent = memo(function PlatformContent({ platformId }: PlatformCo
   return (
     <>
       <PlatformMeta platformId={platformId} />
-      <PageLayout
-        header={
-          <Container maxWidth="lg">
-            <Title>{t('Meta-Platform-Title', { platform: platform.name })}</Title>
-          </Container>
-        }
-        content={
-          <Content>
-            <Container maxWidth="lg">
-              <Filters />
-            </Container>
-            <Vaults />
-          </Content>
-        }
-      />
+      <HomeContent />
     </>
   );
-});
-
-const Title = styled('h1', {
-  base: {
-    paddingBlock: '12px',
-  },
-});
-
-const Content = styled('div', {
-  base: {
-    paddingBlock: '12px 24px',
-    sm: {
-      paddingBlock: '12px 28px',
-      borderRadius: '24px',
-    },
-    lg: {
-      paddingBlock: '12px 48px',
-    },
-  },
 });
 
 // eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()

@@ -12,48 +12,45 @@ import { HomeHeader } from './components/HomeHeader/HomeHeader.tsx';
 import { Vaults } from './components/Vaults/Vaults.tsx';
 import { PageLayout } from '../../components/PageLayout/PageLayout.tsx';
 
-const HomePage = memo(function HomePage() {
+export const HomeContent = memo(function HomeContent() {
   const isVaultListAvailable = useAppSelector(selectIsVaultListAvailable);
 
   if (!isVaultListAvailable) {
-    return (
-      <PageLayout
-        content={
-          <>
-            <HomeMeta />
-            <Loading />
-          </>
-        }
-      />
-    );
+    return <PageLayout content={<Loading />} />;
   }
 
   return (
+    <PageLayout
+      header={
+        <>
+          <HeaderContainer maxWidth="lg">
+            <Banners />
+          </HeaderContainer>
+          <HeaderContainer maxWidth="lg">
+            <HomeHeader />
+          </HeaderContainer>
+        </>
+      }
+      content={
+        <Content>
+          <Container maxWidth="lg">
+            <FeaturedVaults />
+          </Container>
+          <Container maxWidth="lg">
+            <Filters />
+          </Container>
+          <Vaults />
+        </Content>
+      }
+    />
+  );
+});
+
+const HomePage = memo(function HomePage() {
+  return (
     <>
       <HomeMeta />
-      <PageLayout
-        header={
-          <>
-            <HeaderContainer maxWidth="lg">
-              <Banners />
-            </HeaderContainer>
-            <HeaderContainer maxWidth="lg">
-              <HomeHeader />
-            </HeaderContainer>
-          </>
-        }
-        content={
-          <Content>
-            <Container maxWidth="lg">
-              <FeaturedVaults />
-            </Container>
-            <Container maxWidth="lg">
-              <Filters />
-            </Container>
-            <Vaults />
-          </Content>
-        }
-      />
+      <HomeContent />
     </>
   );
 });
