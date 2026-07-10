@@ -1336,6 +1336,76 @@
     ]
   },
   {
+    "id": "aavev3-monad-gho",
+    "name": "GHO",
+    "type": "standard",
+    "token": "GHO",
+    "tokenAddress": "0xfc421aD3C883Bf9E7C4f42dE845C4e4405799e73",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0xF75A3490841476b3Aea440F0934cd709614316dc",
+    "earnedToken": "mooAaveV3MonadGHO",
+    "earnedTokenAddress": "0xF75A3490841476b3Aea440F0934cd709614316dc",
+    "oracle": "tokens",
+    "oracleId": "GHO",
+    "status": "active",
+    "createdAt": 1783447200,
+    "platformId": "aave",
+    "assets": ["GHO"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev3-monad-musd",
+    "name": "mUSD",
+    "type": "standard",
+    "token": "mUSD",
+    "tokenAddress": "0xacA92E438df0B2401fF60dA7E4337B687a2435DA",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x234620066D1BbBceCda5b96E432ee360d812474B",
+    "earnedToken": "mooAaveV3MonadmUSD",
+    "earnedTokenAddress": "0x234620066D1BbBceCda5b96E432ee360d812474B",
+    "oracle": "tokens",
+    "oracleId": "MetaMaskUSD",
+    "status": "active",
+    "createdAt": 1783447199,
+    "platformId": "aave",
+    "assets": ["mUSD"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "neverland-monad-usdt0",
     "name": "USDT0",
     "type": "standard",
