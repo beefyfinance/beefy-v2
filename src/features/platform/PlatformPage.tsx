@@ -1,9 +1,10 @@
-import { lazy, memo, useEffect, useState } from 'react';
+import { lazy, memo, useEffect, useRef, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router';
 import { PlatformMeta } from '../../components/Meta/PlatformMeta.tsx';
 import { PageLayout } from '../../components/PageLayout/PageLayout.tsx';
 import { useAppDispatch, useAppSelector } from '../data/store/hooks.ts';
 import { type PlatformEntity } from '../data/entities/platform.ts';
+import { recalculateFilteredVaultsAction } from '../data/actions/filtered-vaults.ts';
 import { filteredVaultsActions } from '../data/reducers/filtered-vaults.ts';
 import { selectFilterPlatformIds } from '../data/selectors/filtered-vaults.ts';
 import { selectPlatformIdForPlatformPage } from '../data/selectors/platforms.ts';
@@ -40,21 +41,26 @@ const PlatformContent = memo(function PlatformContent({ platformId }: PlatformCo
   const navigate = useNavigate();
   const platformIds = useAppSelector(selectFilterPlatformIds);
   const isPreset = platformIds.length === 1 && platformIds[0] === platformId;
-  // only render once the preset has been applied, so persisted filters never paint
+  // only render once the preset is applied and the list recalculated, so stale results never paint
   const [synced, setSynced] = useState(false);
+  // keep sub-filters (e.g. chain) when the state is already scoped to this platform (browser back)
+  const skipResetRef = useRef(isPreset);
 
   useEffect(() => {
-    dispatch(filteredVaultsActions.reset({ platformIds: [platformId] }));
+    if (!skipResetRef.current) {
+      dispatch(filteredVaultsActions.reset({ platformIds: [platformId] }));
+    }
+    void dispatch(recalculateFilteredVaultsAction({ filtersChanged: true })).then(() => {
+      setSynced(true);
+    });
   }, [dispatch, platformId]);
 
   // exit to home (keeping filters) if the platform filter no longer matches the url
   useEffect(() => {
-    if (isPreset) {
-      setSynced(true);
-    } else if (synced) {
+    if (synced && !isPreset) {
       navigate('/', { replace: true });
     }
-  }, [isPreset, synced, navigate]);
+  }, [synced, isPreset, navigate]);
 
   if (!synced) {
     return <PageLayout content={<Loading />} />;
