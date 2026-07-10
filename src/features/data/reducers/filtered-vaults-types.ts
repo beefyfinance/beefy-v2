@@ -66,6 +66,14 @@ export type FilteredVaultsState = {
   filterContent: FilterContent;
 };
 
+/** Filters a preset URL (e.g. /platform/:platformId) can apply on top of the default state */
+export type FilteredVaultsPreset = Partial<
+  Omit<
+    FilteredVaultsState,
+    'reseted' | 'filteredVaultIds' | 'sortedFilteredVaultIds' | 'filterContent'
+  >
+>;
+
 export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
 export type FilteredVaultBigNumberKeys = KeysOfType<FilteredVaultsState, BigNumber>;
 export type SetSubSortPayload<K extends SortWithSubSort = SortWithSubSort> = {

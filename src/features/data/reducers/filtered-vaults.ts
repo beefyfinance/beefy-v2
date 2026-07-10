@@ -8,6 +8,7 @@ import {
   FilterContent,
   type FilteredVaultBigNumberKeys,
   type FilteredVaultBooleanKeys,
+  type FilteredVaultsPreset,
   type FilteredVaultsState,
   type SetSubSortPayload,
 } from './filtered-vaults-types.ts';
@@ -42,9 +43,10 @@ export const filteredVaultsSlice = createSlice({
   name: 'filtered-vaults',
   initialState: initialFilteredVaultsState,
   reducers: {
-    reset(sliceState) {
+    reset(sliceState, action: PayloadAction<FilteredVaultsPreset | undefined>) {
       return {
         ...initialFilteredVaultsState,
+        ...action.payload,
         filteredVaultIds: sliceState.filteredVaultIds,
         sortedFilteredVaultIds: sliceState.sortedFilteredVaultIds,
       };

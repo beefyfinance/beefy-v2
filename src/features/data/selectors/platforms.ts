@@ -4,6 +4,7 @@ import type { PlatformEntity } from '../entities/platform.ts';
 import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
 import type { VaultEntity } from '../entities/vault.ts';
+import { selectIsConfigAvailable } from './data-loader/config.ts';
 import { selectVaultById } from './vaults.ts';
 
 export const selectPlatformById = createCachedSelector(
@@ -50,6 +51,27 @@ export const selectFilterPlatforms = createSelector(
 export const selectConcentratedLiquidityManagerPlatforms = createSelector(
   (state: BeefyState) => state.entities.platforms.byType.alm,
   ids => arrayOrStaticEmpty(ids?.filter(id => id !== 'conic'))
+);
+
+export const selectPlatformIdForPlatformPage = createSelector(
+  (_state: BeefyState, platformId: string | undefined) => platformId,
+  (state: BeefyState, _platformId: string | undefined) => selectIsConfigAvailable(state),
+  (state: BeefyState) => state.entities.platforms.allIds,
+  (state: BeefyState) => state.entities.platforms.byId,
+  (platformId, isLoaded, allIds, byId): string => {
+    if (!platformId) {
+      return 'not-found';
+    }
+    if (!isLoaded) {
+      return 'loading';
+    }
+    if (byId[platformId]) {
+      return platformId;
+    }
+    const platformIdLowercase = platformId.toLowerCase();
+    const matchingId = allIds.find(id => id.toLowerCase() === platformIdLowercase);
+    return matchingId ?? 'not-found';
+  }
 );
 
 export const selectVaultPlatformOrUndefined = createCachedSelector(

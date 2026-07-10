@@ -19,6 +19,7 @@ const VaultPage = lazy(() => import('./features/vault/VaultPage.tsx'));
 const BridgePage = lazy(() => import('./features/bridge/BridgePage.tsx'));
 const SignMessagePage = lazy(() => import('./features/sign-message/SignMessagePage.tsx'));
 const DashboardPage = lazy(() => import('./features/dashboard/DashboardPage.tsx'));
+const PlatformPage = lazy(() => import('./features/platform/PlatformPage.tsx'));
 const TreasuryPage = lazy(() => import('./features/treasury/TreasuryPage.tsx'));
 const NotFoundPage = lazy(() => import('./features/pagenotfound/NotFoundPage.tsx'));
 
@@ -40,6 +41,7 @@ export const App = memo(function App() {
               <Route path="/dashboard/:address" element={<DashboardPage mode={'url'} />} />
               <Route path="/dashboard" element={<DashboardPage mode={'wallet'} />} />
               <Route path="/treasury" element={<TreasuryPage />} />
+              <Route path="/platform/:platformId" element={<PlatformPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
