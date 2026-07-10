@@ -34,7 +34,7 @@ export const VaultsSearch = memo(function VaultsSearch() {
 
   useEffect(() => {
     // adopt the store value when filters were reset/preset (e.g. from the url)
-    if (reseted) {
+    if (reseted || searchText === '') {
       setValue(searchText);
     }
   }, [reseted, searchText, setValue]);

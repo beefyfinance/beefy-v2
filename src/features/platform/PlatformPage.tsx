@@ -6,9 +6,12 @@ import { useAppSelector } from '../data/store/hooks.ts';
 import { type PlatformEntity } from '../data/entities/platform.ts';
 import { useFilterUrlSync } from '../data/hooks/filter-url-sync.ts';
 import type { FilteredVaultsPreset } from '../data/reducers/filtered-vaults-types.ts';
-import { selectFilterOptions, selectFilterPlatformIds } from '../data/selectors/filtered-vaults.ts';
+import {
+  selectFilterPlatformIds,
+  selectFilterUrlSearch,
+} from '../data/selectors/filtered-vaults.ts';
 import { selectPlatformIdForPlatformPage } from '../data/selectors/platforms.ts';
-import { parseFilterSearch, serializeFilters } from '../data/utils/filter-url.ts';
+import { canonicalizeSearch, parseFilterSearch } from '../data/utils/filter-url.ts';
 import { HomeContent } from '../home/HomePage.tsx';
 import { Loading } from '../home/components/Loading/Loading.tsx';
 
@@ -40,7 +43,7 @@ type PlatformContentProps = {
 const PlatformContent = memo(function PlatformContent({ platformId }: PlatformContentProps) {
   const navigate = useNavigate();
   const location = useLocation();
-  const filters = useAppSelector(selectFilterOptions);
+  const urlSearch = useAppSelector(selectFilterUrlSearch);
   const platformIds = useAppSelector(selectFilterPlatformIds);
   const pathPreset = useMemo<FilteredVaultsPreset>(
     () => ({ platformIds: [platformId] }),
@@ -55,9 +58,9 @@ const PlatformContent = memo(function PlatformContent({ platformId }: PlatformCo
     if (synced && !isPreset && !exitedRef.current) {
       exitedRef.current = true;
       const { carry } = parseFilterSearch(location.search);
-      navigate('/' + serializeFilters(filters, { carry }));
+      navigate('/' + canonicalizeSearch(urlSearch, { carry }));
     }
-  }, [synced, isPreset, navigate, filters, location.search]);
+  }, [synced, isPreset, navigate, urlSearch, location.search]);
 
   if (!synced) {
     return <PageLayout content={<Loading />} />;

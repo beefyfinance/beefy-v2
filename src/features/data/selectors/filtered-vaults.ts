@@ -30,12 +30,11 @@ import { selectAllActiveVaultIds, selectAllVisibleVaultIds, selectVaultById } fr
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 export const selectFilterReseted = (state: BeefyState) => state.ui.filteredVaults.reseted;
 export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
+export const selectFilterOnlyUnstakedClm = (state: BeefyState) =>
+  state.ui.filteredVaults.onlyUnstakedClm;
 
 export const selectFilterUrlSearch = createSelector(selectFilterOptions, filters =>
   serializeFilters(filters)
-);
-export const selectFilterUrlSearchOmitPlatform = createSelector(selectFilterOptions, filters =>
-  serializeFilters(filters, { omitPlatform: true })
 );
 export const selectFilterChainIds = (state: BeefyState) => state.ui.filteredVaults.chainIds;
 export const selectFilterSearchSortField = (state: BeefyState) => state.ui.filteredVaults.sort;

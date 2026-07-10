@@ -1,17 +1,28 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavigationType, useLocation, useNavigate, useNavigationType } from 'react-router';
+import { routerMode } from '../../../components/Router/Router.tsx';
 import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
 import type { FilteredVaultsPreset } from '../reducers/filtered-vaults-types.ts';
 import { filteredVaultsActions } from '../reducers/filtered-vaults.ts';
 import {
-  selectFilterOptions,
+  selectFilterOnlyUnstakedClm,
   selectFilterUrlSearch,
-  selectFilterUrlSearchOmitPlatform,
+  selectFilterUserCategory,
 } from '../selectors/filtered-vaults.ts';
 import { useAppDispatch, useAppSelector } from '../store/hooks.ts';
 import { canonicalizeSearch, parseFilterSearch, serializeFilters } from '../utils/filter-url.ts';
 
 const WRITE_DEBOUNCE_MS = 250;
+
+/** the router's location can lag behind (startTransition/lazy chunks); read the real url */
+function getLivePathname(): string {
+  if (routerMode === 'hash') {
+    const hashPath = window.location.hash.startsWith('#/') ? window.location.hash.slice(1) : '/';
+    const queryIndex = hashPath.indexOf('?');
+    return queryIndex === -1 ? hashPath : hashPath.slice(0, queryIndex);
+  }
+  return window.location.pathname;
+}
 
 /**
  * Single owner of the filter state <-> url search sync.
@@ -27,19 +38,16 @@ export function useFilterUrlSync(pathPreset?: FilteredVaultsPreset): boolean {
   const navigate = useNavigate();
   const location = useLocation();
   const navigationType = useNavigationType();
-  const filters = useAppSelector(selectFilterOptions);
-  const stateSearch = useAppSelector(
-    pathPreset ? selectFilterUrlSearchOmitPlatform : selectFilterUrlSearch
-  );
+  const stateSearch = useAppSelector(selectFilterUrlSearch);
+  const userCategory = useAppSelector(selectFilterUserCategory);
+  const onlyUnstakedClm = useAppSelector(selectFilterOnlyUnstakedClm);
   const [synced, setSynced] = useState(false);
   const reconciledRef = useRef(false);
   const writeTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const filtersRef = useRef(filters);
-  const stateSearchRef = useRef(stateSearch);
+  const syncRef = useRef({ stateSearch, userCategory, onlyUnstakedClm });
 
   useEffect(() => {
-    filtersRef.current = filters;
-    stateSearchRef.current = stateSearch;
+    syncRef.current = { stateSearch, userCategory, onlyUnstakedClm };
   });
 
   // url -> state: on mount and on back/forward; own replaces are skipped
@@ -49,6 +57,7 @@ export function useFilterUrlSync(pathPreset?: FilteredVaultsPreset): boolean {
     }
     reconciledRef.current = true;
 
+    // on back/forward the url takes priority over any pending outbound write
     if (writeTimerRef.current) {
       clearTimeout(writeTimerRef.current);
       writeTimerRef.current = undefined;
@@ -60,10 +69,11 @@ export function useFilterUrlSync(pathPreset?: FilteredVaultsPreset): boolean {
       const desired: FilteredVaultsPreset = {
         ...preset,
         ...pathPreset,
-        userCategory: filtersRef.current.userCategory,
-        onlyUnstakedClm: filtersRef.current.onlyUnstakedClm,
+        userCategory: syncRef.current.userCategory,
+        onlyUnstakedClm: syncRef.current.onlyUnstakedClm,
       };
-      if (serializeFilters(desired, { omitPlatform: !!pathPreset }) !== stateSearchRef.current) {
+      // compare in full space so path preset mismatches stay visible
+      if (serializeFilters(desired) !== syncRef.current.stateSearch) {
         dispatch(filteredVaultsActions.reset(desired));
         void dispatch(recalculateFilteredVaultsAction({ filtersChanged: true })).then(() => {
           setSynced(true);
@@ -73,7 +83,7 @@ export function useFilterUrlSync(pathPreset?: FilteredVaultsPreset): boolean {
       }
     } else {
       // state wins: reflect current filters into the bare url
-      const target = serializeFilters(filtersRef.current, { carry });
+      const target = canonicalizeSearch(syncRef.current.stateSearch, { carry });
       if (target !== canonicalizeSearch(location.search)) {
         navigate({ pathname: location.pathname, search: target }, { replace: true });
       }
@@ -87,13 +97,18 @@ export function useFilterUrlSync(pathPreset?: FilteredVaultsPreset): boolean {
       return;
     }
     const { carry } = parseFilterSearch(location.search);
-    const target = serializeFilters(filters, { omitPlatform: !!pathPreset, carry });
+    const target = canonicalizeSearch(stateSearch, { omitPlatform: !!pathPreset, carry });
     if (target === canonicalizeSearch(location.search)) {
       return;
     }
+    const pathname = location.pathname;
     writeTimerRef.current = setTimeout(() => {
       writeTimerRef.current = undefined;
-      navigate({ pathname: location.pathname, search: target }, { replace: true });
+      // a navigation to a lazy route may not have committed yet; don't clobber it
+      if (getLivePathname() !== pathname) {
+        return;
+      }
+      navigate({ pathname, search: target }, { replace: true });
     }, WRITE_DEBOUNCE_MS);
     return () => {
       if (writeTimerRef.current) {
@@ -101,7 +116,7 @@ export function useFilterUrlSync(pathPreset?: FilteredVaultsPreset): boolean {
         writeTimerRef.current = undefined;
       }
     };
-  }, [synced, filters, navigate, location.pathname, location.search, pathPreset]);
+  }, [synced, stateSearch, navigate, location.pathname, location.search, pathPreset]);
 
   return synced;
 }

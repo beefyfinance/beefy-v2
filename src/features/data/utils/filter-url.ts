@@ -13,30 +13,39 @@ import type {
 } from '../reducers/filtered-vaults-types.ts';
 import { isDefined } from './array-utils.ts';
 
-export type FilterUrlCarry = Array<[string, string]>;
+type FilterUrlCarry = Array<[string, string]>;
 
-export type SerializeFiltersOptions = {
+type SerializeFiltersOptions = {
   /** omit the platform param when the platform is part of the route path */
   omitPlatform?: boolean;
   /** unrecognized params (feature flags, utm etc.) to carry through */
   carry?: FilterUrlCarry;
 };
 
-export type ParsedFilterSearch = {
+type ParsedFilterSearch = {
   preset: FilteredVaultsPreset;
   /** whether the search contained at least one filter param */
   recognized: boolean;
   carry: FilterUrlCarry;
 };
 
-const CATEGORY_VALUES: string[] = [
-  'stable',
-  'bluechip',
-  'meme',
-  'correlated',
-] satisfies VaultCategoryType[];
-const STRATEGY_VALUES: string[] = ['pools', 'vaults'] satisfies StrategiesType[]; // 'all' is the default and omitted
-const SORT_VALUES: string[] = ['apy', 'daily', 'tvl', 'depositValue'] satisfies SortType[]; // 'default' omitted
+// exhaustive records so adding a value to the union fails to compile here
+const CATEGORY_VALUES: string[] = Object.keys({
+  stable: true,
+  bluechip: true,
+  meme: true,
+  correlated: true,
+} satisfies Record<VaultCategoryType, true>);
+const STRATEGY_VALUES: string[] = Object.keys({
+  pools: true,
+  vaults: true,
+} satisfies Record<Exclude<StrategiesType, 'all'>, true>); // 'all' is the default and omitted
+const SORT_VALUES: string[] = Object.keys({
+  apy: true,
+  daily: true,
+  tvl: true,
+  depositValue: true,
+} satisfies Record<Exclude<SortType, 'default'>, true>); // 'default' omitted
 const SUB_SORT_APY_VALUES = [7, 30, 90] satisfies AvgApySortType[];
 const ASSET_TO_PARAM: Record<VaultAssetType, string> = { lps: 'lp', single: 'single', clm: 'clm' };
 const PARAM_TO_ASSET: Record<string, VaultAssetType | undefined> = {
@@ -44,14 +53,15 @@ const PARAM_TO_ASSET: Record<string, VaultAssetType | undefined> = {
   single: 'single',
   clm: 'clm',
 };
-const PARAM_TO_FLAG: Record<string, keyof FilteredVaultsPreset & `only${string}`> = {
-  boosted: 'onlyBoosted',
-  zappable: 'onlyZappable',
-  points: 'onlyEarningPoints',
-  retired: 'onlyRetired',
-  paused: 'onlyPaused',
-};
-const FLAG_PARAMS = Object.entries(PARAM_TO_FLAG);
+const FLAG_PARAMS = [
+  ['boosted', 'onlyBoosted'],
+  ['zappable', 'onlyZappable'],
+  ['points', 'onlyEarningPoints'],
+  ['retired', 'onlyRetired'],
+  ['paused', 'onlyPaused'],
+] as const satisfies Array<[string, keyof FilteredVaultsPreset]>;
+const PARAM_TO_FLAG: Record<string, (typeof FLAG_PARAMS)[number][1] | undefined> =
+  Object.fromEntries(FLAG_PARAMS);
 
 const CHAIN_IDS: string[] = Object.keys(chainConfigs);
 
@@ -78,6 +88,7 @@ function splitList(value: string): string[] {
     .filter(item => item.length > 0);
 }
 
+// items are id slugs; a literal comma in an item would not survive a round-trip
 function encodeList(values: string[]): string {
   return values.map(encodeURIComponent).join(',');
 }
@@ -102,7 +113,7 @@ function serializeSort(
 
 function parseSort(value: string): Partial<FilteredVaultsPreset> {
   const [field, ...suffixes] = value.split('-');
-  if (!field || !isSortValue(field)) {
+  if (!isSortValue(field)) {
     return {};
   }
   const preset: Partial<FilteredVaultsPreset> = { sort: field };
@@ -175,7 +186,7 @@ export function serializeFilters(
  * individually; unrecognized params are returned for carry-through.
  */
 export function parseFilterSearch(search: string): ParsedFilterSearch {
-  const params = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search);
+  const params = new URLSearchParams(search);
   const preset: FilteredVaultsPreset = {};
   const carry: FilterUrlCarry = [];
   let recognized = false;
@@ -213,9 +224,7 @@ export function parseFilterSearch(search: string): ParsedFilterSearch {
         recognized = true;
         break;
       case 'q':
-        if (value) {
-          preset.searchText = value;
-        }
+        preset.searchText = value;
         recognized = true;
         break;
       case 'mintvl': {
@@ -239,8 +248,11 @@ export function parseFilterSearch(search: string): ParsedFilterSearch {
   return { preset, recognized, carry };
 }
 
-/** Canonical form of a search string, used for fixed-point comparisons */
-export function canonicalizeSearch(search: string): string {
+/** Canonical form of a search string, used for fixed-point comparisons and re-serialization */
+export function canonicalizeSearch(search: string, options?: SerializeFiltersOptions): string {
   const { preset, carry } = parseFilterSearch(search);
-  return serializeFilters(preset, { carry });
+  return serializeFilters(preset, {
+    ...options,
+    carry: options?.carry ? [...carry, ...options.carry] : carry,
+  });
 }
