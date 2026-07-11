@@ -33,11 +33,17 @@ export const VaultsSearch = memo(function VaultsSearch() {
   );
 
   useEffect(() => {
-    // adopt the store value when filters were reset/preset (e.g. from the url)
+    // adopt the store value when filters were reset/preset (e.g. from the url),
+    // cancelling any in-flight dispatch so stale typing can't overwrite the reset
     if (reseted || searchText === '') {
+      setFilter.cancel();
       setValue(searchText);
     }
-  }, [reseted, searchText, setValue]);
+  }, [reseted, searchText, setFilter, setValue]);
+
+  useEffect(() => {
+    return () => setFilter.cancel();
+  }, [setFilter]);
 
   return (
     <SearchInput

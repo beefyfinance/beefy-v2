@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { config as chainConfigs } from '../../../config/config.ts';
+import { AVG_APY_PERIODS } from '../../../helpers/apy.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { ChainId } from '../entities/chain.ts';
 import type {
@@ -46,13 +47,14 @@ const SORT_VALUES: string[] = Object.keys({
   tvl: true,
   depositValue: true,
 } satisfies Record<Exclude<SortType, 'default'>, true>); // 'default' omitted
-const SUB_SORT_APY_VALUES = [7, 30, 90] satisfies AvgApySortType[];
+// derived from the UI's options so urls can't create sub-sort states the table can't render
+const SUB_SORT_APY_VALUES: readonly AvgApySortType[] = AVG_APY_PERIODS;
 const ASSET_TO_PARAM: Record<VaultAssetType, string> = { lps: 'lp', single: 'single', clm: 'clm' };
-const PARAM_TO_ASSET: Record<string, VaultAssetType | undefined> = {
-  lp: 'lps',
-  single: 'single',
-  clm: 'clm',
-};
+const PARAM_TO_ASSET: Record<string, VaultAssetType | undefined> = Object.fromEntries(
+  (Object.entries(ASSET_TO_PARAM) as Array<[VaultAssetType, string]>).map(
+    ([asset, param]) => [param, asset] as const
+  )
+);
 const FLAG_PARAMS = [
   ['boosted', 'onlyBoosted'],
   ['zappable', 'onlyZappable'],
@@ -194,7 +196,10 @@ export function parseFilterSearch(search: string): ParsedFilterSearch {
   for (const [key, value] of params.entries()) {
     const flag = PARAM_TO_FLAG[key];
     if (flag) {
-      preset[flag] = true;
+      // flags are emitted bare; tolerate hand-typed ?boosted=false
+      if (value !== 'false' && value !== '0') {
+        preset[flag] = true;
+      }
       recognized = true;
       continue;
     }
@@ -204,25 +209,27 @@ export function parseFilterSearch(search: string): ParsedFilterSearch {
         recognized = true;
         break;
       case 'chain':
-        preset.chainIds = splitList(value).filter(isChainId);
+        preset.chainIds = splitList(value.toLowerCase()).filter(isChainId);
         recognized = true;
         break;
       case 'category':
-        preset.vaultCategory = splitList(value).filter(isVaultCategory);
+        preset.vaultCategory = splitList(value.toLowerCase()).filter(isVaultCategory);
         recognized = true;
         break;
       case 'asset':
-        preset.assetType = splitList(value)
+        preset.assetType = splitList(value.toLowerCase())
           .map(asset => PARAM_TO_ASSET[asset])
           .filter(isDefined);
         recognized = true;
         break;
-      case 'strategy':
-        if (isStrategyValue(value)) {
-          preset.strategyType = value;
+      case 'strategy': {
+        const strategy = value.toLowerCase();
+        if (isStrategyValue(strategy)) {
+          preset.strategyType = strategy;
         }
         recognized = true;
         break;
+      }
       case 'q':
         preset.searchText = value;
         recognized = true;

@@ -15,13 +15,11 @@ import { canonicalizeSearch, parseFilterSearch, serializeFilters } from '../util
 const WRITE_DEBOUNCE_MS = 250;
 
 /** the router's location can lag behind (startTransition/lazy chunks); read the real url */
-function getLivePathname(): string {
+function getLiveUrl(): string {
   if (routerMode === 'hash') {
-    const hashPath = window.location.hash.startsWith('#/') ? window.location.hash.slice(1) : '/';
-    const queryIndex = hashPath.indexOf('?');
-    return queryIndex === -1 ? hashPath : hashPath.slice(0, queryIndex);
+    return window.location.hash.startsWith('#/') ? window.location.hash.slice(1) : '/';
   }
-  return window.location.pathname;
+  return window.location.pathname + window.location.search;
 }
 
 /**
@@ -76,6 +74,7 @@ export function useFilterUrlSync(pathPreset?: FilteredVaultsPreset): boolean {
       // compare in full space so path preset mismatches stay visible
       if (serializeFilters(desired) !== syncRef.current.stateSearch) {
         dispatch(filteredVaultsActions.reset(desired));
+        // the middleware recalcs again after its debounce; dispatching directly resolves synced sooner
         void dispatch(recalculateFilteredVaultsAction({ filtersChanged: true })).then(() => {
           setSynced(true);
         });
@@ -98,15 +97,17 @@ export function useFilterUrlSync(pathPreset?: FilteredVaultsPreset): boolean {
       return;
     }
     const { carry } = parseFilterSearch(location.search);
-    const target = canonicalizeSearch(stateSearch, { omitPlatform: !!pathPreset, carry });
+    const omitPlatform = !!pathPreset?.platformIds?.length;
+    const target = canonicalizeSearch(stateSearch, { omitPlatform, carry });
     if (target === canonicalizeSearch(location.search)) {
       return;
     }
     const pathname = location.pathname;
+    const search = location.search;
     writeTimerRef.current = setTimeout(() => {
       writeTimerRef.current = undefined;
-      // a navigation to a lazy route may not have committed yet; don't clobber it
-      if (getLivePathname() !== pathname) {
+      // a navigation/pop may not have committed yet; don't clobber it
+      if (getLiveUrl() !== pathname + search) {
         return;
       }
       navigate({ pathname, search: target }, { replace: true });

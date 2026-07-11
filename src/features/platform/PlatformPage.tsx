@@ -23,6 +23,7 @@ type PlatformUrlParams = {
 
 const PlatformPage = memo(function PlatformPage() {
   const { platformId: maybeId } = useParams<PlatformUrlParams>();
+  const { search } = useLocation();
   const idOrStatus = useAppSelector(state => selectPlatformIdForPlatformPage(state, maybeId));
 
   if (idOrStatus === 'loading') {
@@ -30,7 +31,7 @@ const PlatformPage = memo(function PlatformPage() {
   } else if (idOrStatus === 'not-found') {
     return <NotFoundPage />;
   } else if (idOrStatus !== maybeId) {
-    return <Navigate to={`/platform/${idOrStatus}`} replace={true} />;
+    return <Navigate to={`/platform/${idOrStatus}${search}`} replace={true} />;
   }
 
   return <PlatformContent key={idOrStatus} platformId={idOrStatus} />;
