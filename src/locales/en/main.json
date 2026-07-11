@@ -561,8 +561,6 @@
   "Meta-Default-Description": "The Multichain Yield Optimizer",
   "Meta-Vault-Title": "{{vault}} on {{chain}}",
   "Meta-Vault-Description": "Deposit {{token}}, earn {{token}} on {{chain}} with {{platform}} and Beefy",
-  "Meta-Platform-Title": "{{platform}} Vaults",
-  "Meta-Platform-Description": "Browse all {{platform}} vaults and pools, and earn autocompounded yield with Beefy, The Multichain Yield Optimizer",
   "Meta-MediaKit-Title": "Media Kit",
   "Meta-MediaKit-Description": "Downloadable assets like the Beefy logo SVG",
   "Meta-NotFound-Title": "Page Not Found",

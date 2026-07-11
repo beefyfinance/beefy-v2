@@ -3,11 +3,6 @@ import { NavigationType, useLocation, useNavigationType } from 'react-router';
 import { setDashboardLast, setVaultsLast } from '../../features/data/reducers/vaults-list.ts';
 import { useAppDispatch } from '../../features/data/store/hooks.ts';
 
-/** routes that render the vaults list, which restores scroll itself via the last viewed vault */
-function isVaultsListPath(pathname: string): boolean {
-  return pathname === '/' || pathname.startsWith('/platform/');
-}
-
 export const ScrollRestorer = memo(function ScrollRestorer() {
   const location = useLocation();
   const navigationType = useNavigationType();
@@ -35,7 +30,7 @@ export const ScrollRestorer = memo(function ScrollRestorer() {
         // Handle vault-specific logic
         if (currentPath.startsWith('/vault/')) {
           const vaultId = currentPath.split('/')[2];
-          if (isVaultsListPath(prevPath)) {
+          if (prevPath === '/') {
             dispatch(setVaultsLast(vaultId));
           } else if (prevPath.startsWith('/dashboard/')) {
             dispatch(setDashboardLast(vaultId));
@@ -44,7 +39,7 @@ export const ScrollRestorer = memo(function ScrollRestorer() {
         break;
       }
       case NavigationType.Pop: {
-        if (!isVaultsListPath(currentPath) && !currentPath.startsWith('/dashboard/')) {
+        if (currentPath !== '/' && !currentPath.startsWith('/dashboard/')) {
           const savedScroll = state.current.lastScroll.get(currentPath) ?? 0;
           window.scrollTo(0, savedScroll);
         }

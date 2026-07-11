@@ -26,12 +26,10 @@ function getLiveUrl(): string {
  * Single owner of the filter state <-> url search sync.
  * Both directions are fixed-point comparisons in canonical space, so a
  * self-caused event is a no-op and feedback loops cannot occur.
- * - url wins on mount and on back/forward when it carries filter params or a path preset
+ * - url wins on mount and on back/forward when it carries filter params
  * - state wins otherwise: filters are reflected into the url via debounced replaces
- *
- * `pathPreset` must be referentially stable (memoized by the caller).
  */
-export function useFilterUrlSync(pathPreset?: FilteredVaultsPreset): boolean {
+export function useFilterUrlSync(): void {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -63,15 +61,13 @@ export function useFilterUrlSync(pathPreset?: FilteredVaultsPreset): boolean {
     }
 
     const { preset, recognized, carry } = parseFilterSearch(location.search);
-    if (recognized || pathPreset) {
+    if (recognized) {
       // url wins: reset all filters to the url's, keeping wallet-specific ones
       const desired: FilteredVaultsPreset = {
         ...preset,
-        ...pathPreset,
         userCategory: syncRef.current.userCategory,
         onlyUnstakedClm: syncRef.current.onlyUnstakedClm,
       };
-      // compare in full space so path preset mismatches stay visible
       if (serializeFilters(desired) !== syncRef.current.stateSearch) {
         dispatch(filteredVaultsActions.reset(desired));
         // the middleware recalcs again after its debounce; dispatching directly resolves synced sooner
@@ -89,7 +85,7 @@ export function useFilterUrlSync(pathPreset?: FilteredVaultsPreset): boolean {
       }
       setSynced(true);
     }
-  }, [dispatch, navigate, navigationType, location.pathname, location.search, pathPreset]);
+  }, [dispatch, navigate, navigationType, location.pathname, location.search]);
 
   // state -> url: debounced replace once the initial reconcile is done
   useEffect(() => {
@@ -97,8 +93,7 @@ export function useFilterUrlSync(pathPreset?: FilteredVaultsPreset): boolean {
       return;
     }
     const { carry } = parseFilterSearch(location.search);
-    const omitPlatform = !!pathPreset?.platformIds?.length;
-    const target = canonicalizeSearch(stateSearch, { omitPlatform, carry });
+    const target = canonicalizeSearch(stateSearch, { carry });
     if (target === canonicalizeSearch(location.search)) {
       return;
     }
@@ -118,7 +113,5 @@ export function useFilterUrlSync(pathPreset?: FilteredVaultsPreset): boolean {
         writeTimerRef.current = undefined;
       }
     };
-  }, [synced, stateSearch, navigate, location.pathname, location.search, pathPreset]);
-
-  return synced;
+  }, [synced, stateSearch, navigate, location.pathname, location.search]);
 }

@@ -358,10 +358,6 @@ export function formatAddressShort(
   return addr.substring(0, prefixLen) + '...' + addr.substring(addr.length - postfixLen);
 }
 
-export function formatTextTruncated(text: string, maxLength: number): string {
-  return text.length > maxLength ? `${text.substring(0, maxLength).trimEnd()}...` : text;
-}
-
 export function formatDomain(domain: string, length: number = 16): string {
   if (domain.length > length) {
     return domain.substring(0, 6) + '...' + domain.substring(domain.length - 3);

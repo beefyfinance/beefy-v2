@@ -17,8 +17,6 @@ import { isDefined } from './array-utils.ts';
 type FilterUrlCarry = Array<[string, string]>;
 
 type SerializeFiltersOptions = {
-  /** omit the platform param when the platform is part of the route path */
-  omitPlatform?: boolean;
   /** unrecognized params (feature flags, utm etc.) to carry through */
   carry?: FilterUrlCarry;
 };
@@ -146,7 +144,7 @@ export function serializeFilters(
   const add = (key: string, value?: string) =>
     parts.push(value === undefined ? key : `${key}=${value}`);
 
-  if (!options?.omitPlatform && filters.platformIds?.length) {
+  if (filters.platformIds?.length) {
     add('platform', encodeList(filters.platformIds));
   }
   if (filters.chainIds?.length) {
