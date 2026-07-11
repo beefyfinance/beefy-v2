@@ -153,10 +153,10 @@ export function serializeFilters(
     add('category', encodeList(filters.vaultCategory));
   }
   if (filters.assetType?.length) {
-    add('asset', encodeList(filters.assetType.map(asset => ASSET_TO_PARAM[asset])));
+    add('type', encodeList(filters.assetType.map(asset => ASSET_TO_PARAM[asset])));
   }
   if (filters.strategyType && filters.strategyType !== 'all') {
-    add('strategy', filters.strategyType);
+    add('product', filters.strategyType);
   }
   if (filters.searchText) {
     add('q', encodeURIComponent(filters.searchText));
@@ -214,13 +214,13 @@ export function parseFilterSearch(search: string): ParsedFilterSearch {
         preset.vaultCategory = splitList(value.toLowerCase()).filter(isVaultCategory);
         recognized = true;
         break;
-      case 'asset':
+      case 'type':
         preset.assetType = splitList(value.toLowerCase())
           .map(asset => PARAM_TO_ASSET[asset])
           .filter(isDefined);
         recognized = true;
         break;
-      case 'strategy': {
+      case 'product': {
         const strategy = value.toLowerCase();
         if (isStrategyValue(strategy)) {
           preset.strategyType = strategy;
