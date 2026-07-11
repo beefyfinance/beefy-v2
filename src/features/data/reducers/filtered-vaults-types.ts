@@ -66,7 +66,7 @@ export type FilteredVaultsState = {
   filterContent: FilterContent;
 };
 
-/** Filters a preset URL (e.g. /platform/:platformId) can apply on top of the default state */
+/** Filters a preset (e.g. parsed from url search params) can apply on top of the default state */
 export type FilteredVaultsPreset = Partial<
   Omit<
     FilteredVaultsState,

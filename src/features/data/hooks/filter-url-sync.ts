@@ -17,17 +17,18 @@ const WRITE_DEBOUNCE_MS = 250;
 /** the router's location can lag behind (startTransition/lazy chunks); read the real url */
 function getLiveUrl(): string {
   if (routerMode === 'hash') {
-    return window.location.hash.startsWith('#/') ? window.location.hash.slice(1) : '/';
+    // via href, as firefox returns location.hash percent-decoded
+    const href = window.location.href;
+    const hashIndex = href.indexOf('#');
+    return hashIndex >= 0 && href.startsWith('#/', hashIndex) ? href.slice(hashIndex + 1) : '/';
   }
   return window.location.pathname + window.location.search;
 }
 
 /**
- * Single owner of the filter state <-> url search sync.
- * Both directions are fixed-point comparisons in canonical space, so a
- * self-caused event is a no-op and feedback loops cannot occur.
- * - url wins on mount and on back/forward when it carries filter params
- * - state wins otherwise: filters are reflected into the url via debounced replaces
+ * Single owner of the filter state <-> url search sync: the url wins on mount and
+ * back/forward, otherwise state is reflected into the url via debounced replaces.
+ * Both directions compare in canonical space, so self-caused events are no-ops.
  */
 export function useFilterUrlSync(): void {
   const dispatch = useAppDispatch();
@@ -79,6 +80,7 @@ export function useFilterUrlSync(): void {
       }
     } else {
       // state wins: reflect current filters into the bare url
+      // (this also rewrites popped bare entries: bare is indistinguishable from never-set)
       const target = canonicalizeSearch(syncRef.current.stateSearch, { carry });
       if (target !== canonicalizeSearch(location.search)) {
         navigate({ pathname: location.pathname, search: target }, { replace: true });

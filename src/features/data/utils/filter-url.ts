@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js';
 import { config as chainConfigs } from '../../../config/config.ts';
 import { AVG_APY_PERIODS } from '../../../helpers/apy.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { entries } from '../../../helpers/object.ts';
 import type { ChainId } from '../entities/chain.ts';
 import type {
   AvgApySortType,
@@ -49,9 +50,7 @@ const SORT_VALUES: string[] = Object.keys({
 const SUB_SORT_APY_VALUES: readonly AvgApySortType[] = AVG_APY_PERIODS;
 const ASSET_TO_PARAM: Record<VaultAssetType, string> = { lps: 'lp', single: 'single', clm: 'clm' };
 const PARAM_TO_ASSET: Record<string, VaultAssetType | undefined> = Object.fromEntries(
-  (Object.entries(ASSET_TO_PARAM) as Array<[VaultAssetType, string]>).map(
-    ([asset, param]) => [param, asset] as const
-  )
+  entries(ASSET_TO_PARAM).map(([asset, param]) => [param, asset] as const)
 );
 const FLAG_PARAMS = [
   ['boosted', 'onlyBoosted'],
@@ -184,6 +183,7 @@ export function serializeFilters(
 /**
  * Parses a search string into a filter preset. Invalid values are dropped
  * individually; unrecognized params are returned for carry-through.
+ * Platform ids pass through unvalidated (platforms load async, ids are mixed-case).
  */
 export function parseFilterSearch(search: string): ParsedFilterSearch {
   const params = new URLSearchParams(search);
