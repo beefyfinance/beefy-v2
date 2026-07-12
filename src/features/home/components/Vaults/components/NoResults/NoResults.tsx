@@ -1,41 +1,20 @@
-import type { PropsWithChildren } from 'react';
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { askForWalletConnection, doDisconnectWallet } from '../../../../../data/actions/wallet.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { selectIsUserBalanceAvailable } from '../../../../../data/selectors/balance.ts';
 import {
+  selectFilterSearchText,
   selectFilterUserCategory,
   selectHasActiveFilterExcludingUserCategoryAndSort,
 } from '../../../../../data/selectors/filtered-vaults.ts';
 import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet.ts';
-import { styles } from './styles.ts';
-
-const useStyles = legacyMakeStyles(styles);
-
-type MessageProps = PropsWithChildren<{
-  title: string;
-  text: string;
-}>;
-
-const Message = memo(function Message({ title, text, children }: MessageProps) {
-  const { t } = useTranslation();
-  const classes = useStyles();
-
-  return (
-    <div className={classes.message}>
-      <div className={classes.title}>{t(title)}</div>
-      <div className={classes.text}>{t(text)}</div>
-      {children ?
-        <div className={classes.extra}>{children}</div>
-      : null}
-    </div>
-  );
-});
+import { hasSearchText } from '../../../../../data/utils/vault-search.ts';
+import { Message, MessageContainer, type MessageProps } from './Message.tsx';
+import { SearchNoResults } from './SearchNoResults.tsx';
 
 const NotConnectedMessage = memo(function NotConnectedMessage({ title, text }: MessageProps) {
   const { t } = useTranslation();
@@ -75,17 +54,17 @@ const NotDepositedMessage = memo(function NotDepositedMessage({ title, text }: M
 });
 
 const LoadingMessage = memo(function LoadingMessage() {
-  const classes = useStyles();
   return (
-    <div className={classes.message}>
+    <MessageContainer>
       <LoadingIndicator />
-    </div>
+    </MessageContainer>
   );
 });
 
 export const NoResults = memo(function NoResults() {
   const hasActiveFilter = useAppSelector(selectHasActiveFilterExcludingUserCategoryAndSort);
   const userCategory = useAppSelector(selectFilterUserCategory);
+  const searchText = useAppSelector(selectFilterSearchText);
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
   const userBalanceAvailable = useAppSelector(state =>
     selectIsUserBalanceAvailable(state, walletAddress)
@@ -112,6 +91,10 @@ export const NoResults = memo(function NoResults() {
 
   if (!hasActiveFilter && userCategory === 'deposited') {
     return <NotDepositedMessage title="NoResults-NotDeposited" text="NoResults-FindVault" />;
+  }
+
+  if (hasSearchText(searchText)) {
+    return <SearchNoResults />;
   }
 
   return <Message title="NoResults-NoResultsFound" text={'NoResults-TryClearFilters'} />;

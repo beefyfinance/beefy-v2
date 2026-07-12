@@ -10,7 +10,12 @@ import {
 } from '../../../helpers/string.ts';
 import type { PlatformEntity } from '../entities/platform.ts';
 import { type VaultEntity } from '../entities/vault.ts';
-import type { FilteredVaultsState, SortWithSubSort } from '../reducers/filtered-vaults-types.ts';
+import {
+  type EffectiveSortType,
+  type FilteredVaultsState,
+  isRelevanceSortActive,
+  type SortWithSubSort,
+} from '../reducers/filtered-vaults-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { serializeFilters } from '../utils/filter-url.ts';
 import type { KeysOfType } from '../utils/types-utils.ts';
@@ -21,7 +26,7 @@ import {
   selectIsTokenBluechip,
   selectIsTokenMeme,
   selectIsTokenStable,
-  selectTokenByAddress,
+  selectTokenByAddressOrUndefined,
   selectVaultTokenSymbols,
 } from './tokens.ts';
 import { selectVaultUnderlyingTvlUsd } from './tvl.ts';
@@ -34,10 +39,16 @@ export const selectFilterOnlyUnstakedClm = (state: BeefyState) =>
   state.ui.filteredVaults.onlyUnstakedClm;
 
 export const selectFilterUrlSearch = createSelector(selectFilterOptions, filters =>
-  serializeFilters(filters)
+  // relevance is implied by ?q= and must not serialize as ?sort=
+  serializeFilters(isRelevanceSortActive(filters) ? { ...filters, sort: 'default' } : filters)
 );
 export const selectFilterChainIds = (state: BeefyState) => state.ui.filteredVaults.chainIds;
 export const selectFilterSearchSortField = (state: BeefyState) => state.ui.filteredVaults.sort;
+export const selectFilterEffectiveSort = (state: BeefyState): EffectiveSortType =>
+  // searchRanked keeps the label honest: all-tied results order by the selected sort
+  isRelevanceSortActive(state.ui.filteredVaults) && state.ui.filteredVaults.searchRanked ?
+    'relevance'
+  : state.ui.filteredVaults.sort;
 export const selectFilterSearchSortDirection = (state: BeefyState) =>
   state.ui.filteredVaults.sortDirection;
 export const selectFilterUserCategory = (state: BeefyState) => state.ui.filteredVaults.userCategory;
@@ -201,8 +212,13 @@ export function selectFilterPlatformIdsForVault(state: BeefyState, vault: VaultE
   const vaultPlatform = selectPlatformIdForFilter(state, vault.platformId);
   const vaultPlatforms = [vaultPlatform];
 
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  if (depositToken.providerId) {
+  // OrUndefined: search scoring calls this per keystroke; an unknown deposit token must not throw
+  const depositToken = selectTokenByAddressOrUndefined(
+    state,
+    vault.chainId,
+    vault.depositTokenAddress
+  );
+  if (depositToken?.providerId) {
     const depositTokenPlatform = selectPlatformIdForFilter(state, depositToken.providerId);
     if (depositTokenPlatform !== 'other' && depositTokenPlatform !== vaultPlatform) {
       vaultPlatforms.push(depositTokenPlatform);
@@ -220,6 +236,10 @@ const selectPlatformIdForFilter = createCachedSelector(
 
 export const selectFilteredVaults = (state: BeefyState) =>
   state.ui.filteredVaults.sortedFilteredVaultIds;
+
+/** true when the filtered list reflects the current searchText */
+export const selectIsSearchTextSettled = (state: BeefyState) =>
+  state.ui.filteredVaults.recalculatedForSearchText === state.ui.filteredVaults.searchText;
 
 export const selectFilteredVaultCount = createSelector(selectFilteredVaults, ids => ids.length);
 

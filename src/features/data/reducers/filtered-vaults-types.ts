@@ -3,8 +3,23 @@ import type { ChainEntity } from '../entities/chain.ts';
 import type { PlatformEntity } from '../entities/platform.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { KeysOfType } from '../utils/types-utils.ts';
+import { hasSearchText } from '../utils/vault-search.ts';
 
 export type SortType = 'tvl' | 'apy' | 'daily' | 'default' | 'depositValue';
+
+export type EffectiveSortType = SortType | 'relevance';
+
+/** while searching, results sort by relevance unless the user explicitly picked a sort */
+export function isRelevanceSortActive(
+  filters: Pick<FilteredVaultsState, 'searchText' | 'sortPickedDuringSearch'>
+): boolean {
+  return hasSearchText(filters.searchText) && !filters.sortPickedDuringSearch;
+}
+
+/** an explicit sort in a preset/restored session wins over relevance */
+export function isSortPickedInPreset(searchText: string | undefined, sort: SortType | undefined) {
+  return hasSearchText(searchText ?? '') && (sort ?? 'default') !== 'default';
+}
 
 export type SortDirectionType = 'asc' | 'desc';
 
@@ -47,11 +62,17 @@ export type FilteredVaultsState = {
   sort: SortType;
   subSort: SubSortsState;
   sortDirection: SortDirectionType;
+  /** user chose a sort while searching, so relevance does not override it */
+  sortPickedDuringSearch: boolean;
   vaultCategory: VaultCategoryType[];
   userCategory: UserCategoryType;
   strategyType: StrategiesType;
   assetType: VaultAssetType[];
   searchText: string;
+  /** searchText the last completed recalc ran with; count display is hidden until they match */
+  recalculatedForSearchText: string;
+  /** the sorted ids are relevance-ranked; false when all matches tie (selected sort applies) */
+  searchRanked: boolean;
   chainIds: ChainEntity['id'][];
   platformIds: PlatformEntity['id'][];
   onlyRetired: boolean;
@@ -70,11 +91,20 @@ export type FilteredVaultsState = {
 export type FilteredVaultsPreset = Partial<
   Omit<
     FilteredVaultsState,
-    'reseted' | 'filteredVaultIds' | 'sortedFilteredVaultIds' | 'filterContent'
+    | 'reseted'
+    | 'filteredVaultIds'
+    | 'sortedFilteredVaultIds'
+    | 'filterContent'
+    | 'sortPickedDuringSearch'
+    | 'recalculatedForSearchText'
+    | 'searchRanked'
   >
 >;
 
-export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
+export type FilteredVaultBooleanKeys = KeysOfType<
+  Omit<FilteredVaultsState, 'reseted' | 'sortPickedDuringSearch' | 'searchRanked'>,
+  boolean
+>;
 export type FilteredVaultBigNumberKeys = KeysOfType<FilteredVaultsState, BigNumber>;
 export type SetSubSortPayload<K extends SortWithSubSort = SortWithSubSort> = {
   [K in SortWithSubSort]: {

@@ -1,6 +1,7 @@
 import type { Reducer } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
-import { persistReducer } from 'redux-persist';
+import { type MigrationManifest, type PersistedState, persistReducer } from 'redux-persist';
+import createMigrate from 'redux-persist/es/createMigrate';
 import storage from 'redux-persist/lib/storage';
 import { addToWalletSlice } from './add-to-wallet.ts';
 import { analyticsSlice } from './analytics.ts';
@@ -12,6 +13,7 @@ import { curatorsSlice } from './curators.ts';
 import { dataLoaderSlice } from './data-loader.ts';
 import { featuredVaultsSlice } from './featured-vaults.ts';
 import { feesSlice } from './fees.ts';
+import { type FilteredVaultsState, isSortPickedInPreset } from './filtered-vaults-types.ts';
 import { bigNumberTransform, filteredVaultsSlice } from './filtered-vaults.ts';
 import { historicalSlice } from './historical.ts';
 import { mintersSlice } from './minters.ts';
@@ -84,6 +86,18 @@ const userReducer = combineReducers({
   ),
   walletActions: walletActionsReducer as Reducer<WalletActionsState>,
 });
+
+const filteredVaultsMigrations: MigrationManifest = {
+  // v6: sortPickedDuringSearch added; an explicit sort in a restored session must win over relevance
+  6: state => {
+    const filters = state as PersistedState & Partial<FilteredVaultsState>;
+    return {
+      ...filters,
+      sortPickedDuringSearch: isSortPickedInPreset(filters.searchText, filters.sort),
+    } as PersistedState;
+  },
+};
+
 const uiReducer = combineReducers({
   addToWallet: addToWalletSlice.reducer,
   bridge: bridgeSlice.reducer,
@@ -93,8 +107,16 @@ const uiReducer = combineReducers({
       key: 'filters',
       storage,
       transforms: [bigNumberTransform],
-      blacklist: ['filteredVaultIds', 'sortedFilteredVaultIds', 'onlyUnstakedClm', 'filterContent'],
-      version: 5, // increase this if you make changes to FilteredVaultsState
+      blacklist: [
+        'filteredVaultIds',
+        'sortedFilteredVaultIds',
+        'onlyUnstakedClm',
+        'filterContent',
+        'recalculatedForSearchText',
+        'searchRanked',
+      ],
+      version: 6, // increase this if you make changes to FilteredVaultsState
+      migrate: createMigrate(filteredVaultsMigrations),
     },
     filteredVaultsSlice.reducer
   ),

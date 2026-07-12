@@ -4,12 +4,14 @@ import createTransform from 'redux-persist/es/createTransform';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
 import { fetchAllVaults } from '../actions/vaults.ts';
+import { hasSearchText } from '../utils/vault-search.ts';
 import {
   FilterContent,
   type FilteredVaultBigNumberKeys,
   type FilteredVaultBooleanKeys,
   type FilteredVaultsPreset,
   type FilteredVaultsState,
+  isSortPickedInPreset,
   type SetSubSortPayload,
 } from './filtered-vaults-types.ts';
 
@@ -17,6 +19,7 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   reseted: true,
   sort: 'default',
   sortDirection: 'desc',
+  sortPickedDuringSearch: false,
   subSort: {
     apy: 'default',
   },
@@ -25,6 +28,8 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   strategyType: 'all',
   assetType: [],
   searchText: '',
+  recalculatedForSearchText: '',
+  searchRanked: false,
   chainIds: [],
   platformIds: [],
   onlyRetired: false,
@@ -47,6 +52,10 @@ export const filteredVaultsSlice = createSlice({
       return {
         ...initialFilteredVaultsState,
         ...action.payload,
+        sortPickedDuringSearch: isSortPickedInPreset(
+          action.payload?.searchText,
+          action.payload?.sort
+        ),
         filteredVaultIds: sliceState.filteredVaultIds,
         sortedFilteredVaultIds: sliceState.sortedFilteredVaultIds,
       };
@@ -54,6 +63,7 @@ export const filteredVaultsSlice = createSlice({
     setSort(sliceState, action: PayloadAction<FilteredVaultsState['sort']>) {
       sliceState.reseted = false;
       sliceState.sort = action.payload;
+      markSortPicked(sliceState);
     },
     setSubSort(sliceState, action: PayloadAction<SetSubSortPayload>) {
       sliceState.reseted = false;
@@ -62,10 +72,12 @@ export const filteredVaultsSlice = createSlice({
         ...sliceState.subSort,
         [column]: value,
       };
+      markSortPicked(sliceState);
     },
     setSortDirection(sliceState, action: PayloadAction<FilteredVaultsState['sortDirection']>) {
       sliceState.reseted = false;
       sliceState.sortDirection = action.payload;
+      markSortPicked(sliceState);
     },
     setSortFieldAndDirection(
       sliceState,
@@ -77,6 +89,7 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState.sort = action.payload.field;
       sliceState.sortDirection = action.payload.direction;
+      markSortPicked(sliceState);
     },
     setVaultCategory(sliceState, action: PayloadAction<FilteredVaultsState['vaultCategory']>) {
       sliceState.reseted = false;
@@ -97,6 +110,10 @@ export const filteredVaultsSlice = createSlice({
     },
     setSearchText(sliceState, action: PayloadAction<FilteredVaultsState['searchText']>) {
       sliceState.reseted = false;
+      // clearing or starting a fresh search session re-enables relevance sort
+      if (!hasSearchText(action.payload) || !hasSearchText(sliceState.searchText)) {
+        sliceState.sortPickedDuringSearch = false;
+      }
       sliceState.searchText = action.payload;
     },
     setChainIds(sliceState, action: PayloadAction<FilteredVaultsState['chainIds']>) {
@@ -152,9 +169,19 @@ export const filteredVaultsSlice = createSlice({
       .addCase(recalculateFilteredVaultsAction.fulfilled, (state, action) => {
         state.filteredVaultIds = action.payload.filtered;
         state.sortedFilteredVaultIds = action.payload.sorted;
+        state.recalculatedForSearchText = action.payload.searchText;
+        state.searchRanked = action.payload.searchRanked;
       });
   },
 });
+
+function markSortPicked(
+  sliceState: Pick<FilteredVaultsState, 'searchText' | 'sortPickedDuringSearch'>
+) {
+  if (hasSearchText(sliceState.searchText)) {
+    sliceState.sortPickedDuringSearch = true;
+  }
+}
 
 export const filteredVaultsActions = filteredVaultsSlice.actions;
 

@@ -1,0 +1,276 @@
+import { describe, expect, it } from 'vitest';
+import type { VaultEntity } from '../entities/vault.ts';
+import {
+  buildVaultSearchContext,
+  classifySearchQuery,
+  hasSearchText,
+  scoreVaultForSearch,
+  type SearchIndexEntry,
+  type VaultSearchContext,
+} from './vault-search.ts';
+
+const chainIndex: SearchIndexEntry[] = [
+  { id: 'ethereum', texts: ['ethereum'] },
+  { id: 'base', texts: ['base'] },
+  { id: 'bsc', texts: ['bsc', 'bnb', 'chain'] },
+];
+
+const platformIndex: SearchIndexEntry[] = [
+  { id: 'aerodrome', texts: ['aerodrome'] },
+  { id: 'curve', texts: ['curve'] },
+  { id: 'baseswap', texts: ['baseswap'] },
+];
+
+function makeVault(overrides: {
+  id?: string;
+  name?: string;
+  chainId?: string;
+  type?: string;
+  contractAddress?: string;
+  depositTokenAddress?: string;
+  receiptTokenAddress?: string;
+}): VaultEntity {
+  return {
+    id: overrides.id ?? 'test-vault',
+    type: overrides.type ?? 'standard',
+    subType: 'standard',
+    names: { list: overrides.name ?? 'Test Vault' },
+    chainId: overrides.chainId ?? 'ethereum',
+    contractAddress: overrides.contractAddress ?? '0x1111111111111111111111111111111111111111',
+    depositTokenAddress:
+      overrides.depositTokenAddress ?? '0x2222222222222222222222222222222222222222',
+    receiptTokenAddress:
+      overrides.receiptTokenAddress ?? '0x3333333333333333333333333333333333333333',
+  } as unknown as VaultEntity;
+}
+
+function context(query: string): VaultSearchContext {
+  const built = buildVaultSearchContext(query, chainIndex, platformIndex);
+  if (!built) {
+    throw new Error(`expected context for "${query}"`);
+  }
+  return built;
+}
+
+describe('hasSearchText', () => {
+  it('is false for empty, whitespace-only and hyphen-only queries', () => {
+    expect(hasSearchText('')).toBe(false);
+    expect(hasSearchText('   ')).toBe(false);
+    expect(hasSearchText('--')).toBe(false);
+  });
+
+  it('is true for real queries', () => {
+    expect(hasSearchText('eth')).toBe(true);
+  });
+});
+
+describe('classifySearchQuery', () => {
+  it('detects addresses with 6+ hex chars', () => {
+    expect(classifySearchQuery('0xabc123')).toBe('address');
+    expect(classifySearchQuery(' 0xAbC1234567 ')).toBe('address');
+  });
+
+  it('detects too-short address prefixes', () => {
+    expect(classifySearchQuery('0x')).toBe('address-too-short');
+    expect(classifySearchQuery('0xabc12')).toBe('address-too-short');
+  });
+
+  it('treats everything else as text', () => {
+    expect(classifySearchQuery('usdc')).toBe('text');
+    expect(classifySearchQuery('0xabc xyz')).toBe('text'); // multi-word never address mode
+    expect(classifySearchQuery('0xzz1234')).toBe('text'); // non-hex
+  });
+});
+
+describe('buildVaultSearchContext', () => {
+  it('returns undefined for empty queries', () => {
+    expect(buildVaultSearchContext('', chainIndex, platformIndex)).toBeUndefined();
+    expect(buildVaultSearchContext('  -  ', chainIndex, platformIndex)).toBeUndefined();
+  });
+
+  it('drops words of length 1 like the old matcher', () => {
+    expect(context('a usdc').words.map(w => w.word)).toEqual(['usdc']);
+  });
+
+  it('splits on space, slash and comma; hyphens are simplified to spaces', () => {
+    expect(context('cbeth-eth/usdc,dai').words.map(w => w.word)).toEqual([
+      'cbeth',
+      'eth',
+      'usdc',
+      'dai',
+    ]);
+  });
+
+  it('resolves chain words exactly and platform words by 3+ char prefix', () => {
+    const [word] = context('base').words;
+    expect([...word.chainIds]).toEqual(['base']);
+    expect([...word.platformIds]).toEqual(['baseswap']);
+    const [aero] = context('aero').words;
+    expect([...aero.chainIds]).toEqual([]);
+    expect([...aero.platformIds]).toEqual(['aerodrome']);
+  });
+
+  it('does not prefix-match chains', () => {
+    const [word] = context('ether').words;
+    expect(word.chainIds.size).toBe(0);
+  });
+
+  it('flags anyPlatformWords only when a word matched a platform', () => {
+    expect(context('aero').anyPlatformWords).toBe(true);
+    expect(context('ethereum').anyPlatformWords).toBe(false);
+  });
+});
+
+describe('scoreVaultForSearch tiers', () => {
+  const vault = makeVault({ name: 'cbBTC-USDC', chainId: 'base', id: 'aero-cbbtc-usdc' });
+
+  it('100: exact name', () => {
+    expect(scoreVaultForSearch(context('cbbtc usdc'), vault, [], [])).toBe(100);
+  });
+
+  it('90: name prefix', () => {
+    expect(scoreVaultForSearch(context('cbbtc us'), vault, [], [])).toBe(90);
+  });
+
+  it('80: phrase in name', () => {
+    expect(scoreVaultForSearch(context('btc usdc'), vault, [], [])).toBe(80);
+  });
+
+  it('70: every word in name', () => {
+    expect(scoreVaultForSearch(context('usdc cbbtc extra'), vault, [], [])).toBe(0);
+    expect(scoreVaultForSearch(context('usdc cbbtc'), vault, [], [])).toBe(70); // reversed word order
+    const other = makeVault({ name: 'USDC-DAI cbBTC Pool' });
+    expect(scoreVaultForSearch(context('usdc pool'), other, [], [])).toBe(70);
+  });
+
+  it('60: fuzzy token symbol (wrapped-token aware)', () => {
+    const single = makeVault({ name: 'Alpha Pool' });
+    expect(scoreVaultForSearch(context('eth'), single, ['WETH'], [])).toBe(60);
+    expect(scoreVaultForSearch(context('eth'), single, ['ETH'], [])).toBe(60);
+    expect(scoreVaultForSearch(context('weth'), single, ['WETH'], [])).toBe(60);
+    expect(scoreVaultForSearch(context('steth'), single, ['wstETH'], [])).toBe(60); // w-prefix fuzzy
+    // wrapping is query-side only (parity with the old matcher): weth does not find plain ETH
+    expect(scoreVaultForSearch(context('weth'), single, ['ETH'], [])).toBe(0);
+  });
+
+  it('50: token substring', () => {
+    const single = makeVault({ name: 'Alpha Pool' });
+    expect(scoreVaultForSearch(context('usd'), single, ['USDC'], [])).toBe(50);
+  });
+
+  it('40: platform match', () => {
+    const single = makeVault({ name: 'Something Else' });
+    expect(scoreVaultForSearch(context('aero'), single, [], ['aerodrome'])).toBe(40);
+  });
+
+  it('30: chain match, exact whole word only', () => {
+    const single = makeVault({ name: 'Something Else', chainId: 'base' });
+    expect(scoreVaultForSearch(context('base'), single, [], [])).toBe(30);
+  });
+
+  it('20: vault id substring for words of 4+ chars', () => {
+    const single = makeVault({ name: 'Something Else', id: 'moo-gamma-pool' });
+    expect(scoreVaultForSearch(context('gamma'), single, [], [])).toBe(20);
+    const short = makeVault({ name: 'Something Else', id: 'moo-gam' });
+    expect(scoreVaultForSearch(context('gam'), short, [], [])).toBe(0);
+  });
+
+  it('0: any word without a match rejects the vault', () => {
+    const single = makeVault({ name: 'Something Else', chainId: 'base' });
+    expect(scoreVaultForSearch(context('base zzz'), single, [], [])).toBe(0);
+  });
+
+  it('multi-word score is the minimum tier across words', () => {
+    // "usdc" hits token (60), "base" hits chain (30) -> 30
+    const vaultOnBase = makeVault({ name: 'Something Else', chainId: 'base' });
+    expect(scoreVaultForSearch(context('usdc base'), vaultOnBase, ['USDC'], [])).toBe(30);
+  });
+
+  it('DIVERGENCE vs old matcher: 1-char queries match name substrings, not everything', () => {
+    // old matcher vacuously matched ALL vaults for 1-char queries (empty word list)
+    const vault = makeVault({ name: 'cbBTC-USDC' });
+    expect(scoreVaultForSearch(context('b'), vault, [], [])).toBe(80); // phrase-in-name
+    const noMatch = makeVault({ name: 'XYZ Pool' });
+    expect(scoreVaultForSearch(context('b'), noMatch, [], [])).toBe(0);
+  });
+
+  it('DIVERGENCE vs old matcher: per-word token substrings match multi-word queries', () => {
+    // old matcher required whole-query substring per symbol; per-word is intended behavior now
+    const single = makeVault({ name: 'Something Else' });
+    expect(scoreVaultForSearch(context('steth btcb'), single, ['wstETH', 'aBTCb'], [])).toBe(50);
+  });
+
+  it('regexes are not stateful across vaults (no g flag)', () => {
+    const ctx = context('eth');
+    const a = makeVault({ name: 'A' });
+    const b = makeVault({ name: 'B' });
+    expect(scoreVaultForSearch(ctx, a, ['WETH'], [])).toBe(60);
+    expect(scoreVaultForSearch(ctx, b, ['WETH'], [])).toBe(60); // would fail with a g-flagged .test()
+  });
+});
+
+describe('scoreVaultForSearch address mode', () => {
+  const vault = makeVault({
+    name: 'cbBTC-USDC',
+    contractAddress: '0xAAAA567890123456789012345678901234567890',
+    depositTokenAddress: '0xBBBB567890123456789012345678901234567890',
+    receiptTokenAddress: '0xCCCC567890123456789012345678901234567890',
+  });
+
+  it('prefix-matches contract, deposit and receipt addresses case-insensitively', () => {
+    expect(scoreVaultForSearch(context('0xaaaa56'), vault, [], [])).toBe(60);
+    expect(scoreVaultForSearch(context('0xBBBB5678'), vault, [], [])).toBe(60);
+    expect(scoreVaultForSearch(context('0xcccc56'), vault, [], [])).toBe(60);
+  });
+
+  it('ranks a full exact address match above prefix matches', () => {
+    expect(
+      scoreVaultForSearch(context('0xAAAA567890123456789012345678901234567890'), vault, [], [])
+    ).toBe(100);
+  });
+
+  it('disables all text matching in address mode', () => {
+    expect(scoreVaultForSearch(context('0xdddd56'), vault, ['0XDDDD56'], [])).toBe(0);
+  });
+
+  it('matches clm deposit token and underlying pool addresses on cowcentrated-like vaults', () => {
+    const clm = {
+      id: 'clm-vault',
+      type: 'cowcentrated',
+      subType: 'cowcentrated',
+      names: { list: 'CLM Vault' },
+      chainId: 'base',
+      contractAddress: '0x1111111111111111111111111111111111111111',
+      depositTokenAddress: '0x2222222222222222222222222222222222222222',
+      depositTokenAddresses: ['0x3333333333333333333333333333333333333333'],
+      receiptTokenAddress: '0x4444444444444444444444444444444444444444',
+      poolAddress: '0x5555555555555555555555555555555555555555',
+    } as unknown as VaultEntity;
+    expect(scoreVaultForSearch(context('0x333333'), clm, [], [])).toBe(60); // clm deposit token
+    expect(scoreVaultForSearch(context('0x555555'), clm, [], [])).toBe(60); // underlying pool
+    // standard vaults have no pool address: same prefix must not match
+    const standard = makeVault({ name: 'Alpha Pool' });
+    expect(scoreVaultForSearch(context('0x555555'), standard, [], [])).toBe(0);
+  });
+
+  it('matches the strategy address when provided, only in address mode', () => {
+    const strategy = '0xbb8815fa8006ea1c343ddb30962811a78ab5529d';
+    expect(scoreVaultForSearch(context('0xbb8815'), vault, [], [], strategy)).toBe(60);
+    expect(scoreVaultForSearch(context('0xbb8815'), vault, [], [], undefined)).toBe(0);
+    expect(scoreVaultForSearch(context(strategy), vault, [], [], strategy)).toBe(100); // exact
+  });
+
+  it('does not read receipt address on gov-single vaults', () => {
+    // gov single has no receiptTokenAddress; the guard must prevent reading it
+    const gov = {
+      id: 'gov-vault',
+      type: 'gov',
+      contractType: 'single',
+      names: { list: 'Gov Vault' },
+      chainId: 'ethereum',
+      contractAddress: '0xAAAA567890123456789012345678901234567890',
+      depositTokenAddress: '0x2222222222222222222222222222222222222222',
+    } as unknown as VaultEntity;
+    expect(scoreVaultForSearch(context('0xaaaa56'), gov, [], [])).toBe(60);
+  });
+});
