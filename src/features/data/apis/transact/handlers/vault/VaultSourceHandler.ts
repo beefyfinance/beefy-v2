@@ -56,8 +56,9 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
       );
     }
 
-    const adaptedInput = this.adaptInputToStrategy(input, match, srcHelpers.getState());
     await match.strategy.beforeQuote?.();
+
+    const adaptedInput = this.adaptInputToStrategy(input, match, srcHelpers.getState());
     const underlyingQuote = await match.strategy.fetchWithdrawQuote([adaptedInput], match.option);
     if (!isZapQuote(underlyingQuote)) {
       throw new Error(
