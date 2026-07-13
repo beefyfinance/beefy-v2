@@ -113,23 +113,29 @@ const RetiredMatches = memo(function RetiredMatches({ count }: { count: number }
 const Suggestions = memo(function Suggestions({ suggestions }: { suggestions: string[] }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const hasSuggestions = suggestions.length > 0;
 
   return (
-    <Message title="NoResults-NoResultsFound" text="NoResults-TryClearSearch">
-      {suggestions.length > 0 && (
-        <Chips>
-          <ChipsLabel>{t('NoResults-DidYouMean')}</ChipsLabel>
-          {suggestions.map(suggestion => (
-            <Chip
-              key={suggestion}
-              type="button"
-              onClick={() => dispatch(filteredVaultsActions.setSearchText(suggestion))}
-            >
-              {suggestion}
-            </Chip>
-          ))}
-        </Chips>
-      )}
+    <Message
+      title="NoResults-NoResultsFound"
+      text={hasSuggestions ? undefined : 'NoResults-TryDifferent'}
+      body={
+        hasSuggestions ?
+          <Chips>
+            <ChipsLabel>{t('NoResults-DidYouMean')}</ChipsLabel>
+            {suggestions.map(suggestion => (
+              <Chip
+                key={suggestion}
+                type="button"
+                onClick={() => dispatch(filteredVaultsActions.setSearchText(suggestion))}
+              >
+                {suggestion}
+              </Chip>
+            ))}
+          </Chips>
+        : undefined
+      }
+    >
       <Actions>
         <ClearSearchButton />
       </Actions>
@@ -167,28 +173,24 @@ const Chips = styled('div', {
   base: {
     display: 'flex',
     flexWrap: 'wrap',
-    alignItems: 'center',
+    alignItems: 'baseline', // label aligns with the text-only cards' second line
     gap: '8px',
-    marginBottom: '24px',
   },
 });
 
 const ChipsLabel = styled('span', {
   base: {
-    textStyle: 'body.sm',
-    color: 'text.dark',
+    textStyle: 'body',
+    color: 'text.middle',
   },
 });
 
 const Chip = styled('button', {
   base: {
     textStyle: 'body.sm.medium',
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '4px',
     padding: '4px 12px',
-    borderRadius: '16px',
-    background: 'background.content.light',
+    borderRadius: '4px',
+    background: 'bayOfMany',
     color: 'text.middle',
     cursor: 'pointer',
     _hover: {

@@ -138,6 +138,7 @@
   "Search-CountAnnounce": "{{count}} result matches your search",
   "Search-CountAnnounce_plural": "{{count}} results match your search",
   "NoResults-DidYouMean": "Did you mean:",
+  "NoResults-TryDifferent": "Try a different asset, chain, or platform.",
   "NoResults-SearchBlockedBy": "Your search matches {{count}} vault hidden by your filters.",
   "NoResults-SearchBlockedBy_plural": "Your search matches {{count}} vaults hidden by your filters.",
   "NoResults-ShowMatches": "Show {{count}} match",

@@ -58,6 +58,7 @@ const Count = styled('span', {
     // reserved width so the clear button doesn't shift as the count appears/changes
     minWidth: '5em',
     textAlign: 'right',
+    marginInlineEnd: '4px', // gap to the clear button
   },
   variants: {
     dimmed: {

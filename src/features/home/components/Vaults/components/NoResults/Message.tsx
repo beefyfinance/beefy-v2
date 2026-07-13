@@ -1,20 +1,31 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, type PropsWithChildren } from 'react';
+import { memo, type PropsWithChildren, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export type MessageProps = PropsWithChildren<{
   title: string;
-  text: string;
+  text?: string;
   textParams?: Record<string, string | number>;
+  /** rendered in the text slot; `children` go in the spaced action zone below */
+  body?: ReactNode;
 }>;
 
-export const Message = memo(function Message({ title, text, textParams, children }: MessageProps) {
+export const Message = memo(function Message({
+  title,
+  text,
+  textParams,
+  body,
+  children,
+}: MessageProps) {
   const { t } = useTranslation();
 
   return (
     <MessageContainer>
       <Title>{t(title)}</Title>
-      <Text>{t(text, textParams)}</Text>
+      {text ?
+        <Text>{t(text, textParams)}</Text>
+      : null}
+      {body}
       {children ?
         <Extra>{children}</Extra>
       : null}
