@@ -111,6 +111,16 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     return this.underlyingStrategy.canEmitTokenAsWithdraw(token);
   }
 
+  async beforeQuote(): Promise<void> {
+    await this.underlyingStrategy.beforeQuote?.();
+    await this.dualUnderlying?.beforeQuote?.();
+  }
+
+  async beforeStep(): Promise<void> {
+    await this.underlyingStrategy.beforeStep?.();
+    await this.dualUnderlying?.beforeStep?.();
+  }
+
   async fetchDepositOptions(): Promise<VaultComposerDepositOption[]> {
     const [primaryOptions, dualOptions] = await Promise.all([
       this.underlyingStrategy.fetchDepositOptions(),
