@@ -908,58 +908,6 @@
     ]
   },
   {
-    "id": "curve-fraxtal-frax-pyusd",
-    "name": "frxUSD/PYUSD",
-    "type": "standard",
-    "token": "FRAXPYUSD",
-    "tokenAddress": "0x35c6c59277f8fA9Ae98dea29b0546D79957ACDd8",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnContractAddress": "0x7838cc24498267A0f195597E9818cA3cf30E8675",
-    "earnedToken": "mooCurveFRAX-PYUSD",
-    "earnedTokenAddress": "0x7838cc24498267A0f195597E9818cA3cf30E8675",
-    "oracle": "lps",
-    "oracleId": "curve-fraxtal-frax-pyusd",
-    "status": "eol",
-    "createdAt": 1714639948,
-    "retireReason": "tvl",
-    "retiredAt": 1780413682,
-    "platformId": "convex",
-    "assets": ["frxUSD", "PYUSD"],
-    "migrationIds": ["l2-convex", "l2-curve"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-7/deposit",
-    "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-7/withdraw",
-    "network": "fraxtal",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0x35c6c59277f8fA9Ae98dea29b0546D79957ACDd8",
-        "methods": [
-          {
-            "type": "dynamic-deposit",
-            "target": "0x35c6c59277f8fA9Ae98dea29b0546D79957ACDd8",
-            "coins": [
-              "0xFc00000000000000000000000000000000000001",
-              "0xfb1520DbDc9230ef5dD5e6fd3Bbb6647B570E190"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "curve-fraxtal-trifxs",
     "name": "frxUSD/frxETH/FRAX",
     "type": "standard",
