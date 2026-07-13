@@ -215,7 +215,7 @@ describe('selectSearchNoResultsInfo', () => {
     const info = selectSearchNoResultsInfo(makeState(FIXTURE_VAULTS, filters));
     expect(info).toEqual({
       kind: 'blocked',
-      blockers: [{ category: 'chain', values: 'Polygon' }],
+      blockers: ['chain'],
       showCount: 1,
     });
   });
@@ -230,7 +230,7 @@ describe('selectSearchNoResultsInfo', () => {
     const info = selectSearchNoResultsInfo(makeState(FIXTURE_VAULTS, filters));
     expect(info.kind).toBe('blocked');
     if (info.kind === 'blocked') {
-      expect(info.blockers.map(b => b.category)).toEqual(['chain', 'platform']);
+      expect(info.blockers).toEqual(['chain', 'platform']);
       expect(info.showCount).toBe(2);
     }
   });
@@ -270,7 +270,7 @@ describe('selectSearchNoResultsInfo', () => {
     expect(info.kind).toBe('blocked');
     if (info.kind === 'blocked') {
       // falls back to the raw id instead of crashing
-      expect(info.blockers).toEqual([{ category: 'chain', values: 'polygon' }]);
+      expect(info.blockers).toEqual(['chain']);
     }
   });
 

@@ -7,23 +7,11 @@ import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vau
 import {
   type BlockerCategory,
   FLAG_KEYS,
-  type SearchBlockerChip,
   selectSearchNoResultsInfo,
 } from '../../../../../data/selectors/no-results.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { BeefyDispatchFn } from '../../../../../data/store/types.ts';
 import { Message } from './Message.tsx';
-
-const BLOCKER_LABEL_KEY: Record<BlockerCategory, string> = {
-  chain: 'Filter-Chain',
-  platform: 'Filter-Platform',
-  category: 'Filter-Category',
-  type: 'Filter-Type',
-  product: 'Filter-Strategy',
-  flags: 'NoResults-BlockedBy-Flags',
-  mintvl: 'Filter-MinTvl',
-  userCategory: 'Filter-MyVaults',
-};
 
 function dispatchClearCategory(dispatch: BeefyDispatchFn, category: BlockerCategory) {
   switch (category) {
@@ -71,35 +59,24 @@ const BlockedBy = memo(function BlockedBy({
   blockers,
   showCount,
 }: {
-  blockers: SearchBlockerChip[];
+  blockers: BlockerCategory[];
   showCount: number;
 }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const handleShowAll = useCallback(() => {
-    for (const blocker of blockers) {
-      dispatchClearCategory(dispatch, blocker.category);
+    for (const category of blockers) {
+      dispatchClearCategory(dispatch, category);
     }
   }, [dispatch, blockers]);
 
+  // no chips: the active filters are already shown in the toolbar directly above
   return (
     <Message
       title="NoResults-NoResultsFound"
       text="NoResults-SearchBlockedBy"
       textParams={{ count: showCount }}
     >
-      <Chips>
-        {blockers.map(blocker => (
-          <Chip
-            key={blocker.category}
-            type="button"
-            onClick={() => dispatchClearCategory(dispatch, blocker.category)}
-          >
-            {t(BLOCKER_LABEL_KEY[blocker.category])}
-            {blocker.values ? ` ${blocker.values}` : ''} ✕
-          </Chip>
-        ))}
-      </Chips>
       <Actions>
         <Button variant="cta" onClick={handleShowAll}>
           {t('NoResults-ShowMatches', { count: showCount })}

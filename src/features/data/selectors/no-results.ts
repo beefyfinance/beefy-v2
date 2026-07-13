@@ -6,9 +6,9 @@ import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
 import { buildVaultFilterEnv, vaultPassesFilters } from '../utils/vault-filter.ts';
 import { classifySearchQuery } from '../utils/vault-search.ts';
-import { selectAllChains, selectChainByIdOrUndefined } from './chains.ts';
+import { selectAllChains } from './chains.ts';
 import { selectFilterOptions } from './filtered-vaults.ts';
-import { selectAllPlatforms, selectPlatformByIdOrUndefined } from './platforms.ts';
+import { selectAllPlatforms } from './platforms.ts';
 import { selectAllVisibleVaultIds, selectVaultById } from './vaults.ts';
 
 export type BlockerCategory =
@@ -41,16 +41,10 @@ export const FLAG_KEYS = [
   'onlyUnstakedClm',
 ] as const;
 
-export type SearchBlockerChip = {
-  category: BlockerCategory;
-  /** human readable active values, e.g. chain names; undefined when the label alone suffices */
-  values: string | undefined;
-};
-
 export type SearchNoResultsInfo =
   | { kind: 'address-too-short' }
   | { kind: 'address-no-match' }
-  | { kind: 'blocked'; blockers: SearchBlockerChip[]; showCount: number }
+  | { kind: 'blocked'; blockers: BlockerCategory[]; showCount: number }
   | { kind: 'retired'; count: number }
   | { kind: 'suggestions'; suggestions: string[] };
 
@@ -172,37 +166,6 @@ function computeDidYouMean(state: BeefyState, searchText: string): string[] {
     .map(entry => entry.display);
 }
 
-function blockerValues(
-  state: BeefyState,
-  filters: FilteredVaultsState,
-  category: BlockerCategory
-): string | undefined {
-  switch (category) {
-    case 'chain':
-      // OrUndefined: a disabled chain id can arrive via a shared url and is absent from byId
-      return filters.chainIds
-        .map(id => selectChainByIdOrUndefined(state, id)?.name || id)
-        .join(', ');
-    case 'platform':
-      return filters.platformIds
-        .map(id => selectPlatformByIdOrUndefined(state, id)?.name || id)
-        .join(', ');
-    case 'category':
-      return filters.vaultCategory.join(', ');
-    case 'type':
-      return filters.assetType.join(', ');
-    case 'product':
-      return filters.strategyType;
-    case 'flags':
-      return FLAG_KEYS.filter(key => filters[key])
-        .map(key => key.slice(4).toLowerCase())
-        .join(', ');
-    case 'mintvl':
-    case 'userCategory':
-      return undefined;
-  }
-}
-
 function computeSearchNoResultsInfo(
   state: BeefyState,
   filters: FilteredVaultsState
@@ -224,10 +187,7 @@ function computeSearchNoResultsInfo(
     }
     return {
       kind: 'blocked',
-      blockers: blockers.map(category => ({
-        category,
-        values: blockerValues(state, filters, category),
-      })),
+      blockers,
       // honest count: what clearing exactly these blockers will reveal
       showCount: countMatching(state, clearBlockerCategories(filters, blockers)),
     };
