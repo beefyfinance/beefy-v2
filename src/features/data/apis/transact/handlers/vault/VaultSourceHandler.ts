@@ -57,6 +57,7 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
     }
 
     const adaptedInput = this.adaptInputToStrategy(input, match, srcHelpers.getState());
+    await match.strategy.beforeQuote?.();
     const underlyingQuote = await match.strategy.fetchWithdrawQuote([adaptedInput], match.option);
     if (!isZapQuote(underlyingQuote)) {
       throw new Error(
@@ -108,6 +109,7 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
       );
     }
 
+    await strategy.beforeStep?.();
     const breakdown = await strategy.fetchWithdrawUserlessZapBreakdown(underlyingQuote);
 
     return {
