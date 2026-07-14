@@ -1,10 +1,16 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from '../../../../hooks/useMediaQuery.ts';
+import { seededShuffle } from '../../../../helpers/random.ts';
 import { FeaturedVaultCard } from '../FeaturedVaultCard/FeaturedVaultCard.tsx';
 import { selectFeaturedVaultIds } from '../../../data/selectors/featured-vaults.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
+
+// Reshuffle the featured order on a time cadence so revisits lead with a different set,
+// spreading prime visibility across all featured vaults. Deterministic within a window
+// (stable on reload, same for everyone), frozen per mount so cards never re-order mid-read.
+const ROTATION_PERIOD_SECONDS = 60;
 
 const DRAG_THRESHOLD_PX = 5;
 // Keep in sync with the `columnGap` on Scroller below.
@@ -21,7 +27,12 @@ const MEDIA_DESKTOP = '(min-width: 960px)';
 
 export const FeaturedVaults = memo(function FeaturedVaults() {
   const { t } = useTranslation();
-  const ids = useAppSelector(selectFeaturedVaultIds);
+  const featuredIds = useAppSelector(selectFeaturedVaultIds);
+  const [seed] = useState(() => Math.floor(Date.now() / (ROTATION_PERIOD_SECONDS * 1000)));
+  const ids = useMemo(
+    () => (featuredIds.length <= 1 ? featuredIds : seededShuffle(featuredIds, seed)),
+    [featuredIds, seed]
+  );
   const isSideBySide = useMediaQuery(MEDIA_SIDE_BY_SIDE);
   const isTablet = useMediaQuery(MEDIA_TABLET);
   const isDesktop = useMediaQuery(MEDIA_DESKTOP);
