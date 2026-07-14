@@ -1,21 +1,94 @@
 import BigNumber from 'bignumber.js';
 import { config as chainConfigs } from '../../../config/config.ts';
 import { AVG_APY_PERIODS } from '../../../helpers/apy.ts';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
-import { entries } from '../../../helpers/object.ts';
+import { entries, keys } from '../../../helpers/object.ts';
 import type { ChainId } from '../entities/chain.ts';
-import type {
-  AvgApySortType,
-  FilteredVaultsPreset,
-  SortDirectionType,
-  SortType,
-  StrategiesType,
-  VaultAssetType,
-  VaultCategoryType,
+import {
+  type AvgApySortType,
+  type FilteredVaultsPreset,
+  type FilterValues,
+  SORT_TYPES,
+  STRATEGY_TYPES,
+  USER_CATEGORIES,
+  VAULT_ASSET_TYPES,
+  VAULT_CATEGORIES,
 } from '../reducers/filtered-vaults-types.ts';
+import {
+  picklist,
+  array,
+  string,
+  maxLength,
+  pipe,
+  transform,
+  regex,
+  check,
+  safeParse,
+  type GenericSchema,
+  strictObject,
+} from 'valibot';
+import { FILTER_DEFAULTS } from './filter-values.ts';
 import { isDefined } from './array-utils.ts';
 
-type FilterUrlCarry = Array<[string, string]>;
+const CHAIN_IDS = Object.keys(chainConfigs) as ChainId[];
+const AVG_APY_PICK = ['default', ...AVG_APY_PERIODS.map(n => `${n}` as const)] as const;
+
+/** array where each item validates independently; invalid items drop instead of failing the whole list */
+function looseArray<TItem>(itemSchema: GenericSchema<string, TItem>) {
+  return pipe(
+    array(
+      pipe(
+        string(),
+        transform((v): TItem | undefined => {
+          const parsed = safeParse(itemSchema, v);
+          return parsed.success ? parsed.output : undefined;
+        })
+      )
+    ),
+    transform((v): TItem[] => v.filter(isDefined))
+  );
+}
+
+const $csv = pipe(string(), maxLength(1024), transform(splitList));
+const $kv = pipe(
+  $csv,
+  transform(values =>
+    Object.fromEntries(values.map(value => value.split(':', 2) as [string, string | undefined]))
+  )
+);
+const $platformId = pipe(string(), maxLength(255), regex(/^[a-zA-Z0-9][a-zA-Z0-9-]+$/));
+const $stringBool = pipe(
+  string(),
+  transform(v => v === 'true' || v === '1')
+);
+const $bigNumber = pipe(
+  string(),
+  maxLength(255),
+  transform(v => new BigNumber(v)),
+  check(v => v.isFinite() && v.gte(0))
+);
+const $subSortApy = pipe(
+  picklist(AVG_APY_PICK),
+  transform(
+    (v): AvgApySortType => (v === 'default' ? 'default' : (parseInt(v, 10) as AvgApySortType))
+  )
+);
+
+const $sort = picklist(SORT_TYPES);
+const $sortDirection = picklist(['asc', 'desc']);
+const $vaultCategory = pipe($csv, looseArray(picklist(VAULT_CATEGORIES)));
+const $userCategory = picklist(USER_CATEGORIES);
+const $strategyType = picklist(STRATEGY_TYPES);
+const $assetType = pipe($csv, looseArray(picklist(VAULT_ASSET_TYPES)));
+const $searchText = pipe(string(), maxLength(255));
+const $chainIds = pipe($csv, looseArray(picklist(CHAIN_IDS)));
+const $platformIds = pipe($csv, looseArray($platformId));
+const $minimumUnderlyingTvl = pipe(
+  $bigNumber,
+  check(v => v.gt(0))
+);
+const $subSort = pipe($kv, strictObject({ apy: $subSortApy }));
+
+export type FilterUrlCarry = Array<[string, string]>;
 
 type SerializeFiltersOptions = {
   /** unrecognized params (feature flags, utm etc.) to carry through */
@@ -29,162 +102,227 @@ type ParsedFilterSearch = {
   carry: FilterUrlCarry;
 };
 
-// exhaustive records so adding a value to the union fails to compile here
-const CATEGORY_VALUES: string[] = Object.keys({
-  stable: true,
-  bluechip: true,
-  meme: true,
-  correlated: true,
-} satisfies Record<VaultCategoryType, true>);
-const STRATEGY_VALUES: string[] = Object.keys({
-  pools: true,
-  vaults: true,
-} satisfies Record<Exclude<StrategiesType, 'all'>, true>); // 'all' is the default and omitted
-const SORT_VALUES: string[] = Object.keys({
-  apy: true,
-  daily: true,
-  tvl: true,
-  depositValue: true,
-} satisfies Record<Exclude<SortType, 'default'>, true>); // 'default' omitted
-// derived from the UI's options so urls can't create sub-sort states the table can't render
-const SUB_SORT_APY_VALUES: readonly AvgApySortType[] = AVG_APY_PERIODS;
-const ASSET_TO_PARAM: Record<VaultAssetType, string> = { lps: 'lp', single: 'single', clm: 'clm' };
-const PARAM_TO_ASSET: Record<string, VaultAssetType | undefined> = Object.fromEntries(
-  entries(ASSET_TO_PARAM).map(([asset, param]) => [param, asset] as const)
-);
-const FLAG_PARAMS = [
-  ['boosted', 'onlyBoosted'],
-  ['zappable', 'onlyZappable'],
-  ['points', 'onlyEarningPoints'],
-  ['retired', 'onlyRetired'],
-  ['paused', 'onlyPaused'],
-] as const satisfies Array<[string, keyof FilteredVaultsPreset]>;
-const PARAM_TO_FLAG: Record<string, (typeof FLAG_PARAMS)[number][1] | undefined> =
-  Object.fromEntries(FLAG_PARAMS);
+type FieldCodec<K extends keyof FilterValues> = {
+  queryKey: string;
+  schema: GenericSchema<string, NonNullable<FilteredVaultsPreset[K]>>;
+  serialize: (value: NonNullable<FilteredVaultsPreset[K]>) => string;
+  /** true when the value equals the default; used symmetrically to drop defaults on both serialize and parse */
+  isDefault: (value: NonNullable<FilteredVaultsPreset[K]>) => boolean;
+};
 
-const CHAIN_IDS: string[] = Object.keys(chainConfigs);
-
-function isChainId(value: string): value is ChainId {
-  return CHAIN_IDS.includes(value);
-}
-
-function isVaultCategory(value: string): value is VaultCategoryType {
-  return CATEGORY_VALUES.includes(value);
-}
-
-function isStrategyValue(value: string): value is Exclude<StrategiesType, 'all'> {
-  return STRATEGY_VALUES.includes(value);
-}
-
-function isSortValue(value: string): value is Exclude<SortType, 'default'> {
-  return SORT_VALUES.includes(value);
-}
-
-function splitList(value: string): string[] {
+function splitList(value: string, maxItems: number = 50): string[] {
   return value
-    .split(',')
+    .split(',', maxItems)
     .map(item => item.trim())
     .filter(item => item.length > 0);
 }
 
-// items are id slugs; a literal comma in an item would not survive a round-trip
-function encodeList(values: string[]): string {
-  return values.map(encodeURIComponent).join(',');
+function serializeList(values: string[]): string {
+  return values.join(',');
 }
 
-function serializeSort(
-  sort: SortType | undefined,
-  direction: SortDirectionType | undefined,
-  subSortApy: AvgApySortType | undefined
-): string | undefined {
-  if (!sort || sort === 'default') {
-    return undefined;
-  }
-  const parts: string[] = [sort];
-  if (sort === 'apy' && subSortApy !== undefined && subSortApy !== 'default') {
-    parts.push(`${subSortApy}d`);
-  }
-  if (direction === 'asc') {
-    parts.push('asc');
-  }
-  return parts.join('-');
+function serializeScalar<T extends { toString: () => string }>(value: T): string {
+  return value.toString();
 }
 
-function parseSort(value: string): Partial<FilteredVaultsPreset> {
-  const [field, ...suffixes] = value.split('-');
-  if (!isSortValue(field)) {
-    return {};
-  }
-  const preset: Partial<FilteredVaultsPreset> = { sort: field };
-  for (const suffix of suffixes) {
-    if (suffix === 'asc') {
-      preset.sortDirection = 'asc';
-    } else if (field === 'apy' && suffix.endsWith('d')) {
-      const days = Number(suffix.slice(0, -1));
-      const subSort = SUB_SORT_APY_VALUES.find(v => v === days);
-      if (subSort) {
-        preset.subSort = { apy: subSort };
-      }
+function serializeBoolean(value: boolean): string {
+  return value ? '1' : '0';
+}
+
+function serializeBigNumber(value: BigNumber): string {
+  return value.toString(10);
+}
+
+function serializeObject<T extends { toString: () => string }>(value: Record<string, T>): string {
+  return serializeList(Object.entries(value).map(([k, v]) => `${k}:${v}`));
+}
+
+function isDefaultScalar<T>(defaultValue: T) {
+  return (value: T | undefined | null) =>
+    value === undefined || value === null || value === defaultValue;
+}
+
+type CompareFn<T> = (a: T, b: T) => 1 | 0 | -1;
+
+function isDefaultList<T>(defaultValue: T[], compareFn?: CompareFn<T>) {
+  const sortedDefault = [...defaultValue].sort(compareFn);
+  return (value: T[] | undefined | null) => {
+    // empty (or missing) counts as default
+    if (value === undefined || value === null || value.length === 0) {
+      return true;
     }
-  }
-  return preset;
+    // different length => not default
+    if (value.length !== sortedDefault.length) {
+      return false;
+    }
+    const sortedValue = [...value].sort(compareFn);
+    return sortedValue.every((b, i) => {
+      const a = sortedDefault[i];
+      return compareFn ? compareFn(a, b) === 0 : a === b;
+    });
+  };
+}
+
+function isDefaultBigNumber(defaultValue: BigNumber) {
+  return (value: BigNumber | undefined | null) =>
+    value === undefined || value === null || value.eq(defaultValue);
 }
 
 /**
- * Serializes filters into a canonical, human-readable search string ('' or '?...').
- * Hand-rolled on purpose: URLSearchParams would percent-encode list commas and
- * render valueless flags as `boosted=`.
+ * Every FilterValues field must have an entry saying how it (de)serializes to
+ * the url/storage search string. Declaration order is the canonical param order.
  */
+export const FIELD_CODECS: { [K in keyof FilterValues]: false | FieldCodec<K> } = {
+  platformIds: {
+    queryKey: 'platform',
+    schema: $platformIds,
+    serialize: serializeList,
+    isDefault: isDefaultList(FILTER_DEFAULTS['platformIds']),
+  },
+  chainIds: {
+    queryKey: 'chain',
+    schema: $chainIds,
+    serialize: serializeList,
+    isDefault: isDefaultList(FILTER_DEFAULTS['chainIds']),
+  },
+  vaultCategory: {
+    queryKey: 'category',
+    schema: $vaultCategory,
+    serialize: serializeList,
+    isDefault: isDefaultList(FILTER_DEFAULTS['vaultCategory']),
+  },
+  assetType: {
+    queryKey: 'type',
+    schema: $assetType,
+    serialize: serializeList,
+    isDefault: isDefaultList(FILTER_DEFAULTS['assetType']),
+  },
+  strategyType: {
+    queryKey: 'product',
+    schema: $strategyType,
+    serialize: serializeScalar,
+    isDefault: isDefaultScalar(FILTER_DEFAULTS['strategyType']),
+  },
+  userCategory: {
+    queryKey: 'tab',
+    schema: $userCategory,
+    serialize: serializeScalar,
+    isDefault: isDefaultScalar(FILTER_DEFAULTS['userCategory']),
+  },
+  searchText: {
+    queryKey: 'q',
+    schema: $searchText,
+    serialize: serializeScalar,
+    isDefault: isDefaultScalar(FILTER_DEFAULTS['searchText']),
+  },
+  minimumUnderlyingTvl: {
+    queryKey: 'mintvl',
+    schema: $minimumUnderlyingTvl,
+    serialize: serializeBigNumber,
+    isDefault: isDefaultBigNumber(FILTER_DEFAULTS['minimumUnderlyingTvl']),
+  },
+  onlyBoosted: {
+    queryKey: 'boosted',
+    schema: $stringBool,
+    serialize: serializeBoolean,
+    isDefault: isDefaultScalar(FILTER_DEFAULTS['onlyBoosted']),
+  },
+  onlyZappable: {
+    queryKey: 'zappable',
+    schema: $stringBool,
+    serialize: serializeBoolean,
+    isDefault: isDefaultScalar(FILTER_DEFAULTS['onlyZappable']),
+  },
+  onlyEarningPoints: {
+    queryKey: 'points',
+    schema: $stringBool,
+    serialize: serializeBoolean,
+    isDefault: isDefaultScalar(FILTER_DEFAULTS['onlyEarningPoints']),
+  },
+  onlyRetired: {
+    queryKey: 'retired',
+    schema: $stringBool,
+    serialize: serializeBoolean,
+    isDefault: isDefaultScalar(FILTER_DEFAULTS['onlyRetired']),
+  },
+  onlyPaused: {
+    queryKey: 'paused',
+    schema: $stringBool,
+    serialize: serializeBoolean,
+    isDefault: isDefaultScalar(FILTER_DEFAULTS['onlyPaused']),
+  },
+  onlyUnstakedClm: false,
+  sort: {
+    queryKey: 'sort',
+    schema: $sort,
+    serialize: serializeScalar,
+    isDefault: isDefaultScalar(FILTER_DEFAULTS['sort']),
+  },
+  sortDirection: {
+    queryKey: 'dir',
+    schema: $sortDirection,
+    serialize: serializeScalar,
+    isDefault: isDefaultScalar(FILTER_DEFAULTS['sortDirection']),
+  },
+  subSort: {
+    queryKey: 'ssort',
+    schema: $subSort,
+    serialize: serializeObject,
+    isDefault(value) {
+      for (const key of keys(FILTER_DEFAULTS['subSort'])) {
+        const a = FILTER_DEFAULTS['subSort'][key];
+        const b = value[key];
+        if (a !== b) {
+          return false;
+        }
+      }
+      return true;
+    },
+  },
+};
+
+/** Map (not object) so attacker-controlled keys like ?__proto__ can't hit the prototype chain */
+const QUERY_KEY_TO_FIELD = new Map<string, keyof FilterValues>(
+  entries(FIELD_CODECS)
+    .map(([field, codec]) => (codec ? ([codec.queryKey, field] as const) : undefined))
+    .filter(isDefined)
+);
+
+/** Serializes filters to a canonical search string ('' or '?...'): codec order, carry params last */
 export function serializeFilters(
   filters: FilteredVaultsPreset,
   options?: SerializeFiltersOptions
 ): string {
-  const parts: string[] = [];
-  const add = (key: string, value?: string) =>
-    parts.push(value === undefined ? key : `${key}=${value}`);
+  const params = new URLSearchParams();
+  for (const [field, codec] of entries(FIELD_CODECS)) {
+    if (codec === false) {
+      continue;
+    }
 
-  if (filters.platformIds?.length) {
-    add('platform', encodeList(filters.platformIds));
-  }
-  if (filters.chainIds?.length) {
-    add('chain', encodeList(filters.chainIds));
-  }
-  if (filters.vaultCategory?.length) {
-    add('category', encodeList(filters.vaultCategory));
-  }
-  if (filters.assetType?.length) {
-    add('type', encodeList(filters.assetType.map(asset => ASSET_TO_PARAM[asset])));
-  }
-  if (filters.strategyType && filters.strategyType !== 'all') {
-    add('product', filters.strategyType);
-  }
-  if (filters.searchText) {
-    add('q', encodeURIComponent(filters.searchText));
-  }
-  if (filters.minimumUnderlyingTvl?.gt(BIG_ZERO)) {
-    add('mintvl', filters.minimumUnderlyingTvl.toString(10));
-  }
-  for (const [param, flag] of FLAG_PARAMS) {
-    if (filters[flag]) {
-      add(param);
+    const value = filters[field];
+    if (value === undefined || value == null) {
+      continue;
+    }
+
+    const isDefault = codec.isDefault as (value: unknown) => boolean;
+    if (isDefault(value)) {
+      continue;
+    }
+
+    const serialize = codec.serialize as (value: unknown) => string;
+    const serialized = serialize(value);
+    if (serialized !== undefined) {
+      params.append(codec.queryKey, serialized);
     }
   }
-  const sort = serializeSort(filters.sort, filters.sortDirection, filters.subSort?.apy);
-  if (sort) {
-    add('sort', sort);
-  }
   for (const [key, value] of options?.carry || []) {
-    add(encodeURIComponent(key), value === '' ? undefined : encodeURIComponent(value));
+    params.append(key, value);
   }
-
-  return parts.length ? `?${parts.join('&')}` : '';
+  const search = params.toString();
+  return search ? `?${search}` : '';
 }
 
-/**
- * Parses a search string into a filter preset. Invalid values are dropped
- * individually; unrecognized params are returned for carry-through.
- * Platform ids pass through unvalidated (platforms load async, ids are mixed-case).
- */
+/** invalid or default-valued params drop but stay recognized; unknown params go to carry */
 export function parseFilterSearch(search: string): ParsedFilterSearch {
   const params = new URLSearchParams(search);
   const preset: FilteredVaultsPreset = {};
@@ -192,72 +330,68 @@ export function parseFilterSearch(search: string): ParsedFilterSearch {
   let recognized = false;
 
   for (const [key, value] of params.entries()) {
-    const flag = PARAM_TO_FLAG[key];
-    if (flag) {
-      // flags are emitted bare; tolerate hand-typed ?boosted=false
-      if (value !== 'false' && value !== '0') {
-        preset[flag] = true;
-      }
-      recognized = true;
+    const field = QUERY_KEY_TO_FIELD.get(key);
+    if (field === undefined) {
+      carry.push([key, value]);
       continue;
     }
-    switch (key) {
-      case 'platform':
-        preset.platformIds = splitList(value);
-        recognized = true;
-        break;
-      case 'chain':
-        preset.chainIds = splitList(value.toLowerCase()).filter(isChainId);
-        recognized = true;
-        break;
-      case 'category':
-        preset.vaultCategory = splitList(value.toLowerCase()).filter(isVaultCategory);
-        recognized = true;
-        break;
-      case 'type':
-        preset.assetType = splitList(value.toLowerCase())
-          .map(asset => PARAM_TO_ASSET[asset])
-          .filter(isDefined);
-        recognized = true;
-        break;
-      case 'product': {
-        const strategy = value.toLowerCase();
-        if (isStrategyValue(strategy)) {
-          preset.strategyType = strategy;
-        }
-        recognized = true;
-        break;
+    const codec = FIELD_CODECS[field];
+    if (codec === false) {
+      continue;
+    }
+
+    recognized = true;
+    // invalid input fails the schema (skip); valid-but-default is dropped so preset stays sparse
+    const result = safeParse(codec.schema, value);
+    if (result.success) {
+      const isDefault = codec.isDefault as (value: unknown) => boolean;
+      if (!isDefault(result.output)) {
+        // ts cannot correlate field and parsed value through the map lookup
+        (preset as Record<keyof FilterValues, unknown>)[field] = result.output;
       }
-      case 'q':
-        preset.searchText = value;
-        recognized = true;
-        break;
-      case 'mintvl': {
-        const tvl = new BigNumber(value);
-        if (!tvl.isNaN() && tvl.gt(BIG_ZERO)) {
-          preset.minimumUnderlyingTvl = tvl;
-        }
-        recognized = true;
-        break;
-      }
-      case 'sort':
-        Object.assign(preset, parseSort(value));
-        recognized = true;
-        break;
-      default:
-        carry.push([key, value]);
-        break;
     }
   }
 
   return { preset, recognized, carry };
 }
 
-/** Canonical form of a search string, used for fixed-point comparisons and re-serialization */
+/** Canonical form of a search string (parse + re-serialize) */
 export function canonicalizeSearch(search: string, options?: SerializeFiltersOptions): string {
   const { preset, carry } = parseFilterSearch(search);
   return serializeFilters(preset, {
     ...options,
     carry: options?.carry ? [...carry, ...options.carry] : carry,
   });
+}
+
+export type FilterUrlSyncDecision = {
+  /** canonical form of the observed url; caller must store it as the new lastSeenUrl */
+  seenUrl: string;
+  apply?: FilteredVaultsPreset;
+  write?: string;
+};
+
+/** inbound (url moved with differing filters) beats outbound (settled state written out); comparisons are canonical */
+export function decideFilterUrlSync(
+  locationSearch: string,
+  lastSeenUrl: string | undefined,
+  appliedSearch: string,
+  settled: boolean
+): FilterUrlSyncDecision {
+  const { preset, recognized, carry } = parseFilterSearch(locationSearch);
+  const urlNow = serializeFilters(preset, { carry });
+
+  if (urlNow !== lastSeenUrl && recognized && serializeFilters(preset) !== appliedSearch) {
+    return { seenUrl: urlNow, apply: preset };
+  }
+
+  // only write settled values; mid-debounce state may still change
+  if (settled) {
+    const target = canonicalizeSearch(appliedSearch, { carry });
+    if (target !== urlNow) {
+      return { seenUrl: urlNow, write: target };
+    }
+  }
+
+  return { seenUrl: urlNow };
 }

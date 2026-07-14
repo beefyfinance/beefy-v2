@@ -7,9 +7,9 @@ import { askForWalletConnection, doDisconnectWallet } from '../../../../../data/
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { selectIsUserBalanceAvailable } from '../../../../../data/selectors/balance.ts';
 import {
-  selectFilterSearchText,
-  selectFilterUserCategory,
-  selectHasActiveFilterExcludingUserCategoryAndSort,
+  selectFilterAppliedHasActiveExcludingUserCategoryAndSort,
+  selectFilterAppliedSearchText,
+  selectFilterAppliedUserCategory,
 } from '../../../../../data/selectors/filtered-vaults.ts';
 import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet.ts';
 import { hasSearchText } from '../../../../../data/utils/vault-search.ts';
@@ -41,7 +41,7 @@ const NotDepositedMessage = memo(function NotDepositedMessage({ title, text }: M
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const handleViewAll = useCallback(() => {
-    dispatch(filteredVaultsActions.setUserCategory('all'));
+    dispatch(filteredVaultsActions.update({ userCategory: 'all', onlyUnstakedClm: false }));
   }, [dispatch]);
 
   return (
@@ -62,9 +62,10 @@ const LoadingMessage = memo(function LoadingMessage() {
 });
 
 export const NoResults = memo(function NoResults() {
-  const hasActiveFilter = useAppSelector(selectHasActiveFilterExcludingUserCategoryAndSort);
-  const userCategory = useAppSelector(selectFilterUserCategory);
-  const searchText = useAppSelector(selectFilterSearchText);
+  const hasActiveFilter = useAppSelector(selectFilterAppliedHasActiveExcludingUserCategoryAndSort);
+  const userCategory = useAppSelector(selectFilterAppliedUserCategory);
+  // the no-results messaging reflects the settled (applied) search that produced the empty list
+  const searchText = useAppSelector(selectFilterAppliedSearchText);
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
   const userBalanceAvailable = useAppSelector(state =>
     selectIsUserBalanceAvailable(state, walletAddress)

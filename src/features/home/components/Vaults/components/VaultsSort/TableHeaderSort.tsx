@@ -4,14 +4,14 @@ import { SortColumnHeader } from '../../../../../../components/SortColumnHeader/
 import { AVG_APY_PERIODS } from '../../../../../../helpers/apy.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import type {
-  FilteredVaultsState,
+  FilterValues,
   SortType,
   SortWithSubSort,
 } from '../../../../../data/reducers/filtered-vaults-types.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import {
   selectFilterEffectiveSort,
-  selectFilterSearchSortDirection,
+  selectFilterSortDirection,
 } from '../../../../../data/selectors/filtered-vaults.ts';
 import { type FilterSubColumn, SubColumnSort } from './SubColumnSort.tsx';
 
@@ -46,14 +46,16 @@ export const TableHeaderSort = memo(function TableHeaderSort() {
   const dispatch = useAppDispatch();
   // 'relevance' selects no column, so the first click during a search always starts a fresh sort
   const sortField = useAppSelector(selectFilterEffectiveSort);
-  const sortDirection = useAppSelector(selectFilterSearchSortDirection);
+  const sortDirection = useAppSelector(selectFilterSortDirection);
 
   const handleSort = useCallback(
-    (field: FilteredVaultsState['sort']) => {
+    (field: FilterValues['sort']) => {
       if (field === sortField) {
-        dispatch(filteredVaultsActions.setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc'));
+        dispatch(
+          filteredVaultsActions.update({ sortDirection: sortDirection === 'asc' ? 'desc' : 'asc' })
+        );
       } else {
-        dispatch(filteredVaultsActions.setSortFieldAndDirection({ field, direction: 'desc' }));
+        dispatch(filteredVaultsActions.update({ sort: field, sortDirection: 'desc' }));
       }
     },
     [dispatch, sortField, sortDirection]

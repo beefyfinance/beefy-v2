@@ -1,13 +1,13 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { boundedLevenshtein, simplifySearchText } from '../../../helpers/string.ts';
-import type { FilteredVaultsState } from '../reducers/filtered-vaults-types.ts';
+import type { FilterValues } from '../reducers/filtered-vaults-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
 import { buildVaultFilterEnv, vaultPassesFilters } from '../utils/vault-filter.ts';
 import { classifySearchQuery } from '../utils/vault-search.ts';
 import { selectAllChains } from './chains.ts';
-import { selectFilterOptions } from './filtered-vaults.ts';
+import { selectFilterAppliedValues } from './filtered-vaults.ts';
 import { selectAllPlatforms } from './platforms.ts';
 import { selectAllVisibleVaultIds, selectVaultById } from './vaults.ts';
 
@@ -48,7 +48,7 @@ export type SearchNoResultsInfo =
   | { kind: 'retired'; count: number }
   | { kind: 'suggestions'; suggestions: string[] };
 
-export function listActiveBlockerCategories(filters: FilteredVaultsState): BlockerCategory[] {
+export function listActiveBlockerCategories(filters: FilterValues): BlockerCategory[] {
   return ALL_BLOCKER_CATEGORIES.filter(category => {
     switch (category) {
       case 'chain':
@@ -72,9 +72,9 @@ export function listActiveBlockerCategories(filters: FilteredVaultsState): Block
 }
 
 export function clearBlockerCategories(
-  filters: FilteredVaultsState,
+  filters: FilterValues,
   categories: readonly BlockerCategory[]
-): FilteredVaultsState {
+): FilterValues {
   const cleared = { ...filters };
   for (const category of categories) {
     switch (category) {
@@ -109,7 +109,7 @@ export function clearBlockerCategories(
   return cleared;
 }
 
-function countMatching(state: BeefyState, filters: FilteredVaultsState): number {
+function countMatching(state: BeefyState, filters: FilterValues): number {
   const env = buildVaultFilterEnv(state, filters);
   let count = 0;
   for (const vaultId of selectAllVisibleVaultIds(state)) {
@@ -120,7 +120,7 @@ function countMatching(state: BeefyState, filters: FilteredVaultsState): number 
   return count;
 }
 
-function anyMatching(state: BeefyState, filters: FilteredVaultsState): boolean {
+function anyMatching(state: BeefyState, filters: FilterValues): boolean {
   const env = buildVaultFilterEnv(state, filters);
   return selectAllVisibleVaultIds(state).some(vaultId =>
     vaultPassesFilters(state, selectVaultById(state, vaultId), filters, env)
@@ -166,10 +166,7 @@ function computeDidYouMean(state: BeefyState, searchText: string): string[] {
     .map(entry => entry.display);
 }
 
-function computeSearchNoResultsInfo(
-  state: BeefyState,
-  filters: FilteredVaultsState
-): SearchNoResultsInfo {
+function computeSearchNoResultsInfo(state: BeefyState, filters: FilterValues): SearchNoResultsInfo {
   const queryKind = classifySearchQuery(filters.searchText);
   if (queryKind === 'address-too-short') {
     return { kind: 'address-too-short' };
@@ -208,12 +205,10 @@ function computeSearchNoResultsInfo(
 }
 
 // identity cache for a stable useAppSelector result; renews each recalc (counts use polled data)
-let cache:
-  | { filters: FilteredVaultsState; vaultIds: unknown; info: SearchNoResultsInfo }
-  | undefined;
+let cache: { filters: FilterValues; vaultIds: unknown; info: SearchNoResultsInfo } | undefined;
 
 export function selectSearchNoResultsInfo(state: BeefyState): SearchNoResultsInfo {
-  const filters = selectFilterOptions(state);
+  const filters = selectFilterAppliedValues(state);
   const vaultIds = selectAllVisibleVaultIds(state);
   if (!cache || cache.filters !== filters || cache.vaultIds !== vaultIds) {
     cache = { filters, vaultIds, info: computeSearchNoResultsInfo(state, filters) };

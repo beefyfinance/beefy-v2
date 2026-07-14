@@ -6,13 +6,13 @@ import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vau
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
   selectFilterAvgApySort,
-  selectFilterSearchSortField,
+  selectFilterSort,
 } from '../../../../../data/selectors/filtered-vaults.ts';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
 import { ToggleButtons } from '../../../../../../components/ToggleButtons/ToggleButtons.tsx';
 import type {
   AvgApySortType,
-  FilteredVaultsState,
+  FilterValues,
   SubSortsState,
 } from '../../../../../data/reducers/filtered-vaults-types.ts';
 import {
@@ -21,7 +21,7 @@ import {
   ScrollableDrawer,
 } from '../../../../../../components/ScrollableDrawer/ScrollableDrawer.tsx';
 
-type SortKey = FilteredVaultsState['sort'];
+type SortKey = FilterValues['sort'];
 type SortKeysWithSubSort = keyof SubSortsState;
 type SubSortValuesOf<T extends SortKey> =
   T extends SortKeysWithSubSort ? SubSortsState[T] : 'default';
@@ -92,7 +92,7 @@ type SortContentProps = {
 const SortContent = memo<SortContentProps>(function SortContent({ onClose, open }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const sortField = useAppSelector(selectFilterSearchSortField);
+  const sortField = useAppSelector(selectFilterSort);
   const subSortApy = useAppSelector(selectFilterAvgApySort);
   const [pendingState, setPendingState] = useState<PendingSort>(() =>
     sortField === 'apy' ?
@@ -117,15 +117,14 @@ const SortContent = memo<SortContentProps>(function SortContent({ onClose, open 
 
   const handleApply = useCallback(() => {
     if (pendingState.changed) {
-      dispatch(filteredVaultsActions.setSort(pendingState.sort));
-      if (pendingState.sort === 'apy') {
-        dispatch(
-          filteredVaultsActions.setSubSort({
-            column: pendingState.sort,
-            value: pendingState.subSort || 'default',
-          })
-        );
-      }
+      dispatch(
+        filteredVaultsActions.update({
+          sort: pendingState.sort,
+          subSort: {
+            apy: pendingState.sort === 'apy' ? pendingState.subSort || 'default' : 'default',
+          },
+        })
+      );
     }
 
     onClose();

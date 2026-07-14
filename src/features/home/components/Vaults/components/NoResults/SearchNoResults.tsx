@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
+import type { FilteredVaultsPreset } from '../../../../../data/reducers/filtered-vaults-types.ts';
 import {
   type BlockerCategory,
   FLAG_KEYS,
@@ -16,32 +17,34 @@ import { Message } from './Message.tsx';
 function dispatchClearCategory(dispatch: BeefyDispatchFn, category: BlockerCategory) {
   switch (category) {
     case 'chain':
-      dispatch(filteredVaultsActions.setChainIds([]));
+      dispatch(filteredVaultsActions.update({ chainIds: [] }));
       break;
     case 'platform':
-      dispatch(filteredVaultsActions.setPlatformIds([]));
+      dispatch(filteredVaultsActions.update({ platformIds: [] }));
       break;
     case 'category':
-      dispatch(filteredVaultsActions.setVaultCategory([]));
+      dispatch(filteredVaultsActions.update({ vaultCategory: [] }));
       break;
     case 'type':
-      dispatch(filteredVaultsActions.setAssetType([]));
+      dispatch(filteredVaultsActions.update({ assetType: [] }));
       break;
     case 'product':
-      dispatch(filteredVaultsActions.setStrategyType('all'));
+      dispatch(filteredVaultsActions.update({ strategyType: 'all' }));
       break;
-    case 'flags':
+    case 'flags': {
+      const cleared: FilteredVaultsPreset = {};
       for (const filter of FLAG_KEYS) {
-        dispatch(filteredVaultsActions.setBoolean({ filter, value: false }));
+        cleared[filter] = false;
       }
+      dispatch(filteredVaultsActions.update(cleared));
       break;
+    }
     case 'mintvl':
-      dispatch(
-        filteredVaultsActions.setBigNumber({ filter: 'minimumUnderlyingTvl', value: BIG_ZERO })
-      );
+      dispatch(filteredVaultsActions.update({ minimumUnderlyingTvl: BIG_ZERO }));
       break;
     case 'userCategory':
-      dispatch(filteredVaultsActions.setUserCategory('all'));
+      // userCategory changes reset onlyUnstakedClm, matching the filter control
+      dispatch(filteredVaultsActions.update({ userCategory: 'all', onlyUnstakedClm: false }));
       break;
   }
 }
@@ -50,7 +53,7 @@ const ClearSearchButton = memo(function ClearSearchButton() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const handleClear = useCallback(() => {
-    dispatch(filteredVaultsActions.setSearchText(''));
+    dispatch(filteredVaultsActions.update({ searchText: '' }));
   }, [dispatch]);
   return <Button onClick={handleClear}>{t('NoResults-ClearSearch')}</Button>;
 });
@@ -91,7 +94,7 @@ const RetiredMatches = memo(function RetiredMatches({ count }: { count: number }
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const handleShowRetired = useCallback(() => {
-    dispatch(filteredVaultsActions.setBoolean({ filter: 'onlyRetired', value: true }));
+    dispatch(filteredVaultsActions.update({ onlyRetired: true }));
   }, [dispatch]);
 
   return (
@@ -127,7 +130,7 @@ const Suggestions = memo(function Suggestions({ suggestions }: { suggestions: st
               <Chip
                 key={suggestion}
                 type="button"
-                onClick={() => dispatch(filteredVaultsActions.setSearchText(suggestion))}
+                onClick={() => dispatch(filteredVaultsActions.update({ searchText: suggestion }))}
               >
                 {suggestion}
               </Chip>

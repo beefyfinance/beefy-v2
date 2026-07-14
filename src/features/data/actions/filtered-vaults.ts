@@ -1,17 +1,14 @@
 import { orderBy, sortBy } from 'lodash-es';
 import { shouldVaultShowInterest, type VaultEntity } from '../entities/vault.ts';
 import type { TotalApy } from '../reducers/apy-types.ts';
-import {
-  type FilteredVaultsState,
-  isRelevanceSortActive,
-} from '../reducers/filtered-vaults-types.ts';
+import { type FilterValues, isRelevanceSortActive } from '../reducers/filtered-vaults-types.ts';
 import { selectVaultAvgApy, selectVaultTotalApy } from '../selectors/apy.ts';
 import { selectUserVaultBalanceInUsdIncludingDisplaced } from '../selectors/balance.ts';
 import {
   selectIsVaultPrestakedBoost,
   selectVaultsActiveBoostPeriodFinish,
 } from '../selectors/boosts.ts';
-import { selectFilterOptions } from '../selectors/filtered-vaults.ts';
+import { selectFilterAppliedValues } from '../selectors/filtered-vaults.ts';
 import { selectVaultTvl } from '../selectors/tvl.ts';
 import {
   selectAllVisibleVaultIds,
@@ -44,7 +41,7 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
   'filtered-vaults/recalculateFilteredVaults',
   async ({ filtersChanged, sortChanged, dataChanged }, { getState }) => {
     const state = getState();
-    const filterOptions = selectFilterOptions(state);
+    const filterOptions = selectFilterAppliedValues(state);
 
     // Recalculate filtered?
     const searchScores = new Map<VaultEntity['id'], number>();
@@ -67,7 +64,10 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
     // score over the FINAL set: the search check runs before minUnderlyingTvl, so the map also
     // holds excluded vaults whose scores must not decide ranking
     const searchRanked =
-      isRelevanceSortActive(filterOptions) && hasDiscriminatingScores(filteredVaults, searchScores);
+      isRelevanceSortActive({
+        searchText: filterOptions.searchText,
+        sortPickedDuringSearch: state.ui.filteredVaults.sortPickedDuringSearch,
+      }) && hasDiscriminatingScores(filteredVaults, searchScores);
     if (dataChanged || filtersChanged || sortChanged) {
       if (searchRanked) {
         // scores always fresh: sort-only dispatches imply a picked sort, which disables relevance
@@ -95,7 +95,7 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
 function applySelectedSort(
   state: BeefyState,
   vaults: VaultEntity[],
-  filterOptions: FilteredVaultsState
+  filterOptions: FilterValues
 ): VaultEntity['id'][] {
   switch (filterOptions.sort) {
     case 'apy':
@@ -155,7 +155,7 @@ function applyRelevanceSort(
 function applyDefaultSort(
   state: BeefyState,
   vaults: VaultEntity[],
-  filters: FilteredVaultsState
+  filters: FilterValues
 ): VaultEntity['id'][] {
   const vaultsToPin = new Set<VaultEntity['id']>(
     vaults
@@ -185,7 +185,7 @@ function applyDefaultSort(
 function applyApySort(
   state: BeefyState,
   vaults: VaultEntity[],
-  filters: FilteredVaultsState,
+  filters: FilterValues,
   fields: (keyof TotalApy)[]
 ): VaultEntity['id'][] {
   return orderBy(
@@ -224,7 +224,7 @@ function applyApySort(
 function applyTvlSort(
   state: BeefyState,
   vaults: VaultEntity[],
-  filters: FilteredVaultsState
+  filters: FilterValues
 ): VaultEntity['id'][] {
   return orderBy(
     vaults,
@@ -243,7 +243,7 @@ function applyTvlSort(
 function applyDepositValueSort(
   state: BeefyState,
   vaults: VaultEntity[],
-  filters: FilteredVaultsState
+  filters: FilterValues
 ): VaultEntity['id'][] {
   return orderBy(
     vaults,

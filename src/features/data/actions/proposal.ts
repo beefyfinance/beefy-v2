@@ -6,13 +6,14 @@ import type {
 import { getBeefyApi } from '../apis/instances.ts';
 import type { ProposalEntity } from '../entities/proposal.ts';
 import { selectAllProposalIdsBySpace } from '../selectors/proposals.ts';
+import { storageGet, storageSet } from '../../../helpers/storage.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 
 const READ_STORAGE_KEY = 'readProposals';
 
 function getReadProposals(): ProposalEntity['id'][] {
   try {
-    const readStorage = window.localStorage.getItem('readProposals');
+    const readStorage = storageGet(READ_STORAGE_KEY);
     if (readStorage && readStorage.startsWith('[') && readStorage.endsWith(']')) {
       const read = JSON.parse(readStorage);
       if (Array.isArray(read) && read.every((id: unknown) => typeof id === 'string')) {
@@ -27,21 +28,9 @@ function getReadProposals(): ProposalEntity['id'][] {
 }
 
 function setReadProposals(read: ProposalEntity['id'][], joinExisting: boolean = false) {
-  try {
-    if (joinExisting) {
-      const existing = getReadProposals();
-      const joined = uniq([...existing, ...read]);
-      window.localStorage.setItem(READ_STORAGE_KEY, JSON.stringify(joined));
-      return joined;
-    } else {
-      window.localStorage.setItem(READ_STORAGE_KEY, JSON.stringify(read));
-      return read;
-    }
-  } catch {
-    // ignore
-  }
-
-  return read;
+  const toStore = joinExisting ? uniq([...getReadProposals(), ...read]) : read;
+  storageSet(READ_STORAGE_KEY, JSON.stringify(toStore));
+  return toStore;
 }
 
 export type FetchActiveProposalsFulfilledPayload = {

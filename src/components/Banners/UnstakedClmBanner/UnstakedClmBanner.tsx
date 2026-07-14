@@ -14,14 +14,7 @@ export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
   const navigate = useNavigate();
   const unstakedIds = useAppSelector(selectUserUnstakedClms);
   const handleFilter = useCallback(() => {
-    dispatch(filteredVaultsActions.reset());
-    dispatch(filteredVaultsActions.setUserCategory('deposited'));
-    dispatch(
-      filteredVaultsActions.setBoolean({
-        filter: 'onlyUnstakedClm',
-        value: true,
-      })
-    );
+    dispatch(filteredVaultsActions.set({ userCategory: 'deposited', onlyUnstakedClm: true }));
     navigate('/');
   }, [dispatch, navigate]);
 

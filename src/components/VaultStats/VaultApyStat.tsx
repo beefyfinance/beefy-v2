@@ -3,7 +3,7 @@ import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectApyVaultUIData } from '../../features/data/selectors/apy.ts';
-import { selectFilterAvgApySort } from '../../features/data/selectors/filtered-vaults.ts';
+import { selectFilterAppliedAvgApySort } from '../../features/data/selectors/filtered-vaults.ts';
 import { formatAvgApy, formatTotalApy } from '../../helpers/format.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import InfoRoundedSquare from '../../images/icons/info-rounded-square.svg?react';
@@ -26,7 +26,7 @@ export const VaultApyStat = memo(function VaultApyStat({
 }: VaultApyStatProps) {
   const { t } = useTranslation();
   const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
-  const subSortApy = useAppSelector(selectFilterAvgApySort);
+  const subSortApy = useAppSelector(selectFilterAppliedAvgApySort);
 
   const label =
     type === 'daily' ? t('VaultStat-DAILY')

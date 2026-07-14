@@ -1,40 +1,18 @@
 import BigNumber from 'bignumber.js';
 import { describe, expect, it } from 'vitest';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
-import { FilterContent, type FilteredVaultsState } from '../reducers/filtered-vaults-types.ts';
+import { FilterContent, type FilterValues } from '../reducers/filtered-vaults-types.ts';
 import type { BeefyState } from '../store/types.ts';
+import { FILTER_DEFAULTS } from '../utils/filter-values.ts';
 import {
   clearBlockerCategories,
   listActiveBlockerCategories,
   selectSearchNoResultsInfo,
 } from './no-results.ts';
 
-function makeFilters(overrides: Partial<FilteredVaultsState> = {}): FilteredVaultsState {
+function makeFilters(overrides: Partial<FilterValues> = {}): FilterValues {
   return {
-    reseted: false,
-    sort: 'default',
-    sortDirection: 'desc',
-    sortPickedDuringSearch: false,
-    subSort: { apy: 'default' },
-    vaultCategory: [],
-    userCategory: 'all',
-    strategyType: 'all',
-    assetType: [],
+    ...FILTER_DEFAULTS,
     searchText: 'cbbtc',
-    recalculatedForSearchText: 'cbbtc',
-    searchRanked: false,
-    chainIds: [],
-    platformIds: [],
-    onlyRetired: false,
-    onlyPaused: false,
-    onlyBoosted: false,
-    onlyZappable: false,
-    onlyEarningPoints: false,
-    onlyUnstakedClm: false,
-    filteredVaultIds: [],
-    sortedFilteredVaultIds: [],
-    minimumUnderlyingTvl: BIG_ZERO,
-    filterContent: FilterContent.Filter,
     ...overrides,
   };
 }
@@ -128,7 +106,7 @@ type FixtureVault = {
 };
 
 // minimal state satisfying every selector the diagnosis predicate touches for these filters
-function makeState(vaults: FixtureVault[], filters: FilteredVaultsState): BeefyState {
+function makeState(vaults: FixtureVault[], filters: FilterValues): BeefyState {
   const chainIds = [...new Set([...vaults.map(v => v.chainId), ...filters.chainIds])];
   const platformIds = [...new Set(vaults.map(v => v.platformId))];
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -173,7 +151,16 @@ function makeState(vaults: FixtureVault[], filters: FilteredVaultsState): BeefyS
       },
     },
     ui: {
-      filteredVaults: filters,
+      filteredVaults: {
+        pending: filters,
+        applied: filters,
+        sortPickedDuringSearch: false,
+        filteredVaultIds: [],
+        sortedFilteredVaultIds: [],
+        recalculatedForSearchText: filters.searchText,
+        searchRanked: false,
+        filterContent: FilterContent.Filter,
+      },
     },
   } as unknown as BeefyState;
 }

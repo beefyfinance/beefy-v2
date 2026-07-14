@@ -27,7 +27,9 @@ export const VaultCategoryCheckList = memo(function VaultCategoryCheckList() {
   const handleChange = useCallback(
     (selected: VaultCategoryType[]) => {
       dispatch(
-        filteredVaultsActions.setVaultCategory(selected.length === options.length ? [] : selected)
+        filteredVaultsActions.update({
+          vaultCategory: selected.length === options.length ? [] : selected,
+        })
       );
     },
     [dispatch, options]

@@ -88,6 +88,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
     "utf-8-validate": "^5.0.10",
+    "valibot": "^1.4.2",
     "viem": "^2.37.6"
   },
   "overrides": {

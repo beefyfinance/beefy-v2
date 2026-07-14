@@ -1,6 +1,4 @@
 import { isAnyOf, isFulfilled } from '@reduxjs/toolkit';
-import { REHYDRATE } from 'redux-persist/es/constants';
-import type { RehydrateAction } from 'redux-persist/es/types';
 import { recalculateAvgApyAction, recalculateTotalApyAction } from '../actions/apy.ts';
 import {
   fetchAllBalanceAction,
@@ -16,7 +14,9 @@ import { initPromos, promosRecalculatePinned } from '../actions/promos.ts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
 import { fetchAllVaults } from '../actions/vaults.ts';
 import { calculateZapAvailabilityAction } from '../actions/zap.ts';
+import { storeFilters } from '../reducers/filtered-vaults-storage.ts';
 import { filteredVaultsActions } from '../reducers/filtered-vaults.ts';
+import { diffFilterValues } from '../utils/filter-values.ts';
 import {
   accountHasChanged,
   chainHasChanged,
@@ -24,22 +24,10 @@ import {
   userDidConnect,
   walletHasDisconnected,
 } from '../reducers/wallet/wallet.ts';
+import { selectActiveChainIds } from '../selectors/chains.ts';
 import { selectIsConfigAvailable } from '../selectors/data-loader/config.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
 import { startAppListening } from './listener-middleware.ts';
-
-type UnknownRehydrateAction = RehydrateAction & {
-  [extraProps: string]: unknown;
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isRehydrateAction(action: any): action is UnknownRehydrateAction {
-  return action.type === REHYDRATE;
-}
-
-function isRehydrateFiltersAction(action: unknown): action is UnknownRehydrateAction {
-  return isRehydrateAction(action) && action.key === 'filters';
-}
 
 const hasDataLoaded = isFulfilled(fetchChainConfigs, fetchAllVaults, fetchPlatforms, initPromos);
 
@@ -55,25 +43,10 @@ const hasDataChanged = isFulfilled(
   recalculateAvgApyAction
 );
 
-const hasFiltersChanged = isAnyOf(
+const hasPendingChanged = isAnyOf(
   filteredVaultsActions.reset,
-  filteredVaultsActions.setVaultCategory,
-  filteredVaultsActions.setUserCategory,
-  filteredVaultsActions.setStrategyType,
-  filteredVaultsActions.setAssetType,
-  filteredVaultsActions.setSearchText,
-  filteredVaultsActions.setChainIds,
-  filteredVaultsActions.setPlatformIds,
-  filteredVaultsActions.setBoolean,
-  filteredVaultsActions.setBigNumber,
-  isRehydrateFiltersAction
-);
-
-const hasSortChanged = isAnyOf(
-  filteredVaultsActions.setSort,
-  filteredVaultsActions.setSortDirection,
-  filteredVaultsActions.setSortFieldAndDirection,
-  filteredVaultsActions.setSubSort
+  filteredVaultsActions.set,
+  filteredVaultsActions.update
 );
 
 const hasWalletChanged = isAnyOf(
@@ -84,15 +57,31 @@ const hasWalletChanged = isAnyOf(
   chainHasChangedToUnsupported
 );
 
-const hasAnyChanged = isAnyOf(hasFiltersChanged, hasSortChanged);
-
 export function addFilteredVaultsListeners() {
+  /**
+   * This middleware persists the applied filters whenever they change
+   */
+  startAppListening({
+    matcher: isAnyOf(
+      fetchChainConfigs.fulfilled,
+      filteredVaultsActions.applyPending,
+      filteredVaultsActions.setFromUrl,
+      filteredVaultsActions.reconcile
+    ),
+    effect: (_action, { getState }) => {
+      storeFilters(getState().ui.filteredVaults.applied);
+    },
+  });
+
   /**
    * This middleware listens for when all actions that have loaded data have been fulfilled and recalculates the filtered vaults
    */
   startAppListening({
     matcher: hasDataLoaded,
-    effect: async (_action, { dispatch, condition, cancelActiveListeners, unsubscribe }) => {
+    effect: async (
+      _action,
+      { dispatch, getState, condition, cancelActiveListeners, unsubscribe }
+    ) => {
       // Stop listening for this
       unsubscribe();
       cancelActiveListeners();
@@ -102,6 +91,21 @@ export function addFilteredVaultsListeners() {
 
       // Start listening for changes
       listenForChanges();
+
+      // reconcile potentially outdated filters from async loaded data
+      dispatch(
+        filteredVaultsActions.reconcile({
+          platformIds: getState().entities.platforms.allIds,
+          chainIds: selectActiveChainIds(getState()),
+        })
+      );
+
+      // apply pending changes dispatched before listeners started (e.g. during load)
+      const slice = getState().ui.filteredVaults;
+      const { filtersChanged, sortChanged } = diffFilterValues(slice.pending, slice.applied);
+      if (filtersChanged || sortChanged) {
+        dispatch(filteredVaultsActions.applyPending());
+      }
 
       // Calculate
       dispatch(recalculateFilteredVaultsAction({ dataChanged: true }));
@@ -145,20 +149,36 @@ export function addFilteredVaultsListeners() {
     });
 
     /**
-     * This middleware listens for actions that change the filters or sort and recalculates the filtered vaults
+     * This middleware applies pending filter changes to `applied` and recalculates the filtered vaults
      */
     startAppListening({
-      matcher: hasAnyChanged,
-      effect: async (action, { dispatch, delay, cancelActiveListeners }) => {
-        // Debounce
+      matcher: hasPendingChanged,
+      effect: async (_action, { dispatch, delay, getState, cancelActiveListeners }) => {
+        // debounce to batch filter updates
         cancelActiveListeners();
         await delay(50);
 
-        // Recalculate
+        // flags come from the diff, not the action, so a cancelled run's changes are never lost
+        const slice = getState().ui.filteredVaults;
+        const { filtersChanged, sortChanged } = diffFilterValues(slice.pending, slice.applied);
+        if (!filtersChanged && !sortChanged) {
+          return;
+        }
+
+        dispatch(filteredVaultsActions.applyPending());
+        await dispatch(recalculateFilteredVaultsAction({ filtersChanged, sortChanged }));
+      },
+    });
+
+    /**
+     * This middleware recalculates immediately when a url applies filters (setFromUrl skips the apply debounce)
+     */
+    startAppListening({
+      matcher: isAnyOf(filteredVaultsActions.setFromUrl),
+      effect: async (_action, { dispatch, cancelActiveListeners }) => {
+        cancelActiveListeners();
         await dispatch(
-          recalculateFilteredVaultsAction(
-            hasFiltersChanged(action) ? { filtersChanged: true } : { sortChanged: true }
-          )
+          recalculateFilteredVaultsAction({ filtersChanged: true, sortChanged: true })
         );
       },
     });

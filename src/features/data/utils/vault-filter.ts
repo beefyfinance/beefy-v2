@@ -7,7 +7,7 @@ import {
   isVaultRetired,
   type VaultEntity,
 } from '../entities/vault.ts';
-import type { FilteredVaultsState } from '../reducers/filtered-vaults-types.ts';
+import type { FilterValues } from '../reducers/filtered-vaults-types.ts';
 import { selectHasUserDepositInVault, selectUserBalanceOfToken } from '../selectors/balance.ts';
 import { selectActiveChainIds, selectAllChainIds } from '../selectors/chains.ts';
 import {
@@ -40,7 +40,7 @@ export type VaultFilterEnv = {
  */
 export function buildVaultFilterEnv(
   state: BeefyState,
-  filters: FilteredVaultsState,
+  filters: FilterValues,
   searchScores?: Map<VaultEntity['id'], number>
 ): VaultFilterEnv {
   const allChainIds =
@@ -87,7 +87,7 @@ export function buildVaultFilterEnv(
 export function vaultPassesFilters(
   state: BeefyState,
   vault: VaultEntity,
-  filterOptions: FilteredVaultsState,
+  filterOptions: FilterValues,
   env: VaultFilterEnv
 ): boolean {
   // Chains
