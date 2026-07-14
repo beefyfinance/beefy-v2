@@ -68,7 +68,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xC1fd739f2Bf1Aad96F04d6AE35ED04DA4D68366b/zap/in?chain=sonic",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xC1fd739f2Bf1Aad96F04d6AE35ED04DA4D68366b/zap/out?chain=sonic",
-    "network": "sonic"
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xb1e25689D55734FD3ffFc939c4C3Eb52DFf8A794"]
+      }
+    ]
   },
   {
     "id": "swapx-ichi-strike-usdc",
