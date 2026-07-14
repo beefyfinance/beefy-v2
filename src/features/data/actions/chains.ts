@@ -4,6 +4,7 @@ import type { ChainConfig } from '../apis/config-types.ts';
 import { getConfigApi } from '../apis/instances.ts';
 import { rpcClientManager } from '../apis/rpc-contract/rpc-manager.ts';
 import type { ChainEntity, ChainId } from '../entities/chain.ts';
+import { storageGet, storageSet } from '../../../helpers/storage.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 
 export interface FulfilledPayload {
@@ -11,9 +12,11 @@ export interface FulfilledPayload {
   localRpcs: Partial<Record<ChainEntity['id'], string[]>>;
 }
 
+const RPCS_STORAGE_KEY = 'activeRpcsByChainId';
+
 const fetchLocalStoredRpcs = (): Partial<Record<ChainEntity['id'], string[]>> => {
   try {
-    const readStorage = window?.localStorage.getItem('activeRpcsByChainId');
+    const readStorage = storageGet(RPCS_STORAGE_KEY);
     if (readStorage && readStorage.startsWith('{') && readStorage.endsWith('}')) {
       const parsedValues = JSON.parse(readStorage);
       if (
@@ -25,7 +28,7 @@ const fetchLocalStoredRpcs = (): Partial<Record<ChainEntity['id'], string[]>> =>
         return parsedValues;
       }
     }
-    window?.localStorage.setItem('activeRpcsByChainId', JSON.stringify({}));
+    storageSet(RPCS_STORAGE_KEY, JSON.stringify({}));
   } catch {
     console.warn('Failed to read activeRpcsByChainId from localStorage');
   }
@@ -35,11 +38,11 @@ const fetchLocalStoredRpcs = (): Partial<Record<ChainEntity['id'], string[]>> =>
 
 const addLocalStoredRpcs = (chainId: ChainId, rpc: string) => {
   try {
-    const readStorage = window?.localStorage.getItem('activeRpcsByChainId');
+    const readStorage = storageGet(RPCS_STORAGE_KEY);
     const parsedValues = readStorage ? JSON.parse(readStorage) : {};
     if (isPlainObject(parsedValues)) {
       parsedValues[chainId] = [rpc];
-      window?.localStorage.setItem('activeRpcsByChainId', JSON.stringify(parsedValues));
+      storageSet(RPCS_STORAGE_KEY, JSON.stringify(parsedValues));
     }
   } catch {
     console.warn('Failed to write activeRpcsByChainId to localStorage');
@@ -48,12 +51,12 @@ const addLocalStoredRpcs = (chainId: ChainId, rpc: string) => {
 
 const removeLocalStoredRpcs = (chainId: ChainId) => {
   try {
-    const readStorage = window?.localStorage.getItem('activeRpcsByChainId');
+    const readStorage = storageGet(RPCS_STORAGE_KEY);
     const parsedValues = readStorage ? JSON.parse(readStorage) : {};
     if (isPlainObject(parsedValues)) {
       if (parsedValues[chainId]) {
         delete parsedValues[chainId];
-        window?.localStorage.setItem('activeRpcsByChainId', JSON.stringify(parsedValues));
+        storageSet(RPCS_STORAGE_KEY, JSON.stringify(parsedValues));
       }
     }
   } catch {

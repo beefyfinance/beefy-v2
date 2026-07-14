@@ -14,7 +14,7 @@ export const BoostFilterButton = memo(function BoostFilterButton() {
   const dispatch = useAppDispatch();
   const value = useAppSelector(state => selectFilterBoolean(state, 'onlyBoosted'));
   const handleChange = useCallback(() => {
-    dispatch(filteredVaultsActions.setBoolean({ filter: 'onlyBoosted', value: !value }));
+    dispatch(filteredVaultsActions.update({ onlyBoosted: !value }));
   }, [dispatch, value]);
 
   return (
@@ -30,7 +30,7 @@ export const BoostCheckBox = memo(function BoostCheckBox() {
   const dispatch = useAppDispatch();
   const value = useAppSelector(state => selectFilterBoolean(state, 'onlyBoosted'));
   const handleChange = useCallback(() => {
-    dispatch(filteredVaultsActions.setBoolean({ filter: 'onlyBoosted', value: !value }));
+    dispatch(filteredVaultsActions.update({ onlyBoosted: !value }));
   }, [dispatch, value]);
 
   return (

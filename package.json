@@ -34,6 +34,8 @@
     "makeExcludeConfig": "vite-node ./scripts/makeExcludeConfig.ts",
     "updatePlatforms": "vite-node ./scripts/updatePlatforms.ts",
     "updateCctpBridgeFees": "vite-node ./scripts/updateCctpBridgeFees.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "tsc": "tsc --project tsconfig.app.json",
     "tsc:watch": "tsc --project tsconfig.app.json --watch",
     "tsc:scripts": "tsc --project tsconfig.scripts.json",
@@ -86,6 +88,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
     "utf-8-validate": "^5.0.10",
+    "valibot": "^1.4.2",
     "viem": "^2.37.6"
   },
   "overrides": {
@@ -151,6 +154,7 @@
     "vite-node": "^3.2.4",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.5.0",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.7"
   }
 }

@@ -10,7 +10,7 @@ import {
   type VaultEntity,
 } from '../entities/vault.ts';
 import type { TotalApy } from '../reducers/apy-types.ts';
-import type { FilteredVaultsState } from '../reducers/filtered-vaults-types.ts';
+import type { FilterValues } from '../reducers/filtered-vaults-types.ts';
 import { selectVaultAvgApy, selectVaultTotalApy } from '../selectors/apy.ts';
 import {
   selectHasUserDepositInVault,
@@ -23,7 +23,7 @@ import {
 } from '../selectors/boosts.ts';
 import { selectActiveChainIds, selectAllChainIds } from '../selectors/chains.ts';
 import {
-  selectFilterOptions,
+  selectFilterAppliedValues,
   selectFilterPlatformIdsForVault,
   selectIsVaultBlueChip,
   selectIsVaultCorrelated,
@@ -61,7 +61,7 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
   'filtered-vaults/recalculateFilteredVaults',
   async ({ filtersChanged, sortChanged, dataChanged }, { getState }) => {
     const state = getState();
-    const filterOptions = selectFilterOptions(state);
+    const filterOptions = selectFilterAppliedValues(state);
 
     // Recalculate filtered?
     let filteredVaults: VaultEntity[];
@@ -250,7 +250,7 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
 function applyDefaultSort(
   state: BeefyState,
   vaults: VaultEntity[],
-  filters: FilteredVaultsState
+  filters: FilterValues
 ): VaultEntity['id'][] {
   const vaultsToPin = new Set<VaultEntity['id']>(
     vaults
@@ -280,7 +280,7 @@ function applyDefaultSort(
 function applyApySort(
   state: BeefyState,
   vaults: VaultEntity[],
-  filters: FilteredVaultsState,
+  filters: FilterValues,
   fields: (keyof TotalApy)[]
 ): VaultEntity['id'][] {
   return orderBy(
@@ -319,7 +319,7 @@ function applyApySort(
 function applyTvlSort(
   state: BeefyState,
   vaults: VaultEntity[],
-  filters: FilteredVaultsState
+  filters: FilterValues
 ): VaultEntity['id'][] {
   return orderBy(
     vaults,
@@ -338,7 +338,7 @@ function applyTvlSort(
 function applyDepositValueSort(
   state: BeefyState,
   vaults: VaultEntity[],
-  filters: FilteredVaultsState
+  filters: FilterValues
 ): VaultEntity['id'][] {
   return orderBy(
     vaults,

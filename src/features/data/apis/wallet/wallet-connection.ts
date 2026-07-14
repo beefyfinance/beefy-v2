@@ -24,6 +24,7 @@ import appLogo from '../../../../images/bifi-logos/header-logo.svg';
 import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url';
 import type { ChainEntity } from '../../entities/chain.ts';
 import { isDefined } from '../../utils/array-utils.ts';
+import { storageGet, storageRemove, storageSet } from '../../../../helpers/storage.ts';
 import { featureFlag_walletConnectChainId } from '../../utils/feature-flags.ts';
 import { customInjectedWallets } from './custom-injected-wallets.ts';
 import type { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types.ts';
@@ -225,23 +226,15 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   }
 
   private static setLastConnectedWallet(wallet: string | undefined) {
-    try {
-      if (wallet) {
-        window?.localStorage?.setItem('lastConnectedWallet', wallet);
-      } else {
-        window?.localStorage?.removeItem('lastConnectedWallet');
-      }
-    } catch {
-      // silently ignore
+    if (wallet) {
+      storageSet('lastConnectedWallet', wallet);
+    } else {
+      storageRemove('lastConnectedWallet');
     }
   }
 
   private static getLastConnectedWallet(): string | undefined {
-    try {
-      return window?.localStorage?.getItem('lastConnectedWallet') || undefined;
-    } catch {
-      return undefined;
-    }
+    return storageGet('lastConnectedWallet') || undefined;
   }
 
   private static async connect(onboard: OnboardAPI, options?: ConnectOptions) {
