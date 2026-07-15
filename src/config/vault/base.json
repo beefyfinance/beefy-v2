@@ -1081,46 +1081,6 @@
     ]
   },
   {
-    "id": "pancake-cow-base-sol-usdc-vault",
-    "name": "SOL-USDC",
-    "type": "standard",
-    "token": "SOL-USDC",
-    "tokenAddress": "0x58470e3b465d11Ad4bF6dBb6B8AC3Fcc04020D28",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pancakeswap",
-    "earnContractAddress": "0xC859831A35eD80206AA2Feb1b53B327AaFefC6C2",
-    "earnedToken": "mooCowPancakeBaseSOL-USDC",
-    "earnedTokenAddress": "0xC859831A35eD80206AA2Feb1b53B327AaFefC6C2",
-    "oracle": "lps",
-    "oracleId": "pancake-cow-base-sol-usdc",
-    "status": "eol",
-    "createdAt": 1780489401,
-    "retireReason": "replaced",
-    "retiredAt": 1781079682,
-    "platformId": "pancakeswap",
-    "assets": ["SOL", "USDC"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "compounds",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
     "id": "pancake-cow-base-sol-usdc-rp",
     "name": "SOL-USDC Reward Pool",
     "type": "gov",
@@ -3515,8 +3475,10 @@
     "earnedTokenAddress": "0x84Bfa487188d52cDe262e95Ed1eD0163C1Ee58F6",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-giza-usdc-v2",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1777017553,
+    "retireReason": "tvl",
+    "retiredAt": 1784063232,
     "platformId": "aerodrome",
     "assets": ["GIZA", "USDC"],
     "risks": {
@@ -3555,8 +3517,10 @@
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-giza-usdc-v2",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1777017552,
+    "retireReason": "tvl",
+    "retiredAt": 1784063232,
     "platformId": "aerodrome",
     "assets": ["GIZA", "USDC"],
     "risks": {
@@ -3597,8 +3561,10 @@
     "earnedTokenAddress": "0x68CA84155c4Dc07B823A41F8c86205be1605BB97",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-giza-usdc-v2",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1777017552,
+    "retireReason": "tvl",
+    "retiredAt": 1784063232,
     "platformId": "beefy",
     "feeTier": "0.9",
     "tickSpacing": 200,
@@ -9047,8 +9013,10 @@
     "earnedTokenAddress": "0x9fc0a828fbaA3e3deA810c3E8C94c94C09788C6b",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-superoethb",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770718146,
+    "retireReason": "rewards",
+    "retiredAt": 1784063232,
     "platformId": "aerodrome",
     "assets": ["WETH", "superOETHb"],
     "risks": {
@@ -9087,8 +9055,10 @@
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-superoethb",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770718145,
+    "retireReason": "rewards",
+    "retiredAt": 1784063232,
     "platformId": "aerodrome",
     "assets": ["WETH", "superOETHb"],
     "risks": {
@@ -9129,8 +9099,10 @@
     "earnedTokenAddress": "0xbfaE75aE02c5868f9E0e3474fD5F12C52A644472",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-superoethb",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770718145,
+    "retireReason": "rewards",
+    "retiredAt": 1784063232,
     "platformId": "beefy",
     "feeTier": "0.04",
     "tickSpacing": 1,
@@ -18783,8 +18755,10 @@
     "earnedTokenAddress": "0x69F0bB3715334C5A553B01f3D1976F2E7BE58D35",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-rfl-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1749473734,
+    "retireReason": "default",
+    "retiredAt": 1784063232,
     "platformId": "aerodrome",
     "assets": ["RFL", "USDC"],
     "risks": {
@@ -18824,8 +18798,10 @@
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-rfl-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1749473733,
+    "retireReason": "default",
+    "retiredAt": 1784063232,
     "platformId": "aerodrome",
     "assets": ["RFL", "USDC"],
     "risks": {
@@ -18867,8 +18843,10 @@
     "earnedTokenAddress": "0x5Ca9B0B7271bE6b3730e9Dd70961D1adD7e5705c",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-rfl-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1749473733,
+    "retireReason": "default",
+    "retiredAt": 1784063232,
     "platformId": "beefy",
     "feeTier": "1",
     "tickSpacing": 100,
@@ -21694,7 +21672,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xE15578523937ed7F08E8F7a1Fa8a021E07025a08/zap/in?chain=base",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xE15578523937ed7F08E8F7a1Fa8a021E07025a08/zap/out?chain=base",
     "pointStructureIds": ["resolv"],
-    "network": "base"
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x35E5dB674D8e93a03d814FA0ADa70731efe8a4b9"]
+      }
+    ]
   },
   {
     "id": "pendle-eqb-base-usr-24apr25",
@@ -21730,7 +21714,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xE15578523937ed7F08E8F7a1Fa8a021E07025a08/zap/in?chain=base",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xE15578523937ed7F08E8F7a1Fa8a021E07025a08/zap/out?chain=base",
     "pointStructureIds": ["resolv"],
-    "network": "base"
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x35E5dB674D8e93a03d814FA0ADa70731efe8a4b9"]
+      }
+    ]
   },
   {
     "id": "morpho-seamless-cbbtc",
@@ -25299,7 +25289,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x621D4D92E9bed484E6D2Cb8A37d342c804A0908c/zap/in?chain=base",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x621D4D92E9bed484E6D2Cb8A37d342c804A0908c/zap/out?chain=base",
-    "network": "base"
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b"]
+      }
+    ]
   },
   {
     "id": "pendle-eqb-base-virtual-cbbtc-26jun25",
@@ -25334,7 +25330,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x621D4D92E9bed484E6D2Cb8A37d342c804A0908c/zap/in?chain=base",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x621D4D92E9bed484E6D2Cb8A37d342c804A0908c/zap/out?chain=base",
-    "network": "base"
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b"]
+      }
+    ]
   },
   {
     "id": "pendle-eqb-base-musdc-26jun25",
@@ -25369,7 +25371,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x3124D41708edbdC7995A55183e802E3D9d0D5Ef1/zap/in?chain=base",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x3124D41708edbdC7995A55183e802E3D9d0D5Ef1/zap/out?chain=base",
-    "network": "base"
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"]
+      }
+    ]
   },
   {
     "id": "aerodrome-weth-anz",
@@ -26385,8 +26393,10 @@
     "earnedTokenAddress": "0x9C8b97C5cE4CC26082B50A4AE706f0a5b4B83062",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-talent",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1732885347,
+    "retireReason": "default",
+    "retiredAt": 1784063232,
     "platformId": "aerodrome",
     "assets": ["TALENT", "WETH"],
     "risks": {
@@ -26427,8 +26437,10 @@
     "earnedOracleIds": ["AERO"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-talent",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1732885346,
+    "retireReason": "default",
+    "retiredAt": 1784063232,
     "platformId": "aerodrome",
     "assets": ["TALENT", "WETH"],
     "risks": {
@@ -26470,8 +26482,10 @@
     "earnedTokenAddress": "0x48145EBbabEcB70909F78b5FCF4320c80BBBF68E",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-talent",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1732885346,
+    "retireReason": "default",
+    "retiredAt": 1784063232,
     "platformId": "beefy",
     "feeTier": "0.7",
     "tickSpacing": 200,
@@ -42454,8 +42468,10 @@
     "earnedTokenAddress": "0x47AE764B53a4088Fa706fa76711F20ED07fE11d7",
     "oracle": "lps",
     "oracleId": "aerodrome-usdc-usd+",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1703773383,
+    "retireReason": "rewards",
+    "retiredAt": 1784063232,
     "platformId": "aerodrome",
     "assets": ["USDC", "USD+"],
     "risks": {

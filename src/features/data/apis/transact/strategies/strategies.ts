@@ -27,6 +27,7 @@ const strategyLoadersByIdUnchecked = {
   'reward-pool-to-vault': async () =>
     (await import('./RewardPoolToVaultStrategy.ts')).RewardPoolToVaultStrategy,
   balancer: async () => (await import('./balancer/BalancerStrategy.ts')).BalancerStrategy,
+  'pendle-v2': async () => (await import('./pendle-v2/PendleStrategy.ts')).PendleStrategy,
   'cross-chain': async () =>
     (await import('./cross-chain/CrossChainStrategy.ts')).CrossChainStrategy,
   'vault-to-vault-single-token': async () =>

@@ -248,6 +248,30 @@ export type CurveWithdrawOption = ZapBaseWithdrawOption & {
       }
   );
 
+export type PendleV2DepositOption = ZapBaseDepositOption & {
+  strategyId: 'pendle-v2';
+} & (
+    | {
+        via: 'direct';
+        viaToken: TokenEntity;
+      }
+    | {
+        via: 'aggregator';
+      }
+  );
+
+export type PendleV2WithdrawOption = ZapBaseWithdrawOption & {
+  strategyId: 'pendle-v2';
+} & (
+    | {
+        via: 'direct';
+        viaToken: TokenEntity;
+      }
+    | {
+        via: 'aggregator';
+      }
+  );
+
 export type BalancerOptionSingleDirectPart = {
   type: 'single';
   via: 'direct';
@@ -471,6 +495,7 @@ export type DepositOption =
   | VaultComposerDepositOption
   | RewardPoolToVaultDepositOption
   | BalancerDepositOption
+  | PendleV2DepositOption
   | CrossChainDepositOption
   | VaultToVaultSingleTokenDepositOption;
 
@@ -490,6 +515,7 @@ export type WithdrawOption =
   | VaultComposerWithdrawOption
   | RewardPoolToVaultWithdrawOption
   | BalancerWithdrawOption
+  | PendleV2WithdrawOption
   | CrossChainWithdrawOption
   | VaultToVaultSingleTokenWithdrawOption;
 
@@ -857,6 +883,11 @@ export type CurveDepositQuote = BaseZapQuote<CurveDepositOption> & {
 
 export type BalancerDepositQuote = BaseZapQuote<BalancerDepositOption>;
 
+export type PendleV2DepositQuote = BaseZapQuote<PendleV2DepositOption> & {
+  via: 'aggregator' | 'direct';
+  viaToken: TokenEntity;
+};
+
 export type GammaDepositQuote = BaseZapQuote<GammaDepositOption> & {
   lpQuotes: (QuoteResponse | undefined)[];
 };
@@ -904,6 +935,7 @@ export type ZapDepositQuote =
   | VaultComposerZapDepositQuote
   | RewardPoolToVaultDepositQuote
   | BalancerDepositQuote
+  | PendleV2DepositQuote
   | CrossChainDepositQuote
   | VaultToVaultSingleTokenDepositQuote;
 
@@ -977,6 +1009,11 @@ export type BalancerWithdrawQuoteAll = BaseZapQuote<
 
 export type BalancerWithdrawQuote = BalancerWithdrawQuoteSingle | BalancerWithdrawQuoteAll;
 
+export type PendleV2WithdrawQuote = BaseZapQuote<PendleV2WithdrawOption> & {
+  via: 'aggregator' | 'direct';
+  viaToken: TokenEntity;
+};
+
 export type GammaBreakWithdrawQuote = BaseZapQuote<GammaWithdrawOption>;
 export type GammaAggregatorWithdrawQuote = BaseZapQuote<GammaWithdrawOption> & {
   lpQuotes: QuoteResponse[];
@@ -1040,6 +1077,7 @@ export type ZapWithdrawQuote =
   | GovComposerZapWithdrawQuote
   | VaultComposerZapWithdrawQuote
   | BalancerWithdrawQuote
+  | PendleV2WithdrawQuote
   | CrossChainWithdrawQuote
   | VaultToVaultSingleTokenWithdrawQuote;
 
