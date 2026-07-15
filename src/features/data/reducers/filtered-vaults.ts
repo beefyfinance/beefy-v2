@@ -69,15 +69,10 @@ export const filteredVaultsSlice = createSlice({
       sliceState.pending = prune(sliceState.pending);
       sliceState.applied = prune(sliceState.applied);
     },
-    /** middleware-only: moves pending to applied */
-    applyPending(sliceState) {
-      sliceState.applied = sliceState.pending;
-    },
-    /** url-sync only: preset over defaults to pending AND applied at once (urls skip the apply debounce) */
+    /** url-sync only: preset over defaults to pending; the immediate recalc commits it to applied */
     setFromUrl(sliceState, action: PayloadAction<FilteredVaultsPreset>) {
       const values = mergePreset(FILTER_DEFAULTS, action.payload);
       sliceState.pending = values;
-      sliceState.applied = values;
       sliceState.sortPickedDuringSearch = isSortPickedInPreset(values.searchText, values.sort);
     },
     setFilterContent(sliceState, action: PayloadAction<FilterContent>) {
@@ -96,9 +91,10 @@ export const filteredVaultsSlice = createSlice({
         }
       })
       .addCase(recalculateFilteredVaultsAction.fulfilled, (state, action) => {
+        // commit the snapshot the recalc ran against: applied + results update atomically
+        state.applied = action.payload.applied;
         state.filteredVaultIds = action.payload.filtered;
         state.sortedFilteredVaultIds = action.payload.sorted;
-        state.recalculatedForSearchText = action.payload.searchText;
         state.searchRanked = action.payload.searchRanked;
       });
   },

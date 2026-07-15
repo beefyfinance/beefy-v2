@@ -7,6 +7,7 @@ import {
   type AvgApySortType,
   type FilteredVaultsPreset,
   type FilterValues,
+  isRelevanceSortActive,
   SORT_TYPES,
   STRATEGY_TYPES,
   USER_CATEGORIES,
@@ -322,6 +323,18 @@ export function serializeFilters(
   return search ? `?${search}` : '';
 }
 
+export function serializeFilterState(
+  filters: FilterValues,
+  sortPickedDuringSearch: boolean
+): string {
+  // don't serialize `sort` if in relevance sort mode
+  return serializeFilters(
+    isRelevanceSortActive({ searchText: filters.searchText, sortPickedDuringSearch }) ?
+      { ...filters, sort: 'default' }
+    : filters
+  );
+}
+
 /** invalid or default-valued params drop but stay recognized; unknown params go to carry */
 export function parseFilterSearch(search: string): ParsedFilterSearch {
   const params = new URLSearchParams(search);
@@ -371,26 +384,23 @@ export type FilterUrlSyncDecision = {
   write?: string;
 };
 
-/** inbound (url moved with differing filters) beats outbound (settled state written out); comparisons are canonical */
+/** inbound (url moved with differing filters) beats outbound (state written out); comparisons are canonical */
 export function decideFilterUrlSync(
   locationSearch: string,
   lastSeenUrl: string | undefined,
-  appliedSearch: string,
-  settled: boolean
+  stateSearch: string
 ): FilterUrlSyncDecision {
   const { preset, recognized, carry } = parseFilterSearch(locationSearch);
   const urlNow = serializeFilters(preset, { carry });
 
-  if (urlNow !== lastSeenUrl && recognized && serializeFilters(preset) !== appliedSearch) {
+  if (urlNow !== lastSeenUrl && recognized && serializeFilters(preset) !== stateSearch) {
     return { seenUrl: urlNow, apply: preset };
   }
 
-  // only write settled values; mid-debounce state may still change
-  if (settled) {
-    const target = canonicalizeSearch(appliedSearch, { carry });
-    if (target !== urlNow) {
-      return { seenUrl: urlNow, write: target };
-    }
+  // state (pending) drives the url; the pending value is always a complete, valid filter set
+  const target = canonicalizeSearch(stateSearch, { carry });
+  if (target !== urlNow) {
+    return { seenUrl: urlNow, write: target };
   }
 
   return { seenUrl: urlNow };

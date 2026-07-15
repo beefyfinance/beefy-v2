@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
 import { FILTER_DEFAULTS } from '../utils/filter-values.ts';
 import { filteredVaultsActions, filteredVaultsSlice } from './filtered-vaults.ts';
 import {
@@ -17,7 +18,6 @@ function stateWith(values: Partial<FilterValues>): FilteredVaultsState {
     sortPickedDuringSearch: false,
     filteredVaultIds: [],
     sortedFilteredVaultIds: [],
-    recalculatedForSearchText: '',
     searchRanked: false,
     filterContent: FilterContent.Filter,
   };
@@ -164,5 +164,34 @@ describe('set preset derivation', () => {
     );
     expect(state.sortPickedDuringSearch).toBe(false);
     expect(relevance(state)).toBe(true);
+  });
+});
+
+describe('recalc commits pending to applied', () => {
+  it('a pending update does not touch applied until recalc fulfils', () => {
+    const state = reducer(stateWith({}), filteredVaultsActions.update({ searchText: 'eth' }));
+    expect(state.pending.searchText).toBe('eth');
+    expect(state.applied.searchText).toBe('');
+  });
+
+  it('recalc.fulfilled commits the snapshot to applied alongside the results', () => {
+    const pendingState = reducer(
+      stateWith({}),
+      filteredVaultsActions.update({ searchText: 'eth' })
+    );
+    const snapshot = pendingState.pending;
+    const committed = reducer(
+      pendingState,
+      recalculateFilteredVaultsAction.fulfilled(
+        { filtered: ['a', 'b'], sorted: ['b', 'a'], applied: snapshot, searchRanked: true },
+        'req-id',
+        { filtersChanged: true }
+      )
+    );
+    expect(committed.applied).toEqual(snapshot);
+    expect(committed.applied.searchText).toBe('eth');
+    expect(committed.filteredVaultIds).toEqual(['a', 'b']);
+    expect(committed.sortedFilteredVaultIds).toEqual(['b', 'a']);
+    expect(committed.searchRanked).toBe(true);
   });
 });

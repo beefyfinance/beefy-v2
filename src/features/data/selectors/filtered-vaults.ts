@@ -17,7 +17,7 @@ import {
   type SortWithSubSort,
 } from '../reducers/filtered-vaults-types.ts';
 import type { BeefyState } from '../store/types.ts';
-import { serializeFilters } from '../utils/filter-url.ts';
+import { serializeFilterState } from '../utils/filter-url.ts';
 import { filterValuesEqual } from '../utils/filter-values.ts';
 import type { KeysOfType } from '../utils/types-utils.ts';
 import { selectVaultTotalApy } from './apy.ts';
@@ -47,19 +47,14 @@ export const selectFilterAppliedAvgApySort = (state: BeefyState) =>
 export const selectFilterSortPickedDuringSearch = (state: BeefyState) =>
   state.ui.filteredVaults.sortPickedDuringSearch;
 
-export const selectFilterAppliedUrlSearch = createSelector(
-  selectFilterAppliedValues,
+// url reflects the pending (editable) filters, like the rest of the filter ui
+export const selectFilterUrlSearch = createSelector(
+  selectFilterValues,
   selectFilterSortPickedDuringSearch,
-  (filters, sortPickedDuringSearch) =>
-    // relevance is implied by ?q= and must not serialize as ?sort=
-    serializeFilters(
-      isRelevanceSortActive({ searchText: filters.searchText, sortPickedDuringSearch }) ?
-        { ...filters, sort: 'default' }
-      : filters
-    )
+  serializeFilterState
 );
 
-/** false while pending changes await the apply debounce */
+/** false until the recalc for the latest pending change commits it to applied (results reflect pending) */
 export const selectFiltersSettled = createSelector(
   selectFilterValues,
   selectFilterAppliedValues,
@@ -277,10 +272,6 @@ const selectPlatformIdForFilter = createCachedSelector(
 
 export const selectFilteredVaults = (state: BeefyState) =>
   state.ui.filteredVaults.sortedFilteredVaultIds;
-
-/** true when the filtered list reflects the current searchText */
-export const selectIsSearchTextSettled = (state: BeefyState) =>
-  state.ui.filteredVaults.recalculatedForSearchText === state.ui.filteredVaults.pending.searchText;
 
 export const selectFilteredVaultCount = createSelector(selectFilteredVaults, ids => ids.length);
 

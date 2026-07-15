@@ -157,7 +157,6 @@ function makeState(vaults: FixtureVault[], filters: FilterValues): BeefyState {
         sortPickedDuringSearch: false,
         filteredVaultIds: [],
         sortedFilteredVaultIds: [],
-        recalculatedForSearchText: filters.searchText,
         searchRanked: false,
         filterContent: FilterContent.Filter,
       },

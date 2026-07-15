@@ -8,7 +8,7 @@ import {
   selectIsVaultPrestakedBoost,
   selectVaultsActiveBoostPeriodFinish,
 } from '../selectors/boosts.ts';
-import { selectFilterAppliedValues } from '../selectors/filtered-vaults.ts';
+import { selectFilterValues } from '../selectors/filtered-vaults.ts';
 import { selectVaultTvl } from '../selectors/tvl.ts';
 import {
   selectAllVisibleVaultIds,
@@ -28,8 +28,8 @@ export type RecalculateFilteredVaultsParams = {
 export type RecalculateFilteredVaultsPayload = {
   filtered: VaultEntity['id'][];
   sorted: VaultEntity['id'][];
-  /** searchText this recalc ran with, so the UI knows when the count is settled */
-  searchText: string;
+  /** the pending filter snapshot this recalc ran against; committed to `applied` on fulfilled */
+  applied: FilterValues;
   /** true when the sorted ids are relevance-ranked (search active and scores discriminate) */
   searchRanked: boolean;
 };
@@ -41,7 +41,7 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
   'filtered-vaults/recalculateFilteredVaults',
   async ({ filtersChanged, sortChanged, dataChanged }, { getState }) => {
     const state = getState();
-    const filterOptions = selectFilterAppliedValues(state);
+    const filterOptions = selectFilterValues(state); // pending
 
     // Recalculate filtered?
     const searchScores = new Map<VaultEntity['id'], number>();
@@ -80,15 +80,9 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
     return {
       filtered: filteredVaults.map(v => v.id),
       sorted: sortedVaultIds,
-      searchText: filterOptions.searchText,
+      applied: filterOptions,
       searchRanked,
     };
-  },
-  {
-    condition: ({ filtersChanged, sortChanged, dataChanged }) => {
-      // only run if there was a change
-      return dataChanged || filtersChanged || sortChanged;
-    },
   }
 );
 

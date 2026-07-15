@@ -1,13 +1,15 @@
 import BigNumber from 'bignumber.js';
 import { describe, expect, it } from 'vitest';
-import type { FilteredVaultsPreset } from '../reducers/filtered-vaults-types.ts';
+import type { FilteredVaultsPreset, FilterValues } from '../reducers/filtered-vaults-types.ts';
 import {
   canonicalizeSearch,
   decideFilterUrlSync,
   FIELD_CODECS,
   parseFilterSearch,
   serializeFilters,
+  serializeFilterState,
 } from './filter-url.ts';
+import { FILTER_DEFAULTS } from './filter-values.ts';
 
 describe('serializeFilters', () => {
   it('serializes an empty preset to an empty string', () => {
@@ -249,78 +251,86 @@ describe('canonicalizeSearch', () => {
 });
 
 describe('decideFilterUrlSync', () => {
-  it('does nothing on first observation when url and applied agree', () => {
-    const result = decideFilterUrlSync('?chain=base', undefined, '?chain=base', true);
+  it('does nothing on first observation when url and state agree', () => {
+    const result = decideFilterUrlSync('?chain=base', undefined, '?chain=base');
     expect(result).toEqual({ seenUrl: '?chain=base' });
   });
 
-  it('applies a recognized url that differs from applied state (inbound wins)', () => {
-    const result = decideFilterUrlSync('?chain=base', undefined, '?chain=ethereum', true);
+  it('applies a recognized url that differs from state (inbound wins)', () => {
+    const result = decideFilterUrlSync('?chain=base', undefined, '?chain=ethereum');
     expect(result.seenUrl).toBe('?chain=base');
     expect(result.apply).toEqual({ chainIds: ['base'] });
     expect(result.write).toBeUndefined();
   });
 
-  it('applies inbound even while unsettled (url wins over pending changes)', () => {
-    const result = decideFilterUrlSync('?chain=base', '?boosted=1', '?boosted=1', false);
+  it('applies inbound over differing state (url wins over pending changes)', () => {
+    const result = decideFilterUrlSync('?chain=base', '?boosted=1', '?boosted=1');
     expect(result.apply).toEqual({ chainIds: ['base'] });
   });
 
-  it('writes settled state over a bare url (state wins on bare)', () => {
-    const result = decideFilterUrlSync('', undefined, '?chain=base&boosted=1', true);
+  it('writes state over a bare url (state wins on bare)', () => {
+    const result = decideFilterUrlSync('', undefined, '?chain=base&boosted=1');
     expect(result).toEqual({ seenUrl: '', write: '?chain=base&boosted=1' });
   });
 
-  it('writes when applied changed under an unchanged url', () => {
-    const result = decideFilterUrlSync('?chain=base', '?chain=base', '?chain=base&boosted=1', true);
+  it('writes when state changed under an unchanged url', () => {
+    const result = decideFilterUrlSync('?chain=base', '?chain=base', '?chain=base&boosted=1');
     expect(result).toEqual({ seenUrl: '?chain=base', write: '?chain=base&boosted=1' });
   });
 
-  it('does not write while unsettled', () => {
-    const result = decideFilterUrlSync(
-      '?chain=base',
-      '?chain=base',
-      '?chain=base&boosted=1',
-      false
-    );
-    expect(result).toEqual({ seenUrl: '?chain=base' });
-  });
-
-  it('advances seenUrl without acting on a bare url while unsettled', () => {
-    const result = decideFilterUrlSync('', '?chain=base', '?chain=base', false);
-    expect(result).toEqual({ seenUrl: '' });
+  it('writes state to a bare url that just changed (bare is not a recognized inbound)', () => {
+    const result = decideFilterUrlSync('', '?chain=base', '?chain=base');
+    expect(result).toEqual({ seenUrl: '', write: '?chain=base' });
   });
 
   it('preserves carry params in outbound writes', () => {
     const result = decideFilterUrlSync(
       '?utm_source=x&chain=base',
       '?chain=base&utm_source=x',
-      '?chain=base&boosted=1',
-      true
+      '?chain=base&boosted=1'
     );
     expect(result.write).toBe('?chain=base&boosted=1&utm_source=x');
   });
 
   it('excludes carry params from the inbound comparison', () => {
     // url gained a utm param but the filters are unchanged: no apply, no write
-    const result = decideFilterUrlSync(
-      '?chain=base&utm_source=x',
-      '?chain=base',
-      '?chain=base',
-      true
-    );
+    const result = decideFilterUrlSync('?chain=base&utm_source=x', '?chain=base', '?chain=base');
     expect(result).toEqual({ seenUrl: '?chain=base&utm_source=x' });
   });
 
-  it('does not re-apply an unchanged url even when it differs from applied', () => {
-    // the url was already observed; state has since moved on and wins once settled
-    const result = decideFilterUrlSync('?chain=base', '?chain=base', '?boosted=1', true);
+  it('does not re-apply an unchanged url even when it differs from state', () => {
+    // the url was already observed; state has since moved on and wins
+    const result = decideFilterUrlSync('?chain=base', '?chain=base', '?boosted=1');
     expect(result.apply).toBeUndefined();
     expect(result.write).toBe('?boosted=1');
   });
 
   it('compares urls canonically, so encoding differences are not movement', () => {
-    const result = decideFilterUrlSync('?q=a b', '?q=a+b', '?q=a+b', true);
+    const result = decideFilterUrlSync('?q=a b', '?q=a+b', '?q=a+b');
     expect(result).toEqual({ seenUrl: '?q=a+b' });
+  });
+});
+
+describe('serializeFilterState', () => {
+  const full = (over: Partial<FilterValues>): FilterValues => ({ ...FILTER_DEFAULTS, ...over });
+
+  it('drops the dormant sort while relevance is active (search, no explicit pick)', () => {
+    // equivalent to serializing with a default sort: relevance is implied by ?q= alone, and
+    // re-parsing a ?q=&sort= combo would read as an explicit pick and disable relevance
+    expect(serializeFilterState(full({ searchText: 'eth', sort: 'tvl' }), false)).toBe(
+      serializeFilters({ searchText: 'eth' })
+    );
+  });
+
+  it('keeps the sort when it was explicitly picked during the search', () => {
+    expect(serializeFilterState(full({ searchText: 'eth', sort: 'tvl' }), true)).toBe(
+      serializeFilters({ searchText: 'eth', sort: 'tvl' })
+    );
+  });
+
+  it('keeps the sort when there is no search', () => {
+    expect(serializeFilterState(full({ sort: 'tvl' }), false)).toBe(
+      serializeFilters({ sort: 'tvl' })
+    );
   });
 });

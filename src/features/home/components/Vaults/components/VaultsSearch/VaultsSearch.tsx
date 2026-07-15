@@ -6,8 +6,8 @@ import { useBreakpoint } from '../../../../../../hooks/useBreakpoint.ts';
 import { useDebouncedState } from '../../../../../../hooks/useDebouncedState.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import {
+  selectFiltersSettled,
   selectFilterSearchText,
-  selectIsSearchTextSettled,
 } from '../../../../../data/selectors/filtered-vaults.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { SearchResultCount } from './SearchResultCount.tsx';
@@ -17,7 +17,7 @@ export const VaultsSearch = memo(function VaultsSearch() {
   const isDesktop = useBreakpoint({ from: 'lg' });
   const dispatch = useAppDispatch();
   const storeValue = useAppSelector(selectFilterSearchText);
-  const storeSettled = useAppSelector(selectIsSearchTextSettled);
+  const storeSettled = useAppSelector(selectFiltersSettled);
   const [focused, setFocused] = useState(false);
 
   // Keystrokes drive `value` at input speed; the store write is debounced. useDebouncedState
@@ -43,7 +43,6 @@ export const VaultsSearch = memo(function VaultsSearch() {
       endAdornment={
         <SearchResultCount
           hasQuery={value.length > 0}
-          // value === storeValue means the debounce committed; storeSettled means recalc finished
           settled={storeSettled && value === storeValue}
           focused={focused}
         />

@@ -82,8 +82,6 @@ export type FilteredVaultsState = {
   sortPickedDuringSearch: boolean;
   filteredVaultIds: VaultEntity['id'][];
   sortedFilteredVaultIds: VaultEntity['id'][];
-  /** searchText the last completed recalc ran with; count display is hidden until it matches pending */
-  recalculatedForSearchText: string;
   /** the sorted ids are relevance-ranked; false when all matches tie (selected sort applies) */
   searchRanked: boolean;
   filterContent: FilterContent;

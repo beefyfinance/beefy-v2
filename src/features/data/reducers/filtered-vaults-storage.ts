@@ -1,6 +1,6 @@
 import { getLiveLocation } from '../../../components/Router/live-location.ts';
 import { storageGet, storageSet } from '../../../helpers/storage.ts';
-import { parseFilterSearch, serializeFilters } from '../utils/filter-url.ts';
+import { parseFilterSearch, serializeFilterState } from '../utils/filter-url.ts';
 import { FILTER_DEFAULTS, mergePreset } from '../utils/filter-values.ts';
 import {
   FilterContent,
@@ -46,12 +46,11 @@ export function buildInitialFilteredVaultsState(): FilteredVaultsState {
     sortPickedDuringSearch: isSortPickedInPreset(values.searchText, values.sort),
     filteredVaultIds: [],
     sortedFilteredVaultIds: [],
-    recalculatedForSearchText: '',
     searchRanked: false,
     filterContent: FilterContent.Filter,
   };
 }
 
-export function storeFilters(values: FilterValues): void {
-  storageSet(FILTERS_STORAGE_KEY, serializeFilters(values));
+export function storeFilters(values: FilterValues, sortPickedDuringSearch: boolean): void {
+  storageSet(FILTERS_STORAGE_KEY, serializeFilterState(values, sortPickedDuringSearch));
 }
