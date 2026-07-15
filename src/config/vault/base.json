@@ -1081,46 +1081,6 @@
     ]
   },
   {
-    "id": "pancake-cow-base-sol-usdc-vault",
-    "name": "SOL-USDC",
-    "type": "standard",
-    "token": "SOL-USDC",
-    "tokenAddress": "0x58470e3b465d11Ad4bF6dBb6B8AC3Fcc04020D28",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pancakeswap",
-    "earnContractAddress": "0xC859831A35eD80206AA2Feb1b53B327AaFefC6C2",
-    "earnedToken": "mooCowPancakeBaseSOL-USDC",
-    "earnedTokenAddress": "0xC859831A35eD80206AA2Feb1b53B327AaFefC6C2",
-    "oracle": "lps",
-    "oracleId": "pancake-cow-base-sol-usdc",
-    "status": "eol",
-    "createdAt": 1780489401,
-    "retireReason": "replaced",
-    "retiredAt": 1781079682,
-    "platformId": "pancakeswap",
-    "assets": ["SOL", "USDC"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "compounds",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
     "id": "pancake-cow-base-sol-usdc-rp",
     "name": "SOL-USDC Reward Pool",
     "type": "gov",
