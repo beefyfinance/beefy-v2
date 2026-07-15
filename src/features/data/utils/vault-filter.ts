@@ -8,7 +8,7 @@ import {
   type VaultEntity,
 } from '../entities/vault.ts';
 import type { FilterValues } from '../reducers/filtered-vaults-types.ts';
-import { selectHasUserDepositInVault, selectUserBalanceOfToken } from '../selectors/balance.ts';
+import { selectUserBalanceOfToken, selectUserDepositedVaultIds } from '../selectors/balance.ts';
 import { selectActiveChainIds, selectAllChainIds } from '../selectors/chains.ts';
 import {
   selectFilterPlatformIdsForVault,
@@ -30,6 +30,8 @@ import { buildVaultSearchContext, scoreVaultForSearch } from './vault-search.ts'
 
 export type VaultFilterEnv = {
   visibleChains: ReadonlySet<ChainEntity['id']>;
+  /** deposited vault ids for O(1) membership; only populated in the 'deposited' user category */
+  depositedVaultIds: ReadonlySet<VaultEntity['id']>;
   /** true when the vault matches the search text; empty query matches all */
   matchesSearch: (vault: VaultEntity) => boolean;
 };
@@ -48,6 +50,10 @@ export function buildVaultFilterEnv(
       selectAllChainIds(state)
     : selectActiveChainIds(state);
   const visibleChains = new Set(filters.chainIds.length === 0 ? allChainIds : filters.chainIds);
+  // only the deposited category consults this; skip the lookup/allocation otherwise
+  const depositedVaultIds = new Set(
+    filters.userCategory === 'deposited' ? selectUserDepositedVaultIds(state) : EMPTY_ARRAY
+  );
   const searchContext = buildVaultSearchContext(
     filters.searchText,
     selectChainSearchIndex(state),
@@ -56,6 +62,7 @@ export function buildVaultFilterEnv(
 
   return {
     visibleChains,
+    depositedVaultIds,
     matchesSearch: vault => {
       if (!searchContext) {
         return true;
@@ -181,7 +188,7 @@ export function vaultPassesFilters(
       ) {
         return false;
       }
-    } else if (!selectHasUserDepositInVault(state, vault.id)) {
+    } else if (!env.depositedVaultIds.has(vault.id)) {
       return false;
     }
   }

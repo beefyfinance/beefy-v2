@@ -195,3 +195,56 @@ describe('recalc commits pending to applied', () => {
     expect(committed.searchRanked).toBe(true);
   });
 });
+
+describe('recalc preserves id-array reference identity', () => {
+  function commit(state: FilteredVaultsState, filtered: string[], sorted: string[]) {
+    return reducer(
+      state,
+      recalculateFilteredVaultsAction.fulfilled(
+        { filtered, sorted, applied: state.applied, searchRanked: false },
+        'req-id',
+        { dataChanged: true }
+      )
+    );
+  }
+
+  it('keeps the previous array references when the recomputed ids are identical', () => {
+    const base = stateWith({});
+    const state: FilteredVaultsState = {
+      ...base,
+      filteredVaultIds: ['a', 'b', 'c'],
+      sortedFilteredVaultIds: ['c', 'b', 'a'],
+    };
+    // a no-op data tick recomputes fresh arrays with identical content
+    const next = commit(state, ['a', 'b', 'c'], ['c', 'b', 'a']);
+    expect(next.filteredVaultIds).toBe(state.filteredVaultIds);
+    expect(next.sortedFilteredVaultIds).toBe(state.sortedFilteredVaultIds);
+  });
+
+  it('replaces only the array whose contents changed', () => {
+    const base = stateWith({});
+    const state: FilteredVaultsState = {
+      ...base,
+      filteredVaultIds: ['a', 'b', 'c'],
+      sortedFilteredVaultIds: ['c', 'b', 'a'],
+    };
+    // membership unchanged, order changed (e.g. tvl tick under a tvl sort)
+    const next = commit(state, ['a', 'b', 'c'], ['a', 'b', 'c']);
+    expect(next.filteredVaultIds).toBe(state.filteredVaultIds);
+    expect(next.sortedFilteredVaultIds).not.toBe(state.sortedFilteredVaultIds);
+    expect(next.sortedFilteredVaultIds).toEqual(['a', 'b', 'c']);
+  });
+
+  it('replaces both arrays when membership changes', () => {
+    const base = stateWith({});
+    const state: FilteredVaultsState = {
+      ...base,
+      filteredVaultIds: ['a', 'b', 'c'],
+      sortedFilteredVaultIds: ['a', 'b', 'c'],
+    };
+    const next = commit(state, ['a', 'b'], ['a', 'b']);
+    expect(next.filteredVaultIds).not.toBe(state.filteredVaultIds);
+    expect(next.filteredVaultIds).toEqual(['a', 'b']);
+    expect(next.sortedFilteredVaultIds).toEqual(['a', 'b']);
+  });
+});

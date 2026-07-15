@@ -1,6 +1,7 @@
 import { createSlice, type Draft, type PayloadAction } from '@reduxjs/toolkit';
 import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
 import { fetchAllVaults } from '../actions/vaults.ts';
+import { areArraysEqual } from '../utils/array-utils.ts';
 import { FILTER_DEFAULTS, mergePreset } from '../utils/filter-values.ts';
 import { hasSearchText } from '../utils/vault-search.ts';
 import { buildInitialFilteredVaultsState } from './filtered-vaults-storage.ts';
@@ -93,8 +94,13 @@ export const filteredVaultsSlice = createSlice({
       .addCase(recalculateFilteredVaultsAction.fulfilled, (state, action) => {
         // commit the snapshot the recalc ran against: applied + results update atomically
         state.applied = action.payload.applied;
-        state.filteredVaultIds = action.payload.filtered;
-        state.sortedFilteredVaultIds = action.payload.sorted;
+        // preserve array identity
+        if (!areArraysEqual(state.filteredVaultIds, action.payload.filtered)) {
+          state.filteredVaultIds = action.payload.filtered;
+        }
+        if (!areArraysEqual(state.sortedFilteredVaultIds, action.payload.sorted)) {
+          state.sortedFilteredVaultIds = action.payload.sorted;
+        }
         state.searchRanked = action.payload.searchRanked;
       });
   },

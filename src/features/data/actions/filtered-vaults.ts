@@ -16,8 +16,10 @@ import {
   selectVaultIsPinned,
 } from '../selectors/vaults.ts';
 import type { BeefyState } from '../store/types.ts';
+import { filtersDependOnData } from '../utils/filter-values.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { buildVaultFilterEnv, vaultPassesFilters } from '../utils/vault-filter.ts';
+import { hasSearchText } from '../utils/vault-search.ts';
 
 export type RecalculateFilteredVaultsParams = {
   dataChanged?: boolean;
@@ -43,10 +45,14 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
     const state = getState();
     const filterOptions = selectFilterValues(state); // pending
 
-    // Recalculate filtered?
+    // Recalculate filtered? Can't skip search due to relevance ranking.
+    const searchActive = hasSearchText(filterOptions.searchText);
+    const mustRefilter =
+      !!filtersChanged || (!!dataChanged && (searchActive || filtersDependOnData(filterOptions)));
+
     const searchScores = new Map<VaultEntity['id'], number>();
     let filteredVaults: VaultEntity[];
-    if (dataChanged || filtersChanged) {
+    if (mustRefilter) {
       const allVaults = selectAllVisibleVaultIds(state).map(id => selectVaultById(state, id));
       const env = buildVaultFilterEnv(state, filterOptions, searchScores);
       filteredVaults = allVaults.filter(vault =>
@@ -64,10 +70,12 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
     // score over the FINAL set: the search check runs before minUnderlyingTvl, so the map also
     // holds excluded vaults whose scores must not decide ranking
     const searchRanked =
+      mustRefilter &&
       isRelevanceSortActive({
         searchText: filterOptions.searchText,
         sortPickedDuringSearch: state.ui.filteredVaults.sortPickedDuringSearch,
-      }) && hasDiscriminatingScores(filteredVaults, searchScores);
+      }) &&
+      hasDiscriminatingScores(filteredVaults, searchScores);
     if (dataChanged || filtersChanged || sortChanged) {
       if (searchRanked) {
         // scores always fresh: sort-only dispatches imply a picked sort, which disables relevance

@@ -28,7 +28,7 @@ import {
   strictObject,
 } from 'valibot';
 import { FILTER_DEFAULTS } from './filter-values.ts';
-import { isDefined } from './array-utils.ts';
+import { areArraysEqual, isDefined } from './array-utils.ts';
 
 const CHAIN_IDS = Object.keys(chainConfigs) as ChainId[];
 const AVG_APY_PICK = ['default', ...AVG_APY_PERIODS.map(n => `${n}` as const)] as const;
@@ -157,10 +157,9 @@ function isDefaultList<T>(defaultValue: T[], compareFn?: CompareFn<T>) {
       return false;
     }
     const sortedValue = [...value].sort(compareFn);
-    return sortedValue.every((b, i) => {
-      const a = sortedDefault[i];
-      return compareFn ? compareFn(a, b) === 0 : a === b;
-    });
+    return areArraysEqual(sortedValue, sortedDefault, (a, b) =>
+      compareFn ? compareFn(a, b) === 0 : a === b
+    );
   };
 }
 

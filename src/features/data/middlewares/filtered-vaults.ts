@@ -16,6 +16,7 @@ import { fetchAllVaults } from '../actions/vaults.ts';
 import { calculateZapAvailabilityAction } from '../actions/zap.ts';
 import { storeFilters } from '../reducers/filtered-vaults-storage.ts';
 import { filteredVaultsActions } from '../reducers/filtered-vaults.ts';
+import { savedVaultsActions } from '../reducers/saved-vaults.ts';
 import { diffFilterValues } from '../utils/filter-values.ts';
 import {
   accountHasChanged,
@@ -98,8 +99,14 @@ export function addFilteredVaultsListeners() {
         })
       );
 
-      // Calculate: reads pending and commits it to applied, covering any pre-listener filter changes
-      dispatch(recalculateFilteredVaultsAction({ dataChanged: true }));
+      // first run mark all changed
+      dispatch(
+        recalculateFilteredVaultsAction({
+          dataChanged: true,
+          filtersChanged: true,
+          sortChanged: true,
+        })
+      );
     },
   });
 
@@ -163,6 +170,19 @@ export function addFilteredVaultsListeners() {
         await dispatch(
           recalculateFilteredVaultsAction({ filtersChanged: true, sortChanged: true })
         );
+      },
+    });
+
+    /** Recalculate when the saved set changes while the saved category is applied */
+    startAppListening({
+      matcher: isAnyOf(savedVaultsActions.setSavedVaultIds),
+      effect: async (_action, { dispatch, getState, cancelActiveListeners }) => {
+        // skip if not on that tab
+        if (getState().ui.filteredVaults.pending.userCategory !== 'saved') {
+          return;
+        }
+        cancelActiveListeners();
+        await dispatch(recalculateFilteredVaultsAction({ filtersChanged: true }));
       },
     });
   }
