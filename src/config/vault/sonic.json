@@ -4452,8 +4452,10 @@
     "earnedTokenAddress": "0x8f001b85E8E457976d4fAE884548c9772Aa4056C",
     "oracle": "lps",
     "oracleId": "beets-sonic-put-a-ring-on-it",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1735588172,
+    "retireReason": "tvl",
+    "retiredAt": 1784101712,
     "platformId": "beethovenx",
     "assets": ["scUSD", "stS"],
     "risks": {
