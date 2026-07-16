@@ -1,5 +1,6 @@
 import { isAnyOf } from '@reduxjs/toolkit';
 import { fetchAllBalanceAction } from '../actions/balance.ts';
+import { transactClearInput } from '../actions/transact.ts';
 import {
   accountHasChanged,
   chainHasChanged,
@@ -20,6 +21,9 @@ const hasWalletChanged = isAnyOf(
 );
 
 export function addWalletListeners() {
+  // last non-null address; survives the disconnected gap so A -> undefined -> B counts as a change
+  let lastWalletAddress: string | undefined = undefined;
+
   /**
    * When connected wallet address changes, fetch data for the new wallet address
    */
@@ -31,8 +35,16 @@ export function addWalletListeners() {
     ) => {
       const state = getState();
       const walletAddress = selectWalletAddress(state);
-      const hasWalletChanged = walletAddress !== selectWalletAddress(getOriginalState());
+      const previousAddress = selectWalletAddress(getOriginalState());
+      const hasWalletChanged = walletAddress !== previousAddress;
       if (hasWalletChanged) {
+        const formAddress = previousAddress ?? lastWalletAddress;
+        lastWalletAddress = walletAddress ?? previousAddress;
+        if (walletAddress && formAddress && walletAddress !== formAddress) {
+          // switched to a different account: form inputs/quotes were built for the old one
+          dispatch(transactClearInput());
+        }
+
         // Debounce
         cancelActiveListeners();
         await delay(50);

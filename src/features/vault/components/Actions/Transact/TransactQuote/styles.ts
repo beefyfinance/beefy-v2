@@ -16,27 +16,66 @@ export const styles = {
   slippage: css.raw({
     marginTop: '24px',
   }),
-  returned: css.raw({
-    marginTop: '16px',
+  youReceiveCard: css.raw({
+    background: 'background.content.light',
+    borderRadius: '8px',
+    padding: '8px 12px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
   }),
-  returnedTitle: css.raw({
-    textStyle: 'body',
+  dustToggle: css.raw({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    padding: '4px 0',
+    margin: '0',
+    background: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    outline: 'none',
     color: 'text.dark',
-    marginBottom: '8px',
+    transition: 'color 0.2s',
+    '&:hover': {
+      color: 'text.light',
+    },
+  }),
+  dustToggleLabel: css.raw({
+    textStyle: 'body.md',
+    color: 'inherit',
+  }),
+  dustToggleChevron: css.raw({
+    display: 'flex',
+    alignItems: 'center',
+    color: 'inherit',
+    '& svg': {
+      width: '20px',
+      height: '20px',
+      fill: 'currentColor',
+    },
+  }),
+  dustRows: css.raw({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+    // breathing room below the last row so it isn't tight against the divider (matches the toggle's spacing above)
+    paddingBottom: '4px',
+  }),
+  totalRow: css.raw({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // top only — the card's own 8px bottom padding provides the space below, matching the top
+    paddingTop: '4px',
+  }),
+  totalText: css.raw({
+    textStyle: 'body.medium',
+    color: 'text.light',
   }),
   disabled: css.raw({
     opacity: '40%',
     pointerEvents: 'none',
-  }),
-  cowcentratedDepositContainer: css.raw({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-  }),
-  cowcentratedSharesDepositContainer: css.raw({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2px',
   }),
   amountReturned: css.raw({
     display: 'flex',
@@ -44,26 +83,25 @@ export const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
   }),
-  mainLp: css.raw({
-    borderRadius: '8px 8px 0px 0px',
-  }),
   fullWidth: css.raw({
     width: '100%',
     flexDirection: 'row-reverse',
     backgroundColor: 'background.content.dark',
   }),
-  borderRadiusToken0: css.raw({
-    borderRadius: '0px 0px 0px 8px',
+  clmPositionGrid: css.raw({
+    display: 'flex',
+    alignItems: 'stretch',
   }),
-  borderRadiusToken1: css.raw({
-    borderRadius: '0px 0px 8px 0px',
+  clmPositionCell: css.raw({
+    flex: '1',
+    minWidth: '0',
+    gap: '8px',
+    padding: '4px 0',
   }),
-  label: css.raw({
-    textStyle: 'body',
-    color: 'text.dark',
-  }),
-  alignItemsEnd: css.raw({
-    alignItems: 'flex-end',
+  clmPositionCellDivider: css.raw({
+    width: '1px',
+    background: 'background.border',
+    margin: '0 12px',
   }),
   link: css.raw({
     color: 'text.lightest',

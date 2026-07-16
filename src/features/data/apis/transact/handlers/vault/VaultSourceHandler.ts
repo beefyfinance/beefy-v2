@@ -50,6 +50,8 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
       );
     }
 
+    await match.strategy.beforeQuote?.();
+
     const expectedToken = match.option.inputs[0];
     if (!isTokenEqual(expectedToken, input.token)) {
       throw new Error(
@@ -107,6 +109,7 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
       );
     }
 
+    await strategy.beforeStep?.();
     const breakdown = await strategy.fetchWithdrawUserlessZapBreakdown(underlyingQuote);
 
     return {

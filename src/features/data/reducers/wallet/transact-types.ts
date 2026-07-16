@@ -63,6 +63,8 @@ export type TransactOptions = {
   status: TransactStatus;
   error: SerializedError | undefined;
   requestId: string | undefined;
+  /** wallet the options were fetched for */
+  walletAddress: string | undefined;
   allOptionIds: TransactOption['id'][];
   byOptionId: Record<TransactOption['id'], TransactOption>;
   bySelectionId: Record<TransactOption['selectionId'], TransactOption['id'][]>;

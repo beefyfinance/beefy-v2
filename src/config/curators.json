@@ -62,6 +62,13 @@
     "website": "https://www.steakhouse.financial/",
     "twitter": "https://x.com/SteakhouseFi"
   },
+  {
+    "id": "alphagrowth",
+    "name": "AlphaGrowth",
+    "description": "AlphaGrowth is a protocol-management firm specializing in DeFi operations, business development, and operational strategy for crypto projects, protocols, and chains.",
+    "website": "https://alphagrowth.io/",
+    "twitter": "https://x.com/alphagrowth1"
+  },
 
   {
     "id": "euler",

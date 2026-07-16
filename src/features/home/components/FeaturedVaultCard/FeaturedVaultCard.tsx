@@ -52,7 +52,7 @@ export const FeaturedVaultCard = memo(function FeaturedVaultCard({
             <VaultIdImage vaultId={vaultId} size={imageSize} />
           </HeadIcon>
         </HeadTop>
-        <Marquee className={tagsContentClass}>
+        <Marquee gap={4} className={tagsContentClass}>
           <VaultTags vaultId={vaultId} />
         </Marquee>
       </Identity>

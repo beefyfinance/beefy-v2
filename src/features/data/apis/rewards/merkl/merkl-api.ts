@@ -8,11 +8,13 @@ import { featureFlag_simulateMerklApiFailure } from '../../../utils/feature-flag
 import { makeRateLimitedHttpHelper } from '../../../../../helpers/http/http.ts';
 import type { HttpHelper } from '../../../../../helpers/http/types.ts';
 
+const MERKL_API_URL = import.meta.env.VITE_MERKL_API_URL || 'https://merkl-api.beefy.finance';
+
 export class MerklRewardsApi implements IMerklRewardsApi {
   private http: HttpHelper;
 
   constructor() {
-    this.http = makeRateLimitedHttpHelper('https://api.merkl.xyz', 1 / 30);
+    this.http = makeRateLimitedHttpHelper(MERKL_API_URL, 5 / 60);
   }
 
   async fetchRewards(request: MerklRewardsRequest): Promise<MerklRewardsResponse> {
@@ -23,17 +25,14 @@ export class MerklRewardsApi implements IMerklRewardsApi {
     }
 
     const params: MerklRewardsParams = {
-      chainId: request.chainId.join(','),
-      test: request.test ? 'true' : 'false',
-      claimableOnly: request.claimableOnly ? 'true' : 'false',
-      breakdownPage: request.breakdownPage.toString(),
+      chains: request.chainId.join(','),
     };
 
     if (request.reloadChainId) {
       params.reloadChainId = request.reloadChainId.toString();
     }
 
-    return await this.http.getJson<MerklRewardsResponse>(`/v4/users/${request.user}/rewards`, {
+    return await this.http.getJson<MerklRewardsResponse>(`/v1/rewards/${request.user}`, {
       params,
     });
   }

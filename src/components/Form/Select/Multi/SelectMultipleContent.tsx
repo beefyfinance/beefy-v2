@@ -9,8 +9,9 @@ import { defaultSearchFunction } from './helpers.ts';
 import { isDefined } from '../../../../features/data/utils/array-utils.ts';
 import { SearchInput } from '../../Input/SearchInput.tsx';
 
-interface SelectMultipleContentProps<TItem extends SelectItem = SelectItem>
-  extends CommonProps<TItem> {
+interface SelectMultipleContentProps<
+  TItem extends SelectItem = SelectItem,
+> extends CommonProps<TItem> {
   options: TItem[];
   selected: TItem['value'][];
   activeIndex: number | null;

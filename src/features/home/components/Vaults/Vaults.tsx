@@ -23,7 +23,7 @@ export const Vaults = memo(function Vaults() {
 
 const VaultsContainer = styled('div', {
   base: {
-    marginTop: '8px',
+    marginTop: '10px',
     borderRadius: '12px',
     contain: 'paint',
   },

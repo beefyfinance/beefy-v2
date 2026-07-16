@@ -29,9 +29,9 @@ import type {
 } from '../../transact/transact-types.ts';
 import type { IBridgeProvider, IBridgeQuote } from './provider-types.ts';
 
-export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
-  implements IBridgeProvider<T>
-{
+export abstract class CommonBridgeProvider<
+  T extends BeefyAnyBridgeConfig,
+> implements IBridgeProvider<T> {
   abstract readonly id: T['id'];
 
   async fetchQuote(

@@ -1,17 +1,11 @@
 export type MerklRewardsRequest = {
   user: string;
   chainId: number[];
-  test: boolean;
-  claimableOnly: boolean;
-  breakdownPage: number; // 0-indexed
   reloadChainId?: number;
 };
 
 export type MerklRewardsParams = {
-  chainId: string; // number as string, e.g., '1' for Ethereum, comma separated for multiple chains
-  test: 'true' | 'false'; // 'true' or 'false'
-  claimableOnly: 'true' | 'false'; // 'true' or 'false'
-  breakdownPage: string; // number
+  chains: string; // number as string, e.g., '1' for Ethereum, comma separated for multiple chains
   reloadChainId?: string; // number
 };
 

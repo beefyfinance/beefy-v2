@@ -44,6 +44,7 @@ export interface ApyStandard {
   compoundingsPerYear: number;
   vaultApr?: number;
   tradingApr?: number;
+  lendingApr?: number;
   composablePoolApr?: number;
   liquidStakingApr?: number;
   rewardPoolApr?: number;

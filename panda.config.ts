@@ -341,7 +341,7 @@ const config = buildConfig(
           tooltipDropdownBoxShadow: { value: '#00000033' },
           transactDebuggerBackground: { value: '#111111' },
           transactDebuggerItemAltBackground: { value: '#222222' },
-          transactErrorBackground: { value: '#da59327c' },
+          transactErrorBackground: { value: '#d85c3066' },
           transactWarningBackground: { value: '#d198477c' },
           vaultClmPoolBackground: { value: '#252c63', description: 'vaults clm + vaults clmPool' },
           vaultClmVaultBackground: { value: '#1e2a48', description: 'vaults clmVault' },
@@ -349,7 +349,6 @@ const config = buildConfig(
           vaultInactiveVaultbackground: { value: '#242032', description: 'vaults inactive' },
           vaultPausedBackground: { value: '#d153470c' },
           vaultTagDividerBackground: { value: '#D9D9D949' },
-          zapDiscountedFeesBackground: { value: '#59a662' },
           yellow: {
             '40': { value: '#d6d05d' },
             '40-12': { value: '#3F3C4E' },
@@ -420,6 +419,7 @@ const config = buildConfig(
             '80': { value: '#df6539' },
             '80-40a': { value: '#df653966' },
             '90': { value: '#d85c30' },
+            '90-40a': { value: '#d85c3066' },
             '100': { value: '#cf5024' },
           },
           white: {

@@ -788,8 +788,10 @@
     "earnedTokenAddress": "0xFB153dd6CB2DE5219B36b8c95F2c528A34E2912B",
     "oracle": "lps",
     "oracleId": "vesync-usdc-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1688599614,
+    "retireReason": "tvl",
+    "retiredAt": 1782886067,
     "platformId": "vesync",
     "assets": ["ETH", "USDCe"],
     "risks": {
