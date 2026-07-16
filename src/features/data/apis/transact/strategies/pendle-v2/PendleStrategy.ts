@@ -42,10 +42,10 @@ import {
   onlyOneInput,
   onlyOneToken,
   onlyOneTokenAmount,
+  onlyVaultShareInput,
 } from '../../helpers/options.ts';
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { pickTokens } from '../../helpers/tokens.ts';
-import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { QuoteResponse } from '../../swap/ISwapProvider.ts';
 import {
@@ -207,7 +207,7 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
   //
 
   public async fetchDepositOptions(): Promise<PendleV2DepositOption[]> {
-    const outputs = [this.depositToken];
+    const outputs = [this.vaultType.shareToken];
 
     const directOptions: PendleV2DepositOption[] = this.possibleTokens.map(token => {
       const inputs = [token];
@@ -404,7 +404,7 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
       ],
     });
 
-    const outputs: TokenAmount[] = [depositLiquidity.output];
+    const outputs: TokenAmount[] = [this.vaultType.estimateDepositShares(depositLiquidity.output)];
     const returned: TokenAmount[] = [];
 
     return {
@@ -558,12 +558,15 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
     }));
 
     // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
-    const dustOutputs: OrderOutput[] = pickTokens(quote.outputs, quote.inputs, quote.returned).map(
-      token => ({
-        token: getTokenAddress(token),
-        minOutputAmount: '0',
-      })
-    );
+    const dustOutputs: OrderOutput[] = pickTokens(
+      quote.outputs,
+      quote.inputs,
+      quote.returned,
+      vaultDeposit.inputs
+    ).map(token => ({
+      token: getTokenAddress(token),
+      minOutputAmount: '0',
+    }));
 
     swapQuotes.forEach(quoteStep => {
       dustOutputs.push({
@@ -621,7 +624,7 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
   //
 
   async fetchWithdrawOptions(): Promise<PendleV2WithdrawOption[]> {
-    const inputs = [this.depositToken];
+    const inputs = [this.vaultType.shareToken];
 
     const directOptions: PendleV2WithdrawOption[] = this.possibleTokens.map(token => {
       const outputs = [token];
@@ -752,10 +755,7 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
     inputs: InputTokenAmount[],
     option: PendleV2WithdrawOption
   ): Promise<PendleV2WithdrawQuote> {
-    const input = onlyOneInput(inputs);
-    if (input.amount.lte(BIG_ZERO)) {
-      throw new Error('Quote called with 0 input amount');
-    }
+    const input = onlyVaultShareInput(inputs, this.vaultType.shareToken);
     if (option.wantedOutputs.length !== 1) {
       throw new Error('Can only swap to 1 output token');
     }
@@ -764,17 +764,15 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
     const state = getState();
 
     // Withdraw from vault
-    const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, this.vault, state);
-    const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
-    const liquidityWithdrawn = { amount: withdrawnAmountAfterFee, token: withdrawnToken };
+    const liquidityWithdrawn = this.vaultType.estimateWithdrawOutput(input);
+    const withdrawnAmountAfterFee = liquidityWithdrawn.amount;
     const wantedToken = onlyOneToken(option.wantedOutputs);
     const returned: TokenAmount[] = [];
 
     const allowances = [
       {
-        token: shareToken,
-        amount: fromWei(sharesToWithdrawWei, shareToken.decimals),
+        token: this.vaultType.shareToken,
+        amount: input.amount,
         spenderAddress: zap.manager,
       },
     ];
@@ -955,6 +953,7 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
     // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
     const dustOutputs: OrderOutput[] = pickTokens(
       vaultWithdraw.inputs,
+      vaultWithdraw.outputs,
       quote.outputs,
       quote.inputs,
       quote.returned,
