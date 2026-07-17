@@ -44,6 +44,7 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
       );
     }
 
+    await match.strategy.beforeQuote?.();
     const destQuote = await match.strategy.fetchDepositQuote(
       [{ token: ctx.inputToken, amount: inputAmount, max: false }],
       match.option
@@ -91,6 +92,7 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
       );
     }
 
+    await destStrategy.beforeStep?.();
     const breakdown = await destStrategy.fetchDepositUserlessZapBreakdown(destQuote);
     return {
       zapSteps: breakdown.zapRequest.steps,

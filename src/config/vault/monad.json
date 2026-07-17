@@ -1,5 +1,54 @@
 [
   {
+    "id": "curve-monad-ausd-avusd",
+    "name": "AUSD/avUSD",
+    "type": "standard",
+    "token": "AUSDAVUSD",
+    "tokenAddress": "0xa98edC41c867184367691234D46ae04B7Dae4545",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xfaAfd6668C7c01d8976f947491BbcE0d68AF77c5",
+    "earnedToken": "mooCurve-AUSD-avUSD",
+    "earnedTokenAddress": "0xfaAfd6668C7c01d8976f947491BbcE0d68AF77c5",
+    "oracle": "lps",
+    "oracleId": "curve-monad-ausd-avusd",
+    "status": "active",
+    "createdAt": 1783572918,
+    "platformId": "curve",
+    "assets": ["AUSD", "avUSD"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-26/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/monad/pools/factory-stable-ng-26/withdraw",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xa98edC41c867184367691234D46ae04B7Dae4545",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xa98edC41c867184367691234D46ae04B7Dae4545",
+            "coins": [
+              "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+              "0x0D9D741FE423Cd5419e4BCb6cB2FfA87AFa93bA4"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "morpho-v2-monad-august-usdc-v2",
     "name": "USDC (August v2)",
     "type": "standard",
@@ -1287,6 +1336,76 @@
     ]
   },
   {
+    "id": "aavev3-monad-gho",
+    "name": "GHO",
+    "type": "standard",
+    "token": "GHO",
+    "tokenAddress": "0xfc421aD3C883Bf9E7C4f42dE845C4e4405799e73",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0xF75A3490841476b3Aea440F0934cd709614316dc",
+    "earnedToken": "mooAaveV3MonadGHO",
+    "earnedTokenAddress": "0xF75A3490841476b3Aea440F0934cd709614316dc",
+    "oracle": "tokens",
+    "oracleId": "GHO",
+    "status": "active",
+    "createdAt": 1783447200,
+    "platformId": "aave",
+    "assets": ["GHO"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev3-monad-musd",
+    "name": "mUSD",
+    "type": "standard",
+    "token": "mUSD",
+    "tokenAddress": "0xacA92E438df0B2401fF60dA7E4337B687a2435DA",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x234620066D1BbBceCda5b96E432ee360d812474B",
+    "earnedToken": "mooAaveV3MonadmUSD",
+    "earnedTokenAddress": "0x234620066D1BbBceCda5b96E432ee360d812474B",
+    "oracle": "tokens",
+    "oracleId": "MetaMaskUSD",
+    "status": "active",
+    "createdAt": 1783447199,
+    "platformId": "aave",
+    "assets": ["mUSD"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "monad",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "neverland-monad-usdt0",
     "name": "USDT0",
     "type": "standard",
@@ -1408,8 +1527,10 @@
     "earnedTokenAddress": "0x1FE5A638eF3e905b35ff14f7F8d08272Fc94075e",
     "oracle": "lps",
     "oracleId": "pancake-cow-monad-usd1-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1766105432,
+    "retireReason": "tvl",
+    "retiredAt": 1784063232,
     "platformId": "pancakeswap",
     "assets": ["USD1", "USDC"],
     "risks": {
@@ -1448,8 +1569,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "pancake-cow-monad-usd1-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1766105431,
+    "retireReason": "tvl",
+    "retiredAt": 1784063232,
     "platformId": "pancakeswap",
     "assets": ["USD1", "USDC"],
     "risks": {
@@ -1490,8 +1613,10 @@
     "earnedTokenAddress": "0xF22e61260c5b41D3e9A2E753Dc8fBEBe56d95970",
     "oracle": "lps",
     "oracleId": "pancake-cow-monad-usd1-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1766105431,
+    "retireReason": "tvl",
+    "retiredAt": 1784063232,
     "platformId": "beefy",
     "feeTier": "0.01",
     "tickSpacing": 1,
@@ -1747,8 +1872,10 @@
     "earnedTokenAddress": "0x9AA6183B8E1148969b082B5585b8A7021fA1b6ce",
     "oracle": "tokens",
     "oracleId": "loAZND",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1765800810,
+    "retireReason": "liquidityNoPanic",
+    "retiredAt": 1784063232,
     "platformId": "curvance",
     "assets": ["loAZND"],
     "migrationIds": [],
@@ -1783,8 +1910,10 @@
     "earnedTokenAddress": "0x0eC5AC8d9614006853fcDC5FBB6Fa5bced701827",
     "oracle": "tokens",
     "oracleId": "AUSD",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1765800810,
+    "retireReason": "liquidityNoPanic",
+    "retiredAt": 1784063232,
     "platformId": "curvance",
     "assets": ["AUSD"],
     "migrationIds": [],

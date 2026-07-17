@@ -107,6 +107,8 @@ export const selectTransactFormIsLoading = (state: BeefyState) =>
 export const selectTransactOptionsVaultId = (state: BeefyState) =>
   state.ui.transact.options.vaultId;
 export const selectTransactOptionsMode = (state: BeefyState) => state.ui.transact.options.mode;
+export const selectTransactOptionsWalletAddress = (state: BeefyState) =>
+  state.ui.transact.options.walletAddress;
 
 export const selectTransactInputAmounts = (state: BeefyState) => state.ui.transact.inputAmounts;
 
