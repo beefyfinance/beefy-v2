@@ -161,6 +161,19 @@ export const config = {
       type: 'standard',
     },
   },
+  robinhood: {
+    new: true,
+    name: 'Robinhood',
+    chainId: 4663,
+    rpc: ['https://rpc.mainnet.chain.robinhood.com'],
+    explorerUrl: 'https://robinhoodchain.blockscout.com',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0xe02749Ba85C543745aA5714263B75efc7e142a2A',
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
+    gas: {
+      type: 'standard',
+    },
+  },
   monad: {
     name: 'Monad',
     chainId: 143,

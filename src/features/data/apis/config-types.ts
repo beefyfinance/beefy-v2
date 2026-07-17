@@ -204,7 +204,8 @@ type ChainId =
   | 'hyperevm'
   | 'plasma'
   | 'monad'
-  | 'megaeth';
+  | 'megaeth'
+  | 'robinhood';
 
 export type ChainConfig = {
   id: ChainId;

@@ -175,6 +175,7 @@ function advanceIndexIfNeeded<
 }
 
 export type ClmInvestorOverviewTimeSeriesPoint = {
+  /** unix timestamp in milliseconds */
   timestamp: number;
   shares: number;
   underlying: number;
@@ -739,6 +740,7 @@ export function getClmInvestorTimeSeries(
 }
 
 export type ClmInvestorFeesTimeSeriesPoint = {
+  /** unix timestamp in milliseconds */
   t: number;
   /** cumulative usd per token */
   values: number[];
