@@ -171,7 +171,9 @@ export const config = {
     appMulticallContractAddress: '0xe02749Ba85C543745aA5714263B75efc7e142a2A',
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.6,
     },
   },
   monad: {
