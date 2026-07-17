@@ -419,52 +419,54 @@ export interface CuratorConfig {
   readonly website?: string;
 }
 
-export interface TokenHoldingConfig {
-  id: string;
+interface TreasuryHoldingConfigBase {
   name: string;
   address: string;
   decimals: number;
   oracleId: string;
-  oracleType: 'lps' | 'token' | 'validator';
-  assetType: 'token' | 'native' | 'validator' | 'concLiquidity';
+  oracleType: 'lps' | 'tokens';
   price: number;
   usdValue: string;
   balance: string;
-  methodPath?: string;
-  symbol: string;
-  staked: boolean;
-  numberId?: string;
+  staked?: boolean;
 }
 
-export interface VaultHoldingConfig {
+export interface TokenHoldingConfig extends TreasuryHoldingConfigBase {
+  assetType: 'token' | 'native';
+  symbol: string;
+}
+
+export interface ValidatorHoldingConfig extends TreasuryHoldingConfigBase {
+  assetType: 'validator';
   id: string;
-  name: string;
-  address: string;
-  decimals: number;
-  oracleId: string;
-  oracleType: 'lps';
-  assetType: 'vault';
-  price: number;
-  usdValue: string;
-  balance: string;
+  symbol: string;
+  methodPath?: string;
+}
+
+export interface ConcLiquidityHoldingConfig extends TreasuryHoldingConfigBase {
+  assetType: 'concLiquidity';
+  id: number;
+  symbol?: string;
+}
+
+export interface VaultHoldingConfig extends TreasuryHoldingConfigBase {
+  assetType: 'vault' | 'gov';
   vaultId: VaultEntity['id'];
   pricePerFullShare: string;
-  methodPath?: string;
-  staked: boolean;
 }
 
-export type TreasuryHoldingConfig = TokenHoldingConfig | VaultHoldingConfig;
+export type TreasuryHoldingConfig =
+  | TokenHoldingConfig
+  | ValidatorHoldingConfig
+  | ConcLiquidityHoldingConfig
+  | VaultHoldingConfig;
 
 export function isVaultHoldingConfig(token: TreasuryHoldingConfig): token is VaultHoldingConfig {
-  return token.assetType === 'vault';
-}
-
-export function isTokenHoldingConfig(token: TreasuryHoldingConfig): token is TokenHoldingConfig {
-  return token.assetType !== 'vault';
+  return token.assetType === 'vault' || token.assetType === 'gov';
 }
 
 export type TreasuryConfig = {
-  [chainId in ChainEntity['id']]: {
+  [chainId in ChainEntity['id']]?: {
     [address: string]: {
       name: string;
       balances: {
@@ -472,10 +474,6 @@ export type TreasuryConfig = {
       };
     };
   };
-};
-
-export type TreasuryCompleteBreakdownConfig = {
-  treasury: TreasuryConfig;
 };
 
 export interface BridgeConfig {
