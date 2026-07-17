@@ -236,5 +236,12 @@
     "manager": "0xD3D46FF34cD495d5B91b8F3C5C552E81E5e3eab5",
     "feeRecipient": "0xA55e75C4815Ff39eFD76C257857441d9FD99b45b",
     "feeBps": 5
+  },
+  {
+    "chainId": "robinhood",
+    "router": "0xA4Fa243F43D9B3f60664e9F11E377a49D322BD1a",
+    "manager": "0x057dD7686F9EFD62b261655D178d088190cF08Ef",
+    "feeRecipient": "0xA55e75C4815Ff39eFD76C257857441d9FD99b45b",
+    "feeBps": 5
   }
 ]
