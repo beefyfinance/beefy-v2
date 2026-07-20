@@ -2613,7 +2613,7 @@
     "earnContractAddress": "0x456e524364B20c7e5F47281eD49bfE8980D93FeE",
     "earnedToken": "MooSkyUSDS_SPK",
     "earnedTokenAddress": "0x456e524364B20c7e5F47281eD49bfE8980D93FeE",
-    "oracle": "token",
+    "oracle": "tokens",
     "oracleId": "USDS",
     "status": "active",
     "createdAt": 1768387341,
