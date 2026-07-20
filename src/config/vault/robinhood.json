@@ -1,5 +1,43 @@
 [
   {
+    "id": "up33-weth-up",
+    "name": "UP-WETH vLP",
+    "type": "standard",
+    "token": "vAMM-UP-WETH",
+    "tokenAddress": "0x8697bb63743678640710b1270e98772a29642b3c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "earnContractAddress": "0xC447184BF75a84Ace3087515CCFFb54937838FC8",
+    "earnedToken": "mooUpRobinhoodUP-WETH",
+    "earnedTokenAddress": "0xC447184BF75a84Ace3087515CCFFb54937838FC8",
+    "oracle": "lps",
+    "oracleId": "up33-weth-up",
+    "status": "active",
+    "createdAt": 1784532533,
+    "platformId": "up",
+    "assets": ["UP33", "WETH"],
+    "risks": {
+      "updatedAt": 1784532533,
+      "complex": false,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://up33.xyz/liquidity/new?pool=0x8697bb63743678640710b1270e98772a29642b3c",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "robinhood-up33"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-robinhood-cashcat-usdg-rp",
     "name": "CASHCAT-USDG Reward Pool",
     "type": "gov",
