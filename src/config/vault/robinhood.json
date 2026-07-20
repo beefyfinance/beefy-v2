@@ -1,5 +1,83 @@
 [
   {
+    "id": "uniswap-cow-robinhood-weth-up-rp",
+    "name": "UP-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodUP-WETH",
+    "tokenAddress": "0xcB968f8382e3Fd875F47fbbde59Fdf46feB8b447",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x41691Cb706ed97eF1AaF675D627EF5B01145E7d6",
+    "earnedToken": "rCowUniswapRobinhoodUP-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-up",
+    "status": "active",
+    "createdAt": 1784540388,
+    "platformId": "uniswap",
+    "assets": ["UP33", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-weth-up",
+    "name": "UP-WETH",
+    "type": "cowcentrated",
+    "token": "UP-WETH uniswap",
+    "tokenAddress": "0x4EF94cD1Ab45eBbB50F9E73Cd6e45C5027caa3F7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0x57C0E45cB534413D1C20A4240955d6bB250BB4F1"
+    ],
+    "earnContractAddress": "0xcB968f8382e3Fd875F47fbbde59Fdf46feB8b447",
+    "earnedToken": "cowUniswapRobinhoodUP-WETH",
+    "earnedTokenAddress": "0xcB968f8382e3Fd875F47fbbde59Fdf46feB8b447",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-up",
+    "status": "active",
+    "createdAt": 1784540388,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["UP33", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "up33-cow-robinhood-weth-usdg-vault",
     "name": "USDG-WETH",
     "type": "standard",
@@ -592,15 +670,15 @@
   },
   {
     "id": "uniswap-cow-robinhood-weth-usdg-rp",
-    "name": "WETH-USDG Reward Pool",
+    "name": "USDG-WETH Reward Pool",
     "type": "gov",
     "version": 2,
-    "token": "cowUniswapRobinhoodWETH-USDG",
+    "token": "cowUniswapRobinhoodUSDG-WETH",
     "tokenAddress": "0x1e8d576F71D5F416e7573b960fF59C4Fb77976ad",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
     "earnContractAddress": "0x72cF42d5951e3F2F9Da265601a064A075600d036",
-    "earnedToken": "rCowUniswapRobinhoodWETH-USDG",
+    "earnedToken": "rCowUniswapRobinhoodUSDG-WETH",
     "earnedTokenDecimals": 18,
     "earnedTokenAddresses": [],
     "oracle": "lps",
@@ -608,7 +686,7 @@
     "status": "active",
     "createdAt": 1784135904,
     "platformId": "uniswap",
-    "assets": ["WETH", "USDG"],
+    "assets": ["USDG", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -629,9 +707,9 @@
   },
   {
     "id": "uniswap-cow-robinhood-weth-usdg",
-    "name": "WETH-USDG",
+    "name": "USDG-WETH",
     "type": "cowcentrated",
-    "token": "WETH-USDG uniswap",
+    "token": "USDG-WETH uniswap",
     "tokenAddress": "0x69BfaF19C9f377BB306a89aEd9F6B07e2c1a8d9a",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
@@ -640,7 +718,7 @@
       "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
     ],
     "earnContractAddress": "0x1e8d576F71D5F416e7573b960fF59C4Fb77976ad",
-    "earnedToken": "cowUniswapRobinhoodWETH-USDG",
+    "earnedToken": "cowUniswapRobinhoodUSDG-WETH",
     "earnedTokenAddress": "0x1e8d576F71D5F416e7573b960fF59C4Fb77976ad",
     "oracle": "lps",
     "oracleId": "uniswap-cow-robinhood-weth-usdg",
@@ -649,7 +727,7 @@
     "platformId": "beefy",
     "feeTier": "0.05",
     "tickSpacing": 10,
-    "assets": ["WETH", "USDG"],
+    "assets": ["USDG", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
