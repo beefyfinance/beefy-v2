@@ -78,7 +78,6 @@ export const V2V_VAULT_BLACKLIST: ReadonlySet<VaultEntity['id']> = new Set([
   'aura-wsteth-reth-sfrxeth',
   'aura-wsteth-reth-sfrxeth-v2',
   'aura-wsteth-reth-sfrxeth-v3',
-  'conic-crvusd-eol',
   'curve-shezeth-eth',
   'curve-shezusd-usdc',
   // sonic
