@@ -18,6 +18,7 @@
     "createdAt": 1784540388,
     "platformId": "uniswap",
     "assets": ["UP33", "WETH"],
+    "icons": ["UP33", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -59,6 +60,7 @@
     "feeTier": "1",
     "tickSpacing": 200,
     "assets": ["UP33", "WETH"],
+    "icons": ["UP33", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -332,6 +334,7 @@
     "createdAt": 1784537619,
     "platformId": "up",
     "assets": ["UP33", "WETH"],
+    "icons": ["UP33", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -372,6 +375,7 @@
     "createdAt": 1784537618,
     "platformId": "up",
     "assets": ["UP33", "WETH"],
+    "icons": ["UP33", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -416,6 +420,7 @@
     "feeTier": "1",
     "tickSpacing": 200,
     "assets": ["UP33", "WETH"],
+    "icons": ["UP33", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
