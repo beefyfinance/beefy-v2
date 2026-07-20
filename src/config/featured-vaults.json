@@ -1,9 +1,10 @@
 {
-  "aavev3-monad-usdc": true,
-  "uniswap-cow-ethereum-weth-usdt-rp": true,
+  "uniswap-cow-ethereum-usdc-weth-rp": true,
   "uniswap-cow-ethereum-wbtc-usdc-rp": true,
   "uniswap-cow-ethereum-wbtc-weth-rp": true,
-  "pancakeswap-cow-base-sol-usdc-vault": true,
   "pancakeswap-cow-base-sol-cbbtc-vault": true,
-  "pancakeswap-cow-base-sol-jitosol-vault": true
+  "pancakeswap-cow-base-sol-jitosol-vault": true,
+  "uniswap-cow-robinhood-cashcat-usdg-rp": true,
+  "uniswap-cow-robinhood-cashcat-usdg-rp": true,
+  "uniswap-cow-robinhood-tendies-weth-rp": true
 }
