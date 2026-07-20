@@ -1120,6 +1120,15 @@
     "type": "amm"
   },
   {
+    "id": "up",
+    "name": "Up",
+    "website": "https://up33.xyz/",
+    "twitter": "uponrh",
+    "documentation": "https://up33.xyz/docs/overview",
+    "description": "up. is a ve(3,3) decentralized exchange on Robinhood Chain. It pays the people who make a market work, and it lets them decide where that pay goes.",
+    "type": "amm"
+  },
+  {
     "id": "dracula",
     "name": "Dracula"
   },
