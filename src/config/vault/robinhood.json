@@ -4,7 +4,7 @@
     "name": "UP-WETH vLP",
     "type": "standard",
     "token": "vAMM-UP-WETH",
-    "tokenAddress": "0x8697bb63743678640710b1270e98772a29642b3c",
+    "tokenAddress": "0x8697bB63743678640710b1270E98772a29642B3c",
     "tokenDecimals": 18,
     "tokenProviderId": "up",
     "earnContractAddress": "0xC447184BF75a84Ace3087515CCFFb54937838FC8",
@@ -28,7 +28,7 @@
       "synthAsset": false
     },
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://up33.xyz/liquidity/new?pool=0x8697bb63743678640710b1270e98772a29642b3c",
+    "addLiquidityUrl": "https://up33.xyz/liquidity/new?pool=0x8697bB63743678640710b1270E98772a29642B3c",
     "network": "robinhood",
     "zaps": [
       {
