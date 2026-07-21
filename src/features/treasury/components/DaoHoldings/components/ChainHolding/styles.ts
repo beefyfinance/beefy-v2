@@ -26,10 +26,6 @@ export const styles = {
     columnGap: '12px',
     alignItems: 'center',
   }),
-  mmName: css.raw({
-    color: 'text.light',
-    paddingLeft: '12px',
-  }),
   chainName: css.raw({
     color: 'text.light',
   }),

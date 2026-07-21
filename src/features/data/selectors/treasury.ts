@@ -1,11 +1,17 @@
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO, compareBigNumber, isFiniteBigNumber } from '../../../helpers/big-number.ts';
 import { entries, keys } from '../../../helpers/object.ts';
 import { explorerAddressUrl } from '../../../helpers/url.ts';
 import type { ChainEntity, ChainId } from '../entities/chain.ts';
 import type { TreasuryHoldingEntity } from '../entities/treasury.ts';
-import { isTokenHoldingEntity, isVaultHoldingEntity } from '../entities/treasury.ts';
+import {
+  getTreasuryHoldingCategory,
+  isTokenHoldingEntity,
+  isValidatorHoldingEntity,
+  isVaultHoldingEntity,
+  TREASURY_MIN_DISPLAY_USD,
+} from '../entities/treasury.ts';
 import type { BeefyState } from '../store/types.ts';
 import { selectLpBreakdownBalance } from './balance.ts';
 import { selectChainById } from './chains.ts';
@@ -20,7 +26,7 @@ import {
 } from './tokens.ts';
 import { selectVaultPricePerFullShare } from './vaults.ts';
 
-export const selectTreasury = (state: BeefyState) => {
+const selectTreasury = (state: BeefyState) => {
   return state.ui.treasury.byChainId;
 };
 
@@ -28,16 +34,13 @@ export const selectTreasurySorted = function (state: BeefyState) {
   const treasuryPerChain = keys(selectTreasury(state)).map(chainId => {
     const assets = selectTreasuryAssetsByChainId(state, chainId);
     const reducedAssets = assets
-      .filter(asset => asset.usdValue.gte(10))
+      .filter(asset => asset.usdValue.gte(TREASURY_MIN_DISPLAY_USD))
       .reduce(
         (acc, asset) => {
           acc.usdTotal = acc.usdTotal.plus(asset.usdValue);
-          if (['token', 'native'].includes(asset.assetType) && !asset.staked) {
-            acc.liquid++;
-          } else if (asset.staked) {
-            acc.staked++;
-          } else if (asset.assetType === 'validator') {
-            acc.locked++;
+          const category = getTreasuryHoldingCategory(asset);
+          if (category) {
+            acc[category]++;
           }
           return acc;
         },
@@ -60,7 +63,7 @@ export const selectTreasurySorted = function (state: BeefyState) {
     .sort((a, b) => compareBigNumber(b.usdTotal, a.usdTotal));
 };
 
-export const selectTreasuryHoldingsByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
+const selectTreasuryHoldingsByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
   return state.ui.treasury.byChainId[chainId];
 };
 
@@ -272,7 +275,7 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
                 totals['BIFI'] = (totals['BIFI'] || BIG_ZERO).plus(tokenBalanceUsd);
               } else {
                 const assetId =
-                  token.symbol ?
+                  isTokenHoldingEntity(token) && token.symbol ?
                     selectWrappedToNativeSymbolOrTokenSymbol(state, token.symbol)
                   : token.name;
                 totals[assetId] = (totals[assetId] || BIG_ZERO).plus(tokenBalanceUsd);
@@ -339,15 +342,10 @@ export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
 
       for (const token of assetsByChainId) {
         if (isFiniteBigNumber(token.usdValue)) {
-          const usdValue = new BigNumber(token.usdValue);
-          if (['token', 'native'].includes(token.assetType) && !token.staked) {
-            totals['liquidAssets'] = (totals['liquidAssets'] || BIG_ZERO).plus(usdValue);
-          }
-          if (token.staked) {
-            totals['stakedAssets'] = (totals['stakedAssets'] || BIG_ZERO).plus(usdValue);
-          }
-          if (token.assetType === 'validator') {
-            totals['lockedAssets'] = (totals['lockedAssets'] || BIG_ZERO).plus(usdValue);
+          const category = getTreasuryHoldingCategory(token);
+          if (category) {
+            const key = `${category}Assets`;
+            totals[key] = (totals[key] || BIG_ZERO).plus(token.usdValue);
           }
         }
       }
@@ -390,10 +388,11 @@ export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
             url: 'https://beaconcha.in/validator/402418',
           };
         }
+        const holding = Object.values(wallet.balances).find(isValidatorHoldingEntity);
         return {
           address: wallet.address,
           name: 'validator',
-          url: explorerAddressUrl(chain, Object.values(wallet.balances)[0].methodPath!),
+          url: explorerAddressUrl(chain, holding?.methodPath ?? wallet.address),
         };
       }
       return {

@@ -1,13 +1,6 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  center: css.raw({
-    display: 'flex',
-    alignItems: 'center',
-    '&:hover': {
-      cursor: 'pointer',
-    },
-  }),
   icon: css.raw({
     height: '16px',
     width: '16px',
