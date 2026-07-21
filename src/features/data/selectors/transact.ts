@@ -122,6 +122,8 @@ export const selectTransactInputIndexMax = (state: BeefyState, index: number) =>
 
 export const selectTransactSelectedChainId = (state: BeefyState) =>
   state.ui.transact.selectedChainId;
+export const selectTransactSelectedSelectionIdOrUndefined = (state: BeefyState) =>
+  state.ui.transact.selectedSelectionId;
 export const selectTransactSelectedSelectionId = (state: BeefyState) =>
   valueOrThrow(state.ui.transact.selectedSelectionId, 'No selected selection id found');
 export const selectTransactSelectedQuoteId = (state: BeefyState) =>

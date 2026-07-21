@@ -1,10 +1,9 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { styled } from '@repo/styles/jsx';
 import { AnimatedButton } from '../../../../../../components/Button/AnimatedButton.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
-import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
   transactClearQuotes,
@@ -46,6 +45,8 @@ import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
 import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
+import { CalmAlert } from '../TransactQuote/TransactQuote.tsx';
+import { NOT_CALM_REFRESH_SECONDS, useNotCalmAutoRefresh } from '../hooks/useNotCalmAutoRefresh.ts';
 import { ZapRoute, ZapRoutePlaceholder } from '../ZapRoute/ZapRoute.tsx';
 import { ZapSlippage } from '../ZapSlippage/ZapSlippage.tsx';
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
@@ -85,6 +86,7 @@ export const MigrateActions = memo(function MigrateActions({
 
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByPriceImpact, setIsDisabledByPriceImpact] = useState(false);
+  const { stickyNotCalmAction, showNotCalmRefresh } = useNotCalmAutoRefresh();
 
   const fetchQuote = useCallback(() => {
     dispatch(transactFetchQuotes());
@@ -149,6 +151,12 @@ export const MigrateActions = memo(function MigrateActions({
   const isLoading = isExecuting || isStepping;
   const isQuotePending = quoteStatus === TransactStatus.Pending;
   const hasQuote = quoteStatus === TransactStatus.Fulfilled && !!quote;
+  // keep the refresh control mounted while retrying not-calm, even when the countdown is paused
+  const notCalmRetrying =
+    !!stickyNotCalmAction ||
+    (quoteStatus === TransactStatus.Rejected &&
+      !!quoteError &&
+      QuoteCowcentratedNotCalmError.match(quoteError));
 
   if (hasQuote && isZapQuote(quote)) {
     return (
@@ -188,9 +196,21 @@ export const MigrateActions = memo(function MigrateActions({
 
   return (
     <>
-      <ZapRoutePlaceholder />
+      <ZapRoutePlaceholder
+        enableRefresh={
+          notCalmRetrying ?
+            isQuotePending ?
+              'disabled'
+            : true
+          : false
+        }
+        autoRefresh={showNotCalmRefresh}
+        autoRefreshSeconds={NOT_CALM_REFRESH_SECONDS}
+      />
       {quoteStatus === TransactStatus.Rejected && quoteError ?
         <MigrateQuoteError error={quoteError} />
+      : stickyNotCalmAction ?
+        <CalmAlert i18nKey={`Transact-Quote-Error-Calm-Retry-${stickyNotCalmAction}`} />
       : null}
       <ActionsContainer>
         <ActionConnectSwitch chainId={newVault.chainId}>
@@ -228,19 +248,7 @@ const MigrateQuoteError = memo(function MigrateQuoteError({
     );
   }
   if (error && QuoteCowcentratedNotCalmError.match(error)) {
-    return (
-      <AlertError>
-        <Trans
-          t={t}
-          i18nKey={`Transact-Quote-Error-Calm-${error.action}`}
-          components={{
-            LinkCalm: (
-              <CalmLink href="https://docs.beefy.finance/beefy-products/clm#calmness-check" />
-            ),
-          }}
-        />
-      </AlertError>
-    );
+    return <CalmAlert i18nKey={`Transact-Quote-Error-Calm-Retry-${error.action}`} />;
   }
 
   return (
@@ -259,12 +267,5 @@ const ActionsContainer = styled('div', {
     flexDirection: 'column',
     backgroundColor: 'background.content.light',
     borderRadius: '8px',
-  },
-});
-
-const CalmLink = styled(ExternalLink, {
-  base: {
-    color: 'text.lightest',
-    textDecoration: 'underline',
   },
 });

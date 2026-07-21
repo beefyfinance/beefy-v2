@@ -49,6 +49,7 @@ import {
 } from '../../../../../data/selectors/transact.ts';
 import { selectZapSwapProviderName } from '../../../../../data/selectors/zap.ts';
 import { QuoteTitle } from '../QuoteTitle/QuoteTitle.tsx';
+import type { ReloadSpinnerState } from '../../../../../../components/ReloadSpinner/ReloadSpinner.tsx';
 import { QuoteTitleRefresh } from '../QuoteTitleRefresh/QuoteTitleRefresh.tsx';
 import { ProviderIcon } from '../ProviderIcon/ProviderIcon.tsx';
 import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
@@ -707,14 +708,27 @@ export const ZapRoute = memo(function ZapRoute({
 
 export type ZapRoutePlaceholderProps = {
   css?: CssStyles;
+  enableRefresh?: ReloadSpinnerState;
+  autoRefresh?: boolean;
+  autoRefreshSeconds?: number;
 };
 export const ZapRoutePlaceholder = memo(function ZapRoutePlaceholder({
   css: cssProp,
+  enableRefresh = false,
+  autoRefresh = false,
+  autoRefreshSeconds,
 }: ZapRoutePlaceholderProps) {
   const { t } = useTranslation();
   return (
     <div className={css(cssProp)}>
-      <div className={css(styles.title)}>{t('Transact-ZapRoute')}</div>
+      {enableRefresh !== false ?
+        <QuoteTitleRefresh
+          title={t('Transact-ZapRoute')}
+          enableRefresh={enableRefresh}
+          autoRefresh={autoRefresh}
+          autoRefreshSeconds={autoRefreshSeconds}
+        />
+      : <div className={css(styles.title)}>{t('Transact-ZapRoute')}</div>}
       <div className={css(styles.routeHolder, styles.routeHolderDisabled)}>
         <div className={css(styles.routeHeader, styles.routeHeaderDisabled)}>
           <div className={css(styles.placeholderTitle)}>
