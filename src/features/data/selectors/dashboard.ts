@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import { cloneDeep, orderBy } from 'lodash-es';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
@@ -50,6 +51,7 @@ import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet.ts';
 import { selectIsAddressBookLoadedGlobal } from './data-loader/tokens.ts';
 import { selectIsAnalyticsLoadedByAddress } from './data-loader/analytics.ts';
 import { selectShouldInitDashboardForUserImpl } from './data-loader/dashboard.ts';
+import { recordEqualBy } from '../../../helpers/object.ts';
 
 export enum DashboardDataStatus {
   Loading,
@@ -57,18 +59,20 @@ export enum DashboardDataStatus {
   Available,
 }
 
-export const selectUserTotalYieldUsd = (state: BeefyState, walletAddress: string) => {
-  const vaultPnls = selectDashboardUserVaultsPnl(state, walletAddress);
+export const selectUserTotalYieldUsd = createSelector(
+  (state: BeefyState, walletAddress: string) => selectDashboardUserVaultsPnl(state, walletAddress),
+  vaultPnls => {
+    let totalYieldUsd = BIG_ZERO;
+    for (const vaultPnl of Object.values(vaultPnls)) {
+      totalYieldUsd = totalYieldUsd.plus(
+        isUserClmPnl(vaultPnl) ? vaultPnl.yields.usd : vaultPnl.totalYieldUsd
+      );
+    }
 
-  let totalYieldUsd = BIG_ZERO;
-  for (const vaultPnl of Object.values(vaultPnls)) {
-    totalYieldUsd = totalYieldUsd.plus(
-      isUserClmPnl(vaultPnl) ? vaultPnl.yields.usd : vaultPnl.totalYieldUsd
-    );
-  }
-
-  return totalYieldUsd;
-};
+    return totalYieldUsd;
+  },
+  { memoizeOptions: { resultEqualityCheck: (a: BigNumber, b: BigNumber) => a.isEqualTo(b) } }
+);
 
 export type UserRewardStatus = 'compounded' | 'pending' | 'claimed';
 export type UserRewardSource = PnlYieldSource['source'] | 'gov' | 'boost';
@@ -258,6 +262,7 @@ type DashboardUserExposureVaultEntry = {
   label: string;
   value: BigNumber;
 };
+
 type DashboardUserExposureVaultFn<
   T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 > = (
@@ -266,21 +271,26 @@ type DashboardUserExposureVaultFn<
   vaultTvl: BigNumber,
   walletAddress: string
 ) => T[];
+
 type DashboardUserExposureEntry<
   T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 > = T & {
   percentage: number;
 };
+
 type DashboardUserExposureSummarizer<
   T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 > = (entries: DashboardUserExposureEntry<T>[]) => DashboardUserExposureEntry<T>[];
+
 type DashboardUserTokenExposureVaultEntry = DashboardUserExposureVaultEntry & {
   symbols: string[];
   chainId: ChainEntity['id'];
 };
+
 type DashboardUserChainExposureVaultEntry = DashboardUserExposureVaultEntry & {
   chainId: ChainEntity['id'] | 'others';
 };
+
 const getDashboardLpBreakdownScalingFactor = (
   _vaultId: string,
   userVaultTvl: BigNumber,
@@ -305,6 +315,7 @@ const getDashboardLpBreakdownScalingFactor = (
   }
   return scaleFactor;
 };
+
 const top6ByPercentageSummarizer = <
   T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 >(
@@ -316,8 +327,10 @@ const top6ByPercentageSummarizer = <
     value: BIG_ZERO,
     percentage: 0,
   });
+
 const stableVsOthersSummarizer = (entries: DashboardUserExposureEntry[]) =>
   orderBy(entries, 'key', 'desc');
+
 const selectDashboardUserExposure = <
   T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 >(
@@ -362,6 +375,7 @@ const selectDashboardUserExposure = <
 
   return summarizerFn(entriesWithPercentage);
 };
+
 const selectDashboardUserVaultChainExposure: DashboardUserExposureVaultFn<
   DashboardUserChainExposureVaultEntry
 > = (state, vaultId, vaultTvl, _walletAddress) => {
@@ -369,6 +383,7 @@ const selectDashboardUserVaultChainExposure: DashboardUserExposureVaultFn<
   const chain = selectChainById(state, vault.chainId);
   return [{ key: chain.id, label: chain.name, value: vaultTvl, chainId: chain.id }];
 };
+
 export const selectDashboardUserExposureByChain = (state: BeefyState, walletAddress?: string) =>
   selectDashboardUserExposure(
     state,
@@ -383,6 +398,7 @@ export const selectDashboardUserExposureByChain = (state: BeefyState, walletAddr
       }),
     walletAddress
   );
+
 const selectDashboardUserVaultPlatformExposure: DashboardUserExposureVaultFn = (
   state,
   vaultId,
@@ -393,6 +409,7 @@ const selectDashboardUserVaultPlatformExposure: DashboardUserExposureVaultFn = (
   const platform = selectPlatformById(state, vault.platformId);
   return [{ key: platform.id, label: platform.name, value: vaultTvl }];
 };
+
 export const selectDashboardUserExposureByPlatform = (state: BeefyState, walletAddress?: string) =>
   selectDashboardUserExposure(
     state,
@@ -446,6 +463,7 @@ const selectDashboardUserVaultTokenExposure: DashboardUserExposureVaultFn<
     },
   ];
 };
+
 export const selectDashboardUserExposureByToken = (state: BeefyState, walletAddress?: string) =>
   selectDashboardUserExposure(
     state,
@@ -461,6 +479,7 @@ export const selectDashboardUserExposureByToken = (state: BeefyState, walletAddr
       }),
     walletAddress
   );
+
 const selectDashboardUserVaultStableExposure: DashboardUserExposureVaultFn = (
   state,
   vaultId,
@@ -490,6 +509,7 @@ const selectDashboardUserVaultStableExposure: DashboardUserExposureVaultFn = (
 
   return [{ key: 'other', label: 'Other', value: vaultTvl }];
 };
+
 export const selectDashboardUserStablecoinsExposure = (state: BeefyState, walletAddress: string) =>
   selectDashboardUserExposure(
     state,
@@ -497,24 +517,42 @@ export const selectDashboardUserStablecoinsExposure = (state: BeefyState, wallet
     stableVsOthersSummarizer,
     walletAddress
   );
-export const selectDashboardUserVaultsPnl = (state: BeefyState, walletAddress: string) => {
-  const userVaults = selectUserDepositedVaultIds(state, walletAddress);
-  const vaults: Record<string, UserVaultPnl> = {};
-  for (const vaultId of userVaults) {
-    vaults[vaultId] = selectVaultPnl(state, vaultId, walletAddress);
-  }
-  return vaults;
-};
 
-export const selectDashboardUserVaultsDailyYield = (state: BeefyState, walletAddress: string) => {
-  const userVaults = selectUserDepositedVaultIds(state, walletAddress);
-  const vaults: Record<string, BigNumber> = {};
-  for (const vaultId of userVaults) {
-    const { dailyUsd } = selectYieldStatsByVaultId(state, vaultId, walletAddress);
-    vaults[vaultId] = dailyUsd;
+export const selectDashboardUserVaultsPnl = createSelector(
+  // @dev we were recalculating on every state change anyway - this lets us use resultEqualityCheck
+  (state: BeefyState, _walletAddress: string) => state,
+  (_state: BeefyState, walletAddress: string) => walletAddress,
+  (state, walletAddress) => {
+    const userVaults = selectUserDepositedVaultIds(state, walletAddress);
+    const vaults: Record<string, UserVaultPnl> = {};
+    for (const vaultId of userVaults) {
+      vaults[vaultId] = selectVaultPnl(state, vaultId, walletAddress);
+    }
+    return vaults;
+  },
+  {
+    memoizeOptions: { resultEqualityCheck: recordEqualBy<UserVaultPnl>((a, b) => a === b) },
   }
-  return vaults;
-};
+);
+
+export const selectDashboardUserVaultsDailyYield = createSelector(
+  // @dev we were recalculating on every state change anyway - this lets us use resultEqualityCheck
+  (state: BeefyState, _walletAddress: string) => state,
+  (_state: BeefyState, walletAddress: string) => walletAddress,
+  (state, walletAddress) => {
+    const userVaults = selectUserDepositedVaultIds(state, walletAddress);
+    const vaults: Record<string, BigNumber> = {};
+    for (const vaultId of userVaults) {
+      const { dailyUsd } = selectYieldStatsByVaultId(state, vaultId, walletAddress);
+      vaults[vaultId] = dailyUsd;
+    }
+    return vaults;
+  },
+  {
+    memoizeOptions: { resultEqualityCheck: recordEqualBy<BigNumber>((a, b) => a.isEqualTo(b)) },
+  }
+);
+
 export const selectShouldInitDashboardForUser = (state: BeefyState, walletAddress: string) => {
   if (!walletAddress) {
     return false;

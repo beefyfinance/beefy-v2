@@ -33,7 +33,7 @@ interface TransactionsFilterProps {
   handleSort: (field: SortedOptions['sort']) => void;
 }
 
-export const TransactionsFilter = memo(function SortColumns({
+export const TransactionsFilter = memo(function TransactionsFilter({
   handleSort,
   sortOptions,
 }: TransactionsFilterProps) {
