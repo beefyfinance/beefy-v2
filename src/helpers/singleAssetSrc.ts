@@ -2,7 +2,7 @@ import type { TokenEntity } from '../features/data/entities/token.ts';
 import type { ChainEntity } from '../features/data/entities/chain.ts';
 import { createGlobLoader, removeExtension } from './globLoader.ts';
 
-const pathToUrl = import.meta.glob<string>('../images/single-assets/**/*.(svg|webp|png)', {
+const pathToUrl = import.meta.glob<string>('../images/single-assets/**/*.(svg|webp|png|avif)', {
   query: '?url',
   import: 'default',
   eager: true,
