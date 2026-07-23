@@ -2428,12 +2428,13 @@
     "earnedTokenAddress": "0xcd17851fd91fEF5AE744F7511213270B63C36c15",
     "oracle": "lps",
     "oracleId": "pendle-stcusd-23jul26",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769600559,
+    "retireReason": "rewards",
+    "retiredAt": 1784780036,
     "platformId": "pendle",
     "assets": ["stcUSD"],
     "migrationIds": [],
-    "pointStructureIds": ["cap-caps"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -2447,6 +2448,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xaC24A6f0068d9701EAEa76AB0B418021017F8D59/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xaC24A6f0068d9701EAEa76AB0B418021017F8D59/zap/out?chain=ethereum",
+    "pointStructureIds": ["cap-caps"],
     "network": "ethereum",
     "zaps": [
       {
@@ -2468,12 +2470,13 @@
     "earnedTokenAddress": "0xAc2A49c8C39198bc340c7604Ee9d6E53015E939A",
     "oracle": "lps",
     "oracleId": "pendle-cusd-23jul26",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769600551,
+    "retireReason": "rewards",
+    "retiredAt": 1784780036,
     "platformId": "pendle",
     "assets": ["cUSD"],
     "migrationIds": [],
-    "pointStructureIds": ["cap-caps"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -2487,6 +2490,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9EaAedA23177B7168c55a3A0F937f67919733449/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9EaAedA23177B7168c55a3A0F937f67919733449/zap/out?chain=ethereum",
+    "pointStructureIds": ["cap-caps"],
     "network": "ethereum",
     "zaps": [
       {
