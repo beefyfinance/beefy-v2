@@ -12426,5 +12426,161 @@
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xd4f79ca0ac83192693bce4699d0c10c66aa6cf0f00020000000000000000047e/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xd4f79ca0ac83192693bce4699d0c10c66aa6cf0f00020000000000000000047e/remove-liquidity",
     "network": "ethereum"
+  },
+  {
+    "id": "uniswap-cow-ethereum-xaut-usdt-rp",
+    "name": "XAUt-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapEthereumXAUt-USDT",
+    "tokenAddress": "0x213a9d299CfFB129321b71376773C74832985533",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x3d372C16B391b05d927F3fEfD935d08c31599199",
+    "earnedToken": "rCowUniswapEthereumXAUt-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-ethereum-xaut-usdt",
+    "status": "active",
+    "createdAt": 1784588975,
+    "platformId": "uniswap",
+    "assets": ["XAUt", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-ethereum-xaut-usdt",
+    "name": "XAUt-USDT",
+    "type": "cowcentrated",
+    "token": "XAUt-USDT uniswap",
+    "tokenAddress": "0x6546055f46e866a4B9a4A13e81273e3152BAE5dA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x68749665FF8D2d112Fa859AA293F07A622782F38",
+      "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+    ],
+    "earnContractAddress": "0x213a9d299CfFB129321b71376773C74832985533",
+    "earnedToken": "cowUniswapEthereumXAUt-USDT",
+    "earnedTokenAddress": "0x213a9d299CfFB129321b71376773C74832985533",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-ethereum-xaut-usdt",
+    "status": "active",
+    "createdAt": 1784588903,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["XAUt", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-ethereum-paxg-usdc-rp",
+    "name": "PAXG-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapEthereumPAXG-USDC",
+    "tokenAddress": "0x2f16815C6F7c705DEC15F28b40A4e63d9763a27E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x846039AfB24E12fA36C60B03967F6E1967e97F29",
+    "earnedToken": "rCowUniswapEthereumPAXG-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-ethereum-paxg-usdc",
+    "status": "active",
+    "createdAt": 1784589095,
+    "platformId": "uniswap",
+    "assets": ["PAXG", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-ethereum-paxg-usdc",
+    "name": "PAXG-USDC",
+    "type": "cowcentrated",
+    "token": "PAXG-USDC uniswap",
+    "tokenAddress": "0x5aE13BAAEF0620FdaE1D355495Dc51a17adb4082",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x45804880De22913dAFE09f4980848ECE6EcbAf78",
+      "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+    ],
+    "earnContractAddress": "0x2f16815C6F7c705DEC15F28b40A4e63d9763a27E",
+    "earnedToken": "cowUniswapEthereumPAXG-USDC",
+    "earnedTokenAddress": "0x2f16815C6F7c705DEC15F28b40A4e63d9763a27E",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-ethereum-paxg-usdc",
+    "status": "active",
+    "createdAt": 1784589035,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["PAXG", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   }
 ]
