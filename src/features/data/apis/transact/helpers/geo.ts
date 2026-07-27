@@ -6,11 +6,11 @@ import {
 } from '../../../selectors/restrictions.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import type { DepositOption, WithdrawOption } from '../transact-types.ts';
-import { isRawVaultOption } from './options.ts';
+import { isDirectVaultOption } from './options.ts';
 
 /**
  * Removes options that swap a geo-restricted token in or out for the current user.
- * Raw vault options always survive so custody exit stays possible.
+ * Direct vault options always survive so custody exit stays possible.
  */
 export function filterGeoBlockedOptions<T extends DepositOption | WithdrawOption>(
   state: BeefyState,
@@ -24,13 +24,13 @@ export function filterGeoBlockedOptions<T extends DepositOption | WithdrawOption
 
   // every zap on a restricted vault trades its restricted deposit token(s);
   // also covers migrate enumeration, which fetches the destination vault's deposit options
-  const allNonRawBlocked = selectIsVaultGeoBlockedForUser(state, vault.id);
+  const allZapsBlocked = selectIsVaultGeoBlockedForUser(state, vault.id);
 
   return options.filter(option => {
-    if (isRawVaultOption(option)) {
+    if (isDirectVaultOption(option)) {
       return true;
     }
-    if (allNonRawBlocked) {
+    if (allZapsBlocked) {
       return false;
     }
     // cross-chain option tokens live on the src/dest chain, so key by token.chainId

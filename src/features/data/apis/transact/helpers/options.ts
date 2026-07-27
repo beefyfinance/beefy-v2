@@ -15,7 +15,7 @@ export function createQuoteId(optionId: string): string {
 }
 
 /** true for the direct vault deposit/withdraw option, incl. composer-wrapped ones */
-export function isRawVaultOption(option: DepositOption | WithdrawOption): boolean {
+export function isDirectVaultOption(option: DepositOption | WithdrawOption): boolean {
   if (option.strategyId === 'vault') {
     return true;
   }
