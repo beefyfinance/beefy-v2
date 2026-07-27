@@ -1,5 +1,6 @@
 import type BigNumber from 'bignumber.js';
 import { BIG_ZERO, compareBigNumber } from '../../../../../helpers/big-number.ts';
+import { isTokenEqual, type TokenEntity } from '../../../entities/token.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectVaultSharesToDepositTokenData } from '../../../selectors/balance.ts';
 import { selectTokenPriceByAddressReceiptAware } from '../../../selectors/tokens.ts';
@@ -31,8 +32,11 @@ export function getEffectiveQuote(quote: TransactQuote): TransactQuote {
   return isVaultDestState(state) ? state.destQuote : quote;
 }
 
-/** false for any quote where there is exactly one matching input+output token else true*/
-export function quoteHasTransformation(quote: TransactQuote): boolean {
+/** false for any quote where there is exactly one matching input+output token else true; the vault's receipt token counts as its deposit token */
+export function quoteHasTransformation(
+  quote: TransactQuote,
+  vaultShares: { depositToken: TokenEntity; shareToken?: TokenEntity }
+): boolean {
   if (isCowcentratedDepositQuote(getEffectiveQuote(quote))) {
     return true;
   }
@@ -47,10 +51,12 @@ export function quoteHasTransformation(quote: TransactQuote): boolean {
   if (!firstInput || !firstOutput) {
     return false;
   }
-  return (
-    firstInput.token.address !== firstOutput.token.address ||
-    firstInput.token.chainId !== firstOutput.token.chainId
-  );
+  const { depositToken, shareToken } = vaultShares;
+  const inputToken =
+    shareToken && isTokenEqual(firstInput.token, shareToken) ? depositToken : firstInput.token;
+  const outputToken =
+    shareToken && isTokenEqual(firstOutput.token, shareToken) ? depositToken : firstOutput.token;
+  return inputToken.address !== outputToken.address || inputToken.chainId !== outputToken.chainId;
 }
 
 /** Convert a vault share amount to its deposit-token equivalent via ppfs; pass-through for vaults without a receipt token. */

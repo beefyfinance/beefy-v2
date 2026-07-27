@@ -42,6 +42,7 @@ import {
 } from '../../../../../data/apis/transact/helpers/tokens.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { isCowcentratedLikeVault, type VaultEntity } from '../../../../../data/entities/vault.ts';
+import { selectVaultSharesToDepositTokenData } from '../../../../../data/selectors/balance.ts';
 import {
   TransactMode,
   TransactStatus,
@@ -153,9 +154,14 @@ export const TransactQuote = memo(function TransactQuote({
   const quote = useAppSelector(
     state => status === TransactStatus.Fulfilled && selectTransactSelectedQuoteOrUndefined(state)
   );
+  const vaultShares = useAppSelector(state =>
+    quote ? selectVaultSharesToDepositTokenData(state, quote.option.vaultId) : undefined
+  );
   const isTransformTitle = useMemo(
-    () => isCowcentratedLikeVault(vault) || (!!quote && quoteHasTransformation(quote)),
-    [vault, quote]
+    () =>
+      isCowcentratedLikeVault(vault) ||
+      (!!quote && !!vaultShares && quoteHasTransformation(quote, vaultShares)),
+    [vault, quote, vaultShares]
   );
 
   // single QuotePanel across all statuses so ReloadSpinner stays mounted and its click spin isn't lost
