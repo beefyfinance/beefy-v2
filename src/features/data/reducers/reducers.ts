@@ -20,6 +20,7 @@ import { platformsSlice } from './platforms.ts';
 import { pointsReducer } from './points.ts';
 import { promosReducer } from './promos.ts';
 import { proposalsSlice } from './proposals.ts';
+import { restrictionsSlice } from './restrictions.ts';
 import { rewardsReducer } from './rewards.ts';
 import { savedVaultsSlice } from './saved-vaults.ts';
 import { tenderlyReducer } from './tenderly.ts';
@@ -77,6 +78,7 @@ const userReducer = combineReducers({
   balance: balanceSlice.reducer,
   migration: migrationSlice.reducer,
   resolver: resolverReducer,
+  restrictions: restrictionsSlice.reducer,
   rewards: userRewardsReducer,
   wallet: persistReducer(
     { key: 'wallet', storage, whitelist: ['address', 'hideBalance'] },
