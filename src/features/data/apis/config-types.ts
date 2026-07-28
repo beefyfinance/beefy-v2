@@ -98,6 +98,9 @@ export interface RestrictionProfileConfig {
   tokens: {
     [chainId in ChainEntity['id']]?: string[];
   };
+  assets?: {
+    [chainId in ChainEntity['id']]?: string[];
+  };
 }
 
 export type RestrictionsConfig = Record<string, RestrictionProfileConfig>;

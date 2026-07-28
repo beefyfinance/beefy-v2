@@ -25,6 +25,7 @@ export const tokenKeyOf = (chainId: string, address: string) =>
   `${chainId}:${address.toLowerCase()}`;
 
 const profileByTokenKey = new Map<string, string>();
+const profileByAssetKey = new Map<string, string>();
 const tokenKeysByProfile: Record<string, Set<string>> = {};
 for (const [profileId, profile] of Object.entries(restrictions)) {
   const keys = new Set<string>();
@@ -36,6 +37,11 @@ for (const [profileId, profile] of Object.entries(restrictions)) {
     }
   }
   tokenKeysByProfile[profileId] = keys;
+  for (const [chainId, assetIds] of Object.entries(profile.assets ?? {})) {
+    for (const assetId of assetIds) {
+      profileByAssetKey.set(`${chainId}:${assetId}`, profileId);
+    }
+  }
 }
 
 function getVaultRestrictedProfileId(vault: VaultEntity): string | undefined {
@@ -51,11 +57,18 @@ function getVaultRestrictedProfileId(vault: VaultEntity): string | undefined {
       }
     }
   }
+  // fallback for vaults without address-level underlyings (e.g. standard vaults over an LP)
+  for (const assetId of vault.assetIds) {
+    const assetProfileId = profileByAssetKey.get(`${vault.chainId}:${assetId}`);
+    if (assetProfileId) {
+      return assetProfileId;
+    }
+  }
   return undefined;
 }
 
 function getGeoStatusForProfile(
-  profile: RestrictionProfileConfig | undefined,
+  profile: RestrictionProfileConfig,
   loader: LoaderState | undefined,
   countryCode: string | undefined
 ): UserGeoStatus {
@@ -69,9 +82,6 @@ function getGeoStatusForProfile(
   const country = countryCode?.toUpperCase();
   if (!country || UNKNOWN_COUNTRIES.includes(country)) {
     return 'blocked'; // fail closed on unknown location
-  }
-  if (!profile) {
-    return 'blocked'; // fail closed on unknown profile
   }
   return profile.countries.includes(country) ? 'blocked' : 'allowed';
 }
