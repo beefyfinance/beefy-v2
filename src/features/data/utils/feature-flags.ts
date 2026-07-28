@@ -182,6 +182,11 @@ export function featureFlag_noDataPolling() {
 }
 
 export function featureFlag_geoCountryOverride(): string | undefined {
+  const isAuthorizedDomain =
+    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
+  if (!isAuthorizedDomain) {
+    return undefined;
+  }
   const params = getSearchParams();
   return params.get('__country') || undefined;
 }
