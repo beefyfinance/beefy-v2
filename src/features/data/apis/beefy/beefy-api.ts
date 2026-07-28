@@ -1,6 +1,6 @@
 import { mapValuesDeep } from '../../utils/array-utils.ts';
 import { featureFlag_simulateBeefyApiError } from '../../utils/feature-flags.ts';
-import type { TreasuryCompleteBreakdownConfig } from '../config-types.ts';
+import type { TreasuryConfig } from '../config-types.ts';
 import type {
   AllCowcentratedVaultRangesResponse,
   ApyFeeData,
@@ -137,13 +137,13 @@ export class BeefyAPI {
     return data;
   }
 
-  public async getTreasury(): Promise<TreasuryCompleteBreakdownConfig> {
+  public async getTreasury(): Promise<TreasuryConfig> {
     if (featureFlag_simulateBeefyApiError('treasury')) {
       throw new Error('Simulated beefy api error');
     }
 
-    return await getJson<TreasuryCompleteBreakdownConfig>({
-      url: `${this.api}/treasury/complete`,
+    return await getJson<TreasuryConfig>({
+      url: `${this.api}/treasury`,
       cacheBuster: 'short',
       timeout: this.timeout,
     });

@@ -848,6 +848,240 @@
     ]
   },
   {
+    "id": "uniswap-cow-ethereum-uni-weth-rp",
+    "name": "UNI-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapEthereumUNI-WETH",
+    "tokenAddress": "0xE97ce6404eA5847Bfcd11A6F7EB3Ff8f30F619eE",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x5fcA009de68595FC4f746F88429370a2A79E37D9",
+    "earnedToken": "rCowUniswapEthereumUNI-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-ethereum-uni-weth",
+    "status": "active",
+    "createdAt": 1784295575,
+    "platformId": "uniswap",
+    "assets": ["UNI", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-ethereum-uni-weth",
+    "name": "UNI-WETH",
+    "type": "cowcentrated",
+    "token": "UNI-WETH uniswap",
+    "tokenAddress": "0x1d42064Fc4Beb5F8aAF85F4617AE8b3b5B8Bd801",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+      "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    ],
+    "earnContractAddress": "0xE97ce6404eA5847Bfcd11A6F7EB3Ff8f30F619eE",
+    "earnedToken": "cowUniswapEthereumUNI-WETH",
+    "earnedTokenAddress": "0xE97ce6404eA5847Bfcd11A6F7EB3Ff8f30F619eE",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-ethereum-uni-weth",
+    "status": "active",
+    "createdAt": 1784295431,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["UNI", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-ethereum-aave-weth-rp",
+    "name": "AAVE-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapEthereumAAVE-WETH",
+    "tokenAddress": "0xeD64dD50515E6A1FE5a4B1a2F514B6e847514BE1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xA9101eF1288259bd61C4EedD852679C355aa29dB",
+    "earnedToken": "rCowUniswapEthereumAAVE-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-ethereum-aave-weth",
+    "status": "active",
+    "createdAt": 1784295695,
+    "platformId": "uniswap",
+    "assets": ["AAVE", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-ethereum-aave-weth",
+    "name": "AAVE-WETH",
+    "type": "cowcentrated",
+    "token": "AAVE-WETH uniswap",
+    "tokenAddress": "0x5aB53EE1d50eeF2C1DD3d5402789cd27bB52c1bB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+      "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    ],
+    "earnContractAddress": "0xeD64dD50515E6A1FE5a4B1a2F514B6e847514BE1",
+    "earnedToken": "cowUniswapEthereumAAVE-WETH",
+    "earnedTokenAddress": "0xeD64dD50515E6A1FE5a4B1a2F514B6e847514BE1",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-ethereum-aave-weth",
+    "status": "active",
+    "createdAt": 1784295635,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["AAVE", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-ethereum-link-weth-rp",
+    "name": "LINK-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapEthereumLINK-WETH",
+    "tokenAddress": "0x2Ae85f4A9c16e2dAa65c624452332f74314F2Ec8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x484966d04B230a110e594De2769EAf00449b2DBe",
+    "earnedToken": "rCowUniswapEthereumLINK-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-ethereum-link-weth",
+    "status": "active",
+    "createdAt": 1784295815,
+    "platformId": "uniswap",
+    "assets": ["LINK", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-ethereum-link-weth",
+    "name": "LINK-WETH",
+    "type": "cowcentrated",
+    "token": "LINK-WETH uniswap",
+    "tokenAddress": "0xa6Cc3C2531FdaA6Ae1A3CA84c2855806728693e8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+      "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    ],
+    "earnContractAddress": "0x2Ae85f4A9c16e2dAa65c624452332f74314F2Ec8",
+    "earnedToken": "cowUniswapEthereumLINK-WETH",
+    "earnedTokenAddress": "0x2Ae85f4A9c16e2dAa65c624452332f74314F2Ec8",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-ethereum-link-weth",
+    "status": "active",
+    "createdAt": 1784295767,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["LINK", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "morpho-v2-ethereum-steakhouse-prime-usdt",
     "name": "USDT (Steakhouse, Prime V2)",
     "type": "standard",
@@ -2194,12 +2428,13 @@
     "earnedTokenAddress": "0xcd17851fd91fEF5AE744F7511213270B63C36c15",
     "oracle": "lps",
     "oracleId": "pendle-stcusd-23jul26",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769600559,
+    "retireReason": "rewards",
+    "retiredAt": 1784780036,
     "platformId": "pendle",
     "assets": ["stcUSD"],
     "migrationIds": [],
-    "pointStructureIds": ["cap-caps"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -2213,6 +2448,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xaC24A6f0068d9701EAEa76AB0B418021017F8D59/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xaC24A6f0068d9701EAEa76AB0B418021017F8D59/zap/out?chain=ethereum",
+    "pointStructureIds": ["cap-caps"],
     "network": "ethereum",
     "zaps": [
       {
@@ -2234,12 +2470,13 @@
     "earnedTokenAddress": "0xAc2A49c8C39198bc340c7604Ee9d6E53015E939A",
     "oracle": "lps",
     "oracleId": "pendle-cusd-23jul26",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769600551,
+    "retireReason": "rewards",
+    "retiredAt": 1784780036,
     "platformId": "pendle",
     "assets": ["cUSD"],
     "migrationIds": [],
-    "pointStructureIds": ["cap-caps"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -2253,6 +2490,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9EaAedA23177B7168c55a3A0F937f67919733449/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9EaAedA23177B7168c55a3A0F937f67919733449/zap/out?chain=ethereum",
+    "pointStructureIds": ["cap-caps"],
     "network": "ethereum",
     "zaps": [
       {
@@ -2613,7 +2851,7 @@
     "earnContractAddress": "0x456e524364B20c7e5F47281eD49bfE8980D93FeE",
     "earnedToken": "MooSkyUSDS_SPK",
     "earnedTokenAddress": "0x456e524364B20c7e5F47281eD49bfE8980D93FeE",
-    "oracle": "token",
+    "oracle": "tokens",
     "oracleId": "USDS",
     "status": "active",
     "createdAt": 1768387341,
@@ -7883,8 +8121,10 @@
     "earnedTokenAddress": "0xadBE02F718327628ED9A9515EC27D3d3b4950ED2",
     "oracle": "lps",
     "oracleId": "convex-alusd-fraxbp",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1711355814,
+    "retireReason": "rewards",
+    "retiredAt": 1784518682,
     "platformId": "convex",
     "assets": ["alUSD", "FRAX", "USDC"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
@@ -9671,8 +9911,10 @@
     "earnedTokenAddress": "0x31C0dac4c896cb84adFEF2F8e41cb9295EEc93c2",
     "oracle": "lps",
     "oracleId": "convex-oeth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1687161061,
+    "retireReason": "tvl",
+    "retiredAt": 1784518287,
     "platformId": "convex",
     "assets": ["OETH", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
@@ -9838,8 +10080,10 @@
     "earnedTokenAddress": "0xFc6a9D39b44a174B5Ba708dBaa437632d78B8585",
     "oracle": "tokens",
     "oracleId": "APE",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1684833624,
+    "retireReason": "tvl",
+    "retiredAt": 1784518287,
     "platformId": "ape",
     "assets": ["APE"],
     "risks": {
@@ -9874,8 +10118,10 @@
     "earnedTokenAddress": "0x03D0F88aDc096259b49079073aED693Ba5f425EE",
     "oracle": "lps",
     "oracleId": "convex-t",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1683622692,
+    "retireReason": "tvl",
+    "retiredAt": 1784518287,
     "platformId": "convex",
     "assets": ["T", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
@@ -11253,8 +11499,10 @@
     "earnedTokenAddress": "0x8448758c3Cad93675eACe770847aA9507f8bDe0B",
     "oracle": "lps",
     "oracleId": "convex-geareth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1675457175,
+    "retireReason": "rewards",
+    "retiredAt": 1784518420,
     "platformId": "convex",
     "assets": ["GEAR", "WETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
