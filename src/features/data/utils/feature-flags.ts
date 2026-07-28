@@ -27,6 +27,12 @@ const getSearchParams = createFactory((): URLSearchParams => {
   return new URLSearchParams(window.location.search);
 });
 
+function isAuthorizedDomain(): boolean {
+  return (
+    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost')
+  );
+}
+
 export const isDevelopment = import.meta.env.DEV;
 export const isProduction = import.meta.env.PROD;
 
@@ -182,9 +188,7 @@ export function featureFlag_noDataPolling() {
 }
 
 export function featureFlag_geoCountryOverride(): string | undefined {
-  const isAuthorizedDomain =
-    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
-  if (!isAuthorizedDomain) {
+  if (!isAuthorizedDomain()) {
     return undefined;
   }
   const params = getSearchParams();
@@ -200,9 +204,7 @@ export function featureFlag_walletAddressOverride(walletAddress: string) {
 }
 
 export function featureFlag_recordReduxActions() {
-  const isAuthorizedDomain =
-    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
-  if (!isAuthorizedDomain) {
+  if (!isAuthorizedDomain()) {
     return false;
   }
   const params = getSearchParams();
@@ -220,9 +222,7 @@ export function featureFlag_logging() {
 }
 
 export function featureFlag_replayReduxActions() {
-  const isAuthorizedDomain =
-    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
-  if (!isAuthorizedDomain) {
+  if (!isAuthorizedDomain()) {
     return false;
   }
   const params = getSearchParams();
@@ -230,9 +230,7 @@ export function featureFlag_replayReduxActions() {
 }
 
 export function featureFlag_simulateRpcError(chainId: ChainEntity['id']) {
-  const isAuthorizedDomain =
-    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
-  if (!isAuthorizedDomain) {
+  if (!isAuthorizedDomain()) {
     return false;
   }
   const params = getSearchParams();
@@ -255,9 +253,7 @@ export function featureFlag_simulateBeefyApiError(
     | 'articles'
     | 'historical-prices'
 ) {
-  const isAuthorizedDomain =
-    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
-  if (!isAuthorizedDomain) {
+  if (!isAuthorizedDomain()) {
     return false;
   }
   const params = getSearchParams();
