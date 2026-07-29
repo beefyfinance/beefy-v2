@@ -44,16 +44,22 @@ for (const [profileId, profile] of Object.entries(restrictions)) {
   }
 }
 
-function getVaultRestrictedProfileId(vault: VaultEntity): string | undefined {
+export type VaultGeoRestriction = {
+  profileId: string;
+  tokenAddress?: string;
+  assetId?: string;
+};
+
+function getVaultGeoRestriction(vault: VaultEntity): VaultGeoRestriction | undefined {
   const profileId = profileByTokenKey.get(tokenKeyOf(vault.chainId, vault.depositTokenAddress));
   if (profileId) {
-    return profileId;
+    return { profileId, tokenAddress: vault.depositTokenAddress };
   }
   if (isCowcentratedLikeVault(vault)) {
     for (const address of vault.depositTokenAddresses) {
       const underlyingProfileId = profileByTokenKey.get(tokenKeyOf(vault.chainId, address));
       if (underlyingProfileId) {
-        return underlyingProfileId;
+        return { profileId: underlyingProfileId, tokenAddress: address };
       }
     }
   }
@@ -61,7 +67,7 @@ function getVaultRestrictedProfileId(vault: VaultEntity): string | undefined {
   for (const assetId of vault.assetIds) {
     const assetProfileId = profileByAssetKey.get(`${vault.chainId}:${assetId}`);
     if (assetProfileId) {
-      return assetProfileId;
+      return { profileId: assetProfileId, assetId };
     }
   }
   return undefined;
@@ -86,6 +92,12 @@ function getGeoStatusForProfile(
   return profile.countries.includes(country) ? 'blocked' : 'allowed';
 }
 
+/** detected country code, or undefined when not yet known / an unknown-location sentinel */
+export const selectUserCountryCode = (state: BeefyState): string | undefined => {
+  const country = state.user.restrictions.countryCode?.toUpperCase();
+  return !country || UNKNOWN_COUNTRIES.includes(country) ? undefined : country;
+};
+
 export const selectUserGeoStatusForProfile = (
   state: BeefyState,
   profileId: string
@@ -96,18 +108,20 @@ export const selectUserGeoStatusForProfile = (
     state.user.restrictions.countryCode
   );
 
-/** id of the restriction profile covering any of the vault's deposit token(s), if any */
-export const selectVaultGeoRestrictedProfileId = createCachedSelector(
+/** restriction profile covering any of the vault's deposit token(s) plus the matched token/asset, if any */
+export const selectVaultGeoRestriction = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultByIdOrUndefined(state, vaultId),
-  vault => (vault ? getVaultRestrictedProfileId(vault) : undefined)
+  vault => (vault ? getVaultGeoRestriction(vault) : undefined)
 )((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectVaultGeoStatus = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ): UserGeoStatus => {
-  const profileId = selectVaultGeoRestrictedProfileId(state, vaultId);
-  return profileId === undefined ? 'allowed' : selectUserGeoStatusForProfile(state, profileId);
+  const restriction = selectVaultGeoRestriction(state, vaultId);
+  return restriction === undefined ? 'allowed' : (
+      selectUserGeoStatusForProfile(state, restriction.profileId)
+    );
 };
 
 /** fail-closed boolean for consumers without a loading state (loading counts as blocked) */
@@ -135,11 +149,11 @@ const selectGeoRestrictedVaultReceiptKeysByProfile = createSelector(
       if (!vault) {
         continue;
       }
-      const profileId = getVaultRestrictedProfileId(vault);
-      if (!profileId) {
+      const restriction = getVaultGeoRestriction(vault);
+      if (!restriction) {
         continue;
       }
-      const keys = (byProfile[profileId] ??= new Set());
+      const keys = (byProfile[restriction.profileId] ??= new Set());
       keys.add(tokenKeyOf(vault.chainId, vault.contractAddress));
       if ('receiptTokenAddress' in vault) {
         keys.add(tokenKeyOf(vault.chainId, vault.receiptTokenAddress));
