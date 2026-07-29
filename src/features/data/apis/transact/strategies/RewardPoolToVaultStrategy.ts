@@ -510,7 +510,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
 
       const zapRequest: UserlessZapRequest = {
         order: {
-          inputs: quote.inputs.map(input => ({
+          inputs: withdrawZap.inputs.map(input => ({
             token: input.token.address,
             amount: toWeiString(input.amount, input.token.decimals),
           })),
