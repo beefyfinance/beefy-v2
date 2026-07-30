@@ -1,5 +1,9 @@
 import { type ArgumentConfig, parse } from 'ts-command-line-args';
-import { getAllVaultConfigsByChainId, getVaultsForChain } from './common/config.ts';
+import {
+  addressBookToAppId,
+  getAllVaultConfigsByChainId,
+  getVaultsForChain,
+} from './common/config.ts';
 import { sortVaultKeys } from './common/vault-fields.ts';
 import { saveJson } from './common/files.ts';
 import { type VaultConfig } from '../src/features/data/apis/config-types.ts';
@@ -183,7 +187,7 @@ async function updateVaults(vaultsToUpdate: VaultConfig[], chainId: string) {
   const modified = existingVaults.map(oldVault => vaultsToUpdateById[oldVault.id] ?? oldVault);
   const changed = modified.filter((vault, i) => !isEqual(vault, existingVaults[i])).length;
   const unchanged = Object.keys(vaultsToUpdateById).length - changed;
-  await saveJson(`./src/config/vault/${chainId}.json`, modified, 'prettier');
+  await saveJson(`./src/config/vault/${addressBookToAppId(chainId)}.json`, modified, 'prettier');
   console.log(
     `[INFO] ${chainId}: ${changed} vaults modified${unchanged > 0 ? `, ${unchanged} already up to date` : ''}`
   );
