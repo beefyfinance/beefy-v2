@@ -1,20 +1,6 @@
 {
-  "qa-example": {
-    "countries": ["US", "AR"],
-    "tokens": {
-      "base": [
-        "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
-        "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
-        "0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b"
-      ],
-      "optimism": ["0xc55E93C62874D8100dBd2DfE307EDc1036ad5434"]
-    },
-    "assets": {
-      "base": ["cbETH"]
-    }
-  },
   "base-tequities": {
-    "countries": ["US", "CA", "GB", "AU", "SG", "AR"],
+    "countries": ["US", "CA", "GB", "AU", "SG"],
     "tokens": {
       "base": [
         "0xb200000000000000000000C2e324d24d7eEcd1fb",
