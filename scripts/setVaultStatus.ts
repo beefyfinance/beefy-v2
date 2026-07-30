@@ -78,53 +78,34 @@ function getRunArgs() {
   });
 }
 
-type VaultWithTokenAddress = Omit<VaultConfig, 'tokenAddress'> & { tokenAddress: string };
+function findRelatedVaults(vault: VaultConfig, allVaults: VaultConfig[]): VaultConfig[] {
+  let allRelatedVaults: VaultConfig[] = [];
 
-function findRelatedVaults(
-  vault: VaultConfig,
-  allVaults: VaultConfig[]
-): Array<VaultWithTokenAddress> {
-  let allRelatedVaults: Array<VaultWithTokenAddress> = [];
-
-  // all vaults that have the underlying token as their deposit token
-  // ie: fetches the vaults, given a rp vault
+  // all vaults whose contract is the input's deposit token
+  // ie: fetches the clm, given a clm vault or rp vault
   allRelatedVaults = allRelatedVaults.concat(
     allVaults.filter(
-      (v): v is VaultWithTokenAddress =>
-        !!v.tokenAddress &&
+      v =>
         !!vault.tokenAddress &&
-        v.tokenAddress.toLowerCase() === vault.tokenAddress.toLowerCase()
+        v.earnContractAddress.toLowerCase() === vault.tokenAddress.toLowerCase()
     )
   );
 
-  // fetch the vaults that have the same earn contract address
-  // ie: fetches the clm vault, given a rp vault
+  // all vaults that have the input's contract as their deposit token
+  // ie: fetches the clm vault + rp vault, given a clm
   allRelatedVaults = allRelatedVaults.concat(
     allVaults.filter(
-      (v): v is VaultWithTokenAddress =>
-        !!v.earnedTokenAddress &&
-        !!vault.tokenAddress &&
-        v.earnedTokenAddress.toLowerCase() === vault.tokenAddress.toLowerCase()
-    )
-  );
-
-  // all vaults that have the input as their underlying token
-  // ie: fetches the rp vaults, given a cow vault
-  allRelatedVaults = allRelatedVaults.concat(
-    allVaults.filter(
-      (v): v is VaultWithTokenAddress =>
-        !!v.tokenAddress &&
-        !!vault.earnedTokenAddress &&
-        v.tokenAddress.toLowerCase() === vault.earnedTokenAddress.toLowerCase()
+      v =>
+        !!v.tokenAddress && v.tokenAddress.toLowerCase() === vault.earnContractAddress.toLowerCase()
     )
   );
 
   // all the vault with the same underlying token and
   // where the type of one is "gov" and the other is "standard"
-  // ie: fetches the rp vaults, given a classic vault
+  // ie: fetches the rp vault, given a clm vault; or bifi-pool, given bifi-vault
   allRelatedVaults = allRelatedVaults.concat(
     allVaults.filter(
-      (v): v is VaultWithTokenAddress =>
+      v =>
         !!v.tokenAddress &&
         !!vault.tokenAddress &&
         v.tokenAddress.toLowerCase() === vault.tokenAddress.toLowerCase() &&
