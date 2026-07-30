@@ -1,6 +1,7 @@
 import { type ArgumentConfig, parse } from 'ts-command-line-args';
 import {
   addressBookToAppId,
+  appToAddressBookId,
   getAllVaultConfigsByChainId,
   getVaultsForChain,
 } from './common/config.ts';
@@ -36,7 +37,8 @@ const runArgsConfig: ArgumentConfig<RunArgs> = {
   chain: {
     type: String,
     alias: 'c',
-    description: 'Chain json file to process',
+    description:
+      'Only look for vaults on this chain (required for chains excluded from validation)',
     optional: true,
   },
   status: {
@@ -193,22 +195,28 @@ async function updateVaults(vaultsToUpdate: VaultConfig[], chainId: string) {
   );
 }
 
-async function getVaultsByIds(vaultIds: string[]) {
-  const existingVaultsByChainId = await getAllVaultConfigsByChainId();
+async function getVaultsByIds(vaultIds: string[], chain?: string) {
+  const existingVaultsByChainId =
+    chain ?
+      { [appToAddressBookId(chain)]: await getVaultsForChain(chain) }
+    : await getAllVaultConfigsByChainId();
   const res: typeof existingVaultsByChainId = {};
-  let foundCount = 0;
+  const notFound = new Set(vaultIds);
 
   for (const chainId in existingVaultsByChainId) {
-    const filtered = existingVaultsByChainId[chainId].filter(vault => vaultIds.includes(vault.id));
+    const filtered = existingVaultsByChainId[chainId].filter(vault => notFound.has(vault.id));
     if (filtered.length > 0) {
       res[chainId] = filtered;
-      foundCount += filtered.length;
+      filtered.forEach(vault => notFound.delete(vault.id));
     }
   }
 
-  if (foundCount !== vaultIds.length) {
-    console.warn(`[WARN] ${vaultIds.length - foundCount} vaults not found`);
+  if (notFound.size > 0) {
+    throw new Error(
+      `Vaults not found${chain ? ` on ${chain}` : ''}: ${Array.from(notFound).join(', ')}`
+    );
   }
+
   return res;
 }
 
@@ -221,7 +229,7 @@ async function main() {
 
   const timestamp = Math.floor(Date.now() / 1000);
 
-  const vaultsToUpdate = await getVaultsByIds(args.vaults);
+  const vaultsToUpdate = await getVaultsByIds(args.vaults, args.chain);
 
   for (const chainId in vaultsToUpdate) {
     const modifiedVaults: VaultConfig[] = [];
