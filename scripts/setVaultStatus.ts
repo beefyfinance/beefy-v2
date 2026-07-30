@@ -9,6 +9,7 @@ import { sortVaultKeys } from './common/vault-fields.ts';
 import { saveJson } from './common/files.ts';
 import { type VaultConfig } from '../src/features/data/apis/config-types.ts';
 import { cloneDeep, isEqual, keyBy, uniqBy } from 'lodash-es';
+import i18keys from '../src/locales/en/main.json';
 
 type RunArgs = {
   help?: boolean;
@@ -49,7 +50,7 @@ const runArgsConfig: ArgumentConfig<RunArgs> = {
   reason: {
     type: String,
     alias: 'r',
-    description: '(retire|pause)Reason code to set',
+    description: '(retire|pause)Reason code to set, must have a matching locale key',
     optional: true,
   },
   vaults: {
@@ -76,6 +77,33 @@ function getRunArgs() {
       },
     ],
   });
+}
+
+/** retire and pause reasons are separate sets; the app renders `Vault-(Retire|Pause)Reason-{code}` */
+function getValidReasons(status: Exclude<RunArgs['status'], 'active'>): string[] {
+  const prefix = status === 'eol' ? 'Vault-RetireReason-' : 'Vault-PauseReason-';
+  return Object.keys(i18keys)
+    .filter(key => key.startsWith(prefix))
+    .map(key => key.substring(prefix.length))
+    .sort();
+}
+
+function validateReason(args: RunArgs) {
+  if (!args.reason) {
+    return;
+  }
+
+  if (args.status === 'active') {
+    console.warn(`[WARN] --reason is ignored when setting status to active`);
+    return;
+  }
+
+  const validReasons = getValidReasons(args.status);
+  if (!validReasons.includes(args.reason)) {
+    throw new Error(
+      `Invalid ${args.status === 'eol' ? 'retire' : 'pause'} reason "${args.reason}", expected one of: ${validReasons.join(', ')}`
+    );
+  }
 }
 
 function findRelatedVaults(vault: VaultConfig, allVaults: VaultConfig[]): VaultConfig[] {
@@ -207,6 +235,8 @@ async function main() {
     console.log(args);
     return;
   }
+
+  validateReason(args);
 
   const timestamp = Math.floor(Date.now() / 1000);
 
