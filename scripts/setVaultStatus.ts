@@ -3,7 +3,7 @@ import { getAllVaultConfigsByChainId, getVaultsForChain } from './common/config.
 import { sortVaultKeys } from './common/vault-fields.ts';
 import { saveJson } from './common/files.ts';
 import { type VaultConfig } from '../src/features/data/apis/config-types.ts';
-import { cloneDeep, keyBy, uniqBy } from 'lodash-es';
+import { cloneDeep, isEqual, keyBy, uniqBy } from 'lodash-es';
 
 type RunArgs = {
   help?: boolean;
@@ -128,10 +128,8 @@ function findRelatedVaults(
     )
   );
 
-  // unique by id:
-  allRelatedVaults = uniqBy(allRelatedVaults, v => v.id);
-
-  return allRelatedVaults;
+  // unique by id, exclude source vault
+  return uniqBy(allRelatedVaults, v => v.id).filter(v => v.id !== vault.id);
 }
 
 function applyChange(vault: VaultConfig, args: RunArgs, now: number): VaultConfig {
@@ -183,15 +181,19 @@ async function updateVaults(vaultsToUpdate: VaultConfig[], chainId: string) {
   const existingVaults = await getVaultsForChain(chainId);
   const vaultsToUpdateById = keyBy(vaultsToUpdate, 'id');
   const modified = existingVaults.map(oldVault => vaultsToUpdateById[oldVault.id] ?? oldVault);
+  const changed = modified.filter((vault, i) => !isEqual(vault, existingVaults[i])).length;
+  const unchanged = Object.keys(vaultsToUpdateById).length - changed;
   await saveJson(`./src/config/vault/${chainId}.json`, modified, 'prettier');
-  console.log(`[INFO] ${vaultsToUpdate.length} vaults modified`);
+  console.log(
+    `[INFO] ${chainId}: ${changed} vaults modified${unchanged > 0 ? `, ${unchanged} already up to date` : ''}`
+  );
 }
 
 async function getVaultsByIds(vaultIds: string[]) {
   const existingVaultsByChainId = await getAllVaultConfigsByChainId();
   const res: typeof existingVaultsByChainId = {};
   let foundCount = 0;
-  console.log(vaultIds);
+
   for (const chainId in existingVaultsByChainId) {
     const filtered = existingVaultsByChainId[chainId].filter(vault => vaultIds.includes(vault.id));
     if (filtered.length > 0) {
@@ -217,7 +219,6 @@ async function main() {
 
   const vaultsToUpdate = await getVaultsByIds(args.vaults);
 
-  console.log(vaultsToUpdate.length);
   for (const chainId in vaultsToUpdate) {
     const modifiedVaults: VaultConfig[] = [];
     const allVaults = await getVaultsForChain(chainId);
