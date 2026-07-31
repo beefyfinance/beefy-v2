@@ -20,6 +20,9 @@ const maxTimestamp = 4_102_444_800;
 const maxFlattenDepth = 64;
 /** Caps on the prelude, so it can never evict the summary it is introducing */
 const maxListedChains = 20;
+/** Caps so one vault cannot consume, or blow past, the whole comment budget */
+const maxRowsPerVault = 200;
+const maxFooterChars = 80;
 const maxListedProblems = 10;
 
 type RunArgs = {
@@ -102,8 +105,8 @@ function chainIdFromPath(path: string): string {
 
 type ChainFiles = {
   paths: string[];
-  /** entries under the directory that are not ordinary files, reported rather than ignored */
-  skipped: string[];
+  /** chain -> why it was not read; excluded on both sides so it cannot look like a mass removal */
+  skipped: Map<string, string>;
 };
 
 /**
@@ -116,9 +119,15 @@ type ChainFiles = {
  * `-z` gives verbatim paths, but only without `--format`, which C-quotes them regardless.
  */
 function listChainFilesAtRef(ref: string): ChainFiles {
+  // if the directory itself is a symlink or a file, ls-tree returns nothing
+  const dirType = git(['cat-file', '-t', `${ref}:${vaultConfigDir}`]).trim();
+  if (dirType !== 'tree') {
+    throw new Error(`${vaultConfigDir} is a ${dirType}, not a directory, at ${ref}`);
+  }
+
   const output = git(['ls-tree', '-z', ref, '--', `${vaultConfigDir}/`]);
   const paths: string[] = [];
-  const skipped: string[] = [];
+  const skipped = new Map<string, string>();
 
   for (const entry of output.split('\0')) {
     const match = /^(\d{6}) (\w+) [0-9a-f]+\t(.*)$/s.exec(entry);
@@ -127,16 +136,18 @@ function listChainFilesAtRef(ref: string): ChainFiles {
     }
     const [, mode, type, path] = match;
     if (!path.endsWith('.json')) {
+      // silently ignoring these is how a nested or oddly named config file goes unmentioned
+      skipped.set(chainIdFromPath(path), `${path} is not a file this tool reads`);
       continue;
     }
     if (!/^[a-z0-9_-]+\.json$/i.test(basename(path))) {
       // an unexpected name would otherwise become a chain id and be rendered as one
-      skipped.push(`${path} is not a recognisable chain file name`);
+      skipped.set(chainIdFromPath(path), `${path} is not a recognisable chain file name`);
     } else if (type === 'blob' && (mode === '100644' || mode === '100755')) {
       paths.push(path);
     } else {
       // a symlink or submodule would otherwise vanish from both sides without a word
-      skipped.push(`${path} is not a regular file (mode ${mode})`);
+      skipped.set(chainIdFromPath(path), `${path} is not a regular file (mode ${mode})`);
     }
   }
 
@@ -189,9 +200,8 @@ function indexVaults(
     }
     const key = `${chain}:${vault.id}`;
     if (into.has(key)) {
-      // keep the first and say so; dropping the chain would hide every other change in it
-      notes.push(`${chain} has more than one vault with id ${vault.id}`);
-      continue;
+      // the app keys these by id, where the last entry wins, so compare the one it will use
+      notes.push(`${chain} has more than one vault with id ${vault.id}; only the last is compared`);
     }
     into.set(key, { chain, vault });
   }
@@ -228,11 +238,11 @@ async function loadSide(ref: string | undefined): Promise<SideLoad> {
   const fromDisk = ref === undefined;
   const listed =
     fromDisk ?
-      { paths: await listChainFilesOnDisk(), skipped: [] as string[] }
+      { paths: await listChainFilesOnDisk(), skipped: new Map<string, string>() }
     : listChainFilesAtRef(ref);
   const vaults: VaultsByKey = new Map();
-  const broken = new Map<string, string>();
-  const notes: string[] = [...listed.skipped];
+  const broken = new Map(listed.skipped);
+  const notes: string[] = [];
 
   for (const path of listed.paths) {
     const chain = chainIdFromPath(path);
@@ -280,8 +290,8 @@ function collectChanges(
     for (const key of new Set([...Object.keys(current), ...Object.keys(previous)])) {
       const segment = escapePathSegment(key);
       collectChanges(
-        previous[key],
-        current[key],
+        Object.hasOwn(previous, key) ? previous[key] : undefined,
+        Object.hasOwn(current, key) ? current[key] : undefined,
         path ? `${path}.${segment}` : segment,
         into,
         depth + 1
@@ -311,18 +321,18 @@ function truncateValue(value: string, start = 0): string {
  * what it actually says. Line endings are handled separately by cell() and inlineHtml().
  */
 function stripUnsafe(value: string): string {
-  // escaped rather than deleted: removing them would make two values that really do differ render
-  // as identical cells, and a bare U+FFFD for all of them would do the same
+  // escaped rather than deleted or folded to a space: two values that really do differ must never
+  // render as the same cell. \p{Cf} covers the tag block and the rest of the format characters.
   return value.replace(
-    // eslint-disable-next-line no-control-regex -- matching them is the whole point
-    /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F\u00AD\u061C\u180E\u200B-\u200F\u202A-\u202E\u2028\u2029\u2060-\u2064\u2066-\u206F\uFEFF]/g,
+    // eslint-disable-next-line no-control-regex, no-misleading-character-class -- deliberate
+    /\p{Cf}|[\u0000-\u0008\u000A-\u001F\u007F\u115F\u1160\u17B4\u17B5\u200B\u2065\u3164\uFFA0\uFFF9-\uFFFB]/gu,
     character => `<U+${character.codePointAt(0)?.toString(16).toUpperCase().padStart(4, '0')}>`
   );
 }
 
 /** Renders a value as a markdown code span.*/
 function code(value: string, start = 0): string {
-  const text = stripUnsafe(truncateValue(value, start)).replace(/\r\n?|\n/g, ' ');
+  const text = stripUnsafe(truncateValue(value, start));
   const longestRun = Math.max(0, ...[...text.matchAll(/`+/g)].map(match => match[0].length));
   const fence = '`'.repeat(longestRun + 1);
   // a code span loses one leading and one trailing space, so pad when that would hide a difference
@@ -336,19 +346,16 @@ function code(value: string, start = 0): string {
  * be parsed as markdown written by the bot.
  */
 function inlineHtml(value: string): string {
-  return stripUnsafe(value.replace(/\r\n?|\n/g, ' '))
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+  return stripUnsafe(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 /** The text code() would render, so both sides of a change can be windowed consistently */
-function valueText(value: unknown): string {
+function valueText(value: unknown, showType = false): string {
   if (value === undefined) {
     return '';
   }
   if (typeof value === 'string') {
-    return value;
+    return showType || value !== value.trim() ? JSON.stringify(value) : value;
   }
   return JSON.stringify(value) ?? typeof value;
 }
@@ -357,9 +364,9 @@ function valueText(value: unknown): string {
  * Each side of a change is cut to maxValueChars on its own, so two long values that differ only
  * past the cut would render as identical cells. Window both around the first difference instead.
  */
-function divergenceStart(before: unknown, after: unknown): number {
-  const a = valueText(before);
-  const b = valueText(after);
+function divergenceStart(before: unknown, after: unknown, showType: boolean): number {
+  const a = valueText(before, showType);
+  const b = valueText(after, showType);
   if (a.length <= maxValueChars && b.length <= maxValueChars) {
     return 0;
   }
@@ -439,16 +446,19 @@ function renderModifiedVault({ chain, vault, changes }: ModifiedVault): string {
     '',
     '| Field | Before | After |',
     '| --- | --- | --- |',
-    ...changes.map(change => {
-      const start = divergenceStart(change.before, change.after);
+    ...changes.slice(0, maxRowsPerVault).map(change => {
       // otherwise 0 and "0", or true and "true", render as two identical looking cells
       const showType =
         change.before !== undefined &&
         change.after !== undefined &&
         (typeof change.before !== typeof change.after ||
           (change.before === null) !== (change.after === null));
+      const start = divergenceStart(change.before, change.after, showType);
       return `| ${cell(code(change.path))} | ${cell(renderValue(change.before, change.path, start, showType))} | ${cell(renderValue(change.after, change.path, start, showType))} |`;
     }),
+    ...(changes.length > maxRowsPerVault ?
+      [`| _… and ${changes.length - maxRowsPerVault} more fields not shown_ | | |`]
+    : []),
     '',
     '</details>',
     '',
@@ -469,12 +479,15 @@ type Diff = {
   notes: string[];
   /** chain files that differ textually, so a reorder-only change is not reported as nothing */
   filesTouched: number;
+  /** vaults that threw while being compared; head side problems must fail the step */
+  comparisonFailures: string[];
 };
 
 function buildDiff(base: SideLoad, head: SideLoad, filesTouched: number): Diff {
   // a chain that failed to load on either side would otherwise look like a mass add or delete
   const broken = new Map([...base.broken, ...head.broken]);
   const notes = [...new Set([...base.notes, ...head.notes])];
+  const comparisonFailures: string[] = [];
 
   const usable = (entry: VaultLocation) => !broken.has(entry.chain);
 
@@ -497,7 +510,7 @@ function buildDiff(base: SideLoad, head: SideLoad, filesTouched: number): Diff {
         modified.push({ ...current, before: previous.vault, changes });
       }
     } catch (e) {
-      notes.push(
+      comparisonFailures.push(
         `${current.chain} ${current.vault.id} could not be compared: ${e instanceof Error ? e.message : String(e)}`
       );
     }
@@ -513,7 +526,15 @@ function buildDiff(base: SideLoad, head: SideLoad, filesTouched: number): Diff {
   removed.sort(byChainThenId);
   modified.sort(byChainThenId);
 
-  return { added, removed, modified, broken, notes, filesTouched };
+  return {
+    added,
+    removed,
+    modified,
+    broken,
+    notes: [...notes, ...comparisonFailures],
+    filesTouched,
+    comparisonFailures,
+  };
 }
 
 /** Renders one id/chain/type table, stopping before it exceeds its share of the comment */
@@ -530,7 +551,7 @@ function renderTableSection(title: string, vaults: VaultLocation[], budget: numb
     const row = `| ${cell(code(vault.id))} | ${cell(code(chain))} | ${cell(code(vaultType(vault)))} |`;
     const footer = `\n_… and ${vaults.length - index} more not shown._`;
     if (used + row.length + footer.length + 2 > budget) {
-      lines.push(footer.trimStart());
+      lines.push('', footer.trimStart());
       break;
     }
     lines.push(row);
@@ -555,7 +576,7 @@ function renderDiff(
   if (!changed && problems.length === 0) {
     parts.push(
       filesTouched > 0 ?
-        `No vault config changes detected (${filesTouched} file(s) changed, ordering or formatting only).`
+        `No vault config changes detected, though ${filesTouched} file(s) under \`${vaultConfigDir}\` differ. Check the diff for renames, reordering or files this tool does not read.`
       : 'No vault config changes detected.',
       ''
     );
@@ -606,16 +627,21 @@ function renderDiff(
   }
 
   let used = parts.join('\n').length;
-  for (const [index, vault] of modified.entries()) {
+  let notShown = 0;
+  for (const vault of modified) {
     const rendered = renderModifiedVault(vault);
-    const remaining = modified.length - index;
-    const footer = `_… and ${remaining} more modified ${remaining === 1 ? 'vault' : 'vaults'} not shown._\n`;
-    if (used + rendered.length + footer.length + 2 > maxChars) {
-      parts.push(footer);
-      break;
+    // continue, not break: one oversized vault must not delete every vault after it
+    if (used + rendered.length + maxFooterChars > maxChars) {
+      notShown++;
+      continue;
     }
     parts.push(rendered);
     used += rendered.length + 1;
+  }
+  if (notShown > 0) {
+    parts.push(
+      `_… and ${notShown} more modified ${notShown === 1 ? 'vault' : 'vaults'} not shown._\n`
+    );
   }
 
   const output = parts.join('\n');
@@ -637,10 +663,8 @@ async function start() {
   }
 
   const [base, head] = await Promise.all([loadSide(args.base), loadSide(args.head)]);
-  const markdown = renderDiff(
-    buildDiff(base, head, countChangedChainFiles(args.base, args.head)),
-    args.maxChars
-  );
+  const diff = buildDiff(base, head, countChangedChainFiles(args.base, args.head));
+  const markdown = renderDiff(diff, args.maxChars);
 
   if (args.output) {
     await saveString(args.output, markdown);
@@ -650,7 +674,7 @@ async function start() {
 
   // Malformed config is the pull request's problem, not a failure of this tool, so the summary is
   // written either way. Only the head side counts: the base may predate a fix.
-  const problems = sideProblems(head);
+  const problems = [...sideProblems(head), ...diff.comparisonFailures];
   if (problems.length > 0) {
     for (const problem of problems) {
       console.error(`Problem: ${problem}`);
