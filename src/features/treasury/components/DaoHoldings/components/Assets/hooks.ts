@@ -1,5 +1,9 @@
 import { sortBy } from 'lodash-es';
 import type { TreasuryHoldingEntity } from '../../../../../data/entities/treasury.ts';
+import {
+  getTreasuryHoldingCategory,
+  TREASURY_MIN_DISPLAY_USD,
+} from '../../../../../data/entities/treasury.ts';
 
 type SortedAssetCategories = {
   staked: TreasuryHoldingEntity[];
@@ -21,15 +25,10 @@ export const useSortedAssets = (assets: TreasuryHoldingEntity[]): SortedAssetCat
 
   for (const token of sortedAssets) {
     //HIDE: All tokens with less than 10 usd
-    if (token.usdValue.gt(10)) {
-      if ((token.assetType === 'token' || token.assetType === 'native') && !token.staked) {
-        list.liquid.push(token);
-      }
-      if (token.staked) {
-        list.staked.push(token);
-      }
-      if (token.assetType === 'validator') {
-        list.locked.push(token);
+    if (token.usdValue.gte(TREASURY_MIN_DISPLAY_USD)) {
+      const category = getTreasuryHoldingCategory(token);
+      if (category) {
+        list[category].push(token);
       }
     }
   }

@@ -55,18 +55,6 @@ export const config = {
       priorityMinimum: '10000000', // 0.01 gwei
     },
   },
-  berachain: {
-    name: 'Berachain',
-    chainId: 80094,
-    rpc: ['https://rpc.berachain.com'],
-    explorerUrl: 'https://berascan.com',
-    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x75c9D65e7C0d6b40F356452f8A11aeD525B67197',
-    native: { symbol: 'BERA', oracleId: 'WBERA', decimals: 18 },
-    gas: {
-      type: 'standard',
-    },
-  },
   bsc: {
     name: 'BNB Chain',
     chainId: 56,
@@ -173,6 +161,21 @@ export const config = {
       type: 'standard',
     },
   },
+  robinhood: {
+    new: true,
+    name: 'Robinhood',
+    chainId: 4663,
+    rpc: ['https://rpc.mainnet.chain.robinhood.com'],
+    explorerUrl: 'https://robinhoodchain.blockscout.com',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0xe02749Ba85C543745aA5714263B75efc7e142a2A',
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.6,
+    },
+  },
   monad: {
     name: 'Monad',
     chainId: 143,
@@ -276,6 +279,19 @@ export const config = {
     multicall3Address: '0x9A04a9e1d67151AB1E742E6D8965e0602410f91d',
     appMulticallContractAddress: '0x6bD7b74BD4707b1effeFC199920Bc3bC1Cb7b11f',
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
+    gas: {
+      type: 'standard',
+    },
+  },
+  berachain: {
+    eol: 1783962082,
+    name: 'Berachain',
+    chainId: 80094,
+    rpc: ['https://rpc.berachain.com'],
+    explorerUrl: 'https://berascan.com',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x75c9D65e7C0d6b40F356452f8A11aeD525B67197',
+    native: { symbol: 'BERA', oracleId: 'WBERA', decimals: 18 },
     gas: {
       type: 'standard',
     },
