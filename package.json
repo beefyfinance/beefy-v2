@@ -22,6 +22,7 @@
     "clm": "vite-node ./scripts/addCLM.ts",
     "pause": "vite-node ./scripts/pausePlatform.ts",
     "setVaultUrls": "vite-node ./scripts/setVaultUrls.ts",
+    "vaultConfigDiff": "vite-node ./scripts/vaultConfigDiff.ts",
     "setVaultStatus": "vite-node ./scripts/setVaultStatus.ts",
     "retireChain": "vite-node ./scripts/retireChain.ts",
     "setVaultRisks": "vite-node ./scripts/setVaultRisks.ts",
