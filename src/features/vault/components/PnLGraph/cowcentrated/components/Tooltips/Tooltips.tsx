@@ -124,7 +124,7 @@ export const FeesTooltip = memo(function FeesTooltip({
 
   return (
     <div className={classes.content}>
-      <div>{formatDateTime(timestamp * 1000)}</div>
+      <div>{formatDateTime(timestamp)}</div>
       {tokens.map((token, i) => (
         <div className={classes.itemContainer} key={token.id}>
           <div className={classes.label}>{token.symbol}:</div>

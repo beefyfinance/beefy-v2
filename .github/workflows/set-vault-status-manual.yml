@@ -24,6 +24,11 @@ on:
           - rewards
           - exploit
           - upgrade
+          - exploitNoPanic
+          - liquidityPanic
+          - liquidityNoPanic
+          - withdraw
+          - viability
           - noReason
       vaults:
         description: 'Comma-separated list of vault IDs'
@@ -56,23 +61,44 @@ jobs:
         run: npm ci
 
       - name: Set Vault Status
+        # never interpolate user input
+        env:
+          INPUT_STATUS: ${{ github.event.inputs.status }}
+          INPUT_REASON: ${{ github.event.inputs.reason }}
+          INPUT_CHAIN: ${{ github.event.inputs.chain }}
+          INPUT_VAULTS: ${{ github.event.inputs.vaults }}
+          INPUT_INCLUDE_RELATED: ${{ github.event.inputs.includeRelated }}
         run: |
-          # Optionally include chain argument
-          CHAIN_ARG=$(if [ -n "${{ github.event.inputs.chain }}" ]; then echo "--chain ${{ github.event.inputs.chain }}" ; fi)
-          # Optionally include includeRelated argument
-          INCLUDE_RELATED_ARG=$(if [ "${{ github.event.inputs.includeRelated }}" = "true" ]; then echo "--includeRelated" ; fi)
-          # Optionally include reason argument
-          # TODO don't pass --reason if input is "noReason"/"default"
-          REASON_ARG=$(if [ -n "${{ github.event.inputs.reason }}" ]; then echo "--reason ${{ github.event.inputs.reason }}" ; fi)
-          # Convert comma-separated vault IDs into multiple --vault arguments
-          VAULT_ARGS=$(echo "${{ github.event.inputs.vaults }}" | tr ',' '\n' | xargs -I {} echo "--vaults {}" | tr '\n' ' ')
+          # Build the argument list; each value stays exactly one argument
+          set -- --status "$INPUT_STATUS"
 
-          npm run setVaultStatus -- -- \
-            --status "${{ github.event.inputs.status }}" \
-            $CHAIN_ARG \
-            $REASON_ARG \
-            $INCLUDE_RELATED_ARG \
-            $VAULT_ARGS
+          # Optionally include chain argument
+          if [ -n "$INPUT_CHAIN" ]; then
+            set -- "$@" --chain "$INPUT_CHAIN"
+          fi
+
+          # Optionally include reason argument; "noReason" means leave the reason code unset
+          if [ -n "$INPUT_REASON" ] && [ "$INPUT_REASON" != "noReason" ]; then
+            set -- "$@" --reason "$INPUT_REASON"
+          fi
+
+          # Optionally include includeRelated argument
+          if [ "$INPUT_INCLUDE_RELATED" = "true" ]; then
+            set -- "$@" --includeRelated
+          fi
+
+          # Convert comma-separated vault ids into repeated --vaults arguments
+          set -f     # no globbing while splitting
+          IFS=', '   # split on commas, absorb surrounding spaces
+          for VAULT_ID in $INPUT_VAULTS; do
+            if [ -n "$VAULT_ID" ]; then
+              set -- "$@" --vaults "$VAULT_ID"
+            fi
+          done
+          set +f
+          unset IFS
+
+          npm run setVaultStatus -- -- "$@"
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7

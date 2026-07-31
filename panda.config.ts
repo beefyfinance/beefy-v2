@@ -1179,6 +1179,7 @@ const config = buildConfig(
       megaeth: { primary: '#D9D9D9', header: 0.4 },
       polygon: { primary: '#f5f0fd', header: 0.3 },
       real: { primary: '#ffffff', header: '#1c122c66' },
+      robinhood: { primary: '#CCFF00', header: 0.2 },
       rootstock: { primary: '#000000', header: '#1c122c66' },
       saga: { primary: '#2a8f68', header: 0.2 },
       scroll: { primary: '#ffe6c8', header: '#c9cbce' },

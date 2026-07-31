@@ -45,7 +45,4 @@ export const styles = {
       },
     },
   }),
-  uppercase: css.raw({
-    textTransform: 'uppercase',
-  }),
 };

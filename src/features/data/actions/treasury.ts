@@ -24,8 +24,8 @@ export const fetchTreasury = createAppAsyncThunk<FetchTreasuryFulfilledPayload>(
     const data = await api.getTreasury();
     const addressHoldingByChainId: AddressHoldingByChainId = {};
 
-    for (const [chainId, balances] of entries(data.treasury)) {
-      if (activeChainIds.includes(chainId)) {
+    for (const [chainId, balances] of entries(data)) {
+      if (balances && activeChainIds.includes(chainId)) {
         const items: Record<string, AddressHolding> = {};
         for (const [address, data] of Object.entries(balances)) {
           items[address] = {
@@ -58,14 +58,19 @@ const mapBalances = (
         selectIsTokenLoadedOnChain(state, token.address, chainId)
       ) {
         const key = token.assetType === 'validator' ? token.id : token.address;
-        totals[key] = {
-          ...token,
-          usdValue: new BigNumber(token.usdValue),
-          balance: new BigNumber(token.balance),
-          pricePerFullShare: new BigNumber(
-            isVaultHoldingConfig(token) ? token.pricePerFullShare : '1'
-          ),
-        };
+        totals[key] =
+          isVaultHoldingConfig(token) ?
+            {
+              ...token,
+              usdValue: new BigNumber(token.usdValue),
+              balance: new BigNumber(token.balance),
+              pricePerFullShare: new BigNumber(token.pricePerFullShare),
+            }
+          : {
+              ...token,
+              usdValue: new BigNumber(token.usdValue),
+              balance: new BigNumber(token.balance),
+            };
       }
 
       return totals;
