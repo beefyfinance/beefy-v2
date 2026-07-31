@@ -2207,8 +2207,10 @@
     "earnedTokenAddress": "0x99B91bbc278A3D6f20A83De8c15215Aa0829FEDd",
     "oracle": "lps",
     "oracleId": "balancerv3-ethereum-teth-wsteth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770938814,
+    "retireReason": "rewards",
+    "retiredAt": 1785476979,
     "platformId": "aura",
     "assets": ["tETH", "waEthLidowstETH"],
     "risks": {
