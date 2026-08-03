@@ -1,9 +1,9 @@
 {
-  "uniswap-cow-ethereum-usdc-weth-rp": true,
-  "uniswap-cow-ethereum-wbtc-usdc-rp": true,
-  "uniswap-cow-ethereum-wbtc-weth-rp": true,
-  "pancakeswap-cow-base-sol-cbbtc-vault": true,
-  "pancakeswap-cow-base-sol-jitosol-vault": true,
+  "yb-wbtc": true,
+  "uniswap-cow-ethereum-paxg-usdc-rp": true,
+  "uniswap-cow-ethereum-link-weth-rp": true,
+  "uniswap-cow-ethereum-aave-weth-rp": true,
+  "uniswap-cow-ethereum-uni-weth-rp": true,
   "uniswap-cow-robinhood-cashcat-usdg-rp": true,
   "uniswap-cow-robinhood-cashcat-weth-rp": true,
   "uniswap-cow-robinhood-tendies-weth-rp": true
