@@ -1,5 +1,38 @@
 [
   {
+    "id": "yb-wbtc",
+    "name": "WBTC",
+    "type": "standard",
+    "token": "staked-g(yb-WBTC)",
+    "tokenAddress": "0xAa0b1d265F23972eafB7d088e963BD31403A58F5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "yb",
+    "earnContractAddress": "0x000D8A90f10c3f47728F5c69990B116d2608bd9f",
+    "earnedToken": "mooYieldBasisWBTC",
+    "earnedTokenAddress": "0x000D8A90f10c3f47728F5c69990B116d2608bd9f",
+    "oracle": "lps",
+    "oracleId": "yb-wbtc",
+    "status": "active",
+    "createdAt": 1785738804,
+    "platformId": "yb",
+    "assets": ["WBTC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single-lp",
+    "addLiquidityUrl": "https://yieldbasis.com/earn/0x651D4b8168488FA163D85304662E8278d4c55BAa",
+    "removeLiquidityUrl": "https://yieldbasis.com/earn/0x651D4b8168488FA163D85304662E8278d4c55BAa",
+    "network": "ethereum"
+  },
+  {
     "id": "stakedao-frxusd-usd3",
     "name": "USD3/frxUSD",
     "type": "standard",
