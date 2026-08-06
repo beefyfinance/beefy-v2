@@ -38,6 +38,7 @@ import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
 import { type Address, encodeFunctionData, parseAbi } from 'viem';
 import {
+  BIG_ZERO,
   bigNumberToBigInt,
   fromWei,
   toWei,
@@ -57,6 +58,7 @@ import { pickTokens } from '../../helpers/tokens.ts';
 import { buildTokenApproveTx } from '../../zap/approve.ts';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { isFulfilledResult, isRejectedResult } from '../../../../../../helpers/promises.ts';
+import type BigNumber from 'bignumber.js';
 
 const strategyId = 'yieldbasis';
 type StrategyId = typeof strategyId;
@@ -70,6 +72,7 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
   protected readonly want: TokenEntity;
   protected readonly asset: TokenEntity;
   protected readonly ybToken: TokenEntity;
+  protected readonly crvUsd: TokenEntity;
 
   protected readonly stakeZap = '0xE862bC39B8D5F12D8c4117d3e2D493Dc20051EC6';
   protected readonly abi = parseAbi([
@@ -96,6 +99,7 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
     this.want = vaultType.depositToken;
     this.asset = selectTokenById(state, vault.chainId, vault.assetIds[0]);
     this.ybToken = selectTokenByAddress(state, vault.chainId, options.ybToken);
+    this.crvUsd = selectTokenById(state, vault.chainId, 'crvUSD');
   }
 
   async fetchDepositOptions(): Promise<ZapStrategyIdToDepositOption<StrategyId>[]> {
@@ -177,14 +181,23 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
     };
   }
 
-  async fetchYbPreviewDeposit(input: TokenAmount) {
+  private assetToCrvUsd(amount: BigNumber) {
     const state = this.helpers.getState();
     const assetPrice = selectTokenPriceByAddress(state, this.vault.chainId, this.asset.address);
-    const crvUsdDebt = assetPrice.times(input.amount);
+    const crvUsdPrice = selectTokenPriceByAddress(state, this.vault.chainId, this.crvUsd.address);
+    const assetValue = assetPrice.times(amount);
+    // fallback to 1:1 if crvUsd is 0
+    return crvUsdPrice.gt(BIG_ZERO) ? assetValue.dividedBy(crvUsdPrice) : assetValue;
+  }
 
+  async fetchYbPreviewDeposit(input: TokenAmount) {
+    if (!isTokenEqual(input.token, this.asset)) {
+      throw new Error('Preview input token must be the deposit asset');
+    }
+    const crvUsdDebt = this.assetToCrvUsd(input.amount);
     const YB = fetchContract(this.ybToken.address, this.abi, this.vault.chainId);
     const assets = toWeiBigInt(input.amount, input.token.decimals);
-    const debt = toWeiBigInt(crvUsdDebt, 18);
+    const debt = toWeiBigInt(crvUsdDebt, this.crvUsd.decimals);
 
     // may still be able to deposit with no debt once debt limit is reached
     const [withDebt, noDebt] = await Promise.allSettled([
