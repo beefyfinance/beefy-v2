@@ -55,7 +55,6 @@ import { uniqBy } from 'lodash-es';
 import { slipBy } from '../../helpers/amounts.ts';
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
 import { pickTokens } from '../../helpers/tokens.ts';
-import { buildTokenApproveTx } from '../../zap/approve.ts';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { isFulfilledResult, isRejectedResult } from '../../../../../../helpers/promises.ts';
 import type BigNumber from 'bignumber.js';
@@ -237,7 +236,6 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
     const inputBigInt = bigNumberToBigInt(inputWei);
     if (isTokenEqual(input.token, this.asset)) {
       const { debt } = await this.fetchYbPreviewDeposit(input);
-      steps.push(buildTokenApproveTx(input.token.address, this.stakeZap, inputWei));
       steps.push({
         target: this.stakeZap,
         data: encodeFunctionData({
@@ -246,10 +244,9 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
           args: [this.want.address as Address, inputBigInt, debt, 0n],
         }),
         value: '0',
-        tokens: [],
+        tokens: [{ token: input.token.address, index: -1 }],
       });
     } else {
-      steps.push(buildTokenApproveTx(input.token.address, this.want.address, inputWei));
       steps.push({
         target: this.want.address,
         data: encodeFunctionData({
@@ -258,7 +255,7 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
           args: [inputBigInt, this.helpers.zap.router as Address],
         }),
         value: '0',
-        tokens: [],
+        tokens: [{ token: input.token.address, index: -1 }],
       });
     }
 
@@ -385,7 +382,6 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
 
     const output = onlyOneTokenAmount(unstakeQuote.outputs);
     if (isTokenEqual(output.token, this.asset)) {
-      steps.push(buildTokenApproveTx(wantOutput.token.address, this.stakeZap, wantWei, true));
       steps.push({
         target: this.stakeZap,
         data: encodeFunctionData({
