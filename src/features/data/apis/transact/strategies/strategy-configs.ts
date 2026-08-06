@@ -87,6 +87,8 @@ export type ConicStrategyConfig = {
 export type YieldBasisStrategyConfig = {
   strategyId: 'yieldbasis';
   ybToken: string;
+  /** the non-crvUSD side of the pair */
+  asset: string;
 } & OptionalStrategySwapConfig;
 
 export type CowcentratedStrategyConfig = {

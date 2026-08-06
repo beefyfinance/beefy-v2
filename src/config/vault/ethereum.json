@@ -34,7 +34,8 @@
     "zaps": [
       {
         "strategyId": "yieldbasis",
-        "ybToken": "0x651D4b8168488FA163D85304662E8278d4c55BAa"
+        "ybToken": "0x651D4b8168488FA163D85304662E8278d4c55BAa",
+        "asset": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
       }
     ]
   },
