@@ -11,7 +11,11 @@ import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
 import { fetchPlatforms } from '../actions/platforms.ts';
 import { fetchAllPricesAction } from '../actions/prices.ts';
 import { initPromos, promosRecalculatePinned } from '../actions/promos.ts';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
+import {
+  fetchAddressBookAction,
+  fetchAllAddressBookAction,
+  reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
+} from '../actions/tokens.ts';
 import { fetchAllVaults } from '../actions/vaults.ts';
 import { calculateZapAvailabilityAction } from '../actions/zap.ts';
 import { storeFilters } from '../reducers/filtered-vaults-storage.ts';
@@ -43,6 +47,8 @@ const hasDataChanged = isFulfilled(
   recalculateTotalApyAction,
   recalculateAvgApyAction
 );
+
+const hasAddressbookLoaded = isFulfilled(fetchAllAddressBookAction, fetchAddressBookAction);
 
 const hasFiltersChangedViaUI = isAnyOf(
   filteredVaultsActions.reset,
@@ -170,6 +176,16 @@ export function addFilteredVaultsListeners() {
         await dispatch(
           recalculateFilteredVaultsAction({ filtersChanged: true, sortChanged: true })
         );
+      },
+    });
+
+    /** category/platform membership depend on address book */
+    startAppListening({
+      matcher: hasAddressbookLoaded,
+      effect: async (_action, { dispatch, delay, cancelActiveListeners }) => {
+        cancelActiveListeners();
+        await delay(50);
+        await dispatch(recalculateFilteredVaultsAction({ filtersChanged: true }));
       },
     });
 
