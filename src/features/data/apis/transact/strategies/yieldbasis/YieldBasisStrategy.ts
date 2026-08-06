@@ -133,9 +133,13 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
         [{ token: input.token, amount: input.amount, spenderAddress: zap.manager }]
       : [];
 
-    let ybTokenAmount = toWeiBigInt(input.amount, input.token.decimals);
-    if (isTokenEqual(input.token, this.asset)) {
+    let ybTokenAmount: bigint;
+    if (isTokenEqual(input.token, this.ybToken)) {
+      ybTokenAmount = toWeiBigInt(input.amount, input.token.decimals);
+    } else if (isTokenEqual(input.token, this.asset)) {
       ({ preview: ybTokenAmount } = await this.fetchYbPreviewDeposit(input));
+    } else {
+      throw new Error(`Unsupported token ${input.token.symbol} ${input.token.address}`);
     }
 
     const Gauge = fetchContract(this.want.address, this.abi, this.vault.chainId);
@@ -234,6 +238,7 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
     const input = onlyOneTokenAmount(buildQuote.inputs);
     const inputWei = toWei(input.amount, input.token.decimals);
     const inputBigInt = bigNumberToBigInt(inputWei);
+
     if (isTokenEqual(input.token, this.asset)) {
       const { debt } = await this.fetchYbPreviewDeposit(input);
       steps.push({
@@ -246,7 +251,7 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
         value: '0',
         tokens: [{ token: input.token.address, index: -1 }],
       });
-    } else {
+    } else if (isTokenEqual(input.token, this.ybToken)) {
       steps.push({
         target: this.want.address,
         data: encodeFunctionData({
@@ -257,6 +262,8 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
         value: '0',
         tokens: [{ token: input.token.address, index: -1 }],
       });
+    } else {
+      throw new Error(`Unsupported token ${input.token.symbol} ${input.token.address}`);
     }
 
     const vaultDeposit = await this.vaultType.fetchZapDeposit({
@@ -311,6 +318,9 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
     const state = getState();
     const input = onlyOneInput(inputs);
     const output = onlyOneToken(option.wantedOutputs);
+    if (!isTokenEqual(output, this.asset)) {
+      throw new Error(`Unsupported token ${output.symbol} ${output.address}`);
+    }
 
     const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
       getVaultWithdrawnFromState(input, this.vault, state);
@@ -392,7 +402,9 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
         value: '0',
         tokens: [{ token: wantOutput.token.address, index: getInsertIndex(1) }],
       });
-    } else throw new Error(`Unsupported token ${output.token.symbol} ${output.token.address}`);
+    } else {
+      throw new Error(`Unsupported token ${output.token.symbol} ${output.token.address}`);
+    }
 
     const inputs: OrderInput[] = vaultWithdraw.inputs.map(input => ({
       token: getTokenAddress(input.token),
