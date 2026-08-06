@@ -84,6 +84,11 @@ export type ConicStrategyConfig = {
   strategyId: 'conic';
 } & OptionalStrategySwapConfig;
 
+export type YieldBasisStrategyConfig = {
+  strategyId: 'yieldbasis';
+  ybToken: string;
+} & OptionalStrategySwapConfig;
+
 export type CowcentratedStrategyConfig = {
   strategyId: 'cowcentrated';
 } & OptionalStrategySwapConfig;
@@ -130,6 +135,7 @@ export type ZapStrategyConfig =
   | RewardPoolToVaultStrategyConfig
   | BalancerStrategyConfig
   | PendleV2StrategyConfig
+  | YieldBasisStrategyConfig
   | CrossChainStrategyConfig
   | VaultToVaultSingleTokenStrategyConfig;
 

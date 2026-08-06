@@ -335,6 +335,13 @@ export type BalancerWithdrawOption = BalancerWithdrawOptionBase &
     | BalancerOptionAllBreakOnlyPart
   );
 
+export type YieldBasisDepositOption = ZapBaseDepositOption & {
+  strategyId: 'yieldbasis';
+};
+export type YieldBasisWithdrawOption = ZapBaseWithdrawOption & {
+  strategyId: 'yieldbasis';
+};
+
 export type ConicDepositOption = ZapBaseDepositOption & {
   strategyId: 'conic';
 };
@@ -496,6 +503,7 @@ export type DepositOption =
   | RewardPoolToVaultDepositOption
   | BalancerDepositOption
   | PendleV2DepositOption
+  | YieldBasisDepositOption
   | CrossChainDepositOption
   | VaultToVaultSingleTokenDepositOption;
 
@@ -516,6 +524,7 @@ export type WithdrawOption =
   | RewardPoolToVaultWithdrawOption
   | BalancerWithdrawOption
   | PendleV2WithdrawOption
+  | YieldBasisWithdrawOption
   | CrossChainWithdrawOption
   | VaultToVaultSingleTokenWithdrawOption;
 
@@ -883,6 +892,8 @@ export type CurveDepositQuote = BaseZapQuote<CurveDepositOption> & {
 
 export type BalancerDepositQuote = BaseZapQuote<BalancerDepositOption>;
 
+export type YieldBasisDepositQuote = BaseZapQuote<YieldBasisDepositOption>;
+
 export type PendleV2DepositQuote = BaseZapQuote<PendleV2DepositOption> & {
   via: 'aggregator' | 'direct';
   viaToken: TokenEntity;
@@ -936,6 +947,7 @@ export type ZapDepositQuote =
   | RewardPoolToVaultDepositQuote
   | BalancerDepositQuote
   | PendleV2DepositQuote
+  | YieldBasisDepositQuote
   | CrossChainDepositQuote
   | VaultToVaultSingleTokenDepositQuote;
 
@@ -1014,6 +1026,8 @@ export type PendleV2WithdrawQuote = BaseZapQuote<PendleV2WithdrawOption> & {
   viaToken: TokenEntity;
 };
 
+export type YieldBasisWithdrawQuote = BaseZapQuote<YieldBasisWithdrawOption>;
+
 export type GammaBreakWithdrawQuote = BaseZapQuote<GammaWithdrawOption>;
 export type GammaAggregatorWithdrawQuote = BaseZapQuote<GammaWithdrawOption> & {
   lpQuotes: QuoteResponse[];
@@ -1078,6 +1092,7 @@ export type ZapWithdrawQuote =
   | VaultComposerZapWithdrawQuote
   | BalancerWithdrawQuote
   | PendleV2WithdrawQuote
+  | YieldBasisWithdrawQuote
   | CrossChainWithdrawQuote
   | VaultToVaultSingleTokenWithdrawQuote;
 

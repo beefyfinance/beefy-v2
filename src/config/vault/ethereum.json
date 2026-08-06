@@ -30,7 +30,13 @@
     "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://yieldbasis.com/earn/0x651D4b8168488FA163D85304662E8278d4c55BAa",
     "removeLiquidityUrl": "https://yieldbasis.com/earn/0x651D4b8168488FA163D85304662E8278d4c55BAa",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "yieldbasis",
+        "ybToken": "0x651D4b8168488FA163D85304662E8278d4c55BAa"
+      }
+    ]
   },
   {
     "id": "stakedao-frxusd-usd3",
