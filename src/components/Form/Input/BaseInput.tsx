@@ -95,6 +95,8 @@ const recipe = sva({
       flexShrink: '1',
       flexGrow: '1',
       outline: 'none',
+      // on the input (not ::placeholder): applies to the placeholder in all browsers
+      textOverflow: 'ellipsis',
       '&::placeholder': {
         color: 'white.70-64a',
         opacity: '1',

@@ -2,20 +2,16 @@ import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { getLiveLocation } from '../../../components/Router/live-location.ts';
 import { filteredVaultsActions } from '../reducers/filtered-vaults.ts';
-import {
-  selectFilterAppliedUrlSearch,
-  selectFiltersSettled,
-} from '../selectors/filtered-vaults.ts';
+import { selectFilterUrlSearch } from '../selectors/filtered-vaults.ts';
 import { useAppDispatch, useAppSelector } from '../store/hooks.ts';
 import { canonicalizeSearch, decideFilterUrlSync } from '../utils/filter-url.ts';
 
-/** filter state <-> url sync; init already consumed the url, and `applied` is pre-debounced so no timers are needed */
+/** filter state <-> url sync; tracks pending */
 export function useFilterUrlSync(): void {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const appliedSearch = useAppSelector(selectFilterAppliedUrlSearch);
-  const settled = useAppSelector(selectFiltersSettled);
+  const stateSearch = useAppSelector(selectFilterUrlSearch);
   const lastSeenUrlRef = useRef<string | undefined>(undefined);
   if (lastSeenUrlRef.current === undefined) {
     lastSeenUrlRef.current = canonicalizeSearch(location.search);
@@ -35,8 +31,7 @@ export function useFilterUrlSync(): void {
     const { seenUrl, apply, write } = decideFilterUrlSync(
       location.search,
       lastSeenUrlRef.current,
-      appliedSearch,
-      settled
+      stateSearch
     );
     lastSeenUrlRef.current = seenUrl;
 
@@ -54,5 +49,5 @@ export function useFilterUrlSync(): void {
         console.error(`Failed to update filter url`, e);
       }
     }
-  }, [dispatch, navigate, settled, appliedSearch, location.pathname, location.search]);
+  }, [dispatch, navigate, stateSearch, location.pathname, location.search]);
 }

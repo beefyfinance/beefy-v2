@@ -7,6 +7,7 @@ import {
   type AvgApySortType,
   type FilteredVaultsPreset,
   type FilterValues,
+  isRelevanceSortActive,
   SORT_TYPES,
   STRATEGY_TYPES,
   USER_CATEGORIES,
@@ -27,7 +28,7 @@ import {
   strictObject,
 } from 'valibot';
 import { FILTER_DEFAULTS } from './filter-values.ts';
-import { isDefined } from './array-utils.ts';
+import { areArraysEqual, isDefined } from './array-utils.ts';
 
 const CHAIN_IDS = Object.keys(chainConfigs) as ChainId[];
 const AVG_APY_PICK = ['default', ...AVG_APY_PERIODS.map(n => `${n}` as const)] as const;
@@ -156,10 +157,9 @@ function isDefaultList<T>(defaultValue: T[], compareFn?: CompareFn<T>) {
       return false;
     }
     const sortedValue = [...value].sort(compareFn);
-    return sortedValue.every((b, i) => {
-      const a = sortedDefault[i];
-      return compareFn ? compareFn(a, b) === 0 : a === b;
-    });
+    return areArraysEqual(sortedValue, sortedDefault, (a, b) =>
+      compareFn ? compareFn(a, b) === 0 : a === b
+    );
   };
 }
 
@@ -322,6 +322,18 @@ export function serializeFilters(
   return search ? `?${search}` : '';
 }
 
+export function serializeFilterState(
+  filters: FilterValues,
+  sortPickedDuringSearch: boolean
+): string {
+  // don't serialize `sort` if in relevance sort mode
+  return serializeFilters(
+    isRelevanceSortActive({ searchText: filters.searchText, sortPickedDuringSearch }) ?
+      { ...filters, sort: 'default' }
+    : filters
+  );
+}
+
 /** invalid or default-valued params drop but stay recognized; unknown params go to carry */
 export function parseFilterSearch(search: string): ParsedFilterSearch {
   const params = new URLSearchParams(search);
@@ -371,26 +383,23 @@ export type FilterUrlSyncDecision = {
   write?: string;
 };
 
-/** inbound (url moved with differing filters) beats outbound (settled state written out); comparisons are canonical */
+/** inbound (url moved with differing filters) beats outbound (state written out); comparisons are canonical */
 export function decideFilterUrlSync(
   locationSearch: string,
   lastSeenUrl: string | undefined,
-  appliedSearch: string,
-  settled: boolean
+  stateSearch: string
 ): FilterUrlSyncDecision {
   const { preset, recognized, carry } = parseFilterSearch(locationSearch);
   const urlNow = serializeFilters(preset, { carry });
 
-  if (urlNow !== lastSeenUrl && recognized && serializeFilters(preset) !== appliedSearch) {
+  if (urlNow !== lastSeenUrl && recognized && serializeFilters(preset) !== stateSearch) {
     return { seenUrl: urlNow, apply: preset };
   }
 
-  // only write settled values; mid-debounce state may still change
-  if (settled) {
-    const target = canonicalizeSearch(appliedSearch, { carry });
-    if (target !== urlNow) {
-      return { seenUrl: urlNow, write: target };
-    }
+  // state (pending) drives the url; the pending value is always a complete, valid filter set
+  const target = canonicalizeSearch(stateSearch, { carry });
+  if (target !== urlNow) {
+    return { seenUrl: urlNow, write: target };
   }
 
   return { seenUrl: urlNow };

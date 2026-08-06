@@ -2,7 +2,7 @@ import type { Draft } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { FilteredVaultsPreset, FilterValues } from '../reducers/filtered-vaults-types.ts';
-import { isOneOf } from './array-utils.ts';
+import { areArraysEqual, isOneOf } from './array-utils.ts';
 
 /** Default filter values; also the exhaustive source of FilterValues keys */
 export const FILTER_DEFAULTS: FilterValues = {
@@ -62,7 +62,7 @@ function valueEqual(a: unknown, b: unknown): boolean {
     return true;
   }
   if (Array.isArray(a) && Array.isArray(b)) {
-    return a.length === b.length && a.every((value, i) => value === b[i]);
+    return areArraysEqual(a, b);
   }
   if (BigNumber.isBigNumber(a) && BigNumber.isBigNumber(b)) {
     return a.eq(b);
@@ -100,4 +100,32 @@ export function diffFilterValues(a: FilterValues, b: FilterValues): FilterValues
 export function filterValuesEqual(a: FilterValues, b: FilterValues): boolean {
   const { filtersChanged, sortChanged } = diffFilterValues(a, b);
   return !filtersChanged && !sortChanged;
+}
+
+/** Filters whose `vaultPassesFilters` outcome can change when data updates */
+export const DATA_DEPENDENT_FILTERS: ReadonlyArray<{
+  /** the filter this row guards, for readability */
+  readonly filter: keyof FilterValues;
+  /** true when the filter is currently active (and so its live-data predicate runs) */
+  readonly isActive: (filters: FilterValues) => boolean;
+}> = [
+  // selectVaultIsBoostedForFilter
+  { filter: 'onlyBoosted', isActive: f => f.onlyBoosted },
+  // selectVaultSupportsZap
+  { filter: 'onlyZappable', isActive: f => f.onlyZappable },
+  {
+    // user balance data (deposited vault ids / selectUserBalanceOfToken)
+    filter: 'userCategory',
+    isActive: f => f.userCategory === 'deposited',
+  },
+  {
+    // selectVaultUnderlyingTvlUsd
+    filter: 'minimumUnderlyingTvl',
+    isActive: f => f.minimumUnderlyingTvl.gt(0),
+  },
+];
+
+/** true when any currently-active filter's membership can shift as live data updates */
+export function filtersDependOnData(filters: FilterValues): boolean {
+  return DATA_DEPENDENT_FILTERS.some(({ isActive }) => isActive(filters));
 }

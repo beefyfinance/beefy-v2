@@ -11,11 +11,16 @@ import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
 import { fetchPlatforms } from '../actions/platforms.ts';
 import { fetchAllPricesAction } from '../actions/prices.ts';
 import { initPromos, promosRecalculatePinned } from '../actions/promos.ts';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
+import {
+  fetchAddressBookAction,
+  fetchAllAddressBookAction,
+  reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
+} from '../actions/tokens.ts';
 import { fetchAllVaults } from '../actions/vaults.ts';
 import { calculateZapAvailabilityAction } from '../actions/zap.ts';
 import { storeFilters } from '../reducers/filtered-vaults-storage.ts';
 import { filteredVaultsActions } from '../reducers/filtered-vaults.ts';
+import { savedVaultsActions } from '../reducers/saved-vaults.ts';
 import { diffFilterValues } from '../utils/filter-values.ts';
 import {
   accountHasChanged,
@@ -43,10 +48,18 @@ const hasDataChanged = isFulfilled(
   recalculateAvgApyAction
 );
 
-const hasPendingChanged = isAnyOf(
+const hasAddressbookLoaded = isFulfilled(fetchAllAddressBookAction, fetchAddressBookAction);
+
+const hasFiltersChangedViaUI = isAnyOf(
   filteredVaultsActions.reset,
   filteredVaultsActions.set,
   filteredVaultsActions.update
+);
+
+const hasFiltersChanged = isAnyOf(
+  hasFiltersChangedViaUI,
+  filteredVaultsActions.setFromUrl,
+  filteredVaultsActions.reconcile
 );
 
 const hasWalletChanged = isAnyOf(
@@ -58,24 +71,16 @@ const hasWalletChanged = isAnyOf(
 );
 
 export function addFilteredVaultsListeners() {
-  /**
-   * This middleware persists the applied filters whenever they change
-   */
+  /** Persist the pending filters whenever they change */
   startAppListening({
-    matcher: isAnyOf(
-      fetchChainConfigs.fulfilled,
-      filteredVaultsActions.applyPending,
-      filteredVaultsActions.setFromUrl,
-      filteredVaultsActions.reconcile
-    ),
+    matcher: hasFiltersChanged,
     effect: (_action, { getState }) => {
-      storeFilters(getState().ui.filteredVaults.applied);
+      const fv = getState().ui.filteredVaults;
+      storeFilters(fv.pending, fv.sortPickedDuringSearch);
     },
   });
 
-  /**
-   * This middleware listens for when all actions that have loaded data have been fulfilled and recalculates the filtered vaults
-   */
+  /** Recalculate the filtered vaults and starts listening for changes after all data has loaded */
   startAppListening({
     matcher: hasDataLoaded,
     effect: async (
@@ -100,22 +105,19 @@ export function addFilteredVaultsListeners() {
         })
       );
 
-      // apply pending changes dispatched before listeners started (e.g. during load)
-      const slice = getState().ui.filteredVaults;
-      const { filtersChanged, sortChanged } = diffFilterValues(slice.pending, slice.applied);
-      if (filtersChanged || sortChanged) {
-        dispatch(filteredVaultsActions.applyPending());
-      }
-
-      // Calculate
-      dispatch(recalculateFilteredVaultsAction({ dataChanged: true }));
+      // first run mark all changed
+      dispatch(
+        recalculateFilteredVaultsAction({
+          dataChanged: true,
+          filtersChanged: true,
+          sortChanged: true,
+        })
+      );
     },
   });
 
   function listenForChanges() {
-    /**
-     * This middleware listens for actions that affect vaults data and recalculates the filtered vaults
-     */
+    /** Long debounced recalculate when global data changes */
     startAppListening({
       matcher: hasDataChanged,
       effect: async (_action, { dispatch, delay, cancelActiveListeners }) => {
@@ -129,9 +131,7 @@ export function addFilteredVaultsListeners() {
       },
     });
 
-    /**
-     * This middleware listens for actions that changes the connected wallet and recalculates the filtered vaults
-     */
+    /** Short debounced recalculate when user wallet changes */
     startAppListening({
       matcher: hasWalletChanged,
       effect: async (
@@ -148,11 +148,9 @@ export function addFilteredVaultsListeners() {
       },
     });
 
-    /**
-     * This middleware applies pending filter changes to `applied` and recalculates the filtered vaults
-     */
+    /** Short debounced recalculate when user changes filteres in UI */
     startAppListening({
-      matcher: hasPendingChanged,
+      matcher: hasFiltersChangedViaUI,
       effect: async (_action, { dispatch, delay, getState, cancelActiveListeners }) => {
         // debounce to batch filter updates
         cancelActiveListeners();
@@ -165,14 +163,12 @@ export function addFilteredVaultsListeners() {
           return;
         }
 
-        dispatch(filteredVaultsActions.applyPending());
+        // recalc reads pending and commits it to applied on completion
         await dispatch(recalculateFilteredVaultsAction({ filtersChanged, sortChanged }));
       },
     });
 
-    /**
-     * This middleware recalculates immediately when a url applies filters (setFromUrl skips the apply debounce)
-     */
+    /** Immediate recalculate when a incoming url applies filters */
     startAppListening({
       matcher: isAnyOf(filteredVaultsActions.setFromUrl),
       effect: async (_action, { dispatch, cancelActiveListeners }) => {
@@ -180,6 +176,29 @@ export function addFilteredVaultsListeners() {
         await dispatch(
           recalculateFilteredVaultsAction({ filtersChanged: true, sortChanged: true })
         );
+      },
+    });
+
+    /** category/platform membership depend on address book */
+    startAppListening({
+      matcher: hasAddressbookLoaded,
+      effect: async (_action, { dispatch, delay, cancelActiveListeners }) => {
+        cancelActiveListeners();
+        await delay(50);
+        await dispatch(recalculateFilteredVaultsAction({ filtersChanged: true }));
+      },
+    });
+
+    /** Recalculate when the saved set changes while the saved category is applied */
+    startAppListening({
+      matcher: isAnyOf(savedVaultsActions.setSavedVaultIds),
+      effect: async (_action, { dispatch, getState, cancelActiveListeners }) => {
+        // skip if not on that tab
+        if (getState().ui.filteredVaults.pending.userCategory !== 'saved') {
+          return;
+        }
+        cancelActiveListeners();
+        await dispatch(recalculateFilteredVaultsAction({ filtersChanged: true }));
       },
     });
   }

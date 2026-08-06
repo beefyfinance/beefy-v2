@@ -10,8 +10,8 @@ import type {
 } from '../../../../../data/reducers/filtered-vaults-types.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import {
+  selectFilterEffectiveSort,
   selectFilterSortDirection,
-  selectFilterSort,
 } from '../../../../../data/selectors/filtered-vaults.ts';
 import { type FilterSubColumn, SubColumnSort } from './SubColumnSort.tsx';
 
@@ -44,7 +44,8 @@ const SORT_COLUMNS = [
 
 export const TableHeaderSort = memo(function TableHeaderSort() {
   const dispatch = useAppDispatch();
-  const sortField = useAppSelector(selectFilterSort);
+  // 'relevance' selects no column, so the first click during a search always starts a fresh sort
+  const sortField = useAppSelector(selectFilterEffectiveSort);
   const sortDirection = useAppSelector(selectFilterSortDirection);
 
   const handleSort = useCallback(

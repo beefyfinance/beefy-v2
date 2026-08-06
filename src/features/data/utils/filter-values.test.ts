@@ -1,5 +1,7 @@
+import BigNumber from 'bignumber.js';
 import { describe, expect, it } from 'vitest';
-import { FILTER_DEFAULTS, mergePreset } from './filter-values.ts';
+import type { FilterValues } from '../reducers/filtered-vaults-types.ts';
+import { FILTER_DEFAULTS, filtersDependOnData, mergePreset } from './filter-values.ts';
 
 describe('mergePreset onlyUnstakedClm', () => {
   it('drops the filter when the user category changes', () => {
@@ -25,4 +27,37 @@ describe('mergePreset onlyUnstakedClm', () => {
     const base = { ...FILTER_DEFAULTS, userCategory: 'deposited' as const, onlyUnstakedClm: true };
     expect(mergePreset(base, { subSort: { apy: 'default' } }).onlyUnstakedClm).toBe(true);
   });
+});
+
+describe('filtersDependOnData', () => {
+  function withFilters(values: Partial<FilterValues>): FilterValues {
+    return { ...FILTER_DEFAULTS, ...values };
+  }
+
+  it('is false for defaults (nothing reads live tick data)', () => {
+    expect(filtersDependOnData(FILTER_DEFAULTS)).toBe(false);
+  });
+
+  it.each([
+    ['onlyBoosted', withFilters({ onlyBoosted: true })],
+    ['onlyZappable', withFilters({ onlyZappable: true })],
+    ['deposited category', withFilters({ userCategory: 'deposited' })],
+    ['minimumUnderlyingTvl > 0', withFilters({ minimumUnderlyingTvl: new BigNumber(100) })],
+  ])('is true when %s is active', (_label, filters) => {
+    expect(filtersDependOnData(filters)).toBe(true);
+  });
+
+  it.each([
+    ['saved category', withFilters({ userCategory: 'saved' })],
+    ['search text', withFilters({ searchText: 'eth' })],
+    ['vault category', withFilters({ vaultCategory: ['stable'] })],
+    ['only retired', withFilters({ onlyRetired: true })],
+    ['asset type', withFilters({ assetType: ['clm'] })],
+    ['zero minimumUnderlyingTvl', withFilters({ minimumUnderlyingTvl: new BigNumber(0) })],
+  ])(
+    'is false when only %s is active (membership is static across data ticks)',
+    (_label, filters) => {
+      expect(filtersDependOnData(filters)).toBe(false);
+    }
+  );
 });

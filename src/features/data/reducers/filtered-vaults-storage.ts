@@ -1,11 +1,12 @@
 import { getLiveLocation } from '../../../components/Router/live-location.ts';
 import { storageGet, storageSet } from '../../../helpers/storage.ts';
-import { parseFilterSearch, serializeFilters } from '../utils/filter-url.ts';
+import { parseFilterSearch, serializeFilterState } from '../utils/filter-url.ts';
 import { FILTER_DEFAULTS, mergePreset } from '../utils/filter-values.ts';
 import {
   FilterContent,
   type FilteredVaultsState,
   type FilterValues,
+  isSortPickedInPreset,
 } from './filtered-vaults-types.ts';
 
 export const FILTERS_STORAGE_KEY = 'vaultFilters';
@@ -41,12 +42,15 @@ export function buildInitialFilteredVaultsState(): FilteredVaultsState {
   return {
     pending: values,
     applied: values,
+    // a restored url/storage session with ?q= + explicit sort keeps that sort over relevance
+    sortPickedDuringSearch: isSortPickedInPreset(values.searchText, values.sort),
     filteredVaultIds: [],
     sortedFilteredVaultIds: [],
+    searchRanked: false,
     filterContent: FilterContent.Filter,
   };
 }
 
-export function storeFilters(values: FilterValues): void {
-  storageSet(FILTERS_STORAGE_KEY, serializeFilters(values));
+export function storeFilters(values: FilterValues, sortPickedDuringSearch: boolean): void {
+  storageSet(FILTERS_STORAGE_KEY, serializeFilterState(values, sortPickedDuringSearch));
 }

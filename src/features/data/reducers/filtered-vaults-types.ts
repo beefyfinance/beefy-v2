@@ -3,9 +3,25 @@ import type { ChainEntity } from '../entities/chain.ts';
 import type { PlatformEntity } from '../entities/platform.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { KeysOfType } from '../utils/types-utils.ts';
+import { hasSearchText } from '../utils/vault-search.ts';
 
 export const SORT_TYPES = ['default', 'tvl', 'apy', 'daily', 'depositValue'] as const;
 export type SortType = (typeof SORT_TYPES)[number];
+
+export type EffectiveSortType = SortType | 'relevance';
+
+/** while searching, results sort by relevance unless the user explicitly picked a sort */
+export function isRelevanceSortActive(filters: {
+  searchText: string;
+  sortPickedDuringSearch: boolean;
+}): boolean {
+  return hasSearchText(filters.searchText) && !filters.sortPickedDuringSearch;
+}
+
+/** an explicit sort in a preset/restored session wins over relevance */
+export function isSortPickedInPreset(searchText: string | undefined, sort: SortType | undefined) {
+  return hasSearchText(searchText ?? '') && (sort ?? 'default') !== 'default';
+}
 
 export type SortDirectionType = 'asc' | 'desc';
 
@@ -59,8 +75,15 @@ export type FilterValues = {
 export type FilteredVaultsState = {
   pending: FilterValues;
   applied: FilterValues;
+  /**
+   * user chose a sort while searching, so relevance does not override it.
+   * kept outside FilterValues: it is derived ui state, never serialized to url/storage nor diffed.
+   */
+  sortPickedDuringSearch: boolean;
   filteredVaultIds: VaultEntity['id'][];
   sortedFilteredVaultIds: VaultEntity['id'][];
+  /** the sorted ids are relevance-ranked; false when all matches tie (selected sort applies) */
+  searchRanked: boolean;
   filterContent: FilterContent;
 };
 

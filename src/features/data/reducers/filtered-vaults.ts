@@ -1,13 +1,16 @@
 import { createSlice, type Draft, type PayloadAction } from '@reduxjs/toolkit';
 import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
 import { fetchAllVaults } from '../actions/vaults.ts';
+import { areArraysEqual } from '../utils/array-utils.ts';
 import { FILTER_DEFAULTS, mergePreset } from '../utils/filter-values.ts';
+import { hasSearchText } from '../utils/vault-search.ts';
 import { buildInitialFilteredVaultsState } from './filtered-vaults-storage.ts';
 import {
   FilterContent,
   type FilteredVaultsPreset,
   type FilteredVaultsReconcile,
   type FilterValues,
+  isSortPickedInPreset,
 } from './filtered-vaults-types.ts';
 
 export const filteredVaultsSlice = createSlice({
@@ -17,15 +20,40 @@ export const filteredVaultsSlice = createSlice({
   reducers: {
     reset(sliceState) {
       sliceState.pending = FILTER_DEFAULTS;
+      sliceState.sortPickedDuringSearch = false;
       sliceState.filterContent = FilterContent.Filter;
     },
     /** reset + update: defaults with the given preset on top */
     set(sliceState, action: PayloadAction<FilteredVaultsPreset>) {
-      sliceState.pending = mergePreset(FILTER_DEFAULTS, action.payload);
+      const values = mergePreset(FILTER_DEFAULTS, action.payload);
+      sliceState.pending = values;
+      sliceState.sortPickedDuringSearch = isSortPickedInPreset(values.searchText, values.sort);
       sliceState.filterContent = FilterContent.Filter;
     },
     update(sliceState, action: PayloadAction<FilteredVaultsPreset>) {
-      sliceState.pending = mergePreset(sliceState.pending, action.payload);
+      // capture as primitives up front so the relevance bookkeeping never compares immer drafts
+      const prevSearchText = sliceState.pending.searchText;
+      const prevSort = sliceState.pending.sort;
+      const prevSortDirection = sliceState.pending.sortDirection;
+      const prevSubSortApy = sliceState.pending.subSort.apy;
+      const next = mergePreset(sliceState.pending, action.payload);
+      sliceState.pending = next;
+
+      // clearing or starting a fresh search session re-enables relevance sort
+      if (
+        prevSearchText !== next.searchText &&
+        (!hasSearchText(next.searchText) || !hasSearchText(prevSearchText))
+      ) {
+        sliceState.sortPickedDuringSearch = false;
+      }
+      // an explicit sort while searching disables the relevance override
+      const sortChanged =
+        next.sort !== prevSort ||
+        next.sortDirection !== prevSortDirection ||
+        next.subSort.apy !== prevSubSortApy;
+      if (sortChanged && hasSearchText(next.searchText)) {
+        sliceState.sortPickedDuringSearch = true;
+      }
     },
     reconcile(sliceState, action: PayloadAction<FilteredVaultsReconcile>) {
       const knownPlatformIds = new Set(action.payload.platformIds);
@@ -42,15 +70,11 @@ export const filteredVaultsSlice = createSlice({
       sliceState.pending = prune(sliceState.pending);
       sliceState.applied = prune(sliceState.applied);
     },
-    /** middleware-only: moves pending to applied */
-    applyPending(sliceState) {
-      sliceState.applied = sliceState.pending;
-    },
-    /** url-sync only: preset over defaults to pending AND applied at once (urls skip the apply debounce) */
+    /** url-sync only: preset over defaults to pending; the immediate recalc commits it to applied */
     setFromUrl(sliceState, action: PayloadAction<FilteredVaultsPreset>) {
       const values = mergePreset(FILTER_DEFAULTS, action.payload);
       sliceState.pending = values;
-      sliceState.applied = values;
+      sliceState.sortPickedDuringSearch = isSortPickedInPreset(values.searchText, values.sort);
     },
     setFilterContent(sliceState, action: PayloadAction<FilterContent>) {
       sliceState.filterContent = action.payload;
@@ -68,8 +92,16 @@ export const filteredVaultsSlice = createSlice({
         }
       })
       .addCase(recalculateFilteredVaultsAction.fulfilled, (state, action) => {
-        state.filteredVaultIds = action.payload.filtered;
-        state.sortedFilteredVaultIds = action.payload.sorted;
+        // commit the snapshot the recalc ran against: applied + results update atomically
+        state.applied = action.payload.applied;
+        // preserve array identity
+        if (!areArraysEqual(state.filteredVaultIds, action.payload.filtered)) {
+          state.filteredVaultIds = action.payload.filtered;
+        }
+        if (!areArraysEqual(state.sortedFilteredVaultIds, action.payload.sorted)) {
+          state.sortedFilteredVaultIds = action.payload.sorted;
+        }
+        state.searchRanked = action.payload.searchRanked;
       });
   },
 });

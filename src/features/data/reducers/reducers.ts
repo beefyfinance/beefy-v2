@@ -84,6 +84,7 @@ const userReducer = combineReducers({
   ),
   walletActions: walletActionsReducer as Reducer<WalletActionsState>,
 });
+
 const uiReducer = combineReducers({
   addToWallet: addToWalletSlice.reducer,
   bridge: bridgeSlice.reducer,
