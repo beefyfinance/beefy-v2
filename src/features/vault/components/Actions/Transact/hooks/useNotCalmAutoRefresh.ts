@@ -7,9 +7,9 @@ import {
   selectTransactMode,
   selectTransactQuoteError,
   selectTransactQuoteStatus,
-  selectTransactSelected,
   selectTransactSelectedChainId,
-  selectTransactSelectedSelectionId,
+  selectTransactSelectedSelectionIdOrUndefined,
+  selectTransactSelectionById,
 } from '../../../../../data/selectors/transact.ts';
 import { selectIsWindowFocused } from '../../../../../data/selectors/window.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
@@ -17,14 +17,14 @@ import { useAppSelector } from '../../../../../data/store/hooks.ts';
 export const NOT_CALM_REFRESH_SECONDS = 10;
 
 export type NotCalmAutoRefresh = {
-  /** Keep the calm warning visible while a not-calm retry re-quote is in flight (no loader flicker). */
-  showStickyNotCalmWarning: boolean;
-  /** Run the title's auto-refresh countdown while we're retrying a not-calm deposit. */
+  /** Action of the not-calm retry re-quote in flight — keeps the calm warning visible (no loader flicker). */
+  stickyNotCalmAction: 'deposit' | 'withdraw' | undefined;
+  /** Run the title's auto-refresh countdown while we're retrying a not-calm quote. */
   showNotCalmRefresh: boolean;
 };
 
 /**
- * CLM "not calm" deposit auto-refresh. When a deposit quote fails the on-chain calmness check we
+ * CLM "not calm" auto-refresh. When a deposit/withdraw quote fails the on-chain calmness check we
  * re-quote every NOT_CALM_REFRESH_SECONDS until a calm quote comes back. The countdown ring AND the
  * re-quote itself are driven by ReloadSpinner (it fires onClick when the countdown completes), so
  * all we need here is the retrying flag — paused while the tab is backgrounded so we don't re-quote
@@ -35,29 +35,30 @@ export type NotCalmAutoRefresh = {
 export function useNotCalmAutoRefresh(): NotCalmAutoRefresh {
   const mode = useAppSelector(selectTransactMode);
   const isWindowFocused = useAppSelector(selectIsWindowFocused);
-  const selectionId = useAppSelector(selectTransactSelectedSelectionId);
-  const selection = useAppSelector(selectTransactSelected);
+  // reset-trigger deps only — must not throw before a selection exists (e.g. migrate flow)
+  const selectionId = useAppSelector(selectTransactSelectedSelectionIdOrUndefined);
+  const selection = useAppSelector(state =>
+    selectionId ? selectTransactSelectionById(state, selectionId) : undefined
+  );
   const inputAmounts = useAppSelector(selectTransactInputAmounts);
   const inputMaxes = useAppSelector(selectTransactInputMaxes);
   const chainId = useAppSelector(selectTransactSelectedChainId);
   const status = useAppSelector(selectTransactQuoteStatus);
   const quoteError = useAppSelector(selectTransactQuoteError);
 
-  const isNotCalmDepositError =
-    !!quoteError &&
-    QuoteCowcentratedNotCalmError.match(quoteError) &&
-    quoteError.action === 'deposit';
+  const notCalmAction =
+    quoteError && QuoteCowcentratedNotCalmError.match(quoteError) ? quoteError.action : undefined;
 
-  // True from the first not-calm error until any other settled result (calm quote, different error,
-  // or idle). Stays true across the retry's brief Pending so the warning doesn't flicker to a loader.
-  const [retrying, setRetrying] = useState(false);
+  // Set from the first not-calm error until any other settled result (calm quote, different error,
+  // or idle). Persists across the retry's brief Pending so the warning doesn't flicker to a loader.
+  const [retryingAction, setRetryingAction] = useState<'deposit' | 'withdraw' | undefined>();
   useEffect(() => {
-    if (isNotCalmDepositError) {
-      setRetrying(true);
+    if (notCalmAction) {
+      setRetryingAction(notCalmAction);
     } else if (status !== TransactStatus.Pending) {
-      setRetrying(false);
+      setRetryingAction(undefined);
     }
-  }, [isNotCalmDepositError, status]);
+  }, [notCalmAction, status]);
 
   // Reset whenever the user changes what they're transacting.
   const skipInitialReset = useRef(true);
@@ -66,11 +67,12 @@ export function useNotCalmAutoRefresh(): NotCalmAutoRefresh {
       skipInitialReset.current = false;
       return;
     }
-    setRetrying(false);
+    setRetryingAction(undefined);
   }, [chainId, inputAmounts, inputMaxes, mode, selection, selectionId]);
 
   return {
-    showStickyNotCalmWarning: status === TransactStatus.Pending && retrying,
-    showNotCalmRefresh: retrying && isWindowFocused,
+    stickyNotCalmAction: status === TransactStatus.Pending ? retryingAction : undefined,
+    // pause the countdown while a re-quote is in flight so a slow quote isn't discarded by the next tick
+    showNotCalmRefresh: !!retryingAction && isWindowFocused && status !== TransactStatus.Pending,
   };
 }
