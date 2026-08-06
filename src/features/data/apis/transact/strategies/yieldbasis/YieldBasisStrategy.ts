@@ -96,7 +96,7 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
     this.vault = vault;
     this.vaultType = vaultType;
     this.want = vaultType.depositToken;
-    this.asset = selectTokenById(state, vault.chainId, vault.assetIds[0]);
+    this.asset = selectTokenByAddress(state, vault.chainId, options.asset);
     this.ybToken = selectTokenByAddress(state, vault.chainId, options.ybToken);
     this.crvUsd = selectTokenById(state, vault.chainId, 'crvUSD');
   }
