@@ -4,21 +4,22 @@ import type { PlatformEntity } from '../entities/platform.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { KeysOfType } from '../utils/types-utils.ts';
 
-export type SortType = 'tvl' | 'apy' | 'daily' | 'default' | 'depositValue';
+export const SORT_TYPES = ['default', 'tvl', 'apy', 'daily', 'depositValue'] as const;
+export type SortType = (typeof SORT_TYPES)[number];
 
 export type SortDirectionType = 'asc' | 'desc';
 
-export type VaultCategoryType = 'stable' | 'bluechip' | 'meme' | 'correlated';
+export const VAULT_CATEGORIES = ['stable', 'bluechip', 'meme', 'correlated'] as const;
+export type VaultCategoryType = (typeof VAULT_CATEGORIES)[number];
 
-export type VaultAssetType = 'lps' | 'single' | 'clm';
+export const VAULT_ASSET_TYPES = ['lps', 'single', 'clm'] as const;
+export type VaultAssetType = (typeof VAULT_ASSET_TYPES)[number];
 
-export type StrategiesType = 'all' | 'pools' | 'vaults';
+export const STRATEGY_TYPES = ['all', 'pools', 'vaults'] as const;
+export type StrategiesType = (typeof STRATEGY_TYPES)[number];
 
-export type UserCategoryType = 'all' | 'saved' | 'deposited';
-
-export function isValidUserCategory(category: string): category is UserCategoryType {
-  return ['all', 'saved', 'deposited'].includes(category);
-}
+export const USER_CATEGORIES = ['all', 'saved', 'deposited'] as const;
+export type UserCategoryType = (typeof USER_CATEGORIES)[number];
 
 export type AvgApySortType = 'default' | 7 | 30 | 90;
 
@@ -33,17 +34,8 @@ export enum FilterContent {
   Platform,
   Chains,
 }
-/**
- * State containing Vault infos
- * Increase the version on persistReducer if you make changes to this shape
- */
-export type FilteredVaultsState = {
-  /**
-   * Some form element have local copies of the state as putting it inside the
-   * redux store would be too slow for user interactions. This bool tells them
-   * to reset their local copy. The search text is (for now) the only example.
-   **/
-  reseted: boolean;
+
+export type FilterValues = {
   sort: SortType;
   subSort: SubSortsState;
   sortDirection: SortDirectionType;
@@ -60,17 +52,26 @@ export type FilteredVaultsState = {
   onlyZappable: boolean;
   onlyEarningPoints: boolean;
   onlyUnstakedClm: boolean;
+  minimumUnderlyingTvl: BigNumber;
+};
+
+/** `pending` is what the controls bind to; `applied` is the debounce-settled copy driving recalc, url and storage */
+export type FilteredVaultsState = {
+  pending: FilterValues;
+  applied: FilterValues;
   filteredVaultIds: VaultEntity['id'][];
   sortedFilteredVaultIds: VaultEntity['id'][];
-  minimumUnderlyingTvl: BigNumber;
   filterContent: FilterContent;
 };
 
-export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
-export type FilteredVaultBigNumberKeys = KeysOfType<FilteredVaultsState, BigNumber>;
-export type SetSubSortPayload<K extends SortWithSubSort = SortWithSubSort> = {
-  [K in SortWithSubSort]: {
-    column: K;
-    value: SubSortsState[K];
-  };
-}[K];
+export type FilteredVaultsPreset = Partial<Omit<FilterValues, 'subSort'>> & {
+  subSort?: Partial<SubSortsState>;
+};
+
+export type FilteredVaultsReconcile = {
+  platformIds: PlatformEntity['id'][];
+  chainIds: ChainEntity['id'][];
+};
+
+export type FilteredVaultBooleanKeys = KeysOfType<FilterValues, boolean>;
+export type FilteredVaultBigNumberKeys = KeysOfType<FilterValues, BigNumber>;

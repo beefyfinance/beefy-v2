@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { routerMode } from '../Router/Router.tsx';
+import { routerMode } from '../Router/router-mode.ts';
 import { useTranslation } from 'react-i18next';
 
 export type MetaProps = {

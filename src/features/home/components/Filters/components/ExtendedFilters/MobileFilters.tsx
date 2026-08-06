@@ -40,13 +40,13 @@ export const MobileFilters = memo<MobileFiltersProps>(function MobileFilters({ o
 
     if (content === FilterContent.Platform) {
       if (!isEqual(platforms, platformsCopy)) {
-        dispatch(filteredVaultsActions.setPlatformIds(platformsCopy));
+        dispatch(filteredVaultsActions.update({ platformIds: platformsCopy }));
       }
     }
 
     if (content === FilterContent.Chains) {
       if (!isEqual(chains, chainsCopy)) {
-        dispatch(filteredVaultsActions.setChainIds(chainsCopy));
+        dispatch(filteredVaultsActions.update({ chainIds: chainsCopy }));
       }
     }
 

@@ -9,8 +9,8 @@ import { askForWalletConnection, doDisconnectWallet } from '../../../../../data/
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { selectIsUserBalanceAvailable } from '../../../../../data/selectors/balance.ts';
 import {
-  selectFilterUserCategory,
-  selectHasActiveFilterExcludingUserCategoryAndSort,
+  selectFilterAppliedUserCategory,
+  selectFilterAppliedHasActiveExcludingUserCategoryAndSort,
 } from '../../../../../data/selectors/filtered-vaults.ts';
 import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet.ts';
 import { styles } from './styles.ts';
@@ -62,7 +62,7 @@ const NotDepositedMessage = memo(function NotDepositedMessage({ title, text }: M
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const handleViewAll = useCallback(() => {
-    dispatch(filteredVaultsActions.setUserCategory('all'));
+    dispatch(filteredVaultsActions.update({ userCategory: 'all' }));
   }, [dispatch]);
 
   return (
@@ -84,8 +84,8 @@ const LoadingMessage = memo(function LoadingMessage() {
 });
 
 export const NoResults = memo(function NoResults() {
-  const hasActiveFilter = useAppSelector(selectHasActiveFilterExcludingUserCategoryAndSort);
-  const userCategory = useAppSelector(selectFilterUserCategory);
+  const hasActiveFilter = useAppSelector(selectFilterAppliedHasActiveExcludingUserCategoryAndSort);
+  const userCategory = useAppSelector(selectFilterAppliedUserCategory);
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
   const userBalanceAvailable = useAppSelector(state =>
     selectIsUserBalanceAvailable(state, walletAddress)

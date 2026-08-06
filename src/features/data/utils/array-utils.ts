@@ -89,6 +89,13 @@ export function isDefined<T>(value: T): value is Exclude<T, undefined | null> {
   return value !== undefined && value !== null;
 }
 
+export function isOneOf<T extends string | number>(
+  values: readonly T[],
+  value: unknown
+): value is T {
+  return values.includes(value as T);
+}
+
 export function getMostCommon<T extends string>(arr: T[]): T {
   if (!isNonEmptyArray(arr)) {
     throw new Error('Array is empty');

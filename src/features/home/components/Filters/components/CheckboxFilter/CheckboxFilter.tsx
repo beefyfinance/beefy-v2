@@ -23,7 +23,7 @@ export const CheckboxFilter = memo(function CheckboxFilter({
   const value = useAppSelector(state => selectFilterBoolean(state, filter));
   const handleChange = useCallback<LabelledCheckboxProps['onChange']>(
     checked => {
-      dispatch(filteredVaultsActions.setBoolean({ filter, value: checked }));
+      dispatch(filteredVaultsActions.update({ [filter]: checked }));
     },
     [dispatch, filter]
   );

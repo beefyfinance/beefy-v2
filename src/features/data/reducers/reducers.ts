@@ -12,7 +12,7 @@ import { curatorsSlice } from './curators.ts';
 import { dataLoaderSlice } from './data-loader.ts';
 import { featuredVaultsSlice } from './featured-vaults.ts';
 import { feesSlice } from './fees.ts';
-import { bigNumberTransform, filteredVaultsSlice } from './filtered-vaults.ts';
+import { filteredVaultsSlice } from './filtered-vaults.ts';
 import { historicalSlice } from './historical.ts';
 import { mintersSlice } from './minters.ts';
 import { partnersSlice } from './partners.ts';
@@ -88,16 +88,7 @@ const uiReducer = combineReducers({
   addToWallet: addToWalletSlice.reducer,
   bridge: bridgeSlice.reducer,
   dataLoader: dataLoaderSlice.reducer,
-  filteredVaults: persistReducer(
-    {
-      key: 'filters',
-      storage,
-      transforms: [bigNumberTransform],
-      blacklist: ['filteredVaultIds', 'sortedFilteredVaultIds', 'onlyUnstakedClm', 'filterContent'],
-      version: 5, // increase this if you make changes to FilteredVaultsState
-    },
-    filteredVaultsSlice.reducer
-  ),
+  filteredVaults: filteredVaultsSlice.reducer,
   savedVaults: persistReducer({ key: 'savedVaults', storage }, savedVaultsSlice.reducer),
   stepperState: stepperSlice.reducer,
   tenderly:

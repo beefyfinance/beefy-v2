@@ -2,7 +2,7 @@
 import { memo, useEffect } from 'react';
 import { REDIRECTS } from '../../config/redirects.ts';
 import { matchPath, useNavigate, useLocation } from 'react-router';
-import { routerMode } from '../Router/Router.tsx';
+import { routerMode } from '../Router/router-mode.ts';
 
 export const Redirects = memo(function Redirects() {
   const navigate = useNavigate();

@@ -1,26 +1,19 @@
 import { useCallback, useState } from 'react';
+import { storageGet, storageSet } from './storage.ts';
 
 export function useLocalStorageBoolean(
   key: string,
   defaultValue: boolean
 ): [boolean, (value: boolean) => void] {
   const [value, setValue] = useState(() => {
-    try {
-      const storageValue = localStorage.getItem(key);
-      return storageValue === null ? defaultValue : storageValue === 'true';
-    } catch {
-      return defaultValue;
-    }
+    const storageValue = storageGet(key);
+    return storageValue === null ? defaultValue : storageValue === 'true';
   });
 
   const wrappedSetValue = useCallback(
     (value: boolean) => {
       setValue(value);
-      try {
-        localStorage.setItem(key, value.toString());
-      } catch {
-        // swallow error
-      }
+      storageSet(key, value.toString());
     },
     [setValue, key]
   );

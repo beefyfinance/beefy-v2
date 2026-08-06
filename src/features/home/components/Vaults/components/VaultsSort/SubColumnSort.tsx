@@ -3,16 +3,15 @@ import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
-  type FilteredVaultsState,
-  type SetSubSortPayload,
   type SortWithSubSort,
+  type SubSortsState,
 } from '../../../../../data/reducers/filtered-vaults-types.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { selectFilterSubSort } from '../../../../../data/selectors/filtered-vaults.ts';
 
 export type FilterSubColumn<T extends SortWithSubSort> = {
   label: string;
-  value: FilteredVaultsState['subSort'][T];
+  value: SubSortsState[T];
 };
 
 export type SubColumnSortProps<T extends SortWithSubSort> = {
@@ -40,7 +39,7 @@ export const SubColumnSort = memo(function SubColumnSort<T extends SortWithSubSo
   const handleClick = useCallback(() => {
     const nextIndex = (index + 1) % subColumns.length;
     const value = subColumns[nextIndex].value;
-    dispatch(filteredVaultsActions.setSubSort({ column: columnKey, value } as SetSubSortPayload));
+    dispatch(filteredVaultsActions.update({ subSort: { [columnKey]: value } }));
   }, [columnKey, index, subColumns, dispatch]);
 
   return (
