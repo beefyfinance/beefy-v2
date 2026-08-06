@@ -62,7 +62,7 @@ const NotDepositedMessage = memo(function NotDepositedMessage({ title, text }: M
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const handleViewAll = useCallback(() => {
-    dispatch(filteredVaultsActions.update({ userCategory: 'all', onlyUnstakedClm: false }));
+    dispatch(filteredVaultsActions.update({ userCategory: 'all' }));
   }, [dispatch]);
 
   return (
