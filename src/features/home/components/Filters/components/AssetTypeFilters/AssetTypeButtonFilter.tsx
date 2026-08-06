@@ -25,7 +25,9 @@ export const AssetTypeButtonFilter = memo(function AssetTypeButtonFilter() {
   const handleChange = useCallback(
     (selected: VaultAssetType[]) => {
       dispatch(
-        filteredVaultsActions.setAssetType(selected.length === options.length ? [] : selected)
+        filteredVaultsActions.update({
+          assetType: selected.length === options.length ? [] : selected,
+        })
       );
     },
     [dispatch, options]

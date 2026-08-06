@@ -28,7 +28,7 @@ export const StategyTypeCheckBoxList = memo(function StategyTypeCheckBoxList() {
 
   const handleChange = useCallback(
     (value: StrategiesType) => {
-      dispatch(filteredVaultsActions.setStrategyType(value));
+      dispatch(filteredVaultsActions.update({ strategyType: value }));
     },
     [dispatch]
   );

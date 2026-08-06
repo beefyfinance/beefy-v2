@@ -1,47 +1,52 @@
 import { css } from '@repo/styles/css';
-import { useBreakpoint } from '../../../../../../hooks/useBreakpoint.ts';
+import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { debounce } from 'lodash-es';
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
-import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { useBreakpoint } from '../../../../../../hooks/useBreakpoint.ts';
+import { useDebouncedState } from '../../../../../../hooks/useDebouncedState.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
-import { selectFilterSearchText } from '../../../../../data/selectors/filtered-vaults.ts';
+import {
+  selectFiltersSettled,
+  selectFilterSearchText,
+} from '../../../../../data/selectors/filtered-vaults.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { SearchResultCount } from './SearchResultCount.tsx';
 
 export const VaultsSearch = memo(function VaultsSearch() {
   const { t } = useTranslation();
   const isDesktop = useBreakpoint({ from: 'lg' });
   const dispatch = useAppDispatch();
-  const searchText = useAppSelector(selectFilterSearchText);
-  const [value, setValue] = useState(searchText);
+  const storeValue = useAppSelector(selectFilterSearchText);
+  const storeSettled = useAppSelector(selectFiltersSettled);
+  const [focused, setFocused] = useState(false);
 
-  const setFilter = useMemo(
-    () => debounce((value: string) => dispatch(filteredVaultsActions.setSearchText(value)), 200),
-    [dispatch]
+  // Keystrokes drive `value` at input speed; the store write is debounced. useDebouncedState
+  // adopts external store changes on its own (reset/preset url, or a did-you-mean chip dispatch).
+  const [value, setValue] = useDebouncedState(
+    storeValue,
+    next => dispatch(filteredVaultsActions.update({ searchText: next })),
+    { wait: 200 }
   );
 
-  const handleChange = useCallback(
-    (newValue: string) => {
-      setValue(newValue);
-      setFilter(newValue);
-    },
-    [setValue, setFilter]
-  );
-
-  useEffect(() => {
-    // reset local value when filter is reset
-    if (searchText === '') {
-      setValue('');
-    }
-  }, [searchText, setValue]);
+  const handleFocus = useCallback(() => setFocused(true), []);
+  const handleBlur = useCallback(() => setFocused(false), []);
 
   return (
     <SearchInput
-      placeholder={t('Filter-Vaults-Search-Placeholder')}
+      placeholder={t('Filter-Vaults-Search-PlaceholderExtended')}
       className={input}
       value={value}
-      onValueChange={handleChange}
+      onValueChange={setValue}
       focusOnSlash={isDesktop}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      endAdornment={
+        <SearchResultCount
+          hasQuery={value.length > 0}
+          settled={storeSettled && value === storeValue}
+          focused={focused}
+        />
+      }
     />
   );
 });

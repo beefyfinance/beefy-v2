@@ -25,7 +25,7 @@ export const FeaturedVaultApyLabel = memo(function FeaturedVaultApyLabel() {
       e.stopPropagation();
       const idx = APY_PERIODS.indexOf(subSort);
       const next = APY_PERIODS[(idx + 1) % APY_PERIODS.length];
-      dispatch(filteredVaultsActions.setSubSort({ column: 'apy', value: next }));
+      dispatch(filteredVaultsActions.update({ subSort: { apy: next } }));
     },
     [dispatch, subSort]
   );

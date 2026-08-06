@@ -89,6 +89,32 @@ export function isDefined<T>(value: T): value is Exclude<T, undefined | null> {
   return value !== undefined && value !== null;
 }
 
+export function isOneOf<T extends string | number>(
+  values: readonly T[],
+  value: unknown
+): value is T {
+  return values.includes(value as T);
+}
+
+export function areArraysEqual<T>(
+  a: readonly T[],
+  b: readonly T[],
+  equalFn: (a: T, b: T) => boolean = (x, y) => x === y
+): boolean {
+  if (a === b) {
+    return true;
+  }
+  if (a.length !== b.length) {
+    return false;
+  }
+  for (let i = 0; i < a.length; ++i) {
+    if (!equalFn(a[i], b[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
 export function getMostCommon<T extends string>(arr: T[]): T {
   if (!isNonEmptyArray(arr)) {
     throw new Error('Array is empty');

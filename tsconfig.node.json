@@ -2,7 +2,9 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./.cache/tsc/node.tsbuildinfo",
     "target": "ES2022",
-    "lib": ["ES2023"],
+    "lib": [
+      "ES2023"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
     /* Bundler mode */
@@ -18,5 +20,9 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["vite.config.ts", "panda.config.ts"]
+  "include": [
+    "vite.config.ts",
+    "panda.config.ts",
+    "vitest.config.ts"
+  ]
 }
