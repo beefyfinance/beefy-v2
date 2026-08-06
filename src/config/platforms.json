@@ -1611,6 +1611,15 @@
     "type": "amm"
   },
   {
+    "id": "yb",
+    "name": "YieldBasis",
+    "website": "https://yieldbasis.com/",
+    "twitter": "yieldbasis",
+    "documentation": "https://docs.yieldbasis.com/user/introduction",
+    "description": "YieldBasis is a decentralized protocol that lets liquidity providers earn trading fees on volatile-asset pairs without the impermanent loss a normal LP suffers.",
+    "type": "amm"
+  },
+  {
     "id": "prism",
     "name": "Prism",
     "website": "https://prismfi.cc/",

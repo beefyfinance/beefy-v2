@@ -1,13 +1,39 @@
 import BigNumber from 'bignumber.js';
 import { describe, expect, it } from 'vitest';
 import type { FilterValues } from '../reducers/filtered-vaults-types.ts';
-import { FILTER_DEFAULTS, filtersDependOnData } from './filter-values.ts';
+import { FILTER_DEFAULTS, filtersDependOnData, mergePreset } from './filter-values.ts';
 
-function withFilters(values: Partial<FilterValues>): FilterValues {
-  return { ...FILTER_DEFAULTS, ...values };
-}
+describe('mergePreset onlyUnstakedClm', () => {
+  it('drops the filter when the user category changes', () => {
+    const base = { ...FILTER_DEFAULTS, userCategory: 'deposited' as const, onlyUnstakedClm: true };
+    expect(mergePreset(base, { userCategory: 'all' }).onlyUnstakedClm).toBe(false);
+  });
+
+  it('drops the filter even when the user category is re-selected', () => {
+    const base = { ...FILTER_DEFAULTS, userCategory: 'deposited' as const, onlyUnstakedClm: true };
+    expect(mergePreset(base, { userCategory: 'deposited' }).onlyUnstakedClm).toBe(false);
+  });
+
+  it('keeps an explicit value alongside a user category (unstaked clm banner)', () => {
+    const merged = mergePreset(FILTER_DEFAULTS, {
+      userCategory: 'deposited',
+      onlyUnstakedClm: true,
+    });
+    expect(merged.onlyUnstakedClm).toBe(true);
+    expect(merged.userCategory).toBe('deposited');
+  });
+
+  it('leaves the filter alone when the preset does not touch the user category', () => {
+    const base = { ...FILTER_DEFAULTS, userCategory: 'deposited' as const, onlyUnstakedClm: true };
+    expect(mergePreset(base, { subSort: { apy: 'default' } }).onlyUnstakedClm).toBe(true);
+  });
+});
 
 describe('filtersDependOnData', () => {
+  function withFilters(values: Partial<FilterValues>): FilterValues {
+    return { ...FILTER_DEFAULTS, ...values };
+  }
+
   it('is false for defaults (nothing reads live tick data)', () => {
     expect(filtersDependOnData(FILTER_DEFAULTS)).toBe(false);
   });

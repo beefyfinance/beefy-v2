@@ -18,7 +18,7 @@ export const UserCategoryButtonFilter = memo(function UserCategoryButtonFilter()
   const value = useAppSelector(selectFilterUserCategory);
   const handleChange = useCallback(
     (value: UserCategoryType) => {
-      dispatch(filteredVaultsActions.update({ userCategory: value, onlyUnstakedClm: false }));
+      dispatch(filteredVaultsActions.update({ userCategory: value }));
     },
     [dispatch]
   );
