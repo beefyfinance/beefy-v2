@@ -56,6 +56,7 @@ import { selectTransactSlippage } from '../../../../selectors/transact.ts';
 import { pickTokens } from '../../helpers/tokens.ts';
 import { buildTokenApproveTx } from '../../zap/approve.ts';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
+import { isFulfilledResult, isRejectedResult } from '../../../../../../helpers/promises.ts';
 
 const strategyId = 'yieldbasis';
 type StrategyId = typeof strategyId;
@@ -184,15 +185,28 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
     const YB = fetchContract(this.ybToken.address, this.abi, this.vault.chainId);
     const assets = toWeiBigInt(input.amount, input.token.decimals);
     const debt = toWeiBigInt(crvUsdDebt, 18);
-    const [previewDebt, previewNoDebt] = await Promise.all([
+
+    // may still be able to deposit with no debt once debt limit is reached
+    const [withDebt, noDebt] = await Promise.allSettled([
       YB.read.preview_deposit([assets, debt]),
       YB.read.preview_deposit([assets, 0n]),
     ]);
-    if (previewDebt > previewNoDebt) {
+
+    const previewDebt = isFulfilledResult(withDebt) ? withDebt.value : undefined;
+    const previewNoDebt = isFulfilledResult(noDebt) ? noDebt.value : undefined;
+
+    if (previewDebt !== undefined && (previewNoDebt === undefined || previewDebt > previewNoDebt)) {
       return { debt, preview: previewDebt };
-    } else {
+    } else if (previewNoDebt !== undefined) {
       return { debt: 0n, preview: previewNoDebt };
     }
+
+    throw new Error('YieldBasisStrategy: preview_deposit failed', {
+      cause:
+        isRejectedResult(noDebt) ? noDebt.reason
+        : isRejectedResult(withDebt) ? withDebt.reason
+        : undefined,
+    });
   }
 
   async zapDeposit(
