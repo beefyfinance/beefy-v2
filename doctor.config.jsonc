@@ -1,0 +1,19 @@
+{
+  // Rules disabled after auditing their findings against this codebase.
+  // Both were sampled by hand; neither produced a single true positive here.
+  "rules": {
+    // 92 findings. Fires on the .map().filter() shape regardless of N, and N is single-digit
+    // almost everywhere here (reward tokens per vault, assetIds per vault, chains). Worse, the
+    // suggested reduce/for-loop rewrite discards the TypeScript type-guard narrowing that these
+    // chains rely on (.filter(isGovVault) narrowing VaultEntity[] -> VaultGov[]), trading real
+    // type safety for an unmeasurable win. The genuinely hot paths were already tuned by hand
+    // (see vault-filter.ts, which uses Set lookups and orders filters cheap-to-expensive).
+    "react-doctor/js-combine-iterations": "off",
+
+    // 16 findings, 0 real. Every one is a panda-css `styled()` or a `memo()` factory result --
+    // i.e. an actual React component that the rule's heuristic cannot see through. ESLint's own
+    // react-refresh/only-export-components stays enabled and does catch real cases (it flagged a
+    // hook exported from a component file), so Fast Refresh is still protected.
+    "react-doctor/only-export-components": "off"
+  }
+}
