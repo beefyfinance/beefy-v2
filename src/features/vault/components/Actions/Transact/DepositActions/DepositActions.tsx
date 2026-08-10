@@ -48,6 +48,7 @@ import { GlpDepositNotice } from '../GlpNotices/GlpNotices.tsx';
 import { MaxNativeNotice } from '../MaxNativeNotice/MaxNativeNotice.tsx';
 import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
+import { usePriceImpactState } from '../hooks/usePriceImpactState.ts';
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
 import { styles } from './styles.ts';
 import { getExecutionChainId } from '../../../../../../helpers/transactUtils.ts';
@@ -168,7 +169,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const [isDisabledByPriceImpact, setIsDisabledByPriceImpact] = useState(false);
+  const priceImpactState = usePriceImpactState(quote);
   const [isDisabledByMaxNative, setIsDisabledByMaxNative] = useState(false);
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
@@ -192,7 +193,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const isDisabled =
     isTxInProgress ||
     isExecuting ||
-    isDisabledByPriceImpact ||
+    priceImpactState.isDisabled ||
     isDisabledByMaxNative ||
     effectiveDisabledByConfirm ||
     isDisabledByGlpLock ||
@@ -220,11 +221,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
         <EmeraldGasNotice />
       : null}
       <GlpDepositNotice vaultId={option.vaultId} onChange={setIsDisabledByGlpLock} />
-      <PriceImpactNotice
-        quote={quote}
-        onChange={setIsDisabledByPriceImpact}
-        hideCheckbox={isDisabledByNotEnoughInput}
-      />
+      <PriceImpactNotice state={priceImpactState} hideCheckbox={isDisabledByNotEnoughInput} />
       <MaxNativeNotice quote={quote} onChange={setIsDisabledByMaxNative} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <NotEnoughNotice mode="deposit" onChange={setIsDisabledByNotEnoughInput} />

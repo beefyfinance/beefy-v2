@@ -54,6 +54,7 @@ import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
 import { GlpWithdrawNotice } from '../GlpNotices/GlpNotices.tsx';
 import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
+import { usePriceImpactState } from '../hooks/usePriceImpactState.ts';
 import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotice/ScreamAvailableLiquidityNotice.tsx';
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
 import { styles } from './styles.ts';
@@ -240,7 +241,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const classes = useStyles();
-  const [isDisabledByPriceImpact, setIsDisabledByPriceImpact] = useState(false);
+  const priceImpactState = usePriceImpactState(quote);
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
   const [isDisabledByScreamLiquidity, setIsDisabledByScreamLiquidity] = useState(false);
@@ -263,7 +264,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
   const isDisabled =
     isTxInProgress ||
     isExecuting ||
-    isDisabledByPriceImpact ||
+    priceImpactState.isDisabled ||
     effectiveDisabledByConfirm ||
     isDisabledByGlpLock ||
     isDisabledByScreamLiquidity ||
@@ -295,7 +296,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
         onChange={setIsDisabledByScreamLiquidity}
       />
       <GlpWithdrawNotice vaultId={option.vaultId} onChange={setIsDisabledByGlpLock} />
-      <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
+      <PriceImpactNotice state={priceImpactState} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <NotEnoughNotice mode="withdraw" onChange={setIsDisabledByNotEnoughInput} />
       <div className={classes.feesContainer}>
@@ -342,7 +343,7 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const option = quote.option;
-  const [isDisabledByPriceImpact, setIsDisabledByPriceImpact] = useState(false);
+  const priceImpactState = usePriceImpactState(quote);
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
 
@@ -362,7 +363,7 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
   const isDisabled =
     isTxInProgress ||
     isExecuting ||
-    isDisabledByPriceImpact ||
+    priceImpactState.isDisabled ||
     effectiveDisabledByConfirm ||
     isDisabledByNotEnoughInput;
   const showClaim = !isCowcentratedLikeVault(vault);
@@ -388,7 +389,7 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
       {option.chainId === 'emerald' ?
         <EmeraldGasNotice />
       : null}
-      <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
+      <PriceImpactNotice state={priceImpactState} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <NotEnoughNotice mode="withdraw" onChange={setIsDisabledByNotEnoughInput} />
       <div className={classes.feesContainer}>

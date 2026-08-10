@@ -45,6 +45,7 @@ import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
 import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
+import { usePriceImpactState } from '../hooks/usePriceImpactState.ts';
 import { CalmAlert } from '../TransactQuote/TransactQuote.tsx';
 import { NOT_CALM_REFRESH_SECONDS, useNotCalmAutoRefresh } from '../hooks/useNotCalmAutoRefresh.ts';
 import { ZapRoute, ZapRoutePlaceholder } from '../ZapRoute/ZapRoute.tsx';
@@ -85,7 +86,7 @@ export const MigrateActions = memo(function MigrateActions({
   const isReadyToPreview = optionsStatus === TransactStatus.Fulfilled && hasInput;
 
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
-  const [isDisabledByPriceImpact, setIsDisabledByPriceImpact] = useState(false);
+  const priceImpactState = usePriceImpactState(quote);
   const { stickyNotCalmAction, showNotCalmRefresh } = useNotCalmAutoRefresh();
 
   const fetchQuote = useCallback(() => {
@@ -146,7 +147,7 @@ export const MigrateActions = memo(function MigrateActions({
     (isStepping ||
       isExecuting ||
       hasNothingToMigrate ||
-      isDisabledByPriceImpact ||
+      priceImpactState.isDisabled ||
       effectiveDisabledByConfirm);
   const isLoading = isExecuting || isStepping;
   const isQuotePending = quoteStatus === TransactStatus.Pending;
@@ -163,7 +164,7 @@ export const MigrateActions = memo(function MigrateActions({
       <>
         <ZapRoute quote={quote} expandable={true} enableRefresh={!isComplete} />
         <ZapSlippage />
-        <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
+        <PriceImpactNotice state={priceImpactState} />
         <ConfirmNotice onChange={setIsDisabledByConfirm} />
         <ActionsContainer>
           <ActionConnectSwitch chainId={newVault.chainId}>
