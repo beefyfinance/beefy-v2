@@ -22,7 +22,8 @@ export type PriceImpactState = {
 /**
  * Derived during render, never in an effect: effects commit after paint, so deriving there left a
  * painted frame in which a quote that had just crossed the confirm threshold was still clickable.
- * The confirmation is stored against the impact it was given for, so any re-quote drops it.
+ * The confirmation is stored against the impact figure it was given for, so a re-quote at a
+ * different impact drops it; an identical impact is the same disclosure and keeps it.
  */
 export function usePriceImpactState(quote: TransactQuote | undefined): PriceImpactState {
   const [confirmedFor, setConfirmedFor] = useState<number | undefined>(undefined);

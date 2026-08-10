@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnimatedButton } from '../../../../../../components/Button/AnimatedButton.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
@@ -51,11 +51,10 @@ import {
 import { ActionConnectSwitchWithFees as ActionConnectSwitch } from './ActionConnectSwitch.tsx';
 import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
-import { GlpWithdrawNotice } from '../GlpNotices/GlpNotices.tsx';
 import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
 import { usePriceImpactState } from '../hooks/usePriceImpactState.ts';
-import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotice/ScreamAvailableLiquidityNotice.tsx';
+import { useConfirmDisabled, useNotEnoughDisabled } from '../hooks/useActionGates.ts';
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
 import { styles } from './styles.ts';
 import { getExecutionChainId } from '../../../../../../helpers/transactUtils.ts';
@@ -242,11 +241,8 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
   const dispatch = useAppDispatch();
   const classes = useStyles();
   const priceImpactState = usePriceImpactState(quote);
-  const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
-  const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
-  const [isDisabledByScreamLiquidity, setIsDisabledByScreamLiquidity] = useState(false);
-  const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
-
+  const isDisabledByConfirm = useConfirmDisabled();
+  const isDisabledByNotEnoughInput = useNotEnoughDisabled('withdraw');
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const stepperContent = useAppSelector(selectStepperStepContent);
   const isExecuting = useAppSelector(selectTransactExecuting);
@@ -266,8 +262,6 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
     isExecuting ||
     priceImpactState.isDisabled ||
     effectiveDisabledByConfirm ||
-    isDisabledByGlpLock ||
-    isDisabledByScreamLiquidity ||
     isDisabledByNotEnoughInput;
 
   const handleWithdraw = useCallback(() => {
@@ -291,14 +285,9 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
       {option.chainId === 'emerald' ?
         <EmeraldGasNotice />
       : null}
-      <ScreamAvailableLiquidityNotice
-        vaultId={option.vaultId}
-        onChange={setIsDisabledByScreamLiquidity}
-      />
-      <GlpWithdrawNotice vaultId={option.vaultId} onChange={setIsDisabledByGlpLock} />
       <PriceImpactNotice state={priceImpactState} />
-      <ConfirmNotice onChange={setIsDisabledByConfirm} />
-      <NotEnoughNotice mode="withdraw" onChange={setIsDisabledByNotEnoughInput} />
+      <ConfirmNotice />
+      <NotEnoughNotice mode="withdraw" />
       <div className={classes.feesContainer}>
         <ActionConnectSwitch chainId={executionChainId}>
           <AnimatedButton
@@ -344,8 +333,8 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
   const dispatch = useAppDispatch();
   const option = quote.option;
   const priceImpactState = usePriceImpactState(quote);
-  const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
-  const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
+  const isDisabledByConfirm = useConfirmDisabled();
+  const isDisabledByNotEnoughInput = useNotEnoughDisabled('withdraw');
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const stepperContent = useAppSelector(selectStepperStepContent);
@@ -390,8 +379,8 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
         <EmeraldGasNotice />
       : null}
       <PriceImpactNotice state={priceImpactState} />
-      <ConfirmNotice onChange={setIsDisabledByConfirm} />
-      <NotEnoughNotice mode="withdraw" onChange={setIsDisabledByNotEnoughInput} />
+      <ConfirmNotice />
+      <NotEnoughNotice mode="withdraw" />
       <div className={classes.feesContainer}>
         <ActionConnectSwitch
           FeesComponent={VaultFees}

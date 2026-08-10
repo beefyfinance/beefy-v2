@@ -1,5 +1,5 @@
 import { type CssStyles } from '@repo/styles/css';
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
@@ -15,12 +15,10 @@ import {
 import { selectIsWalletKnown } from '../../../../../data/selectors/wallet.ts';
 
 export type NotEnoughProps = {
-  onChange: (shouldDisable: boolean) => void;
   mode: 'deposit' | 'withdraw';
   css?: CssStyles;
 };
 export const NotEnoughNotice = memo(function NotEnoughNotice({
-  onChange,
   css: cssProp,
   mode,
 }: NotEnoughProps) {
@@ -39,10 +37,6 @@ export const NotEnoughNotice = memo(function NotEnoughNotice({
   const stepContent = useAppSelector(selectStepperStepContent);
   const isBridging =
     stepContent === StepContent.BridgingTx || stepContent === StepContent.SuccessTx;
-
-  useEffect(() => {
-    onChange(isBridging ? false : inputAmountExceedsBalance);
-  }, [inputAmountExceedsBalance, isBridging, onChange]);
 
   if (!inputAmountExceedsBalance || !isWalletKnown || isInvalidCowcentratedDeposit || isBridging) {
     return null;
