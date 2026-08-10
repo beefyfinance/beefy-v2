@@ -168,8 +168,6 @@
   "NoResults-ViewConnectedDashboard": "View Your Dashboard",
   "FeaturedVaults-Title": "Spotlight",
   "FeaturedVaults-Title-Description": "New launches, hidden gems, and vaults worth a closer look",
-  "Filter-SortApy-default-Featured": "CURRENT",
-  "Filter-SortApy-avgNd-Featured": "{{count}}-DAY",
   "VaultStat-AvgAPY": "{{count}}-Day APY",
   "VaultStat-APY": "APY",
   "VaultStat-APR": "APR",

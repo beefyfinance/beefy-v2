@@ -46,10 +46,6 @@ export function mergePreset(
     ...rest,
     subSort: { ...base.subSort, ...subSort },
   };
-  // fix subSort vs sort
-  if (merged.sort !== 'apy' && merged.subSort.apy !== 'default') {
-    merged.subSort = { ...merged.subSort, apy: 'default' };
-  }
   // changing user category drops the unstaked clm filter, unless the preset sets it explicitly
   if (preset.userCategory !== undefined && preset.onlyUnstakedClm === undefined) {
     merged.onlyUnstakedClm = false;

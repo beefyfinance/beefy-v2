@@ -29,6 +29,25 @@ describe('mergePreset onlyUnstakedClm', () => {
   });
 });
 
+describe('mergePreset subSort', () => {
+  it('survives a sort change to another column', () => {
+    const base = { ...FILTER_DEFAULTS, sort: 'apy' as const, subSort: { apy: 30 as const } };
+    expect(mergePreset(base, { sort: 'tvl' }).subSort.apy).toBe(30);
+  });
+
+  it('applies under a sort that has no sub-sort of its own', () => {
+    const base = { ...FILTER_DEFAULTS, sort: 'tvl' as const };
+    expect(mergePreset(base, { subSort: { apy: 30 } }).subSort.apy).toBe(30);
+  });
+
+  it('does not promote sort to the sub-sort parent (callers decide that)', () => {
+    const base = { ...FILTER_DEFAULTS, sort: 'tvl' as const, subSort: { apy: 7 as const } };
+    const merged = mergePreset(base, { subSort: { apy: 'default' } });
+    expect(merged.subSort.apy).toBe('default');
+    expect(merged.sort).toBe('tvl');
+  });
+});
+
 describe('filtersDependOnData', () => {
   function withFilters(values: Partial<FilterValues>): FilterValues {
     return { ...FILTER_DEFAULTS, ...values };

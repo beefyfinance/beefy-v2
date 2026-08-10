@@ -120,9 +120,9 @@ const SortContent = memo<SortContentProps>(function SortContent({ onClose, open 
       dispatch(
         filteredVaultsActions.update({
           sort: pendingState.sort,
-          subSort: {
-            apy: pendingState.sort === 'apy' ? pendingState.subSort || 'default' : 'default',
-          },
+          ...(pendingState.sort === 'apy' ?
+            { subSort: { apy: pendingState.subSort || 'default' } }
+          : {}),
         })
       );
     }

@@ -99,11 +99,17 @@ describe('sortPickedDuringSearch transitions', () => {
       filteredVaultsActions.update({ sort: 'apy' }),
       filteredVaultsActions.update({ sortDirection: 'asc' }),
       filteredVaultsActions.update({ sort: 'tvl', sortDirection: 'desc' }),
-      // subSort only takes effect under the apy sort, so pick it alongside
-      filteredVaultsActions.update({ sort: 'apy', subSort: { apy: 30 } }),
     ]) {
       expect(reducer(searching, action).sortPickedDuringSearch).toBe(true);
     }
+  });
+
+  it('changing a sub-sort alone is not a sort pick', () => {
+    const searching = reducer(initial, filteredVaultsActions.update({ searchText: 'eth' }));
+    const state = reducer(searching, filteredVaultsActions.update({ subSort: { apy: 30 } }));
+    expect(state.sortPickedDuringSearch).toBe(false);
+    expect(relevance(state)).toBe(true);
+    expect(state.pending.subSort.apy).toBe(30);
   });
 
   it('picking a sort while NOT searching does not mark the pick', () => {
