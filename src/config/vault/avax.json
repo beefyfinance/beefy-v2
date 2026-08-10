@@ -1,5 +1,77 @@
 [
   {
+    "id": "aavev4-avax-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x8ac9A7D5427bb0b455FB18d6CC3098bD4ad5f855",
+    "earnedToken": "mooAaveV4CoreUSDC",
+    "earnedTokenAddress": "0x8ac9A7D5427bb0b455FB18d6CC3098bD4ad5f855",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1786222915,
+    "platformId": "aave-v4",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://pro.aave.com/explore/token/USDC?chain=43114",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev4-avax-usdt",
+    "name": "USDT",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x003b079d06DE21F40e5DA289839f839cFE99f0b5",
+    "earnedToken": "mooAaveV4CoreUSDT",
+    "earnedTokenAddress": "0x003b079d06DE21F40e5DA289839f839cFE99f0b5",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1786222914,
+    "platformId": "aave-v4",
+    "assets": ["USDT"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://pro.aave.com/explore/token/USDT?chain=43114",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "euler-avax-re7labs-ausd-earn",
     "name": "AUSD (Re7 Labs)",
     "type": "standard",
