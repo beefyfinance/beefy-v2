@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { createCachedSelector } from 're-reselect';
 import { getUnixTime, isAfter } from 'date-fns';
 import { uniqBy } from 'lodash-es';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
@@ -97,7 +98,7 @@ export const selectVaultHasActiveOffchainCampaigns = createSelector(
   campaigns => !!campaigns && campaigns.length > 0 && campaigns.some(c => c.apr > 0)
 );
 
-export const selectVaultActiveGovRewards = createSelector(
+export const selectVaultActiveGovRewards = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => state.biz.rewards.gov.byVaultId[vaultId],
   selectVaultRawTvl,
   (state: BeefyState) => state.entities.tokens.prices.byOracleId,
@@ -122,7 +123,7 @@ export const selectVaultActiveGovRewards = createSelector(
       })
       .filter(r => r.apr > 0);
   }
-);
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectVaultHasActiveGovRewards = createSelector(
   selectVaultActiveGovRewards,

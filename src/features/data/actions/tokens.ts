@@ -107,45 +107,48 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAppAsync
     const vault = vaultId ? selectVaultById(getState(), vaultId) : null;
     const erc4626Vault = vault && isErc4626Vault(vault) ? vault : null;
 
-    const balanceApi = await getBalanceApi(chain);
-    const balanceRes = await balanceApi.fetchAllBalances(
-      getState(),
-      {
-        tokens,
-        govVaults: govVault ? [govVault] : [],
-        boosts: boost ? [boost] : [],
-        erc4626Vaults: erc4626Vault ? [erc4626Vault] : [],
-      },
-      walletAddress
-    );
-
-    const allowanceApi = await getAllowanceApi(chain);
+    const [balanceApi, allowanceApi, contractDataApi] = await Promise.all([
+      getBalanceApi(chain),
+      getAllowanceApi(chain),
+      getContractDataApi(chain),
+    ]);
     const erc20Tokens = tokens.filter(isTokenErc20);
-    const allowance: TokenAllowance[] = await allowanceApi.fetchTokensAllowance(
-      getState(),
-      erc20Tokens,
-      walletAddress,
-      spenderAddress
-    );
 
-    const contractDataApi = await getContractDataApi(chain);
-    const contractData: FetchAllContractDataResult =
+    // three independent multicalls: run them together rather than back-to-back
+    const [balanceRes, allowance, contractData] = await Promise.all([
+      balanceApi.fetchAllBalances(
+        getState(),
+        {
+          tokens,
+          govVaults: govVault ? [govVault] : [],
+          boosts: boost ? [boost] : [],
+          erc4626Vaults: erc4626Vault ? [erc4626Vault] : [],
+        },
+        walletAddress
+      ),
+      allowanceApi.fetchTokensAllowance(
+        getState(),
+        erc20Tokens,
+        walletAddress,
+        spenderAddress
+      ) as Promise<TokenAllowance[]>,
       govVault ?
-        await contractDataApi.fetchAllContractData(getState(), {
+        contractDataApi.fetchAllContractData(getState(), {
           govVaults: govVaultSingle ? [govVaultSingle] : [],
           govVaultsMulti: govVaultMulti ? [govVaultMulti] : [],
           boosts: boostSingle ? [boostSingle] : [],
           boostsMulti: boostMulti ? [boostMulti] : [],
           erc4626Vaults: erc4626Vault ? [erc4626Vault] : [],
         })
-      : {
+      : Promise.resolve<FetchAllContractDataResult>({
           boosts: [],
           govVaults: [],
           govVaultsMulti: [],
           standardVaults: [],
           cowVaults: [],
           erc4626Vaults: [],
-        };
+        }),
+    ]);
 
     return {
       walletAddress,
