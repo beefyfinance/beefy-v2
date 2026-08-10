@@ -40,24 +40,21 @@ export const NavLink = memo<NavLinkProps>(function NavLink({
 
   if (isExternal) {
     return (
-      <ExternalNavLink
-        href={to}
-        children={children}
-        onClick={onClick}
-        mobile={mobile}
-        dropdownItem={dropdownItem}
-      />
+      <ExternalNavLink href={to} onClick={onClick} mobile={mobile} dropdownItem={dropdownItem}>
+        {children}
+      </ExternalNavLink>
     );
   }
 
   return (
     <InternalNavLink
       to={to}
-      children={children}
       onClick={onClick}
       mobile={mobile}
       dropdownItem={dropdownItem}
       {...rest}
-    />
+    >
+      {children}
+    </InternalNavLink>
   );
 });
