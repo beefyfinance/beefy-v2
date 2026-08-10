@@ -27,9 +27,7 @@ export const RpcMenu = memo(function RpcMenu({ onSelect, chainsWithErrors }: Rpc
     return chainIds.filter(chainId => !chainsWithErrors.includes(chainId));
   }, [chainIds, chainsWithErrors]);
 
-  const connectedChainIds = useMemo(() => {
-    return chainIds.length - chainsWithErrors.length;
-  }, [chainIds, chainsWithErrors]);
+  const connectedChainIds = chainIds.length - chainsWithErrors.length;
 
   return (
     <Scrollable scrollContainer={false} hideShadows>

@@ -163,7 +163,7 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
           height={12}
           width={12}
           className={classes.vaultTagIconImage}
-          alt={hideLabel ? label : undefined}
+          alt={hideLabel || onlyIcon ? label : ''}
         />
       }
       text={
