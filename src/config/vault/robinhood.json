@@ -256,7 +256,7 @@
     "risks": {
       "complex": true,
       "curated": false,
-      "notAudited": true,
+      "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
       "notTimelocked": true,
@@ -298,7 +298,7 @@
     "risks": {
       "complex": true,
       "curated": false,
-      "notAudited": true,
+      "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
       "notTimelocked": true,
@@ -453,7 +453,7 @@
       "updatedAt": 1784532533,
       "complex": false,
       "curated": false,
-      "notAudited": true,
+      "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
       "notTimelocked": true,
@@ -610,7 +610,7 @@
     "risks": {
       "complex": true,
       "curated": false,
-      "notAudited": true,
+      "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
       "notTimelocked": true,
@@ -651,7 +651,7 @@
     "risks": {
       "complex": true,
       "curated": false,
-      "notAudited": true,
+      "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
       "notTimelocked": true,
@@ -696,7 +696,7 @@
     "risks": {
       "complex": true,
       "curated": false,
-      "notAudited": true,
+      "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
       "notTimelocked": true,
