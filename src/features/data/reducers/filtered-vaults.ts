@@ -35,7 +35,6 @@ export const filteredVaultsSlice = createSlice({
       const prevSearchText = sliceState.pending.searchText;
       const prevSort = sliceState.pending.sort;
       const prevSortDirection = sliceState.pending.sortDirection;
-      const prevSubSortApy = sliceState.pending.subSort.apy;
       const next = mergePreset(sliceState.pending, action.payload);
       sliceState.pending = next;
 
@@ -47,10 +46,7 @@ export const filteredVaultsSlice = createSlice({
         sliceState.sortPickedDuringSearch = false;
       }
       // an explicit sort while searching disables the relevance override
-      const sortChanged =
-        next.sort !== prevSort ||
-        next.sortDirection !== prevSortDirection ||
-        next.subSort.apy !== prevSubSortApy;
+      const sortChanged = next.sort !== prevSort || next.sortDirection !== prevSortDirection;
       if (sortChanged && hasSearchText(next.searchText)) {
         sliceState.sortPickedDuringSearch = true;
       }
