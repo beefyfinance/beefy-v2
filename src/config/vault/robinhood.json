@@ -15,7 +15,7 @@
     "oracle": "lps",
     "oracleId": "uniswap-cow-robinhood-gme-usdg",
     "status": "active",
-    "createdAt": 1786398008,
+    "createdAt": 1786461560,
     "platformId": "uniswap",
     "assets": ["rhGME", "USDG"],
     "risks": {
@@ -54,7 +54,7 @@
     "oracle": "lps",
     "oracleId": "uniswap-cow-robinhood-gme-usdg",
     "status": "active",
-    "createdAt": 1786398008,
+    "createdAt": 1786461560,
     "platformId": "beefy",
     "feeTier": "0.05",
     "tickSpacing": 10,
