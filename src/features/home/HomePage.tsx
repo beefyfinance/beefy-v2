@@ -3,6 +3,7 @@ import { memo } from 'react';
 import { Container } from '../../components/Container/Container.tsx';
 import { HomeMeta } from '../../components/Meta/HomeMeta.tsx';
 import { useAppSelector } from '../data/store/hooks.ts';
+import { useFilterUrlSync } from '../data/hooks/filter-url-sync.ts';
 import { selectIsVaultListAvailable } from '../data/selectors/vaults-list.ts';
 import { Banners } from './components/Banners/Banners.tsx';
 import { FeaturedVaults } from './components/FeaturedVaults/FeaturedVaults.tsx';
@@ -14,6 +15,7 @@ import { PageLayout } from '../../components/PageLayout/PageLayout.tsx';
 
 const HomePage = memo(function HomePage() {
   const isVaultListAvailable = useAppSelector(selectIsVaultListAvailable);
+  useFilterUrlSync();
 
   if (!isVaultListAvailable) {
     return (

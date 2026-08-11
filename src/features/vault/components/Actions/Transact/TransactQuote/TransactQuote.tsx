@@ -93,7 +93,7 @@ export const TransactQuote = memo(function TransactQuote({
     () => inputAmounts.every(amount => amount.lte(BIG_ZERO)),
     [inputAmounts]
   );
-  const { showStickyNotCalmWarning, showNotCalmRefresh } = useNotCalmAutoRefresh();
+  const { stickyNotCalmAction, showNotCalmRefresh } = useNotCalmAutoRefresh();
 
   const debouncedFetchQuotes = useMemo(
     () =>
@@ -168,8 +168,8 @@ export const TransactQuote = memo(function TransactQuote({
         <QuoteFulfilledBody />
       : status === TransactStatus.Idle ?
         <QuoteIdleBody vault={vault} mode={mode} />
-      : showStickyNotCalmWarning ?
-        <CalmAlert i18nKey="Transact-Quote-Error-Calm-deposit" variant="warning" />
+      : stickyNotCalmAction ?
+        <CalmAlert i18nKey={`Transact-Quote-Error-Calm-Retry-${stickyNotCalmAction}`} />
       : status === TransactStatus.Pending ?
         <TokenAmountIconLoader />
       : <QuoteError />}
@@ -252,17 +252,16 @@ const QuoteIdleBody = memo(function QuoteIdleBody({ vault, mode }: QuoteIdleBody
 
 type CalmAlertProps = {
   i18nKey: string;
-  variant: 'warning' | 'error';
 };
-const CalmAlert = memo(function CalmAlert({ i18nKey, variant }: CalmAlertProps) {
+export const CalmAlert = memo(function CalmAlert({ i18nKey }: CalmAlertProps) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const Alert = variant === 'warning' ? AlertWarning : AlertError;
   return (
-    <Alert>
+    <AlertWarning>
       <Trans
         t={t}
         i18nKey={i18nKey}
+        values={{ interval: NOT_CALM_REFRESH_SECONDS }}
         components={{
           LinkCalm: (
             <ExternalLink
@@ -272,7 +271,7 @@ const CalmAlert = memo(function CalmAlert({ i18nKey, variant }: CalmAlertProps) 
           ),
         }}
       />
-    </Alert>
+    </AlertWarning>
   );
 });
 
@@ -297,12 +296,7 @@ const QuoteError = memo(function QuoteError() {
       );
     }
     if (QuoteCowcentratedNotCalmError.match(error)) {
-      return (
-        <CalmAlert
-          i18nKey={`Transact-Quote-Error-Calm-${error.action}`}
-          variant={error.action === 'deposit' ? 'warning' : 'error'}
-        />
-      );
+      return <CalmAlert i18nKey={`Transact-Quote-Error-Calm-Retry-${error.action}`} />;
     }
   }
 

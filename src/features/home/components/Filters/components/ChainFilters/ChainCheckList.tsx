@@ -81,15 +81,16 @@ export const ChainCheckList = memo(function ChainCheckList() {
   const handleChange = useCallback(
     (selected: Array<ChainEntity['id'] | 'all'>) => {
       if (selected.includes('all')) {
-        dispatch(filteredVaultsActions.setChainIds([]));
+        dispatch(filteredVaultsActions.update({ chainIds: [] }));
         return;
       }
       dispatch(
-        filteredVaultsActions.setChainIds(
-          selected.length === activeChains.length ?
-            []
-          : selected.filter((id): id is ChainId => id !== 'all')
-        )
+        filteredVaultsActions.update({
+          chainIds:
+            selected.length === activeChains.length ?
+              []
+            : selected.filter((id): id is ChainId => id !== 'all'),
+        })
       );
     },
     [dispatch, activeChains]

@@ -11,29 +11,33 @@ import { SliderInput } from '../../../../../../components/Form/Input/SliderInput
 import { styled } from '@repo/styles/jsx';
 import { useTranslation } from 'react-i18next';
 import { useBreakpoint } from '../../../../../../hooks/useBreakpoint.ts';
+import { useDebouncedState } from '../../../../../../hooks/useDebouncedState.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 
 //5 MILLION
 const MAX_INPUT = new BigNumber(50000000);
 
+const bigNumberEq = (a: BigNumber, b: BigNumber) => a.eq(b);
+
 export const MinTvlFilter = memo(function MinTvlFilter() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const value = useAppSelector(state => selectFilterBigNumber(state, 'minimumUnderlyingTvl'));
+  const storeValue = useAppSelector(state => selectFilterBigNumber(state, 'minimumUnderlyingTvl'));
   const isDesktop = useBreakpoint({ from: 'lg' });
 
   const maximumUnderlyingTvl = useAppSelector(selectMaximumUnderlyingVaultTvl);
 
+  // Slider drags at pointer speed against `value`; the store write is debounced.
+  const [value, setValue] = useDebouncedState(
+    storeValue,
+    next => dispatch(filteredVaultsActions.update({ minimumUnderlyingTvl: next })),
+    { wait: 150, isEqual: bigNumberEq }
+  );
+
   const handleChange = useCallback(
-    (value: BigNumber) => {
-      dispatch(
-        filteredVaultsActions.setBigNumber({
-          filter: 'minimumUnderlyingTvl',
-          value: BigNumber.min(BigNumber.max(value, BIG_ZERO), maximumUnderlyingTvl),
-        })
-      );
-    },
-    [dispatch, maximumUnderlyingTvl]
+    (next: BigNumber) =>
+      setValue(BigNumber.min(BigNumber.max(next, BIG_ZERO), maximumUnderlyingTvl)),
+    [setValue, maximumUnderlyingTvl]
   );
 
   return (

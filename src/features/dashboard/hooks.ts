@@ -17,7 +17,7 @@ export function useInitDashboard(address: string) {
   useEffect(() => {
     if (address && canInitDashboard) {
       dispatch(initDashboardByAddress({ walletAddress: address }));
-      dispatch(filteredVaultsActions.setSubSort({ column: 'apy', value: 'default' }));
+      dispatch(filteredVaultsActions.update({ subSort: { apy: 'default' } }));
     }
   }, [dispatch, address, canInitDashboard]);
 

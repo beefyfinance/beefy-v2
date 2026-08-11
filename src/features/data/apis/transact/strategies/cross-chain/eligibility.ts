@@ -56,7 +56,9 @@ async function anyComposableStrategyAccepts(
 
   // Skip basic IZapStrategy zaps; isComposableStrategy would discard them post-load.
   const eligibilityZap = (z: ZapStrategyConfig) =>
-    z.strategyId !== 'reward-pool-to-vault' && z.strategyId !== 'conic';
+    z.strategyId !== 'reward-pool-to-vault' &&
+    z.strategyId !== 'conic' &&
+    z.strategyId !== 'yieldbasis';
   if (!vault.zaps.some(eligibilityZap)) return false;
 
   const api = await getTransactApi();
