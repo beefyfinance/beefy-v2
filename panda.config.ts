@@ -266,11 +266,6 @@ const config = buildConfig(
               'linear-gradient(270deg, rgba(59, 152, 176, 0.204) 0%, rgba(39, 127, 154, 0.00) 25%)',
             description: 'vault card tint for free zap vaults',
           },
-          stock: {
-            value:
-              'linear-gradient(348.15deg, rgba(255, 255, 255, 0) -166.22%, rgba(255, 255, 255, 0.7) 113.41%), linear-gradient(0deg, #7D3389, #7D3389)',
-            description: 'tag.stock',
-          },
         },
         colors: {
           //darkBlue100-64a
@@ -326,6 +321,7 @@ const config = buildConfig(
           stepperSuccessBackground: { value: '#59a66226' },
           tagClmBackground: { value: '#0052CC', description: 'tag.clm' },
           tagPausedBackground: { value: '#564a46', description: 'tag.paused' },
+          tagStockBackground: { value: '#0f4a72', description: 'tag.stocks' },
           tagPlatformClmBackground: { value: '#38428f', description: 'tag.platformClm' },
           tagPlatformGovBackground: { value: '#4b388f', description: 'tag.platformGov' },
           tagRetiredBackground: { value: '#532f39', description: 'tag.retired' },
@@ -588,7 +584,7 @@ const config = buildConfig(
             retired: { background: { value: '{colors.tagRetiredBackground}' } },
             paused: { background: { value: '{colors.tagPausedBackground}' } },
             boost: { background: { value: '{gradients.boost}' } },
-            stock: { background: { value: '{gradients.stock}' } },
+            stock: { background: { value: '{colors.tagStockBackground}' } },
             migrate: {
               background: { value: '{colors.orange.50}' },
               text: { value: '{colors.darkBlue.90}' },

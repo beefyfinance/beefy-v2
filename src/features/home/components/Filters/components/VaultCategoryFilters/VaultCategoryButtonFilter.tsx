@@ -49,8 +49,12 @@ export const VaultCategoryButtonFilter = memo(function VaultCategoryButtonFilter
   );
 });
 
-// above the active button's ::before border overlay
-const badgeStyle = css.raw({ zIndex: 'badge' });
+const badgeStyle = css.raw({
+  left: '85%',
+  right: 'auto',
+  transform: 'translate(-50%, -50%)',
+  zIndex: 'badge',
+});
 
 const CategoryToggleButton = memo<MultiToggleButtonProps<VaultCategoryType>>(
   function CategoryToggleButton(props) {
