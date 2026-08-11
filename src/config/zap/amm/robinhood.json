@@ -4,7 +4,7 @@
     "name": "Up33",
     "type": "solidly",
     "routerAddress": "0xf5198743240fAC98db71868F34c70139b1eb0474",
-    "factoryAddress": "not-used",
+    "factoryAddress": "0xFA5429AEBa338BEa2BFcc1b9a889862Ee395bc28",
     "pairInitHash": "not-used",
     "minimumLiquidity": "1000",
     "swapFeeNumerator": "2",
