@@ -1,5 +1,83 @@
 [
   {
+    "id": "uniswap-cow-robinhood-weth-pons-rp",
+    "name": "WETH-PONS Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodWETH-PONS",
+    "tokenAddress": "0x4F702C76dd9D7841784922f87470E3F718aAF6DA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xedBAa34DCBA4250F6BF9582ddED03244e623268D",
+    "earnedToken": "rCowUniswapRobinhoodWETH-PONS",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-pons",
+    "status": "active",
+    "createdAt": 1786472892,
+    "platformId": "uniswap",
+    "assets": ["PONS", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-weth-pons",
+    "name": "WETH-PONS",
+    "type": "cowcentrated",
+    "token": "WETH-PONS uniswap",
+    "tokenAddress": "0x10CC6BD38112cAc182db90B6a71d8Bb5939526bA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0x39dBED3a2bd333467115dE45665cC57F813C4571"
+    ],
+    "earnContractAddress": "0x4F702C76dd9D7841784922f87470E3F718aAF6DA",
+    "earnedToken": "cowUniswapRobinhoodWETH-PONS",
+    "earnedTokenAddress": "0x4F702C76dd9D7841784922f87470E3F718aAF6DA",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-pons",
+    "status": "active",
+    "createdAt": 1786472891,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["PONS", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-robinhood-gme-usdg-rp",
     "name": "GME-USDG Reward Pool",
     "type": "gov",
