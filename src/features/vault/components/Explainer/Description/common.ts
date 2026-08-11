@@ -61,7 +61,6 @@ export function useCommonHelper(vaultId: VaultEntity['id']): CommonHelper {
       platformName: platform.name,
       depositToken: depositToken.symbol,
       depositTokenProvider: depositTokenProvider?.name || '[UNKNOWN]',
-      asset0: vault.names.single,
     };
 
     for (let i = 0; i < assetSymbols.length; ++i) {
