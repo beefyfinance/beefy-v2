@@ -38,7 +38,11 @@ export const styles = {
   }),
   vaultTagBoost: css.raw({
     background: 'tags.boost.background',
-    color: 'background.content',
+    color: 'text.black',
+  }),
+  vaultTagStocks: css.raw({
+    background: 'tags.stock.background',
+    color: 'text.black',
   }),
   vaultTagBoostIcon: css.raw({
     width: '12px',
