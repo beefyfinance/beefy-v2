@@ -10,7 +10,7 @@ export const NexusCard = memo(function NexusCard() {
       logo={getPartnerSrc('nexus')}
       title={t('Nexus-Title')}
       content={t('Nexus-Content')}
-      url="https://app.nexusmutual.io/cover/buy/get-quote?productId=14"
+      url="https://app.nexusmutual.io/cover/product/211"
     />
   );
 });
