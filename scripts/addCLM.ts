@@ -11,11 +11,18 @@ import { loadJson, saveJson } from './common/files.ts';
 import { getViemClient } from './common/viem.ts';
 import { type Abi, type Address, getContract } from 'viem';
 
-const tickSpacingAbi = [
+const poolAbi = [
   {
     inputs: [],
     name: 'tickSpacing',
     outputs: [{ internalType: 'int24', name: '', type: 'int24' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'fee',
+    outputs: [{ internalType: 'uint24', name: '', type: 'uint24' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -61,19 +68,22 @@ async function vaultData(chain: AppChainId, vaultAddress: string, id: string) {
   const poolContract = getContract({
     client: viemClient,
     address: params.want,
-    abi: tickSpacingAbi,
+    abi: poolAbi,
   });
 
-  const [token0, token1, tickSpacing] = await Promise.all([
+  const [token0, token1, tickSpacing, fee] = await Promise.all([
     token0Contract.read.symbol(),
     token1Contract.read.symbol(),
     poolContract.read.tickSpacing(),
+    // algebra pools (camelot/thena) have no fee(), their fee is dynamic
+    poolContract.read.fee().catch(() => undefined),
   ]);
 
   const tokens = {
     token0,
     token1,
     tickSpacing: Number(tickSpacing),
+    feeTier: fee === undefined ? 'Dynamic' : (Number(fee) / 10000).toString(),
   };
 
   const provider =
@@ -241,7 +251,7 @@ async function generateVault() {
     strategyTypeId: vault.strategyTypeId,
     network: chain,
     type: 'cowcentrated' as const,
-    feeTier: '1',
+    feeTier: vault.feeTier,
     tickSpacing: vault.tickSpacing,
     zaps: [
       {
