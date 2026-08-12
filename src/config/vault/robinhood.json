@@ -1,7 +1,7 @@
 [
   {
     "id": "uniswap-cow-robinhood-weth-pons-rp",
-    "name": "WETH-PONS Reward Pool",
+    "name": "PONS-WETH Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapRobinhoodWETH-PONS",
@@ -38,7 +38,7 @@
   },
   {
     "id": "uniswap-cow-robinhood-weth-pons",
-    "name": "WETH-PONS",
+    "name": "PONS-WETH",
     "type": "cowcentrated",
     "token": "WETH-PONS uniswap",
     "tokenAddress": "0x10CC6BD38112cAc182db90B6a71d8Bb5939526bA",
