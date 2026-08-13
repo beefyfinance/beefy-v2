@@ -17,7 +17,7 @@
     "status": "active",
     "createdAt": 1786565129,
     "platformId": "uniswap",
-    "assets": ["rhSPCX", "USDG"],
+    "assets": ["SPCXrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -58,7 +58,7 @@
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 60,
-    "assets": ["rhSPCX", "USDG"],
+    "assets": ["SPCXrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -95,7 +95,7 @@
     "status": "active",
     "createdAt": 1786565121,
     "platformId": "uniswap",
-    "assets": ["rhSPY", "USDG"],
+    "assets": ["SPYrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -136,7 +136,7 @@
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 60,
-    "assets": ["rhSPY", "USDG"],
+    "assets": ["SPYrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -173,7 +173,7 @@
     "status": "active",
     "createdAt": 1786565114,
     "platformId": "uniswap",
-    "assets": ["rhCOIN", "WETH"],
+    "assets": ["COINrh", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -214,7 +214,7 @@
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 60,
-    "assets": ["rhCOIN", "WETH"],
+    "assets": ["COINrh", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
