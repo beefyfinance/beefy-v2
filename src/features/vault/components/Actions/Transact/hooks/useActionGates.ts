@@ -10,16 +10,6 @@ import {
   selectTransactWithdrawInputAmountExceedsBalance,
 } from '../../../../../data/selectors/transact.ts';
 
-/**
- * Gates that decide whether the deposit/withdraw CTA is disabled.
- *
- * These are read by the action components directly rather than pushed up from the notice
- * components through an effect: an effect commits after paint, which left a frame where the CTA
- * was still clickable after the condition that should have blocked it became true. Every input
- * here is already in the store (or on the quote), so the notice and its parent can derive the
- * same answer independently and stay in lockstep.
- */
-
 export function useNotEnoughDisabled(mode: 'deposit' | 'withdraw'): boolean {
   const inputAmountExceedsBalance = useAppSelector(
     mode === 'deposit' ?

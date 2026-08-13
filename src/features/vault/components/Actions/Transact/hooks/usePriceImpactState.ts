@@ -19,14 +19,7 @@ export type PriceImpactState = {
   isDisabled: boolean;
 };
 
-/**
- * Derived during render, never in an effect: effects commit after paint, so deriving there left a
- * painted frame in which a quote that had just crossed the confirm threshold was still clickable.
- *
- * The confirmation is dropped on every change to the values it was given for, so re-quoting always
- * costs the user a fresh tick — including impact going x -> y -> x, where keying on the value alone
- * would silently re-arm a tick the user gave for an earlier quote.
- */
+/** Derived during render so the CTA can't paint enabled on a quote that just crossed the threshold. */
 export function usePriceImpactState(quote: TransactQuote | undefined): PriceImpactState {
   const zapQuote = quote && isZapQuote(quote) ? quote : undefined;
   const priceImpact = zapQuote?.priceImpact ?? 0;
@@ -37,7 +30,7 @@ export function usePriceImpactState(quote: TransactQuote | undefined): PriceImpa
 
   const [confirmed, setConfirmed] = useState(false);
 
-  // reset during render rather than in an effect, so the ungated frame never paints
+  // drop the tick whenever what was disclosed to the user changes
   const resetKey = `${!!zapQuote}:${priceImpact}:${isInvalidCowcentratedDeposit}`;
   const [lastResetKey, setLastResetKey] = useState(resetKey);
   if (lastResetKey !== resetKey) {

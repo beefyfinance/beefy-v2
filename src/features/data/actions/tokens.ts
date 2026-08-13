@@ -126,12 +126,7 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAppAsync
         },
         walletAddress
       ),
-      allowanceApi.fetchTokensAllowance(
-        getState(),
-        erc20Tokens,
-        walletAddress,
-        spenderAddress
-      ) as Promise<TokenAllowance[]>,
+      allowanceApi.fetchTokensAllowance(getState(), erc20Tokens, walletAddress, spenderAddress),
       govVault ?
         contractDataApi.fetchAllContractData(getState(), {
           govVaults: govVaultSingle ? [govVaultSingle] : [],
