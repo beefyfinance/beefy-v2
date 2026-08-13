@@ -1,5 +1,42 @@
 [
   {
+    "id": "morpho-v2-ethereum-armitage-pendle-ecosystem-usdc",
+    "name": "USDC (Armitage, Pendle Ecosystem V2)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x1A85938BC4719f9a6BCABDa377bDd42b584Be678",
+    "earnedToken": "mooMorphoV2EthereumArmitagePendleEcosystemUSDC",
+    "earnedTokenAddress": "0x1A85938BC4719f9a6BCABDa377bDd42b584Be678",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1786613501,
+    "platformId": "morpho",
+    "curatorId": "armitage",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/ethereum/vault/0x55C1B6e461a6334B567bAF0FEb5D728715446f05/armitage-pendle-ecosystem-usdc",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "stakedao-frxusd-sgho",
     "name": "frxUSD/sGHO",
     "type": "standard",
