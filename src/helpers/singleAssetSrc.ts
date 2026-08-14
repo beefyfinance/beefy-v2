@@ -12,9 +12,20 @@ const keyToUrl = createGlobLoader(pathToUrl, path => {
   return removeExtension(path.replace('../images/single-assets/', ''));
 });
 
+const symbolAliases: Record<string, string> = {
+  AAPLc: 'AAPL',
+  GOOGLc: 'GOOGL',
+  METAc: 'META',
+  NVDAc: 'NVDA',
+};
+
 export function getSingleAssetSrc(symbol: TokenEntity['id'], chainId?: ChainEntity['id']) {
   const parsedSymbol = symbol.replace('.', '');
-  const ids = chainId ? [`${chainId}/${parsedSymbol}`, parsedSymbol] : [parsedSymbol];
+  const alias = symbolAliases[parsedSymbol];
+  const ids =
+    chainId ?
+      [`${chainId}/${parsedSymbol}`, parsedSymbol, ...(alias ? [`${chainId}/${alias}`, alias] : [])]
+    : [parsedSymbol, ...(alias ? [alias] : [])];
 
   return keyToUrl(ids);
 }
