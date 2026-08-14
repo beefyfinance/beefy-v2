@@ -1,5 +1,54 @@
 [
   {
+    "id": "stakedao-frxusd-sgho",
+    "name": "frxUSD/sGHO",
+    "type": "standard",
+    "token": "frxUSDsGHO",
+    "tokenAddress": "0x68e392E7875CC23806a8bBC5b1A5D53a366C2C7E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xAE6d37534F2C219A8A276C8801a882ee1e3285CB",
+    "earnedToken": "mooStakeDao-frxUSD-sGHO",
+    "earnedTokenAddress": "0xAE6d37534F2C219A8A276C8801a882ee1e3285CB",
+    "oracle": "lps",
+    "oracleId": "curve-frxusd-sgho",
+    "status": "active",
+    "createdAt": 1786602678,
+    "platformId": "stakedao",
+    "assets": ["frxUSD", "sGHO"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-885/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-885/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x68e392E7875CC23806a8bBC5b1A5D53a366C2C7E",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x68e392E7875CC23806a8bBC5b1A5D53a366C2C7E",
+            "coins": [
+              "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+              "0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "yb-wbtc",
     "name": "WBTC",
     "type": "standard",
