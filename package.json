@@ -53,7 +53,7 @@
     "packages:update": "node ./scripts/updatePackages.js"
   },
   "dependencies": {
-    "@beefyfinance/blockchain-addressbook": "^0.58.2",
+    "@beefyfinance/blockchain-addressbook": "^0.58.8",
     "@coinbase/wallet-sdk": "^4.3.7",
     "@deficonnect/web3-connector": "^2.0.3",
     "@farcaster/miniapp-sdk": "^0.1.10",
@@ -74,7 +74,6 @@
     "p-queue": "^8.1.1",
     "re-reselect": "^5.1.0",
     "react": "^18.3.1",
-    "react-animate-height": "^3.2.3",
     "react-content-loader": "^6.2.1",
     "react-custom-scrollbars-2": "^4.5.0",
     "react-dom": "^18.3.1",
@@ -83,7 +82,7 @@
     "react-markdown": "^10.1.0",
     "react-redux": "^9.2.0",
     "react-resize-detector": "^7.1.2",
-    "react-router": "^7.9.1",
+    "react-router": "^7.18.2",
     "react-virtuoso": "^4.14.0",
     "recharts": "^2.15.4",
     "redux-persist": "^6.0.0",

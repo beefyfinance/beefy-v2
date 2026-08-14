@@ -52,9 +52,7 @@ export const StategyTypeCheckBoxList = memo(function StategyTypeCheckBoxList() {
     return allIndex >= 0 ? [allIndex] : undefined;
   }, [options]);
 
-  const noneSelected = useMemo(() => {
-    return selectedIndex === null;
-  }, [selectedIndex]);
+  const noneSelected = selectedIndex === null;
 
   return (
     <SelectSingleContent

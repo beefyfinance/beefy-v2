@@ -8,7 +8,6 @@ import { VaultCategoryButtonFilter } from './components/VaultCategoryFilters/Vau
 import { StrategyTypeButtonFilter } from './components/StrategyTypeFilters/StrategyTypeButtonFilter.tsx';
 import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 import { styled } from '@repo/styles/jsx';
-import { BoostFilterButton } from './components/BoostFilter/BoostFilterButton.tsx';
 import { Sort } from './components/Sort/Sort.tsx';
 import { ExtendedFiltersButtonMobileFilters } from './components/ExtendedFilters/ExtendedFiltersButtonMobileFilters.tsx';
 
@@ -40,7 +39,6 @@ const DesktopLayout = memo(function DesktopLayout() {
       </Top>
       <Bottom>
         <UserCategoryButtonFilter />
-        <BoostFilterButton />
         <VaultCategoryButtonFilter />
         <AssetTypeButtonFilter />
         <StrategyTypeButtonFilter />

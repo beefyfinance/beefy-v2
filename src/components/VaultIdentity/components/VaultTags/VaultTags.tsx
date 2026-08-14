@@ -38,6 +38,7 @@ import { styles } from './styles.ts';
 import { VaultTag, VaultTagWithTooltip, type VaultTagWithTooltipProps } from './VaultTag.tsx';
 import { styled } from '@repo/styles/jsx';
 import { selectZapCampaignForVaultGroup } from '../../../../features/data/selectors/zap.ts';
+import { selectIsVaultStock } from '../../../../features/data/selectors/filtered-vaults.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -155,7 +156,7 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
           height={12}
           width={12}
           className={classes.vaultTagIconImage}
-          alt={hideLabel ? label : undefined}
+          alt={hideLabel || onlyIcon ? label : ''}
         />
       }
       text={
@@ -265,6 +266,7 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
   const promo = useAppSelector(state => selectActivePromoForVaultGroup(state, vaultId));
   const zapCampaign = useAppSelector(state => selectZapCampaignForVaultGroup(state, vaultId));
   const isMigratable = useAppSelector(state => selectUserHasBalanceToMigrate(state, vaultId));
+  const isStock = useAppSelector(state => selectIsVaultStock(state, vaultId));
   const isGov = isGovVault(vault);
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
   const isSmallDevice = useMediaQuery('(max-width: 450px)', false);
@@ -272,10 +274,11 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
 
   // Tag 1: Platform
   // Tag 2: CLM -> CLM Pool -> CLM Vault --> Vault --> Pool
-  // Tag 3: Free Zap -> none
-  // Tag 4: Migrate -> none
-  // Tag 5: Retired -> Paused -> Promo -> none
-  // Tag 6: Points -> none
+  // Tag 3: Stocks
+  // Tag 4: Free Zap -> none
+  // Tag 5: Migrate -> none
+  // Tag 6: Retired -> Paused -> Promo -> none
+  // Tag 7: Points -> none
   return (
     <VaultTagsContainer isVaultPage={hidePlatform}>
       {!hidePlatform && <VaultPlatformTag vaultId={vaultId} />}
@@ -284,6 +287,7 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
       : isGov ?
         <VaultTag css={styles.vaultTagPool} text={t('VaultTag-Pool')} />
       : <VaultTag css={styles.vaultTagVault} text={t('VaultTag-Vault')} />}
+      {isStock && <VaultTag css={styles.vaultTagStocks} text={t('VaultTag-Stocks')} />}
       {zapCampaign && <VaultFreeZapTag />}
       {isMigratable && <VaultMigrateTag />}
       {isVaultRetired(vault) ?

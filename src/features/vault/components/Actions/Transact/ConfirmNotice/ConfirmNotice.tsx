@@ -1,5 +1,5 @@
 import { css, type CssStyles } from '@repo/styles/css';
-import { memo, useEffect, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertError, AlertWarning } from '../../../../../../components/Alerts/Alerts.tsx';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
@@ -20,23 +20,14 @@ import { styles } from './styles.ts';
 const useStyles = legacyMakeStyles(styles);
 
 export type ConfirmNoticeProps = {
-  onChange: (shouldDisable: boolean) => void;
   css?: CssStyles;
 };
-export const ConfirmNotice = memo(function ConfirmNotice({
-  css: cssProp,
-  onChange,
-}: ConfirmNoticeProps) {
+export const ConfirmNotice = memo(function ConfirmNotice({ css: cssProp }: ConfirmNoticeProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const status = useAppSelector(selectTransactConfirmStatus);
   const changes = useAppSelector(selectTransactConfirmChanges);
   const error = useAppSelector(selectTransactConfirmError);
-
-  useEffect(() => {
-    const shouldDisable = status === TransactStatus.Rejected || status === TransactStatus.Pending;
-    onChange(shouldDisable);
-  }, [status, changes, onChange]);
 
   if (status === TransactStatus.Fulfilled && changes.length > 0) {
     return (

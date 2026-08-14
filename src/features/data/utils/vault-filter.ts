@@ -21,6 +21,7 @@ import {
   selectIsVaultCorrelated,
   selectIsVaultMeme,
   selectIsVaultStable,
+  selectIsVaultStock,
   selectVaultIsBoostedForFilter,
 } from '../selectors/filtered-vaults.ts';
 import { selectIsVaultIdSaved } from '../selectors/saved-vaults.ts';
@@ -194,6 +195,9 @@ export function vaultPassesFilters(
       return false;
     }
     if (filterOptions.vaultCategory.includes('meme') && !selectIsVaultMeme(state, vault.id)) {
+      return false;
+    }
+    if (filterOptions.vaultCategory.includes('stock') && !selectIsVaultStock(state, vault.id)) {
       return false;
     }
   }

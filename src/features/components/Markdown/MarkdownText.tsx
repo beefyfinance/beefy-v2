@@ -22,7 +22,9 @@ export const MarkdownText = memo(function ({
 
   return (
     <div className={className}>
-      <Markdown children={text} components={components} allowedElements={allowedElements} />
+      <Markdown components={components} allowedElements={allowedElements}>
+        {text}
+      </Markdown>
     </div>
   );
 });

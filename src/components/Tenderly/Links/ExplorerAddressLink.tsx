@@ -19,5 +19,5 @@ export const ExplorerAddressLink = memo(function ExplorerAddressLink({
 }: ExplorerAddressLinkProps) {
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const href = useMemo(() => explorerAddressUrl(chain, address), [chain, address]);
-  return <ExternalLink href={href} children={children || formatAddressShort(address)} />;
+  return <ExternalLink href={href}>{children || formatAddressShort(address)}</ExternalLink>;
 });

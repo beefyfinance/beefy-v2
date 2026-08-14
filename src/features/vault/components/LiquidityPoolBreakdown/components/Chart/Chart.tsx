@@ -1,5 +1,5 @@
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { memo, type ReactElement, type SVGProps, useCallback, useMemo, useState } from 'react';
+import { memo, type ReactElement, type SVGProps, useCallback, useState } from 'react';
 import type { CalculatedAsset } from '../../types.ts';
 import type { PieProps } from 'recharts';
 import { Cell, Pie, PieChart, Sector } from 'recharts';
@@ -87,7 +87,7 @@ export const Chart = memo(function Chart({ assets, isUnderlying }: ChartProps) {
     setActiveIndex(undefined);
   }, [setActiveIndex]);
 
-  const dataKey = useMemo(() => (isUnderlying ? 'underlyingPercent' : 'percent'), [isUnderlying]);
+  const dataKey = isUnderlying ? 'underlyingPercent' : 'percent';
 
   const ActiveShapeConstructor = useCallback(
     // eslint-disable-next-line react-x/no-nested-component-definitions

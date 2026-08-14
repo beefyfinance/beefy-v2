@@ -1,5 +1,5 @@
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import type { CalculatedAsset } from '../../types.ts';
 import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
@@ -23,11 +23,7 @@ export const Legend = memo(function Legend({
 }: LegendProps) {
   const classes = useStyles();
 
-  const percentKey = useMemo(
-    () => (isUnderlying ? 'underlyingPercent' : 'percent'),
-
-    [isUnderlying]
-  );
+  const percentKey = isUnderlying ? 'underlyingPercent' : 'percent';
 
   return (
     <div className={css(styles.holder, cssProp)}>

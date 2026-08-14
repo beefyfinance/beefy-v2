@@ -162,7 +162,6 @@ export const config = {
     },
   },
   robinhood: {
-    new: true,
     name: 'Robinhood',
     chainId: 4663,
     rpc: ['https://rpc.mainnet.chain.robinhood.com'],

@@ -1,50 +1,19 @@
 import { styled } from '@repo/styles/jsx';
-import { memo, useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import {
-  type SortWithSubSort,
-  type SubSortsState,
-} from '../../../../../data/reducers/filtered-vaults-types.ts';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
-import { selectFilterSubSort } from '../../../../../data/selectors/filtered-vaults.ts';
-
-export type FilterSubColumn<T extends SortWithSubSort> = {
-  label: string;
-  value: SubSortsState[T];
-};
+import { memo } from 'react';
+import { type SortWithSubSort } from '../../../../../data/reducers/filtered-vaults-types.ts';
+import { useSubSort } from '../../../../../../hooks/useSubSort.ts';
 
 export type SubColumnSortProps<T extends SortWithSubSort> = {
-  columnSelected: boolean;
   columnKey: T;
-  subColumns: FilterSubColumn<T>[];
 };
 
 export const SubColumnSort = memo(function SubColumnSort<T extends SortWithSubSort>({
-  columnSelected,
   columnKey,
-  subColumns,
 }: SubColumnSortProps<T>) {
-  const { t } = useTranslation();
-  const subKey = useAppSelector(state => selectFilterSubSort(state, columnKey));
-  const dispatch = useAppDispatch();
-  const index = useMemo(
-    () => subColumns.findIndex(key => key.value === subKey),
-    [subKey, subColumns]
-  );
-  if (index === -1) {
-    throw new Error(`Invalid subKey: ${subKey} of column: ${columnKey}`);
-  }
-
-  const handleClick = useCallback(() => {
-    const nextIndex = (index + 1) % subColumns.length;
-    const value = subColumns[nextIndex].value;
-    dispatch(filteredVaultsActions.update({ subSort: { [columnKey]: value } }));
-  }, [columnKey, index, subColumns, dispatch]);
-
+  const { next, label, parentSelected } = useSubSort(columnKey);
   return (
-    <SortButton data-active={columnSelected || undefined} onClick={handleClick}>
-      {t(subColumns[index].label)}
+    <SortButton data-active={parentSelected || undefined} onClick={next}>
+      {label}
     </SortButton>
   );
 });

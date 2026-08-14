@@ -83,9 +83,12 @@ export const tokensSlice = createSlice({
 
     // when vault list is fetched, add all new tokens
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
+      // membership index shared across the whole pass; without it the dedupe below is quadratic
+      // over every vault config, and each read goes through immer's draft proxy
+      const activeAssetIdsByChain = new Map<ChainEntity['id'], Set<TokenEntity['id']>>();
       for (const vaults of Object.values(action.payload.byChainId)) {
         for (const vault of vaults) {
-          addVaultToState(sliceState, vault.config, vault.entity);
+          addVaultToState(sliceState, vault.config, vault.entity, activeAssetIdsByChain);
         }
       }
     });
@@ -422,14 +425,26 @@ function addMinterToState(
   }
 }
 
-function addVaultToState(sliceState: Draft<TokensState>, config: VaultConfig, entity: VaultEntity) {
+function addVaultToState(
+  sliceState: Draft<TokensState>,
+  config: VaultConfig,
+  entity: VaultEntity,
+  activeAssetIdsByChain: Map<ChainEntity['id'], Set<TokenEntity['id']>>
+) {
   const chainId = entity.chainId;
   const chainState = getOrCreateTokensChainState(sliceState, chainId);
 
   // add assets id's from active vaults to state
   if (config.status === 'active' && config.assets) {
+    let seenAssetIds = activeAssetIdsByChain.get(chainId);
+    if (!seenAssetIds) {
+      // seeded once per chain from whatever is already there, so re-runs stay correct
+      seenAssetIds = new Set(chainState.tokenIdsInActiveVaults);
+      activeAssetIdsByChain.set(chainId, seenAssetIds);
+    }
     for (const assetId of config.assets) {
-      if (!chainState.tokenIdsInActiveVaults.includes(assetId)) {
+      if (!seenAssetIds.has(assetId)) {
+        seenAssetIds.add(assetId);
         chainState.tokenIdsInActiveVaults.push(assetId);
       }
     }

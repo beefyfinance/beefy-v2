@@ -1,10 +1,10 @@
 {
   "yb-wbtc": true,
-  "uniswap-cow-ethereum-paxg-usdc-rp": true,
-  "uniswap-cow-ethereum-link-weth-rp": true,
-  "uniswap-cow-ethereum-aave-weth-rp": true,
-  "uniswap-cow-ethereum-uni-weth-rp": true,
+  "aavev4-avax-usdt": true,
+  "aavev4-avax-usdc": true,
+  "up33-cow-robinhood-cashcat-weth-vault": true,
+  "uniswap-cow-robinhood-frong-weth-rp": true,
   "uniswap-cow-robinhood-cashcat-usdg-rp": true,
-  "uniswap-cow-robinhood-cashcat-weth-rp": true,
+  "uniswap-cow-robinhood-stonkbroker-weth-rp": true,
   "uniswap-cow-robinhood-tendies-weth-rp": true
 }
