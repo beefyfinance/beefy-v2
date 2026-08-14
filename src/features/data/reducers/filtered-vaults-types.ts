@@ -25,7 +25,7 @@ export function isSortPickedInPreset(searchText: string | undefined, sort: SortT
 
 export type SortDirectionType = 'asc' | 'desc';
 
-export const VAULT_CATEGORIES = ['stable', 'bluechip', 'meme', 'correlated'] as const;
+export const VAULT_CATEGORIES = ['stable', 'bluechip', 'meme', 'correlated', 'stock'] as const;
 export type VaultCategoryType = (typeof VAULT_CATEGORIES)[number];
 
 export const VAULT_ASSET_TYPES = ['lps', 'single', 'clm'] as const;

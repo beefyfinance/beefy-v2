@@ -70,8 +70,8 @@ export const PlatformChecklist = memo(function PlatformChecklist() {
     [options.length]
   );
 
-  const allSelected = useMemo(() => isEmpty(platformsIds), [platformsIds]);
-  const noneSelected = useMemo(() => platformsIds.length === 0, [platformsIds]);
+  const allSelected = isEmpty(platformsIds);
+  const noneSelected = platformsIds.length === 0;
 
   return (
     <SelectMultipleContent

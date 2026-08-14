@@ -195,6 +195,10 @@ export function isTokenMeme(token: TokenEntity): boolean {
   return token.tags.includes('MEMECOIN');
 }
 
+export function isTokenStock(token: TokenEntity): boolean {
+  return token.tags.includes('STOCK');
+}
+
 const makeSelectTokenIsTag = <
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- createSelector uses any
   TSelectToken extends (state: BeefyState, ...args: any[]) => TokenEntity | undefined,
@@ -211,20 +215,9 @@ const makeSelectTokenIsTag = <
   });
 
 export const selectIsTokenStable = makeSelectTokenIsTag(selectTokenByIdOrUndefined, 'STABLECOIN');
-export const selectIsTokenBluechip = makeSelectTokenIsTag(selectTokenByIdOrUndefined, 'BLUECHIP');
-export const selectIsTokenMeme = makeSelectTokenIsTag(selectTokenByIdOrUndefined, 'MEMECOIN');
-
 export const selectIsTokenStableByAddress = makeSelectTokenIsTag(
   selectTokenByAddressOrUndefined,
   'STABLECOIN'
-);
-export const selectIsTokenBluechipByAddress = makeSelectTokenIsTag(
-  selectTokenByAddressOrUndefined,
-  'BLUECHIP'
-);
-export const selectIsTokenMemeByAddress = makeSelectTokenIsTag(
-  selectTokenByAddressOrUndefined,
-  'MEMECOIN'
 );
 
 export const selectTokenPriceByAddress = createSelector(

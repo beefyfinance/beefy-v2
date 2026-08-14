@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnimatedButton } from '../../../../../../components/Button/AnimatedButton.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
@@ -44,10 +44,15 @@ import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
 import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
-import { GlpDepositNotice } from '../GlpNotices/GlpNotices.tsx';
 import { MaxNativeNotice } from '../MaxNativeNotice/MaxNativeNotice.tsx';
 import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
+import { usePriceImpactState } from '../hooks/usePriceImpactState.ts';
+import {
+  isMaxNativeQuote,
+  useConfirmDisabled,
+  useNotEnoughDisabled,
+} from '../hooks/useActionGates.ts';
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
 import { styles } from './styles.ts';
 import { getExecutionChainId } from '../../../../../../helpers/transactUtils.ts';
@@ -168,11 +173,10 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const [isDisabledByPriceImpact, setIsDisabledByPriceImpact] = useState(false);
-  const [isDisabledByMaxNative, setIsDisabledByMaxNative] = useState(false);
-  const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
-  const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
-  const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
+  const priceImpactState = usePriceImpactState(quote);
+  const isDisabledByMaxNative = isMaxNativeQuote(quote);
+  const isDisabledByConfirm = useConfirmDisabled();
+  const isDisabledByNotEnoughInput = useNotEnoughDisabled('deposit');
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const stepperContent = useAppSelector(selectStepperStepContent);
@@ -192,10 +196,9 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const isDisabled =
     isTxInProgress ||
     isExecuting ||
-    isDisabledByPriceImpact ||
+    priceImpactState.isDisabled ||
     isDisabledByMaxNative ||
     effectiveDisabledByConfirm ||
-    isDisabledByGlpLock ||
     isDisabledByNotEnoughInput;
 
   const handleDeposit = useCallback(() => {
@@ -219,15 +222,10 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
       {option.chainId === 'emerald' ?
         <EmeraldGasNotice />
       : null}
-      <GlpDepositNotice vaultId={option.vaultId} onChange={setIsDisabledByGlpLock} />
-      <PriceImpactNotice
-        quote={quote}
-        onChange={setIsDisabledByPriceImpact}
-        hideCheckbox={isDisabledByNotEnoughInput}
-      />
-      <MaxNativeNotice quote={quote} onChange={setIsDisabledByMaxNative} />
-      <ConfirmNotice onChange={setIsDisabledByConfirm} />
-      <NotEnoughNotice mode="deposit" onChange={setIsDisabledByNotEnoughInput} />
+      <PriceImpactNotice state={priceImpactState} hideCheckbox={isDisabledByNotEnoughInput} />
+      <MaxNativeNotice quote={quote} />
+      <ConfirmNotice />
+      <NotEnoughNotice mode="deposit" />
       <div className={classes.feesContainer}>
         <ActionConnectSwitch chainId={executionChainId}>
           <AnimatedButton

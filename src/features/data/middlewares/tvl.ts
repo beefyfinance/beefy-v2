@@ -42,7 +42,8 @@ export function addTvlListeners() {
 }
 
 function getTotalTvlByChainId(state: BeefyState, byVaultId: VaultTvlById) {
-  const activeChainIds = selectActiveChainIds(state);
+  // runs once per chain fulfilled over the whole accumulated map, so keep the per-vault work O(1)
+  const activeChainIds = new Set(selectActiveChainIds(state));
   const byChaindId: ChainTvlById = {};
   let totalTvl = BIG_ZERO;
 
@@ -52,7 +53,7 @@ function getTotalTvlByChainId(state: BeefyState, byVaultId: VaultTvlById) {
     byChaindId[vault.chainId] = (byChaindId[vault.chainId] || BIG_ZERO).plus(vaultTvl.tvl);
 
     // Only include active chains in total
-    if (activeChainIds.includes(vault.chainId)) {
+    if (activeChainIds.has(vault.chainId)) {
       totalTvl = totalTvl.plus(vaultTvl.tvl);
     }
   }
