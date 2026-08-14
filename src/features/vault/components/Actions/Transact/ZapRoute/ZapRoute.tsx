@@ -1,6 +1,6 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import type { ComponentType, ReactNode } from 'react';
-import { Fragment, memo, useCallback, useMemo, useRef } from 'react';
+import { Fragment, memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useCollapse } from '../../../../../../components/Collapsable/hooks.ts';
 import { Trans, useTranslation } from 'react-i18next';
 import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx';
@@ -608,9 +608,13 @@ export const ZapRoute = memo(function ZapRoute({
   );
   const stepperModal = useAppSelector(state => state.ui.stepperState.modal);
   const snapshotRef = useRef<AllowanceTokenAmount[]>(pendingAllowancesLive);
-  if (!stepperModal && !isRecovery) {
-    snapshotRef.current = pendingAllowancesLive;
-  }
+  // freeze the approval rows while the stepper is open so they don't vanish as each one confirms;
+  // written after commit so a discarded render can never leave a stale snapshot behind
+  useEffect(() => {
+    if (!stepperModal && !isRecovery) {
+      snapshotRef.current = pendingAllowancesLive;
+    }
+  }, [stepperModal, isRecovery, pendingAllowancesLive]);
   const pendingAllowances =
     stepperModal || isRecovery ? snapshotRef.current : pendingAllowancesLive;
 

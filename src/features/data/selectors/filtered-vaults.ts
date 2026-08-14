@@ -28,6 +28,7 @@ import {
   isTokenBluechip,
   isTokenMeme,
   isTokenStable,
+  isTokenStock,
   selectTokenByAddressOrUndefined,
   selectVaultTokenSymbols,
 } from './tokens.ts';
@@ -376,6 +377,13 @@ export const selectIsVaultMeme = createCachedSelector(
   selectTokensByChainId,
   (vault, byChainId) =>
     vault.assetIds.some(assetId => vaultAssetHasTag(byChainId, vault, assetId, isTokenMeme))
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectIsVaultStock = createCachedSelector(
+  selectVaultById,
+  selectTokensByChainId,
+  (vault, byChainId) =>
+    vault.assetIds.some(assetId => vaultAssetHasTag(byChainId, vault, assetId, isTokenStock))
 )((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 // memoized on the active-id list + vault and breakdown slices so the full scan reruns only when

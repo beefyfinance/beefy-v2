@@ -32,7 +32,9 @@ export const DepositTokensNotice = memo(function DepositTokensNotice({
   }, [i18nKey, rewardTokens, t]);
 
   return (
-    <ActionTokensNotice children={inner} multiline={rewardTokens.length > 1} onClick={onClick} />
+    <ActionTokensNotice multiline={rewardTokens.length > 1} onClick={onClick}>
+      {inner}
+    </ActionTokensNotice>
   );
 });
 

@@ -120,8 +120,8 @@ export const ChainCheckList = memo(function ChainCheckList() {
     [options.length]
   );
 
-  const allSelected = useMemo(() => isEmpty(selectedChainIds), [selectedChainIds]);
-  const noneSelected = useMemo(() => selectedChainIds.length === 0, [selectedChainIds]);
+  const allSelected = isEmpty(selectedChainIds);
+  const noneSelected = selectedChainIds.length === 0;
 
   return (
     <SelectMultipleContent
