@@ -36,11 +36,9 @@ export const Collapsable = memo<CollapsableProps>(function Collapsable({
         <Icon className={iconStyles} />
       </Header>
       {open && (
-        <CollapsableContent
-          variant={recipeProps.variant}
-          children={children}
-          className={contentClass}
-        />
+        <CollapsableContent variant={recipeProps.variant} className={contentClass}>
+          {children}
+        </CollapsableContent>
       )}
     </CollapsableContainer>
   );

@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { Cell, Pie, PieChart as RechartsPieChart, Tooltip } from 'recharts';
 import { PieChartTooltip } from '../PieChartTooltip/PieChartTooltip.tsx';
 import { CHART_COLORS } from '../../helpers/charts.ts';
@@ -8,9 +8,7 @@ import { token } from '@repo/styles/tokens';
 
 export const PieChart = memo(function PieChart({ data, type, formatter }: PieChartProps) {
   const smUp = useBreakpoint({ from: 'sm' });
-  const chartPxs = useMemo(() => {
-    return smUp ? 164 : 124;
-  }, [smUp]);
+  const chartPxs = smUp ? 164 : 124;
 
   return (
     <RechartsPieChart height={chartPxs} width={chartPxs}>

@@ -51,12 +51,10 @@ function useTreasuryColumns(numColumns: number) {
 function useNumColumns() {
   const isDesktop = useMediaQuery('(min-width: 1296px)', false);
   const isTablet = useMediaQuery('(min-width: 960px)', false);
-  return useMemo(
-    () =>
-      isDesktop ? 3
-      : isTablet ? 2
-      : 1,
-    [isDesktop, isTablet]
+  return (
+    isDesktop ? 3
+    : isTablet ? 2
+    : 1
   );
 }
 

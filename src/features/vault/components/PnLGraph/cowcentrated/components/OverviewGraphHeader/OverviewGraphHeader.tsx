@@ -96,23 +96,22 @@ export const OverviewGraphHeader = memo(function OverviewGraphHeader({
           value2={
             hasPnlTooltip ?
               <DivWithTooltip
-                children={
-                  <div className={classes.tooltip}>
-                    <span
-                      className={
-                        pnl.withClaimedPending.usd.gt(BIG_ZERO) ? classes.green : classes.red
-                      }
-                    >
-                      {formatLargeUsd(pnl.withClaimedPending.usd, { positivePrefix: '+$' })}
-                      {' PNL'}
-                    </span>
-                    <HelpOutline />
-                  </div>
-                }
                 tooltip={<ClmPnlTooltipContent userPnl={userPnl} />}
                 variant="dark"
                 size="compact"
-              />
+              >
+                <div className={classes.tooltip}>
+                  <span
+                    className={
+                      pnl.withClaimedPending.usd.gt(BIG_ZERO) ? classes.green : classes.red
+                    }
+                  >
+                    {formatLargeUsd(pnl.withClaimedPending.usd, { positivePrefix: '+$' })}
+                    {' PNL'}
+                  </span>
+                  <HelpOutline />
+                </div>
+              </DivWithTooltip>
             : <span
                 className={pnl.withClaimedPending.usd.gt(BIG_ZERO) ? classes.green : classes.red}
               >
@@ -122,11 +121,6 @@ export const OverviewGraphHeader = memo(function OverviewGraphHeader({
           }
           subValue2={
             <DivWithTooltip
-              children={
-                <div className={classes.tooltip}>
-                  {`${formatLargeUsd(hold.usd)} HOLD`} <HelpOutline />
-                </div>
-              }
               tooltip={
                 <div>
                   <div className={classes.itemContainer}>
@@ -139,7 +133,11 @@ export const OverviewGraphHeader = memo(function OverviewGraphHeader({
               }
               variant="dark"
               size="compact"
-            />
+            >
+              <div className={classes.tooltip}>
+                {`${formatLargeUsd(hold.usd)} HOLD`} <HelpOutline />
+              </div>
+            </DivWithTooltip>
           }
         />
       </div>
