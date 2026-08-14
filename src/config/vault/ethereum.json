@@ -1,5 +1,54 @@
 [
   {
+    "id": "stakedao-frxusd-sgho",
+    "name": "frxUSD/sGHO",
+    "type": "standard",
+    "token": "frxUSDsGHO",
+    "tokenAddress": "0x68e392E7875CC23806a8bBC5b1A5D53a366C2C7E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xAE6d37534F2C219A8A276C8801a882ee1e3285CB",
+    "earnedToken": "mooStakeDao-frxUSD-sGHO",
+    "earnedTokenAddress": "0xAE6d37534F2C219A8A276C8801a882ee1e3285CB",
+    "oracle": "lps",
+    "oracleId": "curve-frxusd-sgho",
+    "status": "active",
+    "createdAt": 1786602678,
+    "platformId": "stakedao",
+    "assets": ["frxUSD", "sGHO"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-885/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-885/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x68e392E7875CC23806a8bBC5b1A5D53a366C2C7E",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x68e392E7875CC23806a8bBC5b1A5D53a366C2C7E",
+            "coins": [
+              "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+              "0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "yb-wbtc",
     "name": "WBTC",
     "type": "standard",
@@ -480,45 +529,6 @@
     },
     "strategyTypeId": "single",
     "underlyingPlatformUrl": "https://app.morpho.org/ethereum/vault/0xBEeFF047C03714965a54b671A37C18beF6b96210/steakhouse-reservoir-usdc",
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
-  },
-  {
-    "id": "morpho-v2-ethereum-steakhouse-reservoir-rusd",
-    "name": "rUSD (Steakhouse, Reservoir V2)",
-    "type": "standard",
-    "token": "rUSD",
-    "tokenAddress": "0x09D4214C03D01F49544C0448DBE3A27f768F2b34",
-    "tokenDecimals": 18,
-    "earnContractAddress": "0x5B3a6FB1415fDf0235209d5795fec286e21fAcD8",
-    "earnedToken": "mooMorphoV2EthereumSteakhouseReservoirrUSD",
-    "earnedTokenAddress": "0x5B3a6FB1415fDf0235209d5795fec286e21fAcD8",
-    "oracle": "tokens",
-    "oracleId": "ethrUSD",
-    "status": "eol",
-    "createdAt": 1780328838,
-    "retireReason": "rewards",
-    "retiredAt": 1784063232,
-    "platformId": "morpho",
-    "curatorId": "steakhouse",
-    "assets": ["rUSD"],
-    "migrationIds": ["morpho"],
-    "risks": {
-      "complex": false,
-      "curated": true,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": true,
-      "notVerified": false,
-      "synthAsset": true
-    },
-    "strategyTypeId": "single",
-    "underlyingPlatformUrl": "https://app.morpho.org/ethereum/vault/0xBEeFf08E1887A11D91B9Ca68c133c08Ae3c4B44f/steakhouse-reservoir-rusd",
     "network": "ethereum",
     "zaps": [
       {
