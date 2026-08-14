@@ -12,7 +12,7 @@ export const NotificationRpcChains = memo(function NotificationRpcChains({
   onOpenDropdown: () => void;
   chains: ChainEntity['id'][];
 }) {
-  const showChainsConnectedError = useMemo(() => chains.length > 4, [chains]);
+  const showChainsConnectedError = chains.length > 4;
 
   const chainsToShow = useMemo(() => {
     if (showChainsConnectedError) {

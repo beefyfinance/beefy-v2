@@ -508,39 +508,27 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
 
     if (quote.swapQuote) {
       // Step 1. Swap
-      const swap = await swapAggregator.fetchSwap(
-        quote.swapQuote.providerId,
+      const swapZap = await fetchZapAggregatorSwap(
         {
           quote: quote.swapQuote,
-          fromAddress: zap.router,
-          slippage,
+          inputs: [{ token: quote.swapQuote.fromToken, amount: quote.swapQuote.fromAmount }],
+          outputs: [{ token: quote.swapQuote.toToken, amount: quote.swapQuote.toAmount }],
+          maxSlippage: slippage,
+          zapRouter: zap.router,
+          providerId: quote.swapQuote.providerId,
+          insertBalance: true,
         },
+        swapAggregator,
         state
       );
 
-      steps.push({
-        target: swap.tx.toAddress,
-        value: swap.tx.value,
-        data: swap.tx.data,
-        tokens: [
-          {
-            token: getTokenAddress(swap.fromToken),
-            index: -1, // not dynamically inserted
-          },
-        ],
-      });
+      steps.push(...swapZap.zaps);
 
-      minBalances.subtractMany([{ token: swap.fromToken, amount: swap.fromAmount }]);
-      minBalances.addMany([
-        {
-          token: swap.toToken,
-          amount: slipBy(swap.toAmount, slippage, swap.toToken.decimals),
-        },
-      ]);
+      minBalances.subtractMany(swapZap.inputs);
+      minBalances.addMany(swapZap.minOutputs);
 
       depositInput = {
-        token: swap.toToken,
-        amount: slipBy(swap.toAmount, slippage, swap.toToken.decimals),
+        ...swapZap.minOutputs[0],
         max: true,
       };
     } else {

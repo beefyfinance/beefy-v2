@@ -13,6 +13,10 @@ type AnchorProps = DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HT
 
 export const MarkdownLink = memo(function MarkdownLink({ href, children }: AnchorProps) {
   return href?.startsWith('/') ?
-      <Link to={href} className={linkClass} children={children} />
-    : <ExternalLink href={href} className={linkClass} children={children} />;
+      <Link to={href} className={linkClass}>
+        {children}
+      </Link>
+    : <ExternalLink href={href} className={linkClass}>
+        {children}
+      </ExternalLink>;
 });
