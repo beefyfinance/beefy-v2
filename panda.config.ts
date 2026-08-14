@@ -321,6 +321,7 @@ const config = buildConfig(
           stepperSuccessBackground: { value: '#59a66226' },
           tagClmBackground: { value: '#0052CC', description: 'tag.clm' },
           tagPausedBackground: { value: '#564a46', description: 'tag.paused' },
+          tagStockBackground: { value: '#0f4a72', description: 'tag.stocks' },
           tagPlatformClmBackground: { value: '#38428f', description: 'tag.platformClm' },
           tagPlatformGovBackground: { value: '#4b388f', description: 'tag.platformGov' },
           tagRetiredBackground: { value: '#532f39', description: 'tag.retired' },
@@ -583,6 +584,7 @@ const config = buildConfig(
             retired: { background: { value: '{colors.tagRetiredBackground}' } },
             paused: { background: { value: '{colors.tagPausedBackground}' } },
             boost: { background: { value: '{gradients.boost}' } },
+            stock: { background: { value: '{colors.tagStockBackground}' } },
             migrate: {
               background: { value: '{colors.orange.50}' },
               text: { value: '{colors.darkBlue.90}' },
