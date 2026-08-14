@@ -104,12 +104,6 @@ export const styles = {
     height: '12px',
     display: 'block',
   }),
-  divider: css.raw({
-    height: '8px',
-    width: '1px',
-    borderRadius: '8px',
-    backgroundColor: 'vaultTagDividerBackground',
-  }),
   flexWrap: css.raw({
     flexWrap: 'wrap',
   }),

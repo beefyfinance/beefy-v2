@@ -8,13 +8,19 @@ import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/t
 import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults.ts';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
-import { isStandardVault } from '../entities/vault.ts';
+import {
+  isCowcentratedGovVault,
+  isCowcentratedStandardVault,
+  isCowcentratedVault,
+  isStandardVault,
+} from '../entities/vault.ts';
 import type { VaultsState } from './vaults-types.ts';
 
 export const initialVaultsState: VaultsState = {
   byId: {},
   allIds: [],
   allVisibleIds: [],
+  allListIds: [],
   allActiveIds: [],
   allBridgedIds: [],
   allChainIds: [],
@@ -191,6 +197,14 @@ function rebuildVaultsState(sliceState: Draft<VaultsState>) {
   });
   const allVaults = allIds.map(id => sliceState.byId[id]!);
   const allVisibleIds = allVaults.filter(vault => !vault.hidden).map(vault => vault.id);
+  // one row per CLM: the base CLM is the row (even while hidden), its pools/vaults are not
+  const allListIds = allVaults
+    .filter(vault =>
+      isCowcentratedVault(vault) ? true
+      : isCowcentratedGovVault(vault) || isCowcentratedStandardVault(vault) ? false
+      : !vault.hidden
+    )
+    .map(vault => vault.id);
   const allChainIds = Array.from(
     allVaults
       .reduce((acc, vault) => {
@@ -251,6 +265,7 @@ function rebuildVaultsState(sliceState: Draft<VaultsState>) {
   // Update state
   sliceState.allIds = allIds;
   sliceState.allVisibleIds = allVisibleIds;
+  sliceState.allListIds = allListIds;
   sliceState.allChainIds = allChainIds;
   sliceState.allActiveIds = allActiveIds;
   sliceState.allBridgedIds = allBridgedIds;

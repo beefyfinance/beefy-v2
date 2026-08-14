@@ -5,6 +5,7 @@ import { isEmpty } from '../../../helpers/utils.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
 import {
   isCowcentratedGovVault,
+  isCowcentratedLikeVault,
   isCowcentratedVault,
   isVaultActive,
   type VaultEntity,
@@ -24,7 +25,11 @@ import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from '
 import { selectIsConfigAvailable } from './data-loader/config.ts';
 import { selectIsContractDataLoadedOnChain } from './data-loader/contract-data.ts';
 import { selectTokenPriceByAddress } from './tokens.ts';
-import { selectVaultById, selectVaultShouldShowInterest } from './vaults.ts';
+import {
+  selectVaultById,
+  selectVaultByIdOrUndefined,
+  selectVaultShouldShowInterest,
+} from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
 import { selectIsApyAvailable } from './data-loader/apy.ts';
 
@@ -65,6 +70,30 @@ export const selectVaultAvgApy = (
 
 export const selectDidAPIReturnValuesForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
   return state.biz.apy.totalApy.byVaultId[vaultId] !== undefined;
+};
+
+/**
+ * The group member whose rate represents a merged CLM row: always the autocompounding side when it
+ * exists. Pass-through for anything that is not a base CLM.
+ *
+ * The two sides are not comparable. Both earn the same CLM trading fees, but the pool reports them
+ * gross as claimable while the vault reports them compounded and net of the performance fee, so the
+ * pool's headline is higher by construction — measured at 9.5% of the fee component, never more
+ * than a point. Picking "whichever is higher" therefore always chose the pool, swapping the unit
+ * from APY to APR for a fraction of a point of a rate the user has to claim by hand.
+ */
+export const selectClmDisplayVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultEntity['id'] => {
+  const vault = selectVaultById(state, vaultId);
+  if (!isCowcentratedVault(vault)) {
+    return vaultId;
+  }
+
+  const { pool, vault: vaultSide, pools, vaults } = vault.cowcentratedIds;
+  // the claimable side only represents the group when there is no compounding side at all
+  return vaultSide ?? pool ?? vaults[0] ?? pools[0] ?? vaultId;
 };
 
 const EMPTY_GLOBAL_STATS = {
@@ -331,4 +360,48 @@ export const selectBoostAprByRewardToken = (state: BeefyState, boostId: BoostPro
 
 export const selectBoostApr = (state: BeefyState, boostId: string): number => {
   return state.biz.apy.rawApy.byBoostId[boostId]?.apr || 0;
+};
+
+export type ClmOtherSide = {
+  /** i18n key naming the side whose rate the row above is showing */
+  shownNameKey: string;
+  /** i18n key naming the side, shared with the deposit form's yield-mode toggle */
+  nameKey: string;
+  /** all-in yearly rate, boost-style components included */
+  rate: number;
+  type: 'apy' | 'apr';
+};
+
+/**
+ * The side a merged CLM row is NOT showing, for the tooltip footer. `undefined` unless the group
+ * has both sides live, so a single-sided CLM renders the same tooltip it always did.
+ */
+export const selectClmOtherSide = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): ClmOtherSide | undefined => {
+  const vault = selectVaultByIdOrUndefined(state, vaultId);
+  if (!vault || !isCowcentratedLikeVault(vault)) {
+    return undefined;
+  }
+
+  const { pool, vault: vaultSide } = vault.cowcentratedIds;
+  if (!pool || !vaultSide) {
+    return undefined;
+  }
+
+  // dashboard rows pass whichever side the user holds, so neither side is the shown one by
+  // default — name both from the vault actually passed in
+  const otherId = vault.id === pool ? vaultSide : pool;
+  const apy = selectVaultTotalApyOrUndefined(state, otherId);
+  if (!apy) {
+    return undefined;
+  }
+
+  return {
+    shownNameKey: otherId === pool ? 'Transact-ClmMode-Vault' : 'Transact-ClmMode-Pool',
+    nameKey: otherId === pool ? 'Transact-ClmMode-Pool' : 'Transact-ClmMode-Vault',
+    rate: apy.boostedTotalApy ?? apy.totalApy,
+    type: apy.totalType,
+  };
 };

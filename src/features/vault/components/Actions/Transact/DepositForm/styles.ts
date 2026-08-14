@@ -38,6 +38,9 @@ export const styles = {
     flexDirection: 'column',
     rowGap: '24px',
   }),
+  rewardsToggle: css.raw({
+    marginBottom: '24px',
+  }),
   amount: css.raw({
     display: 'flex',
     flexWrap: 'nowrap',

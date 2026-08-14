@@ -31,6 +31,7 @@ import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice/WithdrawnInW
 import { WithdrawQueueLoader } from '../WithdrawQueue/WithdrawQueueLoader.tsx';
 import { WithdrawTokenAmountInput } from '../WithdrawTokenAmountInput/WithdrawTokenAmountInput.tsx';
 import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
+import { ClmModeSelector } from '../../../ClmMode/ClmModeSelector.tsx';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -100,6 +101,7 @@ const WithdrawForm = memo(function WithdrawForm() {
     <>
       <WithdrawnInWalletNotice css={styles.notice} />
       <WithdrawQueueLoader />
+      <ClmModeSelector css={styles.modeSelector} />
       <div className={classes.labels}>
         <div className={classes.selectLabel}>{selectLabel}</div>
         <div className={classes.availableLabel}>

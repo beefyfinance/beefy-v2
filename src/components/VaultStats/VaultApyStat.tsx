@@ -2,7 +2,10 @@ import { styled } from '@repo/styles/jsx';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
-import { selectApyVaultUIData } from '../../features/data/selectors/apy.ts';
+import {
+  selectApyVaultUIData,
+  selectClmDisplayVaultId,
+} from '../../features/data/selectors/apy.ts';
 import { selectFilterAppliedAvgApySort } from '../../features/data/selectors/filtered-vaults.ts';
 import { formatAvgApy, formatTotalApy } from '../../helpers/format.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
@@ -25,7 +28,9 @@ export const VaultApyStat = memo(function VaultApyStat({
   ...passthrough
 }: VaultApyStatProps) {
   const { t } = useTranslation();
-  const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
+  // a merged CLM row shows the rate of the group side selectClmDisplayVaultId picked
+  const apyVaultId = useAppSelector(state => selectClmDisplayVaultId(state, vaultId));
+  const data = useAppSelector(state => selectApyVaultUIData(state, apyVaultId));
   const subSortApy = useAppSelector(selectFilterAppliedAvgApySort);
 
   const label =
@@ -81,7 +86,7 @@ export const VaultApyStat = memo(function VaultApyStat({
       value={value}
       tooltip={
         <ApyTooltipContent
-          vaultId={vaultId}
+          vaultId={apyVaultId}
           type={type}
           isBoosted={isBoosted}
           rates={formatted}

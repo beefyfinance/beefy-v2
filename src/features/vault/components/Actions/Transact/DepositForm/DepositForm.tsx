@@ -20,6 +20,7 @@ import {
 import {
   selectTransactDepositFromVaultId,
   selectTransactForceSelection,
+  selectTransactIsSwitchingTarget,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactSelected,
@@ -38,6 +39,8 @@ import { TransactQuote } from '../TransactQuote/TransactQuote.tsx';
 import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 import { styles } from './styles.ts';
 import { DepositFromVaultBoostNotice } from '../DepositFromVaultBoostNotice/DepositFromVaultBoostNotice.tsx';
+import { useClmMode } from '../../../ClmMode/ClmModeContext.tsx';
+import { ClmRewardsToggle } from '../../../ClmMode/ClmRewardsToggle.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -118,16 +121,29 @@ const DepositFormLoader = memo(function DepositFormLoader() {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isLoading = status === TransactStatus.Idle || status === TransactStatus.Pending;
   const isError = status === TransactStatus.Rejected;
+  const clmMode = useClmMode();
+  const active = isVaultActive(vault);
+  // the rewards toggle sits outside the loading branch: switching wrapper re-fetches options, and
+  // the control the user just clicked must not vanish underneath them while that happens
+  const hasRewardsToggle = active && !!clmMode;
+  // the rewards control stays live so a mis-click is recoverable; the form below it must not
+  // accept input that the incoming options would silently discard
+  const switching = useAppSelector(selectTransactIsSwitchingTarget);
 
   return (
-    <Container noPadding={isLoading && isVaultActive(vault)}>
-      {!isVaultActive(vault) ?
-        <RetirePauseReason vaultId={vaultId} />
-      : isLoading ?
-        <LoadingIndicator text={t('Transact-Loading')} height={468} />
-      : isError ?
-        <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
-      : <DepositForm />}
+    <Container noPadding={isLoading && active && !hasRewardsToggle}>
+      {hasRewardsToggle ?
+        <ClmRewardsToggle css={styles.rewardsToggle} />
+      : null}
+      <Body busy={switching} aria-busy={switching}>
+        {!active ?
+          <RetirePauseReason vaultId={vaultId} />
+        : isLoading ?
+          <LoadingIndicator text={t('Transact-Loading')} height={468} />
+        : isError ?
+          <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
+        : <DepositForm />}
+      </Body>
     </Container>
   );
 });
@@ -212,6 +228,18 @@ const DepositFormInput = memo(function DepositFormInput({
       </div>
     </div>
   );
+});
+
+const Body = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  variants: {
+    busy: {
+      true: { opacity: '0.45', pointerEvents: 'none' },
+    },
+  },
 });
 
 const Container = styled('div', {

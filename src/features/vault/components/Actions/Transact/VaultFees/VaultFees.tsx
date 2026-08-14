@@ -7,6 +7,7 @@ import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { selectFeesByVaultId } from '../../../../../data/selectors/fees.ts';
 import { selectTransactVaultId } from '../../../../../data/selectors/transact.ts';
+import { selectVaultHasPerformanceFee } from '../../../../../data/selectors/vaults.ts';
 import { Label } from './Label.tsx';
 import { LabelCustomTooltip, LabelTooltip } from './LabelTooltip.tsx';
 import { PerformanceFees } from './PerformanceFees.tsx';
@@ -26,6 +27,8 @@ export const VaultFees = memo(function VaultFees({ css: cssProp }: VaultFeesProp
   const vaultId = useAppSelector(selectTransactVaultId);
   const fees = useAppSelector(state => selectFeesByVaultId(state, vaultId));
   const areFeesLoaded = useAppSelector(selectAreFeesLoaded);
+  // pool-only CLMs never harvest, so the performance-fee sentence would not be true there
+  const hasPerformanceFee = useAppSelector(state => selectVaultHasPerformanceFee(state, vaultId));
 
   return (
     <div className={css(styles.container, cssProp)}>
@@ -52,16 +55,18 @@ export const VaultFees = memo(function VaultFees({ css: cssProp }: VaultFeesProp
         </Value>
         <MaybeZapFees />
       </div>
-      <div className={classes.performanceFees}>
-        <Trans
-          t={t}
-          i18nKey={'Transact-Fee-Performance-Explainer'}
-          components={{
-            PerformanceTooltip:
-              fees ? <LabelCustomTooltip tooltip={<PerformanceFees fees={fees} />} /> : <span />,
-          }}
-        />
-      </div>
+      {hasPerformanceFee ?
+        <div className={classes.performanceFees}>
+          <Trans
+            t={t}
+            i18nKey={'Transact-Fee-Performance-Explainer'}
+            components={{
+              PerformanceTooltip:
+                fees ? <LabelCustomTooltip tooltip={<PerformanceFees fees={fees} />} /> : <span />,
+            }}
+          />
+        </div>
+      : null}
     </div>
   );
 });

@@ -1,17 +1,29 @@
 import { orderBy, sortBy } from 'lodash-es';
-import { shouldVaultShowInterest, type VaultEntity } from '../entities/vault.ts';
+import {
+  getCowcentratedWrapperIds,
+  isCowcentratedVault,
+  shouldVaultShowInterest,
+  type VaultEntity,
+} from '../entities/vault.ts';
 import type { TotalApy } from '../reducers/apy-types.ts';
 import { type FilterValues, isRelevanceSortActive } from '../reducers/filtered-vaults-types.ts';
-import { selectVaultAvgApy, selectVaultTotalApy } from '../selectors/apy.ts';
-import { selectUserVaultBalanceInUsdIncludingDisplaced } from '../selectors/balance.ts';
+import {
+  selectClmDisplayVaultId,
+  selectVaultAvgApy,
+  selectVaultTotalApy,
+} from '../selectors/apy.ts';
+import {
+  selectUserClmGroupBalanceInUsd,
+  selectUserVaultBalanceInUsdIncludingDisplaced,
+} from '../selectors/balance.ts';
 import {
   selectIsVaultPrestakedBoost,
   selectVaultsActiveBoostPeriodFinish,
 } from '../selectors/boosts.ts';
 import { selectFilterValues } from '../selectors/filtered-vaults.ts';
-import { selectVaultTvl } from '../selectors/tvl.ts';
+import { selectVaultRawTvl, selectVaultTvl } from '../selectors/tvl.ts';
 import {
-  selectAllVisibleVaultIds,
+  selectAllListVaultIds,
   selectVaultById,
   selectVaultIsPinned,
 } from '../selectors/vaults.ts';
@@ -53,7 +65,7 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
     const searchScores = new Map<VaultEntity['id'], number>();
     let filteredVaults: VaultEntity[];
     if (mustRefilter) {
-      const allVaults = selectAllVisibleVaultIds(state).map(id => selectVaultById(state, id));
+      const allVaults = selectAllListVaultIds(state).map(id => selectVaultById(state, id));
       const env = buildVaultFilterEnv(state, filterOptions, searchScores);
       filteredVaults = allVaults.filter(vault =>
         vaultPassesFilters(state, vault, filterOptions, env)
@@ -136,6 +148,15 @@ function hasDiscriminatingScores(
   return false;
 }
 
+/** raw = before exclusions, i.e. the whole CLM group for a merged row */
+function rowTvl(state: BeefyState, vault: VaultEntity): number {
+  const tvl =
+    isCowcentratedVault(vault) ?
+      selectVaultRawTvl(state, vault.id)
+    : selectVaultTvl(state, vault.id);
+  return tvl ? tvl.toNumber() : -1;
+}
+
 function applyRelevanceSort(
   state: BeefyState,
   vaults: VaultEntity[],
@@ -143,13 +164,7 @@ function applyRelevanceSort(
 ): VaultEntity['id'][] {
   return orderBy(
     vaults,
-    [
-      vault => scores.get(vault.id) ?? 0,
-      vault => {
-        const tvl = selectVaultTvl(state, vault.id);
-        return tvl ? tvl.toNumber() : -1;
-      },
-    ],
+    [vault => scores.get(vault.id) ?? 0, vault => rowTvl(state, vault)],
     ['desc', 'desc']
   ).map(v => v.id);
 }
@@ -161,7 +176,14 @@ function applyDefaultSort(
 ): VaultEntity['id'][] {
   const vaultsToPin = new Set<VaultEntity['id']>(
     vaults
-      .filter(vault => vault.status === 'active' && selectVaultIsPinned(state, vault.id))
+      .filter(
+        vault =>
+          vault.status === 'active' &&
+          (selectVaultIsPinned(state, vault.id) ||
+            // a merged CLM row is pinned if any of its pools/vaults are
+            (isCowcentratedVault(vault) &&
+              getCowcentratedWrapperIds(vault).some(id => selectVaultIsPinned(state, id))))
+      )
       .map(v => v.id)
   );
 
@@ -197,13 +219,15 @@ function applyApySort(
         return 0;
       }
 
-      const apy = selectVaultTotalApy(state, vault.id);
+      // merged CLM rows sort by the rate of the side they display
+      const apyVaultId = selectClmDisplayVaultId(state, vault.id);
+      const apy = selectVaultTotalApy(state, apyVaultId);
       if (!apy) {
         return -1;
       }
 
       if (filters.subSort.apy !== 'default') {
-        const avgApy = selectVaultAvgApy(state, vault.id);
+        const avgApy = selectVaultAvgApy(state, apyVaultId);
         const value = avgApy.periods[filters.subSort.apy].value;
         if (value !== undefined) {
           return value || 0;
@@ -228,18 +252,7 @@ function applyTvlSort(
   vaults: VaultEntity[],
   filters: FilterValues
 ): VaultEntity['id'][] {
-  return orderBy(
-    vaults,
-    vault => {
-      const tvl = selectVaultTvl(state, vault.id);
-      if (!tvl) {
-        return -1;
-      }
-
-      return tvl.toNumber();
-    },
-    filters.sortDirection
-  ).map(v => v.id);
+  return orderBy(vaults, vault => rowTvl(state, vault), filters.sortDirection).map(v => v.id);
 }
 
 function applyDepositValueSort(
@@ -250,7 +263,10 @@ function applyDepositValueSort(
   return orderBy(
     vaults,
     vault => {
-      const value = selectUserVaultBalanceInUsdIncludingDisplaced(state, vault.id);
+      const value =
+        isCowcentratedVault(vault) ?
+          selectUserClmGroupBalanceInUsd(state, vault.id)
+        : selectUserVaultBalanceInUsdIncludingDisplaced(state, vault.id);
       if (!value) {
         return -1;
       }

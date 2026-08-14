@@ -2,13 +2,18 @@ import { styled } from '@repo/styles/jsx';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
+import { selectClmOtherSide } from '../../features/data/selectors/apy.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import {
   getApyComponents,
   getApyLabelsForVault,
   getApyLabelsTypeForVault,
 } from '../../helpers/apy.ts';
-import { type FormattedAvgApy, type FormattedTotalApy } from '../../helpers/format.ts';
+import {
+  formatLargePercent,
+  type FormattedAvgApy,
+  type FormattedTotalApy,
+} from '../../helpers/format.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { InterestTooltipContent } from '../InterestTooltipContent/InterestTooltipContent.tsx';
 
@@ -141,6 +146,7 @@ export const ApyTooltipContent = memo(function ApyTooltipContent({
 
   return (
     <Layout>
+      <ClmSideNote vaultId={vaultId} />
       <TotalApyTooltipContent
         vaultId={vaultId}
         type={type}
@@ -158,6 +164,60 @@ export const ApyTooltipContent = memo(function ApyTooltipContent({
       )}
     </Layout>
   );
+});
+
+/**
+ * A merged CLM row shows the autocompounding side, so the composition above is that side's. Name it,
+ * and give the claimable side's rate — the one number a user would otherwise have to go and find.
+ */
+const ClmSideNote = memo(function ClmSideNote({ vaultId }: { vaultId: VaultEntity['id'] }) {
+  const { t } = useTranslation();
+  const other = useAppSelector(state => selectClmOtherSide(state, vaultId));
+
+  if (!other) {
+    return null;
+  }
+
+  return (
+    <SideNote>
+      <SideNoteRow>
+        <span>{t(other.shownNameKey)}</span>
+        <SideNoteMuted>{t('Vault-Apy-ClmSide-Showing')}</SideNoteMuted>
+      </SideNoteRow>
+      <SideNoteRow>
+        <SideNoteMuted>{t(other.nameKey)}</SideNoteMuted>
+        <span>
+          {formatLargePercent(other.rate, 2, '?')} {other.type.toUpperCase()}
+        </span>
+      </SideNoteRow>
+    </SideNote>
+  );
+});
+
+const SideNote = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+    paddingBottom: '8px',
+    borderBottom: '1px solid {colors.background.content.light}',
+    textStyle: 'body.sm',
+  },
+});
+
+const SideNoteRow = styled('div', {
+  base: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '16px',
+    color: 'text.light',
+  },
+});
+
+const SideNoteMuted = styled('span', {
+  base: {
+    color: 'text.dark',
+  },
 });
 
 const Layout = styled('div', {

@@ -141,10 +141,20 @@ export function addTransactListeners() {
         return;
       }
 
+      // RTK's condition() resolves off the *next* dispatched action, never the current state, so
+      // an already-satisfied wait still parks until something unrelated is dispatched — on a warm
+      // page that is the next poller tick, seconds away. Check first, wait only if we must.
+      const waitFor = async (predicate: (state: BeefyState) => boolean) => {
+        if (predicate(getState())) {
+          return;
+        }
+        await condition((_, currentState) => predicate(currentState));
+      };
+
       // Loaders for these are dispatched in initAppData
       const vault = selectVaultById(getState(), action.payload.vaultId);
-      await condition(
-        (_, currentState) =>
+      await waitFor(
+        currentState =>
           selectIsConfigAvailable(currentState) &&
           selectIsAddressBookLoaded(currentState, vault.chainId)
       );
@@ -185,7 +195,7 @@ export function addTransactListeners() {
       }
 
       // Wait for all data to be loaded (in case we didn't dispatch the above loaders)
-      await condition((_, currentState) => {
+      await waitFor(currentState => {
         if (!selectAreFeesLoaded(currentState)) return false;
         if (!selectIsZapLoaded(currentState)) return false;
 
@@ -200,9 +210,10 @@ export function addTransactListeners() {
       }
 
       const initialMode =
-        selectTransactShouldShowMigrate(getState(), action.payload.vaultId) ?
+        action.payload.mode ??
+        (selectTransactShouldShowMigrate(getState(), action.payload.vaultId) ?
           TransactMode.Migrate
-        : TransactMode.Deposit;
+        : TransactMode.Deposit);
       dispatch(transactInitReady({ vaultId: action.payload.vaultId, mode: initialMode }));
     },
   });

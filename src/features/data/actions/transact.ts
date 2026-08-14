@@ -25,6 +25,7 @@ import { isCowcentratedVault, type VaultEntity } from '../entities/vault.ts';
 import {
   type DepositSource,
   TransactMode,
+  type TransactState,
   TransactStatus,
   type TransactStep,
 } from '../reducers/wallet/transact-types.ts';
@@ -52,6 +53,13 @@ import { fetchBalanceAction } from './balance.ts';
 
 export type TransactInitArgs = {
   vaultId: VaultEntity['id'];
+  /** tab to land on once ready, e.g. to keep the current tab when switching CLM yield mode */
+  mode?: TransactMode;
+  /**
+   * Switching between wrappers of one CLM, so the card already shows a usable form for a sibling
+   * vault. Keeps that form on screen while the new side loads instead of blanking to a spinner.
+   */
+  retarget?: boolean;
 };
 
 export type TransactInitReadyArgs = {
@@ -213,6 +221,33 @@ export type TransactFetchQuotesPayload = {
   quotes: TransactQuote[];
 };
 
+/**
+ * The transaction target is baked into `quote.option.vaultId`, so a quote built while the options
+ * still describe the previous vault would deposit to it however the form then changes. Options now
+ * survive a CLM wrapper switch to stop the form blanking, which makes that window reachable.
+ */
+export function canQuoteForCurrentTarget(transact: TransactState): boolean {
+  // a retarget is in flight: options and vault id have not converged yet
+  if (transact.pendingVaultId !== undefined) {
+    return false;
+  }
+  const vaultId = transact.vaultId;
+  const selectionId = transact.selectedSelectionId;
+  if (!vaultId || !selectionId) {
+    return false;
+  }
+  const optionIds = transact.options.bySelectionId[selectionId];
+  return (
+    !!optionIds?.length &&
+    optionIds.every(id => {
+      const option = transact.options.byOptionId[id];
+      // v2v (migrate) options target the replacement vault by design, so their vaultId never
+      // matches the page vault — checking them here would block migrate quotes entirely
+      return !!option && (isVaultSourceDepositOption(option) || option.vaultId === vaultId);
+    })
+  );
+}
+
 export const transactFetchQuotes = createAppAsyncThunk<
   TransactFetchQuotesPayload,
   void,
@@ -220,127 +255,144 @@ export const transactFetchQuotes = createAppAsyncThunk<
     state: BeefyState;
     rejectValue: SerializedError;
   }
->('transact/fetchQuotes', async (_, { getState, dispatch, rejectWithValue }) => {
-  try {
-    const api = await getTransactApi();
-    const state = getState();
-    const mode = selectTransactOptionsMode(state);
-    const inputAmounts = selectTransactInputAmounts(state);
-    const inputMaxes = selectTransactInputMaxes(state);
-    const walletAddress = selectWalletAddress(state);
-    const vaultId = selectTransactVaultId(state);
-    const vault = selectVaultById(state, vaultId);
+>(
+  'transact/fetchQuotes',
+  async (_, { getState, dispatch, rejectWithValue }) => {
+    try {
+      const api = await getTransactApi();
+      const state = getState();
+      const mode = selectTransactOptionsMode(state);
+      const inputAmounts = selectTransactInputAmounts(state);
+      const inputMaxes = selectTransactInputMaxes(state);
+      const walletAddress = selectWalletAddress(state);
+      const vaultId = selectTransactVaultId(state);
+      const vault = selectVaultById(state, vaultId);
 
-    if (inputAmounts.every(amount => amount.lte(BIG_ZERO))) {
-      throw new Error(`Can not quote for 0`);
-    }
-
-    const selectionId = selectTransactSelectedSelectionId(state);
-    if (!selectionId) {
-      throw new Error(`No selectionId selected`);
-    }
-
-    const chainId = selectTransactSelectedChainId(state);
-    if (!chainId) {
-      throw new Error(`No chainId selected`);
-    }
-
-    const options = selectTransactOptionsForSelectionId(state, selectionId);
-    if (!options || options.length === 0) {
-      throw new Error(`No options for selectionId ${selectionId}`);
-    }
-
-    const selection = selectTransactSelectionById(state, selectionId);
-    if (!selection || selection.tokens.length === 0) {
-      throw new Error(`No tokens for selectionId ${selectionId}`);
-    }
-
-    const quoteInputAmounts: InputTokenAmount[] = [];
-    if (mode === TransactMode.Deposit || mode === TransactMode.Migrate) {
-      // Deposit (and Migrate, a v2v deposit) quote the selected token(s) as the input
-      selection.tokens.forEach((token, index) => {
-        quoteInputAmounts.push({
-          token,
-          amount: inputAmounts[index] || BIG_ZERO,
-          max: inputMaxes[index] || false,
-        });
-      });
-    } else {
-      let inputToken: TokenEntity;
-      const opt = options[0];
-      if (opt?.strategyId === 'cross-chain' || opt?.strategyId === 'vault-to-vault-single-token') {
-        // Withdraw from page vault via a vault-source strategy: option declares its shareToken as input.
-        inputToken = opt.inputs[0];
-      } else if (isCowcentratedVault(vault)) {
-        inputToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
-      } else {
-        inputToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+      if (inputAmounts.every(amount => amount.lte(BIG_ZERO))) {
+        throw new Error(`Can not quote for 0`);
       }
-      quoteInputAmounts.push({
-        token: inputToken,
-        amount: inputAmounts[0] || BIG_ZERO,
-        max: inputMaxes[0] || false,
+
+      const selectionId = selectTransactSelectedSelectionId(state);
+      if (!selectionId) {
+        throw new Error(`No selectionId selected`);
+      }
+
+      const chainId = selectTransactSelectedChainId(state);
+      if (!chainId) {
+        throw new Error(`No chainId selected`);
+      }
+
+      const options = selectTransactOptionsForSelectionId(state, selectionId);
+      if (!options || options.length === 0) {
+        throw new Error(`No options for selectionId ${selectionId}`);
+      }
+
+      const selection = selectTransactSelectionById(state, selectionId);
+      if (!selection || selection.tokens.length === 0) {
+        throw new Error(`No tokens for selectionId ${selectionId}`);
+      }
+
+      const quoteInputAmounts: InputTokenAmount[] = [];
+      if (mode === TransactMode.Deposit || mode === TransactMode.Migrate) {
+        // Deposit (and Migrate, a v2v deposit) quote the selected token(s) as the input
+        selection.tokens.forEach((token, index) => {
+          quoteInputAmounts.push({
+            token,
+            amount: inputAmounts[index] || BIG_ZERO,
+            max: inputMaxes[index] || false,
+          });
+        });
+      } else {
+        let inputToken: TokenEntity;
+        const opt = options[0];
+        if (
+          opt?.strategyId === 'cross-chain' ||
+          opt?.strategyId === 'vault-to-vault-single-token'
+        ) {
+          // Withdraw from page vault via a vault-source strategy: option declares its shareToken as input.
+          inputToken = opt.inputs[0];
+        } else if (isCowcentratedVault(vault)) {
+          inputToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
+        } else {
+          inputToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+        }
+        quoteInputAmounts.push({
+          token: inputToken,
+          amount: inputAmounts[0] || BIG_ZERO,
+          max: inputMaxes[0] || false,
+        });
+      }
+
+      let quotes: TransactQuote[];
+      if (options.every(isDepositOption)) {
+        quotes = await api.fetchDepositQuotesFor(options, quoteInputAmounts, getState);
+      } else if (options.every(isWithdrawOption)) {
+        quotes = await api.fetchWithdrawQuotesFor(options, quoteInputAmounts, getState);
+      } else {
+        throw new Error(`Invalid options`);
+      }
+
+      quotes.sort((a, b) => {
+        const valueA = selectTokenAmountsTotalValue(state, a.outputs);
+        const valueB = selectTokenAmountsTotalValue(state, b.outputs);
+        return compareBigNumber(valueB, valueA);
       });
-    }
 
-    let quotes: TransactQuote[];
-    if (options.every(isDepositOption)) {
-      quotes = await api.fetchDepositQuotesFor(options, quoteInputAmounts, getState);
-    } else if (options.every(isWithdrawOption)) {
-      quotes = await api.fetchWithdrawQuotesFor(options, quoteInputAmounts, getState);
-    } else {
-      throw new Error(`Invalid options`);
-    }
+      // update allowances
+      if (walletAddress) {
+        const uniqueAllowances = uniqBy(
+          quotes.map(quote => quote.allowances).flat(),
+          allowance =>
+            `${allowance.token.chainId}-${allowance.spenderAddress}-${allowance.token.address}`
+        );
+        const allowancesPerChainSpender = groupBy(
+          uniqueAllowances,
+          allowance => `${allowance.token.chainId}-${allowance.spenderAddress}`
+        );
 
-    quotes.sort((a, b) => {
-      const valueA = selectTokenAmountsTotalValue(state, a.outputs);
-      const valueB = selectTokenAmountsTotalValue(state, b.outputs);
-      return compareBigNumber(valueB, valueA);
-    });
-
-    // update allowances
-    if (walletAddress) {
-      const uniqueAllowances = uniqBy(
-        quotes.map(quote => quote.allowances).flat(),
-        allowance =>
-          `${allowance.token.chainId}-${allowance.spenderAddress}-${allowance.token.address}`
-      );
-      const allowancesPerChainSpender = groupBy(
-        uniqueAllowances,
-        allowance => `${allowance.token.chainId}-${allowance.spenderAddress}`
-      );
-
-      await Promise.all(
-        Object.values(allowancesPerChainSpender).map(allowances =>
-          dispatch(
-            fetchAllowanceAction({
-              chainId: allowances[0].token.chainId,
-              spenderAddress: allowances[0].spenderAddress,
-              tokens: allowances.map(allowance => allowance.token),
-              walletAddress,
-            })
+        await Promise.all(
+          Object.values(allowancesPerChainSpender).map(allowances =>
+            dispatch(
+              fetchAllowanceAction({
+                chainId: allowances[0].token.chainId,
+                spenderAddress: allowances[0].spenderAddress,
+                tokens: allowances.map(allowance => allowance.token),
+                walletAddress,
+              })
+            )
           )
-        )
-      );
-    }
+        );
+      }
 
-    if (quotes.length === 0) {
-      throw new Error(`No quotes available`);
-    }
+      if (quotes.length === 0) {
+        throw new Error(`No quotes available`);
+      }
 
-    return {
-      selectionId,
-      chainId,
-      inputAmounts: quoteInputAmounts,
-      quotes,
-    };
-  } catch (e: unknown) {
-    if (isSerializableError(e)) {
-      return rejectWithValue(e.serialize());
+      return {
+        selectionId,
+        chainId,
+        inputAmounts: quoteInputAmounts,
+        quotes,
+      };
+    } catch (e: unknown) {
+      if (isSerializableError(e)) {
+        return rejectWithValue(e.serialize());
+      }
+      throw e;
     }
-    throw e;
+  },
+  {
+    /**
+     * The transaction target is baked into `quote.option.vaultId`, so a quote built while the
+     * options still describe the previous vault would deposit to it however the form then changes.
+     * Options now survive a CLM wrapper switch to stop the form blanking, which makes that window
+     * reachable — refuse to quote until every option for the selection names the vault we are on.
+     */
+    condition(_, { getState }) {
+      return canQuoteForCurrentTarget(getState().ui.transact);
+    },
   }
-});
+);
 
 export const transactFetchQuotesIfNeeded = createAppAsyncThunk(
   'transact/fetchQuotesIfNeeded',

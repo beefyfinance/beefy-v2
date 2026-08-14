@@ -57,7 +57,11 @@ export const selectTvlBreakdownByVaultId = (
 ): TvlBreakdown => {
   const vault = selectVaultById(state, vaultId);
   const isClmLike = isCowcentratedLikeVault(vault);
-  const vaultTvl = selectVaultTvl(state, vault.id);
+  // a base CLM row represents the whole group, so use its TVL before pool/vault exclusions
+  const vaultTvl =
+    isCowcentratedVault(vault) ?
+      selectVaultRawTvl(state, vault.id)
+    : selectVaultTvl(state, vault.id);
 
   // CLM with a pool or vault
   if (isClmLike) {

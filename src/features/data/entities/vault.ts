@@ -390,6 +390,16 @@ export function getCowcentratedVault(vault: VaultCowcentratedLike): string | und
   return undefined;
 }
 
+/** All wrapper ids (gov pools + standard vaults) of a CLM, any status */
+export function getCowcentratedWrapperIds(vault: VaultCowcentratedLike): string[] {
+  return [...vault.cowcentratedIds.pools, ...vault.cowcentratedIds.vaults];
+}
+
+/** Every id in a CLM group — the CLM plus all its wrappers — reachable from any member */
+export function getCowcentratedGroupIds(vault: VaultCowcentratedLike): string[] {
+  return [vault.cowcentratedIds.clm, ...getCowcentratedWrapperIds(vault)];
+}
+
 export function shouldVaultShowInterest(vault: VaultEntity) {
   if (isVaultRetired(vault)) {
     return false;
