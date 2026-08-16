@@ -516,9 +516,10 @@ export const selectVaultIdForVaultPage = createSelector(
         return vault.id;
       }
 
-      const poolId = getCowcentratedPool(vault);
-      if (poolId) {
-        return poolId;
+      // active autocompounding vault preferred, else the pool; never lands on a retired wrapper
+      const wrapperId = vault.cowcentratedIds.vault ?? getCowcentratedPool(vault);
+      if (wrapperId) {
+        return wrapperId;
       }
     }
     if (vault.hidden) {
@@ -527,6 +528,58 @@ export const selectVaultIdForVaultPage = createSelector(
     return vault.id;
   }
 );
+export type ClmFamilyRow = {
+  poolId: VaultEntity['id'];
+  /** the standard vault sibling, any status */
+  vaultId: VaultEntity['id'];
+  /** row link target: the active vault, else the pool */
+  linkId: VaultEntity['id'];
+};
+
+/** Set only when the row anchor is a CLM pool with a standard vault sibling (any status) */
+export const selectClmFamilyForRowId = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultByIdOrUndefined(state, vaultId),
+  (vault): ClmFamilyRow | undefined => {
+    if (!vault || !isCowcentratedGovVault(vault)) {
+      return undefined;
+    }
+    const vaultSideId = getCowcentratedVault(vault);
+    if (!vaultSideId) {
+      return undefined;
+    }
+    return {
+      poolId: vault.id,
+      vaultId: vaultSideId,
+      linkId: vault.cowcentratedIds.vault ?? vault.id,
+    };
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export type ClmFamilyPage = {
+  clmId: VaultEntity['id'];
+  poolSideId: VaultEntity['id'] | undefined;
+  /** any status: a retired side stays reachable via the toggle, defaults never target it */
+  vaultSideId: VaultEntity['id'] | undefined;
+  activeSide: 'pool' | 'vault';
+};
+
+/** Family of the unified CLM page; undefined for non-CLM vaults and the bare CLM (debug) page */
+export const selectClmFamilyForVaultPage = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultByIdOrUndefined(state, vaultId),
+  (vault): ClmFamilyPage | undefined => {
+    if (!vault || isCowcentratedVault(vault) || !isCowcentratedLikeVault(vault)) {
+      return undefined;
+    }
+    const isPool = isCowcentratedGovVault(vault);
+    return {
+      clmId: vault.cowcentratedIds.clm,
+      poolSideId: isPool ? vault.id : getCowcentratedPool(vault),
+      vaultSideId: isPool ? getCowcentratedVault(vault) : vault.id,
+      activeSide: isPool ? 'pool' : 'vault',
+    };
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
 /** Returns false if vault is retired or paused and not earning */
 export const selectVaultShouldShowInterest = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),

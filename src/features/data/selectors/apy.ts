@@ -259,7 +259,7 @@ export const selectYieldStatsByVaultId = (
   };
 };
 
-type ApyVaultUIData =
+export type ApyVaultUIData =
   | {
       status: 'loading' | 'missing' | 'hidden';
       type: 'apy' | 'apr';

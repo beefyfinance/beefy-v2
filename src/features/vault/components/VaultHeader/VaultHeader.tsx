@@ -7,6 +7,7 @@ import { selectVaultIsBoostedForFilter } from '../../../data/selectors/filtered-
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
 import { SaveButton } from '../SaveButton/SaveButton.tsx';
 import { ShareButton } from '../ShareButton/ShareButton.tsx';
+import { AutocompoundToggle } from './AutocompoundToggle.tsx';
 import { ChainTag, PlatformTag } from './Tags.tsx';
 import { styled } from '@repo/styles/jsx';
 import { VaultTags } from '../../../../components/VaultIdentity/components/VaultTags/VaultTags.tsx';
@@ -36,7 +37,8 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
         </LabelsHolder>
       </TitleAndLabelsHolder>
       <VaultTagsAndShareHolder>
-        <VaultTags vaultId={vaultId} hidePlatform={true} />
+        <VaultTags vaultId={vaultId} hidePlatform={true} unifiedClmTag={true} />
+        <AutocompoundToggle vaultId={vaultId} />
         <ShareHolder>
           {vault.status === 'active' ?
             <ShareButton hideText={true} vaultId={vaultId} mobileAlternative={true} />

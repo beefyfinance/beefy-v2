@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from 'react';
 import { lazy, memo } from 'react';
-import { Navigate, useParams } from 'react-router';
+import { Navigate, useLocation, useParams } from 'react-router';
+import { replaceVaultIdInUrl } from '../../helpers/url.ts';
 import { Container } from '../../components/Container/Container.tsx';
 import { Hidden } from '../../components/MediaQueries/Hidden.tsx';
 import { VaultMeta } from '../../components/Meta/VaultMeta.tsx';
@@ -37,13 +38,14 @@ type VaultUrlParams = {
 
 const VaultPage = memo(function VaultPage() {
   const { id: maybeId } = useParams<VaultUrlParams>();
+  const location = useLocation();
   const idOrStatus = useAppSelector(state => selectVaultIdForVaultPage(state, maybeId));
   if (idOrStatus === 'loading') {
     return <FullscreenTechLoader text="Loading..." />;
   } else if (idOrStatus === 'not-found') {
     return <NotFoundPage />;
   } else if (idOrStatus !== maybeId) {
-    return <Navigate to={`/vault/${idOrStatus}`} />;
+    return <Navigate to={replaceVaultIdInUrl(location, idOrStatus)} replace={true} />;
   }
   return <VaultContent vaultId={idOrStatus} />;
 });
@@ -64,7 +66,8 @@ const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) 
             <VaultHeader vaultId={vaultId} />
             <VaultsStats vaultId={vaultId} />
           </div>
-          <div className={classes.contentColumns}>
+          {/* keyed: cards hold per-vault local state and must remount when the toggle flips */}
+          <div className={classes.contentColumns} key={vaultId}>
             <div className={classes.columnActions}>
               <Actions vaultId={vaultId} />
               <Hidden to="sm">

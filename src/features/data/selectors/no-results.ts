@@ -5,6 +5,7 @@ import type { FilterValues } from '../reducers/filtered-vaults-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
 import { buildVaultFilterEnv, vaultPassesFilters } from '../utils/vault-filter.ts';
+import { buildVaultListRows } from '../utils/vault-list-rows.ts';
 import { classifySearchQuery } from '../utils/vault-search.ts';
 import { selectAllChains } from './chains.ts';
 import { selectFilterAppliedValues } from './filtered-vaults.ts';
@@ -110,14 +111,13 @@ export function clearBlockerCategories(
 }
 
 function countMatching(state: BeefyState, filters: FilterValues): number {
+  // count list rows, not vaults: CLM families collapse into one row
   const env = buildVaultFilterEnv(state, filters);
-  let count = 0;
-  for (const vaultId of selectAllVisibleVaultIds(state)) {
-    if (vaultPassesFilters(state, selectVaultById(state, vaultId), filters, env)) {
-      count++;
-    }
-  }
-  return count;
+  const rows = buildVaultListRows(
+    selectAllVisibleVaultIds(state).map(id => selectVaultById(state, id)),
+    vault => vaultPassesFilters(state, vault, filters, env)
+  );
+  return rows.length;
 }
 
 function anyMatching(state: BeefyState, filters: FilterValues): boolean {

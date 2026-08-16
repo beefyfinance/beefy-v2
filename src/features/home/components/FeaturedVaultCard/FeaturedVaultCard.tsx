@@ -53,7 +53,7 @@ export const FeaturedVaultCard = memo(function FeaturedVaultCard({
           </HeadIcon>
         </HeadTop>
         <Marquee gap={4} className={tagsContentClass}>
-          <VaultTags vaultId={vaultId} />
+          <VaultTags vaultId={vaultId} unifiedClmTag={true} />
         </Marquee>
       </Identity>
       <Stats>

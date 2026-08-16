@@ -26,8 +26,10 @@ import {
 import { selectUserHasBalanceToMigrate } from '../../../../features/data/selectors/balance.ts';
 import { selectTokenByAddress } from '../../../../features/data/selectors/tokens.ts';
 import {
+  type ClmFamilyRow,
   selectCowcentratedVaultById,
   selectVaultById,
+  selectVaultByIdOrUndefined,
 } from '../../../../features/data/selectors/vaults.ts';
 import { getBoostIconSrc } from '../../../../helpers/boostIconSrc.ts';
 import { getIcon } from '../../../../helpers/iconSrc.ts';
@@ -235,6 +237,46 @@ const VaultClmPoolOrVaultTag = memo(function VaultClmPoolTag({
   );
 });
 
+/** unified CLM presentation: one "CLM | fee" tag for the family, no per-product naming */
+const VaultClmFamilyTag = memo(function VaultClmFamilyTag({
+  vault,
+  hideFee,
+  hideLabel,
+  css: cssProp,
+  onlyIcon,
+}: {
+  vault: VaultGovCowcentrated | VaultStandardCowcentrated;
+  hideFee?: boolean;
+  hideLabel?: boolean;
+  css?: CssStyles;
+  onlyIcon?: boolean;
+}) {
+  const cowcentratedVault = useAppSelector(state =>
+    selectCowcentratedVaultById(state, vault.cowcentratedIds.clm)
+  );
+  const depositToken = useAppSelector(state =>
+    selectTokenByAddress(state, cowcentratedVault.chainId, cowcentratedVault.depositTokenAddress)
+  );
+  const provider = useAppSelector(state =>
+    depositToken?.providerId ? selectPlatformById(state, depositToken.providerId) : undefined
+  );
+
+  const hasDynamicFee = cowcentratedVault?.feeTier === 'Dynamic';
+  return (
+    <BaseVaultClmTag
+      label={'CLM'}
+      fee={hasDynamicFee ? cowcentratedVault.feeTier : `${cowcentratedVault.feeTier}%`}
+      longLabel={'Cowcentrated Liquidity Manager'}
+      platformName={provider?.name || 'LP'}
+      tickSpacing={cowcentratedVault?.tickSpacing}
+      hideFee={hideFee || hasDynamicFee}
+      hideLabel={hideLabel}
+      css={cssProp}
+      onlyIcon={onlyIcon}
+    />
+  );
+});
+
 const VaultClmTag = memo(function VaultClmTag({
   vault,
   hideFee,
@@ -370,21 +412,59 @@ export type VaultTagsProps = {
   vaultId: VaultEntity['id'];
   isVaultPaused?: boolean;
   hidePlatform?: boolean;
+  /** set on collapsed home-list rows only; tags then describe the whole family */
+  clmFamily?: ClmFamilyRow;
+  /** render the unified "CLM | fee" tag for CLM wrappers instead of CLM Pool / CLM Vault */
+  unifiedClmTag?: boolean;
 };
-export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: VaultTagsProps) {
+export const VaultTags = memo(function VaultTags({
+  vaultId,
+  hidePlatform,
+  clmFamily,
+  unifiedClmTag,
+}: VaultTagsProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const promo = useAppSelector(state => selectActivePromoForVault(state, vaultId));
-  const zapCampaign = useAppSelector(state => selectZapCampaignByVaultId(state, vaultId));
-  const isMigratable = useAppSelector(state => selectUserHasBalanceToMigrate(state, vaultId));
+  const familyVault = useAppSelector(state =>
+    clmFamily ? selectVaultByIdOrUndefined(state, clmFamily.vaultId) : undefined
+  );
+  const promo = useAppSelector(
+    state =>
+      selectActivePromoForVault(state, vaultId) ??
+      (clmFamily ? selectActivePromoForVault(state, clmFamily.vaultId) : undefined)
+  );
+  const zapCampaign = useAppSelector(
+    state =>
+      selectZapCampaignByVaultId(state, vaultId) ??
+      (clmFamily ? selectZapCampaignByVaultId(state, clmFamily.vaultId) : undefined)
+  );
+  const isMigratable = useAppSelector(
+    state =>
+      selectUserHasBalanceToMigrate(state, vaultId) ||
+      (!!clmFamily && selectUserHasBalanceToMigrate(state, clmFamily.vaultId))
+  );
   const isStock = useAppSelector(state => selectIsVaultStock(state, vaultId));
   const isGov = isGovVault(vault);
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
   const isSmallDevice = useMediaQuery('(max-width: 450px)', false);
   const onlyShowIcon = isSmallDevice && isCowcentratedLike && !!promo;
 
+  // family status: retired only when every member is; paused follows the row's link target
+  const isRetired =
+    clmFamily && familyVault ?
+      isVaultRetired(vault) && isVaultRetired(familyVault)
+    : isVaultRetired(vault);
+  const linkTargetVault =
+    clmFamily && clmFamily.linkId !== vault.id ? (familyVault ?? vault) : vault;
+  const isPaused = isVaultPaused(linkTargetVault);
+  // cowcentratedIds.pool/.vault are only set while that wrapper is active
+  const isFamilyActive =
+    isCowcentratedLikeVault(vault) ?
+      isVaultActive(vault) || !!vault.cowcentratedIds.pool || !!vault.cowcentratedIds.vault
+    : isVaultActive(vault);
+
   // Tag 1: Platform
-  // Tag 2: CLM -> CLM Pool -> CLM Vault --> Vault --> Pool
+  // Tag 2: CLM (unified) -> CLM -> CLM Pool -> CLM Vault --> Vault --> Pool
   // Tag 3: Stocks
   // Tag 4: Free Zap -> none
   // Tag 5: Migrate -> none
@@ -393,7 +473,9 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
   return (
     <VaultTagsContainer isVaultPage={hidePlatform}>
       {!hidePlatform && <VaultPlatformTag vaultId={vaultId} />}
-      {isCowcentratedLike ?
+      {unifiedClmTag && (isCowcentratedGovVault(vault) || isCowcentratedStandardVault(vault)) ?
+        <VaultClmFamilyTag vault={vault} hideFee={!isFamilyActive} />
+      : isCowcentratedLike ?
         <VaultClmLikeTag vault={vault} hideFee={!isVaultActive(vault)} />
       : isGov ?
         <VaultTag css={styles.vaultTagPool} text={t('VaultTag-Pool')} />
@@ -401,9 +483,9 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
       {isStock && <VaultTag css={styles.vaultTagStocks} text={t('VaultTag-Stocks')} />}
       {zapCampaign && <VaultFreeZapTag />}
       {isMigratable && <VaultMigrateTag />}
-      {isVaultRetired(vault) ?
+      {isRetired ?
         <VaultTag css={styles.vaultTagRetired} text={t('VaultTag-Retired')} />
-      : isVaultPaused(vault) ?
+      : isPaused ?
         <VaultTag css={styles.vaultTagPaused} text={t('VaultTag-Paused')} />
       : promo ?
         <VaultPromoTag onlyIcon={onlyShowIcon} promoId={promo.id} />

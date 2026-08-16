@@ -10,6 +10,7 @@ import InfoRoundedSquare from '../../images/icons/info-rounded-square.svg?react'
 import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
 import { ApyTooltipContent } from './ApyTooltipContent.tsx';
+import { type ClmFamilySide, ClmFamilySideLine } from './ClmFamilyShared.tsx';
 
 export type VaultApyStatProps = Omit<
   VaultValueStatProps,
@@ -17,11 +18,13 @@ export type VaultApyStatProps = Omit<
 > & {
   vaultId: VaultEntity['id'];
   type: 'yearly' | 'daily';
+  clmSide?: ClmFamilySide;
 };
 
 export const VaultApyStat = memo(function VaultApyStat({
   vaultId,
   type,
+  clmSide,
   ...passthrough
 }: VaultApyStatProps) {
   const { t } = useTranslation();
@@ -78,7 +81,7 @@ export const VaultApyStat = memo(function VaultApyStat({
     <VaultValueStat
       label={label}
       Icon={hasAverageWarning ? InfoRoundedSquare : undefined}
-      value={value}
+      value={clmSide ? <ClmFamilySideLine side={clmSide}>{value}</ClmFamilySideLine> : value}
       tooltip={
         <ApyTooltipContent
           vaultId={vaultId}

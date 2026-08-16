@@ -24,6 +24,10 @@ export const ScrollRestorer = memo(function ScrollRestorer() {
         if (navigationType === NavigationType.Replace && currentPath === prevPath) {
           break;
         }
+        // in-place swaps (e.g. CLM autocompound toggle) must not jump to top
+        if (navigationType === NavigationType.Replace && location.state?.preserveScroll) {
+          break;
+        }
         state.current.lastScroll.set(prevPath, window.scrollY);
         window.scrollTo(0, 0);
 

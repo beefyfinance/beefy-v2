@@ -73,6 +73,13 @@ export const styles = {
     '& span': {
       fontWeight: 'semiBold',
     },
+    // the text slot can hold label + divider + fee; lay them out in a row
+    '& > div:last-child': {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px',
+      minWidth: '0',
+    },
   }),
   vaultTagClmTextAutoHide: css.raw({
     mdDown: {

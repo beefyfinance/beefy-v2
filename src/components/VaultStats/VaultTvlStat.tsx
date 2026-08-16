@@ -1,37 +1,50 @@
 import { memo, useMemo } from 'react';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
-import { selectIsContractDataLoadedOnChain } from '../../features/data/selectors/data-loader/contract-data.ts';
 import { selectPlatformById } from '../../features/data/selectors/platforms.ts';
-import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
 import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types.ts';
-import { selectTvlBreakdownByVaultId } from '../../features/data/selectors/tvl.ts';
-import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import { selectVaultTvlStatData } from '../../features/data/selectors/vault-stats.ts';
 import type { BeefyState } from '../../features/data/store/types.ts';
 import { formatLargeUsd, formatPercent } from '../../helpers/format.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { InterestTooltipContent } from '../InterestTooltipContent/InterestTooltipContent.tsx';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
+import { type ClmFamilySide, ClmFamilySideLine } from './ClmFamilyShared.tsx';
 import { useTranslation } from 'react-i18next';
 
 export type VaultTvlStatProps = {
   vaultId: VaultEntity['id'];
+  clmSide?: ClmFamilySide;
 } & Omit<VaultValueStatProps, keyof ReturnType<typeof selectVaultTvlStat>>;
 
-export const VaultTvlStat = memo(function ({ vaultId, ...passthrough }: VaultTvlStatProps) {
+export const VaultTvlStat = memo(function ({
+  vaultId,
+  clmSide,
+  ...passthrough
+}: VaultTvlStatProps) {
   const { t } = useTranslation();
   // @dev don't do this - temp migration away from connect()
-  const { label, ...statProps } = useAppSelector(state => selectVaultTvlStat(state, vaultId));
-  return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
+  const { label, value, ...statProps } = useAppSelector(state =>
+    selectVaultTvlStat(state, vaultId)
+  );
+  return (
+    <VaultValueStat
+      label={t(label)}
+      value={
+        clmSide && !statProps.loading ?
+          <ClmFamilySideLine side={clmSide}>{value}</ClmFamilySideLine>
+        : value
+      }
+      {...statProps}
+      {...passthrough}
+    />
+  );
 });
 
-// TODO better selector / hook
 function selectVaultTvlStat(state: BeefyState, vaultId: VaultEntity['id']) {
   const label = 'VaultStat-TVL';
-  const vault = selectVaultById(state, vaultId);
-  const isLoaded =
-    selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
+  const data = selectVaultTvlStatData(state, vaultId);
 
-  if (!isLoaded) {
+  if (data.loading) {
     return {
       label,
       value: '-',
@@ -42,7 +55,7 @@ function selectVaultTvlStat(state: BeefyState, vaultId: VaultEntity['id']) {
     };
   }
 
-  const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
+  const breakdown = data.breakdown;
   if (!breakdown || !('underlyingTvl' in breakdown)) {
     return {
       label,

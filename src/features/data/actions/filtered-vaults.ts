@@ -1,9 +1,17 @@
 import { orderBy, sortBy } from 'lodash-es';
-import { shouldVaultShowInterest, type VaultEntity } from '../entities/vault.ts';
+import {
+  isCowcentratedStandardVault,
+  isVaultActive,
+  shouldVaultShowInterest,
+  type VaultEntity,
+} from '../entities/vault.ts';
 import type { TotalApy } from '../reducers/apy-types.ts';
 import { type FilterValues, isRelevanceSortActive } from '../reducers/filtered-vaults-types.ts';
 import { selectVaultAvgApy, selectVaultTotalApy } from '../selectors/apy.ts';
-import { selectUserVaultBalanceInUsdIncludingDisplaced } from '../selectors/balance.ts';
+import {
+  selectUserDepositedVaultIds,
+  selectUserVaultBalanceInUsdIncludingDisplaced,
+} from '../selectors/balance.ts';
 import {
   selectIsVaultPrestakedBoost,
   selectVaultsActiveBoostPeriodFinish,
@@ -19,6 +27,11 @@ import type { BeefyState } from '../store/types.ts';
 import { filtersDependOnData } from '../utils/filter-values.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { buildVaultFilterEnv, vaultPassesFilters } from '../utils/vault-filter.ts';
+import {
+  buildVaultListRows,
+  rowFromAnchorId,
+  type VaultListRow,
+} from '../utils/vault-list-rows.ts';
 import { hasSearchText } from '../utils/vault-search.ts';
 
 export type RecalculateFilteredVaultsParams = {
@@ -51,17 +64,16 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
       !!filtersChanged || (!!dataChanged && (searchActive || filtersDependOnData(filterOptions)));
 
     const searchScores = new Map<VaultEntity['id'], number>();
-    let filteredVaults: VaultEntity[];
+    let rows: VaultListRow[];
     if (mustRefilter) {
+      // filters run per member; a row is kept when either member passes
       const allVaults = selectAllVisibleVaultIds(state).map(id => selectVaultById(state, id));
       const env = buildVaultFilterEnv(state, filterOptions, searchScores);
-      filteredVaults = allVaults.filter(vault =>
+      rows = buildVaultListRows(allVaults, vault =>
         vaultPassesFilters(state, vault, filterOptions, env)
       );
     } else {
-      filteredVaults = state.ui.filteredVaults.filteredVaultIds.map(id =>
-        selectVaultById(state, id)
-      );
+      rows = state.ui.filteredVaults.filteredVaultIds.map(id => rowFromAnchorId(state, id));
     }
 
     // Recalculate sort?
@@ -75,18 +87,18 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
         searchText: filterOptions.searchText,
         sortPickedDuringSearch: state.ui.filteredVaults.sortPickedDuringSearch,
       }) &&
-      hasDiscriminatingScores(filteredVaults, searchScores);
+      hasDiscriminatingScores(rows, searchScores);
     if (dataChanged || filtersChanged || sortChanged) {
       if (searchRanked) {
         // scores always fresh: sort-only dispatches imply a picked sort, which disables relevance
-        sortedVaultIds = applyRelevanceSort(state, filteredVaults, searchScores);
+        sortedVaultIds = applyRelevanceSort(state, rows, searchScores);
       } else {
-        sortedVaultIds = applySelectedSort(state, filteredVaults, filterOptions);
+        sortedVaultIds = applySelectedSort(state, rows, filterOptions);
       }
     }
 
     return {
-      filtered: filteredVaults.map(v => v.id),
+      filtered: rows.map(r => r.id),
       sorted: sortedVaultIds,
       applied: filterOptions,
       searchRanked,
@@ -96,38 +108,47 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
 
 function applySelectedSort(
   state: BeefyState,
-  vaults: VaultEntity[],
+  rows: VaultListRow[],
   filterOptions: FilterValues
 ): VaultEntity['id'][] {
   switch (filterOptions.sort) {
     case 'apy':
-      return applyApySort(state, vaults, filterOptions, [
-        'boostedTotalApy',
-        'totalApy',
-        'vaultApr',
-      ]);
+      return applyApySort(state, rows, filterOptions, ['boostedTotalApy', 'totalApy', 'vaultApr']);
     case 'daily':
-      return applyApySort(state, vaults, filterOptions, [
+      return applyApySort(state, rows, filterOptions, [
         'boostedTotalDaily',
         'totalDaily',
         'vaultDaily',
       ]);
     case 'tvl':
-      return applyTvlSort(state, vaults, filterOptions);
+      return applyTvlSort(state, rows, filterOptions);
     case 'depositValue':
-      return applyDepositValueSort(state, vaults, filterOptions);
+      return applyDepositValueSort(state, rows, filterOptions);
     default:
-      return applyDefaultSort(state, vaults, filterOptions);
+      return applyDefaultSort(state, rows, filterOptions);
   }
 }
 
+/** relevance may only rank by members that passed the filters: the score map is populated
+ * before the min-underlying-tvl check, so non-passing members can hold scores */
+function rowSearchScore(row: VaultListRow, scores: ReadonlyMap<VaultEntity['id'], number>): number {
+  let max = 0;
+  for (const id of row.passingMemberIds) {
+    const score = scores.get(id) ?? 0;
+    if (score > max) {
+      max = score;
+    }
+  }
+  return max;
+}
+
 function hasDiscriminatingScores(
-  vaults: VaultEntity[],
+  rows: VaultListRow[],
   scores: ReadonlyMap<VaultEntity['id'], number>
 ): boolean {
   let first: number | undefined;
-  for (const vault of vaults) {
-    const score = scores.get(vault.id) ?? 0;
+  for (const row of rows) {
+    const score = rowSearchScore(row, scores);
     first ??= score;
     if (score !== first) {
       return true;
@@ -136,127 +157,168 @@ function hasDiscriminatingScores(
   return false;
 }
 
+/** family tvl: the pool's tvl excludes an ACTIVE vault sibling's stake, so summing is exact then;
+ * for a non-active sibling the pool figure still contains its stake — max avoids double counting */
+function rowTvlSortValue(state: BeefyState, row: VaultListRow): number {
+  let sum = 0;
+  let max = 0;
+  let any = false;
+  let sumIsExact = true;
+  for (const member of row.members) {
+    if (isCowcentratedStandardVault(member) && !isVaultActive(member)) {
+      sumIsExact = false;
+    }
+    const tvl = selectVaultTvl(state, member.id);
+    if (!tvl) {
+      continue;
+    }
+    const value = tvl.toNumber();
+    any = true;
+    sum += value;
+    if (value > max) {
+      max = value;
+    }
+  }
+  if (!any) {
+    return -1;
+  }
+  return sumIsExact ? sum : max;
+}
+
 function applyRelevanceSort(
   state: BeefyState,
-  vaults: VaultEntity[],
+  rows: VaultListRow[],
   scores: ReadonlyMap<VaultEntity['id'], number>
 ): VaultEntity['id'][] {
   return orderBy(
-    vaults,
-    [
-      vault => scores.get(vault.id) ?? 0,
-      vault => {
-        const tvl = selectVaultTvl(state, vault.id);
-        return tvl ? tvl.toNumber() : -1;
-      },
-    ],
+    rows,
+    [row => rowSearchScore(row, scores), row => rowTvlSortValue(state, row)],
     ['desc', 'desc']
-  ).map(v => v.id);
+  ).map(r => r.id);
 }
 
 function applyDefaultSort(
   state: BeefyState,
-  vaults: VaultEntity[],
+  rows: VaultListRow[],
   filters: FilterValues
 ): VaultEntity['id'][] {
-  const vaultsToPin = new Set<VaultEntity['id']>(
-    vaults
-      .filter(vault => vault.status === 'active' && selectVaultIsPinned(state, vault.id))
-      .map(v => v.id)
-  );
+  const pinnedByRowId = new Map<VaultEntity['id'], VaultEntity[]>();
+  for (const row of rows) {
+    const pinned = row.members.filter(
+      member => member.status === 'active' && selectVaultIsPinned(state, member.id)
+    );
+    if (pinned.length) {
+      pinnedByRowId.set(row.id, pinned);
+    }
+  }
 
   // Surface retired, paused and boosted
   if (filters.userCategory === 'deposited') {
-    return sortBy(vaults, vault =>
-      vault.status === 'eol' ? -3
-      : vault.status === 'paused' ? -2
-      : vaultsToPin.has(vault.id) ? -1
-      : 1
-    ).map(v => v.id);
+    const depositedIds = new Set(selectUserDepositedVaultIds(state));
+    return sortBy(rows, row => {
+      // rank by the worst status among members the user deposited in, so a family
+      // with a dead deposit still surfaces
+      const deposited = row.members.filter(member => depositedIds.has(member.id));
+      const ranked = deposited.length ? deposited : row.members;
+      return Math.min(
+        ...ranked.map(member =>
+          member.status === 'eol' ? -3
+          : member.status === 'paused' ? -2
+          : pinnedByRowId.has(row.id) ? -1
+          : 1
+        )
+      );
+    }).map(r => r.id);
   }
 
   // Surface boosted
-  return sortBy(vaults, vault =>
-    vaultsToPin.has(vault.id) ?
-      selectIsVaultPrestakedBoost(state, vault.id) ? -Number.MAX_SAFE_INTEGER
-      : -selectVaultsActiveBoostPeriodFinish(state, vault.id).getTime()
-    : 1
-  ).map(v => v.id);
+  return sortBy(rows, row => {
+    const pinned = pinnedByRowId.get(row.id);
+    if (!pinned) {
+      return 1;
+    }
+    if (pinned.some(member => selectIsVaultPrestakedBoost(state, member.id))) {
+      return -Number.MAX_SAFE_INTEGER;
+    }
+    return -Math.max(
+      ...pinned.map(member => selectVaultsActiveBoostPeriodFinish(state, member.id).getTime())
+    );
+  }).map(r => r.id);
+}
+
+function vaultApySortValue(
+  state: BeefyState,
+  vault: VaultEntity,
+  filters: FilterValues,
+  fields: (keyof TotalApy)[]
+): number {
+  if (!shouldVaultShowInterest(vault)) {
+    return 0;
+  }
+
+  const apy = selectVaultTotalApy(state, vault.id);
+  if (!apy) {
+    return -1;
+  }
+
+  if (filters.subSort.apy !== 'default') {
+    const avgApy = selectVaultAvgApy(state, vault.id);
+    const value = avgApy.periods[filters.subSort.apy].value;
+    if (value !== undefined) {
+      return value || 0;
+    }
+  }
+
+  for (const field of fields) {
+    const value = apy[field];
+    if (typeof value === 'number') {
+      return value || 0;
+    }
+  }
+
+  throw new Error(`No apy field found for ${vault.id} of ${fields.join(', ')}`);
 }
 
 function applyApySort(
   state: BeefyState,
-  vaults: VaultEntity[],
+  rows: VaultListRow[],
   filters: FilterValues,
   fields: (keyof TotalApy)[]
 ): VaultEntity['id'][] {
   return orderBy(
-    vaults,
-    vault => {
-      if (!shouldVaultShowInterest(vault)) {
-        return 0;
-      }
-
-      const apy = selectVaultTotalApy(state, vault.id);
-      if (!apy) {
-        return -1;
-      }
-
-      if (filters.subSort.apy !== 'default') {
-        const avgApy = selectVaultAvgApy(state, vault.id);
-        const value = avgApy.periods[filters.subSort.apy].value;
-        if (value !== undefined) {
-          return value || 0;
-        }
-      }
-
-      for (const field of fields) {
-        const value = apy[field];
-        if (value !== undefined) {
-          return value || 0;
-        }
-      }
-
-      throw new Error(`No apy field found for ${vault.id} of ${fields.join(', ')}`);
-    },
+    rows,
+    row =>
+      Math.max(...row.members.map(member => vaultApySortValue(state, member, filters, fields))),
     filters.sortDirection
-  ).map(v => v.id);
+  ).map(r => r.id);
 }
 
 function applyTvlSort(
   state: BeefyState,
-  vaults: VaultEntity[],
+  rows: VaultListRow[],
   filters: FilterValues
 ): VaultEntity['id'][] {
-  return orderBy(
-    vaults,
-    vault => {
-      const tvl = selectVaultTvl(state, vault.id);
-      if (!tvl) {
-        return -1;
-      }
-
-      return tvl.toNumber();
-    },
-    filters.sortDirection
-  ).map(v => v.id);
+  return orderBy(rows, row => rowTvlSortValue(state, row), filters.sortDirection).map(r => r.id);
 }
 
 function applyDepositValueSort(
   state: BeefyState,
-  vaults: VaultEntity[],
+  rows: VaultListRow[],
   filters: FilterValues
 ): VaultEntity['id'][] {
   return orderBy(
-    vaults,
-    vault => {
-      const value = selectUserVaultBalanceInUsdIncludingDisplaced(state, vault.id);
-      if (!value) {
-        return -1;
+    rows,
+    row => {
+      let sum: number | undefined;
+      for (const member of row.members) {
+        const value = selectUserVaultBalanceInUsdIncludingDisplaced(state, member.id);
+        if (!value) {
+          continue;
+        }
+        sum = (sum ?? 0) + value.toNumber();
       }
-
-      return value.toNumber();
+      return sum ?? -1;
     },
     filters.sortDirection
-  ).map(v => v.id);
+  ).map(r => r.id);
 }

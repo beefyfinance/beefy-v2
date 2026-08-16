@@ -5,7 +5,7 @@ import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectChainById } from '../../features/data/selectors/chains.ts';
 import { selectVaultIsBoostedForFilter } from '../../features/data/selectors/filtered-vaults.ts';
-import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import { type ClmFamilyRow, selectVaultById } from '../../features/data/selectors/vaults.ts';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { getNetworkSrc } from '../../helpers/networkSrc.ts';
 import { punctuationWrap } from '../../helpers/string.ts';
@@ -70,17 +70,29 @@ export type VaultIdentityProps = {
   vaultId: VaultEntity['id'];
   networkCss?: CssStyles;
   isLink?: boolean;
+  /** set on collapsed home-list rows only; renders family tags instead of product tags */
+  clmFamily?: ClmFamilyRow;
+  /** render the unified "CLM | fee" tag for CLM wrappers instead of CLM Pool / CLM Vault */
+  unifiedClmTag?: boolean;
 };
 export const VaultIdentity = memo(function VaultIdentity({
   vaultId,
   networkCss,
   isLink,
+  clmFamily,
+  unifiedClmTag,
 }: VaultIdentityProps) {
   const classes = useStyles();
 
   return (
     <div className={classes.vaultIdentity}>
-      <VaultIdentityContent isLink={isLink} vaultId={vaultId} networkCss={networkCss} />
+      <VaultIdentityContent
+        isLink={isLink}
+        vaultId={vaultId}
+        networkCss={networkCss}
+        clmFamily={clmFamily}
+        unifiedClmTag={unifiedClmTag}
+      />
     </div>
   );
 });
@@ -89,6 +101,8 @@ export const VaultIdentityContent = memo(function VaultIdentityContent({
   vaultId,
   networkCss,
   isLink,
+  clmFamily,
+  unifiedClmTag,
 }: VaultIdentityProps) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -99,7 +113,7 @@ export const VaultIdentityContent = memo(function VaultIdentityContent({
       <VaultIcon vaultId={vaultId} />
       <div className={classes.vaultNameTags}>
         <VaultName isLink={isLink} vaultId={vaultId} />
-        <VaultTags vaultId={vaultId} />
+        <VaultTags vaultId={vaultId} clmFamily={clmFamily} unifiedClmTag={unifiedClmTag} />
       </div>
     </>
   );

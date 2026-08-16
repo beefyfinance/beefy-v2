@@ -11,7 +11,10 @@ import {
 import { useBreakpoints } from '../../../../../../hooks/useBreakpoints.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
-import { selectLastViewedVaultsVaultId } from '../../../../../data/selectors/vaults-list.ts';
+import {
+  selectLastViewedVaultsVaultId,
+  selectListRowIdForVaultId,
+} from '../../../../../data/selectors/vaults-list.ts';
 import { Vault } from '../../../Vault/Vault.tsx';
 
 function useVaultHeightEstimate() {
@@ -68,7 +71,11 @@ type VirtualVaultsListProps = {
 export const VirtualVaultsList = memo(function VirtualVaultsList({
   vaultIds,
 }: VirtualVaultsListProps) {
-  const lastVaultId = useAppSelector(selectLastViewedVaultsVaultId);
+  // the last viewed vault may render collapsed into its family row under a different id
+  const lastVaultId = useAppSelector(state => {
+    const viewedId = selectLastViewedVaultsVaultId(state);
+    return viewedId !== undefined ? selectListRowIdForVaultId(state, viewedId) : undefined;
+  });
   const navigationType = useNavigationType(); // Updated hook usage
   const defaultItemHeight = useVaultHeightEstimate();
   const increaseViewportBy = useMemo(

@@ -1,23 +1,6 @@
-import type BigNumber from 'bignumber.js';
 import { memo } from 'react';
-import type { TokenEntity } from '../../features/data/entities/token.ts';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
-import {
-  selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInDepositTokenIncludingDisplaced,
-  selectUserVaultBalanceInUsdIncludingDisplaced,
-  selectUserVaultBalanceNotInActiveBoostInDepositToken,
-} from '../../features/data/selectors/balance.ts';
-
-import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
-import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
-import { selectVaultById } from '../../features/data/selectors/vaults.ts';
-import {
-  selectIsBalanceHidden,
-  selectWalletAddress,
-} from '../../features/data/selectors/wallet.ts';
-import type { BeefyState } from '../../features/data/store/types.ts';
-import { BIG_ZERO } from '../../helpers/big-number.ts';
+import { selectVaultDepositStatData } from '../../features/data/selectors/vault-stats.ts';
 import {
   formatLargeUsd,
   formatTokenDisplay,
@@ -30,96 +13,23 @@ import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTo
 import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
 import { useTranslation } from 'react-i18next';
-import { selectIsBalanceAvailableForChainUser } from '../../features/data/selectors/data-loader/balance.ts';
+import { type ClmFamilySide, ClmFamilySideLine } from './ClmFamilyShared.tsx';
 export type VaultDepositStatProps = {
   vaultId: VaultEntity['id'];
   walletAddress?: string;
   label?: string;
+  clmSide?: ClmFamilySide;
 } & Omit<VaultValueStatProps, 'label' | 'tooltip' | 'value' | 'subValue' | 'loading'>;
-
-type SelectDataReturn =
-  | {
-      loading: true;
-      hideBalance: boolean;
-    }
-  | {
-      loading: false;
-      totalDeposit: BigNumber;
-      hideBalance: boolean;
-    }
-  | {
-      loading: false;
-      totalDeposit: BigNumber;
-      hideBalance: boolean;
-      depositToken: TokenEntity;
-      totalDepositUsd: BigNumber;
-      vaultDeposit: BigNumber;
-      notEarning: BigNumber;
-    };
-
-// TODO better selector / hook
-function selectVaultDepositStat(
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  maybeWalletAddress?: string
-): SelectDataReturn {
-  const vault = selectVaultById(state, vaultId);
-
-  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
-  const hideBalance = selectIsBalanceHidden(state);
-  if (!walletAddress) {
-    return { loading: false, totalDeposit: BIG_ZERO, hideBalance };
-  }
-
-  const isLoaded =
-    selectIsPricesAvailable(state) &&
-    selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress);
-  if (!isLoaded) {
-    return { loading: true, hideBalance };
-  }
-
-  const totalDeposit = selectUserVaultBalanceInDepositTokenIncludingDisplaced(
-    state,
-    vault.id,
-    walletAddress
-  );
-  if (!totalDeposit.gt(0)) {
-    return { loading: false, totalDeposit: BIG_ZERO, hideBalance };
-  }
-
-  const notEarning = selectUserVaultBalanceNotInActiveBoostInDepositToken(
-    state,
-    vault.id,
-    walletAddress
-  );
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const totalDepositUsd = selectUserVaultBalanceInUsdIncludingDisplaced(
-    state,
-    vaultId,
-    walletAddress
-  );
-  const vaultDeposit = selectUserVaultBalanceInDepositToken(state, vault.id, walletAddress);
-
-  return {
-    loading: false,
-    hideBalance,
-    depositToken,
-    totalDeposit,
-    totalDepositUsd,
-    vaultDeposit,
-    notEarning,
-  };
-}
 
 export const VaultDepositStat = memo(function VaultDepositStat({
   vaultId,
   walletAddress,
   label = 'VaultStat-DEPOSITED',
+  clmSide,
   ...passthrough
 }: VaultDepositStatProps) {
   const { t } = useTranslation();
-  // @dev don't do this - temp migration away from connect()
-  const data = useAppSelector(state => selectVaultDepositStat(state, vaultId, walletAddress));
+  const data = useAppSelector(state => selectVaultDepositStatData(state, vaultId, walletAddress));
 
   if (data.loading) {
     return (
@@ -138,7 +48,7 @@ export const VaultDepositStat = memo(function VaultDepositStat({
     return (
       <VaultValueStat
         label={t(label)}
-        value="0"
+        value={clmSide ? <ClmFamilySideLine side={clmSide}>0</ClmFamilySideLine> : '0'}
         blur={data.hideBalance}
         loading={false}
         {...passthrough}
@@ -158,7 +68,11 @@ export const VaultDepositStat = memo(function VaultDepositStat({
   return (
     <VaultValueStat
       label={t(label)}
-      value={depositFormattedCondensed}
+      value={
+        clmSide ?
+          <ClmFamilySideLine side={clmSide}>{depositFormattedCondensed}</ClmFamilySideLine>
+        : depositFormattedCondensed
+      }
       Icon={isNotEarning ? ExclaimRoundedSquare : undefined}
       subValue={formatLargeUsd(data.totalDepositUsd)}
       blur={data.hideBalance}

@@ -12,7 +12,13 @@ import {
   isGovVaultCowcentrated,
   type VaultEntity,
 } from '../../../data/entities/vault.ts';
-import { selectVaultById } from '../../../data/selectors/vaults.ts';
+import { selectClmFamilyForVaultPage, selectVaultById } from '../../../data/selectors/vaults.ts';
+import {
+  type ClmFamilySides,
+  FamilyApyStats,
+  FamilyVaultDeposited,
+  FamilyVaultTvl,
+} from './ClmFamilyStats.tsx';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -20,23 +26,40 @@ const useStyles = legacyMakeStyles(styles);
 function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const clmFamily = useAppSelector(state => selectClmFamilyForVaultPage(state, vaultId));
+  const family: ClmFamilySides | undefined =
+    clmFamily && clmFamily.poolSideId && clmFamily.vaultSideId ?
+      {
+        poolId: clmFamily.poolSideId,
+        vaultId: clmFamily.vaultSideId,
+        activeSide: clmFamily.activeSide,
+      }
+    : undefined;
 
   return (
     <div className={classes.boxes}>
       <div className={css(styles.stats, styles.statsInterest)}>
         <div className={classes.stat}>
-          <VaultTvl vaultId={vaultId} />
+          {family ?
+            <FamilyVaultTvl family={family} />
+          : <VaultTvl vaultId={vaultId} />}
         </div>
         <div className={classes.stat}>
-          <ApyStats type="yearly" vaultId={vaultId} />
+          {family ?
+            <FamilyApyStats type="yearly" family={family} />
+          : <ApyStats type="yearly" vaultId={vaultId} />}
         </div>
         <div className={classes.stat}>
-          <ApyStats type="daily" vaultId={vaultId} />
+          {family ?
+            <FamilyApyStats type="daily" family={family} />
+          : <ApyStats type="daily" vaultId={vaultId} />}
         </div>
       </div>
       <div className={css(styles.stats, styles.statsDeposit)}>
         <div className={classes.stat}>
-          <VaultDeposited vaultId={vaultId} />
+          {family ?
+            <FamilyVaultDeposited family={family} />
+          : <VaultDeposited vaultId={vaultId} />}
         </div>
         {isGovVault(vault) && !isGovVaultCowcentrated(vault) ?
           <div className={classes.stat}>

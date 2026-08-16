@@ -1,6 +1,7 @@
 import { createSlice, type Draft, type PayloadAction } from '@reduxjs/toolkit';
 import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
 import { fetchAllVaults } from '../actions/vaults.ts';
+import { getCowcentratedPool, isCowcentratedStandardVault } from '../entities/vault.ts';
 import { areArraysEqual } from '../utils/array-utils.ts';
 import { FILTER_DEFAULTS, mergePreset } from '../utils/filter-values.ts';
 import { hasSearchText } from '../utils/vault-search.ts';
@@ -80,11 +81,19 @@ export const filteredVaultsSlice = createSlice({
     builder
       .addCase(fetchAllVaults.fulfilled, (state, action) => {
         if (state.filteredVaultIds.length === 0) {
-          const allVaultIds = Object.values(action.payload.byChainId).flatMap(vaults =>
-            vaults.map(v => v.entity.id)
+          // pre-recalc placeholder: one row per visible anchor (CLM vaults collapse into their pool)
+          const rowIds = Object.values(action.payload.byChainId).flatMap(vaults =>
+            vaults
+              .map(v => v.entity)
+              .filter(
+                entity =>
+                  !entity.hidden &&
+                  !(isCowcentratedStandardVault(entity) && getCowcentratedPool(entity))
+              )
+              .map(entity => entity.id)
           );
-          state.filteredVaultIds = allVaultIds;
-          state.sortedFilteredVaultIds = allVaultIds;
+          state.filteredVaultIds = rowIds;
+          state.sortedFilteredVaultIds = rowIds;
         }
       })
       .addCase(recalculateFilteredVaultsAction.fulfilled, (state, action) => {
