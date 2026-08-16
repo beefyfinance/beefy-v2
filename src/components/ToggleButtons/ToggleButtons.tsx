@@ -10,12 +10,19 @@ export type ToggleButtonItem<T extends string = string> = {
   subtitle?: string;
 };
 
+/** as ToggleButtonItem, but the label may be any node (icons etc.) */
+export type ToggleButtonOption<T extends string = string> = {
+  value: T;
+  label: ReactNode;
+  subtitle?: string;
+};
+
 export type ToggleButtonsProps<
   TValue extends string = string,
   TUntoggle extends string = TValue,
 > = {
   value: TValue;
-  options: Array<ToggleButtonItem<TValue>>;
+  options: Array<ToggleButtonOption<TValue>>;
   onChange: (value: TValue | TUntoggle) => void;
   /** set this to 'all' key */
   untoggleValue?: TValue | TUntoggle;

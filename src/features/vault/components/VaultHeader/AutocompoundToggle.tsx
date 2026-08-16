@@ -3,8 +3,10 @@ import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ToggleButtons } from '../../../../components/ToggleButtons/ToggleButtons.tsx';
+import { getIcon } from '../../../../helpers/iconSrc.ts';
 import { replaceVaultIdInUrl } from '../../../../helpers/url.ts';
 import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
+import AutocompoundIcon from '../../../../images/icons/autocompound.svg?react';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import { isVaultRetired, type VaultEntity } from '../../../data/entities/vault.ts';
 import {
@@ -61,8 +63,24 @@ export const AutocompoundToggle = memo(function AutocompoundToggle({
       <ToggleButtons
         value={value}
         options={[
-          { value: 'off', label: withRetiredHint(t('Vault-ClmToggle-Pool'), poolSide) },
-          { value: 'on', label: withRetiredHint(t('Vault-ClmToggle-Vault'), vaultSide) },
+          {
+            value: 'off',
+            label: (
+              <OptionLabel>
+                <img src={getIcon('clm')} width={12} height={12} alt="" />
+                {withRetiredHint(t('Vault-ClmToggle-Pool'), poolSide)}
+              </OptionLabel>
+            ),
+          },
+          {
+            value: 'on',
+            label: (
+              <OptionLabel>
+                <AutocompoundIcon width={12} height={12} />
+                {withRetiredHint(t('Vault-ClmToggle-Vault'), vaultSide)}
+              </OptionLabel>
+            ),
+          },
         ]}
         onChange={handleChange}
         variant="filter"
@@ -70,6 +88,15 @@ export const AutocompoundToggle = memo(function AutocompoundToggle({
       />
     </Holder>
   );
+});
+
+const OptionLabel = styled('span', {
+  base: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '6px',
+  },
 });
 
 const Holder = styled('div', {
