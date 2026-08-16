@@ -126,9 +126,12 @@ const VaultTagsAndShareHolder = styled('div', {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    // the autocompound toggle wraps to its own full-width line on small screens
+    flexWrap: 'wrap',
     gap: '8px',
-    height: '40px',
+    minHeight: '40px',
     sm: {
+      flexWrap: 'nowrap',
       height: '44px',
     },
   },

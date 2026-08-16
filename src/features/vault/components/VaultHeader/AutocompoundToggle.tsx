@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ToggleButtons } from '../../../../components/ToggleButtons/ToggleButtons.tsx';
 import { replaceVaultIdInUrl } from '../../../../helpers/url.ts';
+import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import { isVaultRetired, type VaultEntity } from '../../../data/entities/vault.ts';
 import {
@@ -21,6 +22,7 @@ export const AutocompoundToggle = memo(function AutocompoundToggle({
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+  const isMobile = useBreakpoint({ to: 'xs' });
   const family = useAppSelector(state => selectClmFamilyForVaultPage(state, vaultId));
   const poolSide = useAppSelector(state =>
     family?.poolSideId ? selectVaultByIdOrUndefined(state, family.poolSideId) : undefined
@@ -64,6 +66,7 @@ export const AutocompoundToggle = memo(function AutocompoundToggle({
         ]}
         onChange={handleChange}
         variant="filter"
+        fullWidth={isMobile}
       />
     </Holder>
   );
@@ -74,5 +77,12 @@ const Holder = styled('div', {
     display: 'flex',
     alignItems: 'center',
     flexShrink: '0',
+    // last in the wrapping header row: takes its own full-width line on small screens
+    width: '100%',
+    order: 1,
+    sm: {
+      width: 'auto',
+      order: 0,
+    },
   },
 });
