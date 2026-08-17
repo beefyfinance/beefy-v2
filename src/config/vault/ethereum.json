@@ -12,7 +12,7 @@
     "oracle": "tokens",
     "oracleId": "USDC",
     "status": "active",
-    "createdAt": 1786613501,
+    "createdAt": 1786968138,
     "platformId": "morpho",
     "curatorId": "armitage",
     "assets": ["USDC"],
