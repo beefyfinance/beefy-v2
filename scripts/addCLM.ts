@@ -26,6 +26,10 @@ const tickSpacingAbi = [
 // Do not add ramses/shadow/nuri etc here as the protocol fees can be set 0-100%
 const poolPlatforms = ['aerodrome', 'velodrome'];
 
+function providerToPlatformId(provider: string) {
+  return provider === 'up33' ? 'up' : provider;
+}
+
 async function vaultData(chain: AppChainId, vaultAddress: string, id: string) {
   const viemClient = getViemClient(chain);
   const abi = [...BeefyCowcentratedLiquidityVaultAbi, ...StratAbi];
@@ -83,7 +87,7 @@ async function vaultData(chain: AppChainId, vaultAddress: string, id: string) {
     : params.mooToken.startsWith('cowRamses') ? 'ramses'
     : params.mooToken.startsWith('cowPancake') ? 'pancakeswap'
     : id.substring(0, id.indexOf('-'));
-  const platform = provider;
+  const platform = providerToPlatformId(provider);
 
   const earnedToken =
     provider === 'aerodrome' ? ['AERO']
@@ -169,7 +173,7 @@ async function generateVault() {
         oracle: 'lps',
         oracleId: id,
         status: 'active',
-        platformId: vault.provider,
+        platformId: vault.platform,
         assets: [token0, token1],
         risks: defaultRisks,
         strategyTypeId: vault.strategyTypeId,
@@ -203,7 +207,7 @@ async function generateVault() {
     oracleId: id,
     status: 'active',
     createdAt,
-    platformId: vault.provider,
+    platformId: vault.platform,
     assets: [token0, token1],
     risks: defaultRisks,
     strategyTypeId: vault.strategyTypeId,
