@@ -15,7 +15,8 @@ import { isTokenErc20, isTokenNative } from '../entities/token.ts';
 import { isStandardVault, type VaultEntity } from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
-import { valueOrThrow } from '../utils/selector-utils.ts';
+import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
+import { toSearchWords } from '../utils/vault-search.ts';
 import { selectAllChainIds } from './chains.ts';
 import { selectHistoricalPriceBucketDispatchedRecently } from './historical.ts';
 import { selectIsPricesAvailable } from './data-loader/prices.ts';
@@ -471,6 +472,36 @@ export const selectVaultTokenSymbols = createCachedSelector(
       const token = tokensByChainId[vault.chainId]?.byAddress[address];
       return token?.symbol || assetId;
     });
+  }
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export type TokensByChainId = BeefyState['entities']['tokens']['byChainId'];
+
+/** resolve a vault asset id to its token, mirroring selectTokenByIdOrUndefined without a state read */
+export function resolveAssetToken(
+  byChainId: TokensByChainId,
+  chainId: VaultEntity['chainId'],
+  tokenId: string
+): TokenEntity | undefined {
+  const address = byChainId[chainId]?.byId[tokenId];
+  return address ? byChainId[chainId]?.byAddress[address] : undefined;
+}
+
+/** words of stock asset names ("Apple • Robinhood Token") so search finds companies, not just tickers */
+export const selectVaultTokenNameWords = createCachedSelector(
+  selectVaultById,
+  (state: BeefyState) => state.entities.tokens.byChainId,
+  (vault, tokensByChainId): string[] => {
+    const words: string[] = [];
+    for (const assetId of vault.assetIds) {
+      const token = resolveAssetToken(tokensByChainId, vault.chainId, assetId);
+      // stocks only: every other token is found by ticker, and generic names (Wrapped Ether) would
+      // need a stopword list. Company part only: "Apple • Robinhood Token" -> apple
+      if (token?.name && isTokenStock(token)) {
+        words.push(...toSearchWords(token.name.split('•')[0]));
+      }
+    }
+    return arrayOrStaticEmpty(words);
   }
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 

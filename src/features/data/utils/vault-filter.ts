@@ -21,7 +21,7 @@ import {
 } from '../selectors/filtered-vaults.ts';
 import { selectIsVaultIdSaved } from '../selectors/saved-vaults.ts';
 import { selectChainSearchIndex, selectPlatformSearchIndex } from '../selectors/search.ts';
-import { selectVaultTokenSymbols } from '../selectors/tokens.ts';
+import { selectVaultTokenNameWords, selectVaultTokenSymbols } from '../selectors/tokens.ts';
 import { selectVaultUnderlyingTvlUsd } from '../selectors/tvl.ts';
 import { selectVaultStrategyAddressOrUndefined } from '../selectors/vaults.ts';
 import { selectVaultSupportsZap } from '../selectors/zap.ts';
@@ -72,6 +72,7 @@ export function buildVaultFilterEnv(
         searchContext,
         vault,
         selectVaultTokenSymbols(state, vault.id),
+        selectVaultTokenNameWords(state, vault.id),
         searchContext.anyPlatformWords ?
           selectFilterPlatformIdsForVault(state, vault)
         : EMPTY_ARRAY,
