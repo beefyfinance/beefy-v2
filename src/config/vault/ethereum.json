@@ -1,5 +1,54 @@
 [
   {
+    "id": "stakedao-frxusd-trusd",
+    "name": "frxUSD/trUSD",
+    "type": "standard",
+    "token": "frx-trUSD",
+    "tokenAddress": "0xd1D954BC94c843815EC7b8119f2de00AF27Fa6Ff",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x65515f81c7Da273dC540747f14Dee6C4Ae0e8a5F",
+    "earnedToken": "mooStakeDao-frxUSD-trUSD",
+    "earnedTokenAddress": "0x65515f81c7Da273dC540747f14Dee6C4Ae0e8a5F",
+    "oracle": "lps",
+    "oracleId": "curve-frxusd-trusd",
+    "status": "active",
+    "createdAt": 1787042836,
+    "platformId": "stakedao",
+    "assets": ["frxUSD", "trUSD"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-1005/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-1005/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xd1D954BC94c843815EC7b8119f2de00AF27Fa6Ff",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xd1D954BC94c843815EC7b8119f2de00AF27Fa6Ff",
+            "coins": [
+              "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+              "0xd0580192E98eA6CEB9c7b6191Ed2E27560911697"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "morpho-v2-ethereum-armitage-pendle-ecosystem-usdc",
     "name": "USDC (Armitage, Pendle Ecosystem V2)",
     "type": "standard",
