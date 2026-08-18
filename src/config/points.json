@@ -1,5 +1,28 @@
 [
   {
+    "id": "tori",
+    "docs": "https://docs.tori.finance/resources/cores",
+    "points": [
+      {
+        "id": "tori-points",
+        "name": "Tori Cores"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "tori-points",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://app.tori.finance/earn"
+      }
+    ]
+  },
+  {
     "id": "3jane",
     "docs": "https://docs.3jane.xyz/jane/liquidity-mining",
     "points": [
