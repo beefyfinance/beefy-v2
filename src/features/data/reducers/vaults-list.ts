@@ -1,9 +1,10 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { VaultsListState } from './vaults-list-types.ts';
+import type { VaultsListState, VaultsViewMode } from './vaults-list-types.ts';
 
 const initialState: VaultsListState = {
   vaultsLast: undefined,
   dashboardLast: undefined,
+  viewMode: 'pro',
 };
 
 export const vaultsListSlice = createSlice({
@@ -18,8 +19,11 @@ export const vaultsListSlice = createSlice({
       console.debug('setDashboardLast', action.payload);
       sliceState.dashboardLast = action.payload;
     },
+    setVaultsViewMode(sliceState, action: PayloadAction<VaultsViewMode>) {
+      sliceState.viewMode = action.payload;
+    },
   },
 });
 
-export const { setVaultsLast, setDashboardLast } = vaultsListSlice.actions;
+export const { setVaultsLast, setDashboardLast, setVaultsViewMode } = vaultsListSlice.actions;
 export const vaultsListReducer = vaultsListSlice.reducer;

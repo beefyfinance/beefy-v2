@@ -105,7 +105,10 @@ const uiReducer = combineReducers({
     : undefined,
   transact: transactReducer,
   treasury: treasurySlice.reducer,
-  vaultsList: vaultsListReducer,
+  vaultsList: persistReducer(
+    { key: 'vaultsList', storage, whitelist: ['viewMode'] },
+    vaultsListReducer
+  ),
   version: versionReducer,
   revenue: revenueSlice.reducer,
   window: windowReducer,

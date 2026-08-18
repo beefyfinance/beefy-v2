@@ -10,11 +10,30 @@ import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 import { styled } from '@repo/styles/jsx';
 import { Sort } from './components/Sort/Sort.tsx';
 import { ExtendedFiltersButtonMobileFilters } from './components/ExtendedFilters/ExtendedFiltersButtonMobileFilters.tsx';
+import { selectVaultsViewMode } from '../../../data/selectors/vaults-list.ts';
+import { useAppSelector } from '../../../data/store/hooks.ts';
 
 export const Filters = memo(function Filters() {
   const isDesktop = useBreakpoint({ from: 'lg' });
+  const isSimplified = useAppSelector(selectVaultsViewMode) === 'simplified';
+
+  if (isSimplified) {
+    return <SimplifiedLayout />;
+  }
 
   return isDesktop ? <DesktopLayout /> : <MobileLayout />;
+});
+
+/** simplified mode drills down by asset and chain, so only the two category filters still apply */
+const SimplifiedLayout = memo(function SimplifiedLayout() {
+  return (
+    <Layout>
+      <Bottom>
+        <VaultCategoryButtonFilter />
+        <AssetTypeButtonFilter />
+      </Bottom>
+    </Layout>
+  );
 });
 
 const MobileLayout = memo(function MobileLayout() {

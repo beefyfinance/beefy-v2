@@ -9,6 +9,7 @@ import {
   selectFiltersSettled,
   selectFilterSearchText,
 } from '../../../../../data/selectors/filtered-vaults.ts';
+import { selectVaultsViewMode } from '../../../../../data/selectors/vaults-list.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { SearchResultCount } from './SearchResultCount.tsx';
 
@@ -18,6 +19,8 @@ export const VaultsSearch = memo(function VaultsSearch() {
   const dispatch = useAppDispatch();
   const storeValue = useAppSelector(selectFilterSearchText);
   const storeSettled = useAppSelector(selectFiltersSettled);
+  // the count comes from the pro filter pipeline, which says nothing about the simplified asset list
+  const showCount = useAppSelector(selectVaultsViewMode) === 'pro';
   const [focused, setFocused] = useState(false);
 
   // Keystrokes drive `value` at input speed; the store write is debounced. useDebouncedState
@@ -41,11 +44,13 @@ export const VaultsSearch = memo(function VaultsSearch() {
       onFocus={handleFocus}
       onBlur={handleBlur}
       endAdornment={
-        <SearchResultCount
-          hasQuery={value.length > 0}
-          settled={storeSettled && value === storeValue}
-          focused={focused}
-        />
+        showCount ?
+          <SearchResultCount
+            hasQuery={value.length > 0}
+            settled={storeSettled && value === storeValue}
+            focused={focused}
+          />
+        : undefined
       }
     />
   );
