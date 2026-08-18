@@ -30,6 +30,7 @@ import {
   createSelectionId,
   onlyInputCount,
   onlyOneInput,
+  onlyVaultShareInput,
 } from '../helpers/options.ts';
 import { calculatePriceImpact } from '../helpers/quotes.ts';
 import { getInsertIndex } from '../helpers/zap.ts';
@@ -92,7 +93,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       selectionId,
       selectionOrder: SelectionOrder.AllTokensInPool,
       inputs,
-      wantedOutputs: inputs,
+      wantedOutputs: [this.shareToken],
       strategyId: 'vault',
       vaultType: 'cowcentrated',
       mode: TransactMode.Deposit,
@@ -221,10 +222,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     inputs: InputTokenAmount[],
     option: CowcentratedVaultWithdrawOption
   ): Promise<CowcentratedVaultWithdrawQuote> {
-    const input = onlyOneInput(inputs);
-    if (input.amount.lte(BIG_ZERO)) {
-      throw new Error('Quote called with 0 input amount');
-    }
+    const input = onlyVaultShareInput(inputs, this.shareToken);
 
     const state = this.getState();
     const chain = selectChainById(state, this.vault.chainId);

@@ -17,11 +17,12 @@ import {
 } from '../../../../../data/selectors/balance.ts';
 import {
   selectTransactForceSelection,
-  selectTransactIsActiveSelectionVaultSourceWithdraw,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { isGovVault } from '../../../../../data/entities/vault.ts';
 import { Actions } from '../Actions/Actions.tsx';
 import { CrossChainBelowFeeNotice } from '../CrossChainBelowFeeNotice/CrossChainBelowFeeNotice.tsx';
 import { FormFooter } from '../FormFooter/FormFooter.tsx';
@@ -37,7 +38,7 @@ const useStyles = legacyMakeStyles(styles);
 
 const DepositedInVault = memo(function DepositedInVault() {
   const vaultId = useAppSelector(selectTransactVaultId);
-  const isVaultSourceWithdraw = useAppSelector(selectTransactIsActiveSelectionVaultSourceWithdraw);
+  const vault = useAppSelector(state => (vaultId ? selectVaultById(state, vaultId) : undefined));
   const dispatch = useDispatch();
   const depositTokenAmount = useAppSelector(state =>
     vaultId ? selectUserVaultBalanceInDepositTokenWithToken(state, vaultId) : undefined
@@ -48,9 +49,9 @@ const DepositedInVault = memo(function DepositedInVault() {
   const forceSelection = useAppSelector(selectTransactForceSelection);
 
   const handleMax = useCallback(() => {
-    if (!depositTokenAmount) return;
-    // store-of-record is share-math for vault-source withdraws; dispatch exact share-balance to avoid round-trip wei loss
-    const amount = isVaultSourceWithdraw && shareBalance ? shareBalance : depositTokenAmount.amount;
+    if (!depositTokenAmount || !vault) return;
+    // store-of-record is share-math; dispatch exact share-balance to avoid round-trip wei loss
+    const amount = !isGovVault(vault) && shareBalance ? shareBalance : depositTokenAmount.amount;
     dispatch(
       transactSetInputAmount({
         index: 0,
@@ -58,7 +59,7 @@ const DepositedInVault = memo(function DepositedInVault() {
         max: true,
       })
     );
-  }, [dispatch, depositTokenAmount, isVaultSourceWithdraw, shareBalance]);
+  }, [dispatch, depositTokenAmount, vault, shareBalance]);
 
   if (!vaultId || !depositTokenAmount) {
     return <TextLoader placeholder="0.0000000 BNB-BIFI" />;

@@ -1,6 +1,6 @@
 import { first, uniqBy } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';
-import { BIG_ZERO, fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
+import { BIG_ZERO, toWeiString } from '../../../../../../helpers/big-number.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
 import {
@@ -35,11 +35,11 @@ import {
   createSelectionId,
   onlyAssetCount,
   onlyOneInput,
+  onlyVaultShareInput,
   onlyOneToken,
 } from '../../helpers/options.ts';
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { nativeAndWrappedAreSame, pickTokens } from '../../helpers/tokens.ts';
-import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import {
   type InputTokenAmount,
@@ -55,12 +55,7 @@ import {
   type ZapQuoteStep,
   type ZapQuoteStepSwapAggregator,
 } from '../../transact-types.ts';
-import {
-  type IErc4626VaultType,
-  isErc4626VaultType,
-  isStandardVaultType,
-  type IStandardVaultType,
-} from '../../vaults/IVaultType.ts';
+import { type IPpfsVaultType, isPpfsVaultType } from '../../vaults/IVaultType.ts';
 import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
 import type {
   OrderInput,
@@ -96,7 +91,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
   protected readonly wnative: TokenErc20;
   protected readonly native: TokenNative;
   protected readonly vault: VaultStandard | VaultErc4626;
-  protected readonly vaultType: IStandardVaultType | IErc4626VaultType;
+  protected readonly vaultType: IPpfsVaultType;
 
   public getHelpers(): ZapTransactHelpers {
     return this.helpers;
@@ -112,7 +107,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     if (!isStandardVault(vault) && !isErc4626Vault(vault)) {
       throw new Error('Vault is not a standard/erc4626 vault');
     }
-    if (!isStandardVaultType(vaultType) && !isErc4626VaultType(vaultType)) {
+    if (!isPpfsVaultType(vaultType)) {
       throw new Error('Vault type is not standard/erc4626');
     }
 
@@ -155,7 +150,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
 
     // depositToken included so composable consumers find the identity option; deduped in transact.ts.
     const tokens = await this.aggregatorTokenSupport();
-    const outputs = [this.vaultType.depositToken];
+    const outputs = [this.vaultType.shareToken];
 
     return tokens.map(token => {
       const inputs = [token];
@@ -206,7 +201,12 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     // Direct deposit: no swap needed (used by cross-chain when bridge token = deposit token)
     const state = getState();
     if (isTokenEqual(input.token, this.vaultType.depositToken)) {
-      const outputs = [{ token: this.vaultType.depositToken, amount: input.amount }];
+      const outputs = [
+        this.vaultType.estimateDepositShares({
+          token: this.vaultType.depositToken,
+          amount: input.amount,
+        }),
+      ];
       const steps: ZapQuoteStep[] = [
         { type: 'deposit', inputs: [{ token: input.token, amount: input.amount }] },
       ];
@@ -241,7 +241,12 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
       throw new Error('No swap quote found');
     }
 
-    const outputs = [{ token: this.vaultType.depositToken, amount: bestQuote.toAmount }];
+    const outputs = [
+      this.vaultType.estimateDepositShares({
+        token: this.vaultType.depositToken,
+        amount: bestQuote.toAmount,
+      }),
+    ];
     const steps: ZapQuoteStep[] = [
       {
         type: 'swap',
@@ -302,7 +307,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
 
     // depositToken included so composable consumers find the identity option; deduped in transact.ts.
     const tokens = await this.aggregatorTokenSupport();
-    const inputs = [this.vaultType.depositToken];
+    const inputs = [this.vaultType.shareToken];
 
     return tokens.map(token => {
       const outputs = [token];
@@ -337,20 +342,17 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     }
 
     // Input
-    const input = onlyOneInput(inputs);
-    if (input.amount.lte(BIG_ZERO)) {
-      throw new Error('Quote called with 0 input amount');
-    }
+    const input = onlyVaultShareInput(inputs, this.vaultType.shareToken);
 
     // Token Allowances
     const state = getState();
-    const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, vault, state);
-    const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
+    const withdrawn = this.vaultType.estimateWithdrawOutput(input);
+    const withdrawnToken = withdrawn.token;
+    const withdrawnAmountAfterFee = withdrawn.amount;
     const allowances = [
       {
-        token: shareToken,
-        amount: fromWei(sharesToWithdrawWei, shareToken.decimals),
+        token: this.vaultType.shareToken,
+        amount: input.amount,
         spenderAddress: zap.manager,
       },
     ];
@@ -565,10 +567,13 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     }));
 
     // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
-    const dustOutputs: OrderOutput[] = quote.outputs.concat(quote.inputs).map(input => ({
-      token: getTokenAddress(input.token),
-      minOutputAmount: '0',
-    }));
+    const dustOutputs: OrderOutput[] = quote.outputs
+      .concat(quote.inputs)
+      .concat(vaultDeposit.inputs)
+      .map(input => ({
+        token: getTokenAddress(input.token),
+        minOutputAmount: '0',
+      }));
 
     // @dev uniqBy: first occurrence of each element is kept.
     const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
@@ -637,7 +642,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     );
     swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
 
-    // Build order (note: input to order is shares, but quote inputs are the deposit token)
+    // Build order
     const inputs: OrderInput[] = vaultWithdraw.inputs.map(input => ({
       token: getTokenAddress(input.token),
       amount: toWeiString(input.amount, input.token.decimals),
@@ -654,6 +659,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
     const dustOutputs: OrderOutput[] = pickTokens(
       vaultWithdraw.inputs,
+      vaultWithdraw.outputs,
       quote.outputs,
       quote.inputs,
       quote.returned

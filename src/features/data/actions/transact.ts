@@ -21,14 +21,13 @@ import {
 } from '../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
-import { isCowcentratedVault, type VaultEntity } from '../entities/vault.ts';
+import { type VaultEntity } from '../entities/vault.ts';
 import {
   type DepositSource,
   TransactMode,
   TransactStatus,
   type TransactStep,
 } from '../reducers/wallet/transact-types.ts';
-import { selectTokenByAddress } from '../selectors/tokens.ts';
 import {
   selectTokenAmountsTotalValue,
   selectTransactInputAmounts,
@@ -228,8 +227,6 @@ export const transactFetchQuotes = createAppAsyncThunk<
     const inputAmounts = selectTransactInputAmounts(state);
     const inputMaxes = selectTransactInputMaxes(state);
     const walletAddress = selectWalletAddress(state);
-    const vaultId = selectTransactVaultId(state);
-    const vault = selectVaultById(state, vaultId);
 
     if (inputAmounts.every(amount => amount.lte(BIG_ZERO))) {
       throw new Error(`Can not quote for 0`);
@@ -266,18 +263,9 @@ export const transactFetchQuotes = createAppAsyncThunk<
         });
       });
     } else {
-      let inputToken: TokenEntity;
-      const opt = options[0];
-      if (opt?.strategyId === 'cross-chain' || opt?.strategyId === 'vault-to-vault-single-token') {
-        // Withdraw from page vault via a vault-source strategy: option declares its shareToken as input.
-        inputToken = opt.inputs[0];
-      } else if (isCowcentratedVault(vault)) {
-        inputToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
-      } else {
-        inputToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-      }
+      // Withdraw options declare the token the user gives up as inputs[0] (receipt token, or deposit token for gov)
       quoteInputAmounts.push({
-        token: inputToken,
+        token: options[0].inputs[0],
         amount: inputAmounts[0] || BIG_ZERO,
         max: inputMaxes[0] || false,
       });

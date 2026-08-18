@@ -140,6 +140,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       ...option,
       strategyId,
       vaultId: this.vault.id,
+      wantedOutputs: [this.shareToken],
       underlyingOption: option,
       // same-token vault deposit is free; CLM-zap paths inherit feeable from the underlying option
       feeable: option.strategyId === 'vault' ? false : option.feeable,
@@ -168,10 +169,13 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
         },
       ];
 
-      const modOutputs = underlyingQuote.outputs.map(output => ({
-        ...output,
-        token: this.shareToken,
-      }));
+      // convert underlying CLM share amount to outer vault shares
+      const modOutputs = [
+        this.vaultType.estimateDepositShares({
+          token: this.depositToken,
+          amount: underlyingQuote.outputs[0].amount,
+        }),
+      ];
 
       return {
         ...underlyingQuote,
@@ -202,16 +206,24 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
 
     const underlyingQuote = await this.fetchUnderlyingDepositQuote(inputs, underlyingOption);
 
+    // convert underlying CLM share amount to outer vault shares
+    const outputs = [
+      this.vaultType.estimateDepositShares({
+        token: this.depositToken,
+        amount: underlyingQuote.outputs[0].amount,
+      }),
+    ];
+
     return {
       ...underlyingQuote,
-      outputs: underlyingQuote.outputs,
+      outputs,
       steps: underlyingQuote.steps.concat({
         type: 'deposit',
         inputs: underlyingQuote.outputs,
       }),
       priceImpact: calculatePriceImpact(
         underlyingQuote.inputs,
-        underlyingQuote.outputs,
+        outputs,
         underlyingQuote.returned,
         this.helpers.getState()
       ),
@@ -389,10 +401,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     return [vaultOption, ...options].map(option => ({
       ...option,
       strategyId,
-      inputs: option.inputs.map(input => ({
-        ...input,
-        token: this.shareToken,
-      })),
+      inputs: [this.shareToken],
       vaultId: this.vault.id,
       underlyingOption: option,
       // same-token vault withdraw is free; CLM-zap paths inherit feeable from the underlying option
@@ -411,7 +420,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     const vaultComposerWithdrawQuote = await this.vaultType.fetchWithdrawQuote(
       [
         {
-          token: this.depositToken,
+          token: this.shareToken,
           amount: input.amount,
           max: input.max,
         },

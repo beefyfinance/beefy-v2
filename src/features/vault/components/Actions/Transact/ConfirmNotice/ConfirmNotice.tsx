@@ -8,10 +8,13 @@ import { errorToString, formatLargeUsd } from '../../../../../../helpers/format.
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { isTokenAmountEqual } from '../../../../../data/apis/transact/helpers/tokens.ts';
 import {
+  selectTokenAmountForDisplay,
   selectTransactConfirmChanges,
   selectTransactConfirmError,
   selectTransactConfirmStatus,
+  selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import type { QuoteOutputTokenAmountChange } from '../../../../../data/apis/transact/transact-types.ts';
 import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens.ts';
@@ -64,19 +67,37 @@ type ChangeRowProps = {
 const ChangeRow = memo(function ChangeRow({ change }: ChangeRowProps) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const price = useAppSelector(state =>
-    selectTokenPriceByTokenOracleId(state, change.token.oracleId)
+  const vaultId = useAppSelector(selectTransactVaultId);
+  // receipt-token amounts render as their deposit-token equivalent
+  const amount = useAppSelector(
+    state =>
+      selectTokenAmountForDisplay(state, { token: change.token, amount: change.amount }, vaultId),
+    isTokenAmountEqual
   );
+  const newAmount = useAppSelector(
+    state =>
+      selectTokenAmountForDisplay(
+        state,
+        { token: change.token, amount: change.newAmount },
+        vaultId
+      ),
+    isTokenAmountEqual
+  );
+  const difference = useAppSelector(
+    state =>
+      selectTokenAmountForDisplay(
+        state,
+        { token: change.token, amount: change.difference },
+        vaultId
+      ),
+    isTokenAmountEqual
+  );
+  const token = amount.token;
+  const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, token.oracleId));
 
-  const amountUsd = useMemo(() => change.amount.multipliedBy(price), [change.amount, price]);
-  const newAmountUsd = useMemo(
-    () => change.newAmount.multipliedBy(price),
-    [change.newAmount, price]
-  );
-  const differenceUsd = useMemo(
-    () => change.difference.multipliedBy(price),
-    [change.difference, price]
-  );
+  const amountUsd = useMemo(() => amount.amount.multipliedBy(price), [amount, price]);
+  const newAmountUsd = useMemo(() => newAmount.amount.multipliedBy(price), [newAmount, price]);
+  const differenceUsd = useMemo(() => difference.amount.multipliedBy(price), [difference, price]);
 
   return (
     <div>
@@ -84,7 +105,7 @@ const ChangeRow = memo(function ChangeRow({ change }: ChangeRowProps) {
         t={t}
         i18nKey="Transact-Notice-Confirm-Original"
         components={{
-          amount: <TokenAmountFromEntity amount={change.amount} token={change.token} />,
+          amount: <TokenAmountFromEntity amount={amount.amount} token={token} />,
         }}
       />{' '}
       <span className={classes.usdValue}>{formatLargeUsd(amountUsd)}</span>
@@ -93,7 +114,7 @@ const ChangeRow = memo(function ChangeRow({ change }: ChangeRowProps) {
         t={t}
         i18nKey="Transact-Notice-Confirm-New"
         components={{
-          amount: <TokenAmountFromEntity amount={change.newAmount} token={change.token} />,
+          amount: <TokenAmountFromEntity amount={newAmount.amount} token={token} />,
         }}
       />{' '}
       <span className={classes.usdValue}>{`${formatLargeUsd(newAmountUsd)}`}</span>
@@ -104,11 +125,11 @@ const ChangeRow = memo(function ChangeRow({ change }: ChangeRowProps) {
         components={{
           amount: (
             <TokenAmountFromEntity
-              amount={change.difference}
-              token={change.token}
+              amount={difference.amount}
+              token={token}
               css={css.raw(
-                change.difference.gt(BIG_ZERO) && styles.positive,
-                change.difference.lt(BIG_ZERO) && styles.negative
+                difference.amount.gt(BIG_ZERO) && styles.positive,
+                difference.amount.lt(BIG_ZERO) && styles.negative
               )}
             />
           ),

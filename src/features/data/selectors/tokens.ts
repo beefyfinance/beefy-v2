@@ -25,6 +25,8 @@ import {
   selectVaultById,
   selectVaultByIdWithReceiptOrUndefined,
   selectVaultPricePerFullShare,
+  selectVaultPricePerFullShareOrUndefined,
+  selectVaultWithReceiptByAddressOrUndefined,
 } from './vaults.ts';
 import { selectIsAddressBookLoaded } from './data-loader/tokens.ts';
 
@@ -233,6 +235,7 @@ export const selectTokenPriceByTokenOracleId = (
   oracleId: TokenEntity['oracleId']
 ) => state.entities.tokens.prices.byOracleId[oracleId] || BIG_ZERO;
 
+/** Deposit price × ppfs, no decimals shift — only for apy.ts boost math; use selectVaultShareTokenPrice otherwise */
 export const selectVaultReceiptTokenPrice = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
@@ -249,6 +252,38 @@ export const selectVaultReceiptTokenPrice = (
     vault.depositTokenAddress
   );
   return depositTokenPrice.times(receiptTokenPPFS);
+};
+
+/** USD price of one share-token unit; ppfs is deposit-wei per share-wei, hence the decimals shift. BIG_ZERO until loaded. */
+export const selectVaultShareTokenPrice = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): BigNumber => {
+  const vault = selectVaultByIdWithReceiptOrUndefined(state, vaultId);
+  const ppfs = selectVaultPricePerFullShareOrUndefined(state, vaultId);
+  const shareToken =
+    vault && selectTokenByAddressOrUndefined(state, vault.chainId, vault.receiptTokenAddress);
+  const depositToken =
+    vault && selectTokenByAddressOrUndefined(state, vault.chainId, vault.depositTokenAddress);
+  if (!vault || !ppfs || !shareToken || !depositToken) {
+    return BIG_ZERO;
+  }
+  return selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress).times(
+    ppfs.shiftedBy(shareToken.decimals - depositToken.decimals)
+  );
+};
+
+/** Price by address; standard/erc4626 receipt tokens are repriced to their share value, since the base selector returns only the underlying price for them */
+export const selectTokenPriceByAddressReceiptAware = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  address: TokenEntity['address']
+): BigNumber => {
+  const vault = selectVaultWithReceiptByAddressOrUndefined(state, chainId, address);
+  if (vault && (vault.type === 'standard' || vault.type === 'erc4626')) {
+    return selectVaultShareTokenPrice(state, vault.id);
+  }
+  return selectTokenPriceByAddress(state, chainId, address);
 };
 
 export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEntity['oracleId']) =>

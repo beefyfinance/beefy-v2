@@ -16,8 +16,8 @@ import {
   selectErc20TokenByAddress,
   selectTokenByAddress,
 } from '../../selectors/tokens.ts';
-import { getVaultWithdrawnFromContract } from '../../apis/transact/helpers/vault.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
+import { resolveStandardWithdrawLive } from '../../apis/transact/helpers/ppfs-vault.ts';
 import { StandardVaultAbi } from '../../../../config/abi/StandardVaultAbi.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import type { Address } from 'viem';
@@ -89,7 +89,7 @@ export const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => 
   });
 };
 
-export const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) => {
+export const withdraw = (vault: VaultStandard, shareAmount: BigNumber, max: boolean) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -103,17 +103,16 @@ export const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boo
     const walletClient = await walletApi.getConnectedViemClient();
     const chain = selectChainById(state, vault.chainId);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-
-    const { sharesToWithdrawWei } = await getVaultWithdrawnFromContract(
-      {
-        token: depositToken,
-        amount: oracleAmount,
-        max,
-      },
-      vault,
+    const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
+    const sharesToWithdrawWei = toWei(shareAmount, shareToken.decimals);
+    // live deposit-token amount for tx-tracking; matches the zap path (fails fast on over-balance)
+    const { output } = await resolveStandardWithdrawLive(
       state,
+      { vault, depositToken, shareToken },
+      { token: shareToken, amount: shareAmount, max },
       address
     );
+    const oracleAmount = output.amount;
 
     const native = selectChainNativeToken(state, vault.chainId);
     const isNativeToken = depositToken.id === native.id;

@@ -3,7 +3,7 @@ import {
   isErc4626Vault,
   type VaultEntity,
 } from '../../entities/vault.ts';
-import type BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import {
   captureWalletErrors,
   selectVaultTokensToRefresh,
@@ -31,6 +31,7 @@ import { isTokenErc20 } from '../../entities/token.ts';
 import { Erc4626VaultAbi } from '../../../../config/abi/Erc4626VaultAbi.ts';
 import { selectUserVaultPendingWithdrawal } from '../../selectors/balance.ts';
 import { selectVaultById } from '../../selectors/vaults.ts';
+import { resolveErc4626WithdrawOutputLive } from '../../apis/transact/helpers/ppfs-vault.ts';
 import { formatTokenDisplay } from '../../../../helpers/format.ts';
 import { bigintRange } from '../../../../helpers/bigint.ts';
 import { readContract } from 'viem/actions';
@@ -122,7 +123,7 @@ async function checkSlashedNotRealized(
   }
 }
 
-export const requestRedeem = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => {
+export const requestRedeem = (vault: VaultEntity, shareAmount: BigNumber, max: boolean) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     if (!isErc4626AsyncWithdrawVault(vault)) {
@@ -139,6 +140,7 @@ export const requestRedeem = (vault: VaultEntity, oracleAmount: BigNumber, max: 
     if (!isTokenErc20(depositToken)) {
       throw new Error('Deposit token is not an ERC20 token');
     }
+    const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.contractAddress);
 
     const account = getAddress(address);
     const walletApi = await getWalletConnectionApi();
@@ -154,15 +156,23 @@ export const requestRedeem = (vault: VaultEntity, oracleAmount: BigNumber, max: 
 
     await checkSlashedNotRealized(contract, publicClient);
 
-    const wantedAssets = toWeiBigInt(oracleAmount, depositToken.decimals);
-    const [wantedShares, maxShares] = await Promise.all([
-      contract.read.convertToShares([wantedAssets]),
-      contract.read.balanceOf([account]),
-    ]);
+    const wantedShares = toWeiBigInt(shareAmount, shareToken.decimals);
+    // cap at on-chain balance to protect against state drift on async withdrawals
+    const maxShares = await contract.read.balanceOf([account]);
     const redeemShares =
       max ? maxShares
       : wantedShares > maxShares ? maxShares
       : wantedShares;
+
+    // live deposit-token amount for tx-tracking, based on the shares actually redeemed
+    const redeemSharesBn = new BigNumber(redeemShares.toString());
+    const oracleAmount = (
+      await resolveErc4626WithdrawOutputLive(
+        state,
+        { vault, depositToken, shareToken },
+        redeemSharesBn
+      )
+    ).amount;
 
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);

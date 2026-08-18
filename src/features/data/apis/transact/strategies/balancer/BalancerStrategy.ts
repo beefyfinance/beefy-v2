@@ -5,7 +5,6 @@ import {
   BIG_ZERO,
   bigNumberToStringDeep,
   compareBigNumber,
-  fromWei,
   fromWeiToTokenAmount,
   toWeiFromTokenAmount,
   toWeiString,
@@ -54,11 +53,11 @@ import {
   createQuoteId,
   createSelectionId,
   onlyOneInput,
+  onlyVaultShareInput,
   onlyOneTokenAmount,
 } from '../../helpers/options.ts';
 import { calculatePriceImpact, totalValueOfTokenAmounts, ZERO_FEE } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, includeWrappedAndNative, pickTokens } from '../../helpers/tokens.ts';
-import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { QuoteRequest, QuoteResponse } from '../../swap/ISwapProvider.ts';
 import {
@@ -261,7 +260,7 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
 
     const via = 'aggregator';
     const type = 'all';
-    const outputs = [this.vaultType.depositToken];
+    const outputs = [this.vaultType.shareToken];
 
     const supportedAggregatorTokens = await this.aggregatorTokensCanSwapToAllOf(
       this.allTokenOptions
@@ -300,7 +299,7 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
     }
 
     const type = 'single';
-    const outputs = [this.vaultType.depositToken];
+    const outputs = [this.vaultType.shareToken];
 
     const baseOptions = this.singleTokenOptions.map(viaToken => {
       const inputs = [viaToken];
@@ -459,7 +458,7 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
     });
 
     // Build quote outputs
-    const outputs: TokenAmount[] = [liquidity.output];
+    const outputs: TokenAmount[] = [this.vaultType.estimateDepositShares(liquidity.output)];
     const returned: TokenAmount[] = [];
 
     // Build quote
@@ -929,7 +928,7 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
     }
 
     const type = 'all';
-    const inputs = [this.vaultType.depositToken];
+    const inputs = [this.vaultType.shareToken];
 
     const breakSelectionId = createSelectionId(this.vault.chainId, this.poolTokens);
     const breakOption: BalancerWithdrawOption = {
@@ -987,7 +986,7 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
     }
 
     const type = 'single';
-    const inputs = [this.vaultType.depositToken];
+    const inputs = [this.vaultType.shareToken];
 
     const baseOptions = this.singleTokenOptions.map(viaToken => {
       const outputs = [viaToken];
@@ -1224,24 +1223,19 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
     inputs: InputTokenAmount[],
     option: BalancerWithdrawOption
   ): Promise<BalancerWithdrawQuote> {
-    const input = onlyOneInput(inputs);
-    if (input.amount.lte(BIG_ZERO)) {
-      throw new Error('Quote called with 0 input amount');
-    }
+    const input = onlyVaultShareInput(inputs, this.vaultType.shareToken);
     const { zap, getState } = this.helpers;
 
     // Common: Withdraw from vault
     const state = getState();
-    const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, this.vault, state);
-    const liquidityWithdrawn = fromWeiToTokenAmount(withdrawnAmountAfterFeeWei, withdrawnToken);
+    const liquidityWithdrawn = this.vaultType.estimateWithdrawOutput(input);
     const returned: TokenAmount[] = [];
 
     // Common: Token Allowances
     const allowances = [
       {
-        token: shareToken,
-        amount: fromWei(sharesToWithdrawWei, shareToken.decimals),
+        token: this.vaultType.shareToken,
+        amount: input.amount,
         spenderAddress: zap.manager,
       },
     ];
@@ -1505,6 +1499,7 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
     // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
     const dustOutputs: OrderOutput[] = pickTokens(
       vaultWithdraw.inputs,
+      vaultWithdraw.outputs,
       quote.outputs,
       quote.inputs,
       quote.returned,

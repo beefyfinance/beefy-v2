@@ -36,8 +36,13 @@ import {
   type TokenAmount as QuoteTokenAmount,
   type TransactQuote as TransactQuoteType,
 } from '../../../../../data/apis/transact/transact-types.ts';
+import {
+  areTokenAmountsEqual,
+  isTokenAmountEqual,
+} from '../../../../../data/apis/transact/helpers/tokens.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { isCowcentratedLikeVault, type VaultEntity } from '../../../../../data/entities/vault.ts';
+import { selectVaultSharesToDepositTokenData } from '../../../../../data/selectors/balance.ts';
 import {
   TransactMode,
   TransactStatus,
@@ -51,6 +56,8 @@ import {
   selectTransactQuoteStatus,
   selectTransactSelected,
   selectTransactSelectedChainId,
+  selectTokenAmountForDisplay,
+  selectTokenAmountsForDisplay,
   selectTransactSelectedQuote,
   selectTransactSelectedQuoteOrUndefined,
   selectTransactSelectedSelectionId,
@@ -147,9 +154,14 @@ export const TransactQuote = memo(function TransactQuote({
   const quote = useAppSelector(
     state => status === TransactStatus.Fulfilled && selectTransactSelectedQuoteOrUndefined(state)
   );
+  const vaultShares = useAppSelector(state =>
+    quote ? selectVaultSharesToDepositTokenData(state, quote.option.vaultId) : undefined
+  );
   const isTransformTitle = useMemo(
-    () => isCowcentratedLikeVault(vault) || (!!quote && quoteHasTransformation(quote)),
-    [vault, quote]
+    () =>
+      isCowcentratedLikeVault(vault) ||
+      (!!quote && !!vaultShares && quoteHasTransformation(quote, vaultShares)),
+    [vault, quote, vaultShares]
   );
 
   // single QuotePanel across all statuses so ReloadSpinner stays mounted and its click spin isn't lost
@@ -323,12 +335,17 @@ const QuoteLoaded = memo(function QuoteLoaded({ quote, effectiveQuote }: QuoteLo
   );
   const cowcentratedDepositQuote =
     isCowcentratedDepositQuote(effectiveQuote) ? effectiveQuote : null;
+  // receipt-token amounts render as their deposit-token equivalent
+  const displayOutputs = useAppSelector(
+    state => selectTokenAmountsForDisplay(state, quote.outputs, quote.option.vaultId),
+    areTokenAmountsEqual
+  );
 
   return (
     <>
       {cowcentratedDepositQuote ?
         <CowcentratedYouReceiveSection quote={cowcentratedDepositQuote} returned={returned} />
-      : <YouReceiveSection outputs={quote.outputs} returned={returned} />}
+      : <YouReceiveSection outputs={displayOutputs} returned={returned} />}
       {isZap ?
         <ZapRoute quote={quote} css={styles.route} />
       : null}
@@ -480,16 +497,20 @@ const CowcentratedYouReceiveSection = memo(function CowcentratedYouReceiveSectio
   returned,
 }: CowcentratedYouReceiveSectionProps) {
   const classes = useStyles();
-  const vault = useAppSelector(state => selectVaultById(state, quote.option.vaultId));
   const shares = quote.outputs[0];
-  const outputs = useMemo(() => [shares], [shares]);
+  // receipt-token share amounts render as their deposit-token equivalent
+  const displayShares = useAppSelector(
+    state => selectTokenAmountForDisplay(state, shares, quote.option.vaultId),
+    isTokenAmountEqual
+  );
+  const outputs = useMemo(() => [displayShares], [displayShares]);
 
   return (
     <YouReceiveCard outputs={outputs} returned={returned}>
       <TokenAmountIcon
-        amount={shares.amount}
-        chainId={shares.token.chainId}
-        tokenAddress={vault.depositTokenAddress}
+        amount={displayShares.amount}
+        chainId={displayShares.token.chainId}
+        tokenAddress={displayShares.token.address}
         variant="bare"
       />
       <CardDivider />

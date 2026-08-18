@@ -1,8 +1,9 @@
 import type BigNumber from 'bignumber.js';
 import { BIG_ZERO, compareBigNumber } from '../../../../../helpers/big-number.ts';
+import { isTokenEqual, type TokenEntity } from '../../../entities/token.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectVaultSharesToDepositTokenData } from '../../../selectors/balance.ts';
-import { selectTokenPriceByAddress } from '../../../selectors/tokens.ts';
+import { selectTokenPriceByAddressReceiptAware } from '../../../selectors/tokens.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { mooAmountToOracleAmount } from '../../../utils/ppfs.ts';
 import type { QuoteResponse } from '../swap/ISwapProvider.ts';
@@ -31,8 +32,11 @@ export function getEffectiveQuote(quote: TransactQuote): TransactQuote {
   return isVaultDestState(state) ? state.destQuote : quote;
 }
 
-/** false for any quote where there is exactly one matching input+output token else true*/
-export function quoteHasTransformation(quote: TransactQuote): boolean {
+/** false for any quote where there is exactly one matching input+output token else true; the vault's receipt token counts as its deposit token */
+export function quoteHasTransformation(
+  quote: TransactQuote,
+  vaultShares: { depositToken: TokenEntity; shareToken?: TokenEntity }
+): boolean {
   if (isCowcentratedDepositQuote(getEffectiveQuote(quote))) {
     return true;
   }
@@ -47,20 +51,21 @@ export function quoteHasTransformation(quote: TransactQuote): boolean {
   if (!firstInput || !firstOutput) {
     return false;
   }
-  return (
-    firstInput.token.address !== firstOutput.token.address ||
-    firstInput.token.chainId !== firstOutput.token.chainId
-  );
+  const { depositToken, shareToken } = vaultShares;
+  const inputToken =
+    shareToken && isTokenEqual(firstInput.token, shareToken) ? depositToken : firstInput.token;
+  const outputToken =
+    shareToken && isTokenEqual(firstOutput.token, shareToken) ? depositToken : firstOutput.token;
+  return inputToken.address !== outputToken.address || inputToken.chainId !== outputToken.chainId;
 }
 
-/** Convert a v2v source share amount to the deposit-token TokenAmount via ppfs (pass-through for vaults without a receipt token). */
+/** Convert a vault share amount to its deposit-token equivalent via ppfs; pass-through for vaults without a receipt token. */
 export function convertVaultShareToDepositTokenAmount(
   state: BeefyState,
   srcVaultId: VaultEntity['id'],
   shareAmount: BigNumber
 ): TokenAmount {
   const { depositToken, shareToken, ppfs } = selectVaultSharesToDepositTokenData(state, srcVaultId);
-  if (shareAmount.lte(BIG_ZERO)) return { token: depositToken, amount: BIG_ZERO };
   if (!shareToken) return { token: depositToken, amount: shareAmount };
   return {
     token: depositToken,
@@ -79,7 +84,11 @@ export function totalValueOfTokenAmounts(
     (sum, tokenAmount) =>
       sum.plus(
         tokenAmount.amount.multipliedBy(
-          selectTokenPriceByAddress(state, tokenAmount.token.chainId, tokenAmount.token.address)
+          selectTokenPriceByAddressReceiptAware(
+            state,
+            tokenAmount.token.chainId,
+            tokenAmount.token.address
+          )
         )
       ),
     BIG_ZERO
