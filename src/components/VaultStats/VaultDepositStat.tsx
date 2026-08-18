@@ -83,9 +83,11 @@ function selectVaultDepositStat(
     return { loading: true, hideBalance };
   }
 
-  // a merged CLM row sums deposits across the whole group; all members share the CLM token unit
+  // a merged CLM row sums deposits across the whole group; all members share the CLM token unit.
+  // The bare CLM is excluded: those tokens sit in the wallet, have no analytics timeline, and are
+  // absent from the PnL card — counting them here made Deposited contradict Now on the same screen
   const isGroup = isCowcentratedVault(vault);
-  const memberIds = isGroup ? [vault.id, ...getCowcentratedWrapperIds(vault)] : [vault.id];
+  const memberIds = isGroup ? getCowcentratedWrapperIds(vault) : [vault.id];
 
   const totalDeposit = memberIds.reduce(
     (sum, id) =>

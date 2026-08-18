@@ -9,6 +9,7 @@ import {
   isCowcentratedVault,
   isVaultActive,
   type VaultEntity,
+  getCowcentratedGroupIds,
 } from '../entities/vault.ts';
 import type { AvgApy, TotalApy } from '../reducers/apy-types.ts';
 import type { BeefyState } from '../store/types.ts';
@@ -24,7 +25,8 @@ import {
 import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from './boosts.ts';
 import { selectIsConfigAvailable } from './data-loader/config.ts';
 import { selectIsContractDataLoadedOnChain } from './data-loader/contract-data.ts';
-import { selectTokenPriceByAddress } from './tokens.ts';
+import { selectVaultActiveMerklCampaigns } from './rewards.ts';
+import { selectGovVaultEarnedTokens, selectTokenPriceByAddress } from './tokens.ts';
 import {
   selectVaultById,
   selectVaultByIdOrUndefined,
@@ -362,46 +364,119 @@ export const selectBoostApr = (state: BeefyState, boostId: string): number => {
   return state.biz.apy.rawApy.byBoostId[boostId]?.apr || 0;
 };
 
-export type ClmOtherSide = {
-  /** i18n key naming the side whose rate the row above is showing */
-  shownNameKey: string;
-  /** i18n key naming the side, shared with the deposit form's yield-mode toggle */
-  nameKey: string;
-  /** all-in yearly rate, boost-style components included */
-  rate: number;
-  type: 'apy' | 'apr';
-};
-
 /**
  * The side a merged CLM row is NOT showing, for the tooltip footer. `undefined` unless the group
  * has both sides live, so a single-sided CLM renders the same tooltip it always did.
  */
-export const selectClmOtherSide = (
+/**
+ * The group's reward streams split per stream, scaled to whatever the shown wrapper actually pays.
+ *
+ * Only the pool wrapper reports the split; the vault wrapper reports one aggregate `vaultApr` that
+ * folds Merkl in and is net of the performance fee, so reading it directly attributes Merkl to
+ * trading rewards. Taking the pool's proportions and scaling them to the shown side's aggregate
+ * keeps each stream attributed while the rows still reconcile with the total above them.
+ */
+export const selectClmRewardBreakdown = (
   state: BeefyState,
   vaultId: VaultEntity['id']
-): ClmOtherSide | undefined => {
+): { rewardPoolTradingApr: number; merklApr: number } | undefined => {
   const vault = selectVaultByIdOrUndefined(state, vaultId);
   if (!vault || !isCowcentratedLikeVault(vault)) {
     return undefined;
   }
+  const poolId = vault.cowcentratedIds.pool ?? vault.cowcentratedIds.pools[0];
+  if (!poolId) {
+    return undefined;
+  }
+  const poolApy = selectVaultTotalApyOrUndefined(state, poolId);
+  if (!poolApy) {
+    return undefined;
+  }
+  const trading = poolApy.rewardPoolTradingApr ?? 0;
+  const merkl = poolApy.merklApr ?? 0;
+  const gross = trading + merkl;
 
+  const shownApy = selectVaultTotalApyOrUndefined(state, vaultId);
+  const shownRewards =
+    vaultId === poolId ? gross
+      // the vault wrapper's single aggregate: the same streams, harvested and net of the fee
+    : (shownApy?.vaultApr ?? 0);
+  // gross of 0 means nothing to split, and the scale would be undefined
+  const scale = gross > 0 ? shownRewards / gross : 0;
+
+  return {
+    rewardPoolTradingApr: trading * scale,
+    merklApr: merkl * scale,
+  };
+};
+
+/**
+ * The user's own rate across a CLM group, as a DAILY figure, when they hold both wrappers.
+ *
+ * Daily is the only honest granularity here: both sides' `totalDaily` is a simple daily rate on the
+ * same principal, so a USD-weighted mean is exact. Annualising it would not be — one side compounds
+ * and the other does not, so a single blended APY would silently assert a reinvestment policy on
+ * the user's behalf. Returns undefined unless both sides are actually held.
+ */
+export const selectClmBlendedDaily = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+): number | undefined => {
+  const vault = selectVaultByIdOrUndefined(state, vaultId);
+  if (!vault || !isCowcentratedLikeVault(vault)) {
+    return undefined;
+  }
   const { pool, vault: vaultSide } = vault.cowcentratedIds;
   if (!pool || !vaultSide) {
     return undefined;
   }
 
-  // dashboard rows pass whichever side the user holds, so neither side is the shown one by
-  // default — name both from the vault actually passed in
-  const otherId = vault.id === pool ? vaultSide : pool;
-  const apy = selectVaultTotalApyOrUndefined(state, otherId);
-  if (!apy) {
+  const sides = [vaultSide, pool].map(id => ({
+    usd: selectUserVaultBalanceInUsdIncludingDisplaced(state, id, walletAddress),
+    daily: selectVaultTotalApyOrUndefined(state, id)?.totalDaily ?? 0,
+  }));
+  // one side only is not a blend; the rows already describe it
+  if (sides.some(side => side.usd.lte(BIG_ZERO))) {
     return undefined;
   }
 
+  const total = sides.reduce((sum, side) => sum.plus(side.usd), BIG_ZERO);
+  return sides
+    .reduce((sum, side) => sum.plus(side.usd.multipliedBy(side.daily)), BIG_ZERO)
+    .dividedBy(total)
+    .toNumber();
+};
+
+export const selectClmPayoutTokens = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): { compound: string[]; claim: string[] } | undefined => {
+  const vault = selectVaultByIdOrUndefined(state, vaultId);
+  if (!vault || !isCowcentratedLikeVault(vault)) {
+    return undefined;
+  }
+
+  // every active CLM has a pool wrapper (0 vault-only measured); a retired one still names tokens
+  const pool = vault.cowcentratedIds.pool ?? vault.cowcentratedIds.pools[0];
+  if (!pool) {
+    return undefined;
+  }
+
+  // gov-streamed rewards plus Merkl campaign tokens: some pools stream nothing themselves and
+  // pay only via Merkl (earnedTokenAddresses is empty), and campaigns can register against any
+  // member of the group
+  const claim = new Set(
+    selectGovVaultEarnedTokens(state, vault.chainId, pool).map(token => token.symbol)
+  );
+  for (const id of getCowcentratedGroupIds(vault)) {
+    for (const campaign of selectVaultActiveMerklCampaigns(state, id) ?? []) {
+      claim.add(campaign.rewardToken.symbol);
+    }
+  }
+
   return {
-    shownNameKey: otherId === pool ? 'Transact-ClmMode-Vault' : 'Transact-ClmMode-Pool',
-    nameKey: otherId === pool ? 'Transact-ClmMode-Pool' : 'Transact-ClmMode-Vault',
-    rate: apy.boostedTotalApy ?? apy.totalApy,
-    type: apy.totalType,
+    compound: vault.assetIds,
+    claim: [...claim],
   };
 };

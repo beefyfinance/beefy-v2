@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { transactInit } from '../../../data/actions/transact.ts';
 import {
   getCowcentratedWrapperIds,
@@ -7,11 +8,19 @@ import {
   type VaultEntity,
 } from '../../../data/entities/vault.ts';
 import { TransactMode } from '../../../data/reducers/wallet/transact-types.ts';
-import { selectHasUserDepositInVault } from '../../../data/selectors/balance.ts';
+import {
+  selectHasUserDepositInVault,
+  selectUserVaultBalanceInUsdIncludingDisplaced,
+} from '../../../data/selectors/balance.ts';
 import { selectTransactMode } from '../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
 import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
-import { clmModeToVaultId, type ClmMode, resolveClmMode } from './resolve-clm-mode.ts';
+import {
+  clmModeToVaultId,
+  type ClmMode,
+  pickClmPositionSide,
+  resolveClmMode,
+} from './resolve-clm-mode.ts';
 
 export type ClmModeContextValue = {
   clmId: VaultEntity['id'];
@@ -52,6 +61,20 @@ export function useClmModeController(vaultId: VaultEntity['id']): ClmModeContext
   const heldPool = useAppSelector(
     state => !!ids && ids.pools.some(id => selectHasUserDepositInVault(state, id))
   );
+  // withdraw takes from a position, so it opens on the side holding the most — the deposit
+  // default would otherwise land a both-sides holder on whichever side product prefers, however
+  // little is in it. Returns a plain string, so no selector equality fn is needed.
+  const heldSide = useAppSelector(state => {
+    if (!ids) {
+      return undefined;
+    }
+    const totalUsd = (memberIds: string[]) =>
+      memberIds.reduce(
+        (sum, id) => sum.plus(selectUserVaultBalanceInUsdIncludingDisplaced(state, id)),
+        BIG_ZERO
+      );
+    return pickClmPositionSide(totalUsd(ids.vaults), totalUsd(ids.pools));
+  });
   const transactMode = useAppSelector(selectTransactMode);
   const isWithdraw = transactMode === TransactMode.Withdraw;
   // withdrawing the whole of a picked side leaves that pick unselectable, and the selector then
@@ -63,7 +86,11 @@ export function useClmModeController(vaultId: VaultEntity['id']): ClmModeContext
       : undefined
     : pickedDeposit;
   // until the user picks, both tabs re-derive from balances as they load
-  const mode = picked ?? (ids ? resolveClmMode(ids, heldVault, heldPool, isWithdraw) : 'vault');
+  const mode =
+    picked ??
+    (isWithdraw && heldSide ? heldSide
+    : ids ? resolveClmMode(ids, heldVault, heldPool, isWithdraw)
+    : 'vault');
 
   const setMode = useCallback(
     (next: ClmMode, tab?: TransactMode) => {

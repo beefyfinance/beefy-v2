@@ -36,6 +36,15 @@ describe('resolveClmMode', () => {
     expect(resolveClmMode(vaultRetired, true, false, true)).toBe('vault');
   });
 
+  it('sends withdraw to the larger position, not the deposit default', () => {
+    // holding both sides skips resolveClmMode's follow-the-money branch entirely, so withdraw
+    // has to pick by size or a $5 vault position hides a $5,000 pool one
+    expect(pickClmPositionSide(new BigNumber(5), new BigNumber(5000))).toBe('pool');
+    expect(pickClmPositionSide(new BigNumber(5000), new BigNumber(5))).toBe('vault');
+    // and the deposit default is the opposite answer for the same holdings
+    expect(resolveClmMode(bothActive, true, true, false)).toBe('vault');
+  });
+
   it('defaults to autocompounding when the user holds both or neither', () => {
     expect(resolveClmMode(bothActive, true, true, false)).toBe('vault');
     expect(resolveClmMode(bothActive, false, false, false)).toBe('vault');

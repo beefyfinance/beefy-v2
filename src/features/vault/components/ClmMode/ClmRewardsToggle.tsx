@@ -2,10 +2,12 @@ import { css, type CssStyles } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { formatTokenList } from '../../../../helpers/format.ts';
 import { useLocalStorageBoolean } from '../../../../helpers/useLocalStorageBoolean.ts';
 import CheckBoxIcon from '../../../../images/icons/CheckBox.svg?react';
 import CheckBoxBlankIcon from '../../../../images/icons/CheckBoxBlank.svg?react';
 import ExpandMoreIcon from '../../../../images/icons/mui/ExpandMore.svg?react';
+import { selectClmPayoutTokens } from '../../../data/selectors/apy.ts';
 import { selectIsStepperStepping } from '../../../data/selectors/stepper.ts';
 import { selectTransactExecuting } from '../../../data/selectors/transact.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
@@ -33,6 +35,10 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
   const [seen, setSeen] = useLocalStorageBoolean(SEEN_STORAGE_KEY, false);
   const [expanded, setExpanded] = useState(() => !seen);
   const isExecuting = useAppSelector(selectTransactExecuting);
+  // name what each side pays out in: users choose an asset, not a mechanism
+  const payout = useAppSelector(state =>
+    clmMode ? selectClmPayoutTokens(state, clmMode.clmId) : undefined
+  );
   const isStepping = useAppSelector(selectIsStepperStepping);
 
   useEffect(() => {
@@ -60,10 +66,21 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
   const checked = variant === 'info' || clmMode.mode === 'vault';
   const busy = isExecuting || isStepping;
   const title = variant === 'info' ? 'Transact-ClmRewards-Info' : 'Transact-ClmRewards-Option';
+  // fees-only groups have no claim token to name; fall back to the generic wording
+  const hasRewardToken = !!payout && payout.claim.length > 0;
   const subLine =
-    variant === 'info' ? 'Transact-ClmRewards-Info-Note'
-    : checked ? 'Transact-ClmRewards-On-Note'
-    : 'Transact-ClmRewards-Off-Note';
+    variant === 'info' ?
+      hasRewardToken ? 'Transact-ClmRewards-Info-Note'
+      : 'Transact-ClmRewards-Info-Note-Generic'
+    : checked ?
+      hasRewardToken ? 'Transact-ClmRewards-On-Note'
+      : 'Transact-ClmRewards-On-Note-Generic'
+    : hasRewardToken ? 'Transact-ClmRewards-Off-Note'
+    : 'Transact-ClmRewards-Off-Note-Generic';
+  const tokens = {
+    position: payout?.compound.join('-') ?? '',
+    reward: payout ? formatTokenList(payout.claim) : '',
+  };
 
   // identical in both variants, so the title starts at the same offset whether the glyph sits in
   // an interactive halo beside the disclosure or inside it
@@ -75,7 +92,7 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
           <ExpandMoreIcon />
         </Chevron>
       </TitleRow>
-      {expanded ? null : <SubLine>{t(subLine)}</SubLine>}
+      {expanded ? null : <SubLine>{t(subLine, tokens)}</SubLine>}
     </Column>
   );
 
@@ -126,17 +143,33 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
           <Expansion>
             {variant === 'info' ?
               <>
-                <p>{t('Transact-ClmRewards-Info-Explainer')}</p>
+                <p>
+                  {t(
+                    hasRewardToken ?
+                      'Transact-ClmRewards-Info-Explainer'
+                    : 'Transact-ClmRewards-Info-Explainer-Generic',
+                    tokens
+                  )}
+                </p>
                 <p>{t('Transact-ClmRewards-Info-Explainer-2')}</p>
               </>
             : <>
                 <p>{t('Transact-ClmRewards-Explainer')}</p>
                 <p>
-                  <Lead>{t('Transact-ClmRewards-On')}</Lead> {t('Transact-ClmRewards-Explainer-On')}
+                  {t(
+                    hasRewardToken ?
+                      'Transact-ClmRewards-Explainer-On'
+                    : 'Transact-ClmRewards-Explainer-On-Generic',
+                    tokens
+                  )}
                 </p>
                 <p>
-                  <Lead>{t('Transact-ClmRewards-Off')}</Lead>{' '}
-                  {t('Transact-ClmRewards-Explainer-Off')}
+                  {t(
+                    hasRewardToken ?
+                      'Transact-ClmRewards-Explainer-Off'
+                    : 'Transact-ClmRewards-Explainer-Off-Generic',
+                    tokens
+                  )}
                 </p>
               </>
             }
@@ -320,12 +353,5 @@ const Expansion = styled('div', {
     paddingInlineStart: '44px',
     paddingInlineEnd: '12px',
     paddingBlockEnd: '12px',
-  },
-});
-
-/** the "On"/"Off" lead-in, emphasised against the sentence it introduces */
-const Lead = styled('span', {
-  base: {
-    color: 'text.light',
   },
 });

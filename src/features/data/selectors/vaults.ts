@@ -562,19 +562,6 @@ export const selectVaultIdForVaultPage = createSelector(
     return vault.id;
   }
 );
-/**
- * Whether harvests — and so a performance fee — can happen against this position. False only for a
- * CLM group with no active vault wrapper: nothing harvests there, so quoting a performance fee on
- * it would be untrue. Non-CLM vaults are unaffected.
- */
-export const selectVaultHasPerformanceFee = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-): boolean => {
-  const vault = selectVaultByIdOrUndefined(state, vaultId);
-  return !vault || !isCowcentratedLikeVault(vault) || !!vault.cowcentratedIds.vault;
-};
-
 /** the CLM a wrapper belongs to, so two ids can be tested for being sides of one product */
 export const selectClmGroupIdOrUndefined = (
   state: BeefyState,
