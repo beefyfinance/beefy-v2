@@ -1,11 +1,13 @@
 import { css, cx } from '@repo/styles/css';
 import { forwardRef, memo, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { type Components, type ListProps, Virtuoso } from 'react-virtuoso';
 import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { selectChainByIdOrUndefined } from '../../../../../data/selectors/chains.ts';
 import {
+  selectSimplifiedAllVaultIdsByTvl,
   selectSimplifiedChainIdsByTvl,
   selectSimplifiedVaultIdsByTvl,
 } from '../../../../../data/selectors/simplified-vaults.ts';
@@ -13,56 +15,97 @@ import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { Vault } from '../../../Vault/Vault.tsx';
 import { useVaultListHeight } from './hooks.ts';
 
+/** sentinel for the "All" step, which is not a chain */
+const ALL_CHAINS = 'all';
+const EMPTY_IDS: readonly string[] = Object.freeze([]);
+type StepValue = ChainEntity['id'] | typeof ALL_CHAINS;
+
 export type ChainVaultsPanelProps = {
   assetKey: string;
 };
 
 /**
- * Step 2 (which chain) and step 3 (which vault) share one panel with a fixed height, so switching
- * chains never moves the rows below it.
+ * Step 2 (which chain) and step 3 (which vault) are one panel. The list is sized to the vaults it
+ * actually holds, up to 3 rows, so a one-vault chain leaves no dead space below it.
  */
 export const ChainVaultsPanel = memo(function ChainVaultsPanel({
   assetKey,
 }: ChainVaultsPanelProps) {
   const chainIds = useAppSelector(state => selectSimplifiedChainIdsByTvl(state, assetKey));
-  const [selectedChainId, setSelectedChainId] = useState<ChainEntity['id'] | undefined>(
-    chainIds[0]
-  );
+  const [selected, setSelected] = useState<StepValue>(ALL_CHAINS);
 
-  // the richest chain is preselected; re-point if the chain list changes under us
+  // a chain can disappear under a filter change while it is the active step
   useEffect(() => {
-    if (chainIds.length && (!selectedChainId || !chainIds.includes(selectedChainId))) {
-      setSelectedChainId(chainIds[0]);
-    }
-  }, [chainIds, selectedChainId]);
+    setSelected(current =>
+      current === ALL_CHAINS || chainIds.includes(current) ? current : ALL_CHAINS
+    );
+  }, [chainIds]);
 
-  const listHeight = useVaultListHeight();
+  const allVaultIds = useAppSelector(state => selectSimplifiedAllVaultIdsByTvl(state, assetKey));
+  const chainVaultIds = useAppSelector(state =>
+    selected === ALL_CHAINS ?
+      (EMPTY_IDS as VaultEntity['id'][])
+    : selectSimplifiedVaultIdsByTvl(state, assetKey, selected)
+  );
+  const vaultIds = selected === ALL_CHAINS ? allVaultIds : chainVaultIds;
+  const listHeight = useVaultListHeight(Math.min(vaultIds.length, 3));
 
-  if (!chainIds.length) {
+  // one chain means the step row is just a label for the only option
+  const showSteps = chainIds.length > 1;
+
+  if (!vaultIds.length) {
     return null;
   }
 
   return (
     <div className={panelCss}>
-      <div className={stepsScrollCss}>
-        <div className={stepsCss}>
-          {chainIds.map(chainId => (
-            <ChainStep
-              key={chainId}
-              assetKey={assetKey}
-              chainId={chainId}
-              selected={chainId === selectedChainId}
-              onSelect={setSelectedChainId}
+      {showSteps ?
+        <div className={stepsScrollCss}>
+          <div className={stepsCss}>
+            <AllStep
+              count={allVaultIds.length}
+              selected={selected === ALL_CHAINS}
+              onSelect={setSelected}
             />
-          ))}
+            {chainIds.map(chainId => (
+              <ChainStep
+                key={chainId}
+                assetKey={assetKey}
+                chainId={chainId}
+                selected={chainId === selected}
+                onSelect={setSelected}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      : null}
       <div className={listCss} style={{ height: listHeight }}>
-        {selectedChainId ?
-          <VaultList assetKey={assetKey} chainId={selectedChainId} height={listHeight} />
-        : null}
+        <VaultList vaultIds={vaultIds} height={listHeight} />
       </div>
     </div>
+  );
+});
+
+type AllStepProps = {
+  count: number;
+  selected: boolean;
+  onSelect: (value: StepValue) => void;
+};
+
+const AllStep = memo(function AllStep({ count, selected, onSelect }: AllStepProps) {
+  const { t } = useTranslation();
+  const handleClick = useCallback(() => onSelect(ALL_CHAINS), [onSelect]);
+
+  return (
+    <button
+      type="button"
+      className={cx(stepCss, selected ? stepSelectedCss : undefined)}
+      onClick={handleClick}
+      aria-pressed={selected}
+    >
+      <span>{t('Simplified-AllChains')}</span>
+      <span className={stepCountCss}>{count}</span>
+    </button>
   );
 });
 
@@ -70,7 +113,7 @@ type ChainStepProps = {
   assetKey: string;
   chainId: ChainEntity['id'];
   selected: boolean;
-  onSelect: (chainId: ChainEntity['id']) => void;
+  onSelect: (value: StepValue) => void;
 };
 
 const ChainStep = memo(function ChainStep({
@@ -82,6 +125,7 @@ const ChainStep = memo(function ChainStep({
   const chain = useAppSelector(state => selectChainByIdOrUndefined(state, chainId));
   const vaultIds = useAppSelector(state => selectSimplifiedVaultIdsByTvl(state, assetKey, chainId));
   const handleClick = useCallback(() => onSelect(chainId), [onSelect, chainId]);
+  const name = chain?.name || chainId;
 
   return (
     <button
@@ -89,9 +133,11 @@ const ChainStep = memo(function ChainStep({
       className={cx(stepCss, selected ? stepSelectedCss : undefined)}
       onClick={handleClick}
       aria-pressed={selected}
+      // the logo carries the identity; the name stays for screen readers and native tooltips
+      aria-label={name}
+      title={name}
     >
       <ChainIcon chainId={chainId} size={20} />
-      <span>{chain?.name || chainId}</span>
       <span className={stepCountCss}>{vaultIds.length}</span>
     </button>
   );
@@ -106,16 +152,12 @@ function itemKey(_index: number, vaultId: VaultEntity['id']) {
 }
 
 const VaultList = memo(function VaultList({
-  assetKey,
-  chainId,
+  vaultIds,
   height,
 }: {
-  assetKey: string;
-  chainId: ChainEntity['id'];
+  vaultIds: VaultEntity['id'][];
   height: number;
 }) {
-  const vaultIds = useAppSelector(state => selectSimplifiedVaultIdsByTvl(state, assetKey, chainId));
-
   return (
     <Virtuoso
       data={vaultIds}

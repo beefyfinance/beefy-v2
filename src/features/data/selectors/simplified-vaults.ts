@@ -183,13 +183,6 @@ const selectSimplifiedTotals = createSelector(
   }
 );
 
-/**
- * How many assets the simplified list shows when no search is active. Counting LP legs there are
- * ~341 assets with an active vault, most with a single vault — a shortlist is the whole point of
- * the view. Search still spans every asset.
- */
-export const SIMPLIFIED_ASSET_LIMIT = 12;
-
 /** Derived set: every asset with an active vault, richest first */
 export const selectSimplifiedAssetKeysByTvl = createSelector(
   selectSimplifiedAssetIndex,
@@ -240,6 +233,26 @@ export const selectSimplifiedVaultIdsByTvl = createCachedSelector(
       );
   }
 )((_state: BeefyState, assetKey: string, chainId: ChainEntity['id']) => `${assetKey}:${chainId}`);
+
+/** Every vault for this asset across all chains, richest first — backs the "All" chain step */
+export const selectSimplifiedAllVaultIdsByTvl = createCachedSelector(
+  selectSimplifiedAssetIndex,
+  (state: BeefyState) => state.biz.tvl.byVaultId,
+  (_state: BeefyState, assetKey: string) => assetKey,
+  (index, byVaultId, assetKey) => {
+    const chains = index.byAsset[assetKey];
+    if (!chains) {
+      return EMPTY_ARRAY as unknown as VaultEntity['id'][];
+    }
+    const ids = Object.values(chains).flatMap(chainIds => chainIds || []);
+    if (!ids.length) {
+      return EMPTY_ARRAY as unknown as VaultEntity['id'][];
+    }
+    return ids.sort(
+      (a, b) => (byVaultId[b]?.tvl || BIG_ZERO).comparedTo(byVaultId[a]?.tvl || BIG_ZERO) ?? 0
+    );
+  }
+)((_state: BeefyState, assetKey: string) => assetKey);
 
 /** Aggregate TVL across every vault holding this asset */
 export const selectSimplifiedAssetTvl = createCachedSelector(

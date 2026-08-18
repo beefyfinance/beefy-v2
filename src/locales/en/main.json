@@ -106,6 +106,7 @@
   "Simplified-ChainCount": "{{count}} chain",
   "Simplified-ChainCount_plural": "{{count}} chains",
   "Simplified-Stables": "Stables",
+  "Simplified-AllChains": "All",
   "Filter-Sort": "Sort by:",
   "Filter-SortDefault": "Date",
   "Filter-SortApy": "APY",

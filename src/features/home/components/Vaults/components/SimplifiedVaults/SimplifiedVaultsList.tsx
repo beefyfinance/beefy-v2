@@ -2,10 +2,7 @@ import { css } from '@repo/styles/css';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { selectFilterSearchText } from '../../../../../data/selectors/filtered-vaults.ts';
-import {
-  SIMPLIFIED_ASSET_LIMIT,
-  selectSimplifiedAssetKeysByTvl,
-} from '../../../../../data/selectors/simplified-vaults.ts';
+import { selectSimplifiedAssetKeysByTvl } from '../../../../../data/selectors/simplified-vaults.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { AssetRow } from './AssetRow.tsx';
 
@@ -15,12 +12,9 @@ export const SimplifiedVaultsList = memo(function SimplifiedVaultsList() {
   const searchText = useAppSelector(selectFilterSearchText);
   const [openAssetKey, setOpenAssetKey] = useState<string | undefined>(undefined);
 
-  // unsearched the list is a shortlist of the richest assets; search reaches all of them
   const visibleKeys = useMemo(() => {
     const needle = searchText.trim().toLowerCase();
-    return needle ?
-        assetKeys.filter(key => key.toLowerCase().includes(needle))
-      : assetKeys.slice(0, SIMPLIFIED_ASSET_LIMIT);
+    return needle ? assetKeys.filter(key => key.toLowerCase().includes(needle)) : assetKeys;
   }, [assetKeys, searchText]);
 
   const handleToggle = useCallback(
