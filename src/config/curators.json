@@ -154,5 +154,12 @@
     "description": "Avantgarde is a DeFi-native asset manager and advisory firm providing treasury management and digital-asset investment strategies for DAOs and institutions, and is known as a founding team behind Enzyme.",
     "website": "https://avantgarde.finance/",
     "twitter": "https://x.com/avantgardefi"
+  },
+  {
+    "id": "armitage",
+    "name": "Armitage by Wintermute",
+    "description": "A new standard for vault curation. Armitage curates onchain vaults, managing risk and earning yield for depositors backed by 9 years of active trading.",
+    "website": "https://armitage.wintermute.com/",
+    "twitter": "https://x.com/wintermute_t"
   }
 ]

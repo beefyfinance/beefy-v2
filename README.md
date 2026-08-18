@@ -34,4 +34,4 @@ Beefy.com exists thanks to its contributors. There are many ways you can partici
 
 ## License
 
-[MIT](LICENSE)  
+[MIT](LICENSE) 
