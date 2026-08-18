@@ -33,7 +33,7 @@ export const approve = (token: TokenErc20, spenderAddress: string, amount: BigNu
     const amountWei = toWei(amount, token.decimals);
     const approvalAmountWei = amountWei.gt(MIN_APPROVAL_AMOUNT) ? amountWei : MIN_APPROVAL_AMOUNT;
     const chain = selectChainById(state, token.chainId);
-    const gasPrices = await getGasPriceOptions(chain);
+    const gasPrices = await getGasPriceOptions(chain, 'approval');
 
     txWallet(dispatch);
     const transaction = viemContract.write.approve(
