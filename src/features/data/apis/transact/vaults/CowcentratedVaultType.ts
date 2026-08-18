@@ -24,6 +24,7 @@ import { selectVaultStrategyAddress } from '../../../selectors/vaults.ts';
 import type { BeefyStateFn } from '../../../store/types.ts';
 import { BeefyCLMPool } from '../../beefy/beefy-clm-pool.ts';
 import { slipAllBy } from '../helpers/amounts.ts';
+import { getCowcentratedDepositTokenInsertIndex } from '../helpers/cowcentrated-zap.ts';
 import {
   createOptionId,
   createQuoteId,
@@ -54,6 +55,58 @@ import type {
   VaultWithdrawRequest,
   VaultWithdrawResponse,
 } from './IVaultType.ts';
+
+export function buildCowcentratedZapDepositTx(
+  clmAddress: string,
+  amountA: BigNumber,
+  amountB: BigNumber,
+  minShares: BigNumber,
+  tokenA: string,
+  tokenB: string,
+  insertBalance: boolean
+): ZapStep {
+  return {
+    target: clmAddress,
+    value: '0',
+    data: encodeFunctionData({
+      abi: [
+        {
+          type: 'function',
+          name: 'deposit',
+          constant: false,
+          payable: false,
+          inputs: [
+            {
+              name: '_amount0',
+              type: 'uint256',
+            },
+            {
+              name: '_amount1',
+              type: 'uint256',
+            },
+            {
+              name: '_minShares',
+              type: 'uint256',
+            },
+          ],
+          stateMutability: 'nonpayable',
+          outputs: [],
+        },
+      ] as const satisfies Abi,
+      args: [bigNumberToBigInt(amountA), bigNumberToBigInt(amountB), bigNumberToBigInt(minShares)],
+    }),
+    tokens: [
+      {
+        token: tokenA,
+        index: getCowcentratedDepositTokenInsertIndex(tokenA, 0, insertBalance),
+      },
+      {
+        token: tokenB,
+        index: getCowcentratedDepositTokenInsertIndex(tokenB, 1, insertBalance),
+      },
+    ],
+  };
+}
 
 export class CowcentratedVaultType implements ICowcentratedVaultType {
   public readonly id = 'cowcentrated';
@@ -383,51 +436,15 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     tokenB: string,
     insertBalance: boolean
   ): ZapStep {
-    return {
-      target: clmAddress,
-      value: '0',
-      data: encodeFunctionData({
-        abi: [
-          {
-            type: 'function',
-            name: 'deposit',
-            constant: false,
-            payable: false,
-            inputs: [
-              {
-                name: '_amount0',
-                type: 'uint256',
-              },
-              {
-                name: '_amount1',
-                type: 'uint256',
-              },
-              {
-                name: '_minShares',
-                type: 'uint256',
-              },
-            ],
-            stateMutability: 'nonpayable',
-            outputs: [],
-          },
-        ] as const satisfies Abi,
-        args: [
-          bigNumberToBigInt(amountA),
-          bigNumberToBigInt(amountB),
-          bigNumberToBigInt(minShares),
-        ],
-      }),
-      tokens: [
-        {
-          token: tokenA,
-          index: insertBalance ? getInsertIndex(0) : -1,
-        },
-        {
-          token: tokenB,
-          index: insertBalance ? getInsertIndex(1) : -1,
-        },
-      ],
-    };
+    return buildCowcentratedZapDepositTx(
+      clmAddress,
+      amountA,
+      amountB,
+      minShares,
+      tokenA,
+      tokenB,
+      insertBalance
+    );
   }
 
   protected buildZapWithdrawTx(

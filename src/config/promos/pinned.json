@@ -1,5 +1,6 @@
 [
   {
+    "exclude": ["aerodrome-cow-base-usdc-googlc-vault"],
     "conditions": [
       {
         "type": "boosted"

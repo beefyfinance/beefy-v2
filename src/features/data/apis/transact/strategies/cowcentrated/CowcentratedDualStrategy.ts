@@ -35,7 +35,8 @@ import {
 } from '../../helpers/options.ts';
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
-import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
+import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
+import { getCowcentratedDepositTokenInsertIndex } from '../../helpers/cowcentrated-zap.ts';
 import type { QuoteRequest } from '../../swap/ISwapProvider.ts';
 import {
   type CowcentratedDualZapDepositOption,
@@ -604,11 +605,11 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
       tokens: [
         {
           token: tokenA,
-          index: insertBalance ? getInsertIndex(0) : -1,
+          index: getCowcentratedDepositTokenInsertIndex(tokenA, 0, insertBalance),
         },
         {
           token: tokenB,
-          index: insertBalance ? getInsertIndex(1) : -1,
+          index: getCowcentratedDepositTokenInsertIndex(tokenB, 1, insertBalance),
         },
       ],
     };

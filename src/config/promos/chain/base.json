@@ -1,5 +1,27 @@
 [
   {
+    "id": "moo_aerodrome-usdc-googlc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-usdc-googlc-vault",
+    "assets": ["USDC", "GOOGLc"],
+    "tokenAddress": "0xc71f9270d046a7978088C913E16E7d5d8d772E7B",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x7B182e7b37F38A9d167F3f5a45E22c4f4E5770f8",
+    "status": "active",
+    "campaign": "coinbase-stocks",
+    "partners": ["coinbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
     "id": "moo_aerodrome-synd-weth",
     "title": "Beefy",
     "vaultId": "aerodrome-synd-weth",

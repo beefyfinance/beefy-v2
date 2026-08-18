@@ -1,8 +1,8 @@
 {
+  "aerodrome-cow-base-usdc-googlc-vault": true,
   "yb-wbtc": true,
   "aavev4-avax-usdt": true,
   "aavev4-avax-usdc": true,
-  "up33-cow-robinhood-cashcat-weth-vault": true,
   "uniswap-cow-robinhood-frong-weth-rp": true,
   "uniswap-cow-robinhood-cashcat-usdg-rp": true,
   "uniswap-cow-robinhood-stonkbroker-weth-rp": true,

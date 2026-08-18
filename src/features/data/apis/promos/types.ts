@@ -17,6 +17,8 @@ export type PinnedConfigCondition = PinnedConfigConditionTime | PinnedConfigCond
 export type PinnedConfig = {
   /** vault id, or array of vault ids, undefined = all vaults */
   id?: string | string[];
+  /** vault id, or array of vault ids, to exclude from this config */
+  exclude?: string | string[];
   /** all conditions must match, or only one of them [default: all] */
   mode?: 'all' | 'any';
   /** conditions to match according to mode, undefined = match */

@@ -227,14 +227,22 @@ export const promosRecalculatePinned = createAppAsyncThunk<FulfilledVaultsPinned
             allVaultIds.includes(id)
           )
         : allVaultIds;
-      if (!ids.length) {
+      const excludedIds = new Set(
+        config.exclude ?
+          Array.isArray(config.exclude) ?
+            config.exclude
+          : [config.exclude]
+        : []
+      );
+      const eligibleIds = ids.filter(id => !excludedIds.has(id));
+      if (!eligibleIds.length) {
         console.warn(`No active vaults found for pinned config`, config);
         continue;
       }
       const matching = new Set<string>();
       const mode = config.mode || 'all';
 
-      for (const id of ids) {
+      for (const id of eligibleIds) {
         // already pinned by another condition
         if (byId[id]) {
           continue;
