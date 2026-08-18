@@ -1,5 +1,27 @@
 [
   {
+    "id": "moo_aerodrome-usdc-aaplc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-usdc-aaplc-vault",
+    "assets": ["USDC", "AAPLC"],
+    "tokenAddress": "0x66Cf69C5b780240B1Eb1879020453D81B1c816DA",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x0fE57B19d4De620e4696d6e82d78FF3844Fc117a",
+    "status": "active",
+    "campaign": "coinbase-stocks",
+    "partners": ["coinbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
     "id": "moo_aerodrome-usdc-googlc",
     "title": "Beefy",
     "vaultId": "aerodrome-cow-base-usdc-googlc-vault",
@@ -8,6 +30,50 @@
     "type": "boost",
     "version": 2,
     "contractAddress": "0x7B182e7b37F38A9d167F3f5a45E22c4f4E5770f8",
+    "status": "active",
+    "campaign": "coinbase-stocks",
+    "partners": ["coinbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-usdc-nvdac",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-usdc-nvdac-vault",
+    "assets": ["USDC", "NVDAc"],
+    "tokenAddress": "0x0cbE68943519ebbeb024F20e85DB39f6B51a29ED",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xB1cec45FA9a930400d3Bb25092b9455d29527f9f",
+    "status": "active",
+    "campaign": "coinbase-stocks",
+    "partners": ["coinbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-usdc-metac",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-usdc-metac-vault",
+    "assets": ["USDC", "METAc"],
+    "tokenAddress": "0xB6E0d141475BCfA210055b0e90C1AcDCB8fC06E8",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x63eAa64cFA3D4CCa4Ffe93C596095740e27615c8",
     "status": "active",
     "campaign": "coinbase-stocks",
     "partners": ["coinbase"],
