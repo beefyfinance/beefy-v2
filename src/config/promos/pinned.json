@@ -1,6 +1,11 @@
 [
   {
-    "exclude": ["aerodrome-cow-base-usdc-googlc-vault"],
+    "exclude": [
+      "aerodrome-cow-base-usdc-aaplc-vault",
+      "aerodrome-cow-base-usdc-googlc-vault",
+      "aerodrome-cow-base-usdc-nvdac-vault",
+      "aerodrome-cow-base-usdc-metac-vault"
+    ],
     "conditions": [
       {
         "type": "boosted"
