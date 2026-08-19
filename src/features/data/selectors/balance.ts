@@ -76,8 +76,9 @@ export const selectWalletBalanceByAddress = createCachedSelector(
 )((_state: BeefyState, walletAddress: string) => walletAddress);
 
 export const selectAllTokenWhereUserCouldHaveBalance = createSelector(
-  (state: BeefyState, chainId: ChainEntity['id']) => selectTokensByChainId(state, chainId),
-  tokens => tokens.interestingBalanceTokenAddresses
+  (state: BeefyState, chainId: ChainEntity['id']) =>
+    selectTokensByChainId(state, chainId).interestingBalanceTokenAddresses,
+  addresses => Object.keys(addresses)
 );
 
 export const selectHasWalletBalanceBeenFetched = (state: BeefyState, walletAddress: string) => {
