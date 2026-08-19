@@ -1,4 +1,4 @@
-import { encodeFunctionData, type Address } from 'viem';
+import type { Address } from 'viem';
 import { uniqBy } from 'lodash-es';
 import { BeefyZapRouterAbi } from '../../../../config/abi/BeefyZapRouterAbi.ts';
 import { ZERO_ADDRESS } from '../../../../helpers/addresses.ts';
@@ -107,17 +107,7 @@ export const zapExecuteOrder = (
     };
 
     txWallet(dispatch);
-    const executeOrderCalldata = encodeFunctionData({
-      abi: BeefyZapRouterAbi,
-      functionName: 'executeOrder',
-      args: [castedOrder, castedSteps],
-    });
-    console.debug('executeOrder', {
-      order: castedOrder,
-      steps: castedSteps,
-      options,
-      calldata: executeOrderCalldata,
-    });
+    console.debug('executeOrder', { order: castedOrder, steps: castedSteps, options });
     const transaction = contract.write.executeOrder([castedOrder, castedSteps], options);
 
     bindTransactionEvents(

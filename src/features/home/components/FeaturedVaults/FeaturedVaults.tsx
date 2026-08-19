@@ -7,9 +7,9 @@ import { FeaturedVaultCard } from '../FeaturedVaultCard/FeaturedVaultCard.tsx';
 import { selectFeaturedVaultIds } from '../../../data/selectors/featured-vaults.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 
-// Keep the first configured spotlight vault fixed, then rotate the rest on a time cadence.
-// Deterministic within a window (stable on reload, same for everyone), frozen per mount so
-// cards never re-order mid-read.
+// Reshuffle the featured order on a time cadence so revisits lead with a different set,
+// spreading prime visibility across all featured vaults. Deterministic within a window
+// (stable on reload, same for everyone), frozen per mount so cards never re-order mid-read.
 const ROTATION_PERIOD_SECONDS = 60;
 
 const DRAG_THRESHOLD_PX = 5;
@@ -29,11 +29,10 @@ export const FeaturedVaults = memo(function FeaturedVaults() {
   const { t } = useTranslation();
   const featuredIds = useAppSelector(selectFeaturedVaultIds);
   const [seed] = useState(() => Math.floor(Date.now() / (ROTATION_PERIOD_SECONDS * 1000)));
-  const ids = useMemo(() => {
-    if (featuredIds.length <= 2) return featuredIds;
-    const [firstId, ...restIds] = featuredIds;
-    return [firstId, ...seededShuffle(restIds, seed)];
-  }, [featuredIds, seed]);
+  const ids = useMemo(
+    () => (featuredIds.length <= 1 ? featuredIds : seededShuffle(featuredIds, seed)),
+    [featuredIds, seed]
+  );
   const isSideBySide = useMediaQuery(MEDIA_SIDE_BY_SIDE);
   const isTablet = useMediaQuery(MEDIA_TABLET);
   const isDesktop = useMediaQuery(MEDIA_DESKTOP);
