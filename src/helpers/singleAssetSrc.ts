@@ -14,9 +14,20 @@ const keyToUrl = createGlobLoader(pathToUrl, path => {
 
 const symbolAliases: Record<string, string> = {
   AAPLc: 'AAPL',
+  AAPLrh: 'AAPL',
+  COINrh: 'COIN',
+  GMErh: 'GME',
   GOOGLc: 'GOOGL',
+  INTCrh: 'INTC',
   METAc: 'META',
+  MSFTrh: 'MSFT',
   NVDAc: 'NVDA',
+  NVDArh: 'NVDA',
+  RDDTrh: 'RDDT',
+  SPCXrh: 'SPCX',
+  SPYrh: 'SPY',
+  TSLArh: 'TSLA',
+  USOrh: 'USO',
 };
 
 export function getSingleAssetSrc(symbol: TokenEntity['id'], chainId?: ChainEntity['id']) {
