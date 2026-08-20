@@ -1,5 +1,6 @@
 import { type CssStyles } from '@repo/styles/css';
 import { memo } from 'react';
+import { createCachedSelector } from 're-reselect';
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
@@ -50,6 +51,12 @@ type ChainAssets = {
   assetSymbols: string[];
 };
 
+const selectChainAssetsForSymbol = createCachedSelector(
+  (_state: BeefyState, chainId: ChainEntity['id'], _symbol: string) => chainId,
+  (_state: BeefyState, _chainId: ChainEntity['id'], symbol: string) => symbol,
+  (chainId, symbol): ChainAssets => ({ chainId, assetSymbols: [symbol] })
+)((_state: BeefyState, chainId: ChainEntity['id'], symbol: string) => `${chainId}-${symbol}`);
+
 const selectAssetsForAddressChainId = (
   state: BeefyState,
   { address, chainId }: AddressChainIdOptions
@@ -81,7 +88,7 @@ const selectAssetsForToken = (
 
   // image exists for symbol -> use single asset icon
   if (singleAssetExists(token.symbol, token.chainId)) {
-    return { chainId: token.chainId, assetSymbols: [token.symbol] };
+    return selectChainAssetsForSymbol(state, token.chainId, token.symbol);
   }
 
   // LP token for a vault -> use vault icon
@@ -122,23 +129,35 @@ const selectAssetsForVaultId = (
   return selectAssetsForVault(state, { vault: selectVaultById(state, vaultId), ...rest });
 };
 
+// the inner selectors are already stable; it was only this wrapper being reallocated
+const selectChainAssetsForVaultId = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], _assetsOnly: boolean) =>
+    selectVaultById(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id'], _assetsOnly: boolean) =>
+    selectVaultTokenSymbols(state, vaultId),
+  (_state: BeefyState, _vaultId: VaultEntity['id'], assetsOnly: boolean) => assetsOnly,
+  (vault, symbols, assetsOnly): ChainAssets | undefined => {
+    // Use custom icon from config if not disabled
+    if (!assetsOnly && vault.icons?.length) {
+      return { chainId: vault.chainId, assetSymbols: vault.icons };
+    }
+
+    // Make icon using symbols of all vault assets
+    if (symbols?.length) {
+      return { chainId: vault.chainId, assetSymbols: symbols };
+    }
+
+    return undefined;
+  }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], assetsOnly: boolean) =>
+    `${vaultId}-${assetsOnly}`
+);
+
 const selectAssetsForVault = (
   state: BeefyState,
   { vault, assetsOnly = false }: VaultOptions
-): ChainAssets | undefined => {
-  // Use custom icon from config if not disabled
-  if (!assetsOnly && vault.icons?.length) {
-    return { chainId: vault.chainId, assetSymbols: vault.icons };
-  }
-
-  // Make icon using symbols of all vault assets
-  const symbols = selectVaultTokenSymbols(state, vault.id);
-  if (symbols?.length) {
-    return { chainId: vault.chainId, assetSymbols: symbols };
-  }
-
-  return undefined;
-};
+): ChainAssets | undefined => selectChainAssetsForVaultId(state, vault.id, assetsOnly);
 
 type CommonTokenImageProps = {
   size?: AssetsImageProps['size'];
