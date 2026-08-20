@@ -1,4 +1,12 @@
 {
+  "coinbase": {
+    "title": "Coinbase",
+    "text": "Coinbase is one of the world’s largest crypto platforms, providing exchange, wallet, custody and developer infrastructure for millions of users. Through Base, its Ethereum Layer 2 network, Coinbase is helping bring more financial activity onchain with faster, lower-cost access to DeFi.",
+    "website": "https://www.coinbase.com/",
+    "social": {
+      "twitter": "https://twitter.com/coinbase"
+    }
+  },
   "monad": {
     "title": "Monad",
     "text": "Monad is a high-performance EVM-compatible Layer 1 blockchain designed for massive scalability, delivering 10,000 TPS through pipelined execution and optimistic parallel processing.",
