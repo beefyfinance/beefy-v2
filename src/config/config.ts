@@ -104,18 +104,6 @@ export const config = {
       priorityMinimum: '10000000', // 0.01 gwei
     },
   },
-  gnosis: {
-    name: 'Gnosis',
-    chainId: 100,
-    rpc: ['https://gnosis-rpc.publicnode.com', 'https://gnosis.drpc.org'],
-    explorerUrl: 'https://gnosisscan.io',
-    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0xdAaD0085e5D301Cb5721466e600606AB5158862b',
-    native: { symbol: 'XDAI', oracleId: 'WXDAI', decimals: 18 },
-    gas: {
-      type: 'standard',
-    },
-  },
   hyperevm: {
     name: 'HyperEVM',
     chainId: 999,
@@ -128,27 +116,6 @@ export const config = {
       type: 'standard',
     },
   },
-  linea: {
-    name: 'Linea',
-    chainId: 59144,
-    rpc: [
-      'https://rpc.linea.build',
-      'https://1rpc.io/linea',
-      'https://linea-rpc.publicnode.com',
-      'https://linea.drpc.org',
-    ],
-    explorerUrl: 'https://lineascan.build',
-    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x74037AEe034D2bD5cD2eEc043FE5ad9cE2e90275',
-    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
-    gas: {
-      type: 'eip1559',
-      blocks: 5,
-      percentile: 0.2,
-      baseMinimum: '7',
-      baseSafetyMargin: 0.2,
-    },
-  },
   megaeth: {
     name: 'MegaETH',
     chainId: 4326,
@@ -159,20 +126,6 @@ export const config = {
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'standard',
-    },
-  },
-  robinhood: {
-    name: 'Robinhood',
-    chainId: 4663,
-    rpc: ['https://rpc.mainnet.chain.robinhood.com'],
-    explorerUrl: 'https://robinhoodchain.blockscout.com',
-    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0xe02749Ba85C543745aA5714263B75efc7e142a2A',
-    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
-    gas: {
-      type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
     },
   },
   monad: {
@@ -236,6 +189,20 @@ export const config = {
       baseSafetyMargin: 0.1,
     },
   },
+  robinhood: {
+    name: 'Robinhood',
+    chainId: 4663,
+    rpc: ['https://rpc.mainnet.chain.robinhood.com'],
+    explorerUrl: 'https://robinhoodchain.blockscout.com',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0xe02749Ba85C543745aA5714263B75efc7e142a2A',
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.6,
+    },
+  },
   rootstock: {
     name: 'Rootstock',
     chainId: 30,
@@ -269,7 +236,43 @@ export const config = {
       header: 'gradient',
     },
   },
+  linea: {
+    eol: 1787210390,
+    name: 'Linea',
+    chainId: 59144,
+    rpc: [
+      'https://rpc.linea.build',
+      'https://1rpc.io/linea',
+      'https://linea-rpc.publicnode.com',
+      'https://linea.drpc.org',
+    ],
+    explorerUrl: 'https://lineascan.build',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x74037AEe034D2bD5cD2eEc043FE5ad9cE2e90275',
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
+    gas: {
+      type: 'eip1559',
+      blocks: 5,
+      percentile: 0.2,
+      baseMinimum: '7',
+      baseSafetyMargin: 0.2,
+    },
+  },
+  gnosis: {
+    eol: 1787210389,
+    name: 'Gnosis',
+    chainId: 100,
+    rpc: ['https://gnosis-rpc.publicnode.com', 'https://gnosis.drpc.org'],
+    explorerUrl: 'https://gnosisscan.io',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0xdAaD0085e5D301Cb5721466e600606AB5158862b',
+    native: { symbol: 'XDAI', oracleId: 'WXDAI', decimals: 18 },
+    gas: {
+      type: 'standard',
+    },
+  },
   zksync: {
+    eol: 1787210388,
     name: 'zkSync',
     chainId: 324,
     rpc: ['https://mainnet.era.zksync.io'],

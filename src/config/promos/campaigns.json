@@ -1,4 +1,11 @@
 {
+  "coinbase-stocks": {
+    "title": "Beefy x Coinbase",
+    "description": "Coinbase launches Tokenized Stocks on Base, bringing familiar equity exposure onto onchain rails. To celebrate, Coinbase is supporting the new markets on Aerodrome with incentives distributed through Merkl. As a launch partner, Beefy joins the campaign by distributing mooBIFI incentives to our Aerodrome CLM vaults for Coinbase Tokenized Stocks.",
+    "social": {
+      "twitter": "https://twitter.com/coinbase"
+    }
+  },
   "animera-boost": {
     "title": "Animera Boost",
     "description": "Striker Games is An indie web3 Game Studio Focused on Building The Best PvP AAA Games.",
