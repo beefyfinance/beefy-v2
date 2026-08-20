@@ -1,0 +1,53 @@
+import type BigNumber from 'bignumber.js';
+import type { Namespace, TFunction } from 'react-i18next';
+import type { ChainEntity } from '../../../entities/chain';
+import { type TokenErc20 } from '../../../entities/token';
+import { type VaultEntity, type VaultGovCowcentrated, type VaultStandardCowcentrated } from '../../../entities/vault';
+import type { Step } from '../../../reducers/wallet/stepper-types';
+import type { BeefyState } from '../../../store/types';
+import { type InputTokenAmount, type RewardPoolToVaultDepositOption, type RewardPoolToVaultDepositQuote, type RewardPoolToVaultWithdrawOption, type TokenAmount, type ZapQuoteStepUnstake } from '../transact-types';
+import { type IGovVaultType, type IStandardVaultType } from '../vaults/IVaultType';
+import type { ZapStep, ZapStepRequest, ZapStepResponse } from '../zap/types';
+import type { IZapStrategy, ZapTransactHelpers } from './IStrategy';
+import type { RewardPoolToVaultStrategyConfig } from './strategy-configs';
+type ZapHelpers = {
+    chain: ChainEntity;
+    slippage: number;
+    state: BeefyState;
+};
+declare const strategyId = "reward-pool-to-vault";
+type StrategyId = typeof strategyId;
+/** @dev this handles vault to pool too */
+export declare class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
+    protected options: RewardPoolToVaultStrategyConfig;
+    protected helpers: ZapTransactHelpers;
+    static readonly id = "reward-pool-to-vault";
+    readonly id = "reward-pool-to-vault";
+    protected readonly mainVault: VaultEntity;
+    protected readonly vault: VaultStandardCowcentrated;
+    protected vaultType: IStandardVaultType | undefined;
+    protected readonly vaultShareToken: TokenErc20;
+    protected readonly depositToken: TokenErc20;
+    protected readonly rewardPool: VaultGovCowcentrated;
+    protected rewardPoolType: IGovVaultType | undefined;
+    protected readonly rewardPoolShareToken: TokenErc20;
+    constructor(options: RewardPoolToVaultStrategyConfig, helpers: ZapTransactHelpers);
+    protected connectSecondVaultEntity(): Promise<void>;
+    fetchDepositOptions(): Promise<RewardPoolToVaultDepositOption[]>;
+    fetchDepositQuote(inputs: InputTokenAmount[], option: RewardPoolToVaultDepositOption): Promise<RewardPoolToVaultDepositQuote>;
+    protected fetchRewardPoolToVaultDepositQuote(inputs: InputTokenAmount[], option: RewardPoolToVaultDepositOption): Promise<RewardPoolToVaultDepositQuote>;
+    protected fetchVaultToRewardPoolDepositQuote(inputs: InputTokenAmount[], option: RewardPoolToVaultDepositOption): Promise<RewardPoolToVaultDepositQuote>;
+    fetchDepositStep(quote: RewardPoolToVaultDepositQuote, t: TFunction<Namespace>): Promise<Step>;
+    fetchRewardPoolToVaultDepositStep(quote: RewardPoolToVaultDepositQuote, t: TFunction<Namespace>): Promise<Step>;
+    protected fetchVaultToRewardPoolDepositStep(quote: RewardPoolToVaultDepositQuote, t: TFunction<Namespace>): Promise<Step>;
+    fetchWithdrawOptions(): Promise<RewardPoolToVaultWithdrawOption[]>;
+    fetchWithdrawQuote(_inputs: InputTokenAmount[], _option: RewardPoolToVaultWithdrawOption): Promise<never>;
+    fetchWithdrawStep(_quote: never, _t: TFunction<Namespace>): Promise<Step>;
+    fetchZapUnstakeStep(quoteStep: ZapQuoteStepUnstake, zapHelpers: ZapHelpers): Promise<ZapStepResponse>;
+    protected getZapUnstake(request: ZapStepRequest): Promise<ZapStepResponse>;
+    protected buildZapUnstakeTx(govVaultAddress: string, amount: BigNumber): ZapStep;
+    protected fetchZapStakeStep(minInputs: TokenAmount[], zapHelpers: ZapHelpers): Promise<ZapStepResponse>;
+    protected getZapStake(request: ZapStepRequest): Promise<ZapStepResponse>;
+    protected buildZapStakeTx(govVaultAddress: string, amount: BigNumber, depositTokenAddress: string): ZapStep;
+}
+export {};

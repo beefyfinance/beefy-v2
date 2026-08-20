@@ -1,0 +1,1 @@
+export declare const layoutRecipe: import("../../../.cache/styles/types").SlotRecipeRuntimeFn<"bottom" | "top" | "middle" | "wrapper", import("../../../.cache/styles/types").SlotRecipeVariantRecord<"bottom" | "top" | "middle" | "wrapper">>;

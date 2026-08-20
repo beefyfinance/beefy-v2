@@ -1,0 +1,19 @@
+{
+  "_comment": "esbuild-only path map for the design-sync bundle. Two jobs: resolve @repo/styles/* to panda's generated index.mjs (the converter's resolver has no /index.mjs candidate), and redirect the components' relative helper imports to .design-sync/shims/* where import.meta.glob has been expanded to static imports. Helpers with no shim fall through to normal resolution.",
+  "compilerOptions": {
+    "baseUrl": "..",
+    "paths": {
+      "@repo/styles/*": ["./.design-sync/shims/styles/*"],
+      "../helpers/*": ["./.design-sync/shims/*"],
+      "../../helpers/*": ["./.design-sync/shims/*"],
+      "../../../helpers/*": ["./.design-sync/shims/*"],
+      "../../../../helpers/*": ["./.design-sync/shims/*"],
+      "../../../../../helpers/*": ["./.design-sync/shims/*"],
+      "../images/*": ["./.design-sync/shims/svgr/*"],
+      "../../images/*": ["./.design-sync/shims/svgr/*"],
+      "../../../images/*": ["./.design-sync/shims/svgr/*"],
+      "../../../../images/*": ["./.design-sync/shims/svgr/*"],
+      "../../../../../images/*": ["./.design-sync/shims/svgr/*"]
+    }
+  }
+}

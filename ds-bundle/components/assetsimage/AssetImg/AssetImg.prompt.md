@@ -1,0 +1,10 @@
+AssetImg from beefy-v2. Use via `window.BeefyV2.AssetImg` (bundle loaded from the root `_ds_bundle.js`). Wrap the tree in `<BeefySurface>` (full provider chain in README.md — components read theme/i18n from that context).
+
+## Props
+
+```ts
+interface AssetImgProps {
+  src: string;
+  className?: string;
+}
+```

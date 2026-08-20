@@ -1,0 +1,12 @@
+export declare const selectHasMerklRewardsDispatchedRecentlyForAnyUser: import("../data-loader-helpers").GlobalDataSelectorFn<boolean>;
+export declare const selectFetchMerklRewardsLastDispatched: import("../data-loader-helpers").GlobalDataSelectorFn<number>;
+export declare const selectMerklRewardsForUserShouldLoad: import("../data-loader-helpers").AddressDataSelectorFn<boolean>;
+export declare const selectMerklRewardsForUserHasFulfilledOnce: import("../data-loader-helpers").AddressDataSelectorFn<boolean>;
+export declare const selectMerklRewardsForUserIsRejected: import("../data-loader-helpers").AddressDataSelectorFn<boolean>;
+export declare const selectMerklRewardsForUserIsPending: import("../data-loader-helpers").AddressDataSelectorFn<boolean>;
+export declare const selectHasStellaSwapRewardsDispatchedRecentlyForAnyUser: import("../data-loader-helpers").GlobalDataSelectorFn<boolean>;
+export declare const selectFetchStellaSwapRewardsLastDispatched: import("../data-loader-helpers").GlobalDataSelectorFn<number>;
+export declare const selectStellaSwapRewardsForUserShouldLoad: import("../data-loader-helpers").AddressDataSelectorFn<boolean>;
+export declare const selectStellaSwapRewardsForUserHasFulfilledOnce: import("../data-loader-helpers").AddressDataSelectorFn<boolean>;
+export declare const selectStellaSwapRewardsForUserIsRejected: import("../data-loader-helpers").AddressDataSelectorFn<boolean>;
+export declare const selectStellaSwapRewardsForUserIsPending: import("../data-loader-helpers").AddressDataSelectorFn<boolean>;

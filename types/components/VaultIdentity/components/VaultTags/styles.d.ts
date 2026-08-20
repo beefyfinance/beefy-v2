@@ -1,0 +1,24 @@
+export declare const styles: {
+    vaultTag: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagIcon: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagIconImage: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagText: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagBoost: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagBoostIcon: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagEarn: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagPoints: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagRetired: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagPaused: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagVault: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagClm: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagClmTextAutoHide: import("../../../../../.cache/styles/types").SystemStyleObject;
+    platformTagGov: import("../../../../../.cache/styles/types").SystemStyleObject;
+    platformTagClm: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagPool: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagFreeZap: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagMigrate: import("../../../../../.cache/styles/types").SystemStyleObject;
+    vaultTagMigrateIcon: import("../../../../../.cache/styles/types").SystemStyleObject;
+    divider: import("../../../../../.cache/styles/types").SystemStyleObject;
+    flexWrap: import("../../../../../.cache/styles/types").SystemStyleObject;
+    inverted: import("../../../../../.cache/styles/types").SystemStyleObject;
+};

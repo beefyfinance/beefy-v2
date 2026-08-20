@@ -1,0 +1,22 @@
+export declare const samplingPeriodMs: {
+    readonly '1sec': 1000;
+    readonly '10sec': number;
+    readonly '15sec': number;
+    readonly '30sec': number;
+    readonly '1min': number;
+    readonly '5min': number;
+    readonly '15min': number;
+    readonly '30min': number;
+    readonly '1hour': number;
+    readonly '2hour': number;
+    readonly '4hour': number;
+    readonly '1day': number;
+    readonly '3days': number;
+    readonly '1week': number;
+    readonly '1month': number;
+    readonly '3months': number;
+    readonly '1year': number;
+    readonly '100year': number;
+};
+export type SamplingPeriod = keyof typeof samplingPeriodMs;
+export declare const allSamplingPeriods: ("1sec" | "10sec" | "15sec" | "30sec" | "1min" | "5min" | "15min" | "30min" | "1hour" | "2hour" | "4hour" | "1day" | "3days" | "1week" | "1month" | "3months" | "1year" | "100year")[];

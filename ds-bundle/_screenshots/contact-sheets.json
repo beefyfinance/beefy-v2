@@ -1,0 +1,107 @@
+[
+  {
+    "sheet": 1,
+    "components": [
+      "ActionButton",
+      "ActionLink",
+      "Alert",
+      "AlertError",
+      "AlertInfo",
+      "AlertWarning",
+      "AssetImg",
+      "AssetsImage",
+      "AssetsImageWithChain",
+      "AsTooltip",
+      "Banner",
+      "BaseInput",
+      "BasicTooltipContent",
+      "Button",
+      "ButtonLink",
+      "Buttons"
+    ]
+  },
+  {
+    "sheet": 2,
+    "components": [
+      "ButtonWithTooltip",
+      "ChainIcon",
+      "CircularProgress",
+      "Collapsable",
+      "Collapse",
+      "Container",
+      "ContentLoading",
+      "CopyText",
+      "Count",
+      "Dialog",
+      "DismissibleBanner",
+      "DivWithTooltip",
+      "Drawer",
+      "DropdownButtonTrigger",
+      "DropdownContent",
+      "DropdownTrigger"
+    ]
+  },
+  {
+    "sheet": 3,
+    "components": [
+      "ExternalLink",
+      "Hidden",
+      "IconButtonLink",
+      "IconLoader",
+      "IconWithBasicTooltip",
+      "IconWithTooltip",
+      "LabeledStat",
+      "LabelledCheckbox",
+      "LinkButton",
+      "LinkIcon",
+      "Marquee",
+      "Modal",
+      "MultiToggleButton",
+      "MultiToggleButtons",
+      "Notification",
+      "NotificationDot"
+    ]
+  },
+  {
+    "sheet": 4,
+    "components": [
+      "Overlay",
+      "PageLayout",
+      "PageWithIntroAndContentLayout",
+      "ReloadSpinner",
+      "Scrollable",
+      "ScrollableDrawer",
+      "SearchInput",
+      "Section",
+      "SectionHeader",
+      "SelectButton",
+      "SelectDropdown",
+      "SelectSingle",
+      "SelectSingleContent",
+      "SpinLoader",
+      "StatLoader",
+      "StatusPill"
+    ]
+  },
+  {
+    "sheet": 5,
+    "components": [
+      "Step",
+      "SummaryStats",
+      "SymbolAssetImg",
+      "TextLoader",
+      "Toggle",
+      "ToggleButton",
+      "ToggleButtons",
+      "TooltipContent",
+      "TooltipProvider",
+      "ValueBlock",
+      "VaultTag",
+      "VaultTagWithTooltip",
+      "VaultValueStat",
+      "Visible",
+      "VisibleAbove",
+      "WalletButton"
+    ]
+  }
+]

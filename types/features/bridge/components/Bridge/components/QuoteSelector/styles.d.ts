@@ -1,0 +1,24 @@
+export declare const styles: {
+    container: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quotesHolder: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quotesTitle: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    scrollableThumb: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    scrollableTopShadow: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    scrollableBottomShadow: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    scrollableLeftShadow: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    scrollableRightShadow: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quotes: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quote: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quoteButton: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quoteLimited: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quoteProvider: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quoteProviderIcon: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quoteProviderTitle: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quoteLimit: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quoteLimitIcon: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quoteFee: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quoteFeeIcon: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quoteTime: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quoteTimeIcon: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    quoteButtonSelected: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+};

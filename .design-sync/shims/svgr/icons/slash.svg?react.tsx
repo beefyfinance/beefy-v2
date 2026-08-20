@@ -1,0 +1,6 @@
+import { createElement } from 'react';
+const attrs = {"width":"18","height":"18","viewBox":"0 0 18 18","fill":"none","xmlns":"http://www.w3.org/2000/svg"};
+const inner = "\n<path d=\"M14.0564 0.665771C15.8972 0.665771 17.3902 2.15798 17.3904 3.99878V13.9988C17.3904 15.8397 15.8973 17.3328 14.0564 17.3328H4.0564C2.2156 17.3326 0.723389 15.8396 0.723389 13.9988V3.99878C0.723564 2.15809 2.21571 0.665947 4.0564 0.665771H14.0564ZM9.47339 4.83276L6.97339 13.1658H8.64038L11.1404 4.83276H9.47339Z\" fill=\"#999CB3\"/>\n";
+export default function Svg({ className, ...props }: Record<string, any>) {
+  return createElement('svg', { ...attrs, ...props, className, dangerouslySetInnerHTML: { __html: inner } });
+}

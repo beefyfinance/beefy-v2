@@ -1,0 +1,57 @@
+import BigNumber from 'bignumber.js';
+import type { Namespace, TFunction } from 'react-i18next';
+import type { ChainEntity } from '../../../../entities/chain';
+import { type TokenEntity } from '../../../../entities/token';
+import { type VaultCowcentrated } from '../../../../entities/vault';
+import type { Step } from '../../../../reducers/wallet/stepper-types';
+import type { BeefyState } from '../../../../store/types';
+import { BeefyCLMPool } from '../../../beefy/beefy-clm-pool';
+import { type CowcentratedZapDepositOption, type CowcentratedZapDepositQuote, type CowcentratedZapWithdrawOption, type CowcentratedZapWithdrawQuote, type InputTokenAmount, type TokenAmount, type ZapQuoteStep, type ZapQuoteStepDeposit, type ZapQuoteStepSwap, type ZapQuoteStepSwapAggregator } from '../../transact-types';
+import { type ICowcentratedVaultType } from '../../vaults/IVaultType';
+import type { ZapStep, ZapStepRequest, ZapStepResponse } from '../../zap/types';
+import type { IComposableStrategy, UserlessZapDepositBreakdown, UserlessZapWithdrawBreakdown, ZapTransactHelpers } from '../IStrategy';
+import type { CowcentratedStrategyConfig } from '../strategy-configs';
+type ZapHelpers = {
+    chain: ChainEntity;
+    slippage: number;
+    state: BeefyState;
+    clmPool: BeefyCLMPool;
+};
+declare const strategyId = "cowcentrated";
+type StrategyId = typeof strategyId;
+declare class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
+    protected options: CowcentratedStrategyConfig;
+    protected helpers: ZapTransactHelpers;
+    static readonly id = "cowcentrated";
+    static readonly composable = true;
+    readonly id = "cowcentrated";
+    protected readonly vault: VaultCowcentrated;
+    protected readonly vaultType: ICowcentratedVaultType;
+    constructor(options: CowcentratedStrategyConfig, helpers: ZapTransactHelpers);
+    getHelpers(): ZapTransactHelpers;
+    fetchDepositOptions(): Promise<CowcentratedZapDepositOption[]>;
+    fetchDepositQuote(inputs: InputTokenAmount[], option: CowcentratedZapDepositOption): Promise<CowcentratedZapDepositQuote>;
+    fetchDepositUserlessZapBreakdown(quote: CowcentratedZapDepositQuote): Promise<UserlessZapDepositBreakdown>;
+    fetchDepositStep(quote: CowcentratedZapDepositQuote, t: TFunction<Namespace>): Promise<Step>;
+    protected fetchZapSwap(quoteStep: ZapQuoteStepSwap, zapHelpers: ZapHelpers, insertBalance: boolean): Promise<ZapStepResponse>;
+    protected fetchZapSwapAggregator(quoteStep: ZapQuoteStepSwapAggregator, zapHelpers: ZapHelpers, insertBalance: boolean): Promise<ZapStepResponse>;
+    fetchWithdrawOptions(): Promise<CowcentratedZapWithdrawOption[]>;
+    fetchWithdrawQuote(inputs: InputTokenAmount[], option: CowcentratedZapWithdrawOption): Promise<CowcentratedZapWithdrawQuote>;
+    canAcceptTokenAsDeposit(token: TokenEntity): Promise<boolean>;
+    canEmitTokenAsWithdraw(token: TokenEntity): Promise<boolean>;
+    fetchWithdrawUserlessZapBreakdown(quote: CowcentratedZapWithdrawQuote): Promise<UserlessZapWithdrawBreakdown>;
+    fetchWithdrawStep(quote: CowcentratedZapWithdrawQuote, t: TFunction<Namespace>): Promise<Step>;
+    aggregatorTokenSupport(): Promise<TokenEntity[]>;
+    protected fetchDepositQuoteAggregator(input: InputTokenAmount, option: CowcentratedZapDepositOption): Promise<CowcentratedZapDepositQuote>;
+    protected fetchWithdrawQuoteAggregator(option: CowcentratedZapWithdrawOption, breakOutputs: TokenAmount[], breakReturned: TokenAmount[], steps: ZapQuoteStep[]): Promise<{
+        outputs: TokenAmount[];
+        returned: TokenAmount[];
+        steps: ZapQuoteStep[];
+        fee: import("../../transact-types").ZapFee;
+    }>;
+    protected fetchZapDepositCLM(_quoteStep: ZapQuoteStepDeposit, minInputs: TokenAmount[], zapHelpers: ZapHelpers): Promise<ZapStepResponse>;
+    protected getZapBuildCLM(request: ZapStepRequest): Promise<ZapStepResponse>;
+    protected buildZapbuildCLMTx(clmAddress: string, amountA: BigNumber, amountB: BigNumber, liquidity: BigNumber, tokenA: string, tokenB: string, insertBalance: boolean): ZapStep;
+}
+export declare const CowcentratedStrategy: typeof CowcentratedStrategyImpl;
+export {};

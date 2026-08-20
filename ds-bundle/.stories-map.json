@@ -1,0 +1,656 @@
+{
+  "global": "BeefyV2",
+  "pkg": "beefy-v2",
+  "pkgDir": "/Users/artjoms/beefy/beefy-v2",
+  "extraEntries": [
+    "./.design-sync/preview-provider.tsx"
+  ],
+  "exported": [
+    "BeefySurface"
+  ],
+  "storybookStatic": null,
+  "keyRecipe": 7,
+  "cfgSliceGlobal": "654a28c344f93c2fef23f48886c2cf1f8c01a5826bec0c72c9d189189a2096c2",
+  "components": [
+    {
+      "name": "ActionButton",
+      "group": "prices",
+      "srcSha": null,
+      "sourceKey": "9c6c673f1420b21d",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "ActionLink",
+      "group": "prices",
+      "srcSha": null,
+      "sourceKey": "fc460204978c14e7",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Alert",
+      "group": "alerts",
+      "srcSha": null,
+      "sourceKey": "fc7cc089cdfd518d",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "AlertError",
+      "group": "alerts",
+      "srcSha": null,
+      "sourceKey": "0491b2a88ce51401",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "AlertInfo",
+      "group": "alerts",
+      "srcSha": null,
+      "sourceKey": "5f964f06413c945c",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "AlertWarning",
+      "group": "alerts",
+      "srcSha": null,
+      "sourceKey": "5a4be38cfc89473e",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "AssetImg",
+      "group": "assetsimage",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "AssetsImage",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "AssetsImageWithChain",
+      "group": "assetsimage",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "AsTooltip",
+      "group": "tooltip",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Banner",
+      "group": "banners",
+      "srcSha": null,
+      "sourceKey": "2ce100bd4416abfe",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "BaseInput",
+      "group": "input",
+      "srcSha": null,
+      "sourceKey": "8739a96b806ba841",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "BasicTooltipContent",
+      "group": "tooltip",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Button",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "44c6c695ba97b2e6",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "ButtonLink",
+      "group": "links",
+      "srcSha": null,
+      "sourceKey": "c5f6ba171ac79828",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Buttons",
+      "group": "common",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "ButtonWithTooltip",
+      "group": "tooltip",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "ChainIcon",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "CircularProgress",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Collapsable",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "60d4452b57fd8a97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Collapse",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Container",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "ContentLoading",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "CopyText",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Count",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Dialog",
+      "group": "modal",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "DismissibleBanner",
+      "group": "banner",
+      "srcSha": null,
+      "sourceKey": "8f101d7c6d447d53",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "DivWithTooltip",
+      "group": "tooltip",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Drawer",
+      "group": "modal",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "DropdownButtonTrigger",
+      "group": "dropdown",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "DropdownContent",
+      "group": "dropdown",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "DropdownTrigger",
+      "group": "dropdown",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "ExternalLink",
+      "group": "links",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Hidden",
+      "group": "mediaqueries",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "IconButtonLink",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "c6584e0d05e8cbae",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "IconLoader",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "IconWithBasicTooltip",
+      "group": "tooltip",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "IconWithTooltip",
+      "group": "tooltip",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "LabeledStat",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "LabelledCheckbox",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "56a5b121388ef71a",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "LinkButton",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "b877fd594898f795",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "LinkIcon",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "e5840883de20b946",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Marquee",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Modal",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "736ceae6e131b38d",
+      "cfgSlice": "4a7f1d875d0309f65305b2aa196beff30c8562c088cb330360fb367e809955fb",
+      "stories": []
+    },
+    {
+      "name": "MultiToggleButton",
+      "group": "togglebuttons",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "MultiToggleButtons",
+      "group": "togglebuttons",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Notification",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "NotificationDot",
+      "group": "badges",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Overlay",
+      "group": "modal",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "PageLayout",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "PageWithIntroAndContentLayout",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "ReloadSpinner",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Scrollable",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "ScrollableDrawer",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "SearchInput",
+      "group": "input",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Section",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "bc269583c87e7cef",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "SectionHeader",
+      "group": "section",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "SelectButton",
+      "group": "select",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "SelectDropdown",
+      "group": "select",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "SelectSingle",
+      "group": "single",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "SelectSingleContent",
+      "group": "single",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "SpinLoader",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "StatLoader",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "StatusPill",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "1eb8887725f8673a",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Step",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "SummaryStats",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "edd86447b3ea40e6",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "SymbolAssetImg",
+      "group": "assetsimage",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "TextLoader",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Toggle",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "fb173b69c61b2859",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "ToggleButton",
+      "group": "togglebuttons",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "ToggleButtons",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "983c6855e7a6dde9",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "TooltipContent",
+      "group": "tooltip",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "TooltipProvider",
+      "group": "tooltip",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "ValueBlock",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "VaultTag",
+      "group": "vaulttags",
+      "srcSha": null,
+      "sourceKey": "7d80dbd0ba01163a",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "VaultTagWithTooltip",
+      "group": "vaulttags",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "VaultValueStat",
+      "group": "general",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "Visible",
+      "group": "mediaqueries",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "VisibleAbove",
+      "group": "mediaqueries",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    },
+    {
+      "name": "WalletButton",
+      "group": "walletcontainer",
+      "srcSha": null,
+      "sourceKey": "9b675b94bf13af97",
+      "cfgSlice": "5ff899b099eb6923833804cda955efdd69101524bec86f67dac5537cd81802e8",
+      "stories": []
+    }
+  ]
+}

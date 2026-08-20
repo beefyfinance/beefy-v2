@@ -1,0 +1,10 @@
+/* Beefy's dark app surface. The app applies these on its Layout wrapper
+   (src/components/Layout/styles.ts), not on <body> — so previews and generated
+   designs would otherwise render components on white, where the light-on-dark
+   text and transparent button variants are invisible. Appended after panda's
+   own output, so these custom-property names always match that same cssgen run. */
+body {
+  background-color: var(--colors-background-body);
+  color: var(--colors-text-middle);
+  font-family: var(--fonts-body, "DM Sans", ui-sans-serif, system-ui, sans-serif);
+}

@@ -1,0 +1,47 @@
+import type { Namespace, TFunction } from 'react-i18next';
+import type { ChainEntity } from '../../../../entities/chain';
+import { type TokenEntity, type TokenErc20, type TokenNative } from '../../../../entities/token';
+import { type VaultErc4626, type VaultStandard } from '../../../../entities/vault';
+import type { Step } from '../../../../reducers/wallet/stepper-types';
+import type { BeefyState } from '../../../../store/types';
+import { type InputTokenAmount, type SingleDepositOption, type SingleDepositQuote, type SingleWithdrawOption, type SingleWithdrawQuote, type ZapQuoteStepSwapAggregator } from '../../transact-types';
+import { type IErc4626VaultType, type IStandardVaultType } from '../../vaults/IVaultType';
+import type { ZapStepResponse } from '../../zap/types';
+import type { IComposableStrategy, UserlessZapDepositBreakdown, UserlessZapWithdrawBreakdown, ZapTransactHelpers } from '../IStrategy';
+import type { SingleStrategyConfig } from '../strategy-configs';
+type ZapHelpers = {
+    chain: ChainEntity;
+    slippage: number;
+    state: BeefyState;
+};
+declare const strategyId = "single";
+type StrategyId = typeof strategyId;
+declare class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
+    protected options: SingleStrategyConfig;
+    protected helpers: ZapTransactHelpers;
+    static readonly id = "single";
+    static readonly composable = true;
+    readonly id = "single";
+    protected readonly wnative: TokenErc20;
+    protected readonly native: TokenNative;
+    protected readonly vault: VaultStandard | VaultErc4626;
+    protected readonly vaultType: IStandardVaultType | IErc4626VaultType;
+    getHelpers(): ZapTransactHelpers;
+    constructor(options: SingleStrategyConfig, helpers: ZapTransactHelpers);
+    isDepositDisabled(): boolean;
+    isWithdrawDisabled(): boolean;
+    aggregatorTokenSupport(): Promise<TokenEntity[]>;
+    fetchDepositOptions(): Promise<SingleDepositOption[]>;
+    fetchDepositQuote(inputs: InputTokenAmount[], option: SingleDepositOption): Promise<SingleDepositQuote>;
+    fetchDepositStep(quote: SingleDepositQuote, t: TFunction<Namespace>): Promise<Step>;
+    fetchWithdrawOptions(): Promise<SingleWithdrawOption[]>;
+    fetchWithdrawQuote(inputs: InputTokenAmount[], option: SingleWithdrawOption): Promise<SingleWithdrawQuote>;
+    fetchWithdrawStep(quote: SingleWithdrawQuote, t: TFunction<Namespace>): Promise<Step>;
+    protected fetchZapSwapAggregator(quoteStep: ZapQuoteStepSwapAggregator, zapHelpers: ZapHelpers, insertBalance: boolean): Promise<ZapStepResponse>;
+    fetchDepositUserlessZapBreakdown(quote: SingleDepositQuote): Promise<UserlessZapDepositBreakdown>;
+    canAcceptTokenAsDeposit(token: TokenEntity): Promise<boolean>;
+    canEmitTokenAsWithdraw(token: TokenEntity): Promise<boolean>;
+    fetchWithdrawUserlessZapBreakdown(quote: SingleWithdrawQuote): Promise<UserlessZapWithdrawBreakdown>;
+}
+export declare const SingleStrategy: typeof SingleStrategyImpl;
+export {};

@@ -1,0 +1,97 @@
+import type { AmmEntity, AmmEntityBalancer, AmmEntityGamma, AmmEntitySolidly, AmmEntityUniswapV2 } from '../../../entities/zap';
+import type { ChainEntity } from '../../../entities/chain';
+import type { CurveMethod } from './curve/types';
+export type SwapAggregatorId = 'kyber' | 'one-inch' | 'liquid-swap';
+export type StrategySwapConfig = {
+    blockProviders?: SwapAggregatorId[];
+    blockTokens?: string[];
+};
+export type OptionalStrategySwapConfig = {
+    swap?: StrategySwapConfig;
+};
+export type SingleStrategyConfig = {
+    strategyId: 'single';
+    disableDeposit?: boolean;
+    disableWithdraw?: boolean;
+} & OptionalStrategySwapConfig;
+export type UniswapLikeStrategyConfig<TAmm extends AmmEntity> = {
+    strategyId: TAmm['type'];
+    ammId: TAmm['id'];
+} & OptionalStrategySwapConfig;
+export type UniswapV2StrategyConfig = UniswapLikeStrategyConfig<AmmEntityUniswapV2>;
+export type SolidlyStrategyConfig = UniswapLikeStrategyConfig<AmmEntitySolidly>;
+export type CurveStrategyConfig = {
+    strategyId: 'curve';
+    /** Address of the curve pool. Can be undefined if same as the LP token (want) */
+    poolAddress?: string | undefined;
+    /** Methods to interact with pool, @see curve/types.ts */
+    methods: CurveMethod[];
+} & OptionalStrategySwapConfig;
+type BalancerStrategyConfigBase = {
+    strategyId: 'balancer';
+    ammId: AmmEntityBalancer['id'];
+    poolId: string;
+    /** excluding the BPT token */
+    tokens: string[];
+};
+type BalancerStrategyConfigComposableStable = {
+    poolType: 'composable-stable';
+    bptIndex: number;
+    hasNestedPool: boolean;
+};
+type BalancerStrategyConfigOther = {
+    poolType: 'gyro' | 'gyroe' | 'weighted' | 'meta-stable';
+};
+export type BalancerStrategyConfig = BalancerStrategyConfigBase & OptionalStrategySwapConfig & (BalancerStrategyConfigComposableStable | BalancerStrategyConfigOther);
+export type GammaStrategyConfig = {
+    strategyId: 'gamma';
+    ammId: AmmEntityGamma['id'];
+    /** where are the LP tokens held while earning, not needed for merkl as tokens held in strategy */
+    tokenHolder?: string | undefined;
+} & OptionalStrategySwapConfig;
+export type PendleV2StrategyConfig = {
+    strategyId: 'pendle-v2';
+    /**
+     * Tokens that can mint / redeem the market LP directly via the Pendle router
+     * (i.e. the SY's tokensIn — addLiquiditySingleToken tokenIn === tokenMintSy).
+     * Any other token is routed to one of these via the swap aggregator first.
+     */
+    depositTokens: string[];
+} & OptionalStrategySwapConfig;
+export type ConicStrategyConfig = {
+    strategyId: 'conic';
+} & OptionalStrategySwapConfig;
+export type CowcentratedStrategyConfig = {
+    strategyId: 'cowcentrated';
+} & OptionalStrategySwapConfig;
+export type CowcentratedDualStrategyConfig = {
+    strategyId: 'cowcentrated-dual';
+} & OptionalStrategySwapConfig;
+export type GovComposerStrategyConfig = {
+    strategyId: 'gov-composer';
+} & OptionalStrategySwapConfig;
+export type VaultComposerStrategyConfig = {
+    strategyId: 'vault-composer';
+} & OptionalStrategySwapConfig;
+export type RewardPoolToVaultStrategyConfig = {
+    strategyId: 'reward-pool-to-vault';
+} & OptionalStrategySwapConfig;
+export type CrossChainStrategyConfig = {
+    strategyId: 'cross-chain';
+    /** Limit to specific source chains (default: all CCTP-supported chains) */
+    supportedSourceChains?: ChainEntity['id'][];
+    /** Limit to specific destination chains for withdrawals */
+    supportedDestChains?: ChainEntity['id'][];
+} & OptionalStrategySwapConfig;
+export type VaultToVaultSingleTokenStrategyConfig = {
+    strategyId: 'vault-to-vault-single-token';
+} & OptionalStrategySwapConfig;
+export type ZapStrategyConfig = SingleStrategyConfig | UniswapV2StrategyConfig | SolidlyStrategyConfig | CurveStrategyConfig | GammaStrategyConfig | ConicStrategyConfig | CowcentratedStrategyConfig | CowcentratedDualStrategyConfig | GovComposerStrategyConfig | VaultComposerStrategyConfig | RewardPoolToVaultStrategyConfig | BalancerStrategyConfig | PendleV2StrategyConfig | CrossChainStrategyConfig | VaultToVaultSingleTokenStrategyConfig;
+export type ZapStrategyId = ZapStrategyConfig['strategyId'];
+export type AnyStrategyId = ZapStrategyId | 'vault';
+export type StrategyIdToConfig<TId extends ZapStrategyId = ZapStrategyId> = {
+    [K in TId]: Extract<ZapStrategyConfig, {
+        strategyId: K;
+    }>;
+}[TId];
+export {};

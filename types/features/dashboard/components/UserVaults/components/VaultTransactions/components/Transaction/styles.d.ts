@@ -1,0 +1,24 @@
+export declare const styles: {
+    stat: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    column: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    textFlexStart: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    txPast: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    gridMobile: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    statMobile: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    action: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    actionMobile: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    network: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    link: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    textRed: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    textGreen: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    textDark: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    textOverflow: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    vaultNetwork: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    cowcentratedTokenAmounts: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    tokenIconAmount: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    tokenIcon: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    tokenAmount: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    tokenIconAmountMobile: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    tokenIconAmountPositive: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+    tokenIconAmountNegative: import("../../../../../../../../../.cache/styles/types").SystemStyleObject;
+};

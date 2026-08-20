@@ -1,0 +1,6 @@
+import { createElement } from 'react';
+const attrs = {"width":"20","height":"20","viewBox":"0 0 20 20","fill":"none","xmlns":"http://www.w3.org/2000/svg"};
+const inner = "\n<path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M10 8.72721L14.3636 4.3636L15.6364 5.6364L11.2728 10L15.6364 14.3636L14.3636 15.6364L10 11.2728L5.6364 15.6364L4.3636 14.3636L8.72721 10L4.3636 5.6364L5.6364 4.3636L10 8.72721Z\" fill=\"currentColor\"/>\n";
+export default function Svg({ className, ...props }: Record<string, any>) {
+  return createElement('svg', { ...attrs, ...props, className, dangerouslySetInnerHTML: { __html: inner } });
+}

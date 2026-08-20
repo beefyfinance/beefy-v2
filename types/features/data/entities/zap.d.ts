@@ -1,0 +1,14 @@
+import type { AmmConfigBalancer, AmmConfigGamma, AmmConfigSolidly, AmmConfigUniswapV2, SwapAggregatorConfig, ZapConfig } from '../apis/config-types';
+export type ZapEntity = ZapConfig;
+export type SwapAggregatorEntity = SwapAggregatorConfig;
+export type AmmEntityUniswapV2 = AmmConfigUniswapV2;
+export type AmmEntitySolidly = AmmConfigSolidly;
+export type AmmEntityUniswapLike = AmmEntityUniswapV2 | AmmEntitySolidly;
+export type AmmEntityGamma = AmmConfigGamma;
+export type AmmEntityBalancer = AmmConfigBalancer;
+export type AmmEntity = AmmEntityUniswapLike | AmmEntityGamma | AmmConfigBalancer;
+export declare function isSolidlyAmm(amm: AmmEntity): amm is AmmEntitySolidly;
+export declare function isUniswapV2Amm(amm: AmmEntity): amm is AmmEntityUniswapV2;
+export declare function isUniswapLikeAmm(amm: AmmEntity): amm is AmmEntityUniswapLike;
+export declare function isGammaAmm(amm: AmmEntity): amm is AmmEntityGamma;
+export declare function isBalancerAmm(amm: AmmEntity): amm is AmmEntityBalancer;

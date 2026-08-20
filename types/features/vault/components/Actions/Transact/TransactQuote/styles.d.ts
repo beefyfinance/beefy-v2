@@ -1,0 +1,20 @@
+export declare const styles: {
+    divider: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    tokenAmounts: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    route: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    slippage: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    youReceiveCard: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    dustToggle: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    dustToggleLabel: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    dustToggleChevron: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    dustRows: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    totalRow: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    totalText: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    disabled: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    amountReturned: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    fullWidth: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    clmPositionGrid: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    clmPositionCell: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    clmPositionCellDivider: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    link: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+};

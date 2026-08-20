@@ -1,0 +1,33 @@
+import BigNumber from 'bignumber.js';
+import type { TokenAmount } from '../apis/transact/transact-types';
+import { type Step, StepContent } from '../reducers/wallet/stepper-types';
+import { type BridgeAdditionalData, type WalletActionsSuccessState } from '../reducers/wallet/wallet-action-types';
+import type { BeefyState } from '../store/types';
+export declare const selectStepperState: (state: BeefyState) => import("../reducers/wallet/stepper-types").StepperState;
+export declare const selectStepperChainId: (state: BeefyState) => ("ethereum" | "polygon" | "bsc" | "optimism" | "fantom" | "arbitrum" | "avax" | "cronos" | "moonbeam" | "moonriver" | "metis" | "fuse" | "kava" | "canto" | "zksync" | "zkevm" | "base" | "gnosis" | "linea" | "mantle" | "fraxtal" | "mode" | "manta" | "real" | "sei" | "rootstock" | "scroll" | "lisk" | "sonic" | "aurora" | "emerald" | "berachain" | "celo" | "heco" | "harmony" | "saga" | "hyperevm" | "plasma" | "monad" | "megaeth" | "robinhood") | null;
+export declare const selectIsStepperStepping: (state: BeefyState) => boolean;
+export declare const selectStepperCurrentStep: (state: BeefyState) => number;
+export declare const selectStepperCurrentStepData: (state: BeefyState) => Step;
+export declare const selectStepperItems: (state: BeefyState) => Step[];
+export declare const selectStepperStepContent: (state: BeefyState) => StepContent;
+export declare const selectStepperBridgeStatus: (state: BeefyState) => import("../reducers/wallet/stepper-types").BridgeStatus | undefined;
+export declare const selectIsStepperRecoveryExecution: (state: BeefyState) => boolean;
+export declare function selectMintResult(state: BeefyState): {
+    type: string;
+    amount: string;
+    token: import("../entities/token").TokenEntity;
+};
+export declare function selectBridgeSuccess(state: BeefyState): WalletActionsSuccessState<BridgeAdditionalData>;
+export declare function selectBoostAdditionalData(state: BeefyState): import("../reducers/wallet/wallet-action-types").BoostAdditionalData | undefined;
+export declare function selectBoostClaimed(state: BeefyState): {
+    token: import("../entities/token").TokenEntity;
+    amount: BigNumber;
+}[];
+export declare const selectStepperProgress: (state: BeefyState) => number;
+export declare const selectErrorBar: (state: BeefyState) => boolean;
+export declare const selectSuccessBar: (state: BeefyState) => boolean;
+export declare const selectRecoveryBar: (state: BeefyState) => boolean;
+export declare function selectZapReturned(state: BeefyState): TokenAmount[];
+export declare function selectCrossChainDstReceived(state: BeefyState): TokenAmount[];
+export declare function selectCrossChainDstDust(state: BeefyState): TokenAmount[];
+export declare function selectCrossChainSrcReturned(state: BeefyState): TokenAmount[];

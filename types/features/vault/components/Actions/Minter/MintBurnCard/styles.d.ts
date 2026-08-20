@@ -1,0 +1,25 @@
+export declare const styles: {
+    header: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    tabs: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    tab: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    selected: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    cardContent: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    logo: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    content: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    btn: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    info: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    info2: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    item: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    inputContainer: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    max: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    balances: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    label: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    value: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    customDivider: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    line: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    boxReminder: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    boxReserves: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    reservesText: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    amountReserves: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    noReserves: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+};

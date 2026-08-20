@@ -1,0 +1,35 @@
+import type { Namespace, TFunction } from 'react-i18next';
+import { type TokenEntity, type TokenErc20, type TokenNative } from '../../../../entities/token';
+import { type VaultStandard } from '../../../../entities/vault';
+import type { Step } from '../../../../reducers/wallet/stepper-types';
+import { type ConicDepositOption, type ConicDepositQuote, type ConicWithdrawOption, type ConicWithdrawQuote, type InputTokenAmount } from '../../transact-types';
+import { type IStandardVaultType } from '../../vaults/IVaultType';
+import type { IZapStrategy, ZapTransactHelpers } from '../IStrategy';
+import type { ConicStrategyConfig } from '../strategy-configs';
+declare const strategyId = "conic";
+type StrategyId = typeof strategyId;
+declare class ConicStrategyImp implements IZapStrategy<StrategyId> {
+    protected options: ConicStrategyConfig;
+    protected helpers: ZapTransactHelpers;
+    static readonly id = "conic";
+    readonly id = "conic";
+    protected readonly conicZap = "0x1F3aabF169aE52E868a6065CD1AE6B29Ae1a0368";
+    protected readonly tokens: TokenEntity[];
+    protected readonly cnc: TokenErc20;
+    protected readonly native: TokenNative;
+    protected readonly wnative: TokenErc20;
+    protected readonly vault: VaultStandard;
+    protected readonly vaultType: IStandardVaultType;
+    constructor(options: ConicStrategyConfig, helpers: ZapTransactHelpers);
+    fetchDepositOptions(): Promise<ConicDepositOption[]>;
+    fetchDepositQuote(inputs: InputTokenAmount[], option: ConicDepositOption): Promise<ConicDepositQuote>;
+    fetchDepositStep(quote: ConicDepositQuote, t: TFunction<Namespace>): Promise<Step>;
+    fetchWithdrawOptions(): Promise<ConicWithdrawOption[]>;
+    fetchWithdrawQuote(inputs: InputTokenAmount[], option: ConicWithdrawOption): Promise<ConicWithdrawQuote>;
+    fetchWithdrawStep(quote: ConicWithdrawQuote, t: TFunction<Namespace>): Promise<Step>;
+    private encodeBeefInCall;
+    private encodeBeefInETHCall;
+    private encodeBeefOutAndSwap;
+}
+export declare const ConicStrategy: typeof ConicStrategyImp;
+export {};

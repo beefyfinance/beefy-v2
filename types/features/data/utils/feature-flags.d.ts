@@ -1,0 +1,44 @@
+import type { ChainEntity } from '../entities/chain';
+export declare const isDevelopment: boolean;
+export declare const isProduction: boolean;
+export declare function featureFlag_getContractDataApiImplem(): 'eth-multicall' | 'new-multicall' | 'webworker-eth-multicall';
+export declare function featureFlag_getContractDataApiChunkSize(chain: ChainEntity['id']): number;
+export declare function featureFlag_getBalanceApiImplem(): 'eth-multicall' | 'new-multicall';
+export declare function featureFlag_getBalanceApiChunkSize(chain: ChainEntity['id']): number;
+export declare function featureFlag_getAllowanceApiImplem(): 'eth-multicall' | 'new-multicall';
+export declare function featureFlag_getAllowanceApiChunkSize(chain: ChainEntity['id']): number;
+export declare function featureFlag_getMulticallBatchSize(chain: ChainEntity['id']): number;
+export declare function featureFlag_noDataPolling(): boolean;
+export declare function featureFlag_walletAddressOverride(walletAddress: string): string;
+export declare function featureFlag_recordReduxActions(): boolean;
+export declare function featureFlag_logReduxActions(): boolean;
+export declare function featureFlag_logging(): boolean;
+export declare function featureFlag_replayReduxActions(): boolean;
+export declare function featureFlag_simulateRpcError(chainId: ChainEntity['id']): boolean | undefined;
+export declare function featureFlag_simulateBeefyApiError(key: 'apy' | 'prices' | 'lps' | 'lpsBreakdown' | 'fees' | 'treasury' | 'snapshot' | 'zap-support' | 'articles' | 'historical-prices'): boolean | undefined;
+export declare function featureFlag_breakpoints(): boolean;
+export declare function featureFlag_walletConnectChainId(): number | undefined;
+export declare function featureFlag_simulateBridgeRateLimit(): boolean;
+export declare function featureFlag_simulateAllBridgeRateLimit(): boolean;
+export declare function featureFlag_oneInchSupport(): {
+    chainId: string;
+    tokenAddress: string;
+}[];
+export declare function featureFlag_kyberSwapSupport(): {
+    chainId: string;
+    tokenAddress: string;
+}[];
+export declare function featureFlag_liquidSwapSupport(): {
+    chainId: string;
+    tokenAddress: string;
+}[];
+export declare function featureFlag_disableSwapAggregators(): boolean;
+export declare function featureFlag_disableOneInch(): boolean;
+export declare function featureFlag_disableKyber(): boolean;
+export declare function featureFlag_disableLiquidSwap(): boolean;
+export declare function featureFlag_detailedTooltips(): boolean;
+export declare function featureFlag_simUpdate(): boolean;
+export declare function featureFlag_disableRedirect(): boolean;
+export declare function featureFlag_simulateMerklApiFailure(): number | false;
+export declare function featureFlag_simulateLiveBoost(boostId: string): boolean;
+export declare function featureFlag_simulateMissingTransactions(): boolean;

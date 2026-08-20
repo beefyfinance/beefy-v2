@@ -1,0 +1,43 @@
+<!-- @dsCard group="togglebuttons" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../../../styles.css">
+  <link rel="stylesheet" href="../../../_ds_bundle.css">
+  <style>body{margin:0;padding:24px;background:#fff}</style>
+</head><body>
+  <div id="root"></div>
+  <template id="ds-fallback">
+    <div data-ds-fallback="" style="border:1px solid #e5e7eb;border-radius:12px;padding:28px 24px;max-width:520px;font-family:system-ui">
+      <div data-ds-eyebrow="" style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#9ca3af"></div>
+      <div style="font-size:20px;font-weight:600;color:#111827;margin-top:6px">MultiToggleButtons</div>
+      <div style="font-size:12px;color:#6b7280;margin-top:14px;line-height:1.5">Preview not yet authored. The component is fully importable — its API is in <code>MultiToggleButtons.d.ts</code> and usage in <code>MultiToggleButtons.prompt.md</code>.</div>
+    </div>
+  </template>
+  <script src="../../../_vendor/react.js"></script>
+  <script src="../../../_vendor/react-dom.js"></script>
+  <script src="../../../_ds_bundle.js"></script>
+  <script>
+    var h=React.createElement, C=window.BeefyV2.MultiToggleButtons;
+    var r=document.getElementById('root');
+    function dsFallback(){
+      r.innerHTML=document.getElementById('ds-fallback').innerHTML;
+      // Group comes from the @dsCard marker line so the hashed body stays
+      // group-free (a pure regroup must not read as a contract change).
+      var c=document.childNodes[0], m=c&&c.nodeType===8?/group="([^"]*)"/.exec(c.nodeValue):null;
+      var e=r.querySelector('[data-ds-eyebrow]'); if(e&&m)e.textContent=m[1];
+    }
+    try {
+      ReactDOM.createRoot(r).render(h(window.BeefyV2.BeefySurface,{},h(C,{"value":[],"onChange":()=>null})));
+    } catch (e) { dsFallback(); }
+    // React render errors don't throw here — they leave the root empty. An
+    // intentionally-empty render (returns null) earns the fallback too, and
+    // so does a mount that's no more informative than the floor: a bare echo
+    // of the stub children (the component name floating in white space) or a
+    // visually collapsed render (invisible/headless output).
+    setTimeout(function(){
+      var t=(r.textContent||'').trim();
+      if (!r.childElementCount && !t) return dsFallback();
+      if (t === "MultiToggleButtons" || r.getBoundingClientRect().height < 2) dsFallback();
+    }, 350);
+  </script>
+</body></html>

@@ -1,0 +1,6 @@
+import { createElement } from 'react';
+const attrs = {"width":"20","height":"20","viewBox":"0 0 20 20","fill":"none","xmlns":"http://www.w3.org/2000/svg"};
+const inner = "\n<g clip-path=\"url(#clip0_40008530_16226)\">\n<path d=\"M9.99849 7.26398C11.5042 7.26398 12.7245 8.48161 12.7245 9.98092C12.7245 11.4866 11.5042 12.707 9.99849 12.707C8.49282 12.707 7.27246 11.4866 7.27246 9.98092C7.27246 8.47524 8.49282 7.25489 9.99849 7.25489V7.26398ZM9.99849 3.17493C14.5419 3.17493 18.4219 6.00092 19.9849 9.99001C18.4129 13.97 14.5355 16.8051 9.98941 16.8051C5.43693 16.8051 1.55688 13.97 -0.0151367 9.99001C1.54779 6.00182 5.42784 3.17493 9.98032 3.17493H9.99849ZM1.98395 9.99001C3.47419 13.0341 6.57278 14.9877 9.98941 14.9877C13.3969 14.9877 16.5046 13.0341 17.9949 9.99001C16.4955 6.93685 13.3969 4.99228 9.98032 4.99228C6.5546 4.99228 3.45601 6.93685 1.96578 9.99001H1.98395Z\" fill=\"currentColor\"/>\n</g>\n<defs>\n<clipPath id=\"clip0_40008530_16226\">\n<rect width=\"20\" height=\"20\" fill=\"currentColor\"/>\n</clipPath>\n</defs>\n";
+export default function Svg({ className, ...props }: Record<string, any>) {
+  return createElement('svg', { ...attrs, ...props, className, dangerouslySetInnerHTML: { __html: inner } });
+}

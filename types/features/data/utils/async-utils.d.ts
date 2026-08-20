@@ -1,0 +1,63 @@
+import type { AsyncThunkAction } from '@reduxjs/toolkit';
+import type { Action, Dispatch } from 'redux';
+import type { BeefyDispatchFn, BeefyStateFn } from '../store/types';
+/**
+ * allows us to do
+ *      await sleep(10 * 1000)
+ *
+ * Useful for polling data at regular interval with unknown network conditions
+ */
+export declare function sleep(ms: number): Promise<void>;
+export type PollStop = () => void;
+/**
+ * Wait ms, then call fn, then wait ms, then call fn, then wait ms, etc
+ *
+ * The return value is a stop() function to stop looping
+ */
+export declare function poll(fn: () => Promise<unknown>, ms: number, pauseWhenAppNotShown?: boolean): PollStop;
+/**
+ * Challenge:
+ *  We want to start fetching data as soon as possible
+ *  But some reducers depends on some previous state to have been fetched, like the TVL depends on token prices to be in the store
+ *  Async thunks by redux toolkit don't allow us to delay the fulfilled dispatch until needed
+ *
+ * Solutions:
+ *
+ * ❌ Middleware: have a middleware that delay dispatches until all call dependencies have been met
+ *  - could be weird when debugging
+ *  - have to be smart about action parameters (chain params), etc
+ *  - could be a mess to debug -> have some test
+ *  - people will forget about it and make annoying mistakes?
+ *  - the dependency tree encodes reducer dependencies, which is completely separate code
+ *
+ * ❌ Make reducers smarter:
+ *  - each reducer handles data when it can
+ *  - we may need to hack a new action to trigger computations
+ *  - will make reducers more complex many will have to handle partial data
+ *     - having to handle partial data looks "ok" from a dev perspective
+ *  - we could encode dependencies directly in the reducer: in tvl, we say we depend on this and this action to be fulfilled and dispatched
+ *  - we could "wrap" a reducer in some generic sauce that put "actions to be processed" in the state
+ *  - but we will have to wait for 1 dispatch cycle to be able to use selectors like normal
+ *  - this would be the "proper" way
+ *
+ * ✅ Delay dispatch of fulfilled actions: Have a scenario that call the payloadCreator function and dispatch only when needed
+ *  - easy to understand, complexity will be in a single place (the scenario)
+ *  - keep the state reducers simple, but keep implicit dependencies between reducers
+ *  - have to separate payloadCreator function from the async action (that's ok)
+ *  - will be hard to use async thunk actions without dispatching them
+ *     - maybe pass a custom store and re-dispatch this store actions?
+ *
+ * Feel free to implement any other solution if you find it better
+ */
+export declare function createFulfilledActionCapturer(dispatch: BeefyDispatchFn, getState: BeefyStateFn): <Returned, ThunkArg, ThunkApiConfig extends {
+    state?: unknown;
+    dispatch?: Dispatch;
+    extra?: unknown;
+    rejectValue?: unknown;
+    serializedErrorType?: unknown;
+    pendingMeta?: unknown;
+    fulfilledMeta?: unknown;
+    rejectedMeta?: unknown;
+}>(asyncAction: AsyncThunkAction<Returned, ThunkArg, ThunkApiConfig>) => Promise<() => Action>;
+/** wait at most ms for the result of a promise created */
+export declare function withTimeoutSignal<T>(ms: number, creator: (signal: AbortSignal) => Promise<T>): Promise<T>;

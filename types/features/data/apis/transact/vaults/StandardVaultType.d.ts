@@ -1,0 +1,30 @@
+import BigNumber from 'bignumber.js';
+import type { Namespace, TFunction } from 'react-i18next';
+import { type TokenEntity, type TokenErc20, type TokenNative } from '../../../entities/token';
+import { type VaultStandard } from '../../../entities/vault';
+import type { Step } from '../../../reducers/wallet/stepper-types';
+import type { BeefyState, BeefyStateFn } from '../../../store/types';
+import { type InputTokenAmount, type StandardVaultDepositOption, type StandardVaultDepositQuote, type StandardVaultWithdrawOption, type StandardVaultWithdrawQuote, type TokenAmount, type TransactQuote } from '../transact-types';
+import type { ZapStep } from '../zap/types';
+import type { IStandardVaultType, VaultDepositRequest, VaultDepositResponse, VaultWithdrawRequest, VaultWithdrawResponse } from './IVaultType';
+export declare class StandardVaultType implements IStandardVaultType {
+    readonly id = "standard";
+    readonly vault: VaultStandard;
+    readonly depositToken: TokenEntity;
+    readonly shareToken: TokenErc20;
+    protected readonly getState: BeefyStateFn;
+    constructor(vault: VaultStandard, getState: BeefyStateFn);
+    protected calculateDepositFee(input: TokenAmount, state: BeefyState): BigNumber;
+    fetchZapDeposit(request: VaultDepositRequest): Promise<VaultDepositResponse>;
+    protected fetchErc20ZapDeposit(vaultAddress: string, depositToken: TokenErc20, depositAmount: BigNumber, depositAll: boolean): ZapStep;
+    protected fetchNativeZapDeposit(vaultAddress: string, depositToken: TokenNative, depositAmount: BigNumber): ZapStep;
+    fetchDepositOption(): Promise<StandardVaultDepositOption>;
+    fetchDepositQuote(inputs: InputTokenAmount[], option: StandardVaultDepositOption): Promise<StandardVaultDepositQuote>;
+    fetchDepositStep(quote: TransactQuote, t: TFunction<Namespace>): Promise<Step>;
+    fetchWithdrawOption(): Promise<StandardVaultWithdrawOption>;
+    fetchWithdrawQuote(inputs: InputTokenAmount[], option: StandardVaultWithdrawOption): Promise<StandardVaultWithdrawQuote>;
+    fetchWithdrawStep(quote: TransactQuote, t: TFunction<Namespace>): Promise<Step>;
+    fetchZapWithdraw(request: VaultWithdrawRequest): Promise<VaultWithdrawResponse>;
+    protected fetchNativeZapWithdraw(vaultAddress: string, shareToken: TokenErc20, sharesToWithdrawWei: BigNumber, withdrawAll: boolean): ZapStep;
+    protected fetchErc20ZapWithdraw(vaultAddress: string, shareToken: TokenErc20, sharesToWithdrawWei: BigNumber, withdrawAll: boolean): ZapStep;
+}

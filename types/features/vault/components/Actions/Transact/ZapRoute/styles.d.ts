@@ -1,0 +1,25 @@
+export declare const styles: {
+    title: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    routeHolder: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    routeHeader: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    routerHeaderClickable: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    routeContent: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    steps: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    stepRow: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    stepStatusWrapper: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    stepContent: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    statusBase: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    statusList: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    statusFinished: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    statusInProgress: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    statusFailed: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    statusNotStarted: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    chainIcon: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    chainTag: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    expandIcon: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    routeHolderDisabled: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    routeHeaderDisabled: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    placeholderTitle: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    placeholderIcon: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+    feeOriginal: import("../../../../../../../.cache/styles/types").SystemStyleObject;
+};

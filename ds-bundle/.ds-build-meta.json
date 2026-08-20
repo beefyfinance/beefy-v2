@@ -1,0 +1,9 @@
+{
+  "namespace": "BeefyV2",
+  "source": "beefy-v2@0.1.0",
+  "shape": "package",
+  "provider": "BeefySurface",
+  "componentCount": 80,
+  "skippedStoryIds": [],
+  "runtimeFontPrefixes": []
+}
