@@ -36,6 +36,15 @@ export function hasSearchText(searchText: string): boolean {
   return simplifySearchText(searchText).length > 0;
 }
 
+/** lowercase words of a query or token name; one tokenizer so both sides split identically */
+export function toSearchWords(text: string): string[] {
+  return simplifySearchText(text)
+    .toLowerCase()
+    .split(/[- /,]/g)
+    .map(word => word.trim())
+    .filter(word => word.length > 1);
+}
+
 export type SearchQueryKind = 'text' | 'address' | 'address-too-short';
 
 export function classifySearchQuery(searchText: string): SearchQueryKind {
@@ -68,18 +77,14 @@ export function buildVaultSearchContext(
     };
   }
 
-  const words = query
-    .split(/[- /,]/g)
-    .map(word => word.trim())
-    .filter(word => word.length > 1)
-    .map(
-      (word): VaultSearchWord => ({
-        word,
-        fuzzyToken: fuzzyTokenRegex(word),
-        chainIds: matchIndexExact(chainIndex, word),
-        platformIds: matchIndexWordOrPrefix(platformIndex, word),
-      })
-    );
+  const words = toSearchWords(query).map(
+    (word): VaultSearchWord => ({
+      word,
+      fuzzyToken: fuzzyTokenRegex(word),
+      chainIds: matchIndexExact(chainIndex, word),
+      platformIds: matchIndexWordOrPrefix(platformIndex, word),
+    })
+  );
 
   return {
     query,
@@ -93,6 +98,7 @@ export function buildVaultSearchContext(
  * Relevance tier for a vault, 0 = no match.
  * Whole-query name matches first, then every word must match some field (min tier wins).
  * @param tokenSymbols from selectVaultTokenSymbols
+ * @param tokenNameWords from selectVaultTokenNameWords; matched whole or by prefix, never substring
  * @param platformIds from selectFilterPlatformIdsForVault; pass [] when !context.anyPlatformWords
  * @param strategyAddress on-chain strategy contract; only read in address mode
  */
@@ -100,6 +106,7 @@ export function scoreVaultForSearch(
   context: VaultSearchContext,
   vault: VaultEntity,
   tokenSymbols: string[],
+  tokenNameWords: readonly string[],
   platformIds: readonly string[],
   strategyAddress?: string
 ): number {
@@ -122,9 +129,15 @@ export function scoreVaultForSearch(
     let tier: number;
     if (name.includes(word)) {
       tier = 70;
-    } else if (tokenSymbols.some(symbol => fuzzyToken.test(symbol))) {
+    } else if (
+      tokenSymbols.some(symbol => fuzzyToken.test(symbol)) ||
+      tokenNameWords.includes(word)
+    ) {
       tier = 60;
-    } else if (tokenSymbols.some(symbol => symbol.toLowerCase().includes(word))) {
+    } else if (
+      tokenSymbols.some(symbol => symbol.toLowerCase().includes(word)) ||
+      matchesTokenNameWordPrefix(tokenNameWords, word)
+    ) {
       tier = 50;
     } else if (wordPlatformIds.size > 0 && platformIds.some(id => wordPlatformIds.has(id))) {
       tier = 40;
@@ -169,8 +182,13 @@ function scoreVaultAddresses(
   return best;
 }
 
+/** prefix once 3+ chars are typed; never substring so "base" does not find Coinbase */
+export function matchesTokenNameWordPrefix(nameWords: readonly string[], word: string): boolean {
+  return word.length >= 3 && nameWords.some(nameWord => nameWord.startsWith(word));
+}
+
 // TOKEN, WTOKEN or TOKENW; deliberately without the g flag: .test() on a global regex is stateful
-function fuzzyTokenRegex(token: string) {
+export function fuzzyTokenRegex(token: string) {
   return new RegExp(`^w?${escapeStringRegexp(token)}w?$`, 'i');
 }
 
