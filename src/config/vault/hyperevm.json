@@ -1,5 +1,42 @@
 [
   {
+    "id": "morpho-v2-hyperevm-gauntlet-usdc",
+    "name": "USDC (Gauntlet V2)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x43c4a608f6Cfa2348D568f77a14389688788e8EE",
+    "earnedToken": "mooMorphoV2HyperEVMGauntletUSDC",
+    "earnedTokenAddress": "0x43c4a608f6Cfa2348D568f77a14389688788e8EE",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1782898409,
+    "platformId": "morpho",
+    "curatorId": "gauntlet",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/hyperevm/vault/0x9FA2074E43ef6F6dB4a1bB5eeB72e4bc8558bFDe/gauntlet-usdc",
+    "network": "hyperevm",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "projectx-cow-hyperevm-whype-usdc-rp",
     "name": "WHYPE-USDC Reward Pool",
     "type": "gov",

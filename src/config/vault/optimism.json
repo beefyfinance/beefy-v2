@@ -1,5 +1,42 @@
 [
   {
+    "id": "morpho-v2-op-gauntlet-balanced-usdc",
+    "name": "USDC (Gauntlet, Balanced V2)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x68c155b21D4f839238e25fc0Eba5e091825d3FcB",
+    "earnedToken": "mooMorphoV2OPGauntletBalancedUSDC",
+    "earnedTokenAddress": "0x68c155b21D4f839238e25fc0Eba5e091825d3FcB",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1782898033,
+    "platformId": "morpho",
+    "curatorId": "gauntlet",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/opmainnet/vault/0x4fFc4e5F1f1F5C43dc9Bc27b53728DA13b02bE35/gauntlet-usdc-balanced",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "velo-cow-op-velo-weth-v2-vault",
     "name": "VELO-WETH",
     "type": "standard",
