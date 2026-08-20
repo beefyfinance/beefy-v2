@@ -1247,6 +1247,125 @@
     ]
   },
   {
+    "id": "uniswap-cow-base-sol-cbbtc-vault",
+    "name": "SOL-cbBTC",
+    "type": "standard",
+    "token": "SOL-cbBTC",
+    "tokenAddress": "0x6359E6352409839038df76E5e498A682A39B46e8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xFfEb03A87F703D50a6fa53dCcCf6b7D93b5A2C41",
+    "earnedToken": "mooBeefyUniswapSOL-cbBTC",
+    "earnedTokenAddress": "0xFfEb03A87F703D50a6fa53dCcCf6b7D93b5A2C41",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-sol-cbbtc",
+    "status": "active",
+    "createdAt": 1787052079,
+    "platformId": "uniswap",
+    "assets": ["SOL", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-sol-cbbtc-rp",
+    "name": "SOL-cbBTC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseSOL-cbBTC",
+    "tokenAddress": "0x6359E6352409839038df76E5e498A682A39B46e8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xB11c0970014b006C7E2116f948B51AFABb9E5AA7",
+    "earnedToken": "rcowUniswapBaseSOL-cbBTC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-sol-cbbtc",
+    "status": "active",
+    "createdAt": 1787052061,
+    "platformId": "uniswap",
+    "assets": ["SOL", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-sol-cbbtc",
+    "name": "SOL-cbBTC",
+    "type": "cowcentrated",
+    "token": "SOL-cbBTC",
+    "tokenAddress": "0x428E80cF6633CdA60af98079fcD8bE0d9a3a33a7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x311935Cd80B76769bF2ecC9D8Ab7635b2139cf82",
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    ],
+    "earnContractAddress": "0x6359E6352409839038df76E5e498A682A39B46e8",
+    "earnedToken": "cowUniswapBaseSOL-cbBTC",
+    "earnedTokenAddress": "0x6359E6352409839038df76E5e498A682A39B46e8",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-sol-cbbtc",
+    "status": "active",
+    "createdAt": 1787052045,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["SOL", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancakeswap-cow-base-sol-usdc-vault",
     "name": "SOL-USDC",
     "type": "standard",
