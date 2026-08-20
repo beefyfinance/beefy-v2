@@ -6509,46 +6509,6 @@
     ]
   },
   {
-    "id": "pancake-cow-base-weth-aero-vault",
-    "name": "WETH-AERO",
-    "type": "standard",
-    "token": "WETH-AERO",
-    "tokenAddress": "0x608F0D41c1cbE896Af75dAaDb97b64AC5e9C5392",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pancakeswap",
-    "earnContractAddress": "0xEdB40Ee3D76fCE00b33C7f57B862fCA84B087e04",
-    "earnedToken": "mooCowPancakeWETH-AERO",
-    "earnedTokenAddress": "0xEdB40Ee3D76fCE00b33C7f57B862fCA84B087e04",
-    "oracle": "lps",
-    "oracleId": "pancake-cow-base-weth-aero",
-    "status": "eol",
-    "createdAt": 1775132674,
-    "retireReason": "tvl",
-    "retiredAt": 1785438005,
-    "platformId": "pancakeswap",
-    "assets": ["WETH", "AERO"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "compounds",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
     "id": "pancake-cow-base-weth-aero-rp",
     "name": "WETH-AERO Reward Pool",
     "type": "gov",
