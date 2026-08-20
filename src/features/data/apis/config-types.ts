@@ -93,6 +93,18 @@ export interface VaultConfig {
   underlyingPlatformUrl?: string;
 }
 
+export interface RestrictionProfileConfig {
+  countries: string[];
+  tokens: {
+    [chainId in ChainEntity['id']]?: string[];
+  };
+  assets?: {
+    [chainId in ChainEntity['id']]?: string[];
+  };
+}
+
+export type RestrictionsConfig = Record<string, RestrictionProfileConfig>;
+
 export interface PartnersConfig {
   QiDao: VaultEntity['id'][];
   Nexus: ChainEntity['id'][];
