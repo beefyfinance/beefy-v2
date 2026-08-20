@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { isEqual } from 'lodash-es';
 import type BigNumber from 'bignumber.js';
 import escapeStringRegexp from 'escape-string-regexp';
 import { createCachedSelector } from 're-reselect';
@@ -226,7 +227,7 @@ export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, se
   });
 }
 
-export const selectUserDashboardFilteredVaults = (
+const selectUserDashboardFilteredVaultsUncached = (
   state: BeefyState,
   text: string,
   walletAddress?: string
@@ -407,3 +408,13 @@ export const selectMaximumUnderlyingVaultTvl = createSelector(
     return maxTvl;
   }
 );
+
+// allocates a new array every call, which also breaks the sort useMemo downstream
+export const selectUserDashboardFilteredVaults = createCachedSelector(
+  (state: BeefyState) => state,
+  (_state: BeefyState, text: string) => text,
+  (_state: BeefyState, _text: string, walletAddress?: string) => walletAddress,
+  (state: BeefyState, text: string, walletAddress?: string) =>
+    selectUserDashboardFilteredVaultsUncached(state, text, walletAddress),
+  { memoizeOptions: { resultEqualityCheck: isEqual } }
+)((_state: BeefyState, text: string, walletAddress?: string) => `${walletAddress ?? ''}-${text}`);

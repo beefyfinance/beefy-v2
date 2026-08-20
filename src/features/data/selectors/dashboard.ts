@@ -1,5 +1,6 @@
 import type BigNumber from 'bignumber.js';
-import { cloneDeep, orderBy } from 'lodash-es';
+import { createCachedSelector } from 're-reselect';
+import { cloneDeep, isEqual, orderBy } from 'lodash-es';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
@@ -57,7 +58,7 @@ export enum DashboardDataStatus {
   Available,
 }
 
-export const selectUserTotalYieldUsd = (state: BeefyState, walletAddress: string) => {
+const selectUserTotalYieldUsdUncached = (state: BeefyState, walletAddress: string) => {
   const vaultPnls = selectDashboardUserVaultsPnl(state, walletAddress);
 
   let totalYieldUsd = BIG_ZERO;
@@ -241,17 +242,27 @@ const selectDashboardYieldRewardDataAvailableByVaultId = (
   return DashboardDataStatus.Missing;
 };
 
-export const selectDashboardUserRewardsOrStatusByVaultId = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  walletAddress?: string
-): UserRewards | Exclude<DashboardDataStatus, DashboardDataStatus.Available> => {
-  const status = selectDashboardYieldRewardDataAvailableByVaultId(state, vaultId, walletAddress);
-  if (status === DashboardDataStatus.Available) {
-    return selectDashboardUserRewardsByVaultId(state, vaultId, walletAddress);
-  }
-  return status;
-};
+// the underlying reduce seeds with a fresh clone, so it allocates even for an empty list
+export const selectDashboardUserRewardsOrStatusByVaultId = createCachedSelector(
+  (state: BeefyState) => state,
+  (_s: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (_s: BeefyState, _v: VaultEntity['id'], walletAddress?: string) => walletAddress,
+  (
+    state,
+    vaultId,
+    walletAddress
+  ): UserRewards | Exclude<DashboardDataStatus, DashboardDataStatus.Available> => {
+    const status = selectDashboardYieldRewardDataAvailableByVaultId(state, vaultId, walletAddress);
+    if (status === DashboardDataStatus.Available) {
+      return selectDashboardUserRewardsByVaultId(state, vaultId, walletAddress);
+    }
+    return status;
+  },
+  { memoizeOptions: { resultEqualityCheck: isEqual } }
+)(
+  (_s: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
+    `${vaultId}-${walletAddress ?? ''}`
+);
 
 type DashboardUserExposureVaultEntry = {
   key: string;
@@ -369,7 +380,7 @@ const selectDashboardUserVaultChainExposure: DashboardUserExposureVaultFn<
   const chain = selectChainById(state, vault.chainId);
   return [{ key: chain.id, label: chain.name, value: vaultTvl, chainId: chain.id }];
 };
-export const selectDashboardUserExposureByChain = (state: BeefyState, walletAddress?: string) =>
+const selectDashboardUserExposureByChainUncached = (state: BeefyState, walletAddress?: string) =>
   selectDashboardUserExposure(
     state,
     selectDashboardUserVaultChainExposure,
@@ -393,7 +404,7 @@ const selectDashboardUserVaultPlatformExposure: DashboardUserExposureVaultFn = (
   const platform = selectPlatformById(state, vault.platformId);
   return [{ key: platform.id, label: platform.name, value: vaultTvl }];
 };
-export const selectDashboardUserExposureByPlatform = (state: BeefyState, walletAddress?: string) =>
+const selectDashboardUserExposureByPlatformUncached = (state: BeefyState, walletAddress?: string) =>
   selectDashboardUserExposure(
     state,
     selectDashboardUserVaultPlatformExposure,
@@ -446,7 +457,7 @@ const selectDashboardUserVaultTokenExposure: DashboardUserExposureVaultFn<
     },
   ];
 };
-export const selectDashboardUserExposureByToken = (state: BeefyState, walletAddress?: string) =>
+const selectDashboardUserExposureByTokenUncached = (state: BeefyState, walletAddress?: string) =>
   selectDashboardUserExposure(
     state,
     selectDashboardUserVaultTokenExposure,
@@ -490,14 +501,14 @@ const selectDashboardUserVaultStableExposure: DashboardUserExposureVaultFn = (
 
   return [{ key: 'other', label: 'Other', value: vaultTvl }];
 };
-export const selectDashboardUserStablecoinsExposure = (state: BeefyState, walletAddress: string) =>
+const selectDashboardUserStablecoinsExposureUncached = (state: BeefyState, walletAddress: string) =>
   selectDashboardUserExposure(
     state,
     selectDashboardUserVaultStableExposure,
     stableVsOthersSummarizer,
     walletAddress
   );
-export const selectDashboardUserVaultsPnl = (state: BeefyState, walletAddress: string) => {
+const selectDashboardUserVaultsPnlUncached = (state: BeefyState, walletAddress: string) => {
   const userVaults = selectUserDepositedVaultIds(state, walletAddress);
   const vaults: Record<string, UserVaultPnl> = {};
   for (const vaultId of userVaults) {
@@ -506,7 +517,7 @@ export const selectDashboardUserVaultsPnl = (state: BeefyState, walletAddress: s
   return vaults;
 };
 
-export const selectDashboardUserVaultsDailyYield = (state: BeefyState, walletAddress: string) => {
+const selectDashboardUserVaultsDailyYieldUncached = (state: BeefyState, walletAddress: string) => {
   const userVaults = selectUserDepositedVaultIds(state, walletAddress);
   const vaults: Record<string, BigNumber> = {};
   for (const vaultId of userVaults) {
@@ -526,3 +537,39 @@ export const selectShouldInitDashboardForUser = (state: BeefyState, walletAddres
     selectShouldInitDashboardForUserImpl(state, walletAddress)
   );
 };
+
+/**
+ * These allocate a fresh array/record every call, re-rendering their subscriber on every dispatch.
+ *
+ * Whole state is the input deliberately: they read a wide slice, and an incomplete hand-written
+ * input list would trade a re-render bug for a staleness bug on financial figures. The compute
+ * still runs; `resultEqualityCheck` is what stops the re-render.
+ */
+function cachedByAddress<A extends string | undefined, R>(
+  fn: (state: BeefyState, walletAddress: A) => R
+) {
+  return createCachedSelector(
+    (state: BeefyState) => state,
+    (_state: BeefyState, walletAddress: A) => walletAddress,
+    (state: BeefyState, walletAddress: A) => fn(state, walletAddress),
+    { memoizeOptions: { resultEqualityCheck: isEqual } }
+  )((_state: BeefyState, walletAddress: A) => walletAddress ?? '');
+}
+
+export const selectDashboardUserExposureByChain = cachedByAddress(
+  selectDashboardUserExposureByChainUncached
+);
+export const selectDashboardUserExposureByPlatform = cachedByAddress(
+  selectDashboardUserExposureByPlatformUncached
+);
+export const selectDashboardUserExposureByToken = cachedByAddress(
+  selectDashboardUserExposureByTokenUncached
+);
+export const selectDashboardUserStablecoinsExposure = cachedByAddress(
+  selectDashboardUserStablecoinsExposureUncached
+);
+export const selectUserTotalYieldUsd = cachedByAddress(selectUserTotalYieldUsdUncached);
+export const selectDashboardUserVaultsPnl = cachedByAddress(selectDashboardUserVaultsPnlUncached);
+export const selectDashboardUserVaultsDailyYield = cachedByAddress(
+  selectDashboardUserVaultsDailyYieldUncached
+);

@@ -1,4 +1,6 @@
 import { memo } from 'react';
+import { isEqual } from 'lodash-es';
+import { createCachedSelector } from 're-reselect';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
 import { selectUserDepositedTimelineByVaultId } from '../../features/data/selectors/analytics.ts';
@@ -28,57 +30,69 @@ export const VaultPnlStat = memo(function ({
   const { label, ...statProps } = useAppSelector(state =>
     selectVaultPnlStat(state, vaultId, pnlData, walletAddress)
   );
-  return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
+  return (
+    <VaultValueStat
+      label={t(label)}
+      tooltip={showClmPnlTooltip(pnlData) ? <ClmPnlTooltipContent userPnl={pnlData} /> : undefined}
+      {...statProps}
+      {...passthrough}
+    />
+  );
 });
 
-// TODO better selector / hook
-function selectVaultPnlStat(
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  pnlData: UserVaultPnl,
-  walletAddress: string
-) {
-  const label = 'VaultStat-Pnl';
-  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
-  const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
+// the tooltip element is built in the component: JSX in a selector is a fresh object every
+// call, so it can never be memoized
+const selectVaultPnlStat = createCachedSelector(
+  (state: BeefyState) => state,
+  (_s: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (_s: BeefyState, _v: VaultEntity['id'], pnlData: UserVaultPnl) => pnlData,
+  (_s: BeefyState, _v: VaultEntity['id'], _p: UserVaultPnl, walletAddress: string) => walletAddress,
+  (state: BeefyState, vaultId: VaultEntity['id'], pnlData: UserVaultPnl, walletAddress: string) => {
+    const label = 'VaultStat-Pnl';
+    const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
+    const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
 
-  if (!isLoaded) {
+    if (!isLoaded) {
+      return {
+        label,
+        value: '-',
+        subValue: null,
+        blur: false,
+        loading: true,
+      };
+    }
+
+    if (!vaultTimeline || !vaultTimeline.current.length) {
+      return {
+        label,
+        value: '-',
+        subValue: null,
+        blur: false,
+        loading: false,
+      };
+    }
+
+    let value: string, subValue: string | null;
+    if (isUserClmPnl(pnlData)) {
+      value = formatLargeUsd(pnlData.pnl.withClaimedPending.usd);
+      subValue = formatLargePercent(pnlData.pnl.withClaimedPending.percentage);
+    } else {
+      const { totalPnlUsd, pnlPercentage } = pnlData;
+      value = formatLargeUsd(totalPnlUsd);
+      subValue = formatLargePercent(pnlPercentage);
+    }
+
     return {
       label,
-      value: '-',
-      subValue: null,
+      value,
+      subValue,
       blur: false,
-      loading: true,
+      loading: !isLoaded,
+      boosted: false,
     };
-  }
-
-  if (!vaultTimeline || !vaultTimeline.current.length) {
-    return {
-      label,
-      value: '-',
-      subValue: null,
-      blur: false,
-      loading: false,
-    };
-  }
-
-  let value: string, subValue: string | null;
-  if (isUserClmPnl(pnlData)) {
-    value = formatLargeUsd(pnlData.pnl.withClaimedPending.usd);
-    subValue = formatLargePercent(pnlData.pnl.withClaimedPending.percentage);
-  } else {
-    const { totalPnlUsd, pnlPercentage } = pnlData;
-    value = formatLargeUsd(totalPnlUsd);
-    subValue = formatLargePercent(pnlPercentage);
-  }
-
-  return {
-    label,
-    value,
-    subValue,
-    blur: false,
-    loading: !isLoaded,
-    boosted: false,
-    tooltip: showClmPnlTooltip(pnlData) ? <ClmPnlTooltipContent userPnl={pnlData} /> : undefined,
-  };
-}
+  },
+  { memoizeOptions: { resultEqualityCheck: isEqual } }
+)(
+  (_s: BeefyState, vaultId: VaultEntity['id'], _p: UserVaultPnl, walletAddress: string) =>
+    `${vaultId}-${walletAddress}`
+);

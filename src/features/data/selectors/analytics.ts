@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
+import { isEqual } from 'lodash-es';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE, BIG_ZERO, isEqualWithinPercent } from '../../../helpers/big-number.ts';
 import { ClmPnl, PnL } from '../../../helpers/pnl.ts';
@@ -588,17 +589,24 @@ export const selectClmPnl = (
   };
 };
 
-export const selectVaultPnl = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  walletAddress?: string
-): UserVaultPnl => {
-  const vault = selectVaultById(state, vaultId);
-  if (isCowcentratedLikeVault(vault)) {
-    return selectClmPnl(state, vaultId, walletAddress);
-  }
-  return selectStandardGovPnl(state, vaultId, walletAddress);
-};
+// result is passed as a prop into several memo()'d stat components, so a fresh object each
+// call re-rendered all of them; see cachedByAddress in dashboard.ts for the whole-state rationale
+export const selectVaultPnl = createCachedSelector(
+  (state: BeefyState) => state,
+  (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (_state: BeefyState, _vaultId: VaultEntity['id'], walletAddress?: string) => walletAddress,
+  (state, vaultId, walletAddress): UserVaultPnl => {
+    const vault = selectVaultById(state, vaultId);
+    if (isCowcentratedLikeVault(vault)) {
+      return selectClmPnl(state, vaultId, walletAddress);
+    }
+    return selectStandardGovPnl(state, vaultId, walletAddress);
+  },
+  { memoizeOptions: { resultEqualityCheck: isEqual } }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
+    `${vaultId}-${walletAddress ?? ''}`
+);
 
 const EMPTY_INTERVAL_BUCKET: Readonly<AnalyticsIntervalData<unknown>> = {
   data: [],

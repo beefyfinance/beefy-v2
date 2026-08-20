@@ -1,4 +1,6 @@
 import { memo, type ReactNode } from 'react';
+import { isEqual } from 'lodash-es';
+import { createCachedSelector } from 're-reselect';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
 import { selectUserDepositedTimelineByVaultId } from '../../features/data/selectors/analytics.ts';
@@ -49,96 +51,103 @@ export const VaultDepositNowStat = memo(function VaultDepositNowStat({
   );
 });
 
-// TODO better selector / hook
-const selectVaultDepositNowStat = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  pnlData: UserVaultPnl,
-  walletAddress: string
-) => {
-  const label = 'VaultStat-Now';
-  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
-  const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
+const selectVaultDepositNowStat = createCachedSelector(
+  (state: BeefyState) => state,
+  (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (_s: BeefyState, _v: VaultEntity['id'], pnlData: UserVaultPnl) => pnlData,
+  (_s: BeefyState, _v: VaultEntity['id'], _p: UserVaultPnl, walletAddress: string) => walletAddress,
+  (state: BeefyState, vaultId: VaultEntity['id'], pnlData: UserVaultPnl, walletAddress: string) => {
+    const label = 'VaultStat-Now';
+    const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
+    const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
 
-  if (!vaultTimeline || !vaultTimeline.current.length) {
-    return {
-      label,
-      value: '-',
-      subValue: null,
-      blur: false,
-      loading: false,
-    };
-  }
+    if (!vaultTimeline || !vaultTimeline.current.length) {
+      return {
+        label,
+        value: '-',
+        subValue: null,
+        blur: false,
+        loading: false,
+      };
+    }
 
-  if (!isLoaded) {
-    return {
-      label,
-      value: '-',
-      subValue: null,
-      blur: false,
-      loading: true,
-      expectSubValue: true,
-    };
-  }
+    if (!isLoaded) {
+      return {
+        label,
+        value: '-',
+        subValue: null,
+        blur: false,
+        loading: true,
+        expectSubValue: true,
+      };
+    }
 
-  let value: string,
-    subValue: string,
-    tooltip:
-      | undefined
-      | { type: 'amount'; balance: string }
-      | {
-          type: 'pending-index';
-          indexedBalance: string;
-          onchainBalance: string;
-        },
-    pendingIndex = false;
-  if (isUserClmPnl(pnlData)) {
-    pendingIndex = pnlData.pendingIndex;
-    value = formatTokenDisplayCondensed(
-      pnlData.underlying.now.amount,
-      pnlData.underlying.token.decimals,
-      6
-    );
-    subValue = formatLargeUsd(pnlData.underlying.now.usd);
-    tooltip = {
-      type: 'amount',
-      balance: formatTokenDisplay(pnlData.underlying.now.amount, pnlData.underlying.token.decimals),
-    };
-    if (pendingIndex) {
+    let value: string,
+      subValue: string,
+      tooltip:
+        | undefined
+        | { type: 'amount'; balance: string }
+        | {
+            type: 'pending-index';
+            indexedBalance: string;
+            onchainBalance: string;
+          },
+      pendingIndex = false;
+    if (isUserClmPnl(pnlData)) {
+      pendingIndex = pnlData.pendingIndex;
+      value = formatTokenDisplayCondensed(
+        pnlData.underlying.now.amount,
+        pnlData.underlying.token.decimals,
+        6
+      );
+      subValue = formatLargeUsd(pnlData.underlying.now.usd);
       tooltip = {
-        type: 'pending-index',
-        onchainBalance: formatTokenDisplay(
-          pnlData.underlying.live.amount,
-          pnlData.underlying.token.decimals
-        ),
-        indexedBalance: formatTokenDisplay(
+        type: 'amount',
+        balance: formatTokenDisplay(
           pnlData.underlying.now.amount,
           pnlData.underlying.token.decimals
         ),
       };
+      if (pendingIndex) {
+        tooltip = {
+          type: 'pending-index',
+          onchainBalance: formatTokenDisplay(
+            pnlData.underlying.live.amount,
+            pnlData.underlying.token.decimals
+          ),
+          indexedBalance: formatTokenDisplay(
+            pnlData.underlying.now.amount,
+            pnlData.underlying.token.decimals
+          ),
+        };
+      }
+    } else {
+      const { deposit, depositUsd, depositLive, tokenDecimals } = pnlData;
+      pendingIndex = pnlData.pendingIndex;
+      value = formatTokenDisplayCondensed(deposit, tokenDecimals, 6);
+      subValue = formatLargeUsd(depositUsd);
+      tooltip = { type: 'amount', balance: formatTokenDisplay(deposit, tokenDecimals) };
+      if (pendingIndex) {
+        tooltip = {
+          type: 'pending-index',
+          onchainBalance: formatTokenDisplay(depositLive, tokenDecimals),
+          indexedBalance: formatTokenDisplay(deposit, tokenDecimals),
+        };
+      }
     }
-  } else {
-    const { deposit, depositUsd, depositLive, tokenDecimals } = pnlData;
-    pendingIndex = pnlData.pendingIndex;
-    value = formatTokenDisplayCondensed(deposit, tokenDecimals, 6);
-    subValue = formatLargeUsd(depositUsd);
-    tooltip = { type: 'amount', balance: formatTokenDisplay(deposit, tokenDecimals) };
-    if (pendingIndex) {
-      tooltip = {
-        type: 'pending-index',
-        onchainBalance: formatTokenDisplay(depositLive, tokenDecimals),
-        indexedBalance: formatTokenDisplay(deposit, tokenDecimals),
-      };
-    }
-  }
 
-  return {
-    label,
-    value,
-    subValue,
-    blur: false,
-    loading: !isLoaded,
-    tooltip,
-    Icon: pendingIndex ? ExclaimRoundedSquare : undefined,
-  };
-};
+    return {
+      label,
+      value,
+      subValue,
+      blur: false,
+      loading: !isLoaded,
+      tooltip,
+      Icon: pendingIndex ? ExclaimRoundedSquare : undefined,
+    };
+  },
+  { memoizeOptions: { resultEqualityCheck: isEqual } }
+)(
+  (_s: BeefyState, vaultId: VaultEntity['id'], _p: UserVaultPnl, walletAddress: string) =>
+    `${vaultId}-${walletAddress}`
+);
