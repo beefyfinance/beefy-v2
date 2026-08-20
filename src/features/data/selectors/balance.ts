@@ -95,13 +95,13 @@ export const selectUserHasDepositedInAnyVault = createSelector(
   ids => ids.length > 0
 );
 
-export const selectUserDepositedVaultIdsForAsset = (state: BeefyState, asset: string) => {
-  const vaultIds = selectUserDepositedVaultIds(state);
-  return vaultIds.filter(vaultId => {
-    const vault = selectVaultById(state, vaultId);
-    return vault.assetIds.includes(asset);
-  });
-};
+export const selectUserDepositedVaultIdsForAsset = createCachedSelector(
+  (state: BeefyState, _asset: string) => selectUserDepositedVaultIds(state),
+  (state: BeefyState, _asset: string) => state.entities.vaults.byId,
+  (_state: BeefyState, asset: string) => asset,
+  (vaultIds, vaultsById, asset) =>
+    arrayOrStaticEmpty(vaultIds.filter(vaultId => vaultsById[vaultId]?.assetIds.includes(asset)))
+)((_state: BeefyState, asset: string) => asset);
 
 export const selectHasUserDepositedOnChain = createSelector(
   (state: BeefyState, _chainId: ChainEntity['id'], walletAddress?: string) =>

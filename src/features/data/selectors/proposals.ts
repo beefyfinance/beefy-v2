@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { isEqual } from 'lodash-es';
 import { createCachedSelector } from 're-reselect';
 import type { ProposalEntity } from '../entities/proposal.ts';
 import type { BeefyState } from '../store/types.ts';
@@ -41,7 +42,10 @@ export const selectAllActiveProposals = createSelector(
         p.start <= now &&
         p.end >= now &&
         (p.coreProposal || p.start + DELAY_NON_CORE_PROPOSALS <= now)
-    )
+    ),
+  // the time input above ticks every second; without this the filter returns a fresh
+  // (but identical) array just as often
+  { memoizeOptions: { resultEqualityCheck: isEqual } }
 );
 
 export const selectAllActiveProposalsBySpace = createSelector(
@@ -53,7 +57,8 @@ export const selectAllActiveProposalsBySpace = createSelector(
         p.start <= now &&
         p.end >= now &&
         (p.coreProposal || p.start + DELAY_NON_CORE_PROPOSALS <= now)
-    )
+    ),
+  { memoizeOptions: { resultEqualityCheck: isEqual } }
 );
 
 export const selectUnreadActiveProposals = createSelector(
