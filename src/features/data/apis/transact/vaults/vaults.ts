@@ -3,13 +3,21 @@ import type { BeefyStateFn } from '../../../store/types.ts';
 import type { VaultTypeConstructor } from './IVaultType.ts';
 
 function makeLazyLoader<T extends VaultEntity>(loader: () => Promise<VaultTypeConstructor<T>>) {
-  let constructor: VaultTypeConstructor<T> | undefined;
+  // cache the promise, not the resolved value: callers race in via Promise.allSettled over every
+  // zap vault, so a resolved-value guard is still undefined for all of them and each one triggers
+  // its own import()
+  let pending: Promise<VaultTypeConstructor<T>> | undefined;
 
   return async (vault: T, getState: BeefyStateFn) => {
-    if (!constructor) {
-      constructor = await loader();
+    if (!pending) {
+      // drop the cache on failure so a transient import error stays retryable
+      pending = loader().catch(err => {
+        pending = undefined;
+        throw err;
+      });
     }
 
+    const constructor = await pending;
     return new constructor(vault, getState);
   };
 }
