@@ -26,7 +26,9 @@ import {
   selectTransactSelected,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
+import { selectVaultGeoStatus } from '../../../../../data/selectors/restrictions.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { GeoRestrictedReason } from '../../../GeoRestrictedReason/GeoRestrictedReason.tsx';
 import { RetirePauseReason } from '../../../RetirePauseReason/RetirePauseReason.tsx';
 import { Actions } from '../Actions/Actions.tsx';
 import { CrossChainBelowFeeNotice } from '../CrossChainBelowFeeNotice/CrossChainBelowFeeNotice.tsx';
@@ -119,7 +121,9 @@ const DepositFormLoader = memo(function DepositFormLoader() {
   const error = useAppSelector(selectTransactOptionsError);
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const isLoading = status === TransactStatus.Idle || status === TransactStatus.Pending;
+  const geoStatus = useAppSelector(state => selectVaultGeoStatus(state, vaultId));
+  const isLoading =
+    status === TransactStatus.Idle || status === TransactStatus.Pending || geoStatus === 'loading';
   const isError = status === TransactStatus.Rejected;
   const clmMode = useClmMode();
   const active = isVaultActive(vault);
@@ -131,13 +135,15 @@ const DepositFormLoader = memo(function DepositFormLoader() {
   const switching = useAppSelector(selectTransactIsSwitchingTarget);
 
   return (
-    <Container noPadding={isLoading && active && !hasRewardsToggle}>
-      {hasRewardsToggle ?
+    <Container noPadding={isLoading && active && !hasRewardsToggle && geoStatus !== 'blocked'}>
+      {hasRewardsToggle && geoStatus !== 'blocked' ?
         <ClmRewardsToggle css={styles.rewardsToggle} />
       : null}
       <Body busy={switching} aria-busy={switching}>
         {!active ?
           <RetirePauseReason vaultId={vaultId} />
+        : geoStatus === 'blocked' ?
+          <GeoRestrictedReason vaultId={vaultId} />
         : isLoading ?
           <LoadingIndicator text={t('Transact-Loading')} height={468} />
         : isError ?

@@ -31,6 +31,7 @@ import type { BalanceState } from '../reducers/wallet/balance-types.ts';
 import type { BridgeState } from '../reducers/wallet/bridge-types.ts';
 import type { MigrationState } from '../reducers/wallet/migration-types.ts';
 import type { ResolverState } from '../reducers/wallet/resolver-types.ts';
+import type { RestrictionsState } from '../reducers/restrictions-types.ts';
 import type { StepperState } from '../reducers/wallet/stepper-types.ts';
 import type { TransactState } from '../reducers/wallet/transact-types.ts';
 import type { UserRewardsState } from '../reducers/wallet/user-rewards-types.ts';
@@ -72,6 +73,7 @@ export interface BeefyState {
     balance: BalanceState;
     migration: MigrationState;
     resolver: ResolverState;
+    restrictions: RestrictionsState;
     rewards: UserRewardsState;
     wallet: WalletState;
     walletActions: WalletActionsState;

@@ -114,6 +114,9 @@ export type BeefyArticleConfig = {
   date: number;
 };
 export type BeefyLastArticleResponse = BeefyArticleConfig;
+export type BeefyGeoCountryResponse = {
+  country: string;
+};
 export type ZapAggregatorTokenSupportResponse = {
   [chainId in ChainEntity['id']]?: {
     [tokenAddress: TokenEntity['address']]: {

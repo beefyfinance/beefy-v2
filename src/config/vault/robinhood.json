@@ -1,5 +1,1485 @@
 [
   {
+    "id": "uniswap-cow-robinhood-weth-mstr-rp",
+    "name": "MSTR-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodMSTR-WETH",
+    "tokenAddress": "0x0151a001B2EAb292a36Ffd8c1A42396dAe221848",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xC6A55D8E2a0700fFA760D1C8361A82Ec4DeE0Dfe",
+    "earnedToken": "rCowUniswapRobinhoodMSTR-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-mstr",
+    "status": "active",
+    "createdAt": 1786635780,
+    "platformId": "uniswap",
+    "assets": ["MSTRrh", "WETH"],
+    "icons": ["MSTR", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-weth-mstr",
+    "name": "MSTR-WETH",
+    "type": "cowcentrated",
+    "token": "MSTR-WETH uniswap",
+    "tokenAddress": "0x70504a6FafdbfB75fE971FAA4dD716e79aC5624c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0xec262a75e413fAfD0dF80480274532C79D42da09"
+    ],
+    "earnContractAddress": "0x0151a001B2EAb292a36Ffd8c1A42396dAe221848",
+    "earnedToken": "cowUniswapRobinhoodMSTR-WETH",
+    "earnedTokenAddress": "0x0151a001B2EAb292a36Ffd8c1A42396dAe221848",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-mstr",
+    "status": "active",
+    "createdAt": 1786635780,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["MSTRrh", "WETH"],
+    "icons": ["MSTR", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-weth-coin-rp",
+    "name": "COIN-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodWETH-COIN",
+    "tokenAddress": "0x83c2934FF42756e4FFaF0433c9E246e6888F3EF6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xC887326A6015f279FC68B5f6f93a1BE5899A5f2e",
+    "earnedToken": "rCowUniswapRobinhoodWETH-COIN",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-coin",
+    "status": "active",
+    "createdAt": 1786635780,
+    "platformId": "uniswap",
+    "assets": ["COINrh", "WETH"],
+    "icons": ["COIN", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-weth-coin",
+    "name": "COIN-WETH",
+    "type": "cowcentrated",
+    "token": "COIN-WETH uniswap",
+    "tokenAddress": "0x6707aeAc7D0e519B083219d27BB427364363183A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0x6330D8C3178a418788dF01a47479c0ce7CCF450b"
+    ],
+    "earnContractAddress": "0x83c2934FF42756e4FFaF0433c9E246e6888F3EF6",
+    "earnedToken": "cowUniswapRobinhoodWETH-COIN",
+    "earnedTokenAddress": "0x83c2934FF42756e4FFaF0433c9E246e6888F3EF6",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-coin",
+    "status": "active",
+    "createdAt": 1786635780,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["COINrh", "WETH"],
+    "icons": ["COIN", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-weth-nvda-rp",
+    "name": "NVDA-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodNVDA-WETH",
+    "tokenAddress": "0xC61179279abB6cf3CEcCce23641B3d69986Ec777",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x9776f496DFC4464df76B8503Ca1Ba95D116D1E02",
+    "earnedToken": "rCowUniswapRobinhoodNVDA-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-nvda",
+    "status": "active",
+    "createdAt": 1786635780,
+    "platformId": "uniswap",
+    "assets": ["NVDArh", "WETH"],
+    "icons": ["NVDA", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-weth-nvda",
+    "name": "NVDA-WETH",
+    "type": "cowcentrated",
+    "token": "NVDA-WETH uniswap",
+    "tokenAddress": "0xC0Be1cb0f674D9737C72B2A63fC542361185b807",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC"
+    ],
+    "earnContractAddress": "0xC61179279abB6cf3CEcCce23641B3d69986Ec777",
+    "earnedToken": "cowUniswapRobinhoodNVDA-WETH",
+    "earnedTokenAddress": "0xC61179279abB6cf3CEcCce23641B3d69986Ec777",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-nvda",
+    "status": "active",
+    "createdAt": 1786635780,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["NVDArh", "WETH"],
+    "icons": ["NVDA", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-usdg-nvda-rp",
+    "name": "NVDA-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodNVDA-USDG",
+    "tokenAddress": "0xDaF08ca084DCbA9e801549803dE82160ADcAa1De",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x11907281043B89F3b507159F37D254941B5f6525",
+    "earnedToken": "rCowUniswapRobinhoodNVDA-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-usdg-nvda",
+    "status": "active",
+    "createdAt": 1786635780,
+    "platformId": "uniswap",
+    "assets": ["NVDArh", "USDG"],
+    "icons": ["NVDA", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-usdg-nvda",
+    "name": "NVDA-USDG",
+    "type": "cowcentrated",
+    "token": "NVDA-USDG uniswap",
+    "tokenAddress": "0xd4EB21209C4D6093f80B5b84f5C45cc093EA14a3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC"
+    ],
+    "earnContractAddress": "0xDaF08ca084DCbA9e801549803dE82160ADcAa1De",
+    "earnedToken": "cowUniswapRobinhoodNVDA-USDG",
+    "earnedTokenAddress": "0xDaF08ca084DCbA9e801549803dE82160ADcAa1De",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-usdg-nvda",
+    "status": "active",
+    "createdAt": 1786635780,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["NVDArh", "USDG"],
+    "icons": ["NVDA", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-usdg-intc-rp",
+    "name": "INTC-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodINTC-USDG",
+    "tokenAddress": "0xBb18aCfeeB566E8549F83bF0F0E01Bd0B2a7BdD2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x8C241D00EE324162A1a727f0167EB470c5B456e5",
+    "earnedToken": "rCowUniswapRobinhoodINTC-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-usdg-intc",
+    "status": "active",
+    "createdAt": 1786635780,
+    "platformId": "uniswap",
+    "assets": ["INTCrh", "USDG"],
+    "icons": ["INTC", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-usdg-intc",
+    "name": "INTC-USDG",
+    "type": "cowcentrated",
+    "token": "INTC-USDG uniswap",
+    "tokenAddress": "0x2e5a92f5013a64661A49312111be2e8aBd33F56a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "0xc72b96e0E48ecd4DC75E1e45396e26300BC39681"
+    ],
+    "earnContractAddress": "0xBb18aCfeeB566E8549F83bF0F0E01Bd0B2a7BdD2",
+    "earnedToken": "cowUniswapRobinhoodINTC-USDG",
+    "earnedTokenAddress": "0xBb18aCfeeB566E8549F83bF0F0E01Bd0B2a7BdD2",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-usdg-intc",
+    "status": "active",
+    "createdAt": 1786635780,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["INTCrh", "USDG"],
+    "icons": ["INTC", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-spcx-usdg-rp",
+    "name": "SPCX-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodSPCX-USDG",
+    "tokenAddress": "0xc32834aC40a6529b2f7Bb2b9Af496aF0640Fc508",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x7de04eD76BDE435df1526a994AC7f864274dc137",
+    "earnedToken": "rCowUniswapRobinhoodSPCX-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-spcx-usdg",
+    "status": "active",
+    "createdAt": 1786635780,
+    "platformId": "uniswap",
+    "assets": ["SPCXrh", "USDG"],
+    "icons": ["SPCX", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-spcx-usdg",
+    "name": "SPCX-USDG",
+    "type": "cowcentrated",
+    "token": "SPCX-USDG uniswap",
+    "tokenAddress": "0xEb07d9587eFD1778dFb9c385Ec43EF6d5F9fE401",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4a0E65A3EcceC6dBe60AE065F2e7bb85Fae35eEa",
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+    ],
+    "earnContractAddress": "0xc32834aC40a6529b2f7Bb2b9Af496aF0640Fc508",
+    "earnedToken": "cowUniswapRobinhoodSPCX-USDG",
+    "earnedTokenAddress": "0xc32834aC40a6529b2f7Bb2b9Af496aF0640Fc508",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-spcx-usdg",
+    "status": "active",
+    "createdAt": 1786635780,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["SPCXrh", "USDG"],
+    "icons": ["SPCX", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-spy-usdg-rp",
+    "name": "SPY-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodSPY-USDG",
+    "tokenAddress": "0xe71389553681e8cC0b9164898D58b631fEd7586b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x18B52a793BC1261661236A7f39E7348659FbFD0a",
+    "earnedToken": "rCowUniswapRobinhoodSPY-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-spy-usdg",
+    "status": "active",
+    "createdAt": 1786635780,
+    "platformId": "uniswap",
+    "assets": ["SPYrh", "USDG"],
+    "icons": ["SPY", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-spy-usdg",
+    "name": "SPY-USDG",
+    "type": "cowcentrated",
+    "token": "SPY-USDG uniswap",
+    "tokenAddress": "0xA43b424Bc609495AED4BCD88d654934b510B0aD9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x117cc2133c37B721F49dE2A7a74833232B3B4C0C",
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+    ],
+    "earnContractAddress": "0xe71389553681e8cC0b9164898D58b631fEd7586b",
+    "earnedToken": "cowUniswapRobinhoodSPY-USDG",
+    "earnedTokenAddress": "0xe71389553681e8cC0b9164898D58b631fEd7586b",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-spy-usdg",
+    "status": "active",
+    "createdAt": 1786635780,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["SPYrh", "USDG"],
+    "icons": ["SPY", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-usdg-intc-vault",
+    "name": "INTC-USDG",
+    "type": "standard",
+    "token": "INTC-USDG",
+    "tokenAddress": "0x599ac767099bB6f01712867BfA1Fc1Aa27DEFD37",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "earnContractAddress": "0x8353c496114CF66D10545fdc2B4e6dFBafd37e3b",
+    "earnedToken": "mooCowUp33RobinhoodINTC-USDG",
+    "earnedTokenAddress": "0x8353c496114CF66D10545fdc2B4e6dFBafd37e3b",
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-usdg-intc",
+    "status": "active",
+    "createdAt": 1786635778,
+    "platformId": "up",
+    "assets": ["INTCrh", "USDG"],
+    "icons": ["INTC", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-usdg-intc-rp",
+    "name": "INTC-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUp33RobinhoodINTC-USDG",
+    "tokenAddress": "0x599ac767099bB6f01712867BfA1Fc1Aa27DEFD37",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "earnContractAddress": "0x0e7fb97a89b20A682521c5D29868E50A7b693979",
+    "earnedToken": "rCowUp33RobinhoodINTC-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-usdg-intc",
+    "status": "active",
+    "createdAt": 1786635778,
+    "platformId": "up",
+    "assets": ["INTCrh", "USDG"],
+    "icons": ["INTC", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-usdg-intc",
+    "name": "INTC-USDG",
+    "type": "cowcentrated",
+    "token": "INTC-USDG up33",
+    "tokenAddress": "0x6290Be6e6913708866E6f17eaf3F4FCC7d3fdF67",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "depositTokenAddresses": [
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "0xc72b96e0E48ecd4DC75E1e45396e26300BC39681"
+    ],
+    "earnContractAddress": "0x599ac767099bB6f01712867BfA1Fc1Aa27DEFD37",
+    "earnedToken": "cowUp33RobinhoodINTC-USDG",
+    "earnedTokenAddress": "0x599ac767099bB6f01712867BfA1Fc1Aa27DEFD37",
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-usdg-intc",
+    "status": "active",
+    "createdAt": 1786635778,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["INTCrh", "USDG"],
+    "icons": ["INTC", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-usdg-nvda-vault",
+    "name": "NVDA-USDG",
+    "type": "standard",
+    "token": "NVDA-USDG up33",
+    "tokenAddress": "0x63185DA98b76E7FA49d5d0611a6E211ee2988201",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "earnContractAddress": "0x612afcA34f218F9EB434b6C7458da0670F84DDf0",
+    "earnedToken": "mooCowUp33RobinhoodNVDA-USDG",
+    "earnedTokenAddress": "0x612afcA34f218F9EB434b6C7458da0670F84DDf0",
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-usdg-nvda",
+    "status": "active",
+    "createdAt": 1786635778,
+    "platformId": "up",
+    "assets": ["NVDArh", "USDG"],
+    "icons": ["NVDA", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-usdg-nvda-rp",
+    "name": "NVDA-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUp33RobinhoodNVDA-USDG",
+    "tokenAddress": "0x63185DA98b76E7FA49d5d0611a6E211ee2988201",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "earnContractAddress": "0x6485817467Fd2129622e57b20577CF2697F3dDe2",
+    "earnedToken": "rCowUp33RobinhoodNVDA-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-usdg-nvda",
+    "status": "active",
+    "createdAt": 1786635778,
+    "platformId": "up",
+    "assets": ["NVDArh", "USDG"],
+    "icons": ["NVDA", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-usdg-nvda",
+    "name": "NVDA-USDG",
+    "type": "cowcentrated",
+    "token": "NVDA-USDG up33",
+    "tokenAddress": "0x18A5aF4E442F8be68968Cc1f00D537F8af2D12Cd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "depositTokenAddresses": [
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC"
+    ],
+    "earnContractAddress": "0x63185DA98b76E7FA49d5d0611a6E211ee2988201",
+    "earnedToken": "cowUp33RobinhoodNVDA-USDG",
+    "earnedTokenAddress": "0x63185DA98b76E7FA49d5d0611a6E211ee2988201",
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-usdg-nvda",
+    "status": "active",
+    "createdAt": 1786635778,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 60,
+    "assets": ["NVDArh", "USDG"],
+    "icons": ["NVDA", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-weth-frong-vault",
+    "name": "FRONG-WETH",
+    "type": "standard",
+    "token": "FRONG-WETH",
+    "tokenAddress": "0x9818f01EDCcc3d8EB86B859931C3B877cf44A108",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "earnContractAddress": "0x75588e48f7b4Ed9365d78C6cD509f3C7B804Ca47",
+    "earnedToken": "mooCowUp33RobinhoodFRONG-WETH",
+    "earnedTokenAddress": "0x75588e48f7b4Ed9365d78C6cD509f3C7B804Ca47",
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-weth-frong",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "up",
+    "assets": ["FRONG", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-weth-frong-rp",
+    "name": "FRONG-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUp33RobinhoodFRONG-WETH",
+    "tokenAddress": "0x9818f01EDCcc3d8EB86B859931C3B877cf44A108",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "earnContractAddress": "0xa3EDa31c3d7C886a6Ff3ccB69D4045C05EAaf3b3",
+    "earnedToken": "rCowUp33RobinhoodFRONG-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-weth-frong",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "up",
+    "assets": ["FRONG", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-weth-frong",
+    "name": "FRONG-WETH",
+    "type": "cowcentrated",
+    "token": "FRONG-WETH up33",
+    "tokenAddress": "0x9334BbCBE77C0883d704f71Db35CCF636639334c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0x6245e67affA44a23077f0Ea7f981a8DC743a0c47"
+    ],
+    "earnContractAddress": "0x9818f01EDCcc3d8EB86B859931C3B877cf44A108",
+    "earnedToken": "cowUp33RobinhoodFRONG-WETH",
+    "earnedTokenAddress": "0x9818f01EDCcc3d8EB86B859931C3B877cf44A108",
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-weth-frong",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["FRONG", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-weth-tendies-vault",
+    "name": "TENDIES-WETH",
+    "type": "standard",
+    "token": "TENDIES-WETH",
+    "tokenAddress": "0x9619bFB1f2D97E2B23F23310205e4c2089c1A45d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "earnContractAddress": "0x97DCDc29a3B3e2F556564279f7D09eE40eB74E45",
+    "earnedToken": "mooCowUp33RobinhoodTENDIES-WETH",
+    "earnedTokenAddress": "0x97DCDc29a3B3e2F556564279f7D09eE40eB74E45",
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-weth-tendies",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "up",
+    "assets": ["TENDIES", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-weth-tendies-rp",
+    "name": "TENDIES-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUp33RobinhoodTENDIES-WETH",
+    "tokenAddress": "0x9619bFB1f2D97E2B23F23310205e4c2089c1A45d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "earnContractAddress": "0xF8AB44EA77cE06E9b42De8021449Af01B3De977d",
+    "earnedToken": "rCowUp33RobinhoodTENDIES-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-weth-tendies",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "up",
+    "assets": ["TENDIES", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-weth-tendies",
+    "name": "TENDIES-WETH",
+    "type": "cowcentrated",
+    "token": "TENDIES-WETH up33",
+    "tokenAddress": "0xD53a623c17A5853838FA140cE5706eA008565dA8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0x45242320DBB855EeA8Fd36804C6487E10E97FCF9"
+    ],
+    "earnContractAddress": "0x9619bFB1f2D97E2B23F23310205e4c2089c1A45d",
+    "earnedToken": "cowUp33RobinhoodTENDIES-WETH",
+    "earnedTokenAddress": "0x9619bFB1f2D97E2B23F23310205e4c2089c1A45d",
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-weth-tendies",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 200,
+    "assets": ["TENDIES", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-weth-stonkbroker-vault",
+    "name": "STONKBROKER-WETH",
+    "type": "standard",
+    "token": "STONKBROKER-WETH",
+    "tokenAddress": "0x5794bB61E83397049c40D87BbF3d44AF583A27Ce",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "earnContractAddress": "0x544c7Ef9265dc08d93B5394116E68aE7D9e60730",
+    "earnedToken": "mooCowUp33RobinhoodSTONKBROKER-WETH",
+    "earnedTokenAddress": "0x544c7Ef9265dc08d93B5394116E68aE7D9e60730",
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-weth-stonkbroker",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "up",
+    "assets": ["STONKBROKER", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-weth-stonkbroker-rp",
+    "name": "STONKBROKER-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUp33RobinhoodSTONKBROKER-WETH",
+    "tokenAddress": "0x5794bB61E83397049c40D87BbF3d44AF583A27Ce",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "earnContractAddress": "0x10f9e8B973B5EA104618bd334f3CC2c0ff7E15F2",
+    "earnedToken": "rCowUp33RobinhoodSTONKBROKER-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-weth-stonkbroker",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "up",
+    "assets": ["STONKBROKER", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-weth-stonkbroker",
+    "name": "STONKBROKER-WETH",
+    "type": "cowcentrated",
+    "token": "STONKBROKER-WETH up33",
+    "tokenAddress": "0xB11ba9a4d345434c25d625C076f23Ad14abC6B3c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0xe934e36A439C94017B64a3FecE66AF12099aBF50"
+    ],
+    "earnContractAddress": "0x5794bB61E83397049c40D87BbF3d44AF583A27Ce",
+    "earnedToken": "cowUp33RobinhoodSTONKBROKER-WETH",
+    "earnedTokenAddress": "0x5794bB61E83397049c40D87BbF3d44AF583A27Ce",
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-weth-stonkbroker",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["STONKBROKER", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-up-stonkbroker-vault",
+    "name": "STONKBROKER-UP",
+    "type": "standard",
+    "token": "STONKBROKER-UP",
+    "tokenAddress": "0xd922173C136443a1F7795A86B28Da964ea2BF6bc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "earnContractAddress": "0x658b48154b96D4aCA3Fe9531305C546c0E2de950",
+    "earnedToken": "mooCowUp33RobinhoodSTONKBROKER-UP",
+    "earnedTokenAddress": "0x658b48154b96D4aCA3Fe9531305C546c0E2de950",
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-up-stonkbroker",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "up",
+    "assets": ["STONKBROKER", "UP33"],
+    "icons": ["STONKBROKER", "UP33"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-up-stonkbroker-rp",
+    "name": "STONKBROKER-UP Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUp33RobinhoodSTONKBROKER-UP",
+    "tokenAddress": "0xd922173C136443a1F7795A86B28Da964ea2BF6bc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "earnContractAddress": "0x788D31D39da6252F228b5842d9215bb7abB83F8B",
+    "earnedToken": "rCowUp33RobinhoodSTONKBROKER-UP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-up-stonkbroker",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "up",
+    "assets": ["STONKBROKER", "UP33"],
+    "icons": ["STONKBROKER", "UP33"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-up-stonkbroker",
+    "name": "STONKBROKER-UP",
+    "type": "cowcentrated",
+    "token": "STONKBROKER-UP up33",
+    "tokenAddress": "0x73eF7245B40392ae8710dFB5398f270b07E20d1D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "depositTokenAddresses": [
+      "0x57C0E45cB534413D1C20A4240955d6bB250BB4F1",
+      "0xe934e36A439C94017B64a3FecE66AF12099aBF50"
+    ],
+    "earnContractAddress": "0xd922173C136443a1F7795A86B28Da964ea2BF6bc",
+    "earnedToken": "cowUp33RobinhoodSTONKBROKER-UP",
+    "earnedTokenAddress": "0xd922173C136443a1F7795A86B28Da964ea2BF6bc",
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-up-stonkbroker",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["STONKBROKER", "UP33"],
+    "icons": ["STONKBROKER", "UP33"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-weth-virtual-vault",
+    "name": "VIRTUAL-WETH",
+    "type": "standard",
+    "token": "VIRTUAL-WETH",
+    "tokenAddress": "0x37698C12ecc727178617c5b7d694377eb98dE058",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "earnContractAddress": "0xEbFB46b7A3E37aF48352c1Dd2FAc61EBBb907EC8",
+    "earnedToken": "mooCowUp33RobinhoodVIRTUAL-WETH",
+    "earnedTokenAddress": "0xEbFB46b7A3E37aF48352c1Dd2FAc61EBBb907EC8",
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-weth-virtual",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "up",
+    "assets": ["VIRTUAL", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-weth-virtual-rp",
+    "name": "VIRTUAL-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUp33RobinhoodVIRTUAL-WETH",
+    "tokenAddress": "0x37698C12ecc727178617c5b7d694377eb98dE058",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "earnContractAddress": "0x5eD2B060b7f8809E6aC41DD769fE3528Fe44f424",
+    "earnedToken": "rCowUp33RobinhoodVIRTUAL-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-weth-virtual",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "up",
+    "assets": ["VIRTUAL", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "up33-cow-robinhood-weth-virtual",
+    "name": "VIRTUAL-WETH",
+    "type": "cowcentrated",
+    "token": "VIRTUAL-WETH up33",
+    "tokenAddress": "0x851d1B0342d2257a4172826b68221D2366C1c6B5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "up",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0xc6911796042b15d7Fa4F6CDe69e245DdCd3d9c31"
+    ],
+    "earnContractAddress": "0x37698C12ecc727178617c5b7d694377eb98dE058",
+    "earnedToken": "cowUp33RobinhoodVIRTUAL-WETH",
+    "earnedTokenAddress": "0x37698C12ecc727178617c5b7d694377eb98dE058",
+    "oracle": "lps",
+    "oracleId": "up33-cow-robinhood-weth-virtual",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["VIRTUAL", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-weth-virtual-rp",
+    "name": "VIRTUAL-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodVIRTUAL-WETH",
+    "tokenAddress": "0xc61b3b381C34A636451ba66A62792Bd84A78E112",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x093f6613Dc96AF7c834A439F0a0aF18836B2dFdf",
+    "earnedToken": "rCowUniswapRobinhoodVIRTUAL-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-virtual",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "uniswap",
+    "assets": ["VIRTUAL", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-weth-virtual",
+    "name": "VIRTUAL-WETH",
+    "type": "cowcentrated",
+    "token": "VIRTUAL-WETH uniswap",
+    "tokenAddress": "0x9cc8c4F6118419A27f113723F1DeA646685Be55F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0xc6911796042b15d7Fa4F6CDe69e245DdCd3d9c31"
+    ],
+    "earnContractAddress": "0xc61b3b381C34A636451ba66A62792Bd84A78E112",
+    "earnedToken": "cowUniswapRobinhoodVIRTUAL-WETH",
+    "earnedTokenAddress": "0xc61b3b381C34A636451ba66A62792Bd84A78E112",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-virtual",
+    "status": "active",
+    "createdAt": 1786523797,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["VIRTUAL", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-robinhood-weth-pons-rp",
     "name": "PONS-WETH Reward Pool",
     "type": "gov",
@@ -97,6 +1577,7 @@
     "retiredAt": 1786549543,
     "platformId": "uniswap",
     "assets": ["GMErh", "USDG"],
+    "icons": ["GME", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -139,6 +1620,7 @@
     "feeTier": "0.05",
     "tickSpacing": 10,
     "assets": ["GMErh", "USDG"],
+    "icons": ["GME", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -176,6 +1658,7 @@
     "createdAt": 1786635779,
     "platformId": "uniswap",
     "assets": ["GMErh", "USDG"],
+    "icons": ["GME", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -217,6 +1700,7 @@
     "feeTier": "1",
     "tickSpacing": 200,
     "assets": ["GMErh", "USDG"],
+    "icons": ["GME", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -254,6 +1738,7 @@
     "createdAt": 1786635779,
     "platformId": "uniswap",
     "assets": ["USOrh", "USDG"],
+    "icons": ["USO", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -295,6 +1780,7 @@
     "feeTier": "0.3",
     "tickSpacing": 60,
     "assets": ["USOrh", "USDG"],
+    "icons": ["USO", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -332,6 +1818,7 @@
     "createdAt": 1786635779,
     "platformId": "uniswap",
     "assets": ["AAPLrh", "USDG"],
+    "icons": ["AAPL", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -373,6 +1860,7 @@
     "feeTier": "0.3",
     "tickSpacing": 60,
     "assets": ["AAPLrh", "USDG"],
+    "icons": ["AAPL", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -410,6 +1898,7 @@
     "createdAt": 1786635779,
     "platformId": "uniswap",
     "assets": ["TSLArh", "USDG"],
+    "icons": ["TSLA", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -451,6 +1940,7 @@
     "feeTier": "0.3",
     "tickSpacing": 60,
     "assets": ["TSLArh", "USDG"],
+    "icons": ["TSLA", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -488,6 +1978,7 @@
     "createdAt": 1786635779,
     "platformId": "uniswap",
     "assets": ["MSFTrh", "USDG"],
+    "icons": ["MSFT", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -529,6 +2020,7 @@
     "feeTier": "0.3",
     "tickSpacing": 60,
     "assets": ["MSFTrh", "USDG"],
+    "icons": ["MSFT", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -566,6 +2058,7 @@
     "createdAt": 1786635779,
     "platformId": "uniswap",
     "assets": ["RDDTrh", "USDG"],
+    "icons": ["RDDT", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -607,6 +2100,7 @@
     "feeTier": "1",
     "tickSpacing": 200,
     "assets": ["RDDTrh", "USDG"],
+    "icons": ["RDDT", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,

@@ -35,6 +35,11 @@ import { selectHasBalanceSettledForChainUser } from '../selectors/data-loader/ba
 import { selectIsConfigAvailable } from '../selectors/data-loader/config.ts';
 import { selectIsPricesAvailable } from '../selectors/data-loader/prices.ts';
 import {
+  selectIsGeoCountrySettled,
+  selectShouldInitGeoCountry,
+} from '../selectors/data-loader/restrictions.ts';
+import { fetchUserGeoCountry } from '../actions/restrictions.ts';
+import {
   selectTransactMode,
   selectTransactOptionsStatus,
   selectTransactOptionsWalletAddress,
@@ -178,6 +183,9 @@ export function addTransactListeners() {
       if (selectShouldInitZapAggregatorTokenSupport(getState())) {
         loaders.push(dispatch(fetchZapAggregatorTokenSupportAction()));
       }
+      if (selectShouldInitGeoCountry(getState())) {
+        loaders.push(dispatch(fetchUserGeoCountry()));
+      }
 
       // Claim: Init user off-chain rewards data loader
       const mayHaveOffchainRewards = selectMayHaveOffchainUserRewards(getState(), vault);
@@ -198,6 +206,8 @@ export function addTransactListeners() {
       await waitFor(currentState => {
         if (!selectAreFeesLoaded(currentState)) return false;
         if (!selectIsZapLoaded(currentState)) return false;
+        // options are geo-filtered at fetch time, so wait for geo (settled = fulfilled OR rejected)
+        if (!selectIsGeoCountrySettled(currentState)) return false;
 
         const walletAddress = selectWalletAddress(currentState);
         if (!walletAddress) return true;

@@ -8,6 +8,7 @@ import type {
   BeefyAPILpBreakdownResponse,
   BeefyAPITokenPricesResponse,
   BeefyApiVaultLastHarvestResponse,
+  BeefyGeoCountryResponse,
   BeefyLastArticleResponse,
   BeefyOffChainRewardsCampaign,
   BeefySnapshotActiveResponse,
@@ -169,6 +170,16 @@ export class BeefyAPI {
       url: `${this.api}/articles/latest`,
       cacheBuster: 'short',
       timeout: this.timeout,
+    });
+  }
+
+  public async getGeoCountry(): Promise<BeefyGeoCountryResponse> {
+    return await getJson<BeefyGeoCountryResponse>({
+      url: `${this.api}/geo/country`,
+      // cache bust
+      params: { _: `${Date.now()}.${Math.random().toString(36).slice(2)}` },
+      // briefer than timeout as it's light and needed for transact
+      timeout: 0.3 * this.timeout,
     });
   }
 
