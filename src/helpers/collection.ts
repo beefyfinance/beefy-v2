@@ -60,3 +60,17 @@ export function groupByMap<TKey, TValue>(
     return acc;
   }, new Map<TKey, TValue[]>());
 }
+
+export function countBy<TKey extends string, TValue>(
+  collection: TValue[],
+  keyFn: (value: TValue) => TKey
+): Record<TKey, number> {
+  return collection.reduce(
+    (acc, value) => {
+      const key = keyFn(value);
+      acc[key] = (acc[key] ?? 0) + 1;
+      return acc;
+    },
+    {} as Record<TKey, number>
+  );
+}
