@@ -1,7 +1,11 @@
 import type BigNumber from 'bignumber.js';
 import { memo } from 'react';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
-import type { VaultEntity } from '../../features/data/entities/vault.ts';
+import {
+  getCowcentratedWrapperIds,
+  isCowcentratedVault,
+  type VaultEntity,
+} from '../../features/data/entities/vault.ts';
 import {
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInDepositTokenIncludingDisplaced,
@@ -55,6 +59,7 @@ type SelectDataReturn =
       totalDepositUsd: BigNumber;
       vaultDeposit: BigNumber;
       notEarning: BigNumber;
+      isGroup: boolean;
     };
 
 // TODO better selector / hook
@@ -78,27 +83,34 @@ function selectVaultDepositStat(
     return { loading: true, hideBalance };
   }
 
-  const totalDeposit = selectUserVaultBalanceInDepositTokenIncludingDisplaced(
-    state,
-    vault.id,
-    walletAddress
+  // a merged CLM row sums deposits across the whole group; all members share the CLM token unit.
+  // The bare CLM is excluded: those tokens sit in the wallet, have no analytics timeline, and are
+  // absent from the PnL card — counting them here made Deposited contradict Now on the same screen
+  const isGroup = isCowcentratedVault(vault);
+  const memberIds = isGroup ? getCowcentratedWrapperIds(vault) : [vault.id];
+
+  const totalDeposit = memberIds.reduce(
+    (sum, id) =>
+      sum.plus(selectUserVaultBalanceInDepositTokenIncludingDisplaced(state, id, walletAddress)),
+    BIG_ZERO
   );
   if (!totalDeposit.gt(0)) {
     return { loading: false, totalDeposit: BIG_ZERO, hideBalance };
   }
 
-  const notEarning = selectUserVaultBalanceNotInActiveBoostInDepositToken(
-    state,
-    vault.id,
-    walletAddress
-  );
+  const notEarning =
+    isGroup ? BIG_ZERO : (
+      selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vault.id, walletAddress)
+    );
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const totalDepositUsd = selectUserVaultBalanceInUsdIncludingDisplaced(
-    state,
-    vaultId,
-    walletAddress
+  const totalDepositUsd = memberIds.reduce(
+    (sum, id) => sum.plus(selectUserVaultBalanceInUsdIncludingDisplaced(state, id, walletAddress)),
+    BIG_ZERO
   );
-  const vaultDeposit = selectUserVaultBalanceInDepositToken(state, vault.id, walletAddress);
+  const vaultDeposit = memberIds.reduce(
+    (sum, id) => sum.plus(selectUserVaultBalanceInDepositToken(state, id, walletAddress)),
+    BIG_ZERO
+  );
 
   return {
     loading: false,
@@ -108,6 +120,7 @@ function selectVaultDepositStat(
     totalDepositUsd,
     vaultDeposit,
     notEarning,
+    isGroup,
   };
 }
 
@@ -164,7 +177,8 @@ export const VaultDepositStat = memo(function VaultDepositStat({
       blur={data.hideBalance}
       loading={false}
       tooltip={
-        hasDisplacedDeposit ?
+        // displaced tooltip breaks balances down per vault id, which a merged group can't use
+        hasDisplacedDeposit && !data.isGroup ?
           <VaultDepositedTooltip vaultId={vaultId} walletAddress={walletAddress} />
         : <BasicTooltipContent title={depositFormattedFull} />
       }

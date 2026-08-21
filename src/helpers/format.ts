@@ -55,6 +55,11 @@ function isScale(value: Scale): value is Scale {
  * @param value number or BigNumber
  * @param decimals how many decimal places to output (how many decimals the token has)
  */
+/** "CAKE" | "CAKE & ARB" | "CAKE, ARB & OP" — for token symbols in prose */
+export function formatTokenList(symbols: string[]): string {
+  return new Intl.ListFormat('en', { style: 'short', type: 'conjunction' }).format(symbols);
+}
+
 export function formatTokenInput(value: BigNumberish, decimals: number): string {
   return toDecimalPlaces(value, decimals).toString(10);
 }

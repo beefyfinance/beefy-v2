@@ -220,19 +220,37 @@ const transactSlice = createSlice({
       .addCase(transactInit, (sliceState, action) => {
         const isReady = sliceState.vaultId === action.payload.vaultId;
         const isPending = sliceState.pendingVaultId === action.payload.vaultId;
+        // both wrappers of one CLM take the same deposit tokens, so a retarget keeps the loaded
+        // options on screen; fulfilled replaces them once the new side's fetch lands
+        const keepOptions =
+          !!action.payload.retarget && sliceState.options.status === TransactStatus.Fulfilled;
 
-        resetForm(sliceState);
+        if (keepOptions) {
+          clearInputs(sliceState);
+          resetQuotes(sliceState);
+        } else {
+          resetForm(sliceState);
+        }
 
         if (isReady) {
+          // toggling back before the previous switch resolved would strand the abandoned id here,
+          // and its still-running listener would then land the store on the wrong wrapper
+          sliceState.pendingVaultId = undefined;
           return;
         }
 
         if (!isPending) {
-          sliceState.vaultId = undefined;
           sliceState.pendingVaultId = action.payload.vaultId;
-          sliceState.step = TransactStep.Loading;
-          sliceState.mode = TransactMode.Deposit;
-          sliceState.options = initialTransactState['options'];
+          if (!keepOptions) {
+            sliceState.options = initialTransactState['options'];
+          }
+          // a retarget keeps the sibling's form rendered until transactInitReady swaps the id, so
+          // the card never blanks; a cold load has nothing to show and falls back to the spinner
+          if (!action.payload.retarget || sliceState.vaultId === undefined) {
+            sliceState.vaultId = undefined;
+            sliceState.step = TransactStep.Loading;
+            sliceState.mode = action.payload.mode ?? TransactMode.Deposit;
+          }
         }
       })
       .addCase(transactInvalidateOptions, sliceState => {
@@ -250,7 +268,14 @@ const transactSlice = createSlice({
         }
       })
       .addCase(transactFetchOptions.pending, (sliceState, action) => {
-        resetForm(sliceState);
+        // a same-mode refetch (CLM wrapper switch) keeps what is on screen until fulfilled swaps
+        // it; every other path has nothing usable to keep, so it blanks as before
+        if (
+          sliceState.options.status !== TransactStatus.Fulfilled ||
+          sliceState.options.mode !== action.meta.arg.mode
+        ) {
+          resetForm(sliceState);
+        }
 
         sliceState.options.vaultId = action.meta.arg.vaultId;
         sliceState.options.mode = action.meta.arg.mode;
@@ -268,15 +293,27 @@ const transactSlice = createSlice({
           sliceState.options.status = TransactStatus.Fulfilled;
           sliceState.options.walletAddress = action.payload.walletAddress;
           const { options } = action.payload;
+          const previousSelectionId = sliceState.selectedSelectionId;
 
+          // replace, never merge: the two wrappers of a CLM produce colliding option ids, and
+          // addOptionsToState keeps the first one it saw — which would leave the old vault id
+          clearOptions(sliceState);
           addOptionsToState(sliceState, options);
 
           const defaultOption = first(options);
           if (defaultOption) {
-            sliceState.selectedSelectionId = defaultOption.selectionId;
-            sliceState.selectedChainId = defaultOption.chainId;
-            // One *selection* (token path), even if multiple options share it → no forced picker
-            sliceState.forceSelection = sliceState.selections.allSelectionIds.length > 1;
+            // the token the user picked usually exists on both wrappers; keep it rather than
+            // snapping back to the default and making them choose again
+            const kept =
+              previousSelectionId && sliceState.selections.bySelectionId[previousSelectionId] ?
+                previousSelectionId
+              : undefined;
+            sliceState.selectedSelectionId = kept ?? defaultOption.selectionId;
+            if (!kept) {
+              sliceState.selectedChainId = defaultOption.chainId;
+              // One *selection* (token path), even if multiple options share it → no forced picker
+              sliceState.forceSelection = sliceState.selections.allSelectionIds.length > 1;
+            }
           }
           clearInputs(sliceState);
         }
@@ -385,6 +422,18 @@ function clearInputs(sliceState: Draft<TransactState>) {
   }
 }
 
+/** empties the option/selection maps without touching status, so fulfilled can replace in place */
+function clearOptions(sliceState: Draft<TransactState>) {
+  sliceState.options.allOptionIds = [];
+  sliceState.options.byOptionId = {};
+  sliceState.options.bySelectionId = {};
+
+  sliceState.selections.allSelectionIds = [];
+  sliceState.selections.allChainIds = [];
+  sliceState.selections.bySelectionId = {};
+  sliceState.selections.byChainId = {};
+}
+
 function resetForm(sliceState: Draft<TransactState>) {
   sliceState.selectedChainId = undefined;
   sliceState.selectedSelectionId = undefined;
@@ -396,14 +445,7 @@ function resetForm(sliceState: Draft<TransactState>) {
 
   sliceState.options.status = TransactStatus.Idle;
   sliceState.options.error = undefined;
-  sliceState.options.allOptionIds = [];
-  sliceState.options.byOptionId = {};
-  sliceState.options.bySelectionId = {};
-
-  sliceState.selections.allSelectionIds = [];
-  sliceState.selections.allChainIds = [];
-  sliceState.selections.bySelectionId = {};
-  sliceState.selections.byChainId = {};
+  clearOptions(sliceState);
 
   resetQuotes(sliceState);
 }

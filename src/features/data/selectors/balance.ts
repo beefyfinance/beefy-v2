@@ -13,7 +13,9 @@ import type { ChainEntity } from '../entities/chain.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token.ts';
 import {
+  getCowcentratedWrapperIds,
   isCowcentratedLikeVault,
+  isCowcentratedVault,
   isErc4626Vault,
   isGovVault,
   isSingleGovVault,
@@ -31,6 +33,7 @@ import {
   valueOrThrow,
 } from '../utils/selector-utils.ts';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils.ts';
+import { pickClmPositionSide } from '../../vault/components/ClmMode/resolve-clm-mode.ts';
 import type { UserLpBreakdownBalance } from './balance-types.ts';
 import {
   selectAllVaultBoostIds,
@@ -49,8 +52,10 @@ import {
 } from './tokens.ts';
 import {
   selectAllCowcentratedVaults,
+  selectCowcentratedVaultById,
   selectGovVaultById,
   selectVaultById,
+  selectVaultByIdOrUndefined,
   selectVaultIdsByChainIdIncludingHidden,
   selectVaultReplacementMigration,
 } from './vaults.ts';
@@ -684,6 +689,59 @@ export const selectUserVaultBalanceInUsdIncludingDisplaced = (
   );
 
   return vaultTokenDeposit.multipliedBy(oraclePrice);
+};
+
+/**
+ * USD deposited across a CLM group: the base CLM (unstaked receipt tokens) + all its pools/vaults
+ */
+export const selectUserClmGroupBalanceInUsd = (
+  state: BeefyState,
+  clmId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  const vault = selectCowcentratedVaultById(state, clmId);
+  return [vault.id, ...getCowcentratedWrapperIds(vault)].reduce(
+    (sum, id) => sum.plus(selectUserVaultBalanceInUsdIncludingDisplaced(state, id, walletAddress)),
+    BIG_ZERO
+  );
+};
+
+/**
+ * The group member a merged CLM page reports the user's position on: the side they actually hold,
+ * largest first. Independent of the yield mode, which only routes new deposits. When they hold
+ * neither, any real side will do — the graph gate hides the card regardless.
+ */
+export const selectClmPositionVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultEntity['id'] => {
+  const vault = selectVaultByIdOrUndefined(state, vaultId);
+  if (!vault || !isCowcentratedVault(vault)) {
+    return vaultId;
+  }
+
+  const { pool, vault: vaultSide, pools, vaults } = vault.cowcentratedIds;
+  const vaultSideId = vaultSide ?? vaults[0];
+  const poolSideId = pool ?? pools[0];
+  const side = pickClmPositionSide(
+    vaultSideId ? selectUserVaultBalanceInUsdIncludingDisplaced(state, vaultSideId) : BIG_ZERO,
+    poolSideId ? selectUserVaultBalanceInUsdIncludingDisplaced(state, poolSideId) : BIG_ZERO
+  );
+  if (side === 'vault' && vaultSideId) {
+    return vaultSideId;
+  }
+  if (side === 'pool' && poolSideId) {
+    return poolSideId;
+  }
+  return vaultSideId ?? poolSideId ?? vaultId;
+};
+
+/** Whether the user has a deposit in any member of a CLM group */
+export const selectUserHasDepositInClmGroup = (state: BeefyState, clmId: VaultEntity['id']) => {
+  const vault = selectCowcentratedVaultById(state, clmId);
+  return [vault.id, ...getCowcentratedWrapperIds(vault)].some(id =>
+    selectHasUserDepositInVault(state, id)
+  );
 };
 
 /**

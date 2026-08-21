@@ -104,6 +104,16 @@ export const selectTransactFormIsLoading = (state: BeefyState) =>
   state.ui.transact.options.status === TransactStatus.Idle ||
   state.ui.transact.options.status === TransactStatus.Pending;
 
+/**
+ * A CLM wrapper switch is mid-flight: the loaded options still describe the wrapper the user just
+ * left, so no quote can be built yet. The form stays rendered to avoid blanking, but anything
+ * typed into it would be discarded when the new options land.
+ */
+export const selectTransactIsSwitchingTarget = (state: BeefyState): boolean => {
+  const { vaultId, pendingVaultId, options } = state.ui.transact;
+  return pendingVaultId !== undefined || (!!vaultId && options.vaultId !== vaultId);
+};
+
 export const selectTransactOptionsVaultId = (state: BeefyState) =>
   state.ui.transact.options.vaultId;
 export const selectTransactOptionsMode = (state: BeefyState) => state.ui.transact.options.mode;

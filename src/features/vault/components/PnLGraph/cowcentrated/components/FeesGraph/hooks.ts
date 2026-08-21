@@ -6,7 +6,7 @@ import type { GraphBucket } from '../../../../../../../helpers/graph/types.ts';
 import { useAppSelector } from '../../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
 import {
-  selectUserClmHarvestTimelineByVaultId,
+  selectClmGroupHarvestTimeline,
   selectUserFirstDepositDateByVaultId,
 } from '../../../../../../data/selectors/analytics.ts';
 import { selectWalletAddress } from '../../../../../../data/selectors/wallet.ts';
@@ -21,7 +21,7 @@ export const useFeesChartData = (
 ) => {
   const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
   const userHarvestTimeline = useAppSelector(state =>
-    selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress)
+    selectClmGroupHarvestTimeline(state, vaultId, walletAddress)
   );
   const firstDepositDate = useAppSelector(state =>
     selectUserFirstDepositDateByVaultId(state, vaultId, walletAddress)
@@ -68,7 +68,7 @@ export const useVaultPeriodsFeesGraph = (
     selectUserFirstDepositDateByVaultId(state, vaultId, address)
   );
   const harvestTimeline = useAppSelector(state =>
-    selectUserClmHarvestTimelineByVaultId(state, vaultId, address)
+    selectClmGroupHarvestTimeline(state, vaultId, address)
   );
 
   return useMemo(() => {

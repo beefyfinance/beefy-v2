@@ -19,14 +19,8 @@ export const VaultPlatform = memo(function VaultPlatform({ vaultId }: VaultPlatf
   const provider = useAppSelector(state =>
     depositToken.providerId ? selectPlatformById(state, depositToken.providerId) : null
   );
-  const platformName = platform.name;
-  const providerName = provider ? provider.name : null;
+  // the underlying venue is the useful name; the platform is Beefy on anything with a provider
+  const name = provider?.name || platform.name;
 
-  return (
-    <>
-      {providerName && providerName !== platformName ?
-        t('VaultTag-PlatformWithProvider', { platform: platformName, provider: providerName })
-      : t('VaultTag-Platform', { platform: platformName })}
-    </>
-  );
+  return <>{t('VaultTag-Platform', { platform: name })}</>;
 });

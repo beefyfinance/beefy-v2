@@ -7,8 +7,11 @@ import { VaultMeta } from '../../components/Meta/VaultMeta.tsx';
 import { FullscreenTechLoader } from '../../components/TechLoader/TechLoader.tsx';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { useAppSelector } from '../data/store/hooks.ts';
-import { type VaultEntity } from '../data/entities/vault.ts';
+import type { VaultEntity } from '../data/entities/vault.ts';
 import { selectVaultIdForVaultPage } from '../data/selectors/vaults.ts';
+import { selectClmDisplayVaultId } from '../data/selectors/apy.ts';
+import { selectClmPositionVaultId } from '../data/selectors/balance.ts';
+import { ClmModeContext, useClmModeController } from './components/ClmMode/ClmModeContext.tsx';
 import { Actions } from './components/Actions/Actions.tsx';
 import { VaultBanners } from './components/Banners/VaultBanners.tsx';
 import { PromoCardLoader } from './components/BoostCard/PromoCardLoader.tsx';
@@ -53,8 +56,15 @@ type VaultContentProps = PropsWithChildren<{
 }>;
 const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) {
   const classes = useStyles();
+  const clmMode = useClmModeController(vaultId);
+  // the yield mode routes deposits and withdrawals only; the rest of the page is the whole CLM
+  const modeVaultId = clmMode?.selectedVaultId ?? vaultId;
+  // rates, promos and partnerships come from the same side the vault list row shows
+  const displayVaultId = useAppSelector(state => selectClmDisplayVaultId(state, vaultId));
+  // the position sections follow the user's money, never the toggle
+  const positionVaultId = useAppSelector(state => selectClmPositionVaultId(state, vaultId));
 
-  return (
+  const content = (
     <PageLayout
       content={
         <Container maxWidth="lg" className={classes.page}>
@@ -62,31 +72,31 @@ const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) 
           <VaultBanners vaultId={vaultId} />
           <div className={classes.header}>
             <VaultHeader vaultId={vaultId} />
-            <VaultsStats vaultId={vaultId} />
+            <VaultsStats vaultId={vaultId} modeVaultId={displayVaultId} />
           </div>
           <div className={classes.contentColumns}>
             <div className={classes.columnActions}>
-              <Actions vaultId={vaultId} />
+              <Actions vaultId={modeVaultId} />
               <Hidden to="sm">
-                <InsuranceCards vaultId={vaultId} />
-                <LeverageCards vaultId={vaultId} />
-                <GamingCards vaultId={vaultId} />
+                <InsuranceCards vaultId={displayVaultId} />
+                <LeverageCards vaultId={displayVaultId} />
+                <GamingCards vaultId={displayVaultId} />
               </Hidden>
             </div>
             <div className={classes.columnInfo}>
               <FreeZapPromotionCardLoader vaultId={vaultId} />
-              <PromoCardLoader vaultId={vaultId} />
+              <PromoCardLoader vaultId={displayVaultId} />
               <PointsBannerLoader vaultId={vaultId} />
-              <PnLGraphIfWallet vaultId={vaultId} />
-              <HistoricGraphsLoader vaultId={vaultId} />
-              <LiquidityPoolBreakdownLoader vaultId={vaultId} />
-              <Explainer vaultId={vaultId} />
+              <PnLGraphIfWallet vaultId={positionVaultId} />
+              <HistoricGraphsLoader vaultId={displayVaultId} />
+              <LiquidityPoolBreakdownLoader vaultId={displayVaultId} />
+              <Explainer vaultId={displayVaultId} />
               <RiskChecklistCard vaultId={vaultId} />
-              <Details vaultId={vaultId} />
+              <Details vaultId={displayVaultId} />
               <Hidden from="md">
-                <InsuranceCards vaultId={vaultId} />
-                <LeverageCards vaultId={vaultId} />
-                <GamingCards vaultId={vaultId} />
+                <InsuranceCards vaultId={displayVaultId} />
+                <LeverageCards vaultId={displayVaultId} />
+                <GamingCards vaultId={displayVaultId} />
               </Hidden>
             </div>
           </div>
@@ -94,6 +104,10 @@ const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) 
       }
     />
   );
+
+  return clmMode ?
+      <ClmModeContext.Provider value={clmMode}>{content}</ClmModeContext.Provider>
+    : content;
 });
 
 // eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()

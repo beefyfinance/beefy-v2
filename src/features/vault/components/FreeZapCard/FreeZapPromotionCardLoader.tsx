@@ -1,7 +1,7 @@
 import { lazy, memo } from 'react';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../data/entities/vault.ts';
-import { selectZapCampaignByVaultId } from '../../../data/selectors/zap.ts';
+import { selectZapCampaignForVaultGroup } from '../../../data/selectors/zap.ts';
 
 const FreeZapPromotionCard = lazy(() =>
   import('./FreeZapPromotionCard.tsx').then(m => ({ default: m.FreeZapPromotionCard }))
@@ -14,7 +14,8 @@ export type FreeZapPromotionCardLoaderProps = {
 export const FreeZapPromotionCardLoader = memo(function FreeZapPromotionCardLoader({
   vaultId,
 }: FreeZapPromotionCardLoaderProps) {
-  const zapCampaign = useAppSelector(state => selectZapCampaignByVaultId(state, vaultId));
+  // group-wide: a card advertising the product must not flicker as the yield mode changes
+  const zapCampaign = useAppSelector(state => selectZapCampaignForVaultGroup(state, vaultId));
   if (!zapCampaign) {
     return null;
   }

@@ -1,6 +1,7 @@
 import type { ChainEntity } from '../entities/chain.ts';
 import {
-  isCowcentratedLikeVault,
+  getCowcentratedWrapperIds,
+  isCowcentratedVault,
   isGovVault,
   isVaultEarningPoints,
   isVaultPaused,
@@ -8,7 +9,11 @@ import {
   type VaultEntity,
 } from '../entities/vault.ts';
 import type { FilterValues } from '../reducers/filtered-vaults-types.ts';
-import { selectUserBalanceOfToken, selectUserDepositedVaultIds } from '../selectors/balance.ts';
+import {
+  selectUserBalanceOfToken,
+  selectUserDepositedVaultIds,
+  selectUserHasDepositInClmGroup,
+} from '../selectors/balance.ts';
 import { selectActiveChainIds, selectAllChainIds } from '../selectors/chains.ts';
 import {
   selectFilterPlatformIdsForVault,
@@ -23,7 +28,7 @@ import { selectIsVaultIdSaved } from '../selectors/saved-vaults.ts';
 import { selectChainSearchIndex, selectPlatformSearchIndex } from '../selectors/search.ts';
 import { selectVaultTokenSymbols } from '../selectors/tokens.ts';
 import { selectVaultUnderlyingTvlUsd } from '../selectors/tvl.ts';
-import { selectVaultStrategyAddressOrUndefined } from '../selectors/vaults.ts';
+import { selectVaultById, selectVaultStrategyAddressOrUndefined } from '../selectors/vaults.ts';
 import { selectVaultSupportsZap } from '../selectors/zap.ts';
 import type { BeefyState } from '../store/types.ts';
 import { EMPTY_ARRAY } from './selector-utils.ts';
@@ -103,14 +108,26 @@ export function vaultPassesFilters(
     return false;
   }
 
-  // Strategy Type
-  if (filterOptions.strategyType === 'pools' && !isGovVault(vault)) {
-    return false;
+  // Strategy Type: a merged CLM row matches whichever side(s) it has
+  if (filterOptions.strategyType === 'pools') {
+    if (isCowcentratedVault(vault)) {
+      if (vault.cowcentratedIds.pools.length === 0) {
+        return false;
+      }
+    } else if (!isGovVault(vault)) {
+      return false;
+    }
   }
 
-  // TODO change to !isStandardVault if we get rid of base clm
-  if (filterOptions.strategyType === 'vaults' && isGovVault(vault)) {
-    return false;
+  if (filterOptions.strategyType === 'vaults') {
+    if (isCowcentratedVault(vault)) {
+      // a CLM with only pools has no autocompounding side
+      if (vault.cowcentratedIds.vaults.length === 0 && vault.cowcentratedIds.pools.length > 0) {
+        return false;
+      }
+    } else if (isGovVault(vault)) {
+      return false;
+    }
   }
 
   // Hide non-EOL if onlyRetired is checked
@@ -133,8 +150,16 @@ export function vaultPassesFilters(
   }
 
   // Hide not earning points if onlyEarningPoints checked
-  if (filterOptions.onlyEarningPoints && !isVaultEarningPoints(vault)) {
-    return false;
+  if (filterOptions.onlyEarningPoints) {
+    const earnsPoints =
+      isCowcentratedVault(vault) ?
+        [vault, ...getCowcentratedWrapperIds(vault).map(id => selectVaultById(state, id))].some(
+          isVaultEarningPoints
+        )
+      : isVaultEarningPoints(vault);
+    if (!earnsPoints) {
+      return false;
+    }
   }
 
   // Hide non-zappable if onlyZappable checked
@@ -184,15 +209,19 @@ export function vaultPassesFilters(
 
   // User category: 'My Positions'
   if (filterOptions.userCategory === 'deposited') {
-    // + onlyUnstakedClm
+    // + onlyUnstakedClm: holding the CLM receipt token outside either wrapper
     if (filterOptions.onlyUnstakedClm) {
       if (
-        !isCowcentratedLikeVault(vault) ||
-        selectUserBalanceOfToken(state, vault.chainId, vault.depositTokenAddress).isZero()
+        !isCowcentratedVault(vault) ||
+        selectUserBalanceOfToken(state, vault.chainId, vault.receiptTokenAddress).isZero()
       ) {
         return false;
       }
-    } else if (!env.depositedVaultIds.has(vault.id)) {
+    } else if (
+      isCowcentratedVault(vault) ?
+        !selectUserHasDepositInClmGroup(state, vault.id)
+      : !env.depositedVaultIds.has(vault.id)
+    ) {
       return false;
     }
   }
