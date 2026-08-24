@@ -1,5 +1,56 @@
 [
   {
+    "id": "stakedao-susg-reusd",
+    "name": "sUSG/reUSD",
+    "type": "standard",
+    "token": "sUSDreUSD",
+    "tokenAddress": "0xC6ac08424eE6D1373F03611b96f5Da849594B6D8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x84e6A8374658fdab50Cb6C39E92B83c51F84fa28",
+    "earnedToken": "mooStakeDao-sUSG-reUSD",
+    "earnedTokenAddress": "0x84e6A8374658fdab50Cb6C39E92B83c51F84fa28",
+    "oracle": "lps",
+    "oracleId": "curve-susg-reusd",
+    "status": "active",
+    "createdAt": 1787559000,
+    "platformId": "stakedao",
+    "assets": ["sUSG", "reUSDxyz"],
+    "icons": ["sUSG", "reUSDxyz"],
+    "pointStructureIds": ["re.xyz"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-909/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-909/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xC6ac08424eE6D1373F03611b96f5Da849594B6D8",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xC6ac08424eE6D1373F03611b96f5Da849594B6D8",
+            "coins": [
+              "0xF17D6f98A5C6EAA99d149079984119e0A4EF6900",
+              "0x5086bf358635B81D8C47C66d1C8b9E567Db70c72"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "stakedao-frxusd-trusd",
     "name": "frxUSD/trUSD",
     "type": "standard",
