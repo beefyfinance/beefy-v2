@@ -29610,47 +29610,6 @@
     ]
   },
   {
-    "id": "aero-cow-usdz-cbbtc-vault",
-    "name": "USDz-cbBTC",
-    "type": "standard",
-    "token": "USDz-cbBTC",
-    "tokenAddress": "0xeA46Bc8011A4414EB3F31E2f40CFD65BcAF8745f",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnContractAddress": "0x5FC5f7b7eD001aE57C465c2412f9c1d09eC18b49",
-    "earnedToken": "mooCowAeroUSDz-cbBTC",
-    "earnedTokenAddress": "0x5FC5f7b7eD001aE57C465c2412f9c1d09eC18b49",
-    "oracle": "lps",
-    "oracleId": "aero-cow-usdz-cbbtc",
-    "status": "eol",
-    "createdAt": 1730131954,
-    "retireReason": "tvl",
-    "retiredAt": 1741360041,
-    "platformId": "aerodrome",
-    "assets": ["USDz", "cbBTC"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": true,
-      "notVerified": false,
-      "synthAsset": true
-    },
-    "strategyTypeId": "pool",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
     "id": "aero-cow-usdz-cbbtc-rp",
     "name": "USDz-cbBTC Reward Pool",
     "type": "gov",
@@ -30547,47 +30506,6 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x960BDD1dFD20d7c98fa482D793C3dedD73A113a3"
-    }
-  },
-  {
-    "id": "silo-base-weth-ezeth",
-    "name": "WETH (ezETH Market)",
-    "type": "standard",
-    "token": "WETH",
-    "tokenAddress": "0x4200000000000000000000000000000000000006",
-    "tokenDecimals": 18,
-    "earnContractAddress": "0xEa9677ed4BF937425a211A3F35935B199B842e2d",
-    "earnedToken": "mooSiloBaseWETH(ezETH)",
-    "earnedTokenAddress": "0xEa9677ed4BF937425a211A3F35935B199B842e2d",
-    "oracle": "tokens",
-    "oracleId": "WETH",
-    "status": "eol",
-    "createdAt": 1729264245,
-    "retireReason": "rewards",
-    "retiredAt": 1739314033,
-    "platformId": "silo",
-    "assets": ["WETH"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "lendingNoBorrow",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ],
-    "lendingOracle": {
-      "provider": "chainlink",
-      "address": "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
     }
   },
   {
