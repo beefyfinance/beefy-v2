@@ -73,6 +73,7 @@ import {
 } from '../../../../actions/wallet/cross-chain.ts';
 import { enumerateDstVaultCandidates, enumerateSrcVaultCandidates } from './enumeration.ts';
 import { buildDustOutputs, mergeOutputs } from '../../handlers/dust.ts';
+import { findBoostStakeStep } from '../../helpers/boost.ts';
 import { buildBalanceCheckZapStep, findBridgeTokenMin } from './handlers/utils.ts';
 import { PassthroughDestHandler } from './handlers/PassthroughDestHandler.ts';
 import { SwapDestHandler } from './handlers/SwapDestHandler.ts';
@@ -150,6 +151,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     helpers: ChainTransactHelpers;
     destChainId: ChainEntity['id'];
     inputToken: TokenEntity;
+    isRecovery?: boolean;
+    stakeIntoBoostId?: string;
   }): DestHandlerContext {
     return {
       ...args,
@@ -837,6 +840,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
           ...base,
           destHandlerKind: 'vault',
           destVaultId: quote.option.destVaultId,
+          stakeIntoBoostId: findBoostStakeStep(quote.destSteps)?.boostId,
         };
         break;
       default:
@@ -900,6 +904,9 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       helpers: destChainHelpers,
       destChainId: recovery.destChainId,
       inputToken: destBridgeToken,
+      isRecovery: true,
+      stakeIntoBoostId:
+        recovery.destHandlerKind === 'vault' ? recovery.stakeIntoBoostId : undefined,
     });
     const handler = this.makeRecoveryHandler(recovery, destChainHelpers);
     const quoteVaultId =
@@ -943,6 +950,9 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       helpers: destChainHelpers,
       destChainId: recovery.destChainId,
       inputToken: destBridgeToken,
+      isRecovery: true,
+      stakeIntoBoostId:
+        recovery.destHandlerKind === 'vault' ? recovery.stakeIntoBoostId : undefined,
     });
     const handler = this.makeRecoveryHandler(recovery, destChainHelpers);
     const attributedVaultId =
@@ -980,7 +990,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         destCtx.destChainId,
         attributedVaultId,
         zapRequest,
-        steps.expectedTokens
+        steps.expectedTokens,
+        destCtx.stakeIntoBoostId
       ),
       pending: false,
       extraInfo: { zap: true, vaultId: attributedVaultId },

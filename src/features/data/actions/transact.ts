@@ -105,6 +105,7 @@ export const transactSwitchDepositSource = createAction<DepositSource>(
 export const transactSetSlippage = createAction<{
   slippage: number;
 }>('transact/setSlippage');
+export const transactSetStakeIntoBoost = createAction<boolean>('transact/setStakeIntoBoost');
 export const transactSetExecuting = createAction<boolean>('transact/setExecuting');
 export const transactSetSuccessClosed = createAction<boolean>('transact/setSuccessClosed');
 

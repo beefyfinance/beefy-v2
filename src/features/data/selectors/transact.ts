@@ -19,8 +19,14 @@ import {
   type ZapFee,
 } from '../apis/transact/transact-types.ts';
 import { computeOptionZapFee } from '../apis/transact/helpers/fee.ts';
+import {
+  BOOST_ZAP_MIN_VERSION,
+  boostStakeableStrategyIds,
+  findBoostStakeStep,
+} from '../apis/transact/helpers/boost.ts';
 import type { ChainEntity } from '../entities/chain.ts';
-import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
+import { isSingleGovVault, isStandardVault, type VaultEntity } from '../entities/vault.ts';
+import type { BoostPromoEntity } from '../entities/promo.ts';
 import {
   DepositSource,
   TransactMode,
@@ -42,7 +48,13 @@ import {
   selectUserVaultBalanceInUsdIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInShareToken,
 } from './balance.ts';
-import { selectAllVaultBoostIds, selectPreStakeOrActiveBoostIds } from './boosts.ts';
+import {
+  selectActiveVaultBoostIds,
+  selectAllVaultBoostIds,
+  selectBoostById,
+  selectPreStakeOrActiveBoostIds,
+} from './boosts.ts';
+import { selectZapByChainId } from './zap.ts';
 import {
   selectVaultHasActiveGovRewards,
   selectVaultHasActiveMerklCampaigns,
@@ -74,6 +86,71 @@ export const selectTransactMode = (state: BeefyState) => state.ui.transact.mode;
 export const selectTransactSlippage = (state: BeefyState) => state.ui.transact.swapSlippage;
 
 export const selectTransactDepositSource = (state: BeefyState) => state.ui.transact.depositSource;
+
+export const selectTransactStakeIntoBoost = (state: BeefyState) => state.ui.transact.stakeIntoBoost;
+
+/**
+ * The boost a deposit can be staked into as part of the zap, if any.
+ * Only v2+ boosts mint a receipt token the zap router can hand back to the user.
+ */
+export const selectTransactBoostForStaking = (state: BeefyState): BoostPromoEntity | undefined => {
+  if (state.ui.transact.mode !== TransactMode.Deposit) {
+    return undefined;
+  }
+  const vaultId = state.ui.transact.vaultId;
+  if (!vaultId) {
+    return undefined;
+  }
+  const vault = selectVaultById(state, vaultId);
+  if (!isStandardVault(vault) || !selectZapByChainId(state, vault.chainId)) {
+    return undefined;
+  }
+  const boostId = selectActiveVaultBoostIds(state, vaultId)[0];
+  if (!boostId) {
+    return undefined;
+  }
+  const boost = selectBoostById(state, boostId);
+  return boost.version >= BOOST_ZAP_MIN_VERSION ? boost : undefined;
+};
+
+/** The boost to actually stake into: the user asked for it and this vault supports it */
+export const selectTransactStakeIntoBoostTarget = (
+  state: BeefyState
+): BoostPromoEntity | undefined =>
+  selectTransactStakeIntoBoost(state) ? selectTransactBoostForStaking(state) : undefined;
+
+/**
+ * True when the SELECTED QUOTE ends in a boost stake, so the CTA can take the boost colour and
+ * copy. Read off the quote rather than the checkbox: execution keys off the quote too, so the two
+ * cannot disagree while a re-quote is pending.
+ */
+export const selectTransactWillStakeIntoBoost = (state: BeefyState): boolean => {
+  const quote = selectTransactSelectedQuoteOrUndefined(state);
+  return !!quote && isZapQuote(quote) && !!findBoostStakeStep(quote.steps);
+};
+
+/**
+ * Whether the selected route can carry a boost stake step. Falls back to the candidate options
+ * while no quote is selected — deciding from the quote alone would let the user pick "Yes" on a
+ * route that can never honour it, only to have it revoked once the quote lands.
+ */
+export const selectTransactStakeIntoBoostSupported = (state: BeefyState): boolean => {
+  const selectionId = state.ui.transact.selectedSelectionId;
+  const quote = selectTransactSelectedQuoteOrUndefined(state);
+  // a quote left over from the previous selection describes a route the user is no longer on
+  if (quote && quote.option.selectionId === selectionId) {
+    return boostStakeableStrategyIds.has(quote.option.strategyId);
+  }
+
+  const optionIds = selectionId ? state.ui.transact.options.bySelectionId[selectionId] : undefined;
+  if (!optionIds?.length) {
+    return true;
+  }
+  return optionIds.some(id => {
+    const option = state.ui.transact.options.byOptionId[id];
+    return !!option && boostStakeableStrategyIds.has(option.strategyId);
+  });
+};
 
 export function selectVaultRefIdForSelection(
   state: BeefyState,

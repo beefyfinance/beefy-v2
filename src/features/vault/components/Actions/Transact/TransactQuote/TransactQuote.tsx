@@ -55,6 +55,7 @@ import {
   selectTransactSelectedQuoteOrUndefined,
   selectTransactSelectedSelectionId,
   selectTransactSlippage,
+  selectTransactStakeIntoBoost,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -86,6 +87,7 @@ export const TransactQuote = memo(function TransactQuote({
   const status = useAppSelector(selectTransactQuoteStatus);
   const preflightOk = useAppSelector(selectTransactCrossChainPreflight);
   const slippage = useAppSelector(selectTransactSlippage);
+  const stakeIntoBoost = useAppSelector(selectTransactStakeIntoBoost);
   const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -142,6 +144,19 @@ export const TransactQuote = memo(function TransactQuote({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally keyed on slippage only
   }, [slippage]);
+
+  // same for the stake-into-boost toggle, which changes the route but not the inputs
+  const skipInitialStakeIntoBoostRequote = useRef(true);
+  useEffect(() => {
+    if (skipInitialStakeIntoBoostRequote.current) {
+      skipInitialStakeIntoBoostRequote.current = false;
+      return;
+    }
+    if (!inputIsZero && preflightOk) {
+      dispatch(transactFetchQuotes());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally keyed on the toggle only
+  }, [stakeIntoBoost]);
 
   // preview "You receive" for all CLM vaults AND pools so the placeholder title matches the (transforming) result
   const quote = useAppSelector(

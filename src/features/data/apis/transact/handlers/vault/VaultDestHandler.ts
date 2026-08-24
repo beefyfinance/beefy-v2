@@ -4,7 +4,15 @@ import type { TokenErc20 } from '../../../../entities/token.ts';
 import type { VaultEntity } from '../../../../entities/vault.ts';
 import { getTransactApi } from '../../../instances.ts';
 import { isZapQuote, type DepositOption } from '../../transact-types.ts';
-import { isComposableStrategy, type IStrategy } from '../../strategies/IStrategy.ts';
+import {
+  isComposableStrategy,
+  type IStrategy,
+  type ZapTransactHelpers,
+} from '../../strategies/IStrategy.ts';
+import { StakeIntoBoostZapStrategy } from '../../strategies/StakeIntoBoostStrategy.ts';
+import { findBoostStakeStep } from '../../helpers/boost.ts';
+import { selectBoostById, selectBoostByIdOrUndefined } from '../../../../selectors/boosts.ts';
+import { selectTransactStakeIntoBoostTarget } from '../../../../selectors/transact.ts';
 import { collectIntermediateTokens } from '../dust.ts';
 import type {
   DestHandlerContext,
@@ -44,8 +52,9 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
       );
     }
 
-    await match.strategy.beforeQuote?.();
-    const destQuote = await match.strategy.fetchDepositQuote(
+    const strategy = this.maybeStakeIntoBoost(match.strategy, destHelpers, ctx);
+    await strategy.beforeQuote?.();
+    const destQuote = await strategy.fetchDepositQuote(
       [{ token: ctx.inputToken, amount: inputAmount, max: false }],
       match.option
     );
@@ -92,13 +101,53 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
       );
     }
 
-    await destStrategy.beforeStep?.();
-    const breakdown = await destStrategy.fetchDepositUserlessZapBreakdown(destQuote);
+    // keyed off the quote, not live state, so the executed route always matches the quoted one
+    const stakeStep = findBoostStakeStep(destQuote.steps);
+    const strategy =
+      stakeStep ?
+        new StakeIntoBoostZapStrategy(
+          destStrategy,
+          destHelpers,
+          selectBoostById(destHelpers.getState(), stakeStep.boostId)
+        )
+      : destStrategy;
+
+    await strategy.beforeStep?.();
+    const breakdown = await strategy.fetchDepositUserlessZapBreakdown(destQuote);
     return {
       zapSteps: breakdown.zapRequest.steps,
       orderOutputs: breakdown.zapRequest.order.outputs,
       expectedTokens: breakdown.expectedTokens,
     };
+  }
+
+  /**
+   * Cross-chain / vault-to-vault run their dst leg on inner strategies, which `getStrategyById`
+   * never sees — so the boost decorator has to be applied here instead.
+   *
+   * On recovery the live form no longer describes the op being completed, so the intent recorded
+   * on the op wins; the live toggle is only consulted when quoting a fresh deposit.
+   */
+  private maybeStakeIntoBoost(
+    strategy: IStrategy,
+    destHelpers: ZapTransactHelpers,
+    ctx: DestHandlerContext
+  ): IStrategy {
+    if (!isComposableStrategy(strategy)) {
+      return strategy;
+    }
+
+    const state = destHelpers.getState();
+    const boost =
+      ctx.stakeIntoBoostId ?
+        selectBoostByIdOrUndefined(state, destHelpers.vault.chainId, ctx.stakeIntoBoostId)
+      : ctx.isRecovery ? undefined
+      : selectTransactStakeIntoBoostTarget(state);
+
+    if (!boost || boost.vaultId !== this.destVaultId) {
+      return strategy;
+    }
+    return new StakeIntoBoostZapStrategy(strategy, destHelpers, boost);
   }
 
   /** Find a composable dst strategy accepting the input token; identity case is handled by SingleStrategy's identity option. */

@@ -24,6 +24,7 @@ import {
   selectTokenByAddressOrUndefined,
 } from '../../selectors/tokens.ts';
 import { selectVaultById } from '../../selectors/vaults.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import { selectCurrentChainId, selectWalletAddress } from '../../selectors/wallet.ts';
 import { selectZapByChainId } from '../../selectors/zap.ts';
 import type { BeefyState, BeefyThunk } from '../../store/types.ts';
@@ -262,7 +263,8 @@ export const crossChainRecoveryExecuteOrder = (
   destChainId: ChainEntity['id'],
   vaultId: VaultEntity['id'],
   params: UserlessZapRequest,
-  expectedTokens: TokenEntity[]
+  expectedTokens: TokenEntity[],
+  boostId?: BoostPromoEntity['id']
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -352,8 +354,13 @@ export const crossChainRecoveryExecuteOrder = (
     txWallet(dispatch);
     const transaction = contract.write.executeOrder([castedOrder, castedSteps], options);
 
+    // expectedTokens may contain a synthesized token (e.g. a boost receipt) that is not in the
+    // store; the allowance API resolves by address and throws on those
+    const knownExpectedTokens = expectedTokens.filter(token =>
+      selectTokenByAddressOrUndefined(state, destChainId, token.address)
+    );
     const refreshTokens = uniqBy(
-      [...selectVaultTokensToRefresh(state, vault), ...expectedTokens],
+      [...selectVaultTokensToRefresh(state, vault), ...knownExpectedTokens],
       'id'
     );
 
@@ -375,6 +382,7 @@ export const crossChainRecoveryExecuteOrder = (
         spenderAddress: zap.manager,
         tokens: refreshTokens,
         clearInput: false,
+        ...(boostId ? { boostId } : {}),
       }
     );
 

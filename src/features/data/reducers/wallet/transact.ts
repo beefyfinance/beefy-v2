@@ -21,6 +21,7 @@ import {
   transactSetInputAmount,
   transactSetSelectedChainId,
   transactSetSlippage,
+  transactSetStakeIntoBoost,
   transactSwitchDepositSource,
   transactSwitchMode,
   transactSwitchStep,
@@ -102,6 +103,7 @@ const initialTransactState: TransactState = {
   mode: TransactMode.Deposit,
   step: TransactStep.Form,
   depositSource: DepositSource.Wallet,
+  stakeIntoBoost: true,
   selections: initialTransactTokens,
   forceSelection: false,
   options: initialTransactOptions,
@@ -128,6 +130,7 @@ const transactSlice = createSlice({
         sliceState.inputAmounts = [BIG_ZERO];
         sliceState.inputMaxes = [false];
         sliceState.depositSource = DepositSource.Wallet;
+        sliceState.stakeIntoBoost = true;
         resetQuotes(sliceState);
       })
       .addCase(transactSwitchStep, (sliceState, action) => {
@@ -210,6 +213,9 @@ const transactSlice = createSlice({
       })
       .addCase(transactSetSlippage, (sliceState, action) => {
         sliceState.swapSlippage = action.payload.slippage;
+      })
+      .addCase(transactSetStakeIntoBoost, (sliceState, action) => {
+        sliceState.stakeIntoBoost = action.payload;
       })
       .addCase(transactSetExecuting, (sliceState, action) => {
         sliceState.executing = action.payload;
@@ -393,6 +399,7 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.forceSelection = false;
   sliceState.successClosed = false;
   sliceState.depositSource = DepositSource.Wallet;
+  sliceState.stakeIntoBoost = true;
 
   sliceState.options.status = TransactStatus.Idle;
   sliceState.options.error = undefined;

@@ -115,6 +115,7 @@ export type CrossChainRecoveryVault = {
   destVaultId: VaultEntity['id'];
   bridgeTokenAddress: string;
   bridgedAmount: string;
+  stakeIntoBoostId?: string;
 };
 
 export type CrossChainRecoveryParams =
@@ -168,6 +169,8 @@ export type TransactState = {
   mode: TransactMode;
   step: TransactStep;
   depositSource: DepositSource;
+  /** stake the resulting mooTokens into the vault's active boost as part of the deposit (opt-out) */
+  stakeIntoBoost: boolean;
   forceSelection: boolean;
   selections: TransactSelections;
   options: TransactOptions;

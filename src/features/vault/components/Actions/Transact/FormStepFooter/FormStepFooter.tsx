@@ -12,6 +12,7 @@ import {
 import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../../data/selectors/boosts.ts';
 import { selectVaultActiveExtraRewardTokens } from '../../../../../data/selectors/rewards.ts';
 import {
+  selectTransactBoostForStaking,
   selectTransactMode,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
@@ -26,9 +27,10 @@ const selectBoostDepositNotice = createSelector(
     selectCurrentBoostByVaultIdOrUndefined,
     selectUserVaultBalanceInShareTokenIncludingDisplaced,
     selectUserVaultBalanceNotInActiveBoostInShareToken,
+    selectTransactBoostForStaking,
   ],
-  (boost, inVaultAnywhere, notInActiveBoost) => {
-    if (!!boost && (inVaultAnywhere.isZero() || !notInActiveBoost.isZero())) {
+  (boost, inVaultAnywhere, notInActiveBoost, stakeable) => {
+    if (!!boost && (!!stakeable || inVaultAnywhere.isZero() || !notInActiveBoost.isZero())) {
       return (vaultId: VaultEntity['id']) => (
         <BoostDepositNotice vaultId={vaultId} rewardTokens={boost.rewards} />
       );

@@ -687,6 +687,7 @@ export type ZapQuoteStepUnused = {
 export type ZapQuoteStepStake = {
   type: 'stake';
   inputs: TokenAmount[];
+  boostId?: string;
 };
 
 export type ZapQuoteStepUnstake = {
