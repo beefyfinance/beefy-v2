@@ -1,4 +1,6 @@
 import { memo, useMemo } from 'react';
+import { isEqual } from 'lodash-es';
+import { createCachedSelector } from 're-reselect';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectIsContractDataLoadedOnChain } from '../../features/data/selectors/data-loader/contract-data.ts';
 import { selectPlatformById } from '../../features/data/selectors/platforms.ts';
@@ -20,48 +22,65 @@ export type VaultTvlStatProps = {
 export const VaultTvlStat = memo(function ({ vaultId, ...passthrough }: VaultTvlStatProps) {
   const { t } = useTranslation();
   // @dev don't do this - temp migration away from connect()
-  const { label, ...statProps } = useAppSelector(state => selectVaultTvlStat(state, vaultId));
-  return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
+  const { label, tvlBreakdown, ...statProps } = useAppSelector(state =>
+    selectVaultTvlStat(state, vaultId)
+  );
+  return (
+    <VaultValueStat
+      label={t(label)}
+      tooltip={tvlBreakdown ? <TvlShareTooltip breakdown={tvlBreakdown} /> : undefined}
+      {...statProps}
+      {...passthrough}
+    />
+  );
 });
 
-// TODO better selector / hook
-function selectVaultTvlStat(state: BeefyState, vaultId: VaultEntity['id']) {
-  const label = 'VaultStat-TVL';
-  const vault = selectVaultById(state, vaultId);
-  const isLoaded =
-    selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
+// the tooltip element is built in the component: JSX in a selector is a fresh object every
+// call, so it can never be memoized
+const selectVaultTvlStat = createCachedSelector(
+  (state: BeefyState) => state,
+  (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const label = 'VaultStat-TVL';
+    const vault = selectVaultById(state, vaultId);
+    const isLoaded =
+      selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
 
-  if (!isLoaded) {
-    return {
-      label,
-      value: '-',
-      subValue: null,
-      blur: false,
-      loading: true,
-      expectSubValue: true,
-    };
-  }
+    if (!isLoaded) {
+      return {
+        label,
+        value: '-',
+        subValue: null,
+        blur: false,
+        loading: true,
+        expectSubValue: true,
+        tvlBreakdown: undefined,
+      };
+    }
 
-  const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
-  if (!breakdown || !('underlyingTvl' in breakdown)) {
+    const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
+    if (!breakdown || !('underlyingTvl' in breakdown)) {
+      return {
+        label,
+        value: formatLargeUsd(breakdown.vaultTvl),
+        subValue: null,
+        blur: false,
+        loading: false,
+        tvlBreakdown: undefined,
+      };
+    }
+
     return {
       label,
       value: formatLargeUsd(breakdown.vaultTvl),
-      subValue: null,
+      subValue: formatLargeUsd(breakdown.underlyingTvl),
       blur: false,
       loading: false,
+      tvlBreakdown: breakdown,
     };
-  }
-
-  return {
-    label,
-    value: formatLargeUsd(breakdown.vaultTvl),
-    subValue: formatLargeUsd(breakdown.underlyingTvl),
-    blur: false,
-    loading: false,
-    tooltip: <TvlShareTooltip breakdown={breakdown} />,
-  };
-}
+  },
+  { memoizeOptions: { resultEqualityCheck: isEqual } }
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 type TvlShareTooltipProps = {
   breakdown: TvlBreakdownUnderlying;

@@ -1,4 +1,6 @@
 import type BigNumber from 'bignumber.js';
+import { isEqual } from 'lodash-es';
+import { createCachedSelector } from 're-reselect';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
@@ -26,41 +28,46 @@ type VaultTvlData = {
   breakdown: TvlBreakdownUnderlying | null;
 };
 
-const selectVaultTvlData = (state: BeefyState, vaultId: VaultEntity['id']): VaultTvlData => {
-  const label = 'VaultStat-TVL';
-  const vault = selectVaultById(state, vaultId);
-  const isLoaded =
-    selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
+const selectVaultTvlData = createCachedSelector(
+  (state: BeefyState) => state,
+  (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (state: BeefyState, vaultId: VaultEntity['id']): VaultTvlData => {
+    const label = 'VaultStat-TVL';
+    const vault = selectVaultById(state, vaultId);
+    const isLoaded =
+      selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
 
-  if (!isLoaded) {
-    return {
-      label,
-      vaultTvl: BIG_ZERO,
-      underlyingTvl: null,
-      loading: true,
-      breakdown: null,
-    };
-  }
+    if (!isLoaded) {
+      return {
+        label,
+        vaultTvl: BIG_ZERO,
+        underlyingTvl: null,
+        loading: true,
+        breakdown: null,
+      };
+    }
 
-  const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
-  if (!breakdown || !('underlyingTvl' in breakdown)) {
+    const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
+    if (!breakdown || !('underlyingTvl' in breakdown)) {
+      return {
+        label,
+        vaultTvl: breakdown.vaultTvl,
+        underlyingTvl: null,
+        loading: false,
+        breakdown: null,
+      };
+    }
+
     return {
       label,
       vaultTvl: breakdown.vaultTvl,
-      underlyingTvl: null,
-      loading: false,
-      breakdown: null,
+      underlyingTvl: breakdown.underlyingTvl,
+      loading: !isLoaded,
+      breakdown,
     };
-  }
-
-  return {
-    label,
-    vaultTvl: breakdown.vaultTvl,
-    underlyingTvl: breakdown.underlyingTvl,
-    loading: !isLoaded,
-    breakdown,
-  };
-};
+  },
+  { memoizeOptions: { resultEqualityCheck: isEqual } }
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const VaultTvl = memo(({ vaultId }: VaultTvlProps) => {
   const { t } = useTranslation();

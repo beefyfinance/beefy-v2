@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { isEqual } from 'lodash-es';
 import { BIG_ONE, BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import type { TokenLpBreakdown } from '../../../data/entities/token.ts';
@@ -33,7 +34,8 @@ export function useCalculatedBreakdown(
     oneLpShareOfPool,
     underlyingShareOfPool,
     underlyingTotalSupplyDecimal,
-  } = useAppSelector(state => selectUserLpBreakdownBalance(state, vault, breakdown));
+    // takes entity objects as arguments, so there is no stable cache key; compare the value
+  } = useAppSelector(state => selectUserLpBreakdownBalance(state, vault, breakdown), isEqual);
 
   const { totalValue, totalUnderlyingValue } = useMemo(() => {
     return assets.reduce(
