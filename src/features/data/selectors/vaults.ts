@@ -337,11 +337,10 @@ export const selectVaultIdsByChainIdIncludingHidden = createSelector(
   vaultsChainId => (vaultsChainId ? vaultsChainId.allIds : [])
 );
 
-export const selectVaultPricePerFullShare = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) =>
-    state.entities.vaults.contractData.byVaultId[vaultId]?.pricePerFullShare,
-  price => price || BIG_ONE
-);
+// plain function: a two-hop lookup with a constant fallback. The reducer only reassigns
+// pricePerFullShare when the value actually changes, so the reference is stable without a memo.
+export const selectVaultPricePerFullShare = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  state.entities.vaults.contractData.byVaultId[vaultId]?.pricePerFullShare || BIG_ONE;
 
 export const selectVaultStrategyAddress = (state: BeefyState, vaultId: VaultEntity['id']) =>
   valueOrThrow(
