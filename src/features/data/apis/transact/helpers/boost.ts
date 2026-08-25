@@ -8,18 +8,10 @@ import type { AnyStrategyId } from '../strategies/strategy-configs.ts';
 import type { ZapStep } from '../zap/types.ts';
 import { getInsertIndex } from './zap.ts';
 
-/**
- * v1 boosts hold the staked balance in an internal ledger and mint nothing, so a zap has no token
- * to hand back to the user. v2+ (BeefyRewardPool) mints a transferable 1:1 ERC20 receipt.
- */
+/** v1 boosts mint nothing, so only v2+ (BeefyRewardPool) has a receipt a zap can hand back */
 export const BOOST_ZAP_MIN_VERSION = 2;
 
-/**
- * Strategies that `TransactApi.getStrategyById` can wrap with the boost decorator directly.
- *
- * Excluded: conic, yieldbasis and reward-pool-to-vault build their order inline inside
- * fetchDepositStep, leaving nothing to decorate.
- */
+/** Excludes conic/yieldbasis/reward-pool-to-vault, which build their order inline in fetchDepositStep */
 export const boostDecoratableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<AnyStrategyId>([
   'vault',
   'single',
@@ -32,13 +24,7 @@ export const boostDecoratableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<A
   'vault-composer',
 ]);
 
-/**
- * Strategies whose deposit can end in a boost stake, i.e. when the checkbox is offered.
- *
- * Superset of {@link boostDecoratableStrategyIds}: cross-chain and vault-to-vault are never
- * decorated at the strategy level, they run their destination leg through `VaultDestHandler`,
- * which decorates the inner destination strategy itself.
- */
+/** Superset: cross-chain and vault-to-vault are decorated by `VaultDestHandler`, not by strategy id */
 export const boostStakeableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<AnyStrategyId>([
   ...boostDecoratableStrategyIds,
   'cross-chain',
@@ -59,11 +45,7 @@ export function findBoostStakeStep(
   return steps.find(isBoostStakeStep);
 }
 
-/**
- * The receipt token is the boost contract itself. It is not in the addressbook and never enters
- * the token store, so it is synthesized on demand. Minted 1:1 against the share token, hence the
- * shared decimals/oracleId.
- */
+/** The boost contract is itself the receipt token; it never enters the token store, so synthesize it */
 export function getBoostReceiptToken(boost: BoostPromoEntity, shareToken: TokenErc20): TokenErc20 {
   return {
     type: 'erc20',
@@ -82,11 +64,7 @@ export function getBoostReceiptToken(boost: BoostPromoEntity, shareToken: TokenE
   };
 }
 
-/**
- * `stake` pulls the share token from the caller and mints the receipt to it, so listing the share
- * token in `tokens` does double duty: the router approves the boost to spend it, and rewrites the
- * amount with its own live balance.
- */
+/** Listing the share token in `tokens` both approves the boost to pull it and rewrites the amount */
 export function buildBoostStakeZapStep(
   boost: BoostPromoEntity,
   shareToken: TokenErc20,

@@ -50,9 +50,6 @@ function resolveTokens(helpers: ZapTransactHelpers, boost: BoostPromoEntity) {
 }
 
 /**
- * Appends a boost stake to any composable deposit route, so the user ends up holding the boost
- * receipt token instead of the vault share token.
- *
  * Must be the outermost decorator: ChargeFeeStrategy prepends its fee transfer and rewrites the
  * order inputs, and the stake has to run after every other step has settled the share token.
  */
@@ -111,8 +108,8 @@ export class StakeIntoBoostZapStrategy<
   }
 
   /**
-   * Quote amounts are left alone — the stake mints 1:1 and `outputs` still has to price via the
-   * share/deposit token oracle for price impact and the re-quote check to work.
+   * `outputs` stays priced in the share/deposit token: the receipt has no oracle, so swapping it
+   * there would zero out price impact and the re-quote check.
    */
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
@@ -160,8 +157,7 @@ export class StakeIntoBoostZapStrategy<
       )
     );
 
-    // stake mints exactly what it pulls, so the share token's own floor carries over unchanged;
-    // the share token stays listed at 0 to sweep any rounding dust
+    // stake mints exactly what it pulls, so the share token's own floor carries over unchanged
     breakdown.zapRequest.order.outputs = [
       { token: this.receiptToken.address, minOutputAmount: shareOutput.minOutputAmount },
       ...outputs.map(output =>
@@ -248,10 +244,7 @@ export class StakeIntoBoostZapStrategy<
   }
 }
 
-/**
- * The plain same-token deposit is not a zap at all, so there is no route to append to — it gets
- * rebuilt as a two step zap (deposit, then stake) instead.
- */
+/** The plain same-token deposit has no route to append to, so it is rebuilt as deposit + stake */
 export class StakeIntoBoostVaultStrategy implements IStrategy<'vault'> {
   public readonly id = 'vault' as const;
   protected readonly shareToken: TokenErc20;
@@ -272,9 +265,8 @@ export class StakeIntoBoostVaultStrategy implements IStrategy<'vault'> {
   }
 
   /**
-   * The deposit now goes through the zap router, so the approval target moves with it and the
-   * quote gains the route it actually executes — without `steps` the UI would hide the stake and
-   * the slippage control while still applying a slippage floor to the order.
+   * Routing through the zap moves the approval target, and `steps` is what makes the UI show the
+   * route and the slippage control that the order is now subject to.
    */
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
@@ -321,7 +313,7 @@ export class StakeIntoBoostVaultStrategy implements IStrategy<'vault'> {
         from: zap.router,
       });
 
-      // ppfs is read live when the deposit step is built, so the share output still needs slipping
+      // ppfs is read live here, so the share output still needs slipping
       const shareOutput = depositZap.outputs[0];
       const minShares = slipBy(shareOutput.amount, slippage, this.shareToken.decimals);
       const minSharesWei = toWeiString(minShares, this.shareToken.decimals);

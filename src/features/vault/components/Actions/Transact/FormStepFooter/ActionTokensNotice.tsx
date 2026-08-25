@@ -15,12 +15,15 @@ type ActionTokensNoticeProps = {
    * and the strip drops to the dim tint while unchecked.
    */
   checked?: boolean;
+  /** still shows its state, but cannot be changed */
+  disabled?: boolean;
 };
 export const ActionTokensNotice = memo(function ActionTokensNotice({
   children,
   multiline,
   onClick,
   checked,
+  disabled,
 }: ActionTokensNoticeProps) {
   if (onClick) {
     const isCheckbox = checked !== undefined;
@@ -37,16 +40,22 @@ export const ActionTokensNotice = memo(function ActionTokensNotice({
           onClick={onClick}
           checkbox={isCheckbox}
           dim={isCheckbox && !checked}
+          disabled={disabled}
           role={isCheckbox ? 'checkbox' : undefined}
           aria-checked={isCheckbox ? checked : undefined}
+          aria-disabled={disabled}
         >
           {isCheckbox ?
-            <CheckIcon className={checkIcon} />
-          : null}
-          {children}
-          {isCheckbox ? null : (
-            <ChevronRight preserveAspectRatio="xMaxYMid" className={inlineIcon} />
-          )}
+            <>
+              <CheckIcon className={checkIcon} />
+              {/* one flex item, so the row gap cannot land between the sentence and the tokens */}
+              <CheckboxLabel>{children}</CheckboxLabel>
+            </>
+          : <>
+              {children}
+              <ChevronRight preserveAspectRatio="xMaxYMid" className={inlineIcon} />
+            </>
+          }
         </FooterNotificationButton>
       </FooterNotification>
     );
@@ -64,9 +73,15 @@ const inlineIcon = css({
   marginLeft: '6px',
 });
 
-/** no colour of its own: the tick inherits the strip tint — black on gold, pale gold when dimmed */
+/** no colour of its own, so the tick follows the strip tint */
 const checkIcon = css({
   flexShrink: '0',
+});
+
+const CheckboxLabel = styled('span', {
+  base: {
+    display: 'inline',
+  },
 });
 
 const FooterNotification = styled(
@@ -112,8 +127,7 @@ const FooterNotificationButton = styled('button', {
     },
     dim: {
       true: {
-        // the default hover is gold.30, which is exactly this variant's text colour — it would
-        // paint the label out. Lift the translucent tint instead.
+        // the default hover is gold.30, this variant's text colour, which would paint the label out
         '&:hover': {
           background: 'gold.70-20',
         },

@@ -128,7 +128,6 @@ function maybeWrapStakeIntoBoost(
       return new StakeIntoBoostZapStrategy(strategy, helpers, boost);
     }
   } catch (err: unknown) {
-    // an unresolvable boost or share token must not take the plain deposit down with it:
     // getStrategyById feeds a Promise.all, so throwing here would fail every route's quote
     console.error(`Vault ${helpers.vault.id} failed to apply the boost stake decorator`, err);
   }

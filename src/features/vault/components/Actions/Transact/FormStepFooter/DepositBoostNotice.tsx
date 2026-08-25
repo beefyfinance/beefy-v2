@@ -50,15 +50,15 @@ const BoostDepositNotice = memo(function BoostDepositNotice({
     dispatch(transactSetStakeIntoBoost(!checked));
   }, [dispatch, checked]);
 
-  if (stakeable && supported && !isExecuting && !isStepping) {
+  if (stakeable && supported) {
     return (
       <DepositTokensNotice
-        // same copy either way here: the user is about to deposit, so "boost your deposit" reads
-        // correctly whether or not they already hold a position
+        // reads correctly whether or not they already hold a position
         i18nKey="Transact-Notice-Deposit-Boost-Deposited"
         rewardTokens={rewardTokens}
         onClick={handleToggle}
         checked={checked}
+        disabled={isExecuting || isStepping}
       />
     );
   }

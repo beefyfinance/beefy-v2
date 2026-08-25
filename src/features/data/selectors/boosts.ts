@@ -63,10 +63,7 @@ export const selectCurrentBoostByVaultIdOrUndefined = createCachedSelector(
   }
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-/**
- * A v2+ boost contract is itself the ERC20 receipt handed out for staking. It is not in the
- * addressbook and never enters the token store, so it is synthesized on demand.
- */
+/** A v2+ boost contract is itself the receipt token; it never enters the token store */
 export const selectBoostReceiptTokenOrUndefined = (
   state: BeefyState,
   chainId: ChainEntity['id'],

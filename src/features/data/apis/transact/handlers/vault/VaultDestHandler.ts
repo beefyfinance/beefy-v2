@@ -122,11 +122,9 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
   }
 
   /**
-   * Cross-chain / vault-to-vault run their dst leg on inner strategies, which `getStrategyById`
-   * never sees — so the boost decorator has to be applied here instead.
-   *
-   * On recovery the live form no longer describes the op being completed, so the intent recorded
-   * on the op wins; the live toggle is only consulted when quoting a fresh deposit.
+   * Cross-chain / vault-to-vault run their dst leg on inner strategies that `getStrategyById` never
+   * sees, so the decorator is applied here. On recovery the live form no longer describes the op
+   * being completed, so the intent recorded on the op wins.
    */
   private maybeStakeIntoBoost(
     strategy: IStrategy,

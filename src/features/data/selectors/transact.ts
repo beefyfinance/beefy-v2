@@ -89,10 +89,7 @@ export const selectTransactDepositSource = (state: BeefyState) => state.ui.trans
 
 export const selectTransactStakeIntoBoost = (state: BeefyState) => state.ui.transact.stakeIntoBoost;
 
-/**
- * The boost a deposit can be staked into as part of the zap, if any.
- * Only v2+ boosts mint a receipt token the zap router can hand back to the user.
- */
+/** The boost this deposit could stake into, if any */
 export const selectTransactBoostForStaking = (state: BeefyState): BoostPromoEntity | undefined => {
   if (state.ui.transact.mode !== TransactMode.Deposit) {
     return undefined;
@@ -113,16 +110,15 @@ export const selectTransactBoostForStaking = (state: BeefyState): BoostPromoEnti
   return boost.version >= BOOST_ZAP_MIN_VERSION ? boost : undefined;
 };
 
-/** The boost to actually stake into: the user asked for it and this vault supports it */
+/** The boost to actually stake into: asked for, and possible here */
 export const selectTransactStakeIntoBoostTarget = (
   state: BeefyState
 ): BoostPromoEntity | undefined =>
   selectTransactStakeIntoBoost(state) ? selectTransactBoostForStaking(state) : undefined;
 
 /**
- * True when the SELECTED QUOTE ends in a boost stake, so the CTA can take the boost colour and
- * copy. Read off the quote rather than the checkbox: execution keys off the quote too, so the two
- * cannot disagree while a re-quote is pending.
+ * Read off the quote rather than the checkbox: execution keys off the quote too, so the CTA cannot
+ * promise something different from what will run.
  */
 export const selectTransactWillStakeIntoBoost = (state: BeefyState): boolean => {
   const quote = selectTransactSelectedQuoteOrUndefined(state);
@@ -130,9 +126,8 @@ export const selectTransactWillStakeIntoBoost = (state: BeefyState): boolean => 
 };
 
 /**
- * Whether the selected route can carry a boost stake step. Falls back to the candidate options
- * while no quote is selected — deciding from the quote alone would let the user pick "Yes" on a
- * route that can never honour it, only to have it revoked once the quote lands.
+ * Falls back to the candidate options while no quote is selected, so the checkbox is never offered
+ * on a route that could never honour it.
  */
 export const selectTransactStakeIntoBoostSupported = (state: BeefyState): boolean => {
   const selectionId = state.ui.transact.selectedSelectionId;

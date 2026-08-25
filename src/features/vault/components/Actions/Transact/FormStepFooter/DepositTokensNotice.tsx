@@ -12,6 +12,7 @@ type DepositTokensNoticeProps = {
   onClick?: () => void;
   /** renders the notice as a checkbox row rather than a link to the boost tab */
   checked?: boolean;
+  disabled?: boolean;
 };
 
 export const DepositTokensNotice = memo(function DepositTokensNotice({
@@ -19,6 +20,7 @@ export const DepositTokensNotice = memo(function DepositTokensNotice({
   rewardTokens,
   onClick,
   checked,
+  disabled,
 }: DepositTokensNoticeProps) {
   const { t } = useTranslation();
   const inner = useMemo(() => {
@@ -35,7 +37,12 @@ export const DepositTokensNotice = memo(function DepositTokensNotice({
   }, [i18nKey, rewardTokens, t]);
 
   return (
-    <ActionTokensNotice multiline={rewardTokens.length > 1} onClick={onClick} checked={checked}>
+    <ActionTokensNotice
+      multiline={rewardTokens.length > 1}
+      onClick={onClick}
+      checked={checked}
+      disabled={disabled}
+    >
       {inner}
     </ActionTokensNotice>
   );
