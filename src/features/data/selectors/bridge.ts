@@ -5,7 +5,7 @@ import type { ChainEntity } from '../entities/chain.ts';
 import { FormStep } from '../reducers/wallet/bridge-types.ts';
 import { StepContent } from '../reducers/wallet/stepper-types.ts';
 import type { BeefyState } from '../store/types.ts';
-import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
+import { arrayOrStaticEmpty, stableSelector, valueOrThrow } from '../utils/selector-utils.ts';
 import {
   selectStepperCurrentStepData,
   selectStepperItems,
@@ -143,7 +143,7 @@ export const selectBridgeConfirmStatus = (state: BeefyState) => state.ui.bridge.
 export const selectBridgeConfirmQuote = (state: BeefyState) =>
   valueOrThrow(state.ui.bridge.confirm.quote, 'No bridge quote');
 
-export function selectBridgeTxState(state: BeefyState) {
+function selectBridgeTxStateUncached(state: BeefyState) {
   const items = selectStepperItems(state);
   if (!items.length) {
     return { step: 'unknown', status: 'unknown' };
@@ -173,3 +173,5 @@ export function selectBridgeTxState(state: BeefyState) {
 
   return { step: 'unknown', status: 'unknown' };
 }
+
+export const selectBridgeTxState = stableSelector(selectBridgeTxStateUncached);

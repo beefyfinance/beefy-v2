@@ -29,7 +29,7 @@ import {
   type TransactSelection,
 } from '../reducers/wallet/transact-types.ts';
 import type { BeefyState } from '../store/types.ts';
-import { valueOrThrow } from '../utils/selector-utils.ts';
+import { stableSelector1, stableSelector2Req, valueOrThrow } from '../utils/selector-utils.ts';
 import {
   selectAddressHasVaultPendingWithdrawal,
   selectBoostUserRewardsInToken,
@@ -225,7 +225,7 @@ export const selectTransactTokenChains = (state: BeefyState) =>
 export const selectTransactNumTokens = (state: BeefyState) =>
   state.ui.transact.selections.allSelectionIds.length;
 
-export const selectTransactWithdrawSelectionsForChain = (
+const selectTransactWithdrawSelectionsForChainUncached = (
   state: BeefyState,
   chainId: ChainEntity['id']
 ) => {
@@ -306,7 +306,7 @@ export type SelectionRow = TransactSelection & {
   vaultRefId?: VaultEntity['id'];
 };
 
-export const selectTransactDepositTokensForChainIdWithBalances = (
+const selectTransactDepositTokensForChainIdWithBalancesUncached = (
   state: BeefyState,
   chainId: ChainEntity['id'],
   vaultId: VaultEntity['id']
@@ -401,37 +401,41 @@ export type DepositFromVaultEntry = TransactSelection & {
 };
 
 // Vault-source deposit entries (cross-chain + same-chain v2v), dust-filtered.
-export const selectTransactDepositFromVaultEntries = (
-  state: BeefyState
-): DepositFromVaultEntry[] => {
-  const walletAddress = selectWalletAddressIfKnown(state);
-  if (!walletAddress) return [];
-  const bySelectionId = state.ui.transact.selections.bySelectionId;
-  const entries: DepositFromVaultEntry[] = [];
+// the wrapper below keeps its own argsMemoize cache, so this must not be inlined into it;
+// memoizing here is what makes it a stable input
+export const selectTransactDepositFromVaultEntries = createSelector(
+  (state: BeefyState) => state,
+  (state: BeefyState): DepositFromVaultEntry[] => {
+    const walletAddress = selectWalletAddressIfKnown(state);
+    if (!walletAddress) return [];
+    const bySelectionId = state.ui.transact.selections.bySelectionId;
+    const entries: DepositFromVaultEntry[] = [];
 
-  for (const selection of Object.values(bySelectionId)) {
-    const vaultId = selectVaultRefIdForSelection(state, selection.id);
-    if (!vaultId) continue;
-    const balanceUsd =
-      selectUserVaultBalanceInUsdIncludingDisplaced(state, vaultId, walletAddress) ?? BIG_ZERO;
-    // Vaults with USD value below this threshold are hidden from the picker
-    if (balanceUsd.lt(BIG_ONE)) continue;
-    const balance = selectUserVaultBalanceInShareTokenIncludingDisplaced(
-      state,
-      vaultId,
-      walletAddress
-    );
-    entries.push({
-      ...selection,
-      balance,
-      balanceUsd,
-      decimals: selection.tokens[0].decimals,
-      vaultId,
-    });
-  }
+    for (const selection of Object.values(bySelectionId)) {
+      const vaultId = selectVaultRefIdForSelection(state, selection.id);
+      if (!vaultId) continue;
+      const balanceUsd =
+        selectUserVaultBalanceInUsdIncludingDisplaced(state, vaultId, walletAddress) ?? BIG_ZERO;
+      // Vaults with USD value below this threshold are hidden from the picker
+      if (balanceUsd.lt(BIG_ONE)) continue;
+      const balance = selectUserVaultBalanceInShareTokenIncludingDisplaced(
+        state,
+        vaultId,
+        walletAddress
+      );
+      entries.push({
+        ...selection,
+        balance,
+        balanceUsd,
+        decimals: selection.tokens[0].decimals,
+        vaultId,
+      });
+    }
 
-  return entries.sort((a, b) => compareBigNumber(b.balanceUsd, a.balanceUsd));
-};
+    return entries.sort((a, b) => compareBigNumber(b.balanceUsd, a.balanceUsd));
+  },
+  { memoizeOptions: { resultEqualityCheck: isEqual } }
+);
 
 export const selectTransactUserHasOtherDepositedVaults = createSelector(
   selectTransactDepositFromVaultEntries,
@@ -834,3 +838,10 @@ export const selectTransactShouldShowMigrate = (
     walletAddress
   ).gt(0);
 };
+
+export const selectTransactDepositTokensForChainIdWithBalances = stableSelector2Req(
+  selectTransactDepositTokensForChainIdWithBalancesUncached
+);
+export const selectTransactWithdrawSelectionsForChain = stableSelector1(
+  selectTransactWithdrawSelectionsForChainUncached
+);

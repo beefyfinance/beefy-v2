@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { isEqual } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
@@ -28,6 +29,7 @@ import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
   arrayOrStaticEmpty,
   bigNumberOrStaticZero,
+  stableSelector2,
   valueOrThrow,
 } from '../utils/selector-utils.ts';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils.ts';
@@ -540,105 +542,114 @@ export type UserVaultBalanceBreakdown = {
   entries: UserVaultBalanceBreakdownEntry[];
 };
 
-export const selectVaultUserBalanceInDepositTokenBreakdown = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  walletAddress?: string
-): UserVaultBalanceBreakdown => {
-  const vault = selectVaultById(state, vaultId);
-  const shareData = selectVaultSharesToDepositTokenData(state, vaultId);
-  const vaultBalance = selectUserVaultBalanceInDepositToken(state, vaultId);
-  const balances: UserVaultBalanceBreakdown = {
-    depositToken: shareData.depositToken,
-    entries: [],
-  };
+export const selectVaultUserBalanceInDepositTokenBreakdown = createCachedSelector(
+  (state: BeefyState) => state,
+  (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (_state: BeefyState, _vaultId: VaultEntity['id'], walletAddress?: string) => walletAddress,
+  (
+    state: BeefyState,
+    vaultId: VaultEntity['id'],
+    walletAddress?: string
+  ): UserVaultBalanceBreakdown => {
+    const vault = selectVaultById(state, vaultId);
+    const shareData = selectVaultSharesToDepositTokenData(state, vaultId);
+    const vaultBalance = selectUserVaultBalanceInDepositToken(state, vaultId);
+    const balances: UserVaultBalanceBreakdown = {
+      depositToken: shareData.depositToken,
+      entries: [],
+    };
 
-  if (vaultBalance.gt(BIG_ZERO)) {
-    balances.entries.push({
-      type: 'vault',
-      id: `vault-${vaultId}`,
-      vaultId,
-      amount: vaultBalance,
-    });
-  }
-
-  // gov vaults do not have balances elsewhere
-  if (isGovVault(vault) || !shareData.shareToken) {
-    return balances;
-  }
-
-  // only erc4626 vaults may have pending withdrawals
-  if (isErc4626Vault(vault)) {
-    const pendingWithdrawal = selectUserVaultBalanceInShareTokenPendingWithdrawal(
-      state,
-      vaultId,
-      walletAddress
-    );
-    if (pendingWithdrawal.gt(BIG_ZERO)) {
+    if (vaultBalance.gt(BIG_ZERO)) {
       balances.entries.push({
-        type: 'pending-withdrawal',
-        id: `pending-withdrawal-${vaultId}`,
+        type: 'vault',
+        id: `vault-${vaultId}`,
         vaultId,
-        amount: mooAmountToOracleAmount(
-          shareData.shareToken,
-          shareData.depositToken,
-          shareData.ppfs,
-          pendingWithdrawal
-        ),
+        amount: vaultBalance,
       });
     }
-  }
 
-  // deposits in boost (even those expired)
-  if (isVaultWithReceipt(vault)) {
-    const boostIds = selectAllVaultBoostIds(state, vaultId);
-    for (const boostId of boostIds) {
-      const boostShareBalance = selectBoostUserBalanceInToken(state, boostId, walletAddress);
-      if (boostShareBalance.gt(BIG_ZERO)) {
+    // gov vaults do not have balances elsewhere
+    if (isGovVault(vault) || !shareData.shareToken) {
+      return balances;
+    }
+
+    // only erc4626 vaults may have pending withdrawals
+    if (isErc4626Vault(vault)) {
+      const pendingWithdrawal = selectUserVaultBalanceInShareTokenPendingWithdrawal(
+        state,
+        vaultId,
+        walletAddress
+      );
+      if (pendingWithdrawal.gt(BIG_ZERO)) {
         balances.entries.push({
-          type: 'boost',
-          id: `boost-${boostId}`,
-          boostId,
+          type: 'pending-withdrawal',
+          id: `pending-withdrawal-${vaultId}`,
+          vaultId,
           amount: mooAmountToOracleAmount(
             shareData.shareToken,
             shareData.depositToken,
             shareData.ppfs,
-            boostShareBalance
+            pendingWithdrawal
           ),
         });
       }
     }
-  }
 
-  // bridged mooToken
-  if (isStandardVault(vault)) {
-    if (vault.bridged) {
-      for (const [chainId, tokenAddress] of entries(vault.bridged)) {
-        const bridgedShareBalance = selectUserBalanceOfToken(
-          state,
-          chainId,
-          tokenAddress,
-          walletAddress
-        );
-        if (bridgedShareBalance.gt(BIG_ZERO)) {
+    // deposits in boost (even those expired)
+    if (isVaultWithReceipt(vault)) {
+      const boostIds = selectAllVaultBoostIds(state, vaultId);
+      for (const boostId of boostIds) {
+        const boostShareBalance = selectBoostUserBalanceInToken(state, boostId, walletAddress);
+        if (boostShareBalance.gt(BIG_ZERO)) {
           balances.entries.push({
-            type: 'bridged',
-            id: `bridged-${chainId}`,
-            chainId,
+            type: 'boost',
+            id: `boost-${boostId}`,
+            boostId,
             amount: mooAmountToOracleAmount(
               shareData.shareToken,
               shareData.depositToken,
               shareData.ppfs,
-              bridgedShareBalance
+              boostShareBalance
             ),
           });
         }
       }
     }
-  }
 
-  return balances;
-};
+    // bridged mooToken
+    if (isStandardVault(vault)) {
+      if (vault.bridged) {
+        for (const [chainId, tokenAddress] of entries(vault.bridged)) {
+          const bridgedShareBalance = selectUserBalanceOfToken(
+            state,
+            chainId,
+            tokenAddress,
+            walletAddress
+          );
+          if (bridgedShareBalance.gt(BIG_ZERO)) {
+            balances.entries.push({
+              type: 'bridged',
+              id: `bridged-${chainId}`,
+              chainId,
+              amount: mooAmountToOracleAmount(
+                shareData.shareToken,
+                shareData.depositToken,
+                shareData.ppfs,
+                bridgedShareBalance
+              ),
+            });
+          }
+        }
+      }
+    }
+
+    return balances;
+  },
+  { memoizeOptions: { resultEqualityCheck: isEqual } }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
+    `${vaultId}-${walletAddress ?? ''}`
+);
 
 export const selectGovVaultUserStakedBalanceInDepositToken = (
   state: BeefyState,
@@ -690,7 +701,7 @@ export const selectUserVaultBalanceInUsdIncludingDisplaced = (
 /**
  * Balance of vault deposit token in users wallet converted to USD
  */
-export const selectUserVaultDepositTokenWalletBalanceInUsd = (
+const selectUserVaultDepositTokenWalletBalanceInUsdUncached = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -950,7 +961,7 @@ export const selectIsUserBalanceAvailable = createSelector(
     return false;
   }
 );
-export const selectPastBoostIdsWithUserBalance = (
+const selectPastBoostIdsWithUserBalanceUncached = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ) => {
@@ -998,3 +1009,10 @@ function isVaultSourceSelection(state: BeefyState, selectionId: string): boolean
   if (!option) return false;
   return isVaultSourceDepositOption(option) || isVaultDestWithdrawOption(option);
 }
+
+export const selectPastBoostIdsWithUserBalance = stableSelector2(
+  selectPastBoostIdsWithUserBalanceUncached
+);
+export const selectUserVaultDepositTokenWalletBalanceInUsd = stableSelector2(
+  selectUserVaultDepositTokenWalletBalanceInUsdUncached
+);

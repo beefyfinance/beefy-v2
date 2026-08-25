@@ -1,4 +1,5 @@
 import type BigNumber from 'bignumber.js';
+import { stableSelector2 } from '../utils/selector-utils.ts';
 import { createCachedSelector } from 're-reselect';
 import { cloneDeep, isEqual, orderBy } from 'lodash-es';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
@@ -109,7 +110,7 @@ const emptyUserRewards: UserRewards = {
 /**
  * @dev requires analytics timeline / user pnl to be loaded
  */
-export const selectDashboardUserRewardsByVaultId = (
+const selectDashboardUserRewardsByVaultIdUncached = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -572,4 +573,8 @@ export const selectUserTotalYieldUsd = cachedByAddress(selectUserTotalYieldUsdUn
 export const selectDashboardUserVaultsPnl = cachedByAddress(selectDashboardUserVaultsPnlUncached);
 export const selectDashboardUserVaultsDailyYield = cachedByAddress(
   selectDashboardUserVaultsDailyYieldUncached
+);
+
+export const selectDashboardUserRewardsByVaultId = stableSelector2(
+  selectDashboardUserRewardsByVaultIdUncached
 );

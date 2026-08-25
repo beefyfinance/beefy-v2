@@ -1,4 +1,4 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector, weakMapMemoize } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { fromUnixTime, sub } from 'date-fns';
 import { orderBy } from 'lodash-es';
@@ -322,7 +322,10 @@ export const selectIsTokenLoadedOnChain = createCachedSelector(
   (tokensByChainId, address) => tokensByChainId?.byAddress[address] !== undefined
 )((_state: BeefyState, address: TokenEntity['address'], _chainId: ChainEntity['id']) => address);
 
-export const selectWrappedToNativeSymbolMap = (state: BeefyState) => {
+// weakMapMemoize rather than createSelector: the chain token lookups throw when the addressbook
+// for a chain has not loaded, and weakMapMemoize does not cache a thrown result, so throw
+// behaviour is unchanged. Rebuilding the Map made this an unstable input to the selector below.
+export const selectWrappedToNativeSymbolMap = weakMapMemoize((state: BeefyState) => {
   const chainIds = selectAllChainIds(state);
 
   const wrappedToNativeSymbolMap = new Map<string, string>();
@@ -333,7 +336,7 @@ export const selectWrappedToNativeSymbolMap = (state: BeefyState) => {
     wrappedToNativeSymbolMap.set(wnative.symbol, native.symbol);
   }
   return wrappedToNativeSymbolMap;
-};
+});
 
 export const selectWrappedToNativeSymbolOrTokenSymbol = createCachedSelector(
   (state: BeefyState, _symbol: string) => selectWrappedToNativeSymbolMap(state),

@@ -1,4 +1,5 @@
 import { first, isEqual } from 'lodash-es';
+import { stableSelector1, stableSelector2 } from '../utils/selector-utils.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
 import { EMPTY_AVG_APY } from '../../../helpers/apy.ts';
@@ -152,7 +153,7 @@ const selectUserGlobalStatsUncached = (state: BeefyState, address?: string) => {
   return newGlobalStats;
 };
 
-export const selectYieldStatsByVaultId = (
+const selectYieldStatsByVaultIdUncached = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -344,7 +345,10 @@ export const selectApyVaultUIData = createCachedSelector(
   }
 )((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectBoostAprByRewardToken = (state: BeefyState, boostId: BoostPromoEntity['id']) => {
+const selectBoostAprByRewardTokenUncached = (
+  state: BeefyState,
+  boostId: BoostPromoEntity['id']
+) => {
   return state.biz.apy.rawApy.byBoostId[boostId]?.aprByRewardToken || [];
 };
 
@@ -359,3 +363,6 @@ export const selectUserGlobalStats = createSelector(
   (state, address) => selectUserGlobalStatsUncached(state, address),
   { memoizeOptions: { resultEqualityCheck: isEqual } }
 );
+
+export const selectBoostAprByRewardToken = stableSelector1(selectBoostAprByRewardTokenUncached);
+export const selectYieldStatsByVaultId = stableSelector2(selectYieldStatsByVaultIdUncached);

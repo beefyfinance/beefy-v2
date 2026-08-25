@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { stableSelector2 } from '../utils/selector-utils.ts';
 import BigNumber from 'bignumber.js';
 import { isEqual } from 'lodash-es';
 import { createCachedSelector } from 're-reselect';
@@ -171,7 +172,7 @@ export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAd
   return selectIsAnalyticsLoadedByAddress(state, addressLower);
 };
 
-export const selectStandardGovPnl = (
+const selectStandardGovPnlUncached = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -283,7 +284,7 @@ function makeUsdChange(before: BigNumber, after: BigNumber): UsdChange {
   };
 }
 
-export const selectClmPnl = (
+const selectClmPnlUncached = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -830,3 +831,6 @@ export const selectClmAutocompoundedPendingFeesByVaultId = (
     token1Decimals,
   };
 };
+
+export const selectStandardGovPnl = stableSelector2(selectStandardGovPnlUncached);
+export const selectClmPnl = stableSelector2(selectClmPnlUncached);
