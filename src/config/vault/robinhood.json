@@ -1,5 +1,245 @@
 [
   {
+    "id": "uniswap-cow-robinhood-usdg-gld-rp",
+    "name": "GLD-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodGLD-USDG",
+    "tokenAddress": "0x2e35f0951cFfaF89eb9ADdE94C60475E3745Cc15",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x03B023542F20b0FF3b36C6091a3960Daf1a29A3f",
+    "earnedToken": "rCowUniswapRobinhoodGLD-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-usdg-gld",
+    "status": "active",
+    "createdAt": 1787749776,
+    "platformId": "uniswap",
+    "assets": ["GLDrh", "USDG"],
+    "icons": ["GLD", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-usdg-gld",
+    "name": "GLD-USDG",
+    "type": "cowcentrated",
+    "token": "GLD-USDG uniswap",
+    "tokenAddress": "0x7A6A053eCCf1446A2633E05aA6D40D09381997ec",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "0xC9a981FEE1F9DEc688bb123ccDeCc63D0deBFC4e"
+    ],
+    "earnContractAddress": "0x2e35f0951cFfaF89eb9ADdE94C60475E3745Cc15",
+    "earnedToken": "cowUniswapRobinhoodGLD-USDG",
+    "earnedTokenAddress": "0x2e35f0951cFfaF89eb9ADdE94C60475E3745Cc15",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-usdg-gld",
+    "status": "active",
+    "createdAt": 1787749776,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["GLDrh", "USDG"],
+    "icons": ["GLD", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-slv-usdg-rp",
+    "name": "SLV-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodSLV-USDG",
+    "tokenAddress": "0x6A2A30a53b96fea920e9b991830714EC46f711e3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x7428405506321C601C6AD622fa1185a7D8AE44B4",
+    "earnedToken": "rCowUniswapRobinhoodSLV-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-slv-usdg",
+    "status": "active",
+    "createdAt": 1787749662,
+    "platformId": "uniswap",
+    "assets": ["SLVrh", "USDG"],
+    "icons": ["SLV", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-slv-usdg",
+    "name": "SLV-USDG",
+    "type": "cowcentrated",
+    "token": "SLV-USDG uniswap",
+    "tokenAddress": "0x8cB787e6c315D464775289BaD00FDD67d53Ecb3D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x411eFb0E7f985935DAec3D4C3ebaEa0d0AD7D89f",
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+    ],
+    "earnContractAddress": "0x6A2A30a53b96fea920e9b991830714EC46f711e3",
+    "earnedToken": "cowUniswapRobinhoodSLV-USDG",
+    "earnedTokenAddress": "0x6A2A30a53b96fea920e9b991830714EC46f711e3",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-slv-usdg",
+    "status": "active",
+    "createdAt": 1787749662,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["SLVrh", "USDG"],
+    "icons": ["SLV", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-slv-gld-rp",
+    "name": "GLD-SLV Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodGLD-SLV",
+    "tokenAddress": "0xCC83F9d3e2ABa9fcfb048E0FDF46e4724A44acBA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x7aC789958Ba9a0Cf35F8D6cFeae45190C9dB573d",
+    "earnedToken": "rCowUniswapRobinhoodGLD-SLV",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-slv-gld",
+    "status": "active",
+    "createdAt": 1787749463,
+    "platformId": "uniswap",
+    "assets": ["GLDrh", "SLVrh"],
+    "icons": ["GLD", "SLV"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-slv-gld",
+    "name": "GLD-SLV",
+    "type": "cowcentrated",
+    "token": "GLD-SLV uniswap",
+    "tokenAddress": "0x48Abc7052509cAF820C4C22559F08381f9AFD823",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x411eFb0E7f985935DAec3D4C3ebaEa0d0AD7D89f",
+      "0xC9a981FEE1F9DEc688bb123ccDeCc63D0deBFC4e"
+    ],
+    "earnContractAddress": "0xCC83F9d3e2ABa9fcfb048E0FDF46e4724A44acBA",
+    "earnedToken": "cowUniswapRobinhoodGLD-SLV",
+    "earnedTokenAddress": "0xCC83F9d3e2ABa9fcfb048E0FDF46e4724A44acBA",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-slv-gld",
+    "status": "active",
+    "createdAt": 1787749463,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["GLDrh", "SLVrh"],
+    "icons": ["GLD", "SLV"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-robinhood-usdg-sndk-rp",
     "name": "SNDK-USDG Reward Pool",
     "type": "gov",
