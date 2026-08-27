@@ -25,7 +25,9 @@ import {
   selectTransactSelected,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
+import { selectVaultGeoStatus } from '../../../../../data/selectors/restrictions.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { GeoRestrictedReason } from '../../../GeoRestrictedReason/GeoRestrictedReason.tsx';
 import { RetirePauseReason } from '../../../RetirePauseReason/RetirePauseReason.tsx';
 import { Actions } from '../Actions/Actions.tsx';
 import { CrossChainBelowFeeNotice } from '../CrossChainBelowFeeNotice/CrossChainBelowFeeNotice.tsx';
@@ -116,13 +118,17 @@ const DepositFormLoader = memo(function DepositFormLoader() {
   const error = useAppSelector(selectTransactOptionsError);
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const isLoading = status === TransactStatus.Idle || status === TransactStatus.Pending;
+  const geoStatus = useAppSelector(state => selectVaultGeoStatus(state, vaultId));
+  const isLoading =
+    status === TransactStatus.Idle || status === TransactStatus.Pending || geoStatus === 'loading';
   const isError = status === TransactStatus.Rejected;
 
   return (
-    <Container noPadding={isLoading && isVaultActive(vault)}>
+    <Container noPadding={isLoading && isVaultActive(vault) && geoStatus !== 'blocked'}>
       {!isVaultActive(vault) ?
         <RetirePauseReason vaultId={vaultId} />
+      : geoStatus === 'blocked' ?
+        <GeoRestrictedReason vaultId={vaultId} />
       : isLoading ?
         <LoadingIndicator text={t('Transact-Loading')} height={468} />
       : isError ?

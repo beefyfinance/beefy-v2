@@ -17,6 +17,7 @@ import {
 } from '../actions/analytics.ts';
 import { fetchApyAction, fetchAvgApyAction } from '../actions/apy.ts';
 import { fetchLastArticle } from '../actions/articles.ts';
+import { fetchUserGeoCountry } from '../actions/restrictions.ts';
 import { fetchAllBalanceAction, recalculateDepositedVaultsAction } from '../actions/balance.ts';
 import { initiateBoostForm } from '../actions/boosts.ts';
 import { fetchBridgeConfig } from '../actions/bridge.ts';
@@ -130,6 +131,7 @@ export const initialDataLoaderState: DataLoaderState = {
     currentCowcentratedRanges: dataLoaderStateInit,
     featuredVaults: dataLoaderStateInit,
     fees: dataLoaderStateInit,
+    geoCountry: dataLoaderStateInit,
     lastHarvests: dataLoaderStateInit,
     merklCampaigns: dataLoaderStateInit,
     merklRewards: dataLoaderStateInit,
@@ -614,6 +616,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury');
     addGlobalAsyncThunkActions(builder, fetchActiveProposals, 'proposals');
     addGlobalAsyncThunkActions(builder, fetchLastArticle, 'articles');
+    addGlobalAsyncThunkActions(builder, fetchUserGeoCountry, 'geoCountry');
     addGlobalAsyncThunkActions(builder, fetchOffChainCampaignsAction, 'merklCampaigns');
     addGlobalAsyncThunkActions(
       builder,

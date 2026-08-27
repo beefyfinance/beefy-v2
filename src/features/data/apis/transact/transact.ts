@@ -50,6 +50,7 @@ import {
 } from '../../../../config/vault-to-vault/routing-tokens.ts';
 import { isVaultBlacklistedForV2V } from '../../../../config/vault-to-vault/blacklist.ts';
 import { resolveOptionFeeCampaign } from './helpers/fee.ts';
+import { filterGeoBlockedOptions } from './helpers/geo.ts';
 import { isOptionFeeable } from './helpers/options.ts';
 import {
   type DepositOption,
@@ -221,13 +222,18 @@ export class TransactApi implements ITransactApi {
       }
     }
 
+    const allowedOptions = filterGeoBlockedOptions(state, helpers.vault, options);
+
     // if not disabled by a zap strategy, add the vault deposit option as the first item
     if (vaultDepositOption) {
-      const deduped = dropSingleIdentityOption(options, vaultDepositOption.inputs[0].address);
+      const deduped = dropSingleIdentityOption(
+        allowedOptions,
+        vaultDepositOption.inputs[0].address
+      );
       return [vaultDepositOption, ...deduped];
     }
 
-    return options;
+    return allowedOptions;
   }
 
   async fetchDepositQuotesFor(
@@ -370,13 +376,18 @@ export class TransactApi implements ITransactApi {
       }
     }
 
+    const allowedOptions = filterGeoBlockedOptions(state, helpers.vault, options);
+
     // if not disabled by a zap strategy, add the vault withdraw option as the first item
     if (vaultWithdrawOption) {
-      const deduped = dropSingleIdentityOption(options, vaultWithdrawOption.inputs[0].address);
+      const deduped = dropSingleIdentityOption(
+        allowedOptions,
+        vaultWithdrawOption.inputs[0].address
+      );
       return [vaultWithdrawOption, ...deduped];
     }
 
-    return options;
+    return allowedOptions;
   }
 
   async fetchWithdrawQuotesFor(
