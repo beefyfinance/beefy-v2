@@ -123,10 +123,13 @@ function makeTokensByChainId(chainId: string, tokens: Record<string, FixtureToke
 function makeState(
   vaults: FixtureVault[],
   filters: FilterValues,
-  tokensByChainId: object = {}
+  tokensByChainId: object = {},
+  /** configured in platforms.json but backing no vault, like a defunct protocol */
+  unusedPlatformIds: string[] = []
 ): BeefyState {
   const chainIds = [...new Set([...vaults.map(v => v.chainId), ...filters.chainIds])];
-  const platformIds = [...new Set(vaults.map(v => v.platformId))];
+  const usedPlatformIds = [...new Set(vaults.map(v => v.platformId))];
+  const allPlatformIds = [...new Set([...usedPlatformIds, ...unusedPlatformIds])];
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
   return {
     entities: {
@@ -160,9 +163,10 @@ function makeState(
         eolIds: [],
       },
       platforms: {
-        byId: Object.fromEntries(platformIds.map(id => [id, { id, name: capitalize(id) }])),
-        allIds: platformIds,
-        activeIds: platformIds,
+        byId: Object.fromEntries(allPlatformIds.map(id => [id, { id, name: capitalize(id) }])),
+        allIds: allPlatformIds,
+        activeIds: usedPlatformIds,
+        usedIds: usedPlatformIds,
       },
       tokens: {
         byChainId: tokensByChainId,
@@ -281,6 +285,19 @@ describe('selectSearchNoResultsInfo', () => {
     // company names are suggestable, with their original casing, and the issuer suffix is not
     expect(suggestionsFor('aple')).toContain('Apple');
     expect(suggestionsFor('robinhod')).not.toContain('Robinhood Token');
+  });
+
+  it('suggests platforms that back a vault, never ones configured but unused', () => {
+    // a suggestion replaces the query, so a platform no vault uses is a dead end when clicked
+    const suggestionsFor = (searchText: string) => {
+      const filters = makeFilters({ searchText });
+      const info = selectSearchNoResultsInfo(makeState(FIXTURE_VAULTS, filters, {}, ['snowball']));
+      return info.kind === 'suggestions' ? info.suggestions : [];
+    };
+
+    // "aerodrone" is 1 edit from Aerodrome and does not prefix-match it, so it finds nothing
+    expect(suggestionsFor('aerodrone')).toContain('Aerodrome');
+    expect(suggestionsFor('snowbal')).not.toContain('Snowball');
   });
 
   it('classifies partial and unmatched addresses', () => {

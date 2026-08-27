@@ -447,12 +447,7 @@ export const selectVaultAssetTokensOrUndefined = createCachedSelector(
   (vault, tokensByChainId) => {
     const tokens = vault.assetIds
       .map(assetId => {
-        const address = tokensByChainId[vault.chainId]?.byId[assetId];
-        if (!address) {
-          return undefined;
-        }
-
-        return tokensByChainId[vault.chainId]?.byAddress[address] || undefined;
+        return resolveAssetToken(tokensByChainId, vault.chainId, assetId) || undefined;
       })
       .filter(isDefined);
     return tokens.length ? tokens : undefined;

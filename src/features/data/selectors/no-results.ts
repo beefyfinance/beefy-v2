@@ -3,12 +3,11 @@ import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { boundedLevenshtein, simplifySearchText } from '../../../helpers/string.ts';
 import type { FilterValues } from '../reducers/filtered-vaults-types.ts';
 import type { BeefyState } from '../store/types.ts';
-import { isDefined } from '../utils/array-utils.ts';
 import { buildVaultFilterEnv, vaultPassesFilters } from '../utils/vault-filter.ts';
 import { classifySearchQuery, toDisplayWords } from '../utils/vault-search.ts';
 import { selectAllChains } from './chains.ts';
 import { selectFilterAppliedValues } from './filtered-vaults.ts';
-import { selectAllPlatforms } from './platforms.ts';
+import { selectUsedPlatforms } from './platforms.ts';
 import { resolveAssetToken, resolveStockCompanyName } from './tokens.ts';
 import { selectAllVisibleVaultIds, selectVaultById } from './vaults.ts';
 
@@ -133,7 +132,7 @@ const selectSearchDictionary = createSelector(
   (state: BeefyState) => state.entities.vaults.byId,
   (state: BeefyState) => state.entities.tokens.byChainId,
   selectAllChains,
-  selectAllPlatforms,
+  selectUsedPlatforms,
   (vaultIds, vaultsById, tokensByChainId, chains, platforms) => {
     const entries = new Map<string, string>();
     const add = (text: string) => entries.set(text.toLowerCase(), text);
@@ -156,7 +155,7 @@ const selectSearchDictionary = createSelector(
     for (const chain of chains) {
       add(chain.name);
     }
-    for (const platform of platforms.filter(isDefined)) {
+    for (const platform of platforms) {
       add(platform.name);
     }
     return [...entries.entries()].map(([lower, display]) => ({ lower, display }));

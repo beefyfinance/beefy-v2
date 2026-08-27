@@ -6,10 +6,7 @@ import {
   type VaultEntity,
 } from '../entities/vault.ts';
 
-/**
- * Relevance tiers for a text query, best to worst; results are sorted by tier descending.
- * The numbers are ordinal only — keep them ordered and spaced so a tier can be slotted between.
- */
+/** relevance tiers, best to worst; ordinal only, spaced so a tier can be slotted between */
 const TIER = {
   /** the whole query is the vault name */
   NAME_EXACT: 100,
@@ -32,10 +29,7 @@ const TIER = {
   NO_MATCH: 0,
 } as const;
 
-/**
- * An address query matches on its own scale and disables text matching entirely, so these
- * never share a result list with the TIER values above despite the overlapping numbers.
- */
+/** address queries score on their own scale; they disable text matching so the two never mix */
 const ADDRESS_TIER = {
   EXACT: 100,
   PREFIX: 60,
