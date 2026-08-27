@@ -7,12 +7,17 @@ import type { TokenErc20 } from '../../../entities/token.ts';
 import type { AnyStrategyId } from '../strategies/strategy-configs.ts';
 import type { ZapStep } from '../zap/types.ts';
 import { getInsertIndex } from './zap.ts';
+import { selectErc20TokenByAddress } from '../../../selectors/tokens.ts';
+import type { ZapTransactHelpers } from '../strategies/IStrategy.ts';
 
 /** v1 boosts mint nothing, so only v2+ (BeefyRewardPool) has a receipt a zap can hand back */
 export const BOOST_ZAP_MIN_VERSION = 2;
 
-/** Excludes conic/yieldbasis/reward-pool-to-vault, which build their order inline in fetchDepositStep */
-export const boostDecoratableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<AnyStrategyId>([
+/**
+ * Routes `maybeWrapBoost` can decorate directly, and the ones the withdraw checkbox is offered for.
+ * Excludes conic/yieldbasis/reward-pool-to-vault, which build their order inline in fetchDepositStep.
+ */
+export const boostRoutableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<AnyStrategyId>([
   'vault',
   'single',
   'uniswap-v2',
@@ -24,25 +29,37 @@ export const boostDecoratableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<A
   'vault-composer',
 ]);
 
-/** Superset: cross-chain and vault-to-vault are decorated by `VaultDestHandler`, not by strategy id */
+/**
+ * Where the DEPOSIT checkbox is offered. A superset, because cross-chain and vault-to-vault deposits
+ * are decorated inside `VaultDestHandler` rather than by strategy id.
+ */
 export const boostStakeableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<AnyStrategyId>([
-  ...boostDecoratableStrategyIds,
+  ...boostRoutableStrategyIds,
   'cross-chain',
   'vault-to-vault-single-token',
 ]);
 
-/** The stake step this feature appends, as opposed to a gov/reward-pool strategy's own stake step */
-export function isBoostStakeStep(step: {
-  type: string;
-}): step is { type: 'stake'; boostId: string } {
+/** `boostId` is what separates our steps from a gov/reward-pool strategy's own stake/unstake steps */
+function isBoostStep<T extends 'stake' | 'unstake'>(
+  step: { type: string },
+  type: T
+): step is { type: T; boostId: string } {
   const boostId = (step as { boostId?: unknown }).boostId;
-  return step.type === 'stake' && typeof boostId === 'string' && boostId.length > 0;
+  return step.type === type && typeof boostId === 'string' && boostId.length > 0;
 }
 
-export function findBoostStakeStep(
-  steps: ReadonlyArray<{ type: string }>
-): { boostId: string } | undefined {
-  return steps.find(isBoostStakeStep);
+export const isBoostStakeStep = (step: { type: string }) => isBoostStep(step, 'stake');
+export const isBoostUnstakeStep = (step: { type: string }) => isBoostStep(step, 'unstake');
+
+export const findBoostStakeStep = (steps: ReadonlyArray<{ type: string }>) =>
+  steps.find(isBoostStakeStep);
+export const findBoostUnstakeStep = (steps: ReadonlyArray<{ type: string }>) =>
+  steps.find(isBoostUnstakeStep);
+
+export function getBoostRouteTokens(helpers: ZapTransactHelpers, boost: BoostPromoEntity) {
+  const { vault, getState } = helpers;
+  const shareToken = selectErc20TokenByAddress(getState(), vault.chainId, vault.contractAddress);
+  return { shareToken, receiptToken: getBoostReceiptToken(boost, shareToken) };
 }
 
 /** The boost contract is itself the receipt token; it never enters the token store, so synthesize it */
@@ -61,6 +78,26 @@ export function getBoostReceiptToken(boost: BoostPromoEntity, shareToken: TokenE
     description: undefined,
     documentation: undefined,
     tags: [],
+  };
+}
+
+/**
+ * `withdraw` burns the receipt from the caller, so nothing needs approving; listing the receipt
+ * rewrites the amount with the router's live balance.
+ *
+ * Deliberately not `exit()`: that also claims every reward to the caller — the router — and the zap
+ * has no way to pass those on. Rewards stay in the boost for the user to claim themselves.
+ */
+export function buildBoostWithdrawZapStep(boost: BoostPromoEntity, amountWei: BigNumber): ZapStep {
+  return {
+    target: boost.contractAddress,
+    value: '0',
+    data: encodeFunctionData({
+      abi: BoostAbi,
+      functionName: 'withdraw',
+      args: [bigNumberToBigInt(amountWei)],
+    }),
+    tokens: [{ token: boost.contractAddress, index: getInsertIndex(0) }],
   };
 }
 

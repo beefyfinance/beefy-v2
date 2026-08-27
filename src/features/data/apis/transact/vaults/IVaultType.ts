@@ -1,3 +1,4 @@
+import type BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { TokenEntity, TokenErc20 } from '../../../entities/token.ts';
 import type {
@@ -32,7 +33,13 @@ export type VaultDepositResponse = {
   zap: ZapStep;
 };
 
-export type VaultWithdrawRequest = VaultDepositRequest;
+export type VaultWithdrawRequest = VaultDepositRequest & {
+  /**
+   * shares the router will hold when this step runs, when they come from somewhere other than the
+   * user's wallet (a boost unstake running first)
+   */
+  sharesOverrideWei?: BigNumber;
+};
 export type VaultWithdrawResponse = VaultDepositResponse;
 
 export interface IVaultType {

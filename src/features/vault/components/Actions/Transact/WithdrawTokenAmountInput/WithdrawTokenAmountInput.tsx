@@ -9,7 +9,6 @@ import {
 } from '../../../../../data/entities/vault.ts';
 import {
   selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInDepositTokenWithToken,
   selectUserVaultBalanceInShareToken,
 } from '../../../../../data/selectors/balance.ts';
 import {
@@ -20,6 +19,7 @@ import {
   selectTransactInputIndexAmount,
   selectTransactIsActiveSelectionVaultSourceWithdraw,
   selectTransactVaultId,
+  selectTransactWithdrawAvailableWithToken,
 } from '../../../../../data/selectors/transact.ts';
 import {
   selectVaultByIdWithReceipt,
@@ -52,9 +52,8 @@ const StandardWithdrawTokenAmountInput = memo(function StandardWithdrawTokenAmou
   css: cssProp,
 }: WithdrawTokenAmountInputProps) {
   const dispatch = useAppDispatch();
-  const vaultId = useAppSelector(selectTransactVaultId);
-  const { token: depositToken, amount: userBalance } = useAppSelector(state =>
-    selectUserVaultBalanceInDepositTokenWithToken(state, vaultId)
+  const { token: depositToken, amount: userBalance } = useAppSelector(
+    selectTransactWithdrawAvailableWithToken
   );
   const value = useAppSelector(state => selectTransactInputIndexAmount(state, 0));
   const price = useAppSelector(state =>

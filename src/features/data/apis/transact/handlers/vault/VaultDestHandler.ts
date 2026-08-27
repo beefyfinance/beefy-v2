@@ -9,7 +9,7 @@ import {
   type IStrategy,
   type ZapTransactHelpers,
 } from '../../strategies/IStrategy.ts';
-import { StakeIntoBoostZapStrategy } from '../../strategies/StakeIntoBoostStrategy.ts';
+import { BoostZapStrategy } from '../../strategies/BoostStrategy.ts';
 import { findBoostStakeStep } from '../../helpers/boost.ts';
 import { selectBoostById, selectBoostByIdOrUndefined } from '../../../../selectors/boosts.ts';
 import { selectTransactStakeIntoBoostTarget } from '../../../../selectors/transact.ts';
@@ -105,7 +105,7 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
     const stakeStep = findBoostStakeStep(destQuote.steps);
     const strategy =
       stakeStep ?
-        new StakeIntoBoostZapStrategy(
+        new BoostZapStrategy(
           destStrategy,
           destHelpers,
           selectBoostById(destHelpers.getState(), stakeStep.boostId)
@@ -145,7 +145,7 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
     if (!boost || boost.vaultId !== this.destVaultId) {
       return strategy;
     }
-    return new StakeIntoBoostZapStrategy(strategy, destHelpers, boost);
+    return new BoostZapStrategy(strategy, destHelpers, boost);
   }
 
   /** Find a composable dst strategy accepting the input token; identity case is handled by SingleStrategy's identity option. */

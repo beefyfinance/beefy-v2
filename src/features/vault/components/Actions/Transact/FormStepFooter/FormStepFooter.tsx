@@ -13,7 +13,9 @@ import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../../data/sele
 import { selectVaultActiveExtraRewardTokens } from '../../../../../data/selectors/rewards.ts';
 import {
   selectTransactBoostForStaking,
+  selectTransactBoostForUnstaking,
   selectTransactMode,
+  selectTransactUnstakeFromBoostSupported,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import type { BeefyState } from '../../../../../data/store/types.ts';
@@ -21,6 +23,7 @@ import type { BeefyState } from '../../../../../data/store/types.ts';
 const BoostDepositNotice = lazy(() => import('./DepositBoostNotice.tsx'));
 const DepositClaimNotice = lazy(() => import('./DepositClaimNotice.tsx'));
 const WithdrawBoostNotice = lazy(() => import('./WithdrawBoostNotice.tsx'));
+const UnstakeBoostNotice = lazy(() => import('./UnstakeBoostNotice.tsx'));
 
 const selectBoostDepositNotice = createSelector(
   [
@@ -52,6 +55,30 @@ const selectDepositClaimNotice = createSelector(
 );
 
 const selectWithdrawBoostNotice = createSelector(
+  [
+    selectUserVaultBalanceInDepositTokenInBoosts,
+    selectTransactBoostForUnstaking,
+    selectTransactUnstakeFromBoostSupported,
+  ],
+  (balance, unstakeable, supported) => {
+    if (unstakeable && supported) {
+      return (vaultId: VaultEntity['id']) => (
+        <UnstakeBoostNotice vaultId={vaultId} boost={unstakeable} />
+      );
+    }
+
+    if (balance && !balance.isZero()) {
+      return (vaultId: VaultEntity['id']) => (
+        <WithdrawBoostNotice vaultId={vaultId} balance={balance} />
+      );
+    }
+
+    return undefined;
+  }
+);
+
+/** Migrate has no zap withdraw form, so it keeps the link across to the boost tab */
+const selectMigrateBoostNotice = createSelector(
   [selectUserVaultBalanceInDepositTokenInBoosts],
   balance => {
     if (balance && !balance.isZero()) {
@@ -78,7 +105,7 @@ type ModeToFooters = {
 const modeToFooters: ModeToFooters = {
   [TransactMode.Deposit]: [selectBoostDepositNotice, selectDepositClaimNotice],
   [TransactMode.Withdraw]: [selectWithdrawBoostNotice],
-  [TransactMode.Migrate]: [selectWithdrawBoostNotice],
+  [TransactMode.Migrate]: [selectMigrateBoostNotice],
 };
 
 const selectFooter = (state: BeefyState) => {

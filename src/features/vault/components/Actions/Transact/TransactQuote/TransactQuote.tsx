@@ -56,6 +56,7 @@ import {
   selectTransactSelectedSelectionId,
   selectTransactSlippage,
   selectTransactStakeIntoBoost,
+  selectTransactUnstakeFromBoostChoice,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
@@ -88,6 +89,7 @@ export const TransactQuote = memo(function TransactQuote({
   const preflightOk = useAppSelector(selectTransactCrossChainPreflight);
   const slippage = useAppSelector(selectTransactSlippage);
   const stakeIntoBoost = useAppSelector(selectTransactStakeIntoBoost);
+  const unstakeFromBoostChoice = useAppSelector(selectTransactUnstakeFromBoostChoice);
   const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -145,18 +147,20 @@ export const TransactQuote = memo(function TransactQuote({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally keyed on slippage only
   }, [slippage]);
 
-  // same for the stake-into-boost toggle, which changes the route but not the inputs
-  const skipInitialStakeIntoBoostRequote = useRef(true);
+  // same for the boost checkboxes, which change the route but not the inputs. Keyed on the user's
+  // own choice, not the resolved one: the latter follows balances, which move when the tx lands, and
+  // a re-quote then would destroy the completed route the success screen is showing.
+  const skipInitialBoostRequote = useRef(true);
   useEffect(() => {
-    if (skipInitialStakeIntoBoostRequote.current) {
-      skipInitialStakeIntoBoostRequote.current = false;
+    if (skipInitialBoostRequote.current) {
+      skipInitialBoostRequote.current = false;
       return;
     }
     if (!inputIsZero && preflightOk) {
       dispatch(transactFetchQuotes());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally keyed on the toggle only
-  }, [stakeIntoBoost]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally keyed on the toggles only
+  }, [stakeIntoBoost, unstakeFromBoostChoice]);
 
   // preview "You receive" for all CLM vaults AND pools so the placeholder title matches the (transforming) result
   const quote = useAppSelector(

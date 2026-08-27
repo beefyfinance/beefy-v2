@@ -171,6 +171,9 @@ export type TransactState = {
   depositSource: DepositSource;
   /** stake the resulting mooTokens into the vault's active boost as part of the deposit (opt-out) */
   stakeIntoBoost: boolean;
+  /** exit the boost as the first step of the withdraw; undefined until the user chooses, because
+   * the sensible default depends on whether the whole position is staked */
+  unstakeFromBoost: boolean | undefined;
   forceSelection: boolean;
   selections: TransactSelections;
   options: TransactOptions;

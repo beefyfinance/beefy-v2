@@ -303,7 +303,7 @@ const StepContentUnstake = memo(function StepContentUnstake({
   return (
     <Trans
       t={t}
-      i18nKey="Transact-Route-Step-Unstake"
+      i18nKey={step.boostId ? 'Transact-Route-Step-UnstakeBoost' : 'Transact-Route-Step-Unstake'}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
         chain: chainId ? <ChainTag chainId={chainId} /> : <></>,

@@ -1,23 +1,27 @@
 import BigNumber from 'bignumber.js';
 import { uniqBy } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';
-import { toWei, toWeiString } from '../../../../../helpers/big-number.ts';
+import { fromWei, toWei, toWeiString } from '../../../../../helpers/big-number.ts';
 import { zapExecuteOrder } from '../../../actions/wallet/zap.ts';
 import type { BoostPromoEntity } from '../../../entities/promo.ts';
 import type { TokenEntity, TokenErc20 } from '../../../entities/token.ts';
+import { isStandardVault } from '../../../entities/vault.ts';
 import type { Step } from '../../../reducers/wallet/stepper-types.ts';
-import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../selectors/tokens.ts';
+import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectTransactSlippage } from '../../../selectors/transact.ts';
 import { selectVaultPricePerFullShare } from '../../../selectors/vaults.ts';
 import type { BeefyThunk } from '../../../store/types.ts';
 import { oracleAmountToMooAmount } from '../../../utils/ppfs.ts';
 import { slipBy } from '../helpers/amounts.ts';
-import { ZERO_FEE } from '../helpers/quotes.ts';
 import {
   buildBoostStakeZapStep,
-  getBoostReceiptToken,
+  buildBoostWithdrawZapStep,
+  getBoostRouteTokens,
   isBoostStakeStep,
+  isBoostUnstakeStep,
 } from '../helpers/boost.ts';
+import { ZERO_FEE } from '../helpers/quotes.ts';
+import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../helpers/zap.ts';
 import {
   type DepositOption,
@@ -26,6 +30,7 @@ import {
   type WithdrawOption,
   type WithdrawQuote,
   type ZapQuoteStepStake,
+  type ZapQuoteStepUnstake,
   type ZapStrategyIdToDepositOption,
   type ZapStrategyIdToDepositQuote,
   type ZapStrategyIdToWithdrawOption,
@@ -43,17 +48,15 @@ import type {
 } from './IStrategy.ts';
 import type { ZapStrategyId } from './strategy-configs.ts';
 
-function resolveTokens(helpers: ZapTransactHelpers, boost: BoostPromoEntity) {
-  const { vault, getState } = helpers;
-  const shareToken = selectErc20TokenByAddress(getState(), vault.chainId, vault.contractAddress);
-  return { shareToken, receiptToken: getBoostReceiptToken(boost, shareToken) };
+function isSameAddress(a: string, b: string): boolean {
+  return a.toLowerCase() === b.toLowerCase();
 }
 
 /**
- * Must be the outermost decorator: ChargeFeeStrategy prepends its fee transfer and rewrites the
- * order inputs, and the stake has to run after every other step has settled the share token.
+ * Must be the outermost decorator: ChargeFeeStrategy prepends its deposit fee transfer and rewrites
+ * the order inputs, and the stake has to run after every other step has settled the share token.
  */
-export class StakeIntoBoostZapStrategy<
+export class BoostZapStrategy<
   TId extends ZapStrategyId = ZapStrategyId,
 > implements IComposableStrategy<TId> {
   public readonly id: TId;
@@ -66,7 +69,7 @@ export class StakeIntoBoostZapStrategy<
     protected boost: BoostPromoEntity
   ) {
     this.id = inner.id;
-    const { shareToken, receiptToken } = resolveTokens(helpers, boost);
+    const { shareToken, receiptToken } = getBoostRouteTokens(helpers, boost);
     this.shareToken = shareToken;
     this.receiptToken = receiptToken;
   }
@@ -119,12 +122,7 @@ export class StakeIntoBoostZapStrategy<
     const stakeStep: ZapQuoteStepStake = {
       type: 'stake',
       boostId: this.boost.id,
-      inputs: [
-        {
-          token: this.shareToken,
-          amount: this.estimateShareAmount(innerQuote),
-        },
-      ],
+      inputs: [{ token: this.shareToken, amount: this.estimateShareAmount(innerQuote) }],
     };
 
     return {
@@ -202,24 +200,83 @@ export class StakeIntoBoostZapStrategy<
     };
   }
 
-  fetchWithdrawQuote(
+  async fetchWithdrawQuote(
     inputs: InputTokenAmount[],
     option: ZapStrategyIdToWithdrawOption<TId>
   ): Promise<ZapStrategyIdToWithdrawQuote<TId>> {
-    return this.inner.fetchWithdrawQuote(inputs, option);
+    const innerQuote = await this.inner.fetchWithdrawQuote(inputs, option);
+    const shares = innerQuote.allowances.find(allowance =>
+      isSameAddress(allowance.token.address, this.shareToken.address)
+    );
+    if (!shares) {
+      throw new Error('Invalid quote: no share token allowance to unstake from boost');
+    }
+
+    const unstakeStep: ZapQuoteStepUnstake = {
+      type: 'unstake',
+      boostId: this.boost.id,
+      outputs: [{ token: this.shareToken, amount: shares.amount }],
+    };
+
+    return {
+      ...innerQuote,
+      steps: [unstakeStep, ...innerQuote.steps],
+      // the router pulls the receipt, not the share token, so the approval moves with it
+      allowances: innerQuote.allowances.map(allowance =>
+        isSameAddress(allowance.token.address, this.shareToken.address) ?
+          { ...allowance, token: this.receiptToken }
+        : allowance
+      ),
+    } as ZapStrategyIdToWithdrawQuote<TId>;
   }
 
-  fetchWithdrawUserlessZapBreakdown(
+  async fetchWithdrawUserlessZapBreakdown(
     quote: ZapStrategyIdToWithdrawQuote<TId>
   ): Promise<UserlessZapWithdrawBreakdown> {
-    return this.inner.fetchWithdrawUserlessZapBreakdown(quote);
+    const innerQuote = {
+      ...quote,
+      steps: quote.steps.filter(step => !isBoostUnstakeStep(step)),
+    } as ZapStrategyIdToWithdrawQuote<TId>;
+    const breakdown = await this.inner.fetchWithdrawUserlessZapBreakdown(innerQuote);
+
+    const input = breakdown.zapRequest.order.inputs.find(orderInput =>
+      isSameAddress(orderInput.token, this.shareToken.address)
+    );
+    if (!input) {
+      throw new Error('Invalid breakdown: no share token input to unstake from boost');
+    }
+
+    // receipt is 1:1 with shares, so only the token changes
+    input.token = this.receiptToken.address;
+    breakdown.zapRequest.steps.unshift(
+      buildBoostWithdrawZapStep(this.boost, new BigNumber(input.amount))
+    );
+
+    return breakdown;
   }
 
-  fetchWithdrawStep(
+  async fetchWithdrawStep(
     quote: ZapStrategyIdToWithdrawQuote<TId>,
     t: TFunction<Namespace>
   ): Promise<Step> {
-    return this.inner.fetchWithdrawStep(quote, t);
+    const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
+      const { zapRequest, expectedTokens } = await this.fetchWithdrawUserlessZapBreakdown(quote);
+      const walletAction = zapExecuteOrder(
+        quote.option.vaultId,
+        zapRequest,
+        expectedTokens,
+        this.boost.id
+      );
+      return walletAction(dispatch, getState, extraArgument);
+    };
+
+    return {
+      step: 'zap-out',
+      message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+      action: zapAction,
+      pending: false,
+      extraInfo: { zap: true, vaultId: quote.option.vaultId },
+    };
   }
 
   /** Most strategies quote outputs in the deposit token; vault-composer already relabels to shares */
@@ -228,7 +285,7 @@ export class StakeIntoBoostZapStrategy<
     if (!output) {
       return new BigNumber(0);
     }
-    if (output.token.address.toLowerCase() === this.shareToken.address.toLowerCase()) {
+    if (isSameAddress(output.token.address, this.shareToken.address)) {
       return output.amount;
     }
 
@@ -244,8 +301,11 @@ export class StakeIntoBoostZapStrategy<
   }
 }
 
-/** The plain same-token deposit has no route to append to, so it is rebuilt as deposit + stake */
-export class StakeIntoBoostVaultStrategy implements IStrategy<'vault'> {
+/**
+ * The plain same-token route is not a zap at all, so there is nothing to decorate — it is rebuilt as
+ * a two step one: deposit then stake, or unstake then withdraw.
+ */
+export class BoostVaultStrategy implements IStrategy<'vault'> {
   public readonly id = 'vault' as const;
   protected readonly shareToken: TokenErc20;
   protected readonly receiptToken: TokenErc20;
@@ -255,13 +315,17 @@ export class StakeIntoBoostVaultStrategy implements IStrategy<'vault'> {
     protected helpers: ZapTransactHelpers,
     protected boost: BoostPromoEntity
   ) {
-    const { shareToken, receiptToken } = resolveTokens(helpers, boost);
+    const { shareToken, receiptToken } = getBoostRouteTokens(helpers, boost);
     this.shareToken = shareToken;
     this.receiptToken = receiptToken;
   }
 
   fetchDepositOptions(): Promise<DepositOption[]> {
     return this.inner.fetchDepositOptions();
+  }
+
+  fetchWithdrawOptions(): Promise<WithdrawOption[]> {
+    return this.inner.fetchWithdrawOptions();
   }
 
   /**
@@ -295,7 +359,7 @@ export class StakeIntoBoostVaultStrategy implements IStrategy<'vault'> {
           inputs: [{ token: this.shareToken, amount: shares }],
         },
       ],
-      // same-token deposit through the zap is free, matching VaultComposerStrategy's vault path
+      // same-token route through the zap is free, matching VaultComposerStrategy's vault path
       fee: ZERO_FEE,
     } as DepositQuote;
   }
@@ -314,10 +378,7 @@ export class StakeIntoBoostVaultStrategy implements IStrategy<'vault'> {
       });
 
       // ppfs is read live here, so the share output still needs slipping
-      const shareOutput = depositZap.outputs[0];
-      const minShares = slipBy(shareOutput.amount, slippage, this.shareToken.decimals);
-      const minSharesWei = toWeiString(minShares, this.shareToken.decimals);
-
+      const minShares = slipBy(depositZap.outputs[0].amount, slippage, this.shareToken.decimals);
       const dustOutputs: OrderOutput[] = [this.shareToken, ...quote.inputs.map(i => i.token)].map(
         token => ({ token: getTokenAddress(token), minOutputAmount: '0' })
       );
@@ -329,7 +390,13 @@ export class StakeIntoBoostVaultStrategy implements IStrategy<'vault'> {
             amount: toWeiString(input.amount, input.token.decimals),
           })),
           outputs: uniqBy(
-            [{ token: this.receiptToken.address, minOutputAmount: minSharesWei }, ...dustOutputs],
+            [
+              {
+                token: this.receiptToken.address,
+                minOutputAmount: toWeiString(minShares, this.shareToken.decimals),
+              },
+              ...dustOutputs,
+            ],
             output => output.token
           ),
           relay: NO_RELAY,
@@ -362,15 +429,94 @@ export class StakeIntoBoostVaultStrategy implements IStrategy<'vault'> {
     };
   }
 
-  fetchWithdrawOptions(): Promise<WithdrawOption[]> {
-    return this.inner.fetchWithdrawOptions();
+  async fetchWithdrawQuote(
+    inputs: InputTokenAmount[],
+    option: WithdrawOption
+  ): Promise<WithdrawQuote> {
+    const quote = await this.inner.fetchWithdrawQuote(inputs, option);
+    const { vault, getState } = this.helpers;
+    if (!isStandardVault(vault)) {
+      throw new Error('Vault is not standard');
+    }
+    // resolves the boost balance itself, so it matches the shares the step will pull
+    const { sharesToWithdrawWei } = getVaultWithdrawnFromState(quote.inputs[0], vault, getState());
+    const shares = fromWei(sharesToWithdrawWei, this.shareToken.decimals);
+
+    return {
+      ...quote,
+      allowances: [
+        { token: this.receiptToken, amount: shares, spenderAddress: this.helpers.zap.manager },
+      ],
+      steps: [
+        {
+          type: 'unstake',
+          boostId: this.boost.id,
+          outputs: [{ token: this.shareToken, amount: shares }],
+        },
+        {
+          type: 'withdraw',
+          outputs: quote.outputs.map(({ token, amount }) => ({ token, amount })),
+        },
+      ],
+      fee: ZERO_FEE,
+    } as WithdrawQuote;
   }
 
-  fetchWithdrawQuote(inputs: InputTokenAmount[], option: WithdrawOption): Promise<WithdrawQuote> {
-    return this.inner.fetchWithdrawQuote(inputs, option);
-  }
+  async fetchWithdrawStep(quote: WithdrawQuote, t: TFunction<Namespace>): Promise<Step> {
+    const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
+      const { vault, vaultType, zap } = this.helpers;
+      if (!isStandardVaultType(vaultType)) {
+        throw new Error('Vault type is not standard');
+      }
 
-  fetchWithdrawStep(quote: WithdrawQuote, t: TFunction<Namespace>): Promise<Step> {
-    return this.inner.fetchWithdrawStep(quote, t);
+      const slippage = selectTransactSlippage(getState());
+      const withdrawZap = await vaultType.fetchZapWithdraw({
+        inputs: quote.inputs,
+        from: zap.router,
+      });
+      const shares = withdrawZap.inputs[0];
+      const output = withdrawZap.outputs[0];
+
+      const zapRequest: UserlessZapRequest = {
+        order: {
+          inputs: [
+            {
+              token: this.receiptToken.address,
+              amount: toWeiString(shares.amount, this.shareToken.decimals),
+            },
+          ],
+          outputs: uniqBy(
+            [
+              {
+                token: getTokenAddress(output.token),
+                minOutputAmount: toWeiString(
+                  slipBy(output.amount, slippage, output.token.decimals),
+                  output.token.decimals
+                ),
+              },
+              { token: getTokenAddress(this.shareToken), minOutputAmount: '0' },
+              { token: this.receiptToken.address, minOutputAmount: '0' },
+            ],
+            orderOutput => orderOutput.token
+          ),
+          relay: NO_RELAY,
+        },
+        steps: [
+          buildBoostWithdrawZapStep(this.boost, toWei(shares.amount, this.shareToken.decimals)),
+          withdrawZap.zap,
+        ],
+      };
+
+      const walletAction = zapExecuteOrder(vault.id, zapRequest, [output.token], this.boost.id);
+      return walletAction(dispatch, getState, extraArgument);
+    };
+
+    return {
+      step: 'zap-out',
+      message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+      action: zapAction,
+      pending: false,
+      extraInfo: { zap: true, vaultId: quote.option.vaultId },
+    };
   }
 }

@@ -459,6 +459,30 @@ export const selectUserVaultBalanceInDepositTokenIncludingDisplaced = createCach
  * Balance converted to deposit token, excluding in boosts and bridged tokens
  * @returns {TokenAmount} token: deposit token, amount: balance in deposit token
  */
+/** Shares in ONE boost, in deposit token units — one exit() only ever frees one boost's shares */
+export const selectUserVaultBalanceInDepositTokenInBoostWithToken = createCachedSelector(
+  (state: BeefyState, _vaultId: VaultEntity['id'], boostId: BoostPromoEntity['id']) =>
+    selectBoostUserBalanceInToken(state, boostId),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectVaultSharesToDepositTokenData(state, vaultId),
+  (shares, shareData) => ({
+    token: shareData.depositToken,
+    amount: bigNumberOrStaticZero(
+      shareData.shareToken ?
+        mooAmountToOracleAmount(
+          shareData.shareToken,
+          shareData.depositToken,
+          shareData.ppfs,
+          shares
+        )
+      : shares
+    ),
+  })
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], boostId: BoostPromoEntity['id']) =>
+    `${vaultId}-${boostId}`
+);
+
 export const selectUserVaultBalanceInDepositTokenWithToken = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
     selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),

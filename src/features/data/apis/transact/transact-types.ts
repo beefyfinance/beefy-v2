@@ -693,6 +693,8 @@ export type ZapQuoteStepStake = {
 export type ZapQuoteStepUnstake = {
   type: 'unstake';
   outputs: TokenAmount[];
+  /** set when the step was prepended by the unstake-from-boost decorator */
+  boostId?: string;
 };
 
 export type ZapQuoteStepBridge = {

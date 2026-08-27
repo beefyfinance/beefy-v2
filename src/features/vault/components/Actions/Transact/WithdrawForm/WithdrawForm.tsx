@@ -11,16 +11,14 @@ import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
-import {
-  selectUserVaultBalanceInDepositTokenWithToken,
-  selectUserVaultBalanceInShareToken,
-} from '../../../../../data/selectors/balance.ts';
+import { selectUserVaultBalanceInShareToken } from '../../../../../data/selectors/balance.ts';
 import {
   selectTransactForceSelection,
   selectTransactIsActiveSelectionVaultSourceWithdraw,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactVaultId,
+  selectTransactWithdrawAvailableWithToken,
 } from '../../../../../data/selectors/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
 import { CrossChainBelowFeeNotice } from '../CrossChainBelowFeeNotice/CrossChainBelowFeeNotice.tsx';
@@ -40,7 +38,7 @@ const DepositedInVault = memo(function DepositedInVault() {
   const isVaultSourceWithdraw = useAppSelector(selectTransactIsActiveSelectionVaultSourceWithdraw);
   const dispatch = useDispatch();
   const depositTokenAmount = useAppSelector(state =>
-    vaultId ? selectUserVaultBalanceInDepositTokenWithToken(state, vaultId) : undefined
+    vaultId ? selectTransactWithdrawAvailableWithToken(state) : undefined
   );
   const shareBalance = useAppSelector(state =>
     vaultId ? selectUserVaultBalanceInShareToken(state, vaultId) : undefined
