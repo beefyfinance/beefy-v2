@@ -68,18 +68,19 @@ export function buildVaultFilterEnv(
       if (!searchContext) {
         return true;
       }
-      const score = scoreVaultForSearch(
-        searchContext,
+      const score = scoreVaultForSearch(searchContext, {
         vault,
-        selectVaultTokenSymbols(state, vault.id),
-        selectVaultTokenNameWords(state, vault.id),
-        searchContext.anyPlatformWords ?
-          selectFilterPlatformIdsForVault(state, vault)
-        : EMPTY_ARRAY,
-        searchContext.addressNeedle !== undefined ?
-          selectVaultStrategyAddressOrUndefined(state, vault.id)
-        : undefined
-      );
+        tokenSymbols: selectVaultTokenSymbols(state, vault.id),
+        tokenNameWords: selectVaultTokenNameWords(state, vault.id),
+        platformIds:
+          searchContext.anyPlatformWords ?
+            selectFilterPlatformIdsForVault(state, vault)
+          : EMPTY_ARRAY,
+        strategyAddress:
+          searchContext.addressNeedle !== undefined ?
+            selectVaultStrategyAddressOrUndefined(state, vault.id)
+          : undefined,
+      });
       if (score > 0) {
         searchScores?.set(vault.id, score);
         return true;

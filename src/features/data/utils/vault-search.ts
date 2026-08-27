@@ -94,22 +94,29 @@ export function buildVaultSearchContext(
   };
 }
 
+/** Everything the scorer reads about a vault */
+export type VaultSearchTarget = {
+  vault: VaultEntity;
+  /** from selectVaultTokenSymbols */
+  tokenSymbols: string[];
+  /** from selectVaultTokenNameWords; matched whole or by prefix, never substring */
+  tokenNameWords: readonly string[];
+  /** from selectFilterPlatformIdsForVault; pass [] when !context.anyPlatformWords */
+  platformIds: readonly string[];
+  /** on-chain strategy contract; only read in address mode */
+  strategyAddress?: string;
+};
+
 /**
  * Relevance tier for a vault, 0 = no match.
  * Whole-query name matches first, then every word must match some field (min tier wins).
- * @param tokenSymbols from selectVaultTokenSymbols
- * @param tokenNameWords from selectVaultTokenNameWords; matched whole or by prefix, never substring
- * @param platformIds from selectFilterPlatformIdsForVault; pass [] when !context.anyPlatformWords
- * @param strategyAddress on-chain strategy contract; only read in address mode
  */
 export function scoreVaultForSearch(
   context: VaultSearchContext,
-  vault: VaultEntity,
-  tokenSymbols: string[],
-  tokenNameWords: readonly string[],
-  platformIds: readonly string[],
-  strategyAddress?: string
+  target: VaultSearchTarget
 ): number {
+  const { vault, tokenSymbols, tokenNameWords, platformIds, strategyAddress } = target;
+
   if (context.addressNeedle !== undefined) {
     return scoreVaultAddresses(context.addressNeedle, vault, strategyAddress);
   }
