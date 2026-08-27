@@ -31,7 +31,7 @@ export type AppChainMap<T> = Partial<Record<AppChainId, T>>;
 
 /**
  * What chains to exclude from chainIds array and thus any validation
- * Use `yarn makeExcludeConfig chain` to generate the hash
+ * Use `npm run makeExcludeConfig chain` to generate the hash
  * Key must be the addressbook/api chain id, not app chain id (i.e. use one over harmony)
  * */
 export const excludeChains: ChainMap<{ count: number; hash: string }> = {

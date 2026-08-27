@@ -1,4 +1,4 @@
-// To run: yarn vault ethereum <0x12312312>
+// To run: npm run vault ethereum <0x12312312>
 import { StandardVaultAbi } from '../src/config/abi/StandardVaultAbi.ts';
 import { StratAbi } from '../src/config/abi/StrategyAbi.ts';
 import { ERC20Abi } from '../src/config/abi/ERC20Abi.ts';
