@@ -6,6 +6,42 @@ import {
   type VaultEntity,
 } from '../entities/vault.ts';
 
+/**
+ * Relevance tiers for a text query, best to worst; results are sorted by tier descending.
+ * The numbers are ordinal only — keep them ordered and spaced so a tier can be slotted between.
+ */
+const TIER = {
+  /** the whole query is the vault name */
+  NAME_EXACT: 100,
+  /** the vault name starts with the whole query */
+  NAME_PREFIX: 90,
+  /** the whole query appears somewhere in the vault name */
+  NAME_SUBSTRING: 80,
+  /** every query word appears in the vault name, in any order */
+  NAME_ALL_WORDS: 70,
+  /** the word is an asset symbol (wrapped-aware) or a whole stock company-name word */
+  TOKEN_EXACT: 60,
+  /** the word is inside an asset symbol, or starts a stock company-name word */
+  TOKEN_PARTIAL: 50,
+  /** word matches platform exactly */
+  PLATFORM: 40,
+  /** word matches chain exactly */
+  CHAIN: 30,
+  /** a word of 4+ chars appears in the vault id */
+  VAULT_ID: 20,
+  NO_MATCH: 0,
+} as const;
+
+/**
+ * An address query matches on its own scale and disables text matching entirely, so these
+ * never share a result list with the TIER values above despite the overlapping numbers.
+ */
+const ADDRESS_TIER = {
+  EXACT: 100,
+  PREFIX: 60,
+  NO_MATCH: 0,
+} as const;
+
 /** entity findable by any of its lowercase texts (id + name words) */
 export type SearchIndexEntry = {
   id: string;
@@ -122,38 +158,43 @@ export function scoreVaultForSearch(
   }
 
   const name = simplifySearchText(vault.names.list).toLowerCase();
-  const nameRank = rankStringMatch(name, context.query);
-  if (nameRank < 3) {
-    return 100 - nameRank * 10; // exact 100, prefix 90, substring 80
+  // rankStringMatch: 0 exact, 1 prefix, 2 substring, 3 no match -> fall through to the word loop
+  switch (rankStringMatch(name, context.query)) {
+    case 0:
+      return TIER.NAME_EXACT;
+    case 1:
+      return TIER.NAME_PREFIX;
+    case 2:
+      return TIER.NAME_SUBSTRING;
   }
 
   if (context.words.length === 0) {
-    return 0;
+    return TIER.NO_MATCH;
   }
 
-  let min = 70;
+  let min: number = TIER.NAME_ALL_WORDS;
   for (const { word, fuzzyToken, chainIds, platformIds: wordPlatformIds } of context.words) {
     let tier: number;
     if (name.includes(word)) {
-      tier = 70;
+      tier = TIER.NAME_ALL_WORDS;
     } else if (
       tokenSymbols.some(symbol => fuzzyToken.test(symbol)) ||
       tokenNameWords.includes(word)
     ) {
-      tier = 60;
+      tier = TIER.TOKEN_EXACT;
     } else if (
       tokenSymbols.some(symbol => symbol.toLowerCase().includes(word)) ||
       matchesTokenNameWordPrefix(tokenNameWords, word)
     ) {
-      tier = 50;
+      tier = TIER.TOKEN_PARTIAL;
     } else if (wordPlatformIds.size > 0 && platformIds.some(id => wordPlatformIds.has(id))) {
-      tier = 40;
+      tier = TIER.PLATFORM;
     } else if (chainIds.has(vault.chainId)) {
-      tier = 30;
+      tier = TIER.CHAIN;
     } else if (word.length >= 4 && vault.id.toLowerCase().includes(word)) {
-      tier = 20;
+      tier = TIER.VAULT_ID;
     } else {
-      return 0;
+      return TIER.NO_MATCH;
     }
     min = Math.min(min, tier);
   }
@@ -176,14 +217,14 @@ function scoreVaultAddresses(
     addresses.push(strategyAddress);
   }
 
-  let best = 0;
+  let best: number = ADDRESS_TIER.NO_MATCH;
   for (const address of addresses) {
     const lower = address.toLowerCase();
     if (lower === needle) {
-      return 100;
+      return ADDRESS_TIER.EXACT;
     }
     if (lower.startsWith(needle)) {
-      best = 60;
+      best = ADDRESS_TIER.PREFIX;
     }
   }
   return best;
