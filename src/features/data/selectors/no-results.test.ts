@@ -105,8 +105,26 @@ type FixtureVault = {
   contractAddress?: string;
 };
 
+/** addressbook-derived tokens, keyed by asset id; only the search dictionary reads these */
+type FixtureToken = { symbol: string; name?: string; tags?: string[] };
+
+function makeTokensByChainId(chainId: string, tokens: Record<string, FixtureToken>) {
+  return {
+    [chainId]: {
+      byId: Object.fromEntries(Object.keys(tokens).map(id => [id, id.toLowerCase()])),
+      byAddress: Object.fromEntries(
+        Object.entries(tokens).map(([id, token]) => [id.toLowerCase(), { id, tags: [], ...token }])
+      ),
+    },
+  };
+}
+
 // minimal state satisfying every selector the diagnosis predicate touches for these filters
-function makeState(vaults: FixtureVault[], filters: FilterValues): BeefyState {
+function makeState(
+  vaults: FixtureVault[],
+  filters: FilterValues,
+  tokensByChainId: object = {}
+): BeefyState {
   const chainIds = [...new Set([...vaults.map(v => v.chainId), ...filters.chainIds])];
   const platformIds = [...new Set(vaults.map(v => v.platformId))];
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -147,7 +165,7 @@ function makeState(vaults: FixtureVault[], filters: FilterValues): BeefyState {
         activeIds: platformIds,
       },
       tokens: {
-        byChainId: {},
+        byChainId: tokensByChainId,
       },
     },
     ui: {
@@ -234,6 +252,35 @@ describe('selectSearchNoResultsInfo', () => {
     if (info.kind === 'suggestions') {
       expect(info.suggestions).toContain('USDC');
     }
+  });
+
+  it('suggests searchable symbols and company names, never the unsearchable asset id', () => {
+    // AAPLrh is the config asset id; only AAPL (symbol) and Apple (company) actually find the vault
+    const stockVaults: FixtureVault[] = [
+      {
+        id: 'uni-aapl-usdg',
+        name: 'AAPL-USDG',
+        assets: ['AAPLrh', 'USDG'],
+        chainId: 'robinhood',
+        platformId: 'uniswap',
+      },
+    ];
+    const tokens = makeTokensByChainId('robinhood', {
+      AAPLrh: { symbol: 'AAPL', name: 'Apple • Robinhood Token', tags: ['STOCK'] },
+      USDG: { symbol: 'USDG', name: 'Global Dollar', tags: ['STABLECOIN'] },
+    });
+    const suggestionsFor = (searchText: string) => {
+      const filters = makeFilters({ searchText });
+      const info = selectSearchNoResultsInfo(makeState(stockVaults, filters, tokens));
+      return info.kind === 'suggestions' ? info.suggestions : [];
+    };
+
+    // "aaplr" is 1 edit from the asset id and 1 from the symbol: the symbol must win
+    expect(suggestionsFor('aaplr')).toContain('AAPL');
+    expect(suggestionsFor('aaplr')).not.toContain('AAPLrh');
+    // company names are suggestable, with their original casing, and the issuer suffix is not
+    expect(suggestionsFor('aple')).toContain('Apple');
+    expect(suggestionsFor('robinhod')).not.toContain('Robinhood Token');
   });
 
   it('classifies partial and unmatched addresses', () => {

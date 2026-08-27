@@ -72,13 +72,17 @@ export function hasSearchText(searchText: string): boolean {
   return simplifySearchText(searchText).length > 0;
 }
 
-/** lowercase words of a query or token name; one tokenizer so both sides split identically */
-export function toSearchWords(text: string): string[] {
+/** words of a query or token name, original case; for display strings like search suggestions */
+export function toDisplayWords(text: string): string[] {
   return simplifySearchText(text)
-    .toLowerCase()
     .split(/[- /,]/g)
     .map(word => word.trim())
     .filter(word => word.length > 1);
+}
+
+/** lowercase words of a query or token name; one tokenizer so both sides split identically */
+export function toSearchWords(text: string): string[] {
+  return toDisplayWords(text).map(word => word.toLowerCase());
 }
 
 export type SearchQueryKind = 'text' | 'address' | 'address-too-short';
