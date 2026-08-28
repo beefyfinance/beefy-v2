@@ -61,12 +61,12 @@ type SelectDataReturn =
     };
 
 const NO_DEPOSIT: Record<'true' | 'false', SelectDataReturn> = {
-  true: { loading: false, totalDeposit: BIG_ZERO, hideBalance: true },
-  false: { loading: false, totalDeposit: BIG_ZERO, hideBalance: false },
+  true: Object.freeze({ loading: false, totalDeposit: BIG_ZERO, hideBalance: true }),
+  false: Object.freeze({ loading: false, totalDeposit: BIG_ZERO, hideBalance: false }),
 };
 const STILL_LOADING: Record<'true' | 'false', SelectDataReturn> = {
-  true: { loading: true, hideBalance: true },
-  false: { loading: true, hideBalance: false },
+  true: Object.freeze({ loading: true, hideBalance: true }),
+  false: Object.freeze({ loading: true, hideBalance: false }),
 };
 
 const selectVaultDepositStat = createCachedSelector(
