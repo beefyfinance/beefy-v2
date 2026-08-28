@@ -18,7 +18,8 @@ import type { InputTokenAmount } from '../transact-types.ts';
 
 /**
  * Quote-time only: while the withdraw is set to exit a boost first, the shares come from the boost
- * rather than the wallet. Step-building passes `sharesOverrideWei` explicitly instead.
+ * rather than the wallet. Step building goes through `getVaultWithdrawnFromContract`, which is handed
+ * the shares explicitly.
  */
 function resolveBoostSourcedSharesWei(
   state: BeefyState,
@@ -41,15 +42,13 @@ export function getVaultWithdrawnFromState(
   userInput: InputTokenAmount,
   vault: VaultWithPricePerFullShare,
   state: BeefyState,
-  userAddress?: string,
-  sharesOverrideWei?: BigNumber
+  userAddress?: string
 ) {
   const withdrawAll = userInput.max;
   const withdrawnToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const requestedAmountWei = toWei(userInput.amount, withdrawnToken.decimals);
   const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
   const totalSharesWei =
-    sharesOverrideWei ??
     resolveBoostSourcedSharesWei(state, vault, shareToken, userAddress) ??
     toWei(
       selectUserBalanceOfToken(state, shareToken.chainId, shareToken.address, userAddress),
@@ -63,9 +62,6 @@ export function getVaultWithdrawnFromState(
   if (!withdrawAll) {
     // try to round up, so we withdraw at least the requested amount
     sharesToWithdrawWei = requestedAmountWei.dividedBy(ppfs).decimalPlaces(0, BigNumber.ROUND_CEIL);
-    if (sharesOverrideWei && sharesToWithdrawWei.gt(sharesOverrideWei)) {
-      sharesToWithdrawWei = sharesOverrideWei;
-    }
   }
 
   const withdrawnAmountWei = sharesToWithdrawWei
