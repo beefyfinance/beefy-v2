@@ -1,4 +1,4 @@
-import { createSlice, current, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, original, type PayloadAction } from '@reduxjs/toolkit';
 import { isEqual } from 'lodash-es';
 import {
   fetchApyAction,
@@ -6,41 +6,34 @@ import {
   recalculateAvgApyAction,
   recalculateTotalApyAction,
 } from '../actions/apy.ts';
-import type { ApyContractState, ApyState, AvgApy, TotalApy } from './apy-types.ts';
+import type { ApyContractState, ApyState, TotalApy } from './apy-types.ts';
 
-/**
- * Replacing these maps wholesale gave all ~5.6k entries a fresh identity on every recalc, which
- * invalidated anything memoized per-vault. Only touch entries that actually changed.
- */
+/** avoid new state ref if entry hasn't changed */
 function replaceChangedEntries<T>(
   target: Record<string, T>,
   next: Record<string, T>,
   areEqual: (a: T, b: T) => boolean
 ) {
-  for (const id of Object.keys(target)) {
-    if (!(id in next)) {
+  // @dev compare against the pre-draft map: reading entries off the draft creates a proxy for each key
+  const base = original(target) ?? target;
+  for (const id of Object.keys(base)) {
+    if (!Object.hasOwn(next, id)) {
       delete target[id];
     }
   }
   for (const id of Object.keys(next)) {
-    const existing = target[id];
+    const existing = Object.hasOwn(base, id) ? base[id] : undefined;
     if (existing === undefined || !areEqual(existing, next[id])) {
       target[id] = next[id];
     }
   }
 }
 
-// flat primitives, so a key-wise compare works directly on the draft
 function totalApyEqual(a: TotalApy, b: TotalApy): boolean {
   const ka = Object.keys(a) as Array<keyof TotalApy>;
   const kb = Object.keys(b) as Array<keyof TotalApy>;
   if (ka.length !== kb.length) return false;
   return ka.every(k => a[k] === b[k]);
-}
-
-// nested, so compare the plain value behind the draft
-function avgApyEqual(a: AvgApy, b: AvgApy): boolean {
-  return isEqual(current(a as never) as AvgApy, b);
 }
 
 export const initialApyState: ApyState = {
@@ -72,7 +65,7 @@ export const apySlice = createSlice({
         sliceState.rawAvgApy.byVaultId = action.payload.data;
       })
       .addCase(recalculateAvgApyAction.fulfilled, (sliceState, action) => {
-        replaceChangedEntries(sliceState.avgApy.byVaultId, action.payload.data, avgApyEqual);
+        replaceChangedEntries(sliceState.avgApy.byVaultId, action.payload.data, isEqual);
       });
   },
 });
