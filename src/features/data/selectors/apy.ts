@@ -1,6 +1,5 @@
 import { first, isEqual } from 'lodash-es';
 import { stableSelector1, stableSelector2 } from '../utils/selector-utils.ts';
-import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
 import { EMPTY_AVG_APY } from '../../../helpers/apy.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
@@ -357,12 +356,15 @@ export const selectBoostApr = (state: BeefyState, boostId: string): number => {
 };
 
 // builds and mutates a fresh object every call, so deep-compare to keep the reference
-export const selectUserGlobalStats = createSelector(
-  (state: BeefyState, _address?: string) => state,
-  (_state: BeefyState, address?: string) => address,
-  (state, address) => selectUserGlobalStatsUncached(state, address),
+// keyed by address: PortfolioStats calls this with state only while DepositSummary passes an
+// explicit address, and a shared `lastResult` would make those two argument shapes evict
+// each other (see stableSelector1 in selector-utils)
+export const selectUserGlobalStats = createCachedSelector(
+  (state: BeefyState, _address: string | undefined) => state,
+  (_state: BeefyState, address: string | undefined) => address,
+  (state: BeefyState, address: string | undefined) => selectUserGlobalStatsUncached(state, address),
   { memoizeOptions: { resultEqualityCheck: isEqual } }
-);
+)((_state: BeefyState, address: string | undefined) => address ?? '');
 
 export const selectBoostAprByRewardToken = stableSelector1(selectBoostAprByRewardTokenUncached);
 export const selectYieldStatsByVaultId = stableSelector2(selectYieldStatsByVaultIdUncached);

@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { createCachedSelector } from 're-reselect';
 import { isEqual } from 'lodash-es';
 import type BigNumber from 'bignumber.js';
 import type { BeefyState } from '../store/types.ts';
@@ -34,8 +35,15 @@ export function bigNumberOrStaticZero(value: BigNumber | undefined | null): BigN
  *
  * The whole state is the input on purpose: these read a wide slice, and a hand-written input list
  * that missed one would trade a re-render for a stale figure. The compute still runs; the result
- * comparison is what stops the re-render. Arity-specific because spreading args into a single
- * input selector would itself return a fresh array on every call.
+ * comparison is what stops the re-render.
+ *
+ * The argument-taking variants use `createCachedSelector`, not a plain `createSelector`.
+ * reselect's `resultEqualityCheck` compares against a single `lastResult` shared by the whole
+ * selector (reselect.mjs:546), so with interleaved arguments - A, B, A, B, as happens when a list
+ * renders one row per vault - every call compares against the *other* vault's result, misses, and
+ * returns a new reference. Giving each key its own selector instance gives each its own
+ * `lastResult`. Note the react-redux and reselect dev checks cannot catch this: they call the
+ * selector twice with the same state, which hits the same cache node either way.
  */
 export function stableSelector<R>(fn: (state: BeefyState) => R) {
   return createSelector(
@@ -46,33 +54,31 @@ export function stableSelector<R>(fn: (state: BeefyState) => R) {
 }
 
 export function stableSelector1<A, R>(fn: (state: BeefyState, a: A) => R) {
-  return createSelector(
+  return createCachedSelector(
     (state: BeefyState, _a: A) => state,
     (_state: BeefyState, a: A) => a,
     (state: BeefyState, a: A) => fn(state, a),
     { memoizeOptions: { resultEqualityCheck: isEqual } }
-  );
+  )((_state: BeefyState, a: A) => String(a));
 }
 
-// `b` is declared optional on every input so callers that omit it still typecheck; the arity of
-// the generated selector is taken from these signatures
 export function stableSelector2<A, B, R>(fn: (state: BeefyState, a: A, b?: B) => R) {
-  return createSelector(
+  return createCachedSelector(
     (state: BeefyState, _a: A, _b?: B) => state,
     (_state: BeefyState, a: A, _b?: B) => a,
     (_state: BeefyState, _a: A, b?: B) => b,
     (state: BeefyState, a: A, b: B | undefined) => fn(state, a, b),
     { memoizeOptions: { resultEqualityCheck: isEqual } }
-  );
+  )((_state: BeefyState, a: A, b?: B) => `${String(a)}-${b === undefined ? '' : String(b)}`);
 }
 
 /** as stableSelector2, for selectors whose second argument is required */
 export function stableSelector2Req<A, B, R>(fn: (state: BeefyState, a: A, b: B) => R) {
-  return createSelector(
+  return createCachedSelector(
     (state: BeefyState, _a: A, _b: B) => state,
     (_state: BeefyState, a: A, _b: B) => a,
     (_state: BeefyState, _a: A, b: B) => b,
     (state: BeefyState, a: A, b: B) => fn(state, a, b),
     { memoizeOptions: { resultEqualityCheck: isEqual } }
-  );
+  )((_state: BeefyState, a: A, b: B) => `${String(a)}-${String(b)}`);
 }

@@ -1,4 +1,4 @@
-import { createSelector, weakMapMemoize } from '@reduxjs/toolkit';
+import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { fromUnixTime, sub } from 'date-fns';
 import { orderBy } from 'lodash-es';
@@ -325,8 +325,29 @@ export const selectIsTokenLoadedOnChain = createCachedSelector(
 // weakMapMemoize rather than createSelector: the chain token lookups throw when the addressbook
 // for a chain has not loaded, and weakMapMemoize does not cache a thrown result, so throw
 // behaviour is unchanged. Rebuilding the Map made this an unstable input to the selector below.
-export const selectWrappedToNativeSymbolMap = weakMapMemoize((state: BeefyState) => {
+// Keyed on the two slices this actually reads - both static once chains and the addressbook have
+// loaded - rather than on `state`, which would rebuild the Map on every dispatch and invalidate
+// the memo of the selector below. The body is left untouched so the four distinct throws from
+// selectChainNativeToken / selectChainWrappedNativeToken are preserved exactly; a rewrite that
+// resolved the tokens inline would risk diverging from them. Nothing is cached on throw.
+let wrappedToNativeCache:
+  | {
+      chainIds: ChainEntity['id'][];
+      byChainId: BeefyState['entities']['tokens']['byChainId'];
+      map: Map<string, string>;
+    }
+  | undefined;
+
+export const selectWrappedToNativeSymbolMap = (state: BeefyState) => {
   const chainIds = selectAllChainIds(state);
+  const byChainId = state.entities.tokens.byChainId;
+  if (
+    wrappedToNativeCache &&
+    wrappedToNativeCache.chainIds === chainIds &&
+    wrappedToNativeCache.byChainId === byChainId
+  ) {
+    return wrappedToNativeCache.map;
+  }
 
   const wrappedToNativeSymbolMap = new Map<string, string>();
 
@@ -335,8 +356,9 @@ export const selectWrappedToNativeSymbolMap = weakMapMemoize((state: BeefyState)
     const native = selectChainNativeToken(state, chainId);
     wrappedToNativeSymbolMap.set(wnative.symbol, native.symbol);
   }
+  wrappedToNativeCache = { chainIds, byChainId, map: wrappedToNativeSymbolMap };
   return wrappedToNativeSymbolMap;
-});
+};
 
 export const selectWrappedToNativeSymbolOrTokenSymbol = createCachedSelector(
   (state: BeefyState, _symbol: string) => selectWrappedToNativeSymbolMap(state),
