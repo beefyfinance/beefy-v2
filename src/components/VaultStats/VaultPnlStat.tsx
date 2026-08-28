@@ -27,13 +27,17 @@ export const VaultPnlStat = memo(function ({
 }: VaultDailyStatProps) {
   const { t } = useTranslation();
   // @dev don't do this - temp migration away from connect()
-  const { label, ...statProps } = useAppSelector(state =>
+  const { label, hasValue, ...statProps } = useAppSelector(state =>
     selectVaultPnlStat(state, vaultId, pnlData, walletAddress)
   );
   return (
     <VaultValueStat
       label={t(label)}
-      tooltip={showClmPnlTooltip(pnlData) ? <ClmPnlTooltipContent userPnl={pnlData} /> : undefined}
+      tooltip={
+        hasValue && showClmPnlTooltip(pnlData) ?
+          <ClmPnlTooltipContent userPnl={pnlData} />
+        : undefined
+      }
       {...statProps}
       {...passthrough}
     />
@@ -59,6 +63,7 @@ const selectVaultPnlStat = createCachedSelector(
         subValue: null,
         blur: false,
         loading: true,
+        hasValue: false,
       };
     }
 
@@ -69,6 +74,7 @@ const selectVaultPnlStat = createCachedSelector(
         subValue: null,
         blur: false,
         loading: false,
+        hasValue: false,
       };
     }
 
@@ -89,6 +95,7 @@ const selectVaultPnlStat = createCachedSelector(
       blur: false,
       loading: !isLoaded,
       boosted: false,
+      hasValue: true,
     };
   },
   { memoizeOptions: { resultEqualityCheck: isEqual } }

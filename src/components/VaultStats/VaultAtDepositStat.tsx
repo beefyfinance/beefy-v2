@@ -1,4 +1,4 @@
-import { memo, type ReactNode } from 'react';
+import { memo } from 'react';
 import { isEqual } from 'lodash-es';
 import { createCachedSelector } from 're-reselect';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
@@ -33,10 +33,17 @@ export const VaultAtDepositStat = memo(function VaultAtDepositStat({
 }: VaultAtDepositStatProps) {
   const { t } = useTranslation();
   // @dev don't do this - temp migration away from connect()
-  const { label, ...statProps } = useAppSelector(state =>
+  const { label, tooltip, ...statProps } = useAppSelector(state =>
     selectVaultAtDepositStat(state, vaultId, pnlData, walletAddress)
   );
-  return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
+  return (
+    <VaultValueStat
+      label={t(label)}
+      tooltip={tooltip ? <BasicTooltipContent title={tooltip} /> : undefined}
+      {...statProps}
+      {...passthrough}
+    />
+  );
 });
 
 const selectVaultAtDepositStat = createCachedSelector(
@@ -70,7 +77,7 @@ const selectVaultAtDepositStat = createCachedSelector(
       };
     }
 
-    let value: string, subValue: string, tooltip: ReactNode;
+    let value: string, subValue: string, tooltip: string;
     if (isUserClmPnl(pnlData)) {
       value = formatTokenDisplayCondensed(
         pnlData.underlying.entry.amount,
@@ -78,19 +85,15 @@ const selectVaultAtDepositStat = createCachedSelector(
         6
       );
       subValue = formatLargeUsd(pnlData.underlying.entry.usd);
-      tooltip = (
-        <BasicTooltipContent
-          title={formatTokenDisplay(
-            pnlData.underlying.entry.amount,
-            pnlData.underlying.token.decimals
-          )}
-        />
+      tooltip = formatTokenDisplay(
+        pnlData.underlying.entry.amount,
+        pnlData.underlying.token.decimals
       );
     } else {
       const { balanceAtDeposit, usdBalanceAtDeposit, tokenDecimals } = pnlData;
       value = formatTokenDisplayCondensed(balanceAtDeposit, tokenDecimals, 6);
       subValue = formatLargeUsd(usdBalanceAtDeposit);
-      tooltip = <BasicTooltipContent title={formatTokenDisplay(balanceAtDeposit, tokenDecimals)} />;
+      tooltip = formatTokenDisplay(balanceAtDeposit, tokenDecimals);
     }
 
     return {

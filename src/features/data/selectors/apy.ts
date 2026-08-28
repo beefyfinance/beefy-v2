@@ -287,9 +287,18 @@ const APY_UI_STATUS_ONLY: Record<
   'hidden' | 'loading' | 'missing',
   Record<'apy' | 'apr', ApyVaultUIData>
 > = {
-  hidden: { apy: { status: 'hidden', type: 'apy' }, apr: { status: 'hidden', type: 'apr' } },
-  loading: { apy: { status: 'loading', type: 'apy' }, apr: { status: 'loading', type: 'apr' } },
-  missing: { apy: { status: 'missing', type: 'apy' }, apr: { status: 'missing', type: 'apr' } },
+  hidden: {
+    apy: Object.freeze({ status: 'hidden', type: 'apy' }),
+    apr: Object.freeze({ status: 'hidden', type: 'apr' }),
+  },
+  loading: {
+    apy: Object.freeze({ status: 'loading', type: 'apy' }),
+    apr: Object.freeze({ status: 'loading', type: 'apr' }),
+  },
+  missing: {
+    apy: Object.freeze({ status: 'missing', type: 'apy' }),
+    apr: Object.freeze({ status: 'missing', type: 'apr' }),
+  },
 };
 
 export const selectApyVaultUIData = createCachedSelector(
