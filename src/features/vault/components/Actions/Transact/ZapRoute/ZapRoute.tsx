@@ -323,7 +323,9 @@ const StepContentWithdraw = memo(function StepContentWithdraw({
   return (
     <Trans
       t={t}
-      i18nKey="Transact-Route-Step-Withdraw"
+      i18nKey={
+        step.estimated ? 'Transact-Route-Step-Withdraw-Estimated' : 'Transact-Route-Step-Withdraw'
+      }
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
         chain: chainId ? <ChainTag chainId={chainId} /> : <></>,

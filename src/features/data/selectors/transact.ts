@@ -22,7 +22,7 @@ import { computeOptionZapFee } from '../apis/transact/helpers/fee.ts';
 import {
   BOOST_ZAP_MIN_VERSION,
   boostStakeableStrategyIds,
-  boostRoutableStrategyIds,
+  boostUnstakeableStrategyIds,
   findBoostStakeStep,
   findBoostUnstakeStep,
 } from '../apis/transact/helpers/boost.ts';
@@ -44,7 +44,6 @@ import {
   selectDepositOptionTokensBalanceByChainId,
   selectPastBoostIdsWithUserBalance,
   selectUserBalanceOfToken,
-  selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInShareToken,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
   selectUserVaultBalanceInUsdIncludingDisplaced,
@@ -170,10 +169,7 @@ export const selectTransactUnstakeFromBoost = (state: BeefyState): boolean => {
   return !!boost && selectUserVaultBalanceInShareToken(state, boost.vaultId).lte(BIG_ZERO);
 };
 
-/**
- * Gated on the route too: the plain same-token withdraw and the vault-source routes never get an
- * exit() step, so they must keep showing and spending the wallet position.
- */
+/** Gated on the route too: a route that cannot unstake must keep spending the wallet position */
 export const selectTransactUnstakeFromBoostTarget = (
   state: BeefyState
 ): BoostPromoEntity | undefined =>
@@ -196,21 +192,33 @@ export const selectTransactWillUnstakeFromBoost = (state: BeefyState): boolean =
   return !!quote && isZapQuote(quote) && !!findBoostUnstakeStep(quote.steps);
 };
 
+/**
+ * Share-unit twin of selectTransactWithdrawAvailableWithToken: the vault-source withdraw form is
+ * share-math, so its Available, MAX and validation all have to read the position in shares.
+ */
+export const selectTransactWithdrawAvailableInShareToken = (state: BeefyState): BigNumber => {
+  const vaultId = selectTransactVaultId(state);
+  const boost = selectTransactUnstakeFromBoostTarget(state);
+  return boost ?
+      selectBoostUserBalanceInToken(state, boost.id)
+    : selectUserVaultBalanceInShareToken(state, vaultId);
+};
+
 export const selectTransactUnstakeFromBoostSupported = (state: BeefyState): boolean => {
   const selectionId = state.ui.transact.selectedSelectionId;
   const quote = selectTransactSelectedQuoteOrUndefined(state);
   if (quote && quote.option.selectionId === selectionId) {
-    return boostRoutableStrategyIds.has(quote.option.strategyId);
+    return boostUnstakeableStrategyIds.has(quote.option.strategyId);
   }
 
   const optionIds = selectionId ? state.ui.transact.options.bySelectionId[selectionId] : undefined;
   if (!optionIds?.length) {
     return true;
   }
-  // every, not some: a selection mixing routable and non-routable options cannot be honoured
+  // every, not some: a selection mixing supported and unsupported options cannot be honoured
   return optionIds.every(id => {
     const option = state.ui.transact.options.byOptionId[id];
-    return !!option && boostRoutableStrategyIds.has(option.strategyId);
+    return !!option && boostUnstakeableStrategyIds.has(option.strategyId);
   });
 };
 
@@ -367,15 +375,15 @@ export const selectTransactDepositInputAmountExceedsBalance = (state: BeefyState
 };
 
 export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyState) => {
-  const vaultId = selectTransactVaultId(state);
   const isVaultSourceWithdraw = selectTransactIsActiveSelectionVaultSourceWithdraw(state);
   // Vault-source withdraw (cross-chain or same-chain v2v) dispatches in share-math.
   // Composer-path withdraws still dispatch in deposit-token math.
-  const boost = selectTransactUnstakeFromBoostTarget(state);
+  // vault-source withdraws dispatch share-math, every other route deposit-token math; both read the
+  // same selectors the form does, so the guard cannot drift from what the input shows
   const userBalance =
-    boost ? selectUserVaultBalanceInDepositTokenInBoostWithToken(state, vaultId, boost.id).amount
-    : isVaultSourceWithdraw ? selectUserVaultBalanceInShareToken(state, vaultId)
-    : selectUserVaultBalanceInDepositToken(state, vaultId);
+    isVaultSourceWithdraw ?
+      selectTransactWithdrawAvailableInShareToken(state)
+    : selectTransactWithdrawAvailableWithToken(state).amount;
   const value = selectTransactInputIndexAmount(state, 0);
 
   return value.gt(userBalance);

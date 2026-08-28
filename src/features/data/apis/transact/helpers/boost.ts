@@ -14,10 +14,10 @@ import type { ZapTransactHelpers } from '../strategies/IStrategy.ts';
 export const BOOST_ZAP_MIN_VERSION = 2;
 
 /**
- * Routes `maybeWrapBoost` can decorate directly, and the ones the withdraw checkbox is offered for.
+ * Routes `maybeWrapBoost` decorates in place, and where the withdraw share override applies.
  * Excludes conic/yieldbasis/reward-pool-to-vault, which build their order inline in fetchDepositStep.
  */
-export const boostRoutableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<AnyStrategyId>([
+const boostDecoratableIds = [
   'vault',
   'single',
   'uniswap-v2',
@@ -27,16 +27,27 @@ export const boostRoutableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<AnyS
   'balancer',
   'pendle-v2',
   'vault-composer',
+] as const satisfies ReadonlyArray<AnyStrategyId>;
+
+export const boostDecoratableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<AnyStrategyId>(
+  boostDecoratableIds
+);
+
+/** Deposit: cross-chain and vault-to-vault are decorated inside `VaultDestHandler` instead. */
+export const boostStakeableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<AnyStrategyId>([
+  ...boostDecoratableIds,
+  'cross-chain',
+  'vault-to-vault-single-token',
 ]);
 
 /**
- * Where the DEPOSIT checkbox is offered. A superset, because cross-chain and vault-to-vault deposits
- * are decorated inside `VaultDestHandler` rather than by strategy id.
+ * Withdraw: cross-chain is decorated inside `VaultSourceHandler`. vault-to-vault is deliberately
+ * absent — a position split between vault and boost has no agreed UX yet, so the checkbox is not
+ * offered there even though the source leg would support it.
  */
-export const boostStakeableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<AnyStrategyId>([
-  ...boostRoutableStrategyIds,
+export const boostUnstakeableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<AnyStrategyId>([
+  ...boostDecoratableIds,
   'cross-chain',
-  'vault-to-vault-single-token',
 ]);
 
 /** `boostId` is what separates our steps from a gov/reward-pool strategy's own stake/unstake steps */

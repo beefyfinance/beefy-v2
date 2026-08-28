@@ -46,20 +46,17 @@ import { VaultToVaultSingleTokenStrategy } from './strategies/vault-to-vault/Vau
 import { ChargeFeeStrategy } from './strategies/ChargeFeeStrategy.ts';
 import { BoostVaultStrategy, BoostZapStrategy } from './strategies/BoostStrategy.ts';
 import {
-  boostRoutableStrategyIds,
+  boostDecoratableStrategyIds,
   findBoostStakeStep,
   findBoostUnstakeStep,
 } from './helpers/boost.ts';
+import { withBoostSourcedVaultType } from './vaults/BoostSourcedVaultType.ts';
 import {
   selectTransactStakeIntoBoostTarget,
   selectTransactUnstakeFromBoostTarget,
 } from '../../selectors/transact.ts';
 import { selectBoostById } from '../../selectors/boosts.ts';
-import { selectBoostUserBalanceInToken } from '../../selectors/balance.ts';
 
-import { BoostSourcedStandardVaultType } from './vaults/BoostSourcedVaultType.ts';
-import { isStandardVaultType } from './vaults/IVaultType.ts';
-import { BIG_ZERO, toWei } from '../../../../helpers/big-number.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import {
   getRoutingTokensForChain,
@@ -123,7 +120,7 @@ function maybeWrapBoost(
   helpers: TransactHelpers,
   quote?: TransactQuote
 ): IStrategy {
-  if (!isZapTransactHelpers(helpers) || !boostRoutableStrategyIds.has(strategy.id)) {
+  if (!isZapTransactHelpers(helpers) || !boostDecoratableStrategyIds.has(strategy.id)) {
     return strategy;
   }
 
@@ -804,25 +801,11 @@ export class TransactApi implements ITransactApi {
     strategyId: AnyStrategyId,
     quote: TransactQuote | undefined
   ): TransactHelpers {
-    if (!isZapTransactHelpers(helpers) || !boostRoutableStrategyIds.has(strategyId)) {
+    if (!isZapTransactHelpers(helpers) || !boostDecoratableStrategyIds.has(strategyId)) {
       return helpers;
     }
     try {
-      const boost = resolveBoost(helpers, quote, 'unstake');
-      if (!boost || !isStandardVaultType(helpers.vaultType)) {
-        return helpers;
-      }
-      const shares = selectBoostUserBalanceInToken(helpers.getState(), boost.id);
-      if (shares.lte(BIG_ZERO)) {
-        return helpers;
-      }
-      return {
-        ...helpers,
-        vaultType: new BoostSourcedStandardVaultType(
-          helpers.vaultType,
-          toWei(shares, helpers.vaultType.shareToken.decimals)
-        ),
-      };
+      return withBoostSourcedVaultType(helpers, resolveBoost(helpers, quote, 'unstake')?.id);
     } catch (err: unknown) {
       console.error(`Vault ${helpers.vault.id} failed to source shares from the boost`, err);
       return helpers;

@@ -116,7 +116,9 @@ export const crossChainZapExecuteOrder = (
   vaultId: VaultEntity['id'],
   params: UserlessZapRequest,
   expectedTokens: TokenEntity[],
-  metadata: CrossChainExecuteMetadata
+  metadata: CrossChainExecuteMetadata,
+  /** set when the order unstakes from a boost, so the staked balance is refreshed */
+  boostId?: BoostPromoEntity['id']
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -246,6 +248,7 @@ export const crossChainZapExecuteOrder = (
         spenderAddress: zap.manager,
         tokens: selectCrossChainZapTokensToRefresh(state, sourceChainId, order),
         clearInput: false,
+        ...(boostId ? { boostId } : {}),
       }
     );
 

@@ -11,13 +11,13 @@ import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { selectUserVaultBalanceInShareToken } from '../../../../../data/selectors/balance.ts';
 import {
   selectTransactForceSelection,
   selectTransactIsActiveSelectionVaultSourceWithdraw,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactVaultId,
+  selectTransactWithdrawAvailableInShareToken,
   selectTransactWithdrawAvailableWithToken,
 } from '../../../../../data/selectors/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
@@ -41,7 +41,7 @@ const DepositedInVault = memo(function DepositedInVault() {
     vaultId ? selectTransactWithdrawAvailableWithToken(state) : undefined
   );
   const shareBalance = useAppSelector(state =>
-    vaultId ? selectUserVaultBalanceInShareToken(state, vaultId) : undefined
+    vaultId ? selectTransactWithdrawAvailableInShareToken(state) : undefined
   );
   const forceSelection = useAppSelector(selectTransactForceSelection);
 

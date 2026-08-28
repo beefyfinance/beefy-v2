@@ -73,7 +73,7 @@ import {
 } from '../../../../actions/wallet/cross-chain.ts';
 import { enumerateDstVaultCandidates, enumerateSrcVaultCandidates } from './enumeration.ts';
 import { buildDustOutputs, mergeOutputs } from '../../handlers/dust.ts';
-import { findBoostStakeStep } from '../../helpers/boost.ts';
+import { findBoostStakeStep, findBoostUnstakeStep } from '../../helpers/boost.ts';
 import { buildBalanceCheckZapStep, findBridgeTokenMin } from './handlers/utils.ts';
 import { PassthroughDestHandler } from './handlers/PassthroughDestHandler.ts';
 import { SwapDestHandler } from './handlers/SwapDestHandler.ts';
@@ -630,7 +630,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         quote.option.vaultId,
         zapRequest,
         expectedTokens,
-        metadata
+        metadata,
+        findBoostUnstakeStep(quote.steps)?.boostId
       ),
       pending: false,
       extraInfo: {

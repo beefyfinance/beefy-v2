@@ -665,6 +665,9 @@ export type ZapQuoteStepBuild = {
 export type ZapQuoteStepWithdraw = {
   type: 'withdraw';
   outputs: TokenAmount[];
+  /** Set when the position is broken into its constituents; a plain share -> deposit token
+   * unwrap is priced by ppfs alone, so it is not presented as an estimate. */
+  estimated?: boolean;
 };
 
 export type ZapQuoteStepDeposit = {

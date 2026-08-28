@@ -8,10 +8,6 @@ import {
   type VaultEntity,
 } from '../../../../../data/entities/vault.ts';
 import {
-  selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInShareToken,
-} from '../../../../../data/selectors/balance.ts';
-import {
   selectTokenByAddress,
   selectTokenPriceByTokenOracleId,
 } from '../../../../../data/selectors/tokens.ts';
@@ -19,6 +15,7 @@ import {
   selectTransactInputIndexAmount,
   selectTransactIsActiveSelectionVaultSourceWithdraw,
   selectTransactVaultId,
+  selectTransactWithdrawAvailableInShareToken,
   selectTransactWithdrawAvailableWithToken,
 } from '../../../../../data/selectors/transact.ts';
 import {
@@ -104,10 +101,8 @@ const VaultSourceWithdrawTokenAmountInput = memo(function VaultSourceWithdrawTok
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const ppfs = useAppSelector(state => selectVaultPricePerFullShare(state, vaultId));
-  const shareBalance = useAppSelector(state => selectUserVaultBalanceInShareToken(state, vaultId));
-  const depositBalance = useAppSelector(state =>
-    selectUserVaultBalanceInDepositToken(state, vaultId)
-  );
+  const shareBalance = useAppSelector(selectTransactWithdrawAvailableInShareToken);
+  const depositBalance = useAppSelector(selectTransactWithdrawAvailableWithToken).amount;
   const storeAmount = useAppSelector(state => selectTransactInputIndexAmount(state, 0));
   const price = useAppSelector(state =>
     selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
