@@ -11,6 +11,7 @@ import { DefaultMeta } from './components/Meta/DefaultMeta.tsx';
 import { Redirects } from './components/Redirects/Redirects.tsx';
 import { Router } from './components/Router/Router.tsx';
 import { ScrollRestorer } from './components/ScrollToTop/ScrollRestorer.tsx';
+import { CrossChainSimulator } from './components/CrossChainSimulator/CrossChainSimulator.tsx';
 import { Stepper } from './components/Stepper/Stepper.tsx';
 import { Tenderly } from './components/Tenderly/Tenderly.tsx';
 
@@ -51,6 +52,9 @@ export const App = memo(function App() {
       {import.meta.env.DEV ?
         <Tenderly />
       : null}
+      {/* Intentionally NOT gated by import.meta.env.DEV — this throwaway branch never
+          merges, so the cross-chain scenario simulator stays available in every build. */}
+      <CrossChainSimulator />
     </BreakpointProvider>
   );
 });
