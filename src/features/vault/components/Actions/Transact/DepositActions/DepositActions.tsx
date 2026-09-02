@@ -48,6 +48,8 @@ import { MaxNativeNotice } from '../MaxNativeNotice/MaxNativeNotice.tsx';
 import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
 import { usePriceImpactState } from '../hooks/usePriceImpactState.ts';
+import { StockMarketClosedNotice } from '../StockMarketClosedNotice/StockMarketClosedNotice.tsx';
+import { useStockMarketClosedState } from '../hooks/useStockMarketClosedState.ts';
 import {
   isMaxNativeQuote,
   useConfirmDisabled,
@@ -174,6 +176,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const priceImpactState = usePriceImpactState(quote);
+  const stockMarketClosedState = useStockMarketClosedState();
   const isDisabledByMaxNative = isMaxNativeQuote(quote);
   const isDisabledByConfirm = useConfirmDisabled();
   const isDisabledByNotEnoughInput = useNotEnoughDisabled('deposit');
@@ -197,6 +200,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
     isTxInProgress ||
     isExecuting ||
     priceImpactState.isDisabled ||
+    stockMarketClosedState.isDisabled ||
     isDisabledByMaxNative ||
     effectiveDisabledByConfirm ||
     isDisabledByNotEnoughInput;
@@ -224,6 +228,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
       : null}
       <PriceImpactNotice state={priceImpactState} hideCheckbox={isDisabledByNotEnoughInput} />
       <MaxNativeNotice quote={quote} />
+      <StockMarketClosedNotice state={stockMarketClosedState} />
       <ConfirmNotice />
       <NotEnoughNotice mode="deposit" />
       <div className={classes.feesContainer}>

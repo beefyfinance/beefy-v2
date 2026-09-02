@@ -54,6 +54,8 @@ import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
 import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
 import { usePriceImpactState } from '../hooks/usePriceImpactState.ts';
+import { StockMarketClosedNotice } from '../StockMarketClosedNotice/StockMarketClosedNotice.tsx';
+import { useStockMarketClosedState } from '../hooks/useStockMarketClosedState.ts';
 import { useConfirmDisabled, useNotEnoughDisabled } from '../hooks/useActionGates.ts';
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
 import { styles } from './styles.ts';
@@ -241,6 +243,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
   const dispatch = useAppDispatch();
   const classes = useStyles();
   const priceImpactState = usePriceImpactState(quote);
+  const stockMarketClosedState = useStockMarketClosedState();
   const isDisabledByConfirm = useConfirmDisabled();
   const isDisabledByNotEnoughInput = useNotEnoughDisabled('withdraw');
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
@@ -261,6 +264,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
     isTxInProgress ||
     isExecuting ||
     priceImpactState.isDisabled ||
+    stockMarketClosedState.isDisabled ||
     effectiveDisabledByConfirm ||
     isDisabledByNotEnoughInput;
 
@@ -286,6 +290,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
         <EmeraldGasNotice />
       : null}
       <PriceImpactNotice state={priceImpactState} />
+      <StockMarketClosedNotice state={stockMarketClosedState} />
       <ConfirmNotice />
       <NotEnoughNotice mode="withdraw" />
       <div className={classes.feesContainer}>
@@ -333,6 +338,7 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
   const dispatch = useAppDispatch();
   const option = quote.option;
   const priceImpactState = usePriceImpactState(quote);
+  const stockMarketClosedState = useStockMarketClosedState();
   const isDisabledByConfirm = useConfirmDisabled();
   const isDisabledByNotEnoughInput = useNotEnoughDisabled('withdraw');
 
@@ -353,6 +359,7 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
     isTxInProgress ||
     isExecuting ||
     priceImpactState.isDisabled ||
+    stockMarketClosedState.isDisabled ||
     effectiveDisabledByConfirm ||
     isDisabledByNotEnoughInput;
   const showClaim = !isCowcentratedLikeVault(vault);
@@ -379,6 +386,7 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
         <EmeraldGasNotice />
       : null}
       <PriceImpactNotice state={priceImpactState} />
+      <StockMarketClosedNotice state={stockMarketClosedState} />
       <ConfirmNotice />
       <NotEnoughNotice mode="withdraw" />
       <div className={classes.feesContainer}>
