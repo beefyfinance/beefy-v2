@@ -2,9 +2,14 @@ import { createSelector } from '@reduxjs/toolkit';
 import { first } from 'lodash-es';
 import { createCachedSelector } from 're-reselect';
 import type { PromoEntity } from '../entities/promo.ts';
-import type { VaultEntity } from '../entities/vault.ts';
+import {
+  getCowcentratedWrapperIds,
+  isCowcentratedVault,
+  type VaultEntity,
+} from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
+import { selectVaultByIdOrUndefined } from './vaults.ts';
 
 export const selectPromoById = (state: BeefyState, promoId: PromoEntity['id']) =>
   valueOrThrow(state.entities.promos.byId[promoId], `Unknown promo id ${promoId}`);
@@ -26,3 +31,23 @@ export const selectActivePromosForVault = createCachedSelector(
 export const selectActivePromoForVault = createSelector(selectActivePromosForVault, promos =>
   first(promos)
 );
+
+/** First active promo on the vault, or on any group member for a base CLM row */
+export const selectActivePromoForVaultGroup = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): PromoEntity | undefined => {
+  const vault = selectVaultByIdOrUndefined(state, vaultId);
+  const memberIds =
+    vault && isCowcentratedVault(vault) ?
+      [vault.id, ...getCowcentratedWrapperIds(vault)]
+    : [vaultId];
+
+  for (const memberId of memberIds) {
+    const promo = selectActivePromoForVault(state, memberId);
+    if (promo) {
+      return promo;
+    }
+  }
+  return undefined;
+};

@@ -13,7 +13,7 @@ import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../../data/store/hooks.ts';
 import HelpOutline from '../../../../../../../images/icons/mui/HelpOutline.svg?react';
 import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
-import { selectClmPnl } from '../../../../../../data/selectors/analytics.ts';
+import { selectClmGroupPnl } from '../../../../../../data/selectors/analytics.ts';
 import { selectCowcentratedLikeVaultById } from '../../../../../../data/selectors/vaults.ts';
 import { Stat } from '../Stat/Stat.tsx';
 import { styles } from './styles.ts';
@@ -30,7 +30,8 @@ export const OverviewGraphHeader = memo(function OverviewGraphHeader({
 }: OverviewGraphHeaderProps) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const userPnl = useAppSelector(state => selectClmPnl(state, vaultId));
+  // the whole CLM position, both yield modes; the toggle only routes deposits/withdrawals
+  const userPnl = useAppSelector(state => selectClmGroupPnl(state, vaultId));
   const { underlying, tokens, pnl, hold, pendingIndex } = userPnl;
   const hasPnlTooltip = showClmPnlTooltip(userPnl);
   const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));

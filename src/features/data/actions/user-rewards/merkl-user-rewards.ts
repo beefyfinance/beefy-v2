@@ -3,12 +3,7 @@ import { BIG_ZERO, fromWei } from '../../../../helpers/big-number.ts';
 import { pushOrSet } from '../../../../helpers/object.ts';
 import { getMerklRewardsApi } from '../../apis/instances.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
-import {
-  getCowcentratedPool,
-  isCowcentratedLikeVault,
-  isCowcentratedVault,
-  type VaultEntity,
-} from '../../entities/vault.ts';
+import type { VaultEntity } from '../../entities/vault.ts';
 import type {
   MerklTokenReward,
   MerklVaultReward,
@@ -259,16 +254,8 @@ export const fetchUserMerklRewardsAction = createAppAsyncThunk<
             unclaimed: breakdownUnclaimed,
           };
 
-          // Add reward to the vault
+          // Attribute to the targeted vault only; CLM group members union these on read
           addRewardToVault(vault.id, reward);
-
-          // For rewards on CLM, merge them into the CLM Pool since the CLM page is inaccessible
-          if (isCowcentratedLikeVault(vault)) {
-            const poolId = getCowcentratedPool(vault);
-            if (isCowcentratedVault(vault) && poolId) {
-              addRewardToVault(poolId, reward);
-            }
-          }
         }
       }
     }

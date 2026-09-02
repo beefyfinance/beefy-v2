@@ -119,3 +119,9 @@ export function isUserGovPnl(pnl: UserVaultPnl): pnl is UserGovPnl {
 export function isUserClmPnl(pnl: UserVaultPnl): pnl is UserClmPnl {
   return pnl.type === 'cowcentrated';
 }
+
+/**
+ * A CLM group's combined position. Deliberately has no `shares`: the pool side counts CLM tokens
+ * and the vault side counts moo tokens, so a summed share figure would be dimensionally meaningless.
+ */
+export type UserClmGroupPnl = Omit<UserClmPnl, 'shares'>;

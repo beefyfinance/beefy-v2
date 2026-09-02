@@ -22,3 +22,9 @@ node_modules/
 build/
 
 .claude
+# design-sync
+.ds-sync/
+ds-bundle/
+.design-sync/
+
+/types/

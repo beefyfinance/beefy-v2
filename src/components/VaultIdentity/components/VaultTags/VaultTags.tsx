@@ -3,24 +3,17 @@ import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { PromoEntity } from '../../../../features/data/entities/promo.ts';
 import {
-  isCowcentratedGovVault,
   isCowcentratedLikeVault,
-  isCowcentratedStandardVault,
-  isCowcentratedVault,
   isGovVault,
-  isVaultActive,
   isVaultEarningPoints,
   isVaultPaused,
   isVaultRetired,
-  type VaultCowcentrated,
   type VaultCowcentratedLike,
   type VaultEntity,
-  type VaultGovCowcentrated,
-  type VaultStandardCowcentrated,
 } from '../../../../features/data/entities/vault.ts';
 import { selectPlatformById } from '../../../../features/data/selectors/platforms.ts';
 import {
-  selectActivePromoForVault,
+  selectActivePromoForVaultGroup,
   selectPromoById,
 } from '../../../../features/data/selectors/promos.ts';
 import { selectUserHasBalanceToMigrate } from '../../../../features/data/selectors/balance.ts';
@@ -44,7 +37,7 @@ import { VaultPlatform } from '../../../VaultPlatform/VaultPlatform.tsx';
 import { styles } from './styles.ts';
 import { VaultTag, VaultTagWithTooltip, type VaultTagWithTooltipProps } from './VaultTag.tsx';
 import { styled } from '@repo/styles/jsx';
-import { selectZapCampaignByVaultId } from '../../../../features/data/selectors/zap.ts';
+import { selectZapCampaignForVaultGroup } from '../../../../features/data/selectors/zap.ts';
 import { selectIsVaultStock } from '../../../../features/data/selectors/filtered-vaults.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -132,17 +125,16 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
   platformName,
   tickSpacing,
   hideLabel,
-  hideFee,
   css: cssProp,
   onlyIcon,
 }: {
   label: string;
   longLabel: string;
+  /** shown in the tooltip only — the pill stays just the icon and the label */
   fee: string;
   platformName: string;
   tickSpacing: number;
   hideLabel?: boolean;
-  hideFee?: boolean;
   css?: CssStyles;
   onlyIcon?: boolean;
 }) {
@@ -168,156 +160,53 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
         />
       }
       text={
-        !onlyIcon && (!hideLabel || (!hideFee && fee)) ?
-          <>
-            {!hideLabel && (
-              <div
-                className={css(
-                  hideFee === undefined && hideLabel === undefined && styles.vaultTagClmTextAutoHide
-                )}
-              >
-                {label}
-              </div>
-            )}
-            {!hideFee && fee && (
-              <>
-                <div className={classes.divider} />
-                <span>{fee}</span>
-              </>
-            )}
-          </>
+        !onlyIcon && !hideLabel ?
+          <div className={css(hideLabel === undefined && styles.vaultTagClmTextAutoHide)}>
+            {label}
+          </div>
         : undefined
       }
     />
   );
 });
 
-const VaultClmPoolOrVaultTag = memo(function VaultClmPoolTag({
-  vault,
-  hideFee,
-  hideLabel,
-  css: cssProp,
-  isPool,
-  onlyIcon,
-}: {
-  vault: VaultGovCowcentrated | VaultStandardCowcentrated;
-  isPool?: boolean;
-  hideFee?: boolean;
-  hideLabel?: boolean;
-  css?: CssStyles;
-  onlyIcon?: boolean;
-}) {
-  const cowcentratedVault = useAppSelector(state =>
-    selectCowcentratedVaultById(state, vault.cowcentratedIds.clm)
-  );
-  const depositToken = useAppSelector(state =>
-    selectTokenByAddress(state, cowcentratedVault.chainId, cowcentratedVault.depositTokenAddress)
-  );
-  const provider = useAppSelector(state =>
-    depositToken?.providerId ? selectPlatformById(state, depositToken.providerId) : undefined
-  );
-
-  const typeLabel = isPool ? 'Pool' : 'Vault';
-
-  const hasDynamicFee = cowcentratedVault?.feeTier === 'Dynamic';
-  return (
-    <BaseVaultClmTag
-      label={`CLM ${typeLabel}`}
-      fee={hasDynamicFee ? cowcentratedVault.feeTier : `${cowcentratedVault.feeTier}%`}
-      longLabel={`Cowcentrated Liquidity Manager ${typeLabel}`}
-      platformName={provider?.name || 'LP'}
-      tickSpacing={cowcentratedVault?.tickSpacing}
-      hideFee={hideFee}
-      hideLabel={hideLabel}
-      css={cssProp}
-      onlyIcon={onlyIcon}
-    />
-  );
-});
-
-const VaultClmTag = memo(function VaultClmTag({
-  vault,
-  hideFee,
-  hideLabel,
-  css: cssProp,
-  onlyIcon,
-}: {
-  vault: VaultCowcentrated;
-  hideFee?: boolean;
-  hideLabel?: boolean;
-  css?: CssStyles;
-  onlyIcon?: boolean;
-}) {
-  const hasDynamicFee = vault.feeTier === 'Dynamic';
-  const depositToken = useAppSelector(state =>
-    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
-  );
-  const provider = useAppSelector(state =>
-    depositToken.providerId ? selectPlatformById(state, depositToken.providerId) : undefined
-  );
-
-  return (
-    <BaseVaultClmTag
-      label={'CLM'}
-      fee={hasDynamicFee ? vault.feeTier : `${vault.feeTier}%`}
-      longLabel={'Cowcentrated Liquidity Manager'}
-      platformName={provider?.name || 'LP'}
-      tickSpacing={vault.tickSpacing}
-      hideFee={hideFee || hasDynamicFee}
-      hideLabel={hideLabel}
-      css={cssProp}
-      onlyIcon={onlyIcon}
-    />
-  );
-});
-
+/**
+ * One tag for every member of a CLM group. The wrapper a row happens to be keyed by is an
+ * implementation detail of how yield is routed, not a different product, so it is not in the label.
+ */
 export const VaultClmLikeTag = memo(function VaultClmLikeTag({
   vault,
-  hideFee,
   hideLabel,
   css: cssProp,
   onlyIcon,
 }: {
   vault: VaultCowcentratedLike;
-  hideFee?: boolean;
   hideLabel?: boolean;
   css?: CssStyles;
   onlyIcon?: boolean;
 }) {
-  if (isCowcentratedGovVault(vault)) {
-    return (
-      <VaultClmPoolOrVaultTag
-        isPool={true}
-        vault={vault}
-        hideFee={true}
-        hideLabel={hideLabel}
-        css={cssProp}
-        onlyIcon={onlyIcon}
-      />
-    );
-  } else if (isCowcentratedStandardVault(vault)) {
-    return (
-      <VaultClmPoolOrVaultTag
-        vault={vault}
-        hideFee={true}
-        hideLabel={hideLabel}
-        css={cssProp}
-        onlyIcon={onlyIcon}
-      />
-    );
-  } else if (isCowcentratedVault(vault)) {
-    return (
-      <VaultClmTag
-        vault={vault}
-        hideFee={hideFee}
-        hideLabel={hideLabel}
-        css={cssProp}
-        onlyIcon={onlyIcon}
-      />
-    );
-  }
+  const clm = useAppSelector(state =>
+    selectCowcentratedVaultById(state, vault.cowcentratedIds.clm)
+  );
+  const depositToken = useAppSelector(state =>
+    selectTokenByAddress(state, clm.chainId, clm.depositTokenAddress)
+  );
+  const provider = useAppSelector(state =>
+    depositToken?.providerId ? selectPlatformById(state, depositToken.providerId) : undefined
+  );
 
-  return null;
+  return (
+    <BaseVaultClmTag
+      label={'CLM'}
+      longLabel={'Cowcentrated Liquidity Manager'}
+      fee={clm.feeTier === 'Dynamic' ? clm.feeTier : `${clm.feeTier}%`}
+      platformName={provider?.name || 'LP'}
+      tickSpacing={clm.tickSpacing}
+      hideLabel={hideLabel}
+      css={cssProp}
+      onlyIcon={onlyIcon}
+    />
+  );
 });
 
 const PointsTag = memo(function PointsTag({ vault }: { vault: VaultEntity }) {
@@ -374,8 +263,8 @@ export type VaultTagsProps = {
 export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: VaultTagsProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const promo = useAppSelector(state => selectActivePromoForVault(state, vaultId));
-  const zapCampaign = useAppSelector(state => selectZapCampaignByVaultId(state, vaultId));
+  const promo = useAppSelector(state => selectActivePromoForVaultGroup(state, vaultId));
+  const zapCampaign = useAppSelector(state => selectZapCampaignForVaultGroup(state, vaultId));
   const isMigratable = useAppSelector(state => selectUserHasBalanceToMigrate(state, vaultId));
   const isStock = useAppSelector(state => selectIsVaultStock(state, vaultId));
   const isGov = isGovVault(vault);
@@ -394,7 +283,7 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
     <VaultTagsContainer isVaultPage={hidePlatform}>
       {!hidePlatform && <VaultPlatformTag vaultId={vaultId} />}
       {isCowcentratedLike ?
-        <VaultClmLikeTag vault={vault} hideFee={!isVaultActive(vault)} />
+        <VaultClmLikeTag vault={vault} />
       : isGov ?
         <VaultTag css={styles.vaultTagPool} text={t('VaultTag-Pool')} />
       : <VaultTag css={styles.vaultTagVault} text={t('VaultTag-Vault')} />}

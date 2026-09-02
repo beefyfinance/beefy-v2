@@ -34,6 +34,7 @@ import { selectIsConfigAvailable } from './data-loader/config.ts';
 
 export const selectAllVaultIdsIncludingHidden = (state: BeefyState) => state.entities.vaults.allIds;
 export const selectAllVisibleVaultIds = (state: BeefyState) => state.entities.vaults.allVisibleIds;
+export const selectAllListVaultIds = (state: BeefyState) => state.entities.vaults.allListIds;
 export const selectAllCowcentratedVaultIds = (state: BeefyState) =>
   state.entities.vaults.byType.cowcentrated.allIds;
 
@@ -107,6 +108,22 @@ export type VaultReplacementMigration = {
   oldVaultId: VaultEntity['id'];
   /** the wrapper vault to migrate into */
   newVaultId: VaultEntity['id'];
+};
+
+/**
+ * Where a CLM group's claimable rewards live. Only the pool side runs a reward pool, so claiming
+ * resolves there whatever the yield mode is set to — the toggle routes deposits and withdrawals,
+ * not claims. Pass-through for anything that is not a CLM wrapper.
+ */
+export const selectClmClaimVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultEntity['id'] => {
+  const vault = selectVaultByIdOrUndefined(state, vaultId);
+  if (!vault || !isCowcentratedLikeVault(vault) || isGovVault(vault)) {
+    return vaultId;
+  }
+  return getCowcentratedPool(vault) ?? vaultId;
 };
 
 /** The active wrapper (gov pool / standard vault) of a CLM that matches the given wrapper kind. */
@@ -464,7 +481,25 @@ export const selectVaultWithReceiptByAddressOrUndefined = (
 
 export const selectAllActiveVaultIds = (state: BeefyState) => state.entities.vaults.allActiveIds;
 
-export const selectTotalActiveVaults = (state: BeefyState) => selectAllActiveVaultIds(state).length;
+/**
+ * Products, not contracts: every active member of a CLM group collapses onto its base CLM, so a
+ * pool + vault pair counts once. Left off `allActiveIds` itself, which featured-vault filtering
+ * still resolves against wrapper ids.
+ */
+export const selectTotalActiveVaults = createSelector(
+  selectAllActiveVaultIds,
+  (state: BeefyState) => state.entities.vaults.byId,
+  (activeIds, byId) => {
+    const products = new Set<VaultEntity['id']>();
+    for (const id of activeIds) {
+      const vault = byId[id];
+      if (vault) {
+        products.add(isCowcentratedLikeVault(vault) ? vault.cowcentratedIds.clm : vault.id);
+      }
+    }
+    return products.size;
+  }
+);
 
 export const selectVaultDepositFee = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
@@ -511,15 +546,15 @@ export const selectVaultIdForVaultPage = createSelector(
     if (!vault) {
       return 'not-found';
     }
-    if (vault.hidden && isCowcentratedVault(vault)) {
+    // base CLM renders the merged page (hidden or not); its pool/vault wrappers redirect into it
+    if (isCowcentratedVault(vault)) {
+      return vault.id;
+    }
+    if (isCowcentratedGovVault(vault) || isCowcentratedStandardVault(vault)) {
       if (featureFlag_disableRedirect()) {
         return vault.id;
       }
-
-      const poolId = getCowcentratedPool(vault);
-      if (poolId) {
-        return poolId;
-      }
+      return vault.cowcentratedIds.clm;
     }
     if (vault.hidden) {
       return 'not-found';
@@ -527,6 +562,15 @@ export const selectVaultIdForVaultPage = createSelector(
     return vault.id;
   }
 );
+/** the CLM a wrapper belongs to, so two ids can be tested for being sides of one product */
+export const selectClmGroupIdOrUndefined = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultEntity['id'] | undefined => {
+  const vault = selectVaultByIdOrUndefined(state, vaultId);
+  return vault && isCowcentratedLikeVault(vault) ? vault.cowcentratedIds.clm : undefined;
+};
+
 /** Returns false if vault is retired or paused and not earning */
 export const selectVaultShouldShowInterest = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),

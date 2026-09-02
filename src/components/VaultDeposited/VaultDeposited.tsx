@@ -1,11 +1,17 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { VaultEntity } from '../../features/data/entities/vault.ts';
+import {
+  getCowcentratedWrapperIds,
+  isCowcentratedVault,
+  type VaultEntity,
+} from '../../features/data/entities/vault.ts';
 import {
   selectUserVaultBalanceInDepositToken,
+  selectUserVaultBalanceInDepositTokenIncludingDisplaced,
   selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken,
   selectUserVaultBalanceInUsdIncludingDisplaced,
 } from '../../features/data/selectors/balance.ts';
+import { BIG_ZERO } from '../../helpers/big-number.ts';
 
 import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
@@ -50,17 +56,36 @@ const selectVaultDepositedStat = (state: BeefyState, vaultId: VaultEntity['id'])
     selectIsPricesAvailable(state) &&
     selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress);
 
-  const { amount: deposit, token: depositToken } =
+  // a merged CLM page sums deposits across the whole group; all members share the CLM token unit
+  const isGroup = isCowcentratedVault(vault);
+  const memberIds = isGroup ? [vault.id, ...getCowcentratedWrapperIds(vault)] : [vault.id];
+
+  const { amount: firstDeposit, token: depositToken } =
     selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken(state, vault.id);
-  const baseDeposit = selectUserVaultBalanceInDepositToken(state, vault.id);
+  const deposit = memberIds
+    .slice(1)
+    .reduce(
+      (sum, id) => sum.plus(selectUserVaultBalanceInDepositTokenIncludingDisplaced(state, id)),
+      firstDeposit
+    );
+  const baseDeposit = memberIds.reduce(
+    (sum, id) => sum.plus(selectUserVaultBalanceInDepositToken(state, id)),
+    BIG_ZERO
+  );
   const hasDeposit = deposit.gt(0);
-  const depositUsd = formatLargeUsd(selectUserVaultBalanceInUsdIncludingDisplaced(state, vaultId));
+  const depositUsd = formatLargeUsd(
+    memberIds.reduce(
+      (sum, id) => sum.plus(selectUserVaultBalanceInUsdIncludingDisplaced(state, id)),
+      BIG_ZERO
+    )
+  );
   const blurred = selectIsBalanceHidden(state);
 
   return {
     vaultId,
     hasDeposit,
-    hasDisplacedDeposit: hasDeposit && deposit.gt(baseDeposit),
+    // displaced tooltip breaks balances down per vault id, which a merged group can't use
+    hasDisplacedDeposit: !isGroup && hasDeposit && deposit.gt(baseDeposit),
     deposit,
     depositUsd,
     depositToken,

@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE, BIG_ZERO, isEqualWithinPercent } from '../../../helpers/big-number.ts';
-import { ClmPnl, PnL } from '../../../helpers/pnl.ts';
+import { ClmPnl, mergeClmPnl, PnL } from '../../../helpers/pnl.ts';
 import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types.ts';
 import type {
   ClmPriceHistoryEntryClassic,
@@ -16,13 +16,16 @@ import {
   isTimelineEntityStandard,
 } from '../entities/analytics.ts';
 import {
+  getCowcentratedGroupIds,
   getCowcentratedPool,
   isCowcentratedLikeVault,
   isCowcentratedStandardVault,
   type VaultEntity,
 } from '../entities/vault.ts';
+import type { ClmUserHarvestsTimeline } from '../actions/analytics.ts';
 import type { AnalyticsIntervalData, AnalyticsState } from '../reducers/analytics-types.ts';
 import type { BeefyState } from '../store/types.ts';
+import { isDefined } from '../utils/array-utils.ts';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils.ts';
 import {
   type AmountUsd,
@@ -30,6 +33,7 @@ import {
   type PnlYieldTotal,
   type TokenEntryNow,
   type UsdChange,
+  type UserClmGroupPnl,
   type UserClmPnl,
   type UserErc4626Pnl,
   type UserGovPnl,
@@ -40,6 +44,7 @@ import {
   selectGovVaultPendingRewardsWithPrice,
   selectUserDepositedVaultIds,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
+  selectUserVaultBalanceInUsdIncludingDisplaced,
 } from './balance.ts';
 import { selectAllChainIds } from './chains.ts';
 import { selectHasBalanceSettledForChainUser } from './data-loader/balance.ts';
@@ -54,7 +59,7 @@ import {
   selectTokenPriceByAddress,
 } from './tokens.ts';
 import {
-  selectUserMerklRewardsForVault,
+  selectUserMerklRewardsAttributedToVault,
   selectUserStellaSwapRewardsForVault,
 } from './user-rewards.ts';
 import {
@@ -282,7 +287,7 @@ function makeUsdChange(before: BigNumber, after: BigNumber): UsdChange {
   };
 }
 
-export const selectClmPnl = (
+const computeClmPnl = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -439,7 +444,9 @@ export const selectClmPnl = (
 
   // Merkl/StellaSwap: Claimed + Unclaimed rewards
   // TODO: fetch merkl claims and use usd price at time of claim?
-  const merklRewards = selectUserMerklRewardsForVault(state, vaultId, walletAddress);
+  // attributed-to-this-vault only: the group-wide selector is for display, and summing it per side
+  // in mergeClmPnl would count every group reward once per wrapper the user holds
+  const merklRewards = selectUserMerklRewardsAttributedToVault(state, vaultId, walletAddress);
   const stellaSwapRewards = selectUserStellaSwapRewardsForVault(state, vaultId, walletAddress);
   const offChainRewards = [
     ...(merklRewards ? merklRewards.map(r => ({ ...r, source: 'merkl' as const })) : []),
@@ -588,6 +595,69 @@ export const selectClmPnl = (
   };
 };
 
+/**
+ * ~300 lines and ~40 BigNumber allocations per call, hit several times per render and twice more
+ * per group. Keyed on the root state object, which redux replaces whenever any slice changes, so a
+ * hit is only ever served for the exact state it was computed from.
+ */
+const clmPnlCache = new WeakMap<BeefyState, Map<string, UserClmPnl>>();
+
+export const selectClmPnl = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+): UserClmPnl => {
+  const address = walletAddress ?? selectWalletAddress(state);
+  if (!address) {
+    throw new Error('No wallet address provided');
+  }
+
+  const key = `${address}-${vaultId}`;
+  let byKey = clmPnlCache.get(state);
+  if (!byKey) {
+    byKey = new Map();
+    clmPnlCache.set(state, byKey);
+  }
+  const cached = byKey.get(key);
+  if (cached) {
+    return cached;
+  }
+
+  const result = computeClmPnl(state, vaultId, address);
+  byKey.set(key, result);
+  return result;
+};
+
+/**
+ * A merged CLM's combined position across both yield modes. Only sides the user actually holds are
+ * merged: an empty side contributes zeros whose derived ratios are meaningless. Falls back to the
+ * single side for anything that is not a merged CLM.
+ */
+export const selectClmGroupPnl = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+): UserClmGroupPnl => {
+  const address = walletAddress ?? selectWalletAddress(state);
+  if (!address) {
+    throw new Error('No wallet address provided');
+  }
+
+  const vault = selectCowcentratedLikeVaultById(state, vaultId);
+  const heldIds = getCowcentratedGroupIds(vault).filter(
+    id =>
+      id !== vault.cowcentratedIds.clm &&
+      selectUserVaultBalanceInUsdIncludingDisplaced(state, id, address).gt(BIG_ZERO)
+  );
+
+  // nothing held anywhere: report on the requested side so the caller still gets a shaped result
+  if (!heldIds.length) {
+    return selectClmPnl(state, vaultId, address);
+  }
+
+  return mergeClmPnl(heldIds.map(id => selectClmPnl(state, id, address)));
+};
+
 export const selectVaultPnl = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
@@ -700,19 +770,6 @@ export const selectUserClmHarvestTimelineByVaultId = createCachedSelector(
   }
 )((_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
 
-export const selectUserClmVaultHarvestTimelineByVaultId = createCachedSelector(
-  (state: BeefyState, _vaultId: VaultEntity['id'], address?: string) =>
-    selectUserAnalytics(state, address),
-  (_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId,
-  (userAnalytics, vaultId) => {
-    if (!userAnalytics) {
-      return undefined;
-    }
-
-    return userAnalytics.clmVaultHarvests.byVaultId[vaultId] || undefined;
-  }
-)((_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
-
 const selectClmHasPendingFeesOrHarvestsByVaultId = createSelector(
   [selectCowcentratedLikeVaultById, selectClmPendingRewardsByVaultId, selectClmHarvestsByVaultId],
   (vault, pendingRewards, harvests) => {
@@ -756,11 +813,8 @@ export const selectClmAutocompoundedPendingFeesByVaultId = (
   const { price: token0Price, symbol: token0Symbol, decimals: token0Decimals } = token0;
   const { price: token1Price, symbol: token1Symbol, decimals: token1Decimals } = token1;
 
-  const vault = selectCowcentratedLikeVaultById(state, vaultId);
-  const harvestTimeline =
-    isCowcentratedStandardVault(vault) ?
-      selectUserClmVaultHarvestTimelineByVaultId(state, vaultId, walletAddress)
-    : selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress);
+  // group-wide so the header agrees with the fees chart, which merges both sides
+  const harvestTimeline = selectClmGroupHarvestTimeline(state, vaultId, walletAddress);
   const compoundedYield =
     harvestTimeline ?
       {
@@ -821,4 +875,69 @@ export const selectClmAutocompoundedPendingFeesByVaultId = (
     token0Decimals,
     token1Decimals,
   };
+};
+
+/**
+ * Combine per-side compounded-fee timelines. Both sides earn the same CLM's trading fees in the
+ * same two tokens, attributed by that side's balance, so amounts and USD sum. Harvests are
+ * concatenated in time order and re-cumulated, since each side's running totals only counted itself.
+ */
+export function mergeClmHarvestTimelines(
+  timelines: ClmUserHarvestsTimeline[]
+): ClmUserHarvestsTimeline {
+  const present = timelines.filter(t => t.harvests.length > 0);
+  if (present.length === 0) {
+    return timelines[0];
+  }
+  if (present.length === 1) {
+    return present[0];
+  }
+
+  const tokens = present[0].tokens;
+  const sumPerToken = (pick: (t: ClmUserHarvestsTimeline) => BigNumber[]) =>
+    tokens.map((_, i) => present.reduce((acc, t) => acc.plus(pick(t)[i] ?? BIG_ZERO), BIG_ZERO));
+
+  const cumulativeAmounts = tokens.map(() => BIG_ZERO);
+  const cumulativeAmountsUsd = tokens.map(() => BIG_ZERO);
+  let cumulativeTotalUsd = BIG_ZERO;
+
+  const harvests = present
+    .flatMap(t => t.harvests)
+    .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
+    .map(harvest => {
+      harvest.amounts.forEach((amount, i) => {
+        cumulativeAmounts[i] = cumulativeAmounts[i].plus(amount);
+        cumulativeAmountsUsd[i] = cumulativeAmountsUsd[i].plus(harvest.amountsUsd[i]);
+      });
+      cumulativeTotalUsd = cumulativeTotalUsd.plus(harvest.totalUsd);
+      return {
+        ...harvest,
+        cumulativeAmounts: [...cumulativeAmounts],
+        cumulativeAmountsUsd: [...cumulativeAmountsUsd],
+        cumulativeTotalUsd,
+      };
+    });
+
+  return {
+    tokens,
+    harvests,
+    totals: sumPerToken(t => t.totals),
+    totalsUsd: sumPerToken(t => t.totalsUsd),
+    totalUsd: present.reduce((acc, t) => acc.plus(t.totalUsd), BIG_ZERO),
+  };
+}
+
+/** Compounded fees across every side of a CLM group the user holds. */
+export const selectClmGroupHarvestTimeline = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+): ClmUserHarvestsTimeline | undefined => {
+  const vault = selectCowcentratedLikeVaultById(state, vaultId);
+  const timelines = getCowcentratedGroupIds(vault)
+    .filter(id => id !== vault.cowcentratedIds.clm)
+    .map(id => selectUserClmHarvestTimelineByVaultId(state, id, walletAddress))
+    .filter(isDefined);
+
+  return timelines.length ? mergeClmHarvestTimelines(timelines) : undefined;
 };
