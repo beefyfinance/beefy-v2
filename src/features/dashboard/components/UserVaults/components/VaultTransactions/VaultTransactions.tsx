@@ -1,4 +1,5 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { forwardRef, memo, type Ref, useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { Transaction, TransactionMobile } from './components/Transaction/Transaction.tsx';
 import { TransactionsFilter } from './components/TransactionsFilter/TransactionsFilter.tsx';
@@ -10,7 +11,7 @@ import type {
   TimelineEntryCowcentratedVault,
   TimelineEntryStandard,
 } from '../../../../../data/entities/analytics.ts';
-import { GroupedVirtuoso } from 'react-virtuoso';
+import { type Components, GroupedVirtuoso, type ListProps } from 'react-virtuoso';
 import { styled } from '@repo/styles/jsx';
 import { countBy } from '../../../../../../helpers/collection.ts';
 import { keys } from '../../../../../../helpers/object.ts';
@@ -38,10 +39,28 @@ const scrollerClass = css({
 
 const increaseViewportBy = { top: 50, bottom: 50 };
 
+// virtuoso measures row-gap itself, so rows can be spaced like any other list
+const listClass = css({
+  display: 'grid',
+  gridTemplateColumns: 'minmax(0, 1fr)',
+  rowGap: '2px',
+});
+
+const StyledList = memo(
+  forwardRef(function (props: ListProps, ref: Ref<HTMLDivElement>) {
+    return <div ref={ref} {...props} className={listClass} />;
+  })
+);
+
+const components: Components<AnyTimelineEntry> = {
+  List: StyledList,
+};
+
 export const VaultTransactions = memo(function VaultTransactions({
   vaultId,
   address,
 }: VaultTransactionsProps) {
+  const { t } = useTranslation();
   const { sortedTimeline, sortedOptions, handleSort } = useSortedTransactionHistory(
     vaultId,
     address
@@ -52,26 +71,27 @@ export const VaultTransactions = memo(function VaultTransactions({
   const containerHeight = Math.min(listHeight, 500);
   const { sort } = sortedOptions;
   const { groups, groupCounts } = useMemo((): GroupData => {
-    if (sort !== 'datetime') {
-      return {
-        groups: ['all'],
-        groupCounts: [sortedTimeline.length],
-      };
+    if (sort === 'datetime') {
+      const counts = countBy(sortedTimeline, tx => tx.timeline);
+      const groups = keys(counts);
+      if (groups.length > 1) {
+        return { groups, groupCounts: Object.values(counts) };
+      }
     }
 
-    const counts = countBy(sortedTimeline, tx => tx.timeline);
-    return {
-      groups: keys(counts),
-      groupCounts: Object.values(counts),
-    };
+    return { groups: ['all'], groupCounts: [sortedTimeline.length] };
   }, [sortedTimeline, sort]);
 
   const renderGroup = useCallback(
     (groupIndex: number) => {
-      const group = groups[groupIndex];
-      return <TransactionsGroup group={group}>{group}</TransactionsGroup>;
+      const isNote = groups[groupIndex] === 'past';
+      return (
+        <TransactionsGroup note={isNote}>
+          {isNote ? t('Dashboard-Transactions-PastNote') : null}
+        </TransactionsGroup>
+      );
     },
-    [groups]
+    [groups, t]
   );
   const renderItem = useCallback(
     (index: number, _groupIndex: number) => {
@@ -88,6 +108,7 @@ export const VaultTransactions = memo(function VaultTransactions({
         <GroupedVirtuoso
           className={scrollerClass}
           groupCounts={groupCounts}
+          components={components}
           totalListHeightChanged={setListHeight}
           groupContent={renderGroup}
           itemContent={renderItem}
@@ -102,6 +123,10 @@ export const VaultTransactions = memo(function VaultTransactions({
 const Transactions = styled('div', {
   base: {
     maxHeight: '500px',
+    mdDown: {
+      // rows match what is behind them on mobile, so the gaps need their own ground
+      backgroundColor: 'background.body',
+    },
   },
 });
 
@@ -116,21 +141,23 @@ const TransactionsGrid = styled('div', {
 });
 
 const TransactionsGroup = styled('div', {
-  base: {
-    padding: '8px 16px',
-    backgroundColor: 'darkBlue.60',
-    textStyle: 'subline.sm.semiBold',
-  },
   variants: {
-    group: {
-      current: {},
-      past: {},
-      all: {
+    note: {
+      true: {
+        textStyle: 'subline.sm',
+        color: 'text.dark',
+        textAlign: 'center',
+        padding: '4px',
+        // sticky, so it needs an opaque background
+        backgroundColor: 'background.content.dark',
+        mdDown: {
+          backgroundColor: 'background.body',
+        },
+      },
+      // virtuoso always renders a group header, so give it nothing to show
+      false: {
         height: '1px',
-        padding: '0',
-        overflow: 'hidden',
         visibility: 'hidden',
-        pointerEvents: 'none',
       },
     },
   },
