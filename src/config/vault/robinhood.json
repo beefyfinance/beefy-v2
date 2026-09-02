@@ -1,5 +1,83 @@
 [
   {
+    "id": "uniswap-cow-robinhood-weth-boner-rp",
+    "name": "BONER-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodWETH-BONER",
+    "tokenAddress": "0x3dfd9C1f55546e3281866c81EbfA2Ec707575529",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x527c1Cbb12B3e6432d48ba77fF1fcd0b025805b0",
+    "earnedToken": "rCowUniswapRobinhoodWETH-BONER",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-boner",
+    "status": "active",
+    "createdAt": 1788388931,
+    "platformId": "uniswap",
+    "assets": ["BONER", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-weth-boner",
+    "name": "BONER-WETH",
+    "type": "cowcentrated",
+    "token": "BONER-WETH uniswap",
+    "tokenAddress": "0xBd5cd6515ca6285941FbC177381dC8ED4844e6b8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0x98096d17e191B3dA1d5f99a6D7b3584351b11E18"
+    ],
+    "earnContractAddress": "0x3dfd9C1f55546e3281866c81EbfA2Ec707575529",
+    "earnedToken": "cowUniswapRobinhoodWETH-BONER",
+    "earnedTokenAddress": "0x3dfd9C1f55546e3281866c81EbfA2Ec707575529",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-boner",
+    "status": "active",
+    "createdAt": 1788388931,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["BONER", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-robinhood-weth-cbbtc-rp",
     "name": "cbBTC-WETH Reward Pool",
     "type": "gov",
