@@ -1,5 +1,4 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { isEqual } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
@@ -24,6 +23,7 @@ import {
   type VaultEntity,
   type VaultGov,
 } from '../entities/vault.ts';
+import { deepEqualBigNumberAware } from '../utils/selector-equality.ts';
 import type { BeefyState } from '../store/types.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
@@ -635,7 +635,7 @@ export const selectVaultUserBalanceInDepositTokenBreakdown = createCachedSelecto
 
     return balances;
   },
-  { memoizeOptions: { resultEqualityCheck: isEqual } }
+  { memoizeOptions: { resultEqualityCheck: deepEqualBigNumberAware } }
 )(
   (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
     `${vaultId}-${walletAddress ?? ''}`

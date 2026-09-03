@@ -1,5 +1,6 @@
 import type { Draft } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
+import { bigNumberEqual } from './selector-equality.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { FilteredVaultsPreset, FilterValues } from '../reducers/filtered-vaults-types.ts';
 import { areArraysEqual, isOneOf } from './array-utils.ts';
@@ -61,7 +62,7 @@ function valueEqual(a: unknown, b: unknown): boolean {
     return areArraysEqual(a, b);
   }
   if (BigNumber.isBigNumber(a) && BigNumber.isBigNumber(b)) {
-    return a.eq(b);
+    return bigNumberEqual(a, b);
   }
   if (a && b && typeof a === 'object' && typeof b === 'object') {
     const aEntries = Object.entries(a);

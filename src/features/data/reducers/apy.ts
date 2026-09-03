@@ -6,6 +6,7 @@ import {
   recalculateAvgApyAction,
   recalculateTotalApyAction,
 } from '../actions/apy.ts';
+import { numberEqual } from '../utils/selector-equality.ts';
 import type { ApyContractState, ApyState, TotalApy } from './apy-types.ts';
 
 /** avoid new state ref if entry hasn't changed */
@@ -33,7 +34,11 @@ function totalApyEqual(a: TotalApy, b: TotalApy): boolean {
   const ka = Object.keys(a) as Array<keyof TotalApy>;
   const kb = Object.keys(b) as Array<keyof TotalApy>;
   if (ka.length !== kb.length) return false;
-  return ka.every(k => a[k] === b[k]);
+  return ka.every(k => {
+    const av = a[k];
+    const bv = b[k];
+    return typeof av === 'number' && typeof bv === 'number' ? numberEqual(av, bv) : av === bv;
+  });
 }
 
 export const initialApyState: ApyState = {
