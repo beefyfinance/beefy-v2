@@ -1,6 +1,4 @@
 import { isAnyOf, isFulfilled } from '@reduxjs/toolkit';
-import { REHYDRATE } from 'redux-persist/es/constants';
-import type { RehydrateAction } from 'redux-persist/es/types';
 import { recalculateAvgApyAction, recalculateTotalApyAction } from '../actions/apy.ts';
 import {
   fetchAllBalanceAction,
@@ -13,10 +11,17 @@ import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
 import { fetchPlatforms } from '../actions/platforms.ts';
 import { fetchAllPricesAction } from '../actions/prices.ts';
 import { initPromos, promosRecalculatePinned } from '../actions/promos.ts';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
+import {
+  fetchAddressBookAction,
+  fetchAllAddressBookAction,
+  reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
+} from '../actions/tokens.ts';
 import { fetchAllVaults } from '../actions/vaults.ts';
 import { calculateZapAvailabilityAction } from '../actions/zap.ts';
+import { storeFilters } from '../reducers/filtered-vaults-storage.ts';
 import { filteredVaultsActions } from '../reducers/filtered-vaults.ts';
+import { savedVaultsActions } from '../reducers/saved-vaults.ts';
+import { diffFilterValues } from '../utils/filter-values.ts';
 import {
   accountHasChanged,
   chainHasChanged,
@@ -24,22 +29,10 @@ import {
   userDidConnect,
   walletHasDisconnected,
 } from '../reducers/wallet/wallet.ts';
+import { selectActiveChainIds } from '../selectors/chains.ts';
 import { selectIsConfigAvailable } from '../selectors/data-loader/config.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
 import { startAppListening } from './listener-middleware.ts';
-
-type UnknownRehydrateAction = RehydrateAction & {
-  [extraProps: string]: unknown;
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isRehydrateAction(action: any): action is UnknownRehydrateAction {
-  return action.type === REHYDRATE;
-}
-
-function isRehydrateFiltersAction(action: unknown): action is UnknownRehydrateAction {
-  return isRehydrateAction(action) && action.key === 'filters';
-}
 
 const hasDataLoaded = isFulfilled(fetchChainConfigs, fetchAllVaults, fetchPlatforms, initPromos);
 
@@ -55,25 +48,18 @@ const hasDataChanged = isFulfilled(
   recalculateAvgApyAction
 );
 
-const hasFiltersChanged = isAnyOf(
+const hasAddressbookLoaded = isFulfilled(fetchAllAddressBookAction, fetchAddressBookAction);
+
+const hasFiltersChangedViaUI = isAnyOf(
   filteredVaultsActions.reset,
-  filteredVaultsActions.setVaultCategory,
-  filteredVaultsActions.setUserCategory,
-  filteredVaultsActions.setStrategyType,
-  filteredVaultsActions.setAssetType,
-  filteredVaultsActions.setSearchText,
-  filteredVaultsActions.setChainIds,
-  filteredVaultsActions.setPlatformIds,
-  filteredVaultsActions.setBoolean,
-  filteredVaultsActions.setBigNumber,
-  isRehydrateFiltersAction
+  filteredVaultsActions.set,
+  filteredVaultsActions.update
 );
 
-const hasSortChanged = isAnyOf(
-  filteredVaultsActions.setSort,
-  filteredVaultsActions.setSortDirection,
-  filteredVaultsActions.setSortFieldAndDirection,
-  filteredVaultsActions.setSubSort
+const hasFiltersChanged = isAnyOf(
+  hasFiltersChangedViaUI,
+  filteredVaultsActions.setFromUrl,
+  filteredVaultsActions.reconcile
 );
 
 const hasWalletChanged = isAnyOf(
@@ -84,15 +70,23 @@ const hasWalletChanged = isAnyOf(
   chainHasChangedToUnsupported
 );
 
-const hasAnyChanged = isAnyOf(hasFiltersChanged, hasSortChanged);
-
 export function addFilteredVaultsListeners() {
-  /**
-   * This middleware listens for when all actions that have loaded data have been fulfilled and recalculates the filtered vaults
-   */
+  /** Persist the pending filters whenever they change */
+  startAppListening({
+    matcher: hasFiltersChanged,
+    effect: (_action, { getState }) => {
+      const fv = getState().ui.filteredVaults;
+      storeFilters(fv.pending, fv.sortPickedDuringSearch);
+    },
+  });
+
+  /** Recalculate the filtered vaults and starts listening for changes after all data has loaded */
   startAppListening({
     matcher: hasDataLoaded,
-    effect: async (_action, { dispatch, condition, cancelActiveListeners, unsubscribe }) => {
+    effect: async (
+      _action,
+      { dispatch, getState, condition, cancelActiveListeners, unsubscribe }
+    ) => {
       // Stop listening for this
       unsubscribe();
       cancelActiveListeners();
@@ -103,15 +97,27 @@ export function addFilteredVaultsListeners() {
       // Start listening for changes
       listenForChanges();
 
-      // Calculate
-      dispatch(recalculateFilteredVaultsAction({ dataChanged: true }));
+      // reconcile potentially outdated filters from async loaded data
+      dispatch(
+        filteredVaultsActions.reconcile({
+          platformIds: getState().entities.platforms.allIds,
+          chainIds: selectActiveChainIds(getState()),
+        })
+      );
+
+      // first run mark all changed
+      dispatch(
+        recalculateFilteredVaultsAction({
+          dataChanged: true,
+          filtersChanged: true,
+          sortChanged: true,
+        })
+      );
     },
   });
 
   function listenForChanges() {
-    /**
-     * This middleware listens for actions that affect vaults data and recalculates the filtered vaults
-     */
+    /** Long debounced recalculate when global data changes */
     startAppListening({
       matcher: hasDataChanged,
       effect: async (_action, { dispatch, delay, cancelActiveListeners }) => {
@@ -125,9 +131,7 @@ export function addFilteredVaultsListeners() {
       },
     });
 
-    /**
-     * This middleware listens for actions that changes the connected wallet and recalculates the filtered vaults
-     */
+    /** Short debounced recalculate when user wallet changes */
     startAppListening({
       matcher: hasWalletChanged,
       effect: async (
@@ -144,22 +148,57 @@ export function addFilteredVaultsListeners() {
       },
     });
 
-    /**
-     * This middleware listens for actions that change the filters or sort and recalculates the filtered vaults
-     */
+    /** Short debounced recalculate when user changes filteres in UI */
     startAppListening({
-      matcher: hasAnyChanged,
-      effect: async (action, { dispatch, delay, cancelActiveListeners }) => {
-        // Debounce
+      matcher: hasFiltersChangedViaUI,
+      effect: async (_action, { dispatch, delay, getState, cancelActiveListeners }) => {
+        // debounce to batch filter updates
         cancelActiveListeners();
         await delay(50);
 
-        // Recalculate
+        // flags come from the diff, not the action, so a cancelled run's changes are never lost
+        const slice = getState().ui.filteredVaults;
+        const { filtersChanged, sortChanged } = diffFilterValues(slice.pending, slice.applied);
+        if (!filtersChanged && !sortChanged) {
+          return;
+        }
+
+        // recalc reads pending and commits it to applied on completion
+        await dispatch(recalculateFilteredVaultsAction({ filtersChanged, sortChanged }));
+      },
+    });
+
+    /** Immediate recalculate when a incoming url applies filters */
+    startAppListening({
+      matcher: isAnyOf(filteredVaultsActions.setFromUrl),
+      effect: async (_action, { dispatch, cancelActiveListeners }) => {
+        cancelActiveListeners();
         await dispatch(
-          recalculateFilteredVaultsAction(
-            hasFiltersChanged(action) ? { filtersChanged: true } : { sortChanged: true }
-          )
+          recalculateFilteredVaultsAction({ filtersChanged: true, sortChanged: true })
         );
+      },
+    });
+
+    /** category/platform membership depend on address book */
+    startAppListening({
+      matcher: hasAddressbookLoaded,
+      effect: async (_action, { dispatch, delay, cancelActiveListeners }) => {
+        cancelActiveListeners();
+        await delay(50);
+        await dispatch(recalculateFilteredVaultsAction({ filtersChanged: true }));
+      },
+    });
+
+    /** Recalculate when the saved set changes while the saved category is applied */
+    startAppListening({
+      matcher: isAnyOf(savedVaultsActions.setSavedVaultIds),
+      effect: async (_action, { dispatch, getState, cancelActiveListeners }) => {
+        // skip if not on that tab
+        if (getState().ui.filteredVaults.pending.userCategory !== 'saved') {
+          return;
+        }
+        cancelActiveListeners();
+        await dispatch(recalculateFilteredVaultsAction({ filtersChanged: true }));
       },
     });
   }

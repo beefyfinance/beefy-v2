@@ -37,7 +37,7 @@ export function splitLastWrap(text: string, nbsp: boolean = false): [string, str
  * @param haystack
  * @param needles
  */
-function lastIndexOfAny(haystack: string, needles: string[]): number {
+function lastIndexOfAny(haystack: string, needles: readonly string[]): number {
   for (let i = haystack.length - 1; i >= 0; i--) {
     if (needles.includes(haystack[i])) {
       return i;
@@ -65,4 +65,49 @@ export function stringFoundAnywhere(
 
 export function ucFirstLetter<T extends string>(word: T): Capitalize<T> {
   return `${word.charAt(0).toUpperCase()}${word.slice(1)}` as Capitalize<T>;
+}
+
+/** 0 exact, 1 prefix, 2 substring, 3 no match */
+export function rankStringMatch(text: string, needle: string): number {
+  return (
+    text === needle ? 0
+    : text.startsWith(needle) ? 1
+    : text.includes(needle) ? 2
+    : 3
+  );
+}
+
+/**
+ * Levenshtein distance between a and b, capped at max: returns max + 1 once the distance exceeds max
+ */
+export function boundedLevenshtein(a: string, b: string, max: number): number {
+  if (a === b) {
+    return 0;
+  }
+  if (Math.abs(a.length - b.length) > max) {
+    return max + 1;
+  }
+  if (a.length > b.length) {
+    [a, b] = [b, a];
+  }
+  let prev = Array.from({ length: a.length + 1 }, (_, i) => i);
+  let curr = new Array<number>(a.length + 1);
+  for (let j = 1; j <= b.length; j++) {
+    curr[0] = j;
+    let rowMin = curr[0];
+    for (let i = 1; i <= a.length; i++) {
+      curr[i] = Math.min(
+        prev[i] + 1,
+        curr[i - 1] + 1,
+        prev[i - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
+      );
+      rowMin = Math.min(rowMin, curr[i]);
+    }
+    // every cell in this row exceeds max, so the final distance must too
+    if (rowMin > max) {
+      return max + 1;
+    }
+    [prev, curr] = [curr, prev];
+  }
+  return prev[a.length] > max ? max + 1 : prev[a.length];
 }

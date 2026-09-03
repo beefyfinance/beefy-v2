@@ -42,12 +42,7 @@ import {
   onlyOneToken,
   onlyOneTokenAmount,
 } from '../../helpers/options.ts';
-import {
-  calculatePriceImpact,
-  highestFeeOrZero,
-  totalValueOfTokenAmounts,
-  ZERO_FEE,
-} from '../../helpers/quotes.ts';
+import { calculatePriceImpact, totalValueOfTokenAmounts, ZERO_FEE } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, pickTokens, tokensToLp } from '../../helpers/tokens.ts';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
@@ -65,7 +60,6 @@ import {
   isZapQuoteStepWithdraw,
   SelectionOrder,
   type TokenAmount,
-  type ZapFee,
   type ZapQuoteStep,
   type ZapQuoteStepBuild,
   type ZapQuoteStepSplit,
@@ -90,6 +84,7 @@ import type {
   ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { GammaStrategyConfig } from '../strategy-configs.ts';
+import { canRouteToAllOf } from '../strategy-eligibility.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -425,14 +420,14 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
     return {
       id: createQuoteId(option.id),
       strategyId: 'gamma',
-      priceImpact: calculatePriceImpact(inputs, outputs, returned, state), // includes the zap fee
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       option,
       inputs,
       outputs,
       returned,
       allowances,
       steps,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
       lpQuotes: quotePerLpToken,
     };
   }
@@ -647,6 +642,7 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
       strategyId: 'gamma',
       depositToken: this.vaultType.depositToken,
       lpTokens: this.lpTokens,
+      feeable: false,
     };
 
     return [breakOption].concat(
@@ -733,12 +729,11 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
 
     let outputs: TokenAmount[];
     let returned: TokenAmount[];
-    let fee: ZapFee;
     let steps: ZapQuoteStep[];
 
     if (option.swapVia === 'aggregator') {
       // swap via aggregator
-      ({ outputs, returned, steps, fee } = await this.fetchWithdrawQuoteAggregator(
+      ({ outputs, returned, steps } = await this.fetchWithdrawQuoteAggregator(
         option,
         breakOutputs,
         breakReturned,
@@ -749,7 +744,6 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
       outputs = breakOutputs;
       steps = breakSteps;
       returned = breakReturned;
-      fee = ZERO_FEE;
     }
 
     if (returned.length > 0) {
@@ -759,7 +753,6 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
       });
     }
 
-    // return break only
     return {
       id: createQuoteId(option.id),
       strategyId: 'gamma',
@@ -770,7 +763,7 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
       returned,
       allowances,
       steps,
-      fee,
+      fee: ZERO_FEE,
     };
   }
 
@@ -856,7 +849,7 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
       outputs,
       returned: mergeTokenAmounts(breakReturned, unused),
       steps,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
     };
   }
 
@@ -1054,6 +1047,14 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
       pending: false,
       extraInfo: { zap: true, vaultId: quote.option.vaultId },
     };
+  }
+
+  async canAcceptTokenAsDeposit(token: TokenEntity): Promise<boolean> {
+    return canRouteToAllOf(this.helpers, this.options.swap, this.lpTokens, token);
+  }
+
+  async canEmitTokenAsWithdraw(token: TokenEntity): Promise<boolean> {
+    return canRouteToAllOf(this.helpers, this.options.swap, this.lpTokens, token);
   }
 
   protected async aggregatorTokenSupport() {

@@ -1,5 +1,5 @@
 import { memo, useCallback, useRef } from 'react';
-import FileCopy from '../../images/icons/CopyToClipboard.svg?react';
+import FileCopy from '../../images/icons/copy.svg?react';
 import { cx, sva } from '@repo/styles/css';
 import { useCopyToClipboard } from '../../hooks/useCopyToClipboard.ts';
 

@@ -7,7 +7,8 @@ export const styles = {
     flexDirection: 'column',
     gap: '16px',
     sm: {
-      padding: '24px',
+      paddingInline: '24px',
+      paddingBlock: '20px 24px',
     },
   }),
   description: css.raw({

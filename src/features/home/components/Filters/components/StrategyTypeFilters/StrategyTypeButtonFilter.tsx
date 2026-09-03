@@ -22,7 +22,7 @@ export const StrategyTypeButtonFilter = memo(function StrategyTypeButtonFilter()
   const value = useAppSelector(selectFilterStrategyType);
   const handleChange = useCallback(
     (value: StrategiesType) => {
-      dispatch(filteredVaultsActions.setStrategyType(value));
+      dispatch(filteredVaultsActions.update({ strategyType: value }));
     },
     [dispatch]
   );

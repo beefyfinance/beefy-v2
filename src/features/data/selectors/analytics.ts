@@ -41,6 +41,8 @@ import {
   selectUserDepositedVaultIds,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
 } from './balance.ts';
+import { selectAllChainIds } from './chains.ts';
+import { selectHasBalanceSettledForChainUser } from './data-loader/balance.ts';
 import { selectIsConfigAvailable } from './data-loader/config.ts';
 import { hasLoaderFulfilledOnce } from './data-loader-helpers.ts';
 import { selectFeesByVaultId } from './fees.ts';
@@ -157,8 +159,12 @@ export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAd
 
   // do not wait if user has no deposits and fetch wallet timeline has not dispatched
   // [as we don't dispatch fetch wallet timeline for users with no deposits]
+  // "no deposits" can only be trusted once every chain's balance has settled,
+  // as until then deposits may exist on a chain we have not checked yet
   if (!hasDepositedVaults && timelineIdle) {
-    return true;
+    return selectAllChainIds(state).every(chainId =>
+      selectHasBalanceSettledForChainUser(state, chainId, addressLower)
+    );
   }
 
   return selectIsAnalyticsLoadedByAddress(state, addressLower);

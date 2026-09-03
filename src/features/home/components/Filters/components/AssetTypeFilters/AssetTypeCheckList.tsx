@@ -26,7 +26,9 @@ export const AssetTypeCheckList = memo(function AssetTypeCheckList() {
   const handleChange = useCallback(
     (selected: VaultAssetType[]) => {
       dispatch(
-        filteredVaultsActions.setAssetType(selected.length === options.length ? [] : selected)
+        filteredVaultsActions.update({
+          assetType: selected.length === options.length ? [] : selected,
+        })
       );
     },
     [dispatch, options]

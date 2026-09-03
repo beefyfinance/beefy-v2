@@ -74,6 +74,7 @@ export interface VaultConfig {
   showWarning?: boolean | null;
   warning?: string | null;
   migrationIds?: string[];
+  replacementVaultId?: string;
   /** Map of chain->address of bridged receipt tokens */
   bridged?: Record<ChainEntity['id'], string>;
   /* Oracle can be ChainLink | Pyth, then the oracle address*/
@@ -84,12 +85,25 @@ export interface VaultConfig {
   };
   pointStructureIds?: string[];
   feeTier?: string;
+  tickSpacing?: number;
   /** tmp: exclude from being loaded */
   hidden?: boolean;
   poolTogether?: string;
   curatorId?: CuratorEntity['id'];
   underlyingPlatformUrl?: string;
 }
+
+export interface RestrictionProfileConfig {
+  countries: string[];
+  tokens: {
+    [chainId in ChainEntity['id']]?: string[];
+  };
+  assets?: {
+    [chainId in ChainEntity['id']]?: string[];
+  };
+}
+
+export type RestrictionsConfig = Record<string, RestrictionProfileConfig>;
 
 export interface PartnersConfig {
   QiDao: VaultEntity['id'][];
@@ -202,7 +216,8 @@ type ChainId =
   | 'hyperevm'
   | 'plasma'
   | 'monad'
-  | 'megaeth';
+  | 'megaeth'
+  | 'robinhood';
 
 export type ChainConfig = {
   id: ChainId;
@@ -284,7 +299,44 @@ export interface ZapConfig {
   router: string;
   manager: string;
   chainId: ChainEntity['id'];
+  feeRecipient: string;
+  feeBps: number;
 }
+
+export type ZapFeeEndpointMatcher = {
+  token?: {
+    chainIds?: ChainEntity['id'][];
+    ids?: string[];
+    addresses?: string[];
+    symbols?: string[];
+    oracleIds?: string[];
+    tags?: string[];
+  };
+  vault?: {
+    chainIds?: ChainEntity['id'][];
+    ids?: string[];
+    platformIds?: string[];
+    strategyTypeIds?: string[];
+    assetTypes?: string[];
+    assetIds?: string[];
+    statuses?: string[];
+  };
+};
+
+// Endpoint-scoped: a rule constrains the input side and/or output side; direction (deposit/withdraw) is
+// emergent. The resulting fee is `bps` (clamped to <= base; 0 = free). At least one of input/output is required.
+export type ZapFeeRule = {
+  id: string;
+  bps: number;
+  input?: ZapFeeEndpointMatcher;
+  output?: ZapFeeEndpointMatcher;
+  // Opt-in: feature this campaign on the vault list (single-sided-with-vault rules only; engine derives the side).
+  featured?: boolean;
+  // Short campaign blurb, shown next to the fee when this rule applies (display not yet wired).
+  description?: string;
+  startsAt?: number;
+  endsAt?: number;
+};
 
 export interface OneInchSwapConfig {
   id: string;
@@ -380,52 +432,54 @@ export interface CuratorConfig {
   readonly website?: string;
 }
 
-export interface TokenHoldingConfig {
-  id: string;
+interface TreasuryHoldingConfigBase {
   name: string;
   address: string;
   decimals: number;
   oracleId: string;
-  oracleType: 'lps' | 'token' | 'validator';
-  assetType: 'token' | 'native' | 'validator' | 'concLiquidity';
+  oracleType: 'lps' | 'tokens';
   price: number;
   usdValue: string;
   balance: string;
-  methodPath?: string;
-  symbol: string;
-  staked: boolean;
-  numberId?: string;
+  staked?: boolean;
 }
 
-export interface VaultHoldingConfig {
+export interface TokenHoldingConfig extends TreasuryHoldingConfigBase {
+  assetType: 'token' | 'native';
+  symbol: string;
+}
+
+export interface ValidatorHoldingConfig extends TreasuryHoldingConfigBase {
+  assetType: 'validator';
   id: string;
-  name: string;
-  address: string;
-  decimals: number;
-  oracleId: string;
-  oracleType: 'lps';
-  assetType: 'vault';
-  price: number;
-  usdValue: string;
-  balance: string;
+  symbol: string;
+  methodPath?: string;
+}
+
+export interface ConcLiquidityHoldingConfig extends TreasuryHoldingConfigBase {
+  assetType: 'concLiquidity';
+  id: number;
+  symbol?: string;
+}
+
+export interface VaultHoldingConfig extends TreasuryHoldingConfigBase {
+  assetType: 'vault' | 'gov';
   vaultId: VaultEntity['id'];
   pricePerFullShare: string;
-  methodPath?: string;
-  staked: boolean;
 }
 
-export type TreasuryHoldingConfig = TokenHoldingConfig | VaultHoldingConfig;
+export type TreasuryHoldingConfig =
+  | TokenHoldingConfig
+  | ValidatorHoldingConfig
+  | ConcLiquidityHoldingConfig
+  | VaultHoldingConfig;
 
 export function isVaultHoldingConfig(token: TreasuryHoldingConfig): token is VaultHoldingConfig {
-  return token.assetType === 'vault';
-}
-
-export function isTokenHoldingConfig(token: TreasuryHoldingConfig): token is TokenHoldingConfig {
-  return token.assetType !== 'vault';
+  return token.assetType === 'vault' || token.assetType === 'gov';
 }
 
 export type TreasuryConfig = {
-  [chainId in ChainEntity['id']]: {
+  [chainId in ChainEntity['id']]?: {
     [address: string]: {
       name: string;
       balances: {
@@ -433,29 +487,6 @@ export type TreasuryConfig = {
       };
     };
   };
-};
-
-export type MarketMakerHoldingConfig = {
-  symbol: string;
-  name: string;
-  oracleId: string;
-  oracleType: 'tokens' | 'lps';
-  usdValue: string;
-  balance: string;
-  price: number;
-};
-
-export type MarketMakerConfig = {
-  [marketMakerId: string]: {
-    [exchange: string]: {
-      [tokenId: string]: MarketMakerHoldingConfig;
-    };
-  };
-};
-
-export type TreasuryCompleteBreakdownConfig = {
-  treasury: TreasuryConfig;
-  marketMaker: MarketMakerConfig;
 };
 
 export interface BridgeConfig {

@@ -70,8 +70,25 @@ export type GammaStrategyConfig = {
   tokenHolder?: string | undefined;
 } & OptionalStrategySwapConfig;
 
+export type PendleV2StrategyConfig = {
+  strategyId: 'pendle-v2';
+  /**
+   * Tokens that can mint / redeem the market LP directly via the Pendle router
+   * (i.e. the SY's tokensIn — addLiquiditySingleToken tokenIn === tokenMintSy).
+   * Any other token is routed to one of these via the swap aggregator first.
+   */
+  depositTokens: string[];
+} & OptionalStrategySwapConfig;
+
 export type ConicStrategyConfig = {
   strategyId: 'conic';
+} & OptionalStrategySwapConfig;
+
+export type YieldBasisStrategyConfig = {
+  strategyId: 'yieldbasis';
+  ybToken: string;
+  /** the non-crvUSD side of the pair */
+  asset: string;
 } & OptionalStrategySwapConfig;
 
 export type CowcentratedStrategyConfig = {
@@ -102,6 +119,10 @@ export type CrossChainStrategyConfig = {
   supportedDestChains?: ChainEntity['id'][];
 } & OptionalStrategySwapConfig;
 
+export type VaultToVaultSingleTokenStrategyConfig = {
+  strategyId: 'vault-to-vault-single-token';
+} & OptionalStrategySwapConfig;
+
 export type ZapStrategyConfig =
   | SingleStrategyConfig
   | UniswapV2StrategyConfig
@@ -115,7 +136,10 @@ export type ZapStrategyConfig =
   | VaultComposerStrategyConfig
   | RewardPoolToVaultStrategyConfig
   | BalancerStrategyConfig
-  | CrossChainStrategyConfig;
+  | PendleV2StrategyConfig
+  | YieldBasisStrategyConfig
+  | CrossChainStrategyConfig
+  | VaultToVaultSingleTokenStrategyConfig;
 
 export type ZapStrategyId = ZapStrategyConfig['strategyId'];
 

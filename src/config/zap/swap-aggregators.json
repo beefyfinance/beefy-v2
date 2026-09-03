@@ -265,5 +265,21 @@
     "priorityTokens": ["S", "WS", "USDCe", "WETH"],
     "blockedTokens": [],
     "blockedVaults": []
+  },
+  {
+    "id": "kyber-robinhood",
+    "type": "kyber",
+    "chainId": "robinhood",
+    "priorityTokens": ["ETH", "WETH", "USDG"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "one-inch-robinhood",
+    "type": "one-inch",
+    "chainId": "robinhood",
+    "priorityTokens": ["ETH", "WETH", "USDG"],
+    "blockedTokens": [],
+    "blockedVaults": []
   }
 ]

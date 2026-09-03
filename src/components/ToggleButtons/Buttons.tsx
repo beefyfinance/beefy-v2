@@ -40,6 +40,10 @@ export const Buttons = styled('div', {
         textStyle: 'body.sm.medium',
         gap: '12px',
       },
+      card: {
+        colorPalette: 'buttons.card',
+        borderWidth: '1px',
+      },
     },
     noBackground: {
       false: {},

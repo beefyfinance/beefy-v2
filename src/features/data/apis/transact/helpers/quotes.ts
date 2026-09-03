@@ -1,17 +1,72 @@
 import type BigNumber from 'bignumber.js';
 import { BIG_ZERO, compareBigNumber } from '../../../../../helpers/big-number.ts';
+import type { VaultEntity } from '../../../entities/vault.ts';
+import { selectVaultSharesToDepositTokenData } from '../../../selectors/balance.ts';
 import { selectTokenPriceByAddress } from '../../../selectors/tokens.ts';
 import type { BeefyState } from '../../../store/types.ts';
+import { mooAmountToOracleAmount } from '../../../utils/ppfs.ts';
 import type { QuoteResponse } from '../swap/ISwapProvider.ts';
 import {
-  isZapQuoteStepSwap,
-  isZapQuoteStepSwapAggregator,
+  isCowcentratedDepositQuote,
+  isCrossChainDepositQuote,
+  isVaultToVaultSingleTokenDepositQuote,
   type TokenAmount,
+  type TransactQuote,
   type ZapFee,
-  type ZapQuoteStep,
 } from '../transact-types.ts';
+import { isVaultDestState } from '../handlers/types.ts';
 
 export const ZERO_FEE: ZapFee = { value: 0 };
+
+/**
+ * The quote to render the result against. Unwraps a dest-composed deposit (cross-chain, or same-chain vault-to-vault)
+ * to its real dest deposit quote so a CLM destination shows its position breakdown rather than just the share token;
+ * all other quotes pass through unchanged.
+ */
+export function getEffectiveQuote(quote: TransactQuote): TransactQuote {
+  if (!isCrossChainDepositQuote(quote) && !isVaultToVaultSingleTokenDepositQuote(quote)) {
+    return quote;
+  }
+  const { state } = quote.destHandlerQuote;
+  return isVaultDestState(state) ? state.destQuote : quote;
+}
+
+/** false for any quote where there is exactly one matching input+output token else true*/
+export function quoteHasTransformation(quote: TransactQuote): boolean {
+  if (isCowcentratedDepositQuote(getEffectiveQuote(quote))) {
+    return true;
+  }
+  if (quote.returned.some(r => r.amount.gt(BIG_ZERO))) {
+    return true;
+  }
+  if (quote.outputs.length > 1) {
+    return true;
+  }
+  const firstInput = quote.inputs[0];
+  const firstOutput = quote.outputs[0];
+  if (!firstInput || !firstOutput) {
+    return false;
+  }
+  return (
+    firstInput.token.address !== firstOutput.token.address ||
+    firstInput.token.chainId !== firstOutput.token.chainId
+  );
+}
+
+/** Convert a v2v source share amount to the deposit-token TokenAmount via ppfs (pass-through for vaults without a receipt token). */
+export function convertVaultShareToDepositTokenAmount(
+  state: BeefyState,
+  srcVaultId: VaultEntity['id'],
+  shareAmount: BigNumber
+): TokenAmount {
+  const { depositToken, shareToken, ppfs } = selectVaultSharesToDepositTokenData(state, srcVaultId);
+  if (shareAmount.lte(BIG_ZERO)) return { token: depositToken, amount: BIG_ZERO };
+  if (!shareToken) return { token: depositToken, amount: shareAmount };
+  return {
+    token: depositToken,
+    amount: mooAmountToOracleAmount(shareToken, depositToken, ppfs, shareAmount),
+  };
+}
 
 /**
  * Returns the total value of the token amounts in USD
@@ -53,21 +108,6 @@ export function calculatePriceImpact(
   }
 
   return effectiveInput.minus(totalOutputAmount).div(effectiveInput).toNumber();
-}
-
-/**
- * Returns the highest fee from the given steps for display in the UI
- */
-export function highestFeeOrZero(steps: ZapQuoteStep[]): ZapFee {
-  return steps.reduce((maxFee, step) => {
-    // only aggregator swap step has fee so far
-    if (isZapQuoteStepSwap(step) && isZapQuoteStepSwapAggregator(step)) {
-      if (step.fee.value > maxFee.value) {
-        return step.fee;
-      }
-    }
-    return maxFee;
-  }, ZERO_FEE);
 }
 
 /**

@@ -1,5 +1,77 @@
 [
   {
+    "id": "aavev4-avax-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x8ac9A7D5427bb0b455FB18d6CC3098bD4ad5f855",
+    "earnedToken": "mooAaveV4CoreUSDC",
+    "earnedTokenAddress": "0x8ac9A7D5427bb0b455FB18d6CC3098bD4ad5f855",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1786222915,
+    "platformId": "aave-v4",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://pro.aave.com/explore/token/USDC?chain=43114",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev4-avax-usdt",
+    "name": "USDT",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x003b079d06DE21F40e5DA289839f839cFE99f0b5",
+    "earnedToken": "mooAaveV4CoreUSDT",
+    "earnedTokenAddress": "0x003b079d06DE21F40e5DA289839f839cFE99f0b5",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1786222914,
+    "platformId": "aave-v4",
+    "assets": ["USDT"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://pro.aave.com/explore/token/USDT?chain=43114",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "euler-avax-re7labs-ausd-earn",
     "name": "AUSD (Re7 Labs)",
     "type": "standard",
@@ -426,8 +498,10 @@
     "earnedTokenAddress": "0xEce17085CedeAc9414ab7Da38e5175e882c4F483",
     "oracle": "lps",
     "oracleId": "black-avax-rsavax",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1754382664,
+    "retireReason": "rewards",
+    "retiredAt": 1780642325,
     "platformId": "blackhole",
     "assets": ["rsAVAX", "WAVAX"],
     "migrationIds": [],
@@ -445,48 +519,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7&token1=0xDf788AD40181894dA035B827cDF55C523bf52F67&pair=0xd299699e69aDC03fC65e14ec605286758facF1D8&type=Basic%20Stable",
     "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0xd299699e69aDC03fC65e14ec605286758facF1D8&position=0",
-    "network": "avax",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "avax-blackhole"
-      }
-    ]
-  },
-  {
-    "id": "black-savusd-usdc",
-    "name": "savUSD-USDC sLP",
-    "type": "standard",
-    "token": "sAMM-savUSD/USDC",
-    "tokenAddress": "0x4f80724E5f2d2Af81cb2A1eeb2cC049ab2A33089",
-    "tokenDecimals": 18,
-    "tokenProviderId": "blackhole",
-    "earnContractAddress": "0x1F58be57008f3D8bC577aF8b1148760d2BC7CBc7",
-    "earnedToken": "mooBlackholesavUSD-USDC",
-    "earnedTokenAddress": "0x1F58be57008f3D8bC577aF8b1148760d2BC7CBc7",
-    "oracle": "lps",
-    "oracleId": "black-savusd-usdc",
-    "status": "eol",
-    "createdAt": 1754382650,
-    "retireReason": "tvl",
-    "retiredAt": 1760538193,
-    "platformId": "blackhole",
-    "assets": ["savUSD", "USDC"],
-    "migrationIds": [],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": true,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0x06d47F3fb376649c3A9Dafe069B3D6E35572219E&token1=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&pair=0x4f80724E5f2d2Af81cb2A1eeb2cC049ab2A33089&type=Basic%20Stable",
-    "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x4f80724E5f2d2Af81cb2A1eeb2cC049ab2A33089&position=0",
     "network": "avax",
     "zaps": [
       {
@@ -668,8 +700,10 @@
     "earnedTokenAddress": "0x0483130D4EFBC2e082653F88Bd52adF987545455",
     "oracle": "lps",
     "oracleId": "black-btcb-wavax",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1753093757,
+    "retireReason": "tvl",
+    "retiredAt": 1780413682,
     "platformId": "blackhole",
     "assets": ["BTCb", "WAVAX"],
     "migrationIds": [],
@@ -1059,6 +1093,7 @@
     "retiredAt": 1761587666,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 1,
     "assets": ["USDT", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1191,6 +1226,7 @@
     "retiredAt": 1761587666,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["BTCb", "WAVAX"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1319,6 +1355,7 @@
     "retiredAt": 1761587666,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["WETHe", "WAVAX"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1451,6 +1488,7 @@
     "retiredAt": 1761587666,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["WAVAX", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1529,6 +1567,7 @@
     "createdAt": 1727102130,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETHe", "WAVAX"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1607,6 +1646,7 @@
     "createdAt": 1727102130,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WAVAX", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1685,6 +1725,7 @@
     "createdAt": 1727102130,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDT", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1763,6 +1804,7 @@
     "createdAt": 1727102130,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["BTCb", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -9338,8 +9380,10 @@
     "earnedTokenAddress": "0x408835a5616baE0ECE4d3eF821C1D1CC88a2179E",
     "oracle": "tokens",
     "oracleId": "GMX",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1666793247,
+    "retireReason": "rewards",
+    "retiredAt": 1776777860,
     "platformId": "gmx",
     "assets": ["GMX"],
     "risks": {

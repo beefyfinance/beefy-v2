@@ -44,7 +44,7 @@ import {
   onlyOneToken,
   onlyOneTokenAmount,
 } from '../../helpers/options.ts';
-import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
@@ -86,6 +86,7 @@ import type {
   ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { CurveStrategyConfig } from '../strategy-configs.ts';
+import { canRouteToAnyOf } from '../strategy-eligibility.ts';
 import { CurvePool } from './CurvePool.ts';
 import type { CurveMethod, CurveTokenOption } from './types.ts';
 
@@ -416,14 +417,14 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
     return {
       id: createQuoteId(option.id),
       strategyId: 'curve',
-      priceImpact: calculatePriceImpact(inputs, outputs, returned, state), // includes the zap fee
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       option,
       inputs,
       outputs,
       returned,
       allowances,
       steps,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
       via: option.via,
       viaToken: depositLiquidity.via,
     };
@@ -870,7 +871,7 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
       steps,
       via: option.via,
       viaToken: withdrawnLiquidity.via,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
     };
   }
 
@@ -1060,6 +1061,20 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
       pending: false,
       extraInfo: { zap: true, vaultId: quote.option.vaultId },
     };
+  }
+
+  async canAcceptTokenAsDeposit(token: TokenEntity): Promise<boolean> {
+    return this.canRouteTokenAcrossPool(token);
+  }
+
+  async canEmitTokenAsWithdraw(token: TokenEntity): Promise<boolean> {
+    return this.canRouteTokenAcrossPool(token);
+  }
+
+  protected async canRouteTokenAcrossPool(token: TokenEntity): Promise<boolean> {
+    // Skip natives — not swap-reachable
+    const poolTokens = this.possibleTokens.map(o => o.token).filter(t => !isTokenNative(t));
+    return canRouteToAnyOf(this.helpers, this.options.swap, poolTokens, token);
   }
 
   protected async aggregatorTokenSupport() {

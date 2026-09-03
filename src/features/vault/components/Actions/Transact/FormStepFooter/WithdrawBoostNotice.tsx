@@ -49,7 +49,7 @@ const WithdrawBoostNotice = memo(function WithdrawBoostNotice({
     dispatch(transactSwitchMode(TransactMode.Boost));
   }, [dispatch]);
 
-  return <ActionTokensNotice onClick={handleTab} children={inner} />;
+  return <ActionTokensNotice onClick={handleTab}>{inner}</ActionTokensNotice>;
 });
 
 type TokenAmountSymbolIconProps = {

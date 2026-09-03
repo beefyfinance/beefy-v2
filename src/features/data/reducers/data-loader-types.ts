@@ -79,7 +79,9 @@ export interface DataLoaderState {
     chainConfig: LoaderState;
     curators: LoaderState;
     currentCowcentratedRanges: LoaderState;
+    featuredVaults: LoaderState;
     fees: LoaderState;
+    geoCountry: LoaderState;
     lastHarvests: LoaderState;
     merklCampaigns: LoaderState;
     merklRewards: LoaderState;

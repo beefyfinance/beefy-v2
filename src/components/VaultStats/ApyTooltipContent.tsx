@@ -5,7 +5,7 @@ import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import {
   getApyComponents,
-  getApyLabelsForType,
+  getApyLabelsForVault,
   getApyLabelsTypeForVault,
 } from '../../helpers/apy.ts';
 import { type FormattedAvgApy, type FormattedTotalApy } from '../../helpers/format.ts';
@@ -29,7 +29,7 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
 }: TotalApyTooltipContentProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const rows = useMemo(() => {
-    const labels = getApyLabelsForType(getApyLabelsTypeForVault(vault, rates.totalType));
+    const labels = getApyLabelsForVault(vault, rates.totalType);
     const allComponents = getApyComponents();
     const components = allComponents[type];
     const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';

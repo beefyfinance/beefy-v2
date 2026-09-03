@@ -3,10 +3,26 @@ import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenEntity } from '../../../entities/token.ts';
 import { nanoid } from '@reduxjs/toolkit';
 import { sortTokens } from './tokens.ts';
-import type { InputTokenAmount, TokenAmount } from '../transact-types.ts';
+import type {
+  DepositOption,
+  InputTokenAmount,
+  TokenAmount,
+  WithdrawOption,
+} from '../transact-types.ts';
 
 export function createQuoteId(optionId: string): string {
   return `${optionId}-${nanoid()}`;
+}
+
+/** true for the direct vault deposit/withdraw option, incl. composer-wrapped ones */
+export function isDirectVaultOption(option: DepositOption | WithdrawOption): boolean {
+  if (option.strategyId === 'vault') {
+    return true;
+  }
+  if (option.strategyId === 'gov-composer' || option.strategyId === 'vault-composer') {
+    return option.underlyingOption.strategyId === 'vault';
+  }
+  return false;
 }
 
 export function createOptionId(
@@ -82,4 +98,8 @@ export function onlyOneToken(tokens: TokenEntity[]) {
     throw new Error(`Invalid token count ${tokens.length}, expected 1`);
   }
   return tokens[0];
+}
+
+export function isOptionFeeable(option: { feeable?: boolean }): boolean {
+  return option.feeable !== false;
 }

@@ -1,3 +1,4 @@
+import { keyBy } from 'lodash-es';
 import type { ApiApyDataAprComponents } from '../features/data/apis/beefy/beefy-api-types.ts';
 import {
   isCowcentratedGovVault,
@@ -16,18 +17,21 @@ import { createCachedFactory, createFactory } from '../features/data/utils/facto
 import { fromKeysMapper } from './object.ts';
 import { ucFirstLetter } from './string.ts';
 
-export const AVG_APY_PERIODS = [7, 30 /*, 90*/] as const satisfies Omit<
+export const AVG_APY_PERIODS = [7, 30 /*, 90*/] as const satisfies Exclude<
   AvgApySortType,
   'default'
 >[];
 export const EMPTY_AVG_APY: AvgApy = {
-  periods: AVG_APY_PERIODS.map(days => ({
-    days,
-    dataDays: 0,
-    value: 0,
-    partial: false,
-    full: false,
-  })),
+  periods: keyBy(
+    AVG_APY_PERIODS.map(days => ({
+      days,
+      dataDays: 0,
+      value: 0,
+      partial: false,
+      full: false,
+    })),
+    'days'
+  ),
   partial: [],
   full: [],
 };
@@ -39,6 +43,7 @@ const DISPLAY_ORDER = ((i = 0) =>
     rewardPoolTrading: i++,
     rewardPool: i++,
     trading: i++,
+    lending: i++,
     merkl: i++,
     stellaSwap: i++,
     lineaIgnition: i++,
@@ -115,6 +120,7 @@ export const getApiApyDataComponents = createFactory(() => {
   const compoundableComponents = ['vault', 'clm'] as const satisfies Array<ApiApyDataAprComponents>;
   const nonCompoundableComponents = [
     'trading',
+    'lending',
     'merkl',
     'stellaSwap',
     'lineaIgnition',
@@ -168,4 +174,8 @@ export function getApyLabelsTypeForVault(
   }
 
   return vault.type;
+}
+
+export function getApyLabelsForVault(vault: VaultEntity, totalType: 'apy' | 'apr'): ApyLabels {
+  return getApyLabelsForType(getApyLabelsTypeForVault(vault, totalType));
 }

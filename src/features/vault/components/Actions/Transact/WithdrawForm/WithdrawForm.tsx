@@ -11,14 +11,19 @@ import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance.ts';
+import {
+  selectUserVaultBalanceInDepositTokenWithToken,
+  selectUserVaultBalanceInShareToken,
+} from '../../../../../data/selectors/balance.ts';
 import {
   selectTransactForceSelection,
+  selectTransactIsActiveSelectionVaultSourceWithdraw,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
+import { CrossChainBelowFeeNotice } from '../CrossChainBelowFeeNotice/CrossChainBelowFeeNotice.tsx';
 import { FormFooter } from '../FormFooter/FormFooter.tsx';
 import { TransactQuote } from '../TransactQuote/TransactQuote.tsx';
 import { WithdrawActions } from '../WithdrawActions/WithdrawActions.tsx';
@@ -32,33 +37,38 @@ const useStyles = legacyMakeStyles(styles);
 
 const DepositedInVault = memo(function DepositedInVault() {
   const vaultId = useAppSelector(selectTransactVaultId);
+  const isVaultSourceWithdraw = useAppSelector(selectTransactIsActiveSelectionVaultSourceWithdraw);
   const dispatch = useDispatch();
-  const tokenAmount = useAppSelector(state =>
+  const depositTokenAmount = useAppSelector(state =>
     vaultId ? selectUserVaultBalanceInDepositTokenWithToken(state, vaultId) : undefined
+  );
+  const shareBalance = useAppSelector(state =>
+    vaultId ? selectUserVaultBalanceInShareToken(state, vaultId) : undefined
   );
   const forceSelection = useAppSelector(selectTransactForceSelection);
 
   const handleMax = useCallback(() => {
-    if (tokenAmount) {
-      dispatch(
-        transactSetInputAmount({
-          index: 0,
-          amount: tokenAmount.amount,
-          max: true,
-        })
-      );
-    }
-  }, [dispatch, tokenAmount]);
+    if (!depositTokenAmount) return;
+    // store-of-record is share-math for vault-source withdraws; dispatch exact share-balance to avoid round-trip wei loss
+    const amount = isVaultSourceWithdraw && shareBalance ? shareBalance : depositTokenAmount.amount;
+    dispatch(
+      transactSetInputAmount({
+        index: 0,
+        amount,
+        max: true,
+      })
+    );
+  }, [dispatch, depositTokenAmount, isVaultSourceWithdraw, shareBalance]);
 
-  if (!vaultId || !tokenAmount) {
+  if (!vaultId || !depositTokenAmount) {
     return <TextLoader placeholder="0.0000000 BNB-BIFI" />;
   }
 
   return (
     <TokenAmountFromEntity
       onClick={forceSelection ? undefined : handleMax}
-      amount={tokenAmount.amount}
-      token={tokenAmount.token}
+      amount={depositTokenAmount.amount}
+      token={depositTokenAmount.token}
     />
   );
 });
@@ -102,6 +112,7 @@ const WithdrawForm = memo(function WithdrawForm() {
       <div className={classes.inputs}>
         <WithdrawTokenAmountInput />
       </div>
+      <CrossChainBelowFeeNotice css={styles.quote} />
       <TransactQuote title={t('Transact-YouWithdraw')} css={styles.quote} />
       <Actions>
         <WithdrawActions />
@@ -115,7 +126,8 @@ const Container = styled('div', {
   base: {
     padding: '16px',
     sm: {
-      padding: '24px',
+      paddingInline: '24px',
+      paddingBlock: '20px 24px',
     },
   },
   variants: {

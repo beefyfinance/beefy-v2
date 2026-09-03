@@ -551,6 +551,15 @@
     "type": "money-market"
   },
   {
+    "id": "aave-v4",
+    "name": "Aave V4",
+    "website": "https://aave.com/",
+    "twitter": "aave",
+    "documentation": "https://docs.aave.com/",
+    "description": "Aave V4 is Aave's modular, non-custodial lending platform. It uses Hub and Spokes to route assets into controlled borrow markets, where depositors earn lending yield and incentives.",
+    "type": "money-market"
+  },
+  {
     "id": "quickswap",
     "name": "QuickSwap",
     "website": "https://quickswap.exchange/#/swap",
@@ -1111,6 +1120,15 @@
     "type": "amm"
   },
   {
+    "id": "up",
+    "name": "Up",
+    "website": "https://up33.xyz/",
+    "twitter": "uponrh",
+    "documentation": "https://up33.xyz/docs/overview",
+    "description": "up. is a ve(3,3) decentralized exchange on Robinhood Chain. It pays the people who make a market work, and it lets them decide where that pay goes.",
+    "type": "amm"
+  },
+  {
     "id": "dracula",
     "name": "Dracula"
   },
@@ -1590,6 +1608,15 @@
     "twitter": "kumbaya_xyz",
     "documentation": "https://www.kumbaya.xyz/",
     "description": "Cult formation venue for MegaETH. Token launchpad with built-in Uniswap V3 style liquidity.",
+    "type": "amm"
+  },
+  {
+    "id": "yb",
+    "name": "YieldBasis",
+    "website": "https://yieldbasis.com/",
+    "twitter": "yieldbasis",
+    "documentation": "https://docs.yieldbasis.com/user/introduction",
+    "description": "YieldBasis is a decentralized protocol that lets liquidity providers earn trading fees on volatile-asset pairs without the impermanent loss a normal LP suffers.",
     "type": "amm"
   },
   {

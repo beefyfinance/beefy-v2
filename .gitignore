@@ -20,3 +20,5 @@ analyze-source.svg
 node_modules/
 .cache/
 build/
+
+.claude

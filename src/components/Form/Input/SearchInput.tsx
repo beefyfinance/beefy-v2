@@ -2,6 +2,7 @@ import {
   type ChangeEventHandler,
   type FocusEventHandler,
   memo,
+  type ReactNode,
   useCallback,
   useEffect,
   useMemo,
@@ -43,13 +44,15 @@ const StartSearchIcon = styled(SearchIcon, {
 });
 
 export type SearchInputProps = Override<
-  Omit<BaseInputProps, 'fullWidth' | 'endAdornment'>,
+  Omit<BaseInputProps, 'fullWidth'>,
   {
     onValueChange: (newValue: string) => void;
     value: string;
     minLength?: number;
     placeholder?: string;
     focusOnSlash?: boolean;
+    /** rendered before the built-in clear button / slash hint */
+    endAdornment?: ReactNode;
   }
 >;
 
@@ -63,6 +66,7 @@ export const SearchInput = memo(function SearchInput({
   focusOnSlash = false,
   onFocus,
   onBlur,
+  endAdornment: extraEndAdornment,
   ...rest
 }: SearchInputProps) {
   const ref = useRef<HTMLInputElement | null>(null);
@@ -82,16 +86,23 @@ export const SearchInput = memo(function SearchInput({
   const showClear = value.length > 0;
   const showSlash = focusOnSlash && !isFocused && !isTouch && value.length === 0;
   const endAdornment = useMemo(() => {
-    if (showSlash) {
-      return <SlashIcon />;
-    } else if (showClear) {
-      return (
+    const suffix =
+      showSlash ? <SlashIcon />
+      : showClear ?
         <button type="button" onClick={handleClear} className={cx(buttonCss, pointerCss)}>
           <CloseRounded />
         </button>
-      );
+      : null;
+    if (!extraEndAdornment) {
+      return suffix ?? undefined;
     }
-  }, [showClear, showSlash, handleClear]);
+    return (
+      <>
+        {extraEndAdornment}
+        {suffix}
+      </>
+    );
+  }, [showClear, showSlash, handleClear, extraEndAdornment]);
 
   const focusInput = useCallback(() => {
     if (ref.current) {

@@ -1,47 +1,25 @@
 import { orderBy, sortBy } from 'lodash-es';
-import { simplifySearchText } from '../../../helpers/string.ts';
-import {
-  isCowcentratedLikeVault,
-  isGovVault,
-  isVaultEarningPoints,
-  isVaultPaused,
-  isVaultRetired,
-  shouldVaultShowInterest,
-  type VaultEntity,
-} from '../entities/vault.ts';
+import { shouldVaultShowInterest, type VaultEntity } from '../entities/vault.ts';
 import type { TotalApy } from '../reducers/apy-types.ts';
-import type { FilteredVaultsState } from '../reducers/filtered-vaults-types.ts';
+import { type FilterValues, isRelevanceSortActive } from '../reducers/filtered-vaults-types.ts';
 import { selectVaultAvgApy, selectVaultTotalApy } from '../selectors/apy.ts';
-import {
-  selectHasUserDepositInVault,
-  selectUserBalanceOfToken,
-  selectUserVaultBalanceInUsdIncludingDisplaced,
-} from '../selectors/balance.ts';
+import { selectUserVaultBalanceInUsdIncludingDisplaced } from '../selectors/balance.ts';
 import {
   selectIsVaultPrestakedBoost,
   selectVaultsActiveBoostPeriodFinish,
 } from '../selectors/boosts.ts';
-import { selectActiveChainIds, selectAllChainIds } from '../selectors/chains.ts';
-import {
-  selectFilterOptions,
-  selectFilterPlatformIdsForVault,
-  selectIsVaultBlueChip,
-  selectIsVaultCorrelated,
-  selectIsVaultMeme,
-  selectIsVaultStable,
-  selectVaultIsBoostedForFilter,
-  selectVaultMatchesText,
-} from '../selectors/filtered-vaults.ts';
-import { selectIsVaultIdSaved } from '../selectors/saved-vaults.ts';
-import { selectVaultTvl, selectVaultUnderlyingTvlUsd } from '../selectors/tvl.ts';
+import { selectFilterValues } from '../selectors/filtered-vaults.ts';
+import { selectVaultTvl } from '../selectors/tvl.ts';
 import {
   selectAllVisibleVaultIds,
   selectVaultById,
   selectVaultIsPinned,
 } from '../selectors/vaults.ts';
-import { selectVaultSupportsZap } from '../selectors/zap.ts';
 import type { BeefyState } from '../store/types.ts';
+import { filtersDependOnData } from '../utils/filter-values.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
+import { buildVaultFilterEnv, vaultPassesFilters } from '../utils/vault-filter.ts';
+import { hasSearchText } from '../utils/vault-search.ts';
 
 export type RecalculateFilteredVaultsParams = {
   dataChanged?: boolean;
@@ -52,6 +30,10 @@ export type RecalculateFilteredVaultsParams = {
 export type RecalculateFilteredVaultsPayload = {
   filtered: VaultEntity['id'][];
   sorted: VaultEntity['id'][];
+  /** the pending filter snapshot this recalc ran against; committed to `applied` on fulfilled */
+  applied: FilterValues;
+  /** true when the sorted ids are relevance-ranked (search active and scores discriminate) */
+  searchRanked: boolean;
 };
 
 export const recalculateFilteredVaultsAction = createAppAsyncThunk<
@@ -61,149 +43,21 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
   'filtered-vaults/recalculateFilteredVaults',
   async ({ filtersChanged, sortChanged, dataChanged }, { getState }) => {
     const state = getState();
-    const filterOptions = selectFilterOptions(state);
+    const filterOptions = selectFilterValues(state); // pending
 
-    // Recalculate filtered?
+    // Recalculate filtered? Can't skip search due to relevance ranking.
+    const searchActive = hasSearchText(filterOptions.searchText);
+    const mustRefilter =
+      !!filtersChanged || (!!dataChanged && (searchActive || filtersDependOnData(filterOptions)));
+
+    const searchScores = new Map<VaultEntity['id'], number>();
     let filteredVaults: VaultEntity[];
-    if (dataChanged || filtersChanged) {
-      const allChainIds =
-        filterOptions.userCategory === 'deposited' || filterOptions.onlyRetired ?
-          selectAllChainIds(state)
-        : selectActiveChainIds(state);
-      const visibleChains = new Set(
-        filterOptions.chainIds.length === 0 ? allChainIds : filterOptions.chainIds
-      );
-      const searchText = simplifySearchText(filterOptions.searchText);
+    if (mustRefilter) {
       const allVaults = selectAllVisibleVaultIds(state).map(id => selectVaultById(state, id));
-
-      /*
-           @dev every filter that can be applied without using a selector should come first
-           then cheap selectors, then expensive selectors last
-          */
-      filteredVaults = allVaults.filter(vault => {
-        // Chains
-        if (!visibleChains.has(vault.chainId)) {
-          return false;
-        }
-
-        // Strategy Type
-        if (filterOptions.strategyType === 'pools' && !isGovVault(vault)) {
-          return false;
-        }
-
-        // TODO change to !isStandardVault if we get rid of base clm
-        if (filterOptions.strategyType === 'vaults' && isGovVault(vault)) {
-          return false;
-        }
-
-        // Hide non-EOL if onlyRetired is checked
-        if (filterOptions.onlyRetired && !isVaultRetired(vault)) {
-          return false;
-        }
-
-        // Hide non-paused if onlyPaused is checked
-        if (filterOptions.onlyPaused && !isVaultPaused(vault)) {
-          return false;
-        }
-
-        // Hide EOL unless onlyRetired is checked or user category is 'My'
-        if (
-          !filterOptions.onlyRetired &&
-          filterOptions.userCategory !== 'deposited' &&
-          isVaultRetired(vault)
-        ) {
-          return false;
-        }
-
-        // Hide not earning points if onlyEarningPoints checked
-        if (filterOptions.onlyEarningPoints && !isVaultEarningPoints(vault)) {
-          return false;
-        }
-
-        // Hide non-zappable if onlyZappable checked
-        if (filterOptions.onlyZappable && !selectVaultSupportsZap(state, vault.id)) {
-          return false;
-        }
-
-        // Hide unselected asset types (if any asset type selected)
-        if (filterOptions.assetType.length && !filterOptions.assetType.includes(vault.assetType)) {
-          return false;
-        }
-
-        // Hide non-boosted if onlyBoosted checked
-        if (filterOptions.onlyBoosted && !selectVaultIsBoostedForFilter(state, vault.id)) {
-          return false;
-        }
-
-        // Vault Category
-        if (filterOptions.vaultCategory.length) {
-          if (
-            filterOptions.vaultCategory.includes('bluechip') &&
-            !selectIsVaultBlueChip(state, vault.id)
-          ) {
-            return false;
-          }
-          if (
-            filterOptions.vaultCategory.includes('stable') &&
-            !selectIsVaultStable(state, vault.id)
-          ) {
-            return false;
-          }
-          if (
-            filterOptions.vaultCategory.includes('correlated') &&
-            !selectIsVaultCorrelated(state, vault.id)
-          ) {
-            return false;
-          }
-          if (filterOptions.vaultCategory.includes('meme') && !selectIsVaultMeme(state, vault.id)) {
-            return false;
-          }
-        }
-
-        // User category: 'Saved'
-        if (filterOptions.userCategory === 'saved' && !selectIsVaultIdSaved(state, vault.id)) {
-          return false;
-        }
-
-        // User category: 'My Positions'
-        if (filterOptions.userCategory === 'deposited') {
-          // + onlyUnstakedClm
-          if (filterOptions.onlyUnstakedClm) {
-            if (
-              !isCowcentratedLikeVault(vault) ||
-              selectUserBalanceOfToken(state, vault.chainId, vault.depositTokenAddress).isZero()
-            ) {
-              return false;
-            }
-          } else if (!selectHasUserDepositInVault(state, vault.id)) {
-            return false;
-          }
-        }
-
-        // Platform
-        if (filterOptions.platformIds.length) {
-          const vaultPlatforms = selectFilterPlatformIdsForVault(state, vault);
-          if (!filterOptions.platformIds.some(platform => vaultPlatforms.includes(platform))) {
-            return false;
-          }
-        }
-
-        // Search
-        if (searchText.length > 0 && !selectVaultMatchesText(state, vault, searchText)) {
-          return false;
-        }
-
-        // Underlying TVL
-        if (
-          filterOptions.minimumUnderlyingTvl.gt(0) &&
-          selectVaultUnderlyingTvlUsd(state, vault.id).lt(filterOptions.minimumUnderlyingTvl)
-        ) {
-          return false;
-        }
-
-        // Default: Show
-        return true;
-      });
+      const env = buildVaultFilterEnv(state, filterOptions, searchScores);
+      filteredVaults = allVaults.filter(vault =>
+        vaultPassesFilters(state, vault, filterOptions, env)
+      );
     } else {
       filteredVaults = state.ui.filteredVaults.filteredVaultIds.map(id =>
         selectVaultById(state, id)
@@ -212,45 +66,98 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
 
     // Recalculate sort?
     let sortedVaultIds = state.ui.filteredVaults.sortedFilteredVaultIds;
+    // relevance only ranks when it discriminates; all-tied results keep the selected sort.
+    // score over the FINAL set: the search check runs before minUnderlyingTvl, so the map also
+    // holds excluded vaults whose scores must not decide ranking
+    const searchRanked =
+      mustRefilter &&
+      isRelevanceSortActive({
+        searchText: filterOptions.searchText,
+        sortPickedDuringSearch: state.ui.filteredVaults.sortPickedDuringSearch,
+      }) &&
+      hasDiscriminatingScores(filteredVaults, searchScores);
     if (dataChanged || filtersChanged || sortChanged) {
-      if (filterOptions.sort === 'apy') {
-        sortedVaultIds = applyApySort(state, filteredVaults, filterOptions, [
-          'boostedTotalApy',
-          'totalApy',
-          'vaultApr',
-        ]);
-      } else if (filterOptions.sort === 'daily') {
-        sortedVaultIds = applyApySort(state, filteredVaults, filterOptions, [
-          'boostedTotalDaily',
-          'totalDaily',
-          'vaultDaily',
-        ]);
-      } else if (filterOptions.sort === 'tvl') {
-        sortedVaultIds = applyTvlSort(state, filteredVaults, filterOptions);
-      } else if (filterOptions.sort === 'depositValue') {
-        sortedVaultIds = applyDepositValueSort(state, filteredVaults, filterOptions);
+      if (searchRanked) {
+        // scores always fresh: sort-only dispatches imply a picked sort, which disables relevance
+        sortedVaultIds = applyRelevanceSort(state, filteredVaults, searchScores);
       } else {
-        sortedVaultIds = applyDefaultSort(state, filteredVaults, filterOptions);
+        sortedVaultIds = applySelectedSort(state, filteredVaults, filterOptions);
       }
     }
 
     return {
       filtered: filteredVaults.map(v => v.id),
       sorted: sortedVaultIds,
+      applied: filterOptions,
+      searchRanked,
     };
-  },
-  {
-    condition: ({ filtersChanged, sortChanged, dataChanged }) => {
-      // only run if there was a change
-      return dataChanged || filtersChanged || sortChanged;
-    },
   }
 );
+
+function applySelectedSort(
+  state: BeefyState,
+  vaults: VaultEntity[],
+  filterOptions: FilterValues
+): VaultEntity['id'][] {
+  switch (filterOptions.sort) {
+    case 'apy':
+      return applyApySort(state, vaults, filterOptions, [
+        'boostedTotalApy',
+        'totalApy',
+        'vaultApr',
+      ]);
+    case 'daily':
+      return applyApySort(state, vaults, filterOptions, [
+        'boostedTotalDaily',
+        'totalDaily',
+        'vaultDaily',
+      ]);
+    case 'tvl':
+      return applyTvlSort(state, vaults, filterOptions);
+    case 'depositValue':
+      return applyDepositValueSort(state, vaults, filterOptions);
+    default:
+      return applyDefaultSort(state, vaults, filterOptions);
+  }
+}
+
+function hasDiscriminatingScores(
+  vaults: VaultEntity[],
+  scores: ReadonlyMap<VaultEntity['id'], number>
+): boolean {
+  let first: number | undefined;
+  for (const vault of vaults) {
+    const score = scores.get(vault.id) ?? 0;
+    first ??= score;
+    if (score !== first) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function applyRelevanceSort(
+  state: BeefyState,
+  vaults: VaultEntity[],
+  scores: ReadonlyMap<VaultEntity['id'], number>
+): VaultEntity['id'][] {
+  return orderBy(
+    vaults,
+    [
+      vault => scores.get(vault.id) ?? 0,
+      vault => {
+        const tvl = selectVaultTvl(state, vault.id);
+        return tvl ? tvl.toNumber() : -1;
+      },
+    ],
+    ['desc', 'desc']
+  ).map(v => v.id);
+}
 
 function applyDefaultSort(
   state: BeefyState,
   vaults: VaultEntity[],
-  filters: FilteredVaultsState
+  filters: FilterValues
 ): VaultEntity['id'][] {
   const vaultsToPin = new Set<VaultEntity['id']>(
     vaults
@@ -280,7 +187,7 @@ function applyDefaultSort(
 function applyApySort(
   state: BeefyState,
   vaults: VaultEntity[],
-  filters: FilteredVaultsState,
+  filters: FilterValues,
   fields: (keyof TotalApy)[]
 ): VaultEntity['id'][] {
   return orderBy(
@@ -319,7 +226,7 @@ function applyApySort(
 function applyTvlSort(
   state: BeefyState,
   vaults: VaultEntity[],
-  filters: FilteredVaultsState
+  filters: FilterValues
 ): VaultEntity['id'][] {
   return orderBy(
     vaults,
@@ -338,7 +245,7 @@ function applyTvlSort(
 function applyDepositValueSort(
   state: BeefyState,
   vaults: VaultEntity[],
-  filters: FilteredVaultsState
+  filters: FilterValues
 ): VaultEntity['id'][] {
   return orderBy(
     vaults,

@@ -135,6 +135,15 @@ export class QuoteCowcentratedNotCalmAndNotActionableError extends SerializableE
   }
 }
 
+export class CrossChainBridgeBelowFeeError extends SerializableError {
+  public static readonly name = 'CrossChainBridgeBelowFeeError';
+  public readonly name = CrossChainBridgeBelowFeeError.name;
+
+  static match(error: SerializedError): boolean {
+    return error.name === CrossChainBridgeBelowFeeError.name;
+  }
+}
+
 export function isSerializableError(error: unknown): error is SerializableError {
   return !!error && error instanceof SerializableError;
 }

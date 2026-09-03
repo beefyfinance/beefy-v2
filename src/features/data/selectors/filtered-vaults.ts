@@ -9,54 +9,106 @@ import {
   stringFoundAnywhere,
 } from '../../../helpers/string.ts';
 import type { PlatformEntity } from '../entities/platform.ts';
+import type { TokenEntity } from '../entities/token.ts';
 import { type VaultEntity } from '../entities/vault.ts';
-import type { FilteredVaultsState, SortWithSubSort } from '../reducers/filtered-vaults-types.ts';
+import {
+  type EffectiveSortType,
+  type FilterValues,
+  isRelevanceSortActive,
+  type SortWithSubSort,
+} from '../reducers/filtered-vaults-types.ts';
 import type { BeefyState } from '../store/types.ts';
+import { serializeFilterState } from '../utils/filter-url.ts';
+import { filterValuesEqual } from '../utils/filter-values.ts';
 import type { KeysOfType } from '../utils/types-utils.ts';
 import { selectVaultTotalApy } from './apy.ts';
 import { selectUserDepositedVaultIds } from './balance.ts';
 import { selectActivePromoForVault } from './promos.ts';
 import {
-  selectIsTokenBluechip,
-  selectIsTokenMeme,
-  selectIsTokenStable,
-  selectTokenByAddress,
+  isTokenBluechip,
+  isTokenMeme,
+  isTokenStable,
+  isTokenStock,
+  selectTokenByAddressOrUndefined,
   selectVaultTokenSymbols,
 } from './tokens.ts';
-import { selectVaultUnderlyingTvlUsd } from './tvl.ts';
+import { computeUnderlyingTvlUsd } from './tvl.ts';
 import { selectAllActiveVaultIds, selectAllVisibleVaultIds, selectVaultById } from './vaults.ts';
 
-export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
-export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
-export const selectFilterChainIds = (state: BeefyState) => state.ui.filteredVaults.chainIds;
-export const selectFilterSearchSortField = (state: BeefyState) => state.ui.filteredVaults.sort;
-export const selectFilterSearchSortDirection = (state: BeefyState) =>
-  state.ui.filteredVaults.sortDirection;
-export const selectFilterUserCategory = (state: BeefyState) => state.ui.filteredVaults.userCategory;
-export const selectFilterAssetType = (state: BeefyState) => state.ui.filteredVaults.assetType;
-export const selectFilterStrategyType = (state: BeefyState) => state.ui.filteredVaults.strategyType;
+export const selectFilterValues = (state: BeefyState) => state.ui.filteredVaults.pending;
+export const selectFilterSearchText = (state: BeefyState) =>
+  state.ui.filteredVaults.pending.searchText;
+export const selectFilterAppliedValues = (state: BeefyState) => state.ui.filteredVaults.applied;
+export const selectFilterAppliedSearchText = (state: BeefyState) =>
+  state.ui.filteredVaults.applied.searchText;
+export const selectFilterAppliedUserCategory = (state: BeefyState) =>
+  state.ui.filteredVaults.applied.userCategory;
+export const selectFilterAppliedAvgApySort = (state: BeefyState) =>
+  state.ui.filteredVaults.applied.subSort.apy;
+
+export const selectFilterSortPickedDuringSearch = (state: BeefyState) =>
+  state.ui.filteredVaults.sortPickedDuringSearch;
+
+// url reflects the pending (editable) filters, like the rest of the filter ui
+export const selectFilterUrlSearch = createSelector(
+  selectFilterValues,
+  selectFilterSortPickedDuringSearch,
+  serializeFilterState
+);
+
+/** false until the recalc for the latest pending change commits it to applied (results reflect pending) */
+export const selectFiltersSettled = createSelector(
+  selectFilterValues,
+  selectFilterAppliedValues,
+  filterValuesEqual
+);
+export const selectFilterChainIds = (state: BeefyState) => state.ui.filteredVaults.pending.chainIds;
+export const selectFilterSort = (state: BeefyState) => state.ui.filteredVaults.pending.sort;
+export const selectFilterEffectiveSort = (state: BeefyState): EffectiveSortType => {
+  const fv = state.ui.filteredVaults;
+  // relevance ranking follows the settled (applied) result set; searchRanked keeps the label
+  // honest, so all-tied results still order by the selected sort
+  return (
+      isRelevanceSortActive({
+        searchText: fv.applied.searchText,
+        sortPickedDuringSearch: fv.sortPickedDuringSearch,
+      }) && fv.searchRanked
+    ) ?
+      'relevance'
+    : fv.pending.sort;
+};
+export const selectFilterSortDirection = (state: BeefyState) =>
+  state.ui.filteredVaults.pending.sortDirection;
+export const selectFilterUserCategory = (state: BeefyState) =>
+  state.ui.filteredVaults.pending.userCategory;
+export const selectFilterAssetType = (state: BeefyState) =>
+  state.ui.filteredVaults.pending.assetType;
+export const selectFilterStrategyType = (state: BeefyState) =>
+  state.ui.filteredVaults.pending.strategyType;
 export const selectFilterVaultCategory = (state: BeefyState) =>
-  state.ui.filteredVaults.vaultCategory;
-export const selectFilterPlatformIds = (state: BeefyState) => state.ui.filteredVaults.platformIds;
-export const selectFilterAvgApySort = (state: BeefyState) => state.ui.filteredVaults.subSort.apy;
+  state.ui.filteredVaults.pending.vaultCategory;
+export const selectFilterPlatformIds = (state: BeefyState) =>
+  state.ui.filteredVaults.pending.platformIds;
+export const selectFilterAvgApySort = (state: BeefyState) =>
+  state.ui.filteredVaults.pending.subSort.apy;
 
 export const selectFilterSubSort = <T extends SortWithSubSort>(state: BeefyState, key: T) =>
-  state.ui.filteredVaults.subSort[key];
+  state.ui.filteredVaults.pending.subSort[key];
 
 export const selectFilterBoolean = createCachedSelector(
-  (_state: BeefyState, key: KeysOfType<FilteredVaultsState, boolean>) => key,
-  (state: BeefyState) => state.ui.filteredVaults,
+  (_state: BeefyState, key: KeysOfType<FilterValues, boolean>) => key,
+  selectFilterValues,
   (key, filters) => filters[key]
-)((_state: BeefyState, key: KeysOfType<FilteredVaultsState, boolean>) => key);
+)((_state: BeefyState, key: KeysOfType<FilterValues, boolean>) => key);
 
 export const selectFilterBigNumber = createCachedSelector(
-  (_state: BeefyState, key: KeysOfType<FilteredVaultsState, BigNumber>) => key,
-  (state: BeefyState) => state.ui.filteredVaults,
+  (_state: BeefyState, key: KeysOfType<FilterValues, BigNumber>) => key,
+  selectFilterValues,
   (key, filters) => filters[key]
-)((_state: BeefyState, key: KeysOfType<FilteredVaultsState, BigNumber>) => key);
+)((_state: BeefyState, key: KeysOfType<FilterValues, BigNumber>) => key);
 
 export const selectFilterPopinFilterCount = createSelector(
-  selectFilterOptions,
+  selectFilterValues,
   filterOptions =>
     (filterOptions.onlyRetired ? 1 : 0) +
     (filterOptions.onlyPaused ? 1 : 0) +
@@ -72,9 +124,8 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.minimumUnderlyingTvl.gt(0) ? 1 : 0)
 );
 
-export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
-  selectFilterOptions,
-  filterOptions =>
+function hasActiveFilterExcludingUserCategoryAndSort(filterOptions: FilterValues): boolean {
+  return (
     filterOptions.vaultCategory.length > 0 ||
     filterOptions.assetType.length > 0 ||
     filterOptions.strategyType !== 'all' ||
@@ -88,18 +139,24 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.platformIds.length > 0 ||
     filterOptions.chainIds.length > 0 ||
     filterOptions.minimumUnderlyingTvl.gt(0)
+  );
+}
+
+export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
+  selectFilterValues,
+  hasActiveFilterExcludingUserCategoryAndSort
+);
+
+export const selectFilterAppliedHasActiveExcludingUserCategoryAndSort = createSelector(
+  selectFilterAppliedValues,
+  hasActiveFilterExcludingUserCategoryAndSort
 );
 
 export const selectHasActiveFilter = createSelector(
   selectHasActiveFilterExcludingUserCategoryAndSort,
-  selectFilterOptions,
+  selectFilterValues,
   (activeFilter, filterOptions) =>
     activeFilter || filterOptions.userCategory !== 'all' || filterOptions.sort !== 'default'
-);
-
-export const selectVaultCategory = createSelector(
-  selectFilterOptions,
-  filterOptions => filterOptions.vaultCategory
 );
 
 // TOKEN, WTOKEN or TOKENW
@@ -189,26 +246,36 @@ export const selectUserDashboardFilteredVaults = (
   return filteredVaults;
 };
 
-export function selectFilterPlatformIdsForVault(state: BeefyState, vault: VaultEntity): string[] {
-  const vaultPlatform = selectPlatformIdForFilter(state, vault.platformId);
-  const vaultPlatforms = [vaultPlatform];
-
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  if (depositToken.providerId) {
-    const depositTokenPlatform = selectPlatformIdForFilter(state, depositToken.providerId);
-    if (depositTokenPlatform !== 'other' && depositTokenPlatform !== vaultPlatform) {
-      vaultPlatforms.push(depositTokenPlatform);
-    }
-  }
-
-  return vaultPlatforms;
-}
-
 const selectPlatformIdForFilter = createCachedSelector(
   (state: BeefyState) => state.entities.platforms.allIds,
   (_state: BeefyState, platformId: PlatformEntity['id']) => platformId,
   (allIds, platformId) => (allIds.includes(platformId) ? platformId : 'other')
 )((_state: BeefyState, platformId: PlatformEntity['id']) => platformId);
+
+export const selectFilterPlatformIdsForVault = createCachedSelector(
+  (state: BeefyState, vault: VaultEntity) => selectPlatformIdForFilter(state, vault.platformId),
+  (state: BeefyState, vault: VaultEntity) => {
+    const depositToken = selectTokenByAddressOrUndefined(
+      state,
+      vault.chainId,
+      vault.depositTokenAddress
+    );
+    return depositToken?.providerId ?
+        selectPlatformIdForFilter(state, depositToken.providerId)
+      : undefined;
+  },
+  (vaultPlatform, depositTokenPlatform): string[] => {
+    const vaultPlatforms = [vaultPlatform];
+    if (
+      depositTokenPlatform &&
+      depositTokenPlatform !== 'other' &&
+      depositTokenPlatform !== vaultPlatform
+    ) {
+      vaultPlatforms.push(depositTokenPlatform);
+    }
+    return vaultPlatforms;
+  }
+)((_state: BeefyState, vault: VaultEntity) => vault.id);
 
 export const selectFilteredVaults = (state: BeefyState) =>
   state.ui.filteredVaults.sortedFilteredVaultIds;
@@ -228,7 +295,7 @@ export const selectVaultIsBoostedForFilter = (state: BeefyState, vaultId: VaultE
 };
 
 export const selectAnyDesktopExtenderFilterIsActive = createSelector(
-  selectFilterOptions,
+  selectFilterValues,
   filterOptions => {
     if (
       filterOptions.onlyZappable ||
@@ -245,61 +312,98 @@ export const selectAnyDesktopExtenderFilterIsActive = createSelector(
   }
 );
 
-export const selectFilterContent = createSelector(
-  selectFilterOptions,
-  filterOptions => filterOptions.filterContent
-);
-export const selectIsVaultBlueChip = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => {
-    const vault = selectVaultById(state, vaultId);
+export const selectFilterContent = (state: BeefyState) => state.ui.filteredVaults.filterContent;
+// category membership is derived from static token tags; keyed by vaultId so it caches per vault
+// (the old createSelector(fn, res => res) did the whole compute in the always-run input selector,
+// so nothing was ever memoized). Inputs are the vault and the token slice, both stable after load.
+type TokensByChainId = BeefyState['entities']['tokens']['byChainId'];
+const selectTokensByChainId = (state: BeefyState): TokensByChainId =>
+  state.entities.tokens.byChainId;
+
+/** resolve a vault asset id to its token, mirroring selectTokenByIdOrUndefined without a state read */
+function resolveAssetToken(
+  byChainId: TokensByChainId,
+  chainId: VaultEntity['chainId'],
+  tokenId: string
+): TokenEntity | undefined {
+  const address = byChainId[chainId]?.byId[tokenId];
+  return address ? byChainId[chainId]?.byAddress[address] : undefined;
+}
+
+/** true when the vault asset resolves to a token satisfying `isTag` (missing token => false) */
+function vaultAssetHasTag(
+  byChainId: TokensByChainId,
+  vault: VaultEntity,
+  tokenId: string,
+  isTag: (token: TokenEntity) => boolean
+): boolean {
+  const token = resolveAssetToken(byChainId, vault.chainId, tokenId);
+  return !!token && isTag(token);
+}
+
+export const selectIsVaultBlueChip = createCachedSelector(
+  selectVaultById,
+  selectTokensByChainId,
+  (vault, byChainId) => {
     const nonStables = vault.assetIds.filter(
-      tokenId => !selectIsTokenStable(state, vault.chainId, tokenId)
+      tokenId => !vaultAssetHasTag(byChainId, vault, tokenId, isTokenStable)
     );
     return (
       nonStables.length > 0 &&
-      nonStables.every(tokenId => selectIsTokenBluechip(state, vault.chainId, tokenId))
+      nonStables.every(tokenId => vaultAssetHasTag(byChainId, vault, tokenId, isTokenBluechip))
     );
-  },
-  res => res
-);
-
-export const selectIsVaultStable = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => {
-    const vault = selectVaultById(state, vaultId);
-    return vault.assetIds.every(assetId => selectIsTokenStable(state, vault.chainId, assetId));
-  },
-  res => res
-);
-
-export const selectIsVaultCorrelated = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => {
-    const vault = selectVaultById(state, vaultId);
-
-    return (
-      !vault.risks.notCorrelated &&
-      vault.assetIds.length > 1 &&
-      !selectIsVaultStable(state, vaultId)
-    );
-  },
-  res => res
-);
-
-export const selectIsVaultMeme = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => {
-    const vault = selectVaultById(state, vaultId);
-    return vault.assetIds.some(assetId => selectIsTokenMeme(state, vault.chainId, assetId));
-  },
-  res => res
-);
-
-export const selectMaximumUnderlyingVaultTvl = (state: BeefyState) => {
-  const ids = selectAllActiveVaultIds(state);
-  let maxTvl = BIG_ZERO;
-  for (const id of ids) {
-    const underlyingTvl = selectVaultUnderlyingTvlUsd(state, id);
-    if (underlyingTvl.gt(maxTvl)) {
-      maxTvl = underlyingTvl;
-    }
   }
-  return maxTvl;
-};
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectIsVaultStable = createCachedSelector(
+  selectVaultById,
+  selectTokensByChainId,
+  (vault, byChainId) =>
+    vault.assetIds.every(assetId => vaultAssetHasTag(byChainId, vault, assetId, isTokenStable))
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectIsVaultCorrelated = createCachedSelector(
+  selectVaultById,
+  selectTokensByChainId,
+  (vault, byChainId) =>
+    !vault.risks.notCorrelated &&
+    vault.assetIds.length > 1 &&
+    // "not stable" inlined (was selectIsVaultStable) so this stays a single cached compute
+    !vault.assetIds.every(assetId => vaultAssetHasTag(byChainId, vault, assetId, isTokenStable))
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectIsVaultMeme = createCachedSelector(
+  selectVaultById,
+  selectTokensByChainId,
+  (vault, byChainId) =>
+    vault.assetIds.some(assetId => vaultAssetHasTag(byChainId, vault, assetId, isTokenMeme))
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectIsVaultStock = createCachedSelector(
+  selectVaultById,
+  selectTokensByChainId,
+  (vault, byChainId) =>
+    vault.assetIds.some(assetId => vaultAssetHasTag(byChainId, vault, assetId, isTokenStock))
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+// memoized on the active-id list + vault and breakdown slices so the full scan reruns only when
+// those change, not on every dispatch while the min-TVL filter dropdown is open
+export const selectMaximumUnderlyingVaultTvl = createSelector(
+  selectAllActiveVaultIds,
+  (state: BeefyState) => state.entities.vaults.byId,
+  (state: BeefyState) => state.entities.tokens.breakdown.byOracleId,
+  (activeIds, vaultsById, breakdownByOracleId) => {
+    let maxTvl = BIG_ZERO;
+    for (const id of activeIds) {
+      const vault = vaultsById[id];
+      if (!vault) {
+        continue;
+      }
+      const underlyingTvl = computeUnderlyingTvlUsd(vault, breakdownByOracleId[vault.breakdownId]);
+      if (underlyingTvl.gt(maxTvl)) {
+        maxTvl = underlyingTvl;
+      }
+    }
+    return maxTvl;
+  }
+);

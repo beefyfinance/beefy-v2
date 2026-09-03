@@ -1,6 +1,6 @@
 import { mapValuesDeep } from '../../utils/array-utils.ts';
 import { featureFlag_simulateBeefyApiError } from '../../utils/feature-flags.ts';
-import type { TreasuryCompleteBreakdownConfig } from '../config-types.ts';
+import type { TreasuryConfig } from '../config-types.ts';
 import type {
   AllCowcentratedVaultRangesResponse,
   ApyFeeData,
@@ -8,6 +8,7 @@ import type {
   BeefyAPILpBreakdownResponse,
   BeefyAPITokenPricesResponse,
   BeefyApiVaultLastHarvestResponse,
+  BeefyGeoCountryResponse,
   BeefyLastArticleResponse,
   BeefyOffChainRewardsCampaign,
   BeefySnapshotActiveResponse,
@@ -137,13 +138,13 @@ export class BeefyAPI {
     return data;
   }
 
-  public async getTreasury(): Promise<TreasuryCompleteBreakdownConfig> {
+  public async getTreasury(): Promise<TreasuryConfig> {
     if (featureFlag_simulateBeefyApiError('treasury')) {
       throw new Error('Simulated beefy api error');
     }
 
-    return await getJson<TreasuryCompleteBreakdownConfig>({
-      url: `${this.api}/treasury/complete`,
+    return await getJson<TreasuryConfig>({
+      url: `${this.api}/treasury`,
       cacheBuster: 'short',
       timeout: this.timeout,
     });
@@ -169,6 +170,16 @@ export class BeefyAPI {
       url: `${this.api}/articles/latest`,
       cacheBuster: 'short',
       timeout: this.timeout,
+    });
+  }
+
+  public async getGeoCountry(): Promise<BeefyGeoCountryResponse> {
+    return await getJson<BeefyGeoCountryResponse>({
+      url: `${this.api}/geo/country`,
+      // cache bust
+      params: { _: `${Date.now()}.${Math.random().toString(36).slice(2)}` },
+      // briefer than timeout as it's light and needed for transact
+      timeout: 0.3 * this.timeout,
     });
   }
 

@@ -1,5 +1,5 @@
 import { css } from '@repo/styles/css';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../../data/store/hooks.ts';
@@ -41,9 +41,7 @@ export const Legend = memo(function Legend({ vaultId }: LegendProps) {
 
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
-  const isSingleAssetVault = useMemo(() => {
-    return vault.assetIds.length === 1;
-  }, [vault.assetIds.length]);
+  const isSingleAssetVault = vault.assetIds.length === 1;
 
   return (
     <div className={classes.items}>

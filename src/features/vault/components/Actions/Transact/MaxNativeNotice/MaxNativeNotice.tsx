@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import type { TransactQuote } from '../../../../../data/apis/transact/transact-types.ts';
@@ -7,23 +7,17 @@ import { type CssStyles } from '@repo/styles/css';
 
 export type MaxNativeProps = {
   quote: TransactQuote;
-  onChange: (shouldDisable: boolean) => void;
   css?: CssStyles;
 };
 export const MaxNativeNotice = memo(function MaxNativeNotice({
   quote,
-  onChange,
   css: cssProp,
 }: MaxNativeProps) {
   const { t } = useTranslation();
   const maxNativeInputs = useMemo(() => {
     return quote.inputs.filter(tokenAmount => tokenAmount.max && isTokenNative(tokenAmount.token));
   }, [quote]);
-  const isMaxNative = useMemo(() => maxNativeInputs.length > 0, [maxNativeInputs]);
-
-  useEffect(() => {
-    onChange(isMaxNative);
-  }, [isMaxNative, onChange]);
+  const isMaxNative = maxNativeInputs.length > 0;
 
   if (!isMaxNative) {
     return null;

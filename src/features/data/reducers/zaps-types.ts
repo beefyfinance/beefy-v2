@@ -1,6 +1,7 @@
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import type { VaultEntity } from '../entities/vault.ts';
+import type { ZapFeeRule } from '../apis/config-types.ts';
 import type { AmmEntity, SwapAggregatorEntity, ZapEntity } from '../entities/zap.ts';
 
 export type ZapsState = {
@@ -73,4 +74,8 @@ export type ZapsState = {
       };
     };
   };
+  /**
+   * Global zap fee campaign rules (waive / discount)
+   */
+  feeCampaigns: ZapFeeRule[];
 };

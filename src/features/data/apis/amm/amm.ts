@@ -62,6 +62,7 @@ const mapSolidly: Record<string, typeof SolidlyPool> = {
   'scroll-tokan': TokanSolidlyPool,
   'sonic-shadow': SpiritSwapV2SolidlyPool,
   'avax-blackhole': BlackholeSolidlyPool,
+  'robinhood-up33': VelodromeV2SolidlyPool,
 };
 
 export async function getUniswapLikePool(

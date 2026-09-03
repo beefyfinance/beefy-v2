@@ -6,6 +6,7 @@ import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.t
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSelectSelection } from '../../../../../data/actions/transact.ts';
 import {
+  type SelectionRow,
   selectTransactSelectedChainId,
   selectTransactVaultId,
   selectTransactWithdrawSelectionsForChainWithBalances,
@@ -13,6 +14,7 @@ import {
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import type { ListItemProps } from './components/ListItem/ListItem.tsx';
 import { ListItem } from './components/ListItem/ListItem.tsx';
+import { VaultListItem } from './components/VaultListItem/VaultListItem.tsx';
 import {
   SelectListContainer,
   SelectListItems,
@@ -53,9 +55,14 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
       );
     }
 
-    const vaultWithdrawals = [];
-    const other = [];
+    const vaultWithdrawals: SelectionRow[] = [];
+    const other: SelectionRow[] = [];
+    const vaultRefs: SelectionRow[] = [];
     for (const option of options) {
+      if (option.vaultRefId) {
+        vaultRefs.push(option);
+        continue;
+      }
       const isVaultWithdrawal = option.tokens.length > 1 || option.order === 0;
       if (isVaultWithdrawal) {
         vaultWithdrawals.push(option);
@@ -64,7 +71,7 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
       }
     }
     vaultWithdrawals.sort((a, b) => b.tokens.length - a.tokens.length);
-    return [...vaultWithdrawals, ...other];
+    return [...vaultWithdrawals, ...other, ...vaultRefs];
   }, [optionsForChain, search]);
 
   const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
@@ -87,19 +94,28 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
       <Scrollable css={selectListScrollable}>
         <SelectListItems noGap={true}>
           {filteredOptions.length ?
-            filteredOptions.map(option => (
-              <ListItem
-                key={option.id}
-                selectionId={option.id}
-                tokens={option.tokens}
-                balance={option.balance}
-                balanceValue={option.balanceValue}
-                decimals={option.decimals}
-                tag={option.tag}
-                chainId={selectedChain}
-                onSelect={handleTokenSelect}
-              />
-            ))
+            filteredOptions.map(option =>
+              option.vaultRefId ?
+                <VaultListItem
+                  key={option.id}
+                  selectionId={option.id}
+                  vaultId={option.vaultRefId}
+                  decimals={option.decimals}
+                  mode="vault-dst"
+                  onSelect={handleTokenSelect}
+                />
+              : <ListItem
+                  key={option.id}
+                  selectionId={option.id}
+                  tokens={option.tokens}
+                  balance={option.balance}
+                  balanceValue={option.balanceValue}
+                  decimals={option.decimals}
+                  tag={option.tag}
+                  chainId={selectedChain}
+                  onSelect={handleTokenSelect}
+                />
+            )
           : <SelectListNoResults>{t('Transact-TokenSelect-NoResults')}</SelectListNoResults>}
         </SelectListItems>
       </Scrollable>

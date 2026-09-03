@@ -81,15 +81,16 @@ export const ChainCheckList = memo(function ChainCheckList() {
   const handleChange = useCallback(
     (selected: Array<ChainEntity['id'] | 'all'>) => {
       if (selected.includes('all')) {
-        dispatch(filteredVaultsActions.setChainIds([]));
+        dispatch(filteredVaultsActions.update({ chainIds: [] }));
         return;
       }
       dispatch(
-        filteredVaultsActions.setChainIds(
-          selected.length === activeChains.length ?
-            []
-          : selected.filter((id): id is ChainId => id !== 'all')
-        )
+        filteredVaultsActions.update({
+          chainIds:
+            selected.length === activeChains.length ?
+              []
+            : selected.filter((id): id is ChainId => id !== 'all'),
+        })
       );
     },
     [dispatch, activeChains]
@@ -119,8 +120,8 @@ export const ChainCheckList = memo(function ChainCheckList() {
     [options.length]
   );
 
-  const allSelected = useMemo(() => isEmpty(selectedChainIds), [selectedChainIds]);
-  const noneSelected = useMemo(() => selectedChainIds.length === 0, [selectedChainIds]);
+  const allSelected = isEmpty(selectedChainIds);
+  const noneSelected = selectedChainIds.length === 0;
 
   return (
     <SelectMultipleContent

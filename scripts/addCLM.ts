@@ -9,12 +9,26 @@ import { join as pathJoin } from 'node:path';
 import type { VaultConfig, VaultRisksConfig } from '../src/features/data/apis/config-types.ts';
 import { loadJson, saveJson } from './common/files.ts';
 import { getViemClient } from './common/viem.ts';
-import { type Address, getContract } from 'viem';
+import { type Abi, type Address, getContract } from 'viem';
+
+const tickSpacingAbi = [
+  {
+    inputs: [],
+    name: 'tickSpacing',
+    outputs: [{ internalType: 'int24', name: '', type: 'int24' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+] as const satisfies Abi;
 
 // Which platforms **only** send fee rewards to the reward pool
 // i.e. strategies that do not call pool.collect()
 // Do not add ramses/shadow/nuri etc here as the protocol fees can be set 0-100%
 const poolPlatforms = ['aerodrome', 'velodrome'];
+
+function providerToPlatformId(provider: string) {
+  return provider === 'up33' ? 'up' : provider;
+}
 
 async function vaultData(chain: AppChainId, vaultAddress: string, id: string) {
   const viemClient = getViemClient(chain);
@@ -48,14 +62,22 @@ async function vaultData(chain: AppChainId, vaultAddress: string, id: string) {
     abi: ERC20Abi,
   });
 
-  const [token0, token1] = await Promise.all([
+  const poolContract = getContract({
+    client: viemClient,
+    address: params.want,
+    abi: tickSpacingAbi,
+  });
+
+  const [token0, token1, tickSpacing] = await Promise.all([
     token0Contract.read.symbol(),
     token1Contract.read.symbol(),
+    poolContract.read.tickSpacing(),
   ]);
 
   const tokens = {
     token0,
     token1,
+    tickSpacing: Number(tickSpacing),
   };
 
   const provider =
@@ -65,7 +87,7 @@ async function vaultData(chain: AppChainId, vaultAddress: string, id: string) {
     : params.mooToken.startsWith('cowRamses') ? 'ramses'
     : params.mooToken.startsWith('cowPancake') ? 'pancakeswap'
     : id.substring(0, id.indexOf('-'));
-  const platform = provider;
+  const platform = providerToPlatformId(provider);
 
   const earnedToken =
     provider === 'aerodrome' ? ['AERO']
@@ -151,7 +173,7 @@ async function generateVault() {
         oracle: 'lps',
         oracleId: id,
         status: 'active',
-        platformId: vault.provider,
+        platformId: vault.platform,
         assets: [token0, token1],
         risks: defaultRisks,
         strategyTypeId: vault.strategyTypeId,
@@ -185,7 +207,7 @@ async function generateVault() {
     oracleId: id,
     status: 'active',
     createdAt,
-    platformId: vault.provider,
+    platformId: vault.platform,
     assets: [token0, token1],
     risks: defaultRisks,
     strategyTypeId: vault.strategyTypeId,
@@ -224,6 +246,7 @@ async function generateVault() {
     network: chain,
     type: 'cowcentrated' as const,
     feeTier: '1',
+    tickSpacing: vault.tickSpacing,
     zaps: [
       {
         strategyId: 'cowcentrated' as const,

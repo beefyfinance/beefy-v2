@@ -7,6 +7,7 @@ import {
   isTokenEqual,
   isTokenErc20,
   isTokenNative,
+  type TokenEntity,
   type TokenErc20,
   type TokenNative,
 } from '../../../../entities/token.ts';
@@ -51,7 +52,6 @@ import {
   type SingleWithdrawOption,
   type SingleWithdrawQuote,
   type TokenAmount,
-  type ZapFee,
   type ZapQuoteStep,
   type ZapQuoteStepSwapAggregator,
 } from '../../transact-types.ts';
@@ -77,6 +77,7 @@ import type {
   ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { SingleStrategyConfig } from '../strategy-configs.ts';
+import { canRouteToAllOf } from '../strategy-eligibility.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -152,10 +153,8 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
       return [];
     }
 
-    const supportedAggregatorTokens = await this.aggregatorTokenSupport();
-    const tokens = supportedAggregatorTokens.filter(
-      token => !isTokenEqual(token, this.vaultType.depositToken)
-    );
+    // depositToken included so composable consumers find the identity option; deduped in transact.ts.
+    const tokens = await this.aggregatorTokenSupport();
     const outputs = [this.vaultType.depositToken];
 
     return tokens.map(token => {
@@ -265,14 +264,14 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
       id: createQuoteId(option.id),
       strategyId: 'single',
       swapQuote: bestQuote,
-      priceImpact: calculatePriceImpact(inputs, outputs, [], state), // includes the zap fee
+      priceImpact: calculatePriceImpact(inputs, outputs, [], state),
       option,
       inputs,
       outputs,
       returned: [],
       allowances,
       steps,
-      fee: bestQuote.fee,
+      fee: ZERO_FEE,
     };
   }
 
@@ -301,10 +300,8 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
       return [];
     }
 
-    const supportedAggregatorTokens = await this.aggregatorTokenSupport();
-    const tokens = supportedAggregatorTokens.filter(
-      token => !isTokenEqual(token, this.vaultType.depositToken)
-    );
+    // depositToken included so composable consumers find the identity option; deduped in transact.ts.
+    const tokens = await this.aggregatorTokenSupport();
     const inputs = [this.vaultType.depositToken];
 
     return tokens.map(token => {
@@ -408,7 +405,6 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     const swapInputAmount = withdrawnAmountAfterFee;
     const swapOutputToken = onlyOneToken(option.wantedOutputs);
     let outputs: TokenAmount[] = [{ token: swapInputToken, amount: swapInputAmount }];
-    let fee: ZapFee = ZERO_FEE;
 
     if (!isTokenEqual(swapInputToken, swapOutputToken)) {
       const swapQuotes = await swapAggregator.fetchQuotes(
@@ -440,20 +436,19 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
 
       // set outputs
       outputs = [{ token: bestQuote.toToken, amount: bestQuote.toAmount }];
-      fee = bestQuote.fee;
     }
 
     return {
       id: createQuoteId(option.id),
       strategyId: 'single',
-      priceImpact: calculatePriceImpact(inputs, outputs, [], state), // includes the zap fee.
+      priceImpact: calculatePriceImpact(inputs, outputs, [], state),
       option,
       inputs,
       outputs,
       returned: [],
       allowances,
       steps,
-      fee,
+      fee: ZERO_FEE,
     };
   }
 
@@ -513,39 +508,27 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
 
     if (quote.swapQuote) {
       // Step 1. Swap
-      const swap = await swapAggregator.fetchSwap(
-        quote.swapQuote.providerId,
+      const swapZap = await fetchZapAggregatorSwap(
         {
           quote: quote.swapQuote,
-          fromAddress: zap.router,
-          slippage,
+          inputs: [{ token: quote.swapQuote.fromToken, amount: quote.swapQuote.fromAmount }],
+          outputs: [{ token: quote.swapQuote.toToken, amount: quote.swapQuote.toAmount }],
+          maxSlippage: slippage,
+          zapRouter: zap.router,
+          providerId: quote.swapQuote.providerId,
+          insertBalance: true,
         },
+        swapAggregator,
         state
       );
 
-      steps.push({
-        target: swap.tx.toAddress,
-        value: swap.tx.value,
-        data: swap.tx.data,
-        tokens: [
-          {
-            token: getTokenAddress(swap.fromToken),
-            index: -1, // not dynamically inserted
-          },
-        ],
-      });
+      steps.push(...swapZap.zaps);
 
-      minBalances.subtractMany([{ token: swap.fromToken, amount: swap.fromAmount }]);
-      minBalances.addMany([
-        {
-          token: swap.toToken,
-          amount: slipBy(swap.toAmount, slippage, swap.toToken.decimals),
-        },
-      ]);
+      minBalances.subtractMany(swapZap.inputs);
+      minBalances.addMany(swapZap.minOutputs);
 
       depositInput = {
-        token: swap.toToken,
-        amount: slipBy(swap.toAmount, slippage, swap.toToken.decimals),
+        ...swapZap.minOutputs[0],
         max: true,
       };
     } else {
@@ -604,6 +587,16 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     return { zapRequest, expectedTokens, minBalances };
   }
 
+  async canAcceptTokenAsDeposit(token: TokenEntity): Promise<boolean> {
+    if (this.isDepositDisabled()) return false;
+    return canRouteToAllOf(this.helpers, this.options.swap, [this.vaultType.depositToken], token);
+  }
+
+  async canEmitTokenAsWithdraw(token: TokenEntity): Promise<boolean> {
+    if (this.isWithdrawDisabled()) return false;
+    return canRouteToAllOf(this.helpers, this.options.swap, [this.vaultType.depositToken], token);
+  }
+
   async fetchWithdrawUserlessZapBreakdown(
     quote: SingleWithdrawQuote
   ): Promise<UserlessZapWithdrawBreakdown> {
@@ -650,7 +643,6 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
       amount: toWeiString(input.amount, input.token.decimals),
     }));
 
-    // The required output is the swap output
     const requiredOutputs: OrderOutput[] = quote.outputs.map(output => ({
       token: getTokenAddress(output.token),
       minOutputAmount: toWeiString(

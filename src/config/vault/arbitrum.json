@@ -1,5 +1,251 @@
 [
   {
+    "id": "uniswap-cow-arbitrum-mor-weth-rp",
+    "name": "MOR-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArbitrumMOR-WETH",
+    "tokenAddress": "0x2AC513Bc6432063B391E5b12F04eAba71Aaf30dC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x451391ec8f8B4dEf10E5d8dd0e148A2D2Dd38160",
+    "earnedToken": "rCowUniswapArbitrumMOR-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-mor-weth",
+    "status": "eol",
+    "createdAt": 1779100673,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
+    "platformId": "uniswap",
+    "assets": ["MOR", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arbitrum-mor-weth",
+    "name": "MOR-WETH",
+    "type": "cowcentrated",
+    "token": "MOR-WETH uniswap",
+    "tokenAddress": "0xE5Cf22EE4988d54141B77050967E1052Bd9c7F7A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x092bAaDB7DEf4C3981454dD9c0A0D7FF07bCFc86",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnContractAddress": "0x2AC513Bc6432063B391E5b12F04eAba71Aaf30dC",
+    "earnedToken": "cowUniswapArbitrumMOR-WETH",
+    "earnedTokenAddress": "0x2AC513Bc6432063B391E5b12F04eAba71Aaf30dC",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-mor-weth",
+    "status": "eol",
+    "createdAt": 1779100673,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["MOR", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arbitrum-chip-usdc-rp",
+    "name": "CHIP-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArbitrumCHIP-USDC",
+    "tokenAddress": "0x8e4A4Cf748d18dA506a35874751A8BcF9707f29B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x299Ec0E4Dc75cad1015dB1aF16C0d617B44559E6",
+    "earnedToken": "rCowUniswapArbitrumCHIP-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-chip-usdc",
+    "status": "active",
+    "createdAt": 1776785283,
+    "platformId": "uniswap",
+    "assets": ["CHIP", "USDC"],
+    "risks": {
+      "updatedAt": 1776785283,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arbitrum-chip-usdc",
+    "name": "CHIP-USDC",
+    "type": "cowcentrated",
+    "token": "CHIP-USDC uniswap",
+    "tokenAddress": "0x560093B297E9c149e8566f329122C1790b4dA306",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0C1c1C109FE34733fca54b82d7B46B75CFb71F6e",
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+    ],
+    "earnContractAddress": "0x8e4A4Cf748d18dA506a35874751A8BcF9707f29B",
+    "earnedToken": "cowUniswapArbitrumCHIP-USDC",
+    "earnedTokenAddress": "0x8e4A4Cf748d18dA506a35874751A8BcF9707f29B",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-chip-usdc",
+    "status": "active",
+    "createdAt": 1776785283,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["CHIP", "USDC"],
+    "risks": {
+      "updatedAt": 1776785283,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arbitrum-chip-usdt-rp",
+    "name": "CHIP-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArbitrumCHIP-USDT",
+    "tokenAddress": "0x107A385a347f7E509FcF08806C3831913146Ce45",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x3CD5CEAab70C521c1cC4583e38d2FDda3e4633Cb",
+    "earnedToken": "rCowUniswapArbitrumCHIP-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-chip-usdt",
+    "status": "eol",
+    "createdAt": 1776784701,
+    "retireReason": "tvl",
+    "retiredAt": 1776926556,
+    "platformId": "uniswap",
+    "assets": ["CHIP", "USDT"],
+    "risks": {
+      "updatedAt": 1776784701,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arbitrum-chip-usdt",
+    "name": "CHIP-USDT",
+    "type": "cowcentrated",
+    "token": "CHIP-USDT uniswap",
+    "tokenAddress": "0xA5Ade02335F6EEd9937EcfE5494B1873c7925feC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0C1c1C109FE34733fca54b82d7B46B75CFb71F6e",
+      "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+    ],
+    "earnContractAddress": "0x107A385a347f7E509FcF08806C3831913146Ce45",
+    "earnedToken": "cowUniswapArbitrumCHIP-USDT",
+    "earnedTokenAddress": "0x107A385a347f7E509FcF08806C3831913146Ce45",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arbitrum-chip-usdt",
+    "status": "eol",
+    "createdAt": 1776784701,
+    "retireReason": "tvl",
+    "retiredAt": 1776926556,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["CHIP", "USDT"],
+    "risks": {
+      "updatedAt": 1776784701,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "euler-arb-euler-usdc",
     "name": "USDC (Euler DAO)",
     "type": "standard",
@@ -112,7 +358,7 @@
   },
   {
     "id": "morpho-arb-steakhouse-usdc",
-    "name": "USDC (Steakhouse, High Yield USDC)",
+    "name": "USDC (Steakhouse, High Yield)",
     "token": "USDC",
     "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
     "tokenDecimals": 6,
@@ -220,7 +466,7 @@
   },
   {
     "id": "morpho-arb-hyperithm-usdc",
-    "name": "USDC (Hyperithm)",
+    "name": "USDC (Hyperithm, Apex)",
     "token": "USDC",
     "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
     "tokenDecimals": 6,
@@ -312,6 +558,7 @@
     "createdAt": 1765918675,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["CORN", "USDT"],
     "risks": {
       "complex": true,
@@ -418,42 +665,6 @@
     }
   },
   {
-    "id": "pendle-arb-wsteth-25jun26",
-    "name": "wstETH 25Jun26",
-    "type": "standard",
-    "token": "wstETH-25JUN26",
-    "tokenAddress": "0xf78452e0f5C0B95fc5dC8353B8CD1e06E53fa25B",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pendle",
-    "earnContractAddress": "0xA7f998461919fa3f50E93B1ab4F6AD84286646b9",
-    "earnedToken": "mooPenpie-wstETH-25JUN26",
-    "earnedTokenAddress": "0xA7f998461919fa3f50E93B1ab4F6AD84286646b9",
-    "oracle": "lps",
-    "oracleId": "pendle-arb-wsteth-25jun26",
-    "status": "eol",
-    "createdAt": 1751431202,
-    "retireReason": "rewards",
-    "retiredAt": 1775809382,
-    "platformId": "magpie",
-    "assets": ["wstETH"],
-    "migrationIds": ["magpie"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": true,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf78452e0f5C0B95fc5dC8353B8CD1e06E53fa25B/zap/in?chain=arbitrum",
-    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf78452e0f5C0B95fc5dC8353B8CD1e06E53fa25B/zap/out?chain=arbitrum",
-    "network": "arbitrum"
-  },
-  {
     "id": "pendle-eqb-arb-wsteth-25jun26",
     "name": "wstETH 25Jun26",
     "type": "standard",
@@ -487,7 +698,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf78452e0f5C0B95fc5dC8353B8CD1e06E53fa25B/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf78452e0f5C0B95fc5dC8353B8CD1e06E53fa25B/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x5979D7b546E38E414F7E9822514be443A4800529"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-reth-25jun26",
@@ -523,79 +740,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xd7Eac6c9109D8c3977EBCe4e7DBf0A5A9532E240/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xd7Eac6c9109D8c3977EBCe4e7DBf0A5A9532E240/zap/out?chain=arbitrum",
-    "network": "arbitrum"
-  },
-  {
-    "id": "pendle-eqb-arb-reth-25jun26",
-    "name": "rETH 25Jun26",
-    "type": "standard",
-    "token": "rETH-25JUN26",
-    "tokenAddress": "0xd7Eac6c9109D8c3977EBCe4e7DBf0A5A9532E240",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pendle",
-    "earnContractAddress": "0xC3A6CC34cefF2F20995EB45EFEC0cC97c6092310",
-    "earnedToken": "mooEqb-rETH-25JUN26",
-    "earnedTokenAddress": "0xC3A6CC34cefF2F20995EB45EFEC0cC97c6092310",
-    "oracle": "lps",
-    "oracleId": "pendle-arb-reth-25jun26",
-    "status": "eol",
-    "createdAt": 1751430110,
-    "retireReason": "rewards",
-    "retiredAt": 1775809382,
-    "platformId": "equilibria",
-    "assets": ["rETH"],
-    "migrationIds": ["magpie"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xd7Eac6c9109D8c3977EBCe4e7DBf0A5A9532E240/zap/in?chain=arbitrum",
-    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xd7Eac6c9109D8c3977EBCe4e7DBf0A5A9532E240/zap/out?chain=arbitrum",
-    "network": "arbitrum"
-  },
-  {
-    "id": "pendle-arb-dusdc-18dec25",
-    "name": "dUSDC 18Dec25",
-    "type": "standard",
-    "token": "dUSDC-18DEC25",
-    "tokenAddress": "0xD6D4648a192c5179B4175e0e431822b64aEDF6fC",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pendle",
-    "earnContractAddress": "0x92934DA2B3a9c3C6506C53A74Ef0d09f1704F8fC",
-    "earnedToken": "mooPenpie-dUSDC-18DEC25",
-    "earnedTokenAddress": "0x92934DA2B3a9c3C6506C53A74Ef0d09f1704F8fC",
-    "oracle": "lps",
-    "oracleId": "pendle-arb-dusdc-18dec25",
-    "status": "eol",
-    "createdAt": 1751177922,
-    "retireReason": "rewards",
-    "retiredAt": 1767630245,
-    "platformId": "magpie",
-    "assets": ["USDC"],
-    "migrationIds": ["magpie"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": true,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xD6D4648a192c5179B4175e0e431822b64aEDF6fC/zap/in?chain=arbitrum",
-    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xD6D4648a192c5179B4175e0e431822b64aEDF6fC/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8"]
+      }
+    ]
   },
   {
     "id": "pendle-eqb-arb-dusdc-18dec25",
@@ -631,7 +782,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xD6D4648a192c5179B4175e0e431822b64aEDF6fC/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xD6D4648a192c5179B4175e0e431822b64aEDF6fC/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xaf88d065e77c8cC2239327C5EDb3A432268e5831"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-gusdc-18dec25",
@@ -667,7 +824,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x18ffB61c6d223bd91ec15acC248bb7e670aBcc48/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x18ffB61c6d223bd91ec15acC248bb7e670aBcc48/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xd3443ee1e91aF28e5FB858Fbd0D72A63bA8046E0"]
+      }
+    ]
   },
   {
     "id": "pendle-eqb-arb-gusdc-18dec25",
@@ -703,7 +866,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x18ffB61c6d223bd91ec15acC248bb7e670aBcc48/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x18ffB61c6d223bd91ec15acC248bb7e670aBcc48/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xd3443ee1e91aF28e5FB858Fbd0D72A63bA8046E0"]
+      }
+    ]
   },
   {
     "id": "curve-arb-usdc-eure",
@@ -770,8 +939,10 @@
     "earnedTokenAddress": "0x03F1aA37749D1226B2F147e00f8e219d1179C9c5",
     "oracle": "lps",
     "oracleId": "balancerv3-arbitrum-waarbweth-reth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1756747503,
+    "retireReason": "rewards",
+    "retiredAt": 1784057931,
     "platformId": "aura",
     "assets": ["waArbWETH", "rETH"],
     "risks": {
@@ -802,8 +973,10 @@
     "earnedTokenAddress": "0x1Ec305f7938C99AdB3DEc111230fc4e61a96b864",
     "oracle": "lps",
     "oracleId": "balancerv3-arbitrum-waarbwbtc-ebtc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1768586851,
+    "retireReason": "tvl",
+    "retiredAt": 1776009600,
     "platformId": "aura",
     "assets": ["waArbWBTC", "eBTC"],
     "risks": {
@@ -834,8 +1007,10 @@
     "earnedTokenAddress": "0xdFcfFE75EF84EdEa4ef62bE6D08fb82acD3d2044",
     "oracle": "lps",
     "oracleId": "balancerv3-arbitrum-waarbusdcn-eure",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1764094750,
+    "retireReason": "rewards",
+    "retiredAt": 1784057931,
     "platformId": "aura",
     "assets": ["waArbUSDCn", "EURe"],
     "risks": {
@@ -866,8 +1041,10 @@
     "earnedTokenAddress": "0x1C49B46D878fcabA86EcDaC5436d86cdcd85a62B",
     "oracle": "lps",
     "oracleId": "balancerv3-arbitrum-waarbweth-waarbwsteth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1745365759,
+    "retireReason": "rewards",
+    "retiredAt": 1784057931,
     "platformId": "aura",
     "assets": ["waArbWETH", "waArbwstETH"],
     "risks": {
@@ -966,8 +1143,10 @@
     "earnedTokenAddress": "0x14B85C31975b4f400dDbb6313957A79e0387f1c6",
     "oracle": "lps",
     "oracleId": "balancerv3-arbitrum-waarbusdcn-waarbusdt-waarbgho",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1745352429,
+    "retireReason": "rewards",
+    "retiredAt": 1784057931,
     "platformId": "aura",
     "assets": ["waArbUSDCn", "waArbUSDT", "waArbGHO"],
     "risks": {
@@ -1052,7 +1231,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x4505ec38982Bb796B34D050ca8d765aCFF1aBdee/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x4505ec38982Bb796B34D050ca8d765aCFF1aBdee/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xaf88d065e77c8cC2239327C5EDb3A432268e5831"]
+      }
+    ]
   },
   {
     "id": "curve-arb-asdcrv-v2.1",
@@ -1066,8 +1251,10 @@
     "earnedTokenAddress": "0x0165384487d26b3bb71aE2f3e26635071b71CC25",
     "oracle": "lps",
     "oracleId": "curve-arb-asdcrv-v2.1",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1734344258,
+    "retireReason": "exploitNoPanic",
+    "retiredAt": 1784056878,
     "platformId": "convex",
     "assets": ["CRV", "vsdCRV", "asdCRV"],
     "migrationIds": ["l2-convex", "l2-curve"],
@@ -1137,7 +1324,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x22e0F26320aCE985e3CB2434095F18Bfe114E28e/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x22e0F26320aCE985e3CB2434095F18Bfe114E28e/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xd3443ee1e91aF28e5FB858Fbd0D72A63bA8046E0"]
+      }
+    ]
   },
   {
     "id": "pendle-eqb-arb-gusdc-26jun25",
@@ -1172,7 +1365,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x22e0F26320aCE985e3CB2434095F18Bfe114E28e/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x22e0F26320aCE985e3CB2434095F18Bfe114E28e/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xd3443ee1e91aF28e5FB858Fbd0D72A63bA8046E0"]
+      }
+    ]
   },
   {
     "id": "compound-arbitrum-eth",
@@ -1186,7 +1385,7 @@
     "earnedTokenAddress": "0x79717B36190B229d06CC0d31304c66aB18E1F3ab",
     "oracle": "tokens",
     "oracleId": "WETH",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1732036612,
     "platformId": "compound",
     "assets": ["WETH"],
@@ -1212,7 +1411,9 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1777011281
   },
   {
     "id": "compound-arbitrum-usdt",
@@ -1226,7 +1427,7 @@
     "earnedTokenAddress": "0x9aB0cA1CC39A951176Eb623F39a4FD99a49051e5",
     "oracle": "tokens",
     "oracleId": "USDT",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1732036612,
     "platformId": "compound",
     "assets": ["USDT"],
@@ -1252,7 +1453,9 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x3f3f5dF88dC9F13eac63DF89EC16ef6e7E25DdE7"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1777011281
   },
   {
     "id": "pendle-arb-silo-27mar25",
@@ -1287,7 +1490,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x3be83Cc235455Ae1B624Cf6e326505769AD8f9eA/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x3be83Cc235455Ae1B624Cf6e326505769AD8f9eA/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x0341C0C0ec423328621788d4854119B97f44E391"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-reth-26jun25",
@@ -1322,7 +1531,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x14FbC760eFaF36781cB0eb3Cb255aD976117B9Bd/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x14FbC760eFaF36781cB0eb3Cb255aD976117B9Bd/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-dusdc-26jun25",
@@ -1358,7 +1573,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x0bD6890b3Bb15f16430546147734b254d0B03059/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x0bD6890b3Bb15f16430546147734b254d0B03059/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xaf88d065e77c8cC2239327C5EDb3A432268e5831"]
+      }
+    ]
   },
   {
     "id": "pendle-eqb-arb-dwbtc-26jun25",
@@ -1394,7 +1615,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x8cAB5Fd029ae2FBF28c53E965E4194C7260aDF0C/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x8cAB5Fd029ae2FBF28c53E965E4194C7260aDF0C/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f"]
+      }
+    ]
   },
   {
     "id": "silo-arb-silo",
@@ -1786,6 +2013,7 @@
     "retiredAt": 1761205953,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["ORDER", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1868,6 +2096,7 @@
     "retiredAt": 1738691291,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["EIGEN", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1959,7 +2188,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xA9104b8B6698979568852C30231871e28A482b3C/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xA9104b8B6698979568852C30231871e28A482b3C/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xd85E038593d7A098614721EaE955EC2022B9B91B"]
+      }
+    ]
   },
   {
     "id": "aura-arb-gho-usdc-usdt",
@@ -2268,6 +2503,7 @@
     "retiredAt": 1761205953,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 1,
     "assets": ["USDC", "gUSDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2388,6 +2624,7 @@
     "createdAt": 1725264953,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDC", "DAI"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2515,6 +2752,7 @@
     "retiredAt": 1732379821,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDT+", "USD+"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2594,8 +2832,10 @@
     "earnedOracleIds": ["Cake", "ARB"],
     "oracle": "lps",
     "oracleId": "pancake-cow-arb-usdc-mim",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1725011787,
+    "retireReason": "liquidityPanic",
+    "retiredAt": 1782372150,
     "platformId": "pancakeswap",
     "assets": ["MIM", "USDC"],
     "risks": {
@@ -2637,10 +2877,13 @@
     "earnedTokenAddress": "0x9A4995eF8EF7D64F234e7d7C5bA10C0463132014",
     "oracle": "lps",
     "oracleId": "pancake-cow-arb-usdc-mim",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1725011787,
+    "retireReason": "liquidityPanic",
+    "retiredAt": 1782372150,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["MIM", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2674,8 +2917,10 @@
     "earnedTokenAddress": "0x88cD2e60A549525e13bE59daED9E2F8eBb74174a",
     "oracle": "lps",
     "oracleId": "mim-arb-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1724916347,
+    "retireReason": "rewards",
+    "retiredAt": 1784056878,
     "platformId": "mim",
     "assets": ["MIM", "USDC"],
     "migrationIds": [],
@@ -2708,8 +2953,10 @@
     "earnedTokenAddress": "0x2651D82Bf8Cd7b2Eb021d97A34f059B47BA9A272",
     "oracle": "lps",
     "oracleId": "mim-arb-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1724916338,
+    "retireReason": "rewards",
+    "retiredAt": 1784056878,
     "platformId": "mim",
     "assets": ["MIM", "USDT"],
     "migrationIds": [],
@@ -2830,6 +3077,7 @@
     "createdAt": 1724862426,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDC", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2959,6 +3207,7 @@
     "retiredAt": 1743001154,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDe", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3088,6 +3337,7 @@
     "retiredAt": 1743001154,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["weETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3215,6 +3465,7 @@
     "retiredAt": 1743510775,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["ezETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3393,6 +3644,7 @@
     "retiredAt": 1744925964,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDC", "USD+"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3426,8 +3678,10 @@
     "earnedTokenAddress": "0x639976EE5FbcdAe1fB981a02F4372e2b289db844",
     "oracle": "lps",
     "oracleId": "uniswap-cow-arb-usd+-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1724324003,
+    "retireReason": "rewards",
+    "retiredAt": 1777371691,
     "platformId": "uniswap",
     "assets": ["USD+", "USDT"],
     "risks": {
@@ -3466,8 +3720,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "uniswap-cow-arb-usd+-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1724324002,
+    "retireReason": "rewards",
+    "retiredAt": 1777371691,
     "platformId": "uniswap",
     "assets": ["USD+", "USDT"],
     "risks": {
@@ -3509,10 +3765,13 @@
     "earnedTokenAddress": "0xf22Aa165a474f5108Dee823abF444737d15e61C6",
     "oracle": "lps",
     "oracleId": "uniswap-cow-arb-usd+-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1724324002,
+    "retireReason": "rewards",
+    "retiredAt": 1777371691,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USD+", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3639,6 +3898,7 @@
     "retiredAt": 1737731758,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USD+", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3765,6 +4025,7 @@
     "retiredAt": 1737731758,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USD+", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3848,7 +4109,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -3970,6 +4231,7 @@
     "retiredAt": 1733690769,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 1,
     "assets": ["WBTC", "tBTC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4091,6 +4353,7 @@
     "createdAt": 1724161455,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["wstETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4217,6 +4480,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["ARB", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4300,8 +4564,10 @@
     "earnedTokenAddress": "0x5188990f4E84960a2b147Bd596602d14331F9714",
     "oracle": "lps",
     "oracleId": "aura-arb-ausdt-gyd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1724167746,
+    "retireReason": "rewards",
+    "retiredAt": 1777371415,
     "platformId": "aura",
     "assets": ["stataArbUSDTn", "GYD"],
     "risks": {
@@ -4420,7 +4686,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x281fE15fd3E08A282f52D5cf09a4d13c3709E66D/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x281fE15fd3E08A282f52D5cf09a4d13c3709E66D/zap/out?chain=arbitrum",
     "pointStructureIds": ["ethena"],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34"]
+      }
+    ]
   },
   {
     "id": "aura-arb-wusdm-gyd",
@@ -4581,6 +4853,7 @@
     "retiredAt": 1743014134,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 1,
     "assets": ["rsETH", "ETHx"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4709,6 +4982,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDT", "arbUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4830,6 +5104,7 @@
     "createdAt": 1723477739,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBTC", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4957,6 +5232,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["ARB", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5084,6 +5360,7 @@
     "retiredAt": 1743510775,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDC", "arbUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5211,6 +5488,7 @@
     "retiredAt": 1737731758,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["WETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5335,6 +5613,7 @@
     "createdAt": 1722618157,
     "platformId": "beefy",
     "feeTier": "0.25",
+    "tickSpacing": 50,
     "assets": ["CAKE", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5459,6 +5738,7 @@
     "createdAt": 1722618157,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDC", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5583,6 +5863,7 @@
     "createdAt": 1722459101,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5707,6 +5988,7 @@
     "createdAt": 1722459101,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5831,6 +6113,7 @@
     "createdAt": 1722459101,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5955,6 +6238,7 @@
     "createdAt": 1722459101,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBTC", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6001,7 +6285,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -6047,7 +6331,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -6085,6 +6369,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.25",
+    "tickSpacing": 50,
     "assets": ["ZRO", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6093,7 +6378,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -6206,6 +6491,7 @@
     "createdAt": 1722459101,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["ARB", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6336,6 +6622,7 @@
     "retiredAt": 1737731758,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USD+", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6466,6 +6753,7 @@
     "retiredAt": 1744925964,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["wstETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6596,6 +6884,7 @@
     "retiredAt": 1743510775,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["rsETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6726,6 +7015,7 @@
     "retiredAt": 1737389642,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["ETHx", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6856,6 +7146,7 @@
     "retiredAt": 1743510775,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["rETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6910,7 +7201,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xa877a0E177b54A37066c1786F91a1DAb68F094AF/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xa877a0E177b54A37066c1786F91a1DAb68F094AF/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xd3443ee1e91aF28e5FB858Fbd0D72A63bA8046E0"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-unieth-26dec24",
@@ -7158,6 +7455,7 @@
     "retiredAt": 1727106694,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["rsETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -7284,6 +7582,7 @@
     "retiredAt": 1743510775,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["rsETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -7414,6 +7713,7 @@
     "retiredAt": 1743510775,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 5,
     "assets": ["weETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -8283,8 +8583,10 @@
     "earnedTokenAddress": "0xDa42DA88EcDa377e3BA4930A393BE4043EC45C34",
     "oracle": "lps",
     "oracleId": "ramses-zero-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1721779510,
+    "retireReason": "rewards",
+    "retiredAt": 1785737175,
     "platformId": "ramses",
     "assets": ["ZRO", "WETH"],
     "risks": {
@@ -8294,7 +8596,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -8322,8 +8624,10 @@
     "earnedTokenAddress": "0xeEE05484d1b2DCB2D528E29543b73Ce3aeE181c4",
     "oracle": "lps",
     "oracleId": "ramses-cl-weth-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1721779510,
+    "retireReason": "rewards",
+    "retiredAt": 1785737175,
     "platformId": "ramses",
     "assets": ["WETH", "USDC"],
     "risks": {
@@ -8443,8 +8747,10 @@
     "earnedTokenAddress": "0x34d07eEFf5aF38BcdD1CAbcF6C997A9D75A0d1B7",
     "oracle": "lps",
     "oracleId": "ramses-cl-wbtc-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1721779510,
+    "retireReason": "rewards",
+    "retiredAt": 1785737175,
     "platformId": "ramses",
     "assets": ["WBTC", "WETH"],
     "risks": {
@@ -8806,6 +9112,7 @@
     "createdAt": 1721742357,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["ARB", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -8851,7 +9158,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -8887,6 +9194,7 @@
     "createdAt": 1721742357,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["ZRO", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -8895,7 +9203,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -8968,6 +9276,7 @@
     "createdAt": 1721742357,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -9046,6 +9355,7 @@
     "createdAt": 1721742357,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "arbUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -9124,6 +9434,7 @@
     "createdAt": 1721415146,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["ETHFI", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -9206,6 +9517,7 @@
     "retiredAt": 1744925964,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 1,
     "assets": ["rsETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -9244,8 +9556,10 @@
     "earnedOracleIds": ["RAM", "ARB"],
     "oracle": "lps",
     "oracleId": "ramses-cl-wbtc-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1721343401,
+    "retireReason": "rewards",
+    "retiredAt": 1785737175,
     "platformId": "ramses",
     "assets": ["WBTC", "WETH"],
     "risks": {
@@ -9287,10 +9601,13 @@
     "earnedTokenAddress": "0xeE480eb145158A176C1e4748003619360B7a2EAd",
     "oracle": "lps",
     "oracleId": "ramses-cl-wbtc-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1721343401,
+    "retireReason": "rewards",
+    "retiredAt": 1785737175,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -9380,6 +9697,7 @@
     "retiredAt": 1727186610,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["ETHFI", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -9469,6 +9787,7 @@
     "retiredAt": 1764609953,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["ARB", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -9507,8 +9826,10 @@
     "earnedOracleIds": ["RAM", "ARB"],
     "oracle": "lps",
     "oracleId": "ramses-cl-weth-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1721343401,
+    "retireReason": "rewards",
+    "retiredAt": 1785737175,
     "platformId": "ramses",
     "assets": ["WETH", "USDC"],
     "risks": {
@@ -9550,10 +9871,13 @@
     "earnedTokenAddress": "0x6b17F8f3cf06696bb4Fd90D10b3EdeF8BA36097b",
     "oracle": "lps",
     "oracleId": "ramses-cl-weth-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1721343401,
+    "retireReason": "rewards",
+    "retiredAt": 1785737175,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -9644,8 +9968,10 @@
     "earnedOracleIds": ["RAM", "ARB"],
     "oracle": "lps",
     "oracleId": "ramses-zero-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1721343401,
+    "retireReason": "rewards",
+    "retiredAt": 1785737175,
     "platformId": "ramses",
     "assets": ["ZRO", "WETH"],
     "risks": {
@@ -9655,7 +9981,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -9687,10 +10013,13 @@
     "earnedTokenAddress": "0x72eB356324963A85A3d06c35422b59c87e475195",
     "oracle": "lps",
     "oracleId": "ramses-zero-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1721343401,
+    "retireReason": "rewards",
+    "retiredAt": 1785737175,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 200,
     "assets": ["ZRO", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -9699,7 +10028,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -9869,6 +10198,7 @@
     "createdAt": 1721059299,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["ETHFI", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -10025,43 +10355,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/out?chain=arbitrum",
-    "network": "arbitrum"
-  },
-  {
-    "id": "equilibria-arb-seth-rseth-26sep24",
-    "name": "ETH (rsETHSilo) 26Sep24",
-    "type": "standard",
-    "token": "ETH (rsETHSilo) 26Sep24",
-    "tokenAddress": "0x2aD746fa3faA0AD586021a633d10F4E2785A0349",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pendle",
-    "earnContractAddress": "0x9487044D3208Ff03343429F10307f0a23A27dfeC",
-    "earnedToken": "mooEqb-sETH_rsETHSilo_26SEP24",
-    "earnedTokenAddress": "0x9487044D3208Ff03343429F10307f0a23A27dfeC",
-    "oracle": "lps",
-    "oracleId": "equilibria-arb-seth-rseth-26sep24",
-    "status": "eol",
-    "createdAt": 1720077891,
-    "retireReason": "rewards",
-    "retiredAt": 1726517711,
-    "platformId": "equilibria",
-    "assets": ["ETH"],
-    "migrationIds": ["magpie"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2aD746fa3faA0AD586021a633d10F4E2785A0349/zap/in?chain=arbitrum",
-    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2aD746fa3faA0AD586021a633d10F4E2785A0349/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"]
+      }
+    ]
   },
   {
     "id": "balancer-gyro-arb-wsteth-weth",
@@ -10125,8 +10425,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "pancake-cow-arb-weth-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1719666519,
+    "retireReason": "tvl",
+    "retiredAt": 1785438005,
     "platformId": "pancakeswap",
     "assets": ["WETH", "USDC"],
     "risks": {
@@ -10162,8 +10464,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "pancake-cow-arb-weth-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1719666519,
+    "retireReason": "tvl",
+    "retiredAt": 1785438005,
     "platformId": "pancakeswap",
     "assets": ["WETH", "USDT"],
     "risks": {
@@ -10449,7 +10753,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -10896,8 +11200,10 @@
     "earnedOracleIds": ["ARB"],
     "oracle": "lps",
     "oracleId": "camelot-arb-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1719055979,
+    "retireReason": "tvl",
+    "retiredAt": 1785438005,
     "platformId": "camelot",
     "assets": ["ARB", "USDC"],
     "risks": {
@@ -11058,7 +11364,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -11095,7 +11401,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -11132,7 +11438,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -13091,8 +13397,10 @@
     "earnedOracleIds": ["ARB"],
     "oracle": "lps",
     "oracleId": "camelot-ezeth-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1719824584,
+    "retireReason": "rewards",
+    "retiredAt": 1784063232,
     "platformId": "camelot",
     "assets": ["ezETH", "WETH"],
     "risks": {
@@ -13195,7 +13503,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2Dfaf9a5E4F293BceedE49f2dBa29aACDD88E0C4/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2Dfaf9a5E4F293BceedE49f2dBa29aACDD88E0C4/zap/out?chain=arbitrum",
     "pointStructureIds": ["ethena"],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34"]
+      }
+    ]
   },
   {
     "id": "pancake-cow-arb-weth-usdc",
@@ -13214,10 +13528,13 @@
     "earnedTokenAddress": "0xA297024a99098d52aae466AC5F48520d514262bA",
     "oracle": "lps",
     "oracleId": "pancake-cow-arb-weth-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1719666518,
+    "retireReason": "tvl",
+    "retiredAt": 1785438005,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["WETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -13255,10 +13572,13 @@
     "earnedTokenAddress": "0xF0eB29f3E21f8F88a6c93dE44993bac27c4B519F",
     "oracle": "lps",
     "oracleId": "pancake-cow-arb-weth-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1719666518,
+    "retireReason": "tvl",
+    "retiredAt": 1785438005,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["WETH", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -13341,6 +13661,7 @@
     "createdAt": 1719509612,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["GNS", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -13384,6 +13705,7 @@
     "retiredAt": 1737899656,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["wUSDM", "wstETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -13425,6 +13747,7 @@
     "createdAt": 1719491859,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["tBTC", "WBTC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -13466,6 +13789,7 @@
     "createdAt": 1719491859,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["tBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -13749,6 +14073,7 @@
     "createdAt": 1719321885,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 1,
     "assets": ["USDe", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -13791,6 +14116,7 @@
     "createdAt": 1719321885,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 1,
     "assets": ["USDC", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -13834,6 +14160,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["ZRO", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -13842,7 +14169,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -13877,6 +14204,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["KUJI", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -13918,6 +14246,7 @@
     "createdAt": 1719321885,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBTC", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -13973,7 +14302,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf9F9779d8fF604732EBA9AD345E6A27EF5c2a9d6/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf9F9779d8fF604732EBA9AD345E6A27EF5c2a9d6/zap/out?chain=arbitrum",
     "pointStructureIds": ["etherfi"],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-rseth-26sep24",
@@ -14009,7 +14344,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xED99fC8bdB8E9e7B8240f62f69609a125A0Fbf14/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xED99fC8bdB8E9e7B8240f62f69609a125A0Fbf14/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x4186BFC76E2E237523CBC30FD220FE055156b41F"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-ezeth-26sep24",
@@ -14046,7 +14387,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3dB08a6e9cB4391348b0B404F493E7ae264c0/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3dB08a6e9cB4391348b0B404F493E7ae264c0/zap/out?chain=arbitrum",
     "pointStructureIds": [],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x2416092f143378750bb29b79eD961ab195CcEea5"]
+      }
+    ]
   },
   {
     "id": "pendle-arb-dusdc-26sep24",
@@ -14082,7 +14429,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2fB73D98B1D60B35FD12508933578098f352cE7e/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2fB73D98B1D60B35FD12508933578098f352cE7e/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xaf88d065e77c8cC2239327C5EDb3A432268e5831"]
+      }
+    ]
   },
   {
     "id": "camelot-pendle-weth",
@@ -14105,6 +14458,7 @@
     "createdAt": 1719145883,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["PENDLE", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14146,6 +14500,7 @@
     "createdAt": 1719145883,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["GMX", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14189,6 +14544,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["RDNT", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14230,6 +14586,7 @@
     "createdAt": 1719145883,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["MAGIC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14271,6 +14628,7 @@
     "createdAt": 1719145883,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["SOL", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14312,6 +14670,7 @@
     "createdAt": 1719055978,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["LINK", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14353,6 +14712,7 @@
     "createdAt": 1719055978,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["USDT", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14394,6 +14754,7 @@
     "createdAt": 1719055978,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 1,
     "assets": ["weETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14435,6 +14796,7 @@
     "createdAt": 1719055978,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["ARB", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14472,10 +14834,13 @@
     "earnedTokenAddress": "0x8bc2AE3862617838357c329ccfd9eD8Fded58cfc",
     "oracle": "lps",
     "oracleId": "camelot-arb-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1719055978,
+    "retireReason": "tvl",
+    "retiredAt": 1785438005,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["ARB", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14517,6 +14882,7 @@
     "createdAt": 1719055978,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14554,10 +14920,13 @@
     "earnedTokenAddress": "0x663B0d9ddB6e86cB5E1F87ebCbDafb5A53a45798",
     "oracle": "lps",
     "oracleId": "camelot-ezeth-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1719055978,
+    "retireReason": "rewards",
+    "retiredAt": 1784063232,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 1,
     "assets": ["ezETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14599,6 +14968,7 @@
     "createdAt": 1719055978,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 10,
     "assets": ["USDC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14640,6 +15010,7 @@
     "createdAt": 1719055978,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 1,
     "assets": ["wstETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14681,6 +15052,7 @@
     "createdAt": 1719052734,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["ZRO", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14689,7 +15061,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -14722,6 +15094,7 @@
     "createdAt": 1718895191,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["ZRO", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14730,7 +15103,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -14763,6 +15136,7 @@
     "createdAt": 1718895191,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["ZRO", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14771,7 +15145,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -14857,6 +15231,7 @@
     "createdAt": 1718824835,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["cbETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14900,6 +15275,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["wstETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14941,6 +15317,7 @@
     "createdAt": 1718824835,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["PEPE", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -14982,6 +15359,7 @@
     "createdAt": 1718824835,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["CRV", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15025,6 +15403,7 @@
     "retiredAt": 1738158912,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["RPL", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15068,6 +15447,7 @@
     "retiredAt": 1741252256,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["WMATIC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15111,6 +15491,7 @@
     "retiredAt": 1764609953,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["COMP", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15152,6 +15533,7 @@
     "createdAt": 1718789163,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["AAVE", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15193,6 +15575,7 @@
     "createdAt": 1718789163,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["AAVE", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15234,6 +15617,7 @@
     "createdAt": 1718789163,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["LDO", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15275,6 +15659,7 @@
     "createdAt": 1718789163,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["UNI", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15316,6 +15701,7 @@
     "createdAt": 1718789163,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["UNI", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15359,6 +15745,7 @@
     "retiredAt": 1743080733,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["SYN", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15400,6 +15787,7 @@
     "createdAt": 1718789163,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["WBTC", "LINK"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15441,6 +15829,7 @@
     "createdAt": 1718789163,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["LINK", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15482,6 +15871,7 @@
     "createdAt": 1718709062,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["rETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15525,6 +15915,7 @@
     "retiredAt": 1727186610,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDV", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15568,6 +15959,7 @@
     "retiredAt": 1744925964,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDe", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15610,6 +16002,7 @@
     "createdAt": 1718709062,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDC", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15653,6 +16046,7 @@
     "retiredAt": 1764609953,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["FRAX", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15735,6 +16129,7 @@
     "createdAt": 1718455449,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["LDO", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15778,6 +16173,7 @@
     "retiredAt": 1737930375,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["NEXT", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15819,6 +16215,7 @@
     "createdAt": 1718372100,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["ARB", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15862,6 +16259,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["wstETH", "arbUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15903,6 +16301,7 @@
     "createdAt": 1718372100,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "arbUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15944,6 +16343,7 @@
     "createdAt": 1718372100,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["GMX", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -15987,6 +16387,7 @@
     "retiredAt": 1767991369,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["RDNT", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16028,6 +16429,7 @@
     "createdAt": 1718372100,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["GNS", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16071,6 +16473,7 @@
     "retiredAt": 1727186610,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["RSR", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16112,6 +16515,7 @@
     "createdAt": 1718243445,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["UNI", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16153,6 +16557,7 @@
     "createdAt": 1718243445,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["DAI", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16194,6 +16599,7 @@
     "createdAt": 1718243445,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDT", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16235,6 +16641,7 @@
     "createdAt": 1718243445,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBTC", "arbUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16276,6 +16683,7 @@
     "createdAt": 1718243445,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBTC", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16314,11 +16722,12 @@
     "oracle": "lps",
     "oracleId": "uniswap-cow-arb-rseth-wsteth",
     "status": "eol",
+    "createdAt": 1718042016,
     "retireReason": "rewards",
     "retiredAt": 1758546805,
-    "createdAt": 1718042016,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["rsETH", "wstETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16362,6 +16771,7 @@
     "retiredAt": 1727186610,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["ezETH", "wstETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16405,6 +16815,7 @@
     "retiredAt": 1727186610,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDe", "wstETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16449,6 +16860,7 @@
     "retiredAt": 1738158060,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["ETH+", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16492,6 +16904,7 @@
     "retiredAt": 1729892801,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["KNOX", "eUSD"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16535,6 +16948,7 @@
     "retiredAt": 1733690769,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["eUSD", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16576,6 +16990,7 @@
     "createdAt": 1718042016,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "ARB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16617,6 +17032,7 @@
     "createdAt": 1718042016,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["MAGIC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16660,6 +17076,7 @@
     "retiredAt": 1761205953,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["SILO", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16701,6 +17118,7 @@
     "createdAt": 1718042016,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["GRT", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16742,6 +17160,7 @@
     "createdAt": 1718042016,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["LINK", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16783,6 +17202,7 @@
     "createdAt": 1718042016,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["PENDLE", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16824,6 +17244,7 @@
     "createdAt": 1718042016,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["ARB", "arbUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16865,6 +17286,7 @@
     "createdAt": 1718042016,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16906,6 +17328,7 @@
     "createdAt": 1718042016,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["wstETH", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -16947,6 +17370,7 @@
     "createdAt": 1718042016,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -17001,7 +17425,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xED99fC8bdB8E9e7B8240f62f69609a125A0Fbf14/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xED99fC8bdB8E9e7B8240f62f69609a125A0Fbf14/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x4186BFC76E2E237523CBC30FD220FE055156b41F"]
+      }
+    ]
   },
   {
     "id": "stargate-v2-arb-weth",
@@ -17415,7 +17845,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x1d38d4204159aa5e767afba8f76be22117de61e5/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x1d38d4204159aa5e767afba8f76be22117de61e5/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x4186BFC76E2E237523CBC30FD220FE055156b41F"]
+      }
+    ]
   },
   {
     "id": "equilibria-arb-eeth-26sep24",
@@ -17452,7 +17888,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf9F9779d8fF604732EBA9AD345E6A27EF5c2a9d6/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf9F9779d8fF604732EBA9AD345E6A27EF5c2a9d6/zap/out?chain=arbitrum",
     "pointStructureIds": ["etherfi"],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe"]
+      }
+    ]
   },
   {
     "id": "equilibria-arb-ezeth-26sep24",
@@ -17488,7 +17930,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3db08a6e9cb4391348b0b404f493e7ae264c0/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3db08a6e9cb4391348b0b404f493e7ae264c0/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x2416092f143378750bb29b79eD961ab195CcEea5"]
+      }
+    ]
   },
   {
     "id": "uniswap-cow-arb-silo-weth",
@@ -17513,6 +17961,7 @@
     "retiredAt": 1718051223,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["SILO", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -17709,6 +18158,7 @@
     "retiredAt": 1718051223,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["tBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -17752,6 +18202,7 @@
     "retiredAt": 1718051223,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["wstETH", "arbUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -17795,6 +18246,7 @@
     "retiredAt": 1718051223,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "arbUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -18005,6 +18457,7 @@
     "retiredAt": 1718051223,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -18048,6 +18501,7 @@
     "retiredAt": 1718051223,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["MAGIC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -18091,6 +18545,7 @@
     "retiredAt": 1718051223,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["ARB", "arbUSDCe"],
     "risks": {
       "updatedAt": 1765557014,
@@ -18146,7 +18601,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x952083cde7aaa11ab8449057f7de23a970aa8472/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x952083cde7aaa11ab8449057f7de23a970aa8472/zap/out?chain=arbitrum",
     "pointStructureIds": ["etherfi"],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe"]
+      }
+    ]
   },
   {
     "id": "equilibria-arb-rseth-27jun24",
@@ -18182,7 +18643,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6ae79089b2cf4be441480801bb741a531d94312b/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6ae79089b2cf4be441480801bb741a531d94312b/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x4186BFC76E2E237523CBC30FD220FE055156b41F"]
+      }
+    ]
   },
   {
     "id": "uniswap-cow-arb-wbtc-eth",
@@ -18207,6 +18674,7 @@
     "retiredAt": 1718051223,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBTC", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -18250,6 +18718,7 @@
     "retiredAt": 1718051223,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -18293,6 +18762,7 @@
     "retiredAt": 1718051223,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["PENDLE", "WETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -18336,6 +18806,7 @@
     "retiredAt": 1718051223,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WETH", "ARB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -18390,7 +18861,13 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5e03c94fc5fb2e21882000a96df0b63d2c4312e2/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5e03c94fc5fb2e21882000a96df0b63d2c4312e2/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x2416092f143378750bb29b79eD961ab195CcEea5"]
+      }
+    ]
   },
   {
     "id": "aavev3-arb-usdc",
@@ -18601,7 +19078,13 @@
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x551c423c441db0b691b5630f04d2080caee25963/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x551c423c441db0b691b5630f04d2080caee25963/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f"]
+      }
+    ]
   },
   {
     "id": "curve-arb-asdcrv",
@@ -18823,7 +19306,13 @@
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x99e9028e274feafa2e1d8787e1ee6de39c6f7724/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x99e9028e274feafa2e1d8787e1ee6de39c6f7724/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"]
+      }
+    ]
   },
   {
     "id": "silo-eth-pendle-weeth",
@@ -18949,7 +19438,13 @@
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xaccd9a7cb5518326bed715f90bd32cdf2fec2d14/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xaccd9a7cb5518326bed715f90bd32cdf2fec2d14/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"]
+      }
+    ]
   },
   {
     "id": "equilibria-arb-rseth",
@@ -18985,7 +19480,13 @@
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6f02c88650837c8dfe89f66723c4743e9cf833cd/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6f02c88650837c8dfe89f66723c4743e9cf833cd/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x4186BFC76E2E237523CBC30FD220FE055156b41F"]
+      }
+    ]
   },
   {
     "id": "equilibria-arb-eeth",
@@ -19022,7 +19523,13 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xe11f9786b06438456b044b3e21712228adcaa0d1/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xe11f9786b06438456b044b3e21712228adcaa0d1/zap/out?chain=arbitrum",
     "pointStructureIds": ["etherfi"],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe"]
+      }
+    ]
   },
   {
     "id": "equilibria-arb-reth",
@@ -19058,7 +19565,13 @@
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x14fbc760efaf36781cb0eb3cb255ad976117b9bd/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x14fbc760efaf36781cb0eb3cb255ad976117b9bd/zap/in?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8"]
+      }
+    ]
   },
   {
     "id": "curve-arb-tricrvarb",
@@ -19073,8 +19586,10 @@
     "earnedTokenAddress": "0xE47CCbD0F9E80ed02EF68f35eA5074b7165c68ED",
     "oracle": "lps",
     "oracleId": "curve-arb-tricrvarb",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1705304770,
+    "retireReason": "rewards",
+    "retiredAt": 1780295756,
     "platformId": "curve",
     "assets": ["crvUSD", "ARB", "CRV"],
     "migrationIds": ["l2-convex", "l2-curve"],
@@ -19718,7 +20233,13 @@
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x7d49e5adc0eaad9c027857767638613253ef125f/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x7d49e5adc0eaad9c027857767638613253ef125f/zap/out?chain=arbitrum",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "pendle-v2",
+        "depositTokens": ["0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f"]
+      }
+    ]
   },
   {
     "id": "silo-eth-wsteth",
@@ -20680,7 +21201,7 @@
     "earnedTokenAddress": "0xb9A27ba529634017b12e3cbbbFFb6dB7908a8C8B",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1698772242,
     "platformId": "compound",
     "assets": ["USDC"],
@@ -20706,7 +21227,9 @@
     "lendingOracle": {
       "provider": "chainlink",
       "address": "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3"
-    }
+    },
+    "retireReason": "rewards",
+    "retiredAt": 1777011281
   },
   {
     "id": "sushi-gamma-weth-arb-narrow",
@@ -21352,8 +21875,10 @@
     "earnedTokenAddress": "0x93981d31ADE2C84882a9A1ABA9Cb49978C83389a",
     "oracle": "lps",
     "oracleId": "aura-rdnt-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1692957284,
+    "retireReason": "rewards",
+    "retiredAt": 1780295756,
     "platformId": "aura",
     "assets": ["RDNT", "WETH"],
     "risks": {
@@ -21502,8 +22027,10 @@
     "earnedTokenAddress": "0x3bAa857646e5A0B475E75a1dbD38E7f0a6742058",
     "oracle": "lps",
     "oracleId": "aura-aurabal-wsteth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1691593745,
+    "retireReason": "rewards",
+    "retiredAt": 1780295756,
     "platformId": "aura",
     "assets": ["auraBAL", "wstETH"],
     "risks": {
@@ -21937,47 +22464,6 @@
     ]
   },
   {
-    "id": "chronos-wusdr-usdc",
-    "name": "wUSDR-USDC.e vLP",
-    "type": "standard",
-    "token": "vAMM-wUSDR/USDC.e",
-    "tokenAddress": "0x278f76df86EfdcbE0f2573AE54e917505621E312",
-    "tokenDecimals": 18,
-    "tokenProviderId": "chronos",
-    "earnContractAddress": "0xA5fc91bE851AdAbA6db55A60FEc68716dC46C6CE",
-    "earnedToken": "mooChronos_wUSDR-USDC",
-    "earnedTokenAddress": "0xA5fc91bE851AdAbA6db55A60FEc68716dC46C6CE",
-    "oracle": "lps",
-    "oracleId": "chronos-wusdr-usdc",
-    "status": "eol",
-    "createdAt": 1684143581,
-    "retireReason": "rewards",
-    "retiredAt": 1691431139,
-    "platformId": "chronos",
-    "assets": ["wUSDR", "arbUSDCe"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": true,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.chronos.exchange/liquidity/0x278f76df86EfdcbE0f2573AE54e917505621E312",
-    "removeLiquidityUrl": "https://app.chronos.exchange/liquidity/0x278f76df86EfdcbE0f2573AE54e917505621E312",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "arbitrum-chronos"
-      }
-    ]
-  },
-  {
     "id": "ramses-eth-ram",
     "name": "RAM-ETH vLP",
     "type": "standard",
@@ -22052,47 +22538,6 @@
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xcba9ff45cfb9ce238afde32b0148eb82cbe635620000000000000000000003fd/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xcba9ff45cfb9ce238afde32b0148eb82cbe635620000000000000000000003fd/remove-liquidity",
     "network": "arbitrum"
-  },
-  {
-    "id": "arbidex-arb-usdc",
-    "name": "ARB-USDC.e LP",
-    "type": "standard",
-    "token": "ARB-USDC.e LP",
-    "tokenAddress": "0xD65Ef54B1ff5D9a452B32Ac0c304d1674F761061",
-    "tokenDecimals": 18,
-    "tokenProviderId": "arbidex",
-    "earnContractAddress": "0x698610AdFf053f6bAc0D1800780A3FCf6b16C31f",
-    "earnedToken": "mooArbidexARB-USDC",
-    "earnedTokenAddress": "0x698610AdFf053f6bAc0D1800780A3FCf6b16C31f",
-    "oracle": "lps",
-    "oracleId": "arbidex-arb-usdc",
-    "status": "eol",
-    "createdAt": 1682622717,
-    "retireReason": "rewards",
-    "retiredAt": 1696060775,
-    "platformId": "arbidex",
-    "assets": ["ARB", "arbUSDCe"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": true,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://arbidex.fi/swap/",
-    "addLiquidityUrl": "https://arbidex.fi/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0x912CE59144191C1204E64559FE8253a0e49E6548/",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "arbitrum-arbidex"
-      }
-    ]
   },
   {
     "id": "hop-arb-reth",
@@ -24955,8 +25400,10 @@
     "earnedTokenAddress": "0x5B904f19fb9ccf493b623e5c8cE91603665788b0",
     "oracle": "tokens",
     "oracleId": "GMX",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1666793248,
+    "retireReason": "rewards",
+    "retiredAt": 1776777860,
     "platformId": "gmx",
     "assets": ["GMX"],
     "risks": {

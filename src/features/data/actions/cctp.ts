@@ -276,7 +276,6 @@ export const fetchCCTPDstTokensReturned = createAppAsyncThunk<
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return results;
 });
 
@@ -305,7 +304,6 @@ export const fetchCrossChainSrcTokensReturned = createAppAsyncThunk<
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return results;
 });
 

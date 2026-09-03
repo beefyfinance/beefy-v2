@@ -290,10 +290,8 @@ export const AssetArrangement = memo<AssetArrangementProps>(function AssetArrang
   const sizeStyles = { width: size, height: size, '--size': size } as CSSProperties;
 
   return (
-    <div
-      className={css(recipe.raw(), cssProp)}
-      style={{ ...arrangementStyles, ...sizeStyles }}
-      children={children}
-    />
+    <div className={css(recipe.raw(), cssProp)} style={{ ...arrangementStyles, ...sizeStyles }}>
+      {children}
+    </div>
   );
 });

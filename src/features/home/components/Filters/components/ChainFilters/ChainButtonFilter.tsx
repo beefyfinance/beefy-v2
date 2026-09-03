@@ -11,7 +11,7 @@ export const ChainButtonFilter = memo(function ChainButtonFilter() {
 
   const handleChainSelectorChange = useCallback(
     (selected: ChainEntity['id'][]) => {
-      dispatch(filteredVaultsActions.setChainIds(selected));
+      dispatch(filteredVaultsActions.update({ chainIds: selected }));
     },
     [dispatch]
   );

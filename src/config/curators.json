@@ -62,6 +62,13 @@
     "website": "https://www.steakhouse.financial/",
     "twitter": "https://x.com/SteakhouseFi"
   },
+  {
+    "id": "alphagrowth",
+    "name": "AlphaGrowth",
+    "description": "AlphaGrowth is a protocol-management firm specializing in DeFi operations, business development, and operational strategy for crypto projects, protocols, and chains.",
+    "website": "https://alphagrowth.io/",
+    "twitter": "https://x.com/alphagrowth1"
+  },
 
   {
     "id": "euler",
@@ -147,5 +154,12 @@
     "description": "Avantgarde is a DeFi-native asset manager and advisory firm providing treasury management and digital-asset investment strategies for DAOs and institutions, and is known as a founding team behind Enzyme.",
     "website": "https://avantgarde.finance/",
     "twitter": "https://x.com/avantgardefi"
+  },
+  {
+    "id": "armitage",
+    "name": "Armitage by Wintermute",
+    "description": "A new standard for vault curation. Armitage curates onchain vaults, managing risk and earning yield for depositors backed by 9 years of active trading.",
+    "website": "https://armitage.wintermute.com/",
+    "twitter": "https://x.com/wintermute_t"
   }
 ]

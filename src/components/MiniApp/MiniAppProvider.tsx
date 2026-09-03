@@ -2,6 +2,7 @@ import { type ReactNode, useEffect, useMemo, useState } from 'react';
 import type { MiniAppContextData, MiniAppSdkContext } from './types.ts';
 import { sdk } from '@farcaster/miniapp-sdk';
 import { MiniAppContext } from './context.ts';
+import { storageGet, storageSet } from '../../helpers/storage.ts';
 import { useAppDispatch } from '../../features/data/store/hooks.ts';
 import { tryToAutoConnectToEip6936Wallet } from '../../features/data/actions/wallet.ts';
 
@@ -38,14 +39,16 @@ export function MiniAppProvider({ children }: { children: ReactNode }) {
           return;
         }
 
-        const alreadyAsked = window.localStorage.getItem('miniapp:askedToAdd') === '1';
+        const alreadyAsked = storageGet('miniapp:askedToAdd') === '1';
         if (alreadyAsked) {
           console.debug('Already asked to add MiniApp');
           return;
         }
 
-        // we set flag before asking, so we don't ask at all if set throws and the flag can not be set
-        window.localStorage.setItem('miniapp:askedToAdd', '1');
+        // set the flag before asking; if it can not be set, don't ask at all (we would re-ask forever)
+        if (!storageSet('miniapp:askedToAdd', '1')) {
+          return;
+        }
 
         const result = await sdk.actions.addMiniApp();
         console.debug('Add MiniApp result:', result);

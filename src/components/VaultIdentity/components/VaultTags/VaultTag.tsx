@@ -15,10 +15,16 @@ export type VaultTagProps = {
 };
 
 export const VaultTag = memo(
-  forwardRef<HTMLDivElement, VaultTagProps>(function VaultTag({ icon, text, css: cssProp }, ref) {
+  forwardRef<HTMLDivElement, VaultTagProps>(function VaultTag(
+    { icon, text, css: cssProp, order = 'icon-text' },
+    ref
+  ) {
     const classes = useStyles();
     return (
-      <div className={css(styles.vaultTag, cssProp)} ref={ref}>
+      <div
+        className={css(styles.vaultTag, cssProp, order === 'text-icon' && styles.inverted)}
+        ref={ref}
+      >
         {icon ?
           <div className={classes.vaultTagIcon}>{icon}</div>
         : null}

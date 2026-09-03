@@ -304,6 +304,9 @@ function getCowcentratedBases(configs: VaultConfig[]) {
       if (!config.feeTier) {
         throw new Error(`Cowcentrated vault ${config.id} must have a fee tier (feeTier)`);
       }
+      if (!config.tickSpacing) {
+        throw new Error(`Cowcentrated vault ${config.id} must have tick spacing (tickSpacing)`);
+      }
       if (!config.tokenAddress) {
         throw new Error(
           `Cowcentrated vault ${config.id} must have underlying CL address (tokenAddress)`
@@ -331,6 +334,7 @@ function getCowcentratedBases(configs: VaultConfig[]) {
         },
         depositTokenAddresses: config.depositTokenAddresses,
         feeTier: config.feeTier,
+        tickSpacing: config.tickSpacing,
         poolAddress: config.tokenAddress,
         risks: risksWithUpdatedAt(risks, config.createdAt),
       };
@@ -391,6 +395,7 @@ function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBas
     risks: risksWithUpdatedAt(config.risks, config.createdAt),
     depositFee: config.depositFee || 0,
     migrationIds: config.migrationIds || [],
+    replacementVaultId: config.replacementVaultId || undefined,
     hidden: false,
     poolTogether: config.poolTogether,
     breakdownId: config.oracle === 'tokens' ? config.id : config.oracleId, // use vault id when deposit token is not a LP

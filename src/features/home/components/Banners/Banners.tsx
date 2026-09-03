@@ -2,14 +2,14 @@ import { memo } from 'react';
 import { BusdBannerHome } from '../../../../components/Banners/BusdBanner/BusdBannerHome.tsx';
 import { UnstakedClmBanner } from '../../../../components/Banners/UnstakedClmBanner/UnstakedClmBanner.tsx';
 import { styled } from '@repo/styles/jsx';
-import { AnnouncementBanner } from '../../../../components/Banners/AnnouncementBanner/AnnouncementBanner.tsx';
+import { TokenizedStocksBanner } from '../../../../components/Banners/TokenizedStocksBanner/TokenizedStocksBanner.tsx';
 
 export const Banners = memo(function Banners() {
   return (
     <BannerList>
       <UnstakedClmBanner />
       <BusdBannerHome />
-      <AnnouncementBanner />
+      <TokenizedStocksBanner />
     </BannerList>
   );
 });
@@ -19,9 +19,6 @@ const BannerList = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     gap: '12px',
-    sm: {
-      gap: '24px',
-    },
     '& > :last-child': {
       marginBottom: '24px',
     },

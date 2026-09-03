@@ -1,5 +1,637 @@
 [
   {
+    "id": "uniswap-cow-bsc-usdt-cz-rp",
+    "name": "CZ-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBSCCZ-USDT",
+    "tokenAddress": "0xec05332D47a707Aad8e5EAA3808B68f53A5CE58b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x4132E7A04D21E52c8e627C5Db7F1fd2F038CFfb3",
+    "earnedToken": "rCowUniswapBSCCZ-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-cz",
+    "status": "active",
+    "createdAt": 1783450854,
+    "platformId": "uniswap",
+    "assets": ["CZ", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-usdt-cz",
+    "name": "USDT-CZ",
+    "type": "cowcentrated",
+    "token": "USDT-CZ uniswap",
+    "tokenAddress": "0x526778127A7324b01723312C7640E4f3dCd068a3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x55d398326f99059fF775485246999027B3197955",
+      "0x7A848a5A8169aa6a2f603D056A749f924F504444"
+    ],
+    "earnContractAddress": "0xec05332D47a707Aad8e5EAA3808B68f53A5CE58b",
+    "earnedToken": "cowUniswapBSCCZ-USDT",
+    "earnedTokenAddress": "0xec05332D47a707Aad8e5EAA3808B68f53A5CE58b",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-cz",
+    "status": "active",
+    "createdAt": 1783450854,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["USDT", "CZ"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-usdt-cap-rp",
+    "name": "CAP-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBSCCAP-USDT",
+    "tokenAddress": "0x2e88EdF7923d842b36E72635531393e279838890",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x2e6e106dE869E0EDdF4BeF45dE77C285dfbA3B7A",
+    "earnedToken": "rCowUniswapBSCCAP-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-cap",
+    "status": "active",
+    "createdAt": 1782499257,
+    "platformId": "uniswap",
+    "assets": ["CAP", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-usdt-cap",
+    "name": "USDT-CAP",
+    "type": "cowcentrated",
+    "token": "USDT-CAP uniswap",
+    "tokenAddress": "0x1F87F6A5AE82c4fA00B41f1E6E1afaa4e69ea228",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x55d398326f99059fF775485246999027B3197955",
+      "0x99991c6AAbba5a096f24f250b73580F5179b9999"
+    ],
+    "earnContractAddress": "0x2e88EdF7923d842b36E72635531393e279838890",
+    "earnedToken": "cowUniswapBSCCAP-USDT",
+    "earnedTokenAddress": "0x2e88EdF7923d842b36E72635531393e279838890",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-cap",
+    "status": "active",
+    "createdAt": 1782499257,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["CAP", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-zest-usdt-rp",
+    "name": "ZEST-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBscZEST-USDT",
+    "tokenAddress": "0x4AF07fCe264429446B88ac78C393799842fe85A8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xD0ffeA1BACb84c2FAd3A145cBDC02de1bd397206",
+    "earnedToken": "rCowUniswapBscZEST-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-zest-usdt",
+    "status": "active",
+    "createdAt": 1779206004,
+    "platformId": "uniswap",
+    "assets": ["ZEST", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-zest-usdt",
+    "name": "ZEST-USDT",
+    "type": "cowcentrated",
+    "token": "ZEST-USDT uniswap",
+    "tokenAddress": "0x6d299F4bAD5392af1e55e3E86A0339399543032b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x5506599c722389A60580B5213ea1Da60D64754a1",
+      "0x55d398326f99059fF775485246999027B3197955"
+    ],
+    "earnContractAddress": "0x4AF07fCe264429446B88ac78C393799842fe85A8",
+    "earnedToken": "cowUniswapBscZEST-USDT",
+    "earnedTokenAddress": "0x4AF07fCe264429446B88ac78C393799842fe85A8",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-zest-usdt",
+    "status": "active",
+    "createdAt": 1779206004,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["ZEST", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-usdt-opg-rp",
+    "name": "USDT-OPG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBSCUSDT-OPG",
+    "tokenAddress": "0x3F142c3Fab8DE3639b220f91C782F2015BE4D784",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xBfE49A7aF6fFB64c1424c417AE0C645ed9Ed20E5",
+    "earnedToken": "rCowUniswapBSCUSDT-OPG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-opg",
+    "status": "active",
+    "createdAt": 1778526638,
+    "platformId": "uniswap",
+    "assets": ["USDT", "OPG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-usdt-opg",
+    "name": "USDT-OPG",
+    "type": "cowcentrated",
+    "token": "USDT-OPG uniswap",
+    "tokenAddress": "0x0a4b571C4932d84dE11A6BCA96bb9BA5bF27Ff1C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x55d398326f99059fF775485246999027B3197955",
+      "0x5feCcD17C393CaF1001D18164236A37E731FCb9d"
+    ],
+    "earnContractAddress": "0x3F142c3Fab8DE3639b220f91C782F2015BE4D784",
+    "earnedToken": "cowUniswapBSCUSDT-OPG",
+    "earnedTokenAddress": "0x3F142c3Fab8DE3639b220f91C782F2015BE4D784",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-opg",
+    "status": "active",
+    "createdAt": 1778526638,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["USDT", "OPG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-zec-wbnb-rp",
+    "name": "ZEC-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBscZEC-WBNB",
+    "tokenAddress": "0x8954EB7D39551D8c2aa85786dC1f03D22C44f73f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xd7beaa5dedD3647fC69beb4B18100A96dd085A34",
+    "earnedToken": "rCowUniswapBscZEC-WBNB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-zec-wbnb",
+    "status": "active",
+    "createdAt": 1776358218,
+    "platformId": "uniswap",
+    "assets": ["ZEC", "WBNB"],
+    "risks": {
+      "updatedAt": 1776358218,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-zec-wbnb",
+    "name": "ZEC-WBNB",
+    "type": "cowcentrated",
+    "token": "ZEC-WBNB uniswap",
+    "tokenAddress": "0x64b0B57840A3a2Bde9a05b69d726239194dc49e1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x1Ba42e5193dfA8B03D15dd1B86a3113bbBEF8Eeb",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnContractAddress": "0x8954EB7D39551D8c2aa85786dC1f03D22C44f73f",
+    "earnedToken": "cowUniswapBscZEC-WBNB",
+    "earnedTokenAddress": "0x8954EB7D39551D8c2aa85786dC1f03D22C44f73f",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-zec-wbnb",
+    "status": "active",
+    "createdAt": 1776358218,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["ZEC", "WBNB"],
+    "risks": {
+      "updatedAt": 1776358218,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-zec-btcb-rp",
+    "name": "ZEC-BTCB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBscZEC-BTCB",
+    "tokenAddress": "0x04567A3F060E451A2fB0d8517336A379251D138f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xC567F2171CD00636b236CD0a40B15df5539df290",
+    "earnedToken": "rCowUniswapBscZEC-BTCB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-zec-btcb",
+    "status": "active",
+    "createdAt": 1776357709,
+    "platformId": "uniswap",
+    "assets": ["ZEC", "BTCB"],
+    "risks": {
+      "updatedAt": 1776357709,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-zec-btcb",
+    "name": "ZEC-BTCB",
+    "type": "cowcentrated",
+    "token": "ZEC-BTCB uniswap",
+    "tokenAddress": "0xbF3693031c272be6d539d79a9715561229a8fBa9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x1Ba42e5193dfA8B03D15dd1B86a3113bbBEF8Eeb",
+      "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c"
+    ],
+    "earnContractAddress": "0x04567A3F060E451A2fB0d8517336A379251D138f",
+    "earnedToken": "cowUniswapBscZEC-BTCB",
+    "earnedTokenAddress": "0x04567A3F060E451A2fB0d8517336A379251D138f",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-zec-btcb",
+    "status": "active",
+    "createdAt": 1776357709,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["ZEC", "BTCB"],
+    "risks": {
+      "updatedAt": 1776357709,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-zec-usdt-rp",
+    "name": "ZEC-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBscZEC-USDT",
+    "tokenAddress": "0xA134bbf9010f8d8E9748d5a953E1959547076F89",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x6eD1412D73DDB56603ADB2D74aE409c833F2086a",
+    "earnedToken": "rCowUniswapBscZEC-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-zec-usdt",
+    "status": "active",
+    "createdAt": 1776357293,
+    "platformId": "uniswap",
+    "assets": ["ZEC", "USDT"],
+    "risks": {
+      "updatedAt": 1776357293,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-zec-usdt",
+    "name": "ZEC-USDT",
+    "type": "cowcentrated",
+    "token": "ZEC-USDT uniswap",
+    "tokenAddress": "0x4d1b90273d5B0Ea98101154D73A6C7D7A19884DB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x1Ba42e5193dfA8B03D15dd1B86a3113bbBEF8Eeb",
+      "0x55d398326f99059fF775485246999027B3197955"
+    ],
+    "earnContractAddress": "0xA134bbf9010f8d8E9748d5a953E1959547076F89",
+    "earnedToken": "cowUniswapBscZEC-USDT",
+    "earnedTokenAddress": "0xA134bbf9010f8d8E9748d5a953E1959547076F89",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-zec-usdt",
+    "status": "active",
+    "createdAt": 1776357293,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["ZEC", "USDT"],
+    "risks": {
+      "updatedAt": 1776357293,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-zec-usdt-rp",
+    "name": "ZEC-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBscZEC-USDT",
+    "tokenAddress": "0x8186bCA37d312142A10F117C1792A2a27F0ca9df",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x478959FBA1341F48eE689f2b89867A0Cf1c3d284",
+    "earnedToken": "rCowPancakeBscZEC-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-zec-usdt",
+    "status": "active",
+    "createdAt": 1776355040,
+    "platformId": "pancakeswap",
+    "assets": ["ZEC", "USDT"],
+    "risks": {
+      "updatedAt": 1776355040,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-zec-usdt",
+    "name": "ZEC-USDT",
+    "type": "cowcentrated",
+    "token": "ZEC-USDT pancakeswap",
+    "tokenAddress": "0x6fAE7301f1B7c0ab83d69A855447491F2B585876",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x1Ba42e5193dfA8B03D15dd1B86a3113bbBEF8Eeb",
+      "0x55d398326f99059fF775485246999027B3197955"
+    ],
+    "earnContractAddress": "0x8186bCA37d312142A10F117C1792A2a27F0ca9df",
+    "earnedToken": "cowPancakeBscZEC-USDT",
+    "earnedTokenAddress": "0x8186bCA37d312142A10F117C1792A2a27F0ca9df",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-zec-usdt",
+    "status": "active",
+    "createdAt": 1776355040,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "tickSpacing": 50,
+    "assets": ["ZEC", "USDT"],
+    "risks": {
+      "updatedAt": 1776355040,
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-bsc-genius-usdt-rp",
     "name": "GENIUS-USDT Reward Pool",
     "type": "gov",
@@ -14,8 +646,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-genius-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1776161346,
+    "retireReason": "rewards",
+    "retiredAt": 1785827680,
     "platformId": "pancakeswap",
     "assets": ["GENIUS", "USDT"],
     "risks": {
@@ -54,10 +688,13 @@
     "earnedTokenAddress": "0xC23CD44950ee0Ce6eED241d923bC7A04c8619704",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-genius-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1776161346,
+    "retireReason": "rewards",
+    "retiredAt": 1785827680,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["GENIUS", "USDT"],
     "risks": {
       "updatedAt": 1776161346,
@@ -137,6 +774,7 @@
     "createdAt": 1776161346,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["GENIUS", "USDT"],
     "risks": {
       "updatedAt": 1776161346,
@@ -215,6 +853,7 @@
     "createdAt": 1772743311,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDT", "Q"],
     "risks": {
       "complex": true,
@@ -293,6 +932,7 @@
     "createdAt": 1760631004,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["XPL", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -372,6 +1012,7 @@
     "createdAt": 1760631004,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["ASTER", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -451,6 +1092,7 @@
     "createdAt": 1760631004,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["XRP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -530,6 +1172,7 @@
     "createdAt": 1760631004,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["CAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -609,6 +1252,7 @@
     "createdAt": 1760631004,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["CAKE", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -688,6 +1332,7 @@
     "createdAt": 1760631004,
     "platformId": "beefy",
     "feeTier": "0.3",
+    "tickSpacing": 60,
     "assets": ["LINK", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -767,6 +1412,7 @@
     "createdAt": 1760558657,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["COAI", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -846,6 +1492,7 @@
     "createdAt": 1760558657,
     "platformId": "beefy",
     "feeTier": "0.25",
+    "tickSpacing": 50,
     "assets": ["COAI", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -925,6 +1572,7 @@
     "createdAt": 1760025594,
     "platformId": "beefy",
     "feeTier": "0.25",
+    "tickSpacing": 50,
     "assets": ["FORM", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1004,6 +1652,7 @@
     "createdAt": 1760028289,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["BNBHolder", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1083,6 +1732,7 @@
     "createdAt": 1760028289,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["BNBHolder", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1162,6 +1812,7 @@
     "createdAt": 1759882318,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["PALU", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1241,6 +1892,7 @@
     "createdAt": 1759882163,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["PALU", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1320,6 +1972,7 @@
     "createdAt": 1759881841,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["FOUR", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1399,6 +2052,7 @@
     "createdAt": 1759881699,
     "platformId": "beefy",
     "feeTier": "0.25",
+    "tickSpacing": 50,
     "assets": ["FOUR", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1478,6 +2132,7 @@
     "createdAt": 1759881666,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["BINANCE_LIFE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1513,8 +2168,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-pup-wbnb",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1759880427,
+    "retireReason": "default",
+    "retiredAt": 1784063232,
     "platformId": "pancakeswap",
     "assets": ["PUP", "WBNB"],
     "risks": {
@@ -1553,10 +2210,13 @@
     "earnedTokenAddress": "0x06e84B1d74E417CfEc9416072F69658c5f83472B",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-pup-wbnb",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1759880427,
+    "retireReason": "default",
+    "retiredAt": 1784063232,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["PUP", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1636,6 +2296,7 @@
     "createdAt": 1759848879,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["ASTER", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1715,6 +2376,7 @@
     "createdAt": 1758816621,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["XPL", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1794,6 +2456,7 @@
     "createdAt": 1758640238,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["GIGGLE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1873,6 +2536,7 @@
     "createdAt": 1758640204,
     "platformId": "beefy",
     "feeTier": "0.25",
+    "tickSpacing": 50,
     "assets": ["ASTER", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -1956,6 +2620,7 @@
     "retiredAt": 1767991369,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["RION", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2039,6 +2704,7 @@
     "retiredAt": 1767991369,
     "platformId": "beefy",
     "feeTier": "0.25",
+    "tickSpacing": 50,
     "assets": ["B", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2118,6 +2784,7 @@
     "createdAt": 1747915358,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USD1", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2197,6 +2864,7 @@
     "createdAt": 1743158532,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 50,
     "assets": ["mubarak", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2276,6 +2944,7 @@
     "createdAt": 1743158347,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["WBNB", "TUT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2355,6 +3024,7 @@
     "createdAt": 1743158166,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["BroccoliCZDog", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2434,6 +3104,7 @@
     "createdAt": 1740568031,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["SIREN", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2513,6 +3184,7 @@
     "createdAt": 1740566296,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["Broccoli", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2634,6 +3306,7 @@
     "createdAt": 1740041270,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["TST", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -2667,8 +3340,10 @@
     "earnedTokenAddress": "0x806dC239aB0C64b2bf3e9D2EDb21Ac70856dF47A",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-wbnb-shell",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1739968878,
+    "retireReason": "rewards",
+    "retiredAt": 1784063232,
     "platformId": "pancakeswap",
     "assets": ["SHELL", "WBNB"],
     "risks": {
@@ -2708,8 +3383,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-wbnb-shell",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1739968877,
+    "retireReason": "rewards",
+    "retiredAt": 1784063232,
     "platformId": "pancakeswap",
     "assets": ["SHELL", "WBNB"],
     "risks": {
@@ -2751,10 +3428,13 @@
     "earnedTokenAddress": "0xb1f9EA84780BEeA0A9D2c89c0163511aA1f1328D",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-wbnb-shell",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1739968877,
+    "retireReason": "rewards",
+    "retiredAt": 1784063232,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["WBNB", "SHELL"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3284,6 +3964,7 @@
     "retiredAt": 1761205953,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["wstETH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3411,6 +4092,7 @@
     "retiredAt": 1761205953,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["wstETH", "BTCB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3444,8 +4126,10 @@
     "earnedTokenAddress": "0x63A3DbA21224227231B6867eB5192290B84B44bD",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-eth-wsteth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1726149785,
+    "retireReason": "rewards",
+    "retiredAt": 1784063232,
     "platformId": "pancakeswap",
     "assets": ["wstETH", "ETH"],
     "risks": {
@@ -3485,8 +4169,10 @@
     "earnedOracleIds": ["Cake"],
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-eth-wsteth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1726149784,
+    "retireReason": "rewards",
+    "retiredAt": 1784063232,
     "platformId": "pancakeswap",
     "assets": ["wstETH", "ETH"],
     "risks": {
@@ -3528,10 +4214,13 @@
     "earnedTokenAddress": "0x5F25f61055141997772d8496Fc55ADA1FF7a3A10",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-eth-wsteth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1726149784,
+    "retireReason": "rewards",
+    "retiredAt": 1784063232,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["wstETH", "ETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3653,6 +4342,7 @@
     "createdAt": 1724853598,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDC", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3732,6 +4422,7 @@
     "createdAt": 1724853598,
     "platformId": "beefy",
     "feeTier": "0.30",
+    "tickSpacing": 60,
     "assets": ["BTCB", "ETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3811,6 +4502,7 @@
     "createdAt": 1724853598,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["BTCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3890,6 +4582,7 @@
     "createdAt": 1724687912,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["ETH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -3969,6 +4662,7 @@
     "createdAt": 1724687912,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["USDT", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4048,6 +4742,7 @@
     "createdAt": 1724687912,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["ETH", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4127,6 +4822,7 @@
     "createdAt": 1724687912,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDT", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4206,6 +4902,7 @@
     "createdAt": 1724687912,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["BTCB", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4285,6 +4982,7 @@
     "createdAt": 1724065008,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["BTCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4364,6 +5062,7 @@
     "createdAt": 1724065008,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["ETH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4443,6 +5142,7 @@
     "createdAt": 1724065008,
     "platformId": "beefy",
     "feeTier": "Dynamic",
+    "tickSpacing": 60,
     "assets": ["SOL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4570,6 +5270,7 @@
     "retiredAt": 1760631004,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBNB", "BUSD"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4691,6 +5392,7 @@
     "createdAt": 1723067551,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["axlUSDC", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4818,6 +5520,7 @@
     "retiredAt": 1741262041,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDV", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4862,7 +5565,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -4903,7 +5606,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -4939,6 +5642,7 @@
     "createdAt": 1723067551,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["ZRO", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -4947,7 +5651,7 @@
       "notAudited": false,
       "notBattleTested": false,
       "notCorrelated": true,
-      "notTimelocked": false,
+      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -5060,6 +5764,7 @@
     "createdAt": 1723067551,
     "platformId": "beefy",
     "feeTier": "1",
+    "tickSpacing": 200,
     "assets": ["PEPE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5181,6 +5886,7 @@
     "createdAt": 1723067551,
     "platformId": "beefy",
     "feeTier": "0.25",
+    "tickSpacing": 50,
     "assets": ["XVS", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5308,6 +6014,7 @@
     "retiredAt": 1760631004,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDT", "BUSD"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5429,6 +6136,7 @@
     "createdAt": 1723051090,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["ETH", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5550,6 +6258,7 @@
     "createdAt": 1723051090,
     "platformId": "beefy",
     "feeTier": "0.25",
+    "tickSpacing": 50,
     "assets": ["DOGE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5671,6 +6380,7 @@
     "createdAt": 1723051090,
     "platformId": "beefy",
     "feeTier": "0.25",
+    "tickSpacing": 50,
     "assets": ["SOL", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5792,6 +6502,7 @@
     "createdAt": 1723051090,
     "platformId": "beefy",
     "feeTier": "0.25",
+    "tickSpacing": 50,
     "assets": ["SOL", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5913,6 +6624,7 @@
     "createdAt": 1723051090,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["slisBNB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -5946,8 +6658,10 @@
     "earnedTokenAddress": "0xe5Fedc9efC864e43E29d92347AFabC51F507eada",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-lisusd-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1723051091,
+    "retireReason": "rewards",
+    "retiredAt": 1784063232,
     "platformId": "pancakeswap",
     "assets": ["lisUSD", "USDT"],
     "risks": {
@@ -5987,8 +6701,10 @@
     "earnedOracleIds": ["Cake"],
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-lisusd-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1723051090,
+    "retireReason": "rewards",
+    "retiredAt": 1784063232,
     "platformId": "pancakeswap",
     "assets": ["lisUSD", "USDT"],
     "risks": {
@@ -6030,10 +6746,13 @@
     "earnedTokenAddress": "0x1FDf7ABD9dACd1946E76b6c76a6daEE8872076A7",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-lisusd-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1723051090,
+    "retireReason": "rewards",
+    "retiredAt": 1784063232,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["lisUSD", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6155,10 +6874,13 @@
     "earnedTokenAddress": "0xB9D8c235010829BbDaB6666e2c3d96f2c34B6DF7",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-eth-pxeth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1723051090,
+    "retireReason": "tvl",
+    "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 1,
     "assets": ["pxETH", "ETH"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6280,6 +7002,7 @@
     "createdAt": 1722967709,
     "platformId": "beefy",
     "feeTier": "0.25",
+    "tickSpacing": 50,
     "assets": ["CAKE", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6401,6 +7124,7 @@
     "createdAt": 1722967709,
     "platformId": "beefy",
     "feeTier": "0.25",
+    "tickSpacing": 50,
     "assets": ["CAKE", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6522,6 +7246,7 @@
     "createdAt": 1722967709,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WBNB", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6643,6 +7368,7 @@
     "createdAt": 1722967709,
     "platformId": "beefy",
     "feeTier": "0.01",
+    "tickSpacing": 1,
     "assets": ["USDT", "USDC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6764,6 +7490,7 @@
     "createdAt": 1722967709,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["BTCB", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -6885,6 +7612,7 @@
     "createdAt": 1722967709,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["BTCB", "USDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -7006,6 +7734,7 @@
     "createdAt": 1722967709,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["ETH", "WBNB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -7127,6 +7856,7 @@
     "createdAt": 1722967709,
     "platformId": "beefy",
     "feeTier": "0.25",
+    "tickSpacing": 50,
     "assets": ["ETH", "BTCB"],
     "risks": {
       "updatedAt": 1765557014,
@@ -21407,41 +22137,6 @@
         "ammId": "bsc-pancakeswap-v2"
       }
     ]
-  },
-  {
-    "id": "cakev2-wsote-bn-eolb",
-    "name": "WSOTE-BNB LP",
-    "type": "standard",
-    "token": "WSOTE-BNB LP2",
-    "tokenAddress": "0x7653D2c31440f04d2c6520D482dC5DbD7650f70a",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pancakeswap",
-    "earnContractAddress": "0x51a159496328F5cCec192748F135eC57E326A10B",
-    "earnedToken": "mooCakev2WSOTE-BNB",
-    "earnedTokenAddress": "0x51a159496328F5cCec192748F135eC57E326A10B",
-    "oracle": "lps",
-    "oracleId": "cakev2-wsote-bnb",
-    "status": "eol",
-    "createdAt": 1619285608,
-    "retiredAt": 1625098855,
-    "platformId": "pancakeswap",
-    "assets": ["WSOTE", "WBNB"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x541e619858737031a1244a5d0cd47e5ef480342c",
-    "addLiquidityUrl": "https://pancakeswap.finance/add/BNB/0x541e619858737031a1244a5d0cd47e5ef480342c",
-    "removeLiquidityUrl": "https://pancakeswap.finance/remove/BNB/0x541e619858737031a1244a5d0cd47e5ef480342c",
-    "network": "bsc"
   },
   {
     "id": "cakev2-btcst-bnb",

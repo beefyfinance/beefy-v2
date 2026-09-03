@@ -115,6 +115,34 @@ export const excludeChains: ChainMap<{ count: number; hash: string }> = {
     count: 31,
     hash: 'd202515cf267006a5dff7737f97d7f4d74f5c8c7d05ffec29a0b5dfdb8e1e170',
   },
+  rootstock: {
+    count: 20,
+    hash: 'c080c107e3552269a43a0771f1e944148dcc8427b65725978e32f5f321eab15d',
+  },
+  sei: {
+    count: 30,
+    hash: '6e0909ce9d5a62ef4895aa4f6a181711041aa46ea8a95dd19fef9aab15efbb98',
+  },
+  lisk: {
+    count: 24,
+    hash: '35b7925e26df4578d3c4a25b383080a60bb71cce6f9bbb4043ff163bc7bd0483',
+  },
+  berachain: {
+    count: 34,
+    hash: '5f14b3012610f314e6484f71026e09e84b96762a7d630899dd1ac6edb8f14e07',
+  },
+  linea: {
+    count: 89,
+    hash: '3cd9aac4017b42666f986a4811913c6916e2d0bc2a0e1be746274808af5b948e',
+  },
+  zksync: {
+    count: 25,
+    hash: '70e21cc5e4f7e2f731111e3f67343f26de06b4aa1ac0c81812a9b65825a76fbd',
+  },
+  gnosis: {
+    count: 30,
+    hash: '0a78e409fd4ed8ed0d1741878cfb566a2ce63add64a786af782e5fe746971ead',
+  },
 };
 
 export const allChainIds = Object.keys(chainConfigs) as AddressBookChainId[];

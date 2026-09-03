@@ -13,12 +13,14 @@ export type SerializedQuoteCowcentratedNotCalmError = {
 
 export type SerializedQuoteCowcentratedNotActionableError = {
   name: 'QuoteCowcentratedNotActionableError';
+  message?: string;
   action: 'deposit' | 'withdraw';
   actionableAt: number;
 };
 
 export type SerializedQuoteCowcentratedNotCalmAndNotActionableError = {
   name: 'QuoteCowcentratedNotCalmAndNotActionableError';
+  message?: string;
   action: 'deposit' | 'withdraw';
 };
 

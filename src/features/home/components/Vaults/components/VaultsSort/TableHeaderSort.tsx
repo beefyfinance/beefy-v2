@@ -1,42 +1,25 @@
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback } from 'react';
 import { SortColumnHeader } from '../../../../../../components/SortColumnHeader/SortColumnHeader.tsx';
-import { AVG_APY_PERIODS } from '../../../../../../helpers/apy.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import type {
-  FilteredVaultsState,
-  SortType,
-  SortWithSubSort,
-} from '../../../../../data/reducers/filtered-vaults-types.ts';
+import type { FilterValues, SortType } from '../../../../../data/reducers/filtered-vaults-types.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import {
-  selectFilterSearchSortDirection,
-  selectFilterSearchSortField,
+  selectFilterEffectiveSort,
+  selectFilterSortDirection,
 } from '../../../../../data/selectors/filtered-vaults.ts';
-import { type FilterSubColumn, SubColumnSort } from './SubColumnSort.tsx';
-
-type SubKeyField<T extends SortType> =
-  T extends SortWithSubSort ? { subKeys: FilterSubColumn<T>[] } : unknown;
+import { SubColumnSort } from './SubColumnSort.tsx';
+import { hasSubSort } from '../../../../../../hooks/useSubSort.ts';
 
 type SortColumn = {
   [K in SortType]: {
     label: string;
     value: K;
-  } & SubKeyField<K>;
+  };
 }[SortType];
 
 const SORT_COLUMNS = [
-  {
-    label: 'Filter-SortApy',
-    value: 'apy',
-    subKeys: [
-      { label: 'Filter-SortApy-default', value: 'default' },
-      ...AVG_APY_PERIODS.map(period => ({
-        label: `Filter-SortApy-avg${period}d`,
-        value: period,
-      })),
-    ],
-  },
+  { label: 'Filter-SortApy', value: 'apy' },
   { label: 'Filter-SortDaily', value: 'daily' },
   { label: 'Filter-SortTvl', value: 'tvl' },
   { label: 'Filter-SortDeposited', value: 'depositValue' },
@@ -44,15 +27,18 @@ const SORT_COLUMNS = [
 
 export const TableHeaderSort = memo(function TableHeaderSort() {
   const dispatch = useAppDispatch();
-  const sortField = useAppSelector(selectFilterSearchSortField);
-  const sortDirection = useAppSelector(selectFilterSearchSortDirection);
+  // 'relevance' selects no column, so the first click during a search always starts a fresh sort
+  const sortField = useAppSelector(selectFilterEffectiveSort);
+  const sortDirection = useAppSelector(selectFilterSortDirection);
 
   const handleSort = useCallback(
-    (field: FilteredVaultsState['sort']) => {
+    (field: FilterValues['sort']) => {
       if (field === sortField) {
-        dispatch(filteredVaultsActions.setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc'));
+        dispatch(
+          filteredVaultsActions.update({ sortDirection: sortDirection === 'asc' ? 'desc' : 'asc' })
+        );
       } else {
-        dispatch(filteredVaultsActions.setSortFieldAndDirection({ field, direction: 'desc' }));
+        dispatch(filteredVaultsActions.update({ sort: field, sortDirection: 'desc' }));
       }
     },
     [dispatch, sortField, sortDirection]
@@ -60,22 +46,14 @@ export const TableHeaderSort = memo(function TableHeaderSort() {
 
   return (
     <HeaderRow>
-      {SORT_COLUMNS.map(({ label, value, subKeys }) => (
+      {SORT_COLUMNS.map(({ label, value }) => (
         <SortColumnHeader
           key={value}
           label={label}
           sortKey={value}
           sorted={sortField === value ? sortDirection : 'none'}
           onChange={handleSort}
-          before={
-            subKeys && (
-              <SubColumnSort
-                columnSelected={sortField === value}
-                columnKey={value}
-                subColumns={subKeys}
-              />
-            )
-          }
+          before={hasSubSort(value) && <SubColumnSort columnKey={value} />}
         />
       ))}
     </HeaderRow>

@@ -23,6 +23,7 @@ import {
   selectActivePromoForVault,
   selectPromoById,
 } from '../../../../features/data/selectors/promos.ts';
+import { selectUserHasBalanceToMigrate } from '../../../../features/data/selectors/balance.ts';
 import { selectTokenByAddress } from '../../../../features/data/selectors/tokens.ts';
 import {
   selectCowcentratedVaultById,
@@ -34,13 +35,17 @@ import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useIsOverflowingHorizontally } from '../../../../helpers/overflow.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 import BoostIcon from '../../../../images/icons/boost.svg?react';
+import FreeZapIcon from '../../../../images/icons/freeZapBolt.svg?react';
 import LineaIgnitionIcon from '../../../../images/icons/linea-ignition.svg?react';
+import MigrateIcon from '../../../../images/icons/migrate.svg?react';
 import { useMediaQuery } from '../../../../hooks/useMediaQuery.ts';
 import { BasicTooltipContent } from '../../../Tooltip/BasicTooltipContent.tsx';
 import { VaultPlatform } from '../../../VaultPlatform/VaultPlatform.tsx';
 import { styles } from './styles.ts';
 import { VaultTag, VaultTagWithTooltip, type VaultTagWithTooltipProps } from './VaultTag.tsx';
 import { styled } from '@repo/styles/jsx';
+import { selectZapCampaignByVaultId } from '../../../../features/data/selectors/zap.ts';
+import { selectIsVaultStock } from '../../../../features/data/selectors/filtered-vaults.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -75,16 +80,47 @@ const VaultPromoTag = memo(function VaultBoostTag({ promoId, onlyIcon }: VaultPr
 
 type VaultPlatformTagProps = {
   vaultId: VaultEntity['id'];
+  css?: CssStyles;
 };
-const VaultPlatformTag = memo(function VaultPlatformTag({ vaultId }: VaultPlatformTagProps) {
+export const VaultPlatformTag = memo(function VaultPlatformTag({
+  vaultId,
+  css: cssProp,
+}: VaultPlatformTagProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isGov = isGovVault(vault);
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
 
   return (
     <VaultTag
-      css={css.raw(isGov && styles.platformTagGov, isCowcentratedLike && styles.platformTagClm)}
+      css={css.raw(
+        isGov && styles.platformTagGov,
+        isCowcentratedLike && styles.platformTagClm,
+        cssProp
+      )}
       text={<VaultPlatform vaultId={vaultId} />}
+    />
+  );
+});
+
+const VaultFreeZapTag = memo(function VaultFreeZapTag() {
+  const { t } = useTranslation();
+  return (
+    <VaultTag
+      css={styles.vaultTagFreeZap}
+      order="text-icon"
+      text={t('VaultTag-FreeZap')}
+      icon={<FreeZapIcon className={css(styles.vaultTagIconImage)} />}
+    />
+  );
+});
+
+const VaultMigrateTag = memo(function VaultMigrateTag() {
+  const { t } = useTranslation();
+  return (
+    <VaultTag
+      css={css.raw(styles.vaultTagMigrate, styles.inverted)}
+      text={t('VaultTag-Migrate')}
+      icon={<MigrateIcon className={css(styles.vaultTagMigrateIcon)} />}
     />
   );
 });
@@ -94,6 +130,7 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
   longLabel,
   fee,
   platformName,
+  tickSpacing,
   hideLabel,
   hideFee,
   css: cssProp,
@@ -103,22 +140,22 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
   longLabel: string;
   fee: string;
   platformName: string;
+  tickSpacing: number;
   hideLabel?: boolean;
   hideFee?: boolean;
   css?: CssStyles;
   onlyIcon?: boolean;
 }) {
   const classes = useStyles();
-  // const tooltipTitle = useMemo(() => {
-  //   return fee ? `${longLabel} | ${fee}` : longLabel;
-  // }, [longLabel, fee]);
+  const tooltipContent =
+    tickSpacing !== undefined ?
+      `${platformName} trading fee: ${fee}\nPool tick spacing: ${tickSpacing}`
+    : `${platformName} trading fee: ${fee}`;
 
   return (
     <VaultTagWithTooltip
       order="text-icon"
-      tooltip={
-        <BasicTooltipContent title={longLabel} content={`${platformName} trading fee: ${fee}`} />
-      }
+      tooltip={<BasicTooltipContent title={longLabel} content={tooltipContent} />}
       placement="bottom"
       css={css.raw(styles.vaultTagClm, cssProp)}
       icon={
@@ -126,8 +163,8 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
           src={getIcon('clm')}
           height={12}
           width={12}
-          className={classes.vaultTagClmIcon}
-          alt={hideLabel ? label : undefined}
+          className={classes.vaultTagIconImage}
+          alt={hideLabel || onlyIcon ? label : ''}
         />
       }
       text={
@@ -189,6 +226,7 @@ const VaultClmPoolOrVaultTag = memo(function VaultClmPoolTag({
       fee={hasDynamicFee ? cowcentratedVault.feeTier : `${cowcentratedVault.feeTier}%`}
       longLabel={`Cowcentrated Liquidity Manager ${typeLabel}`}
       platformName={provider?.name || 'LP'}
+      tickSpacing={cowcentratedVault?.tickSpacing}
       hideFee={hideFee}
       hideLabel={hideLabel}
       css={cssProp}
@@ -224,6 +262,7 @@ const VaultClmTag = memo(function VaultClmTag({
       fee={hasDynamicFee ? vault.feeTier : `${vault.feeTier}%`}
       longLabel={'Cowcentrated Liquidity Manager'}
       platformName={provider?.name || 'LP'}
+      tickSpacing={vault.tickSpacing}
       hideFee={hideFee || hasDynamicFee}
       hideLabel={hideLabel}
       css={cssProp}
@@ -336,6 +375,9 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const promo = useAppSelector(state => selectActivePromoForVault(state, vaultId));
+  const zapCampaign = useAppSelector(state => selectZapCampaignByVaultId(state, vaultId));
+  const isMigratable = useAppSelector(state => selectUserHasBalanceToMigrate(state, vaultId));
+  const isStock = useAppSelector(state => selectIsVaultStock(state, vaultId));
   const isGov = isGovVault(vault);
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
   const isSmallDevice = useMediaQuery('(max-width: 450px)', false);
@@ -343,8 +385,11 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
 
   // Tag 1: Platform
   // Tag 2: CLM -> CLM Pool -> CLM Vault --> Vault --> Pool
-  // Tag 3: Retired -> Paused -> Promo -> none
-  // Tag 4: Points -> none
+  // Tag 3: Stocks
+  // Tag 4: Free Zap -> none
+  // Tag 5: Migrate -> none
+  // Tag 6: Retired -> Paused -> Promo -> none
+  // Tag 7: Points -> none
   return (
     <VaultTagsContainer isVaultPage={hidePlatform}>
       {!hidePlatform && <VaultPlatformTag vaultId={vaultId} />}
@@ -353,6 +398,9 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
       : isGov ?
         <VaultTag css={styles.vaultTagPool} text={t('VaultTag-Pool')} />
       : <VaultTag css={styles.vaultTagVault} text={t('VaultTag-Vault')} />}
+      {isStock && <VaultTag css={styles.vaultTagStocks} text={t('VaultTag-Stocks')} />}
+      {zapCampaign && <VaultFreeZapTag />}
+      {isMigratable && <VaultMigrateTag />}
       {isVaultRetired(vault) ?
         <VaultTag css={styles.vaultTagRetired} text={t('VaultTag-Retired')} />
       : isVaultPaused(vault) ?

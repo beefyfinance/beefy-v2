@@ -5,7 +5,7 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": "^20.18.2 || ^22.14.0"
+    "node": "^22.14.0 || ^24.18.1"
   },
   "packageManager": "npm@11.4.2",
   "scripts": {
@@ -22,7 +22,9 @@
     "clm": "vite-node ./scripts/addCLM.ts",
     "pause": "vite-node ./scripts/pausePlatform.ts",
     "setVaultUrls": "vite-node ./scripts/setVaultUrls.ts",
+    "vaultConfigDiff": "vite-node ./scripts/vaultConfigDiff.ts",
     "setVaultStatus": "vite-node ./scripts/setVaultStatus.ts",
+    "retireChain": "vite-node ./scripts/retireChain.ts",
     "setVaultRisks": "vite-node ./scripts/setVaultRisks.ts",
     "addClmRewardPools": "vite-node ./scripts/addClmRewardPools.ts",
     "addCurveZap": "vite-node ./scripts/addCurveZap.ts",
@@ -33,6 +35,8 @@
     "makeExcludeConfig": "vite-node ./scripts/makeExcludeConfig.ts",
     "updatePlatforms": "vite-node ./scripts/updatePlatforms.ts",
     "updateCctpBridgeFees": "vite-node ./scripts/updateCctpBridgeFees.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "tsc": "tsc --project tsconfig.app.json",
     "tsc:watch": "tsc --project tsconfig.app.json --watch",
     "tsc:scripts": "tsc --project tsconfig.scripts.json",
@@ -49,7 +53,7 @@
     "packages:update": "node ./scripts/updatePackages.js"
   },
   "dependencies": {
-    "@beefyfinance/blockchain-addressbook": "^0.54.199",
+    "@beefyfinance/blockchain-addressbook": "^0.59.7",
     "@coinbase/wallet-sdk": "^4.3.7",
     "@deficonnect/web3-connector": "^2.0.3",
     "@farcaster/miniapp-sdk": "^0.1.10",
@@ -70,7 +74,6 @@
     "p-queue": "^8.1.1",
     "re-reselect": "^5.1.0",
     "react": "^18.3.1",
-    "react-animate-height": "^3.2.3",
     "react-content-loader": "^6.2.1",
     "react-custom-scrollbars-2": "^4.5.0",
     "react-dom": "^18.3.1",
@@ -79,12 +82,13 @@
     "react-markdown": "^10.1.0",
     "react-redux": "^9.2.0",
     "react-resize-detector": "^7.1.2",
-    "react-router": "^7.9.1",
+    "react-router": "^7.18.2",
     "react-virtuoso": "^4.14.0",
     "recharts": "^2.15.4",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
     "utf-8-validate": "^5.0.10",
+    "valibot": "^1.4.2",
     "viem": "^2.37.6"
   },
   "overrides": {
@@ -150,6 +154,7 @@
     "vite-node": "^3.2.4",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.5.0",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^4.1.10"
   }
 }

@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { VaultsHeader } from './components/VaultsHeader/VaultsHeader.tsx';
 import { VaultsList } from './components/VaultsList/VaultsList.tsx';
 import { styled } from '@repo/styles/jsx';
@@ -8,9 +8,7 @@ import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 export const Vaults = memo(function Vaults() {
   const isMobile = useBreakpoint({ to: 'xs' });
 
-  const maxWidth = useMemo(() => {
-    return isMobile ? 'xl' : 'lg';
-  }, [isMobile]);
+  const maxWidth = isMobile ? 'xl' : 'lg';
   return (
     <Container maxWidth={maxWidth} noPadding={isMobile}>
       <VaultsContainer>
@@ -23,7 +21,7 @@ export const Vaults = memo(function Vaults() {
 
 const VaultsContainer = styled('div', {
   base: {
-    marginTop: '8px',
+    marginTop: '10px',
     borderRadius: '12px',
     contain: 'paint',
   },

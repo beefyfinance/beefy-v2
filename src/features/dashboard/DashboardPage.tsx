@@ -56,7 +56,7 @@ const DashboardFromUrl = memo(function DashboardFromWallet() {
     <PageLayout
       header={
         <Header address={addressOrDomain || ''} addressLabel={addressOrDomain || ''}>
-          <DepositSummaryPlaceholder showZeroBalance={true} />
+          <DepositSummaryPlaceholder mode="empty" />
         </Header>
       }
       content={
@@ -81,7 +81,7 @@ const DashboardFromWallet = memo(function DashboardFromWallet() {
     <PageLayout
       header={
         <Header address={address || ''} addressLabel={address || ''}>
-          <DepositSummaryPlaceholder showZeroBalance={true} />
+          <DepositSummaryPlaceholder mode="empty" />
         </Header>
       }
       content={
@@ -111,7 +111,7 @@ const DashboardFromDomain = memo(function DashboardFromDomain({
       <PageLayout
         header={
           <Header address={domain || ''} addressLabel={domain || ''}>
-            <DepositSummaryPlaceholder showZeroBalance={true} />
+            <DepositSummaryPlaceholder mode="empty" />
           </Header>
         }
         content={
@@ -183,10 +183,10 @@ const Content = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     sm: {
-      paddingBlock: '14px 28px',
+      paddingBlock: '12px 28px',
     },
     lg: {
-      paddingBlock: '14px 48px',
+      paddingBlock: '12px 48px',
     },
   },
 });

@@ -44,6 +44,7 @@ export interface ApyStandard {
   compoundingsPerYear: number;
   vaultApr?: number;
   tradingApr?: number;
+  lendingApr?: number;
   composablePoolApr?: number;
   liquidStakingApr?: number;
   rewardPoolApr?: number;
@@ -113,6 +114,9 @@ export type BeefyArticleConfig = {
   date: number;
 };
 export type BeefyLastArticleResponse = BeefyArticleConfig;
+export type BeefyGeoCountryResponse = {
+  country: string;
+};
 export type ZapAggregatorTokenSupportResponse = {
   [chainId in ChainEntity['id']]?: {
     [tokenAddress: TokenEntity['address']]: {

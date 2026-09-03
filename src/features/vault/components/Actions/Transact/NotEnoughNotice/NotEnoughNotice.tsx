@@ -1,5 +1,5 @@
 import { type CssStyles } from '@repo/styles/css';
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
@@ -12,20 +12,18 @@ import {
   selectTransactSelectedQuote,
   selectTransactWithdrawInputAmountExceedsBalance,
 } from '../../../../../data/selectors/transact.ts';
-import { selectIsWalletConnected } from '../../../../../data/selectors/wallet.ts';
+import { selectIsWalletKnown } from '../../../../../data/selectors/wallet.ts';
 
 export type NotEnoughProps = {
-  onChange: (shouldDisable: boolean) => void;
   mode: 'deposit' | 'withdraw';
   css?: CssStyles;
 };
 export const NotEnoughNotice = memo(function NotEnoughNotice({
-  onChange,
   css: cssProp,
   mode,
 }: NotEnoughProps) {
   const { t } = useTranslation();
-  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+  const isWalletKnown = useAppSelector(selectIsWalletKnown);
   const inputAmountExceedsBalance = useAppSelector(
     mode === 'deposit' ?
       selectTransactDepositInputAmountExceedsBalance
@@ -40,16 +38,7 @@ export const NotEnoughNotice = memo(function NotEnoughNotice({
   const isBridging =
     stepContent === StepContent.BridgingTx || stepContent === StepContent.SuccessTx;
 
-  useEffect(() => {
-    onChange(isBridging ? false : inputAmountExceedsBalance);
-  }, [inputAmountExceedsBalance, isBridging, onChange]);
-
-  if (
-    !inputAmountExceedsBalance ||
-    !isWalletConnected ||
-    isInvalidCowcentratedDeposit ||
-    isBridging
-  ) {
+  if (!inputAmountExceedsBalance || !isWalletKnown || isInvalidCowcentratedDeposit || isBridging) {
     return null;
   }
 

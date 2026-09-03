@@ -2,7 +2,13 @@ import { ZERO_ADDRESS } from '../../../helpers/addresses.ts';
 import { entries } from '../../../helpers/object.ts';
 import { isFulfilledResult } from '../../../helpers/promises.ts';
 import type { ZapAggregatorTokenSupportResponse } from '../apis/beefy/beefy-api-types.ts';
-import type { AmmConfig, SwapAggregatorConfig, ZapConfig } from '../apis/config-types.ts';
+import type {
+  AmmConfig,
+  SwapAggregatorConfig,
+  ZapConfig,
+  ZapFeeRule,
+} from '../apis/config-types.ts';
+import { clampZapFeeBps } from '../apis/transact/helpers/fee-rules.ts';
 import { getBeefyApi, getConfigApi, getTransactApi } from '../apis/instances.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { VaultEntity } from '../entities/vault.ts';
@@ -25,7 +31,25 @@ export const fetchZapConfigsAction = createAppAsyncThunk<FetchAllZapsFulfilledPa
     const api = await getConfigApi();
     const zaps = await api.fetchZapConfigs();
 
-    return { zaps: zaps.filter(zap => zap.router !== ZERO_ADDRESS) };
+    return {
+      zaps: zaps
+        .filter(zap => zap.router !== ZERO_ADDRESS)
+        .map(zap => ({ ...zap, feeBps: clampZapFeeBps(zap.feeBps) })),
+    };
+  }
+);
+
+interface FetchZapFeeCampaignsFulfilledPayload {
+  feeCampaigns: ZapFeeRule[];
+}
+
+export const fetchZapFeeCampaignsAction = createAppAsyncThunk<FetchZapFeeCampaignsFulfilledPayload>(
+  'zap/fetchFeeCampaigns',
+  async () => {
+    const api = await getConfigApi();
+    const feeCampaigns = await api.fetchZapFeeCampaigns();
+
+    return { feeCampaigns };
   }
 );
 

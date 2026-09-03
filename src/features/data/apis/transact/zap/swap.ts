@@ -1,6 +1,7 @@
 import { first } from 'lodash-es';
 import { isTokenNative } from '../../../entities/token.ts';
 import type { BeefyState } from '../../../store/types.ts';
+import { slipBy } from '../helpers/amounts.ts';
 import { getTokenAddress } from '../helpers/zap.ts';
 import { QuoteChangedError } from '../strategies/error.ts';
 import type { ISwapAggregator } from '../swap/ISwapAggregator.ts';
@@ -36,7 +37,7 @@ export async function fetchZapAggregatorSwap(
     state
   );
 
-  const quoteMin = output.amount.times(maxSlippage);
+  const quoteMin = slipBy(output.amount, maxSlippage, output.token.decimals);
   if (swap.toAmountMin.lt(quoteMin)) {
     console.error('QuoteChangedError', { quote, swap });
     throw new QuoteChangedError(

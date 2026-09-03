@@ -86,7 +86,7 @@ export const CCTP_CONFIG: CCTPConfig = {
       usdcAddress: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
       domain: 3,
       time: { outgoing: 5, incoming: 5 },
-      fastFeeBps: 1.3,
+      fastFeeBps: 1.4,
       beefyBridgeFeeUsd: 0.1,
     },
     avax: {
@@ -119,7 +119,7 @@ export const CCTP_CONFIG: CCTPConfig = {
       domain: 0,
       time: { outgoing: 15, incoming: 15 },
       fastFeeBps: 1,
-      beefyBridgeFeeUsd: 1,
+      beefyBridgeFeeUsd: 2.5,
     },
     hyperevm: {
       tokenMessenger: TOKEN_MESSENGER_V2,
@@ -139,7 +139,7 @@ export const CCTP_CONFIG: CCTPConfig = {
       usdcAddress: '0x176211869cA2b568f2A7D4EE941E073a821EE1ff',
       domain: 11,
       time: { outgoing: 5, incoming: 5 },
-      fastFeeBps: 11,
+      fastFeeBps: 13,
       beefyBridgeFeeUsd: 1,
     },
     monad: {

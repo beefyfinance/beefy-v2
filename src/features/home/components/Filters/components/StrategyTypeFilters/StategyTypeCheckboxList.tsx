@@ -28,7 +28,7 @@ export const StategyTypeCheckBoxList = memo(function StategyTypeCheckBoxList() {
 
   const handleChange = useCallback(
     (value: StrategiesType) => {
-      dispatch(filteredVaultsActions.setStrategyType(value));
+      dispatch(filteredVaultsActions.update({ strategyType: value }));
     },
     [dispatch]
   );
@@ -52,9 +52,7 @@ export const StategyTypeCheckBoxList = memo(function StategyTypeCheckBoxList() {
     return allIndex >= 0 ? [allIndex] : undefined;
   }, [options]);
 
-  const noneSelected = useMemo(() => {
-    return selectedIndex === null;
-  }, [selectedIndex]);
+  const noneSelected = selectedIndex === null;
 
   return (
     <SelectSingleContent

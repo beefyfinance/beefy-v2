@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import {
   isCowcentratedLikeVault,
@@ -9,6 +10,7 @@ import type { BeefyState } from '../store/types.ts';
 import {
   selectLpBreakdownByOracleId,
   selectLpBreakdownForVault,
+  selectLpBreakdownForVaultId,
   selectTokenByAddress,
 } from './tokens.ts';
 import type { TvlBreakdown } from './tvl-types.ts';
@@ -21,9 +23,11 @@ export const selectVaultTvl = (state: BeefyState, vaultId: VaultEntity['id']) =>
 export const selectVaultRawTvl = (state: BeefyState, vaultId: VaultEntity['id']) =>
   state.biz.tvl.byVaultId[vaultId]?.rawTvl || BIG_ZERO;
 
-export const selectVaultUnderlyingTvlUsd = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const vault = selectVaultById(state, vaultId);
-  const breakdown = selectLpBreakdownForVault(state, vault);
+/** pure underlying-TVL math, shared by the per-vault cached selector and the max scan */
+export function computeUnderlyingTvlUsd(
+  vault: VaultEntity,
+  breakdown: ReturnType<typeof selectLpBreakdownForVaultId>
+): BigNumber {
   if (!breakdown) return BIG_ZERO;
 
   if (isCowcentratedLikeVault(vault) && 'underlyingPrice' in breakdown) {
@@ -31,7 +35,13 @@ export const selectVaultUnderlyingTvlUsd = (state: BeefyState, vaultId: VaultEnt
   }
 
   return new BigNumber(breakdown.totalSupply || 0).times(breakdown.price || 0);
-};
+}
+
+export const selectVaultUnderlyingTvlUsd = createCachedSelector(
+  selectVaultById,
+  selectLpBreakdownForVaultId,
+  computeUnderlyingTvlUsd
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectTotalTvl = (state: BeefyState) => state.biz.tvl.totalTvl;
 

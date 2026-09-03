@@ -21,6 +21,8 @@ export interface TotalApy {
   vaultDaily?: number;
   tradingApr?: number;
   tradingDaily?: number;
+  lendingApr?: number;
+  lendingDaily?: number;
   composablePoolApr?: number;
   composablePoolDaily?: number;
   liquidStakingApr?: number;

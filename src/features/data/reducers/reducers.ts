@@ -10,14 +10,17 @@ import { bridgesSlice } from './bridges.ts';
 import { chainsSlice } from './chains.ts';
 import { curatorsSlice } from './curators.ts';
 import { dataLoaderSlice } from './data-loader.ts';
+import { featuredVaultsSlice } from './featured-vaults.ts';
 import { feesSlice } from './fees.ts';
-import { bigNumberTransform, filteredVaultsSlice } from './filtered-vaults.ts';
+import { filteredVaultsSlice } from './filtered-vaults.ts';
 import { historicalSlice } from './historical.ts';
 import { mintersSlice } from './minters.ts';
 import { partnersSlice } from './partners.ts';
 import { platformsSlice } from './platforms.ts';
+import { pointsReducer } from './points.ts';
 import { promosReducer } from './promos.ts';
 import { proposalsSlice } from './proposals.ts';
+import { restrictionsSlice } from './restrictions.ts';
 import { rewardsReducer } from './rewards.ts';
 import { savedVaultsSlice } from './saved-vaults.ts';
 import { tenderlyReducer } from './tenderly.ts';
@@ -38,6 +41,7 @@ import { userRewardsReducer } from './wallet/user-rewards.ts';
 import type { WalletActionsState } from './wallet/wallet-action-types.ts';
 import { walletActionsReducer } from './wallet/wallet-action.ts';
 import { walletSlice } from './wallet/wallet.ts';
+import { windowReducer } from './window.ts';
 import { zapsSlice } from './zaps.ts';
 import type { BeefyState } from '../store/types.ts';
 import { revenueSlice } from './revenue.ts';
@@ -50,9 +54,11 @@ const entitiesReducer = combineReducers({
   bridges: bridgesSlice.reducer,
   chains: chainsSlice.reducer,
   curators: curatorsSlice.reducer,
+  featuredVaults: featuredVaultsSlice.reducer,
   fees: feesSlice.reducer,
   minters: mintersSlice.reducer,
   platforms: platformsSlice.reducer,
+  points: pointsReducer,
   promos: promosReducer,
   proposals: proposalsSlice.reducer,
   tokens: tokensSlice.reducer,
@@ -72,6 +78,7 @@ const userReducer = combineReducers({
   balance: balanceSlice.reducer,
   migration: migrationSlice.reducer,
   resolver: resolverReducer,
+  restrictions: restrictionsSlice.reducer,
   rewards: userRewardsReducer,
   wallet: persistReducer(
     { key: 'wallet', storage, whitelist: ['address', 'hideBalance'] },
@@ -79,20 +86,12 @@ const userReducer = combineReducers({
   ),
   walletActions: walletActionsReducer as Reducer<WalletActionsState>,
 });
+
 const uiReducer = combineReducers({
   addToWallet: addToWalletSlice.reducer,
   bridge: bridgeSlice.reducer,
   dataLoader: dataLoaderSlice.reducer,
-  filteredVaults: persistReducer(
-    {
-      key: 'filters',
-      storage,
-      transforms: [bigNumberTransform],
-      blacklist: ['filteredVaultIds', 'sortedFilteredVaultIds', 'onlyUnstakedClm', 'filterContent'],
-      version: 5, // increase this if you make changes to FilteredVaultsState
-    },
-    filteredVaultsSlice.reducer
-  ),
+  filteredVaults: filteredVaultsSlice.reducer,
   savedVaults: persistReducer({ key: 'savedVaults', storage }, savedVaultsSlice.reducer),
   stepperState: stepperSlice.reducer,
   tenderly:
@@ -111,6 +110,7 @@ const uiReducer = combineReducers({
   vaultsList: vaultsListReducer,
   version: versionReducer,
   revenue: revenueSlice.reducer,
+  window: windowReducer,
 });
 
 export const rootReducer = combineReducers({

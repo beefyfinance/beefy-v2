@@ -17,6 +17,7 @@ import {
 } from '../actions/analytics.ts';
 import { fetchApyAction, fetchAvgApyAction } from '../actions/apy.ts';
 import { fetchLastArticle } from '../actions/articles.ts';
+import { fetchUserGeoCountry } from '../actions/restrictions.ts';
 import { fetchAllBalanceAction, recalculateDepositedVaultsAction } from '../actions/balance.ts';
 import { initiateBoostForm } from '../actions/boosts.ts';
 import { fetchBridgeConfig } from '../actions/bridge.ts';
@@ -24,6 +25,7 @@ import { fetchBridges } from '../actions/bridges.ts';
 import { fetchChainConfigs } from '../actions/chains.ts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { fetchCurators } from '../actions/curators.ts';
+import { fetchFeaturedVaults } from '../actions/featured-vaults.ts';
 import { fetchFees } from '../actions/fees.ts';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters.ts';
 import { fetchPlatforms } from '../actions/platforms.ts';
@@ -127,7 +129,9 @@ export const initialDataLoaderState: DataLoaderState = {
     chainConfig: dataLoaderStateInit,
     curators: dataLoaderStateInit,
     currentCowcentratedRanges: dataLoaderStateInit,
+    featuredVaults: dataLoaderStateInit,
     fees: dataLoaderStateInit,
+    geoCountry: dataLoaderStateInit,
     lastHarvests: dataLoaderStateInit,
     merklCampaigns: dataLoaderStateInit,
     merklRewards: dataLoaderStateInit,
@@ -606,11 +610,13 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchZapAmmsAction, 'zapAmms');
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook');
     addGlobalAsyncThunkActions(builder, fetchCurators, 'curators');
+    addGlobalAsyncThunkActions(builder, fetchFeaturedVaults, 'featuredVaults');
     addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms');
     addGlobalAsyncThunkActions(builder, fetchBridges, 'bridges');
     addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury');
     addGlobalAsyncThunkActions(builder, fetchActiveProposals, 'proposals');
     addGlobalAsyncThunkActions(builder, fetchLastArticle, 'articles');
+    addGlobalAsyncThunkActions(builder, fetchUserGeoCountry, 'geoCountry');
     addGlobalAsyncThunkActions(builder, fetchOffChainCampaignsAction, 'merklCampaigns');
     addGlobalAsyncThunkActions(
       builder,

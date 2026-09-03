@@ -1,8 +1,9 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnimatedButton } from '../../../../../../components/Button/AnimatedButton.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
@@ -11,6 +12,7 @@ import {
 } from '../../../../../data/actions/transact.ts';
 import { transactSteps } from '../../../../../data/actions/wallet/transact.ts';
 import { ActionRecovery } from '../CommonActions/ActionRecovery.tsx';
+import { RecoveryQuoteErrorAlert } from '../RecoveryQuoteErrorAlert/RecoveryQuoteErrorAlert.tsx';
 import {
   isCowcentratedDepositQuote,
   type TransactOption,
@@ -26,8 +28,11 @@ import {
 import {
   selectRecoveryOpForCurrentVault,
   selectTransactConfirmNeededWithChanges,
+  selectTransactDepositFromVaultId,
   selectTransactExecuting,
   selectTransactForceSelection,
+  selectTransactInputAmounts,
+  selectTransactIsDepositFromVault,
   selectTransactQuoteStatus,
   selectTransactSelectedChainId,
   selectTransactSelectedQuoteOrUndefined,
@@ -39,10 +44,15 @@ import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
 import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
-import { GlpDepositNotice } from '../GlpNotices/GlpNotices.tsx';
 import { MaxNativeNotice } from '../MaxNativeNotice/MaxNativeNotice.tsx';
 import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
+import { usePriceImpactState } from '../hooks/usePriceImpactState.ts';
+import {
+  isMaxNativeQuote,
+  useConfirmDisabled,
+  useNotEnoughDisabled,
+} from '../hooks/useActionGates.ts';
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
 import { styles } from './styles.ts';
 import { getExecutionChainId } from '../../../../../../helpers/transactUtils.ts';
@@ -50,6 +60,19 @@ import { stepperReset } from '../../../../../data/actions/wallet/stepper.ts';
 import { useTransactSelectFlowCta } from '../hooks/useTransactSelectFlowCta.ts';
 
 const useStyles = legacyMakeStyles(styles);
+
+/** In deposit-from-vault mode, CTA should switch the wallet to the source vault's chain. */
+function useFromVaultChainId() {
+  const isDepositFromVault = useAppSelector(selectTransactIsDepositFromVault);
+  const fromVaultId = useAppSelector(selectTransactDepositFromVaultId);
+  const fromVault = useAppSelector(state =>
+    fromVaultId ? selectVaultById(state, fromVaultId) : undefined
+  );
+  if (!isDepositFromVault || !fromVault) {
+    return undefined;
+  }
+  return fromVault.chainId;
+}
 
 export const DepositActions = memo(function DepositActions() {
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
@@ -60,7 +83,12 @@ export const DepositActions = memo(function DepositActions() {
   const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
 
   if (stepperContent === StepContent.RecoveryTx || isRecoveryExecution || recoveryOp != null) {
-    return <ActionRecovery mode="deposit" />;
+    return (
+      <>
+        <RecoveryQuoteErrorAlert action="deposit" />
+        <ActionRecovery mode="deposit" />
+      </>
+    );
   }
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
@@ -80,10 +108,13 @@ const ActionDepositPending = memo(function ActionDepositPending() {
   const selectedChainId = useAppSelector(selectTransactSelectedChainId);
   const forceSelection = useAppSelector(selectTransactForceSelection);
   const hasCrossChainZap = useAppSelector(selectTransactVaultHasCrossChainZap);
+  const fromVaultChainId = useFromVaultChainId();
   const { t } = useTranslation();
   const classes = useStyles();
   const connectSwitchChainId =
-    hasCrossChainZap && forceSelection ? undefined : (selectedChainId ?? vault.chainId);
+    hasCrossChainZap && forceSelection ? undefined : (
+      (fromVaultChainId ?? selectedChainId ?? vault.chainId)
+    );
 
   return (
     <div className={classes.feesContainer}>
@@ -97,15 +128,24 @@ const ActionDepositPending = memo(function ActionDepositPending() {
   );
 });
 
-/** No quote yet — CTA opens chain/token select (same as TokenSelectButton) */
+/** No quote yet — CTA opens chain/token/vault select (same as TokenSelectButton) */
 const ActionDepositSelectFlow = memo(function ActionDepositSelectFlow() {
+  const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const selectedChainId = useAppSelector(selectTransactSelectedChainId);
-  const forceSelection = useAppSelector(selectTransactForceSelection);
+  const inputAmounts = useAppSelector(selectTransactInputAmounts);
+  const fromVaultChainId = useFromVaultChainId();
   const classes = useStyles();
-  const { ctaLabel, openSelectStep } = useTransactSelectFlowCta();
-  const connectSwitchChainId = forceSelection ? undefined : (selectedChainId ?? vault.chainId);
+  const { ctaLabel, openSelectStep, isSelecting } = useTransactSelectFlowCta();
+  const connectSwitchChainId =
+    isSelecting ? undefined : (fromVaultChainId ?? selectedChainId ?? vault.chainId);
+
+  const hasInputAmount = useMemo(
+    () => inputAmounts.some(amount => amount.gt(BIG_ZERO)),
+    [inputAmounts]
+  );
+  const label = !isSelecting && hasInputAmount ? t('Transact-Deposit') : ctaLabel;
 
   return (
     <div className={classes.feesContainer}>
@@ -114,10 +154,10 @@ const ActionDepositSelectFlow = memo(function ActionDepositSelectFlow() {
           variant="cta"
           fullWidth={true}
           borderless={true}
-          disabled={!forceSelection}
-          onClick={forceSelection ? openSelectStep : undefined}
+          disabled={!isSelecting}
+          onClick={isSelecting ? openSelectStep : undefined}
         >
-          {ctaLabel}
+          {label}
         </Button>
       </ActionConnectSwitch>
       <VaultFees />
@@ -133,11 +173,10 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const [isDisabledByPriceImpact, setIsDisabledByPriceImpact] = useState(false);
-  const [isDisabledByMaxNative, setIsDisabledByMaxNative] = useState(false);
-  const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
-  const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
-  const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
+  const priceImpactState = usePriceImpactState(quote);
+  const isDisabledByMaxNative = isMaxNativeQuote(quote);
+  const isDisabledByConfirm = useConfirmDisabled();
+  const isDisabledByNotEnoughInput = useNotEnoughDisabled('deposit');
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const stepperContent = useAppSelector(selectStepperStepContent);
@@ -157,10 +196,9 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const isDisabled =
     isTxInProgress ||
     isExecuting ||
-    isDisabledByPriceImpact ||
+    priceImpactState.isDisabled ||
     isDisabledByMaxNative ||
     effectiveDisabledByConfirm ||
-    isDisabledByGlpLock ||
     isDisabledByNotEnoughInput;
 
   const handleDeposit = useCallback(() => {
@@ -184,15 +222,10 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
       {option.chainId === 'emerald' ?
         <EmeraldGasNotice />
       : null}
-      <GlpDepositNotice vaultId={option.vaultId} onChange={setIsDisabledByGlpLock} />
-      <PriceImpactNotice
-        quote={quote}
-        onChange={setIsDisabledByPriceImpact}
-        hideCheckbox={isDisabledByNotEnoughInput}
-      />
-      <MaxNativeNotice quote={quote} onChange={setIsDisabledByMaxNative} />
-      <ConfirmNotice onChange={setIsDisabledByConfirm} />
-      <NotEnoughNotice mode="deposit" onChange={setIsDisabledByNotEnoughInput} />
+      <PriceImpactNotice state={priceImpactState} hideCheckbox={isDisabledByNotEnoughInput} />
+      <MaxNativeNotice quote={quote} />
+      <ConfirmNotice />
+      <NotEnoughNotice mode="deposit" />
       <div className={classes.feesContainer}>
         <ActionConnectSwitch chainId={executionChainId}>
           <AnimatedButton

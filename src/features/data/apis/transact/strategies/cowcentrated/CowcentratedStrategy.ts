@@ -11,7 +11,12 @@ import {
 } from '../../../../../../helpers/big-number.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
-import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../../entities/token.ts';
+import {
+  isTokenEqual,
+  isTokenErc20,
+  isTokenNative,
+  type TokenEntity,
+} from '../../../../entities/token.ts';
 import { isCowcentratedVault, type VaultCowcentrated } from '../../../../entities/vault.ts';
 import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
@@ -30,7 +35,7 @@ import {
   onlyOneInput,
   onlyOneToken,
 } from '../../helpers/options.ts';
-import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
 import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { QuoteRequest } from '../../swap/ISwapProvider.ts';
@@ -75,6 +80,7 @@ import type {
   ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { CowcentratedStrategyConfig } from '../strategy-configs.ts';
+import { canRouteToAllOf } from '../strategy-eligibility.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -389,12 +395,11 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       },
     ];
 
-    const { outputs, returned, steps, fee } = await this.fetchWithdrawQuoteAggregator(
-      option,
-      vaultWithdrawn.outputs,
-      [],
-      withdrawSteps
-    );
+    const {
+      outputs: aggregatorOutputs,
+      returned,
+      steps,
+    } = await this.fetchWithdrawQuoteAggregator(option, vaultWithdrawn.outputs, [], withdrawSteps);
 
     if (returned.length > 0) {
       steps.push({
@@ -403,6 +408,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       });
     }
 
+    const outputs = aggregatorOutputs;
     return {
       id: createQuoteId(option.id),
       strategyId: this.id,
@@ -413,10 +419,18 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       returned,
       allowances,
       steps,
-      fee,
+      fee: ZERO_FEE,
       isCalm: vaultWithdrawn.isCalm,
       vaultType: vaultWithdrawn.vaultType,
     };
+  }
+
+  async canAcceptTokenAsDeposit(token: TokenEntity): Promise<boolean> {
+    return canRouteToAllOf(this.helpers, this.options.swap, this.vaultType.depositTokens, token);
+  }
+
+  async canEmitTokenAsWithdraw(token: TokenEntity): Promise<boolean> {
+    return canRouteToAllOf(this.helpers, this.options.swap, this.vaultType.depositTokens, token);
   }
 
   async fetchWithdrawUserlessZapBreakdown(
@@ -733,14 +747,14 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     return {
       id: createQuoteId(option.id),
       strategyId: this.id,
-      priceImpact: calculatePriceImpact(inputs, outputs, returned, state), // includes the zap fee
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       option,
       inputs,
       outputs,
       returned,
       allowances,
       steps,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
       lpQuotes: quotePerLpToken,
       vaultType: 'cowcentrated',
       isCalm,
@@ -832,7 +846,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       outputs,
       returned: mergeTokenAmounts(breakReturned, unused),
       steps,
-      fee: highestFeeOrZero(steps),
+      fee: ZERO_FEE,
     };
   }
 

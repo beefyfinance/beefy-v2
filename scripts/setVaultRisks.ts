@@ -90,6 +90,10 @@ function getRunArgs() {
   });
 }
 
+function isConfigRiskKey(key: string): key is RiskKeys {
+  return (riskKeys as readonly string[]).includes(key);
+}
+
 type CowcentratedVaultConfig = Omit<VaultConfig, 'type' | 'earnedTokenAddress'> & {
   type: 'cowcentrated';
   earnedTokenAddress: string;
@@ -137,6 +141,7 @@ function applyChanges(
   let changed = false;
 
   for (const { key, value } of changes) {
+    if (!isConfigRiskKey(key)) continue;
     if (newVault.risks[key] !== value) {
       newVault.risks[key] = value;
       changed = true;
@@ -255,6 +260,7 @@ async function getForcedRisksFor(vault: VaultConfig) {
   if (platformRisks) {
     for (const [riskKey, change] of Object.entries(platformRiskMap)) {
       if (platformRisks.has(riskKey)) {
+        if (!isConfigRiskKey(change.key)) continue;
         forcedRisks.set(change.key, {
           source: `platform ${vault.platformId}`,
           value: change.value,
@@ -275,6 +281,7 @@ async function getForcedRisksFor(vault: VaultConfig) {
     for (const token of tokenTags) {
       for (const [tagKey, change] of Object.entries(tokenTagToRiskMap)) {
         if (token.tags.has(tagKey)) {
+          if (!isConfigRiskKey(change.key)) continue;
           forcedRisks.set(change.key, { source: `token ${token.id}`, value: change.value });
         }
       }

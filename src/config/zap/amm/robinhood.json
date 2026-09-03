@@ -1,0 +1,14 @@
+[
+  {
+    "id": "robinhood-up33",
+    "name": "Up33",
+    "type": "solidly",
+    "routerAddress": "0xf5198743240fAC98db71868F34c70139b1eb0474",
+    "factoryAddress": "not-used",
+    "pairInitHash": "not-used",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "2",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
+  }
+]

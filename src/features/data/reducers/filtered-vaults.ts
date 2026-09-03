@@ -1,139 +1,79 @@
-import { createSlice, prepareAutoBatched, type PayloadAction } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
-import createTransform from 'redux-persist/es/createTransform';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { createSlice, type Draft, type PayloadAction } from '@reduxjs/toolkit';
 import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
 import { fetchAllVaults } from '../actions/vaults.ts';
+import { areArraysEqual } from '../utils/array-utils.ts';
+import { FILTER_DEFAULTS, mergePreset } from '../utils/filter-values.ts';
+import { hasSearchText } from '../utils/vault-search.ts';
+import { buildInitialFilteredVaultsState } from './filtered-vaults-storage.ts';
 import {
   FilterContent,
-  type FilteredVaultBigNumberKeys,
-  type FilteredVaultBooleanKeys,
-  type FilteredVaultsState,
-  type SetSubSortPayload,
+  type FilteredVaultsPreset,
+  type FilteredVaultsReconcile,
+  type FilterValues,
+  isSortPickedInPreset,
 } from './filtered-vaults-types.ts';
-
-const initialFilteredVaultsState: FilteredVaultsState = {
-  reseted: true,
-  sort: 'default',
-  sortDirection: 'desc',
-  subSort: {
-    apy: 'default',
-  },
-  vaultCategory: [],
-  userCategory: 'all',
-  strategyType: 'all',
-  assetType: [],
-  searchText: '',
-  chainIds: [],
-  platformIds: [],
-  onlyRetired: false,
-  onlyPaused: false,
-  onlyBoosted: false,
-  onlyZappable: false,
-  onlyEarningPoints: false,
-  onlyUnstakedClm: false,
-  filteredVaultIds: [],
-  sortedFilteredVaultIds: [],
-  minimumUnderlyingTvl: BIG_ZERO,
-  filterContent: FilterContent.Filter,
-};
 
 export const filteredVaultsSlice = createSlice({
   name: 'filtered-vaults',
-  initialState: initialFilteredVaultsState,
+  // lazy so importing this module outside a browser never touches window/localStorage
+  initialState: buildInitialFilteredVaultsState,
   reducers: {
     reset(sliceState) {
-      return {
-        ...initialFilteredVaultsState,
-        filteredVaultIds: sliceState.filteredVaultIds,
-        sortedFilteredVaultIds: sliceState.sortedFilteredVaultIds,
-      };
+      sliceState.pending = FILTER_DEFAULTS;
+      sliceState.sortPickedDuringSearch = false;
+      sliceState.filterContent = FilterContent.Filter;
     },
-    setSort(sliceState, action: PayloadAction<FilteredVaultsState['sort']>) {
-      sliceState.reseted = false;
-      sliceState.sort = action.payload;
+    /** reset + update: defaults with the given preset on top */
+    set(sliceState, action: PayloadAction<FilteredVaultsPreset>) {
+      const values = mergePreset(FILTER_DEFAULTS, action.payload);
+      sliceState.pending = values;
+      sliceState.sortPickedDuringSearch = isSortPickedInPreset(values.searchText, values.sort);
+      sliceState.filterContent = FilterContent.Filter;
     },
-    setSubSort(sliceState, action: PayloadAction<SetSubSortPayload>) {
-      sliceState.reseted = false;
-      const { column, value } = action.payload;
-      sliceState.subSort = {
-        ...sliceState.subSort,
-        [column]: value,
-      };
-    },
-    setSortDirection(sliceState, action: PayloadAction<FilteredVaultsState['sortDirection']>) {
-      sliceState.reseted = false;
-      sliceState.sortDirection = action.payload;
-    },
-    setSortFieldAndDirection(
-      sliceState,
-      action: PayloadAction<{
-        field: FilteredVaultsState['sort'];
-        direction: FilteredVaultsState['sortDirection'];
-      }>
-    ) {
-      sliceState.reseted = false;
-      sliceState.sort = action.payload.field;
-      sliceState.sortDirection = action.payload.direction;
-    },
-    setVaultCategory(sliceState, action: PayloadAction<FilteredVaultsState['vaultCategory']>) {
-      sliceState.reseted = false;
-      sliceState.vaultCategory = action.payload;
-    },
-    setStrategyType(sliceState, action: PayloadAction<FilteredVaultsState['strategyType']>) {
-      sliceState.reseted = false;
-      sliceState.strategyType = action.payload;
-    },
-    setUserCategory(sliceState, action: PayloadAction<FilteredVaultsState['userCategory']>) {
-      sliceState.reseted = false;
-      sliceState.userCategory = action.payload;
-      sliceState.onlyUnstakedClm = false; // reset this filter when user category changes
-    },
-    setAssetType(sliceState, action: PayloadAction<FilteredVaultsState['assetType']>) {
-      sliceState.reseted = false;
-      sliceState.assetType = action.payload;
-    },
-    setSearchText(sliceState, action: PayloadAction<FilteredVaultsState['searchText']>) {
-      sliceState.reseted = false;
-      sliceState.searchText = action.payload;
-    },
-    setChainIds(sliceState, action: PayloadAction<FilteredVaultsState['chainIds']>) {
-      sliceState.reseted = false;
-      sliceState.chainIds = action.payload;
-    },
-    setPlatformIds(sliceState, action: PayloadAction<FilteredVaultsState['platformIds']>) {
-      sliceState.reseted = false;
-      sliceState.platformIds = action.payload;
-    },
-    setFilterContent(sliceState, action: PayloadAction<FilteredVaultsState['filterContent']>) {
-      sliceState.reseted = false;
-      sliceState.filterContent = action.payload;
-    },
-    setBoolean(
-      sliceState,
-      action: PayloadAction<{
-        filter: FilteredVaultBooleanKeys;
-        value: boolean;
-      }>
-    ) {
-      sliceState.reseted = false;
-      sliceState[action.payload.filter] = action.payload.value;
-    },
-    setBigNumber: {
-      reducer(
-        sliceState,
-        action: PayloadAction<{
-          filter: FilteredVaultBigNumberKeys;
-          value: BigNumber;
-        }>
+    update(sliceState, action: PayloadAction<FilteredVaultsPreset>) {
+      // capture as primitives up front so the relevance bookkeeping never compares immer drafts
+      const prevSearchText = sliceState.pending.searchText;
+      const prevSort = sliceState.pending.sort;
+      const prevSortDirection = sliceState.pending.sortDirection;
+      const next = mergePreset(sliceState.pending, action.payload);
+      sliceState.pending = next;
+
+      // clearing or starting a fresh search session re-enables relevance sort
+      if (
+        prevSearchText !== next.searchText &&
+        (!hasSearchText(next.searchText) || !hasSearchText(prevSearchText))
       ) {
-        sliceState.reseted = false;
-        sliceState[action.payload.filter] = action.payload.value;
-      },
-      prepare: prepareAutoBatched<{
-        filter: FilteredVaultBigNumberKeys;
-        value: BigNumber;
-      }>(),
+        sliceState.sortPickedDuringSearch = false;
+      }
+      // an explicit sort while searching disables the relevance override
+      const sortChanged = next.sort !== prevSort || next.sortDirection !== prevSortDirection;
+      if (sortChanged && hasSearchText(next.searchText)) {
+        sliceState.sortPickedDuringSearch = true;
+      }
+    },
+    reconcile(sliceState, action: PayloadAction<FilteredVaultsReconcile>) {
+      const knownPlatformIds = new Set(action.payload.platformIds);
+      const knownChainIds = new Set(action.payload.chainIds);
+      const prune = (values: FilterValues | Draft<FilterValues>): FilterValues => {
+        // immer does not draft class instances, so Draft<BigNumber> is only a type-level fiction
+        const base = values as FilterValues;
+        return {
+          ...base,
+          platformIds: base.platformIds.filter(id => knownPlatformIds.has(id)),
+          chainIds: base.chainIds.filter(id => knownChainIds.has(id)),
+        };
+      };
+      sliceState.pending = prune(sliceState.pending);
+      sliceState.applied = prune(sliceState.applied);
+    },
+    /** url-sync only: preset over defaults to pending; the immediate recalc commits it to applied */
+    setFromUrl(sliceState, action: PayloadAction<FilteredVaultsPreset>) {
+      const values = mergePreset(FILTER_DEFAULTS, action.payload);
+      sliceState.pending = values;
+      sliceState.sortPickedDuringSearch = isSortPickedInPreset(values.searchText, values.sort);
+    },
+    setFilterContent(sliceState, action: PayloadAction<FilterContent>) {
+      sliceState.filterContent = action.payload;
     },
   },
   extraReducers: builder => {
@@ -148,16 +88,18 @@ export const filteredVaultsSlice = createSlice({
         }
       })
       .addCase(recalculateFilteredVaultsAction.fulfilled, (state, action) => {
-        state.filteredVaultIds = action.payload.filtered;
-        state.sortedFilteredVaultIds = action.payload.sorted;
+        // commit the snapshot the recalc ran against: applied + results update atomically
+        state.applied = action.payload.applied;
+        // preserve array identity
+        if (!areArraysEqual(state.filteredVaultIds, action.payload.filtered)) {
+          state.filteredVaultIds = action.payload.filtered;
+        }
+        if (!areArraysEqual(state.sortedFilteredVaultIds, action.payload.sorted)) {
+          state.sortedFilteredVaultIds = action.payload.sorted;
+        }
+        state.searchRanked = action.payload.searchRanked;
       });
   },
 });
 
 export const filteredVaultsActions = filteredVaultsSlice.actions;
-
-export const bigNumberTransform = createTransform(
-  (bigNumber: BigNumber) => bigNumber.toString(),
-  (storedBigNumber: string) => new BigNumber(storedBigNumber),
-  { whitelist: ['minimumUnderlyingTvl'] }
-);

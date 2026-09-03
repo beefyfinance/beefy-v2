@@ -8,23 +8,6 @@ export const styles = {
     rowGap: '1px',
     '& div:last-child': {
       borderRadius: '0px 0px 8px 8px',
-      lg: {
-        borderRadius: '0px 0px 20px 20px',
-      },
-    },
-  }),
-  filter: css.raw({
-    display: 'grid',
-    padding: '16px 24px',
-    gridTemplateColumns: 'repeat(2,minmax(0,1fr))',
-    backgroundColor: 'background.content.dark',
-    '& div': {
-      textStyle: 'subline.sm',
-      color: 'text.dark',
-      fontWeight: 'bold',
-    },
-    lgDown: {
-      padding: '16px',
     },
   }),
   assetTypes: css.raw({
@@ -33,8 +16,5 @@ export const styles = {
     textStyle: 'subline.sm',
     color: 'text.dark',
     fontWeight: 'bold',
-  }),
-  sortColumn: css.raw({
-    justifyContent: 'flex-start',
   }),
 };

@@ -17,6 +17,13 @@ export const ChainIcon = memo(function ChainIcon({
   const src = getNetworkSrc(chainId);
 
   return src ?
-      <img src={src} width={size} height={size} alt={chainId} className={css(cssProp)} />
+      <img
+        src={src}
+        width={size}
+        height={size}
+        alt={chainId}
+        className={css({ flexShrink: 0 }, cssProp)}
+        style={{ width: `${size}px`, height: `${size}px` }}
+      />
     : null;
 });

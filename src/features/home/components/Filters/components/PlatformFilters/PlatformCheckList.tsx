@@ -34,13 +34,13 @@ export const PlatformChecklist = memo(function PlatformChecklist() {
   const handleChange = useCallback(
     (selected: PlatformEntity['id'][]) => {
       if (selected.includes('all')) {
-        dispatch(filteredVaultsActions.setPlatformIds([]));
+        dispatch(filteredVaultsActions.update({ platformIds: [] }));
         return;
       }
       dispatch(
-        filteredVaultsActions.setPlatformIds(
-          selected.length === platformsIds.length ? [] : selected
-        )
+        filteredVaultsActions.update({
+          platformIds: selected.length === platformsIds.length ? [] : selected,
+        })
       );
     },
     [dispatch, platformsIds]
@@ -70,8 +70,8 @@ export const PlatformChecklist = memo(function PlatformChecklist() {
     [options.length]
   );
 
-  const allSelected = useMemo(() => isEmpty(platformsIds), [platformsIds]);
-  const noneSelected = useMemo(() => platformsIds.length === 0, [platformsIds]);
+  const allSelected = isEmpty(platformsIds);
+  const noneSelected = platformsIds.length === 0;
 
   return (
     <SelectMultipleContent

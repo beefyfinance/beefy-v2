@@ -256,6 +256,16 @@ const config = buildConfig(
               'linear-gradient(348.15deg, rgba(255, 255, 255, 0) -166.22%, rgba(255, 255, 255, 0.7) 113.41%), linear-gradient(0deg, #FFD54F, #FFD54F)',
             description: 'tag.boost',
           },
+          migrate: {
+            value:
+              'linear-gradient(270deg, rgba(255, 137, 21, 0.256) 0%, rgba(255, 133, 0, 0) 25%)',
+            description: 'vault card tint for migratable vaults',
+          },
+          freeZap: {
+            value:
+              'linear-gradient(270deg, rgba(59, 152, 176, 0.204) 0%, rgba(39, 127, 154, 0.00) 25%)',
+            description: 'vault card tint for free zap vaults',
+          },
         },
         colors: {
           //darkBlue100-64a
@@ -271,6 +281,7 @@ const config = buildConfig(
           blueJewel: { value: '#495086', description: 'bg hover for some buttons' },
           bridgeQuoteSelectorScrollThumb: { value: '#373b60' },
           chainIconUnselectedBackground: { value: '#2e324c' },
+          pointsSurface: { value: '#19191A', description: 'points banner dark surface' },
           changeNegative: { value: '#e84525' },
           changePositive: { value: '#509658' },
           contentBackgroundLight: { value: '#2d3153', description: 'contentLight' },
@@ -310,6 +321,7 @@ const config = buildConfig(
           stepperSuccessBackground: { value: '#59a66226' },
           tagClmBackground: { value: '#0052CC', description: 'tag.clm' },
           tagPausedBackground: { value: '#564a46', description: 'tag.paused' },
+          tagStockBackground: { value: '#0f4a72', description: 'tag.stocks' },
           tagPlatformClmBackground: { value: '#38428f', description: 'tag.platformClm' },
           tagPlatformGovBackground: { value: '#4b388f', description: 'tag.platformGov' },
           tagRetiredBackground: { value: '#532f39', description: 'tag.retired' },
@@ -330,16 +342,14 @@ const config = buildConfig(
           tooltipDropdownBoxShadow: { value: '#00000033' },
           transactDebuggerBackground: { value: '#111111' },
           transactDebuggerItemAltBackground: { value: '#222222' },
-          transactErrorBackground: { value: '#da59327c' },
+          transactErrorBackground: { value: '#d85c3066' },
           transactWarningBackground: { value: '#d198477c' },
-          treasuryHeaderSystem9: { value: '#f3f3c87f' },
           vaultClmPoolBackground: { value: '#252c63', description: 'vaults clm + vaults clmPool' },
           vaultClmVaultBackground: { value: '#1e2a48', description: 'vaults clmVault' },
           vaultGovBackground: { value: '#322460', description: 'vaults gov' },
           vaultInactiveVaultbackground: { value: '#242032', description: 'vaults inactive' },
           vaultPausedBackground: { value: '#d153470c' },
           vaultTagDividerBackground: { value: '#D9D9D949' },
-          zapDiscountedFeesBackground: { value: '#59a662' },
           yellow: {
             '40': { value: '#d6d05d' },
             '40-12': { value: '#3F3C4E' },
@@ -410,6 +420,7 @@ const config = buildConfig(
             '80': { value: '#df6539' },
             '80-40a': { value: '#df653966' },
             '90': { value: '#d85c30' },
+            '90-40a': { value: '#d85c3066' },
             '100': { value: '#cf5024' },
           },
           white: {
@@ -451,6 +462,9 @@ const config = buildConfig(
             pool: {
               '70': { value: '#4C2CDE' },
             },
+          },
+          petrol: {
+            '20': { value: '#B7DDE1' },
           },
         },
         sizes: {
@@ -519,6 +533,8 @@ const config = buildConfig(
             dark: { value: '{colors.white.70}' },
             black: { value: '{colors.darkBlue.90}' },
             boosted: { value: '{colors.gold.30}' },
+            freeZap: { value: '{colors.petrol.20}' },
+            points: { value: '{colors.green.40}' },
             warning: { value: '{colors.orange.40}' },
             disabled: { value: '{colors.darkBlue.90-56a}' },
             underline: { value: '{colors.white.70-64a}' },
@@ -535,6 +551,7 @@ const config = buildConfig(
               light: { value: '{colors.contentBackgroundLight}' },
               gray: { value: '{colors.text.dark}' },
               darkest: { value: '{colors.darkBlue.90}' },
+              points: { value: '{colors.pointsSurface}' },
             },
             vaults: {
               standard: { value: '{colors.blackMarket}' },
@@ -567,6 +584,15 @@ const config = buildConfig(
             retired: { background: { value: '{colors.tagRetiredBackground}' } },
             paused: { background: { value: '{colors.tagPausedBackground}' } },
             boost: { background: { value: '{gradients.boost}' } },
+            stock: { background: { value: '{colors.tagStockBackground}' } },
+            migrate: {
+              background: { value: '{colors.orange.50}' },
+              text: { value: '{colors.darkBlue.90}' },
+            },
+            freeZap: {
+              background: { value: '{colors.petrol.20}' },
+              text: { value: '{colors.darkBlue.90}' },
+            },
             platform: {
               gov: { background: { value: '{colors.tagPlatformGovBackground}' } },
               clm: { background: { value: '{colors.tagPlatformClmBackground}' } },
@@ -785,6 +811,14 @@ const config = buildConfig(
           to: {
             transform: 'rotate(360deg)',
           },
+        },
+        featuredVaultMarqueeLoop: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        addressInputCaretBlink: {
+          '0%, 50%': { backgroundSize: '2px 12px' },
+          '50.01%, 100%': { backgroundSize: '0 12px' },
         },
         highlight: {
           to: {
@@ -1085,6 +1119,23 @@ const config = buildConfig(
           border: 'transparent',
         },
       },
+      card: {
+        base: {
+          color: '{colors.text.light}',
+          background: '{colors.background.content.dark}',
+          border: '{colors.background.border}',
+        },
+        hover: {
+          color: '{colors.text.light}',
+          background: '{colors.background.content.dark}',
+          border: '{colors.background.content.light}',
+        },
+        active: {
+          color: '{colors.text.light}',
+          background: '{colors.darkBlue.50}',
+          border: '{colors.background.content.light}',
+        },
+      },
     },
     zIndex: {
       thumb: 10,
@@ -1100,7 +1151,7 @@ const config = buildConfig(
       arbitrum: { primary: '#2d374b', header: '#289fef33' },
       aurora: { primary: '#70d44b', header: 0.2 },
       avax: { primary: '#e74142', header: 0.2 },
-      base: { primary: '#ffffff', header: '#0052ff33' },
+      base: { primary: '#ffffff', header: '#0000ff5e' },
       berachain: { primary: '#814625', header: 1 },
       bsc: { primary: '#f0b90b', header: 0.2 },
       canto: { primary: '#06fc99', header: 0.2 },
@@ -1130,6 +1181,7 @@ const config = buildConfig(
       megaeth: { primary: '#D9D9D9', header: 0.4 },
       polygon: { primary: '#f5f0fd', header: 0.3 },
       real: { primary: '#ffffff', header: '#1c122c66' },
+      robinhood: { primary: '#CCFF00', header: 0.2 },
       rootstock: { primary: '#000000', header: '#1c122c66' },
       saga: { primary: '#2a8f68', header: 0.2 },
       scroll: { primary: '#ffe6c8', header: '#c9cbce' },

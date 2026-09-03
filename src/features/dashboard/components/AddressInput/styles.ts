@@ -43,6 +43,7 @@ export const IconDiv = styled('div', {
     lineHeight: 'inherit',
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
     flexShrink: '0',
     width: '20px',
     height: '20px',
@@ -57,9 +58,16 @@ export const IconDiv = styled('div', {
         color: 'text.dark',
       },
     },
+    variant: {
+      default: {
+        transform: 'rotate(270deg)',
+      },
+      transparent: {},
+    },
   },
   defaultVariants: {
     state: 'disabled',
+    variant: 'transparent',
   },
 });
 

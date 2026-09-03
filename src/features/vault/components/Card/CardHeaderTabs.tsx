@@ -23,7 +23,7 @@ export const CardHeaderTabs = memo(function CardHeaderTabs<T extends TabOption =
   TabComponent = Tab,
 }: CardHeaderTabsProps<T>) {
   return (
-    <StyledCardHeader>
+    <StyledCardHeader padding="none">
       {options.map(({ value, label, context }) => (
         <TabComponent
           key={value}
@@ -40,11 +40,7 @@ export const CardHeaderTabs = memo(function CardHeaderTabs<T extends TabOption =
 
 const StyledCardHeader = styled(CardHeader, {
   base: {
-    padding: '0',
     gap: '0',
-    sm: {
-      padding: '0',
-    },
   },
 });
 

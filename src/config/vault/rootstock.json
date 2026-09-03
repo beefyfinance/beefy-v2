@@ -106,6 +106,7 @@
     "retiredAt": 1761122430,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["ETHs", "WRBTC"],
     "risks": {
       "updatedAt": 1765557014,
@@ -233,6 +234,7 @@
     "retiredAt": 1761122430,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WRBTC", "rUSDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -360,6 +362,7 @@
     "retiredAt": 1744298354,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["DOC", "rUSDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -443,6 +446,7 @@
     "retiredAt": 1761122430,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["RIF", "rUSDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -564,6 +568,7 @@
     "createdAt": 1722523990,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["DOC", "rUSDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -691,6 +696,7 @@
     "retiredAt": 1761122430,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["WRBTC", "rUSDT"],
     "risks": {
       "updatedAt": 1765557014,
@@ -818,6 +824,7 @@
     "retiredAt": 1761122430,
     "platformId": "beefy",
     "feeTier": "0.05",
+    "tickSpacing": 10,
     "assets": ["ETHs", "WRBTC"],
     "risks": {
       "updatedAt": 1765557014,

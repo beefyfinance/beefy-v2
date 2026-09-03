@@ -8,7 +8,6 @@ import { VaultCategoryButtonFilter } from './components/VaultCategoryFilters/Vau
 import { StrategyTypeButtonFilter } from './components/StrategyTypeFilters/StrategyTypeButtonFilter.tsx';
 import { useBreakpoint } from '../../../../hooks/useBreakpoint.ts';
 import { styled } from '@repo/styles/jsx';
-import { BoostFilterButton } from './components/BoostFilter/BoostFilterButton.tsx';
 import { Sort } from './components/Sort/Sort.tsx';
 import { ExtendedFiltersButtonMobileFilters } from './components/ExtendedFilters/ExtendedFiltersButtonMobileFilters.tsx';
 
@@ -40,7 +39,6 @@ const DesktopLayout = memo(function DesktopLayout() {
       </Top>
       <Bottom>
         <UserCategoryButtonFilter />
-        <BoostFilterButton />
         <VaultCategoryButtonFilter />
         <AssetTypeButtonFilter />
         <StrategyTypeButtonFilter />
@@ -55,10 +53,7 @@ const Layout = styled('div', {
   base: {
     display: 'flex',
     flexWrap: 'wrap',
-    gap: '12px',
-    sm: {
-      gap: '8px',
-    },
+    gap: '10px',
   },
 });
 
@@ -89,7 +84,7 @@ const Bottom = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    gap: 'inherit',
+    gap: '8px',
     md: {
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fit, minmax(0px, 1fr))',
@@ -97,7 +92,7 @@ const Bottom = styled('div', {
     lg: {
       display: 'flex',
       flexDirection: 'inherit',
-      gap: 'inherit',
+      gap: '8px',
       width: '100%',
     },
   },

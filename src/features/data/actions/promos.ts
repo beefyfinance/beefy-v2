@@ -1,5 +1,5 @@
-import { sortBy } from 'lodash-es';
 import { getUnixNow } from '../../../helpers/date.ts';
+import { seededShuffle } from '../../../helpers/random.ts';
 import type { VaultConfig } from '../apis/config-types.ts';
 import { getPromosApi } from '../apis/promos/promos.ts';
 import type { PinnedConfig, PinnedConfigCondition, PromoConfig } from '../apis/promos/types.ts';
@@ -196,19 +196,6 @@ function selectVaultMatchesAnyCondition(
   return conditions.some(condition => selectVaultMatchesCondition(state, vaultId, condition));
 }
 
-function makePRNG(seed: number) {
-  // SplitMix32
-  return function () {
-    seed |= 0;
-    seed = (seed + 0x9e3779b9) | 0;
-    let num = seed ^ (seed >>> 16);
-    num = Math.imul(num, 0x21f0aaad);
-    num = num ^ (num >>> 15);
-    num = Math.imul(num, 0x735a2d97);
-    return ((num = num ^ (num >>> 15)) >>> 0) / 4294967296;
-  };
-}
-
 function limitIds(ids: string[], limit: number | undefined, periodSeconds: number = 21600) {
   if (limit === undefined) {
     return ids;
@@ -221,8 +208,7 @@ function limitIds(ids: string[], limit: number | undefined, periodSeconds: numbe
   }
 
   ids.sort();
-  const rng = makePRNG(Math.floor(Date.now() / (periodSeconds * 1000)));
-  const sorted = sortBy(ids, () => rng());
+  const sorted = seededShuffle(ids, Math.floor(Date.now() / (periodSeconds * 1000)));
   return sorted.slice(0, limit);
 }
 
@@ -241,14 +227,22 @@ export const promosRecalculatePinned = createAppAsyncThunk<FulfilledVaultsPinned
             allVaultIds.includes(id)
           )
         : allVaultIds;
-      if (!ids.length) {
+      const excludedIds = new Set(
+        config.exclude ?
+          Array.isArray(config.exclude) ?
+            config.exclude
+          : [config.exclude]
+        : []
+      );
+      const eligibleIds = ids.filter(id => !excludedIds.has(id));
+      if (!eligibleIds.length) {
         console.warn(`No active vaults found for pinned config`, config);
         continue;
       }
       const matching = new Set<string>();
       const mode = config.mode || 'all';
 
-      for (const id of ids) {
+      for (const id of eligibleIds) {
         // already pinned by another condition
         if (byId[id]) {
           continue;

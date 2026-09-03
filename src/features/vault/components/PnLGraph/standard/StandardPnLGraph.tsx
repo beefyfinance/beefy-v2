@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData.tsx';
 import type { ToggleButtonItem } from '../../../../../components/ToggleButtons/ToggleButtons.tsx';
@@ -91,25 +91,24 @@ export const DashboardPnLGraph = memo(function DashboardPnLGraph({
   address,
 }: PnLGraphProps) {
   const classes = useStyles();
-
   const labels = useVaultPeriods(vaultId, address);
-
   const [period, setPeriod] = useState<number>(labels.length - 1);
-
-  const handlePeriod = useCallback((newPeriod: number) => {
-    setPeriod(newPeriod);
-  }, []);
+  const canShowGraph = labels.length > 0;
 
   return (
     <div className={classes.dashboardPnlContainer}>
-      <Graph address={address} period={period} vaultId={vaultId} />
-      <Footer
-        css={styles.footerDashboard}
-        labels={labels}
-        vaultId={vaultId}
-        period={period}
-        handlePeriod={handlePeriod}
-      />
+      {canShowGraph ?
+        <>
+          <Graph address={address} period={period} vaultId={vaultId} />
+          <Footer
+            css={styles.footerDashboard}
+            labels={labels}
+            vaultId={vaultId}
+            period={period}
+            handlePeriod={setPeriod}
+          />
+        </>
+      : <GraphNoData reason="wait-collect" />}
     </div>
   );
 });
