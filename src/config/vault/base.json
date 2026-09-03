@@ -1,6 +1,6 @@
 [
   {
-    "id": "mellow-aero-usdc-cbbtc",
+    "id": "mellow-aero-usdc-cbbtc-v2",
     "name": "USDC-cbBTC ALM",
     "type": "standard",
     "token": "MVS:USDC-cbBTC-100",
@@ -11,7 +11,7 @@
     "earnedToken": "mooAeroAutopilotUSDC-cbBTC",
     "earnedTokenAddress": "0x7F765219D007b058fc6F6654061B99cD283Fa025",
     "oracle": "lps",
-    "oracleId": "mellow-aero-usdc-cbbtc",
+    "oracleId": "mellow-aero-usdc-cbbtc-v2",
     "status": "active",
     "createdAt": 1788242855,
     "platformId": "aerodrome",

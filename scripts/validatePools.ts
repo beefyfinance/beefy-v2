@@ -96,7 +96,7 @@ const nonHarvestOnDepositPools = [
   'morpho-v2-monad-hyperithm-apex-cbbtc',
   'aavev3-monad-gho',
   'aavev3-monad-musd',
-  'mellow-aero-usdc-cbbtc',
+  'mellow-aero-usdc-cbbtc-v2',
 ];
 const isCowPancakeWithHodOff = (pool: VaultConfigWithStrategyData) =>
   ['base'].includes(pool.network) &&
