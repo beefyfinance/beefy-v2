@@ -315,6 +315,8 @@ export const selectVaultSharesToDepositTokenData = createSelector(
 /**
  * Total shares including boosts (excludes bridged and pending withdrawal)
  * (For gov vaults this will be in deposit token since there are no shares)
+ *
+ * Key omits the address: a resultEqualityCheck here would compare across addresses and always miss.
  */
 export const selectUserVaultBalanceInShareTokenIncludingBoosts = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>

@@ -96,6 +96,7 @@ export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   }
 )((_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
 
+// key omits the address: a resultEqualityCheck here would compare across addresses and always miss
 export const selectUserFullTimelineEntriesByVaultId = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], address?: string) =>
     selectUserDepositedTimelineByVaultId(state, vaultId, address),
@@ -119,6 +120,8 @@ export const selectUserHasCurrentDepositTimelineByVaultId = createCachedSelector
 /**
  * Selects the first deposit date of the user in a vault
  * If the user has fully withdrawn at any point, this will return the date of the first deposit after the last full withdrawal
+ *
+ * Key omits the address: a resultEqualityCheck here would compare across addresses and always miss.
  */
 export const selectUserFirstDepositDateByVaultId = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], address?: string) =>
@@ -812,6 +815,7 @@ export const selectClmPendingRewardsByVaultId = (state: BeefyState, vaultId: Vau
   return state.user.analytics.clmPendingRewards.byVaultId[vaultId];
 };
 
+// key omits the address: a resultEqualityCheck here would compare across addresses and always miss
 export const selectUserClmHarvestTimelineByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], address?: string) =>
     selectUserAnalytics(state, address),
@@ -828,6 +832,7 @@ export const selectUserClmHarvestTimelineByVaultId = createCachedSelector(
   }
 )((_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
 
+// key omits the address: a resultEqualityCheck here would compare across addresses and always miss
 export const selectUserClmVaultHarvestTimelineByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], address?: string) =>
     selectUserAnalytics(state, address),

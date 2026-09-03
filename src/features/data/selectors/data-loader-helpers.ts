@@ -20,7 +20,7 @@ import type { BeefyState } from '../store/types.ts';
 import { createCachedFactory } from '../utils/factory-utils.ts';
 import { isEqual, sortBy, uniqBy } from 'lodash-es';
 import { selectWalletAddress } from './wallet.ts';
-import { getStatus, type LoaderStatuses } from '../reducers/data-loader-notifications.ts'; // time since a loader was last dispatched before it is allowed to be dispatched again
+import { getStatus, type LoaderStatuses } from '../reducers/data-loader-notifications.ts';
 
 // time since a loader was last dispatched before it is allowed to be dispatched again
 export const DEFAULT_DISPATCHED_RECENT_SECONDS = 30;
