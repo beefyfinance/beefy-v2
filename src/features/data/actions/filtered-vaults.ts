@@ -18,7 +18,7 @@ import {
 import type { BeefyState } from '../store/types.ts';
 import { filtersDependOnData } from '../utils/filter-values.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
-import { buildVaultFilterEnv, vaultPassesFilters } from '../utils/vault-filter.ts';
+import { selectVaultFilterEnv, selectVaultPassesFilters } from '../utils/vault-filter.ts';
 import { hasSearchText } from '../utils/vault-search.ts';
 
 export type RecalculateFilteredVaultsParams = {
@@ -54,9 +54,9 @@ export const recalculateFilteredVaultsAction = createAppAsyncThunk<
     let filteredVaults: VaultEntity[];
     if (mustRefilter) {
       const allVaults = selectAllVisibleVaultIds(state).map(id => selectVaultById(state, id));
-      const env = buildVaultFilterEnv(state, filterOptions, searchScores);
+      const env = selectVaultFilterEnv(state, filterOptions, searchScores);
       filteredVaults = allVaults.filter(vault =>
-        vaultPassesFilters(state, vault, filterOptions, env)
+        selectVaultPassesFilters(state, vault, filterOptions, env)
       );
     } else {
       filteredVaults = state.ui.filteredVaults.filteredVaultIds.map(id =>

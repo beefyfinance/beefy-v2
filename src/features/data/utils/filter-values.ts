@@ -99,7 +99,7 @@ export function filterValuesEqual(a: FilterValues, b: FilterValues): boolean {
   return !filtersChanged && !sortChanged;
 }
 
-/** Filters whose `vaultPassesFilters` outcome can change when data updates */
+/** Filters whose `selectVaultPassesFilters` outcome can change when data updates */
 export const DATA_DEPENDENT_FILTERS: ReadonlyArray<{
   /** the filter this row guards, for readability */
   readonly filter: keyof FilterValues;

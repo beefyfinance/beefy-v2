@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { FilterContent, type FilterValues } from '../reducers/filtered-vaults-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { FILTER_DEFAULTS } from '../utils/filter-values.ts';
-import { buildVaultFilterEnv, vaultPassesFilters } from '../utils/vault-filter.ts';
+import { selectVaultFilterEnv, selectVaultPassesFilters } from '../utils/vault-filter.ts';
 import {
   type BlockerCategory,
   clearBlockerCategories,
@@ -370,7 +370,7 @@ function listProbeFilters(filters: FilterValues): FilterValues[] {
   ];
 }
 
-describe('vaultPassesFilters search gate', () => {
+describe('selectVaultPassesFilters search gate', () => {
   it('passes no vault the search text does not match, under any probe filter set', () => {
     const filters = makeFilters({
       searchText: 'usdc',
@@ -381,7 +381,7 @@ describe('vaultPassesFilters search gate', () => {
     const state = makeState(FIXTURE_VAULTS, filters);
     const visibleIds = state.entities.vaults.allVisibleIds;
     const searchOnly = clearBlockerCategories(filters, ALL_CATEGORIES);
-    const searchEnv = buildVaultFilterEnv(state, searchOnly);
+    const searchEnv = selectVaultFilterEnv(state, searchOnly);
     const searchMatches = visibleIds.filter(id =>
       searchEnv.matchesSearch(selectVaultById(state, id))
     );
@@ -392,9 +392,9 @@ describe('vaultPassesFilters search gate', () => {
 
     const passing = new Set<string>();
     for (const probe of listProbeFilters(filters)) {
-      const env = buildVaultFilterEnv(state, probe);
+      const env = selectVaultFilterEnv(state, probe);
       for (const id of visibleIds) {
-        if (vaultPassesFilters(state, selectVaultById(state, id), probe, env)) {
+        if (selectVaultPassesFilters(state, selectVaultById(state, id), probe, env)) {
           passing.add(id);
         }
       }

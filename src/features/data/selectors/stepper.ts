@@ -357,7 +357,7 @@ export function selectZapReturned(state: BeefyState): TokenAmount[] {
   return arrayOrStaticEmpty(tokenAmounts);
 }
 
-function resolveDstTokensReturned(
+function selectDstTokensReturned(
   state: BeefyState,
   events: DstTokenReturned[],
   chainId: ChainEntity['id']
@@ -377,7 +377,7 @@ function resolveDstTokensReturned(
     .filter((t): t is TokenAmount => !!t.token);
 }
 
-function getReceivedAddresses(
+function selectReceivedAddresses(
   state: BeefyState,
   op: {
     direction: string;
@@ -413,13 +413,13 @@ export function selectCrossChainDstReceived(state: BeefyState): TokenAmount[] {
   }
 
   const destChainId = bridgeStatus.destChainId;
-  const receivedAddresses = getReceivedAddresses(state, { ...op, destChainId });
+  const receivedAddresses = selectReceivedAddresses(state, { ...op, destChainId });
 
   const receivedEvents = bridgeStatus.dstTokensReturned.filter(e =>
     receivedAddresses.has(e.tokenAddress.toLowerCase())
   );
 
-  const tokenAmounts = resolveDstTokensReturned(state, receivedEvents, destChainId);
+  const tokenAmounts = selectDstTokensReturned(state, receivedEvents, destChainId);
 
   if (op.direction === 'deposit') {
     const vault = selectVaultById(state, op.vaultId);
@@ -454,13 +454,13 @@ export function selectCrossChainDstDust(state: BeefyState): TokenAmount[] {
   }
 
   const destChainId = bridgeStatus.destChainId;
-  const receivedAddresses = getReceivedAddresses(state, { ...op, destChainId });
+  const receivedAddresses = selectReceivedAddresses(state, { ...op, destChainId });
 
   const dustEvents = bridgeStatus.dstTokensReturned.filter(
     e => !receivedAddresses.has(e.tokenAddress.toLowerCase())
   );
 
-  return arrayOrStaticEmpty(resolveDstTokensReturned(state, dustEvents, destChainId));
+  return arrayOrStaticEmpty(selectDstTokensReturned(state, dustEvents, destChainId));
 }
 
 export function selectCrossChainSrcReturned(state: BeefyState): TokenAmount[] {
@@ -471,6 +471,6 @@ export function selectCrossChainSrcReturned(state: BeefyState): TokenAmount[] {
 
   const srcChainId = bridgeStatus.srcChainId;
   return arrayOrStaticEmpty(
-    resolveDstTokensReturned(state, bridgeStatus.srcTokensReturned, srcChainId)
+    selectDstTokensReturned(state, bridgeStatus.srcTokensReturned, srcChainId)
   );
 }

@@ -132,7 +132,7 @@ export const selectTreasuryStats = (state: BeefyState) => {
           let balanceInTokens = token.balance.shiftedBy(-token.decimals);
           if (bifiOracles.includes(token.oracleId)) {
             beefyHeld = beefyHeld.plus(
-              getBifiBalanceInTokens(state, token.oracleId, balanceInTokens)
+              selectBifiBalanceInTokens(state, token.oracleId, balanceInTokens)
             );
           }
 
@@ -158,7 +158,7 @@ export const selectTreasuryStats = (state: BeefyState) => {
               for (const asset of assets) {
                 if (bifiOracles.includes(asset.oracleId)) {
                   beefyHeld = beefyHeld.plus(
-                    getBifiBalanceInTokens(state, asset.oracleId, asset.userAmount)
+                    selectBifiBalanceInTokens(state, asset.oracleId, asset.userAmount)
                   );
                 }
                 if (selectIsTokenStable(state, chainId, asset.id)) {
@@ -216,7 +216,7 @@ export const selectTreasuryStats = (state: BeefyState) => {
 /**
  * Helper function to get bifi balance
  */
-const getBifiBalanceInTokens = (
+const selectBifiBalanceInTokens = (
   state: BeefyState,
   oracleId: TreasuryHoldingEntity['oracleId'],
   balance: BigNumber

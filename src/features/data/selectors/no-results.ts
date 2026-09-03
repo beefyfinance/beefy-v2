@@ -4,7 +4,7 @@ import { boundedLevenshtein, simplifySearchText } from '../../../helpers/string.
 import type { VaultEntity } from '../entities/vault.ts';
 import type { FilterValues } from '../reducers/filtered-vaults-types.ts';
 import type { BeefyState } from '../store/types.ts';
-import { buildVaultFilterEnv, vaultPassesFilters } from '../utils/vault-filter.ts';
+import { selectVaultFilterEnv, selectVaultPassesFilters } from '../utils/vault-filter.ts';
 import { classifySearchQuery, toDisplayWords } from '../utils/vault-search.ts';
 import { selectAllChains } from './chains.ts';
 import { selectFilterAppliedValues } from './filtered-vaults.ts';
@@ -114,35 +114,35 @@ function selectVaultIdsMatchingSearchText(
   state: BeefyState,
   filters: FilterValues
 ): VaultEntity['id'][] {
-  const env = buildVaultFilterEnv(state, filters);
+  const env = selectVaultFilterEnv(state, filters);
   return selectAllVisibleVaultIds(state).filter(vaultId =>
     env.matchesSearch(selectVaultById(state, vaultId))
   );
 }
 
-function countMatching(
+function selectCountMatching(
   state: BeefyState,
   filters: FilterValues,
   vaultIds: readonly VaultEntity['id'][]
 ): number {
-  const env = buildVaultFilterEnv(state, filters);
+  const env = selectVaultFilterEnv(state, filters);
   let count = 0;
   for (const vaultId of vaultIds) {
-    if (vaultPassesFilters(state, selectVaultById(state, vaultId), filters, env)) {
+    if (selectVaultPassesFilters(state, selectVaultById(state, vaultId), filters, env)) {
       count++;
     }
   }
   return count;
 }
 
-function anyMatching(
+function selectAnyMatching(
   state: BeefyState,
   filters: FilterValues,
   vaultIds: readonly VaultEntity['id'][]
 ): boolean {
-  const env = buildVaultFilterEnv(state, filters);
+  const env = selectVaultFilterEnv(state, filters);
   return vaultIds.some(vaultId =>
-    vaultPassesFilters(state, selectVaultById(state, vaultId), filters, env)
+    selectVaultPassesFilters(state, selectVaultById(state, vaultId), filters, env)
   );
 }
 
@@ -181,7 +181,7 @@ const selectSearchDictionary = createSelector(
   }
 );
 
-function computeDidYouMean(state: BeefyState, searchText: string): string[] {
+function selectDidYouMean(state: BeefyState, searchText: string): string[] {
   const query = simplifySearchText(searchText).toLowerCase();
   // multi-word typo correction is noise; single words only
   if (query.length < 3 || query.includes(' ')) {
@@ -195,7 +195,10 @@ function computeDidYouMean(state: BeefyState, searchText: string): string[] {
     .map(entry => entry.display);
 }
 
-function computeSearchNoResultsInfo(state: BeefyState, filters: FilterValues): SearchNoResultsInfo {
+function selectSearchNoResultsInfoUncached(
+  state: BeefyState,
+  filters: FilterValues
+): SearchNoResultsInfo {
   const queryKind = classifySearchQuery(filters.searchText);
   if (queryKind === 'address-too-short') {
     return { kind: 'address-too-short' };
@@ -204,9 +207,9 @@ function computeSearchNoResultsInfo(state: BeefyState, filters: FilterValues): S
   const searchOnly = clearBlockerCategories(filters, ALL_BLOCKER_CATEGORIES);
   const searchMatches = selectVaultIdsMatchingSearchText(state, searchOnly);
   const active = listActiveBlockerCategories(filters);
-  if (active.length > 0 && anyMatching(state, searchOnly, searchMatches)) {
+  if (active.length > 0 && selectAnyMatching(state, searchOnly, searchMatches)) {
     let blockers = active.filter(category =>
-      anyMatching(state, clearBlockerCategories(filters, [category]), searchMatches)
+      selectAnyMatching(state, clearBlockerCategories(filters, [category]), searchMatches)
     );
     if (blockers.length === 0) {
       // joint blockage: no single filter is solely responsible, offer to clear them all
@@ -216,12 +219,20 @@ function computeSearchNoResultsInfo(state: BeefyState, filters: FilterValues): S
       kind: 'blocked',
       blockers,
       // honest count: what clearing exactly these blockers will reveal
-      showCount: countMatching(state, clearBlockerCategories(filters, blockers), searchMatches),
+      showCount: selectCountMatching(
+        state,
+        clearBlockerCategories(filters, blockers),
+        searchMatches
+      ),
     };
   }
 
   if (!filters.onlyRetired) {
-    const retiredCount = countMatching(state, { ...searchOnly, onlyRetired: true }, searchMatches);
+    const retiredCount = selectCountMatching(
+      state,
+      { ...searchOnly, onlyRetired: true },
+      searchMatches
+    );
     if (retiredCount > 0) {
       return { kind: 'retired', count: retiredCount };
     }
@@ -231,7 +242,7 @@ function computeSearchNoResultsInfo(state: BeefyState, filters: FilterValues): S
     return { kind: 'address-no-match' };
   }
 
-  return { kind: 'suggestions', suggestions: computeDidYouMean(state, filters.searchText) };
+  return { kind: 'suggestions', suggestions: selectDidYouMean(state, filters.searchText) };
 }
 
 /**
@@ -249,7 +260,7 @@ export function selectSearchNoResultsInfo(state: BeefyState): SearchNoResultsInf
     // the raw address, not the effective one: the dev override is fixed for the page lifetime
     state.user.wallet.address,
     state.user.balance.byAddress,
-    // every slice vaultPassesFilters reads through, or the blocker list and count go stale on screen
+    // every slice selectVaultPassesFilters reads through, or the blocker list and count go stale on screen
     state.entities?.vaults?.byId,
     state.entities?.vaults?.contractData?.byVaultId,
     state.entities?.tokens?.byChainId,
@@ -266,6 +277,6 @@ export function selectSearchNoResultsInfo(state: BeefyState): SearchNoResultsInf
     return previous.info;
   }
   // assigned only after the compute returns, so a throw is not cached
-  cache = { deps, info: computeSearchNoResultsInfo(state, filters) };
+  cache = { deps, info: selectSearchNoResultsInfoUncached(state, filters) };
   return cache.info;
 }
