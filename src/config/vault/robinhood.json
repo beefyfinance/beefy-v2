@@ -78,240 +78,6 @@
     ]
   },
   {
-    "id": "uniswap-cow-robinhood-djt-usdg-rp",
-    "name": "DJT-USDG Reward Pool",
-    "type": "gov",
-    "version": 2,
-    "token": "cowUniswapRobinhoodDJT-USDG",
-    "tokenAddress": "0xb2D5ce49744ED86a7962E6F64DCE597A0126f9d6",
-    "tokenDecimals": 18,
-    "tokenProviderId": "uniswap",
-    "earnContractAddress": "0x123E8BC882dCa28F86174F9F3dc82a8C573C6C84",
-    "earnedToken": "rCowUniswapRobinhoodDJT-USDG",
-    "earnedTokenDecimals": 18,
-    "earnedTokenAddresses": [],
-    "oracle": "lps",
-    "oracleId": "uniswap-cow-robinhood-djt-usdg",
-    "status": "active",
-    "createdAt": 1788332168,
-    "platformId": "uniswap",
-    "assets": ["DJT", "USDG"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": true,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "compounds",
-    "network": "robinhood",
-    "zaps": [
-      {
-        "strategyId": "gov-composer"
-      }
-    ]
-  },
-  {
-    "id": "uniswap-cow-robinhood-djt-usdg",
-    "name": "DJT-USDG",
-    "type": "cowcentrated",
-    "token": "DJT-USDG uniswap",
-    "tokenAddress": "0x31a89afd92F9397465649AD03226c52292fc1ae5",
-    "tokenDecimals": 18,
-    "tokenProviderId": "uniswap",
-    "depositTokenAddresses": [
-      "0x1D11f0496982706C5e14A514D4E79F2e6BdE4516",
-      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
-    ],
-    "earnContractAddress": "0xb2D5ce49744ED86a7962E6F64DCE597A0126f9d6",
-    "earnedToken": "cowUniswapRobinhoodDJT-USDG",
-    "earnedTokenAddress": "0xb2D5ce49744ED86a7962E6F64DCE597A0126f9d6",
-    "oracle": "lps",
-    "oracleId": "uniswap-cow-robinhood-djt-usdg",
-    "status": "active",
-    "createdAt": 1788332168,
-    "platformId": "beefy",
-    "feeTier": "1",
-    "tickSpacing": 200,
-    "assets": ["DJT", "USDG"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": true,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "compounds",
-    "network": "robinhood",
-    "zaps": [
-      {
-        "strategyId": "cowcentrated"
-      }
-    ]
-  },
-  {
-    "id": "uniswap-cow-robinhood-usdg-qqq-rp",
-    "name": "QQQ-USDG Reward Pool",
-    "type": "gov",
-    "version": 2,
-    "token": "cowUniswapRobinhoodQQQ-USDG",
-    "tokenAddress": "0x938FD2151d61B32140eb172B89D5d03724E64319",
-    "tokenDecimals": 18,
-    "tokenProviderId": "uniswap",
-    "earnContractAddress": "0x3021ca1Ce7440F445a4ED1f366AFF5180CB8E4B8",
-    "earnedToken": "rCowUniswapRobinhoodQQQ-USDG",
-    "earnedTokenDecimals": 18,
-    "earnedTokenAddresses": [],
-    "oracle": "lps",
-    "oracleId": "uniswap-cow-robinhood-usdg-qqq",
-    "status": "active",
-    "createdAt": 1788331584,
-    "platformId": "uniswap",
-    "assets": ["QQQ", "USDG"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": true,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "compounds",
-    "network": "robinhood",
-    "zaps": [
-      {
-        "strategyId": "gov-composer"
-      }
-    ]
-  },
-  {
-    "id": "uniswap-cow-robinhood-usdg-qqq",
-    "name": "QQQ-USDG",
-    "type": "cowcentrated",
-    "token": "QQQ-USDG uniswap",
-    "tokenAddress": "0xEbD78dcfc8a6b3A696f1E191aD1ff321f9579f79",
-    "tokenDecimals": 18,
-    "tokenProviderId": "uniswap",
-    "depositTokenAddresses": [
-      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
-      "0xD5f3879160bc7c32ebb4dC785F8a4F505888de68"
-    ],
-    "earnContractAddress": "0x938FD2151d61B32140eb172B89D5d03724E64319",
-    "earnedToken": "cowUniswapRobinhoodQQQ-USDG",
-    "earnedTokenAddress": "0x938FD2151d61B32140eb172B89D5d03724E64319",
-    "oracle": "lps",
-    "oracleId": "uniswap-cow-robinhood-usdg-qqq",
-    "status": "active",
-    "createdAt": 1788331584,
-    "platformId": "beefy",
-    "feeTier": "1",
-    "tickSpacing": 60,
-    "assets": ["QQQ", "USDG"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": true,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "compounds",
-    "network": "robinhood",
-    "zaps": [
-      {
-        "strategyId": "cowcentrated"
-      }
-    ]
-  },
-  {
-    "id": "uniswap-cow-robinhood-usdg-usar-rp",
-    "name": "USAR-USDG Reward Pool",
-    "type": "gov",
-    "version": 2,
-    "token": "cowUniswapRobinhoodUSAR-USDG",
-    "tokenAddress": "0xaB094DEeB58B8f09533930F653594DbCfc423d53",
-    "tokenDecimals": 18,
-    "tokenProviderId": "uniswap",
-    "earnContractAddress": "0x627ec2b7C8F50EB882a327A2a4200b7792C0ff58",
-    "earnedToken": "rCowUniswapRobinhoodUSAR-USDG",
-    "earnedTokenDecimals": 18,
-    "earnedTokenAddresses": [],
-    "oracle": "lps",
-    "oracleId": "uniswap-cow-robinhood-usdg-usar",
-    "status": "active",
-    "createdAt": 1788331522,
-    "platformId": "uniswap",
-    "assets": ["USAR", "USDG"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": true,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "compounds",
-    "network": "robinhood",
-    "zaps": [
-      {
-        "strategyId": "gov-composer"
-      }
-    ]
-  },
-  {
-    "id": "uniswap-cow-robinhood-usdg-usar",
-    "name": "USAR-USDG",
-    "type": "cowcentrated",
-    "token": "USAR-USDG uniswap",
-    "tokenAddress": "0x04391780F519B7d3ba59c9590459D76e23d225C4",
-    "tokenDecimals": 18,
-    "tokenProviderId": "uniswap",
-    "depositTokenAddresses": [
-      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
-      "0xd917B029C761D264c6A312BBbcDA868658eF86a6"
-    ],
-    "earnContractAddress": "0xaB094DEeB58B8f09533930F653594DbCfc423d53",
-    "earnedToken": "cowUniswapRobinhoodUSAR-USDG",
-    "earnedTokenAddress": "0xaB094DEeB58B8f09533930F653594DbCfc423d53",
-    "oracle": "lps",
-    "oracleId": "uniswap-cow-robinhood-usdg-usar",
-    "status": "active",
-    "createdAt": 1788331522,
-    "platformId": "beefy",
-    "feeTier": "1",
-    "tickSpacing": 60,
-    "assets": ["USAR", "USDG"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": true,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "compounds",
-    "network": "robinhood",
-    "zaps": [
-      {
-        "strategyId": "cowcentrated"
-      }
-    ]
-  },
-  {
     "id": "uniswap-cow-robinhood-usdg-mstr-rp",
     "name": "MSTR-USDG Reward Pool",
     "type": "gov",
@@ -327,7 +93,7 @@
     "oracle": "lps",
     "oracleId": "uniswap-cow-robinhood-usdg-mstr",
     "status": "active",
-    "createdAt": 1788331441,
+    "createdAt": 1788474530,
     "platformId": "uniswap",
     "assets": ["MSTR", "USDG"],
     "risks": {
@@ -366,11 +132,245 @@
     "oracle": "lps",
     "oracleId": "uniswap-cow-robinhood-usdg-mstr",
     "status": "active",
-    "createdAt": 1788331441,
+    "createdAt": 1788474530,
     "platformId": "beefy",
     "feeTier": "1",
     "tickSpacing": 200,
     "assets": ["MSTR", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-djt-usdg-rp",
+    "name": "DJT-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodDJT-USDG",
+    "tokenAddress": "0xb2D5ce49744ED86a7962E6F64DCE597A0126f9d6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x123E8BC882dCa28F86174F9F3dc82a8C573C6C84",
+    "earnedToken": "rCowUniswapRobinhoodDJT-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-djt-usdg",
+    "status": "active",
+    "createdAt": 1788474530,
+    "platformId": "uniswap",
+    "assets": ["DJT", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-djt-usdg",
+    "name": "DJT-USDG",
+    "type": "cowcentrated",
+    "token": "DJT-USDG uniswap",
+    "tokenAddress": "0x31a89afd92F9397465649AD03226c52292fc1ae5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x1D11f0496982706C5e14A514D4E79F2e6BdE4516",
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+    ],
+    "earnContractAddress": "0xb2D5ce49744ED86a7962E6F64DCE597A0126f9d6",
+    "earnedToken": "cowUniswapRobinhoodDJT-USDG",
+    "earnedTokenAddress": "0xb2D5ce49744ED86a7962E6F64DCE597A0126f9d6",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-djt-usdg",
+    "status": "active",
+    "createdAt": 1788474530,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["DJT", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-usdg-qqq-rp",
+    "name": "QQQ-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodQQQ-USDG",
+    "tokenAddress": "0x938FD2151d61B32140eb172B89D5d03724E64319",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x3021ca1Ce7440F445a4ED1f366AFF5180CB8E4B8",
+    "earnedToken": "rCowUniswapRobinhoodQQQ-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-usdg-qqq",
+    "status": "active",
+    "createdAt": 1788474530,
+    "platformId": "uniswap",
+    "assets": ["QQQ", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-usdg-qqq",
+    "name": "QQQ-USDG",
+    "type": "cowcentrated",
+    "token": "QQQ-USDG uniswap",
+    "tokenAddress": "0xEbD78dcfc8a6b3A696f1E191aD1ff321f9579f79",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "0xD5f3879160bc7c32ebb4dC785F8a4F505888de68"
+    ],
+    "earnContractAddress": "0x938FD2151d61B32140eb172B89D5d03724E64319",
+    "earnedToken": "cowUniswapRobinhoodQQQ-USDG",
+    "earnedTokenAddress": "0x938FD2151d61B32140eb172B89D5d03724E64319",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-usdg-qqq",
+    "status": "active",
+    "createdAt": 1788474530,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["QQQ", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-usdg-usar-rp",
+    "name": "USAR-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodUSAR-USDG",
+    "tokenAddress": "0xaB094DEeB58B8f09533930F653594DbCfc423d53",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x627ec2b7C8F50EB882a327A2a4200b7792C0ff58",
+    "earnedToken": "rCowUniswapRobinhoodUSAR-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-usdg-usar",
+    "status": "active",
+    "createdAt": 1788474530,
+    "platformId": "uniswap",
+    "assets": ["USAR", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-usdg-usar",
+    "name": "USAR-USDG",
+    "type": "cowcentrated",
+    "token": "USAR-USDG uniswap",
+    "tokenAddress": "0x04391780F519B7d3ba59c9590459D76e23d225C4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "0xd917B029C761D264c6A312BBbcDA868658eF86a6"
+    ],
+    "earnContractAddress": "0xaB094DEeB58B8f09533930F653594DbCfc423d53",
+    "earnedToken": "cowUniswapRobinhoodUSAR-USDG",
+    "earnedTokenAddress": "0xaB094DEeB58B8f09533930F653594DbCfc423d53",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-usdg-usar",
+    "status": "active",
+    "createdAt": 1788474530,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["USAR", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -405,7 +405,7 @@
     "oracle": "lps",
     "oracleId": "uniswap-cow-robinhood-weth-crcl",
     "status": "active",
-    "createdAt": 1788331377,
+    "createdAt": 1788474530,
     "platformId": "uniswap",
     "assets": ["CRCL", "WETH"],
     "risks": {
@@ -444,7 +444,7 @@
     "oracle": "lps",
     "oracleId": "uniswap-cow-robinhood-weth-crcl",
     "status": "active",
-    "createdAt": 1788331377,
+    "createdAt": 1788474530,
     "platformId": "beefy",
     "feeTier": "1",
     "tickSpacing": 200,
@@ -483,7 +483,7 @@
     "oracle": "lps",
     "oracleId": "uniswap-cow-robinhood-usdg-crcl",
     "status": "active",
-    "createdAt": 1788331237,
+    "createdAt": 1788474530,
     "platformId": "uniswap",
     "assets": ["CRCL", "USDG"],
     "risks": {
@@ -524,7 +524,7 @@
     "status": "active",
     "createdAt": 1788474530,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "0.3",
     "tickSpacing": 60,
     "assets": ["CRCL", "USDG"],
     "risks": {
