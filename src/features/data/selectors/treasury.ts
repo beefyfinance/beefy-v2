@@ -1,5 +1,4 @@
 import type BigNumber from 'bignumber.js';
-import { isEqual } from 'lodash-es';
 import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO, compareBigNumber, isFiniteBigNumber } from '../../../helpers/big-number.ts';
@@ -117,7 +116,8 @@ export const selectTreasuryAssetsByChainId = createCachedSelector(
 
 const bifiOracles = ['BIFI', 'mooBIFI', 'rBIFI', 'basemooBIFI', 'opmooBIFI'];
 
-const selectTreasuryStatsUncached = (state: BeefyState) => {
+// reads prices, LP breakdowns and PPFS, so it is compared at the subscription, not gated here
+export const selectTreasuryStats = (state: BeefyState) => {
   const treasury = selectTreasury(state);
   let holdings = BIG_ZERO;
   const holdingAssets = new Set();
@@ -229,7 +229,8 @@ const getBifiBalanceInTokens = (
   }
 };
 
-const selectTreasuryTokensExposureUncached = (state: BeefyState) => {
+// reads prices, LP breakdowns and PPFS, so it is compared at the subscription, not gated here
+export const selectTreasuryTokensExposure = (state: BeefyState) => {
   const treasury = selectTreasury(state);
 
   const exposure = entries(treasury).reduce(
@@ -407,14 +408,6 @@ export const selectTreasuryWalletAddressesByChainId = createSelector(
   }
 );
 
-function stableTreasurySelector<R>(fn: (state: BeefyState) => R) {
-  return createSelector(
-    (state: BeefyState) => state,
-    (state: BeefyState) => fn(state),
-    { memoizeOptions: { resultEqualityCheck: isEqual } }
-  );
-}
-
 // the cache lives with the created selector, so it is process-wide rather than per-store
 function gatedTreasurySelector<R>(
   deps: ReadonlyArray<(state: BeefyState) => unknown>,
@@ -454,10 +447,4 @@ export const selectTreasuryExposureByChain = gatedTreasurySelector(
 export const selectTreasuryExposureByAvailability = gatedTreasurySelector(
   [selectTreasury],
   selectTreasuryExposureByAvailabilityUncached
-);
-
-// these two also read prices, LP breakdowns and PPFS, so the treasury slice alone cannot gate them
-export const selectTreasuryStats = stableTreasurySelector(selectTreasuryStatsUncached);
-export const selectTreasuryTokensExposure = stableTreasurySelector(
-  selectTreasuryTokensExposureUncached
 );

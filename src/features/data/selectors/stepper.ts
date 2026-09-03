@@ -1,4 +1,4 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector, weakMapMemoize } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { arrayOrStaticEmpty, EMPTY_ARRAY } from '../utils/selector-utils.ts';
 import { type Abi, parseEventLogs, type TransactionReceipt } from 'viem';
@@ -37,22 +37,6 @@ import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 const NO_TOKEN_AMOUNTS = EMPTY_ARRAY;
 
 type ReceiptLogs = TransactionReceipt['logs'];
-
-/** The wallet-action reducer never mutates in place, so logs identity implies logs content. */
-function memoizeOnLogs<R extends object>(
-  parse: (logs: ReceiptLogs) => R
-): (logs: ReceiptLogs) => R {
-  const cache = new WeakMap<ReceiptLogs, R>();
-  return logs => {
-    const cached = cache.get(logs);
-    if (cached !== undefined) {
-      return cached;
-    }
-    const result = parse(logs);
-    cache.set(logs, result);
-    return result;
-  };
-}
 
 export const selectStepperState = (state: BeefyState) => {
   return state.ui.stepperState;
@@ -108,7 +92,8 @@ const transferAbi = [
   },
 ] as const satisfies Abi;
 
-const parseTransferEvents = memoizeOnLogs(logs =>
+// the wallet-action reducer never mutates in place, so logs identity implies logs content
+const parseTransferEvents = weakMapMemoize((logs: ReceiptLogs) =>
   parseEventLogs({ abi: transferAbi, logs, eventName: 'Transfer' })
 );
 
@@ -314,7 +299,7 @@ const tokenReturnedAbi = [
   },
 ] as const satisfies Abi;
 
-const parseTokenReturnedEvents = memoizeOnLogs(logs =>
+const parseTokenReturnedEvents = weakMapMemoize((logs: ReceiptLogs) =>
   parseEventLogs({ abi: tokenReturnedAbi, logs, eventName: 'TokenReturned' })
 );
 

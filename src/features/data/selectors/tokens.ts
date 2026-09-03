@@ -308,36 +308,28 @@ export const selectIsTokenLoadedOnChain = createCachedSelector(
     `${chainId}-${address.toLowerCase()}`
 );
 
-// the chain token lookups throw until the addressbook loads, so the cache is set after the loop
-let wrappedToNativeCache:
-  | {
-      chainIds: ChainEntity['id'][];
-      byChainId: BeefyState['entities']['tokens']['byChainId'];
-      map: Map<string, string>;
+export const selectWrappedToNativeSymbolMap = createSelector(
+  selectAllChainIds,
+  (state: BeefyState) => state.entities.tokens.byChainId,
+  (chainIds, byChainId) => {
+    const wrappedToNativeSymbolMap = new Map<string, string>();
+    for (const chainId of chainIds) {
+      const chain = byChainId[chainId];
+      if (!chain?.native || !chain?.wnative) {
+        throw new Error(
+          `selectWrappedToNativeSymbolMap: Empty native or wnative token for chain id ${chainId}, maybe you need to load the addressbook`
+        );
+      }
+      const native = chain.byAddress[chain.byId[chain.native]];
+      const wnative = chain.byAddress[chain.byId[chain.wnative]];
+      if (!isTokenNative(native) || !isTokenErc20(wnative)) {
+        throw new Error(`selectWrappedToNativeSymbolMap: Wrong token type for chain id ${chainId}`);
+      }
+      wrappedToNativeSymbolMap.set(wnative.symbol, native.symbol);
     }
-  | undefined;
-
-export const selectWrappedToNativeSymbolMap = (state: BeefyState) => {
-  const chainIds = selectAllChainIds(state);
-  const byChainId = state.entities.tokens.byChainId;
-  if (
-    wrappedToNativeCache &&
-    wrappedToNativeCache.chainIds === chainIds &&
-    wrappedToNativeCache.byChainId === byChainId
-  ) {
-    return wrappedToNativeCache.map;
+    return wrappedToNativeSymbolMap;
   }
-
-  const wrappedToNativeSymbolMap = new Map<string, string>();
-
-  for (const chainId of chainIds) {
-    const wnative = selectChainWrappedNativeToken(state, chainId);
-    const native = selectChainNativeToken(state, chainId);
-    wrappedToNativeSymbolMap.set(wnative.symbol, native.symbol);
-  }
-  wrappedToNativeCache = { chainIds, byChainId, map: wrappedToNativeSymbolMap };
-  return wrappedToNativeSymbolMap;
-};
+);
 
 export const selectWrappedToNativeSymbolOrTokenSymbol = createCachedSelector(
   (state: BeefyState, _symbol: string) => selectWrappedToNativeSymbolMap(state),
