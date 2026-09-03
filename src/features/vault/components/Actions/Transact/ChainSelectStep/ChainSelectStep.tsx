@@ -22,6 +22,7 @@ import {
   type CrossChainTokenOption,
 } from '../../../../../data/apis/transact/transact-types.ts';
 import {
+  crossChainChainsEqual,
   selectCrossChainSortedChains,
   selectTransactMode,
   selectTransactUserHasOtherDepositedVaults,
@@ -65,8 +66,9 @@ const ChainList = memo(function ChainList() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const vaultId = useAppSelector(selectTransactVaultId);
-  const sortedChains: CrossChainChainOption[] = useAppSelector(state =>
-    selectCrossChainSortedChains(state, vaultId)
+  const sortedChains: CrossChainChainOption[] = useAppSelector(
+    state => selectCrossChainSortedChains(state, vaultId),
+    crossChainChainsEqual
   );
   const mode = useAppSelector(selectTransactMode);
   const hasOtherDeposits = useAppSelector(selectTransactUserHasOtherDepositedVaults);

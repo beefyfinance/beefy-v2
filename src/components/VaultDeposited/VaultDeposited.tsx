@@ -1,6 +1,5 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { memo } from 'react';
-import { isEqual } from 'lodash-es';
-import { createCachedSelector } from 're-reselect';
 import { useTranslation } from 'react-i18next';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
@@ -43,36 +42,44 @@ export const VaultDeposited = memo(function VaultDeposited({ vaultId }: VaultDep
   );
 });
 
-const selectVaultDepositedStat = createCachedSelector(
-  (state: BeefyState) => state,
-  (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+const selectVaultDepositedStat = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectUserVaultBalanceInDepositToken(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectUserVaultBalanceInUsdIncludingDisplaced(state, vaultId),
+  (state: BeefyState) => selectIsBalanceHidden(state),
+  (state: BeefyState) => selectWalletAddress(state),
   (state: BeefyState, vaultId: VaultEntity['id']) => {
-    const vault = selectVaultById(state, vaultId);
     const walletAddress = selectWalletAddress(state);
-    const isLoaded =
-      !!walletAddress &&
+    if (!walletAddress) {
+      return false;
+    }
+    const vault = selectVaultById(state, vaultId);
+    return (
       selectIsPricesAvailable(state) &&
-      selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress);
-
-    const { amount: deposit, token: depositToken } =
-      selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken(state, vault.id);
-    const baseDeposit = selectUserVaultBalanceInDepositToken(state, vault.id);
-    const hasDeposit = deposit.gt(0);
-    const depositUsd = formatLargeUsd(
-      selectUserVaultBalanceInUsdIncludingDisplaced(state, vaultId)
+      selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress)
     );
-    const blurred = selectIsBalanceHidden(state);
+  },
+  (
+    { amount: deposit, token: depositToken },
+    baseDeposit,
+    depositUsdAmount,
+    blurred,
+    walletAddress,
+    isLoaded
+  ) => {
+    const hasDeposit = deposit.gt(0);
 
     return {
-      vaultId,
       hasDeposit,
       hasDisplacedDeposit: hasDeposit && deposit.gt(baseDeposit),
       deposit,
-      depositUsd,
+      depositUsd: formatLargeUsd(depositUsdAmount),
       depositToken,
       blurred,
       loading: !!walletAddress && !isLoaded,
     };
-  },
-  { memoizeOptions: { resultEqualityCheck: isEqual } }
-)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+  }
+);

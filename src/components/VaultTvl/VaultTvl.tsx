@@ -1,15 +1,17 @@
 import type BigNumber from 'bignumber.js';
-import { isEqual } from 'lodash-es';
-import { createCachedSelector } from 're-reselect';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectIsContractDataLoadedOnChain } from '../../features/data/selectors/data-loader/contract-data.ts';
 import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
 import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types.ts';
-import { selectTvlBreakdownByVaultId } from '../../features/data/selectors/tvl.ts';
+import {
+  selectTvlBreakdownByVaultId,
+  tvlBreakdownEqual,
+} from '../../features/data/selectors/tvl.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import type { BeefyState } from '../../features/data/store/types.ts';
+import { bigNumberEqual } from '../../features/data/utils/selector-equality.ts';
 import { BIG_ZERO } from '../../helpers/big-number.ts';
 import { formatLargeUsd } from '../../helpers/format.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
@@ -21,58 +23,65 @@ type VaultTvlProps = {
 };
 
 type VaultTvlData = {
-  label: string;
   vaultTvl: BigNumber;
   underlyingTvl: BigNumber | null;
   loading: boolean;
   breakdown: TvlBreakdownUnderlying | null;
 };
 
-const selectVaultTvlData = createCachedSelector(
-  (state: BeefyState) => state,
-  (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  (state: BeefyState, vaultId: VaultEntity['id']): VaultTvlData => {
-    const label = 'VaultStat-TVL';
-    const vault = selectVaultById(state, vaultId);
-    const isLoaded =
-      selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
+const LOADING_TVL_DATA: VaultTvlData = {
+  vaultTvl: BIG_ZERO,
+  underlyingTvl: null,
+  loading: true,
+  breakdown: null,
+};
 
-    if (!isLoaded) {
-      return {
-        label,
-        vaultTvl: BIG_ZERO,
-        underlyingTvl: null,
-        loading: true,
-        breakdown: null,
-      };
-    }
+const selectVaultTvlData = (state: BeefyState, vaultId: VaultEntity['id']): VaultTvlData => {
+  const vault = selectVaultById(state, vaultId);
+  const isLoaded =
+    selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
 
-    const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
-    if (!breakdown || !('underlyingTvl' in breakdown)) {
-      return {
-        label,
-        vaultTvl: breakdown.vaultTvl,
-        underlyingTvl: null,
-        loading: false,
-        breakdown: null,
-      };
-    }
+  if (!isLoaded) {
+    return LOADING_TVL_DATA;
+  }
 
+  const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
+  if (!('underlyingTvl' in breakdown)) {
     return {
-      label,
       vaultTvl: breakdown.vaultTvl,
-      underlyingTvl: breakdown.underlyingTvl,
-      loading: !isLoaded,
-      breakdown,
+      underlyingTvl: null,
+      loading: false,
+      breakdown: null,
     };
-  },
-  { memoizeOptions: { resultEqualityCheck: isEqual } }
-)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+  }
+
+  return {
+    vaultTvl: breakdown.vaultTvl,
+    underlyingTvl: breakdown.underlyingTvl,
+    loading: false,
+    breakdown,
+  };
+};
+
+function optionalBigNumberEqual(a: BigNumber | null, b: BigNumber | null): boolean {
+  return a === b || (!!a && !!b && bigNumberEqual(a, b));
+}
+
+function vaultTvlDataEqual(a: VaultTvlData, b: VaultTvlData): boolean {
+  return (
+    a === b ||
+    (a.loading === b.loading &&
+      bigNumberEqual(a.vaultTvl, b.vaultTvl) &&
+      optionalBigNumberEqual(a.underlyingTvl, b.underlyingTvl) &&
+      tvlBreakdownEqual(a.breakdown, b.breakdown))
+  );
+}
 
 export const VaultTvl = memo(({ vaultId }: VaultTvlProps) => {
   const { t } = useTranslation();
-  const { label, vaultTvl, loading, breakdown, underlyingTvl } = useAppSelector(state =>
-    selectVaultTvlData(state, vaultId)
+  const { vaultTvl, loading, breakdown, underlyingTvl } = useAppSelector(
+    state => selectVaultTvlData(state, vaultId),
+    vaultTvlDataEqual
   );
 
   const value = useMemo(() => {
@@ -85,7 +94,7 @@ export const VaultTvl = memo(({ vaultId }: VaultTvlProps) => {
 
   return (
     <ValueBlock
-      label={t(label)}
+      label={t('VaultStat-TVL')}
       value={value}
       blurred={false}
       loading={loading}

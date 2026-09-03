@@ -1,6 +1,5 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { memo, type ReactNode } from 'react';
-import { isEqual } from 'lodash-es';
-import { createCachedSelector } from 're-reselect';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
 import { selectUserDepositedTimelineByVaultId } from '../../features/data/selectors/analytics.ts';
@@ -51,15 +50,14 @@ export const VaultDepositNowStat = memo(function VaultDepositNowStat({
   );
 });
 
-const selectVaultDepositNowStat = createCachedSelector(
-  (state: BeefyState) => state,
-  (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  (_s: BeefyState, _v: VaultEntity['id'], pnlData: UserVaultPnl) => pnlData,
-  (_s: BeefyState, _v: VaultEntity['id'], _p: UserVaultPnl, walletAddress: string) => walletAddress,
-  (state: BeefyState, vaultId: VaultEntity['id'], pnlData: UserVaultPnl, walletAddress: string) => {
+const selectVaultDepositNowStat = createSelector(
+  (_s: BeefyState, _v: VaultEntity['id'], pnlData: UserVaultPnl, _w: string) => pnlData,
+  (state: BeefyState, vaultId: VaultEntity['id'], _p: UserVaultPnl, walletAddress: string) =>
+    selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress),
+  (state: BeefyState, _v: VaultEntity['id'], _p: UserVaultPnl, walletAddress: string) =>
+    selectIsAnalyticsLoadedByAddress(state, walletAddress),
+  (pnlData, vaultTimeline, isLoaded) => {
     const label = 'VaultStat-Now';
-    const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
-    const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
 
     if (!vaultTimeline || !vaultTimeline.current.length) {
       return {
@@ -145,9 +143,5 @@ const selectVaultDepositNowStat = createCachedSelector(
       tooltip,
       Icon: pendingIndex ? ExclaimRoundedSquare : undefined,
     };
-  },
-  { memoizeOptions: { resultEqualityCheck: isEqual } }
-)(
-  (_s: BeefyState, vaultId: VaultEntity['id'], _p: UserVaultPnl, walletAddress: string) =>
-    `${vaultId}-${walletAddress}`
+  }
 );

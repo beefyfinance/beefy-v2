@@ -1,5 +1,6 @@
 import { memo, useCallback, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { shallowEqual } from 'react-redux';
 import { formatLargePercent, formatLargeUsd } from '../../../../../helpers/format.ts';
 import { useAppSelector } from '../../../../data/store/hooks.ts';
 import { selectUserGlobalStats } from '../../../../data/selectors/apy.ts';
@@ -15,9 +16,10 @@ type YieldStats = {
 };
 
 export const PortfolioStats = memo(function PortfolioStats() {
-  const { deposited, daily, weekly, monthly, apy } = useAppSelector(state =>
+  const { deposited, daily, weekly, monthly, apy } = useAppSelector(
     // undefined -> falls back to the connected wallet inside the selector
-    selectUserGlobalStats(state, undefined)
+    state => selectUserGlobalStats(state, undefined),
+    shallowEqual
   );
   const hideBalance = useAppSelector(selectIsBalanceHidden);
   const { t } = useTranslation();

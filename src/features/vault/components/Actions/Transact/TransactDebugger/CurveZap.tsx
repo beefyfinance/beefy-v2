@@ -3,7 +3,9 @@ import { Fragment, memo, useEffect, useState } from 'react';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { formatLargeUsd } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { shallowEqual } from 'react-redux';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import { deepEqualBigNumberAware } from '../../../../../data/utils/selector-equality.ts';
 import { getSwapAggregator } from '../../../../../data/apis/instances.ts';
 import type { CurveStrategyConfig } from '../../../../../data/apis/transact/strategies/strategy-configs.ts';
 import type { ISwapAggregator } from '../../../../../data/apis/transact/swap/ISwapAggregator.ts';
@@ -62,17 +64,19 @@ const ZapLoader = memo(function ZapLoader({ vault, zap }: ZapLoaderProps) {
   const swapLoaded = useAppSelector(
     state => selectIsZapLoaded(state) && selectIsAddressBookLoaded(state, vault.chainId)
   );
-  const tokens = useAppSelector(state =>
-    uniqBy(
-      zap.methods
-        .flatMap(method =>
-          method.coins.map(address =>
-            selectTokenByAddressOrUndefined(state, vault.chainId, address)
+  const tokens = useAppSelector(
+    state =>
+      uniqBy(
+        zap.methods
+          .flatMap(method =>
+            method.coins.map(address =>
+              selectTokenByAddressOrUndefined(state, vault.chainId, address)
+            )
           )
-        )
-        .filter((t): t is TokenEntity => !!t),
-      token => token.address
-    )
+          .filter((t): t is TokenEntity => !!t),
+        token => token.address
+      ),
+    shallowEqual
   );
   const [tokensSupported, setTokensSupported] = useState<TokenEntity[] | undefined>(undefined);
 
@@ -109,19 +113,21 @@ const ZapLoader = memo(function ZapLoader({ vault, zap }: ZapLoaderProps) {
 
 const Zap = memo(function Zap({ aggregatorSupportedTokens, vault, zap }: ZapProps) {
   const classes = useStyles();
-  const methods = useAppSelector(state =>
-    zap.methods.map(method => ({
-      ...method,
-      tokens: method.coins.map(address => {
-        const token = selectTokenByAddressOrUndefined(state, vault.chainId, address);
-        const inAddressBook = !!token;
-        const inAggregator =
-          inAddressBook &&
-          aggregatorSupportedTokens.some(supported => isTokenEqual(supported, token));
-        const price = token ? selectTokenPriceByTokenOracleId(state, token.oracleId) : undefined;
-        return { address, token, inAddressBook, inAggregator, price };
-      }),
-    }))
+  const methods = useAppSelector(
+    state =>
+      zap.methods.map(method => ({
+        ...method,
+        tokens: method.coins.map(address => {
+          const token = selectTokenByAddressOrUndefined(state, vault.chainId, address);
+          const inAddressBook = !!token;
+          const inAggregator =
+            inAddressBook &&
+            aggregatorSupportedTokens.some(supported => isTokenEqual(supported, token));
+          const price = token ? selectTokenPriceByTokenOracleId(state, token.oracleId) : undefined;
+          return { address, token, inAddressBook, inAggregator, price };
+        }),
+      })),
+    deepEqualBigNumberAware
   );
 
   return (

@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { shallowEqual } from 'react-redux';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
 import type { VaultGov } from '../../features/data/entities/vault.ts';
 import { selectGovVaultPendingRewardsWithPrice } from '../../features/data/selectors/balance.ts';
@@ -35,7 +36,6 @@ type GovVaultRewardsData =
       rewardsEarnedUsd: string;
     };
 
-// TODO rewrite so this doesn't cause a re-render (return a new object) on every state update
 const selectGovVaultRewardsData = (
   state: BeefyState,
   vaultId: VaultGov['id']
@@ -98,7 +98,7 @@ const selectGovVaultRewardsData = (
 
 export const GovVaultRewards = memo(({ vaultId }: GovVaultRewardsProps) => {
   const { t } = useTranslation();
-  const data = useAppSelector(state => selectGovVaultRewardsData(state, vaultId));
+  const data = useAppSelector(state => selectGovVaultRewardsData(state, vaultId), shallowEqual);
 
   if (data.status === 'rewards') {
     return (

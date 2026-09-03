@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { type CssStyles } from '@repo/styles/css';
 import { memo } from 'react';
 import { createCachedSelector } from 're-reselect';
@@ -50,6 +51,14 @@ type ChainAssets = {
   chainId: ChainEntity['id'];
   assetSymbols: string[];
 };
+
+const chainAssetsEqual = (a: ChainAssets | undefined, b: ChainAssets | undefined): boolean =>
+  a === b ||
+  (!!a &&
+    !!b &&
+    a.chainId === b.chainId &&
+    a.assetSymbols.length === b.assetSymbols.length &&
+    a.assetSymbols.every((symbol, index) => symbol === b.assetSymbols[index]));
 
 const selectChainAssetsForSymbol = createCachedSelector(
   (_state: BeefyState, chainId: ChainEntity['id'], _symbol: string) => chainId,
@@ -129,8 +138,7 @@ const selectAssetsForVaultId = (
   return selectAssetsForVault(state, { vault: selectVaultById(state, vaultId), ...rest });
 };
 
-// the inner selectors are already stable; it was only this wrapper being reallocated
-const selectChainAssetsForVaultId = createCachedSelector(
+const selectChainAssetsForVaultId = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], _assetsOnly: boolean) =>
     selectVaultById(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id'], _assetsOnly: boolean) =>
@@ -149,9 +157,6 @@ const selectChainAssetsForVaultId = createCachedSelector(
 
     return undefined;
   }
-)(
-  (_state: BeefyState, vaultId: VaultEntity['id'], assetsOnly: boolean) =>
-    `${vaultId}-${assetsOnly}`
 );
 
 const selectAssetsForVault = (
@@ -198,7 +203,7 @@ export const TokensImage = memo(function TokensImage({
   css: cssProp,
   ...options
 }: TokensImageProps) {
-  const assets = useAppSelector(state => selectAssetsForTokens(state, options));
+  const assets = useAppSelector(state => selectAssetsForTokens(state, options), chainAssetsEqual);
 
   return assets ?
       <AssetsImage {...assets} css={cssProp} size={size} />
@@ -213,7 +218,7 @@ export const TokensImageWithChain = memo(function TokensImageWithChain({
   chainId,
   ...options
 }: TokensImageWithChainProps) {
-  const assets = useAppSelector(state => selectAssetsForTokens(state, options));
+  const assets = useAppSelector(state => selectAssetsForTokens(state, options), chainAssetsEqual);
 
   return assets ?
       <AssetsImageWithChain

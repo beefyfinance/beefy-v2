@@ -1,6 +1,6 @@
+import { createSelector } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import { memo } from 'react';
-import { createCachedSelector } from 're-reselect';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
@@ -69,7 +69,7 @@ const STILL_LOADING: Record<'true' | 'false', SelectDataReturn> = {
   false: Object.freeze({ loading: true, hideBalance: false }),
 };
 
-const selectVaultDepositStat = createCachedSelector(
+const selectVaultDepositStat = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], _w?: string) => selectVaultById(state, vaultId),
   (state: BeefyState, _vaultId: VaultEntity['id'], w?: string) => w || selectWalletAddress(state),
   (state: BeefyState) => selectIsBalanceHidden(state),
@@ -138,9 +138,6 @@ const selectVaultDepositStat = createCachedSelector(
       notEarning,
     };
   }
-)(
-  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
-    `${vaultId}-${walletAddress ?? ''}`
 );
 
 export const VaultDepositStat = memo(function VaultDepositStat({
