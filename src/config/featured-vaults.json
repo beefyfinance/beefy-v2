@@ -1,6 +1,6 @@
 {
-  "aerodrome-cow-base-usdc-nvdac-vault": true,
-  "aerodrome-cow-base-usdc-aaplc-vault": true,
-  "aerodrome-cow-base-usdc-googlc-vault": true,
-  "aerodrome-cow-base-usdc-metac-vault": true
+  "uniswap-cow-robinhood-cashcat-weth-rp": true,
+  "uniswap-cow-robinhood-weth-pons-rp": true,
+  "uniswap-cow-robinhood-tendies-weth-rp": true,
+  "uniswap-cow-robinhood-weth-ai-rp": true
 }
