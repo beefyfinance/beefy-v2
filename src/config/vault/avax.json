@@ -528,48 +528,6 @@
     ]
   },
   {
-    "id": "black-savusd-usdc",
-    "name": "savUSD-USDC sLP",
-    "type": "standard",
-    "token": "sAMM-savUSD/USDC",
-    "tokenAddress": "0x4f80724E5f2d2Af81cb2A1eeb2cC049ab2A33089",
-    "tokenDecimals": 18,
-    "tokenProviderId": "blackhole",
-    "earnContractAddress": "0x1F58be57008f3D8bC577aF8b1148760d2BC7CBc7",
-    "earnedToken": "mooBlackholesavUSD-USDC",
-    "earnedTokenAddress": "0x1F58be57008f3D8bC577aF8b1148760d2BC7CBc7",
-    "oracle": "lps",
-    "oracleId": "black-savusd-usdc",
-    "status": "eol",
-    "createdAt": 1754382650,
-    "retireReason": "tvl",
-    "retiredAt": 1760538193,
-    "platformId": "blackhole",
-    "assets": ["savUSD", "USDC"],
-    "migrationIds": [],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": true,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://blackhole.xyz/deposit?token0=0x06d47F3fb376649c3A9Dafe069B3D6E35572219E&token1=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E&pair=0x4f80724E5f2d2Af81cb2A1eeb2cC049ab2A33089&type=Basic%20Stable",
-    "removeLiquidityUrl": "https://blackhole.xyz/withdraw?pool=0x4f80724E5f2d2Af81cb2A1eeb2cC049ab2A33089&position=0",
-    "network": "avax",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "avax-blackhole"
-      }
-    ]
-  },
-  {
     "id": "black-avax-black",
     "name": "BLACK-AVAX vLP",
     "type": "standard",
