@@ -21,7 +21,11 @@ import {
 } from '../reducers/wallet/wallet-action-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
-import { selectBoostById } from './boosts.ts';
+import {
+  selectAllVaultBoostIds,
+  selectBoostById,
+  selectBoostReceiptTokenOrUndefined,
+} from './boosts.ts';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
@@ -354,7 +358,8 @@ function resolveDstTokensReturned(
       const token =
         e.tokenAddress === ZERO_ADDRESS ?
           native
-        : selectTokenByAddressOrUndefined(state, chainId, e.tokenAddress);
+        : (selectTokenByAddressOrUndefined(state, chainId, e.tokenAddress) ??
+          selectBoostReceiptTokenOrUndefined(state, chainId, e.tokenAddress));
       return {
         amount: token ? fromWei(e.amount, token.decimals) : BIG_ZERO,
         token,
@@ -374,7 +379,14 @@ function getReceivedAddresses(
 ): Set<string> {
   if (op.direction === 'deposit') {
     const vault = selectVaultById(state, op.vaultId);
-    return new Set([vault.contractAddress.toLowerCase(), vault.depositTokenAddress.toLowerCase()]);
+    return new Set([
+      vault.contractAddress.toLowerCase(),
+      vault.depositTokenAddress.toLowerCase(),
+      // the route may have staked the shares, in which case the boost receipt is what arrived
+      ...selectAllVaultBoostIds(state, op.vaultId).map(boostId =>
+        selectBoostById(state, boostId).contractAddress.toLowerCase()
+      ),
+    ]);
   }
   if (isTokenNative(op.expectedOutput.token)) {
     const wnative = selectChainWrappedNativeToken(state, op.destChainId);

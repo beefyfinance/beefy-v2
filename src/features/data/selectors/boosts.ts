@@ -9,6 +9,9 @@ import type { BoostPromoEntity, PromoEntity } from '../entities/promo.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
+import { isTokenErc20, type TokenErc20 } from '../entities/token.ts';
+import { selectTokenByAddressOrUndefined } from './tokens.ts';
+import { BOOST_ZAP_MIN_VERSION, getBoostReceiptToken } from '../apis/transact/helpers/boost.ts';
 
 function requireBoost(
   promosById: { [id: string]: PromoEntity | undefined },
@@ -59,6 +62,26 @@ export const selectCurrentBoostByVaultIdOrUndefined = createCachedSelector(
     return boostId ? requireBoost(promosById, boostId) : undefined;
   }
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+/** A v2+ boost contract is itself the receipt token; it never enters the token store */
+export const selectBoostReceiptTokenOrUndefined = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  contractAddress: string
+): TokenErc20 | undefined => {
+  const boost = selectBoostByContractAddressOrUndefined(state, chainId, contractAddress);
+  if (!boost || boost.version < BOOST_ZAP_MIN_VERSION) {
+    return undefined;
+  }
+  const vault = state.entities.vaults.byId[boost.vaultId];
+  if (!vault) {
+    return undefined;
+  }
+  const shareToken = selectTokenByAddressOrUndefined(state, chainId, vault.contractAddress);
+  return shareToken && isTokenErc20(shareToken) ?
+      getBoostReceiptToken(boost, shareToken)
+    : undefined;
+};
 
 export const selectBoostsByChainId = (state: BeefyState, chainId: ChainEntity['id']) =>
   arrayOrStaticEmpty(state.entities.promos.byType.boost?.byChainId[chainId]?.allIds);

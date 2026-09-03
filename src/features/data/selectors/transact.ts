@@ -19,8 +19,16 @@ import {
   type ZapFee,
 } from '../apis/transact/transact-types.ts';
 import { computeOptionZapFee } from '../apis/transact/helpers/fee.ts';
+import {
+  BOOST_ZAP_MIN_VERSION,
+  boostStakeableStrategyIds,
+  boostUnstakeableStrategyIds,
+  findBoostStakeStep,
+  findBoostUnstakeStep,
+} from '../apis/transact/helpers/boost.ts';
 import type { ChainEntity } from '../entities/chain.ts';
-import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
+import { isSingleGovVault, isStandardVault, type VaultEntity } from '../entities/vault.ts';
+import type { BoostPromoEntity } from '../entities/promo.ts';
 import {
   DepositSource,
   TransactMode,
@@ -36,13 +44,21 @@ import {
   selectDepositOptionTokensBalanceByChainId,
   selectPastBoostIdsWithUserBalance,
   selectUserBalanceOfToken,
-  selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInShareToken,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
   selectUserVaultBalanceInUsdIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInShareToken,
+  selectBoostUserBalanceInToken,
+  selectUserVaultBalanceInDepositTokenInBoostWithToken,
+  selectUserVaultBalanceInDepositTokenWithToken,
 } from './balance.ts';
-import { selectAllVaultBoostIds, selectPreStakeOrActiveBoostIds } from './boosts.ts';
+import {
+  selectActiveVaultBoostIds,
+  selectAllVaultBoostIds,
+  selectBoostById,
+  selectPreStakeOrActiveBoostIds,
+} from './boosts.ts';
+import { selectZapByChainId } from './zap.ts';
 import {
   selectVaultHasActiveGovRewards,
   selectVaultHasActiveMerklCampaigns,
@@ -74,6 +90,159 @@ export const selectTransactMode = (state: BeefyState) => state.ui.transact.mode;
 export const selectTransactSlippage = (state: BeefyState) => state.ui.transact.swapSlippage;
 
 export const selectTransactDepositSource = (state: BeefyState) => state.ui.transact.depositSource;
+
+export const selectTransactStakeIntoBoost = (state: BeefyState) => state.ui.transact.stakeIntoBoost;
+
+/** The boost this deposit could stake into, if any */
+export const selectTransactBoostForStaking = (state: BeefyState): BoostPromoEntity | undefined => {
+  if (state.ui.transact.mode !== TransactMode.Deposit) {
+    return undefined;
+  }
+  const vaultId = state.ui.transact.vaultId;
+  if (!vaultId) {
+    return undefined;
+  }
+  const vault = selectVaultById(state, vaultId);
+  if (!isStandardVault(vault) || !selectZapByChainId(state, vault.chainId)) {
+    return undefined;
+  }
+  const boostId = selectActiveVaultBoostIds(state, vaultId)[0];
+  if (!boostId) {
+    return undefined;
+  }
+  const boost = selectBoostById(state, boostId);
+  return boost.version >= BOOST_ZAP_MIN_VERSION ? boost : undefined;
+};
+
+/** The boost to actually stake into: asked for, and possible here */
+export const selectTransactStakeIntoBoostTarget = (
+  state: BeefyState
+): BoostPromoEntity | undefined =>
+  selectTransactStakeIntoBoost(state) ? selectTransactBoostForStaking(state) : undefined;
+
+/**
+ * Read off the quote rather than the checkbox: execution keys off the quote too, so the CTA cannot
+ * promise something different from what will run.
+ */
+export const selectTransactWillStakeIntoBoost = (state: BeefyState): boolean => {
+  const quote = selectTransactSelectedQuoteOrUndefined(state);
+  return !!quote && isZapQuote(quote) && !!findBoostStakeStep(quote.steps);
+};
+
+/** The boost this withdraw could exit. Expired boosts count — that is where stranded stakes live */
+export const selectTransactBoostForUnstaking = (
+  state: BeefyState
+): BoostPromoEntity | undefined => {
+  if (state.ui.transact.mode !== TransactMode.Withdraw) {
+    return undefined;
+  }
+  const vaultId = state.ui.transact.vaultId;
+  if (!vaultId) {
+    return undefined;
+  }
+  const vault = selectVaultById(state, vaultId);
+  if (!isStandardVault(vault) || !selectZapByChainId(state, vault.chainId)) {
+    return undefined;
+  }
+  // exit() frees one boost, so offering the checkbox with several staked would hide the rest
+  const staked = selectAllVaultBoostIds(state, vaultId).filter(boostId =>
+    selectBoostUserBalanceInToken(state, boostId).gt(BIG_ZERO)
+  );
+  if (staked.length !== 1) {
+    return undefined;
+  }
+  const boost = selectBoostById(state, staked[0]);
+  return boost.version >= BOOST_ZAP_MIN_VERSION ? boost : undefined;
+};
+
+/** The user's own choice, before the default is resolved; only changes when they click */
+export const selectTransactUnstakeFromBoostChoice = (state: BeefyState) =>
+  state.ui.transact.unstakeFromBoost;
+
+/** Untouched resolves to yes only when nothing is left unstaked, so Available is never a bare 0 */
+export const selectTransactUnstakeFromBoost = (state: BeefyState): boolean => {
+  const chosen = state.ui.transact.unstakeFromBoost;
+  if (chosen !== undefined) {
+    return chosen;
+  }
+  const boost = selectTransactBoostForUnstaking(state);
+  return !!boost && selectUserVaultBalanceInShareToken(state, boost.vaultId).lte(BIG_ZERO);
+};
+
+/** Gated on the route too: a route that cannot unstake must keep spending the wallet position */
+export const selectTransactUnstakeFromBoostTarget = (
+  state: BeefyState
+): BoostPromoEntity | undefined =>
+  selectTransactUnstakeFromBoost(state) && selectTransactUnstakeFromBoostSupported(state) ?
+    selectTransactBoostForUnstaking(state)
+  : undefined;
+
+/** What the withdraw form can spend: the boost stake when unstaking, otherwise the vault position */
+export const selectTransactWithdrawAvailableWithToken = (state: BeefyState) => {
+  const vaultId = selectTransactVaultId(state);
+  const boost = selectTransactUnstakeFromBoostTarget(state);
+  return boost ?
+      selectUserVaultBalanceInDepositTokenInBoostWithToken(state, vaultId, boost.id)
+    : selectUserVaultBalanceInDepositTokenWithToken(state, vaultId);
+};
+
+/** Mirror of the deposit twin: off the quote, so the CTA cannot promise a different route */
+export const selectTransactWillUnstakeFromBoost = (state: BeefyState): boolean => {
+  const quote = selectTransactSelectedQuoteOrUndefined(state);
+  return !!quote && isZapQuote(quote) && !!findBoostUnstakeStep(quote.steps);
+};
+
+/**
+ * Share-unit twin of selectTransactWithdrawAvailableWithToken: the vault-source withdraw form is
+ * share-math, so its Available, MAX and validation all have to read the position in shares.
+ */
+export const selectTransactWithdrawAvailableInShareToken = (state: BeefyState): BigNumber => {
+  const vaultId = selectTransactVaultId(state);
+  const boost = selectTransactUnstakeFromBoostTarget(state);
+  return boost ?
+      selectBoostUserBalanceInToken(state, boost.id)
+    : selectUserVaultBalanceInShareToken(state, vaultId);
+};
+
+export const selectTransactUnstakeFromBoostSupported = (state: BeefyState): boolean => {
+  const selectionId = state.ui.transact.selectedSelectionId;
+  const quote = selectTransactSelectedQuoteOrUndefined(state);
+  if (quote && quote.option.selectionId === selectionId) {
+    return boostUnstakeableStrategyIds.has(quote.option.strategyId);
+  }
+
+  const optionIds = selectionId ? state.ui.transact.options.bySelectionId[selectionId] : undefined;
+  if (!optionIds?.length) {
+    return true;
+  }
+  // every, not some: a selection mixing supported and unsupported options cannot be honoured
+  return optionIds.every(id => {
+    const option = state.ui.transact.options.byOptionId[id];
+    return !!option && boostUnstakeableStrategyIds.has(option.strategyId);
+  });
+};
+
+/**
+ * Falls back to the candidate options while no quote is selected, so the checkbox is never offered
+ * on a route that could never honour it.
+ */
+export const selectTransactStakeIntoBoostSupported = (state: BeefyState): boolean => {
+  const selectionId = state.ui.transact.selectedSelectionId;
+  const quote = selectTransactSelectedQuoteOrUndefined(state);
+  // a quote left over from the previous selection describes a route the user is no longer on
+  if (quote && quote.option.selectionId === selectionId) {
+    return boostStakeableStrategyIds.has(quote.option.strategyId);
+  }
+
+  const optionIds = selectionId ? state.ui.transact.options.bySelectionId[selectionId] : undefined;
+  if (!optionIds?.length) {
+    return true;
+  }
+  return optionIds.some(id => {
+    const option = state.ui.transact.options.byOptionId[id];
+    return !!option && boostStakeableStrategyIds.has(option.strategyId);
+  });
+};
 
 export function selectVaultRefIdForSelection(
   state: BeefyState,
@@ -206,14 +375,15 @@ export const selectTransactDepositInputAmountExceedsBalance = (state: BeefyState
 };
 
 export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyState) => {
-  const vaultId = selectTransactVaultId(state);
   const isVaultSourceWithdraw = selectTransactIsActiveSelectionVaultSourceWithdraw(state);
   // Vault-source withdraw (cross-chain or same-chain v2v) dispatches in share-math.
   // Composer-path withdraws still dispatch in deposit-token math.
+  // vault-source withdraws dispatch share-math, every other route deposit-token math; both read the
+  // same selectors the form does, so the guard cannot drift from what the input shows
   const userBalance =
     isVaultSourceWithdraw ?
-      selectUserVaultBalanceInShareToken(state, vaultId)
-    : selectUserVaultBalanceInDepositToken(state, vaultId);
+      selectTransactWithdrawAvailableInShareToken(state)
+    : selectTransactWithdrawAvailableWithToken(state).amount;
   const value = selectTransactInputIndexAmount(state, 0);
 
   return value.gt(userBalance);
