@@ -1,72 +1,47 @@
 import { describe, expect, it } from 'vitest';
-import type { BeefyState } from '../store/types.ts';
-import {
-  stableSelector,
-  stableSelector1,
-  stableSelector2,
-  stableSelector2Req,
-} from './selector-utils.ts';
+import BigNumber from 'bignumber.js';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { arrayOrStaticEmpty, bigNumberOrStaticZero, EMPTY_ARRAY } from './selector-utils.ts';
 
-/**
- * reselect's `resultEqualityCheck` compares against a single `lastResult` shared by the whole
- * selector, so interleaved arguments make every call miss. Neither the react-redux nor the
- * reselect dev check can see this - both call the selector twice with the same state, which hits
- * the same cache node regardless - so it needs its own test.
- */
-const newState = () => ({ tick: 1 }) as unknown as BeefyState;
-
-describe('stable selector helpers', () => {
-  it('keeps the reference for a single argument set across dispatches', () => {
-    const sel = stableSelector((_s: BeefyState) => ({ v: 1 }));
-    const a = sel(newState());
-    const b = sel(newState());
-    expect(a).toBe(b);
+describe('EMPTY_ARRAY', () => {
+  it('is frozen, so a selector consumer cannot mutate every other selector result', () => {
+    expect(Object.isFrozen(EMPTY_ARRAY)).toBe(true);
+    expect(() => (EMPTY_ARRAY as unknown[]).push(1)).toThrow(TypeError);
   });
 
-  it('keeps each key its own reference when arguments interleave', () => {
-    const sel = stableSelector1((_s: BeefyState, id: string) => ({ id }));
-    let s = newState();
-    const a1 = sel(s, 'A'),
-      b1 = sel(s, 'B'),
-      c1 = sel(s, 'C');
-    s = newState();
-    const a2 = sel(s, 'A'),
-      b2 = sel(s, 'B'),
-      c2 = sel(s, 'C');
-    expect(a2).toBe(a1);
-    expect(b2).toBe(b1);
-    expect(c2).toBe(c1);
+  it('is empty', () => {
+    expect(EMPTY_ARRAY).toHaveLength(0);
+  });
+});
+
+describe('arrayOrStaticEmpty', () => {
+  it('returns the shared reference for every empty case, so subscribers do not re-render', () => {
+    expect(arrayOrStaticEmpty([])).toBe(EMPTY_ARRAY);
+    expect(arrayOrStaticEmpty(undefined)).toBe(EMPTY_ARRAY);
+    expect(arrayOrStaticEmpty(null)).toBe(EMPTY_ARRAY);
+    expect(arrayOrStaticEmpty([])).toBe(arrayOrStaticEmpty(undefined));
   });
 
-  it('keeps references stable for two-argument selectors under interleaving', () => {
-    const sel = stableSelector2((_s: BeefyState, id: string, who?: string) => ({ id, who }));
-    let s = newState();
-    const a1 = sel(s, 'A', 'x'),
-      b1 = sel(s, 'B', 'y'),
-      n1 = sel(s, 'A');
-    s = newState();
-    expect(sel(s, 'A', 'x')).toBe(a1);
-    expect(sel(s, 'B', 'y')).toBe(b1);
-    expect(sel(s, 'A')).toBe(n1);
+  it('returns the input unchanged when it has entries', () => {
+    const input = [1, 2, 3];
+    expect(arrayOrStaticEmpty(input)).toBe(input);
+  });
+});
+
+describe('bigNumberOrStaticZero', () => {
+  it('returns the shared zero for every zero-valued case', () => {
+    expect(bigNumberOrStaticZero(new BigNumber(0))).toBe(BIG_ZERO);
+    expect(bigNumberOrStaticZero(undefined)).toBe(BIG_ZERO);
+    expect(bigNumberOrStaticZero(null)).toBe(BIG_ZERO);
   });
 
-  it('keeps references stable for required two-argument selectors', () => {
-    const sel = stableSelector2Req((_s: BeefyState, a: string, b: string) => ({ a, b }));
-    let s = newState();
-    const x1 = sel(s, 'A', '1'),
-      y1 = sel(s, 'B', '2');
-    s = newState();
-    expect(sel(s, 'A', '1')).toBe(x1);
-    expect(sel(s, 'B', '2')).toBe(y1);
+  it('returns the input unchanged when it is non-zero', () => {
+    const input = new BigNumber(5);
+    expect(bigNumberOrStaticZero(input)).toBe(input);
   });
 
-  it('still returns a new reference when the value actually changes', () => {
-    let n = 1;
-    const sel = stableSelector1((_s: BeefyState, id: string) => ({ id, n }));
-    const a1 = sel(newState(), 'A');
-    n = 2;
-    const a2 = sel(newState(), 'A');
-    expect(a2).not.toBe(a1);
-    expect(a2).toEqual({ id: 'A', n: 2 });
+  it('does not treat NaN as zero', () => {
+    const nan = new BigNumber(NaN);
+    expect(bigNumberOrStaticZero(nan)).toBe(nan);
   });
 });
