@@ -1,5 +1,116 @@
 [
   {
+    "id": "mellow-aero-usdc-cbbtc",
+    "name": "USDC-cbBTC ALM",
+    "type": "standard",
+    "token": "MVS:USDC-cbBTC-100",
+    "tokenAddress": "0x0Df5f2662e4a8C801c04D83Df717476509816250",
+    "tokenDecimals": 18,
+    "tokenProviderId": "autopilot",
+    "earnContractAddress": "0x7F765219D007b058fc6F6654061B99cD283Fa025",
+    "earnedToken": "mooAeroAutopilotUSDC-cbBTC",
+    "earnedTokenAddress": "0x7F765219D007b058fc6F6654061B99cD283Fa025",
+    "oracle": "lps",
+    "oracleId": "mellow-aero-usdc-cbbtc",
+    "status": "active",
+    "createdAt": 1788242855,
+    "platformId": "aerodrome",
+    "assets": ["USDC", "cbBTC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&token1=0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf&type=2000&chain0=8453&chain1=8453&factory=0x5e7BB104d84c7CB9B682AaC2F3d509f5F406809A",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw?pool=0x4e962bb3889bf030368f56810a9c96b83cb3e778&chain=8453",
+    "network": "base"
+  },
+  {
+    "id": "uniswap-cow-base-weth-basecat-rp",
+    "name": "Basecat-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-Basecat",
+    "tokenAddress": "0xCa9Ca9F65Fc5A703091c1995C99f2734443462a9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xa9361a3A28a919d0136092ADbB74CD286BE6Ada6",
+    "earnedToken": "rCowUniswapBaseWETH-Basecat",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-basecat",
+    "status": "active",
+    "createdAt": 1787875698,
+    "platformId": "uniswap",
+    "assets": ["Basecat", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-basecat",
+    "name": "Basecat-WETH",
+    "type": "cowcentrated",
+    "token": "WETH-Basecat uniswap",
+    "tokenAddress": "0xf79478d5a6baE4546F7e489e80b2fC690B558944",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xB2000000000000000000004c27f6523082f41D01"
+    ],
+    "earnContractAddress": "0xCa9Ca9F65Fc5A703091c1995C99f2734443462a9",
+    "earnedToken": "cowUniswapBaseWETH-Basecat",
+    "earnedTokenAddress": "0xCa9Ca9F65Fc5A703091c1995C99f2734443462a9",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-basecat",
+    "status": "active",
+    "createdAt": 1787875698,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["Basecat", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-usdc-metac-vault",
     "name": "METAc-USDC",
     "type": "standard",

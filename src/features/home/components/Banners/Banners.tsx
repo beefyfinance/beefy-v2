@@ -2,12 +2,14 @@ import { memo } from 'react';
 import { BusdBannerHome } from '../../../../components/Banners/BusdBanner/BusdBannerHome.tsx';
 import { UnstakedClmBanner } from '../../../../components/Banners/UnstakedClmBanner/UnstakedClmBanner.tsx';
 import { styled } from '@repo/styles/jsx';
+import { TokenizedStocksBanner } from '../../../../components/Banners/TokenizedStocksBanner/TokenizedStocksBanner.tsx';
 
 export const Banners = memo(function Banners() {
   return (
     <BannerList>
       <UnstakedClmBanner />
       <BusdBannerHome />
+      <TokenizedStocksBanner />
     </BannerList>
   );
 });

@@ -303,6 +303,7 @@ function addAddressBookToState(
       const existingToken = chainState.byAddress['native'];
 
       // Add missing information
+      existingToken.name = existingToken.name || token.name;
       existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
       existingToken.description = existingToken.description || token.description;
       existingToken.website = existingToken.website || token.website;
@@ -340,6 +341,7 @@ function addAddressBookToState(
       }
 
       // Add missing information
+      existingToken.name = existingToken.name || token.name;
       existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
       existingToken.description = existingToken.description || token.description;
       existingToken.website = existingToken.website || token.website;

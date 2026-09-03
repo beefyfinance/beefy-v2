@@ -260,7 +260,8 @@ const SearchIndicatorLayout = styled('div', {
 const transparentRoot = css.raw({
   // mobile: collapsed input shows the "Search" placeholder + icon
   width: '79px',
-  minWidth: 0,
+  // the width above does not fit the placeholder; never shrink below it
+  minWidth: 'fit-content',
   transition: 'width 0.2s ease-in-out',
   gap: 0,
   '& .BaseInput-input': {
@@ -276,6 +277,8 @@ const transparentRoot = css.raw({
 const transparentRootActive = css.raw({
   // mobile (active): take the full row available
   width: '100%',
+  // typed value must still shrink and scroll rather than widen the row
+  minWidth: 0,
   sm: {
     // tablet+: handled by field-sizing on the input itself
     width: 'auto',

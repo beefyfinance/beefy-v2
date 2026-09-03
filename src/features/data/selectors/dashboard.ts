@@ -1,6 +1,7 @@
-import type BigNumber from 'bignumber.js';
-import { stableSelector2 } from '../utils/selector-utils.ts';
+import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
+import { stableSelector2 } from '../utils/selector-utils.ts';
+import type BigNumber from 'bignumber.js';
 import { cloneDeep, isEqual, orderBy } from 'lodash-es';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { ChainEntity } from '../entities/chain.ts';
@@ -52,6 +53,7 @@ import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet.ts';
 import { selectIsAddressBookLoadedGlobal } from './data-loader/tokens.ts';
 import { selectIsAnalyticsLoadedByAddress } from './data-loader/analytics.ts';
 import { selectShouldInitDashboardForUserImpl } from './data-loader/dashboard.ts';
+import { recordEqualBy } from '../../../helpers/object.ts';
 
 export enum DashboardDataStatus {
   Loading,
@@ -59,18 +61,20 @@ export enum DashboardDataStatus {
   Available,
 }
 
-const selectUserTotalYieldUsdUncached = (state: BeefyState, walletAddress: string) => {
-  const vaultPnls = selectDashboardUserVaultsPnl(state, walletAddress);
+export const selectUserTotalYieldUsd = createSelector(
+  (state: BeefyState, walletAddress: string) => selectDashboardUserVaultsPnl(state, walletAddress),
+  vaultPnls => {
+    let totalYieldUsd = BIG_ZERO;
+    for (const vaultPnl of Object.values(vaultPnls)) {
+      totalYieldUsd = totalYieldUsd.plus(
+        isUserClmPnl(vaultPnl) ? vaultPnl.yields.usd : vaultPnl.totalYieldUsd
+      );
+    }
 
-  let totalYieldUsd = BIG_ZERO;
-  for (const vaultPnl of Object.values(vaultPnls)) {
-    totalYieldUsd = totalYieldUsd.plus(
-      isUserClmPnl(vaultPnl) ? vaultPnl.yields.usd : vaultPnl.totalYieldUsd
-    );
-  }
-
-  return totalYieldUsd;
-};
+    return totalYieldUsd;
+  },
+  { memoizeOptions: { resultEqualityCheck: (a: BigNumber, b: BigNumber) => a.isEqualTo(b) } }
+);
 
 export type UserRewardStatus = 'compounded' | 'pending' | 'claimed';
 export type UserRewardSource = PnlYieldSource['source'] | 'gov' | 'boost';
@@ -243,33 +247,24 @@ const selectDashboardYieldRewardDataAvailableByVaultId = (
   return DashboardDataStatus.Missing;
 };
 
-// the underlying reduce seeds with a fresh clone, so it allocates even for an empty list
-export const selectDashboardUserRewardsOrStatusByVaultId = createCachedSelector(
-  (state: BeefyState) => state,
-  (_s: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  (_s: BeefyState, _v: VaultEntity['id'], walletAddress?: string) => walletAddress,
-  (
-    state,
-    vaultId,
-    walletAddress
-  ): UserRewards | Exclude<DashboardDataStatus, DashboardDataStatus.Available> => {
-    const status = selectDashboardYieldRewardDataAvailableByVaultId(state, vaultId, walletAddress);
-    if (status === DashboardDataStatus.Available) {
-      return selectDashboardUserRewardsByVaultId(state, vaultId, walletAddress);
-    }
-    return status;
-  },
-  { memoizeOptions: { resultEqualityCheck: isEqual } }
-)(
-  (_s: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
-    `${vaultId}-${walletAddress ?? ''}`
-);
+export const selectDashboardUserRewardsOrStatusByVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+): UserRewards | Exclude<DashboardDataStatus, DashboardDataStatus.Available> => {
+  const status = selectDashboardYieldRewardDataAvailableByVaultId(state, vaultId, walletAddress);
+  if (status === DashboardDataStatus.Available) {
+    return selectDashboardUserRewardsByVaultId(state, vaultId, walletAddress);
+  }
+  return status;
+};
 
 type DashboardUserExposureVaultEntry = {
   key: string;
   label: string;
   value: BigNumber;
 };
+
 type DashboardUserExposureVaultFn<
   T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 > = (
@@ -278,21 +273,26 @@ type DashboardUserExposureVaultFn<
   vaultTvl: BigNumber,
   walletAddress: string
 ) => T[];
+
 type DashboardUserExposureEntry<
   T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 > = T & {
   percentage: number;
 };
+
 type DashboardUserExposureSummarizer<
   T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 > = (entries: DashboardUserExposureEntry<T>[]) => DashboardUserExposureEntry<T>[];
+
 type DashboardUserTokenExposureVaultEntry = DashboardUserExposureVaultEntry & {
   symbols: string[];
   chainId: ChainEntity['id'];
 };
+
 type DashboardUserChainExposureVaultEntry = DashboardUserExposureVaultEntry & {
   chainId: ChainEntity['id'] | 'others';
 };
+
 const getDashboardLpBreakdownScalingFactor = (
   _vaultId: string,
   userVaultTvl: BigNumber,
@@ -317,6 +317,7 @@ const getDashboardLpBreakdownScalingFactor = (
   }
   return scaleFactor;
 };
+
 const top6ByPercentageSummarizer = <
   T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 >(
@@ -328,8 +329,10 @@ const top6ByPercentageSummarizer = <
     value: BIG_ZERO,
     percentage: 0,
   });
+
 const stableVsOthersSummarizer = (entries: DashboardUserExposureEntry[]) =>
   orderBy(entries, 'key', 'desc');
+
 const selectDashboardUserExposure = <
   T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 >(
@@ -374,6 +377,7 @@ const selectDashboardUserExposure = <
 
   return summarizerFn(entriesWithPercentage);
 };
+
 const selectDashboardUserVaultChainExposure: DashboardUserExposureVaultFn<
   DashboardUserChainExposureVaultEntry
 > = (state, vaultId, vaultTvl, _walletAddress) => {
@@ -381,6 +385,7 @@ const selectDashboardUserVaultChainExposure: DashboardUserExposureVaultFn<
   const chain = selectChainById(state, vault.chainId);
   return [{ key: chain.id, label: chain.name, value: vaultTvl, chainId: chain.id }];
 };
+
 const selectDashboardUserExposureByChainUncached = (state: BeefyState, walletAddress?: string) =>
   selectDashboardUserExposure(
     state,
@@ -395,6 +400,7 @@ const selectDashboardUserExposureByChainUncached = (state: BeefyState, walletAdd
       }),
     walletAddress
   );
+
 const selectDashboardUserVaultPlatformExposure: DashboardUserExposureVaultFn = (
   state,
   vaultId,
@@ -405,6 +411,7 @@ const selectDashboardUserVaultPlatformExposure: DashboardUserExposureVaultFn = (
   const platform = selectPlatformById(state, vault.platformId);
   return [{ key: platform.id, label: platform.name, value: vaultTvl }];
 };
+
 const selectDashboardUserExposureByPlatformUncached = (state: BeefyState, walletAddress?: string) =>
   selectDashboardUserExposure(
     state,
@@ -458,6 +465,7 @@ const selectDashboardUserVaultTokenExposure: DashboardUserExposureVaultFn<
     },
   ];
 };
+
 const selectDashboardUserExposureByTokenUncached = (state: BeefyState, walletAddress?: string) =>
   selectDashboardUserExposure(
     state,
@@ -473,6 +481,7 @@ const selectDashboardUserExposureByTokenUncached = (state: BeefyState, walletAdd
       }),
     walletAddress
   );
+
 const selectDashboardUserVaultStableExposure: DashboardUserExposureVaultFn = (
   state,
   vaultId,
@@ -502,6 +511,7 @@ const selectDashboardUserVaultStableExposure: DashboardUserExposureVaultFn = (
 
   return [{ key: 'other', label: 'Other', value: vaultTvl }];
 };
+
 const selectDashboardUserStablecoinsExposureUncached = (state: BeefyState, walletAddress: string) =>
   selectDashboardUserExposure(
     state,
@@ -509,24 +519,42 @@ const selectDashboardUserStablecoinsExposureUncached = (state: BeefyState, walle
     stableVsOthersSummarizer,
     walletAddress
   );
-const selectDashboardUserVaultsPnlUncached = (state: BeefyState, walletAddress: string) => {
-  const userVaults = selectUserDepositedVaultIds(state, walletAddress);
-  const vaults: Record<string, UserVaultPnl> = {};
-  for (const vaultId of userVaults) {
-    vaults[vaultId] = selectVaultPnl(state, vaultId, walletAddress);
-  }
-  return vaults;
-};
 
-const selectDashboardUserVaultsDailyYieldUncached = (state: BeefyState, walletAddress: string) => {
-  const userVaults = selectUserDepositedVaultIds(state, walletAddress);
-  const vaults: Record<string, BigNumber> = {};
-  for (const vaultId of userVaults) {
-    const { dailyUsd } = selectYieldStatsByVaultId(state, vaultId, walletAddress);
-    vaults[vaultId] = dailyUsd;
+export const selectDashboardUserVaultsPnl = createSelector(
+  // @dev we were recalculating on every state change anyway - this lets us use resultEqualityCheck
+  (state: BeefyState, _walletAddress: string) => state,
+  (_state: BeefyState, walletAddress: string) => walletAddress,
+  (state, walletAddress) => {
+    const userVaults = selectUserDepositedVaultIds(state, walletAddress);
+    const vaults: Record<string, UserVaultPnl> = {};
+    for (const vaultId of userVaults) {
+      vaults[vaultId] = selectVaultPnl(state, vaultId, walletAddress);
+    }
+    return vaults;
+  },
+  {
+    memoizeOptions: { resultEqualityCheck: recordEqualBy<UserVaultPnl>((a, b) => a === b) },
   }
-  return vaults;
-};
+);
+
+export const selectDashboardUserVaultsDailyYield = createSelector(
+  // @dev we were recalculating on every state change anyway - this lets us use resultEqualityCheck
+  (state: BeefyState, _walletAddress: string) => state,
+  (_state: BeefyState, walletAddress: string) => walletAddress,
+  (state, walletAddress) => {
+    const userVaults = selectUserDepositedVaultIds(state, walletAddress);
+    const vaults: Record<string, BigNumber> = {};
+    for (const vaultId of userVaults) {
+      const { dailyUsd } = selectYieldStatsByVaultId(state, vaultId, walletAddress);
+      vaults[vaultId] = dailyUsd;
+    }
+    return vaults;
+  },
+  {
+    memoizeOptions: { resultEqualityCheck: recordEqualBy<BigNumber>((a, b) => a.isEqualTo(b)) },
+  }
+);
+
 export const selectShouldInitDashboardForUser = (state: BeefyState, walletAddress: string) => {
   if (!walletAddress) {
     return false;
@@ -540,17 +568,16 @@ export const selectShouldInitDashboardForUser = (state: BeefyState, walletAddres
 };
 
 /**
- * These allocate a fresh array/record every call, re-rendering their subscriber on every dispatch.
- *
- * Whole state is the input deliberately: they read a wide slice, and an incomplete hand-written
- * input list would trade a re-render bug for a staleness bug on financial figures. The compute
- * still runs; `resultEqualityCheck` is what stops the re-render.
+ * These allocate a fresh array/record every call and are subscribed directly, so each re-rendered
+ * its component on every dispatch. Same shape upstream already uses for selectDashboardUserVaultsPnl,
+ * but keyed per argument: reselect keeps one shared `lastResult`, so a plain createSelector would
+ * churn whenever two different addresses or vaults interleave (see selector-utils).
  */
 function cachedByAddress<A extends string | undefined, R>(
   fn: (state: BeefyState, walletAddress: A) => R
 ) {
   return createCachedSelector(
-    (state: BeefyState) => state,
+    (state: BeefyState, _walletAddress: A) => state,
     (_state: BeefyState, walletAddress: A) => walletAddress,
     (state: BeefyState, walletAddress: A) => fn(state, walletAddress),
     { memoizeOptions: { resultEqualityCheck: isEqual } }
@@ -569,12 +596,6 @@ export const selectDashboardUserExposureByToken = cachedByAddress(
 export const selectDashboardUserStablecoinsExposure = cachedByAddress(
   selectDashboardUserStablecoinsExposureUncached
 );
-export const selectUserTotalYieldUsd = cachedByAddress(selectUserTotalYieldUsdUncached);
-export const selectDashboardUserVaultsPnl = cachedByAddress(selectDashboardUserVaultsPnlUncached);
-export const selectDashboardUserVaultsDailyYield = cachedByAddress(
-  selectDashboardUserVaultsDailyYieldUncached
-);
-
 export const selectDashboardUserRewardsByVaultId = stableSelector2(
   selectDashboardUserRewardsByVaultIdUncached
 );

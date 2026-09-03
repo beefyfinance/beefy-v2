@@ -719,7 +719,7 @@ const selectUserVaultDepositTokenWalletBalanceInUsdUncached = (
 };
 
 /** @dev will NOT default to connected wallet address */
-export const selectGovVaultPendingRewards = createSelector(
+export const selectGovVaultPendingRewards = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
     walletAddress ?
       state.user.balance.byAddress[walletAddress.toLowerCase()]?.tokenAmount.byGovVaultId[vaultId]
@@ -743,10 +743,13 @@ export const selectGovVaultPendingRewards = createSelector(
       return { token, amount: reward.amount };
     });
   }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
+    `${vaultId}:${walletAddress ?? ''}`
 );
 
 /** @dev will NOT default to connected wallet address */
-export const selectGovVaultPendingRewardsWithPrice = createSelector(
+export const selectGovVaultPendingRewardsWithPrice = createCachedSelector(
   selectGovVaultPendingRewards,
   (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
     state.entities.tokens.prices.byOracleId,
@@ -756,6 +759,9 @@ export const selectGovVaultPendingRewardsWithPrice = createSelector(
       price: prices[reward.token.oracleId] || undefined,
     }));
   }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
+    `${vaultId}:${walletAddress ?? ''}`
 );
 
 /**

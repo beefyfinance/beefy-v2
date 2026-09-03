@@ -1,7 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { isEqual } from 'lodash-es';
 import type BigNumber from 'bignumber.js';
-import escapeStringRegexp from 'escape-string-regexp';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import {
@@ -22,6 +21,11 @@ import type { BeefyState } from '../store/types.ts';
 import { serializeFilterState } from '../utils/filter-url.ts';
 import { filterValuesEqual } from '../utils/filter-values.ts';
 import type { KeysOfType } from '../utils/types-utils.ts';
+import {
+  fuzzyTokenRegex,
+  matchesTokenNameWordPrefix,
+  toSearchWords,
+} from '../utils/vault-search.ts';
 import { selectVaultTotalApy } from './apy.ts';
 import { selectUserDepositedVaultIds } from './balance.ts';
 import { selectActivePromoForVault } from './promos.ts';
@@ -30,8 +34,11 @@ import {
   isTokenMeme,
   isTokenStable,
   isTokenStock,
+  resolveAssetToken,
   selectTokenByAddressOrUndefined,
+  selectVaultTokenNameWords,
   selectVaultTokenSymbols,
+  type TokensByChainId,
 } from './tokens.ts';
 import { computeUnderlyingTvlUsd } from './tvl.ts';
 import { selectAllActiveVaultIds, selectAllVisibleVaultIds, selectVaultById } from './vaults.ts';
@@ -160,11 +167,6 @@ export const selectHasActiveFilter = createSelector(
     activeFilter || filterOptions.userCategory !== 'all' || filterOptions.sort !== 'default'
 );
 
-// TOKEN, WTOKEN or TOKENW
-function fuzzyTokenRegex(token: string) {
-  return new RegExp(`^w?${escapeStringRegexp(token)}w?$`, 'gi');
-}
-
 function vaultNameMatches(vault: VaultEntity, searchText: string) {
   // phrase match
   if (stringFoundAnywhere(simplifySearchText(vault.names.list), searchText)) {
@@ -178,14 +180,6 @@ function vaultNameMatches(vault: VaultEntity, searchText: string) {
     .filter(t => t.length > 1)
     .map(t => safeSearchRegex(t, true));
   return words.every(word => vault.names.list.match(word));
-}
-
-function searchTextToFuzzyTokenMatchers(searchText: string) {
-  return searchText
-    .split(/[- /,]/g)
-    .map(t => t.trim())
-    .filter(t => t.length > 1)
-    .map(t => fuzzyTokenRegex(t));
 }
 
 export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchText: string) {
@@ -202,28 +196,26 @@ export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, se
   }
 
   // Split search text in to possible tokens
-  const fuzzySearchTokens = searchTextToFuzzyTokenMatchers(normalizedSearchText);
+  const words = toSearchWords(normalizedSearchText);
 
   // No token names in search string
-  if (fuzzySearchTokens.length === 0) {
+  if (words.length === 0) {
     return false;
   }
 
-  // All tokens must match
+  // All tokens must match a vault asset symbol or stock name
   const tokenSymbols = selectVaultTokenSymbols(state, vault.id);
+  const tokenNameWords = selectVaultTokenNameWords(state, vault.id);
 
-  return fuzzySearchTokens.every(token => {
-    // In vault assets
-    if (
+  return words.every(word => {
+    const fuzzyToken = fuzzyTokenRegex(word);
+    return (
       tokenSymbols.some(
-        symbol => symbol.match(token) || symbol.toLowerCase().includes(normalizedSearchText)
-      )
-    ) {
-      return true;
-    }
-
-    // Default: no match
-    return false;
+        symbol => fuzzyToken.test(symbol) || symbol.toLowerCase().includes(normalizedSearchText)
+      ) ||
+      tokenNameWords.includes(word) ||
+      matchesTokenNameWordPrefix(tokenNameWords, word)
+    );
   });
 }
 
@@ -317,19 +309,8 @@ export const selectFilterContent = (state: BeefyState) => state.ui.filteredVault
 // category membership is derived from static token tags; keyed by vaultId so it caches per vault
 // (the old createSelector(fn, res => res) did the whole compute in the always-run input selector,
 // so nothing was ever memoized). Inputs are the vault and the token slice, both stable after load.
-type TokensByChainId = BeefyState['entities']['tokens']['byChainId'];
 const selectTokensByChainId = (state: BeefyState): TokensByChainId =>
   state.entities.tokens.byChainId;
-
-/** resolve a vault asset id to its token, mirroring selectTokenByIdOrUndefined without a state read */
-function resolveAssetToken(
-  byChainId: TokensByChainId,
-  chainId: VaultEntity['chainId'],
-  tokenId: string
-): TokenEntity | undefined {
-  const address = byChainId[chainId]?.byId[tokenId];
-  return address ? byChainId[chainId]?.byAddress[address] : undefined;
-}
 
 /** true when the vault asset resolves to a token satisfying `isTag` (missing token => false) */
 function vaultAssetHasTag(
