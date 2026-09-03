@@ -1,4 +1,4 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector, createSelectorCreator, lruMemoize } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
 import { isEqual } from 'lodash-es';
 import type BigNumber from 'bignumber.js';
@@ -16,10 +16,10 @@ export function valueOrThrow<T>(
 }
 
 /** For returning from selectors so a new object isn't created causing a re-render */
-export const EMPTY_ARRAY = Object.freeze([]);
+export const EMPTY_ARRAY = Object.freeze([]) as never[];
 
 export function arrayOrStaticEmpty<T>(arr: T[] | undefined | null): T[] {
-  return !!arr && arr.length ? arr : (EMPTY_ARRAY as unknown as T[]);
+  return !!arr && arr.length ? arr : EMPTY_ARRAY;
 }
 
 export function bigNumberOrStaticZero(value: BigNumber | undefined | null): BigNumber {
@@ -82,3 +82,8 @@ export function stableSelector2Req<A, B, R>(fn: (state: BeefyState, a: A, b: B) 
     { memoizeOptions: { resultEqualityCheck: isEqual } }
   )((_state: BeefyState, a: A, b: B) => `${String(a)}-${String(b)}`);
 }
+
+export const createBoundedSelector = createSelectorCreator({
+  memoize: lruMemoize,
+  memoizeOptions: { maxSize: 1 },
+});
