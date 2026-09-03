@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { createBoundedSelector } from '../utils/selector-utils.ts';
 import { createCachedSelector } from 're-reselect';
 import type { ChainEntity, ChainId } from '../entities/chain.ts';
 import type { VaultEntity } from '../entities/vault.ts';
@@ -22,7 +23,7 @@ import { selectWalletAddress } from './wallet.ts';
 import { getStatus, type LoaderStatuses } from '../reducers/data-loader-notifications.ts'; // time since a loader was last dispatched before it is allowed to be dispatched again
 
 // time since a loader was last dispatched before it is allowed to be dispatched again
-const DEFAULT_DISPATCHED_RECENT_SECONDS = 30;
+export const DEFAULT_DISPATCHED_RECENT_SECONDS = 30;
 // time since a loader was last fulfilled before it is allowed to be dispatched again
 const DEFAULT_FULFILLED_RECENT_SECONDS = 300;
 
@@ -57,8 +58,11 @@ export function isLoaderRejected(state: LoaderState | undefined): state is Loade
   return !!state && state.status === 'rejected';
 }
 
-export function hasLoaderDispatchedOnce(state: LoaderState | undefined): boolean {
-  return !!state && state.lastDispatched !== undefined;
+const CLOCK_READING_EVALUATORS = new WeakSet<object>();
+
+function clockReading(evaluateFn: LoaderEvaluatorFn): LoaderEvaluatorFn {
+  CLOCK_READING_EVALUATORS.add(evaluateFn);
+  return evaluateFn;
 }
 
 export function hasLoaderFulfilledOnce(state: LoaderState | undefined): boolean {
@@ -82,8 +86,9 @@ function hasLoaderFulfilledRecentlyImpl(
 
 export const createHasLoaderFulfilledRecentlyEvaluator = createCachedFactory(
   (fulfilledRecentSeconds: number = DEFAULT_FULFILLED_RECENT_SECONDS): LoaderEvaluatorFn => {
-    return (state: LoaderState | undefined) =>
-      hasLoaderFulfilledRecentlyImpl(state, fulfilledRecentSeconds);
+    return clockReading((state: LoaderState | undefined) =>
+      hasLoaderFulfilledRecentlyImpl(state, fulfilledRecentSeconds)
+    );
   },
   fulfilledRecentSeconds => fulfilledRecentSeconds?.toString() ?? 'default'
 );
@@ -105,14 +110,11 @@ export function hasLoaderDispatchedRecentlyImpl(
 
 export const createHasLoaderDispatchedRecentlyEvaluator = createCachedFactory(
   (dispatchedRecentSeconds: number = DEFAULT_DISPATCHED_RECENT_SECONDS): LoaderEvaluatorFn => {
-    return (state: LoaderState | undefined) =>
-      hasLoaderDispatchedRecentlyImpl(state, dispatchedRecentSeconds);
+    return clockReading((state: LoaderState | undefined) =>
+      hasLoaderDispatchedRecentlyImpl(state, dispatchedRecentSeconds)
+    );
   },
   dispatchedRecentSeconds => dispatchedRecentSeconds?.toString() ?? 'default'
-);
-
-export const hasLoaderDispatchedRecently = createHasLoaderDispatchedRecentlyEvaluator(
-  DEFAULT_DISPATCHED_RECENT_SECONDS
 );
 
 function shouldLoaderLoadOnceImpl(
@@ -121,15 +123,17 @@ function shouldLoaderLoadOnceImpl(
 ): boolean {
   return (
     isLoaderIdle(state) ||
-    (!hasLoaderFulfilledOnce(state) &&
+    (!isLoaderPending(state) &&
+      !hasLoaderFulfilledOnce(state) &&
       !hasLoaderDispatchedRecentlyImpl(state, dispatchedRecentSeconds))
   );
 }
 
 export const createShouldLoaderLoadOnceEvaluator = createCachedFactory(
   (dispatchedRecentSeconds: number): LoaderEvaluatorFn => {
-    return (state: LoaderState | undefined) =>
-      shouldLoaderLoadOnceImpl(state, dispatchedRecentSeconds);
+    return clockReading((state: LoaderState | undefined) =>
+      shouldLoaderLoadOnceImpl(state, dispatchedRecentSeconds)
+    );
   },
   dispatchedRecentSeconds => dispatchedRecentSeconds.toString()
 );
@@ -145,7 +149,8 @@ function shouldLoaderLoadRecentImpl(
 ): boolean {
   return (
     isLoaderIdle(state) ||
-    (!hasLoaderFulfilledRecentlyImpl(state, fulfilledRecentSeconds) &&
+    (!isLoaderPending(state) &&
+      !hasLoaderFulfilledRecentlyImpl(state, fulfilledRecentSeconds) &&
       !hasLoaderDispatchedRecentlyImpl(state, dispatchedRecentSeconds))
   );
 }
@@ -155,8 +160,9 @@ export const createShouldLoaderLoadRecentEvaluator = createCachedFactory(
     fulfilledRecentSeconds: number,
     dispatchedRecentSeconds: number = DEFAULT_DISPATCHED_RECENT_SECONDS
   ): LoaderEvaluatorFn => {
-    return (state: LoaderState | undefined) =>
-      shouldLoaderLoadRecentImpl(state, fulfilledRecentSeconds, dispatchedRecentSeconds);
+    return clockReading((state: LoaderState | undefined) =>
+      shouldLoaderLoadRecentImpl(state, fulfilledRecentSeconds, dispatchedRecentSeconds)
+    );
   },
   (fulfilledRecentSeconds, dispatchedRecentSeconds) =>
     `${fulfilledRecentSeconds}-${dispatchedRecentSeconds ?? 'default'}`
@@ -176,12 +182,45 @@ const createTimeCacheInvalidator = createCachedFactory(
   invalidateCacheAfterSeconds => invalidateCacheAfterSeconds?.toString() ?? 'undefined'
 );
 
+const CLOCK_FREE_EVALUATORS = new Set<LoaderEvaluatorFn<unknown>>([
+  isLoaderIdle,
+  isLoaderPending,
+  isLoaderRejected,
+  hasLoaderFulfilledOnce,
+  hasLoaderSettledOnce,
+]);
+
+function isClockFree<T>(
+  evaluateFn: LoaderEvaluatorFn<T>,
+  invalidateCacheAfterSeconds: number | undefined
+): boolean {
+  return invalidateCacheAfterSeconds === undefined && CLOCK_FREE_EVALUATORS.has(evaluateFn);
+}
+
+function assertWindowedIfClockReading<T>(
+  evaluateFn: LoaderEvaluatorFn<T>,
+  invalidateCacheAfterSeconds: number | undefined
+): void {
+  if (invalidateCacheAfterSeconds === undefined && CLOCK_READING_EVALUATORS.has(evaluateFn)) {
+    throw new Error(
+      'loader selector: an evaluator that reads the clock needs an invalidation window, or the ' +
+        'memo has no input that changes with time and its answer never updates'
+    );
+  }
+}
+
 export function createGlobalDataSelector<T>(
   key: keyof DataLoaderState['global'],
   evaluateFn: LoaderEvaluatorFn<T>,
   invalidateCacheAfterSeconds?: number
 ): GlobalDataSelectorFn<T> {
-  return createSelector(
+  if (isClockFree(evaluateFn, invalidateCacheAfterSeconds)) {
+    return (state: BeefyState) => evaluateFn(state.ui.dataLoader.global[key]);
+  }
+
+  assertWindowedIfClockReading(evaluateFn, invalidateCacheAfterSeconds);
+
+  return createBoundedSelector(
     (state: BeefyState) => state.ui.dataLoader.global[key],
     createTimeCacheInvalidator(invalidateCacheAfterSeconds),
     evaluateFn
@@ -193,12 +232,19 @@ export function createChainDataSelector<T>(
   evaluateFn: LoaderEvaluatorFn<T>,
   invalidateCacheAfterSeconds?: number
 ): ChainDataSelectorFn<T> {
+  if (isClockFree(evaluateFn, invalidateCacheAfterSeconds)) {
+    return (state: BeefyState, chainId: ChainEntity['id']) =>
+      evaluateFn(state.ui.dataLoader.byChainId[chainId]?.[key]);
+  }
+
+  assertWindowedIfClockReading(evaluateFn, invalidateCacheAfterSeconds);
+
   return createCachedSelector(
     (state: BeefyState, chainId: ChainEntity['id']) =>
       state.ui.dataLoader.byChainId[chainId]?.[key],
     createTimeCacheInvalidator(invalidateCacheAfterSeconds),
     evaluateFn
-  )((_, chainId) => chainId);
+  )({ keySelector: (_, chainId) => chainId, selectorCreator: createBoundedSelector });
 }
 
 export function createAddressDataSelector<T>(
@@ -206,12 +252,22 @@ export function createAddressDataSelector<T>(
   evaluateFn: LoaderEvaluatorFn<T>,
   invalidateCacheAfterSeconds?: number
 ): AddressDataSelectorFn<T> {
+  if (isClockFree(evaluateFn, invalidateCacheAfterSeconds)) {
+    return (state: BeefyState, walletAddress: string) =>
+      evaluateFn(state.ui.dataLoader.byAddress[walletAddress.toLowerCase()]?.global[key]);
+  }
+
+  assertWindowedIfClockReading(evaluateFn, invalidateCacheAfterSeconds);
+
   return createCachedSelector(
     (state: BeefyState, walletAddress: string) =>
       state.ui.dataLoader.byAddress[walletAddress.toLowerCase()]?.global[key],
     createTimeCacheInvalidator(invalidateCacheAfterSeconds),
     evaluateFn
-  )((_, walletAddress) => walletAddress.toLowerCase());
+  )({
+    keySelector: (_, walletAddress) => walletAddress.toLowerCase(),
+    selectorCreator: createBoundedSelector,
+  });
 }
 
 export function createAddressChainDataSelector<T>(
@@ -219,12 +275,24 @@ export function createAddressChainDataSelector<T>(
   evaluateFn: LoaderEvaluatorFn<T>,
   invalidateCacheAfterSeconds?: number
 ): AddressChainDataSelectorFn<T> {
+  if (isClockFree(evaluateFn, invalidateCacheAfterSeconds)) {
+    return (state: BeefyState, chainId: ChainEntity['id'], walletAddress: string) =>
+      evaluateFn(
+        state.ui.dataLoader.byAddress[walletAddress.toLowerCase()]?.byChainId[chainId]?.[key]
+      );
+  }
+
+  assertWindowedIfClockReading(evaluateFn, invalidateCacheAfterSeconds);
+
   return createCachedSelector(
     (state: BeefyState, chainId: ChainEntity['id'], walletAddress: string) =>
       state.ui.dataLoader.byAddress[walletAddress.toLowerCase()]?.byChainId[chainId]?.[key],
     createTimeCacheInvalidator(invalidateCacheAfterSeconds),
     evaluateFn
-  )((_, walletAddress) => walletAddress.toLowerCase());
+  )({
+    keySelector: (_, chainId, walletAddress) => `${chainId}-${walletAddress.toLowerCase()}`,
+    selectorCreator: createBoundedSelector,
+  });
 }
 
 export type LoaderNotifications = {
@@ -248,10 +316,9 @@ function combineNotifications(...lists: LoaderNotification[][]) {
 }
 
 export const selectStatusNotifications = createSelector(
-  (state: BeefyState, _userAddress?: string) =>
-    state.ui.dataLoader.statusIndicator.notifications.common,
-  (state: BeefyState, userAddress?: string) => {
-    const address = userAddress || selectWalletAddress(state);
+  (state: BeefyState) => state.ui.dataLoader.statusIndicator.notifications.common,
+  (state: BeefyState) => {
+    const address = selectWalletAddress(state);
     return address ?
         state.ui.dataLoader.statusIndicator.notifications.byAddress[address.toLowerCase()]
       : undefined;
@@ -267,17 +334,16 @@ export const selectStatusNotifications = createSelector(
 );
 
 export const selectUnreadStatusNotifications = createSelector(
-  (state: BeefyState, _userAddress?: string) =>
-    state.ui.dataLoader.statusIndicator.notifications.common,
-  (state: BeefyState, userAddress?: string) => {
-    const address = userAddress || selectWalletAddress(state);
+  (state: BeefyState) => state.ui.dataLoader.statusIndicator.notifications.common,
+  (state: BeefyState) => {
+    const address = selectWalletAddress(state);
     return address ?
         state.ui.dataLoader.statusIndicator.notifications.byAddress[address.toLowerCase()]
       : undefined;
   },
-  (state: BeefyState, _userAddress?: string) => state.ui.dataLoader.statusIndicator.ignored.common,
-  (state: BeefyState, userAddress?: string) => {
-    const address = userAddress || selectWalletAddress(state);
+  (state: BeefyState) => state.ui.dataLoader.statusIndicator.ignored.common,
+  (state: BeefyState) => {
+    const address = selectWalletAddress(state);
     return address ?
         state.ui.dataLoader.statusIndicator.ignored.byAddress[address.toLowerCase()]
       : undefined;
@@ -300,13 +366,13 @@ export const selectHaveUnreadStatusNotification = createSelector(
 );
 
 export const selectLoaderStatus = createSelector(
-  (state: BeefyState, _userAddress?: string) => state.ui.dataLoader.global,
-  (state: BeefyState, _userAddress?: string) => state.ui.dataLoader.byChainId,
-  (state: BeefyState, userAddress?: string) => {
-    const address = userAddress || selectWalletAddress(state);
+  (state: BeefyState) => state.ui.dataLoader.global,
+  (state: BeefyState) => state.ui.dataLoader.byChainId,
+  (state: BeefyState) => {
+    const address = selectWalletAddress(state);
     return address ? state.ui.dataLoader.byAddress[address.toLowerCase()] : undefined;
   },
-  (state: BeefyState, _userAddress?: string) => state.ui.dataLoader.statusIndicator.excludeChainIds,
+  (state: BeefyState) => state.ui.dataLoader.statusIndicator.excludeChainIds,
   getStatus,
   {
     memoizeOptions: {

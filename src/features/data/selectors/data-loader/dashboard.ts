@@ -1,7 +1,7 @@
 import {
   createAddressChainDataSelector,
   createAddressDataSelector,
-  hasLoaderFulfilledRecently,
+  createHasLoaderFulfilledRecentlyEvaluator,
   isLoaderPending,
   shouldLoaderLoadRecent,
 } from '../data-loader-helpers.ts';
@@ -20,7 +20,7 @@ export const selectIsWalletTimelineForUserPending = createAddressDataSelector(
 );
 export const selectIsWalletTimelineForUserRecent = createAddressDataSelector(
   'timeline',
-  hasLoaderFulfilledRecently,
+  createHasLoaderFulfilledRecentlyEvaluator(30),
   5
 );
 export const selectShouldInitDashboardForUserImpl = createAddressDataSelector(
