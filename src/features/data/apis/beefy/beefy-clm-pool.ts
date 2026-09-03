@@ -253,10 +253,6 @@ export class BeefyCLMPool {
     const unused0 = input0.minus(used0);
     const unused1 = input1.minus(used1);
 
-    console.log(actionableAt);
-    console.log(strategy);
-    console.log(this.address);
-
     return {
       liquidity,
       used0,

@@ -320,28 +320,35 @@ const QuoteError = memo(function QuoteError() {
   );
 });
 
-const QuoteNotActionableError = memo(function QuoteNotActionableError({
-  action,
-  actionableAt,
-}: {
+type QuoteNotActionableErrorProps = {
   action: 'deposit' | 'withdraw';
   actionableAt: number;
-}) {
+  css?: CssStyles;
+};
+export const QuoteNotActionableError = memo(function QuoteNotActionableError({
+  action,
+  actionableAt,
+  css: cssProp,
+}: QuoteNotActionableErrorProps) {
   const { t } = useTranslation();
+  // match() narrows on name alone, so actionableAt can be missing if the thunk didn't serialize it
+  const target = Number.isFinite(actionableAt) ? actionableAt : 0;
   const [secondsLeft, setSecondsLeft] = useState(() =>
-    Math.max(0, actionableAt - Math.floor(Date.now() / 1000))
+    Math.max(0, target - Math.floor(Date.now() / 1000))
   );
 
   useEffect(() => {
     if (secondsLeft <= 0) return;
     const interval = setInterval(() => {
-      setSecondsLeft(Math.max(0, actionableAt - Math.floor(Date.now() / 1000)));
+      setSecondsLeft(Math.max(0, target - Math.floor(Date.now() / 1000)));
     }, 1000);
     return () => clearInterval(interval);
-  }, [actionableAt, secondsLeft]);
+  }, [target, secondsLeft]);
 
   return (
-    <AlertError>{t(`Transact-Quote-Error-NotActionable-${action}`, { secondsLeft })}</AlertError>
+    <AlertError css={cssProp}>
+      {t(`Transact-Quote-Error-NotActionable-${action}`, { secondsLeft })}
+    </AlertError>
   );
 });
 

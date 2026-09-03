@@ -6,6 +6,8 @@ import { ExternalLink } from '../../../../../../components/Links/ExternalLink.ts
 import {
   CrossChainBridgeBelowFeeError,
   QuoteCowcentratedNoSingleSideError,
+  QuoteCowcentratedNotActionableError,
+  QuoteCowcentratedNotCalmAndNotActionableError,
   QuoteCowcentratedNotCalmError,
 } from '../../../../../data/apis/transact/strategies/error.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
@@ -14,6 +16,7 @@ import {
   selectCrossChainRecoveryQuoteStatus,
 } from '../../../../../data/selectors/transact.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import { QuoteNotActionableError } from '../TransactQuote/TransactQuote.tsx';
 import { styled } from '@repo/styles/jsx';
 
 export type RecoveryQuoteErrorAlertProps = {
@@ -46,6 +49,20 @@ export const RecoveryQuoteErrorAlert = memo(function RecoveryQuoteErrorAlert({
           inputToken: error.inputToken,
           neededToken: error.neededToken,
         })}
+      </AlertError>
+    );
+  }
+
+  if (QuoteCowcentratedNotActionableError.match(error)) {
+    return (
+      <QuoteNotActionableError action={action} actionableAt={error.actionableAt} css={cssProp} />
+    );
+  }
+
+  if (QuoteCowcentratedNotCalmAndNotActionableError.match(error)) {
+    return (
+      <AlertError css={cssProp}>
+        {t(`Transact-Quote-Error-NotCalmAndNotActionable-${action}`)}
       </AlertError>
     );
   }
