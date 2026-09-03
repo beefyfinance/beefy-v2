@@ -307,6 +307,7 @@ function addAddressBookToState(
 
       // Add missing information
       existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
+      existingToken.name = existingToken.name || token.name;
       existingToken.description = existingToken.description || token.description;
       existingToken.website = existingToken.website || token.website;
       if (!existingToken.tags?.length) {
@@ -344,6 +345,7 @@ function addAddressBookToState(
 
       // Add missing information
       existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
+      existingToken.name = existingToken.name || token.name;
       existingToken.description = existingToken.description || token.description;
       existingToken.website = existingToken.website || token.website;
       if (!existingToken.tags?.length) {

@@ -19,6 +19,8 @@ export type TokenEntity = TokenErc20 | TokenNative;
 export interface TokenErc20 {
   id: string;
   symbol: string;
+  /** full name from the address book, e.g. "Apple Inc." */
+  name?: string;
   providerId?: PlatformEntity['id'];
   chainId: ChainEntity['id'];
   oracleId: string;
@@ -40,6 +42,8 @@ export interface TokenErc20 {
 export interface TokenNative {
   id: string;
   symbol: string;
+  /** full name from the address book, e.g. "Apple Inc." */
+  name?: string;
   providerId?: PlatformEntity['id'];
   chainId: ChainEntity['id'];
   // some chains have addressable native tokens
