@@ -23,6 +23,8 @@ import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { isZapQuote } from '../../../../../data/apis/transact/transact-types.ts';
 import {
   QuoteCowcentratedNoSingleSideError,
+  QuoteCowcentratedNotActionableError,
+  QuoteCowcentratedNotCalmAndNotActionableError,
   QuoteCowcentratedNotCalmError,
 } from '../../../../../data/apis/transact/strategies/error.ts';
 import { selectUserVaultBalanceInShareToken } from '../../../../../data/selectors/balance.ts';
@@ -47,7 +49,7 @@ import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
 import { usePriceImpactState } from '../hooks/usePriceImpactState.ts';
 import { useConfirmDisabled } from '../hooks/useActionGates.ts';
-import { CalmAlert } from '../TransactQuote/TransactQuote.tsx';
+import { CalmAlert, QuoteNotActionableError } from '../TransactQuote/TransactQuote.tsx';
 import { NOT_CALM_REFRESH_SECONDS, useNotCalmAutoRefresh } from '../hooks/useNotCalmAutoRefresh.ts';
 import { ZapRoute, ZapRoutePlaceholder } from '../ZapRoute/ZapRoute.tsx';
 import { ZapSlippage } from '../ZapSlippage/ZapSlippage.tsx';
@@ -247,6 +249,14 @@ const MigrateQuoteError = memo(function MigrateQuoteError({
           neededToken: error.neededToken,
         })}
       </AlertError>
+    );
+  }
+  if (error && QuoteCowcentratedNotActionableError.match(error)) {
+    return <QuoteNotActionableError action={error.action} actionableAt={error.actionableAt} />;
+  }
+  if (error && QuoteCowcentratedNotCalmAndNotActionableError.match(error)) {
+    return (
+      <AlertError>{t(`Transact-Quote-Error-NotCalmAndNotActionable-${error.action}`)}</AlertError>
     );
   }
   if (error && QuoteCowcentratedNotCalmError.match(error)) {

@@ -2,7 +2,7 @@ import { css, type CssStyles } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
-import { Fragment, memo, type ReactNode, useEffect, useId, useMemo, useRef } from 'react';
+import { Fragment, memo, type ReactNode, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertError, AlertWarning } from '../../../../../../components/Alerts/Alerts.tsx';
 import type { ReloadSpinnerState } from '../../../../../../components/ReloadSpinner/ReloadSpinner.tsx';
@@ -24,6 +24,8 @@ import {
 import {
   CrossChainBridgeBelowFeeError,
   QuoteCowcentratedNoSingleSideError,
+  QuoteCowcentratedNotActionableError,
+  QuoteCowcentratedNotCalmAndNotActionableError,
   QuoteCowcentratedNotCalmError,
 } from '../../../../../data/apis/transact/strategies/error.ts';
 import {
@@ -295,6 +297,14 @@ const QuoteError = memo(function QuoteError() {
         </AlertError>
       );
     }
+    if (QuoteCowcentratedNotActionableError.match(error)) {
+      return <QuoteNotActionableError action={error.action} actionableAt={error.actionableAt} />;
+    }
+    if (QuoteCowcentratedNotCalmAndNotActionableError.match(error)) {
+      return (
+        <AlertError>{t(`Transact-Quote-Error-NotCalmAndNotActionable-${error.action}`)}</AlertError>
+      );
+    }
     if (QuoteCowcentratedNotCalmError.match(error)) {
       return <CalmAlert i18nKey={`Transact-Quote-Error-Calm-Retry-${error.action}`} />;
     }
@@ -306,6 +316,38 @@ const QuoteError = memo(function QuoteError() {
       {error && error.message ?
         <p>{error.message}</p>
       : null}
+    </AlertError>
+  );
+});
+
+type QuoteNotActionableErrorProps = {
+  action: 'deposit' | 'withdraw';
+  actionableAt: number;
+  css?: CssStyles;
+};
+export const QuoteNotActionableError = memo(function QuoteNotActionableError({
+  action,
+  actionableAt,
+  css: cssProp,
+}: QuoteNotActionableErrorProps) {
+  const { t } = useTranslation();
+  // match() narrows on name alone, so actionableAt can be missing if the thunk didn't serialize it
+  const target = Number.isFinite(actionableAt) ? actionableAt : 0;
+  const [secondsLeft, setSecondsLeft] = useState(() =>
+    Math.max(0, target - Math.floor(Date.now() / 1000))
+  );
+
+  useEffect(() => {
+    if (secondsLeft <= 0) return;
+    const interval = setInterval(() => {
+      setSecondsLeft(Math.max(0, target - Math.floor(Date.now() / 1000)));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [target, secondsLeft]);
+
+  return (
+    <AlertError css={cssProp}>
+      {t(`Transact-Quote-Error-NotActionable-${action}`, { secondsLeft })}
     </AlertError>
   );
 });
