@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { arrayOrStaticEmpty, EMPTY_ARRAY } from '../utils/selector-utils.ts';
-import { type Abi, getAddress, parseEventLogs, type TransactionReceipt } from 'viem';
+import { type Abi, parseEventLogs, type TransactionReceipt } from 'viem';
 import { ZERO_ADDRESS } from '../../../helpers/addresses.ts';
 import { BIG_ZERO, fromWei } from '../../../helpers/big-number.ts';
 import { formatTokenDisplayCondensed } from '../../../helpers/format.ts';
@@ -207,15 +207,21 @@ export function selectBoostClaimed(state: BeefyState): TokenAmount[] {
   const boost = selectBoostById(state, boostId);
 
   // Tokens sent from boost to the user, excluding the vault token
-  const from = getAddress(boost.contractAddress);
-  const to = getAddress(walletAddress);
-  const contract = getAddress(token.address);
+  // viem checksums decoded args but leaves log.address as the rpc returned it
+  const from = boost.contractAddress.toLowerCase();
+  const to = walletAddress.toLowerCase();
+  const contract = token.address.toLowerCase();
 
   const transferEvents = parseTransferEvents(receipt.logs);
 
   return arrayOrStaticEmpty(
     transferEvents
-      .filter(e => e.address === contract && e.args.from === from && e.args.to === to)
+      .filter(
+        e =>
+          e.address.toLowerCase() === contract &&
+          e.args.from.toLowerCase() === from &&
+          e.args.to.toLowerCase() === to
+      )
       .map(e => {
         const token = selectTokenByAddressOrUndefined(state, boost.chainId, e.address);
         if (!token) {
