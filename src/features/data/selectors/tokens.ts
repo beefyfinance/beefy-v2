@@ -15,7 +15,8 @@ import { isTokenErc20, isTokenNative } from '../entities/token.ts';
 import { isStandardVault, type VaultEntity } from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
-import { valueOrThrow } from '../utils/selector-utils.ts';
+import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
+import { toSearchWords } from '../utils/vault-search.ts';
 import { selectAllChainIds } from './chains.ts';
 import { selectHistoricalPriceBucketDispatchedRecently } from './historical.ts';
 import { selectIsPricesAvailable } from './data-loader/prices.ts';
@@ -446,31 +447,59 @@ export const selectVaultAssetTokensOrUndefined = createCachedSelector(
   (vault, tokensByChainId) => {
     const tokens = vault.assetIds
       .map(assetId => {
-        const address = tokensByChainId[vault.chainId]?.byId[assetId];
-        if (!address) {
-          return undefined;
-        }
-
-        return tokensByChainId[vault.chainId]?.byAddress[address] || undefined;
+        return resolveAssetToken(tokensByChainId, vault.chainId, assetId) || undefined;
       })
       .filter(isDefined);
     return tokens.length ? tokens : undefined;
   }
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
+/** token symbol or id if not found */
+export function resolveAssetSymbol(
+  byChainId: TokensByChainId,
+  chainId: VaultEntity['chainId'],
+  tokenId: string
+): string {
+  return resolveAssetToken(byChainId, chainId, tokenId)?.symbol || tokenId;
+}
+
+/** if tagged STOCK, "Apple • Robinhood Token" -> "Apple", otherwise undefined */
+export function resolveStockCompanyName(token: TokenEntity | undefined): string | undefined {
+  return token?.name && isTokenStock(token) ? token.name.split('•')[0].trim() : undefined;
+}
+
 export const selectVaultTokenSymbols = createCachedSelector(
   selectVaultById,
   (state: BeefyState) => state.entities.tokens.byChainId,
-  (vault, tokensByChainId) => {
-    return vault.assetIds.map(assetId => {
-      const address = tokensByChainId[vault.chainId]?.byId[assetId];
-      if (!address) {
-        return assetId;
-      }
+  (vault, tokensByChainId) =>
+    vault.assetIds.map(assetId => resolveAssetSymbol(tokensByChainId, vault.chainId, assetId))
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+export type TokensByChainId = BeefyState['entities']['tokens']['byChainId'];
 
-      const token = tokensByChainId[vault.chainId]?.byAddress[address];
-      return token?.symbol || assetId;
-    });
+/** resolve a vault asset id to its token, mirroring selectTokenByIdOrUndefined without a state read */
+export function resolveAssetToken(
+  byChainId: TokensByChainId,
+  chainId: VaultEntity['chainId'],
+  tokenId: string
+): TokenEntity | undefined {
+  const address = byChainId[chainId]?.byId[tokenId];
+  return address ? byChainId[chainId]?.byAddress[address] : undefined;
+}
+
+/** words of stock asset names ("Apple • Robinhood Token") so search finds companies, not just tickers */
+export const selectVaultTokenNameWords = createCachedSelector(
+  selectVaultById,
+  (state: BeefyState) => state.entities.tokens.byChainId,
+  (vault, tokensByChainId): string[] => {
+    const words: string[] = [];
+    for (const assetId of vault.assetIds) {
+      const token = resolveAssetToken(tokensByChainId, vault.chainId, assetId);
+      const company = resolveStockCompanyName(token);
+      if (company) {
+        words.push(...toSearchWords(company));
+      }
+    }
+    return arrayOrStaticEmpty(words);
   }
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
@@ -482,15 +511,9 @@ export const selectVaultIcons = createCachedSelector(
       return vault.icons;
     }
 
-    return vault.assetIds.map(assetId => {
-      const address = tokensByChainId[vault.chainId]?.byId[assetId];
-      if (!address) {
-        return assetId;
-      }
-
-      const token = tokensByChainId[vault.chainId]?.byAddress[address];
-      return token?.symbol || assetId;
-    });
+    return vault.assetIds.map(assetId =>
+      resolveAssetSymbol(tokensByChainId, vault.chainId, assetId)
+    );
   }
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
