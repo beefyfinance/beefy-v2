@@ -1,22 +1,20 @@
-import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../store/types.ts';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags.ts';
+import { createBoundedSelector } from '../utils/selector-utils.ts';
 
-// plain function: the result is a primitive, so memoizing bought nothing and the result
-// function handed back its own input whenever the override flag was absent
-export const selectWalletAddress = (state: BeefyState) => {
-  const address = state.user.wallet.address;
-  return address ? featureFlag_walletAddressOverride(address) : undefined;
-};
+// @dev on hotpath so 1 slot cache to stop featureFlag_walletAddressOverride being called
+export const selectWalletAddress = createBoundedSelector(
+  (state: BeefyState) => state.user.wallet.address,
+  address => (address ? featureFlag_walletAddressOverride(address) : undefined)
+);
 
-export const selectIsWalletKnown = createSelector(selectWalletAddress, address => !!address);
+export const selectIsWalletKnown = (state: BeefyState) => !!selectWalletAddress(state);
 
 // If address is actually connected
-export const selectIsWalletConnected = createSelector(
-  selectWalletAddress,
-  (state: BeefyState) => state.user.wallet.connectedAddress,
-  (address, connectedAddress) => !!connectedAddress && connectedAddress === address
-);
+export const selectIsWalletConnected = (state: BeefyState) => {
+  const connectedAddress = state.user.wallet.connectedAddress;
+  return !!connectedAddress && connectedAddress === selectWalletAddress(state);
+};
 
 export const selectWalletAddressOrThrow = (state: BeefyState): string => {
   const address = selectWalletAddress(state);
