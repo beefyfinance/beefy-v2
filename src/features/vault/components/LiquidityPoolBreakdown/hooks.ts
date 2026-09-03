@@ -34,7 +34,6 @@ export function useCalculatedBreakdown(
     oneLpShareOfPool,
     underlyingShareOfPool,
     underlyingTotalSupplyDecimal,
-    // takes entity objects as arguments, so there is no stable cache key; compare the value
   } = useAppSelector(
     state => selectUserLpBreakdownBalance(state, vault, breakdown),
     deepEqualBigNumberAware

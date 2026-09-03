@@ -407,12 +407,6 @@ export const selectTreasuryWalletAddressesByChainId = createSelector(
   }
 );
 
-/**
- * These read the treasury tree plus LP breakdowns and PPFS, so they cannot be keyed on the
- * treasury slice alone without going stale when prices move. The whole state is the input and
- * the comparison is on the result, which is small (a few totals, or a top-N array) even though
- * the tree it is derived from is not.
- */
 function stableTreasurySelector<R>(fn: (state: BeefyState) => R) {
   return createSelector(
     (state: BeefyState) => state,

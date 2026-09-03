@@ -544,8 +544,7 @@ function ensureInterestingToken(
   sliceState: Draft<TokensState>
 ) {
   const chainState = getOrCreateTokensChainState(sliceState, chainId);
-  // callers pass a mix of checksummed config addresses and already-lowercased ones;
-  // normalizing here keeps a token from being enqueued twice in the balance multicall
+  // config addresses arrive checksummed; an unnormalized key enqueues the token twice
   chainState.interestingBalanceTokenAddresses[address.toLowerCase()] = true;
 }
 

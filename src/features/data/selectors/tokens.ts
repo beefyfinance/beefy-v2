@@ -308,14 +308,7 @@ export const selectIsTokenLoadedOnChain = createCachedSelector(
     `${chainId}-${address.toLowerCase()}`
 );
 
-// weakMapMemoize rather than createSelector: the chain token lookups throw when the addressbook
-// for a chain has not loaded, and weakMapMemoize does not cache a thrown result, so throw
-// behaviour is unchanged. Rebuilding the Map made this an unstable input to the selector below.
-// Keyed on the two slices this actually reads - both static once chains and the addressbook have
-// loaded - rather than on `state`, which would rebuild the Map on every dispatch and invalidate
-// the memo of the selector below. The body is left untouched so the four distinct throws from
-// selectChainNativeToken / selectChainWrappedNativeToken are preserved exactly; a rewrite that
-// resolved the tokens inline would risk diverging from them. Nothing is cached on throw.
+// the chain token lookups throw until the addressbook loads, so the cache is set after the loop
 let wrappedToNativeCache:
   | {
       chainIds: ChainEntity['id'][];

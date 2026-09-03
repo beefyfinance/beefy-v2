@@ -17,7 +17,6 @@ type YieldStats = {
 
 export const PortfolioStats = memo(function PortfolioStats() {
   const { deposited, daily, weekly, monthly, apy } = useAppSelector(
-    // undefined -> falls back to the connected wallet inside the selector
     state => selectUserGlobalStats(state, undefined),
     shallowEqual
   );

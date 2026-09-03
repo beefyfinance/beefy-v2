@@ -121,8 +121,6 @@ export const ShareButton = memo(function ShareButton({
       },
     [vault, apys]
   );
-  // the selector is rebuilt whenever (vault, apys) change and returns a fresh literal each call,
-  // so compare the value rather than the reference
   const additionalVaultDetails = useAppSelector(additionalSelector, isEqual);
   const vaultDetails: VaultDetails = useMemo(
     () => ({ ...commonVaultDetails, ...additionalVaultDetails }),

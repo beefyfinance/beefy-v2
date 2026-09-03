@@ -1,11 +1,6 @@
 import type { Address } from 'viem';
 
-/**
- * Lowercase an address for use as a contract-call argument.
- *
- * We use more addresses than viem's checksumAddress LRU cache size,
- * lowercasing skips checksumming.
- */
+/** Lowercase rather than checksum: we use more addresses than viem's checksum cache holds. */
 export function toCallAddress(address: string): Address {
   return address.toLowerCase() as Address;
 }

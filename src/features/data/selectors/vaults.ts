@@ -280,8 +280,7 @@ export const selectVaultIdsByChainIdIncludingHidden = (
   chainId: ChainEntity['id']
 ) => arrayOrStaticEmpty(state.entities.vaults.byChainId[chainId]?.allIds);
 
-// plain function: a two-hop lookup with a constant fallback. The reducer only reassigns
-// pricePerFullShare when the value actually changes, so the reference is stable without a memo.
+// the reducer reassigns pricePerFullShare only on a real change, so this is stable without a memo
 export const selectVaultPricePerFullShare = (state: BeefyState, vaultId: VaultEntity['id']) =>
   state.entities.vaults.contractData.byVaultId[vaultId]?.pricePerFullShare || BIG_ONE;
 

@@ -57,8 +57,7 @@ const LOADING_TVL_STAT: VaultTvlStatResult = {
   tvlBreakdown: undefined,
 };
 
-// the tooltip element is built in the component: JSX in a selector is a fresh object every
-// call, so it can never be memoized
+// tvlBreakdown must stay data: a JSX tooltip cannot compare equal, so every action re-renders
 const selectVaultTvlStat = (state: BeefyState, vaultId: VaultEntity['id']): VaultTvlStatResult => {
   const vault = selectVaultById(state, vaultId);
   const isLoaded =
