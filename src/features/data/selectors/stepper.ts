@@ -1,6 +1,7 @@
+import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import { stableSelector } from '../utils/selector-utils.ts';
-import { type Abi, getAddress, parseEventLogs } from 'viem';
+import { arrayOrStaticEmpty, EMPTY_ARRAY } from '../utils/selector-utils.ts';
+import { type Abi, getAddress, parseEventLogs, type TransactionReceipt } from 'viem';
 import { ZERO_ADDRESS } from '../../../helpers/addresses.ts';
 import { BIG_ZERO, fromWei } from '../../../helpers/big-number.ts';
 import { formatTokenDisplayCondensed } from '../../../helpers/format.ts';
@@ -32,6 +33,26 @@ import { isStandardVault, isErc4626Vault } from '../entities/vault.ts';
 import { selectTokenByAddress } from './tokens.ts';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
+
+const NO_TOKEN_AMOUNTS = EMPTY_ARRAY;
+
+type ReceiptLogs = TransactionReceipt['logs'];
+
+/** The wallet-action reducer never mutates in place, so logs identity implies logs content. */
+function memoizeOnLogs<R extends object>(
+  parse: (logs: ReceiptLogs) => R
+): (logs: ReceiptLogs) => R {
+  const cache = new WeakMap<ReceiptLogs, R>();
+  return logs => {
+    const cached = cache.get(logs);
+    if (cached !== undefined) {
+      return cached;
+    }
+    const result = parse(logs);
+    cache.set(logs, result);
+    return result;
+  };
+}
 
 export const selectStepperState = (state: BeefyState) => {
   return state.ui.stepperState;
@@ -87,66 +108,69 @@ const transferAbi = [
   },
 ] as const satisfies Abi;
 
-export function selectMintResult(state: BeefyState) {
-  if (!isWalletActionSuccess(state.user.walletActions)) {
-    throw new Error('Not wallet action success');
-  }
+const parseTransferEvents = memoizeOnLogs(logs =>
+  parseEventLogs({ abi: transferAbi, logs, eventName: 'Transfer' })
+);
 
-  if (!isBaseAdditionalData(state.user.walletActions.additional)) {
-    throw new Error('Missing wallet additional data');
-  }
+export const selectMintResult = createSelector(
+  (state: BeefyState) => state.user.walletActions,
+  walletActions => {
+    if (!isWalletActionSuccess(walletActions)) {
+      throw new Error('Not wallet action success');
+    }
 
-  const { receipt } = state.user.walletActions.data;
-  const { token: mintToken, amount } = state.user.walletActions.additional;
+    if (!isBaseAdditionalData(walletActions.additional)) {
+      throw new Error('Missing wallet additional data');
+    }
 
-  const result = {
-    type: 'mint',
-    amount: formatTokenDisplayCondensed(amount, mintToken.decimals),
-    token: mintToken,
-  };
+    const { receipt } = walletActions.data;
+    const { token: mintToken, amount } = walletActions.additional;
 
-  const transferEvents = parseEventLogs({
-    abi: transferAbi,
-    logs: receipt.logs,
-    eventName: 'Transfer',
-  });
+    const result = {
+      type: 'mint',
+      amount: formatTokenDisplayCondensed(amount, mintToken.decimals),
+      token: mintToken,
+    };
 
-  if (
-    !mintToken ||
-    !isTokenErc20(mintToken) ||
-    !receipt ||
-    !transferEvents ||
-    transferEvents.length === 0
-  ) {
+    const transferEvents = parseTransferEvents(receipt.logs);
+
+    if (
+      !mintToken ||
+      !isTokenErc20(mintToken) ||
+      !receipt ||
+      !transferEvents ||
+      transferEvents.length === 0
+    ) {
+      return result;
+    }
+
+    const userAddress = receipt.from.toLowerCase();
+    const mintContractAddress = receipt.to!.toLowerCase();
+    const mintTokenAddress = mintToken.address.toLowerCase();
+    const mintTransferEvent = transferEvents.find(
+      e =>
+        e.address.toLowerCase() === mintTokenAddress &&
+        e.args.to.toLowerCase() === mintContractAddress &&
+        e.args.from.toLowerCase() === ZERO_ADDRESS
+    );
+    const userTransferEvent = transferEvents.find(
+      e =>
+        e.address.toLowerCase() === mintTokenAddress &&
+        e.args.to.toLowerCase() === userAddress &&
+        e.args.from.toLowerCase() === mintContractAddress
+    );
+
+    if (!mintTransferEvent && userTransferEvent) {
+      result.type = 'buy';
+      result.amount = formatTokenDisplayCondensed(
+        fromWei(new BigNumber(userTransferEvent.args.value.toString(10)), mintToken.decimals),
+        mintToken.decimals
+      );
+    }
+
     return result;
   }
-
-  const userAddress = receipt.from.toLowerCase();
-  const mintContractAddress = receipt.to!.toLowerCase();
-  const mintTokenAddress = mintToken.address.toLowerCase();
-  const mintTransferEvent = transferEvents.find(
-    e =>
-      e.address.toLowerCase() === mintTokenAddress &&
-      e.args.to.toLowerCase() === mintContractAddress &&
-      e.args.from.toLowerCase() === ZERO_ADDRESS
-  );
-  const userTransferEvent = transferEvents.find(
-    e =>
-      e.address.toLowerCase() === mintTokenAddress &&
-      e.args.to.toLowerCase() === userAddress &&
-      e.args.from.toLowerCase() === mintContractAddress
-  );
-
-  if (!mintTransferEvent && userTransferEvent) {
-    result.type = 'buy';
-    result.amount = formatTokenDisplayCondensed(
-      fromWei(new BigNumber(userTransferEvent.args.value.toString(10)), mintToken.decimals),
-      mintToken.decimals
-    );
-  }
-
-  return result;
-}
+);
 
 export function selectBridgeSuccess(
   state: BeefyState
@@ -165,19 +189,19 @@ export function selectBoostAdditionalData(state: BeefyState) {
   return undefined;
 }
 
-function selectBoostClaimedUncached(state: BeefyState) {
+export function selectBoostClaimed(state: BeefyState): TokenAmount[] {
   if (!isWalletActionSuccess(state.user.walletActions)) {
-    return [];
+    return NO_TOKEN_AMOUNTS;
   }
   if (!isBoostAdditionalData(state.user.walletActions.additional)) {
-    return [];
+    return NO_TOKEN_AMOUNTS;
   }
 
   const { receipt } = state.user.walletActions.data;
   const { boostId, token, walletAddress } = state.user.walletActions.additional;
 
   if (!boostId || !receipt || !receipt.logs) {
-    return [];
+    return NO_TOKEN_AMOUNTS;
   }
 
   const boost = selectBoostById(state, boostId);
@@ -187,29 +211,27 @@ function selectBoostClaimedUncached(state: BeefyState) {
   const to = getAddress(walletAddress);
   const contract = getAddress(token.address);
 
-  const transferEvents = parseEventLogs({
-    abi: transferAbi,
-    logs: receipt.logs,
-    eventName: 'Transfer',
-  });
+  const transferEvents = parseTransferEvents(receipt.logs);
 
-  return transferEvents
-    .filter(e => e.address === contract && e.args.from === from && e.args.to === to)
-    .map(e => {
-      const token = selectTokenByAddressOrUndefined(state, boost.chainId, e.address);
-      if (!token) {
-        return undefined;
-      }
-      const amount = fromWei(e.args.value.toString(), token.decimals);
-      if (amount.lte(BIG_ZERO)) {
-        return undefined;
-      }
-      return {
-        token,
-        amount,
-      };
-    })
-    .filter(isDefined);
+  return arrayOrStaticEmpty(
+    transferEvents
+      .filter(e => e.address === contract && e.args.from === from && e.args.to === to)
+      .map(e => {
+        const token = selectTokenByAddressOrUndefined(state, boost.chainId, e.address);
+        if (!token) {
+          return undefined;
+        }
+        const amount = fromWei(e.args.value.toString(), token.decimals);
+        if (amount.lte(BIG_ZERO)) {
+          return undefined;
+        }
+        return {
+          token,
+          amount,
+        };
+      })
+      .filter(isDefined)
+  );
 }
 
 export const selectStepperProgress = (state: BeefyState) => {
@@ -286,30 +308,30 @@ const tokenReturnedAbi = [
   },
 ] as const satisfies Abi;
 
-function selectZapReturnedUncached(state: BeefyState) {
+const parseTokenReturnedEvents = memoizeOnLogs(logs =>
+  parseEventLogs({ abi: tokenReturnedAbi, logs, eventName: 'TokenReturned' })
+);
+
+export function selectZapReturned(state: BeefyState): TokenAmount[] {
   if (!isWalletActionSuccess(state.user.walletActions)) {
-    return [];
+    return NO_TOKEN_AMOUNTS;
   }
   if (!isZapAdditionalData(state.user.walletActions.additional)) {
-    return [];
+    return NO_TOKEN_AMOUNTS;
   }
 
   const { receipt } = state.user.walletActions.data;
   const { vaultId, expectedTokens } = state.user.walletActions.additional;
 
-  const tokenReturnedEvents = parseEventLogs({
-    abi: tokenReturnedAbi,
-    logs: receipt.logs,
-    eventName: 'TokenReturned',
-  });
+  const tokenReturnedEvents = parseTokenReturnedEvents(receipt.logs);
 
   if (!vaultId || !receipt || !tokenReturnedEvents || !receipt.contractAddress) {
-    return [];
+    return NO_TOKEN_AMOUNTS;
   }
 
   // We need to know what normal tokens to expect, so we don't show them as dust
   if (!expectedTokens || !expectedTokens.length) {
-    return [];
+    return NO_TOKEN_AMOUNTS;
   }
   const expectedTokensAddresses: Set<string> = new Set(
     expectedTokens.map(t => t.address.toLowerCase())
@@ -320,7 +342,7 @@ function selectZapReturnedUncached(state: BeefyState) {
   const returnEvents = tokenReturnedEvents.filter(e => e.address.toLowerCase() === zapAddress);
 
   if (!returnEvents.length) {
-    return [];
+    return NO_TOKEN_AMOUNTS;
   }
 
   const minAmount = new BigNumber('0.00000001');
@@ -341,7 +363,7 @@ function selectZapReturnedUncached(state: BeefyState) {
     .filter(t => !expectedTokensAddresses.has(t.token.address.toLowerCase()))
     .filter(t => t.amount.gte(minAmount));
 
-  return tokenAmounts;
+  return arrayOrStaticEmpty(tokenAmounts);
 }
 
 function resolveDstTokensReturned(
@@ -388,15 +410,15 @@ function getReceivedAddresses(
   return new Set([op.expectedOutput.token.address.toLowerCase()]);
 }
 
-function selectCrossChainDstReceivedUncached(state: BeefyState): TokenAmount[] {
+export function selectCrossChainDstReceived(state: BeefyState): TokenAmount[] {
   const bridgeStatus = selectStepperBridgeStatus(state);
   if (!bridgeStatus?.dstTokensReturned?.length || !bridgeStatus.opId) {
-    return [];
+    return NO_TOKEN_AMOUNTS;
   }
 
   const op = state.ui.transact.crossChain.pendingOps[bridgeStatus.opId];
   if (!op) {
-    return [];
+    return NO_TOKEN_AMOUNTS;
   }
 
   const destChainId = bridgeStatus.destChainId;
@@ -417,25 +439,27 @@ function selectCrossChainDstReceivedUncached(state: BeefyState): TokenAmount[] {
         vault.chainId,
         vault.depositTokenAddress
       );
-      return tokenAmounts.map(item => ({
-        amount: mooAmountToOracleAmount(item.token, vaultDepositToken, ppfs, item.amount),
-        token: vaultDepositToken,
-      }));
+      return arrayOrStaticEmpty(
+        tokenAmounts.map(item => ({
+          amount: mooAmountToOracleAmount(item.token, vaultDepositToken, ppfs, item.amount),
+          token: vaultDepositToken,
+        }))
+      );
     }
   }
 
-  return tokenAmounts;
+  return arrayOrStaticEmpty(tokenAmounts);
 }
 
-function selectCrossChainDstDustUncached(state: BeefyState): TokenAmount[] {
+export function selectCrossChainDstDust(state: BeefyState): TokenAmount[] {
   const bridgeStatus = selectStepperBridgeStatus(state);
   if (!bridgeStatus?.dstTokensReturned?.length || !bridgeStatus.opId) {
-    return [];
+    return NO_TOKEN_AMOUNTS;
   }
 
   const op = state.ui.transact.crossChain.pendingOps[bridgeStatus.opId];
   if (!op) {
-    return [];
+    return NO_TOKEN_AMOUNTS;
   }
 
   const destChainId = bridgeStatus.destChainId;
@@ -445,21 +469,17 @@ function selectCrossChainDstDustUncached(state: BeefyState): TokenAmount[] {
     e => !receivedAddresses.has(e.tokenAddress.toLowerCase())
   );
 
-  return resolveDstTokensReturned(state, dustEvents, destChainId);
+  return arrayOrStaticEmpty(resolveDstTokensReturned(state, dustEvents, destChainId));
 }
 
-function selectCrossChainSrcReturnedUncached(state: BeefyState): TokenAmount[] {
+export function selectCrossChainSrcReturned(state: BeefyState): TokenAmount[] {
   const bridgeStatus = selectStepperBridgeStatus(state);
   if (!bridgeStatus?.srcTokensReturned?.length) {
-    return [];
+    return NO_TOKEN_AMOUNTS;
   }
 
   const srcChainId = bridgeStatus.srcChainId;
-  return resolveDstTokensReturned(state, bridgeStatus.srcTokensReturned, srcChainId);
+  return arrayOrStaticEmpty(
+    resolveDstTokensReturned(state, bridgeStatus.srcTokensReturned, srcChainId)
+  );
 }
-
-export const selectBoostClaimed = stableSelector(selectBoostClaimedUncached);
-export const selectCrossChainDstDust = stableSelector(selectCrossChainDstDustUncached);
-export const selectCrossChainDstReceived = stableSelector(selectCrossChainDstReceivedUncached);
-export const selectCrossChainSrcReturned = stableSelector(selectCrossChainSrcReturnedUncached);
-export const selectZapReturned = stableSelector(selectZapReturnedUncached);

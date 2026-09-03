@@ -15,6 +15,7 @@ import {
   TREASURY_MIN_DISPLAY_USD,
 } from '../entities/treasury.ts';
 import type { BeefyState } from '../store/types.ts';
+import { EMPTY_ARRAY } from '../utils/selector-utils.ts';
 import { selectLpBreakdownBalance } from './balance.ts';
 import { selectChainById } from './chains.ts';
 import { selectIsVaultStable } from './filtered-vaults.ts';
@@ -372,13 +373,13 @@ const selectTreasuryExposureByAvailabilityUncached = (state: BeefyState) => {
   return treasuryExposureByAvailability;
 };
 
-export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
+export const selectTreasuryWalletAddressesByChainId = createSelector(
   (state: BeefyState, chainId: ChainEntity['id']) =>
     selectTreasuryHoldingsByChainId(state, chainId),
   (state: BeefyState, chainId: ChainEntity['id']) => selectChainById(state, chainId),
 
   (treasury, chain) => {
-    if (!treasury) return [];
+    if (!treasury) return EMPTY_ARRAY;
 
     return Object.values(treasury).map(wallet => {
       if (wallet.name.includes('validator')) {
@@ -404,7 +405,7 @@ export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
       };
     });
   }
-)((_state: BeefyState, chainId: ChainEntity['id']) => chainId);
+);
 
 /**
  * These read the treasury tree plus LP breakdowns and PPFS, so they cannot be keyed on the
@@ -420,14 +421,49 @@ function stableTreasurySelector<R>(fn: (state: BeefyState) => R) {
   );
 }
 
-export const selectTreasurySorted = stableTreasurySelector(selectTreasurySortedUncached);
+// the cache lives with the created selector, so it is process-wide rather than per-store
+function gatedTreasurySelector<R>(
+  deps: ReadonlyArray<(state: BeefyState) => unknown>,
+  fn: (state: BeefyState) => R
+) {
+  const last: unknown[] = new Array(deps.length);
+  const next: unknown[] = new Array(deps.length);
+  let hasResult = false;
+  let lastResult: R;
+  return (state: BeefyState): R => {
+    let changed = !hasResult;
+    for (let i = 0; i < deps.length; i++) {
+      next[i] = deps[i](state);
+      if (!changed && next[i] !== last[i]) changed = true;
+    }
+    if (!changed) {
+      return lastResult;
+    }
+    // the dep slots and hasResult are set only after fn returns, so a throw is not cached
+    lastResult = fn(state);
+    for (let i = 0; i < deps.length; i++) {
+      last[i] = next[i];
+    }
+    hasResult = true;
+    return lastResult;
+  };
+}
+
+export const selectTreasurySorted = gatedTreasurySelector(
+  [selectTreasury],
+  selectTreasurySortedUncached
+);
+export const selectTreasuryExposureByChain = gatedTreasurySelector(
+  [selectTreasury, (state: BeefyState) => state.entities.chains.byId],
+  selectTreasuryExposureByChainUncached
+);
+export const selectTreasuryExposureByAvailability = gatedTreasurySelector(
+  [selectTreasury],
+  selectTreasuryExposureByAvailabilityUncached
+);
+
+// these two also read prices, LP breakdowns and PPFS, so the treasury slice alone cannot gate them
 export const selectTreasuryStats = stableTreasurySelector(selectTreasuryStatsUncached);
 export const selectTreasuryTokensExposure = stableTreasurySelector(
   selectTreasuryTokensExposureUncached
-);
-export const selectTreasuryExposureByChain = stableTreasurySelector(
-  selectTreasuryExposureByChainUncached
-);
-export const selectTreasuryExposureByAvailability = stableTreasurySelector(
-  selectTreasuryExposureByAvailabilityUncached
 );

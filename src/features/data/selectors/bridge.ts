@@ -1,11 +1,10 @@
-import { createSelector } from '@reduxjs/toolkit';
 import type { IBridgeQuote } from '../apis/bridge/providers/provider-types.ts';
 import type { BeefyAnyBridgeConfig } from '../apis/config-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import { FormStep } from '../reducers/wallet/bridge-types.ts';
 import { StepContent } from '../reducers/wallet/stepper-types.ts';
 import type { BeefyState } from '../store/types.ts';
-import { arrayOrStaticEmpty, stableSelector, valueOrThrow } from '../utils/selector-utils.ts';
+import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
 import {
   selectStepperCurrentStepData,
   selectStepperItems,
@@ -122,12 +121,6 @@ export const selectBridgeLimitedQuoteById = (
 ): IBridgeQuote<BeefyAnyBridgeConfig> =>
   valueOrThrow(state.ui.bridge.quote.limitedQuotes.byId[id], `No bridge limited quote for ${id}`);
 
-export const selectAllBridgeLimitedQuotes = createSelector(
-  selectBridgeLimitedQuoteIds,
-  (state: BeefyState) => state.ui.bridge.quote.limitedQuotes.byId,
-  (ids, byId) => ids.map(id => byId[id])
-);
-
 export const selectBridgeQuoteSelectedId = (state: BeefyState) => state.ui.bridge.quote.selected;
 
 export const selectBridgeHasSelectedQuote = (state: BeefyState) => {
@@ -143,35 +136,44 @@ export const selectBridgeConfirmStatus = (state: BeefyState) => state.ui.bridge.
 export const selectBridgeConfirmQuote = (state: BeefyState) =>
   valueOrThrow(state.ui.bridge.confirm.quote, 'No bridge quote');
 
-function selectBridgeTxStateUncached(state: BeefyState) {
+export type BridgeTxState = {
+  step: 'unknown' | 'approve' | 'bridge';
+  status: 'unknown' | 'building' | 'pending' | 'mining' | 'success' | 'error';
+};
+
+const TX_STATE_UNKNOWN: BridgeTxState = { step: 'unknown', status: 'unknown' };
+
+const TX_STATES: Record<'approve' | 'bridge', Partial<Record<StepContent, BridgeTxState>>> = {
+  approve: {
+    [StepContent.StartTx]: { step: 'approve', status: 'building' },
+    [StepContent.WalletTx]: { step: 'approve', status: 'pending' },
+    [StepContent.WaitingTx]: { step: 'approve', status: 'mining' },
+    [StepContent.SuccessTx]: { step: 'approve', status: 'success' },
+    [StepContent.ErrorTx]: { step: 'approve', status: 'error' },
+  },
+  bridge: {
+    [StepContent.StartTx]: { step: 'bridge', status: 'building' },
+    [StepContent.WalletTx]: { step: 'bridge', status: 'pending' },
+    [StepContent.WaitingTx]: { step: 'bridge', status: 'mining' },
+    [StepContent.SuccessTx]: { step: 'bridge', status: 'success' },
+    [StepContent.ErrorTx]: { step: 'bridge', status: 'error' },
+  },
+};
+
+export const selectBridgeTxState = (state: BeefyState): BridgeTxState => {
   const items = selectStepperItems(state);
   if (!items.length) {
-    return { step: 'unknown', status: 'unknown' };
+    return TX_STATE_UNKNOWN;
   }
 
   const currentItem = selectStepperCurrentStepData(state);
   if (!currentItem) {
-    return { step: 'unknown', status: 'unknown' };
+    return TX_STATE_UNKNOWN;
   }
 
   if (currentItem.step !== 'approve' && currentItem.step !== 'bridge') {
-    return { step: 'unknown', status: 'unknown' };
+    return TX_STATE_UNKNOWN;
   }
 
-  const stepContent = selectStepperStepContent(state);
-  if (stepContent === StepContent.StartTx) {
-    return { step: currentItem.step, status: 'building' };
-  } else if (stepContent === StepContent.WalletTx) {
-    return { step: currentItem.step, status: 'pending' };
-  } else if (stepContent === StepContent.WaitingTx) {
-    return { step: currentItem.step, status: 'mining' };
-  } else if (stepContent === StepContent.SuccessTx) {
-    return { step: currentItem.step, status: 'success' };
-  } else if (stepContent === StepContent.ErrorTx) {
-    return { step: currentItem.step, status: 'error' };
-  }
-
-  return { step: 'unknown', status: 'unknown' };
-}
-
-export const selectBridgeTxState = stableSelector(selectBridgeTxStateUncached);
+  return TX_STATES[currentItem.step][selectStepperStepContent(state)] ?? TX_STATE_UNKNOWN;
+};

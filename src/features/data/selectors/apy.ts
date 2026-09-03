@@ -1,5 +1,6 @@
-import { first, isEqual } from 'lodash-es';
-import { stableSelector1, stableSelector2 } from '../utils/selector-utils.ts';
+import { first } from 'lodash-es';
+import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
+import { bigNumberEqual } from '../utils/selector-equality.ts';
 import { createCachedSelector } from 're-reselect';
 import { EMPTY_AVG_APY } from '../../../helpers/apy.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
@@ -82,7 +83,7 @@ const EMPTY_GLOBAL_STATS = {
 /**
  * Ignores boost component of APY
  */
-const selectUserGlobalStatsUncached = (state: BeefyState, address?: string) => {
+export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
   const walletAddress = address || selectWalletAddress(state);
   if (!walletAddress) {
     return EMPTY_GLOBAL_STATS;
@@ -344,27 +345,36 @@ export const selectApyVaultUIData = createCachedSelector(
   }
 )((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-const selectBoostAprByRewardTokenUncached = (
-  state: BeefyState,
-  boostId: BoostPromoEntity['id']
-) => {
-  return state.biz.apy.rawApy.byBoostId[boostId]?.aprByRewardToken || [];
+export const selectBoostAprByRewardToken = (state: BeefyState, boostId: BoostPromoEntity['id']) => {
+  return arrayOrStaticEmpty(state.biz.apy.rawApy.byBoostId[boostId]?.aprByRewardToken);
 };
 
-export const selectBoostApr = (state: BeefyState, boostId: string): number => {
-  return state.biz.apy.rawApy.byBoostId[boostId]?.apr || 0;
-};
+type VaultYieldStats = ReturnType<typeof selectYieldStatsByVaultIdUncached>;
 
-// builds and mutates a fresh object every call, so deep-compare to keep the reference
-// keyed by address: PortfolioStats calls this with state only while DepositSummary passes an
-// explicit address, and a shared `lastResult` would make those two argument shapes evict
-// each other (see stableSelector1 in selector-utils)
-export const selectUserGlobalStats = createCachedSelector(
-  (state: BeefyState, _address: string | undefined) => state,
-  (_state: BeefyState, address: string | undefined) => address,
-  (state: BeefyState, address: string | undefined) => selectUserGlobalStatsUncached(state, address),
-  { memoizeOptions: { resultEqualityCheck: isEqual } }
-)((_state: BeefyState, address: string | undefined) => address ?? '');
+function yieldStatsEqual(a: VaultYieldStats, b: VaultYieldStats): boolean {
+  return (
+    a === b ||
+    (a.depositToken === b.depositToken &&
+      bigNumberEqual(a.oraclePrice, b.oraclePrice) &&
+      bigNumberEqual(a.dailyTokens, b.dailyTokens) &&
+      bigNumberEqual(a.dailyUsd, b.dailyUsd) &&
+      bigNumberEqual(a.weeklyTokens, b.weeklyTokens) &&
+      bigNumberEqual(a.weeklyUsd, b.weeklyUsd) &&
+      bigNumberEqual(a.monthlyTokens, b.monthlyTokens) &&
+      bigNumberEqual(a.monthlyUsd, b.monthlyUsd) &&
+      bigNumberEqual(a.yearlyTokens, b.yearlyTokens) &&
+      bigNumberEqual(a.yearlyUsd, b.yearlyUsd))
+  );
+}
 
-export const selectBoostAprByRewardToken = stableSelector1(selectBoostAprByRewardTokenUncached);
-export const selectYieldStatsByVaultId = stableSelector2(selectYieldStatsByVaultIdUncached);
+export const selectYieldStatsByVaultId = createCachedSelector(
+  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) => state,
+  (_state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) => vaultId,
+  (_state: BeefyState, _vaultId: VaultEntity['id'], walletAddress?: string) => walletAddress,
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string | undefined) =>
+    selectYieldStatsByVaultIdUncached(state, vaultId, walletAddress),
+  { memoizeOptions: { resultEqualityCheck: yieldStatsEqual } }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
+    `${vaultId}-${walletAddress ?? ''}`
+);

@@ -16,13 +16,14 @@ export function selectHistoricalRangesStatus(state: BeefyState, vaultId: VaultEn
   return state.biz.historical.ranges.byVaultId[vaultId]?.status || 'idle';
 }
 
-export const selectHistoricalHasAnyChart = createSelector(
-  selectHistoricalHasApyChart,
-  selectHistoricalHasTvlChart,
-  selectHistoricalHasPriceChart,
-  selectHistoricalHasCowcentratedRanges,
-  (apy, tvl, price, clm) => apy || tvl || price || clm
-);
+export function selectHistoricalHasAnyChart(state: BeefyState, vaultId: VaultEntity['id']) {
+  return (
+    selectHistoricalHasApyChart(state, vaultId) ||
+    selectHistoricalHasTvlChart(state, vaultId) ||
+    selectHistoricalHasPriceChart(state, vaultId) ||
+    selectHistoricalHasCowcentratedRanges(state, vaultId)
+  );
+}
 
 export function selectHistoricalHasApyChart(state: BeefyState, vaultId: VaultEntity['id']) {
   return Object.values(state.biz.historical.apys.byVaultId[vaultId]?.available || {}).some(v => v);

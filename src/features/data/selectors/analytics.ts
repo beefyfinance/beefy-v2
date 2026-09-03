@@ -543,7 +543,7 @@ const selectClmPnlInner = createCachedSelector(
       pending.push({
         token: reward.token,
         amount: reward.amount,
-        usd: reward.amount.times(reward.price),
+        usd: reward.amount.times(reward.price || BIG_ZERO),
         source: 'pool',
       });
     }

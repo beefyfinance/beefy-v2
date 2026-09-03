@@ -179,7 +179,7 @@ function applyDefaultSort(
   return sortBy(vaults, vault =>
     vaultsToPin.has(vault.id) ?
       selectIsVaultPrestakedBoost(state, vault.id) ? -Number.MAX_SAFE_INTEGER
-      : -selectVaultsActiveBoostPeriodFinish(state, vault.id).getTime()
+      : -selectVaultsActiveBoostPeriodFinish(state, vault.id)
     : 1
   ).map(v => v.id);
 }

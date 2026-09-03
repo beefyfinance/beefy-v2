@@ -21,16 +21,18 @@ import { PendingIndexNotice } from '../../../common/PendingIndexNotice.tsx';
 
 interface OverviewGraphHeaderProps {
   vaultId: VaultEntity['id'];
+  address: string;
 }
 
 const useStyles = legacyMakeStyles(styles);
 
 export const OverviewGraphHeader = memo(function OverviewGraphHeader({
   vaultId,
+  address,
 }: OverviewGraphHeaderProps) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const userPnl = useAppSelector(state => selectClmPnl(state, vaultId));
+  const userPnl = useAppSelector(state => selectClmPnl(state, vaultId, address));
   const { underlying, tokens, pnl, hold, pendingIndex } = userPnl;
   const hasPnlTooltip = showClmPnlTooltip(userPnl);
   const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
