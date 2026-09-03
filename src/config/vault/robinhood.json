@@ -1,5 +1,83 @@
 [
   {
+    "id": "uniswap-cow-robinhood-cbbtc-mstr-rp",
+    "name": "MSTR-cbBTC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodMSTR-cbBTC",
+    "tokenAddress": "0x5FA82f7E34ea4dfd9Fb81DcA63d6FDD824356cbB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xfb7aEbCA176Adfd610E264e7fccF814f08D13D9d",
+    "earnedToken": "rCowUniswapRobinhoodMSTR-cbBTC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-cbbtc-mstr",
+    "status": "active",
+    "createdAt": 1788474531,
+    "platformId": "uniswap",
+    "assets": ["MSTR", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-cbbtc-mstr",
+    "name": "MSTR-cbBTC",
+    "type": "cowcentrated",
+    "token": "MSTR-cbBTC uniswap",
+    "tokenAddress": "0x6f8Dc7122B56017c46892F91D38d871acf787f9b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0xCEC185eB182c47d1bA1EFc84e6959e18cd620Be4",
+      "0xec262a75e413fAfD0dF80480274532C79D42da09"
+    ],
+    "earnContractAddress": "0x5FA82f7E34ea4dfd9Fb81DcA63d6FDD824356cbB",
+    "earnedToken": "cowUniswapRobinhoodMSTR-cbBTC",
+    "earnedTokenAddress": "0x5FA82f7E34ea4dfd9Fb81DcA63d6FDD824356cbB",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-cbbtc-mstr",
+    "status": "active",
+    "createdAt": 1788474531,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["MSTR", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-robinhood-djt-usdg-rp",
     "name": "DJT-USDG Reward Pool",
     "type": "gov",
