@@ -10,6 +10,7 @@ import type { PlatformConfig, VaultConfig } from '../apis/config-types.ts';
  * State containing Vault infos
  */
 export type PlatformsState = NormalizedEntity<PlatformEntity> & {
+  usedIds: PlatformEntity['id'][];
   activeIds: PlatformEntity['id'][];
   byType: Partial<Record<NonNullable<PlatformEntity['type']>, PlatformEntity['id'][]>>;
 };
@@ -18,6 +19,7 @@ export const initialPlatformsState: PlatformsState = {
   byId: {},
   allIds: [],
   activeIds: [],
+  usedIds: [],
   byType: {},
 };
 
@@ -30,9 +32,14 @@ export const platformsSlice = createSlice({
   extraReducers: builder => {
     // when vault list is fetched, add all new tokens
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
+      // @dev perf
+      const seen: SeenIds = {
+        activeIds: new Set(sliceState.activeIds),
+        usedIds: new Set(sliceState.usedIds),
+      };
       for (const vaults of Object.values(action.payload.byChainId)) {
         for (const vault of vaults) {
-          addVaultToState(sliceState, vault.config);
+          addVaultToState(sliceState, seen, vault.config);
         }
       }
     });
@@ -45,14 +52,23 @@ export const platformsSlice = createSlice({
   },
 });
 
-function addVaultToState(sliceState: Draft<PlatformsState>, vault: VaultConfig) {
+type IdsKey = 'activeIds' | 'usedIds';
+type SeenIds = Record<IdsKey, Set<PlatformEntity['id']>>;
+
+function addVaultToState(sliceState: Draft<PlatformsState>, seen: SeenIds, vault: VaultConfig) {
+  const maybeAdd = (key: IdsKey, id: string | undefined) => {
+    if (id && !seen[key].has(id)) {
+      seen[key].add(id);
+      sliceState[key].push(id);
+    }
+  };
+
+  maybeAdd('usedIds', vault.platformId);
+  maybeAdd('usedIds', vault.tokenProviderId);
+
   if (vault.status !== 'eol') {
-    if (vault.platformId && !sliceState.activeIds.includes(vault.platformId)) {
-      sliceState.activeIds.push(vault.platformId);
-    }
-    if (vault.tokenProviderId && !sliceState.activeIds.includes(vault.tokenProviderId)) {
-      sliceState.activeIds.push(vault.tokenProviderId);
-    }
+    maybeAdd('activeIds', vault.platformId);
+    maybeAdd('activeIds', vault.tokenProviderId);
   }
 }
 
