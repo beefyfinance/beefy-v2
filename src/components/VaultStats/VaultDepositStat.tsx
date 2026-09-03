@@ -1,16 +1,19 @@
 import type BigNumber from 'bignumber.js';
 import { memo } from 'react';
+import { createCachedSelector } from 're-reselect';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInDepositTokenIncludingDisplaced,
-  selectUserVaultBalanceInUsdIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInDepositToken,
 } from '../../features/data/selectors/balance.ts';
 
 import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
-import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
+import {
+  selectTokenByAddressOrUndefined,
+  selectTokenPriceByAddress,
+} from '../../features/data/selectors/tokens.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import {
   selectIsBalanceHidden,
@@ -57,59 +60,88 @@ type SelectDataReturn =
       notEarning: BigNumber;
     };
 
-// TODO better selector / hook
-function selectVaultDepositStat(
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  maybeWalletAddress?: string
-): SelectDataReturn {
-  const vault = selectVaultById(state, vaultId);
+const NO_DEPOSIT: Record<'true' | 'false', SelectDataReturn> = {
+  true: Object.freeze({ loading: false, totalDeposit: BIG_ZERO, hideBalance: true }),
+  false: Object.freeze({ loading: false, totalDeposit: BIG_ZERO, hideBalance: false }),
+};
+const STILL_LOADING: Record<'true' | 'false', SelectDataReturn> = {
+  true: Object.freeze({ loading: true, hideBalance: true }),
+  false: Object.freeze({ loading: true, hideBalance: false }),
+};
 
-  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
-  const hideBalance = selectIsBalanceHidden(state);
-  if (!walletAddress) {
-    return { loading: false, totalDeposit: BIG_ZERO, hideBalance };
-  }
-
-  const isLoaded =
-    selectIsPricesAvailable(state) &&
-    selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress);
-  if (!isLoaded) {
-    return { loading: true, hideBalance };
-  }
-
-  const totalDeposit = selectUserVaultBalanceInDepositTokenIncludingDisplaced(
-    state,
-    vault.id,
-    walletAddress
-  );
-  if (!totalDeposit.gt(0)) {
-    return { loading: false, totalDeposit: BIG_ZERO, hideBalance };
-  }
-
-  const notEarning = selectUserVaultBalanceNotInActiveBoostInDepositToken(
-    state,
-    vault.id,
-    walletAddress
-  );
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const totalDepositUsd = selectUserVaultBalanceInUsdIncludingDisplaced(
-    state,
-    vaultId,
-    walletAddress
-  );
-  const vaultDeposit = selectUserVaultBalanceInDepositToken(state, vault.id, walletAddress);
-
-  return {
-    loading: false,
+const selectVaultDepositStat = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], _w?: string) => selectVaultById(state, vaultId),
+  (state: BeefyState, _vaultId: VaultEntity['id'], w?: string) => w || selectWalletAddress(state),
+  (state: BeefyState) => selectIsBalanceHidden(state),
+  (state: BeefyState) => selectIsPricesAvailable(state),
+  (state: BeefyState, vaultId: VaultEntity['id'], w?: string) => {
+    const address = w || selectWalletAddress(state);
+    return address ?
+        selectIsBalanceAvailableForChainUser(
+          state,
+          selectVaultById(state, vaultId).chainId,
+          address
+        )
+      : false;
+  },
+  (state: BeefyState, vaultId: VaultEntity['id'], w?: string) =>
+    selectUserVaultBalanceInDepositTokenIncludingDisplaced(state, vaultId, w),
+  (state: BeefyState, vaultId: VaultEntity['id'], w?: string) =>
+    selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vaultId, w),
+  (state: BeefyState, vaultId: VaultEntity['id'], w?: string) =>
+    selectUserVaultBalanceInDepositToken(state, vaultId, w),
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+    return selectTokenByAddressOrUndefined(state, vault.chainId, vault.depositTokenAddress);
+  },
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+    return selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
+  },
+  (
+    vault,
+    walletAddress,
     hideBalance,
-    depositToken,
+    pricesAvailable,
+    balanceAvailable,
     totalDeposit,
-    totalDepositUsd,
-    vaultDeposit,
     notEarning,
-  };
-}
+    vaultDeposit,
+    depositToken,
+    oraclePrice
+  ): SelectDataReturn => {
+    const key = hideBalance ? 'true' : 'false';
+
+    if (!walletAddress) {
+      return NO_DEPOSIT[key];
+    }
+
+    if (!pricesAvailable || !balanceAvailable) {
+      return STILL_LOADING[key];
+    }
+
+    if (!totalDeposit.gt(0)) {
+      return NO_DEPOSIT[key];
+    }
+
+    if (!depositToken) {
+      throw new Error(`selectTokenByAddress: Unknown token address "${vault.depositTokenAddress}"`);
+    }
+
+    return {
+      loading: false,
+      hideBalance,
+      depositToken,
+      totalDeposit,
+      totalDepositUsd: totalDeposit.multipliedBy(oraclePrice),
+      vaultDeposit,
+      notEarning,
+    };
+  }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
+    `${vaultId}-${walletAddress ?? ''}`
+);
 
 export const VaultDepositStat = memo(function VaultDepositStat({
   vaultId,

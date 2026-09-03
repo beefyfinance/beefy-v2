@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { isEqual } from 'lodash-es';
 import { createCachedSelector } from 're-reselect';
 import type { ProposalEntity } from '../entities/proposal.ts';
 import type { BeefyState } from '../store/types.ts';
@@ -36,34 +37,45 @@ export const selectAllActiveProposals = createSelector(
   selectAllProposals,
   () => Math.floor(Date.now() / 1000),
   (proposals, now): ProposalEntity[] =>
-    proposals.filter(
-      p =>
-        p.start <= now &&
-        p.end >= now &&
-        (p.coreProposal || p.start + DELAY_NON_CORE_PROPOSALS <= now)
-    )
+    arrayOrStaticEmpty(
+      proposals.filter(
+        p =>
+          p.start <= now &&
+          p.end >= now &&
+          (p.coreProposal || p.start + DELAY_NON_CORE_PROPOSALS <= now)
+      )
+    ),
+  // the time input above ticks every second; without this the filter returns a fresh
+  // (but identical) array just as often
+  { memoizeOptions: { resultEqualityCheck: isEqual } }
 );
 
-export const selectAllActiveProposalsBySpace = createSelector(
+// @dev resultEqualityCheck applies to whole selector, not each entry (space), so createCachedSelector needed
+export const selectAllActiveProposalsBySpace = createCachedSelector(
   (state: BeefyState, space: string) => selectAllProposalsBySpace(state, space),
   () => Math.floor(Date.now() / 1000),
   (proposals, now): ProposalEntity[] =>
-    proposals.filter(
-      p =>
-        p.start <= now &&
-        p.end >= now &&
-        (p.coreProposal || p.start + DELAY_NON_CORE_PROPOSALS <= now)
-    )
-);
+    arrayOrStaticEmpty(
+      proposals.filter(
+        p =>
+          p.start <= now &&
+          p.end >= now &&
+          (p.coreProposal || p.start + DELAY_NON_CORE_PROPOSALS <= now)
+      )
+    ),
+  { memoizeOptions: { resultEqualityCheck: isEqual } }
+)((_state: BeefyState, space: string) => space);
 
 export const selectUnreadActiveProposals = createSelector(
   selectAllActiveProposals,
   (state: BeefyState) => state.entities.proposals.readIds,
-  (proposals, readIds): ProposalEntity[] => proposals.filter(p => !readIds.includes(p.id))
+  (proposals, readIds): ProposalEntity[] =>
+    arrayOrStaticEmpty(proposals.filter(p => !readIds.includes(p.id)))
 );
 
 export const selectUnreadActiveProposalsBySpace = createSelector(
   (state: BeefyState, space: string) => selectAllActiveProposalsBySpace(state, space),
   (state: BeefyState) => state.entities.proposals.readIds,
-  (proposals, readIds): ProposalEntity[] => proposals.filter(p => !readIds.includes(p.id))
+  (proposals, readIds): ProposalEntity[] =>
+    arrayOrStaticEmpty(proposals.filter(p => !readIds.includes(p.id)))
 );

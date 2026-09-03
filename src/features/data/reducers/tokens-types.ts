@@ -29,10 +29,11 @@ export type TokensState = {
        * reducer has a number of config fixes that I find would make for a more complex code
        * if refactored. And we have to update the config anyway to make it smaller, so move this
        * inside the balance reducer once the config is reworked
+       *
+       * Keyed by lowercased address so inserts are O(1); scanning an array here cost ~750ms
+       * of main-thread time at boot, since every read went through an immer draft proxy.
        */
-      interestingBalanceTokenAddresses: TokenEntity['address'][];
-      /** list of tokens that have an active vault */
-      tokenIdsInActiveVaults: TokenEntity['id'][];
+      interestingBalanceTokenAddresses: Record<TokenEntity['address'], true>;
     };
   };
   prices: {

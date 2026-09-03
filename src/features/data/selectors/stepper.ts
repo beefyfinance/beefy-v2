@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { stableSelector } from '../utils/selector-utils.ts';
 import { type Abi, getAddress, parseEventLogs } from 'viem';
 import { ZERO_ADDRESS } from '../../../helpers/addresses.ts';
 import { BIG_ZERO, fromWei } from '../../../helpers/big-number.ts';
@@ -164,7 +165,7 @@ export function selectBoostAdditionalData(state: BeefyState) {
   return undefined;
 }
 
-export function selectBoostClaimed(state: BeefyState) {
+function selectBoostClaimedUncached(state: BeefyState) {
   if (!isWalletActionSuccess(state.user.walletActions)) {
     return [];
   }
@@ -285,7 +286,7 @@ const tokenReturnedAbi = [
   },
 ] as const satisfies Abi;
 
-export function selectZapReturned(state: BeefyState) {
+function selectZapReturnedUncached(state: BeefyState) {
   if (!isWalletActionSuccess(state.user.walletActions)) {
     return [];
   }
@@ -387,7 +388,7 @@ function getReceivedAddresses(
   return new Set([op.expectedOutput.token.address.toLowerCase()]);
 }
 
-export function selectCrossChainDstReceived(state: BeefyState): TokenAmount[] {
+function selectCrossChainDstReceivedUncached(state: BeefyState): TokenAmount[] {
   const bridgeStatus = selectStepperBridgeStatus(state);
   if (!bridgeStatus?.dstTokensReturned?.length || !bridgeStatus.opId) {
     return [];
@@ -426,7 +427,7 @@ export function selectCrossChainDstReceived(state: BeefyState): TokenAmount[] {
   return tokenAmounts;
 }
 
-export function selectCrossChainDstDust(state: BeefyState): TokenAmount[] {
+function selectCrossChainDstDustUncached(state: BeefyState): TokenAmount[] {
   const bridgeStatus = selectStepperBridgeStatus(state);
   if (!bridgeStatus?.dstTokensReturned?.length || !bridgeStatus.opId) {
     return [];
@@ -447,7 +448,7 @@ export function selectCrossChainDstDust(state: BeefyState): TokenAmount[] {
   return resolveDstTokensReturned(state, dustEvents, destChainId);
 }
 
-export function selectCrossChainSrcReturned(state: BeefyState): TokenAmount[] {
+function selectCrossChainSrcReturnedUncached(state: BeefyState): TokenAmount[] {
   const bridgeStatus = selectStepperBridgeStatus(state);
   if (!bridgeStatus?.srcTokensReturned?.length) {
     return [];
@@ -456,3 +457,9 @@ export function selectCrossChainSrcReturned(state: BeefyState): TokenAmount[] {
   const srcChainId = bridgeStatus.srcChainId;
   return resolveDstTokensReturned(state, bridgeStatus.srcTokensReturned, srcChainId);
 }
+
+export const selectBoostClaimed = stableSelector(selectBoostClaimedUncached);
+export const selectCrossChainDstDust = stableSelector(selectCrossChainDstDustUncached);
+export const selectCrossChainDstReceived = stableSelector(selectCrossChainDstReceivedUncached);
+export const selectCrossChainSrcReturned = stableSelector(selectCrossChainSrcReturnedUncached);
+export const selectZapReturned = stableSelector(selectZapReturnedUncached);

@@ -157,10 +157,10 @@ export const selectBoostPeriodFinish = (state: BeefyState, boostId: BoostPromoEn
   return state.entities.promos.dataByType.boost[boostId]?.periodFinish || null;
 };
 
+const NO_BOOST_CONTRACT_STATE = { periodFinish: null, isPreStake: true };
+
 export const selectBoostContractState = (state: BeefyState, boostId: BoostPromoEntity['id']) => {
-  return (
-    state.entities.promos.dataByType.boost[boostId] || { periodFinish: null, isPreStake: true }
-  );
+  return state.entities.promos.dataByType.boost[boostId] || NO_BOOST_CONTRACT_STATE;
 };
 
 export const selectBoostPartnerById = (state: BeefyState, partnerId: string) => {

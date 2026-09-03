@@ -15,7 +15,10 @@ type YieldStats = {
 };
 
 export const PortfolioStats = memo(function PortfolioStats() {
-  const { deposited, daily, weekly, monthly, apy } = useAppSelector(selectUserGlobalStats);
+  const { deposited, daily, weekly, monthly, apy } = useAppSelector(state =>
+    // undefined -> falls back to the connected wallet inside the selector
+    selectUserGlobalStats(state, undefined)
+  );
   const hideBalance = useAppSelector(selectIsBalanceHidden);
   const { t } = useTranslation();
 

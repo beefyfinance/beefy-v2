@@ -1,4 +1,6 @@
 import type BigNumber from 'bignumber.js';
+import { isEqual } from 'lodash-es';
+import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO, compareBigNumber, isFiniteBigNumber } from '../../../helpers/big-number.ts';
 import { entries, keys } from '../../../helpers/object.ts';
@@ -30,7 +32,7 @@ const selectTreasury = (state: BeefyState) => {
   return state.ui.treasury.byChainId;
 };
 
-export const selectTreasurySorted = function (state: BeefyState) {
+const selectTreasurySortedUncached = function (state: BeefyState) {
   const treasuryPerChain = keys(selectTreasury(state)).map(chainId => {
     const assets = selectTreasuryAssetsByChainId(state, chainId);
     const reducedAssets = assets
@@ -114,7 +116,7 @@ export const selectTreasuryAssetsByChainId = createCachedSelector(
 
 const bifiOracles = ['BIFI', 'mooBIFI', 'rBIFI', 'basemooBIFI', 'opmooBIFI'];
 
-export const selectTreasuryStats = (state: BeefyState) => {
+const selectTreasuryStatsUncached = (state: BeefyState) => {
   const treasury = selectTreasury(state);
   let holdings = BIG_ZERO;
   const holdingAssets = new Set();
@@ -226,7 +228,7 @@ const getBifiBalanceInTokens = (
   }
 };
 
-export const selectTreasuryTokensExposure = (state: BeefyState) => {
+const selectTreasuryTokensExposureUncached = (state: BeefyState) => {
   const treasury = selectTreasury(state);
 
   const exposure = entries(treasury).reduce(
@@ -305,7 +307,7 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
   return treasuryExposure;
 };
 
-export const selectTreasuryExposureByChain = (state: BeefyState) => {
+const selectTreasuryExposureByChainUncached = (state: BeefyState) => {
   const treasury = selectTreasury(state);
 
   const chains: Partial<Record<ChainId, BigNumber>> = {};
@@ -333,7 +335,7 @@ export const selectTreasuryExposureByChain = (state: BeefyState) => {
   return treasuryExposureBychain;
 };
 
-export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
+const selectTreasuryExposureByAvailabilityUncached = (state: BeefyState) => {
   const treasury = selectTreasury(state);
 
   const exposure = keys(treasury).reduce(
@@ -403,3 +405,29 @@ export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
     });
   }
 )((_state: BeefyState, chainId: ChainEntity['id']) => chainId);
+
+/**
+ * These read the treasury tree plus LP breakdowns and PPFS, so they cannot be keyed on the
+ * treasury slice alone without going stale when prices move. The whole state is the input and
+ * the comparison is on the result, which is small (a few totals, or a top-N array) even though
+ * the tree it is derived from is not.
+ */
+function stableTreasurySelector<R>(fn: (state: BeefyState) => R) {
+  return createSelector(
+    (state: BeefyState) => state,
+    (state: BeefyState) => fn(state),
+    { memoizeOptions: { resultEqualityCheck: isEqual } }
+  );
+}
+
+export const selectTreasurySorted = stableTreasurySelector(selectTreasurySortedUncached);
+export const selectTreasuryStats = stableTreasurySelector(selectTreasuryStatsUncached);
+export const selectTreasuryTokensExposure = stableTreasurySelector(
+  selectTreasuryTokensExposureUncached
+);
+export const selectTreasuryExposureByChain = stableTreasurySelector(
+  selectTreasuryExposureByChainUncached
+);
+export const selectTreasuryExposureByAvailability = stableTreasurySelector(
+  selectTreasuryExposureByAvailabilityUncached
+);

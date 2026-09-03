@@ -1,6 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { createCachedSelector } from 're-reselect';
+import { stableSelector2 } from '../utils/selector-utils.ts';
 import type BigNumber from 'bignumber.js';
-import { cloneDeep, orderBy } from 'lodash-es';
+import { cloneDeep, isEqual, orderBy } from 'lodash-es';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
@@ -112,7 +114,7 @@ const emptyUserRewards: UserRewards = {
 /**
  * @dev requires analytics timeline / user pnl to be loaded
  */
-export const selectDashboardUserRewardsByVaultId = (
+const selectDashboardUserRewardsByVaultIdUncached = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -384,7 +386,7 @@ const selectDashboardUserVaultChainExposure: DashboardUserExposureVaultFn<
   return [{ key: chain.id, label: chain.name, value: vaultTvl, chainId: chain.id }];
 };
 
-export const selectDashboardUserExposureByChain = (state: BeefyState, walletAddress?: string) =>
+const selectDashboardUserExposureByChainUncached = (state: BeefyState, walletAddress?: string) =>
   selectDashboardUserExposure(
     state,
     selectDashboardUserVaultChainExposure,
@@ -410,7 +412,7 @@ const selectDashboardUserVaultPlatformExposure: DashboardUserExposureVaultFn = (
   return [{ key: platform.id, label: platform.name, value: vaultTvl }];
 };
 
-export const selectDashboardUserExposureByPlatform = (state: BeefyState, walletAddress?: string) =>
+const selectDashboardUserExposureByPlatformUncached = (state: BeefyState, walletAddress?: string) =>
   selectDashboardUserExposure(
     state,
     selectDashboardUserVaultPlatformExposure,
@@ -464,7 +466,7 @@ const selectDashboardUserVaultTokenExposure: DashboardUserExposureVaultFn<
   ];
 };
 
-export const selectDashboardUserExposureByToken = (state: BeefyState, walletAddress?: string) =>
+const selectDashboardUserExposureByTokenUncached = (state: BeefyState, walletAddress?: string) =>
   selectDashboardUserExposure(
     state,
     selectDashboardUserVaultTokenExposure,
@@ -510,7 +512,7 @@ const selectDashboardUserVaultStableExposure: DashboardUserExposureVaultFn = (
   return [{ key: 'other', label: 'Other', value: vaultTvl }];
 };
 
-export const selectDashboardUserStablecoinsExposure = (state: BeefyState, walletAddress: string) =>
+const selectDashboardUserStablecoinsExposureUncached = (state: BeefyState, walletAddress: string) =>
   selectDashboardUserExposure(
     state,
     selectDashboardUserVaultStableExposure,
@@ -564,3 +566,36 @@ export const selectShouldInitDashboardForUser = (state: BeefyState, walletAddres
     selectShouldInitDashboardForUserImpl(state, walletAddress)
   );
 };
+
+/**
+ * These allocate a fresh array/record every call and are subscribed directly, so each re-rendered
+ * its component on every dispatch. Same shape upstream already uses for selectDashboardUserVaultsPnl,
+ * but keyed per argument: reselect keeps one shared `lastResult`, so a plain createSelector would
+ * churn whenever two different addresses or vaults interleave (see selector-utils).
+ */
+function cachedByAddress<A extends string | undefined, R>(
+  fn: (state: BeefyState, walletAddress: A) => R
+) {
+  return createCachedSelector(
+    (state: BeefyState, _walletAddress: A) => state,
+    (_state: BeefyState, walletAddress: A) => walletAddress,
+    (state: BeefyState, walletAddress: A) => fn(state, walletAddress),
+    { memoizeOptions: { resultEqualityCheck: isEqual } }
+  )((_state: BeefyState, walletAddress: A) => walletAddress ?? '');
+}
+
+export const selectDashboardUserExposureByChain = cachedByAddress(
+  selectDashboardUserExposureByChainUncached
+);
+export const selectDashboardUserExposureByPlatform = cachedByAddress(
+  selectDashboardUserExposureByPlatformUncached
+);
+export const selectDashboardUserExposureByToken = cachedByAddress(
+  selectDashboardUserExposureByTokenUncached
+);
+export const selectDashboardUserStablecoinsExposure = cachedByAddress(
+  selectDashboardUserStablecoinsExposureUncached
+);
+export const selectDashboardUserRewardsByVaultId = stableSelector2(
+  selectDashboardUserRewardsByVaultIdUncached
+);

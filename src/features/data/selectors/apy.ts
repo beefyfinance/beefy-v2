@@ -1,4 +1,6 @@
-import { first } from 'lodash-es';
+import { first, isEqual } from 'lodash-es';
+import { stableSelector1, stableSelector2 } from '../utils/selector-utils.ts';
+import { createCachedSelector } from 're-reselect';
 import { EMPTY_AVG_APY } from '../../../helpers/apy.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { isEmpty } from '../../../helpers/utils.ts';
@@ -80,7 +82,7 @@ const EMPTY_GLOBAL_STATS = {
 /**
  * Ignores boost component of APY
  */
-export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
+const selectUserGlobalStatsUncached = (state: BeefyState, address?: string) => {
   const walletAddress = address || selectWalletAddress(state);
   if (!walletAddress) {
     return EMPTY_GLOBAL_STATS;
@@ -150,7 +152,7 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
   return newGlobalStats;
 };
 
-export const selectYieldStatsByVaultId = (
+const selectYieldStatsByVaultIdUncached = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -281,54 +283,88 @@ export const selectIsVaultApyAvailable = (state: BeefyState, vaultId: VaultEntit
   return selectIsContractDataLoadedOnChain(state, vault.chainId);
 };
 
-// TEMP: selector instead of connect/mapStateToProps
-export function selectApyVaultUIData(
+const APY_UI_STATUS_ONLY: Record<
+  'hidden' | 'loading' | 'missing',
+  Record<'apy' | 'apr', ApyVaultUIData>
+> = {
+  hidden: {
+    apy: Object.freeze({ status: 'hidden', type: 'apy' }),
+    apr: Object.freeze({ status: 'hidden', type: 'apr' }),
+  },
+  loading: {
+    apy: Object.freeze({ status: 'loading', type: 'apy' }),
+    apr: Object.freeze({ status: 'loading', type: 'apr' }),
+  },
+  missing: {
+    apy: Object.freeze({ status: 'missing', type: 'apy' }),
+    apr: Object.freeze({ status: 'missing', type: 'apr' }),
+  },
+};
+
+export const selectApyVaultUIData = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultShouldShowInterest(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectIsVaultApyAvailable(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectDidAPIReturnValuesForVault(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultTotalApy(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectVaultCurrentBoostIdWithStatus(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultAvgApyOrUndefined(state, vaultId),
+  (vault, shouldShowInterest, isLoaded, exists, values, boost, averages): ApyVaultUIData => {
+    const type: 'apr' | 'apy' = vault.type === 'gov' ? 'apr' : 'apy';
+
+    if (!shouldShowInterest) {
+      return APY_UI_STATUS_ONLY.hidden[type];
+    }
+
+    if (!isLoaded) {
+      return APY_UI_STATUS_ONLY.loading[type];
+    }
+
+    if (!exists) {
+      return APY_UI_STATUS_ONLY.missing[type];
+    }
+
+    if (boost) {
+      return { status: 'available', type, values, boosted: boost.status, averages };
+    }
+
+    if (!isCowcentratedVault(vault) && !isCowcentratedGovVault(vault)) {
+      return { status: 'available', type, values, boosted: undefined, averages };
+    }
+
+    return {
+      status: 'available',
+      type: values.totalType,
+      values,
+      boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
+      averages,
+    };
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+const selectBoostAprByRewardTokenUncached = (
   state: BeefyState,
-  vaultId: VaultEntity['id']
-): ApyVaultUIData {
-  const vault = selectVaultById(state, vaultId);
-  const type: 'apr' | 'apy' = vault.type === 'gov' ? 'apr' : 'apy';
-
-  const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
-  if (!shouldShowInterest) {
-    return { status: 'hidden', type };
-  }
-
-  const isLoaded = selectIsVaultApyAvailable(state, vaultId);
-  if (!isLoaded) {
-    return { status: 'loading', type };
-  }
-
-  const exists = selectDidAPIReturnValuesForVault(state, vaultId);
-  if (!exists) {
-    return { status: 'missing', type };
-  }
-
-  const values = selectVaultTotalApy(state, vaultId);
-  const boost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
-  const averages = selectVaultAvgApyOrUndefined(state, vaultId);
-
-  if (boost) {
-    return { status: 'available', type, values, boosted: boost.status, averages };
-  }
-
-  if (!isCowcentratedVault(vault) && !isCowcentratedGovVault(vault)) {
-    return { status: 'available', type, values, boosted: undefined, averages };
-  }
-
-  return {
-    status: 'available',
-    type: values.totalType,
-    values,
-    boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
-    averages,
-  };
-}
-
-export const selectBoostAprByRewardToken = (state: BeefyState, boostId: BoostPromoEntity['id']) => {
+  boostId: BoostPromoEntity['id']
+) => {
   return state.biz.apy.rawApy.byBoostId[boostId]?.aprByRewardToken || [];
 };
 
 export const selectBoostApr = (state: BeefyState, boostId: string): number => {
   return state.biz.apy.rawApy.byBoostId[boostId]?.apr || 0;
 };
+
+// builds and mutates a fresh object every call, so deep-compare to keep the reference
+// keyed by address: PortfolioStats calls this with state only while DepositSummary passes an
+// explicit address, and a shared `lastResult` would make those two argument shapes evict
+// each other (see stableSelector1 in selector-utils)
+export const selectUserGlobalStats = createCachedSelector(
+  (state: BeefyState, _address: string | undefined) => state,
+  (_state: BeefyState, address: string | undefined) => address,
+  (state: BeefyState, address: string | undefined) => selectUserGlobalStatsUncached(state, address),
+  { memoizeOptions: { resultEqualityCheck: isEqual } }
+)((_state: BeefyState, address: string | undefined) => address ?? '');
+
+export const selectBoostAprByRewardToken = stableSelector1(selectBoostAprByRewardTokenUncached);
+export const selectYieldStatsByVaultId = stableSelector2(selectYieldStatsByVaultIdUncached);
