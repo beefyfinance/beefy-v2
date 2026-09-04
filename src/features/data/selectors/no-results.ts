@@ -3,12 +3,12 @@ import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { boundedLevenshtein, simplifySearchText } from '../../../helpers/string.ts';
 import type { FilterValues } from '../reducers/filtered-vaults-types.ts';
 import type { BeefyState } from '../store/types.ts';
-import { isDefined } from '../utils/array-utils.ts';
 import { buildVaultFilterEnv, vaultPassesFilters } from '../utils/vault-filter.ts';
-import { classifySearchQuery } from '../utils/vault-search.ts';
+import { classifySearchQuery, toDisplayWords } from '../utils/vault-search.ts';
 import { selectAllChains } from './chains.ts';
 import { selectFilterAppliedValues } from './filtered-vaults.ts';
-import { selectAllPlatforms } from './platforms.ts';
+import { selectUsedPlatforms } from './platforms.ts';
+import { resolveAssetToken, resolveStockCompanyName } from './tokens.ts';
 import { selectAllVisibleVaultIds, selectVaultById } from './vaults.ts';
 
 export type BlockerCategory =
@@ -130,23 +130,33 @@ function anyMatching(state: BeefyState, filters: FilterValues): boolean {
 const selectSearchDictionary = createSelector(
   selectAllVisibleVaultIds,
   (state: BeefyState) => state.entities.vaults.byId,
+  (state: BeefyState) => state.entities.tokens.byChainId,
   selectAllChains,
-  selectAllPlatforms,
-  (vaultIds, vaultsById, chains, platforms) => {
+  selectUsedPlatforms,
+  (vaultIds, vaultsById, tokensByChainId, chains, platforms) => {
     const entries = new Map<string, string>();
+    const add = (text: string) => entries.set(text.toLowerCase(), text);
     for (const vaultId of vaultIds) {
       const vault = vaultsById[vaultId];
-      if (vault) {
-        for (const assetId of vault.assetIds) {
-          entries.set(assetId.toLowerCase(), assetId);
+      if (!vault) {
+        continue;
+      }
+      for (const assetId of vault.assetIds) {
+        const token = resolveAssetToken(tokensByChainId, vault.chainId, assetId);
+        add(token?.symbol || assetId);
+        const company = resolveStockCompanyName(token);
+        if (company) {
+          for (const word of toDisplayWords(company)) {
+            add(word);
+          }
         }
       }
     }
     for (const chain of chains) {
-      entries.set(chain.name.toLowerCase(), chain.name);
+      add(chain.name);
     }
-    for (const platform of platforms.filter(isDefined)) {
-      entries.set(platform.name.toLowerCase(), platform.name);
+    for (const platform of platforms) {
+      add(platform.name);
     }
     return [...entries.entries()].map(([lower, display]) => ({ lower, display }));
   }

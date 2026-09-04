@@ -20,9 +20,7 @@ export const getChainAddressBook = memoize(
 
     const addrBookEntries = Object.entries(addressBookTokens);
     if (addrBookEntries.length <= 0) {
-      throw new Error(
-        `Addressbook empty for chain ${chain.id}. You may need to run "yarn install"`
-      );
+      throw new Error(`Addressbook empty for chain ${chain.id}. You may need to run "npm install"`);
     }
 
     // map to our own token entity
@@ -35,6 +33,7 @@ export const getChainAddressBook = memoize(
           address: bookToken.address,
           decimals: bookToken.decimals,
           symbol: bookToken.symbol,
+          name: bookToken.name,
           buyUrl: undefined,
           website: bookToken.website || undefined,
           description: bookToken.description || undefined,
@@ -50,6 +49,7 @@ export const getChainAddressBook = memoize(
           address: 'native',
           decimals: bookToken.decimals,
           symbol: nativeSymbol,
+          name: bookToken.name,
           buyUrl: undefined,
           website: bookToken.website || undefined,
           description: bookToken.description || undefined,
@@ -65,6 +65,7 @@ export const getChainAddressBook = memoize(
           address: bookToken.address,
           decimals: bookToken.decimals,
           symbol: bookToken.symbol,
+          name: bookToken.name,
           buyUrl: undefined,
           website: bookToken.website || undefined,
           description: bookToken.description || undefined,

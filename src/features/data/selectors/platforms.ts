@@ -5,6 +5,7 @@ import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import { selectVaultById } from './vaults.ts';
+import { isDefined } from '../utils/array-utils.ts';
 
 export const selectPlatformById = createCachedSelector(
   // get a tiny bit of the data
@@ -32,18 +33,18 @@ export const selectPlatformByIdOrUndefined = createCachedSelector(
   }
 )((_state: BeefyState, platformId: PlatformEntity['id']) => platformId);
 
-export const selectAllPlatforms = createSelector(
-  (state: BeefyState) => state.entities.platforms.allIds,
+/** All platforms actually used by a vault that loaded */
+export const selectUsedPlatforms = createSelector(
+  (state: BeefyState) => state.entities.platforms.usedIds,
   (state: BeefyState) => state.entities.platforms.byId,
-  (ids, byId) => ids.map(id => byId[id])
+  (usedIds, byId) => usedIds.map(id => byId[id]).filter(isDefined)
 );
 
 /** All active platforms (vault.status !== eol) that are allowed to be in the filter */
 export const selectFilterPlatforms = createSelector(
-  (state: BeefyState) => state.entities.platforms.allIds,
   (state: BeefyState) => state.entities.platforms.activeIds,
   (state: BeefyState) => state.entities.platforms.byId,
-  (allIds, activeIds, byId) => activeIds.filter(id => allIds.includes(id)).map(id => byId[id]!)
+  (activeIds, byId) => activeIds.map(id => byId[id]).filter(isDefined)
 );
 
 /** All platforms with `type: 'alm'` exception conic which manages curve not CL */

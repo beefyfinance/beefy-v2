@@ -136,3 +136,21 @@ export function firstKey<
 >(obj: T): KeysOfUnion<T> | undefined {
   return Object.keys(obj)[0] as KeysOfUnion<T> | undefined;
 }
+
+export function recordEqualBy<T>(valueEqual: (a: T, b: T) => boolean) {
+  return (a: Record<string, T>, b: Record<string, T>): boolean => {
+    if (a === b) {
+      return true;
+    }
+    const keys = Object.keys(a);
+    if (keys.length !== Object.keys(b).length) {
+      return false;
+    }
+    for (const key of keys) {
+      if (!Object.prototype.hasOwnProperty.call(b, key) || !valueEqual(a[key], b[key])) {
+        return false;
+      }
+    }
+    return true;
+  };
+}
