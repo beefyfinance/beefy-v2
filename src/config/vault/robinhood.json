@@ -56,7 +56,7 @@
     "status": "active",
     "createdAt": 1788474531,
     "platformId": "beefy",
-    "feeTier": "0.3",
+    "feeTier": "0.30",
     "tickSpacing": 60,
     "assets": ["MSTR", "cbBTC"],
     "risks": {
