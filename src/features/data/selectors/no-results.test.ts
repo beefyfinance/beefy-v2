@@ -150,9 +150,9 @@ function makeState(
               chainId: v.chainId,
               platformId: v.platformId,
               assetType: 'lps',
-              contractAddress: v.contractAddress ?? '0x1111111111111111111111111111111111111111',
-              depositTokenAddress: '0x2222222222222222222222222222222222222222',
-              receiptTokenAddress: '0x3333333333333333333333333333333333333333',
+              contractAddress: v.contractAddress ?? '0x111111111111111111111111111111111111000B',
+              depositTokenAddress: '0x222222222222222222222222222222222222000D',
+              receiptTokenAddress: '0x333333333333333333333333333333333333000B',
             },
           ])
         ),
