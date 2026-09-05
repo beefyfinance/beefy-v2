@@ -1,6 +1,8 @@
 {
-  "uniswap-cow-robinhood-cashcat-weth-rp": true,
-  "uniswap-cow-robinhood-weth-pons-rp": true,
-  "uniswap-cow-robinhood-tendies-weth-rp": true,
-  "uniswap-cow-robinhood-weth-ai-rp": true
+  "aerodrome-cow-base-usdc-amznc-vault": true,
+  "aerodrome-cow-base-usdc-msftc-vault": true,
+  "aerodrome-cow-base-usdc-mstrc-vault": true,
+  "aerodrome-cow-base-usdc-sndkc-vault": true,
+  "aerodrome-cow-base-usdc-spcxc-vault": true,
+  "aerodrome-cow-base-usdc-tslac-vault": true
 }
