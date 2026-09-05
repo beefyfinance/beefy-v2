@@ -9,7 +9,3 @@ export const selectIsAnalyticsLoadedByAddress = createAddressDataSelector(
   hasLoaderFulfilledOnce
 );
 export const selectIsAnalyticsIdleByAddress = createAddressDataSelector('timeline', isLoaderIdle);
-export const selectIsClmHarvestsLoadedByAddress = createAddressDataSelector(
-  'clmHarvests',
-  hasLoaderFulfilledOnce
-);

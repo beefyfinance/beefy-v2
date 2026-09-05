@@ -22,6 +22,7 @@ export type FetchAbortSignal =
       signal?: AbortSignal;
     }
   | {
+      /** default 60_000ms if neither signal nor timeout supplied */
       timeout?: number;
     };
 

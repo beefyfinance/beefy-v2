@@ -1,4 +1,5 @@
 import {
+  DEFAULT_DISPATCHED_RECENT_SECONDS,
   createGlobalDataSelector,
   hasLoaderSettledOnce,
   shouldLoaderLoadOnce,
@@ -6,7 +7,8 @@ import {
 
 export const selectShouldInitGeoCountry = createGlobalDataSelector(
   'geoCountry',
-  shouldLoaderLoadOnce
+  shouldLoaderLoadOnce,
+  DEFAULT_DISPATCHED_RECENT_SECONDS
 );
 
 export const selectIsGeoCountrySettled = createGlobalDataSelector(

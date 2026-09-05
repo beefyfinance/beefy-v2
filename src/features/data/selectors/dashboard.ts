@@ -1,6 +1,9 @@
+import { EMPTY_ARRAY } from '../utils/selector-utils.ts';
+import { bigNumberEqual, numberEqual } from '../utils/selector-equality.ts';
 import { createSelector } from '@reduxjs/toolkit';
+import { createCachedSelector } from 're-reselect';
+import { orderBy } from 'lodash-es';
 import type BigNumber from 'bignumber.js';
-import { cloneDeep, orderBy } from 'lodash-es';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
@@ -97,22 +100,58 @@ export type UserRewards = {
   all: UserRewardsStatusEntry;
 };
 
-const emptyUserRewardsStatusEntry: UserRewardsStatusEntry = {
+const emptyUserRewardsStatusEntry: UserRewardsStatusEntry = Object.freeze({
   has: false,
   usd: BIG_ZERO,
-  rewards: [],
-};
-const emptyUserRewards: UserRewards = {
-  pending: cloneDeep(emptyUserRewardsStatusEntry),
-  claimed: cloneDeep(emptyUserRewardsStatusEntry),
-  compounded: cloneDeep(emptyUserRewardsStatusEntry),
-  all: cloneDeep(emptyUserRewardsStatusEntry),
+  rewards: EMPTY_ARRAY,
+});
+const emptyUserRewards: UserRewards = Object.freeze({
+  pending: emptyUserRewardsStatusEntry,
+  claimed: emptyUserRewardsStatusEntry,
+  compounded: emptyUserRewardsStatusEntry,
+  all: emptyUserRewardsStatusEntry,
+});
+const newUserRewards = (): UserRewards => ({
+  pending: { has: false, usd: BIG_ZERO, rewards: [] },
+  claimed: { has: false, usd: BIG_ZERO, rewards: [] },
+  compounded: { has: false, usd: BIG_ZERO, rewards: [] },
+  all: { has: false, usd: BIG_ZERO, rewards: [] },
+});
+
+const userRewardsStatusEqual = (a: UserRewardsStatusEntry, b: UserRewardsStatusEntry): boolean =>
+  a === b ||
+  (a.has === b.has && a.rewards.length === b.rewards.length && bigNumberEqual(a.usd, b.usd));
+
+const userRewardsEqual = (a: UserRewards, b: UserRewards): boolean => {
+  if (a === b) {
+    return true;
+  }
+  // reselect's stability check probes result comparators with two fresh empty objects
+  if (!a?.all || !b?.all) {
+    return false;
+  }
+  if (
+    !userRewardsStatusEqual(a.all, b.all) ||
+    !userRewardsStatusEqual(a.pending, b.pending) ||
+    !userRewardsStatusEqual(a.claimed, b.claimed) ||
+    !userRewardsStatusEqual(a.compounded, b.compounded)
+  ) {
+    return false;
+  }
+  // the status buckets hold the same objects as all, so comparing all element-wise settles them too
+  return a.all.rewards.every((reward, i) => {
+    const other = b.all.rewards[i];
+    return (
+      reward.status === other.status &&
+      reward.source === other.source &&
+      reward.token === other.token &&
+      bigNumberEqual(reward.amount, other.amount) &&
+      bigNumberEqual(reward.usd, other.usd)
+    );
+  });
 };
 
-/**
- * @dev requires analytics timeline / user pnl to be loaded
- */
-export const selectDashboardUserRewardsByVaultId = (
+const selectDashboardUserRewardsByVaultIdUncached = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -193,6 +232,10 @@ export const selectDashboardUserRewardsByVaultId = (
     }
   }
 
+  if (!rewards.length) {
+    return emptyUserRewards;
+  }
+
   return rewards.reduce<UserRewards>((acc, reward) => {
     for (const key of ['all', reward.status] as const) {
       const status = acc[key];
@@ -201,7 +244,7 @@ export const selectDashboardUserRewardsByVaultId = (
       status.rewards.push(reward);
     }
     return acc;
-  }, cloneDeep(emptyUserRewards));
+  }, newUserRewards());
 };
 
 // TODO add more checks
@@ -290,6 +333,46 @@ type DashboardUserTokenExposureVaultEntry = DashboardUserExposureVaultEntry & {
 type DashboardUserChainExposureVaultEntry = DashboardUserExposureVaultEntry & {
   chainId: ChainEntity['id'] | 'others';
 };
+type DashboardUserAnyExposureEntry = DashboardUserExposureEntry & {
+  chainId?: ChainEntity['id'] | 'others';
+  symbols?: string[];
+};
+
+const exposureSymbolsEqual = (a: string[] | undefined, b: string[] | undefined): boolean => {
+  if (a === b) {
+    return true;
+  }
+  if (!a || !b || a.length !== b.length) {
+    return false;
+  }
+  return a.every((symbol, i) => symbol === b[i]);
+};
+
+export const exposureEntriesEqual = (
+  a: DashboardUserAnyExposureEntry[],
+  b: DashboardUserAnyExposureEntry[]
+): boolean => {
+  if (a === b) {
+    return true;
+  }
+  if (!Array.isArray(a) || !Array.isArray(b)) {
+    return false;
+  }
+  if (a.length !== b.length) {
+    return false;
+  }
+  return a.every((entry, i) => {
+    const other = b[i];
+    return (
+      entry.key === other.key &&
+      entry.label === other.label &&
+      numberEqual(entry.percentage, other.percentage) &&
+      entry.chainId === other.chainId &&
+      bigNumberEqual(entry.value, other.value) &&
+      exposureSymbolsEqual(entry.symbols, other.symbols)
+    );
+  });
+};
 
 const getDashboardLpBreakdownScalingFactor = (
   _vaultId: string,
@@ -315,19 +398,34 @@ const getDashboardLpBreakdownScalingFactor = (
   }
   return scaleFactor;
 };
-
+const EXPOSURE_OTHERS: DashboardUserExposureEntry = Object.freeze({
+  key: 'others',
+  label: 'Others',
+  value: BIG_ZERO,
+  percentage: 0,
+});
+const CHAIN_EXPOSURE_OTHERS: DashboardUserExposureEntry<DashboardUserChainExposureVaultEntry> =
+  Object.freeze({
+    ...EXPOSURE_OTHERS,
+    chainId: 'others' as const,
+  });
+const TOKEN_EXPOSURE_OTHERS: DashboardUserExposureEntry<DashboardUserTokenExposureVaultEntry> =
+  Object.freeze({
+    ...EXPOSURE_OTHERS,
+    symbols: EMPTY_ARRAY,
+    chainId: 'ethereum' as const,
+  });
 const top6ByPercentageSummarizer = <
   T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 >(
   entries: DashboardUserExposureEntry<T>[]
-) =>
-  getTopNArray(entries, 'percentage', 6, {
-    key: 'others',
-    label: 'Others',
-    value: BIG_ZERO,
-    percentage: 0,
-  });
-
+) => getTopNArray(entries, 'percentage', 6, EXPOSURE_OTHERS);
+const top6ChainsByPercentageSummarizer = (
+  entries: DashboardUserExposureEntry<DashboardUserChainExposureVaultEntry>[]
+) => getTopNArray(entries, 'percentage', 6, CHAIN_EXPOSURE_OTHERS);
+const top6TokensByPercentageSummarizer = (
+  entries: DashboardUserExposureEntry<DashboardUserTokenExposureVaultEntry>[]
+) => getTopNArray(entries, 'percentage', 6, TOKEN_EXPOSURE_OTHERS);
 const stableVsOthersSummarizer = (entries: DashboardUserExposureEntry[]) =>
   orderBy(entries, 'key', 'desc');
 
@@ -341,12 +439,12 @@ const selectDashboardUserExposure = <
 ): DashboardUserExposureEntry<T>[] => {
   const walletAddress = maybeWalletAddress || selectWalletAddressIfKnown(state);
   if (!walletAddress) {
-    return [];
+    return EMPTY_ARRAY;
   }
 
   const vaultIds = selectUserDepositedVaultIds(state, walletAddress);
   if (!vaultIds.length) {
-    return [];
+    return EMPTY_ARRAY;
   }
 
   const vaultDeposits = vaultIds.map(vaultId =>
@@ -383,19 +481,11 @@ const selectDashboardUserVaultChainExposure: DashboardUserExposureVaultFn<
   const chain = selectChainById(state, vault.chainId);
   return [{ key: chain.id, label: chain.name, value: vaultTvl, chainId: chain.id }];
 };
-
 export const selectDashboardUserExposureByChain = (state: BeefyState, walletAddress?: string) =>
   selectDashboardUserExposure(
     state,
     selectDashboardUserVaultChainExposure,
-    entries =>
-      getTopNArray(entries, 'percentage', 6, {
-        key: 'others',
-        label: 'Others',
-        value: BIG_ZERO,
-        percentage: 0,
-        chainId: 'others' as const,
-      }),
+    top6ChainsByPercentageSummarizer,
     walletAddress
   );
 
@@ -409,7 +499,6 @@ const selectDashboardUserVaultPlatformExposure: DashboardUserExposureVaultFn = (
   const platform = selectPlatformById(state, vault.platformId);
   return [{ key: platform.id, label: platform.name, value: vaultTvl }];
 };
-
 export const selectDashboardUserExposureByPlatform = (state: BeefyState, walletAddress?: string) =>
   selectDashboardUserExposure(
     state,
@@ -463,20 +552,11 @@ const selectDashboardUserVaultTokenExposure: DashboardUserExposureVaultFn<
     },
   ];
 };
-
 export const selectDashboardUserExposureByToken = (state: BeefyState, walletAddress?: string) =>
   selectDashboardUserExposure(
     state,
     selectDashboardUserVaultTokenExposure,
-    entries =>
-      getTopNArray(entries, 'percentage', 6, {
-        key: 'others',
-        label: 'Others',
-        value: BIG_ZERO,
-        percentage: 0,
-        symbols: [],
-        chainId: 'ethereum',
-      }),
+    top6TokensByPercentageSummarizer,
     walletAddress
   );
 
@@ -509,7 +589,6 @@ const selectDashboardUserVaultStableExposure: DashboardUserExposureVaultFn = (
 
   return [{ key: 'other', label: 'Other', value: vaultTvl }];
 };
-
 export const selectDashboardUserStablecoinsExposure = (state: BeefyState, walletAddress: string) =>
   selectDashboardUserExposure(
     state,
@@ -564,3 +643,15 @@ export const selectShouldInitDashboardForUser = (state: BeefyState, walletAddres
     selectShouldInitDashboardForUserImpl(state, walletAddress)
   );
 };
+
+/** @dev requires analytics timeline / user pnl to be loaded */
+export const selectDashboardUserRewardsByVaultId = createCachedSelector(
+  (state: BeefyState) => state,
+  (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (_state: BeefyState, _vaultId: VaultEntity['id'], walletAddress?: string) => walletAddress,
+  selectDashboardUserRewardsByVaultIdUncached,
+  { memoizeOptions: { resultEqualityCheck: userRewardsEqual } }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
+    `${vaultId}-${walletAddress ?? ''}`
+);

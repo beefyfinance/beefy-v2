@@ -1,6 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { uniqBy } from 'lodash-es';
 import { createCachedSelector } from 're-reselect';
+import { createBoundedSelector } from '../utils/selector-utils.ts';
+import { uniqBy } from 'lodash-es';
 import type { TFunction } from 'react-i18next';
 import {
   featurableVaultSide,
@@ -17,8 +18,6 @@ import type { TokenEntity } from '../entities/token.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { AmmEntity, SwapAggregatorEntity } from '../entities/zap.ts';
 import type { BeefyState } from '../store/types.ts';
-import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
-import { selectPlatformByIdOrUndefined } from './platforms.ts';
 import { selectVaultByIdOrUndefined } from './vaults.ts';
 
 export const selectZapByChainId = (state: BeefyState, chainId: ChainEntity['id']) =>
@@ -106,26 +105,13 @@ export const selectZapCampaignByVaultId = createCachedSelector(
       ...(fee.winner?.id ? { id: fee.winner.id } : {}),
     };
   }
-)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
-
-export const selectSwapAggregatorById = (state: BeefyState, id: SwapAggregatorEntity['id']) =>
-  state.entities.zaps.aggregators.byId[id] || undefined;
+)({
+  keySelector: (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  selectorCreator: createBoundedSelector,
+});
 
 export const selectSwapAggregatorsExistForChain = (state: BeefyState, chainId: ChainEntity['id']) =>
   (state.entities.zaps.aggregators.byChainId[chainId]?.allIds.length || 0) > 0;
-
-export const selectSwapAggregatorsForChain = createSelector(
-  (state: BeefyState, chainId: ChainEntity['id']) =>
-    state.entities.zaps.aggregators.byChainId[chainId]?.byType,
-  (state: BeefyState) => state.entities.zaps.aggregators.byId,
-  (byType, byId): SwapAggregatorEntity[] => {
-    if (!byType) {
-      return [];
-    }
-
-    return Object.values(byType).map(id => byId[id]);
-  }
-);
 
 export const selectSwapAggregatorForChainType = <T extends SwapAggregatorEntity['type']>(
   state: BeefyState,
@@ -147,12 +133,6 @@ export const selectSwapAggregatorForChainType = <T extends SwapAggregatorEntity[
   >;
 };
 
-export const selectZapTokenScoresByChainId = (
-  state: BeefyState,
-  chainId: ChainEntity['id']
-): Record<TokenEntity['id'], number> =>
-  state.entities.zaps.tokens.byChainId[chainId]?.scoreById || {};
-
 export const selectZapTokenScore = (
   state: BeefyState,
   chainId: ChainEntity['id'],
@@ -162,24 +142,20 @@ export const selectZapTokenScore = (
 export const selectVaultSupportsZap = (state: BeefyState, vaultId: VaultEntity['id']) =>
   state.entities.zaps.vaults.byId[vaultId] || false;
 
-export const selectAmmsByChainId = (state: BeefyState, chainId: ChainEntity['id']) =>
-  arrayOrStaticEmpty(state.entities.zaps.amms.byChainId[chainId]);
+export const selectAmmById = (state: BeefyState, ammId: AmmEntity['id']) =>
+  state.entities.zaps.amms.byId[ammId] || null;
 
-export const selectAmmById = createSelector(
-  (_state: BeefyState, ammId: AmmEntity['id']) => ammId,
-  (state: BeefyState, _ammId: AmmEntity['id']) => state.entities.zaps.amms.byId,
-  (ammId, byId) => byId[ammId] || null
-);
+const selectPlatformsById = (state: BeefyState) => state.entities.platforms.byId;
+type PlatformsById = ReturnType<typeof selectPlatformsById>;
 
-export const selectZapSwapProviderName = (
-  state: BeefyState,
+function swapProviderName(
+  platformsById: PlatformsById,
   providerId: string,
   type: 'pool' | 'aggregator',
   t: TFunction
-) => {
+) {
   if (type === 'pool') {
-    const platform = selectPlatformByIdOrUndefined(state, providerId);
-    return platform?.name || providerId;
+    return platformsById[providerId]?.name || providerId;
   }
 
   if (type === 'aggregator') {
@@ -187,94 +163,107 @@ export const selectZapSwapProviderName = (
   }
 
   return providerId;
-};
+}
 
-export const selectZapQuoteTitle = (state: BeefyState, steps: ZapQuoteStep[], t: TFunction) => {
-  const defaultTitle = `Transact-Quote-Title`;
-  const swapSteps = steps.filter(isZapQuoteStepSwap);
-  if (swapSteps.length === 0) {
-    return { title: defaultTitle, icon: 'default' };
+export const selectZapSwapProviderName = (
+  state: BeefyState,
+  providerId: string,
+  type: 'pool' | 'aggregator',
+  t: TFunction
+) => swapProviderName(selectPlatformsById(state), providerId, type, t);
+
+export const selectZapQuoteTitle = createSelector(
+  (state: BeefyState, _steps: ZapQuoteStep[], _t: TFunction) => selectPlatformsById(state),
+  (_state: BeefyState, steps: ZapQuoteStep[], _t: TFunction) => steps,
+  (_state: BeefyState, _steps: ZapQuoteStep[], t: TFunction) => t,
+  (platformsById, steps, t) => {
+    const defaultTitle = `Transact-Quote-Title`;
+    const swapSteps = steps.filter(isZapQuoteStepSwap);
+    if (swapSteps.length === 0) {
+      return { title: defaultTitle, icon: 'default' };
+    }
+
+    const nonWraps = swapSteps.filter(step => step.providerId !== 'wnative');
+    if (nonWraps.length === 0) {
+      return { title: defaultTitle, icon: 'default' };
+    }
+
+    const uniqueProviders = uniqBy(
+      nonWraps.map(step => ({
+        providerId: step.providerId,
+        via: step.via,
+      })),
+      p => `${p.providerId}-${p.via}`
+    );
+
+    const names = uniqueProviders.map(p => swapProviderName(platformsById, p.providerId, p.via, t));
+
+    if (names.length === 1) {
+      return {
+        title: t(`Transact-Quote-Title-one`, { one: names[0] }),
+        icon: uniqueProviders[0].via === 'aggregator' ? uniqueProviders[0].providerId : 'default',
+      };
+    } else if (names.length === 2) {
+      return {
+        title: t(`Transact-Quote-Title-two`, { one: names[0], two: names[1] }),
+        icon: 'default',
+      };
+    } else {
+      return {
+        title: t(`Transact-Quote-Title-three`, { one: names[0], two: names[1], three: names[2] }),
+        icon: 'default',
+      };
+    }
   }
-
-  const nonWraps = swapSteps.filter(step => step.providerId !== 'wnative');
-  if (nonWraps.length === 0) {
-    return { title: defaultTitle, icon: 'default' };
-  }
-
-  const uniqueProviders = uniqBy(
-    nonWraps.map(step => ({
-      providerId: step.providerId,
-      via: step.via,
-    })),
-    p => `${p.providerId}-${p.via}`
-  );
-
-  const names = uniqueProviders.map(p => selectZapSwapProviderName(state, p.providerId, p.via, t));
-
-  if (names.length === 1) {
-    return {
-      title: t(`Transact-Quote-Title-one`, { one: names[0] }),
-      icon: uniqueProviders[0].via === 'aggregator' ? uniqueProviders[0].providerId : 'default',
-    };
-  } else if (names.length === 2) {
-    return {
-      title: t(`Transact-Quote-Title-two`, { one: names[0], two: names[1] }),
-      icon: 'default',
-    };
-  } else {
-    return {
-      title: t(`Transact-Quote-Title-three`, { one: names[0], two: names[1], three: names[2] }),
-      icon: 'default',
-    };
-  }
-};
+);
 
 export type ZapQuoteProvider = {
   name: string;
   icon: string;
 };
 
-export const selectZapQuoteProviders = (
-  state: BeefyState,
-  steps: ZapQuoteStep[],
-  t: TFunction
-): ZapQuoteProvider[] => {
-  const providers: ZapQuoteProvider[] = [];
-  const seen = new Set<string>();
+export const selectZapQuoteProviders = createSelector(
+  (state: BeefyState, _steps: ZapQuoteStep[], _t: TFunction) => selectPlatformsById(state),
+  (_state: BeefyState, steps: ZapQuoteStep[], _t: TFunction) => steps,
+  (_state: BeefyState, _steps: ZapQuoteStep[], t: TFunction) => t,
+  (platformsById, steps, t): ZapQuoteProvider[] => {
+    const providers: ZapQuoteProvider[] = [];
+    const seen = new Set<string>();
 
-  const swapSteps = steps.filter(isZapQuoteStepSwap);
-  const nonWraps = swapSteps.filter(step => step.providerId !== 'wnative');
-  const uniqueSwapProviders = uniqBy(
-    nonWraps.map(step => ({ providerId: step.providerId, via: step.via })),
-    p => `${p.providerId}-${p.via}`
-  );
+    const swapSteps = steps.filter(isZapQuoteStepSwap);
+    const nonWraps = swapSteps.filter(step => step.providerId !== 'wnative');
+    const uniqueSwapProviders = uniqBy(
+      nonWraps.map(step => ({ providerId: step.providerId, via: step.via })),
+      p => `${p.providerId}-${p.via}`
+    );
 
-  for (const p of uniqueSwapProviders) {
-    const key = `${p.providerId}-${p.via}`;
-    if (!seen.has(key)) {
-      seen.add(key);
-      providers.push({
-        name: selectZapSwapProviderName(state, p.providerId, p.via, t),
-        icon: p.via === 'aggregator' ? p.providerId : 'default',
-      });
+    for (const p of uniqueSwapProviders) {
+      const key = `${p.providerId}-${p.via}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        providers.push({
+          name: swapProviderName(platformsById, p.providerId, p.via, t),
+          icon: p.via === 'aggregator' ? p.providerId : 'default',
+        });
+      }
     }
-  }
 
-  const bridgeSteps = steps.filter(isZapQuoteStepBridge);
-  for (const bridge of bridgeSteps) {
-    const key = `bridge-${bridge.bridgeId}`;
-    if (!seen.has(key)) {
-      seen.add(key);
-      providers.push({
-        name: bridge.bridgeId.toUpperCase(),
-        icon: bridge.bridgeId,
-      });
+    const bridgeSteps = steps.filter(isZapQuoteStepBridge);
+    for (const bridge of bridgeSteps) {
+      const key = `bridge-${bridge.bridgeId}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        providers.push({
+          name: bridge.bridgeId.toUpperCase(),
+          icon: bridge.bridgeId,
+        });
+      }
     }
-  }
 
-  if (providers.length === 0) {
-    providers.push({ name: t('Transact-Quote-Title'), icon: 'default' });
-  }
+    if (providers.length === 0) {
+      providers.push({ name: t('Transact-Quote-Title'), icon: 'default' });
+    }
 
-  return providers;
-};
+    return providers;
+  }
+);

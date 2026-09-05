@@ -1,4 +1,5 @@
 import type BigNumber from 'bignumber.js';
+import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO, compareBigNumber, isFiniteBigNumber } from '../../../helpers/big-number.ts';
 import { entries, keys } from '../../../helpers/object.ts';
@@ -13,6 +14,7 @@ import {
   TREASURY_MIN_DISPLAY_USD,
 } from '../entities/treasury.ts';
 import type { BeefyState } from '../store/types.ts';
+import { EMPTY_ARRAY } from '../utils/selector-utils.ts';
 import { selectLpBreakdownBalance } from './balance.ts';
 import { selectChainById } from './chains.ts';
 import { selectIsVaultStable } from './filtered-vaults.ts';
@@ -30,7 +32,7 @@ const selectTreasury = (state: BeefyState) => {
   return state.ui.treasury.byChainId;
 };
 
-export const selectTreasurySorted = function (state: BeefyState) {
+const selectTreasurySortedUncached = function (state: BeefyState) {
   const treasuryPerChain = keys(selectTreasury(state)).map(chainId => {
     const assets = selectTreasuryAssetsByChainId(state, chainId);
     const reducedAssets = assets
@@ -114,6 +116,7 @@ export const selectTreasuryAssetsByChainId = createCachedSelector(
 
 const bifiOracles = ['BIFI', 'mooBIFI', 'rBIFI', 'basemooBIFI', 'opmooBIFI'];
 
+// reads prices, LP breakdowns and PPFS, so it is compared at the subscription, not gated here
 export const selectTreasuryStats = (state: BeefyState) => {
   const treasury = selectTreasury(state);
   let holdings = BIG_ZERO;
@@ -129,7 +132,7 @@ export const selectTreasuryStats = (state: BeefyState) => {
           let balanceInTokens = token.balance.shiftedBy(-token.decimals);
           if (bifiOracles.includes(token.oracleId)) {
             beefyHeld = beefyHeld.plus(
-              getBifiBalanceInTokens(state, token.oracleId, balanceInTokens)
+              selectBifiBalanceInTokens(state, token.oracleId, balanceInTokens)
             );
           }
 
@@ -155,7 +158,7 @@ export const selectTreasuryStats = (state: BeefyState) => {
               for (const asset of assets) {
                 if (bifiOracles.includes(asset.oracleId)) {
                   beefyHeld = beefyHeld.plus(
-                    getBifiBalanceInTokens(state, asset.oracleId, asset.userAmount)
+                    selectBifiBalanceInTokens(state, asset.oracleId, asset.userAmount)
                   );
                 }
                 if (selectIsTokenStable(state, chainId, asset.id)) {
@@ -213,7 +216,7 @@ export const selectTreasuryStats = (state: BeefyState) => {
 /**
  * Helper function to get bifi balance
  */
-const getBifiBalanceInTokens = (
+const selectBifiBalanceInTokens = (
   state: BeefyState,
   oracleId: TreasuryHoldingEntity['oracleId'],
   balance: BigNumber
@@ -226,6 +229,7 @@ const getBifiBalanceInTokens = (
   }
 };
 
+// reads prices, LP breakdowns and PPFS, so it is compared at the subscription, not gated here
 export const selectTreasuryTokensExposure = (state: BeefyState) => {
   const treasury = selectTreasury(state);
 
@@ -305,7 +309,7 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
   return treasuryExposure;
 };
 
-export const selectTreasuryExposureByChain = (state: BeefyState) => {
+const selectTreasuryExposureByChainUncached = (state: BeefyState) => {
   const treasury = selectTreasury(state);
 
   const chains: Partial<Record<ChainId, BigNumber>> = {};
@@ -333,7 +337,7 @@ export const selectTreasuryExposureByChain = (state: BeefyState) => {
   return treasuryExposureBychain;
 };
 
-export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
+const selectTreasuryExposureByAvailabilityUncached = (state: BeefyState) => {
   const treasury = selectTreasury(state);
 
   const exposure = keys(treasury).reduce(
@@ -370,13 +374,13 @@ export const selectTreasuryExposureByAvailability = (state: BeefyState) => {
   return treasuryExposureByAvailability;
 };
 
-export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
+export const selectTreasuryWalletAddressesByChainId = createSelector(
   (state: BeefyState, chainId: ChainEntity['id']) =>
     selectTreasuryHoldingsByChainId(state, chainId),
   (state: BeefyState, chainId: ChainEntity['id']) => selectChainById(state, chainId),
 
   (treasury, chain) => {
-    if (!treasury) return [];
+    if (!treasury) return EMPTY_ARRAY;
 
     return Object.values(treasury).map(wallet => {
       if (wallet.name.includes('validator')) {
@@ -402,4 +406,45 @@ export const selectTreasuryWalletAddressesByChainId = createCachedSelector(
       };
     });
   }
-)((_state: BeefyState, chainId: ChainEntity['id']) => chainId);
+);
+
+// the cache lives with the created selector, so it is process-wide rather than per-store
+function gatedTreasurySelector<R>(
+  deps: ReadonlyArray<(state: BeefyState) => unknown>,
+  fn: (state: BeefyState) => R
+) {
+  const last: unknown[] = new Array(deps.length);
+  const next: unknown[] = new Array(deps.length);
+  let hasResult = false;
+  let lastResult: R;
+  return (state: BeefyState): R => {
+    let changed = !hasResult;
+    for (let i = 0; i < deps.length; i++) {
+      next[i] = deps[i](state);
+      if (!changed && next[i] !== last[i]) changed = true;
+    }
+    if (!changed) {
+      return lastResult;
+    }
+    // the dep slots and hasResult are set only after fn returns, so a throw is not cached
+    lastResult = fn(state);
+    for (let i = 0; i < deps.length; i++) {
+      last[i] = next[i];
+    }
+    hasResult = true;
+    return lastResult;
+  };
+}
+
+export const selectTreasurySorted = gatedTreasurySelector(
+  [selectTreasury],
+  selectTreasurySortedUncached
+);
+export const selectTreasuryExposureByChain = gatedTreasurySelector(
+  [selectTreasury, (state: BeefyState) => state.entities.chains.byId],
+  selectTreasuryExposureByChainUncached
+);
+export const selectTreasuryExposureByAvailability = gatedTreasurySelector(
+  [selectTreasury],
+  selectTreasuryExposureByAvailabilityUncached
+);

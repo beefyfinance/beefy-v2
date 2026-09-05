@@ -154,9 +154,21 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
     (async () => {
       const chainFfs = fulfillsByNet[chain.id];
       if (chainFfs) {
-        dispatch((await chainFfs.contractData)());
-        if (chainFfs.user !== undefined) {
-          return dispatchUserFfs(dispatch, chainFfs.user);
+        try {
+          dispatch((await chainFfs.contractData)());
+        } catch (err) {
+          // balances replayed below are valued at a share price this chain no longer has, so ask again
+          dispatch(fetchAllContractDataByChainAction({ chainId: chain.id }));
+          throw err;
+        } finally {
+          // a failed chain must not withhold the user fulfils, or its loaders stay pending forever
+          if (chainFfs.user !== undefined) {
+            try {
+              await dispatchUserFfs(dispatch, chainFfs.user);
+            } catch (userErr) {
+              console.warn(userErr);
+            }
+          }
         }
       }
     })().catch(err => {

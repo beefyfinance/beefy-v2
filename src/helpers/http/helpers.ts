@@ -9,6 +9,7 @@ import type {
 import { typedDefaultsDeep } from '../object.ts';
 
 export const ABORT_REASON_TIMEOUT = '__timeout';
+export const DEFAULT_FETCH_TIMEOUT_MS = 60000;
 
 const DEFAULT_NULL_STRING = 'null';
 const DEFAULT_UNDEFINED_STRING = 'undefined';

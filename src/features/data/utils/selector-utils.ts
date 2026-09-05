@@ -1,3 +1,4 @@
+import { createSelectorCreator, lruMemoize } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 
@@ -12,10 +13,10 @@ export function valueOrThrow<T>(
 }
 
 /** For returning from selectors so a new object isn't created causing a re-render */
-export const EMPTY_ARRAY = Object.freeze([]);
+export const EMPTY_ARRAY = Object.freeze([]) as never[];
 
 export function arrayOrStaticEmpty<T>(arr: T[] | undefined | null): T[] {
-  return !!arr && arr.length ? arr : (EMPTY_ARRAY as unknown as T[]);
+  return !!arr && arr.length ? arr : EMPTY_ARRAY;
 }
 
 export function bigNumberOrStaticZero(value: BigNumber | undefined | null): BigNumber {
@@ -24,3 +25,8 @@ export function bigNumberOrStaticZero(value: BigNumber | undefined | null): BigN
   }
   return value;
 }
+
+export const createBoundedSelector = createSelectorCreator({
+  memoize: lruMemoize,
+  memoizeOptions: { maxSize: 1 },
+});

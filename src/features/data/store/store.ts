@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { useStore } from 'react-redux';
 import { persistStore } from 'redux-persist';
-import { setGlobalDevModeChecks } from 'reselect';
 import { initAppData } from '../actions/scenarios.ts';
 import { listenerMiddleware } from '../middlewares/listener-middleware.ts';
 import { addListeners } from '../middlewares/listener-setup.ts';
@@ -30,11 +29,6 @@ setupListeners(store.dispatch);
 store.dispatch(initAppData);
 
 export const persistor = persistStore(store);
-
-if (import.meta.env.DEV) {
-  // TODO can be enabled once selectors fixed to not trigger 1000 lines of console
-  setGlobalDevModeChecks({ inputStabilityCheck: 'never', identityFunctionCheck: 'never' });
-}
 
 /** @deprecated don't use the store directly */
 export type BeefyStore = typeof store;

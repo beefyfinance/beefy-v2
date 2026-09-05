@@ -38,11 +38,11 @@ function makeVault(overrides: {
     subType: 'standard',
     names: { list: overrides.name ?? 'Test Vault' },
     chainId: overrides.chainId ?? 'ethereum',
-    contractAddress: overrides.contractAddress ?? '0x1111111111111111111111111111111111111111',
+    contractAddress: overrides.contractAddress ?? '0x111111111111111111111111111111111111000B',
     depositTokenAddress:
-      overrides.depositTokenAddress ?? '0x2222222222222222222222222222222222222222',
+      overrides.depositTokenAddress ?? '0x222222222222222222222222222222222222000D',
     receiptTokenAddress:
-      overrides.receiptTokenAddress ?? '0x3333333333333333333333333333333333333333',
+      overrides.receiptTokenAddress ?? '0x333333333333333333333333333333333333000B',
   } as unknown as VaultEntity;
 }
 
@@ -300,11 +300,11 @@ describe('scoreVaultForSearch address mode', () => {
       subType: 'cowcentrated',
       names: { list: 'CLM Vault' },
       chainId: 'base',
-      contractAddress: '0x1111111111111111111111111111111111111111',
-      depositTokenAddress: '0x2222222222222222222222222222222222222222',
-      depositTokenAddresses: ['0x3333333333333333333333333333333333333333'],
-      receiptTokenAddress: '0x4444444444444444444444444444444444444444',
-      poolAddress: '0x5555555555555555555555555555555555555555',
+      contractAddress: '0x111111111111111111111111111111111111000B',
+      depositTokenAddress: '0x222222222222222222222222222222222222000D',
+      depositTokenAddresses: ['0x333333333333333333333333333333333333000B'],
+      receiptTokenAddress: '0x444444444444444444444444444444444444000A',
+      poolAddress: '0x555555555555555555555555555555555555000A',
     } as unknown as VaultEntity;
     expect(scoreVaultForSearch(context('0x333333'), target(clm))).toBe(60); // clm deposit token
     expect(scoreVaultForSearch(context('0x555555'), target(clm))).toBe(60); // underlying pool
@@ -335,7 +335,7 @@ describe('scoreVaultForSearch address mode', () => {
       names: { list: 'Gov Vault' },
       chainId: 'ethereum',
       contractAddress: '0xAAAA567890123456789012345678901234567890',
-      depositTokenAddress: '0x2222222222222222222222222222222222222222',
+      depositTokenAddress: '0x222222222222222222222222222222222222000D',
     } as unknown as VaultEntity;
     expect(scoreVaultForSearch(context('0xaaaa56'), target(gov))).toBe(60);
   });
