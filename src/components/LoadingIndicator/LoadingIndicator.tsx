@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { css, type CssStyles } from '@repo/styles/css';
 import { useTranslation } from 'react-i18next';
-import techLoader from '../../images/tech-loader.gif';
+import techLoader from '../../images/tech-loader.svg?inline';
 
 export type LoadingIndicatorProps = {
   text?: string;
