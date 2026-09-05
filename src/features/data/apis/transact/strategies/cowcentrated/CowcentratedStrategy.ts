@@ -36,7 +36,7 @@ import {
   onlyOneToken,
 } from '../../helpers/options.ts';
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
-import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
+import { allTokensAreDistinct, pickTokens, tokensReachableFromAll } from '../../helpers/tokens.ts';
 import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { QuoteRequest } from '../../swap/ISwapProvider.ts';
 import {
@@ -557,13 +557,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       this.options.swap
     );
 
-    return tokenSupport.any.filter(token => {
-      return depositTokens.every(
-        (lpToken, i) =>
-          isTokenEqual(token, lpToken) ||
-          tokenSupport.tokens[i].some(supportedToken => isTokenEqual(supportedToken, token))
-      );
-    });
+    return tokensReachableFromAll(tokenSupport.any, depositTokens, tokenSupport.tokens);
   }
 
   protected async fetchDepositQuoteAggregator(
