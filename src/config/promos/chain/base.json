@@ -1,5 +1,137 @@
 [
   {
+    "id": "moo_aerodrome-usdc-amznc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-usdc-amznc-vault",
+    "assets": ["USDC", "AMZNC"],
+    "tokenAddress": "0xB65A7e6749C01F35cCB9258803f5eE15E1b375AE",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x607796Ad1ecc3B6D0cCc765916Aadcf6D6ae381c",
+    "status": "active",
+    "campaign": "coinbase-stocks",
+    "partners": ["coinbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-usdc-msftc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-usdc-msftc-vault",
+    "assets": ["USDC", "MSFTc"],
+    "tokenAddress": "0x575Da7570B4eE677bd6002569De9D88B269CbAe4",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xB7BD7F8736a50fD1d349A9af6e6485eea418f040",
+    "status": "active",
+    "campaign": "coinbase-stocks",
+    "partners": ["coinbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-usdc-mstrc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-usdc-mstrc-vault",
+    "assets": ["USDC", "MSTRc"],
+    "tokenAddress": "0x944A37603ca610ccBaC7a09264b3E73c3b7FbA28",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xdF80Cda01eB964f38F1C0FB192797B3A01513dAd",
+    "status": "active",
+    "campaign": "coinbase-stocks",
+    "partners": ["coinbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-usdc-sndkc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-usdc-sndkc-vault",
+    "assets": ["USDC", "SNDKc"],
+    "tokenAddress": "0x8d7F7FDF3C0176b5Bc14830406c3DEAE1dB16dDE",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x1138a3da0E3C4c6eA7bD03750D4B010f3216473D",
+    "status": "active",
+    "campaign": "coinbase-stocks",
+    "partners": ["coinbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-usdc-spcxc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-usdc-spcxc-vault",
+    "assets": ["USDC", "SPCXc"],
+    "tokenAddress": "0xf638Acbb5Afa238af95E77f24963335018f51bCc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x3B6691f6802Bb18D663e315edeC5f9d5ad3C5e67",
+    "status": "active",
+    "campaign": "coinbase-stocks",
+    "partners": ["coinbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-usdc-tslac",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-usdc-tslac-vault",
+    "assets": ["USDC", "TSLAc"],
+    "tokenAddress": "0x722A0B2664Cac3C826ecb85dcAd97383e1645Db1",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x6ca1bd83Dd1d9B2754FE262f2Ee269cB0AB82a68",
+    "status": "active",
+    "campaign": "coinbase-stocks",
+    "partners": ["coinbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
     "id": "moo_aerodrome-usdc-aaplc",
     "title": "Beefy",
     "vaultId": "aerodrome-cow-base-usdc-aaplc-vault",
