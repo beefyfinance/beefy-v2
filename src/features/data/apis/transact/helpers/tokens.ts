@@ -1,6 +1,6 @@
 import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token.ts';
-import { isTokenEqual, isTokenNative } from '../../../entities/token.ts';
-import { sortBy, uniqBy } from 'lodash-es';
+import { isTokenEqual, isTokenNative, tokenEqualityKey } from '../../../entities/token.ts';
+import { sortBy } from 'lodash-es';
 import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenAmount } from '../transact-types.ts';
 
@@ -86,7 +86,16 @@ export function sortTokenAddresses(addresses: TokenEntity['address'][]): TokenEn
  * Returns list of unique tokens by chainId and address
  */
 export function uniqueTokens<T extends TokenEntity = TokenEntity>(tokens: T[]): T[] {
-  return uniqBy(tokens, token => `${token.chainId}-${token.address.toLowerCase()}`);
+  const seen = new Set<string>();
+  const unique: T[] = [];
+  for (const token of tokens) {
+    const key = `${token.chainId}-${token.address.toLowerCase()}`;
+    if (!seen.has(key)) {
+      seen.add(key);
+      unique.push(token);
+    }
+  }
+  return unique;
 }
 
 /**
@@ -94,6 +103,29 @@ export function uniqueTokens<T extends TokenEntity = TokenEntity>(tokens: T[]): 
  */
 export function mergeTokenLists(...lists: TokenEntity[][]): TokenEntity[] {
   return uniqueTokens(lists.flat());
+}
+
+/**
+ * Of {@link candidates}, those that every wanted token can reach: either the candidate is that
+ * wanted token, or it appears in that wanted token's supported list.
+ * {@link supportedPerWanted} is indexed to match {@link wantedTokens}.
+ */
+export function tokensReachableFromAll(
+  candidates: TokenEntity[],
+  wantedTokens: TokenEntity[],
+  supportedPerWanted: TokenEntity[][]
+): TokenEntity[] {
+  const wantedKeys = wantedTokens.map(tokenEqualityKey);
+  const supportedKeysPerWanted = supportedPerWanted.map(
+    tokens => new Set(tokens.map(tokenEqualityKey))
+  );
+
+  return candidates.filter(candidate => {
+    const candidateKey = tokenEqualityKey(candidate);
+    return wantedKeys.every(
+      (wantedKey, i) => wantedKey === candidateKey || supportedKeysPerWanted[i].has(candidateKey)
+    );
+  });
 }
 
 /**
