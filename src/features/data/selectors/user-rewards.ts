@@ -13,8 +13,8 @@ import {
   selectVaultActiveStellaSwapCampaigns,
   type UnifiedRewardToken,
 } from './rewards.ts';
-import { selectTokenByAddressOrUndefined, selectTokenPriceByTokenOracleId } from './tokens.ts';
 import { selectWalletAddress } from './wallet.ts';
+import { bigNumberEqual, numberEqual } from '../utils/selector-equality.ts';
 import {
   selectHasMerklRewardsDispatchedRecentlyForAnyUser,
   selectHasStellaSwapRewardsDispatchedRecentlyForAnyUser,
@@ -36,15 +36,44 @@ export type UnifiedReward = {
   apr: number | undefined;
 };
 
-function selectUnifiedReward(
-  state: BeefyState,
+type TokensByChainId = BeefyState['entities']['tokens']['byChainId'];
+type PricesByOracleId = BeefyState['entities']['tokens']['prices']['byOracleId'];
+
+function unifiedRewardEqual(a: UnifiedReward, b: UnifiedReward): boolean {
+  return (
+    a === b ||
+    (a.token === b.token &&
+      a.active === b.active &&
+      numberEqual(a.apr, b.apr) &&
+      bigNumberEqual(a.amount, b.amount) &&
+      (a.price === b.price || (!!a.price && !!b.price && bigNumberEqual(a.price, b.price))))
+  );
+}
+
+export function unifiedRewardsEqual(
+  a: UnifiedReward[] | undefined,
+  b: UnifiedReward[] | undefined
+): boolean {
+  if (a === b) {
+    return true;
+  }
+  if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) {
+    return false;
+  }
+  return a.every((reward, i) => unifiedRewardEqual(reward, b[i]));
+}
+
+function buildUnifiedReward(
+  tokensByChainId: TokensByChainId,
+  pricesByOracleId: PricesByOracleId,
   balance: BigNumber,
   token: UnifiedRewardToken,
   active: boolean,
   apr: number | undefined
 ): UnifiedReward {
-  const abToken = selectTokenByAddressOrUndefined(state, token.chainId, token.address);
-  const price = abToken ? selectTokenPriceByTokenOracleId(state, abToken.oracleId) : undefined;
+  const abToken =
+    tokensByChainId[token.chainId]?.byAddress[token.address.toLowerCase()] || undefined;
+  const price = abToken ? pricesByOracleId[abToken.oracleId] || BIG_ZERO : undefined;
 
   return {
     amount: balance,
@@ -55,83 +84,86 @@ function selectUnifiedReward(
   };
 }
 
-function selectUnifiedMerklRewards(
-  state: BeefyState,
+function buildUnifiedMerklRewards(
+  tokensByChainId: TokensByChainId,
+  pricesByOracleId: PricesByOracleId,
   rewards: Pick<MerklVaultReward, 'token' | 'unclaimed'>[]
 ): UnifiedReward[] {
   return rewards.map(reward =>
-    selectUnifiedReward(state, reward.unclaimed, reward.token, false, undefined)
+    buildUnifiedReward(
+      tokensByChainId,
+      pricesByOracleId,
+      reward.unclaimed,
+      reward.token,
+      false,
+      undefined
+    )
   );
 }
 
-export function selectUserMerklUnifiedRewardsForVault(
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  walletAddress?: string
-) {
-  const unclaimedRewards =
+export const selectUserMerklUnifiedRewardsForVault = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
     walletAddress ?
       state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byVaultId[vaultId] ||
       undefined
-    : undefined;
-  const activeCampaigns = selectVaultActiveMerklCampaigns(state, vaultId);
+    : undefined,
+  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
+    selectVaultActiveMerklCampaigns(state, vaultId),
+  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
+    state.entities.tokens.byChainId,
+  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
+    state.entities.tokens.prices.byOracleId,
+  (unclaimedRewards, activeCampaigns, tokensByChainId, pricesByOracleId) => {
+    if (!isNonEmptyArray(unclaimedRewards) && !isNonEmptyArray(activeCampaigns)) {
+      return undefined;
+    }
 
-  if (!isNonEmptyArray(unclaimedRewards) && !isNonEmptyArray(activeCampaigns)) {
-    return undefined;
-  }
+    const rewards: UnifiedReward[] =
+      isNonEmptyArray(unclaimedRewards) ?
+        buildUnifiedMerklRewards(tokensByChainId, pricesByOracleId, unclaimedRewards)
+      : [];
 
-  const rewards: UnifiedReward[] =
-    isNonEmptyArray(unclaimedRewards) ? selectUnifiedMerklRewards(state, unclaimedRewards) : [];
-
-  if (isNonEmptyArray(activeCampaigns)) {
-    for (const campaign of activeCampaigns) {
-      const existing = rewards.find(r => r.token.address === campaign.rewardToken.address);
-      if (existing) {
-        existing.active = true;
-        existing.apr = (existing.apr || 0) + campaign.apr;
-      } else {
-        rewards.push(
-          selectUnifiedReward(state, BIG_ZERO, campaign.rewardToken, true, campaign.apr)
-        );
+    if (isNonEmptyArray(activeCampaigns)) {
+      for (const campaign of activeCampaigns) {
+        const existing = rewards.find(r => r.token.address === campaign.rewardToken.address);
+        if (existing) {
+          existing.active = true;
+          existing.apr = (existing.apr || 0) + campaign.apr;
+        } else {
+          rewards.push(
+            buildUnifiedReward(
+              tokensByChainId,
+              pricesByOracleId,
+              BIG_ZERO,
+              campaign.rewardToken,
+              true,
+              campaign.apr
+            )
+          );
+        }
       }
     }
+
+    return rewards;
   }
+);
 
-  return rewards;
-}
-
-export function selectUserMerklUnifiedRewardsForChain(
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  walletAddress: string
-) {
-  const chainRewards =
-    state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byChainId[chainId];
-  if (!chainRewards) {
-    return undefined;
-  }
-
-  return selectUnifiedMerklRewards(state, chainRewards);
-}
+export const selectUserMerklUnifiedRewardsForChain = createSelector(
+  (state: BeefyState, chainId: ChainEntity['id'], walletAddress: string) =>
+    state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byChainId[chainId],
+  (state: BeefyState, _chainId: ChainEntity['id'], _walletAddress: string) =>
+    state.entities.tokens.byChainId,
+  (state: BeefyState, _chainId: ChainEntity['id'], _walletAddress: string) =>
+    state.entities.tokens.prices.byOracleId,
+  (chainRewards, tokensByChainId, pricesByOracleId) =>
+    chainRewards ?
+      buildUnifiedMerklRewards(tokensByChainId, pricesByOracleId, chainRewards)
+    : undefined
+);
 
 export function selectMayHaveOffchainUserRewards(_state: BeefyState, vault: VaultEntity) {
   return isCowcentratedLikeVault(vault) || vault.chainId === 'mode';
 }
-
-const selectConnectedUserMerklRewardsForVault = createSelector(
-  (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  (state: BeefyState) => state.user.rewards.byUser,
-  (state: BeefyState) => selectWalletAddress(state),
-  (vaultId, rewardsByUser, walletAddress) => {
-    if (!walletAddress) {
-      return undefined;
-    }
-
-    return (
-      rewardsByUser[walletAddress.toLowerCase()]?.byProvider.merkl.byVaultId[vaultId] || undefined
-    );
-  }
-);
 
 export const selectUserMerklRewardsForVault = (
   state: BeefyState,
@@ -141,61 +173,61 @@ export const selectUserMerklRewardsForVault = (
   state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byVaultId[vaultId] ||
   undefined;
 
+const selectConnectedUserMerklRewardsForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const walletAddress = selectWalletAddress(state);
+  return walletAddress ? selectUserMerklRewardsForVault(state, vaultId, walletAddress) : undefined;
+};
+
 export const selectConnectedUserHasMerklRewardsForVault = createSelector(
   selectConnectedUserMerklRewardsForVault,
   rewards => rewards?.some(r => r.unclaimed.gt(BIG_ZERO)) || false
 );
 
-export function selectUserStellaSwapUnifiedRewardsForVault(
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  walletAddress?: string
-) {
-  const unclaimedRewards =
+export const selectUserStellaSwapUnifiedRewardsForVault = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
     walletAddress ?
       state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.stellaswap.byVaultId[
         vaultId
       ] || undefined
-    : undefined;
-  const activeCampaigns = selectVaultActiveStellaSwapCampaigns(state, vaultId);
-
-  if (!isNonEmptyArray(unclaimedRewards) && !isNonEmptyArray(activeCampaigns)) {
-    return undefined;
-  }
-
-  const rewards: UnifiedReward[] =
-    isNonEmptyArray(unclaimedRewards) ? selectUnifiedMerklRewards(state, unclaimedRewards) : [];
-
-  if (isNonEmptyArray(activeCampaigns)) {
-    for (const campaign of activeCampaigns) {
-      const existing = rewards.find(r => r.token.address === campaign.rewardToken.address);
-      if (existing) {
-        existing.active = true;
-        existing.apr = (existing.apr || 0) + campaign.apr;
-      } else {
-        rewards.push(
-          selectUnifiedReward(state, BIG_ZERO, campaign.rewardToken, true, campaign.apr)
-        );
-      }
-    }
-  }
-
-  return rewards;
-}
-
-const selectConnectedUserStellaSwapRewardsForVault = createSelector(
-  (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  (state: BeefyState) => state.user.rewards.byUser,
-  (state: BeefyState) => selectWalletAddress(state),
-  (vaultId, rewardsByUser, walletAddress) => {
-    if (!walletAddress) {
+    : undefined,
+  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
+    selectVaultActiveStellaSwapCampaigns(state, vaultId),
+  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
+    state.entities.tokens.byChainId,
+  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
+    state.entities.tokens.prices.byOracleId,
+  (unclaimedRewards, activeCampaigns, tokensByChainId, pricesByOracleId) => {
+    if (!isNonEmptyArray(unclaimedRewards) && !isNonEmptyArray(activeCampaigns)) {
       return undefined;
     }
 
-    return (
-      rewardsByUser[walletAddress.toLowerCase()]?.byProvider.stellaswap.byVaultId[vaultId] ||
-      undefined
-    );
+    const rewards: UnifiedReward[] =
+      isNonEmptyArray(unclaimedRewards) ?
+        buildUnifiedMerklRewards(tokensByChainId, pricesByOracleId, unclaimedRewards)
+      : [];
+
+    if (isNonEmptyArray(activeCampaigns)) {
+      for (const campaign of activeCampaigns) {
+        const existing = rewards.find(r => r.token.address === campaign.rewardToken.address);
+        if (existing) {
+          existing.active = true;
+          existing.apr = (existing.apr || 0) + campaign.apr;
+        } else {
+          rewards.push(
+            buildUnifiedReward(
+              tokensByChainId,
+              pricesByOracleId,
+              BIG_ZERO,
+              campaign.rewardToken,
+              true,
+              campaign.apr
+            )
+          );
+        }
+      }
+    }
+
+    return rewards;
   }
 );
 
@@ -207,6 +239,16 @@ export const selectUserStellaSwapRewardsForVault = (
   state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.stellaswap.byVaultId[
     vaultId
   ] || undefined;
+
+const selectConnectedUserStellaSwapRewardsForVault = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => {
+  const walletAddress = selectWalletAddress(state);
+  return walletAddress ?
+      selectUserStellaSwapRewardsForVault(state, vaultId, walletAddress)
+    : undefined;
+};
 
 export const selectConnectedUserHasStellaSwapRewardsForVault = createSelector(
   selectConnectedUserStellaSwapRewardsForVault,

@@ -1,4 +1,4 @@
-import { createCachedSelector } from 're-reselect';
+import { createSelector } from '@reduxjs/toolkit';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { VaultFee } from '../reducers/fees-types.ts';
 import type { BeefyState } from '../store/types.ts';
@@ -15,7 +15,7 @@ const GOV_FEES: Readonly<VaultFee> = {
   treasury: 0,
 };
 
-export const selectFeesByVaultId = createCachedSelector(
+export const selectFeesByVaultId = createSelector(
   selectVaultDepositFee,
   selectIsVaultGov,
   (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.fees.byId[vaultId],
@@ -34,4 +34,4 @@ export const selectFeesByVaultId = createCachedSelector(
 
     return fees;
   }
-)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+);

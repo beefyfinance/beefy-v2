@@ -45,6 +45,7 @@ import {
   includeWrappedAndNative,
   nativeAndWrappedAreSame,
   pickTokens,
+  tokensReachableFromAll,
   tokensToLp,
 } from '../helpers/tokens.ts';
 import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
@@ -196,13 +197,7 @@ export abstract class UniswapLikeStrategy<
       this.options.swap
     );
 
-    return tokenSupport.any.filter(token => {
-      return this.lpTokens.every(
-        (lpToken, i) =>
-          isTokenEqual(token, lpToken) ||
-          tokenSupport.tokens[i].some(supportedToken => isTokenEqual(supportedToken, token))
-      );
-    });
+    return tokensReachableFromAll(tokenSupport.any, this.lpTokens, tokenSupport.tokens);
   }
 
   async fetchDepositOptions(): Promise<UniswapLikeDepositOption<TAmm>[]> {

@@ -1,32 +1,21 @@
-import { createSelector } from '@reduxjs/toolkit';
-import { createCachedSelector } from 're-reselect';
 import type { BridgeEntity } from '../entities/bridge.ts';
 import type { BeefyState } from '../store/types.ts';
 
-export const selectBridgeById = createCachedSelector(
-  (state: BeefyState) => state.entities.bridges.byId,
-  (_: BeefyState, bridgeId: BridgeEntity['id']) => bridgeId,
-  (byId, bridgeId) => {
-    if (byId[bridgeId] === undefined) {
-      throw new Error(`selectBridgeById: Unknown bridge id ${bridgeId}`);
-    }
-    return byId[bridgeId];
-  }
-)((_state: BeefyState, bridgeId: BridgeEntity['id']) => bridgeId);
+const warnedUnknownBridgeIds = new Set<BridgeEntity['id']>();
 
-export const selectBridgeByIdIfKnown = createCachedSelector(
-  (state: BeefyState) => state.entities.bridges.byId,
-  (_: BeefyState, bridgeId: BridgeEntity['id']) => bridgeId,
-  (byId, bridgeId): BridgeEntity | undefined => {
-    if (byId[bridgeId] === undefined) {
-      console.warn(`selectBridgeByIdIfKnown: Unknown bridge id ${bridgeId}`);
-    }
-    return byId[bridgeId];
+export const selectBridgeByIdIfKnown = (
+  state: BeefyState,
+  bridgeId: BridgeEntity['id']
+): BridgeEntity | undefined => {
+  const bridge = state.entities.bridges.byId[bridgeId];
+  // the config loads after first render, so an empty map means not yet rather than unknown
+  if (
+    bridge === undefined &&
+    state.entities.bridges.allIds.length > 0 &&
+    !warnedUnknownBridgeIds.has(bridgeId)
+  ) {
+    warnedUnknownBridgeIds.add(bridgeId);
+    console.warn(`selectBridgeByIdIfKnown: Unknown bridge id ${bridgeId}`);
   }
-)((_state: BeefyState, bridgeId: BridgeEntity['id']) => bridgeId);
-
-export const selectAllBridges = createSelector(
-  (state: BeefyState) => state.entities.bridges.allIds,
-  (state: BeefyState) => state.entities.bridges.byId,
-  (ids, byId) => ids.map(id => byId[id])
-);
+  return bridge;
+};

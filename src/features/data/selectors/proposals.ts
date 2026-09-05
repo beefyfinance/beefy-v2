@@ -1,5 +1,3 @@
-import { createSelector } from '@reduxjs/toolkit';
-import { createCachedSelector } from 're-reselect';
 import type { ProposalEntity } from '../entities/proposal.ts';
 import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
@@ -13,57 +11,29 @@ export function selectAllProposalIds(state: BeefyState): ProposalEntity['id'][] 
 export const selectAllProposalIdsBySpace = (state: BeefyState, space: string) =>
   arrayOrStaticEmpty(state.entities.proposals.bySpace[space]?.allIds);
 
-export function selectProposalById(
-  state: BeefyState,
-  id: ProposalEntity['id']
-): ProposalEntity | undefined {
-  return state.entities.proposals.byId[id];
+function isProposalActive(p: ProposalEntity, now: number): boolean {
+  return (
+    p.start <= now && p.end >= now && (p.coreProposal || p.start + DELAY_NON_CORE_PROPOSALS <= now)
+  );
 }
 
-export const selectAllProposals = createSelector(
-  selectAllProposalIds,
-  (state: BeefyState) => state.entities.proposals.byId,
-  (allIds, byId): ProposalEntity[] => allIds.map(id => byId[id]!)
-);
+function selectUnreadActiveProposalCount(state: BeefyState, ids: ProposalEntity['id'][]): number {
+  const { byId, readIds } = state.entities.proposals;
+  const now = Math.floor(Date.now() / 1000);
+  let count = 0;
+  for (const id of ids) {
+    const p = byId[id];
+    if (p && isProposalActive(p, now) && !readIds.includes(p.id)) {
+      count++;
+    }
+  }
+  return count;
+}
 
-export const selectAllProposalsBySpace = createCachedSelector(
-  (state: BeefyState, space: string) => selectAllProposalIdsBySpace(state, space),
-  (state: BeefyState) => state.entities.proposals.byId,
-  (allIds, byId): ProposalEntity[] => allIds.map(id => byId[id]!)
-)((_, space) => space);
+export function selectUnreadActiveProposalsCount(state: BeefyState): number {
+  return selectUnreadActiveProposalCount(state, selectAllProposalIds(state));
+}
 
-export const selectAllActiveProposals = createSelector(
-  selectAllProposals,
-  () => Math.floor(Date.now() / 1000),
-  (proposals, now): ProposalEntity[] =>
-    proposals.filter(
-      p =>
-        p.start <= now &&
-        p.end >= now &&
-        (p.coreProposal || p.start + DELAY_NON_CORE_PROPOSALS <= now)
-    )
-);
-
-export const selectAllActiveProposalsBySpace = createSelector(
-  (state: BeefyState, space: string) => selectAllProposalsBySpace(state, space),
-  () => Math.floor(Date.now() / 1000),
-  (proposals, now): ProposalEntity[] =>
-    proposals.filter(
-      p =>
-        p.start <= now &&
-        p.end >= now &&
-        (p.coreProposal || p.start + DELAY_NON_CORE_PROPOSALS <= now)
-    )
-);
-
-export const selectUnreadActiveProposals = createSelector(
-  selectAllActiveProposals,
-  (state: BeefyState) => state.entities.proposals.readIds,
-  (proposals, readIds): ProposalEntity[] => proposals.filter(p => !readIds.includes(p.id))
-);
-
-export const selectUnreadActiveProposalsBySpace = createSelector(
-  (state: BeefyState, space: string) => selectAllActiveProposalsBySpace(state, space),
-  (state: BeefyState) => state.entities.proposals.readIds,
-  (proposals, readIds): ProposalEntity[] => proposals.filter(p => !readIds.includes(p.id))
-);
+export function selectUnreadActiveProposalsCountBySpace(state: BeefyState, space: string): number {
+  return selectUnreadActiveProposalCount(state, selectAllProposalIdsBySpace(state, space));
+}

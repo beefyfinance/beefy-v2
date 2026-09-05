@@ -1,8 +1,8 @@
-import { orderBy, partition } from 'lodash-es';
+import { partition } from 'lodash-es';
 import { isFulfilledResult } from '../../../../../helpers/promises.ts';
 import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenEntity } from '../../../entities/token.ts';
-import { isTokenEqual, isTokenNative } from '../../../entities/token.ts';
+import { isTokenEqual, isTokenNative, tokenEqualityKey } from '../../../entities/token.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectChainWrappedNativeToken } from '../../../selectors/tokens.ts';
 import { selectZapTokenScore } from '../../../selectors/zap.ts';
@@ -82,13 +82,37 @@ export class SwapAggregator implements ISwapAggregator {
       )
     );
 
-    const supportPerWanted = wantedTokens.map(wantedToken =>
-      this.tokensSupportingFilter(
-        tokensPerProvider,
-        (providerTokens: TokenEntity[]) =>
-          providerTokens.some(providerToken => isTokenEqual(providerToken, wantedToken)),
-        state
-      )
+    // membership index per provider, so the per-wanted-token tests below are hash lookups
+    // rather than a scan of every provider list for every wanted token
+    const keysPerProvider = tokensPerProvider.map(
+      providerTokens => new Set(providerTokens.map(tokenEqualityKey))
+    );
+    const wantedKeys = wantedTokens.map(tokenEqualityKey);
+
+    // the merged+sorted list depends only on which providers passed, and the same subset recurs
+    // for most wanted tokens, so merge and sort each distinct subset once
+    const mergedBySubset = new Map<string, TokenEntity[]>();
+    const tokensSupporting = (supports: (providerIndex: number) => boolean): TokenEntity[] => {
+      const passing: TokenEntity[][] = [];
+      const subsetKey: number[] = [];
+      for (let i = 0; i < tokensPerProvider.length; ++i) {
+        if (tokensPerProvider[i].length > 1 && supports(i)) {
+          passing.push(tokensPerProvider[i]);
+          subsetKey.push(i);
+        }
+      }
+
+      const cacheKey = subsetKey.join(',');
+      let merged = mergedBySubset.get(cacheKey);
+      if (merged === undefined) {
+        merged = this.mergeAndSortTokens(passing, state);
+        mergedBySubset.set(cacheKey, merged);
+      }
+      return merged;
+    };
+
+    const supportPerWanted = wantedKeys.map(wantedKey =>
+      tokensSupporting(i => keysPerProvider[i].has(wantedKey))
     );
 
     if (supportPerWanted.length === 1) {
@@ -98,13 +122,8 @@ export class SwapAggregator implements ISwapAggregator {
       };
     }
 
-    const supportAny = this.tokensSupportingFilter(
-      tokensPerProvider,
-      (providerTokens: TokenEntity[]) =>
-        wantedTokens.some(wantedToken =>
-          providerTokens.some(providerToken => isTokenEqual(providerToken, wantedToken))
-        ),
-      state
+    const supportAny = tokensSupporting(i =>
+      wantedKeys.some(wantedKey => keysPerProvider[i].has(wantedKey))
     );
 
     return {
@@ -113,31 +132,26 @@ export class SwapAggregator implements ISwapAggregator {
     };
   }
 
-  protected tokensSupportingFilter(
-    tokensPerProvider: TokenEntity[][],
-    filterFn: (tokens: TokenEntity[]) => boolean,
-    state: BeefyState
-  ): TokenEntity[] {
-    const tokensPerProviderSupportingWanted = tokensPerProvider.filter(
-      providerTokens => providerTokens.length > 1 && filterFn(providerTokens)
-    );
-
-    return this.mergeAndSortTokens(tokensPerProviderSupportingWanted, state);
-  }
-
   protected mergeAndSortTokens(tokens: TokenEntity[][], state: BeefyState) {
-    const mergedTokens = mergeTokenLists(...tokens);
+    // Sorted by native first, then those in priorityTokens, then alphabetically.
+    // Keys are computed once per token rather than per comparison.
+    const ranked = mergeTokenLists(...tokens).map(token => ({
+      token,
+      native: isTokenNative(token) ? 1 : 0,
+      score: selectZapTokenScore(state, token.chainId, token.id),
+      symbol: token.symbol.toLowerCase(),
+    }));
 
-    // Sorted by native first, then those in priorityTokens, then alphabetically
-    return orderBy(
-      mergedTokens,
-      [
-        token => (isTokenNative(token) ? 1 : 0),
-        token => selectZapTokenScore(state, token.chainId, token.id),
-        token => token.symbol.toLowerCase(),
-      ],
-      ['desc', 'desc', 'asc']
+    ranked.sort(
+      (a, b) =>
+        b.native - a.native ||
+        b.score - a.score ||
+        (a.symbol < b.symbol ? -1
+        : a.symbol > b.symbol ? 1
+        : 0)
     );
+
+    return ranked.map(({ token }) => token);
   }
 
   async canSwapTokenPair(

@@ -19,6 +19,7 @@ import {
   featureFlag_liquidSwapSupport,
   featureFlag_oneInchSupport,
 } from '../utils/feature-flags.ts';
+import { cooperativeAllSettled } from '../utils/async-utils.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 
 interface FetchAllZapsFulfilledPayload {
@@ -81,8 +82,9 @@ export const calculateZapAvailabilityAction =
         .map(id => selectVaultById(state, id))
         .filter(v => v.zaps?.length > 0);
       const api = await getTransactApi();
-      const hasZap = await Promise.allSettled(
-        allVaults.map(v => api.fetchVaultHasZap(v.id, getState))
+      // @dev yield main thread
+      const hasZap = await cooperativeAllSettled(allVaults, v =>
+        api.fetchVaultHasZap(v.id, getState)
       );
 
       return {

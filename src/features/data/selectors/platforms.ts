@@ -1,5 +1,4 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { createCachedSelector } from 're-reselect';
 import type { PlatformEntity } from '../entities/platform.ts';
 import type { BeefyState } from '../store/types.ts';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
@@ -7,37 +6,29 @@ import type { VaultEntity } from '../entities/vault.ts';
 import { selectVaultById } from './vaults.ts';
 import { isDefined } from '../utils/array-utils.ts';
 
-export const selectPlatformById = createCachedSelector(
-  // get a tiny bit of the data
-  (state: BeefyState) => state.entities.platforms.byId,
-  // get the user passed ID
-  (_: BeefyState, platformId: PlatformEntity['id']) => platformId,
-  // last function receives previous function outputs as parameters
-  (byId, platformId) => {
-    const platform = byId[platformId];
-    if (platform === undefined) {
-      throw new Error(`selectPlatformById: Unknown platform id ${platformId}`);
-    }
-    return platform;
+export const selectPlatformById = (state: BeefyState, platformId: PlatformEntity['id']) => {
+  const platform = state.entities.platforms.byId[platformId];
+  if (platform === undefined) {
+    throw new Error(`selectPlatformById: Unknown platform id ${platformId}`);
   }
-)((_state: BeefyState, platformId: PlatformEntity['id']) => platformId);
+  return platform;
+};
 
-export const selectPlatformByIdOrUndefined = createCachedSelector(
-  // get a tiny bit of the data
-  (state: BeefyState) => state.entities.platforms.byId,
-  // get the user passed ID
-  (_: BeefyState, platformId: PlatformEntity['id']) => platformId,
-  // last function receives previous function outputs as parameters
-  (byId, platformId) => {
-    return byId[platformId];
-  }
-)((_state: BeefyState, platformId: PlatformEntity['id']) => platformId);
+export const selectPlatformByIdOrUndefined = (
+  state: BeefyState,
+  platformId: PlatformEntity['id']
+) => state.entities.platforms.byId[platformId];
 
 /** All platforms actually used by a vault that loaded */
 export const selectUsedPlatforms = createSelector(
   (state: BeefyState) => state.entities.platforms.usedIds,
   (state: BeefyState) => state.entities.platforms.byId,
   (usedIds, byId) => usedIds.map(id => byId[id]).filter(isDefined)
+);
+
+export const selectKnownPlatformIds = createSelector(
+  (state: BeefyState) => state.entities.platforms.allIds,
+  (allIds): ReadonlySet<PlatformEntity['id']> => new Set(allIds)
 );
 
 /** All active platforms (vault.status !== eol) that are allowed to be in the filter */
@@ -53,17 +44,7 @@ export const selectConcentratedLiquidityManagerPlatforms = createSelector(
   ids => arrayOrStaticEmpty(ids?.filter(id => id !== 'conic'))
 );
 
-export const selectVaultPlatformOrUndefined = createCachedSelector(
-  selectVaultById,
-  (state: BeefyState) => state.entities.platforms.byId,
-  (vault, tokensByChainId) => {
-    const platformId = vault.platformId;
-
-    if (!platformId) {
-      return undefined;
-    }
-
-    const platform = tokensByChainId[platformId];
-    return platform || undefined;
-  }
-)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+export const selectVaultPlatformOrUndefined = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const platformId = selectVaultById(state, vaultId).platformId;
+  return platformId ? state.entities.platforms.byId[platformId] : undefined;
+};

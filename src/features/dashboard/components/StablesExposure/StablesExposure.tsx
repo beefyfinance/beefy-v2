@@ -4,7 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { formatLargePercent } from '../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
-import { selectDashboardUserStablecoinsExposure } from '../../../data/selectors/dashboard.ts';
+import {
+  exposureEntriesEqual,
+  selectDashboardUserStablecoinsExposure,
+} from '../../../data/selectors/dashboard.ts';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -16,8 +19,9 @@ interface StablesExposureProps {
 export const StablesExposure = memo(function StablesExposure({ address }: StablesExposureProps) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const stablecoinsExposureData = useAppSelector(state =>
-    selectDashboardUserStablecoinsExposure(state, address)
+  const stablecoinsExposureData = useAppSelector(
+    state => selectDashboardUserStablecoinsExposure(state, address),
+    exposureEntriesEqual
   );
   const stablePercentage = stablecoinsExposureData.filter(item => item.key === 'stable');
   const percentage = Math.min(Math.max(0, (stablePercentage[0]?.percentage || 0) * 100), 100);

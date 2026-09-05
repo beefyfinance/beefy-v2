@@ -18,6 +18,7 @@ import {
   selectUserMerklUnifiedRewardsForChain,
   selectUserMerklUnifiedRewardsForVault,
   type UnifiedReward,
+  unifiedRewardsEqual,
 } from '../../../../../../data/selectors/user-rewards.ts';
 import { isNonEmptyArray, type NonEmptyArray } from '../../../../../../data/utils/array-utils.ts';
 import { RefreshButton } from '../RefreshButton/RefreshButton.tsx';
@@ -67,8 +68,9 @@ export const MerklRewards = memo(function MerklRewards({
   deposited,
 }: MerklRewardsProps) {
   const { t } = useTranslation();
-  const vaultRewards = useAppSelector(state =>
-    selectUserMerklUnifiedRewardsForVault(state, vaultId, walletAddress)
+  const vaultRewards = useAppSelector(
+    state => selectUserMerklUnifiedRewardsForVault(state, vaultId, walletAddress),
+    unifiedRewardsEqual
   );
   const hasClaimable = useMemo(
     () => !!walletAddress && !!vaultRewards && vaultRewards.some(r => r.amount.gt(BIG_ZERO)),
@@ -192,8 +194,9 @@ const OtherRewards = memo(function OtherRewards({
   const classes = useStyles();
   const { t } = useTranslation();
   const [otherOpen, setOtherOpen] = useState<boolean>(false);
-  const chainRewards = useAppSelector(state =>
-    selectUserMerklUnifiedRewardsForChain(state, chainId, walletAddress)
+  const chainRewards = useAppSelector(
+    state => selectUserMerklUnifiedRewardsForChain(state, chainId, walletAddress),
+    unifiedRewardsEqual
   );
   const otherRewards = useMemo(() => {
     if (!chainRewards) {

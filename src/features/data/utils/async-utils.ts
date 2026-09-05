@@ -1,6 +1,7 @@
 import type { AsyncThunkAction } from '@reduxjs/toolkit';
 import type { Action, Dispatch } from 'redux';
 import type { BeefyDispatchFn, BeefyState, BeefyStateFn } from '../store/types.ts';
+import { createFactory } from './factory-utils.ts';
 
 /**
  * allows us to do
@@ -13,6 +14,90 @@ export function sleep(ms: number) {
     setTimeout(() => resolve(), ms);
   });
 }
+
+type CooperativeOptions = {
+  /** how long to run uninterrupted, in ms, before handing control back to the browser */
+  budgetMs?: number;
+  /** cap on mappers in flight; only useful when the mapper does i/o. 0 disables the cap */
+  maxPending?: number;
+};
+
+/** Promise.allSettled that yields to the browser between items */
+export async function cooperativeAllSettled<TInput, TOutput>(
+  inputs: TInput[],
+  mapper: (input: TInput, index: number, inputs: TInput[]) => TOutput | Promise<TOutput>,
+  { budgetMs = 5, maxPending = 50 }: CooperativeOptions = {}
+): Promise<PromiseSettledResult<Awaited<TOutput>>[]> {
+  const results: PromiseSettledResult<Awaited<TOutput>>[] = new Array(inputs.length);
+  let next = 0;
+  let lastYield = performance.now();
+
+  // workers pull from a shared cursor, so concurrency is capped by how many we start and
+  // results land at their input index without any bookkeeping
+  const worker = async () => {
+    while (next < inputs.length) {
+      const index = next++;
+      try {
+        results[index] = { status: 'fulfilled', value: await mapper(inputs[index], index, inputs) };
+      } catch (reason) {
+        results[index] = { status: 'rejected', reason };
+      }
+
+      if (performance.now() - lastYield >= budgetMs) {
+        await yieldToMain();
+        // measure the next budget from when we got control back, not from when we gave it up
+        lastYield = performance.now();
+      }
+    }
+  };
+
+  const workers = maxPending > 0 ? Math.min(maxPending, inputs.length) : inputs.length;
+  await Promise.all(Array.from({ length: workers }, worker));
+
+  return results;
+}
+
+/** Hands control of main thread back to the browser */
+export function yieldToMain(): Promise<void> {
+  if (typeof globalThis.scheduler?.yield === 'function') {
+    return globalThis.scheduler.yield();
+  }
+
+  // node: an open MessageChannel keeps the process alive, so prefer setImmediate there
+  if (typeof globalThis.setImmediate === 'function') {
+    return new Promise<void>(resolve => globalThis.setImmediate(resolve));
+  }
+
+  if (typeof MessageChannel === 'function') {
+    return getMessageChannelYield()();
+  }
+
+  return sleep(0);
+}
+
+/** faster alternative to sleep, which has ~4ms minimum yield time */
+const getMessageChannelYield = createFactory((): (() => Promise<void>) => {
+  const channel = new MessageChannel();
+  const port = channel.port2;
+  let resolvers: Array<() => void> = [];
+
+  channel.port1.onmessage = () => {
+    const pending = resolvers;
+    resolvers = [];
+    for (const resolve of pending) {
+      resolve();
+    }
+  };
+
+  return () =>
+    new Promise<void>(resolve => {
+      resolvers.push(resolve);
+      // first call in batch performs the yield, all resolve at once
+      if (resolvers.length === 1) {
+        port.postMessage(undefined);
+      }
+    });
+});
 
 export type PollStop = () => void;
 

@@ -263,5 +263,11 @@
     "name": "IDRX",
     "tagName": "IDRX",
     "website": "https://home.idrx.co/"
+  },
+  {
+    "id": "robinhood-canonical",
+    "name": "Robinhood Bridge",
+    "tagName": "Robinhood",
+    "website": "https://portal.arbitrum.io/bridge?destinationChain=robinhood-chain&sanitized=true&sourceChain=ethereum"
   }
 ]

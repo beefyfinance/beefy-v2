@@ -1,9 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { boundedLevenshtein, simplifySearchText } from '../../../helpers/string.ts';
+import type { VaultEntity } from '../entities/vault.ts';
 import type { FilterValues } from '../reducers/filtered-vaults-types.ts';
 import type { BeefyState } from '../store/types.ts';
-import { buildVaultFilterEnv, vaultPassesFilters } from '../utils/vault-filter.ts';
+import { selectVaultFilterEnv, selectVaultPassesFilters } from '../utils/vault-filter.ts';
 import { classifySearchQuery, toDisplayWords } from '../utils/vault-search.ts';
 import { selectAllChains } from './chains.ts';
 import { selectFilterAppliedValues } from './filtered-vaults.ts';
@@ -109,21 +110,39 @@ export function clearBlockerCategories(
   return cleared;
 }
 
-function countMatching(state: BeefyState, filters: FilterValues): number {
-  const env = buildVaultFilterEnv(state, filters);
+function selectVaultIdsMatchingSearchText(
+  state: BeefyState,
+  filters: FilterValues
+): VaultEntity['id'][] {
+  const env = selectVaultFilterEnv(state, filters);
+  return selectAllVisibleVaultIds(state).filter(vaultId =>
+    env.matchesSearch(selectVaultById(state, vaultId))
+  );
+}
+
+function selectCountMatching(
+  state: BeefyState,
+  filters: FilterValues,
+  vaultIds: readonly VaultEntity['id'][]
+): number {
+  const env = selectVaultFilterEnv(state, filters);
   let count = 0;
-  for (const vaultId of selectAllVisibleVaultIds(state)) {
-    if (vaultPassesFilters(state, selectVaultById(state, vaultId), filters, env)) {
+  for (const vaultId of vaultIds) {
+    if (selectVaultPassesFilters(state, selectVaultById(state, vaultId), filters, env)) {
       count++;
     }
   }
   return count;
 }
 
-function anyMatching(state: BeefyState, filters: FilterValues): boolean {
-  const env = buildVaultFilterEnv(state, filters);
-  return selectAllVisibleVaultIds(state).some(vaultId =>
-    vaultPassesFilters(state, selectVaultById(state, vaultId), filters, env)
+function selectAnyMatching(
+  state: BeefyState,
+  filters: FilterValues,
+  vaultIds: readonly VaultEntity['id'][]
+): boolean {
+  const env = selectVaultFilterEnv(state, filters);
+  return vaultIds.some(vaultId =>
+    selectVaultPassesFilters(state, selectVaultById(state, vaultId), filters, env)
   );
 }
 
@@ -162,7 +181,7 @@ const selectSearchDictionary = createSelector(
   }
 );
 
-function computeDidYouMean(state: BeefyState, searchText: string): string[] {
+function selectDidYouMean(state: BeefyState, searchText: string): string[] {
   const query = simplifySearchText(searchText).toLowerCase();
   // multi-word typo correction is noise; single words only
   if (query.length < 3 || query.includes(' ')) {
@@ -176,17 +195,21 @@ function computeDidYouMean(state: BeefyState, searchText: string): string[] {
     .map(entry => entry.display);
 }
 
-function computeSearchNoResultsInfo(state: BeefyState, filters: FilterValues): SearchNoResultsInfo {
+function selectSearchNoResultsInfoUncached(
+  state: BeefyState,
+  filters: FilterValues
+): SearchNoResultsInfo {
   const queryKind = classifySearchQuery(filters.searchText);
   if (queryKind === 'address-too-short') {
     return { kind: 'address-too-short' };
   }
 
   const searchOnly = clearBlockerCategories(filters, ALL_BLOCKER_CATEGORIES);
+  const searchMatches = selectVaultIdsMatchingSearchText(state, searchOnly);
   const active = listActiveBlockerCategories(filters);
-  if (active.length > 0 && anyMatching(state, searchOnly)) {
+  if (active.length > 0 && selectAnyMatching(state, searchOnly, searchMatches)) {
     let blockers = active.filter(category =>
-      anyMatching(state, clearBlockerCategories(filters, [category]))
+      selectAnyMatching(state, clearBlockerCategories(filters, [category]), searchMatches)
     );
     if (blockers.length === 0) {
       // joint blockage: no single filter is solely responsible, offer to clear them all
@@ -196,12 +219,20 @@ function computeSearchNoResultsInfo(state: BeefyState, filters: FilterValues): S
       kind: 'blocked',
       blockers,
       // honest count: what clearing exactly these blockers will reveal
-      showCount: countMatching(state, clearBlockerCategories(filters, blockers)),
+      showCount: selectCountMatching(
+        state,
+        clearBlockerCategories(filters, blockers),
+        searchMatches
+      ),
     };
   }
 
   if (!filters.onlyRetired) {
-    const retiredCount = countMatching(state, { ...searchOnly, onlyRetired: true });
+    const retiredCount = selectCountMatching(
+      state,
+      { ...searchOnly, onlyRetired: true },
+      searchMatches
+    );
     if (retiredCount > 0) {
       return { kind: 'retired', count: retiredCount };
     }
@@ -211,17 +242,41 @@ function computeSearchNoResultsInfo(state: BeefyState, filters: FilterValues): S
     return { kind: 'address-no-match' };
   }
 
-  return { kind: 'suggestions', suggestions: computeDidYouMean(state, filters.searchText) };
+  return { kind: 'suggestions', suggestions: selectDidYouMean(state, filters.searchText) };
 }
 
-// identity cache for a stable useAppSelector result; renews each recalc (counts use polled data)
-let cache: { filters: FilterValues; vaultIds: unknown; info: SearchNoResultsInfo } | undefined;
+/**
+ * A filter recalc does not renew this: the `applied` payload is the same object as `pending`, so
+ * immer keeps its identity. The wallet and its balances are part of the key too, or a wallet
+ * change serves the previous wallet's blocker list and count.
+ */
+let cache: { deps: unknown[]; info: SearchNoResultsInfo } | undefined;
 
 export function selectSearchNoResultsInfo(state: BeefyState): SearchNoResultsInfo {
   const filters = selectFilterAppliedValues(state);
-  const vaultIds = selectAllVisibleVaultIds(state);
-  if (!cache || cache.filters !== filters || cache.vaultIds !== vaultIds) {
-    cache = { filters, vaultIds, info: computeSearchNoResultsInfo(state, filters) };
+  const deps: unknown[] = [
+    filters,
+    selectAllVisibleVaultIds(state),
+    // the raw address, not the effective one: the dev override is fixed for the page lifetime
+    state.user.wallet.address,
+    state.user.balance.byAddress,
+    // every slice selectVaultPassesFilters reads through, or the blocker list and count go stale on screen
+    state.entities?.vaults?.byId,
+    state.entities?.vaults?.contractData?.byVaultId,
+    state.entities?.tokens?.byChainId,
+    state.entities?.tokens?.breakdown?.byOracleId,
+    state.entities?.chains,
+    state.entities?.platforms,
+    state.entities?.promos,
+    state.entities?.zaps?.vaults?.byId,
+    state.biz?.apy?.totalApy,
+    state.ui?.savedVaults?.byVaultId,
+  ];
+  const previous = cache;
+  if (previous && deps.every((dep, i) => dep === previous.deps[i])) {
+    return previous.info;
   }
+  // assigned only after the compute returns, so a throw is not cached
+  cache = { deps, info: selectSearchNoResultsInfoUncached(state, filters) };
   return cache.info;
 }

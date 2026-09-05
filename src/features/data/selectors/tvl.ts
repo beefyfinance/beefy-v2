@@ -7,13 +7,14 @@ import {
   type VaultEntity,
 } from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
+import { bigNumberEqual, numberEqual } from '../utils/selector-equality.ts';
 import {
   selectLpBreakdownByOracleId,
   selectLpBreakdownForVault,
   selectLpBreakdownForVaultId,
   selectTokenByAddress,
 } from './tokens.ts';
-import type { TvlBreakdown } from './tvl-types.ts';
+import type { TvlBreakdown, TvlBreakdownUnderlying } from './tvl-types.ts';
 import { selectVaultById } from './vaults.ts';
 
 export const selectVaultTvl = (state: BeefyState, vaultId: VaultEntity['id']) =>
@@ -77,6 +78,16 @@ export const selectTvlBreakdownByVaultId = (
       clmBreakdown.underlyingPrice
     );
 
+    // an unknown beefy-wide total drops that row; the underlying figures beside it are still known
+    if (!clmBreakdown.totalSupply || !clmBreakdown.price) {
+      return {
+        vaultTvl,
+        vaultShare: calculateShare(vaultTvl, underlyingTvl),
+        underlyingTvl,
+        underlyingPlatformId: depositToken.providerId,
+      };
+    }
+
     const totalTvl = new BigNumber(clmBreakdown.totalSupply).times(clmBreakdown.price);
 
     // If all the Beefy TVL is in this vault, we can skip further breakdown
@@ -106,6 +117,10 @@ export const selectTvlBreakdownByVaultId = (
     return { vaultTvl };
   }
 
+  if (!breakdown.totalSupply || !breakdown.price) {
+    return { vaultTvl };
+  }
+
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const underlyingTvl = new BigNumber(breakdown.totalSupply).times(breakdown.price);
   return {
@@ -115,3 +130,33 @@ export const selectTvlBreakdownByVaultId = (
     underlyingPlatformId: depositToken.providerId,
   };
 };
+// a breakdown field left uncompared here never updates on screen
+export function tvlBreakdownEqual(
+  a: TvlBreakdownUnderlying | null | undefined,
+  b: TvlBreakdownUnderlying | null | undefined
+): boolean {
+  if (a === b) {
+    return true;
+  }
+  if (!a || !b) {
+    return false;
+  }
+  if (
+    a.underlyingPlatformId !== b.underlyingPlatformId ||
+    !numberEqual(a.vaultShare, b.vaultShare) ||
+    !bigNumberEqual(a.vaultTvl, b.vaultTvl) ||
+    !bigNumberEqual(a.underlyingTvl, b.underlyingTvl)
+  ) {
+    return false;
+  }
+  if ('vaultType' in a) {
+    return (
+      'vaultType' in b &&
+      a.vaultType === b.vaultType &&
+      a.totalType === b.totalType &&
+      numberEqual(a.totalShare, b.totalShare) &&
+      bigNumberEqual(a.totalTvl, b.totalTvl)
+    );
+  }
+  return !('vaultType' in b);
+}

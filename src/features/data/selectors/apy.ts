@@ -1,4 +1,7 @@
 import { first } from 'lodash-es';
+import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
+import { bigNumberEqual } from '../utils/selector-equality.ts';
+import { createCachedSelector } from 're-reselect';
 import { EMPTY_AVG_APY } from '../../../helpers/apy.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { isEmpty } from '../../../helpers/utils.ts';
@@ -150,7 +153,7 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
   return newGlobalStats;
 };
 
-export const selectYieldStatsByVaultId = (
+const selectYieldStatsByVaultIdUncached = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -281,54 +284,97 @@ export const selectIsVaultApyAvailable = (state: BeefyState, vaultId: VaultEntit
   return selectIsContractDataLoadedOnChain(state, vault.chainId);
 };
 
-// TEMP: selector instead of connect/mapStateToProps
-export function selectApyVaultUIData(
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-): ApyVaultUIData {
-  const vault = selectVaultById(state, vaultId);
-  const type: 'apr' | 'apy' = vault.type === 'gov' ? 'apr' : 'apy';
+const APY_UI_STATUS_ONLY: Record<
+  'hidden' | 'loading' | 'missing',
+  Record<'apy' | 'apr', ApyVaultUIData>
+> = {
+  hidden: {
+    apy: Object.freeze({ status: 'hidden', type: 'apy' }),
+    apr: Object.freeze({ status: 'hidden', type: 'apr' }),
+  },
+  loading: {
+    apy: Object.freeze({ status: 'loading', type: 'apy' }),
+    apr: Object.freeze({ status: 'loading', type: 'apr' }),
+  },
+  missing: {
+    apy: Object.freeze({ status: 'missing', type: 'apy' }),
+    apr: Object.freeze({ status: 'missing', type: 'apr' }),
+  },
+};
 
-  const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
-  if (!shouldShowInterest) {
-    return { status: 'hidden', type };
+export const selectApyVaultUIData = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultShouldShowInterest(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectIsVaultApyAvailable(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectDidAPIReturnValuesForVault(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultTotalApy(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectVaultCurrentBoostIdWithStatus(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultAvgApyOrUndefined(state, vaultId),
+  (vault, shouldShowInterest, isLoaded, exists, values, boost, averages): ApyVaultUIData => {
+    const type: 'apr' | 'apy' = vault.type === 'gov' ? 'apr' : 'apy';
+
+    if (!shouldShowInterest) {
+      return APY_UI_STATUS_ONLY.hidden[type];
+    }
+
+    if (!isLoaded) {
+      return APY_UI_STATUS_ONLY.loading[type];
+    }
+
+    if (!exists) {
+      return APY_UI_STATUS_ONLY.missing[type];
+    }
+
+    if (boost) {
+      return { status: 'available', type, values, boosted: boost.status, averages };
+    }
+
+    if (!isCowcentratedVault(vault) && !isCowcentratedGovVault(vault)) {
+      return { status: 'available', type, values, boosted: undefined, averages };
+    }
+
+    return {
+      status: 'available',
+      type: values.totalType,
+      values,
+      boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
+      averages,
+    };
   }
-
-  const isLoaded = selectIsVaultApyAvailable(state, vaultId);
-  if (!isLoaded) {
-    return { status: 'loading', type };
-  }
-
-  const exists = selectDidAPIReturnValuesForVault(state, vaultId);
-  if (!exists) {
-    return { status: 'missing', type };
-  }
-
-  const values = selectVaultTotalApy(state, vaultId);
-  const boost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
-  const averages = selectVaultAvgApyOrUndefined(state, vaultId);
-
-  if (boost) {
-    return { status: 'available', type, values, boosted: boost.status, averages };
-  }
-
-  if (!isCowcentratedVault(vault) && !isCowcentratedGovVault(vault)) {
-    return { status: 'available', type, values, boosted: undefined, averages };
-  }
-
-  return {
-    status: 'available',
-    type: values.totalType,
-    values,
-    boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
-    averages,
-  };
-}
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectBoostAprByRewardToken = (state: BeefyState, boostId: BoostPromoEntity['id']) => {
-  return state.biz.apy.rawApy.byBoostId[boostId]?.aprByRewardToken || [];
+  return arrayOrStaticEmpty(state.biz.apy.rawApy.byBoostId[boostId]?.aprByRewardToken);
 };
 
-export const selectBoostApr = (state: BeefyState, boostId: string): number => {
-  return state.biz.apy.rawApy.byBoostId[boostId]?.apr || 0;
-};
+type VaultYieldStats = ReturnType<typeof selectYieldStatsByVaultIdUncached>;
+
+function yieldStatsEqual(a: VaultYieldStats, b: VaultYieldStats): boolean {
+  return (
+    a === b ||
+    (a.depositToken === b.depositToken &&
+      bigNumberEqual(a.oraclePrice, b.oraclePrice) &&
+      bigNumberEqual(a.dailyTokens, b.dailyTokens) &&
+      bigNumberEqual(a.dailyUsd, b.dailyUsd) &&
+      bigNumberEqual(a.weeklyTokens, b.weeklyTokens) &&
+      bigNumberEqual(a.weeklyUsd, b.weeklyUsd) &&
+      bigNumberEqual(a.monthlyTokens, b.monthlyTokens) &&
+      bigNumberEqual(a.monthlyUsd, b.monthlyUsd) &&
+      bigNumberEqual(a.yearlyTokens, b.yearlyTokens) &&
+      bigNumberEqual(a.yearlyUsd, b.yearlyUsd))
+  );
+}
+
+export const selectYieldStatsByVaultId = createCachedSelector(
+  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) => state,
+  (_state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) => vaultId,
+  (_state: BeefyState, _vaultId: VaultEntity['id'], walletAddress?: string) => walletAddress,
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string | undefined) =>
+    selectYieldStatsByVaultIdUncached(state, vaultId, walletAddress),
+  { memoizeOptions: { resultEqualityCheck: yieldStatsEqual } }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
+    `${vaultId}-${walletAddress ?? ''}`
+);

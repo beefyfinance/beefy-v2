@@ -10,7 +10,10 @@ import {
   isCrossChainOption,
   isZapFeeDiscounted,
 } from '../../../../../data/apis/transact/transact-types.ts';
-import { selectTransactSelectedZapFee } from '../../../../../data/selectors/transact.ts';
+import {
+  selectedZapFeeEqual,
+  selectTransactSelectedZapFee,
+} from '../../../../../data/selectors/transact.ts';
 import { CCTP_CONFIG } from '../../../../../../config/cctp/cctp-config.ts';
 import { Label } from './Label.tsx';
 import { LabelCustomTooltip } from './LabelTooltip.tsx';
@@ -31,7 +34,7 @@ const useStyles = legacyMakeStyles({
 });
 
 export const MaybeZapFees = memo(function MaybeZapFees() {
-  const ctx = useAppSelector(selectTransactSelectedZapFee);
+  const ctx = useAppSelector(selectTransactSelectedZapFee, selectedZapFeeEqual);
 
   if (!ctx) {
     return null;
