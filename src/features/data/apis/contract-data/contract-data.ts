@@ -1,4 +1,3 @@
-import type { Address } from 'viem';
 import BigNumber from 'bignumber.js';
 import { addDays } from 'date-fns';
 import { chunk, pick, sortBy } from 'lodash-es';
@@ -23,6 +22,7 @@ import {
   featureFlag_simulateLiveBoost,
 } from '../../utils/feature-flags.ts';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
+import { toCallAddress } from '../../utils/address-utils.ts';
 import type {
   BoostContractData,
   BoostRawContractData,
@@ -75,30 +75,38 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const erc4626VaultBatches = chunk(erc4626Vaults, CHUNK_SIZE);
 
     const boostRequests = boostBatches.map(batch =>
-      multicallContract.read.getBoostInfo([batch.map(boost => boost.contractAddress as Address)])
+      multicallContract.read.getBoostInfo([
+        batch.map(boost => toCallAddress(boost.contractAddress)),
+      ])
     );
     const boostMultiRequests = boostMultiBatches.map(batch =>
       multicallContract.read.getGovVaultMultiInfo([
-        batch.map(vault => vault.contractAddress as Address),
+        batch.map(vault => toCallAddress(vault.contractAddress)),
       ])
     );
     const vaultRequests = vaultBatches.map(batch =>
-      multicallContract.read.getVaultInfo([batch.map(vault => vault.contractAddress as Address)])
+      multicallContract.read.getVaultInfo([
+        batch.map(vault => toCallAddress(vault.contractAddress)),
+      ])
     );
     const govVaultRequests = govVaultBatches.map(batch =>
-      multicallContract.read.getGovVaultInfo([batch.map(vault => vault.contractAddress as Address)])
+      multicallContract.read.getGovVaultInfo([
+        batch.map(vault => toCallAddress(vault.contractAddress)),
+      ])
     );
     const govVaultMultiRequests = govVaultMultiBatches.map(batch =>
       multicallContract.read.getGovVaultMultiInfo([
-        batch.map(vault => vault.contractAddress as Address),
+        batch.map(vault => toCallAddress(vault.contractAddress)),
       ])
     );
     const cowVaultRequests = cowVaultBatches.map(batch =>
-      multicallContract.read.getCowVaultInfo([batch.map(vault => vault.contractAddress as Address)])
+      multicallContract.read.getCowVaultInfo([
+        batch.map(vault => toCallAddress(vault.contractAddress)),
+      ])
     );
     const erc4626VaultRequests = erc4626VaultBatches.map(batch =>
       multicallContract.read.getERC4626VaultInfo([
-        batch.map(vault => vault.contractAddress as Address),
+        batch.map(vault => toCallAddress(vault.contractAddress)),
       ])
     );
 

@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { memo } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
@@ -30,56 +31,45 @@ export const VaultDailyUsdStat = memo(function ({
   return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
 });
 
-// TODO better selector / hook
-function selectVaultDailyUsdStat(
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  walletAddress?: string
-) {
-  const label = 'Dashboard-Filter-DailyYield';
+const LABEL = 'Dashboard-Filter-DailyYield';
+const NO_INTEREST = { label: LABEL, value: '-', subValue: null, blur: false, loading: false };
+const APY_LOADING = { label: LABEL, value: '-', subValue: null, blur: false, loading: true };
+const NO_API_VALUES = { label: LABEL, value: '???', subValue: null, blur: false, loading: false };
 
-  const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
-  if (!shouldShowInterest) {
+const selectDailyUsdStatus = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  !selectVaultShouldShowInterest(state, vaultId) ? 'no-interest'
+  : !selectIsVaultApyAvailable(state, vaultId) ? 'loading'
+  : !selectDidAPIReturnValuesForVault(state, vaultId) ? 'no-api-values'
+  : 'ok';
+
+const selectVaultDailyUsdStat = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
+    selectDailyUsdStatus(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
+    selectDailyUsdStatus(state, vaultId) === 'ok' ?
+      selectYieldStatsByVaultId(state, vaultId, walletAddress).dailyUsd
+    : undefined,
+  (status, dailyUsd) => {
+    if (status === 'no-interest') {
+      return NO_INTEREST;
+    }
+
+    if (status === 'loading') {
+      return APY_LOADING;
+    }
+
+    if (status === 'no-api-values' || dailyUsd === undefined) {
+      return NO_API_VALUES;
+    }
+
     return {
-      label,
-      value: '-',
+      label: LABEL,
+      value: formatLargeUsd(dailyUsd),
       subValue: null,
       blur: false,
       loading: false,
+      boosted: false,
+      tooltip: null,
     };
   }
-
-  const isLoaded = selectIsVaultApyAvailable(state, vaultId);
-  if (!isLoaded) {
-    return {
-      label,
-      value: '-',
-      subValue: null,
-      blur: false,
-      loading: true,
-    };
-  }
-
-  const haveValues = selectDidAPIReturnValuesForVault(state, vaultId);
-  if (!haveValues) {
-    return {
-      label,
-      value: '???',
-      subValue: null,
-      blur: false,
-      loading: false,
-    };
-  }
-
-  const { dailyUsd } = selectYieldStatsByVaultId(state, vaultId, walletAddress);
-
-  return {
-    label,
-    value: formatLargeUsd(dailyUsd),
-    subValue: null,
-    blur: false,
-    loading: !isLoaded,
-    boosted: false,
-    tooltip: null,
-  };
-}
+);

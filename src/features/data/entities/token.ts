@@ -19,6 +19,8 @@ export type TokenEntity = TokenErc20 | TokenNative;
 export interface TokenErc20 {
   id: string;
   symbol: string;
+  /** addressbook display name, e.g. "Apple • Robinhood Token" */
+  name?: string;
   providerId?: PlatformEntity['id'];
   chainId: ChainEntity['id'];
   oracleId: string;
@@ -40,6 +42,7 @@ export interface TokenErc20 {
 export interface TokenNative {
   id: string;
   symbol: string;
+  name?: string;
   providerId?: PlatformEntity['id'];
   chainId: ChainEntity['id'];
   // some chains have addressable native tokens
@@ -71,6 +74,14 @@ export function isTokenEqual(tokenA: TokenEntity, tokenB: TokenEntity): boolean 
     tokenA.chainId === tokenB.chainId &&
     tokenA.address === tokenB.address
   );
+}
+
+/**
+ * Key that is equal for exactly the tokens {@link isTokenEqual} considers equal, so membership
+ * tests over a token list can use a Set instead of a scan. Keep in sync with isTokenEqual.
+ */
+export function tokenEqualityKey(token: TokenEntity): string {
+  return `${token.type}|${token.chainId}|${token.address}`;
 }
 
 export type TokenLpBreakdown = LpData;

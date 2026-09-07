@@ -20,7 +20,10 @@ import {
   type VaultEntity,
 } from '../../../../../data/entities/vault.ts';
 import { selectVaultMatchesText } from '../../../../../data/selectors/filtered-vaults.ts';
-import { selectTransactDepositFromVaultEntries } from '../../../../../data/selectors/transact.ts';
+import {
+  depositFromVaultEntriesEqual,
+  selectTransactDepositFromVaultEntries,
+} from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import type { BeefyState } from '../../../../../data/store/types.ts';
 import { simplifySearchText } from '../../../../../../helpers/string.ts';
@@ -71,7 +74,10 @@ export const DepositFromVaultSelectList = memo(function DepositFromVaultSelectLi
 }: DepositFromVaultSelectListProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const entries = useAppSelector(selectTransactDepositFromVaultEntries);
+  const entries = useAppSelector(
+    selectTransactDepositFromVaultEntries,
+    depositFromVaultEntriesEqual
+  );
   const vaultById = useAppSelector((state: BeefyState) => state.entities.vaults.byId);
   const [search, setSearch] = useState('');
 
@@ -83,7 +89,7 @@ export const DepositFromVaultSelectList = memo(function DepositFromVaultSelectLi
       if (!vault) return false;
       return selectVaultMatchesText(state, vault, searchText);
     });
-  });
+  }, depositFromVaultEntriesEqual);
 
   const groups = useMemo(() => {
     const buckets = new Map<

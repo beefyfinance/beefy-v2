@@ -4,7 +4,10 @@ import { selectIsContractDataLoadedOnChain } from '../../features/data/selectors
 import { selectPlatformById } from '../../features/data/selectors/platforms.ts';
 import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
 import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types.ts';
-import { selectTvlBreakdownByVaultId } from '../../features/data/selectors/tvl.ts';
+import {
+  selectTvlBreakdownByVaultId,
+  tvlBreakdownEqual,
+} from '../../features/data/selectors/tvl.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import type { BeefyState } from '../../features/data/store/types.ts';
 import { formatLargeUsd, formatPercent } from '../../helpers/format.ts';
@@ -13,54 +16,92 @@ import { InterestTooltipContent } from '../InterestTooltipContent/InterestToolti
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
 import { useTranslation } from 'react-i18next';
 
+type VaultTvlStatResult = {
+  label: string;
+  value: string;
+  subValue: string | null;
+  blur: boolean;
+  loading: boolean;
+  expectSubValue: boolean;
+  tvlBreakdown: TvlBreakdownUnderlying | undefined;
+};
+
 export type VaultTvlStatProps = {
   vaultId: VaultEntity['id'];
-} & Omit<VaultValueStatProps, keyof ReturnType<typeof selectVaultTvlStat>>;
+} & Omit<VaultValueStatProps, keyof VaultTvlStatResult>;
 
 export const VaultTvlStat = memo(function ({ vaultId, ...passthrough }: VaultTvlStatProps) {
   const { t } = useTranslation();
   // @dev don't do this - temp migration away from connect()
-  const { label, ...statProps } = useAppSelector(state => selectVaultTvlStat(state, vaultId));
-  return <VaultValueStat label={t(label)} {...statProps} {...passthrough} />;
+  const { label, tvlBreakdown, ...statProps } = useAppSelector(
+    state => selectVaultTvlStat(state, vaultId),
+    vaultTvlStatEqual
+  );
+  return (
+    <VaultValueStat
+      label={t(label)}
+      tooltip={tvlBreakdown ? <TvlShareTooltip breakdown={tvlBreakdown} /> : undefined}
+      {...statProps}
+      {...passthrough}
+    />
+  );
 });
 
-// TODO better selector / hook
-function selectVaultTvlStat(state: BeefyState, vaultId: VaultEntity['id']) {
-  const label = 'VaultStat-TVL';
+const LOADING_TVL_STAT: VaultTvlStatResult = {
+  label: 'VaultStat-TVL',
+  value: '-',
+  subValue: null,
+  blur: false,
+  loading: true,
+  expectSubValue: true,
+  tvlBreakdown: undefined,
+};
+
+// tvlBreakdown must stay data: a JSX tooltip cannot compare equal, so every action re-renders
+const selectVaultTvlStat = (state: BeefyState, vaultId: VaultEntity['id']): VaultTvlStatResult => {
   const vault = selectVaultById(state, vaultId);
   const isLoaded =
     selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
 
   if (!isLoaded) {
-    return {
-      label,
-      value: '-',
-      subValue: null,
-      blur: false,
-      loading: true,
-      expectSubValue: true,
-    };
+    return LOADING_TVL_STAT;
   }
 
   const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
-  if (!breakdown || !('underlyingTvl' in breakdown)) {
+  if (!('underlyingTvl' in breakdown)) {
     return {
-      label,
+      label: 'VaultStat-TVL',
       value: formatLargeUsd(breakdown.vaultTvl),
       subValue: null,
       blur: false,
       loading: false,
+      expectSubValue: false,
+      tvlBreakdown: undefined,
     };
   }
 
   return {
-    label,
+    label: 'VaultStat-TVL',
     value: formatLargeUsd(breakdown.vaultTvl),
     subValue: formatLargeUsd(breakdown.underlyingTvl),
     blur: false,
     loading: false,
-    tooltip: <TvlShareTooltip breakdown={breakdown} />,
+    expectSubValue: false,
+    tvlBreakdown: breakdown,
   };
+};
+
+function vaultTvlStatEqual(a: VaultTvlStatResult, b: VaultTvlStatResult): boolean {
+  return (
+    a === b ||
+    (a.label === b.label &&
+      a.value === b.value &&
+      a.subValue === b.subValue &&
+      a.blur === b.blur &&
+      a.loading === b.loading &&
+      a.expectSubValue === b.expectSubValue &&
+      tvlBreakdownEqual(a.tvlBreakdown, b.tvlBreakdown))
+  );
 }
 
 type TvlShareTooltipProps = {

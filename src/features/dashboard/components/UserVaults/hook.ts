@@ -1,5 +1,6 @@
 import { orderBy } from 'lodash-es';
 import { useCallback, useMemo, useState } from 'react';
+import { shallowEqual } from 'react-redux';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import { isVaultActive } from '../../../data/entities/vault.ts';
 import { isUserClmPnl } from '../../../data/selectors/analytics-types.ts';
@@ -8,6 +9,7 @@ import {
   selectDashboardUserVaultsPnl,
 } from '../../../data/selectors/dashboard.ts';
 import { selectUserDashboardFilteredVaults } from '../../../data/selectors/filtered-vaults.ts';
+import { bigNumberRecordEqual } from '../../../data/utils/selector-equality.ts';
 
 export type SortedOptions = {
   sort: 'atDeposit' | 'now' | 'yield' | 'pnl' | 'apy' | 'dailyYield' | 'default';
@@ -22,16 +24,18 @@ export function useSortedDashboardVaults(address: string) {
     sort: 'now',
   });
 
-  const filteredVaults = useAppSelector(state =>
-    selectUserDashboardFilteredVaults(state, searchText, address)
+  const filteredVaults = useAppSelector(
+    state => selectUserDashboardFilteredVaults(state, searchText, address),
+    shallowEqual
   );
 
   const apyByVaultId = useAppSelector(state => state.biz.apy.totalApy.byVaultId);
 
   const userVaultsPnl = useAppSelector(state => selectDashboardUserVaultsPnl(state, address));
 
-  const userVaultsDailyYield = useAppSelector(state =>
-    selectDashboardUserVaultsDailyYield(state, address)
+  const userVaultsDailyYield = useAppSelector(
+    state => selectDashboardUserVaultsDailyYield(state, address),
+    bigNumberRecordEqual
   );
 
   const sortedFilteredVaults = useMemo(() => {

@@ -213,7 +213,7 @@ function addPoolDataToState(
   contractData: FetchAllContractDataResult['govVaultsMulti']
 ) {
   for (const pool of contractData) {
-    const contractState = sliceState.dataByType.boost[pool.id];
+    const contractState = sliceState.dataByType.pool[pool.id];
     if (
       contractState === undefined ||
       contractState.rewards.length !== pool.rewards.length ||

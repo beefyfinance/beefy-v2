@@ -4,7 +4,13 @@
       "aerodrome-cow-base-usdc-aaplc-vault",
       "aerodrome-cow-base-usdc-googlc-vault",
       "aerodrome-cow-base-usdc-nvdac-vault",
-      "aerodrome-cow-base-usdc-metac-vault"
+      "aerodrome-cow-base-usdc-metac-vault",
+      "aerodrome-cow-base-usdc-amznc-vault",
+      "aerodrome-cow-base-usdc-msftc-vault",
+      "aerodrome-cow-base-usdc-mstrc-vault",
+      "aerodrome-cow-base-usdc-sndkc-vault",
+      "aerodrome-cow-base-usdc-spcxc-vault",
+      "aerodrome-cow-base-usdc-tslac-vault"
     ],
     "conditions": [
       {

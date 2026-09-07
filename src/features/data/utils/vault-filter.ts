@@ -21,7 +21,7 @@ import {
 } from '../selectors/filtered-vaults.ts';
 import { selectIsVaultIdSaved } from '../selectors/saved-vaults.ts';
 import { selectChainSearchIndex, selectPlatformSearchIndex } from '../selectors/search.ts';
-import { selectVaultTokenSymbols } from '../selectors/tokens.ts';
+import { selectVaultTokenNameWords, selectVaultTokenSymbols } from '../selectors/tokens.ts';
 import { selectVaultUnderlyingTvlUsd } from '../selectors/tvl.ts';
 import { selectVaultStrategyAddressOrUndefined } from '../selectors/vaults.ts';
 import { selectVaultSupportsZap } from '../selectors/zap.ts';
@@ -41,7 +41,7 @@ export type VaultFilterEnv = {
  * per-recalc environment: query matchers are compiled once, reused across every vault
  * @param searchScores when given, receives the relevance score of every matching vault
  */
-export function buildVaultFilterEnv(
+export function selectVaultFilterEnv(
   state: BeefyState,
   filters: FilterValues,
   searchScores?: Map<VaultEntity['id'], number>
@@ -68,17 +68,19 @@ export function buildVaultFilterEnv(
       if (!searchContext) {
         return true;
       }
-      const score = scoreVaultForSearch(
-        searchContext,
+      const score = scoreVaultForSearch(searchContext, {
         vault,
-        selectVaultTokenSymbols(state, vault.id),
-        searchContext.anyPlatformWords ?
-          selectFilterPlatformIdsForVault(state, vault)
-        : EMPTY_ARRAY,
-        searchContext.addressNeedle !== undefined ?
-          selectVaultStrategyAddressOrUndefined(state, vault.id)
-        : undefined
-      );
+        tokenSymbols: selectVaultTokenSymbols(state, vault.id),
+        tokenNameWords: selectVaultTokenNameWords(state, vault.id),
+        platformIds:
+          searchContext.anyPlatformWords ?
+            selectFilterPlatformIdsForVault(state, vault)
+          : EMPTY_ARRAY,
+        strategyAddress:
+          searchContext.addressNeedle !== undefined ?
+            selectVaultStrategyAddressOrUndefined(state, vault.id)
+          : undefined,
+      });
       if (score > 0) {
         searchScores?.set(vault.id, score);
         return true;
@@ -92,7 +94,7 @@ export function buildVaultFilterEnv(
  @dev every filter that can be applied without using a selector should come first
  then cheap selectors, then expensive selectors last
 */
-export function vaultPassesFilters(
+export function selectVaultPassesFilters(
   state: BeefyState,
   vault: VaultEntity,
   filterOptions: FilterValues,

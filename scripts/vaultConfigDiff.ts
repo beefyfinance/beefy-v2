@@ -22,8 +22,18 @@ const maxFlattenDepth = 64;
 const maxListedChains = 20;
 /** Caps so one vault cannot consume, or blow past, the whole comment budget */
 const maxRowsPerVault = 200;
+const maxVaultsPerStatusGroup = 200;
 const maxFooterChars = 80;
 const maxListedProblems = 10;
+/**
+ * Retiring or pausing touches only these, on a lot of vaults at once, so a details block each is
+ * mostly the same three rows repeated. Grouped by what the change did instead.
+ */
+const statusFields = ['status', 'retireReason', 'pauseReason', 'retiredAt', 'pausedAt'];
+/** Of those, the ones that differ per vault, so they cannot be part of a group's shared summary */
+const perVaultStatusFields = ['retiredAt', 'pausedAt'];
+/** Section order; the last one covers a status field change that is none of the others */
+const statusTitles = ['Retired', 'Unretired', 'Paused', 'Unpaused', 'Status changed'] as const;
 
 type RunArgs = {
   help?: boolean;
@@ -93,6 +103,25 @@ type FieldChange = {
 type ModifiedVault = VaultLocation & {
   before: VaultConfig;
   changes: FieldChange[];
+};
+
+type StatusTitle = (typeof statusTitles)[number];
+
+/** Vaults whose only changes are to statusFields, sharing one identical transition */
+type StatusGroup = {
+  title: StatusTitle;
+  /** the changes every vault in the group makes, identically; the group is keyed on them */
+  shared: FieldChange[];
+  /** perVaultStatusFields changed by at least one member, rendered as a column each */
+  columns: string[];
+  vaults: ModifiedVault[];
+};
+
+/** Every group that did the same thing, however it was reasoned or timestamped */
+type StatusSection = {
+  title: StatusTitle;
+  groups: StatusGroup[];
+  vaultCount: number;
 };
 
 function git(args: string[]): string {
@@ -437,6 +466,25 @@ function vaultType(vault: VaultConfig): string {
   return typeof vault.type === 'string' && vault.type ? vault.type : 'standard';
 }
 
+/** Otherwise 0 and "0", or true and "true", render as two identical looking cells */
+function needsType({ before, after }: FieldChange): boolean {
+  return (
+    before !== undefined &&
+    after !== undefined &&
+    (typeof before !== typeof after || (before === null) !== (after === null))
+  );
+}
+
+/** One before/after pair, windowed and typed consistently, ready to put in table cells */
+function renderChangePair(change: FieldChange): [before: string, after: string] {
+  const showType = needsType(change);
+  const start = divergenceStart(change.before, change.after, showType);
+  return [
+    cell(renderValue(change.before, change.path, start, showType)),
+    cell(renderValue(change.after, change.path, start, showType)),
+  ];
+}
+
 function renderModifiedVault({ chain, vault, changes }: ModifiedVault): string {
   const fields = changes.map(change => change.path).join(', ');
   return [
@@ -446,16 +494,9 @@ function renderModifiedVault({ chain, vault, changes }: ModifiedVault): string {
     '',
     '| Field | Before | After |',
     '| --- | --- | --- |',
-    ...changes.slice(0, maxRowsPerVault).map(change => {
-      // otherwise 0 and "0", or true and "true", render as two identical looking cells
-      const showType =
-        change.before !== undefined &&
-        change.after !== undefined &&
-        (typeof change.before !== typeof change.after ||
-          (change.before === null) !== (change.after === null));
-      const start = divergenceStart(change.before, change.after, showType);
-      return `| ${cell(code(change.path))} | ${cell(renderValue(change.before, change.path, start, showType))} | ${cell(renderValue(change.after, change.path, start, showType))} |`;
-    }),
+    ...changes
+      .slice(0, maxRowsPerVault)
+      .map(change => `| ${cell(code(change.path))} | ${renderChangePair(change).join(' | ')} |`),
     ...(changes.length > maxRowsPerVault ?
       [`| _… and ${changes.length - maxRowsPerVault} more fields not shown_ | | |`]
     : []),
@@ -463,6 +504,163 @@ function renderModifiedVault({ chain, vault, changes }: ModifiedVault): string {
     '</details>',
     '',
   ].join('\n');
+}
+
+function isStatusOnlyChange(changes: FieldChange[]): boolean {
+  return changes.every(change => statusFields.includes(change.path));
+}
+
+/** Identifies a change exactly; the booleans keep an unset value distinct from a null one */
+function changeKey({ path, before, after }: FieldChange): string {
+  return JSON.stringify([path, before === undefined, before, after === undefined, after]);
+}
+
+/** What a status change did, since `active` → `eol` reads as a diff long before it reads as retired */
+function statusTitle(shared: FieldChange[]): StatusTitle {
+  const status = shared.find(change => change.path === 'status');
+  if (status) {
+    if (status.after === 'eol') {
+      return 'Retired';
+    }
+    if (status.after === 'paused') {
+      return 'Paused';
+    }
+    if (status.after === 'active') {
+      if (status.before === 'eol') {
+        return 'Unretired';
+      }
+      if (status.before === 'paused') {
+        return 'Unpaused';
+      }
+    }
+  }
+  // an unrecognised status, or only a reason or a timestamp moving, still has to be reported
+  return 'Status changed';
+}
+
+/**
+ * Buckets status only vaults by the transition they share, so a batch retirement is one block
+ * naming the transition once rather than the same three rows per vault. Timestamps are left out of
+ * the key: they are set per vault, seconds apart, and would otherwise split every batch up again.
+ */
+function buildStatusSections(vaults: ModifiedVault[]): StatusSection[] {
+  const groups = new Map<string, StatusGroup>();
+
+  for (const modified of vaults) {
+    const shared = modified.changes.filter(change => !perVaultStatusFields.includes(change.path));
+    const key = shared.map(changeKey).join('\n');
+    let group = groups.get(key);
+    if (!group) {
+      group = { title: statusTitle(shared), shared, columns: [], vaults: [] };
+      groups.set(key, group);
+    }
+    for (const path of perVaultStatusFields) {
+      if (!group.columns.includes(path) && modified.changes.some(change => change.path === path)) {
+        group.columns.push(path);
+      }
+    }
+    group.vaults.push(modified);
+  }
+
+  return statusTitles
+    .map(title => {
+      // biggest batch first, so a section stays useful when the budget cuts it short
+      const matching = [...groups.values()]
+        .filter(group => group.title === title)
+        .sort(
+          (a, b) => b.vaults.length - a.vaults.length || byChainThenId(a.vaults[0], b.vaults[0])
+        );
+      return {
+        title,
+        groups: matching,
+        vaultCount: matching.reduce((count, group) => count + group.vaults.length, 0),
+      };
+    })
+    .filter(section => section.groups.length > 0);
+}
+
+/** renderValue's markdown is not parsed inside a summary, so those values are rendered as html */
+function htmlValue(value: unknown, path: string): string {
+  if (value === undefined) {
+    return '<em>unset</em>';
+  }
+  if (value === '') {
+    return '<em>empty string</em>';
+  }
+  const timestamp =
+    typeof value === 'number' && isTimestampPath(path) ? renderTimestamp(value) : undefined;
+  return `<code>${inlineHtml(truncateValue(timestamp ?? valueText(value)))}</code>`;
+}
+
+function renderStatusGroup({ shared, columns, vaults }: StatusGroup): string {
+  const transitions = shared
+    .map(change => {
+      // the section heading already says what a status transition means, so it goes unlabelled
+      const label = change.path === 'status' ? '' : `<code>${inlineHtml(change.path)}</code> `;
+      return `${label}${htmlValue(change.before, change.path)} → ${htmlValue(change.after, change.path)}`;
+    })
+    .join(' · ');
+  const stamps = `${columns.map(path => `<code>${inlineHtml(path)}</code>`).join(', ')} changed`;
+  const shown = vaults.slice(0, maxVaultsPerStatusGroup);
+
+  return [
+    '<details>',
+    `<summary>${vaults.length} ${vaults.length === 1 ? 'vault' : 'vaults'} — ${transitions || stamps}</summary>`,
+    '',
+    `| Vault ID | Chain |${columns.map(path => ` ${code(path)} |`).join('')}`,
+    `| --- | --- |${columns.map(() => ' --- |').join('')}`,
+    ...shown.map(({ chain, vault, changes }) => {
+      const cells = columns.map(path => {
+        const change = changes.find(candidate => candidate.path === path);
+        if (!change) {
+          return ' |';
+        }
+        const [before, after] = renderChangePair(change);
+        // just the new value where there was none before, which is the whole column's usual case
+        return change.before === undefined ? ` ${after} |` : ` ${before} → ${after} |`;
+      });
+      return `| ${cell(code(vault.id))} | ${cell(code(chain))} |${cells.join('')}`;
+    }),
+    ...(vaults.length > maxVaultsPerStatusGroup ?
+      [
+        `| _… and ${vaults.length - maxVaultsPerStatusGroup} more not shown_ | |${columns.map(() => ' |').join('')}`,
+      ]
+    : []),
+    '',
+    '</details>',
+    '',
+  ].join('\n');
+}
+
+/** Renders the status sections, stopping before they exceed their shared slice of the comment */
+function renderStatusSections(sections: StatusSection[], budget: number): string {
+  const parts: string[] = [];
+  let used = 0;
+
+  for (const section of sections) {
+    const heading = `### ${section.title} (${section.vaultCount})`;
+    parts.push(heading, '');
+    used += heading.length + 2;
+
+    let notShown = 0;
+    for (const group of section.groups) {
+      const rendered = renderStatusGroup(group);
+      // continue, not break: one oversized group must not delete every group after it
+      if (used + rendered.length + maxFooterChars > budget) {
+        notShown += group.vaults.length;
+        continue;
+      }
+      parts.push(rendered);
+      used += rendered.length + 1;
+    }
+
+    if (notShown > 0) {
+      parts.push(`_… and ${notShown} more not shown._`, '');
+      used += maxFooterChars;
+    }
+  }
+
+  return parts.join('\n');
 }
 
 function byChainThenId(a: VaultLocation, b: VaultLocation): number {
@@ -473,6 +671,8 @@ type Diff = {
   added: VaultLocation[];
   removed: VaultLocation[];
   modified: ModifiedVault[];
+  /** vaults that only changed statusFields, split out of modified and grouped by transition */
+  statusOnly: ModifiedVault[];
   /** chain -> why it could not be compared */
   broken: Map<string, string>;
   /** entries skipped on either side, which the reader still needs to know about */
@@ -494,6 +694,7 @@ function buildDiff(base: SideLoad, head: SideLoad, filesTouched: number): Diff {
   const added: VaultLocation[] = [];
   const removed: VaultLocation[] = [];
   const modified: ModifiedVault[] = [];
+  const statusOnly: ModifiedVault[] = [];
 
   for (const [key, current] of head.vaults) {
     if (!usable(current)) {
@@ -507,7 +708,8 @@ function buildDiff(base: SideLoad, head: SideLoad, filesTouched: number): Diff {
     try {
       const changes = diffVault(previous.vault, current.vault);
       if (changes.length > 0) {
-        modified.push({ ...current, before: previous.vault, changes });
+        const entry = { ...current, before: previous.vault, changes };
+        (isStatusOnlyChange(changes) ? statusOnly : modified).push(entry);
       }
     } catch (e) {
       comparisonFailures.push(
@@ -525,11 +727,13 @@ function buildDiff(base: SideLoad, head: SideLoad, filesTouched: number): Diff {
   added.sort(byChainThenId);
   removed.sort(byChainThenId);
   modified.sort(byChainThenId);
+  statusOnly.sort(byChainThenId);
 
   return {
     added,
     removed,
     modified,
+    statusOnly,
     broken,
     notes: [...notes, ...comparisonFailures],
     filesTouched,
@@ -563,7 +767,7 @@ function renderTableSection(title: string, vaults: VaultLocation[], budget: numb
 }
 
 function renderDiff(
-  { added, removed, modified, broken, notes, filesTouched }: Diff,
+  { added, removed, modified, statusOnly, broken, notes, filesTouched }: Diff,
   maxChars: number
 ): string {
   const parts = [commentMarker, '## Vault config changes', ''];
@@ -571,7 +775,9 @@ function renderDiff(
     ...[...broken].map(([chain, why]) => `${chain} could not be read: ${why}`),
     ...notes,
   ];
-  const changed = added.length > 0 || removed.length > 0 || modified.length > 0;
+  const changed =
+    added.length > 0 || removed.length > 0 || modified.length > 0 || statusOnly.length > 0;
+  const statusSections = buildStatusSections(statusOnly);
 
   if (!changed && problems.length === 0) {
     parts.push(
@@ -584,7 +790,9 @@ function renderDiff(
   }
 
   if (changed) {
-    const chains = [...new Set([...added, ...removed, ...modified].map(({ chain }) => chain))]
+    const chains = [
+      ...new Set([...added, ...removed, ...modified, ...statusOnly].map(({ chain }) => chain)),
+    ]
       .sort()
       .map(chain => code(chain));
     const shownChains = chains.slice(0, maxListedChains).join(', ');
@@ -594,6 +802,7 @@ function renderDiff(
       added.length > 0 && `**${added.length}** added`,
       removed.length > 0 && `**${removed.length}** removed`,
       modified.length > 0 && `**${modified.length}** modified`,
+      ...statusSections.map(section => `**${section.vaultCount}** ${section.title.toLowerCase()}`),
     ].filter((part): part is string => !!part);
     parts.push(`${counts.join(' · ')} across ${shownChains}${moreChains}`, '');
   } else {
@@ -614,13 +823,16 @@ function renderDiff(
     );
   }
 
-  // the add/remove tables get at most a quarter each, so the modified details always have room
+  // the add/remove/status sections get at most a quarter each, so modified always has room
   const tableBudget = Math.floor(maxChars / 4);
   if (added.length > 0) {
     parts.push(renderTableSection('Added', added, tableBudget));
   }
   if (removed.length > 0) {
     parts.push(renderTableSection('Removed', removed, tableBudget));
+  }
+  if (statusSections.length > 0) {
+    parts.push(renderStatusSections(statusSections, tableBudget));
   }
   if (modified.length > 0) {
     parts.push(`### Modified (${modified.length})`, '');
