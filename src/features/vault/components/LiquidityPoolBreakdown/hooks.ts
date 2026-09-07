@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { deepEqualBigNumberAware } from '../../../data/utils/selector-equality.ts';
 import { BIG_ONE, BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import type { TokenLpBreakdown } from '../../../data/entities/token.ts';
@@ -33,7 +34,10 @@ export function useCalculatedBreakdown(
     oneLpShareOfPool,
     underlyingShareOfPool,
     underlyingTotalSupplyDecimal,
-  } = useAppSelector(state => selectUserLpBreakdownBalance(state, vault, breakdown));
+  } = useAppSelector(
+    state => selectUserLpBreakdownBalance(state, vault, breakdown),
+    deepEqualBigNumberAware
+  );
 
   const { totalValue, totalUnderlyingValue } = useMemo(() => {
     return assets.reduce(

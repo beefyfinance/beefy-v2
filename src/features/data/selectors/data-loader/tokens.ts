@@ -1,6 +1,7 @@
 import {
   createChainDataSelector,
   createGlobalDataSelector,
+  DEFAULT_DISPATCHED_RECENT_SECONDS,
   hasLoaderFulfilledOnce,
   shouldLoaderLoadOnce,
 } from '../data-loader-helpers.ts';
@@ -9,7 +10,8 @@ import type { ChainEntity } from '../../entities/chain.ts';
 
 const selectShouldInitAddressBookGlobal = createGlobalDataSelector(
   'addressBook',
-  shouldLoaderLoadOnce
+  shouldLoaderLoadOnce,
+  DEFAULT_DISPATCHED_RECENT_SECONDS
 );
 export const selectIsAddressBookLoadedGlobal = createGlobalDataSelector(
   'addressBook',
@@ -17,7 +19,8 @@ export const selectIsAddressBookLoadedGlobal = createGlobalDataSelector(
 );
 const selectShouldInitAddressBookChain = createChainDataSelector(
   'addressBook',
-  shouldLoaderLoadOnce
+  shouldLoaderLoadOnce,
+  DEFAULT_DISPATCHED_RECENT_SECONDS
 );
 const selectIsAddressBookLoadedChain = createChainDataSelector(
   'addressBook',

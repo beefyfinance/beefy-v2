@@ -3,11 +3,14 @@ import { describe, expect, it } from 'vitest';
 import { FilterContent, type FilterValues } from '../reducers/filtered-vaults-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { FILTER_DEFAULTS } from '../utils/filter-values.ts';
+import { selectVaultFilterEnv, selectVaultPassesFilters } from '../utils/vault-filter.ts';
 import {
+  type BlockerCategory,
   clearBlockerCategories,
   listActiveBlockerCategories,
   selectSearchNoResultsInfo,
 } from './no-results.ts';
+import { selectVaultById } from './vaults.ts';
 
 function makeFilters(overrides: Partial<FilterValues> = {}): FilterValues {
   return {
@@ -147,9 +150,9 @@ function makeState(
               chainId: v.chainId,
               platformId: v.platformId,
               assetType: 'lps',
-              contractAddress: v.contractAddress ?? '0x1111111111111111111111111111111111111111',
-              depositTokenAddress: '0x2222222222222222222222222222222222222222',
-              receiptTokenAddress: '0x3333333333333333333333333333333333333333',
+              contractAddress: v.contractAddress ?? '0x111111111111111111111111111111111111000B',
+              depositTokenAddress: '0x222222222222222222222222222222222222000D',
+              receiptTokenAddress: '0x333333333333333333333333333333333333000B',
             },
           ])
         ),
@@ -171,6 +174,10 @@ function makeState(
       tokens: {
         byChainId: tokensByChainId,
       },
+    },
+    user: {
+      wallet: { address: undefined },
+      balance: { byAddress: {} },
     },
     ui: {
       filteredVaults: {
@@ -331,5 +338,69 @@ describe('selectSearchNoResultsInfo', () => {
     if (info.kind === 'blocked') {
       expect(info.showCount).toBe(1);
     }
+  });
+
+  it('detects retired matches while the deposited filter is active', () => {
+    // searchOnly rejects retired vaults: probing its match set rather than the text matches reports 0
+    const filters = makeFilters({ searchText: 'caps', userCategory: 'deposited' });
+    const info = selectSearchNoResultsInfo(makeState(FIXTURE_VAULTS, filters));
+    expect(info).toEqual({ kind: 'retired', count: 1 });
+  });
+});
+
+const ALL_CATEGORIES: BlockerCategory[] = [
+  'chain',
+  'platform',
+  'category',
+  'type',
+  'product',
+  'flags',
+  'mintvl',
+  'userCategory',
+];
+
+/** every filter set the no-results diagnosis probes with */
+function listProbeFilters(filters: FilterValues): FilterValues[] {
+  const searchOnly = clearBlockerCategories(filters, ALL_CATEGORIES);
+  return [
+    searchOnly,
+    { ...searchOnly, onlyRetired: true },
+    clearBlockerCategories(filters, listActiveBlockerCategories(filters)),
+    ...ALL_CATEGORIES.map(category => clearBlockerCategories(filters, [category])),
+  ];
+}
+
+describe('selectVaultPassesFilters search gate', () => {
+  it('passes no vault the search text does not match, under any probe filter set', () => {
+    const filters = makeFilters({
+      searchText: 'usdc',
+      chainIds: ['ethereum'],
+      platformIds: ['aerodrome'],
+      userCategory: 'deposited',
+    });
+    const state = makeState(FIXTURE_VAULTS, filters);
+    const visibleIds = state.entities.vaults.allVisibleIds;
+    const searchOnly = clearBlockerCategories(filters, ALL_CATEGORIES);
+    const searchEnv = selectVaultFilterEnv(state, searchOnly);
+    const searchMatches = visibleIds.filter(id =>
+      searchEnv.matchesSearch(selectVaultById(state, id))
+    );
+
+    // the assertion below is only meaningful while some vault is a match and some is not
+    expect(searchMatches.length).toBeGreaterThan(0);
+    expect(searchMatches.length).toBeLessThan(visibleIds.length);
+
+    const passing = new Set<string>();
+    for (const probe of listProbeFilters(filters)) {
+      const env = selectVaultFilterEnv(state, probe);
+      for (const id of visibleIds) {
+        if (selectVaultPassesFilters(state, selectVaultById(state, id), probe, env)) {
+          passing.add(id);
+        }
+      }
+    }
+
+    expect(passing.size).toBeGreaterThan(0);
+    expect([...passing].filter(id => !searchMatches.includes(id))).toEqual([]);
   });
 });

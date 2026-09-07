@@ -1,27 +1,26 @@
-import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../store/types.ts';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags.ts';
+import { createBoundedSelector } from '../utils/selector-utils.ts';
 
-export const selectWalletAddress = createSelector(
+// @dev on hotpath so 1 slot cache to stop featureFlag_walletAddressOverride being called
+export const selectWalletAddress = createBoundedSelector(
   (state: BeefyState) => state.user.wallet.address,
-  address => {
-    return address ? featureFlag_walletAddressOverride(address) : undefined;
-  }
+  address => (address ? featureFlag_walletAddressOverride(address) : undefined)
 );
 
-export const selectIsWalletKnown = createSelector(selectWalletAddress, address => !!address);
+export const selectIsWalletKnown = (state: BeefyState) => !!selectWalletAddress(state);
 
 // If address is actually connected
-export const selectIsWalletConnected = createSelector(
-  selectWalletAddress,
-  (state: BeefyState) => state.user.wallet.connectedAddress,
-  (address, connectedAddress) => !!connectedAddress && connectedAddress === address
-);
+export const selectIsWalletConnected = (state: BeefyState) => {
+  const connectedAddress = state.user.wallet.connectedAddress;
+  return !!connectedAddress && connectedAddress === selectWalletAddress(state);
+};
 
-export const selectWalletAddressOrThrow = createSelector(selectWalletAddress, (address): string => {
+export const selectWalletAddressOrThrow = (state: BeefyState): string => {
+  const address = selectWalletAddress(state);
   if (!address) throw new Error('Wallet address not known');
   return address;
-});
+};
 
 // TODO: remove later
 export const selectWalletAddressIfKnown = selectWalletAddress;

@@ -2,7 +2,16 @@ import { css, type CssStyles } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
-import { Fragment, memo, type ReactNode, useEffect, useId, useMemo, useRef } from 'react';
+import {
+  Fragment,
+  memo,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+} from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertError, AlertWarning } from '../../../../../../components/Alerts/Alerts.tsx';
 import type { ReloadSpinnerState } from '../../../../../../components/ReloadSpinner/ReloadSpinner.tsx';
@@ -11,6 +20,8 @@ import { ExternalLink } from '../../../../../../components/Links/ExternalLink.ts
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { formatLargeUsd } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { bigNumberEqual } from '../../../../../data/utils/selector-equality.ts';
+import type { BeefyState } from '../../../../../data/store/types.ts';
 import {
   transactClearQuotes,
   transactFetchQuotes,
@@ -401,14 +412,16 @@ const YouReceiveCard = memo(function YouReceiveCard({
   const classes = useStyles();
   const { open, handleToggle, Icon } = useCollapse();
   const dustRowsId = useId();
-  const outputsUsd = useAppSelector(
-    state => totalValueOfTokenAmounts(outputs, state),
-    (prev, next) => prev.eq(next)
+  const selectOutputsUsd = useCallback(
+    (state: BeefyState) => totalValueOfTokenAmounts(outputs, state),
+    [outputs]
   );
-  const dustUsd = useAppSelector(
-    state => totalValueOfTokenAmounts(returned, state),
-    (prev, next) => prev.eq(next)
+  const selectDustUsd = useCallback(
+    (state: BeefyState) => totalValueOfTokenAmounts(returned, state),
+    [returned]
   );
+  const outputsUsd = useAppSelector(selectOutputsUsd, bigNumberEqual);
+  const dustUsd = useAppSelector(selectDustUsd, bigNumberEqual);
   const { dustUsdFormatted, totalUsdFormatted, showDust } = useMemo(() => {
     return {
       dustUsdFormatted: formatLargeUsd(dustUsd),

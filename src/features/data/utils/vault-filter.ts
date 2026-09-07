@@ -41,7 +41,7 @@ export type VaultFilterEnv = {
  * per-recalc environment: query matchers are compiled once, reused across every vault
  * @param searchScores when given, receives the relevance score of every matching vault
  */
-export function buildVaultFilterEnv(
+export function selectVaultFilterEnv(
   state: BeefyState,
   filters: FilterValues,
   searchScores?: Map<VaultEntity['id'], number>
@@ -94,7 +94,7 @@ export function buildVaultFilterEnv(
  @dev every filter that can be applied without using a selector should come first
  then cheap selectors, then expensive selectors last
 */
-export function vaultPassesFilters(
+export function selectVaultPassesFilters(
   state: BeefyState,
   vault: VaultEntity,
   filterOptions: FilterValues,

@@ -1,5 +1,6 @@
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { shallowEqual } from 'react-redux';
 import { SummaryStats } from '../../../components/SummaryStats/SummaryStats.tsx';
 import { TextLoader } from '../../../components/TextLoader/TextLoader.tsx';
 import { formatLargeUsd } from '../../../helpers/format.ts';
@@ -13,7 +14,7 @@ interface DepositSummaryProps {
 
 export const DepositSummary = memo(function DepositSummary({ address }: DepositSummaryProps) {
   const { t } = useTranslation();
-  const stats = useAppSelector(state => selectUserGlobalStats(state, address));
+  const stats = useAppSelector(state => selectUserGlobalStats(state, address), shallowEqual);
   const totalYieldUsd = useAppSelector(state => selectUserTotalYieldUsd(state, address));
 
   const userStats = useMemo(() => {
@@ -28,7 +29,7 @@ export const DepositSummary = memo(function DepositSummary({ address }: DepositS
       },
       {
         label: t('Summary-Yield'),
-        value: formatLargeUsd(totalYieldUsd.toNumber()),
+        value: formatLargeUsd(totalYieldUsd),
       },
       {
         label: t('Summary-Daily'),

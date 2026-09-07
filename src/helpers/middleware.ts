@@ -5,13 +5,15 @@ export function createWalletDebouncer(wait: number) {
    * Returns true if the awaiter should abort their operation.
    */
   return async (walletAddress: string, delay: (ms: number) => Promise<void>): Promise<boolean> => {
-    const existing = latestByWallet.get(walletAddress);
+    // callers supply either the checksummed or the lowercased address for the same wallet
+    const key = walletAddress.toLowerCase();
+    const existing = latestByWallet.get(key);
     if (existing && !existing.signal.aborted) {
       existing.abort();
     }
 
     const controller = new AbortController();
-    latestByWallet.set(walletAddress, controller);
+    latestByWallet.set(key, controller);
     await delay(wait);
     return controller.signal.aborted;
   };

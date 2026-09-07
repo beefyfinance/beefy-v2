@@ -76,6 +76,14 @@ export function isTokenEqual(tokenA: TokenEntity, tokenB: TokenEntity): boolean 
   );
 }
 
+/**
+ * Key that is equal for exactly the tokens {@link isTokenEqual} considers equal, so membership
+ * tests over a token list can use a Set instead of a scan. Keep in sync with isTokenEqual.
+ */
+export function tokenEqualityKey(token: TokenEntity): string {
+  return `${token.type}|${token.chainId}|${token.address}`;
+}
+
 export type TokenLpBreakdown = LpData;
 
 export type CurrentCowcentratedRangeData<T = BigNumber> = {

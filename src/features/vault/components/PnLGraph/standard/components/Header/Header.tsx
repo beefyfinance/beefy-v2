@@ -25,9 +25,10 @@ const useStyles = legacyMakeStyles(styles);
 
 interface HeaderProps {
   vaultId: VaultEntity['id'];
+  address: string;
 }
 
-export const Header = memo(function Header({ vaultId }: HeaderProps) {
+export const Header = memo(function Header({ vaultId, address }: HeaderProps) {
   const { t } = useTranslation();
 
   const {
@@ -42,7 +43,7 @@ export const Header = memo(function Header({ vaultId }: HeaderProps) {
     totalPnlUsd,
     pnlPercentage,
     pendingIndex,
-  } = useAppSelector(state => selectStandardGovPnl(state, vaultId));
+  } = useAppSelector(state => selectStandardGovPnl(state, vaultId, address));
 
   const classes = useStyles();
 

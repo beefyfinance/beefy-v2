@@ -1,6 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import {
   createGlobalDataSelector,
+  DEFAULT_DISPATCHED_RECENT_SECONDS,
   hasLoaderFulfilledOnce,
   shouldLoaderLoadOnce,
 } from '../data-loader-helpers.ts';
@@ -24,14 +25,21 @@ export const selectIsZapLoaded = createSelector(
 );
 export const selectShouldInitZapConfigs = createGlobalDataSelector(
   'zapConfigs',
-  shouldLoaderLoadOnce
+  shouldLoaderLoadOnce,
+  DEFAULT_DISPATCHED_RECENT_SECONDS
 );
 export const selectShouldInitZapSwapAggregators = createGlobalDataSelector(
   'zapSwapAggregators',
-  shouldLoaderLoadOnce
+  shouldLoaderLoadOnce,
+  DEFAULT_DISPATCHED_RECENT_SECONDS
 );
 export const selectShouldInitZapAggregatorTokenSupport = createGlobalDataSelector(
   'zapAggregatorTokenSupport',
-  shouldLoaderLoadOnce
+  shouldLoaderLoadOnce,
+  DEFAULT_DISPATCHED_RECENT_SECONDS
 );
-export const selectShouldInitZapAmms = createGlobalDataSelector('zapAmms', shouldLoaderLoadOnce);
+export const selectShouldInitZapAmms = createGlobalDataSelector(
+  'zapAmms',
+  shouldLoaderLoadOnce,
+  DEFAULT_DISPATCHED_RECENT_SECONDS
+);
