@@ -24,7 +24,7 @@ import { selectChainById } from '../../../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
 import { selectVaultStrategyAddress } from '../../../../selectors/vaults.ts';
 import type { BeefyState, BeefyThunk } from '../../../../store/types.ts';
-import { BeefyCLMPool } from '../../../beefy/beefy-clm-pool.ts';
+import { BeefyCLMPool, clmSupportsActionableAt } from '../../../beefy/beefy-clm-pool.ts';
 import { slipAllBy, slipBy } from '../../helpers/amounts.ts';
 import { Balances } from '../../helpers/Balances.ts';
 import {
@@ -162,7 +162,8 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
       this.vault.contractAddress,
       strategy,
       chain,
-      this.vaultType.depositTokens
+      this.vaultType.depositTokens,
+      clmSupportsActionableAt(this.vault)
     );
 
     const rebalance = await clmPool.getDualInputRebalanceData(inputs[0].amount, inputs[1].amount);
@@ -320,7 +321,8 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
       this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
-      this.vaultType.depositTokens
+      this.vaultType.depositTokens,
+      clmSupportsActionableAt(this.vault)
     );
     const slippage = selectTransactSlippage(state);
     const zapHelpers: ZapHelpers = { chain, slippage, state, clmPool };

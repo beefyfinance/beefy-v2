@@ -22,7 +22,7 @@ import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectTransactSlippage } from '../../../selectors/transact.ts';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults.ts';
 import type { BeefyStateFn } from '../../../store/types.ts';
-import { BeefyCLMPool } from '../../beefy/beefy-clm-pool.ts';
+import { BeefyCLMPool, clmSupportsActionableAt } from '../../beefy/beefy-clm-pool.ts';
 import { slipAllBy } from '../helpers/amounts.ts';
 import {
   createOptionId,
@@ -121,7 +121,8 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
-      this.depositTokens
+      this.depositTokens,
+      clmSupportsActionableAt(this.vault)
     );
 
     const {
@@ -252,7 +253,8 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
-      this.depositTokens
+      this.depositTokens,
+      clmSupportsActionableAt(this.vault)
     );
     const { amount0, amount1, isCalm, actionableAt } = await clmPool.previewWithdraw(input.amount);
 
@@ -326,7 +328,8 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
-      this.depositTokens
+      this.depositTokens,
+      clmSupportsActionableAt(this.vault)
     );
 
     const { liquidity } = await clmPool.previewDeposit(
@@ -371,7 +374,8 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
-      this.depositTokens
+      this.depositTokens,
+      clmSupportsActionableAt(this.vault)
     );
     const { amount0, amount1 } = await clmPool.previewWithdraw(input.amount);
 
