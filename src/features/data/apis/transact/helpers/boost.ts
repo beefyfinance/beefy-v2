@@ -97,7 +97,8 @@ export function getBoostReceiptToken(boost: BoostPromoEntity, shareToken: TokenE
  * rewrites the amount with the router's live balance.
  *
  * Deliberately not `exit()`: that also claims every reward to the caller — the router — and the zap
- * has no way to pass those on. Rewards stay in the boost for the user to claim themselves.
+ * has no way to pass those on. `maybeBoostClaimStep` batches a `getReward()` ahead of the zap instead,
+ * so the rewards reach the user's own wallet.
  */
 export function buildBoostWithdrawZapStep(boost: BoostPromoEntity, amountWei: BigNumber): ZapStep {
   return {
