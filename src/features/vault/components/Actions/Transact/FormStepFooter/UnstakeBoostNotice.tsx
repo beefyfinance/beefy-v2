@@ -1,31 +1,28 @@
-import { styled } from '@repo/styles/jsx';
-import { memo, useCallback } from 'react';
+import type BigNumber from 'bignumber.js';
+import { memo, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { VaultDepositTokenImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
 import { transactSetUnstakeFromBoost } from '../../../../../data/actions/transact.ts';
-import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
 import {
   selectTransactExecuting,
   selectTransactUnstakeFromBoost,
 } from '../../../../../data/selectors/transact.ts';
-import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { ActionTokensNotice } from './ActionTokensNotice.tsx';
+import { StakedTokenAmount } from './StakedTokenAmount.tsx';
 
 export type UnstakeBoostNoticeProps = {
   vaultId: VaultEntity['id'];
-  boost: BoostPromoEntity;
+  balance: BigNumber;
 };
 
 const UnstakeBoostNotice = memo(function UnstakeBoostNotice({
   vaultId,
-  boost,
+  balance,
 }: UnstakeBoostNoticeProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const checked = useAppSelector(selectTransactUnstakeFromBoost);
   const isExecuting = useAppSelector(selectTransactExecuting);
   const isStepping = useAppSelector(selectIsStepperStepping);
@@ -34,35 +31,27 @@ const UnstakeBoostNotice = memo(function UnstakeBoostNotice({
     dispatch(transactSetUnstakeFromBoost(!checked));
   }, [dispatch, checked]);
 
+  const heading = useMemo(
+    () => (
+      <Trans
+        t={t}
+        i18nKey="Transact-Notice-Withdraw-Boost-Staked"
+        components={{ Token: <StakedTokenAmount vaultId={vaultId} amount={balance} /> }}
+      />
+    ),
+    [t, vaultId, balance]
+  );
+
   return (
     <ActionTokensNotice
       onClick={handleToggle}
       checked={checked}
       disabled={isExecuting || isStepping}
+      heading={heading}
     >
-      <Trans
-        t={t}
-        i18nKey="Transact-Notice-Withdraw-Boost-Unstake"
-        values={{ boost: boost.tag.text || boost.title }}
-        components={{
-          Tokens: (
-            <Inline>
-              <VaultDepositTokenImage vault={vault} size={24} />
-            </Inline>
-          ),
-        }}
-      />
+      {t('Transact-Notice-Withdraw-Boost-ClaimUnstake')}
     </ActionTokensNotice>
   );
-});
-
-const Inline = styled('span', {
-  base: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    verticalAlign: 'middle',
-    marginLeft: '6px',
-  },
 });
 
 // eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()

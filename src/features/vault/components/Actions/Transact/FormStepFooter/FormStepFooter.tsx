@@ -3,7 +3,7 @@ import type BigNumber from 'bignumber.js';
 import { lazy, memo } from 'react';
 import { shallowEqual } from 'react-redux';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
-import type { BoostPromoEntity, PromoReward } from '../../../../../data/entities/promo.ts';
+import type { PromoReward } from '../../../../../data/entities/promo.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
@@ -50,7 +50,7 @@ type FooterNotice =
   | {
       kind: 'boost-unstake';
       vaultId: VaultEntity['id'];
-      boost: BoostPromoEntity;
+      balance: BigNumber;
     };
 
 const vaultIdArgument = (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId;
@@ -91,8 +91,8 @@ const selectWithdrawBoostNotice = createSelector(
     selectTransactUnstakeFromBoostSupported,
   ],
   (vaultId, balance, unstakeable, supported): FooterNotice | undefined => {
-    if (unstakeable && supported) {
-      return { kind: 'boost-unstake', vaultId, boost: unstakeable };
+    if (unstakeable && supported && balance) {
+      return { kind: 'boost-unstake', vaultId, balance };
     }
 
     if (balance && !balance.isZero()) {
@@ -166,7 +166,7 @@ function footerNoticeEqual(a: FooterNotice | undefined, b: FooterNotice | undefi
     return a.vaultId === b.vaultId && bigNumberEqual(a.balance, b.balance);
   }
   if (a.kind === 'boost-unstake' && b.kind === 'boost-unstake') {
-    return a.vaultId === b.vaultId && a.boost.id === b.boost.id;
+    return a.vaultId === b.vaultId && bigNumberEqual(a.balance, b.balance);
   }
   return false;
 }
@@ -186,6 +186,6 @@ export const FormStepFooter = memo(function FormStepFooter() {
     case 'withdraw-boost':
       return <WithdrawBoostNotice vaultId={notice.vaultId} balance={notice.balance} />;
     case 'boost-unstake':
-      return <UnstakeBoostNotice vaultId={notice.vaultId} boost={notice.boost} />;
+      return <UnstakeBoostNotice vaultId={notice.vaultId} balance={notice.balance} />;
   }
 });

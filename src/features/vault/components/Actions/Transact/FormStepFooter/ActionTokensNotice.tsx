@@ -10,6 +10,8 @@ type ActionTokensNoticeProps = {
   children: ReactNode;
   onClick?: () => void;
   multiline?: boolean;
+  /** static line rendered above the interactive row */
+  heading?: ReactNode;
   /**
    * When set the notice becomes a checkbox row instead of a link: the tick replaces the chevron
    * and the strip drops to the dim tint while unchecked.
@@ -21,6 +23,7 @@ type ActionTokensNoticeProps = {
 export const ActionTokensNotice = memo(function ActionTokensNotice({
   children,
   multiline,
+  heading,
   onClick,
   checked,
   disabled,
@@ -32,25 +35,28 @@ export const ActionTokensNotice = memo(function ActionTokensNotice({
     return (
       <FooterNotification
         padding="none"
-        direction={multiline ? 'column' : 'row'}
+        direction={heading || multiline ? 'column' : 'row'}
         background={isCheckbox && !checked ? 'transparent' : 'solid'}
       >
         <FooterNotificationButton
           type="button"
           onClick={onClick}
-          checkbox={isCheckbox}
           dim={isCheckbox && !checked}
           disabled={disabled}
           role={isCheckbox ? 'checkbox' : undefined}
           aria-checked={isCheckbox ? checked : undefined}
           aria-disabled={disabled}
         >
+          {/* inside the button so hover and click cover the whole strip, not just the tick row */}
+          {heading ?
+            <NoticeHeading>{heading}</NoticeHeading>
+          : null}
           {isCheckbox ?
-            <>
+            <CheckboxRow>
               <CheckIcon className={checkIcon} />
               {/* one flex item, so the row gap cannot land between the sentence and the tokens */}
               <CheckboxLabel>{children}</CheckboxLabel>
-            </>
+            </CheckboxRow>
           : <>
               {children}
               <ChevronRight preserveAspectRatio="xMaxYMid" className={inlineIcon} />
@@ -66,6 +72,26 @@ export const ActionTokensNotice = memo(function ActionTokensNotice({
   );
 });
 
+const NoticeHeading = styled('div', {
+  base: {
+    width: '100%',
+    textAlign: 'center',
+    textWrap: 'wrap balance',
+  },
+});
+
+const CheckboxRow = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '10px',
+    textWrap: 'wrap',
+    // matches the heading line; a floor rather than a fixed height, so a label that wraps still grows
+    minHeight: '24px',
+  },
+});
+
 const inlineIcon = css({
   display: 'inline-flex',
   alignItems: 'center',
@@ -76,6 +102,8 @@ const inlineIcon = css({
 /** no colour of its own, so the tick follows the strip tint */
 const checkIcon = css({
   flexShrink: '0',
+  width: '20px',
+  height: '20px',
 });
 
 const CheckboxLabel = styled('span', {
@@ -107,24 +135,16 @@ const FooterNotificationButton = styled('button', {
     textWrap: 'wrap balance',
     width: '100%',
     border: 'none',
-    padding: '8px 16px',
+    paddingBlock: '8px',
+    paddingInline: '16px',
     sm: {
-      padding: '8px 24px',
+      paddingInline: '24px',
     },
     '&:hover': {
       background: 'buttons.boost.active.background',
     },
   },
   variants: {
-    checkbox: {
-      true: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '10px',
-        textWrap: 'wrap',
-      },
-    },
     dim: {
       true: {
         // the default hover is gold.30, this variant's text colour, which would paint the label out
