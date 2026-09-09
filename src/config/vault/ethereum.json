@@ -1,5 +1,45 @@
 [
   {
+    "id": "yb-cbbtc",
+    "name": "cbBTC",
+    "type": "standard",
+    "token": "staked-g(yb-cbBTC)",
+    "tokenAddress": "0xF8764cBcdb15a9E4c7CA1b0b8a578d9ebEEC1b6f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "yb",
+    "earnContractAddress": "0xdE2cda87D8c9EFce4c363edcBc74FD3857E0CFD7",
+    "earnedToken": "mooYieldBasisCbBTC",
+    "earnedTokenAddress": "0xdE2cda87D8c9EFce4c363edcBc74FD3857E0CFD7",
+    "oracle": "lps",
+    "oracleId": "yb-cbbtc",
+    "status": "active",
+    "createdAt": 1788932686,
+    "platformId": "yb",
+    "assets": ["cbBTC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "yieldbasis",
+    "addLiquidityUrl": "https://yieldbasis.com/earn/0x722FC3640BA007C3E9867CCdB0dCa59F2e2F29F9",
+    "removeLiquidityUrl": "https://yieldbasis.com/earn/0x722FC3640BA007C3E9867CCdB0dCa59F2e2F29F9",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "yieldbasis",
+        "ybToken": "0x722FC3640BA007C3E9867CCdB0dCa59F2e2F29F9",
+        "asset": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+      }
+    ]
+  },
+  {
     "id": "stakedao-susg-reusd",
     "name": "sUSG/reUSD",
     "type": "standard",
@@ -7464,8 +7504,10 @@
     "earnedTokenAddress": "0xf308d61839716610baf43cb72c294C61BB67e38E",
     "oracle": "lps",
     "oracleId": "fx-eusd-fxusd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1719559463,
+    "retireReason": "rewards",
+    "retiredAt": 1788846033,
     "platformId": "fx",
     "assets": ["eUSD", "fxUSD"],
     "migrationIds": [],
