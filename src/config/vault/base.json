@@ -47688,5 +47688,125 @@
     "addLiquidityUrl": "https://balancer.fi/pools/base/v2/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/remove-liquidity",
     "network": "base"
+  },
+  {
+    "id": "aerodrome-cow-base-laptop-usdc-vault",
+    "name": "LAPTOP-USDC",
+    "type": "standard",
+    "token": "LAPTOP-USDC",
+    "tokenAddress": "0xf57999852B109CdfF2eF2b3f1Ec405Ee03e1767E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x7839135eDC52B77428a3823D9439A0aD9E65F514",
+    "earnedToken": "mooBeefyAerodromeLAPTOP-USDC",
+    "earnedTokenAddress": "0x7839135eDC52B77428a3823D9439A0aD9E65F514",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-laptop-usdc",
+    "status": "active",
+    "createdAt": 1788959457,
+    "platformId": "aerodrome",
+    "assets": ["LAPTOP", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-laptop-usdc-rp",
+    "name": "LAPTOP-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeLAPTOP-USDC",
+    "tokenAddress": "0xf57999852B109CdfF2eF2b3f1Ec405Ee03e1767E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x35bBdCD14a43B887473ED0A808E7a7856c933b6b",
+    "earnedToken": "rcowAerodromeLAPTOP-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-laptop-usdc",
+    "status": "active",
+    "createdAt": 1788959317,
+    "updatedAt": 1787097600,
+    "platformId": "aerodrome",
+    "assets": ["LAPTOP", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-laptop-usdc",
+    "name": "LAPTOP-USDC",
+    "type": "cowcentrated",
+    "token": "LAPTOP-USDC aerodrome",
+    "tokenAddress": "0x99cf3E8bfB02c300312c53Aac5D0B082e3D5975C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xB095274743941e953c746F9C228DA9c18Bb6ec29"
+    ],
+    "earnContractAddress": "0xf57999852B109CdfF2eF2b3f1Ec405Ee03e1767E",
+    "earnedToken": "cowAerodromeLAPTOP-USDC",
+    "earnedTokenAddress": "0xf57999852B109CdfF2eF2b3f1Ec405Ee03e1767E",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-laptop-usdc",
+    "status": "active",
+    "createdAt": 1788959265,
+    "platformId": "beefy",
+    "feeTier": "2.00",
+    "tickSpacing": 200,
+    "assets": ["LAPTOP", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   }
 ]
