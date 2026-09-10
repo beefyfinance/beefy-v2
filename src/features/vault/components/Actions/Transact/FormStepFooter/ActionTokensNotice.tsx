@@ -10,8 +10,6 @@ type ActionTokensNoticeProps = {
   children: ReactNode;
   onClick?: () => void;
   multiline?: boolean;
-  /** static line rendered above the interactive row */
-  heading?: ReactNode;
   /**
    * When set the notice becomes a checkbox row instead of a link: the tick replaces the chevron
    * and the strip drops to the dim tint while unchecked.
@@ -23,7 +21,6 @@ type ActionTokensNoticeProps = {
 export const ActionTokensNotice = memo(function ActionTokensNotice({
   children,
   multiline,
-  heading,
   onClick,
   checked,
   disabled,
@@ -35,7 +32,7 @@ export const ActionTokensNotice = memo(function ActionTokensNotice({
     return (
       <FooterNotification
         padding="none"
-        direction={heading || multiline ? 'column' : 'row'}
+        direction={multiline ? 'column' : 'row'}
         background={isCheckbox && !checked ? 'transparent' : 'solid'}
       >
         <FooterNotificationButton
@@ -47,10 +44,6 @@ export const ActionTokensNotice = memo(function ActionTokensNotice({
           aria-checked={isCheckbox ? checked : undefined}
           aria-disabled={disabled}
         >
-          {/* inside the button so hover and click cover the whole strip, not just the tick row */}
-          {heading ?
-            <NoticeHeading>{heading}</NoticeHeading>
-          : null}
           {isCheckbox ?
             <CheckboxRow>
               <CheckIcon className={checkIcon} />
@@ -72,22 +65,13 @@ export const ActionTokensNotice = memo(function ActionTokensNotice({
   );
 });
 
-const NoticeHeading = styled('div', {
-  base: {
-    width: '100%',
-    textAlign: 'center',
-    textWrap: 'wrap balance',
-  },
-});
-
 const CheckboxRow = styled('div', {
   base: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
     gap: '10px',
     textWrap: 'wrap',
-    // matches the heading line; a floor rather than a fixed height, so a label that wraps still grows
+    // a floor rather than a fixed height, so a label that wraps to two lines still grows
     minHeight: '24px',
   },
 });
@@ -108,7 +92,9 @@ const checkIcon = css({
 
 const CheckboxLabel = styled('span', {
   base: {
-    display: 'inline',
+    // takes the space left by the tick, so the sentence centres against the row, not against the tick
+    flex: '1',
+    textAlign: 'center',
   },
 });
 

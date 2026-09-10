@@ -1,5 +1,5 @@
 import type BigNumber from 'bignumber.js';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { transactSetUnstakeFromBoost } from '../../../../../data/actions/transact.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
@@ -31,25 +31,17 @@ const UnstakeBoostNotice = memo(function UnstakeBoostNotice({
     dispatch(transactSetUnstakeFromBoost(!checked));
   }, [dispatch, checked]);
 
-  const heading = useMemo(
-    () => (
-      <Trans
-        t={t}
-        i18nKey="Transact-Notice-Withdraw-Boost-Staked"
-        components={{ Token: <StakedTokenAmount vaultId={vaultId} amount={balance} /> }}
-      />
-    ),
-    [t, vaultId, balance]
-  );
-
   return (
     <ActionTokensNotice
       onClick={handleToggle}
       checked={checked}
       disabled={isExecuting || isStepping}
-      heading={heading}
     >
-      {t('Transact-Notice-Withdraw-Boost-ClaimUnstake')}
+      <Trans
+        t={t}
+        i18nKey="Transact-Notice-Withdraw-Boost-Unstake"
+        components={{ Token: <StakedTokenAmount vaultId={vaultId} amount={balance} /> }}
+      />
     </ActionTokensNotice>
   );
 });
