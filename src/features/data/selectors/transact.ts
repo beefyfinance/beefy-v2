@@ -24,7 +24,6 @@ import {
   boostStakeableStrategyIds,
   boostUnstakeableStrategyIds,
   findBoostStakeStep,
-  findBoostUnstakeStep,
 } from '../apis/transact/helpers/boost.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
@@ -186,12 +185,6 @@ export const selectTransactWithdrawAvailableWithToken = (state: BeefyState) => {
   return boost ?
       selectUserVaultBalanceInDepositTokenInBoostWithToken(state, vaultId, boost.id)
     : selectUserVaultBalanceInDepositTokenWithToken(state, vaultId);
-};
-
-/** Mirror of the deposit twin: off the quote, so the CTA cannot promise a different route */
-export const selectTransactWillUnstakeFromBoost = (state: BeefyState): boolean => {
-  const quote = selectTransactSelectedQuoteOrUndefined(state);
-  return !!quote && isZapQuote(quote) && !!findBoostUnstakeStep(quote.steps);
 };
 
 /**

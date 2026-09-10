@@ -41,7 +41,6 @@ import {
   selectTransactQuoteStatus,
   selectTransactSelectedQuoteOrUndefined,
   selectTransactSuccessClosed,
-  selectTransactWillUnstakeFromBoost,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import {
@@ -255,7 +254,6 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
   const executionChainId = useMemo(() => getExecutionChainId(quote), [quote]);
-  const willUnstakeFromBoost = useAppSelector(selectTransactWillUnstakeFromBoost);
 
   const effectiveDisabledByConfirm = isDisabledByConfirm && !confirmNeededWithChanges;
 
@@ -265,9 +263,6 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
     priceImpactState.isDisabled ||
     effectiveDisabledByConfirm ||
     isDisabledByNotEnoughInput;
-
-  // only once the transaction can actually be fired, matching the deposit CTA
-  const boostCta = willUnstakeFromBoost && !isDisabled && !isComplete && !confirmNeededWithChanges;
 
   const handleWithdraw = useCallback(() => {
     dispatch(transactSteps(quote, t));
@@ -296,7 +291,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
       <div className={classes.feesContainer}>
         <ActionConnectSwitch chainId={executionChainId}>
           <AnimatedButton
-            variant={boostCta ? 'boost' : 'cta'}
+            variant="cta"
             loading={isComplete ? false : isLoading}
             isCreating={isComplete ? false : isCreating}
             isConfirmed={isComplete}
