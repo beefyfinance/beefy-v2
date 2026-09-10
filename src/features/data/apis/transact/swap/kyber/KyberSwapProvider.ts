@@ -53,7 +53,9 @@ export class KyberSwapProvider implements ISwapProvider {
       gasInclude: true,
       saveGas: false,
       // onlySinglePath: true,
-      ...(config.excludedSources?.length ? { excludedSources: config.excludedSources } : {}),
+      ...(config.excludedSources?.length ?
+        { excludedSources: config.excludedSources.join(',') }
+      : {}),
       ...(request.options?.excludeRfq ? { excludeRFQSources: true } : {}),
     };
 
