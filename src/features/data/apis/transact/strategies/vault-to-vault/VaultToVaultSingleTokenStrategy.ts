@@ -9,6 +9,7 @@ import { selectWalletAddress } from '../../../../selectors/wallet.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 import { getRoutingTokensForChain } from '../../../../../../config/vault-to-vault/routing-tokens.ts';
 import { mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
+import { findBoostStakeStep } from '../../helpers/boost.ts';
 import { buildFeeZapSteps, optionFeeEndpoints, resolveZapFee } from '../../helpers/fee.ts';
 import {
   createOptionId,
@@ -327,7 +328,12 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
       message: t('Vault-TxnConfirm', {
         type: t(isDeposit ? 'Deposit-noun' : 'Withdraw-noun'),
       }),
-      action: zapExecuteOrder(this.helpers.vault.id, zapRequest, destSteps.expectedTokens),
+      action: zapExecuteOrder(
+        this.helpers.vault.id,
+        zapRequest,
+        destSteps.expectedTokens,
+        findBoostStakeStep(quote.steps)?.boostId
+      ),
       pending: false,
       extraInfo: { zap: true, vaultId: this.helpers.vault.id },
     };

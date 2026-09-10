@@ -1,15 +1,42 @@
 import type { Address } from 'viem';
 import BigNumber from 'bignumber.js';
 import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi.ts';
-import { toWei } from '../../../../../helpers/big-number.ts';
+import { BIG_ZERO, toWei } from '../../../../../helpers/big-number.ts';
 import type { VaultStandard, VaultWithPricePerFullShare } from '../../../entities/vault.ts';
-import { selectUserBalanceOfToken } from '../../../selectors/balance.ts';
+import type { TokenErc20 } from '../../../entities/token.ts';
+import {
+  selectBoostUserBalanceInToken,
+  selectUserBalanceOfToken,
+} from '../../../selectors/balance.ts';
 import { selectFeesByVaultId } from '../../../selectors/fees.ts';
 import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectVaultPricePerFullShare } from '../../../selectors/vaults.ts';
+import { selectTransactUnstakeFromBoostTarget } from '../../../selectors/transact.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import type { InputTokenAmount } from '../transact-types.ts';
+
+/**
+ * Quote-time only: while the withdraw is set to exit a boost first, the shares come from the boost
+ * rather than the wallet. Step building goes through `getVaultWithdrawnFromContract`, which is handed
+ * the shares explicitly.
+ */
+function resolveBoostSourcedSharesWei(
+  state: BeefyState,
+  vault: VaultWithPricePerFullShare,
+  shareToken: TokenErc20,
+  userAddress?: string
+): BigNumber | undefined {
+  if (userAddress || state.ui.transact.vaultId !== vault.id) {
+    return undefined;
+  }
+  const boost = selectTransactUnstakeFromBoostTarget(state);
+  if (!boost) {
+    return undefined;
+  }
+  const shares = selectBoostUserBalanceInToken(state, boost.id);
+  return shares.gt(BIG_ZERO) ? toWei(shares, shareToken.decimals) : undefined;
+}
 
 export function getVaultWithdrawnFromState(
   userInput: InputTokenAmount,
@@ -21,10 +48,12 @@ export function getVaultWithdrawnFromState(
   const withdrawnToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const requestedAmountWei = toWei(userInput.amount, withdrawnToken.decimals);
   const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
-  const totalSharesWei = toWei(
-    selectUserBalanceOfToken(state, shareToken.chainId, shareToken.address, userAddress),
-    shareToken.decimals
-  );
+  const totalSharesWei =
+    resolveBoostSourcedSharesWei(state, vault, shareToken, userAddress) ??
+    toWei(
+      selectUserBalanceOfToken(state, shareToken.chainId, shareToken.address, userAddress),
+      shareToken.decimals
+    );
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
   const vaultFees = selectFeesByVaultId(state, vault.id);
   const withdrawFee = vaultFees?.withdraw || 0;
@@ -58,7 +87,8 @@ export async function getVaultWithdrawnFromContract(
   userInput: InputTokenAmount,
   vault: VaultStandard,
   state: BeefyState,
-  userAddress: string
+  userAddress: string,
+  sharesOverrideWei?: BigNumber
 ) {
   const withdrawAll = userInput.max;
   const withdrawnToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
@@ -75,7 +105,7 @@ export async function getVaultWithdrawnFromContract(
     vaultContract.read.balanceOf([userAddress as Address]),
   ]);
 
-  const totalSharesWei = new BigNumber(userBalance.toString(10));
+  const totalSharesWei = sharesOverrideWei ?? new BigNumber(userBalance.toString(10));
   const vaultTotalSupplyWei = new BigNumber(totalSupply.toString(10));
   const vaultBalanceWei = new BigNumber(balance.toString(10));
 

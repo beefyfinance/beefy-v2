@@ -44,6 +44,20 @@ import { CrossChainStrategy } from './strategies/cross-chain/CrossChainStrategy.
 import { VaultStrategy } from './strategies/vault/VaultStrategy.ts';
 import { VaultToVaultSingleTokenStrategy } from './strategies/vault-to-vault/VaultToVaultSingleTokenStrategy.ts';
 import { ChargeFeeStrategy } from './strategies/ChargeFeeStrategy.ts';
+import { BoostVaultStrategy, BoostZapStrategy } from './strategies/BoostStrategy.ts';
+import {
+  boostDecoratableStrategyIds,
+  findBoostStakeStep,
+  findBoostUnstakeStep,
+} from './helpers/boost.ts';
+import { withBoostSourcedVaultType } from './vaults/BoostSourcedVaultType.ts';
+import {
+  selectTransactStakeIntoBoostTarget,
+  selectTransactUnstakeFromBoostTarget,
+} from '../../selectors/transact.ts';
+import { selectBoostById } from '../../selectors/boosts.ts';
+
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import {
   getRoutingTokensForChain,
   hasRoutingTokensForChain,
@@ -56,6 +70,7 @@ import {
   type DepositOption,
   type DepositQuote,
   type InputTokenAmount,
+  isZapQuote,
   type ITransactApi,
   type RecoveryQuote,
   type TransactQuote,
@@ -73,6 +88,62 @@ function maybeWrapFee(
   if (chargesZapFee && isComposableStrategy(strategy)) {
     return new ChargeFeeStrategy(strategy, helpers);
   }
+  return strategy;
+}
+
+/**
+ * Quoting reads the live toggle; building a step re-reads the decision from the quote it was given,
+ * so the executed route can never diverge from the one the user approved.
+ */
+function resolveBoost(
+  helpers: ZapTransactHelpers,
+  quote: TransactQuote | undefined,
+  side: 'stake' | 'unstake'
+): BoostPromoEntity | undefined {
+  const state = helpers.getState();
+  if (!quote) {
+    return side === 'stake' ?
+        selectTransactStakeIntoBoostTarget(state)
+      : selectTransactUnstakeFromBoostTarget(state);
+  }
+  if (!isZapQuote(quote)) {
+    return undefined;
+  }
+  const step =
+    side === 'stake' ? findBoostStakeStep(quote.steps) : findBoostUnstakeStep(quote.steps);
+  return step ? selectBoostById(state, step.boostId) : undefined;
+}
+
+/** Applied outside maybeWrapFee so the boost step is the outermost thing the route does */
+function maybeWrapBoost(
+  strategy: IStrategy,
+  helpers: TransactHelpers,
+  quote?: TransactQuote
+): IStrategy {
+  if (!isZapTransactHelpers(helpers) || !boostDecoratableStrategyIds.has(strategy.id)) {
+    return strategy;
+  }
+
+  try {
+    // the mode gates the selectors and the quote carries only its own step kind, so at most one
+    // side ever resolves — and which method gets called decides the direction from there
+    const boost = resolveBoost(helpers, quote, 'stake') ?? resolveBoost(helpers, quote, 'unstake');
+    if (!boost || boost.vaultId !== helpers.vault.id) {
+      return strategy;
+    }
+
+    if (strategy.id === 'vault') {
+      return new BoostVaultStrategy(strategy as IStrategy<'vault'>, helpers, boost);
+    }
+
+    if (isComposableStrategy(strategy)) {
+      return new BoostZapStrategy(strategy, helpers, boost);
+    }
+  } catch (err: unknown) {
+    // getStrategyById feeds a Promise.all, so throwing here would fail every route's quote
+    console.error(`Vault ${helpers.vault.id} failed to apply the boost decorator`, err);
+  }
+
   return strategy;
 }
 
@@ -297,7 +368,7 @@ export class TransactApi implements ITransactApi {
     t: TFunction<Namespace>
   ): Promise<Step> {
     const helpers = await this.getHelpersForVault(quote.option.vaultId, getState);
-    const strategy = await this.getStrategyById(quote.option.strategyId, helpers);
+    const strategy = await this.getStrategyById(quote.option.strategyId, helpers, quote);
 
     if (strategy.beforeStep) {
       await strategy.beforeStep();
@@ -466,7 +537,7 @@ export class TransactApi implements ITransactApi {
     t: TFunction<Namespace>
   ): Promise<Step> {
     const helpers = await this.getHelpersForVault(quote.option.vaultId, getState);
-    const strategy = await this.getStrategyById(quote.option.strategyId, helpers);
+    const strategy = await this.getStrategyById(quote.option.strategyId, helpers, quote);
 
     if (strategy.beforeStep) {
       await strategy.beforeStep();
@@ -684,21 +755,25 @@ export class TransactApi implements ITransactApi {
 
   private async getStrategyById(
     strategyId: AnyStrategyId,
-    helpers: TransactHelpers
+    helpers: TransactHelpers,
+    /** when building a step: the quote to honour, instead of whatever the toggle says right now */
+    quote?: TransactQuote
   ): Promise<IStrategy> {
-    const { vault, vaultType } = helpers;
+    const { vault } = helpers;
+    const routeHelpers = this.withBoostSourcedShares(helpers, strategyId, quote);
+    const { vaultType } = routeHelpers;
 
     if (strategyId === 'vault') {
-      return new VaultStrategy(vaultType);
+      return maybeWrapBoost(new VaultStrategy(vaultType), routeHelpers, quote);
     }
 
-    if (!isZapTransactHelpers(helpers)) {
+    if (!isZapTransactHelpers(routeHelpers)) {
       throw new Error(`Strategy "${strategyId}" requires zap contract`);
     }
 
     // Synthetic strategies that aren't stored in vault.zaps — instantiate inline
     if (strategyId === 'cross-chain' || strategyId === 'vault-to-vault-single-token') {
-      return await this.buildZapStrategy({ strategyId }, helpers, true);
+      return await this.buildZapStrategy({ strategyId }, routeHelpers, true);
     }
 
     if (!vault.zaps) {
@@ -710,7 +785,31 @@ export class TransactApi implements ITransactApi {
       throw new Error(`Vault ${vault.id} has no zap with strategy "${strategyId}"`);
     }
 
-    return await this.buildZapStrategy(zap, helpers, true);
+    return maybeWrapBoost(
+      await this.buildZapStrategy(zap, routeHelpers, true),
+      routeHelpers,
+      quote
+    );
+  }
+
+  /**
+   * `helpersCache` shares one object per (state, vault) across every strategy and both directions,
+   * so the swapped vault type has to go on a copy.
+   */
+  private withBoostSourcedShares(
+    helpers: TransactHelpers,
+    strategyId: AnyStrategyId,
+    quote: TransactQuote | undefined
+  ): TransactHelpers {
+    if (!isZapTransactHelpers(helpers) || !boostDecoratableStrategyIds.has(strategyId)) {
+      return helpers;
+    }
+    try {
+      return withBoostSourcedVaultType(helpers, resolveBoost(helpers, quote, 'unstake')?.id);
+    } catch (err: unknown) {
+      console.error(`Vault ${helpers.vault.id} failed to source shares from the boost`, err);
+      return helpers;
+    }
   }
 
   async fetchRecoveryQuote(
