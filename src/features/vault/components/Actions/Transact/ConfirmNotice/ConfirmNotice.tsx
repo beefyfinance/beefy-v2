@@ -13,8 +13,10 @@ import {
   selectTransactConfirmError,
   selectTransactConfirmStatus,
 } from '../../../../../data/selectors/transact.ts';
+import { QuoteCowcentratedNotCalmError } from '../../../../../data/apis/transact/strategies/error.ts';
 import type { QuoteOutputTokenAmountChange } from '../../../../../data/apis/transact/transact-types.ts';
 import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens.ts';
+import { CalmAlert } from '../TransactQuote/TransactQuote.tsx';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -43,6 +45,10 @@ export const ConfirmNotice = memo(function ConfirmNotice({ css: cssProp }: Confi
   }
 
   if (status === TransactStatus.Rejected) {
+    if (error && QuoteCowcentratedNotCalmError.match(error)) {
+      return <CalmAlert i18nKey={`Transact-Quote-Error-Calm-Retry-${error.action}`} />;
+    }
+
     return (
       <AlertError css={cssProp}>
         <p>
