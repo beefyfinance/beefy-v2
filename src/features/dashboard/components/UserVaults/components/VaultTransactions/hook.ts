@@ -30,6 +30,8 @@ type VaultTransactionHistory = {
   )[];
 };
 
+const EMPTY_TIMELINE: AnyTimelineEntry[] = [];
+
 export function useSortedTransactionHistory(
   vaultId: VaultEntity['id'],
   address: string
@@ -44,7 +46,7 @@ export function useSortedTransactionHistory(
 
   // Replace nulls with current price or 0
   const vaultTimelineFixed = useMemo(() => {
-    if (!fullTimelineEntries) return [];
+    if (!fullTimelineEntries) return EMPTY_TIMELINE;
 
     const oneDayAgo = subDays(new Date(), 1);
     return fullTimelineEntries.map((row: AnyTimelineEntry) => {

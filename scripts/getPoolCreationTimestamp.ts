@@ -157,6 +157,6 @@ if (process.argv.length === 4) {
   getPoolDate().catch(console.error);
 } else {
   console.error(
-    'Usage: yarn creationdate <vaultId|address> <chain>\ne.g. yarn creationdate one-bifi-maxi one'
+    'Usage: npm run creationdate <vaultId|address> <chain>\ne.g. npm run creationdate one-bifi-maxi one'
   );
 }

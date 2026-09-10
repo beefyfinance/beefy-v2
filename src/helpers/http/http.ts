@@ -7,6 +7,7 @@ import type {
 } from './types.ts';
 import {
   ABORT_REASON_TIMEOUT,
+  DEFAULT_FETCH_TIMEOUT_MS,
   getCacheBuster,
   getTimeoutAbortSignal,
   getUrlSearchParams,
@@ -144,9 +145,9 @@ function getRequestUrlInit(request: FetchCommonJsonRequest): {
   init: FetchRequestInit;
 } {
   const signal: AbortSignal | undefined =
-    'signal' in request && request.signal ? request.signal
-    : 'timeout' in request && request.timeout ? getTimeoutAbortSignal(request.timeout)
-    : undefined;
+    'signal' in request && request.signal !== undefined ? request.signal
+    : 'timeout' in request && request.timeout !== undefined ? getTimeoutAbortSignal(request.timeout)
+    : getTimeoutAbortSignal(DEFAULT_FETCH_TIMEOUT_MS);
 
   const headers = request.headers ? new Headers(request.headers) : new Headers();
 

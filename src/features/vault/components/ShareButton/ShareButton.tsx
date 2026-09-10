@@ -1,4 +1,5 @@
 import { styled } from '@repo/styles/jsx';
+import { isEqual } from 'lodash-es';
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DropdownContent } from '../../../../components/Dropdown/DropdownContent.tsx';
@@ -120,7 +121,7 @@ export const ShareButton = memo(function ShareButton({
       },
     [vault, apys]
   );
-  const additionalVaultDetails = useAppSelector(additionalSelector);
+  const additionalVaultDetails = useAppSelector(additionalSelector, isEqual);
   const vaultDetails: VaultDetails = useMemo(
     () => ({ ...commonVaultDetails, ...additionalVaultDetails }),
     [commonVaultDetails, additionalVaultDetails]

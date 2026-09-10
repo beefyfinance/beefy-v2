@@ -1,5 +1,4 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { createCachedSelector } from 're-reselect';
 import restrictionsConfig from '../../../config/restrictions.json';
 import type { RestrictionProfileConfig, RestrictionsConfig } from '../apis/config-types.ts';
 import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault.ts';
@@ -11,12 +10,12 @@ import {
   isLoaderRejected,
 } from './data-loader-helpers.ts';
 import { selectVaultByIdOrUndefined } from './vaults.ts';
+import { EMPTY_ARRAY } from '../utils/selector-utils.ts';
 
 const restrictions: RestrictionsConfig = restrictionsConfig;
 
 const UNKNOWN_COUNTRIES = ['XX', 'T1'];
 const EMPTY_SET: ReadonlySet<string> = new Set();
-const EMPTY_ARRAY: string[] = [];
 
 export type UserGeoStatus = 'loading' | 'blocked' | 'allowed';
 
@@ -109,10 +108,10 @@ export const selectUserGeoStatusForProfile = (
   );
 
 /** restriction profile covering any of the vault's deposit token(s) plus the matched token/asset, if any */
-export const selectVaultGeoRestriction = createCachedSelector(
+export const selectVaultGeoRestriction = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultByIdOrUndefined(state, vaultId),
   vault => (vault ? getVaultGeoRestriction(vault) : undefined)
-)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+);
 
 export const selectVaultGeoStatus = (
   state: BeefyState,

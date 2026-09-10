@@ -3,7 +3,7 @@ import {
   selectLastArticle,
   selectLastReadArticleId,
 } from '../../../../features/data/selectors/articles.ts';
-import { selectUnreadActiveProposals } from '../../../../features/data/selectors/proposals.ts';
+import { selectUnreadActiveProposalsCount } from '../../../../features/data/selectors/proposals.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
 
 const SEVEN_DAYS_IN_SECONDS = 60 * 60 * 24 * 7;
@@ -28,13 +28,5 @@ export function useHaveUnreadArticle() {
 }
 
 export function useHaveUnreadProposal() {
-  const proposals = useAppSelector(selectUnreadActiveProposals);
-
-  return useMemo(() => {
-    if (proposals.length === 0) {
-      return false;
-    }
-
-    return true;
-  }, [proposals.length]);
+  return useAppSelector(selectUnreadActiveProposalsCount) > 0;
 }

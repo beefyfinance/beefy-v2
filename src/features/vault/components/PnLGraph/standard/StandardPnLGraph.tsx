@@ -6,7 +6,6 @@ import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../data/store/hooks.ts';
 import { type VaultEntity } from '../../../../data/entities/vault.ts';
 import { selectHasDataToShowGraphByVaultId } from '../../../../data/selectors/analytics.ts';
-import { selectWalletAddress } from '../../../../data/selectors/wallet.ts';
 import { Card } from '../../Card/Card.tsx';
 import { CardContent } from '../../Card/CardContent.tsx';
 import { CardHeader } from '../../Card/CardHeader.tsx';
@@ -22,20 +21,19 @@ const useStyles = legacyMakeStyles(styles);
 
 interface PnLGraphLoaderProps {
   vaultId: VaultEntity['id'];
-  address?: string;
+  address: string;
 }
 
 export const StandardPnLGraphLoader = memo(function PnLGraphLoader({
   vaultId,
   address,
 }: PnLGraphLoaderProps) {
-  const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
   const hasData = useAppSelector(state =>
     selectHasDataToShowGraphByVaultId(state, vaultId, address)
   );
 
-  if (hasData && walletAddress) {
-    return <StandardPnLGraph address={walletAddress} vaultId={vaultId} />;
+  if (hasData) {
+    return <StandardPnLGraph address={address} vaultId={vaultId} />;
   }
 
   return null;
@@ -72,7 +70,7 @@ export const StandardPnLGraph = memo(function StandardPnLGraph({
         : null}
       </CardHeader>
       <CardContent css={styles.content}>
-        <Header vaultId={vaultId} />
+        <Header vaultId={vaultId} address={address} />
         <div className={classes.graphContainer}>
           {canShowGraph ?
             <Graph vaultId={vaultId} period={period} address={address} />

@@ -83,12 +83,9 @@ export const tokensSlice = createSlice({
 
     // when vault list is fetched, add all new tokens
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
-      // membership index shared across the whole pass; without it the dedupe below is quadratic
-      // over every vault config, and each read goes through immer's draft proxy
-      const activeAssetIdsByChain = new Map<ChainEntity['id'], Set<TokenEntity['id']>>();
       for (const vaults of Object.values(action.payload.byChainId)) {
         for (const vault of vaults) {
-          addVaultToState(sliceState, vault.config, vault.entity, activeAssetIdsByChain);
+          addVaultToState(sliceState, vault.config, vault.entity);
         }
       }
     });
@@ -306,6 +303,7 @@ function addAddressBookToState(
       const existingToken = chainState.byAddress['native'];
 
       // Add missing information
+      existingToken.name = existingToken.name || token.name;
       existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
       existingToken.description = existingToken.description || token.description;
       existingToken.website = existingToken.website || token.website;
@@ -343,6 +341,7 @@ function addAddressBookToState(
       }
 
       // Add missing information
+      existingToken.name = existingToken.name || token.name;
       existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
       existingToken.description = existingToken.description || token.description;
       existingToken.website = existingToken.website || token.website;
@@ -425,30 +424,9 @@ function addMinterToState(
   }
 }
 
-function addVaultToState(
-  sliceState: Draft<TokensState>,
-  config: VaultConfig,
-  entity: VaultEntity,
-  activeAssetIdsByChain: Map<ChainEntity['id'], Set<TokenEntity['id']>>
-) {
+function addVaultToState(sliceState: Draft<TokensState>, config: VaultConfig, entity: VaultEntity) {
   const chainId = entity.chainId;
   const chainState = getOrCreateTokensChainState(sliceState, chainId);
-
-  // add assets id's from active vaults to state
-  if (config.status === 'active' && config.assets) {
-    let seenAssetIds = activeAssetIdsByChain.get(chainId);
-    if (!seenAssetIds) {
-      // seeded once per chain from whatever is already there, so re-runs stay correct
-      seenAssetIds = new Set(chainState.tokenIdsInActiveVaults);
-      activeAssetIdsByChain.set(chainId, seenAssetIds);
-    }
-    for (const assetId of config.assets) {
-      if (!seenAssetIds.has(assetId)) {
-        seenAssetIds.add(assetId);
-        chainState.tokenIdsInActiveVaults.push(assetId);
-      }
-    }
-  }
 
   //
   // Deposit token
@@ -566,9 +544,8 @@ function ensureInterestingToken(
   sliceState: Draft<TokensState>
 ) {
   const chainState = getOrCreateTokensChainState(sliceState, chainId);
-  if (!chainState.interestingBalanceTokenAddresses.includes(address)) {
-    chainState.interestingBalanceTokenAddresses.push(address);
-  }
+  // config addresses arrive checksummed; an unnormalized key enqueues the token twice
+  chainState.interestingBalanceTokenAddresses[address.toLowerCase()] = true;
 }
 
 function getOrCreateTokensChainState(sliceState: Draft<TokensState>, chainId: ChainEntity['id']) {
@@ -578,8 +555,7 @@ function getOrCreateTokensChainState(sliceState: Draft<TokensState>, chainId: Ch
     chainState = sliceState.byChainId[chainId] = {
       byId: {},
       byAddress: {},
-      interestingBalanceTokenAddresses: [],
-      tokenIdsInActiveVaults: [],
+      interestingBalanceTokenAddresses: {},
       native: undefined,
       wnative: undefined,
     };

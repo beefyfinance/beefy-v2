@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { styles } from './styles.ts';
-import loadingImage from '../../images/tech-loader.gif';
+import loadingImage from '../../images/tech-loader.svg?inline';
 import { css, type CssStyles } from '@repo/styles/css';
 import { PageLayout } from '../PageLayout/PageLayout.tsx';
 

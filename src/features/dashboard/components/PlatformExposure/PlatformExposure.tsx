@@ -1,7 +1,10 @@
 import { memo } from 'react';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import { selectIsUserBalanceAvailable } from '../../../data/selectors/balance.ts';
-import { selectDashboardUserExposureByPlatform } from '../../../data/selectors/dashboard.ts';
+import {
+  exposureEntriesEqual,
+  selectDashboardUserExposureByPlatform,
+} from '../../../data/selectors/dashboard.ts';
 import { ExposureChart } from '../ExposureChart/ExposureChart.tsx';
 import type { ExposureDashboardChartLoaderProps } from '../ExposureChart/types.ts';
 
@@ -9,8 +12,9 @@ const PlatformExposure = memo(function PlatformExposure({
   title,
   address,
 }: ExposureDashboardChartLoaderProps) {
-  const platformExposureData = useAppSelector(state =>
-    selectDashboardUserExposureByPlatform(state, address)
+  const platformExposureData = useAppSelector(
+    state => selectDashboardUserExposureByPlatform(state, address),
+    exposureEntriesEqual
   );
   return <ExposureChart title={title} type="platform" data={platformExposureData} />;
 });

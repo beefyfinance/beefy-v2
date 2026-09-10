@@ -17,7 +17,6 @@ import {
 import { selectIsContractDataLoadedOnChain } from '../../../../data/selectors/data-loader/contract-data.ts';
 import { selectHasBreakdownDataForVaultId } from '../../../../data/selectors/tokens.ts';
 import { selectCowcentratedLikeVaultById } from '../../../../data/selectors/vaults.ts';
-import { selectWalletAddress } from '../../../../data/selectors/wallet.ts';
 import { Card } from '../../Card/Card.tsx';
 import { CardContent } from '../../Card/CardContent.tsx';
 import { CardHeader } from '../../Card/CardHeader.tsx';
@@ -37,14 +36,13 @@ const useStyles = legacyMakeStyles(styles);
 
 interface CowcentratedPnlGraphLoaderProps {
   vaultId: VaultEntity['id'];
-  address?: string;
+  address: string;
 }
 
 export const CowcentratedPnlGraphLoader = memo(function CowcentratedPnlGraphLoader({
   vaultId,
   address,
 }: CowcentratedPnlGraphLoaderProps) {
-  const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
   const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
 
   const haveBreakdownData = useAppSelector(state =>
@@ -54,20 +52,14 @@ export const CowcentratedPnlGraphLoader = memo(function CowcentratedPnlGraphLoad
     selectIsContractDataLoadedOnChain(state, vault.chainId)
   );
   const hasData = useAppSelector(state =>
-    selectHasDataToShowGraphByVaultId(state, vaultId, walletAddress)
+    selectHasDataToShowGraphByVaultId(state, vaultId, address)
   );
   const isAddressBookLoaded = useAppSelector(state =>
     selectIsAddressBookLoaded(state, vault.chainId)
   );
 
-  if (
-    haveBreakdownData &&
-    isAddressBookLoaded &&
-    hasData &&
-    isContractDataLoaded &&
-    walletAddress
-  ) {
-    return <CowcentratedPnlGraph vaultId={vaultId} address={walletAddress} />;
+  if (haveBreakdownData && isAddressBookLoaded && hasData && isContractDataLoaded) {
+    return <CowcentratedPnlGraph vaultId={vaultId} address={address} />;
   }
 
   return null;
@@ -90,7 +82,7 @@ export const OverviewGraph = memo(function OverviewGraph({
 
   return (
     <CardContent css={styles.content}>
-      <OverviewGraphHeader vaultId={vaultId} />
+      <OverviewGraphHeader vaultId={vaultId} address={address} />
       <div className={classes.graphContainer}>
         {canShowGraph ?
           <ErrorBoundary>

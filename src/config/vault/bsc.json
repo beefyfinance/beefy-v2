@@ -1,5 +1,83 @@
 [
   {
+    "id": "pancake-cow-bsc-usdt-4stock-rp",
+    "name": "4Stock-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBscUSDT-4Stock",
+    "tokenAddress": "0x4Adf3B713131815b5d672F83Abdf910846b7EcbD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x0114f3934FA54C434E0c4e1C4F3a322343F20C40",
+    "earnedToken": "rCowPancakeBscUSDT-4Stock",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdt-4stock",
+    "status": "active",
+    "createdAt": 1788939745,
+    "platformId": "pancakeswap",
+    "assets": ["4Stock", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-usdt-4stock",
+    "name": "USDT-4Stock",
+    "type": "cowcentrated",
+    "token": "USDT-4Stock pancakeswap",
+    "tokenAddress": "0x90c3c770087eB9e63ad47E99a66e260aA10c31Ae",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x55d398326f99059fF775485246999027B3197955",
+      "0xd270D4e1EC6e6E0d28C0ecB8BE966EC75997FFfF"
+    ],
+    "earnContractAddress": "0x4Adf3B713131815b5d672F83Abdf910846b7EcbD",
+    "earnedToken": "cowPancakeBscUSDT-4Stock",
+    "earnedTokenAddress": "0x4Adf3B713131815b5d672F83Abdf910846b7EcbD",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdt-4stock",
+    "status": "active",
+    "createdAt": 1788939745,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["USDT", "4Stock"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-bsc-usdt-cz-rp",
     "name": "CZ-USDT Reward Pool",
     "type": "gov",
@@ -730,8 +808,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "uniswap-cow-bsc-genius-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1776161346,
+    "retireReason": "tvl",
+    "retiredAt": 1788527247,
     "platformId": "uniswap",
     "assets": ["GENIUS", "USDT"],
     "risks": {
@@ -770,8 +850,10 @@
     "earnedTokenAddress": "0x3957d34645CfAe834Ac285b99D3818cBd81DCDf5",
     "oracle": "lps",
     "oracleId": "uniswap-cow-bsc-genius-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1776161346,
+    "retireReason": "tvl",
+    "retiredAt": 1788527247,
     "platformId": "beefy",
     "feeTier": "1",
     "tickSpacing": 200,
@@ -1768,8 +1850,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-palu-wbnb",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1759882318,
+    "retireReason": "tvl",
+    "retiredAt": 1788526751,
     "platformId": "pancakeswap",
     "assets": ["PALU", "WBNB"],
     "risks": {
@@ -1808,8 +1892,10 @@
     "earnedTokenAddress": "0x353c831C1eAf38A18DbE7C8D63Ed2519D1a6a47c",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-palu-wbnb",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1759882318,
+    "retireReason": "tvl",
+    "retiredAt": 1788526751,
     "platformId": "beefy",
     "feeTier": "1",
     "tickSpacing": 200,
