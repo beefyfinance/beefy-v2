@@ -249,7 +249,8 @@
     "chainId": "base",
     "priorityTokens": ["ETH", "WETH", "cbETH", "USDbC", "axlUSDC", "DAI", "MIM"],
     "blockedTokens": [],
-    "blockedVaults": []
+    "blockedVaults": [],
+    "excludedSources": ["BASE_TESSERASWAP"]
   },
   {
     "id": "one-inch-linea",
