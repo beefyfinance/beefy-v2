@@ -354,6 +354,8 @@ export interface KyberSwapSwapConfig {
   priorityTokens: TokenEntity['id'][];
   blockedTokens: TokenEntity['id'][];
   blockedVaults: VaultEntity['id'][];
+  /** liquidity source ids never routed through on this chain */
+  excludedSources?: string[];
 }
 
 export interface LiquidSwapSwapConfig {
