@@ -47,6 +47,9 @@ export class OneInchSwapProvider implements ISwapProvider {
       src: this.getTokenAddress(request.fromToken),
       dst: this.getTokenAddress(request.toToken),
       amount: toWeiString(request.fromAmount, request.fromToken.decimals),
+      ...(config.excludedSources?.length ?
+        { excludedProtocols: config.excludedSources.join(',') }
+      : {}),
     });
 
     return {
@@ -76,6 +79,9 @@ export class OneInchSwapProvider implements ISwapProvider {
       slippage: request.slippage * 100, // convert to % (0.01 -> 1%)
       disableEstimate: true,
       origin: fromAddress,
+      ...(config.excludedSources?.length ?
+        { excludedProtocols: config.excludedSources.join(',') }
+      : {}),
     });
 
     return {

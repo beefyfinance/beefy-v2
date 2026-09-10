@@ -49,6 +49,7 @@ export class LiquidSwapSwapProvider implements ISwapProvider {
       amountIn: request.fromAmount.toString(10), // @dev in decimal, not converted to wei
       multiHop: true,
       slippage: slippage * 100, // 0.01 -> 1%
+      ...(config.excludedSources?.length ? { excludeDexes: config.excludedSources.join(',') } : {}),
     };
 
     const quote = await api.getQuote(quoteRequest);

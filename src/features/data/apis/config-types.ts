@@ -338,35 +338,20 @@ export type ZapFeeRule = {
   endsAt?: number;
 };
 
-export interface OneInchSwapConfig {
+type MakeSwapConfig<TType extends string, TExtra extends object = Record<never, never>> = {
   id: string;
-  type: 'one-inch';
-  chainId: ChainEntity['id'];
-  priorityTokens: TokenEntity['id'][];
-  blockedTokens: TokenEntity['id'][];
-  blockedVaults: VaultEntity['id'][];
-}
-
-export interface KyberSwapSwapConfig {
-  id: string;
-  type: 'kyber';
+  type: TType;
   chainId: ChainEntity['id'];
   priorityTokens: TokenEntity['id'][];
   blockedTokens: TokenEntity['id'][];
   blockedVaults: VaultEntity['id'][];
   /** liquidity source ids never routed through on this chain */
   excludedSources?: string[];
-}
+} & TExtra;
 
-export interface LiquidSwapSwapConfig {
-  id: string;
-  type: 'liquid-swap';
-  chainId: ChainEntity['id'];
-  priorityTokens: TokenEntity['id'][];
-  blockedTokens: TokenEntity['id'][];
-  blockedVaults: VaultEntity['id'][];
-}
-
+export type OneInchSwapConfig = MakeSwapConfig<'one-inch'>;
+export type KyberSwapSwapConfig = MakeSwapConfig<'kyber'>;
+export type LiquidSwapSwapConfig = MakeSwapConfig<'liquid-swap'>;
 export type SwapAggregatorConfig = OneInchSwapConfig | KyberSwapSwapConfig | LiquidSwapSwapConfig;
 
 export type SwapAggregatorConfigLoose = ChangeTypeOfKeys<
