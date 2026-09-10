@@ -20,7 +20,7 @@ export type TokenSupport = {
 
 export interface ISwapAggregator {
   /**
-   * Returns an aggregator that applies these options to every quote/swap request
+   * Returns an aggregator that applies these options to every quote/swap request by default
    */
   withOptions(options: SwapOptions): ISwapAggregator;
 
