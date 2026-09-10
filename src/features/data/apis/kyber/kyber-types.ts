@@ -7,6 +7,7 @@ export type QuoteRequest = {
   saveGas?: boolean;
   includedSources?: string[];
   excludedSources?: string[];
+  excludeRFQSources?: boolean;
   gasInclude?: boolean;
   gasPrice?: string;
   onlySinglePath?: boolean;

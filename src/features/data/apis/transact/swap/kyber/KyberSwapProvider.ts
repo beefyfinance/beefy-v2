@@ -53,6 +53,7 @@ export class KyberSwapProvider implements ISwapProvider {
       gasInclude: true,
       saveGas: false,
       // onlySinglePath: true,
+      ...(request.options?.excludeRfq ? { excludeRFQSources: true } : {}),
     };
 
     const quote = await api.getQuote(quoteRequest);
@@ -69,7 +70,7 @@ export class KyberSwapProvider implements ISwapProvider {
   }
 
   async fetchSwap(request: SwapRequest<RouteSummary>, state: BeefyState): Promise<SwapResponse> {
-    const { quote, fromAddress, slippage } = request;
+    const { quote, fromAddress, slippage, options } = request;
     const chain = selectChainById(state, quote.fromToken.chainId);
     const config = this.getConfigForChain(chain.id, state);
     if (!config) {
@@ -92,6 +93,9 @@ export class KyberSwapProvider implements ISwapProvider {
       sender: fromAddress,
       routeSummary: quote.extra,
       slippageTolerance, // in bps (1/10_000)
+      ...(options?.deadlineSeconds ?
+        { deadline: Math.floor(Date.now() / 1000) + options.deadlineSeconds }
+      : {}),
     });
 
     return {
