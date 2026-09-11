@@ -2,7 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { WalletState } from './wallet-types.ts';
-import { tryToAutoConnectToEip6936Wallet } from '../../actions/wallet.ts';
+import { tryToAutoConnectToEip6963Wallet } from '../../actions/wallet.ts';
 
 const initialWalletState: WalletState = {
   isInMiniApp: false,
@@ -79,7 +79,7 @@ export const walletSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(tryToAutoConnectToEip6936Wallet.pending, sliceState => {
+    builder.addCase(tryToAutoConnectToEip6963Wallet.pending, sliceState => {
       sliceState.isInMiniApp = true;
     });
   },

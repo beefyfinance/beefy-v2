@@ -166,17 +166,16 @@ function addNetworks(
     }
 
     let primaryColor: string = setColorOpacity(network.primary, defaultHeaderOpacity);
-    let secondaryColor: string | undefined = network.secondary
-      ? setColorOpacity(network.secondary, defaultHeaderOpacity)
-      : undefined;
+    let secondaryColor: string | undefined =
+      network.secondary ? setColorOpacity(network.secondary, defaultHeaderOpacity) : undefined;
 
     if (typeof network.header !== 'undefined') {
       const primaryColorOrOpacity =
         typeof network.header === 'object' ? network.header.primary : network.header;
       primaryColor =
-        typeof primaryColorOrOpacity === 'number'
-          ? setColorOpacity(network.primary, primaryColorOrOpacity)
-          : primaryColorOrOpacity;
+        typeof primaryColorOrOpacity === 'number' ?
+          setColorOpacity(network.primary, primaryColorOrOpacity)
+        : primaryColorOrOpacity;
 
       const secondaryColorOrOpacity =
         typeof network.header === 'object' ? network.header.secondary : undefined;
