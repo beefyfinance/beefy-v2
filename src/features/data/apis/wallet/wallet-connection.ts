@@ -6,10 +6,7 @@ import type { EIP1193Provider, OnboardAPI } from '@web3-onboard/core';
 import Onboard from '@web3-onboard/core';
 import type { ConnectOptions } from '@web3-onboard/core/dist/types';
 import createInjectedWallets from '@web3-onboard/injected-wallets';
-import type {
-  EIP6963AnnounceProviderEvent,
-  InjectedNameSpace,
-} from '@web3-onboard/injected-wallets/dist/types';
+import type { InjectedNameSpace } from '@web3-onboard/injected-wallets/dist/types';
 import standardInjectedWallets from '@web3-onboard/injected-wallets/dist/wallets';
 import createMetamaskModule from '@web3-onboard/metamask';
 import createTrustDesktopModule from '@web3-onboard/trust';
@@ -28,6 +25,7 @@ import { storageGet, storageRemove, storageSet } from '../../../../helpers/stora
 import { featureFlag_walletConnectChainId } from '../../utils/feature-flags.ts';
 import { customInjectedWallets } from './custom-injected-wallets.ts';
 import type { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types.ts';
+import { isEip6963AnnounceProviderEvent } from '../../../../helpers/eip6963.ts';
 
 declare const window: {
   [K in InjectedNameSpace]?: unknown;
@@ -37,14 +35,6 @@ declare const window: {
 const walletConnectImages: Record<string, string> = {
   '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489': fireblocksLogo,
 };
-
-function isEip6963Event(e: Event): e is EIP6963AnnounceProviderEvent {
-  return (
-    e.type === 'eip6963:announceProvider' &&
-    typeof (e as EIP6963AnnounceProviderEvent).detail?.info?.rdns === 'string' &&
-    typeof (e as EIP6963AnnounceProviderEvent).detail?.provider === 'object'
-  );
-}
 
 const eip6963WalletPriority = ['xyz.farcaster.', 'com.coinbase.'];
 
@@ -463,7 +453,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   }
 
   protected onEip6963AnnounceProvider(e: Event): void {
-    if (!isEip6963Event(e)) {
+    if (!isEip6963AnnounceProviderEvent(e)) {
       return;
     }
 
