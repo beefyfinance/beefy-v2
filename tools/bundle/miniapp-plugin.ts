@@ -388,8 +388,6 @@ async function emitAssetGetUrl(baseUrl: string, originalPath: string, context: P
   return `${baseUrl}/${context.getFileName(id)}`;
 }
 
-// https://farcaster.xyz/miniapps/qItemA9Tveop/beefy for miniapp.beefy.rodeo
-
 // eslint-disable-next-line no-restricted-syntax -- required for Vite plugin
 export default function (options: MiniAppPluginOptions): Plugin {
   const baseUrl = `https://${options.domain}`;
