@@ -4,7 +4,7 @@ import { sdk } from '@farcaster/miniapp-sdk';
 import { MiniAppContext } from './context.ts';
 import { storageGet, storageSet } from '../../helpers/storage.ts';
 import { useAppDispatch } from '../../features/data/store/hooks.ts';
-import { tryToAutoConnectToEip6936Wallet } from '../../features/data/actions/wallet.ts';
+import { tryToAutoConnectToEip6963Wallet } from '../../features/data/actions/wallet.ts';
 
 export function MiniAppProvider({ children }: { children: ReactNode }) {
   const dispatch = useAppDispatch();
@@ -64,7 +64,7 @@ export function MiniAppProvider({ children }: { children: ReactNode }) {
       }
       setContext(sdkContext);
 
-      dispatch(tryToAutoConnectToEip6936Wallet());
+      dispatch(tryToAutoConnectToEip6963Wallet());
 
       const sdkReady = await hideSplash();
       if (!sdkReady) {
