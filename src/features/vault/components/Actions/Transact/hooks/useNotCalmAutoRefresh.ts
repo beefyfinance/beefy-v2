@@ -67,9 +67,7 @@ export function useNotCalmAutoRefresh(): NotCalmAutoRefresh {
     }
   }, [notCalmAction, status]);
 
-  // Reset whenever the user changes what they're transacting. Not keyed on the max flags: toggling
-  // max alone doesn't re-quote (transactFetchQuotesIfNeeded compares amounts), so resetting on it
-  // would strand the warning with a dead countdown.
+  // Reset whenever the user changes what they're transacting.
   const skipInitialReset = useRef(true);
   useEffect(() => {
     if (skipInitialReset.current) {
@@ -81,8 +79,7 @@ export function useNotCalmAutoRefresh(): NotCalmAutoRefresh {
 
   return {
     stickyNotCalmAction: status === TransactStatus.Pending ? retryingAction : undefined,
-    // pause the countdown while a re-quote is in flight so a slow quote isn't discarded by the next tick
-    showNotCalmRefresh: !!retryingAction && isWindowFocused && status !== TransactStatus.Pending,
+    showNotCalmRefresh: !!notCalmAction && isWindowFocused,
   };
 }
 
