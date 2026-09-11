@@ -3,7 +3,13 @@ import type { TokenEntity } from '../../../entities/token.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import type { StrategySwapConfig } from '../strategies/strategy-configs.ts';
-import type { QuoteRequest, QuoteResponse, SwapRequest, SwapResponse } from './ISwapProvider.ts';
+import type {
+  QuoteRequest,
+  QuoteResponse,
+  SwapOptions,
+  SwapRequest,
+  SwapResponse,
+} from './ISwapProvider.ts';
 
 export type TokenSupport = {
   /** Tokens supported per input token */
@@ -13,6 +19,11 @@ export type TokenSupport = {
 };
 
 export interface ISwapAggregator {
+  /**
+   * Returns an aggregator that applies these options to every quote/swap request by default
+   */
+  withOptions(options: SwapOptions): ISwapAggregator;
+
   /**
    * Returns quotes for a request
    * Optionally, some providers or tokens can be disabled

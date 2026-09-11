@@ -5,8 +5,11 @@ export type QuoteRequest = {
   tokenOut: string;
   amountIn: string;
   saveGas?: boolean;
-  includedSources?: string[];
-  excludedSources?: string[];
+  /** csv */
+  includedSources?: string;
+  /** csv */
+  excludedSources?: string;
+  excludeRFQSources?: boolean;
   gasInclude?: boolean;
   gasPrice?: string;
   onlySinglePath?: boolean;

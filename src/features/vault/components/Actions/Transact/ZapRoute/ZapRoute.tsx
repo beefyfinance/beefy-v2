@@ -582,12 +582,16 @@ export type ZapRouteProps = {
   css?: CssStyles;
   expandable?: boolean;
   enableRefresh?: boolean;
+  autoRefresh?: boolean;
+  autoRefreshSeconds?: number;
 };
 export const ZapRoute = memo(function ZapRoute({
   quote,
   css: cssProp,
   expandable = false,
   enableRefresh = false,
+  autoRefresh = false,
+  autoRefreshSeconds,
 }: ZapRouteProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -669,7 +673,12 @@ export const ZapRoute = memo(function ZapRoute({
   return (
     <div className={css(cssProp)}>
       {enableRefresh ?
-        <QuoteTitleRefresh title={t('Transact-ZapRoute')} enableRefresh={true} />
+        <QuoteTitleRefresh
+          title={t('Transact-ZapRoute')}
+          enableRefresh={true}
+          autoRefresh={autoRefresh}
+          autoRefreshSeconds={autoRefreshSeconds}
+        />
       : <div className={css(styles.title)}>{t('Transact-ZapRoute')}</div>}
       <div className={css(styles.routeHolder)}>
         <div

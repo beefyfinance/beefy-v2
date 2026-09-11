@@ -657,12 +657,17 @@ export class TransactApi implements ITransactApi {
   ): Promise<AnyComposableStrategy[]> {
     const { getState, vault } = helpers;
     const underlyingVault = selectVaultUnderlyingVault(getState(), vault.id);
-    const underlyingHelpers = await this.getHelpersForVault(underlyingVault.id, getState);
-    if (!isZapTransactHelpers(underlyingHelpers)) {
+    const resolvedHelpers = await this.getHelpersForVault(underlyingVault.id, getState);
+    if (!isZapTransactHelpers(resolvedHelpers)) {
       throw new Error(
         `Underlying vault ${underlyingVault.id} has no zap contract on chain ${underlyingVault.chainId}`
       );
     }
+    // underlying strategies do the swaps, so they must use the composer's (possibly scoped) aggregator
+    const underlyingHelpers: ZapTransactHelpers = {
+      ...resolvedHelpers,
+      swapAggregator: helpers.swapAggregator,
+    };
     const underlyingStrategies = await this.getZapStrategyConstructorsForVault(underlyingHelpers);
     const composableUnderlyingStrategies = underlyingStrategies.filter(
       isComposableStrategyConstructorWithOptions

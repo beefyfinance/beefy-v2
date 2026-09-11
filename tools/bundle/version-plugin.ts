@@ -4,6 +4,7 @@ import type { OutputBundle } from 'rollup';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { getHeadersApi, type HeadersPluginApi } from './headers-plugin.ts';
 
 // eslint-disable-next-line no-restricted-syntax -- required for Vite plugin
 export default function (): Plugin {
@@ -35,14 +36,6 @@ export default function (): Plugin {
     return hash.digest('hex');
   }
 
-  function getCloudflareHeaders(version: BuildVersion) {
-    return `/*
-  X-Git-Commit: ${version.git || 'undefined'}
-  X-Build-Timestamp: ${version.timestamp}
-  X-Content-Hash: ${version.content}
-`;
-  }
-
   async function getCheckerScript(version: BuildVersion) {
     const filePath = path.resolve(__dirname, 'version-checker.ts');
     const code = await readFile(filePath, 'utf-8');
@@ -61,10 +54,15 @@ export default function (): Plugin {
     return `<script>${minified.code}</script>`;
   }
 
+  let headers: HeadersPluginApi;
+
   return {
     name: 'version-plugin',
     enforce: 'post',
     apply: 'build',
+    configResolved(config) {
+      headers = getHeadersApi(config);
+    },
     async generateBundle(_options, bundle) {
       const content = getContentHash(bundle);
       const timestamp = Math.floor(Date.now() / 1000);
@@ -77,10 +75,10 @@ export default function (): Plugin {
         source: JSON.stringify(version),
       });
 
-      this.emitFile({
-        fileName: '_headers',
-        type: 'asset',
-        source: getCloudflareHeaders(version),
+      headers.add('/*', {
+        'X-Git-Commit': version.git || 'undefined',
+        'X-Build-Timestamp': `${version.timestamp}`,
+        'X-Content-Hash': version.content,
       });
 
       const index = bundle['index.html'];

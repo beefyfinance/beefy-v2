@@ -5,11 +5,20 @@ import type { VaultEntity } from '../../../entities/vault.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import type { ZapFee } from '../transact-types.ts';
 
+export type SwapOptions = {
+  excludeRfq?: boolean; // RFQ quotes have quick expiries, not fit for xchain
+  deadlineSeconds?: number; // seconds from swap build until the calldata expires
+};
+
+export type QuoteOptions = Pick<SwapOptions, 'excludeRfq'>;
+export type SwapBuildOptions = Pick<SwapOptions, 'deadlineSeconds'>;
+
 export type QuoteRequest = {
   fromToken: TokenEntity;
   fromAmount: BigNumber;
   toToken: TokenEntity;
   vaultId?: VaultEntity['id']; // so we can block vaults from aggregators if needed
+  options?: QuoteOptions;
 };
 
 export type QuoteResponse<T = unknown> = {
@@ -26,6 +35,7 @@ export type SwapRequest<T = unknown> = {
   quote: QuoteResponse<T>;
   fromAddress: string;
   slippage: number;
+  options?: SwapBuildOptions;
 };
 
 export type SwapTx = {
