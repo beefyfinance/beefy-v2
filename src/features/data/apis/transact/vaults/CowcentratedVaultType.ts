@@ -22,7 +22,7 @@ import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectTransactSlippage } from '../../../selectors/transact.ts';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults.ts';
 import type { BeefyStateFn } from '../../../store/types.ts';
-import { BeefyCLMPool } from '../../beefy/beefy-clm-pool.ts';
+import { BeefyCLMPool, clmSupportsActionableAt } from '../../beefy/beefy-clm-pool.ts';
 import { slipAllBy } from '../helpers/amounts.ts';
 import {
   createOptionId,
@@ -35,6 +35,8 @@ import { calculatePriceImpact } from '../helpers/quotes.ts';
 import { getInsertIndex } from '../helpers/zap.ts';
 import {
   QuoteCowcentratedNoSingleSideError,
+  QuoteCowcentratedNotActionableError,
+  QuoteCowcentratedNotCalmAndNotActionableError,
   QuoteCowcentratedNotCalmError,
 } from '../strategies/error.ts';
 import {
@@ -119,18 +121,37 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
-      this.depositTokens
+      this.depositTokens,
+      clmSupportsActionableAt(this.vault)
     );
 
-    const { isCalm, liquidity, used0, used1, unused0, unused1, position1, position0 } =
-      await clmPool.previewDeposit(inputs[0].amount, inputs[1].amount);
+    const {
+      isCalm,
+      liquidity,
+      used0,
+      used1,
+      unused0,
+      unused1,
+      position1,
+      position0,
+      actionableAt,
+    } = await clmPool.previewDeposit(inputs[0].amount, inputs[1].amount);
 
     if (liquidity.lte(BIG_ZERO)) {
       throw new QuoteCowcentratedNoSingleSideError(inputs);
     }
 
+    const actionableAtSeconds = Number(actionableAt);
+    const isNotActionable = actionableAtSeconds > Math.floor(Date.now() / 1000);
+
+    if (!isCalm && isNotActionable) {
+      throw new QuoteCowcentratedNotCalmAndNotActionableError('deposit');
+    }
     if (!isCalm) {
       throw new QuoteCowcentratedNotCalmError('deposit');
+    }
+    if (isNotActionable) {
+      throw new QuoteCowcentratedNotActionableError('deposit', actionableAtSeconds);
     }
 
     const depositUsed = [used0, used1].map((amount, i) => ({
@@ -232,12 +253,22 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
-      this.depositTokens
+      this.depositTokens,
+      clmSupportsActionableAt(this.vault)
     );
-    const { amount0, amount1, isCalm } = await clmPool.previewWithdraw(input.amount);
+    const { amount0, amount1, isCalm, actionableAt } = await clmPool.previewWithdraw(input.amount);
 
+    const actionableAtSeconds = Number(actionableAt);
+    const isNotActionable = actionableAtSeconds > Math.floor(Date.now() / 1000);
+
+    if (!isCalm && isNotActionable) {
+      throw new QuoteCowcentratedNotCalmAndNotActionableError('withdraw');
+    }
     if (!isCalm) {
       throw new QuoteCowcentratedNotCalmError('withdraw');
+    }
+    if (isNotActionable) {
+      throw new QuoteCowcentratedNotActionableError('withdraw', actionableAtSeconds);
     }
 
     const outputs: TokenAmount[] = [
@@ -297,7 +328,8 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
-      this.depositTokens
+      this.depositTokens,
+      clmSupportsActionableAt(this.vault)
     );
 
     const { liquidity } = await clmPool.previewDeposit(
@@ -342,7 +374,8 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
-      this.depositTokens
+      this.depositTokens,
+      clmSupportsActionableAt(this.vault)
     );
     const { amount0, amount1 } = await clmPool.previewWithdraw(input.amount);
 

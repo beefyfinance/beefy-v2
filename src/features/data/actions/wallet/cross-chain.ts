@@ -8,6 +8,8 @@ import { BeefyZapRouterAbi } from '../../../../config/abi/BeefyZapRouterAbi.ts';
 import { ZERO_ADDRESS } from '../../../../helpers/addresses.ts';
 import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { getTransactApi, getWalletConnectionApi } from '../../apis/instances.ts';
+import type { SerializedError } from '../../apis/transact/strategies/error-types.ts';
+import { isSerializableError } from '../../apis/transact/strategies/error.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import type { UserlessZapRequest, ZapOrder, ZapStep } from '../../apis/transact/zap/types.ts';
@@ -502,8 +504,12 @@ type CrossChainFetchRecoveryQuoteArgs = {
 
 export const crossChainFetchRecoveryQuote = createAppAsyncThunk<
   CrossChainFetchRecoveryQuotePayload,
-  CrossChainFetchRecoveryQuoteArgs
->('cross-chain/fetchRecoveryQuote', async ({ opId }, { getState }) => {
+  CrossChainFetchRecoveryQuoteArgs,
+  {
+    state: BeefyState;
+    rejectValue: SerializedError;
+  }
+>('cross-chain/fetchRecoveryQuote', async ({ opId }, { getState, rejectWithValue }) => {
   const state = getState();
   const op = state.ui.transact.crossChain.pendingOps[opId];
   if (!op) {
@@ -513,16 +519,23 @@ export const crossChainFetchRecoveryQuote = createAppAsyncThunk<
     throw new Error(`Op ${opId} is not in dest-failed state`);
   }
 
-  const api = await getTransactApi();
-  const actualBridgedAmount = new BigNumber(op.recovery.bridgedAmount);
-  const quote = await api.fetchRecoveryQuote(
-    op.recovery,
-    actualBridgedAmount,
-    getState,
-    op.vaultId
-  );
+  try {
+    const api = await getTransactApi();
+    const actualBridgedAmount = new BigNumber(op.recovery.bridgedAmount);
+    const quote = await api.fetchRecoveryQuote(
+      op.recovery,
+      actualBridgedAmount,
+      getState,
+      op.vaultId
+    );
 
-  return { quote };
+    return { quote };
+  } catch (e: unknown) {
+    if (isSerializableError(e)) {
+      return rejectWithValue(e.serialize());
+    }
+    throw e;
+  }
 });
 
 export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): BeefyThunk {

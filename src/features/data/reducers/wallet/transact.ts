@@ -350,7 +350,7 @@ const transactSlice = createSlice({
         const rq = sliceState.crossChain.recoveryQuote;
         if (rq.opId === action.meta.arg.opId) {
           rq.status = TransactStatus.Rejected;
-          rq.error = action.error;
+          rq.error = action.meta.rejectedWithValue ? action.payload : action.error;
           console.error('crossChainFetchRecoveryQuote rejected', action.error);
         }
       })

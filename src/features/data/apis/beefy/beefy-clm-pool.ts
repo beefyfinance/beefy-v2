@@ -3,6 +3,7 @@ import { BeefyCowcentratedLiquidityStrategyAbi } from '../../../../config/abi/Be
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi.ts';
 import BigNumber from 'bignumber.js';
 import { isTokenEqual, type TokenEntity } from '../../entities/token.ts';
+import type { VaultCowcentrated } from '../../entities/vault.ts';
 import type { InputTokenAmount, TokenAmount } from '../transact/transact-types.ts';
 import {
   BIG_ONE,
@@ -13,6 +14,19 @@ import {
 } from '../../../../helpers/big-number.ts';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
 
+const ACTIONABLE_AT_FROM = 1776378070;
+
+/**
+ * Only velodrome/aerodrome CLM strategies from this generation expose actionableAt(); older ones revert.
+ * Inclusive: validatePools.ts tests the same cutoff against the standard wrapper, whose createdAt is >= the CLM's.
+ */
+export function clmSupportsActionableAt(vault: VaultCowcentrated): boolean {
+  return (
+    (vault.tokenProviderId === 'velodrome' || vault.tokenProviderId === 'aerodrome') &&
+    vault.createdAt >= ACTIONABLE_AT_FROM
+  );
+}
+
 export class BeefyCLMPool {
   public readonly type = 'uniswap-v2';
 
@@ -22,7 +36,8 @@ export class BeefyCLMPool {
     protected address: string,
     protected strategy: string,
     protected chain: ChainEntity,
-    protected tokens: TokenEntity[]
+    protected tokens: TokenEntity[],
+    protected supportsActionableAt: boolean
   ) {}
 
   public async getDepositRatioData(
@@ -205,6 +220,15 @@ export class BeefyCLMPool {
       : [half.div(total), balancingAmount.plus(half).div(total)];
   }
 
+  private async readActionableAt(): Promise<bigint> {
+    if (!this.supportsActionableAt) {
+      return 0n;
+    }
+    return fetchContract(this.strategy, BeefyCowcentratedLiquidityStrategyAbi, this.chain.id)
+      .read.actionableAt()
+      .catch(() => 0n);
+  }
+
   public async previewDeposit(inputAmount0: BigNumber, inputAmount1: BigNumber) {
     const input0 = toWei(inputAmount0, this.tokens[0].decimals);
     const input1 = toWei(inputAmount1, this.tokens[1].decimals);
@@ -215,12 +239,14 @@ export class BeefyCLMPool {
       this.chain.id
     );
 
-    const [previewDepositResult, isCalm, balancesResult, totalSupplyResult] = await Promise.all([
-      clmContract.read.previewDeposit([bigNumberToBigInt(input0), bigNumberToBigInt(input1)]),
-      clmContract.read.isCalm(),
-      clmContract.read.balances(),
-      clmContract.read.totalSupply(),
-    ]);
+    const [previewDepositResult, isCalm, balancesResult, totalSupplyResult, actionableAt] =
+      await Promise.all([
+        clmContract.read.previewDeposit([bigNumberToBigInt(input0), bigNumberToBigInt(input1)]),
+        clmContract.read.isCalm(),
+        clmContract.read.balances(),
+        clmContract.read.totalSupply(),
+        this.readActionableAt(),
+      ]);
 
     const [liquidity, used0, used1] = [
       new BigNumber(previewDepositResult[0]),
@@ -242,7 +268,17 @@ export class BeefyCLMPool {
     const unused0 = input0.minus(used0);
     const unused1 = input1.minus(used1);
 
-    return { liquidity, used0, used1, position0, position1, unused0, unused1, isCalm };
+    return {
+      liquidity,
+      used0,
+      used1,
+      position0,
+      position1,
+      unused0,
+      unused1,
+      isCalm,
+      actionableAt,
+    };
   }
 
   public async previewWithdraw(liquidity: BigNumber) {
@@ -251,15 +287,17 @@ export class BeefyCLMPool {
       BeefyCowcentratedLiquidityVaultAbi,
       this.chain.id
     );
-    const [withdrawResult, isCalm] = await Promise.all([
+    const [withdrawResult, isCalm, actionableAt] = await Promise.all([
       clmContract.read.previewWithdraw([bigNumberToBigInt(toWei(liquidity, 18))]),
       clmContract.read.isCalm(),
+      this.readActionableAt(),
     ]);
 
     return {
       amount0: new BigNumber(withdrawResult[0]),
       amount1: new BigNumber(withdrawResult[1]),
       isCalm,
+      actionableAt,
     };
   }
 }
