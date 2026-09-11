@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
+import type { SerializedError } from '../../../../../data/apis/transact/strategies/error-types.ts';
 import { QuoteCowcentratedNotCalmError } from '../../../../../data/apis/transact/strategies/error.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
+  selectTransactConfirmError,
+  selectTransactConfirmStatus,
   selectTransactInputAmounts,
-  selectTransactInputMaxes,
   selectTransactMode,
   selectTransactQuoteError,
   selectTransactQuoteStatus,
@@ -24,12 +26,13 @@ export type NotCalmAutoRefresh = {
 };
 
 /**
- * CLM "not calm" auto-refresh. When a deposit/withdraw quote fails the on-chain calmness check we
- * re-quote every NOT_CALM_REFRESH_SECONDS until a calm quote comes back. The countdown ring AND the
- * re-quote itself are driven by ReloadSpinner (it fires onClick when the countdown completes), so
- * all we need here is the retrying flag — paused while the tab is backgrounded so we don't re-quote
- * the zap api unattended (the countdown re-arms from scratch when the tab is refocused) — plus a
- * sticky flag that keeps the warning from flickering to a loader during the retry's brief Pending.
+ * CLM "not calm" auto-refresh. When a deposit/withdraw quote — or the confirm step's re-quote just
+ * before the tx — fails the on-chain calmness check we re-quote every NOT_CALM_REFRESH_SECONDS until
+ * a calm quote comes back. The countdown ring AND the re-quote itself are driven by ReloadSpinner
+ * (it fires onClick when the countdown completes), so all we need here is the retrying flag — paused
+ * while the tab is backgrounded so we don't re-quote the zap api unattended (the countdown re-arms
+ * from scratch when the tab is refocused) — plus a sticky flag that keeps the warning from flickering
+ * to a loader during the retry's brief Pending.
  * Resets when the user changes what they're transacting.
  */
 export function useNotCalmAutoRefresh(): NotCalmAutoRefresh {
@@ -41,13 +44,17 @@ export function useNotCalmAutoRefresh(): NotCalmAutoRefresh {
     selectionId ? selectTransactSelectionById(state, selectionId) : undefined
   );
   const inputAmounts = useAppSelector(selectTransactInputAmounts);
-  const inputMaxes = useAppSelector(selectTransactInputMaxes);
   const chainId = useAppSelector(selectTransactSelectedChainId);
   const status = useAppSelector(selectTransactQuoteStatus);
   const quoteError = useAppSelector(selectTransactQuoteError);
+  const confirmStatus = useAppSelector(selectTransactConfirmStatus);
+  const confirmError = useAppSelector(selectTransactConfirmError);
 
+  // the confirm step re-quotes before sending the tx, so the calm check can fail there with the
+  // quote slice still fulfilled
   const notCalmAction =
-    quoteError && QuoteCowcentratedNotCalmError.match(quoteError) ? quoteError.action : undefined;
+    notCalmActionOf(quoteError) ??
+    (confirmStatus === TransactStatus.Rejected ? notCalmActionOf(confirmError) : undefined);
 
   // Set from the first not-calm error until any other settled result (calm quote, different error,
   // or idle). Persists across the retry's brief Pending so the warning doesn't flicker to a loader.
@@ -68,11 +75,14 @@ export function useNotCalmAutoRefresh(): NotCalmAutoRefresh {
       return;
     }
     setRetryingAction(undefined);
-  }, [chainId, inputAmounts, inputMaxes, mode, selection, selectionId]);
+  }, [chainId, inputAmounts, mode, selection, selectionId]);
 
   return {
     stickyNotCalmAction: status === TransactStatus.Pending ? retryingAction : undefined,
-    // pause the countdown while a re-quote is in flight so a slow quote isn't discarded by the next tick
-    showNotCalmRefresh: !!retryingAction && isWindowFocused && status !== TransactStatus.Pending,
+    showNotCalmRefresh: !!notCalmAction && isWindowFocused,
   };
+}
+
+function notCalmActionOf(error: SerializedError | undefined) {
+  return error && QuoteCowcentratedNotCalmError.match(error) ? error.action : undefined;
 }
