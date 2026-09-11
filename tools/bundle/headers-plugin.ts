@@ -63,6 +63,8 @@ const targets = { cloudflare };
 
 export type HeadersPluginOptions = {
   target?: keyof typeof targets;
+  /** Path pattern to headers added to every build */
+  headers?: Record<string, Record<string, string>>;
 };
 
 const PLUGIN_NAME = 'headers-plugin';
@@ -84,7 +86,10 @@ function patternToRegExp(pattern: string): RegExp {
 }
 
 // eslint-disable-next-line no-restricted-syntax -- required for Vite plugin
-export default function ({ target = 'cloudflare' }: HeadersPluginOptions = {}): Plugin {
+export default function ({
+  target = 'cloudflare',
+  headers = {},
+}: HeadersPluginOptions = {}): Plugin {
   const { fileName, serialize, parse } = targets[target];
   const rules: HeaderRules = new Map();
   let filePath = fileName;
@@ -114,6 +119,9 @@ export default function ({ target = 'cloudflare' }: HeadersPluginOptions = {}): 
     },
     buildStart() {
       rules.clear();
+      for (const [pattern, values] of Object.entries(headers)) {
+        api.add(pattern, values);
+      }
     },
     async writeBundle() {
       if (rules.size) {
