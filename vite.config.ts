@@ -86,7 +86,11 @@ export default defineConfig({
       },
       baseBuilderAddresses: ['0xd7Ec5766a06500e71e6695E579e4001A73Ed76A4'],
     }),
-    headersPlugin(),
+    headersPlugin({
+      headers: {
+        '/*': { 'Cross-Origin-Opener-Policy': 'same-origin-allow-popups' },
+      },
+    }),
     versionPlugin(),
     cspPlugin({
       reportOnly: true,
