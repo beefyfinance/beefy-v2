@@ -5,8 +5,11 @@ import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import versionPlugin from './tools/bundle/version-plugin.ts';
 import miniAppPlugin from './tools/bundle/miniapp-plugin.ts';
+import cspPlugin from './tools/bundle/csp-plugin.ts';
+import headersPlugin from './tools/bundle/headers-plugin.ts';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { muiCompatSvgrPlugin, standardSvgrPlugin } from './tools/bundle/svgr.ts';
+import { MINIAPP_HOST_ORIGINS } from './src/config/miniapp.ts';
 
 function getMiniAppDomain() {
   const deployUrl = process.env.DEPLOY_URL;
@@ -81,9 +84,42 @@ export default defineConfig({
         signature:
           'AHvDs-1ibYdkLHy8GTKN8CWECX-K4f3ekxVt04mMfANQruE3RT7_hwoviz62-4H3UZPWC6uCb7fci9pd9yDi4Rs',
       },
-      baseBuilderAddresses: ['0xd7Ec5766a06500e71e6695E579e4001A73Ed76A4']
+      baseBuilderAddresses: ['0xd7Ec5766a06500e71e6695E579e4001A73Ed76A4'],
+    }),
+    headersPlugin({
+      headers: {
+        '/*': { 'Cross-Origin-Opener-Policy': 'same-origin-allow-popups' },
+      },
     }),
     versionPlugin(),
+    cspPlugin({
+      reportOnly: true,
+      reportTo: process.env.CSP_REPORT_TO,
+      directives: {
+        'default-src': ["'self'"],
+        'script-src': ["'self'", "'wasm-unsafe-eval'", 'https://static.cloudflareinsights.com'],
+        'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+        'font-src': ["'self'", 'https://fonts.gstatic.com'],
+        'img-src': ["'self'", 'data:', 'blob:', 'https://beefy.com'],
+        'connect-src': [
+          "'self'",
+          'https:',
+          'https://cloudflareinsights.com',
+          'wss://relay.walletconnect.org',
+          'wss://www.walletlink.org',
+          'wss://metamask-sdk.api.cx.metamask.io',
+        ],
+        'frame-src': ["'self'", 'https://verify.walletconnect.org', 'https://fwd.metamask.io'],
+        'worker-src': ["'self'"],
+        'manifest-src': ["'self'"],
+        'media-src': ["'none'"],
+        'object-src': ["'none'"],
+        'base-uri': ["'self'"],
+        'form-action': ["'self'"],
+        'frame-ancestors': ["'self'", ...MINIAPP_HOST_ORIGINS],
+        'upgrade-insecure-requests': true,
+      },
+    }),
     ...optionalPlugins,
   ],
   optimizeDeps: {
@@ -139,5 +175,5 @@ export default defineConfig({
       },
       plugins: [RollupNodePolyFillPlugin()],
     },
-  }
+  },
 });
