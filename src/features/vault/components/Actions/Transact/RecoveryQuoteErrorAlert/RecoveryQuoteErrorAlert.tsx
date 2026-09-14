@@ -1,23 +1,12 @@
 import type { CssStyles } from '@repo/styles/css';
 import { memo } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
-import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
-import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
-import {
-  CrossChainBridgeBelowFeeError,
-  QuoteCowcentratedNoSingleSideError,
-  QuoteCowcentratedNotActionableError,
-  QuoteCowcentratedNotCalmAndNotActionableError,
-  QuoteCowcentratedNotCalmError,
-} from '../../../../../data/apis/transact/strategies/error.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectCrossChainRecoveryQuoteError,
   selectCrossChainRecoveryQuoteStatus,
 } from '../../../../../data/selectors/transact.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
-import { QuoteNotActionableError } from '../TransactQuote/TransactQuote.tsx';
-import { styled } from '@repo/styles/jsx';
+import { QuoteErrorAlert } from '../QuoteErrorAlert/QuoteErrorAlert.tsx';
 
 export type RecoveryQuoteErrorAlertProps = {
   action: 'deposit' | 'withdraw';
@@ -28,7 +17,6 @@ export const RecoveryQuoteErrorAlert = memo(function RecoveryQuoteErrorAlert({
   action,
   css: cssProp,
 }: RecoveryQuoteErrorAlertProps) {
-  const { t } = useTranslation();
   const status = useAppSelector(selectCrossChainRecoveryQuoteStatus);
   const error = useAppSelector(selectCrossChainRecoveryQuoteError);
 
@@ -36,66 +24,6 @@ export const RecoveryQuoteErrorAlert = memo(function RecoveryQuoteErrorAlert({
     return null;
   }
 
-  if (CrossChainBridgeBelowFeeError.match(error)) {
-    return (
-      <AlertError css={cssProp}>{t(`Transact-Quote-Error-CrossChain-TooLow-${action}`)}</AlertError>
-    );
-  }
-
-  if (QuoteCowcentratedNoSingleSideError.match(error)) {
-    return (
-      <AlertError css={cssProp}>
-        {t('Transact-Notice-CowcentratedNoSingleSideAllowed', {
-          inputToken: error.inputToken,
-          neededToken: error.neededToken,
-        })}
-      </AlertError>
-    );
-  }
-
-  if (QuoteCowcentratedNotActionableError.match(error)) {
-    return (
-      <QuoteNotActionableError action={action} actionableAt={error.actionableAt} css={cssProp} />
-    );
-  }
-
-  if (QuoteCowcentratedNotCalmAndNotActionableError.match(error)) {
-    return (
-      <AlertError css={cssProp}>
-        {t(`Transact-Quote-Error-NotCalmAndNotActionable-${action}`)}
-      </AlertError>
-    );
-  }
-
-  if (QuoteCowcentratedNotCalmError.match(error)) {
-    return (
-      <AlertError css={cssProp}>
-        <Trans
-          t={t}
-          i18nKey={`Transact-Quote-Error-Calm-${action}`}
-          components={{
-            LinkCalm: (
-              <CalmLink href={'https://docs.beefy.finance/beefy-products/clm#calmness-check'} />
-            ),
-          }}
-        />
-      </AlertError>
-    );
-  }
-
-  return (
-    <AlertError css={cssProp}>
-      <p>{t('Transact-Quote-Error')}</p>
-      {error.message ?
-        <p>{error.message}</p>
-      : null}
-    </AlertError>
-  );
-});
-
-const CalmLink = styled(ExternalLink, {
-  base: {
-    color: 'text.lightest',
-    textDecoration: 'underline',
-  },
+  // recovery re-quotes from its own "fetch new quote" button, so there's no countdown to point at
+  return <QuoteErrorAlert error={error} action={action} autoRetry={false} css={cssProp} />;
 });

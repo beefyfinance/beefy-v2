@@ -4,7 +4,6 @@ import {
   type SerializedError,
   type SerializedQuoteCowcentratedNoSingleSideError,
   type SerializedQuoteCowcentratedNotActionableError,
-  type SerializedQuoteCowcentratedNotCalmAndNotActionableError,
   type SerializedQuoteCowcentratedNotCalmError,
 } from './error-types.ts';
 import { miniSerializeError } from '@reduxjs/toolkit';
@@ -105,33 +104,6 @@ export class QuoteCowcentratedNotActionableError extends SerializableError {
 
   static match(error: SerializedError): error is SerializedQuoteCowcentratedNotActionableError {
     return error.name === QuoteCowcentratedNotActionableError.name;
-  }
-}
-
-export class QuoteCowcentratedNotCalmAndNotActionableError extends SerializableError {
-  public static readonly name = 'QuoteCowcentratedNotCalmAndNotActionableError';
-  public readonly name = QuoteCowcentratedNotCalmAndNotActionableError.name;
-
-  constructor(public readonly action: 'deposit' | 'withdraw') {
-    super(
-      `${
-        action === 'withdraw' ? 'Withdrawals' : 'New deposits'
-      } are temporarily unavailable. The current price is outside the calm zone, and the vault is processing a recent transaction. Please wait a few minutes and try again.`
-    );
-  }
-
-  serialize(): SerializedQuoteCowcentratedNotCalmAndNotActionableError {
-    return {
-      ...miniSerializeError(this),
-      name: this.name,
-      action: this.action,
-    };
-  }
-
-  static match(
-    error: SerializedError
-  ): error is SerializedQuoteCowcentratedNotCalmAndNotActionableError {
-    return error.name === QuoteCowcentratedNotCalmAndNotActionableError.name;
   }
 }
 

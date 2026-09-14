@@ -36,7 +36,6 @@ import { getInsertIndex } from '../helpers/zap.ts';
 import {
   QuoteCowcentratedNoSingleSideError,
   QuoteCowcentratedNotActionableError,
-  QuoteCowcentratedNotCalmAndNotActionableError,
   QuoteCowcentratedNotCalmError,
 } from '../strategies/error.ts';
 import {
@@ -141,16 +140,12 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       throw new QuoteCowcentratedNoSingleSideError(inputs);
     }
 
-    const actionableAtSeconds = Number(actionableAt);
-    const isNotActionable = actionableAtSeconds > Math.floor(Date.now() / 1000);
-
-    if (!isCalm && isNotActionable) {
-      throw new QuoteCowcentratedNotCalmAndNotActionableError('deposit');
-    }
+    // not-calm takes precedence: it re-quotes on a short timer, so it's the more actionable of the two
     if (!isCalm) {
       throw new QuoteCowcentratedNotCalmError('deposit');
     }
-    if (isNotActionable) {
+    const actionableAtSeconds = Number(actionableAt);
+    if (actionableAtSeconds > Math.floor(Date.now() / 1000)) {
       throw new QuoteCowcentratedNotActionableError('deposit', actionableAtSeconds);
     }
 
@@ -258,16 +253,12 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     );
     const { amount0, amount1, isCalm, actionableAt } = await clmPool.previewWithdraw(input.amount);
 
-    const actionableAtSeconds = Number(actionableAt);
-    const isNotActionable = actionableAtSeconds > Math.floor(Date.now() / 1000);
-
-    if (!isCalm && isNotActionable) {
-      throw new QuoteCowcentratedNotCalmAndNotActionableError('withdraw');
-    }
+    // not-calm takes precedence: it re-quotes on a short timer, so it's the more actionable of the two
     if (!isCalm) {
       throw new QuoteCowcentratedNotCalmError('withdraw');
     }
-    if (isNotActionable) {
+    const actionableAtSeconds = Number(actionableAt);
+    if (actionableAtSeconds > Math.floor(Date.now() / 1000)) {
       throw new QuoteCowcentratedNotActionableError('withdraw', actionableAtSeconds);
     }
 

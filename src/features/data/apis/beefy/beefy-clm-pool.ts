@@ -224,9 +224,13 @@ export class BeefyCLMPool {
     if (!this.supportsActionableAt) {
       return 0n;
     }
-    return fetchContract(this.strategy, BeefyCowcentratedLiquidityStrategyAbi, this.chain.id)
-      .read.actionableAt()
-      .catch(() => 0n);
+    // let a failed read reject: falling back to 0 reads as "actionable" and would let the user
+    // send a tx that reverts
+    return fetchContract(
+      this.strategy,
+      BeefyCowcentratedLiquidityStrategyAbi,
+      this.chain.id
+    ).read.actionableAt();
   }
 
   public async previewDeposit(inputAmount0: BigNumber, inputAmount1: BigNumber) {

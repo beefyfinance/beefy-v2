@@ -18,15 +18,8 @@ export type SerializedQuoteCowcentratedNotActionableError = {
   actionableAt: number;
 };
 
-export type SerializedQuoteCowcentratedNotCalmAndNotActionableError = {
-  name: 'QuoteCowcentratedNotCalmAndNotActionableError';
-  message?: string;
-  action: 'deposit' | 'withdraw';
-};
-
 export type SerializedError =
   | SerializedAnyError
   | SerializedQuoteCowcentratedNoSingleSideError
   | SerializedQuoteCowcentratedNotCalmError
-  | SerializedQuoteCowcentratedNotActionableError
-  | SerializedQuoteCowcentratedNotCalmAndNotActionableError;
+  | SerializedQuoteCowcentratedNotActionableError;

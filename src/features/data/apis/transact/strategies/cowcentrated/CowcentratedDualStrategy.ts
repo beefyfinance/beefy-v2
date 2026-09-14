@@ -64,7 +64,6 @@ import type {
 import {
   QuoteCowcentratedNoSingleSideError,
   QuoteCowcentratedNotActionableError,
-  QuoteCowcentratedNotCalmAndNotActionableError,
   QuoteCowcentratedNotCalmError,
 } from '../error.ts';
 import type {
@@ -243,16 +242,12 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
       throw new QuoteCowcentratedNoSingleSideError(lpTokenAmounts);
     }
 
-    const actionableAtSeconds = Number(actionableAt);
-    const isNotActionable = actionableAtSeconds > Math.floor(Date.now() / 1000);
-
-    if (!isCalm && isNotActionable) {
-      throw new QuoteCowcentratedNotCalmAndNotActionableError('deposit');
-    }
+    // not-calm takes precedence: it re-quotes on a short timer, so it's the more actionable of the two
     if (!isCalm) {
       throw new QuoteCowcentratedNotCalmError('deposit');
     }
-    if (isNotActionable) {
+    const actionableAtSeconds = Number(actionableAt);
+    if (actionableAtSeconds > Math.floor(Date.now() / 1000)) {
       throw new QuoteCowcentratedNotActionableError('deposit', actionableAtSeconds);
     }
 
