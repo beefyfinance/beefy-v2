@@ -170,10 +170,7 @@ export const TransactQuote = memo(function TransactQuote({
       disabled={status === TransactStatus.Idle}
       title={isTransformTitle ? t('Transact-YouReceive') : title}
       enableRefresh={status === TransactStatus.Pending ? 'disabled' : true}
-      autoRefresh={
-        (status === TransactStatus.Pending || status === TransactStatus.Rejected) &&
-        showNotCalmRefresh
-      }
+      autoRefresh={showNotCalmRefresh}
     >
       {status === TransactStatus.Fulfilled ?
         <QuoteFulfilledBody />
