@@ -75,6 +75,7 @@ import { enumerateDstVaultCandidates, enumerateSrcVaultCandidates } from './enum
 import { buildDustOutputs, mergeOutputs } from '../../handlers/dust.ts';
 import { findBoostStakeStep, findBoostUnstakeStep } from '../../helpers/boost.ts';
 import { buildBalanceCheckZapStep, findBridgeTokenMin } from './handlers/utils.ts';
+import type { SwapOptions } from '../../swap/ISwapProvider.ts';
 import { PassthroughDestHandler } from './handlers/PassthroughDestHandler.ts';
 import { SwapDestHandler } from './handlers/SwapDestHandler.ts';
 import { SwapSourceHandler } from './handlers/SwapSourceHandler.ts';
@@ -94,6 +95,11 @@ type StrategyId = typeof strategyId;
 
 /** Phased rollout: vault-to-vault paths dark until picker UX ships. */
 const VAULT_TO_VAULT_ENABLED: boolean = true;
+
+// dst hook executes whenever the CCTP relay lands, so no short-lived RFQ quotes and a longer calldata deadline
+const DEST_HOOK_SWAP_OPTIONS: SwapOptions = { excludeRfq: true, deadlineSeconds: 60 * 60 };
+// recovery is a direct user tx, so only the RFQ exclusion carries over
+const DEST_RECOVERY_SWAP_OPTIONS: SwapOptions = { excludeRfq: true };
 
 type CrossChainQuoteBody = {
   bridgeQuote: CCTPBridgeQuote;
@@ -153,12 +159,22 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     inputToken: TokenEntity;
     isRecovery?: boolean;
     stakeIntoBoostId?: string;
+    swapOptions: SwapOptions;
   }): DestHandlerContext {
+    const { helpers, destChainId, inputToken, isRecovery, stakeIntoBoostId, swapOptions } = args;
+    const swapAggregator = helpers.swapAggregator.withOptions(swapOptions);
     return {
-      ...args,
-      slippage: selectTransactSlippage(args.helpers.getState()),
+      helpers: { ...helpers, swapAggregator },
+      destChainId,
+      inputToken,
+      isRecovery,
+      stakeIntoBoostId,
+      slippage: selectTransactSlippage(helpers.getState()),
       pageVaultId: this.helpers.vault.id,
-      resolveHelpersForVault: id => this.resolveHelpersForVault(id),
+      resolveHelpersForVault: async id => ({
+        ...(await this.resolveHelpersForVault(id)),
+        swapAggregator,
+      }),
     };
   }
 
@@ -414,6 +430,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       helpers: this.helpers,
       destChainId: option.destChainId,
       inputToken: option.destBridgeToken,
+      swapOptions: DEST_HOOK_SWAP_OPTIONS,
     });
     const srcHandler = this.makeSourceHandler(option);
     const destHandler = this.makeDestHandler(option);
@@ -552,6 +569,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       helpers: this.helpers,
       destChainId: quote.option.destChainId,
       inputToken: quote.option.destBridgeToken,
+      swapOptions: DEST_HOOK_SWAP_OPTIONS,
     });
     const srcHandler = this.makeSourceHandler(quote.option);
     const destHandler = this.makeDestHandler(quote.option);
@@ -908,6 +926,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       isRecovery: true,
       stakeIntoBoostId:
         recovery.destHandlerKind === 'vault' ? recovery.stakeIntoBoostId : undefined,
+      swapOptions: DEST_RECOVERY_SWAP_OPTIONS,
     });
     const handler = this.makeRecoveryHandler(recovery, destChainHelpers);
     const quoteVaultId =
@@ -954,6 +973,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       isRecovery: true,
       stakeIntoBoostId:
         recovery.destHandlerKind === 'vault' ? recovery.stakeIntoBoostId : undefined,
+      swapOptions: DEST_RECOVERY_SWAP_OPTIONS,
     });
     const handler = this.makeRecoveryHandler(recovery, destChainHelpers);
     const attributedVaultId =

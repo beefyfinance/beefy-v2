@@ -144,5 +144,5 @@ export default tseslint.config(
       // 'react-x/no-children-prop': 'off',
       'react-hooks/exhaustive-deps': 'warn',
     },
-  },
+  }
 );

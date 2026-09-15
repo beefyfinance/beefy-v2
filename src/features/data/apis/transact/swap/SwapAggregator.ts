@@ -15,6 +15,7 @@ import type {
   ISwapProvider,
   QuoteRequest,
   QuoteResponse,
+  SwapOptions,
   SwapRequest,
   SwapResponse,
 } from './ISwapProvider.ts';
@@ -22,14 +23,21 @@ import type {
 export class SwapAggregator implements ISwapAggregator {
   protected providersById: Record<string, ISwapProvider> = {};
 
-  constructor(protected providers: ISwapProvider[]) {
+  constructor(
+    protected providers: ISwapProvider[],
+    protected options?: SwapOptions
+  ) {
     this.providers.forEach(provider => {
       this.providersById[provider.getId()] = provider;
     });
   }
 
   with(provider: ISwapProvider) {
-    return new SwapAggregator([...this.providers, provider]);
+    return new SwapAggregator([...this.providers, provider], this.options);
+  }
+
+  withOptions(options: SwapOptions) {
+    return new SwapAggregator(this.providers, { ...this.options, ...options });
   }
 
   protected allowedProviders(options: StrategySwapConfig | undefined) {
@@ -234,8 +242,9 @@ export class SwapAggregator implements ISwapAggregator {
       );
     }
 
+    const providerRequest = { ...request, options: { ...this.options, ...request.options } };
     const quotes = await Promise.allSettled(
-      providers.map(provider => provider.fetchQuote(request, state))
+      providers.map(provider => provider.fetchQuote(providerRequest, state))
     );
 
     const [success, failure] = partition(quotes, isFulfilledResult);
@@ -270,7 +279,9 @@ export class SwapAggregator implements ISwapAggregator {
       throw new Error(`Provider ${providerId} not found`);
     }
 
-    const result = await provider.fetchSwap(request, state);
-    return result;
+    return await provider.fetchSwap(
+      { ...request, options: { ...this.options, ...request.options } },
+      state
+    );
   }
 }

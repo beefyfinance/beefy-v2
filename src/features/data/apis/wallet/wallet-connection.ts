@@ -6,10 +6,7 @@ import type { EIP1193Provider, OnboardAPI } from '@web3-onboard/core';
 import Onboard from '@web3-onboard/core';
 import type { ConnectOptions } from '@web3-onboard/core/dist/types';
 import createInjectedWallets from '@web3-onboard/injected-wallets';
-import type {
-  EIP6963AnnounceProviderEvent,
-  InjectedNameSpace,
-} from '@web3-onboard/injected-wallets/dist/types';
+import type { InjectedNameSpace } from '@web3-onboard/injected-wallets/dist/types';
 import standardInjectedWallets from '@web3-onboard/injected-wallets/dist/wallets';
 import createMetamaskModule from '@web3-onboard/metamask';
 import createTrustDesktopModule from '@web3-onboard/trust';
@@ -28,6 +25,7 @@ import { storageGet, storageRemove, storageSet } from '../../../../helpers/stora
 import { featureFlag_walletConnectChainId } from '../../utils/feature-flags.ts';
 import { customInjectedWallets } from './custom-injected-wallets.ts';
 import type { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types.ts';
+import { isEip6963AnnounceProviderEvent } from '../../../../helpers/eip6963.ts';
 
 declare const window: {
   [K in InjectedNameSpace]?: unknown;
@@ -38,22 +36,14 @@ const walletConnectImages: Record<string, string> = {
   '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489': fireblocksLogo,
 };
 
-function isEip6963Event(e: Event): e is EIP6963AnnounceProviderEvent {
-  return (
-    e.type === 'eip6963:announceProvider' &&
-    typeof (e as EIP6963AnnounceProviderEvent).detail?.info?.rdns === 'string' &&
-    typeof (e as EIP6963AnnounceProviderEvent).detail?.provider === 'object'
-  );
-}
-
-const eip6936WalletPriority = ['xyz.farcaster.', 'com.coinbase.'];
+const eip6963WalletPriority = ['xyz.farcaster.', 'com.coinbase.'];
 
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | undefined;
   protected onboardWalletInitializers: WalletInit[] | undefined;
   protected hasConnectedWallet = false;
   protected providerWrapper: ((provider: EIP1193Provider) => EIP1193Provider) | undefined;
-  protected tryToAutoConnectToEip6936: boolean = false;
+  protected tryToAutoConnectToEip6963: boolean = false;
   protected eip6963Wallets = new Map<string, string>();
 
   constructor(protected options: WalletConnectionOptions) {
@@ -274,9 +264,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     }
   }
 
-  /** set whether next tryToAutoConnect will try to automatically connect to EIP6936 wallet */
-  public setAutoConnectToEip6936(value: boolean = true) {
-    this.tryToAutoConnectToEip6936 = value;
+  /** set whether next tryToAutoConnect will try to automatically connect to EIP6963 wallet */
+  public setAutoConnectToEip6963(value: boolean = true) {
+    this.tryToAutoConnectToEip6963 = value;
   }
 
   /**
@@ -446,7 +436,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     WalletConnectionApi.clearWalletConnectStorage();
 
     // Don't try to auto connect next time
-    this.tryToAutoConnectToEip6936 = false;
+    this.tryToAutoConnectToEip6963 = false;
 
     // Raise events
     this.options.onWalletDisconnected();
@@ -463,7 +453,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   }
 
   protected onEip6963AnnounceProvider(e: Event): void {
-    if (!isEip6963Event(e)) {
+    if (!isEip6963AnnounceProviderEvent(e)) {
       return;
     }
 
@@ -475,7 +465,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       return undefined;
     }
 
-    for (const rdns of eip6936WalletPriority) {
+    for (const rdns of eip6963WalletPriority) {
       const wallet = this.eip6963Wallets.get(rdns);
       if (wallet) {
         return wallet;
@@ -495,8 +485,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     }
 
     // Try to auto connect if wallet announced via EIP-6963
-    if (this.tryToAutoConnectToEip6936 && this.eip6963Wallets.size > 0) {
-      this.tryToAutoConnectToEip6936 = false;
+    if (this.tryToAutoConnectToEip6963 && this.eip6963Wallets.size > 0) {
+      this.tryToAutoConnectToEip6963 = false;
       return this.getEip6963Wallet();
     }
 
