@@ -193,7 +193,7 @@ export const config = {
     name: 'Robinhood',
     chainId: 4663,
     rpc: ['https://rpc.mainnet.chain.robinhood.com'],
-    explorerUrl: 'https://robinhoodchain.blockscout.com',
+    explorerUrl: 'https://robin.etherscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xe02749Ba85C543745aA5714263B75efc7e142a2A',
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
