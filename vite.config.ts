@@ -93,7 +93,7 @@ export default defineConfig({
     }),
     versionPlugin(),
     cspPlugin({
-      reportOnly: true,
+      reportOnly: false,
       reportTo: process.env.CSP_REPORT_TO,
       directives: {
         'default-src': ["'self'"],
