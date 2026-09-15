@@ -22,9 +22,8 @@ import {
   selectTokenPriceByTokenOracleId,
 } from '../../../../../data/selectors/tokens.ts';
 import {
-  selectTransactDepositFromVaultId,
+  selectTransactDepositInputVaultId,
   selectTransactInputIndexAmount,
-  selectTransactIsDepositFromVault,
 } from '../../../../../data/selectors/transact.ts';
 import {
   selectVaultByIdWithReceipt,
@@ -49,9 +48,8 @@ export const DepositTokenAmountInput = memo(function DepositTokenAmountInput({
   token,
   css: cssProp,
 }: DepositTokenAmountInputProps) {
-  const fromVaultId = useAppSelector(selectTransactDepositFromVaultId);
-  const isFromVaultMode = useAppSelector(selectTransactIsDepositFromVault);
-  if (isFromVaultMode && index === 0 && fromVaultId) {
+  const fromVaultId = useAppSelector(selectTransactDepositInputVaultId);
+  if (index === 0 && fromVaultId) {
     return <V2vDepositTokenAmountInput index={index} fromVaultId={fromVaultId} css={cssProp} />;
   }
   return <StandardDepositTokenAmountInput index={index} token={token} css={cssProp} />;
