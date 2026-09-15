@@ -488,6 +488,15 @@ export const crossChainClearRecoveryQuote = createAction('cross-chain/clearRecov
 
 export const crossChainMarkRecoveryQuoteStale = createAction('cross-chain/markRecoveryQuoteStale');
 
+/**
+ * DEV-only: inject a fulfilled recovery quote without hitting the API.
+ * Used by the cross-chain scenario simulator (import.meta.env.DEV) to force
+ * recovery states for screenshots. Inert in production — never dispatched.
+ */
+export const crossChainSeedRecoveryQuote = createAction<{ opId: string; quote: RecoveryQuote }>(
+  'cross-chain/DEV/seedRecoveryQuote'
+);
+
 // ---------------------------------------------------------------------------
 // Recovery: quote + step thunks
 // ---------------------------------------------------------------------------
