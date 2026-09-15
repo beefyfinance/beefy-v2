@@ -1,5 +1,399 @@
 [
   {
+    "id": "ramses-cow-robinhood-ram-weth-rp",
+    "name": "RAM-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowRamsesRobinhoodRAM-WETH",
+    "tokenAddress": "0x0674d06804C8E134eDa798263a1FB93036212dAf",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "earnContractAddress": "0xdb1BC7E2b788FA359D92706D80a6bfdEf0cd31bd",
+    "earnedToken": "rcowRamsesRobinhoodRAM-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "ramses-cow-robinhood-ram-weth",
+    "status": "active",
+    "createdAt": 1789507255,
+    "platformId": "ramses",
+    "assets": ["RAM", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "ramses-cow-robinhood-ram-weth",
+    "name": "RAM-WETH",
+    "type": "cowcentrated",
+    "token": "RAM-WETH ramses",
+    "tokenAddress": "0x5860dD468B4FC1740EaF80a3b7F22e78D70a076a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0x5173D45A1191eE33cBB7D8c7e65f21B04eD54802"
+    ],
+    "earnContractAddress": "0x0674d06804C8E134eDa798263a1FB93036212dAf",
+    "earnedToken": "cowRamsesRobinhoodRAM-WETH",
+    "earnedTokenAddress": "0x0674d06804C8E134eDa798263a1FB93036212dAf",
+    "oracle": "lps",
+    "oracleId": "ramses-cow-robinhood-ram-weth",
+    "status": "active",
+    "createdAt": 1789507255,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 100,
+    "assets": ["RAM", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "ramses-cow-robinhood-spy-usdg-rp",
+    "name": "SPY-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowRamsesRobinhoodSPY-USDG",
+    "tokenAddress": "0x324F6Dd622e8ee5EA3d5181d8B927443f9566e42",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "earnContractAddress": "0x03Cd8b8E7122F2B9649Fb7d3408C26F6617AF2aa",
+    "earnedToken": "rcowRamsesRobinhoodSPY-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "ramses-cow-robinhood-spy-usdg",
+    "status": "active",
+    "createdAt": 1789507328,
+    "platformId": "ramses",
+    "assets": ["SPYrh", "USDG"],
+    "icons": ["SPY", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "ramses-cow-robinhood-spy-usdg",
+    "name": "SPY-USDG",
+    "type": "cowcentrated",
+    "token": "SPY-USDG ramses",
+    "tokenAddress": "0x47A2a145308d55eaa957920876Ab626730eAF90b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "depositTokenAddresses": [
+      "0x117cc2133c37B721F49dE2A7a74833232B3B4C0C",
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+    ],
+    "earnContractAddress": "0x324F6Dd622e8ee5EA3d5181d8B927443f9566e42",
+    "earnedToken": "cowRamsesRobinhoodSPY-USDG",
+    "earnedTokenAddress": "0x324F6Dd622e8ee5EA3d5181d8B927443f9566e42",
+    "oracle": "lps",
+    "oracleId": "ramses-cow-robinhood-spy-usdg",
+    "status": "active",
+    "createdAt": 1789507328,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 5,
+    "assets": ["SPYrh", "USDG"],
+    "icons": ["SPY", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "ramses-cow-robinhood-nvda-weth-rp",
+    "name": "NVDA-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowRamsesRobinhoodNVDA-WETH",
+    "tokenAddress": "0x13805bAfC3800d14a14BDbab038C5750f6D54077",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "earnContractAddress": "0x2e752ac0d35E707f6f2f8fcfA3c68844fd238329",
+    "earnedToken": "rcowRamsesRobinhoodNVDA-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "ramses-cow-robinhood-nvda-weth",
+    "status": "active",
+    "createdAt": 1789507379,
+    "platformId": "ramses",
+    "assets": ["NVDArh", "WETH"],
+    "icons": ["NVDA", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "ramses-cow-robinhood-nvda-weth",
+    "name": "NVDA-WETH",
+    "type": "cowcentrated",
+    "token": "NVDA-WETH ramses",
+    "tokenAddress": "0xF8996E22ac7A67fAe741830Ad83B3b4D5e5de203",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC"
+    ],
+    "earnContractAddress": "0x13805bAfC3800d14a14BDbab038C5750f6D54077",
+    "earnedToken": "cowRamsesRobinhoodNVDA-WETH",
+    "earnedTokenAddress": "0x13805bAfC3800d14a14BDbab038C5750f6D54077",
+    "oracle": "lps",
+    "oracleId": "ramses-cow-robinhood-nvda-weth",
+    "status": "active",
+    "createdAt": 1789507379,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 50,
+    "assets": ["NVDArh", "WETH"],
+    "icons": ["NVDA", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "ramses-cow-robinhood-microduck-usdg-rp",
+    "name": "microduck-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowRamsesRobinhoodmicroduck-USDG",
+    "tokenAddress": "0xe2B1c9DCdF2cbe25F33b1d245FfD8ad943ABAf98",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "earnContractAddress": "0x45C08056a1B5Dd4Af73303b29c0bFdB9b939C8FA",
+    "earnedToken": "rcowRamsesRobinhoodmicroduck-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "ramses-cow-robinhood-microduck-usdg",
+    "status": "active",
+    "createdAt": 1789507540,
+    "platformId": "ramses",
+    "assets": ["microduck", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "ramses-cow-robinhood-microduck-usdg",
+    "name": "microduck-USDG",
+    "type": "cowcentrated",
+    "token": "microduck-USDG ramses",
+    "tokenAddress": "0xa7b68ce0cF9Eb5A3d3880D3a4853aa4C77DB2567",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "depositTokenAddresses": [
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "0xD5f1afEA47b1A9eab414D2ee740cF1d6d039E725"
+    ],
+    "earnContractAddress": "0xe2B1c9DCdF2cbe25F33b1d245FfD8ad943ABAf98",
+    "earnedToken": "cowRamsesRobinhoodmicroduck-USDG",
+    "earnedTokenAddress": "0xe2B1c9DCdF2cbe25F33b1d245FfD8ad943ABAf98",
+    "oracle": "lps",
+    "oracleId": "ramses-cow-robinhood-microduck-usdg",
+    "status": "active",
+    "createdAt": 1789507540,
+    "platformId": "beefy",
+    "feeTier": "0.75",
+    "tickSpacing": 300,
+    "assets": ["microduck", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "ramses-cow-robinhood-pons-usdg-rp",
+    "name": "PONS-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowRamsesRobinhoodPONS-USDG",
+    "tokenAddress": "0x8866F1E2b251606E9Da67a462D18e4c15c7979e9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "earnContractAddress": "0xD6c823b6298463F4AE3c4F4F29A8601ffF3d5332",
+    "earnedToken": "rcowRamsesRobinhoodPONS-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "ramses-cow-robinhood-pons-usdg",
+    "status": "active",
+    "createdAt": 1789507425,
+    "platformId": "ramses",
+    "assets": ["PONS", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "ramses-cow-robinhood-pons-usdg",
+    "name": "PONS-USDG",
+    "type": "cowcentrated",
+    "token": "PONS-USDG ramses",
+    "tokenAddress": "0xf2A0bE59AB76b96f957bd5E5b967F2B75e8dB269",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "depositTokenAddresses": [
+      "0x39dBED3a2bd333467115dE45665cC57F813C4571",
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+    ],
+    "earnContractAddress": "0x8866F1E2b251606E9Da67a462D18e4c15c7979e9",
+    "earnedToken": "cowRamsesRobinhoodPONS-USDG",
+    "earnedTokenAddress": "0x8866F1E2b251606E9Da67a462D18e4c15c7979e9",
+    "oracle": "lps",
+    "oracleId": "ramses-cow-robinhood-pons-usdg",
+    "status": "active",
+    "createdAt": 1789507425,
+    "platformId": "beefy",
+    "feeTier": "0.1",
+    "tickSpacing": 50,
+    "assets": ["PONS", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-robinhood-weth-meme-rp",
     "name": "MEME-WETH Reward Pool",
     "type": "gov",
