@@ -1,8 +1,7 @@
 {
   "alandale": {
     "title": "Alandale",
-    "text": "Beefy is partnering with Alandale as the go-to liquidity management solution for Robinhood's outlaw ve(3,3) MetaDEX. Earn boosted LUTE rewards for depositing in promoted Beefy CLM Vaults and depositing into the Boost contracts.",
-    "website": "https://alandale.io/",
+    "description": "Beefy is partnering with Alandale as the go-to liquidity management solution for Robinhood's outlaw ve(3,3) MetaDEX. Earn boosted LUTE rewards for depositing in promoted Beefy CLM Vaults and depositing into the Boost contracts.",
     "social": {
       "discord": "https://discord.gg/DT6kEY9kz",
       "twitter": "https://x.com/alandalexyz"
