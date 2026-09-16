@@ -192,7 +192,12 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     return {
       step: 'deposit',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-      action: v3Deposit(this.vault, quote.inputs[0].amount, quote.inputs[1].amount),
+      action: v3Deposit(
+        this.vault,
+        quote.inputs[0].amount,
+        quote.inputs[1].amount,
+        quote.outputs[0].amount
+      ),
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };
@@ -274,7 +279,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     return {
       step: 'withdraw',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-      action: v3Withdraw(this.vault, input.amount, input.max ?? false),
+      action: v3Withdraw(this.vault, input.amount, input.max ?? false, quote.outputs),
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };
