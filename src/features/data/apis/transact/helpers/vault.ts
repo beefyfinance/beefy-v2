@@ -2,7 +2,11 @@ import type { Address } from 'viem';
 import BigNumber from 'bignumber.js';
 import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi.ts';
 import { BIG_ZERO, toWei } from '../../../../../helpers/big-number.ts';
-import type { VaultStandard, VaultWithPricePerFullShare } from '../../../entities/vault.ts';
+import type {
+  VaultGovMulti,
+  VaultStandard,
+  VaultWithPricePerFullShare,
+} from '../../../entities/vault.ts';
 import type { TokenErc20 } from '../../../entities/token.ts';
 import {
   selectBoostUserBalanceInToken,
@@ -78,6 +82,34 @@ export function getVaultWithdrawnFromState(
     sharesToWithdrawWei, // how many shares to withdraw
     withdrawnAmountWei, // how much of the deposit token will be withdrawn (before fee)
     withdrawnAmountAfterFeeWei, // how much of the deposit token will be withdrawn (after fee)
+    withdrawnToken,
+    shareToken,
+  };
+}
+
+/** Gov v2 pools mint their receipt 1:1 with the deposit token, so there is no ppfs to apply */
+export function getGovVaultWithdrawnFromState(
+  userInput: InputTokenAmount,
+  vault: VaultGovMulti,
+  state: BeefyState
+) {
+  const withdrawnToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
+  const sharesToWithdrawWei =
+    userInput.max ?
+      toWei(
+        selectUserBalanceOfToken(state, shareToken.chainId, shareToken.address),
+        shareToken.decimals
+      )
+    : toWei(userInput.amount, shareToken.decimals);
+  const withdrawFee = selectFeesByVaultId(state, vault.id)?.withdraw || 0;
+  const withdrawnAmountFeeWei = sharesToWithdrawWei
+    .multipliedBy(withdrawFee)
+    .decimalPlaces(0, BigNumber.ROUND_FLOOR);
+
+  return {
+    sharesToWithdrawWei,
+    withdrawnAmountAfterFeeWei: sharesToWithdrawWei.minus(withdrawnAmountFeeWei),
     withdrawnToken,
     shareToken,
   };

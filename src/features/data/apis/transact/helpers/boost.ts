@@ -100,7 +100,10 @@ export function getBoostReceiptToken(boost: BoostPromoEntity, shareToken: TokenE
  * has no way to pass those on. `maybeBoostClaimStep` batches a `getReward()` ahead of the zap instead,
  * so the rewards reach the user's own wallet.
  */
-export function buildBoostWithdrawZapStep(boost: BoostPromoEntity, amountWei: BigNumber): ZapStep {
+export function buildBoostWithdrawZapStep(
+  boost: Pick<BoostPromoEntity, 'contractAddress'>,
+  amountWei: BigNumber
+): ZapStep {
   return {
     target: boost.contractAddress,
     value: '0',
@@ -115,8 +118,8 @@ export function buildBoostWithdrawZapStep(boost: BoostPromoEntity, amountWei: Bi
 
 /** Listing the share token in `tokens` both approves the boost to pull it and rewrites the amount */
 export function buildBoostStakeZapStep(
-  boost: BoostPromoEntity,
-  shareToken: TokenErc20,
+  boost: Pick<BoostPromoEntity, 'contractAddress'>,
+  shareToken: Pick<TokenErc20, 'address'>,
   amountWei: BigNumber
 ): ZapStep {
   return {

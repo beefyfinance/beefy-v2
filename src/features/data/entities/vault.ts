@@ -294,6 +294,11 @@ export function isMultiGovVault(vault: VaultEntity): vault is VaultGovMulti {
   return isGovVault(vault) && vault.contractType === 'multi';
 }
 
+/** `isMultiGovVault` also matches CLM reward pools, which are 'multi' too */
+export function isNonCowcentratedMultiGovVault(vault: VaultEntity): vault is VaultGovMulti {
+  return isGovVault(vault) && vault.subType === 'gov' && vault.contractType === 'multi';
+}
+
 export function isSingleGovVault(vault: VaultEntity): vault is VaultGovSingle {
   return isGovVault(vault) && vault.contractType === 'single';
 }
