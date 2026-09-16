@@ -103,8 +103,4 @@ export const styles = {
     background: 'background.border',
     margin: '0 12px',
   }),
-  link: css.raw({
-    color: 'text.lightest',
-    textDecoration: 'underline',
-  }),
 };
