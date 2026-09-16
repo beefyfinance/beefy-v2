@@ -1,1 +1,86 @@
-[]
+[
+  {
+    "id": "moo_alandale-cow-robinhood-weth-usdg-vault",
+    "title": "Beefy",
+    "vaultId": "alandale-cow-robinhood-weth-usdg-vault",
+    "assets": ["WETH", "USDG"],
+    "tokenAddress": "0x9fB66d84764c66A7f5C11F8eE3074d0e9F610C59",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x13ec60CcFFD2cf989912CCBC038D618d3F56a30E",
+    "campaign": "alandale",
+    "partners": ["alandale"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xD1e861CC5Eee7eA88649206b74504D78CCD7AEeA",
+        "symbol": "LUTE",
+        "decimals": 18,
+        "oracleId": "LUTE"
+      }
+    ]
+  },
+  {
+    "id": "moo_alandale-cow-robinhood-weth-lute-vault",
+    "title": "Beefy",
+    "vaultId": "alandale-cow-robinhood-weth-lute-vault",
+    "assets": ["LUTE", "WETH"],
+    "tokenAddress": "0xE232CC0841445c39A0de44F887277a6882067aE6",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xC5ff71a8754c9A9FC0c27EE297025Ea7eEbDD19d",
+    "campaign": "alandale",
+    "partners": ["alandale"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xD1e861CC5Eee7eA88649206b74504D78CCD7AEeA",
+        "symbol": "LUTE",
+        "decimals": 18,
+        "oracleId": "LUTE"
+      }
+    ]
+  },
+  {
+    "id": "moo_alandale-cow-robinhood-usdg-lute-vault",
+    "title": "Beefy",
+    "vaultId": "alandale-cow-robinhood-usdg-lute-vault",
+    "assets": ["LUTE", "USDG"],
+    "tokenAddress": "0xAC82Faa24D9139D5abB943DCdEE18995847A4525",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x83a074A41c06c07631e284463ea2bfc3d2f674c5",
+    "campaign": "alandale",
+    "partners": ["alandale"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xD1e861CC5Eee7eA88649206b74504D78CCD7AEeA",
+        "symbol": "LUTE",
+        "decimals": 18,
+        "oracleId": "LUTE"
+      }
+    ]
+  },
+  {
+    "id": "moo_alandale-cow-robinhood-weth-spy-vault",
+    "title": "Beefy",
+    "vaultId": "alandale-cow-robinhood-weth-spy-vault",
+    "assets": ["SPYrh", "WETH"],
+    "tokenAddress": "0xd9B95DcECf21528D5e98D4167EBd30Eb5fd1666f",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xcdDa7830A6F034d66a46919f3D132f53A56a356d",
+    "campaign": "alandale",
+    "partners": ["alandale"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xD1e861CC5Eee7eA88649206b74504D78CCD7AEeA",
+        "symbol": "LUTE",
+        "decimals": 18,
+        "oracleId": "LUTE"
+      }
+    ]
+  }
+]
