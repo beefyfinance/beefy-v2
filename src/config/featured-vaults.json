@@ -1,8 +1,10 @@
 {
-  "aerodrome-cow-base-usdc-amznc-vault": true,
-  "aerodrome-cow-base-usdc-msftc-vault": true,
-  "aerodrome-cow-base-usdc-mstrc-vault": true,
-  "aerodrome-cow-base-usdc-sndkc-vault": true,
-  "aerodrome-cow-base-usdc-spcxc-vault": true,
-  "aerodrome-cow-base-usdc-tslac-vault": true
+  "uniswap-cow-ethereum-wbtc-weth-rp": true,
+  "uniswap-cow-ethereum-wbtc-usdc-rp": true,
+  "uniswap-cow-ethereum-weth-usdt-rp": true,
+  "uniswap-cow-ethereum-usdc-weth-rp": true,
+  "uniswap-cow-ethereum-uni-weth-rp": true,
+  "uniswap-cow-ethereum-aave-weth-rp": true,
+  "uniswap-cow-ethereum-link-weth-rp": true,
+  "uniswap-cow-ethereum-paxg-usdc-rp": true
 }

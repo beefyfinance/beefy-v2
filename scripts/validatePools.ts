@@ -30,6 +30,7 @@ import { isEmpty } from '../src/helpers/utils.ts';
 import { keys } from '../src/helpers/object.ts';
 import { sleep } from '../src/features/data/utils/async-utils.ts';
 import { getViemClient } from './common/viem.ts';
+import { ACTIONABLE_AT_FROM } from '../src/features/data/apis/beefy/beefy-clm-pool.ts';
 import {
   type Abi,
   type Address,
@@ -108,7 +109,7 @@ const isCowAerodromeWith10sec = (pool: VaultConfigWithStrategyData) =>
   ['velodrome', 'aerodrome'].includes(pool.platformId) &&
   pool.type === 'standard' &&
   pool.strategyTypeId === 'pool' &&
-  pool.createdAt > 1776378070;
+  pool.createdAt > ACTIONABLE_AT_FROM;
 
 const excludedAbPools = ['gmx-arb-atom-usdc', 'gmx-arb-xrp-usdc', 'gmx-arb-doge-usdc'];
 const addressFields: Array<keyof VaultConfig> = [
