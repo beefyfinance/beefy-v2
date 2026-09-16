@@ -48,7 +48,7 @@ export const initWallet = createAppAsyncThunk(
 
     setTimeout(() => {
       if (selectIsInMiniApp(getState())) {
-        walletApi.setAutoConnectToEip6936(true);
+        walletApi.setAutoConnectToEip6963(true);
       }
       dispatch(tryToAutoReconnect());
     }, 500);
@@ -66,8 +66,8 @@ export const tryToAutoReconnect = createAppAsyncThunk(
   }
 );
 
-export const tryToAutoConnectToEip6936Wallet = createAppAsyncThunk(
-  'wallet/tryToAutoConnectToEip6936Wallet',
+export const tryToAutoConnectToEip6963Wallet = createAppAsyncThunk(
+  'wallet/tryToAutoConnectToEip6963Wallet',
   async (_, { getState }) => {
     const state = getState();
     if (selectIsWalletConnected(state) || !selectHasWalletInitialized(state)) {
@@ -75,7 +75,7 @@ export const tryToAutoConnectToEip6936Wallet = createAppAsyncThunk(
     }
 
     const walletConnection = await getWalletConnectionApi();
-    walletConnection.setAutoConnectToEip6936();
+    walletConnection.setAutoConnectToEip6963();
     await walletConnection.tryToAutoReconnect();
   }
 );

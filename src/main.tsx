@@ -1,4 +1,5 @@
 import './main.css';
+import './features/patches/global.ts';
 import { createRoot } from 'react-dom/client';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
