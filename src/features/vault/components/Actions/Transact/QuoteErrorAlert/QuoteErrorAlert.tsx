@@ -1,9 +1,11 @@
 import type { CssStyles } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
-import { memo } from 'react';
+import { fromUnixTime, isValid } from 'date-fns';
+import { memo, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { AlertError, AlertWarning } from '../../../../../../components/Alerts/Alerts.tsx';
 import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
+import { TimeUntil } from '../../../../../../components/TimeUntil/TimeUntil.tsx';
 import type { SerializedError } from '../../../../../data/apis/transact/strategies/error-types.ts';
 import {
   CrossChainBridgeBelowFeeError,
@@ -51,21 +53,45 @@ const CalmAlert = memo(function CalmAlert({
   );
 });
 
+type NotActionableAlertProps = RetryAlertProps & {
+  /** unix seconds the vault is actionable again */
+  actionableAt?: number;
+};
+
 const NotActionableAlert = memo(function NotActionableAlert({
   action,
+  actionableAt,
   autoRetry = true,
   css: cssProp,
-}: RetryAlertProps) {
+}: NotActionableAlertProps) {
   const { t } = useTranslation();
   const Alert = autoRetry ? AlertWarning : AlertError;
+  const keyPrefix =
+    autoRetry ? 'Transact-Quote-Error-NotActionable-Retry' : 'Transact-Quote-Error-NotActionable';
+  // actionableAt is an unbounded uint256, so it may not fit in a Date
+  const deadline = useMemo(() => {
+    const date = actionableAt === undefined ? undefined : fromUnixTime(actionableAt);
+    return date && isValid(date) ? date : undefined;
+  }, [actionableAt]);
+  const renderCountdown = useCallback(
+    (timeLeft: string) => t(`${keyPrefix}-Countdown-${action}`, { timeLeft }),
+    [t, keyPrefix, action]
+  );
+  const withoutCountdown = t(`${keyPrefix}-${action}`);
 
   return (
     <Alert css={cssProp}>
-      {t(
-        autoRetry ?
-          `Transact-Quote-Error-NotActionable-Retry-${action}`
-        : `Transact-Quote-Error-NotActionable-${action}`
-      )}
+      {deadline ?
+        <TimeUntil
+          key={actionableAt}
+          time={deadline}
+          minParts={1}
+          maxParts={2}
+          padLength={1}
+          renderFuture={renderCountdown}
+          renderPast={withoutCountdown}
+        />
+      : withoutCountdown}
     </Alert>
   );
 });
@@ -82,7 +108,7 @@ export const QuoteRetryAlert = memo(function QuoteRetryAlert({
 }: QuoteRetryAlertProps) {
   return retry.kind === 'not-calm' ?
       <CalmAlert action={retry.action} css={cssProp} />
-    : <NotActionableAlert action={retry.action} css={cssProp} />;
+    : <NotActionableAlert action={retry.action} actionableAt={retry.actionableAt} css={cssProp} />;
 });
 
 export type QuoteErrorAlertProps = {
@@ -128,7 +154,14 @@ export const QuoteErrorAlert = memo(function QuoteErrorAlert({
       return <CalmAlert action={error.action} autoRetry={autoRetry} css={cssProp} />;
     }
     if (QuoteCowcentratedNotActionableError.match(error)) {
-      return <NotActionableAlert action={error.action} autoRetry={autoRetry} css={cssProp} />;
+      return (
+        <NotActionableAlert
+          action={error.action}
+          actionableAt={error.actionableAt}
+          autoRetry={autoRetry}
+          css={cssProp}
+        />
+      );
     }
   }
 

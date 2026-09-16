@@ -30,6 +30,8 @@ export type QuoteRetryAction = 'deposit' | 'withdraw';
 export type QuoteRetry = {
   kind: 'not-calm' | 'not-actionable';
   action: QuoteRetryAction;
+  /** unix seconds the vault is actionable again; not-actionable only */
+  actionableAt?: number;
 };
 
 export type QuoteAutoRefresh = {
@@ -83,11 +85,11 @@ export function useQuoteAutoRefresh(): QuoteAutoRefresh {
   const [stickyRetry, setStickyRetry] = useState<QuoteRetry | undefined>();
   useEffect(() => {
     if (kind && action) {
-      setStickyRetry({ kind, action });
+      setStickyRetry({ kind, action, actionableAt });
     } else if (status !== TransactStatus.Pending) {
       setStickyRetry(undefined);
     }
-  }, [kind, action, status]);
+  }, [kind, action, actionableAt, status]);
 
   // Reset whenever the user changes what they're transacting.
   const skipInitialReset = useRef(true);
@@ -122,13 +124,8 @@ export function useQuoteAutoRefresh(): QuoteAutoRefresh {
   };
 }
 
-type RetryableError = QuoteRetry & {
-  /** unix seconds the vault is actionable again; not-actionable only */
-  actionableAt?: number;
-};
-
 /** The retry an error maps to, if it's one of the two that clear on their own. */
-export function quoteRetryOf(error: SerializedError | undefined): RetryableError | undefined {
+export function quoteRetryOf(error: SerializedError | undefined): QuoteRetry | undefined {
   if (!error) {
     return undefined;
   }
