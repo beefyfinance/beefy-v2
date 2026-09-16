@@ -34,9 +34,8 @@ import {
 import { calculatePriceImpact } from '../helpers/quotes.ts';
 import { getInsertIndex } from '../helpers/zap.ts';
 import {
+  assertCowcentratedActionable,
   QuoteCowcentratedNoSingleSideError,
-  QuoteCowcentratedNotActionableError,
-  QuoteCowcentratedNotCalmError,
 } from '../strategies/error.ts';
 import {
   type CowcentratedVaultDepositOption,
@@ -140,14 +139,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       throw new QuoteCowcentratedNoSingleSideError(inputs);
     }
 
-    // not-calm takes precedence: it re-quotes on a short timer, so it's the more actionable of the two
-    if (!isCalm) {
-      throw new QuoteCowcentratedNotCalmError('deposit');
-    }
-    const actionableAtSeconds = Number(actionableAt);
-    if (actionableAtSeconds > Math.floor(Date.now() / 1000)) {
-      throw new QuoteCowcentratedNotActionableError('deposit', actionableAtSeconds);
-    }
+    assertCowcentratedActionable('deposit', isCalm, actionableAt);
 
     const depositUsed = [used0, used1].map((amount, i) => ({
       token: this.depositTokens[i],
@@ -253,14 +245,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     );
     const { amount0, amount1, isCalm, actionableAt } = await clmPool.previewWithdraw(input.amount);
 
-    // not-calm takes precedence: it re-quotes on a short timer, so it's the more actionable of the two
-    if (!isCalm) {
-      throw new QuoteCowcentratedNotCalmError('withdraw');
-    }
-    const actionableAtSeconds = Number(actionableAt);
-    if (actionableAtSeconds > Math.floor(Date.now() / 1000)) {
-      throw new QuoteCowcentratedNotActionableError('withdraw', actionableAtSeconds);
-    }
+    assertCowcentratedActionable('withdraw', isCalm, actionableAt);
 
     const outputs: TokenAmount[] = [
       {

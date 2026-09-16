@@ -61,11 +61,7 @@ import type {
   ZapStepRequest,
   ZapStepResponse,
 } from '../../zap/types.ts';
-import {
-  QuoteCowcentratedNoSingleSideError,
-  QuoteCowcentratedNotActionableError,
-  QuoteCowcentratedNotCalmError,
-} from '../error.ts';
+import { assertCowcentratedActionable, QuoteCowcentratedNoSingleSideError } from '../error.ts';
 import type {
   IComposableStrategy,
   IComposableStrategyStatic,
@@ -242,14 +238,7 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
       throw new QuoteCowcentratedNoSingleSideError(lpTokenAmounts);
     }
 
-    // not-calm takes precedence: it re-quotes on a short timer, so it's the more actionable of the two
-    if (!isCalm) {
-      throw new QuoteCowcentratedNotCalmError('deposit');
-    }
-    const actionableAtSeconds = Number(actionableAt);
-    if (actionableAtSeconds > Math.floor(Date.now() / 1000)) {
-      throw new QuoteCowcentratedNotActionableError('deposit', actionableAtSeconds);
-    }
+    assertCowcentratedActionable('deposit', isCalm, actionableAt);
 
     const depositUsed = [used0, used1].map((amount, i) => ({
       token: this.vaultType.depositTokens[i],

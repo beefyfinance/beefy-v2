@@ -14,7 +14,7 @@ import {
 } from '../../../../helpers/big-number.ts';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
 
-const ACTIONABLE_AT_FROM = 1776378070;
+export const ACTIONABLE_AT_FROM = 1776378070;
 
 /**
  * Only velodrome/aerodrome CLM strategies from this generation expose actionableAt(); older ones revert.

@@ -107,6 +107,22 @@ export class QuoteCowcentratedNotActionableError extends SerializableError {
   }
 }
 
+/** Throws if the CLM would revert the action now: not calm, or still in its actionableAt cooldown. */
+export function assertCowcentratedActionable(
+  action: 'deposit' | 'withdraw',
+  isCalm: boolean,
+  actionableAt: bigint
+) {
+  // not-calm takes precedence: it re-quotes on a short timer, so it's the more actionable of the two
+  if (!isCalm) {
+    throw new QuoteCowcentratedNotCalmError(action);
+  }
+  const actionableAtSeconds = Number(actionableAt);
+  if (actionableAtSeconds > Math.floor(Date.now() / 1000)) {
+    throw new QuoteCowcentratedNotActionableError(action, actionableAtSeconds);
+  }
+}
+
 export class CrossChainBridgeBelowFeeError extends SerializableError {
   public static readonly name = 'CrossChainBridgeBelowFeeError';
   public readonly name = CrossChainBridgeBelowFeeError.name;

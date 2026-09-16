@@ -57,15 +57,16 @@ const NotActionableAlert = memo(function NotActionableAlert({
   css: cssProp,
 }: RetryAlertProps) {
   const { t } = useTranslation();
+  const Alert = autoRetry ? AlertWarning : AlertError;
 
   return (
-    <AlertError css={cssProp}>
+    <Alert css={cssProp}>
       {t(
         autoRetry ?
           `Transact-Quote-Error-NotActionable-Retry-${action}`
         : `Transact-Quote-Error-NotActionable-${action}`
       )}
-    </AlertError>
+    </Alert>
   );
 });
 
