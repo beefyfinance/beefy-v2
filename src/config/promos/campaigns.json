@@ -1,16 +1,11 @@
 {
   "alandale": {
     "description": "Beefy is partnering with Alandale as the go-to liquidity management solution for Robinhood's outlaw ve(3,3) MetaDEX. Earn boosted LUTE rewards for depositing in promoted Beefy CLM Vaults and depositing into the Boost contracts.",
-    "social": {
-      "discord": "https://discord.gg/DT6kEY9kz",
-      "twitter": "https://x.com/alandalexyz"
-    }
+    "social": {}
   },
   "coinbase-stocks": {
     "description": "Coinbase launches Tokenized Stocks on Base, bringing familiar equity exposure onto onchain rails. To celebrate, Coinbase is supporting the new markets on Aerodrome with incentives distributed through Merkl. As a launch partner, Beefy joins the campaign by distributing mooBIFI incentives to our Aerodrome CLM vaults for Coinbase Tokenized Stocks.",
-    "social": {
-      "twitter": "https://twitter.com/coinbase"
-    }
+    "social": {}
   },
   "animera-boost": {
     "title": "Animera Boost",
