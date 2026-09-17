@@ -3,11 +3,14 @@ import { describe, expect, it } from 'vitest';
 import { FilterContent, type FilterValues } from '../reducers/filtered-vaults-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { FILTER_DEFAULTS } from '../utils/filter-values.ts';
+import { selectVaultFilterEnv, selectVaultPassesFilters } from '../utils/vault-filter.ts';
 import {
+  type BlockerCategory,
   clearBlockerCategories,
   listActiveBlockerCategories,
   selectSearchNoResultsInfo,
 } from './no-results.ts';
+import { selectVaultById } from './vaults.ts';
 
 function makeFilters(overrides: Partial<FilterValues> = {}): FilterValues {
   return {
@@ -105,10 +108,31 @@ type FixtureVault = {
   contractAddress?: string;
 };
 
+/** addressbook-derived tokens, keyed by asset id; only the search dictionary reads these */
+type FixtureToken = { symbol: string; name?: string; tags?: string[] };
+
+function makeTokensByChainId(chainId: string, tokens: Record<string, FixtureToken>) {
+  return {
+    [chainId]: {
+      byId: Object.fromEntries(Object.keys(tokens).map(id => [id, id.toLowerCase()])),
+      byAddress: Object.fromEntries(
+        Object.entries(tokens).map(([id, token]) => [id.toLowerCase(), { id, tags: [], ...token }])
+      ),
+    },
+  };
+}
+
 // minimal state satisfying every selector the diagnosis predicate touches for these filters
-function makeState(vaults: FixtureVault[], filters: FilterValues): BeefyState {
+function makeState(
+  vaults: FixtureVault[],
+  filters: FilterValues,
+  tokensByChainId: object = {},
+  /** configured in platforms.json but backing no vault, like a defunct protocol */
+  unusedPlatformIds: string[] = []
+): BeefyState {
   const chainIds = [...new Set([...vaults.map(v => v.chainId), ...filters.chainIds])];
-  const platformIds = [...new Set(vaults.map(v => v.platformId))];
+  const usedPlatformIds = [...new Set(vaults.map(v => v.platformId))];
+  const allPlatformIds = [...new Set([...usedPlatformIds, ...unusedPlatformIds])];
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
   return {
     entities: {
@@ -126,9 +150,9 @@ function makeState(vaults: FixtureVault[], filters: FilterValues): BeefyState {
               chainId: v.chainId,
               platformId: v.platformId,
               assetType: 'lps',
-              contractAddress: v.contractAddress ?? '0x1111111111111111111111111111111111111111',
-              depositTokenAddress: '0x2222222222222222222222222222222222222222',
-              receiptTokenAddress: '0x3333333333333333333333333333333333333333',
+              contractAddress: v.contractAddress ?? '0x111111111111111111111111111111111111000B',
+              depositTokenAddress: '0x222222222222222222222222222222222222000D',
+              receiptTokenAddress: '0x333333333333333333333333333333333333000B',
             },
           ])
         ),
@@ -142,13 +166,18 @@ function makeState(vaults: FixtureVault[], filters: FilterValues): BeefyState {
         eolIds: [],
       },
       platforms: {
-        byId: Object.fromEntries(platformIds.map(id => [id, { id, name: capitalize(id) }])),
-        allIds: platformIds,
-        activeIds: platformIds,
+        byId: Object.fromEntries(allPlatformIds.map(id => [id, { id, name: capitalize(id) }])),
+        allIds: allPlatformIds,
+        activeIds: usedPlatformIds,
+        usedIds: usedPlatformIds,
       },
       tokens: {
-        byChainId: {},
+        byChainId: tokensByChainId,
       },
+    },
+    user: {
+      wallet: { address: undefined },
+      balance: { byAddress: {} },
     },
     ui: {
       filteredVaults: {
@@ -236,6 +265,48 @@ describe('selectSearchNoResultsInfo', () => {
     }
   });
 
+  it('suggests searchable symbols and company names, never the unsearchable asset id', () => {
+    // AAPLrh is the config asset id; only AAPL (symbol) and Apple (company) actually find the vault
+    const stockVaults: FixtureVault[] = [
+      {
+        id: 'uni-aapl-usdg',
+        name: 'AAPL-USDG',
+        assets: ['AAPLrh', 'USDG'],
+        chainId: 'robinhood',
+        platformId: 'uniswap',
+      },
+    ];
+    const tokens = makeTokensByChainId('robinhood', {
+      AAPLrh: { symbol: 'AAPL', name: 'Apple • Robinhood Token', tags: ['STOCK'] },
+      USDG: { symbol: 'USDG', name: 'Global Dollar', tags: ['STABLECOIN'] },
+    });
+    const suggestionsFor = (searchText: string) => {
+      const filters = makeFilters({ searchText });
+      const info = selectSearchNoResultsInfo(makeState(stockVaults, filters, tokens));
+      return info.kind === 'suggestions' ? info.suggestions : [];
+    };
+
+    // "aaplr" is 1 edit from the asset id and 1 from the symbol: the symbol must win
+    expect(suggestionsFor('aaplr')).toContain('AAPL');
+    expect(suggestionsFor('aaplr')).not.toContain('AAPLrh');
+    // company names are suggestable, with their original casing, and the issuer suffix is not
+    expect(suggestionsFor('aple')).toContain('Apple');
+    expect(suggestionsFor('robinhod')).not.toContain('Robinhood Token');
+  });
+
+  it('suggests platforms that back a vault, never ones configured but unused', () => {
+    // a suggestion replaces the query, so a platform no vault uses is a dead end when clicked
+    const suggestionsFor = (searchText: string) => {
+      const filters = makeFilters({ searchText });
+      const info = selectSearchNoResultsInfo(makeState(FIXTURE_VAULTS, filters, {}, ['snowball']));
+      return info.kind === 'suggestions' ? info.suggestions : [];
+    };
+
+    // "aerodrone" is 1 edit from Aerodrome and does not prefix-match it, so it finds nothing
+    expect(suggestionsFor('aerodrone')).toContain('Aerodrome');
+    expect(suggestionsFor('snowbal')).not.toContain('Snowball');
+  });
+
   it('classifies partial and unmatched addresses', () => {
     expect(
       selectSearchNoResultsInfo(makeState(FIXTURE_VAULTS, makeFilters({ searchText: '0xab' })))
@@ -267,5 +338,69 @@ describe('selectSearchNoResultsInfo', () => {
     if (info.kind === 'blocked') {
       expect(info.showCount).toBe(1);
     }
+  });
+
+  it('detects retired matches while the deposited filter is active', () => {
+    // searchOnly rejects retired vaults: probing its match set rather than the text matches reports 0
+    const filters = makeFilters({ searchText: 'caps', userCategory: 'deposited' });
+    const info = selectSearchNoResultsInfo(makeState(FIXTURE_VAULTS, filters));
+    expect(info).toEqual({ kind: 'retired', count: 1 });
+  });
+});
+
+const ALL_CATEGORIES: BlockerCategory[] = [
+  'chain',
+  'platform',
+  'category',
+  'type',
+  'product',
+  'flags',
+  'mintvl',
+  'userCategory',
+];
+
+/** every filter set the no-results diagnosis probes with */
+function listProbeFilters(filters: FilterValues): FilterValues[] {
+  const searchOnly = clearBlockerCategories(filters, ALL_CATEGORIES);
+  return [
+    searchOnly,
+    { ...searchOnly, onlyRetired: true },
+    clearBlockerCategories(filters, listActiveBlockerCategories(filters)),
+    ...ALL_CATEGORIES.map(category => clearBlockerCategories(filters, [category])),
+  ];
+}
+
+describe('selectVaultPassesFilters search gate', () => {
+  it('passes no vault the search text does not match, under any probe filter set', () => {
+    const filters = makeFilters({
+      searchText: 'usdc',
+      chainIds: ['ethereum'],
+      platformIds: ['aerodrome'],
+      userCategory: 'deposited',
+    });
+    const state = makeState(FIXTURE_VAULTS, filters);
+    const visibleIds = state.entities.vaults.allVisibleIds;
+    const searchOnly = clearBlockerCategories(filters, ALL_CATEGORIES);
+    const searchEnv = selectVaultFilterEnv(state, searchOnly);
+    const searchMatches = visibleIds.filter(id =>
+      searchEnv.matchesSearch(selectVaultById(state, id))
+    );
+
+    // the assertion below is only meaningful while some vault is a match and some is not
+    expect(searchMatches.length).toBeGreaterThan(0);
+    expect(searchMatches.length).toBeLessThan(visibleIds.length);
+
+    const passing = new Set<string>();
+    for (const probe of listProbeFilters(filters)) {
+      const env = selectVaultFilterEnv(state, probe);
+      for (const id of visibleIds) {
+        if (selectVaultPassesFilters(state, selectVaultById(state, id), probe, env)) {
+          passing.add(id);
+        }
+      }
+    }
+
+    expect(passing.size).toBeGreaterThan(0);
+    expect([...passing].filter(id => !searchMatches.includes(id))).toEqual([]);
   });
 });

@@ -3,6 +3,7 @@ import type {
   IComposableStrategyStatic,
   IComposerStrategyStatic,
 } from './IStrategy.ts';
+import { createFactory } from '../../../utils/factory-utils.ts';
 import type { OmitNever, PromiseReturnType } from '../../../utils/types-utils.ts';
 import type { ZapStrategyId } from './strategy-configs.ts';
 
@@ -65,8 +66,16 @@ type StrategyIdToPromiseLoader = {
   : never;
 };
 
+function memoizeLoaders<T extends Record<string, () => Promise<unknown>>>(loaders: T): T {
+  return Object.fromEntries(
+    Object.entries(loaders).map(([id, loader]) => [id, createFactory(loader)])
+  ) as T;
+}
+
 // ensure key->strategy mapping matches
-export const strategyLoadersById = strategyLoadersByIdUnchecked satisfies StrategyIdToPromiseLoader;
+export const strategyLoadersById = memoizeLoaders(
+  strategyLoadersByIdUnchecked
+) satisfies StrategyIdToPromiseLoader;
 
 export function isComposableStrategyStatic(
   strategy: AnyZapStrategyStatic

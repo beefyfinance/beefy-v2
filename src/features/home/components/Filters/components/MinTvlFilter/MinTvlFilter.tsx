@@ -12,12 +12,13 @@ import { styled } from '@repo/styles/jsx';
 import { useTranslation } from 'react-i18next';
 import { useBreakpoint } from '../../../../../../hooks/useBreakpoint.ts';
 import { useDebouncedState } from '../../../../../../hooks/useDebouncedState.ts';
+import { bigNumberEqual } from '../../../../../data/utils/selector-equality.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 
 //5 MILLION
 const MAX_INPUT = new BigNumber(50000000);
 
-const bigNumberEq = (a: BigNumber, b: BigNumber) => a.eq(b);
+const bigNumberEq = bigNumberEqual;
 
 export const MinTvlFilter = memo(function MinTvlFilter() {
   const { t } = useTranslation();

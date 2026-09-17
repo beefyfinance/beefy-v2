@@ -40,10 +40,6 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
 }: TotalApyTooltipContentProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  // the rows above describe the wrapper being shown, which is the autocompounding one wherever it
-  // exists — so on a group with both, state what the other handling of the same position pays.
-  // Named with the deposit control's own words, since that is the choice this describes.
-  // Yearly only: the other side is a total rate, there is no daily figure for it.
   // per-stream split from the pool wrapper, scaled to what the shown wrapper pays
   const rewards = useAppSelector(state =>
     type === 'yearly' ? selectClmRewardBreakdown(state, vaultId) : undefined

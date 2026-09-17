@@ -1,4 +1,5 @@
 import './main.css';
+import './features/patches/global.ts';
 import { createRoot } from 'react-dom/client';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
@@ -12,7 +13,7 @@ import { MiniAppProvider } from './components/MiniApp/MiniAppProvider.tsx';
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <ErrorBoundary fallback={MinimalFallback}>
-    <Provider store={store} identityFunctionCheck="never" stabilityCheck="never">
+    <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <I18nextProvider i18n={i18n}>
           <MiniAppProvider>

@@ -1,3 +1,4 @@
+import { deepEqualBigNumberAware } from '../../../data/utils/selector-equality.ts';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Container } from '../../../../components/Container/Container.tsx';
@@ -10,7 +11,10 @@ import { styled } from '@repo/styles/jsx';
 export const DaoSummary = memo(function DaoSummary() {
   const { t } = useTranslation();
 
-  const { holdings, beefyHeld, assets, stables } = useAppSelector(selectTreasuryStats);
+  const { holdings, beefyHeld, assets, stables } = useAppSelector(
+    selectTreasuryStats,
+    deepEqualBigNumberAware
+  );
 
   const DaoStats = useMemo(() => {
     return [

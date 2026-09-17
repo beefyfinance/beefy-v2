@@ -1,5 +1,926 @@
 [
   {
+    "id": "uniswap-cow-base-usdc-basecat-rp",
+    "name": "Basecat-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseUSDC-Basecat",
+    "tokenAddress": "0xB851e73A5A597e67D0aF28DdE76eD1EA65276Bd1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x8e539EAd6055F94CF3F323ca407b85701Cb47b1C",
+    "earnedToken": "rCowUniswapBaseUSDC-Basecat",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-basecat",
+    "status": "active",
+    "createdAt": 1789391974,
+    "platformId": "uniswap",
+    "assets": ["Basecat", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-usdc-basecat",
+    "name": "Basecat-USDC",
+    "type": "cowcentrated",
+    "token": "USDC-Basecat uniswap",
+    "tokenAddress": "0x22906596Bd81F53f01d700DdBdB3935baC2E1446",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xB2000000000000000000004c27f6523082f41D01"
+    ],
+    "earnContractAddress": "0xB851e73A5A597e67D0aF28DdE76eD1EA65276Bd1",
+    "earnedToken": "cowUniswapBaseUSDC-Basecat",
+    "earnedTokenAddress": "0xB851e73A5A597e67D0aF28DdE76eD1EA65276Bd1",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-basecat",
+    "status": "active",
+    "createdAt": 1789391974,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["Basecat", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-tslac-vault",
+    "name": "TSLAc-USDC",
+    "type": "standard",
+    "token": "TSLAc-USDC",
+    "tokenAddress": "0xD619D7917be5cEEaa104b38B17729b2f72951B02",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x722A0B2664Cac3C826ecb85dcAd97383e1645Db1",
+    "earnedToken": "mooCowAerodromeBaseTSLAc-USDC",
+    "earnedTokenAddress": "0x722A0B2664Cac3C826ecb85dcAd97383e1645Db1",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-tslac",
+    "status": "active",
+    "createdAt": 1788554356,
+    "platformId": "aerodrome",
+    "assets": ["TSLAc", "USDC"],
+    "icons": ["TSLA", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-tslac-rp",
+    "name": "TSLAc-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeBaseTSLAc-USDC",
+    "tokenAddress": "0xD619D7917be5cEEaa104b38B17729b2f72951B02",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xa3D6aA11F3C1078c44cf57866dF5938A88e37128",
+    "earnedToken": "rCowAerodromeBaseTSLAc-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-tslac",
+    "status": "active",
+    "createdAt": 1788554356,
+    "platformId": "aerodrome",
+    "assets": ["TSLAc", "USDC"],
+    "icons": ["TSLA", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-tslac",
+    "name": "TSLAc-USDC",
+    "type": "cowcentrated",
+    "token": "TSLAc-USDC aerodrome",
+    "tokenAddress": "0x469337fDcc5E8f38e2E4B670B04F57865D13a7BB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xb2000000000000000000001e800a7f5189430cD0"
+    ],
+    "earnContractAddress": "0xD619D7917be5cEEaa104b38B17729b2f72951B02",
+    "earnedToken": "cowAerodromeBaseTSLAc-USDC",
+    "earnedTokenAddress": "0xD619D7917be5cEEaa104b38B17729b2f72951B02",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-tslac",
+    "status": "active",
+    "createdAt": 1788554356,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["TSLAc", "USDC"],
+    "icons": ["TSLA", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-spcxc-vault",
+    "name": "SPCXc-USDC",
+    "type": "standard",
+    "token": "SPCXc-USDC",
+    "tokenAddress": "0xb7843158C063e31Bf621ad7CE066315DA369aE07",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xf638Acbb5Afa238af95E77f24963335018f51bCc",
+    "earnedToken": "mooCowAerodromeBaseSPCXc-USDC",
+    "earnedTokenAddress": "0xf638Acbb5Afa238af95E77f24963335018f51bCc",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-spcxc",
+    "status": "active",
+    "createdAt": 1788554269,
+    "platformId": "aerodrome",
+    "assets": ["SPCXc", "USDC"],
+    "icons": ["SPCX", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-spcxc-rp",
+    "name": "SPCXc-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeBaseSPCXc-USDC",
+    "tokenAddress": "0xb7843158C063e31Bf621ad7CE066315DA369aE07",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x31bd09D99de769e0c7a935d81335E24a5E58E042",
+    "earnedToken": "rCowAerodromeBaseSPCXc-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-spcxc",
+    "status": "active",
+    "createdAt": 1788554268,
+    "platformId": "aerodrome",
+    "assets": ["SPCXc", "USDC"],
+    "icons": ["SPCX", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-spcxc",
+    "name": "SPCXc-USDC",
+    "type": "cowcentrated",
+    "token": "SPCXc-USDC aerodrome",
+    "tokenAddress": "0x0bf58fe0FAc935Ac69595c19B12Ba0d75E3F8c0E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xb2000000000000000000007b9fcbd005511aCBd5"
+    ],
+    "earnContractAddress": "0xb7843158C063e31Bf621ad7CE066315DA369aE07",
+    "earnedToken": "cowAerodromeBaseSPCXc-USDC",
+    "earnedTokenAddress": "0xb7843158C063e31Bf621ad7CE066315DA369aE07",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-spcxc",
+    "status": "active",
+    "createdAt": 1788554268,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["SPCXc", "USDC"],
+    "icons": ["SPCX", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-sndkc-vault",
+    "name": "SNDKc-USDC",
+    "type": "standard",
+    "token": "SNDKc-USDC",
+    "tokenAddress": "0x60d0Fa1978867B4FC92FcdBFC615149574d4dd43",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x8d7F7FDF3C0176b5Bc14830406c3DEAE1dB16dDE",
+    "earnedToken": "mooCowAerodromeBaseSNDKc-USDC",
+    "earnedTokenAddress": "0x8d7F7FDF3C0176b5Bc14830406c3DEAE1dB16dDE",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-sndkc",
+    "status": "active",
+    "createdAt": 1788554192,
+    "platformId": "aerodrome",
+    "assets": ["SNDKc", "USDC"],
+    "icons": ["SNDK", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-sndkc-rp",
+    "name": "SNDKc-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeBaseSNDKc-USDC",
+    "tokenAddress": "0x60d0Fa1978867B4FC92FcdBFC615149574d4dd43",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xABe16425C4898A3E9986ECfF6FF9935172e5460b",
+    "earnedToken": "rCowAerodromeBaseSNDKc-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-sndkc",
+    "status": "active",
+    "createdAt": 1788554191,
+    "platformId": "aerodrome",
+    "assets": ["SNDKc", "USDC"],
+    "icons": ["SNDK", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-sndkc",
+    "name": "SNDKc-USDC",
+    "type": "cowcentrated",
+    "token": "SNDKc-USDC",
+    "tokenAddress": "0x5A8236f575471e7BfCA2C8462a200c28f737246E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xb200000000000000000000397293Cb8cda9a10c5"
+    ],
+    "earnContractAddress": "0x60d0Fa1978867B4FC92FcdBFC615149574d4dd43",
+    "earnedToken": "cowAerodromeBaseSNDKc-USDC",
+    "earnedTokenAddress": "0x60d0Fa1978867B4FC92FcdBFC615149574d4dd43",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-sndkc",
+    "status": "active",
+    "createdAt": 1788554191,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["SNDKc", "USDC"],
+    "icons": ["SNDK", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-mstrc-vault",
+    "name": "MSTRc-USDC",
+    "type": "standard",
+    "token": "MSTRc-USDC",
+    "tokenAddress": "0x7ec3a9cB1E2512f6318a18aA69eBF113cb1759f0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x944A37603ca610ccBaC7a09264b3E73c3b7FbA28",
+    "earnedToken": "mooCowAerodromeBaseMSTRc-USDC",
+    "earnedTokenAddress": "0x944A37603ca610ccBaC7a09264b3E73c3b7FbA28",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-mstrc",
+    "status": "active",
+    "createdAt": 1788554070,
+    "platformId": "aerodrome",
+    "assets": ["MSTRc", "USDC"],
+    "icons": ["MSTR", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-mstrc-rp",
+    "name": "MSTRc-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeBaseMSTRc-USDC",
+    "tokenAddress": "0x7ec3a9cB1E2512f6318a18aA69eBF113cb1759f0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x987c1ED184B9f6BC0507Da9a29f5C1Db202209B3",
+    "earnedToken": "rCowAerodromeBaseMSTRc-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-mstrc",
+    "status": "active",
+    "createdAt": 1788554069,
+    "platformId": "aerodrome",
+    "assets": ["MSTRc", "USDC"],
+    "icons": ["MSTR", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-mstrc",
+    "name": "MSTRc-USDC",
+    "type": "cowcentrated",
+    "token": "MSTRc-USDC aerodrome",
+    "tokenAddress": "0x8b27f626ab668197000BC722A1012022CAeD10E2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xb2000000000000000000004884b426556b92883d"
+    ],
+    "earnContractAddress": "0x7ec3a9cB1E2512f6318a18aA69eBF113cb1759f0",
+    "earnedToken": "cowAerodromeBaseMSTRc-USDC",
+    "earnedTokenAddress": "0x7ec3a9cB1E2512f6318a18aA69eBF113cb1759f0",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-mstrc",
+    "status": "active",
+    "createdAt": 1788554069,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["MSTRc", "USDC"],
+    "icons": ["MSTR", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-msftc-vault",
+    "name": "MSFTc-USDC",
+    "type": "standard",
+    "token": "MSFTc-USDC",
+    "tokenAddress": "0x0fFDAB7f531064DB145EE218976953E8d6C46aB5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x575Da7570B4eE677bd6002569De9D88B269CbAe4",
+    "earnedToken": "mooCowAerodromeBaseMSFTc-USDC",
+    "earnedTokenAddress": "0x575Da7570B4eE677bd6002569De9D88B269CbAe4",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-msftc",
+    "status": "active",
+    "createdAt": 1788554009,
+    "platformId": "aerodrome",
+    "assets": ["MSFTc", "USDC"],
+    "icons": ["MSFT", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-msftc-rp",
+    "name": "MSFTc-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeBaseMSFTc-USDC",
+    "tokenAddress": "0x0fFDAB7f531064DB145EE218976953E8d6C46aB5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x24E6ba590dFd1c5623E2850D27b8584b088A3e3A",
+    "earnedToken": "rCowAerodromeBaseMSFTc-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-msftc",
+    "status": "active",
+    "createdAt": 1788554008,
+    "platformId": "aerodrome",
+    "assets": ["MSFTc", "USDC"],
+    "icons": ["MSFT", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-msftc",
+    "name": "MSFTc-USDC",
+    "type": "cowcentrated",
+    "token": "MSFTc-USDC aerodrome",
+    "tokenAddress": "0x7103eB3c9590d1281f7dc03b2A9EE27C39dF5D54",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xB200000000000000000000Ab99cFa739E253872B"
+    ],
+    "earnContractAddress": "0x0fFDAB7f531064DB145EE218976953E8d6C46aB5",
+    "earnedToken": "cowAerodromeBaseMSFTc-USDC",
+    "earnedTokenAddress": "0x0fFDAB7f531064DB145EE218976953E8d6C46aB5",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-msftc",
+    "status": "active",
+    "createdAt": 1788554008,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["MSFTc", "USDC"],
+    "icons": ["MSFT", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-amznc-vault",
+    "name": "AMZNc-USDC",
+    "type": "standard",
+    "token": "AMZNc-USDC",
+    "tokenAddress": "0xA011f86058AF8ECAD68DE247B134ed0dd6E173b6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xB65A7e6749C01F35cCB9258803f5eE15E1b375AE",
+    "earnedToken": "mooCowAerodromeBaseAMZNc-USDC",
+    "earnedTokenAddress": "0xB65A7e6749C01F35cCB9258803f5eE15E1b375AE",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-amznc",
+    "status": "active",
+    "createdAt": 1788553948,
+    "platformId": "aerodrome",
+    "assets": ["AMZNc", "USDC"],
+    "icons": ["AMZN", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-amznc-rp",
+    "name": "AMZNc-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeBaseAMZNc-USDC",
+    "tokenAddress": "0xA011f86058AF8ECAD68DE247B134ed0dd6E173b6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x9f2e28958dD6B53D5d1a45f7EFd0290D257D49dE",
+    "earnedToken": "rCowAerodromeBaseAMZNc-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-amznc",
+    "status": "active",
+    "createdAt": 1788553947,
+    "platformId": "aerodrome",
+    "assets": ["AMZNc", "USDC"],
+    "icons": ["AMZN", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-amznc",
+    "name": "AMZNc-USDC",
+    "type": "cowcentrated",
+    "token": "AMZNc-USDC aerodrome",
+    "tokenAddress": "0xd03Bc8C7F2FAedCe2aac81bF0444AEA08Ea06E9b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xb200000000000000000000d9192b6B456483C2E8"
+    ],
+    "earnContractAddress": "0xA011f86058AF8ECAD68DE247B134ed0dd6E173b6",
+    "earnedToken": "cowAerodromeBaseAMZNc-USDC",
+    "earnedTokenAddress": "0xA011f86058AF8ECAD68DE247B134ed0dd6E173b6",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-amznc",
+    "status": "active",
+    "createdAt": 1788553947,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["AMZNc", "USDC"],
+    "icons": ["AMZN", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": true,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "mellow-aero-usdc-cbbtc",
+    "name": "USDC-cbBTC ALM",
+    "type": "standard",
+    "token": "MVS:USDC-cbBTC-100",
+    "tokenAddress": "0x0Df5f2662e4a8C801c04D83Df717476509816250",
+    "tokenDecimals": 18,
+    "tokenProviderId": "autopilot",
+    "earnContractAddress": "0x7F765219D007b058fc6F6654061B99cD283Fa025",
+    "earnedToken": "mooAeroAutopilotUSDC-cbBTC",
+    "earnedTokenAddress": "0x7F765219D007b058fc6F6654061B99cD283Fa025",
+    "oracle": "lps",
+    "oracleId": "mellow-aero-usdc-cbbtc",
+    "status": "active",
+    "createdAt": 1788242855,
+    "platformId": "aerodrome",
+    "assets": ["USDC", "cbBTC"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&token1=0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf&type=2000&chain0=8453&chain1=8453&factory=0x5e7BB104d84c7CB9B682AaC2F3d509f5F406809A",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw?pool=0x4e962bb3889bf030368f56810a9c96b83cb3e778&chain=8453",
+    "network": "base"
+  },
+  {
+    "id": "uniswap-cow-base-weth-basecat-rp",
+    "name": "Basecat-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-Basecat",
+    "tokenAddress": "0xCa9Ca9F65Fc5A703091c1995C99f2734443462a9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xa9361a3A28a919d0136092ADbB74CD286BE6Ada6",
+    "earnedToken": "rCowUniswapBaseWETH-Basecat",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-basecat",
+    "status": "active",
+    "createdAt": 1787875698,
+    "platformId": "uniswap",
+    "assets": ["Basecat", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-basecat",
+    "name": "Basecat-WETH",
+    "type": "cowcentrated",
+    "token": "WETH-Basecat uniswap",
+    "tokenAddress": "0xf79478d5a6baE4546F7e489e80b2fC690B558944",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xB2000000000000000000004c27f6523082f41D01"
+    ],
+    "earnContractAddress": "0xCa9Ca9F65Fc5A703091c1995C99f2734443462a9",
+    "earnedToken": "cowUniswapBaseWETH-Basecat",
+    "earnedTokenAddress": "0xCa9Ca9F65Fc5A703091c1995C99f2734443462a9",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-basecat",
+    "status": "active",
+    "createdAt": 1787875698,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["Basecat", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-usdc-metac-vault",
     "name": "METAc-USDC",
     "type": "standard",
@@ -1913,8 +2834,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "uniswap-cow-base-weth-mor",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1779100659,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "uniswap",
     "assets": ["MOR", "WETH"],
     "risks": {
@@ -1952,8 +2875,10 @@
     "earnedTokenAddress": "0x5365c568ABA52688bc2c7930E2b980AA8A8DE2f8",
     "oracle": "lps",
     "oracleId": "uniswap-cow-base-weth-mor",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1779100659,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 60,
@@ -3142,8 +4067,10 @@
     "earnedTokenAddress": "0xf22D714180a5101632d273F082354D81dfe9D2B5",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-morpho-v2",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1777573924,
+    "retireReason": "tvl",
+    "retiredAt": 1788526751,
     "platformId": "aerodrome",
     "assets": ["WETH", "MORPHO"],
     "risks": {
@@ -3182,8 +4109,10 @@
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-morpho-v2",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1777573923,
+    "retireReason": "tvl",
+    "retiredAt": 1788526751,
     "platformId": "aerodrome",
     "assets": ["WETH", "MORPHO"],
     "risks": {
@@ -3224,8 +4153,10 @@
     "earnedTokenAddress": "0x1efc02e3FE4a179d497992D6F392C91D8E984697",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-morpho-v2",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1777573923,
+    "retireReason": "tvl",
+    "retiredAt": 1788526751,
     "platformId": "beefy",
     "feeTier": "0.27",
     "tickSpacing": 100,
@@ -3944,131 +4875,6 @@
     "feeTier": "0.05",
     "tickSpacing": 50,
     "assets": ["WETH", "USDC"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "pool",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "cowcentrated"
-      }
-    ]
-  },
-  {
-    "id": "aerodrome-cow-base-giza-usdc-v2-vault",
-    "name": "GIZA-USDC",
-    "type": "standard",
-    "token": "GIZA-USDC",
-    "tokenAddress": "0x68CA84155c4Dc07B823A41F8c86205be1605BB97",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnContractAddress": "0x84Bfa487188d52cDe262e95Ed1eD0163C1Ee58F6",
-    "earnedToken": "mooCowAerodromeGIZA-USDCv2",
-    "earnedTokenAddress": "0x84Bfa487188d52cDe262e95Ed1eD0163C1Ee58F6",
-    "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-giza-usdc-v2",
-    "status": "eol",
-    "createdAt": 1777017553,
-    "retireReason": "tvl",
-    "retiredAt": 1784063232,
-    "platformId": "aerodrome",
-    "assets": ["GIZA", "USDC"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "pool",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
-    "id": "aerodrome-cow-base-giza-usdc-v2-rp",
-    "name": "GIZA-USDC Reward Pool",
-    "type": "gov",
-    "version": 2,
-    "token": "cowAerodromeGIZA-USDCv2",
-    "tokenAddress": "0x68CA84155c4Dc07B823A41F8c86205be1605BB97",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnContractAddress": "0xeC51D907DFB34842F0440e58f7D2905D26BFA04F",
-    "earnedToken": "rCowAerodromeGIZA-USDC",
-    "earnedTokenDecimals": 18,
-    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
-    "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-giza-usdc-v2",
-    "status": "eol",
-    "createdAt": 1777017552,
-    "retireReason": "tvl",
-    "retiredAt": 1784063232,
-    "platformId": "aerodrome",
-    "assets": ["GIZA", "USDC"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "pool",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
-    "id": "aerodrome-cow-base-giza-usdc-v2",
-    "name": "GIZA-USDC",
-    "type": "cowcentrated",
-    "token": "GIZA-USDC aerodrome",
-    "tokenAddress": "0xe9EEd359ef1e600cEC91F240768f463ED3c88730",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "depositTokenAddresses": [
-      "0x590830dFDf9A3F68aFCDdE2694773dEBDF267774",
-      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
-    ],
-    "earnContractAddress": "0x68CA84155c4Dc07B823A41F8c86205be1605BB97",
-    "earnedToken": "cowAerodromeGIZA-USDCv2",
-    "earnedTokenAddress": "0x68CA84155c4Dc07B823A41F8c86205be1605BB97",
-    "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-giza-usdc-v2",
-    "status": "eol",
-    "createdAt": 1777017552,
-    "retireReason": "tvl",
-    "retiredAt": 1784063232,
-    "platformId": "beefy",
-    "feeTier": "0.9",
-    "tickSpacing": 200,
-    "assets": ["GIZA", "USDC"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -5328,8 +6134,10 @@
     "earnedTokenAddress": "0xae15b86519594d91a80B7fcbB721A6EbD761C53c",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-usdc-ghst-v2",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1776412627,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "aerodrome",
     "assets": ["GHST", "USDC"],
     "risks": {
@@ -5368,8 +6176,10 @@
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-usdc-ghst-v2",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1776412626,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "aerodrome",
     "assets": ["GHST", "USDC"],
     "risks": {
@@ -5410,8 +6220,10 @@
     "earnedTokenAddress": "0x4cd5cAb2F70693eB656606237Ee74A55A377BEfa",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-usdc-ghst-v2",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1776412626,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "beefy",
     "feeTier": "1",
     "tickSpacing": 2000,
@@ -7447,8 +8259,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "uniswap-cow-base-weth-felix",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1773041590,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "uniswap",
     "assets": ["WETH", "FELIX"],
     "risks": {
@@ -7486,8 +8300,10 @@
     "earnedTokenAddress": "0x9e0cB29be1D6428552f43Cb8B039b36765d50944",
     "oracle": "lps",
     "oracleId": "uniswap-cow-base-weth-felix",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1773041590,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "beefy",
     "feeTier": "1",
     "tickSpacing": 200,
@@ -9370,8 +10186,10 @@
     "earnedTokenAddress": "0x81c5d2e064f3a26E65e62f9208aF8bbC4164165D",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weeth-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770718326,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "aerodrome",
     "assets": ["weETH", "WETH"],
     "risks": {
@@ -9410,8 +10228,10 @@
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weeth-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770718325,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "aerodrome",
     "assets": ["weETH", "WETH"],
     "risks": {
@@ -9452,8 +10272,10 @@
     "earnedTokenAddress": "0xED1ef9d7186B4242F414Da7194A147aB3E55e220",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weeth-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770718325,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "beefy",
     "feeTier": "0.009",
     "tickSpacing": 1,
@@ -10045,8 +10867,10 @@
     "earnedTokenAddress": "0x65be6f7057bA2572bDE6C6F53eA4F977D2E65C8F",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-veil",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770020926,
+    "retireReason": "tvl",
+    "retiredAt": 1788526751,
     "platformId": "aerodrome",
     "assets": ["WETH", "VEIL"],
     "risks": {
@@ -10085,8 +10909,10 @@
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-veil",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770020925,
+    "retireReason": "tvl",
+    "retiredAt": 1788526751,
     "platformId": "aerodrome",
     "assets": ["WETH", "VEIL"],
     "risks": {
@@ -10127,8 +10953,10 @@
     "earnedTokenAddress": "0x5EBC333653286bA26a02bC208d0BE1822a6D1D4A",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-veil",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770020925,
+    "retireReason": "tvl",
+    "retiredAt": 1788526751,
     "platformId": "beefy",
     "feeTier": "0.75",
     "tickSpacing": 200,
@@ -10283,8 +11111,10 @@
     "earnedTokenAddress": "0xA231A75CF76bf155064865DB7d3A0beaC96D4FEB",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-usdc-tower",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770019376,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "aerodrome",
     "assets": ["USDC", "TOWER"],
     "risks": {
@@ -10323,8 +11153,10 @@
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-usdc-tower",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770019375,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "aerodrome",
     "assets": ["USDC", "TOWER"],
     "risks": {
@@ -10365,8 +11197,10 @@
     "earnedTokenAddress": "0xaA210011C9233b5DdEe8A8DC4f4F236164895Da9",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-usdc-tower",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770019375,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "beefy",
     "feeTier": "0.25",
     "tickSpacing": 100,
@@ -11038,8 +11872,10 @@
     "earnedTokenAddress": "0x334C50eE23853D306C7269090eFF29dE6760dF2e",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-usdc-titn",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769588829,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "aerodrome",
     "assets": ["USDC", "TITN"],
     "risks": {
@@ -11078,8 +11914,10 @@
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-usdc-titn",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769588829,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "aerodrome",
     "assets": ["USDC", "TITN"],
     "risks": {
@@ -11120,8 +11958,10 @@
     "earnedTokenAddress": "0x63f4f2228833fAa2a7E6bea7b3F3dd6f31D7492d",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-usdc-titn",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769588829,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "beefy",
     "feeTier": "0.01",
     "tickSpacing": 1,
@@ -11514,8 +12354,10 @@
     "earnedTokenAddress": "0x51F5689b9A2cC01Dbe1112625E8419d2a00aa1f2",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-lsk",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769588829,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "aerodrome",
     "assets": ["WETH", "LSK"],
     "risks": {
@@ -11554,8 +12396,10 @@
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-lsk",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769588829,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "aerodrome",
     "assets": ["WETH", "LSK"],
     "risks": {
@@ -11596,8 +12440,10 @@
     "earnedTokenAddress": "0xe5EEDa36D7C23c2E2E519c9d56216158e50FBf31",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-lsk",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769588829,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "beefy",
     "feeTier": "0.27",
     "tickSpacing": 200,
@@ -12228,9 +13074,11 @@
     "earnedTokenAddress": "0xe8b4e5248312e9D81BBE70753AbC116cFF32B868",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-vfy-zen",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769014697,
     "platformId": "aerodrome",
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "assets": ["VFY", "ZEN"],
     "risks": {
       "complex": true,
@@ -12268,8 +13116,10 @@
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-vfy-zen",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769014696,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "aerodrome",
     "assets": ["VFY", "ZEN"],
     "risks": {
@@ -12310,8 +13160,10 @@
     "earnedTokenAddress": "0xe37FbAeB14a63FdcdE1FD803C31E6a3797890287",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-vfy-zen",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769014696,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 200,
@@ -12466,8 +13318,10 @@
     "earnedTokenAddress": "0x9883Aa049f45aFffa7aFf4ef02a06FC4a958162a",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-zen",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769012394,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "aerodrome",
     "assets": ["WETH", "ZEN"],
     "risks": {
@@ -12506,8 +13360,10 @@
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-zen",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769012393,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "aerodrome",
     "assets": ["WETH", "ZEN"],
     "risks": {
@@ -12548,8 +13404,10 @@
     "earnedTokenAddress": "0x6690a92c7073a5122E65D3a3187B95b808Dc152b",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-zen",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1769012393,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "beefy",
     "feeTier": "0.15",
     "tickSpacing": 100,
@@ -13242,9 +14100,11 @@
     "earnedTokenAddress": "0xdEf9cfb2BAC22652A93442fFa10c280A85F21916",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-lcap",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1768476681,
     "platformId": "aerodrome",
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "assets": ["WETH", "LCAP"],
     "risks": {
       "complex": true,
@@ -13282,8 +14142,10 @@
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-lcap",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1768476681,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "aerodrome",
     "assets": ["WETH", "LCAP"],
     "risks": {
@@ -13324,8 +14186,10 @@
     "earnedTokenAddress": "0x2637A719947FfBC554E61EDeccaCf929cF594F73",
     "oracle": "lps",
     "oracleId": "aerodrome-cow-base-weth-lcap",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1768476681,
+    "retireReason": "rewards",
+    "retiredAt": 1787656179,
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 200,
@@ -19827,8 +20691,10 @@
     "earnedTokenAddress": "0xc3d599344b7B0AbdB8c7193162D6aea37f2D4b72",
     "oracle": "lps",
     "oracleId": "aerodrome-bold-lusd-new",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1747926146,
+    "retireReason": "tvl",
+    "retiredAt": 1788529836,
     "platformId": "aerodrome",
     "assets": ["BOLDV2", "LUSD"],
     "risks": {
@@ -26419,8 +27285,10 @@
     "earnedOracleIds": [],
     "oracle": "lps",
     "oracleId": "uniswap-cow-base-bsdeth-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1733420000,
+    "retireReason": "tvl",
+    "retiredAt": 1788526751,
     "platformId": "uniswap",
     "assets": ["bsdETH", "WETH"],
     "risks": {
@@ -26459,8 +27327,10 @@
     "earnedTokenAddress": "0x3c83ff3398166b0d1bc2B04292aC7de194e089a0",
     "oracle": "lps",
     "oracleId": "uniswap-cow-base-bsdeth-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1733420000,
+    "retireReason": "tvl",
+    "retiredAt": 1788526751,
     "platformId": "beefy",
     "feeTier": "0.01",
     "tickSpacing": 1,
@@ -29610,47 +30480,6 @@
     ]
   },
   {
-    "id": "aero-cow-usdz-cbbtc-vault",
-    "name": "USDz-cbBTC",
-    "type": "standard",
-    "token": "USDz-cbBTC",
-    "tokenAddress": "0xeA46Bc8011A4414EB3F31E2f40CFD65BcAF8745f",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnContractAddress": "0x5FC5f7b7eD001aE57C465c2412f9c1d09eC18b49",
-    "earnedToken": "mooCowAeroUSDz-cbBTC",
-    "earnedTokenAddress": "0x5FC5f7b7eD001aE57C465c2412f9c1d09eC18b49",
-    "oracle": "lps",
-    "oracleId": "aero-cow-usdz-cbbtc",
-    "status": "eol",
-    "createdAt": 1730131954,
-    "retireReason": "tvl",
-    "retiredAt": 1741360041,
-    "platformId": "aerodrome",
-    "assets": ["USDz", "cbBTC"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": true,
-      "notVerified": false,
-      "synthAsset": true
-    },
-    "strategyTypeId": "pool",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
     "id": "aero-cow-usdz-cbbtc-rp",
     "name": "USDz-cbBTC Reward Pool",
     "type": "gov",
@@ -30550,47 +31379,6 @@
     }
   },
   {
-    "id": "silo-base-weth-ezeth",
-    "name": "WETH (ezETH Market)",
-    "type": "standard",
-    "token": "WETH",
-    "tokenAddress": "0x4200000000000000000000000000000000000006",
-    "tokenDecimals": 18,
-    "earnContractAddress": "0xEa9677ed4BF937425a211A3F35935B199B842e2d",
-    "earnedToken": "mooSiloBaseWETH(ezETH)",
-    "earnedTokenAddress": "0xEa9677ed4BF937425a211A3F35935B199B842e2d",
-    "oracle": "tokens",
-    "oracleId": "WETH",
-    "status": "eol",
-    "createdAt": 1729264245,
-    "retireReason": "rewards",
-    "retiredAt": 1739314033,
-    "platformId": "silo",
-    "assets": ["WETH"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "lendingNoBorrow",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ],
-    "lendingOracle": {
-      "provider": "chainlink",
-      "address": "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
-    }
-  },
-  {
     "id": "silo-base-wsteth-wsteth",
     "name": "wstETH (wstETH Market)",
     "type": "standard",
@@ -30973,8 +31761,10 @@
     "earnedTokenAddress": "0x58a3183d1bD6273a418926e0A568B3a4b7CfF759",
     "oracle": "lps",
     "oracleId": "aero-cow-weth-ethfi",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1729244040,
+    "retireReason": "tvl",
+    "retiredAt": 1788846115,
     "platformId": "aerodrome",
     "assets": ["ETHFI", "WETH"],
     "risks": {
@@ -31016,8 +31806,10 @@
     "earnedOracleIds": ["AERO"],
     "oracle": "lps",
     "oracleId": "aero-cow-weth-ethfi",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1729244039,
+    "retireReason": "tvl",
+    "retiredAt": 1788846115,
     "platformId": "aerodrome",
     "assets": ["ETHFI", "WETH"],
     "risks": {
@@ -31059,8 +31851,10 @@
     "earnedTokenAddress": "0x18e5b8615C50bd5596dc15681a66FB256c5010A0",
     "oracle": "lps",
     "oracleId": "aero-cow-weth-ethfi",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1729244039,
+    "retireReason": "tvl",
+    "retiredAt": 1788846115,
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 200,
@@ -46972,5 +47766,125 @@
     "addLiquidityUrl": "https://balancer.fi/pools/base/v2/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/remove-liquidity",
     "network": "base"
+  },
+  {
+    "id": "aerodrome-cow-base-laptop-usdc-vault",
+    "name": "LAPTOP-USDC",
+    "type": "standard",
+    "token": "LAPTOP-USDC",
+    "tokenAddress": "0xf57999852B109CdfF2eF2b3f1Ec405Ee03e1767E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x7839135eDC52B77428a3823D9439A0aD9E65F514",
+    "earnedToken": "mooBeefyAerodromeLAPTOP-USDC",
+    "earnedTokenAddress": "0x7839135eDC52B77428a3823D9439A0aD9E65F514",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-laptop-usdc",
+    "status": "active",
+    "createdAt": 1788959457,
+    "platformId": "aerodrome",
+    "assets": ["LAPTOP", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-laptop-usdc-rp",
+    "name": "LAPTOP-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeLAPTOP-USDC",
+    "tokenAddress": "0xf57999852B109CdfF2eF2b3f1Ec405Ee03e1767E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x35bBdCD14a43B887473ED0A808E7a7856c933b6b",
+    "earnedToken": "rcowAerodromeLAPTOP-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-laptop-usdc",
+    "status": "active",
+    "createdAt": 1788959317,
+    "updatedAt": 1787097600,
+    "platformId": "aerodrome",
+    "assets": ["LAPTOP", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-laptop-usdc",
+    "name": "LAPTOP-USDC",
+    "type": "cowcentrated",
+    "token": "LAPTOP-USDC aerodrome",
+    "tokenAddress": "0x99cf3E8bfB02c300312c53Aac5D0B082e3D5975C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xB095274743941e953c746F9C228DA9c18Bb6ec29"
+    ],
+    "earnContractAddress": "0xf57999852B109CdfF2eF2b3f1Ec405Ee03e1767E",
+    "earnedToken": "cowAerodromeLAPTOP-USDC",
+    "earnedTokenAddress": "0xf57999852B109CdfF2eF2b3f1Ec405Ee03e1767E",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-laptop-usdc",
+    "status": "active",
+    "createdAt": 1788959265,
+    "platformId": "beefy",
+    "feeTier": "2.00",
+    "tickSpacing": 200,
+    "assets": ["LAPTOP", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   }
 ]

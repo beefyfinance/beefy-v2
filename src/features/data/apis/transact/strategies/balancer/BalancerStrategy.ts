@@ -57,7 +57,12 @@ import {
   onlyOneTokenAmount,
 } from '../../helpers/options.ts';
 import { calculatePriceImpact, totalValueOfTokenAmounts, ZERO_FEE } from '../../helpers/quotes.ts';
-import { allTokensAreDistinct, includeWrappedAndNative, pickTokens } from '../../helpers/tokens.ts';
+import {
+  allTokensAreDistinct,
+  includeWrappedAndNative,
+  pickTokens,
+  tokensReachableFromAll,
+} from '../../helpers/tokens.ts';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { QuoteRequest, QuoteResponse } from '../../swap/ISwapProvider.ts';
@@ -1592,13 +1597,7 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
       this.options.swap
     );
 
-    return tokenSupport.any.filter(aggToken => {
-      return allTokens.every(
-        (poolToken, i) =>
-          isTokenEqual(aggToken, poolToken) ||
-          tokenSupport.tokens[i].some(supportedToken => isTokenEqual(supportedToken, aggToken))
-      );
-    });
+    return tokensReachableFromAll(tokenSupport.any, allTokens, tokenSupport.tokens);
   }
 
   protected async aggregatorTokensCanSwapToTokens(tokens: TokenEntity[]): Promise<{

@@ -24,7 +24,7 @@ export function fetchUserOffChainRewardsForVaultAction(
 export function fetchUserOffChainRewardsForDepositedVaultsAction(walletAddress: string) {
   return async function (dispatch: BeefyDispatchFn, getState: BeefyStateFn) {
     const state = getState();
-    const depositedVaultIds = selectUserDepositedVaultIds(state);
+    const depositedVaultIds = selectUserDepositedVaultIds(state, walletAddress);
     let fetchMerkl: boolean = false;
     let fetchStellaSwap: boolean = false;
 

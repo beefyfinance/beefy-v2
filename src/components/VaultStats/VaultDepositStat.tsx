@@ -1,20 +1,17 @@
+import { createSelector } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import { memo } from 'react';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
+import { isCowcentratedVault, type VaultEntity } from '../../features/data/entities/vault.ts';
 import {
-  getCowcentratedWrapperIds,
-  isCowcentratedVault,
-  type VaultEntity,
-} from '../../features/data/entities/vault.ts';
-import {
-  selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInDepositTokenIncludingDisplaced,
-  selectUserVaultBalanceInUsdIncludingDisplaced,
+  selectUserRowDeposit,
+  selectUserRowDepositIncludingDisplaced,
+  selectUserRowDepositInUsd,
   selectUserVaultBalanceNotInActiveBoostInDepositToken,
 } from '../../features/data/selectors/balance.ts';
 
 import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
-import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
+import { selectTokenByAddressOrUndefined } from '../../features/data/selectors/tokens.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import {
   selectIsBalanceHidden,
@@ -62,67 +59,87 @@ type SelectDataReturn =
       isGroup: boolean;
     };
 
-// TODO better selector / hook
-function selectVaultDepositStat(
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  maybeWalletAddress?: string
-): SelectDataReturn {
-  const vault = selectVaultById(state, vaultId);
+const NO_DEPOSIT: Record<'true' | 'false', SelectDataReturn> = {
+  true: Object.freeze({ loading: false, totalDeposit: BIG_ZERO, hideBalance: true }),
+  false: Object.freeze({ loading: false, totalDeposit: BIG_ZERO, hideBalance: false }),
+};
+const STILL_LOADING: Record<'true' | 'false', SelectDataReturn> = {
+  true: Object.freeze({ loading: true, hideBalance: true }),
+  false: Object.freeze({ loading: true, hideBalance: false }),
+};
 
-  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
-  const hideBalance = selectIsBalanceHidden(state);
-  if (!walletAddress) {
-    return { loading: false, totalDeposit: BIG_ZERO, hideBalance };
-  }
-
-  const isLoaded =
-    selectIsPricesAvailable(state) &&
-    selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress);
-  if (!isLoaded) {
-    return { loading: true, hideBalance };
-  }
-
-  // a merged CLM row sums deposits across the whole group; all members share the CLM token unit.
-  // The bare CLM is excluded: those tokens sit in the wallet, have no analytics timeline, and are
-  // absent from the PnL card — counting them here made Deposited contradict Now on the same screen
-  const isGroup = isCowcentratedVault(vault);
-  const memberIds = isGroup ? getCowcentratedWrapperIds(vault) : [vault.id];
-
-  const totalDeposit = memberIds.reduce(
-    (sum, id) =>
-      sum.plus(selectUserVaultBalanceInDepositTokenIncludingDisplaced(state, id, walletAddress)),
-    BIG_ZERO
-  );
-  if (!totalDeposit.gt(0)) {
-    return { loading: false, totalDeposit: BIG_ZERO, hideBalance };
-  }
-
-  const notEarning =
-    isGroup ? BIG_ZERO : (
-      selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vault.id, walletAddress)
-    );
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const totalDepositUsd = memberIds.reduce(
-    (sum, id) => sum.plus(selectUserVaultBalanceInUsdIncludingDisplaced(state, id, walletAddress)),
-    BIG_ZERO
-  );
-  const vaultDeposit = memberIds.reduce(
-    (sum, id) => sum.plus(selectUserVaultBalanceInDepositToken(state, id, walletAddress)),
-    BIG_ZERO
-  );
-
-  return {
-    loading: false,
+const selectVaultDepositStat = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], _w?: string) => selectVaultById(state, vaultId),
+  (state: BeefyState, _vaultId: VaultEntity['id'], w?: string) => w || selectWalletAddress(state),
+  (state: BeefyState) => selectIsBalanceHidden(state),
+  (state: BeefyState) => selectIsPricesAvailable(state),
+  (state: BeefyState, vaultId: VaultEntity['id'], w?: string) => {
+    const address = w || selectWalletAddress(state);
+    return address ?
+        selectIsBalanceAvailableForChainUser(
+          state,
+          selectVaultById(state, vaultId).chainId,
+          address
+        )
+      : false;
+  },
+  // a merged CLM row sums its wrappers; boosts attach per wrapper, so not-earning stays per vault
+  (state: BeefyState, vaultId: VaultEntity['id'], w?: string) =>
+    selectUserRowDepositIncludingDisplaced(state, vaultId, w),
+  (state: BeefyState, vaultId: VaultEntity['id'], w?: string) =>
+    isCowcentratedVault(selectVaultById(state, vaultId)) ? BIG_ZERO : (
+      selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vaultId, w)
+    ),
+  (state: BeefyState, vaultId: VaultEntity['id'], w?: string) =>
+    selectUserRowDeposit(state, vaultId, w),
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+    return selectTokenByAddressOrUndefined(state, vault.chainId, vault.depositTokenAddress);
+  },
+  (state: BeefyState, vaultId: VaultEntity['id'], w?: string) =>
+    selectUserRowDepositInUsd(state, vaultId, w),
+  (
+    vault,
+    walletAddress,
     hideBalance,
-    depositToken,
+    pricesAvailable,
+    balanceAvailable,
     totalDeposit,
-    totalDepositUsd,
-    vaultDeposit,
     notEarning,
-    isGroup,
-  };
-}
+    vaultDeposit,
+    depositToken,
+    totalDepositUsd
+  ): SelectDataReturn => {
+    const key = hideBalance ? 'true' : 'false';
+
+    if (!walletAddress) {
+      return NO_DEPOSIT[key];
+    }
+
+    if (!pricesAvailable || !balanceAvailable) {
+      return STILL_LOADING[key];
+    }
+
+    if (!totalDeposit.gt(0)) {
+      return NO_DEPOSIT[key];
+    }
+
+    if (!depositToken) {
+      throw new Error(`selectTokenByAddress: Unknown token address "${vault.depositTokenAddress}"`);
+    }
+
+    return {
+      loading: false,
+      hideBalance,
+      depositToken,
+      totalDeposit,
+      totalDepositUsd,
+      vaultDeposit,
+      notEarning,
+      isGroup: isCowcentratedVault(vault),
+    };
+  }
+);
 
 export const VaultDepositStat = memo(function VaultDepositStat({
   vaultId,

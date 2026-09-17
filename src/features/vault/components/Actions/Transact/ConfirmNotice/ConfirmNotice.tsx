@@ -15,6 +15,8 @@ import {
 } from '../../../../../data/selectors/transact.ts';
 import type { QuoteOutputTokenAmountChange } from '../../../../../data/apis/transact/transact-types.ts';
 import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens.ts';
+import { QuoteRetryAlert } from '../QuoteErrorAlert/QuoteErrorAlert.tsx';
+import { quoteRetryOf } from '../hooks/useQuoteAutoRefresh.ts';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -43,6 +45,11 @@ export const ConfirmNotice = memo(function ConfirmNotice({ css: cssProp }: Confi
   }
 
   if (status === TransactStatus.Rejected) {
+    const retry = quoteRetryOf(error);
+    if (retry) {
+      return <QuoteRetryAlert retry={retry} css={cssProp} />;
+    }
+
     return (
       <AlertError css={cssProp}>
         <p>

@@ -30,9 +30,7 @@ export type TokensState = {
        * if refactored. And we have to update the config anyway to make it smaller, so move this
        * inside the balance reducer once the config is reworked
        */
-      interestingBalanceTokenAddresses: TokenEntity['address'][];
-      /** list of tokens that have an active vault */
-      tokenIdsInActiveVaults: TokenEntity['id'][];
+      interestingBalanceTokenAddresses: Record<TokenEntity['address'], true>;
     };
   };
   prices: {

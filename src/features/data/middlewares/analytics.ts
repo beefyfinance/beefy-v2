@@ -40,12 +40,13 @@ export function addAnalyticsListeners() {
         return;
       }
 
-      // Only if new standard or clm vault that we don't have timeline data for
-      const missingVaultIds = addedVaultIds.filter(
-        v => selectUserDepositedTimelineByVaultId(state, walletAddress, v) === undefined
-      );
-
-      if (!missingVaultIds.length) {
+      // the timeline is fetched per address, so only refetch when an added vault is actually missing
+      if (
+        addedVaultIds.every(
+          vaultId =>
+            selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress) !== undefined
+        )
+      ) {
         return;
       }
 

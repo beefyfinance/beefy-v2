@@ -177,6 +177,8 @@ export type VaultCowcentratedBaseOnly = {
   tickSpacing: number;
   /** the address of the underlying CL pool */
   poolAddress: string;
+  /** the dex the underlying CL pool belongs to */
+  tokenProviderId?: PlatformEntity['id'];
   /** risk assessments per category */
   risks: VaultRisks;
 };

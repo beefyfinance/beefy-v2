@@ -10,8 +10,9 @@ import { PastBoosts } from './PastBoosts.tsx';
 export const Boosts = memo(function Boosts() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const boostId = useAppSelector(state => selectVaultCurrentBoostId(state, vaultId));
-  const hasPast =
-    useAppSelector(state => selectPastBoostIdsWithUserBalance(state, vaultId)).length > 0;
+  const hasPast = useAppSelector(
+    state => selectPastBoostIdsWithUserBalance(state, vaultId).length > 0
+  );
   const showDivider = hasPast && !!boostId;
 
   return (

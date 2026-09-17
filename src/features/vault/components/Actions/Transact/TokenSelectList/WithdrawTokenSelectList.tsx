@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.
 import { transactSelectSelection } from '../../../../../data/actions/transact.ts';
 import {
   type SelectionRow,
+  selectionRowsEqual,
   selectTransactSelectedChainId,
   selectTransactVaultId,
   selectTransactWithdrawSelectionsForChainWithBalances,
@@ -37,8 +38,9 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
   const transactChainId = useAppSelector(selectTransactSelectedChainId);
   const selectedChain = transactChainId ?? vault.chainId;
   const [search, setSearch] = useState('');
-  const optionsForChain = useAppSelector(state =>
-    selectTransactWithdrawSelectionsForChainWithBalances(state, selectedChain, vaultId)
+  const optionsForChain = useAppSelector(
+    state => selectTransactWithdrawSelectionsForChainWithBalances(state, selectedChain, vaultId),
+    selectionRowsEqual
   );
 
   const filteredOptions = useMemo(() => {

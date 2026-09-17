@@ -17,12 +17,17 @@ import type {
   ZapFeeRule,
 } from './config-types.ts';
 import { mapValues } from 'lodash-es';
-import { entries, keys } from '../../../helpers/object.ts';
+import { entries } from '../../../helpers/object.ts';
 import { getMinterConfig } from '../../../helpers/getConfig.ts';
 
 const ammsChainPathToImportFn = import.meta.glob<AmmConfig[]>('../../../config/zap/amm/*.json', {
   import: 'default',
 });
+
+const enabledChains = entries(chainConfigs).filter(
+  ([, chain]) => !('disabled' in chain && chain.disabled)
+);
+const enabledChainIds = enabledChains.map(([id]) => id);
 
 /**
  * A class to access beefy configuration
@@ -30,11 +35,7 @@ const ammsChainPathToImportFn = import.meta.glob<AmmConfig[]>('../../../config/z
  */
 export class ConfigAPI {
   public async fetchChainConfigs(): Promise<ChainConfig[]> {
-    return entries(chainConfigs).map(([id, chain]) => ({
-      id,
-      disabled: 'disabled' in chain && chain.disabled,
-      ...chain,
-    }));
+    return enabledChains.map(([id, chain]) => ({ id, ...chain }));
   }
 
   public async fetchPartnersConfig(): Promise<PartnersConfig> {
@@ -46,7 +47,7 @@ export class ConfigAPI {
   }> {
     return Object.fromEntries(
       await Promise.all(
-        Object.keys(chainConfigs).map(async chainId => {
+        enabledChainIds.map(async chainId => {
           const importer = ammsChainPathToImportFn[`../../../config/zap/amm/${chainId}.json`];
           return [chainId, importer ? await importer() : []];
         })
@@ -84,7 +85,7 @@ export class ConfigAPI {
       [chainId in ChainEntity['id']]: VaultConfig[];
     } = Object.fromEntries(
       await Promise.all(
-        keys(chainConfigs).map(async chainId => [
+        enabledChainIds.map(async chainId => [
           chainId,
           (await import(`../../../config/vault/${chainId}.json`)).default as VaultConfig[],
         ])
@@ -96,7 +97,7 @@ export class ConfigAPI {
 
   public async fetchAllMinters(): Promise<{ [chainId in ChainEntity['id']]?: MinterConfig[] }> {
     const entries = await Promise.all(
-      keys(chainConfigs).map(async chainId => {
+      enabledChainIds.map(async chainId => {
         const minters = await getMinterConfig(chainId);
         return [chainId, minters || []];
       })

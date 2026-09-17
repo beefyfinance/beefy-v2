@@ -1,8 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { isDefined } from '../utils/array-utils.ts';
 import type { SearchIndexEntry } from '../utils/vault-search.ts';
 import { selectAllChains } from './chains.ts';
-import { selectAllPlatforms } from './platforms.ts';
+import { selectUsedPlatforms } from './platforms.ts';
 
 export const selectChainSearchIndex = createSelector(selectAllChains, chains =>
   chains.map(
@@ -13,8 +12,8 @@ export const selectChainSearchIndex = createSelector(selectAllChains, chains =>
   )
 );
 
-export const selectPlatformSearchIndex = createSelector(selectAllPlatforms, platforms =>
-  platforms.filter(isDefined).map(
+export const selectPlatformSearchIndex = createSelector(selectUsedPlatforms, platforms =>
+  platforms.map(
     (platform): SearchIndexEntry => ({
       id: platform.id,
       texts: toIndexTexts(platform.id, platform.name),

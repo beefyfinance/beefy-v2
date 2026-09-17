@@ -13,6 +13,7 @@ import {
   selectStellaSwapUserRewardsStatus,
   selectUserStellaSwapUnifiedRewardsForVault,
   type UnifiedReward,
+  unifiedRewardsEqual,
 } from '../../../../../../data/selectors/user-rewards.ts';
 import { isNonEmptyArray, type NonEmptyArray } from '../../../../../../data/utils/array-utils.ts';
 import { RefreshButton } from '../RefreshButton/RefreshButton.tsx';
@@ -59,8 +60,9 @@ export const StellaSwapRewards = memo(function StellaSwapRewards({
   deposited,
 }: StellaSwapRewardsProps) {
   const { t } = useTranslation();
-  const vaultRewards = useAppSelector(state =>
-    selectUserStellaSwapUnifiedRewardsForVault(state, vaultId, walletAddress)
+  const vaultRewards = useAppSelector(
+    state => selectUserStellaSwapUnifiedRewardsForVault(state, vaultId, walletAddress),
+    unifiedRewardsEqual
   );
   const hasClaimable = useMemo(
     () => !!walletAddress && !!vaultRewards && vaultRewards.some(r => r.amount.gt(BIG_ZERO)),

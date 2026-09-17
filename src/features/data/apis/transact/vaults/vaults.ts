@@ -1,15 +1,13 @@
 import type { VaultEntity } from '../../../entities/vault.ts';
 import type { BeefyStateFn } from '../../../store/types.ts';
+import { createFactory } from '../../../utils/factory-utils.ts';
 import type { VaultTypeConstructor } from './IVaultType.ts';
 
 function makeLazyLoader<T extends VaultEntity>(loader: () => Promise<VaultTypeConstructor<T>>) {
-  let constructor: VaultTypeConstructor<T> | undefined;
+  const getConstructor = createFactory(loader);
 
   return async (vault: T, getState: BeefyStateFn) => {
-    if (!constructor) {
-      constructor = await loader();
-    }
-
+    const constructor = await getConstructor();
     return new constructor(vault, getState);
   };
 }

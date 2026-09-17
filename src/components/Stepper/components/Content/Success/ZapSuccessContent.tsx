@@ -11,6 +11,7 @@ import {
 } from '../../../../../features/data/selectors/stepper.ts';
 import { selectVaultById } from '../../../../../features/data/selectors/vaults.ts';
 import { useAppSelector } from '../../../../../features/data/store/hooks.ts';
+import { tokenAmountsEqual } from '../../../../../features/data/utils/selector-equality.ts';
 import { formatTokenDisplayCondensed } from '../../../../../helpers/format.ts';
 import { ChainGroupedTokens } from '../common/ChainGroupedTokens.tsx';
 import { formatTokenAmountsList } from '../common/formatTokenAmountsList.tsx';
@@ -19,8 +20,8 @@ import type { SuccessContentProps } from './types.ts';
 
 export const ZapSuccessContent = memo(function ZapSuccessContent({ step }: SuccessContentProps) {
   const { t } = useTranslation();
-  const returned = useAppSelector(selectZapReturned);
-  const srcReturned = useAppSelector(selectCrossChainSrcReturned);
+  const returned = useAppSelector(selectZapReturned, tokenAmountsEqual);
+  const srcReturned = useAppSelector(selectCrossChainSrcReturned, tokenAmountsEqual);
   const bridgeStatus = useAppSelector(selectStepperBridgeStatus);
   const pendingOp = useAppSelector(state =>
     bridgeStatus?.opId ? state.ui.transact.crossChain.pendingOps[bridgeStatus.opId] : undefined
@@ -34,8 +35,8 @@ export const ZapSuccessContent = memo(function ZapSuccessContent({ step }: Succe
   const destChain = useAppSelector(state =>
     pendingOp?.destChainId ? selectChainById(state, pendingOp.destChainId) : undefined
   );
-  const dstReceived = useAppSelector(selectCrossChainDstReceived);
-  const dstDust = useAppSelector(selectCrossChainDstDust);
+  const dstReceived = useAppSelector(selectCrossChainDstReceived, tokenAmountsEqual);
+  const dstDust = useAppSelector(selectCrossChainDstDust, tokenAmountsEqual);
 
   const isCrossChain = !!pendingOp && !!vault && !!srcChain && !!destChain;
 

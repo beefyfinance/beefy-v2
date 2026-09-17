@@ -1,4 +1,4 @@
-// To run: yarn pause gamma
+// To run: npm run pause gamma
 import { config } from '../src/config/config.ts';
 import { loadJson, saveJson } from './common/files.ts';
 import type { VaultConfig } from '../src/features/data/apis/config-types.ts';

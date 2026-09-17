@@ -226,8 +226,7 @@ export const fetchUserMerklRewardsAction = createAppAsyncThunk<
 
           const vaults = supportedChainIds
             .map(chainId => selectVaultByAddressOrUndefined(state, chainId, reason.address))
-            .filter(isDefined)
-            .filter(v => v.type === reason.type);
+            .filter(isDefined);
 
           if (vaults.length === 0) {
             if (reason.type !== 'standard') {

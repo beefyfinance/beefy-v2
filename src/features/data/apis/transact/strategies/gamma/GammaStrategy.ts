@@ -43,7 +43,12 @@ import {
   onlyOneTokenAmount,
 } from '../../helpers/options.ts';
 import { calculatePriceImpact, totalValueOfTokenAmounts, ZERO_FEE } from '../../helpers/quotes.ts';
-import { allTokensAreDistinct, pickTokens, tokensToLp } from '../../helpers/tokens.ts';
+import {
+  allTokensAreDistinct,
+  pickTokens,
+  tokensReachableFromAll,
+  tokensToLp,
+} from '../../helpers/tokens.ts';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { QuoteRequest } from '../../swap/ISwapProvider.ts';
@@ -1068,13 +1073,7 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
       this.options.swap
     );
 
-    return tokenSupport.any.filter(token => {
-      return this.lpTokens.every(
-        (lpToken, i) =>
-          isTokenEqual(token, lpToken) ||
-          tokenSupport.tokens[i].some(supportedToken => isTokenEqual(supportedToken, token))
-      );
-    });
+    return tokensReachableFromAll(tokenSupport.any, this.lpTokens, tokenSupport.tokens);
   }
 }
 

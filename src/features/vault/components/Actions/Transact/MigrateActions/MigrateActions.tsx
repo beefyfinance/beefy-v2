@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { styled } from '@repo/styles/jsx';
 import { AnimatedButton } from '../../../../../../components/Button/AnimatedButton.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
-import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
   transactClearQuotes,
@@ -21,10 +20,6 @@ import {
 } from '../../../../../data/reducers/wallet/transact-types.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { isZapQuote } from '../../../../../data/apis/transact/transact-types.ts';
-import {
-  QuoteCowcentratedNoSingleSideError,
-  QuoteCowcentratedNotCalmError,
-} from '../../../../../data/apis/transact/strategies/error.ts';
 import { selectUserVaultBalanceInShareToken } from '../../../../../data/selectors/balance.ts';
 import {
   selectIsStepperStepping,
@@ -47,8 +42,8 @@ import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
 import { usePriceImpactState } from '../hooks/usePriceImpactState.ts';
 import { useConfirmDisabled } from '../hooks/useActionGates.ts';
-import { CalmAlert } from '../TransactQuote/TransactQuote.tsx';
-import { NOT_CALM_REFRESH_SECONDS, useNotCalmAutoRefresh } from '../hooks/useNotCalmAutoRefresh.ts';
+import { QuoteErrorAlert, QuoteRetryAlert } from '../QuoteErrorAlert/QuoteErrorAlert.tsx';
+import { quoteRetryOf, useQuoteAutoRefresh } from '../hooks/useQuoteAutoRefresh.ts';
 import { ZapRoute, ZapRoutePlaceholder } from '../ZapRoute/ZapRoute.tsx';
 import { ZapSlippage } from '../ZapSlippage/ZapSlippage.tsx';
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
@@ -88,7 +83,7 @@ export const MigrateActions = memo(function MigrateActions({
 
   const isDisabledByConfirm = useConfirmDisabled();
   const priceImpactState = usePriceImpactState(quote);
-  const { stickyNotCalmAction, showNotCalmRefresh } = useNotCalmAutoRefresh();
+  const { stickyRetry, showAutoRefresh, autoRefreshSeconds } = useQuoteAutoRefresh();
 
   const fetchQuote = useCallback(() => {
     dispatch(transactFetchQuotes());
@@ -153,17 +148,20 @@ export const MigrateActions = memo(function MigrateActions({
   const isLoading = isExecuting || isStepping;
   const isQuotePending = quoteStatus === TransactStatus.Pending;
   const hasQuote = quoteStatus === TransactStatus.Fulfilled && !!quote;
-  // keep the refresh control mounted while retrying not-calm, even when the countdown is paused
-  const notCalmRetrying =
-    !!stickyNotCalmAction ||
-    (quoteStatus === TransactStatus.Rejected &&
-      !!quoteError &&
-      QuoteCowcentratedNotCalmError.match(quoteError));
+  // keep the refresh control mounted while retrying, even when the countdown is paused
+  const retrying =
+    !!stickyRetry || (quoteStatus === TransactStatus.Rejected && !!quoteRetryOf(quoteError));
 
   if (hasQuote && isZapQuote(quote)) {
     return (
       <>
-        <ZapRoute quote={quote} expandable={true} enableRefresh={!isComplete} />
+        <ZapRoute
+          quote={quote}
+          expandable={true}
+          enableRefresh={!isComplete}
+          autoRefresh={showAutoRefresh}
+          autoRefreshSeconds={autoRefreshSeconds}
+        />
         <ZapSlippage />
         <PriceImpactNotice state={priceImpactState} />
         <ConfirmNotice />
@@ -200,19 +198,19 @@ export const MigrateActions = memo(function MigrateActions({
     <>
       <ZapRoutePlaceholder
         enableRefresh={
-          notCalmRetrying ?
+          retrying ?
             isQuotePending ?
               'disabled'
             : true
           : false
         }
-        autoRefresh={showNotCalmRefresh}
-        autoRefreshSeconds={NOT_CALM_REFRESH_SECONDS}
+        autoRefresh={showAutoRefresh}
+        autoRefreshSeconds={autoRefreshSeconds}
       />
       {quoteStatus === TransactStatus.Rejected && quoteError ?
-        <MigrateQuoteError error={quoteError} />
-      : stickyNotCalmAction ?
-        <CalmAlert i18nKey={`Transact-Quote-Error-Calm-Retry-${stickyNotCalmAction}`} />
+        <QuoteErrorAlert error={quoteError} action="deposit" fallbackKey="ReplacementVault-Error" />
+      : stickyRetry ?
+        <QuoteRetryAlert retry={stickyRetry} />
       : null}
       <ActionsContainer>
         <ActionConnectSwitch chainId={newVault.chainId}>
@@ -229,37 +227,6 @@ export const MigrateActions = memo(function MigrateActions({
         <VaultFees />
       </ActionsContainer>
     </>
-  );
-});
-
-const MigrateQuoteError = memo(function MigrateQuoteError({
-  error,
-}: {
-  error: ReturnType<typeof selectTransactQuoteError>;
-}) {
-  const { t } = useTranslation();
-
-  if (error && QuoteCowcentratedNoSingleSideError.match(error)) {
-    return (
-      <AlertError>
-        {t('Transact-Notice-CowcentratedNoSingleSideAllowed', {
-          inputToken: error.inputToken,
-          neededToken: error.neededToken,
-        })}
-      </AlertError>
-    );
-  }
-  if (error && QuoteCowcentratedNotCalmError.match(error)) {
-    return <CalmAlert i18nKey={`Transact-Quote-Error-Calm-Retry-${error.action}`} />;
-  }
-
-  return (
-    <AlertError>
-      <p>{t('ReplacementVault-Error')}</p>
-      {error && error.message ?
-        <p>{error.message}</p>
-      : null}
-    </AlertError>
   );
 });
 

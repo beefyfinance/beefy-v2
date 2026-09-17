@@ -1,7 +1,7 @@
 import type { Address } from 'viem';
 import BigNumber from 'bignumber.js';
 import { chunk, partition, pick } from 'lodash-es';
-import { getAddress, type PublicClient } from 'viem';
+import { type PublicClient } from 'viem';
 import { readContract } from 'viem/actions';
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi.ts';
 import { Erc4626VaultAbi } from '../../../../config/abi/Erc4626VaultAbi.ts';
@@ -29,6 +29,7 @@ import { isDefined } from '../../utils/array-utils.ts';
 import { featureFlag_getBalanceApiChunkSize } from '../../utils/feature-flags.ts';
 import { rpcClientManager } from '../rpc-contract/rpc-manager.ts';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
+import { toCallAddress } from '../../utils/address-utils.ts';
 import type {
   BoostBalance,
   BoostBalanceContractData,
@@ -51,7 +52,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     { tokens = [], govVaults = [], boosts = [], erc4626Vaults = [] }: FetchAllBalancesEntities,
     _walletAddress: string
   ): Promise<FetchAllBalancesResult> {
-    const walletAddress = getAddress(_walletAddress);
+    const walletAddress = toCallAddress(_walletAddress);
     const client = rpcClientManager.getBatchClient(this.chain.id);
     const appMulticallContract = fetchContract(
       this.chain.appMulticallContractAddress,
@@ -81,21 +82,21 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     const boostAndGovVaultV1Requests = boostAndGovVaultV1Batches.map(batch =>
       appMulticallContract.read.getBoostOrGovBalance([
-        batch.map(boostOrGovVault => boostOrGovVault.contractAddress as Address),
+        batch.map(boostOrGovVault => toCallAddress(boostOrGovVault.contractAddress)),
         walletAddress,
       ])
     );
 
     const boostAndGovVaultV2Requests = boostAndGovVaultsV2Batches.map(batch =>
       appMulticallContract.read.getGovVaultMultiBalance([
-        batch.map(gov => gov.contractAddress as Address),
+        batch.map(gov => toCallAddress(gov.contractAddress)),
         walletAddress,
       ])
     );
 
     const erc20TokensRequests = erc20TokensBatches.map(batch =>
       appMulticallContract.read.getTokenBalances([
-        batch.map(token => token.address as Address),
+        batch.map(token => toCallAddress(token.address)),
         walletAddress,
       ])
     );
@@ -190,7 +191,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     vault: VaultErc4626AsyncWithdraw,
     walletAddress: Address
   ) {
-    const contractAddress = getAddress(vault.contractAddress);
+    const contractAddress = toCallAddress(vault.contractAddress);
     const shareToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 

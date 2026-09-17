@@ -1,6 +1,8 @@
 import type { ChainEntity } from '../entities/chain.ts';
+import { isValidAddress } from '../../../helpers/addresses.ts';
 import { clamp } from '../../../helpers/number.ts';
 import { createFactory } from './factory-utils.ts';
+import { getAddress } from 'viem';
 
 const DEFAULT_CONTRACT_DATA_CHUNK_SIZE = 468;
 const DEFAULT_CONTRACT_DATA_CHUNK_SIZE_BY_CHAIN: Record<string, number> = {
@@ -197,7 +199,9 @@ export function featureFlag_geoCountryOverride(): string | undefined {
 
 export function featureFlag_walletAddressOverride(walletAddress: string) {
   if (walletAddress) {
-    return getParam('__view_as', walletAddress);
+    return getAddress(
+      getParam('__view_as', walletAddress, value => (isValidAddress(value) ? value : walletAddress))
+    );
   }
 
   return walletAddress;

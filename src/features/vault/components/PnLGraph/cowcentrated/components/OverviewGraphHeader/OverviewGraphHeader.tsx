@@ -21,17 +21,19 @@ import { PendingIndexNotice } from '../../../common/PendingIndexNotice.tsx';
 
 interface OverviewGraphHeaderProps {
   vaultId: VaultEntity['id'];
+  address: string;
 }
 
 const useStyles = legacyMakeStyles(styles);
 
 export const OverviewGraphHeader = memo(function OverviewGraphHeader({
   vaultId,
+  address,
 }: OverviewGraphHeaderProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   // the whole CLM position, both yield modes; the toggle only routes deposits/withdrawals
-  const userPnl = useAppSelector(state => selectClmGroupPnl(state, vaultId));
+  const userPnl = useAppSelector(state => selectClmGroupPnl(state, vaultId, address));
   const { underlying, tokens, pnl, hold, pendingIndex } = userPnl;
   const hasPnlTooltip = showClmPnlTooltip(userPnl);
   const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));

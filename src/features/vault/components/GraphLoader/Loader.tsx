@@ -1,6 +1,6 @@
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { memo, type PropsWithChildren } from 'react';
-import techLoaderUrl from '../../../../images/tech-loader.gif';
+import techLoaderUrl from '../../../../images/tech-loader.svg?inline';
 import { css } from '@repo/styles/css';
 
 const useStyles = legacyMakeStyles({

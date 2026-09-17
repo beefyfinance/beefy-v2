@@ -1,0 +1,22 @@
+
+          <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" fill="none">
+            <defs>
+              <radialGradient id="stake_dao_gradient" cx="30%" cy="30%" r="70%">
+                <stop stop-color="#ffffff"/>
+                <stop stop-color="#cccccc" offset="1"/>
+              </radialGradient>
+              
+            </defs>
+            <circle cx="300" cy="300" r="300" fill="url(#stake_dao_gradient)"/>
+            <g transform="translate(-3.80989293298785, -3.3708694615574473) scale(18.960613510655467)">
+<g xmlns="http://www.w3.org/2000/svg" clip-path="url(#clip0_8046_26)">
+
+<g clip-path="url(#clip1_8046_26)">
+<path d="M16.0143 1.76001V16H7.74402C8.1286 15.9728 8.50298 15.9319 8.86715 15.8775C11.9574 15.4111 14.316 13.8451 15.3847 8.93958C15.7931 7.07405 16.0109 4.72171 16.0143 1.76341V1.76001Z" fill="#53AE94"/>
+<path d="M16.0321 30.2401L16.0321 16.0001L24.3024 16.0001C23.9178 16.0273 23.5434 16.0682 23.1792 16.1227C20.0889 16.589 17.7304 18.155 16.6617 23.0605C16.2533 24.9261 16.0355 27.2784 16.0321 30.2367L16.0321 30.2401Z" fill="#53AE94"/>
+</g>
+</g>
+
+</g>
+          </svg>
+        

@@ -1,4 +1,4 @@
-// To run: yarn clm ethereum 0xclm 0xpool 0xvault clm-id
+// To run: npm run clm ethereum 0xclm 0xpool 0xvault clm-id
 import { type AppChainId, addressBookToAppId } from './common/config.ts';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../src/config/abi/BeefyCowcentratedLiquidityVaultAbi.ts';
 import { StratAbi } from '../src/config/abi/StrategyAbi.ts';

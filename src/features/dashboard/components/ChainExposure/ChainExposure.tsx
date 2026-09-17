@@ -1,7 +1,10 @@
 import { memo } from 'react';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import { selectIsUserBalanceAvailable } from '../../../data/selectors/balance.ts';
-import { selectDashboardUserExposureByChain } from '../../../data/selectors/dashboard.ts';
+import {
+  exposureEntriesEqual,
+  selectDashboardUserExposureByChain,
+} from '../../../data/selectors/dashboard.ts';
 import { ExposureChart } from '../ExposureChart/ExposureChart.tsx';
 import type { ExposureDashboardChartLoaderProps } from '../ExposureChart/types.ts';
 
@@ -9,8 +12,9 @@ const ChainExposure = memo(function ChainExposure({
   title,
   address,
 }: ExposureDashboardChartLoaderProps) {
-  const chainExposureData = useAppSelector(state =>
-    selectDashboardUserExposureByChain(state, address)
+  const chainExposureData = useAppSelector(
+    state => selectDashboardUserExposureByChain(state, address),
+    exposureEntriesEqual
   );
   return <ExposureChart title={title} type="chain" data={chainExposureData} />;
 });

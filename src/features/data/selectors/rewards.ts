@@ -1,4 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { createBoundedSelector } from '../utils/selector-utils.ts';
+import { createCachedSelector } from 're-reselect';
 import { getUnixTime, isAfter } from 'date-fns';
 import { uniqBy } from 'lodash-es';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
@@ -11,6 +13,11 @@ import { selectVaultRawTvl } from './tvl.ts';
 
 export type UnifiedRewardToken = Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'chainId'>;
 
+const byVaultId = {
+  keySelector: (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  selectorCreator: createBoundedSelector,
+};
+
 export type MerklRewardsCampaignWithApr = MerklRewardsCampaign & {
   apr: number;
 };
@@ -19,11 +26,12 @@ export type StellaSwapRewardsCampaignWithApr = StellaSwapRewardsCampaign & {
   apr: number;
 };
 
-export const selectVaultActiveMerklCampaigns = createSelector(
+export const selectVaultActiveMerklCampaigns = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     state.biz.rewards.offchain.byProviderId.merkl[vaultId],
   (state: BeefyState) => state.biz.rewards.offchain.byId,
-  (vaultCampaigns, campaignById): MerklRewardsCampaignWithApr[] | undefined => {
+  () => Math.trunc(Date.now() / 600000), // re-evaluate campaign windows on a 10-min bucket
+  (vaultCampaigns, campaignById, _bucket): MerklRewardsCampaignWithApr[] | undefined => {
     if (!vaultCampaigns) {
       return undefined;
     }
@@ -36,12 +44,12 @@ export const selectVaultActiveMerklCampaigns = createSelector(
 
     return activeCampaigns.length ? activeCampaigns : undefined;
   }
-);
+)(byVaultId);
 
-export const selectVaultHasActiveMerklCampaigns = createSelector(
-  selectVaultActiveMerklCampaigns,
-  campaigns => !!campaigns && campaigns.length > 0
-);
+export function selectVaultHasActiveMerklCampaigns(state: BeefyState, vaultId: VaultEntity['id']) {
+  const campaigns = selectVaultActiveMerklCampaigns(state, vaultId);
+  return !!campaigns && campaigns.length > 0;
+}
 
 export function isMerklBoostCampaign(campaign: MerklRewardsCampaignWithApr): boolean {
   return (
@@ -51,28 +59,12 @@ export function isMerklBoostCampaign(campaign: MerklRewardsCampaignWithApr): boo
   );
 }
 
-export const selectVaultActiveMerklBoostCampaigns = createSelector(
-  selectVaultActiveMerklCampaigns,
-  campaigns => {
-    if (!campaigns) {
-      return undefined;
-    }
-
-    const filtered = campaigns.filter(isMerklBoostCampaign);
-    return filtered.length ? filtered : undefined;
-  }
-);
-
-export const selectVaultHasActiveMerklBoostCampaigns = createSelector(
-  selectVaultActiveMerklBoostCampaigns,
-  campaigns => !!campaigns && campaigns.length > 0
-);
-
-export const selectVaultActiveStellaSwapCampaigns = createSelector(
+export const selectVaultActiveStellaSwapCampaigns = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     state.biz.rewards.offchain.byProviderId.stellaswap[vaultId],
   (state: BeefyState) => state.biz.rewards.offchain.byId,
-  (vaultCampaigns, campaignById): StellaSwapRewardsCampaignWithApr[] | undefined => {
+  () => Math.trunc(Date.now() / 600000), // re-evaluate campaign windows on a 10-min bucket
+  (vaultCampaigns, campaignById, _bucket): StellaSwapRewardsCampaignWithApr[] | undefined => {
     if (!vaultCampaigns) {
       return undefined;
     }
@@ -85,23 +77,42 @@ export const selectVaultActiveStellaSwapCampaigns = createSelector(
 
     return activeCampaigns.length ? activeCampaigns : undefined;
   }
-);
+)(byVaultId);
 
-export const selectVaultHasActiveStellaSwapCampaigns = createSelector(
-  selectVaultActiveStellaSwapCampaigns,
-  campaigns => !!campaigns && campaigns.length > 0
-);
+export function selectVaultHasActiveStellaSwapCampaigns(
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) {
+  const campaigns = selectVaultActiveStellaSwapCampaigns(state, vaultId);
+  return !!campaigns && campaigns.length > 0;
+}
 
-export const selectVaultHasActiveOffchainCampaigns = createSelector(
+export const selectVaultHasActiveOffchainCampaigns = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => state.biz.rewards.offchain.byVaultId[vaultId],
-  campaigns => !!campaigns && campaigns.length > 0 && campaigns.some(c => c.apr > 0)
-);
+  (state: BeefyState) => state.biz.rewards.offchain.byId,
+  () => Math.trunc(Date.now() / 600000), // re-evaluate campaign windows on a 10-min bucket
+  (vaultCampaigns, campaignById, _bucket): boolean => {
+    if (!vaultCampaigns || vaultCampaigns.length === 0) {
+      return false;
+    }
 
-export const selectVaultActiveGovRewards = createSelector(
+    const now = getUnixTime(new Date());
+    return vaultCampaigns.some(vaultCampaign => {
+      if (vaultCampaign.apr <= 0) {
+        return false;
+      }
+      const campaign = campaignById[vaultCampaign.id];
+      return !!campaign && campaign.startTimestamp <= now && campaign.endTimestamp >= now;
+    });
+  }
+)(byVaultId);
+
+export const selectVaultActiveGovRewards = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => state.biz.rewards.gov.byVaultId[vaultId],
   selectVaultRawTvl,
   (state: BeefyState) => state.entities.tokens.prices.byOracleId,
-  (rewards, tvl, priceByOracleId) => {
+  () => Math.trunc(Date.now() / 600000), // re-evaluate reward periods on a 10-min bucket
+  (rewards, tvl, priceByOracleId, _bucket) => {
     if (!rewards || rewards.length === 0 || !tvl || tvl.isZero()) {
       return undefined;
     }
@@ -122,12 +133,12 @@ export const selectVaultActiveGovRewards = createSelector(
       })
       .filter(r => r.apr > 0);
   }
-);
+)(byVaultId);
 
-export const selectVaultHasActiveGovRewards = createSelector(
-  selectVaultActiveGovRewards,
-  rewards => !!rewards && rewards.length > 0
-);
+export function selectVaultHasActiveGovRewards(state: BeefyState, vaultId: VaultEntity['id']) {
+  const rewards = selectVaultActiveGovRewards(state, vaultId);
+  return !!rewards && rewards.length > 0;
+}
 
 export const selectVaultActiveExtraRewardTokens = createSelector(
   selectVaultActiveMerklCampaigns,

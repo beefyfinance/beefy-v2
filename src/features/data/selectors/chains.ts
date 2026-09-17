@@ -1,5 +1,4 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { createCachedSelector } from 're-reselect';
 import type { ChainEntity, ChainId } from '../entities/chain.ts';
 import type { BeefyState } from '../store/types.ts';
 
@@ -11,17 +10,13 @@ function makeChainSelector(idsSelector: (state: BeefyState) => ChainEntity['id']
   ) as (state: BeefyState) => ChainEntity[];
 }
 
-export const selectChainById = createCachedSelector(
-  (_: BeefyState, chainId: ChainEntity['id']) => chainId,
-  state => state.entities.chains.byId,
-  (chainId, byId): ChainEntity => {
-    const chain = byId[chainId];
-    if (!chain) {
-      throw new Error(`Unknown chainId ${chainId}`);
-    }
-    return chain;
+export const selectChainById = (state: BeefyState, chainId: ChainEntity['id']): ChainEntity => {
+  const chain = state.entities.chains.byId[chainId];
+  if (!chain) {
+    throw new Error(`Unknown chainId ${chainId}`);
   }
-)((_, chainId) => chainId);
+  return chain;
+};
 
 export const selectChainByIdOrUndefined = (state: BeefyState, chainId: ChainEntity['id']) =>
   state.entities.chains.byId[chainId] || undefined;
@@ -36,7 +31,6 @@ export const selectChainByNetworkChainId = (
 
 export const selectAllChainIds = (state: BeefyState) => state.entities.chains.allIds;
 export const selectActiveChainIds = (state: BeefyState) => state.entities.chains.activeIds;
-export const selectEolChainIds = (state: BeefyState) => state.entities.chains.eolIds;
 export const selectActiveRpcUrlForChain = (state: BeefyState, chainId: ChainId) => {
   const activeRpcsForChain = state.entities.chains.activeRpcsByChainId[chainId];
   if (!activeRpcsForChain) {
@@ -45,17 +39,14 @@ export const selectActiveRpcUrlForChain = (state: BeefyState, chainId: ChainId) 
   return activeRpcsForChain.rpcs;
 };
 
-export const selectChainHasModifiedRpc = createSelector(
-  selectActiveRpcUrlForChain,
-  (state: BeefyState, chainId: ChainId) => selectChainById(state, chainId).rpc,
-  (activeRpcUrl, defaultRpc) => {
-    return (
-      activeRpcUrl.length !== defaultRpc.length ||
-      activeRpcUrl.some((url, index) => url !== defaultRpc[index])
-    );
-  }
-);
+export const selectChainHasModifiedRpc = (state: BeefyState, chainId: ChainId) => {
+  const activeRpcUrl = selectActiveRpcUrlForChain(state, chainId);
+  const defaultRpc = selectChainById(state, chainId).rpc;
+  return (
+    activeRpcUrl.length !== defaultRpc.length ||
+    activeRpcUrl.some((url, index) => url !== defaultRpc[index])
+  );
+};
 
 export const selectAllChains = makeChainSelector(selectAllChainIds);
 export const selectActiveChains = makeChainSelector(selectActiveChainIds);
-export const selectEolChains = makeChainSelector(selectEolChainIds);
