@@ -12,10 +12,7 @@ import {
   selectVaultAvgApy,
   selectVaultTotalApy,
 } from '../selectors/apy.ts';
-import {
-  selectUserClmGroupBalanceInUsd,
-  selectUserVaultBalanceInUsdIncludingDisplaced,
-} from '../selectors/balance.ts';
+import { selectUserRowDepositInUsd } from '../selectors/balance.ts';
 import {
   selectIsVaultPrestakedBoost,
   selectVaultsActiveBoostPeriodFinish,
@@ -263,10 +260,8 @@ function applyDepositValueSort(
   return orderBy(
     vaults,
     vault => {
-      const value =
-        isCowcentratedVault(vault) ?
-          selectUserClmGroupBalanceInUsd(state, vault.id)
-        : selectUserVaultBalanceInUsdIncludingDisplaced(state, vault.id);
+      // the figure the row's Deposited stat shows, so the order matches what the user reads
+      const value = selectUserRowDepositInUsd(state, vault.id);
       if (!value) {
         return -1;
       }

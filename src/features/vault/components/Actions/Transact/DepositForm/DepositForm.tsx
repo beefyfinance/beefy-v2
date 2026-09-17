@@ -127,16 +127,16 @@ const DepositFormLoader = memo(function DepositFormLoader() {
   const isError = status === TransactStatus.Rejected;
   const clmMode = useClmMode();
   const active = isVaultActive(vault);
-  // the rewards toggle sits outside the loading branch: switching wrapper re-fetches options, and
-  // the control the user just clicked must not vanish underneath them while that happens
-  const hasRewardsToggle = active && !!clmMode;
+  // appears with the rest of the form on first load; a wrapper switch keeps options loaded, so the
+  // toggle the user just clicked stays put while the form below refetches
+  const showRewardsToggle = active && !!clmMode && geoStatus !== 'blocked' && !isLoading;
   // the rewards control stays live so a mis-click is recoverable; the form below it must not
   // accept input that the incoming options would silently discard
   const switching = useAppSelector(selectTransactIsSwitchingTarget);
 
   return (
-    <Container noPadding={isLoading && active && !hasRewardsToggle && geoStatus !== 'blocked'}>
-      {hasRewardsToggle && geoStatus !== 'blocked' ?
+    <Container noPadding={isLoading && active && geoStatus !== 'blocked'}>
+      {showRewardsToggle ?
         <ClmRewardsToggle css={styles.rewardsToggle} />
       : null}
       <Body busy={switching} aria-busy={switching}>

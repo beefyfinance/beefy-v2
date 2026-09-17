@@ -28,7 +28,10 @@ import {
   userDidConnect,
   walletHasDisconnected,
 } from '../reducers/wallet/wallet.ts';
-import { selectUserVaultBalanceInShareTokenInBoosts } from '../selectors/balance.ts';
+import {
+  selectClmMigrateVaultId,
+  selectUserVaultBalanceInShareTokenInBoosts,
+} from '../selectors/balance.ts';
 import { selectBoostById, selectIsVaultPreStakedOrBoosted } from '../selectors/boosts.ts';
 import { selectAllChainIds } from '../selectors/chains.ts';
 import { selectHasBalanceSettledForChainUser } from '../selectors/data-loader/balance.ts';
@@ -219,9 +222,12 @@ export function addTransactListeners() {
         return;
       }
 
+      // a merged CLM page may init on a side the user doesn't hold; open Migrate for either side
+      const migrateVaultId =
+        selectClmMigrateVaultId(getState(), action.payload.vaultId) ?? action.payload.vaultId;
       const initialMode =
         action.payload.mode ??
-        (selectTransactShouldShowMigrate(getState(), action.payload.vaultId) ?
+        (selectTransactShouldShowMigrate(getState(), migrateVaultId) ?
           TransactMode.Migrate
         : TransactMode.Deposit);
       dispatch(transactInitReady({ vaultId: action.payload.vaultId, mode: initialMode }));

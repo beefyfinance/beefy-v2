@@ -1,12 +1,11 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TokenAmountFromEntity } from '../../../../components/TokenAmount/TokenAmount.tsx';
 import { formatLargeUsd } from '../../../../helpers/format.ts';
 import AutocompoundIcon from '../../../../images/icons/autocompound.svg?react';
 import ClaimableIcon from '../../../../images/icons/claimable.svg?react';
-import ExpandMoreIcon from '../../../../images/icons/mui/ExpandMore.svg?react';
 import type { VaultEntity } from '../../../data/entities/vault.ts';
 import {
   selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken,
@@ -17,6 +16,16 @@ import { selectTransactExecuting } from '../../../data/selectors/transact.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import { useClmMode } from './ClmModeContext.tsx';
 import { useSideRetired } from './hooks.ts';
+import {
+  OptionBody,
+  OptionCard,
+  OptionGlyph,
+  OptionHeading,
+  OptionNote,
+  OptionSection,
+  OptionTitle,
+  OptionTitleRow,
+} from './OptionCard.tsx';
 import type { ClmMode } from './resolve-clm-mode.ts';
 
 const MODE_NAME: Record<ClmMode, string> = {
@@ -31,16 +40,16 @@ type SideProps = {
 };
 
 type ClmModeSelectorProps = {
-  /** the withdraw form spaces its blocks with margins; the deposit form uses a row gap */
+  /** the withdraw form spaces its blocks with margins */
   css?: CssStyles;
 };
 
+/** Withdraw's side picker: one card per held side, in the deposit rewards card's anatomy */
 export const ClmModeSelector = memo(function ClmModeSelector({
   css: cssProp,
 }: ClmModeSelectorProps) {
   const { t } = useTranslation();
   const clmMode = useClmMode();
-  const [open, setOpen] = useState(false);
   const isExecuting = useAppSelector(selectTransactExecuting);
   const isStepping = useAppSelector(selectIsStepperStepping);
   const vaultRetired = useSideRetired(clmMode?.vaultSideId);
@@ -48,21 +57,13 @@ export const ClmModeSelector = memo(function ClmModeSelector({
   const vaultHeld = useSideHeld(clmMode?.vaultSideId);
   const poolHeld = useSideHeld(clmMode?.poolSideId);
 
-  const handleToggle = useCallback(() => setOpen(prev => !prev), []);
-  const handleSelect = useCallback(
-    (mode: ClmMode) => {
-      setOpen(false);
-      clmMode?.setMode(mode);
-    },
-    [clmMode]
-  );
+  const handleSelect = useCallback((mode: ClmMode) => clmMode?.setMode(mode), [clmMode]);
 
   if (!clmMode) {
     return null;
   }
 
-  // deposit asks where new funds go, so retired sides are absent; withdraw asks which position to
-  // take from, so it lists only sides actually held
+  // withdraw takes from a position, so only sides actually held are listed, retired or not
   const sides: SideProps[] = (
     [
       { mode: 'vault', sideId: clmMode.vaultSideId, retired: vaultRetired, held: vaultHeld },
@@ -73,126 +74,111 @@ export const ClmModeSelector = memo(function ClmModeSelector({
       [{ mode: side.mode, sideId: side.sideId, retired: side.retired }]
     : []
   );
-
   if (!sides.length) {
     return null;
   }
 
-  const disabled = isExecuting || isStepping;
-  const single = sides.length < 2;
-  const expanded = open && !single && !disabled;
+  const busy = isExecuting || isStepping;
 
   return (
-    <div className={css(cssProp)}>
-      <Trigger
-        type="button"
-        interactive={!single}
-        dimmed={disabled}
-        disabled={disabled || single}
-        onClick={handleToggle}
-      >
-        <TriggerInfo>
-          <EyebrowLine>
-            <Eyebrow>{t('Transact-ClmMode-Label')}</Eyebrow>
-          </EyebrowLine>
-          <TriggerLine>
-            <ModeIcon mode={clmMode.mode} />
-            <TriggerName>{t(MODE_NAME[clmMode.mode])}</TriggerName>
-            <TriggerValue>
-              <SideValue sideId={clmMode.selectedVaultId} suffix={true} />
-            </TriggerValue>
-          </TriggerLine>
-        </TriggerInfo>
-        {single ? null : <Chevron open={expanded} />}
-      </Trigger>
-      {expanded ?
-        <Panel>
+    <OptionSection className={css(cssProp)}>
+      <OptionHeading>{t('Transact-ClmMode-Title')}</OptionHeading>
+      {sides.length === 1 ?
+        // nothing to choose: the deposit tab's statement card
+        <OptionCard busy={busy}>
+          <SideRow>
+            <OptionGlyph aria-hidden={true}>
+              <ModeIcon mode={sides[0].mode} />
+            </OptionGlyph>
+            <SideContent {...sides[0]} />
+          </SideRow>
+        </OptionCard>
+      : <SideStack>
           {sides.map(side => (
-            <ModeOption
+            <SideOption
               key={side.mode}
               {...side}
+              group={clmMode.clmId}
               selected={side.mode === clmMode.mode}
+              busy={busy}
               onSelect={handleSelect}
             />
           ))}
-        </Panel>
-      : null}
-    </div>
+        </SideStack>
+      }
+    </OptionSection>
   );
 });
 
-const ModeOption = memo(function ModeOption({
+const SideOption = memo(function SideOption({
   mode,
   sideId,
   retired,
+  group,
   selected,
+  busy,
   onSelect,
 }: SideProps & {
+  group: string;
   selected: boolean;
+  busy: boolean;
   onSelect: (mode: ClmMode) => void;
 }) {
-  const { t } = useTranslation();
-  const handleClick = useCallback(() => onSelect(mode), [mode, onSelect]);
+  const handleChange = useCallback(() => onSelect(mode), [mode, onSelect]);
 
   return (
-    <Option type="button" selected={selected} retired={retired} onClick={handleClick}>
-      <OptionHead>
-        <OptionLeft>
-          <ModeIcon mode={mode} />
-          <OptionName>{t(MODE_NAME[mode])}</OptionName>
-          {retired ?
-            <RetiredTag>{t('VaultTag-Retired')}</RetiredTag>
-          : null}
-        </OptionLeft>
-        <OptionValue>
-          <SideValue sideId={sideId} suffix={false} />
-        </OptionValue>
-      </OptionHead>
-      <Receive>
-        <ReceiveContent sideId={sideId} retired={retired} />
-      </Receive>
-    </Option>
+    <OptionCard checked={selected} busy={busy}>
+      <SideLabel>
+        <NativeRadio
+          type="radio"
+          name={`clm-side-${group}`}
+          checked={selected}
+          onChange={handleChange}
+          disabled={busy}
+        />
+        <OptionGlyph aria-hidden={true}>
+          <Radio checked={selected} />
+        </OptionGlyph>
+        <SideContent mode={mode} sideId={sideId} retired={retired} />
+      </SideLabel>
+    </OptionCard>
   );
 });
 
-/** APY/APR on deposit, deposited USD on withdraw */
-const SideValue = memo(function SideValue({
-  sideId,
-  suffix,
-}: {
-  sideId: VaultEntity['id'];
-  suffix: boolean;
-}) {
+const SideContent = memo(function SideContent({ mode, sideId, retired }: SideProps) {
   const { t } = useTranslation();
   const value = useAppSelector(state =>
     formatLargeUsd(selectUserVaultBalanceInUsdIncludingDisplaced(state, sideId))
   );
 
-  if (!value) {
-    return null;
-  }
-  return <>{suffix ? t('Transact-ClmMode-Deposited', { value }) : value}</>;
+  return (
+    <OptionBody>
+      <OptionTitleRow>
+        <OptionTitle>{t(MODE_NAME[mode])}</OptionTitle>
+        {retired ?
+          <RetiredTag>{t('VaultTag-Retired')}</RetiredTag>
+        : null}
+        <Value>{value}</Value>
+      </OptionTitleRow>
+      <OptionNote>
+        {retired ? t('Transact-ClmMode-RetiredNote') : <HeldAmount sideId={sideId} />}
+      </OptionNote>
+    </OptionBody>
+  );
 });
 
-/** what the user holds on this side, shown while withdrawing */
-const ReceiveContent = memo(function ReceiveContent({
-  sideId,
-  retired,
-}: {
-  sideId: VaultEntity['id'];
-  retired: boolean;
-}) {
-  const { t } = useTranslation();
+const HeldAmount = memo(function HeldAmount({ sideId }: { sideId: VaultEntity['id'] }) {
   const held = useAppSelector(state =>
     selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken(state, sideId)
   );
-
-  return retired ?
-      <>{t('Transact-ClmMode-RetiredNote')}</>
-    : <TokenAmountFromEntity amount={held.amount} token={held.token} />;
+  return (
+    <>
+      <TokenAmountFromEntity amount={held.amount} token={held.token} /> {held.token.symbol}
+    </>
+  );
 });
 
-const ModeIcon = memo(function ModeIcon({ mode }: { mode: ClmMode }) {
+export const ModeIcon = memo(function ModeIcon({ mode }: { mode: ClmMode }) {
   return mode === 'vault' ? <Autocompound /> : <Claimable />;
 });
 
@@ -202,180 +188,78 @@ function useSideHeld(sideId: VaultEntity['id'] | undefined): boolean {
   );
 }
 
-const Trigger = styled('button', {
+const SideStack = styled('div', {
   base: {
     display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    gap: '8px',
-    textAlign: 'left',
-    padding: '11px 14px',
-    borderRadius: '8px',
-    backgroundColor: 'background.button',
-    cursor: 'default',
-  },
-  variants: {
-    interactive: {
-      true: {
-        cursor: 'pointer',
-        _hover: {
-          backgroundColor: 'background.content.light',
-        },
-      },
-    },
-    dimmed: {
-      true: {
-        opacity: '0.45',
-        pointerEvents: 'none',
-      },
-    },
-  },
-});
-
-const TriggerInfo = styled('span', {
-  base: {
-    minWidth: 0,
-  },
-});
-
-const EyebrowLine = styled('span', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    marginBottom: '2px',
-  },
-});
-
-const Eyebrow = styled('span', {
-  base: {
-    textStyle: 'body.sm',
-    color: 'text.dark',
-  },
-});
-
-const TriggerLine = styled('span', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
+    flexDirection: 'column',
     gap: '8px',
   },
 });
 
-const TriggerName = styled('span', {
-  base: {
-    textStyle: 'body.medium',
-    color: 'text.light',
-  },
-});
-
-const TriggerValue = styled('span', {
-  base: {
-    textStyle: 'body.md',
-    color: 'text.middle',
-  },
-});
-
-const iconBase = {
-  flex: 'none',
-  width: '18px',
-  height: '18px',
-  color: 'text.light',
+const rowBase = {
+  display: 'flex',
+  alignItems: 'flex-start',
+  paddingBlock: '12px',
+  paddingInlineEnd: '12px',
 } as const;
 
-const Autocompound = styled(AutocompoundIcon, { base: iconBase });
+const SideRow = styled('div', { base: rowBase });
 
-const Claimable = styled(ClaimableIcon, { base: iconBase });
-
-const Chevron = styled(ExpandMoreIcon, {
+/** the whole card is the tap target; nothing else in it is interactive */
+const SideLabel = styled('label', {
   base: {
-    flex: 'none',
-    width: '20px',
-    height: '20px',
-    color: 'text.light',
-    transition: 'transform 0.15s ease-in-out',
-  },
-  variants: {
-    open: {
-      true: {
-        transform: 'rotate(180deg)',
-      },
+    ...rowBase,
+    // contains the visually-hidden radio
+    position: 'relative',
+    cursor: 'pointer',
+    // keyboard only: :focus-within would also fire on click and leave a ring behind the cursor
+    '&:has(:focus-visible)': {
+      outline: 'solid 2px {colors.text.dark}',
+      outlineOffset: '-2px',
+      borderRadius: '8px',
     },
   },
 });
 
-const Panel = styled('div', {
+const NativeRadio = styled('input', {
+  base: {
+    position: 'absolute',
+    width: '1px',
+    height: '1px',
+    opacity: '0',
+    pointerEvents: 'none',
+  },
+});
+
+/** drawn to match the checkbox glyph: 20px, 2px green outline, filled mark when selected */
+const Radio = styled('span', {
   base: {
     display: 'grid',
-    gap: '4px',
-    marginTop: '4px',
-    padding: '6px',
-    borderRadius: '8px',
-    border: '2px solid {colors.background.content.light}',
-    backgroundColor: 'background.content',
-  },
-});
-
-const Option = styled('button', {
-  base: {
-    display: 'block',
-    width: '100%',
-    textAlign: 'left',
-    padding: '12px',
-    borderRadius: '8px',
-    backgroundColor: 'transparent',
-    cursor: 'pointer',
-    transition: 'background-color 0.12s ease-in-out',
-    _hover: {
-      backgroundColor: 'background.content.light',
-    },
+    placeItems: 'center',
+    width: '20px',
+    height: '20px',
+    borderRadius: '50%',
+    border: '2px solid {colors.green.40}',
   },
   variants: {
-    selected: {
+    checked: {
       true: {
-        backgroundColor: 'background.button',
-        _hover: {
-          backgroundColor: 'background.content.light',
+        _after: {
+          content: '""',
+          width: '10px',
+          height: '10px',
+          borderRadius: '50%',
+          backgroundColor: 'green.40',
         },
       },
     },
-    retired: {
-      true: {
-        boxShadow: 'inset 0 0 0 1px {colors.tags.retired.background}',
-      },
-    },
   },
 });
 
-const OptionHead = styled('span', {
+const Value = styled('span', {
   base: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    gap: '8px',
-  },
-});
-
-const OptionLeft = styled('span', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    minWidth: 0,
-  },
-});
-
-const OptionName = styled('span', {
-  base: {
-    textStyle: 'body.medium',
-    color: 'text.light',
-  },
-});
-
-const OptionValue = styled('span', {
-  base: {
-    flex: 'none',
+    flexShrink: '0',
+    marginLeft: 'auto',
     textStyle: 'body.medium',
     color: 'text.light',
   },
@@ -394,12 +278,13 @@ const RetiredTag = styled('span', {
   },
 });
 
-const Receive = styled('span', {
-  base: {
-    display: 'block',
-    marginTop: '3px',
-    textStyle: 'body.sm',
-    color: 'text.dark',
-    whiteSpace: 'normal',
-  },
-});
+const iconBase = {
+  flex: 'none',
+  width: '18px',
+  height: '18px',
+  color: 'text.light',
+} as const;
+
+const Autocompound = styled(AutocompoundIcon, { base: iconBase });
+
+const Claimable = styled(ClaimableIcon, { base: iconBase });

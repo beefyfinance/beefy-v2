@@ -19,8 +19,19 @@ export const VaultPlatform = memo(function VaultPlatform({ vaultId }: VaultPlatf
   const provider = useAppSelector(state =>
     depositToken.providerId ? selectPlatformById(state, depositToken.providerId) : null
   );
-  // the underlying venue is the useful name; the platform is Beefy on anything with a provider
-  const name = provider?.name || platform.name;
+  const platformName = platform.name;
+  const providerName = provider ? provider.name : null;
 
-  return <>{t('VaultTag-Platform', { platform: name })}</>;
+  // Beefy's own CLMs are named by the venue they manage liquidity on, not "Venue (Beefy)"
+  if (providerName && platform.id === 'beefy') {
+    return <>{t('VaultTag-Platform', { platform: providerName })}</>;
+  }
+
+  return (
+    <>
+      {providerName && providerName !== platformName ?
+        t('VaultTag-PlatformWithProvider', { platform: platformName, provider: providerName })
+      : t('VaultTag-Platform', { platform: platformName })}
+    </>
+  );
 });

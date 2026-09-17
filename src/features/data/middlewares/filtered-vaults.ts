@@ -31,6 +31,7 @@ import {
 } from '../reducers/wallet/wallet.ts';
 import { selectActiveChainIds } from '../selectors/chains.ts';
 import { selectIsConfigAvailable } from '../selectors/data-loader/config.ts';
+import { selectSavedVaultIdRemap } from '../selectors/saved-vaults.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
 import { startAppListening } from './listener-middleware.ts';
 
@@ -104,6 +105,10 @@ export function addFilteredVaultsListeners() {
           chainIds: selectActiveChainIds(getState()),
         })
       );
+      const savedRemap = selectSavedVaultIdRemap(getState());
+      if (Object.keys(savedRemap).length) {
+        dispatch(savedVaultsActions.reconcile(savedRemap));
+      }
 
       // first run mark all changed
       dispatch(

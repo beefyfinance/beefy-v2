@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isCowcentratedVault, type VaultEntity } from '../../features/data/entities/vault.ts';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
   selectUserRowDeposit,
   selectUserRowDepositIncludingDisplaced,
@@ -51,8 +51,6 @@ const selectVaultDepositedStat = createSelector(
     selectUserRowDepositIncludingDisplaced(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id']) => selectUserRowDeposit(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id']) => selectUserRowDepositInUsd(state, vaultId),
-  (state: BeefyState, vaultId: VaultEntity['id']) =>
-    isCowcentratedVault(selectVaultById(state, vaultId)),
   (state: BeefyState) => selectIsBalanceHidden(state),
   (state: BeefyState) => selectWalletAddress(state),
   (state: BeefyState, vaultId: VaultEntity['id']) => {
@@ -66,22 +64,12 @@ const selectVaultDepositedStat = createSelector(
       selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress)
     );
   },
-  (
-    depositToken,
-    deposit,
-    baseDeposit,
-    depositUsdAmount,
-    isGroup,
-    blurred,
-    walletAddress,
-    isLoaded
-  ) => {
+  (depositToken, deposit, baseDeposit, depositUsdAmount, blurred, walletAddress, isLoaded) => {
     const hasDeposit = deposit.gt(0);
 
     return {
       hasDeposit,
-      // displaced tooltip breaks balances down per vault id, which a merged group can't use
-      hasDisplacedDeposit: !isGroup && hasDeposit && deposit.gt(baseDeposit),
+      hasDisplacedDeposit: hasDeposit && deposit.gt(baseDeposit),
       deposit,
       depositUsd: formatLargeUsd(depositUsdAmount),
       depositToken,

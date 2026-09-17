@@ -31,6 +31,9 @@ type TotalApyTooltipContentProps = {
 /** a CLM stream that exists but pays nothing right now; absent keys mean the same thing here */
 const ZERO_RATE = '0%';
 
+/** components the CLM rows already account for; `vault` is the compounded rewards row's source */
+const CLM_TEMPLATE_COMPONENTS = ['clm', 'rewardPoolTrading', 'merkl', 'vault'] as const;
+
 const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
   vaultId,
   type,
@@ -66,26 +69,38 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
         // not a stream currently pays — a component at zero reads 0%, it does not disappear.
         // The rewards row is one stream under two handlings: claimable on the pool wrapper,
         // already harvested and compounded on the vault one, so it never names either.
-        ([
-          {
-            label: labels[`clm${suffix}`],
-            value: rates[`clm${suffix}`] ?? ZERO_RATE,
-          },
-          {
-            label: labels[`rewardPoolTrading${suffix}`],
-            value:
-              rewards ?
-                formatLargePercent(rewards.rewardPoolTradingApr, 2)
-              : (rates[`rewardPoolTrading${suffix}`] ?? rates[`vault${suffix}`] ?? ZERO_RATE),
-          },
-          {
-            label: labels[`merkl${suffix}`],
-            value:
-              rewards ?
-                formatLargePercent(rewards.merklApr, 2)
-              : (rates[`merkl${suffix}`] ?? ZERO_RATE),
-          },
-        ] as { label: string | string[]; value: string }[])
+        (
+          [
+            {
+              label: labels[`clm${suffix}`],
+              value: rates[`clm${suffix}`] ?? ZERO_RATE,
+            },
+            {
+              label: labels[`rewardPoolTrading${suffix}`],
+              value:
+                rewards ?
+                  formatLargePercent(rewards.rewardPoolTradingApr, 2)
+                : (rates[`rewardPoolTrading${suffix}`] ?? rates[`vault${suffix}`] ?? ZERO_RATE),
+            },
+            {
+              label: labels[`merkl${suffix}`],
+              value:
+                rewards ?
+                  formatLargePercent(rewards.merklApr, 2)
+                : (rates[`merkl${suffix}`] ?? ZERO_RATE),
+            },
+          ] as { label: string | string[]; value: string }[]
+        ).concat(
+          // streams outside the template (boosts, other incentives) still count towards the total
+          components
+            .filter(
+              key =>
+                !CLM_TEMPLATE_COMPONENTS.some(c => key === `${c}${suffix}`) &&
+                key in rates &&
+                rates[key] !== ZERO_RATE
+            )
+            .map(key => ({ label: labels[key], value: rates[key] ?? '?' }))
+        )
       : components
           .filter(key => key in rates)
           .map(key => ({

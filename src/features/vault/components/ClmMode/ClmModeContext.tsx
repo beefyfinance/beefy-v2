@@ -9,10 +9,11 @@ import {
 } from '../../../data/entities/vault.ts';
 import { TransactMode } from '../../../data/reducers/wallet/transact-types.ts';
 import {
+  selectClmMigrateVaultId,
   selectHasUserDepositInVault,
   selectUserVaultBalanceInUsdIncludingDisplaced,
 } from '../../../data/selectors/balance.ts';
-import { selectTransactMode } from '../../../data/selectors/transact.ts';
+import { selectClmBoostVaultId, selectTransactMode } from '../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
 import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
 import {
@@ -27,6 +28,10 @@ export type ClmModeContextValue = {
   /** raw group ids; `pool`/`vault` are the *active* wrappers, the arrays are any status */
   ids: VaultCowcentrated['cowcentratedIds'];
   mode: ClmMode;
+  /** the Deposit tab's mode, whichever tab is open */
+  depositMode: ClmMode;
+  /** holds any pool wrapper, active or retired */
+  heldPool: boolean;
   /** the wrapper the page's mode-dependent sections are bound to */
   selectedVaultId: VaultEntity['id'];
   /** per-side wrapper ids; undefined when that side does not exist */
@@ -77,8 +82,15 @@ export function useClmModeController(vaultId: VaultEntity['id']): ClmModeContext
   });
   const transactMode = useAppSelector(selectTransactMode);
   const isWithdraw = transactMode === TransactMode.Withdraw;
+  // boosts and migrations belong to one side, so their tabs bind there whatever the deposit pick is
+  const tabVaultId = useAppSelector(state =>
+    !ids ? undefined
+    : transactMode === TransactMode.Boost ? selectClmBoostVaultId(state, vaultId)
+    : transactMode === TransactMode.Migrate ? selectClmMigrateVaultId(state, vaultId)
+    : undefined
+  );
   // withdrawing the whole of a picked side leaves that pick unselectable, and the selector then
-  // collapses to a single disabled row pointing at the empty position — drop it and re-derive
+  // collapses to a single card pointing at the empty position — drop it and re-derive
   const picked =
     isWithdraw ?
       pickedWithdraw && (pickedWithdraw === 'vault' ? heldVault : heldPool) ?
@@ -87,10 +99,16 @@ export function useClmModeController(vaultId: VaultEntity['id']): ClmModeContext
     : pickedDeposit;
   // until the user picks, both tabs re-derive from balances as they load
   const mode =
-    picked ??
-    (isWithdraw && heldSide ? heldSide
-    : ids ? resolveClmMode(ids, heldVault, heldPool, isWithdraw)
-    : 'vault');
+    tabVaultId && ids ?
+      ids.vaults.includes(tabVaultId) ?
+        'vault'
+      : 'pool'
+    : (picked ??
+      (isWithdraw && heldSide ? heldSide
+      : ids ? resolveClmMode(ids, heldVault, heldPool, isWithdraw)
+      : 'vault'));
+  const depositMode =
+    pickedDeposit ?? (ids ? resolveClmMode(ids, heldVault, heldPool, false) : 'vault');
 
   const setMode = useCallback(
     (next: ClmMode, tab?: TransactMode) => {
@@ -124,10 +142,12 @@ export function useClmModeController(vaultId: VaultEntity['id']): ClmModeContext
       clmId: ids.clm,
       ids,
       mode,
-      selectedVaultId: clmModeToVaultId(ids, mode),
+      depositMode,
+      heldPool,
+      selectedVaultId: tabVaultId ?? clmModeToVaultId(ids, mode),
       vaultSideId: ids.vault ?? ids.vaults[0],
       poolSideId: ids.pool ?? ids.pools[0],
       setMode,
     };
-  }, [ids, mode, setMode]);
+  }, [ids, mode, depositMode, heldPool, tabVaultId, setMode]);
 }

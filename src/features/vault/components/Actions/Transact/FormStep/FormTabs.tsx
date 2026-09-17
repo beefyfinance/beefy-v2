@@ -5,6 +5,7 @@ import { transactSwitchMode } from '../../../../../data/actions/transact.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
+  selectClmBoostVaultId,
   selectTransactMode,
   selectTransactShouldShowBoost,
   selectTransactShouldShowBoostNotification,
@@ -13,7 +14,9 @@ import {
   selectTransactShouldShowMigrate,
   selectTransactShouldShowWithdrawNotification,
 } from '../../../../../data/selectors/transact.ts';
+import { useClmMode } from '../../../ClmMode/ClmModeContext.tsx';
 import { selectClmClaimVaultId } from '../../../../../data/selectors/vaults.ts';
+import { selectClmMigrateVaultId } from '../../../../../data/selectors/balance.ts';
 import type { BeefyState } from '../../../../../data/store/types.ts';
 import { CardHeaderTabs } from '../../../Card/CardHeaderTabs.tsx';
 import {
@@ -33,11 +36,31 @@ export const FormTabs = memo(function FormTabs({ vaultId }: FormTabsProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const mode = useAppSelector(selectTransactMode);
+  const clmMode = useClmMode();
   // claims live on the CLM's pool side whatever the yield mode is
   const claimVaultId = useAppSelector(state => selectClmClaimVaultId(state, vaultId));
-  const showClaim = useAppSelector(state => selectTransactShouldShowClaims(state, claimVaultId));
-  const showBoost = useAppSelector(state => selectTransactShouldShowBoost(state, vaultId));
-  const showMigrate = useAppSelector(state => selectTransactShouldShowMigrate(state, vaultId));
+  const canClaim = useAppSelector(state => selectTransactShouldShowClaims(state, claimVaultId));
+  const hasUnclaimed = useAppSelector(
+    state => !!selectTransactShouldShowClaimsNotification(state, claimVaultId)
+  );
+  // autocompounders only get the tab to collect rewards already owed; kept while open
+  const showClaim =
+    canClaim &&
+    (!clmMode ||
+      clmMode.depositMode === 'pool' ||
+      clmMode.heldPool ||
+      hasUnclaimed ||
+      mode === TransactMode.Claim);
+  // a CLM boost sits on one side; the tab shows for it whichever side the form is on
+  const boostVaultId = useAppSelector(state => selectClmBoostVaultId(state, vaultId) ?? vaultId);
+  const showBoost = useAppSelector(state => selectTransactShouldShowBoost(state, boostVaultId));
+  // likewise a migration belongs to the side the user holds in the replaced CLM
+  const migrateVaultId = useAppSelector(
+    state => selectClmMigrateVaultId(state, vaultId) ?? vaultId
+  );
+  const showMigrate = useAppSelector(state =>
+    selectTransactShouldShowMigrate(state, migrateVaultId)
+  );
 
   const handleModeChange = useCallback(
     (newMode: string) => {
@@ -72,7 +95,7 @@ export const FormTabs = memo(function FormTabs({ vaultId }: FormTabsProps) {
               label: t('Transact-Boost'),
               context: {
                 shouldHighlight: (state: BeefyState) =>
-                  selectTransactShouldShowBoostNotification(state, vaultId),
+                  selectTransactShouldShowBoostNotification(state, boostVaultId),
               },
             },
           ]
@@ -86,7 +109,7 @@ export const FormTabs = memo(function FormTabs({ vaultId }: FormTabsProps) {
           },
         },
       ] satisfies Array<HighlightableTabOption>,
-    [t, vaultId, claimVaultId, showClaim, showBoost, showMigrate]
+    [t, vaultId, claimVaultId, boostVaultId, showClaim, showBoost, showMigrate]
   );
 
   return (

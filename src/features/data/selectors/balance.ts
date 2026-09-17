@@ -360,6 +360,10 @@ export const selectUserHasBalanceToMigrate = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ): boolean => {
+  // a merged CLM row migrates through whichever of its wrappers the user holds
+  if (isCowcentratedVault(selectVaultById(state, vaultId))) {
+    return !!selectClmMigrateVaultId(state, vaultId);
+  }
   const migration = selectVaultReplacementMigration(state, vaultId);
   if (!migration) {
     return false;
@@ -373,6 +377,17 @@ export const selectUserHasBalanceToMigrate = (
     migration.oldVaultId,
     walletAddress
   ).gt(BIG_ZERO);
+};
+
+/** The CLM wrapper the user holds that should migrate, reachable from any group member */
+export const selectClmMigrateVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultEntity['id'] | undefined => {
+  const vault = selectVaultById(state, vaultId);
+  return isCowcentratedLikeVault(vault) ?
+      getCowcentratedWrapperIds(vault).find(id => selectUserHasBalanceToMigrate(state, id))
+    : undefined;
 };
 
 /**
@@ -724,21 +739,9 @@ export const selectUserRowDeposit = sumOverClmWrappers(selectUserVaultBalanceInD
 export const selectUserRowDepositInUsd = sumOverClmWrappers(
   selectUserVaultBalanceInUsdIncludingDisplaced
 );
-
-/**
- * USD deposited across a CLM group: the base CLM (unstaked receipt tokens) + all its pools/vaults
- */
-export const selectUserClmGroupBalanceInUsd = (
-  state: BeefyState,
-  clmId: VaultEntity['id'],
-  walletAddress?: string
-) => {
-  const vault = selectCowcentratedVaultById(state, clmId);
-  return [vault.id, ...getCowcentratedWrapperIds(vault)].reduce(
-    (sum, id) => sum.plus(selectUserVaultBalanceInUsdIncludingDisplaced(state, id, walletAddress)),
-    BIG_ZERO
-  );
-};
+export const selectUserRowDepositNotInActiveBoost = sumOverClmWrappers(
+  selectUserVaultBalanceNotInActiveBoostInDepositToken
+);
 
 /**
  * The group member a merged CLM page reports the user's position on: the side they actually hold,

@@ -59,7 +59,7 @@ const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) 
   const clmMode = useClmModeController(vaultId);
   // the yield mode routes deposits and withdrawals only; the rest of the page is the whole CLM
   const modeVaultId = clmMode?.selectedVaultId ?? vaultId;
-  // rates, promos and partnerships come from the same side the vault list row shows
+  // rates and partnerships come from the same side the vault list row shows
   const displayVaultId = useAppSelector(state => selectClmDisplayVaultId(state, vaultId));
   // the position sections follow the user's money, never the toggle
   const positionVaultId = useAppSelector(state => selectClmPositionVaultId(state, vaultId));
@@ -85,7 +85,7 @@ const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) 
             </div>
             <div className={classes.columnInfo}>
               <FreeZapPromotionCardLoader vaultId={vaultId} />
-              <PromoCardLoader vaultId={displayVaultId} />
+              <PromoCardLoader vaultId={vaultId} />
               <PointsBannerLoader vaultId={vaultId} />
               <PnLGraphIfWallet vaultId={positionVaultId} />
               <HistoricGraphsLoader vaultId={displayVaultId} />

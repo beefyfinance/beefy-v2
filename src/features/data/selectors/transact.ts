@@ -21,7 +21,12 @@ import {
 import { computeOptionZapFee } from '../apis/transact/helpers/fee.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
-import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
+import {
+  getCowcentratedWrapperIds,
+  isCowcentratedLikeVault,
+  isSingleGovVault,
+  type VaultEntity,
+} from '../entities/vault.ts';
 import {
   DepositSource,
   TransactMode,
@@ -820,6 +825,22 @@ export const selectTransactShouldShowBoost = (state: BeefyState, vaultId: VaultE
 
   // OR, there is an expired boost which the user is still staked in
   return selectPastBoostIdsWithUserBalance(state, vaultId).length > 0;
+};
+
+/** The CLM side its Boost tab acts on: boosts live on one side, so the tab follows it, not the yield mode */
+export const selectClmBoostVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultEntity['id'] | undefined => {
+  const vault = selectVaultById(state, vaultId);
+  if (!isCowcentratedLikeVault(vault)) {
+    return undefined;
+  }
+  const wrapperIds = getCowcentratedWrapperIds(vault);
+  return (
+    wrapperIds.find(id => selectPreStakeOrActiveBoostIds(state, id).length > 0) ??
+    wrapperIds.find(id => selectPastBoostIdsWithUserBalance(state, id).length > 0)
+  );
 };
 
 export const selectTransactShouldShowBoostNotification = (

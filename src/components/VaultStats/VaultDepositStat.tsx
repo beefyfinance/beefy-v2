@@ -2,12 +2,12 @@ import { createSelector } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import { memo } from 'react';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
-import { isCowcentratedVault, type VaultEntity } from '../../features/data/entities/vault.ts';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
   selectUserRowDeposit,
   selectUserRowDepositIncludingDisplaced,
   selectUserRowDepositInUsd,
-  selectUserVaultBalanceNotInActiveBoostInDepositToken,
+  selectUserRowDepositNotInActiveBoost,
 } from '../../features/data/selectors/balance.ts';
 
 import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
@@ -56,7 +56,6 @@ type SelectDataReturn =
       totalDepositUsd: BigNumber;
       vaultDeposit: BigNumber;
       notEarning: BigNumber;
-      isGroup: boolean;
     };
 
 const NO_DEPOSIT: Record<'true' | 'false', SelectDataReturn> = {
@@ -83,13 +82,11 @@ const selectVaultDepositStat = createSelector(
         )
       : false;
   },
-  // a merged CLM row sums its wrappers; boosts attach per wrapper, so not-earning stays per vault
+  // a merged CLM row sums its wrappers
   (state: BeefyState, vaultId: VaultEntity['id'], w?: string) =>
     selectUserRowDepositIncludingDisplaced(state, vaultId, w),
   (state: BeefyState, vaultId: VaultEntity['id'], w?: string) =>
-    isCowcentratedVault(selectVaultById(state, vaultId)) ? BIG_ZERO : (
-      selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vaultId, w)
-    ),
+    selectUserRowDepositNotInActiveBoost(state, vaultId, w),
   (state: BeefyState, vaultId: VaultEntity['id'], w?: string) =>
     selectUserRowDeposit(state, vaultId, w),
   (state: BeefyState, vaultId: VaultEntity['id']) => {
@@ -136,7 +133,6 @@ const selectVaultDepositStat = createSelector(
       totalDepositUsd,
       vaultDeposit,
       notEarning,
-      isGroup: isCowcentratedVault(vault),
     };
   }
 );
@@ -195,7 +191,7 @@ export const VaultDepositStat = memo(function VaultDepositStat({
       loading={false}
       tooltip={
         // displaced tooltip breaks balances down per vault id, which a merged group can't use
-        hasDisplacedDeposit && !data.isGroup ?
+        hasDisplacedDeposit ?
           <VaultDepositedTooltip vaultId={vaultId} walletAddress={walletAddress} />
         : <BasicTooltipContent title={depositFormattedFull} />
       }

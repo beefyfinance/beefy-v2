@@ -12,7 +12,18 @@ import { selectIsStepperStepping } from '../../../data/selectors/stepper.ts';
 import { selectTransactExecuting } from '../../../data/selectors/transact.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import { useClmMode } from './ClmModeContext.tsx';
+import { ModeIcon } from './ClmModeSelector.tsx';
 import { resolveClmRewardsVariant } from './clm-rewards.ts';
+import {
+  OptionBody,
+  OptionCard,
+  OptionGlyph,
+  OptionHeading,
+  OptionNote,
+  OptionSection,
+  OptionTitle,
+  OptionTitleRow,
+} from './OptionCard.tsx';
 
 /** first-ever view of the control opens it; every later view is collapsed */
 const SEEN_STORAGE_KEY = 'clmRewardsSeen';
@@ -63,7 +74,7 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
     console.warn(`CLM ${clmMode.clmId} has no active pool wrapper; rewards row has no off state`);
   }
 
-  const checked = variant === 'info' || clmMode.mode === 'vault';
+  const checked = variant === 'toggle' && clmMode.mode === 'vault';
   const busy = isExecuting || isStepping;
   const title = variant === 'info' ? 'Transact-ClmRewards-Info' : 'Transact-ClmRewards-Option';
   // fees-only groups have no claim token to name; fall back to the generic wording
@@ -85,32 +96,32 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
   // identical in both variants, so the title starts at the same offset whether the glyph sits in
   // an interactive halo beside the disclosure or inside it
   const content = (
-    <Column>
-      <TitleRow>
-        <Title>{t(title)}</Title>
+    <OptionBody>
+      <OptionTitleRow>
+        <OptionTitle>{t(title)}</OptionTitle>
         <Chevron open={expanded}>
           <ExpandMoreIcon />
         </Chevron>
-      </TitleRow>
-      {expanded ? null : <SubLine>{t(subLine, tokens)}</SubLine>}
-    </Column>
+      </OptionTitleRow>
+      {expanded ? null : <OptionNote>{t(subLine, tokens)}</OptionNote>}
+    </OptionBody>
   );
 
   return (
-    <Section className={css(cssProp)}>
-      <Heading>{t('Transact-ClmRewards-Title')}</Heading>
-      <Card checked={checked} busy={busy}>
+    <OptionSection className={css(cssProp)}>
+      <OptionHeading>{t('Transact-ClmRewards-Title')}</OptionHeading>
+      <OptionCard checked={checked} busy={busy}>
         {variant === 'info' ?
-          // a statement, not a control: the whole row is one expand target, no dead taps
+          // a statement, not a control: one expand target, and a mode icon so it can't read as a stuck tick
           <Disclosure
             type="button"
             onClick={handleExpand}
             aria-expanded={expanded}
             expanded={expanded}
           >
-            <GlyphBox aria-hidden={true}>
-              <CheckBoxIcon />
-            </GlyphBox>
+            <OptionGlyph aria-hidden={true}>
+              <ModeIcon mode="vault" />
+            </OptionGlyph>
             {content}
           </Disclosure>
         : <Row>
@@ -123,11 +134,11 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
                 onChange={handleToggle}
                 aria-label={t(title)}
               />
-              <GlyphBox aria-hidden={true}>
+              <OptionGlyph aria-hidden={true}>
                 {checked ?
                   <CheckBoxIcon />
                 : <CheckBoxBlankIcon />}
-              </GlyphBox>
+              </OptionGlyph>
             </Halo>
             <Disclosure
               type="button"
@@ -175,48 +186,9 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
             }
           </Expansion>
         : null}
-      </Card>
-    </Section>
+      </OptionCard>
+    </OptionSection>
   );
-});
-
-const Section = styled('div', {
-  base: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-  },
-});
-
-const Heading = styled('div', {
-  base: {
-    textStyle: 'body.medium',
-    color: 'text.dark',
-  },
-});
-
-const Card = styled('div', {
-  base: {
-    display: 'flex',
-    flexDirection: 'column',
-    borderRadius: '8px',
-    border: '1px solid {colors.background.content.light}',
-    backgroundColor: 'background.content.dark',
-  },
-  variants: {
-    checked: {
-      true: {
-        borderColor: 'transparent',
-        backgroundColor: 'background.content.light',
-      },
-    },
-    busy: {
-      true: {
-        opacity: '0.45',
-        pointerEvents: 'none',
-      },
-    },
-  },
 });
 
 const Row = styled('div', {
@@ -255,27 +227,6 @@ const NativeCheckbox = styled('input', {
   },
 });
 
-/** fixed 44px gutter so the title starts at the same offset in every variant */
-const GlyphBox = styled('div', {
-  base: {
-    display: 'grid',
-    placeItems: 'center',
-    flexShrink: '0',
-    width: '44px',
-    color: 'green.40',
-  },
-});
-
-const Column = styled('div', {
-  base: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '4px',
-    flexGrow: '1',
-    minWidth: '0',
-  },
-});
-
 const Disclosure = styled('button', {
   base: {
     display: 'flex',
@@ -301,35 +252,11 @@ const Disclosure = styled('button', {
   },
 });
 
-const TitleRow = styled('div', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    width: '100%',
-  },
-});
-
-const Title = styled('span', {
-  base: {
-    textStyle: 'body.medium',
-    color: 'text.light',
-    flexGrow: '1',
-  },
-});
-
-const SubLine = styled('span', {
-  base: {
-    textStyle: 'body.sm',
-    color: 'text.dark',
-    textWrap: 'pretty',
-  },
-});
-
 const Chevron = styled('span', {
   base: {
     display: 'flex',
     flexShrink: '0',
+    marginLeft: 'auto',
     color: 'text.dark',
     transition: 'transform 0.2s ease-in-out',
   },
