@@ -5,7 +5,7 @@ import { renderToString } from 'react-dom/server';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import { getAddress, type Address } from 'viem';
+import { getAddress, pad, toEventSelector, toHex, type Address } from 'viem';
 import { BreakpointContext } from '../../../hooks/useBreakpoints.ts';
 import { i18n } from '../../../i18n.ts';
 import { recalculateTotalApyAction } from '../actions/apy.ts';
@@ -609,6 +609,50 @@ export function withZapSuccess(state: BeefyState, vaultId: string, token: TokenE
           expectedTokens: [token],
           amount: new BigNumber(5),
           token,
+        },
+      },
+    },
+  } as unknown as BeefyState;
+}
+
+const FIXTURE_ROUTER = getAddress('0xdEaD000000000000000000000000000000000003');
+
+/** a same-chain zap on `vaultId` whose router returned 2 of each expected token */
+export function withZapRouterSuccess(
+  state: BeefyState,
+  vaultId: string,
+  expectedTokens: TokenEntity[]
+): BeefyState {
+  const logs = expectedTokens.map((token, logIndex) => ({
+    address: FIXTURE_ROUTER.toLowerCase(),
+    topics: [
+      toEventSelector('TokenReturned(address,uint256)'),
+      pad(token.address as Address, { size: 32 }),
+    ],
+    data: pad(toHex(2n * 10n ** BigInt(token.decimals)), { size: 32 }),
+    blockHash: pad('0x1', { size: 32 }),
+    blockNumber: 1n,
+    logIndex,
+    transactionHash: pad('0x2', { size: 32 }),
+    transactionIndex: 0,
+    removed: false,
+  }));
+  return {
+    ...state,
+    user: {
+      ...state.user,
+      walletActions: {
+        result: 'success',
+        data: {
+          hash: '0xfixture',
+          receipt: { ...SUCCESS_RECEIPT, to: FIXTURE_ROUTER, contractAddress: null, logs },
+        },
+        additional: {
+          type: 'zap',
+          vaultId,
+          expectedTokens,
+          amount: new BigNumber(0),
+          token: expectedTokens[0],
         },
       },
     },
