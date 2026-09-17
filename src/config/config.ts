@@ -15,6 +15,23 @@ export const config = {
       percentile: 0.6,
     },
   },
+  arc: {
+    new: true,
+    name: 'Arc',
+    chainId: 5042,
+    rpc: ['https://rpc.mainnet.arc.io', 'https://rpc.blockdaemon.mainnet.arc.io'],
+    explorerUrl: 'https://explorer.arc.io',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
+    native: { symbol: 'USDC', oracleId: 'USDC', decimals: 18 },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.6,
+      baseMinimum: '20000000000',
+      priorityMinimum: '1000000000',
+    },
+  },
   avax: {
     name: 'Avalanche',
     chainId: 43114,

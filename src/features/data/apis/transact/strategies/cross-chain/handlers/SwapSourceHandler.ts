@@ -1,8 +1,10 @@
 import { BIG_ZERO, toWeiString } from '../../../../../../../helpers/big-number.ts';
 import { isTokenErc20 } from '../../../../../entities/token.ts';
+import { selectChainWrappedNativeToken } from '../../../../../selectors/tokens.ts';
 import { selectTransactSlippage } from '../../../../../selectors/transact.ts';
 import { selectZapByChainId } from '../../../../../selectors/zap.ts';
 import { Balances } from '../../../helpers/Balances.ts';
+import { isSameBalancePair, nativeAndWrappedAreSame } from '../../../helpers/tokens.ts';
 import { getTokenAddress } from '../../../helpers/zap.ts';
 import {
   isZapQuoteStepSwapAggregator,
@@ -45,6 +47,14 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
     const { swapAggregator } = helpers;
 
     const isDirectOutput = input.token.address.toLowerCase() === outputToken.address.toLowerCase();
+    // native -> wnative on a same-balance chain is exact, no slippage
+    const isSameBalance =
+      nativeAndWrappedAreSame(sourceChainId) &&
+      isSameBalancePair(
+        input.token,
+        outputToken,
+        selectChainWrappedNativeToken(state, sourceChainId)
+      );
     const sourceSteps: ZapQuoteStep[] = [];
     let outputAmount = input.amount;
     let swapStep: ZapQuoteStepSwapAggregator | undefined;
@@ -107,7 +117,7 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
       allowances,
       returned: [],
       dustTokens,
-      slippageAppliesToOutput: !isDirectOutput,
+      slippageAppliesToOutput: !isDirectOutput && !isSameBalance,
       state: { input, swapStep },
     };
   }

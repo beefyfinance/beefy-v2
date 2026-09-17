@@ -27,7 +27,8 @@ export const getChainAddressBook = memoize(
     return addrBookEntries.reduce((agg, [tokenId, bookToken]) => {
       if (tokenId === 'WNATIVE') {
         agg[tokenId] = {
-          id: wnative.symbol,
+          // arc: native and wnative share the USDC symbol, so the ids must differ
+          id: wnative.symbol === chain.native.symbol ? `W${chain.native.symbol}` : wnative.symbol,
           chainId: chain.id,
           oracleId: wnative.oracleId,
           address: bookToken.address,

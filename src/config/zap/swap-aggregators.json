@@ -283,5 +283,21 @@
     "priorityTokens": ["ETH", "WETH", "USDG"],
     "blockedTokens": [],
     "blockedVaults": []
+  },
+  {
+    "id": "kyber-arc",
+    "type": "kyber",
+    "chainId": "arc",
+    "priorityTokens": ["USDC", "WUSDC"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "one-inch-arc",
+    "type": "one-inch",
+    "chainId": "arc",
+    "priorityTokens": ["USDC", "WUSDC"],
+    "blockedTokens": [],
+    "blockedVaults": []
   }
 ]

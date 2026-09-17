@@ -15,6 +15,8 @@ import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import {
   type AllowanceTokenAmount,
   isCowcentratedDepositQuote,
+  isZapQuoteStepSwap,
+  isZapQuoteStepSwapAggregator,
   type TokenAmount,
   type ZapQuote,
   type ZapQuoteStep,
@@ -29,6 +31,7 @@ import {
   type ZapQuoteStepWithdraw,
   type ZapQuoteStepBridge,
 } from '../../../../../data/apis/transact/transact-types.ts';
+import { nativeAndWrappedAreSame } from '../../../../../data/apis/transact/helpers/tokens.ts';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.ts';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
@@ -58,6 +61,19 @@ import CheckmarkIcon from '../../../../../../images/icons/checkmark.svg?react';
 import PlayIcon from '../../../../../../images/icons/play.svg?react';
 
 export type StepStatusState = 'list' | 'finished' | 'inProgress' | 'notStarted' | 'failed';
+
+function isDisplayedStep(step: ZapQuoteStep): boolean {
+  if (step.type === 'fee' || step.type === 'unused') {
+    return false;
+  }
+  // native <-> wnative on same-balance chains is a call-less bookkeeping step
+  return !(
+    isZapQuoteStepSwap(step) &&
+    isZapQuoteStepSwapAggregator(step) &&
+    step.providerId === 'wnative' &&
+    nativeAndWrappedAreSame(step.fromToken.chainId)
+  );
+}
 
 function getStepChainId(step: ZapQuoteStep): ChainEntity['id'] | undefined {
   switch (step.type) {
@@ -625,16 +641,14 @@ export const ZapRoute = memo(function ZapRoute({
   const recoveryQuoteMatchesOp = !recoveryOp || recoveryQuoteOpId === recoveryOp.id;
 
   const { effectiveSteps, bridgeStepAbsoluteIndex } = useMemo(() => {
-    const displaySteps = quote.steps.filter(s => s.type !== 'fee' && s.type !== 'unused');
+    const displaySteps = quote.steps.filter(isDisplayedStep);
     const bridgeIdx = displaySteps.findIndex(s => s.type === 'bridge');
     const absoluteBridgeIdx =
       pendingAllowances.length + (bridgeIdx >= 0 ? bridgeIdx : displaySteps.length);
 
     if (isRecovery && recoveryQuote && recoveryQuoteMatchesOp && bridgeIdx >= 0) {
       const preBridgeSteps = displaySteps.slice(0, bridgeIdx + 1);
-      const recoverySteps = recoveryQuote.steps.filter(
-        s => s.type !== 'fee' && s.type !== 'unused'
-      );
+      const recoverySteps = recoveryQuote.steps.filter(isDisplayedStep);
       return {
         effectiveSteps: [...preBridgeSteps, ...recoverySteps],
         bridgeStepAbsoluteIndex: absoluteBridgeIdx,

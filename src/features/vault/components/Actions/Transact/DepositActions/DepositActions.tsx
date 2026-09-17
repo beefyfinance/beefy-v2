@@ -49,7 +49,7 @@ import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
 import { usePriceImpactState } from '../hooks/usePriceImpactState.ts';
 import {
-  isMaxNativeQuote,
+  useIsMaxGasTokenQuote,
   useConfirmDisabled,
   useNotEnoughDisabled,
 } from '../hooks/useActionGates.ts';
@@ -174,7 +174,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const priceImpactState = usePriceImpactState(quote);
-  const isDisabledByMaxNative = isMaxNativeQuote(quote);
+  const isDisabledByMaxNative = useIsMaxGasTokenQuote(quote);
   const isDisabledByConfirm = useConfirmDisabled();
   const isDisabledByNotEnoughInput = useNotEnoughDisabled('deposit');
 

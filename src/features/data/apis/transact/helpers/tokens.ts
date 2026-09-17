@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token.ts';
 import { isTokenEqual, isTokenNative, tokenEqualityKey } from '../../../entities/token.ts';
 import { sortBy } from 'lodash-es';
@@ -140,7 +141,38 @@ export function allTokensAreDistinct(inputs: TokenEntity[]): boolean {
  * (Chains where there is no need to wrap or unwrap)
  */
 export function nativeAndWrappedAreSame(chainId: ChainEntity['id']) {
-  return ['metis', 'celo'].includes(chainId);
+  return ['metis', 'celo', 'arc'].includes(chainId);
+}
+
+/**
+ * Native <-> wnative on a chain where both are one balance, so moving between them needs no call
+ */
+export function isSameBalancePair(a: TokenEntity, b: TokenEntity, wnative: TokenErc20): boolean {
+  if (a.chainId !== b.chainId || !nativeAndWrappedAreSame(a.chainId)) {
+    return false;
+  }
+  return (
+    (isTokenNative(a) && isTokenEqual(b, wnative)) || (isTokenEqual(a, wnative) && isTokenNative(b))
+  );
+}
+
+/**
+ * Amounts are in whole tokens, so native and wnative need no conversion factor, but the wnative
+ * view can hold fewer decimals (arc: 6 vs 18, balanceOf truncates the rest).
+ * No-op unless token is native/wnative on a nativeAndWrappedAreSame chain.
+ */
+export function floorToSharedPrecision(
+  amount: BigNumber,
+  token: TokenEntity,
+  wnative: TokenErc20
+): BigNumber {
+  if (
+    !nativeAndWrappedAreSame(token.chainId) ||
+    !(isTokenNative(token) || isTokenEqual(token, wnative))
+  ) {
+    return amount;
+  }
+  return amount.decimalPlaces(Math.min(token.decimals, wnative.decimals), BigNumber.ROUND_FLOOR);
 }
 
 export function pickTokens(...inputs: TokenAmount[][]): TokenEntity[] {

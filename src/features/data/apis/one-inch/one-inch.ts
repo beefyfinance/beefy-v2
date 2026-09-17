@@ -25,6 +25,7 @@ export const supportedChainIds: ChainConfig['id'][] = [
   'linea',
   'sonic',
   'robinhood',
+  'arc',
   // 'unichain',
 ];
 
