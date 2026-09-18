@@ -21,7 +21,10 @@ export const DesktopCollapseContent = memo(function DesktopCollapseContent({
   const classes = useStyles();
   const { t } = useTranslation();
   const [toggleTab, setToggleTab] = useState<ToggleTabOptions>('txHistory');
-  const { PositionGraph, CompoundsGraph, availableCharts } = useChartOptions(vaultId, address);
+  const { PositionGraph, CompoundsGraph, availableCharts, chartVaultId } = useChartOptions(
+    vaultId,
+    address
+  );
 
   const options = useMemo<Array<SelectItem<ToggleTabOptions>>>(
     () => [{ value: 'txHistory', label: t('Dashboard-TransactionHistory') }, ...availableCharts],
@@ -46,9 +49,9 @@ export const DesktopCollapseContent = memo(function DesktopCollapseContent({
           {toggleTab === 'txHistory' ?
             <VaultTransactions address={address} vaultId={vaultId} />
           : toggleTab === 'positionChart' ?
-            <PositionGraph address={address} vaultId={vaultId} />
+            <PositionGraph address={address} vaultId={chartVaultId} />
           : toggleTab === 'compoundsChart' ?
-            <CompoundsGraph address={address} vaultId={vaultId} />
+            <CompoundsGraph address={address} vaultId={chartVaultId} />
           : null}
         </ErrorBoundary>
       </div>

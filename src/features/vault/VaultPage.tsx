@@ -46,7 +46,7 @@ const VaultPage = memo(function VaultPage() {
   } else if (idOrStatus === 'not-found') {
     return <NotFoundPage />;
   } else if (idOrStatus !== maybeId) {
-    return <Navigate to={`/vault/${idOrStatus}`} />;
+    return <Navigate to={`/vault/${idOrStatus}`} replace={true} />;
   }
   return <VaultContent vaultId={idOrStatus} />;
 });

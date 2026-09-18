@@ -329,7 +329,8 @@ function mergeAmountUsd(parts: AmountUsd[]): AmountUsd {
 /** price is intensive: derive it from the summed totals rather than averaging the parts */
 function mergeAmountPriceUsd(parts: AmountPriceUsd[]): AmountPriceUsd {
   const { amount, usd } = mergeAmountUsd(parts);
-  return { amount, usd, price: amount.isZero() ? BIG_ZERO : usd.dividedBy(amount) };
+  // nothing held on any side: the parts' own price (live prices are shared) beats a made-up zero
+  return { amount, usd, price: amount.isZero() ? parts[0].price : usd.dividedBy(amount) };
 }
 
 function mergeEntryNowDiff(parts: TokenEntryNowDiff[]): TokenEntryNowDiff {
@@ -360,10 +361,40 @@ function mergeYieldTotal(parts: PnlYieldTotal[]): PnlYieldTotal {
   return {
     usd: sum(parts.map(p => p.usd)),
     tokens,
-    // sources are disjoint by construction: 'vault' only on the autocompounding side, 'pool' only
-    // on the claimable one, and merkl/stellaswap are deduped upstream across the group
-    sources: parts.flatMap(p => p.sources),
+    sources: mergeTokenEntries(
+      parts.flatMap(p => p.sources),
+      source => source.source
+    ),
   };
+}
+
+type TokenAmountEntry = {
+  token: { chainId: string; address: string };
+  amount: BigNumber;
+  usd: BigNumber;
+};
+
+/** one entry per kind and token, amounts summed: both CLM sides compound fees in the same tokens */
+export function mergeTokenEntries<T extends TokenAmountEntry>(
+  entries: T[],
+  kind: (entry: T) => string
+): T[] {
+  const merged = new Map<string, T>();
+  for (const entry of entries) {
+    const key = `${kind(entry)}:${entry.token.chainId}:${entry.token.address.toLowerCase()}`;
+    const existing = merged.get(key);
+    merged.set(
+      key,
+      existing ?
+        {
+          ...existing,
+          amount: existing.amount.plus(entry.amount),
+          usd: existing.usd.plus(entry.usd),
+        }
+      : entry
+    );
+  }
+  return [...merged.values()];
 }
 
 /**
@@ -375,6 +406,10 @@ function mergeYieldTotal(parts: PnlYieldTotal[]): PnlYieldTotal {
  * derived ratios are meaningless.
  */
 export function mergeClmPnl(sides: UserClmPnl[]): UserClmGroupPnl {
+  // one side is already the whole position; re-deriving it could only drift from prod's figures
+  if (sides.length === 1) {
+    return sides[0];
+  }
   const entryUsd = sum(sides.map(s => s.underlying.entry.usd));
   const nowUsd = sum(sides.map(s => s.underlying.now.usd));
   const holdUsd = sum(sides.map(s => s.hold.usd));

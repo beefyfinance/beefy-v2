@@ -8,12 +8,14 @@ import type { BoostReward } from '../apis/balance/balance-types.ts';
 import {
   isVaultDestWithdrawOption,
   isVaultSourceDepositOption,
+  isClmSideSwitchDepositOption,
 } from '../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token.ts';
 import {
   getCowcentratedWrapperIds,
+  getVaultListId,
   isCowcentratedLikeVault,
   isCowcentratedVault,
   isErc4626Vault,
@@ -25,7 +27,11 @@ import {
   type VaultEntity,
   type VaultGov,
 } from '../entities/vault.ts';
-import { bigNumberEqual, deepEqualBigNumberAware } from '../utils/selector-equality.ts';
+import {
+  bigNumberEqual,
+  deepEqualBigNumberAware,
+  shallowArrayEqual,
+} from '../utils/selector-equality.ts';
 import type { BeefyState } from '../store/types.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
@@ -95,6 +101,36 @@ export const selectUserDepositedVaultIds = (state: BeefyState, walletAddress?: s
 export const selectUserHasDepositedInAnyVault = createSelector(
   selectUserDepositedVaultIds,
   ids => ids.length > 0
+);
+
+/** The dashboard's rows: one per product, so a CLM held on both sides is one row keyed by the CLM */
+export const selectUserDashboardVaultIds = createCachedSelector(
+  (state: BeefyState, walletAddress: string) => selectUserDepositedVaultIds(state, walletAddress),
+  (state: BeefyState, _walletAddress: string) => state.entities.vaults.byId,
+  (ids, byId) => arrayOrStaticEmpty([...new Set(ids.map(id => getVaultListId(byId[id]!)))])
+)((_state: BeefyState, walletAddress: string) => walletAddress.toLowerCase());
+
+/**
+ * The wrappers a dashboard row stands for, autocompounding side first: a CLM row is the sides the
+ * address holds; anything else, or a CLM holding none, is itself.
+ */
+export const selectDashboardRowSideIds = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress: string) =>
+    selectVaultById(state, vaultId),
+  (state: BeefyState, _vaultId: VaultEntity['id'], walletAddress: string) =>
+    selectUserDepositedVaultIds(state, walletAddress),
+  (vault, depositedIds): VaultEntity['id'][] => {
+    if (!isCowcentratedVault(vault)) {
+      return [vault.id];
+    }
+    const { vaults, pools } = vault.cowcentratedIds;
+    const held = [...vaults, ...pools].filter(id => depositedIds.includes(id));
+    return held.length ? held : [vault.id];
+  },
+  { memoizeOptions: { resultEqualityCheck: shallowArrayEqual } }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+    `${vaultId}-${walletAddress.toLowerCase()}`
 );
 
 export const selectUserDepositedVaultIdsForAsset = createSelector(
@@ -726,10 +762,13 @@ function sumOverClmWrappers(
       `${clmId}-${walletAddress ?? ''}`
   );
 
-  return (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string): BigNumber =>
-    isCowcentratedVault(selectVaultById(state, vaultId)) ?
-      summed(state, vaultId, walletAddress)
-    : select(state, vaultId, walletAddress);
+  return (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string): BigNumber => {
+    const vault = selectVaultById(state, vaultId);
+    // a CLM with no wrapper at all is its own position
+    return isCowcentratedVault(vault) && getCowcentratedWrapperIds(vault).length ?
+        summed(state, vaultId, walletAddress)
+      : select(state, vaultId, walletAddress);
+  };
 }
 
 export const selectUserRowDepositIncludingDisplaced = sumOverClmWrappers(
@@ -1062,5 +1101,9 @@ function isVaultSourceSelection(state: BeefyState, selectionId: string): boolean
   if (!optionIds?.length) return false;
   const option = state.ui.transact.options.byOptionId[optionIds[0]];
   if (!option) return false;
-  return isVaultSourceDepositOption(option) || isVaultDestWithdrawOption(option);
+  return (
+    isVaultSourceDepositOption(option) ||
+    isVaultDestWithdrawOption(option) ||
+    isClmSideSwitchDepositOption(option)
+  );
 }

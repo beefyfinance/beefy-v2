@@ -26,6 +26,8 @@ type TotalApyTooltipContentProps = {
   isBoosted: boolean;
   rates: FormattedTotalApy;
   header?: boolean;
+  /** whose positions the blended footer describes; defaults to the connected wallet */
+  walletAddress?: string;
 };
 
 /** a CLM stream that exists but pays nothing right now; absent keys mean the same thing here */
@@ -40,6 +42,7 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
   isBoosted,
   rates,
   header = false,
+  walletAddress,
 }: TotalApyTooltipContentProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -49,7 +52,7 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
   );
   // only when both wrappers are held, and only daily — see the selector for why not annualised
   const blendedDaily = useAppSelector(state =>
-    type === 'yearly' ? selectClmBlendedDaily(state, vaultId) : undefined
+    type === 'yearly' ? selectClmBlendedDaily(state, vaultId, walletAddress) : undefined
   );
   const rows = useMemo(() => {
     const labels = getApyLabelsForVault(vault, rates.totalType);
@@ -218,6 +221,7 @@ type ApyTooltipContentProps = {
   isBoosted: boolean;
   rates: FormattedTotalApy;
   averages?: FormattedAvgApy;
+  walletAddress?: string;
 };
 
 export const ApyTooltipContent = memo(function ApyTooltipContent({
@@ -226,6 +230,7 @@ export const ApyTooltipContent = memo(function ApyTooltipContent({
   isBoosted,
   rates,
   averages,
+  walletAddress,
 }: ApyTooltipContentProps) {
   const showAverages = !!averages && type === 'yearly';
 
@@ -237,6 +242,7 @@ export const ApyTooltipContent = memo(function ApyTooltipContent({
         isBoosted={isBoosted}
         rates={rates}
         header={showAverages}
+        walletAddress={walletAddress}
       />
       {showAverages && (
         <AverageApyTooltipContent

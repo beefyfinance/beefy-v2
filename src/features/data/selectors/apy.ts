@@ -1,6 +1,6 @@
 import { first } from 'lodash-es';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
-import { bigNumberEqual } from '../utils/selector-equality.ts';
+import { bigNumberEqual, shallowArrayEqual } from '../utils/selector-equality.ts';
 import { createCachedSelector } from 're-reselect';
 import { EMPTY_AVG_APY } from '../../../helpers/apy.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
@@ -19,7 +19,9 @@ import type { BeefyState } from '../store/types.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
   selectBoostUserBalanceInToken,
+  selectDashboardRowSideIds,
   selectIsUserBalanceAvailable,
+  selectUserDashboardVaultIds,
   selectUserDepositedVaultIds,
   selectUserVaultBalanceInDepositTokenIncludingDisplaced,
   selectUserVaultBalanceInUsdIncludingDisplaced,
@@ -132,7 +134,8 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
 
   const newGlobalStats = {
     ...EMPTY_GLOBAL_STATS,
-    depositedVaults: userVaultIds.length,
+    // one per product, like the dashboard rows; the sums below stay per wrapper
+    depositedVaults: selectUserDashboardVaultIds(state, walletAddress).length,
   };
 
   const userVaults = userVaultIds.map(vaultId => selectVaultById(state, vaultId));
@@ -292,6 +295,69 @@ const selectYieldStatsByVaultIdUncached = (
     depositToken: shareData.depositToken,
   };
 };
+
+/**
+ * A dashboard CLM row's rate when both sides earn: the mean of the rates each side quotes — the
+ * vault's APY, the pool's APR — weighted by deposit. Daily sums the sides' simple daily rates, so it
+ * runs a little under this x deposit / 365. Undefined until every side has its rate.
+ */
+export const selectDashboardClmBlendedApy = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress: string
+): number | undefined => {
+  const ids = selectDashboardRateVaultIds(state, vaultId, walletAddress);
+  if (ids.length < 2 || ids.some(id => !selectVaultTotalApyOrUndefined(state, id))) {
+    return undefined;
+  }
+  let yearly = BIG_ZERO;
+  let deposit = BIG_ZERO;
+  for (const id of ids) {
+    yearly = yearly.plus(selectYieldStatsByVaultId(state, id, walletAddress).yearlyUsd);
+    deposit = deposit.plus(selectUserVaultBalanceInUsdIncludingDisplaced(state, id, walletAddress));
+  }
+  return deposit.gt(BIG_ZERO) ? yearly.div(deposit).toNumber() : undefined;
+};
+
+/** the held sides a dashboard CLM row quotes a rate for: those still earning, autocompound first */
+export const selectDashboardRateVaultIds = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+    selectDashboardRowSideIds(state, vaultId, walletAddress),
+  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress: string) =>
+    state.entities.vaults.byId,
+  (ids, byId) => ids.filter(id => isVaultActive(byId[id]!)),
+  { memoizeOptions: { resultEqualityCheck: shallowArrayEqual } }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+    `${vaultId}-${walletAddress.toLowerCase()}`
+);
+
+/** the side a dashboard row's single rate and status come from; a retired one reads "-" */
+export const selectDashboardRateVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress: string
+): VaultEntity['id'] =>
+  selectDashboardRateVaultIds(state, vaultId, walletAddress)[0] ??
+  selectDashboardRowSideIds(state, vaultId, walletAddress)[0];
+
+/** a dashboard row's $/day: a CLM row's earning sides, as the portfolio Daily counts them */
+export const selectDashboardRowDailyUsd = createCachedSelector(
+  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress: string) => state,
+  (_state: BeefyState, vaultId: VaultEntity['id'], _walletAddress: string) => vaultId,
+  (_state: BeefyState, _vaultId: VaultEntity['id'], walletAddress: string) => walletAddress,
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+    selectDashboardRowSideIds(state, vaultId, walletAddress)[0] === vaultId ?
+      selectYieldStatsByVaultId(state, vaultId, walletAddress).dailyUsd
+    : selectDashboardRateVaultIds(state, vaultId, walletAddress).reduce(
+        (sum, id) => sum.plus(selectYieldStatsByVaultId(state, id, walletAddress).dailyUsd),
+        BIG_ZERO
+      ),
+  { memoizeOptions: { resultEqualityCheck: bigNumberEqual } }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+    `${vaultId}-${walletAddress.toLowerCase()}`
+);
 
 type ApyVaultUIData =
   | {
@@ -454,12 +520,9 @@ export const selectClmRewardBreakdown = createCachedSelector(
 )((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 /**
- * The user's own rate across a CLM group, as a DAILY figure, when they hold both wrappers.
- *
- * Daily is the only honest granularity here: both sides' `totalDaily` is a simple daily rate on the
- * same principal, so a USD-weighted mean is exact. Annualising it would not be — one side compounds
- * and the other does not, so a single blended APY would silently assert a reinvestment policy on
- * the user's behalf. Returns undefined unless both sides are actually held.
+ * The user's own rate across a CLM group, as a DAILY figure, when they hold both wrappers: both
+ * sides' $/day over both sides' USD, so it agrees with the Daily stat. Annualising it would not be
+ * honest — one side compounds and the other does not. Undefined unless both sides are held.
  */
 export const selectClmBlendedDaily = (
   state: BeefyState,
@@ -477,16 +540,18 @@ export const selectClmBlendedDaily = (
 
   const sides = [vaultSide, pool].map(id => ({
     usd: selectUserVaultBalanceInUsdIncludingDisplaced(state, id, walletAddress),
-    daily: selectVaultTotalApyOrUndefined(state, id)?.totalDaily ?? 0,
+    hasApy: !!selectVaultTotalApyOrUndefined(state, id),
+    // the same $/day the Daily stat and the portfolio total use, boosts included
+    dailyUsd: selectYieldStatsByVaultId(state, id, walletAddress).dailyUsd,
   }));
   // one side only is not a blend; the rows already describe it
-  if (sides.some(side => side.usd.lte(BIG_ZERO))) {
+  if (sides.some(side => side.usd.lte(BIG_ZERO) || !side.hasApy)) {
     return undefined;
   }
 
   const total = sides.reduce((sum, side) => sum.plus(side.usd), BIG_ZERO);
   return sides
-    .reduce((sum, side) => sum.plus(side.usd.multipliedBy(side.daily)), BIG_ZERO)
+    .reduce((sum, side) => sum.plus(side.dailyUsd), BIG_ZERO)
     .dividedBy(total)
     .toNumber();
 };

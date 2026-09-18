@@ -8,6 +8,7 @@ import type { BoostReward } from '../apis/balance/balance-types.ts';
 import {
   type CrossChainChainOption,
   type CrossChainTokenOption,
+  isClmSideSwitchDepositOption,
   isCrossChainOption,
   isVaultDestWithdrawOption,
   isVaultSourceDepositOption,
@@ -61,7 +62,11 @@ import {
   selectConnectedUserHasMerklRewardsForVault,
   selectConnectedUserHasStellaSwapRewardsForVault,
 } from './user-rewards.ts';
-import { selectVaultById, selectVaultReplacementMigration } from './vaults.ts';
+import {
+  selectVaultById,
+  selectVaultByAddressOrUndefined,
+  selectVaultReplacementMigration,
+} from './vaults.ts';
 import { convertVaultShareToDepositTokenAmount } from '../apis/transact/helpers/quotes.ts';
 import { selectWalletAddressIfKnown } from './wallet.ts';
 import { selectChainById } from './chains.ts';
@@ -92,6 +97,10 @@ export function selectVaultRefIdForSelection(
   if (!option) return undefined;
   if (isVaultSourceDepositOption(option)) return option.srcVaultId;
   if (isVaultDestWithdrawOption(option)) return option.destVaultId;
+  // spends the other side's share token, so that side is the source vault
+  if (isClmSideSwitchDepositOption(option)) {
+    return selectVaultByAddressOrUndefined(state, option.chainId, option.inputs[0].address)?.id;
+  }
   return undefined;
 }
 

@@ -47,6 +47,16 @@ export function useClmMode(): ClmModeContextValue | null {
   return useContext(ClmModeContext);
 }
 
+/** set where a CLM chart stands for the whole group without a vault page around it: a dashboard CLM row */
+export const ClmGroupScopeContext = createContext(false);
+
+/** whether CLM charts and headers cover every held side: the merged vault page, or a dashboard CLM row */
+export function useClmGroupScope(): boolean {
+  const scoped = useContext(ClmGroupScopeContext);
+  const clmMode = useClmMode();
+  return scoped || !!clmMode;
+}
+
 /** Yield-mode state of a merged CLM page; null when the page vault is not a merged CLM */
 export function useClmModeController(vaultId: VaultEntity['id']): ClmModeContextValue | null {
   const dispatch = useAppDispatch();

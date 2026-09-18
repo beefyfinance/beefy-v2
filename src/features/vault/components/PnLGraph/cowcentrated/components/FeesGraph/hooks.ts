@@ -6,9 +6,11 @@ import type { GraphBucket } from '../../../../../../../helpers/graph/types.ts';
 import { useAppSelector } from '../../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
 import {
+  selectClmFirstDepositDate,
   selectClmGroupHarvestTimeline,
-  selectUserFirstDepositDateByVaultId,
+  selectUserClmHarvestTimelineByVaultId,
 } from '../../../../../../data/selectors/analytics.ts';
+import { useClmGroupScope } from '../../../../ClmMode/ClmModeContext.tsx';
 import { selectWalletAddress } from '../../../../../../data/selectors/wallet.ts';
 
 // Same object reference for empty chart data
@@ -20,11 +22,15 @@ export const useFeesChartData = (
   address?: string
 ) => {
   const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
+  // the merged vault page and a dashboard CLM row chart the whole CLM; anywhere else one side
+  const wholeGroup = useClmGroupScope();
   const userHarvestTimeline = useAppSelector(state =>
-    selectClmGroupHarvestTimeline(state, vaultId, walletAddress)
+    wholeGroup ?
+      selectClmGroupHarvestTimeline(state, vaultId, walletAddress)
+    : selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress)
   );
   const firstDepositDate = useAppSelector(state =>
-    selectUserFirstDepositDateByVaultId(state, vaultId, walletAddress)
+    selectClmFirstDepositDate(state, vaultId, walletAddress, wholeGroup)
   );
   const isLoading = !userHarvestTimeline;
 
@@ -64,11 +70,14 @@ export const useVaultPeriodsFeesGraph = (
   address: string,
   minHours: number = 4
 ): string[] => {
+  const wholeGroup = useClmGroupScope();
   const vaultDepositDate = useAppSelector(state =>
-    selectUserFirstDepositDateByVaultId(state, vaultId, address)
+    selectClmFirstDepositDate(state, vaultId, address, wholeGroup)
   );
   const harvestTimeline = useAppSelector(state =>
-    selectClmGroupHarvestTimeline(state, vaultId, address)
+    wholeGroup ?
+      selectClmGroupHarvestTimeline(state, vaultId, address)
+    : selectUserClmHarvestTimelineByVaultId(state, vaultId, address)
   );
 
   return useMemo(() => {

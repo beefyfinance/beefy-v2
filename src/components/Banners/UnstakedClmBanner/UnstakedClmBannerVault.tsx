@@ -44,14 +44,17 @@ const UnstakedClmBannerVaultImpl = memo<UnstakedClmBannerVaultImplProps>(
       : vault.cowcentratedIds.pool ? 'gov'
       : 'standard';
     const thisType = vault.type;
-    // the merged CLM page has the deposit form right below the banner, no links needed
+    // the merged CLM page has the deposit form right below the banner; anywhere else links to it
     const endOfKey =
-      isCowcentratedVault(vault) ? 'this-clm'
+      isCowcentratedVault(vault) ?
+        fromVault ? 'this-clm'
+        : 'link-clm'
       : !fromVault ? `link-${availableTypes}`
       : `this-${thisType}${availableTypes === 'both' ? '-both' : ''}`;
 
     const components = useMemo(() => {
       return {
+        Link: <InternalLink to={`/vault/${vault.cowcentratedIds.clm}`} />,
         GovLink:
           vault.cowcentratedIds.pool ?
             <InternalLink to={`/vault/${vault.cowcentratedIds.pool}`} />
@@ -61,7 +64,7 @@ const UnstakedClmBannerVaultImpl = memo<UnstakedClmBannerVaultImplProps>(
             <InternalLink to={`/vault/${vault.cowcentratedIds.vault}`} />
           : <span />,
       };
-    }, [vault.cowcentratedIds.pool, vault.cowcentratedIds.vault]);
+    }, [vault.cowcentratedIds.clm, vault.cowcentratedIds.pool, vault.cowcentratedIds.vault]);
 
     return (
       <ClmBanner

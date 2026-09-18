@@ -31,7 +31,7 @@ import {
   toSearchWords,
 } from '../utils/vault-search.ts';
 import { selectVaultTotalApy } from './apy.ts';
-import { selectUserDepositedVaultIds } from './balance.ts';
+import { selectUserDashboardVaultIds } from './balance.ts';
 import { selectActivePromoForVault } from './promos.ts';
 import {
   isTokenBluechip,
@@ -229,7 +229,8 @@ const selectUserDashboardFilteredVaultsUncached = (
   walletAddress?: string
 ) => {
   if (!walletAddress) return [];
-  const vaults = selectUserDepositedVaultIds(state, walletAddress).map(id =>
+  // one row per product: a CLM held on both sides is a single row keyed by the CLM
+  const vaults = selectUserDashboardVaultIds(state, walletAddress).map(id =>
     selectVaultById(state, id)
   );
   const searchText = simplifySearchText(text);

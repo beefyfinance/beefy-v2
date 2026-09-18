@@ -12,6 +12,7 @@ import type { GraphBucket } from '../../../../../../../helpers/graph/types.ts';
 import { useAppSelector } from '../../../../../../data/store/hooks.ts';
 import { isTimelineEntityCowcentrated } from '../../../../../../data/entities/analytics.ts';
 import {
+  getCowcentratedWrapperIds,
   isCowcentratedStandardVault,
   type VaultEntity,
 } from '../../../../../../data/entities/vault.ts';
@@ -21,9 +22,12 @@ import {
 } from '../../../../../../data/hooks/analytics.ts';
 import { useOracleIdToUsdPrices } from '../../../../../../data/hooks/historical.ts';
 import {
+  selectClmFirstDepositDate,
   selectClmPnl,
+  selectHeldClmSideIds,
   selectUserDepositedTimelineByVaultId,
 } from '../../../../../../data/selectors/analytics.ts';
+import { useClmGroupScope } from '../../../../ClmMode/ClmModeContext.tsx';
 import {
   selectCowcentratedLikeVaultDepositTokensWithPrices,
   selectDepositTokenByVaultId,
@@ -35,7 +39,7 @@ import {
   selectVaultPricePerFullShare,
 } from '../../../../../../data/selectors/vaults.ts';
 import { selectWalletAddress } from '../../../../../../data/selectors/wallet.ts';
-import { useVaultPeriods } from '../../../standard/hooks.ts';
+import { usePeriodsSince } from '../../../standard/hooks.ts';
 
 // Same object reference so a side with no data does not re-render its consumers
 const NO_POINTS: ClmInvestorOverviewTimeSeriesPoint[] = [];
@@ -134,12 +138,47 @@ function useSideSeries(
   return { points, isLoading, willRetry, isVaultSide };
 }
 
+const NO_SIDE_IDS: VaultEntity['id'][] = [];
+
+/**
+ * The sides a CLM chart draws, and whether the CLM-token line is one of them. In group scope (the
+ * merged vault page, a dashboard CLM row) it charts the sides the address holds, so chart and
+ * header describe the same position; elsewhere one side charts itself — the bare CLM as a pool.
+ * Holding nothing falls back to every side, which is all history and no live position.
+ */
+export function useClmChartSides(vaultId: VaultEntity['id'], walletAddress: string | undefined) {
+  const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
+  const wholeGroup = useClmGroupScope();
+  const held = useAppSelector(state =>
+    wholeGroup && walletAddress ? selectHeldClmSideIds(state, vaultId, walletAddress) : NO_SIDE_IDS
+  );
+
+  return useMemo(() => {
+    const { cowcentratedIds: ids } = vault;
+    if (!wholeGroup) {
+      const isVaultSide = isCowcentratedStandardVault(vault);
+      return {
+        vaultSideId: isVaultSide ? vault.id : undefined,
+        poolSideId: isVaultSide ? undefined : vault.id,
+        type: isVaultSide ? ('vault' as const) : ('pool' as const),
+      };
+    }
+    const sides = held.length ? held : getCowcentratedWrapperIds(vault);
+    const vaultSideId = sides.find(id => ids.vaults.includes(id));
+    const poolSideId = sides.find(id => ids.pools.includes(id));
+    return {
+      vaultSideId,
+      poolSideId,
+      type: vaultSideId && !poolSideId ? ('vault' as const) : ('pool' as const),
+    };
+  }, [vault, wholeGroup, held]);
+}
+
 export const usePnLChartData = (
   timeBucket: GraphBucket,
   vaultId: VaultEntity['id'],
   address?: string
 ) => {
-  const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
   const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
   const depositToken = useAppSelector(state => selectDepositTokenByVaultId(state, vaultId));
   const nowPriceUnderlying = useAppSelector(state =>
@@ -189,20 +228,9 @@ export const usePnLChartData = (
     ]
   );
 
-  // the whole CLM position: the yield toggle routes deposits, it does not scope performance
-  const { vault: vaultSideId, pool: poolSideId } = vault.cowcentratedIds;
-  const vaultSide = useSideSeries(
-    vaultSideId ?? vault.cowcentratedIds.vaults[0],
-    walletAddress,
-    timeBucket,
-    shared
-  );
-  const poolSide = useSideSeries(
-    poolSideId ?? vault.cowcentratedIds.pools[0],
-    walletAddress,
-    timeBucket,
-    shared
-  );
+  const { vaultSideId, poolSideId, type } = useClmChartSides(vaultId, walletAddress);
+  const vaultSide = useSideSeries(vaultSideId, walletAddress, timeBucket, shared);
+  const poolSide = useSideSeries(poolSideId, walletAddress, timeBucket, shared);
 
   const isLoading = vaultSide.isLoading || poolSide.isLoading;
   const willRetry =
@@ -227,13 +255,16 @@ export const usePnLChartData = (
     };
   }, [vaultSide.points, poolSide.points]);
 
-  // the CLM-token line only reads true while the autocompounding side is the only one held
-  const type = vaultSide.points.length && !poolSide.points.length ? 'vault' : 'pool';
-
   return { chartData, isLoading, willRetry, type };
 };
 
 /**
  * The indexes of the array returned are used to index GRAPH_TIME_BUCKETS
  */
-export const useVaultPeriodsOverviewGraph = useVaultPeriods;
+export const useVaultPeriodsOverviewGraph = (vaultId: VaultEntity['id'], address: string) => {
+  const wholeGroup = useClmGroupScope();
+  const firstDepositDate = useAppSelector(state =>
+    selectClmFirstDepositDate(state, vaultId, address, wholeGroup)
+  );
+  return usePeriodsSince(firstDepositDate);
+};

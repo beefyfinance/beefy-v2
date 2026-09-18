@@ -33,12 +33,6 @@ export const styles = {
   vaultClm: css.raw({
     backgroundColor: 'background.vaults.clm',
   }),
-  vaultClmPool: css.raw({
-    backgroundColor: 'background.vaults.clm.pool',
-  }),
-  vaultCowcentratedVault: css.raw({
-    backgroundColor: 'background.vaults.clm.vault',
-  }),
   vaultRetired: css.raw({
     backgroundColor: 'background.vaults.inactive',
   }),

@@ -118,6 +118,7 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
             onClick={handleExpand}
             aria-expanded={expanded}
             expanded={expanded}
+            disabled={busy}
           >
             <OptionGlyph aria-hidden={true}>
               <ModeIcon mode="vault" />
@@ -133,6 +134,7 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
                 checked={checked}
                 onChange={handleToggle}
                 aria-label={t(title)}
+                disabled={busy}
               />
               <OptionGlyph aria-hidden={true}>
                 {checked ?
@@ -145,6 +147,7 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
               onClick={handleExpand}
               aria-expanded={expanded}
               expanded={expanded}
+              disabled={busy}
             >
               {content}
             </Disclosure>

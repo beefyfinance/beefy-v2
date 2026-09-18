@@ -167,7 +167,7 @@ const SideContent = memo(function SideContent({ mode, sideId, retired }: SidePro
   );
 });
 
-const HeldAmount = memo(function HeldAmount({ sideId }: { sideId: VaultEntity['id'] }) {
+export const HeldAmount = memo(function HeldAmount({ sideId }: { sideId: VaultEntity['id'] }) {
   const held = useAppSelector(state =>
     selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken(state, sideId)
   );

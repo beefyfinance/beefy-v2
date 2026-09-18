@@ -169,6 +169,27 @@ export function selectMayHaveOffchainUserRewards(_state: BeefyState, vault: Vaul
   return isCowcentratedLikeVault(vault) || vault.chainId === 'mode';
 }
 
+/** one row per token: campaigns paying the same token are one reward to the user */
+export function mergeMerklRewardsByToken(rewards: MerklVaultReward[]): MerklVaultReward[] {
+  const merged: MerklVaultReward[] = [];
+  for (const reward of rewards) {
+    const at = merged.findIndex(
+      r => r.token.address === reward.token.address && r.token.chainId === reward.token.chainId
+    );
+    if (at === -1) {
+      merged.push(reward);
+    } else {
+      merged[at] = {
+        ...merged[at],
+        campaignIds: [...new Set([...merged[at].campaignIds, ...reward.campaignIds])],
+        accumulated: merged[at].accumulated.plus(reward.accumulated),
+        unclaimed: merged[at].unclaimed.plus(reward.unclaimed),
+      };
+    }
+  }
+  return merged;
+}
+
 /**
  * A Merkl campaign targets one address, which for a CLM may be the manager or either wrapper.
  * Every group member reads all of them, so the reward shows wherever the user is looking, and
@@ -187,24 +208,9 @@ export const selectUserMerklRewardsForVault = createCachedSelector(
       return byVaultId[vault.id] || undefined;
     }
 
-    const merged: MerklVaultReward[] = [];
-    for (const id of getCowcentratedGroupIds(vault)) {
-      for (const reward of byVaultId[id] || []) {
-        const at = merged.findIndex(
-          r => r.token.address === reward.token.address && r.token.chainId === reward.token.chainId
-        );
-        if (at === -1) {
-          merged.push(reward);
-        } else {
-          merged[at] = {
-            ...merged[at],
-            campaignIds: [...new Set([...merged[at].campaignIds, ...reward.campaignIds])],
-            accumulated: merged[at].accumulated.plus(reward.accumulated),
-            unclaimed: merged[at].unclaimed.plus(reward.unclaimed),
-          };
-        }
-      }
-    }
+    const merged = mergeMerklRewardsByToken(
+      getCowcentratedGroupIds(vault).flatMap(id => byVaultId[id] || [])
+    );
     return merged.length ? merged : undefined;
   }
 )(

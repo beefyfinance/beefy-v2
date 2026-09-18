@@ -162,6 +162,22 @@ describe('mergeClmPnl', () => {
     expect(merged.yields.compounded.sources.map(s => s.source)).toEqual(['vault', 'pool']);
   });
 
+  it('merges the same source in the same token into one line', () => {
+    const fees = (usd: number): PnlYieldSource => ({
+      token: token('weth'),
+      amount: n(usd / 10),
+      usd: n(usd),
+      source: 'clm',
+    });
+    const merged = mergeClmPnl([
+      side({ entryUsd: 100, nowUsd: 110, holdUsd: 100, compoundedSources: [fees(4)] }),
+      side({ entryUsd: 100, nowUsd: 110, holdUsd: 100, compoundedSources: [fees(6)] }),
+    ]);
+
+    expect(merged.yields.compounded.sources).toHaveLength(1);
+    expect(merged.yields.compounded.sources[0].usd.toNumber()).toBe(10);
+  });
+
   it('treats the whole total as pending when any side is pending', () => {
     const merged = mergeClmPnl([
       side({ entryUsd: 100, nowUsd: 100, holdUsd: 100 }),
@@ -175,6 +191,9 @@ describe('mergeClmPnl', () => {
     const only = side({ entryUsd: 1000, nowUsd: 1234, holdUsd: 1100, claimedUsd: 7 });
     const merged = mergeClmPnl([only]);
 
+    // the same object: a one-side holder must see prod's exact figures, not a re-derivation
+    expect(merged).toBe(only);
+
     expect(merged.underlying.now.usd.toNumber()).toBe(only.underlying.now.usd.toNumber());
     expect(merged.pnl.base.usd.toNumber()).toBe(only.pnl.base.usd.toNumber());
     expect(merged.pnl.base.percentage.toNumber()).toBeCloseTo(
@@ -182,6 +201,18 @@ describe('mergeClmPnl', () => {
       10
     );
     expect(merged.hold.diff.withClaimed.toNumber()).toBe(only.hold.diff.withClaimed.toNumber());
+  });
+
+  it('keeps the live price when neither side holds any of a token', () => {
+    const a = side({ entryUsd: 1000, nowUsd: 1100, holdUsd: 1000 });
+    const b = side({ entryUsd: 500, nowUsd: 550, holdUsd: 500 });
+    const outOfRange = (s: UserClmPnl) => ({
+      ...s,
+      tokens: [entry('T0', 0, 2, 0, 3), s.tokens[1]] as UserClmPnl['tokens'],
+    });
+    const merged = mergeClmPnl([outOfRange(a), outOfRange(b)]);
+
+    expect(merged.tokens[0].now.price.toNumber()).toBe(3);
   });
 
   it('does not produce NaN when a side contributes nothing', () => {

@@ -397,6 +397,11 @@ export function getCowcentratedWrapperIds(vault: VaultCowcentratedLike): string[
   return [...vault.cowcentratedIds.pools, ...vault.cowcentratedIds.vaults];
 }
 
+/** The list row a vault sits on: every member of a CLM group shares the CLM's row */
+export function getVaultListId(vault: VaultEntity): VaultEntity['id'] {
+  return isCowcentratedLikeVault(vault) ? vault.cowcentratedIds.clm : vault.id;
+}
+
 /** Every id in a CLM group — the CLM plus all its wrappers — reachable from any member */
 export function getCowcentratedGroupIds(vault: VaultCowcentratedLike): string[] {
   return [vault.cowcentratedIds.clm, ...getCowcentratedWrapperIds(vault)];

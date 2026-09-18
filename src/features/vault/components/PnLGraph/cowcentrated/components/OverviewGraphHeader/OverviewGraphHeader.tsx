@@ -16,6 +16,7 @@ import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
 import { selectClmGroupPnl } from '../../../../../../data/selectors/analytics.ts';
 import { selectCowcentratedLikeVaultById } from '../../../../../../data/selectors/vaults.ts';
 import { Stat } from '../Stat/Stat.tsx';
+import { useClmGroupScope } from '../../../../ClmMode/ClmModeContext.tsx';
 import { styles } from './styles.ts';
 import { PendingIndexNotice } from '../../../common/PendingIndexNotice.tsx';
 
@@ -37,11 +38,13 @@ export const OverviewGraphHeader = memo(function OverviewGraphHeader({
   const { underlying, tokens, pnl, hold, pendingIndex } = userPnl;
   const hasPnlTooltip = showClmPnlTooltip(userPnl);
   const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
+  // the merged card always reports claimed and pending rewards, so it always takes that wording
+  const wholeGroup = useClmGroupScope();
   const tt = useMemo(() => {
-    const suffix = vault.type;
+    const suffix = wholeGroup ? 'gov' : vault.type;
     return (key: string, options?: Parameters<typeof t>[0]) =>
       t([`${key}-${suffix}`, key], options);
-  }, [t, vault.type]);
+  }, [t, vault.type, wholeGroup]);
 
   return (
     <>
