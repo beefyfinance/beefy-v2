@@ -12,11 +12,9 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
-import { AlertError, AlertWarning } from '../../../../../../components/Alerts/Alerts.tsx';
+import { useTranslation } from 'react-i18next';
 import type { ReloadSpinnerState } from '../../../../../../components/ReloadSpinner/ReloadSpinner.tsx';
 import { useCollapse } from '../../../../../../components/Collapsable/hooks.ts';
-import { ExternalLink } from '../../../../../../components/Links/ExternalLink.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { formatLargeUsd } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
@@ -32,11 +30,6 @@ import {
   quoteHasTransformation,
   totalValueOfTokenAmounts,
 } from '../../../../../data/apis/transact/helpers/quotes.ts';
-import {
-  CrossChainBridgeBelowFeeError,
-  QuoteCowcentratedNoSingleSideError,
-  QuoteCowcentratedNotCalmError,
-} from '../../../../../data/apis/transact/strategies/error.ts';
 import {
   type CowcentratedVaultDepositQuote,
   type CowcentratedZapDepositQuote,
@@ -70,11 +63,12 @@ import {
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { QuoteErrorAlert, QuoteRetryAlert } from '../QuoteErrorAlert/QuoteErrorAlert.tsx';
 import { QuoteTitleRefresh } from '../QuoteTitleRefresh/QuoteTitleRefresh.tsx';
 import { TokenAmountIcon, TokenAmountIconLoader } from '../TokenAmountIcon/TokenAmountIcon.tsx';
 import { ZapRoute } from '../ZapRoute/ZapRoute.tsx';
 import { ZapSlippage } from '../ZapSlippage/ZapSlippage.tsx';
-import { NOT_CALM_REFRESH_SECONDS, useNotCalmAutoRefresh } from '../hooks/useNotCalmAutoRefresh.ts';
+import { useQuoteAutoRefresh } from '../hooks/useQuoteAutoRefresh.ts';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -104,7 +98,7 @@ export const TransactQuote = memo(function TransactQuote({
     () => inputAmounts.every(amount => amount.lte(BIG_ZERO)),
     [inputAmounts]
   );
-  const { stickyNotCalmAction, showNotCalmRefresh } = useNotCalmAutoRefresh();
+  const { stickyRetry, showAutoRefresh, autoRefreshSeconds } = useQuoteAutoRefresh();
 
   const debouncedFetchQuotes = useMemo(
     () =>
@@ -170,14 +164,15 @@ export const TransactQuote = memo(function TransactQuote({
       disabled={status === TransactStatus.Idle}
       title={isTransformTitle ? t('Transact-YouReceive') : title}
       enableRefresh={status === TransactStatus.Pending ? 'disabled' : true}
-      autoRefresh={showNotCalmRefresh}
+      autoRefresh={showAutoRefresh}
+      autoRefreshSeconds={autoRefreshSeconds}
     >
       {status === TransactStatus.Fulfilled ?
         <QuoteFulfilledBody />
       : status === TransactStatus.Idle ?
         <QuoteIdleBody vault={vault} mode={mode} />
-      : stickyNotCalmAction ?
-        <CalmAlert i18nKey={`Transact-Quote-Error-Calm-Retry-${stickyNotCalmAction}`} />
+      : stickyRetry ?
+        <QuoteRetryAlert retry={stickyRetry} />
       : status === TransactStatus.Pending ?
         <TokenAmountIconLoader />
       : <QuoteError />}
@@ -189,6 +184,7 @@ type QuotePanelProps = {
   title: string;
   enableRefresh: ReloadSpinnerState;
   autoRefresh?: boolean;
+  autoRefreshSeconds?: number;
   disabled?: boolean;
   css?: CssStyles;
   children: ReactNode;
@@ -198,6 +194,7 @@ const QuotePanel = memo(function QuotePanel({
   title,
   enableRefresh,
   autoRefresh = false,
+  autoRefreshSeconds,
   disabled = false,
   css: cssProp,
   children,
@@ -208,7 +205,7 @@ const QuotePanel = memo(function QuotePanel({
         title={title}
         enableRefresh={enableRefresh}
         autoRefresh={autoRefresh}
-        autoRefreshSeconds={NOT_CALM_REFRESH_SECONDS}
+        autoRefreshSeconds={autoRefreshSeconds}
       />
       {children}
     </div>
@@ -258,63 +255,15 @@ const QuoteIdleBody = memo(function QuoteIdleBody({ vault, mode }: QuoteIdleBody
   );
 });
 
-type CalmAlertProps = {
-  i18nKey: string;
-};
-export const CalmAlert = memo(function CalmAlert({ i18nKey }: CalmAlertProps) {
-  const { t } = useTranslation();
-  const classes = useStyles();
-  return (
-    <AlertWarning>
-      <Trans
-        t={t}
-        i18nKey={i18nKey}
-        values={{ interval: NOT_CALM_REFRESH_SECONDS }}
-        components={{
-          LinkCalm: (
-            <ExternalLink
-              className={classes.link}
-              href="https://docs.beefy.finance/beefy-products/clm#calmness-check"
-            />
-          ),
-        }}
-      />
-    </AlertWarning>
-  );
-});
-
 const QuoteError = memo(function QuoteError() {
-  const { t } = useTranslation();
   const error = useAppSelector(selectTransactQuoteError);
   const mode = useAppSelector(selectTransactMode);
 
-  if (error) {
-    if (CrossChainBridgeBelowFeeError.match(error)) {
-      const action = mode === TransactMode.Deposit ? 'deposit' : 'withdraw';
-      return <AlertError>{t(`Transact-Quote-Error-CrossChain-TooLow-${action}`)}</AlertError>;
-    }
-    if (QuoteCowcentratedNoSingleSideError.match(error)) {
-      return (
-        <AlertError>
-          {t('Transact-Notice-CowcentratedNoSingleSideAllowed', {
-            inputToken: error.inputToken,
-            neededToken: error.neededToken,
-          })}
-        </AlertError>
-      );
-    }
-    if (QuoteCowcentratedNotCalmError.match(error)) {
-      return <CalmAlert i18nKey={`Transact-Quote-Error-Calm-Retry-${error.action}`} />;
-    }
-  }
-
   return (
-    <AlertError>
-      <p>{t('Transact-Quote-Error')}</p>
-      {error && error.message ?
-        <p>{error.message}</p>
-      : null}
-    </AlertError>
+    <QuoteErrorAlert
+      error={error}
+      action={mode === TransactMode.Deposit ? 'deposit' : 'withdraw'}
+    />
   );
 });
 
