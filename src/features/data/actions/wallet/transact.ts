@@ -3,11 +3,13 @@ import BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
 import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { getTransactApi } from '../../apis/instances.ts';
+import { convertVaultShareToDepositTokenAmount } from '../../apis/transact/helpers/quotes.ts';
 import { serializeError } from '../../apis/transact/strategies/error.ts';
 import {
   isCrossChainOption,
   isDepositOption,
   isDepositQuote,
+  isVaultToVaultSingleTokenOption,
   isWithdrawOption,
   isWithdrawQuote,
   type QuoteOutputTokenAmountChange,
@@ -15,11 +17,11 @@ import {
 } from '../../apis/transact/transact-types.ts';
 import { isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
 import type { VaultGov } from '../../entities/vault.ts';
-import type { Step } from '../../reducers/wallet/stepper-types.ts';
+import type { Step, ZapStepDetails } from '../../reducers/wallet/stepper-types.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../selectors/transact.ts';
-import type { BeefyStateFn, BeefyThunk } from '../../store/types.ts';
+import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
 import {
   transactConfirmNeeded,
   transactConfirmPending,
@@ -112,9 +114,38 @@ export async function getTransactSteps(
     throw new Error(`Invalid quote`);
   }
 
-  steps.push(wrapStepConfirmQuote(originalStep, quote, prefetchedRequote));
+  steps.push(
+    wrapStepConfirmQuote(withZapDetails(originalStep, quote, getState()), quote, prefetchedRequote)
+  );
 
   return steps;
+}
+
+/** Cross-chain zaps describe themselves via their pending op instead */
+function withZapDetails(step: Step, quote: TransactQuote, state: BeefyState): Step {
+  if ((step.step !== 'zap-in' && step.step !== 'zap-out') || isCrossChainOption(quote.option)) {
+    return step;
+  }
+
+  const { option } = quote;
+  const inputs = quote.inputs.filter(input => input.amount.gt(BIG_ZERO));
+  const outputTokens = quote.outputs
+    .filter(output => output.amount.gt(BIG_ZERO))
+    .map(output => output.token);
+
+  const zapDetails: ZapStepDetails =
+    isVaultToVaultSingleTokenOption(option) ?
+      {
+        // v2v inputs are source vault shares
+        inputs: inputs.map(input =>
+          convertVaultShareToDepositTokenAmount(state, option.srcVaultId, input.amount)
+        ),
+        outputTokens,
+        vaultToVault: { srcVaultId: option.srcVaultId, destVaultId: option.destVaultId },
+      }
+    : { inputs, outputTokens };
+
+  return { ...step, extraInfo: { ...step.extraInfo, zapDetails } };
 }
 
 /**
