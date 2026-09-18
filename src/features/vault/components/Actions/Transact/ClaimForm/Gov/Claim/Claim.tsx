@@ -41,6 +41,7 @@ export const Claim = memo(function Claim({ vaultId }: ClaimProps) {
     <ActionConnectSwitch chainId={vault.chainId}>
       <Button
         fullWidth={true}
+        borderless={true}
         variant="cta"
         onClick={handleClaim}
         disabled={isStepping || isExecuting}
