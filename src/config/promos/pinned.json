@@ -1,5 +1,11 @@
 [
   {
+    "exclude": [
+      "alandale-cow-robinhood-weth-usdg-vault",
+      "alandale-cow-robinhood-weth-lute-vault",
+      "alandale-cow-robinhood-usdg-lute-vault",
+      "alandale-cow-robinhood-weth-spy-vault"
+    ],
     "conditions": [
       {
         "type": "boosted"
