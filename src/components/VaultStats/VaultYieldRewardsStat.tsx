@@ -1,6 +1,10 @@
 import { css } from '@repo/styles/css';
 import { memo, useMemo } from 'react';
-import { isGovVault, type VaultEntity } from '../../features/data/entities/vault.ts';
+import {
+  isCowcentratedVault,
+  isGovVault,
+  type VaultEntity,
+} from '../../features/data/entities/vault.ts';
 import {
   DashboardDataStatus,
   selectDashboardUserRewardsOrStatusByVaultId,
@@ -36,8 +40,14 @@ export const VaultYieldRewardsStat = memo(function VaultYieldRewardsStat({
   );
   const received = useMemo(() => {
     if (typeof data === 'object' && (data.compounded.has || data.claimed.has)) {
+      // a CLM row compounds into its wrappers' deposit token, the CLM token itself
+      const depositTokenAddress = (
+        isCowcentratedVault(vault) ?
+          vault.contractAddress
+        : vault.depositTokenAddress).toLowerCase();
       const compoundedDepositRewards = data.compounded.rewards.filter(
-        r => r.token.chainId === vault.chainId && r.token.address === vault.depositTokenAddress
+        r =>
+          r.token.chainId === vault.chainId && r.token.address.toLowerCase() === depositTokenAddress
       );
       const depositToken =
         (
@@ -110,7 +120,10 @@ export const VaultYieldRewardsStat = memo(function VaultYieldRewardsStat({
           </>
         }
         subValue={
-          received.depositToken ? formatLargeUsd(received.usd) : formatLargeUsd(data.all.usd)
+          // a CLM row's claim-manually side earns only pending rewards, which its own row showed
+          received.depositToken && !isCowcentratedVault(vault) ?
+            formatLargeUsd(received.usd)
+          : formatLargeUsd(data.all.usd)
         }
         loading={false}
         {...passthrough}

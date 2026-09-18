@@ -1,14 +1,22 @@
 import { styled } from '@repo/styles/jsx';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { VaultEntity } from '../../features/data/entities/vault.ts';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../features/data/entities/vault.ts';
+import {
+  selectClmBlendedDaily,
+  selectClmRewardBreakdown,
+} from '../../features/data/selectors/apy.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import {
   getApyComponents,
   getApyLabelsForVault,
   getApyLabelsTypeForVault,
 } from '../../helpers/apy.ts';
-import { type FormattedAvgApy, type FormattedTotalApy } from '../../helpers/format.ts';
+import {
+  formatLargePercent,
+  type FormattedAvgApy,
+  type FormattedTotalApy,
+} from '../../helpers/format.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { InterestTooltipContent } from '../InterestTooltipContent/InterestTooltipContent.tsx';
 
@@ -18,7 +26,15 @@ type TotalApyTooltipContentProps = {
   isBoosted: boolean;
   rates: FormattedTotalApy;
   header?: boolean;
+  /** whose positions the blended footer describes; defaults to the connected wallet */
+  walletAddress?: string;
 };
+
+/** a CLM stream that exists but pays nothing right now; absent keys mean the same thing here */
+const ZERO_RATE = '0%';
+
+/** components the CLM rows already account for; `vault` is the compounded rewards row's source */
+const CLM_TEMPLATE_COMPONENTS = ['clm', 'rewardPoolTrading', 'merkl', 'vault'] as const;
 
 const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
   vaultId,
@@ -26,24 +42,74 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
   isBoosted,
   rates,
   header = false,
+  walletAddress,
 }: TotalApyTooltipContentProps) {
+  const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  // per-stream split from the pool wrapper, scaled to what the shown wrapper pays
+  const rewards = useAppSelector(state =>
+    type === 'yearly' ? selectClmRewardBreakdown(state, vaultId) : undefined
+  );
+  // only when both wrappers are held, and only daily — see the selector for why not annualised
+  const blendedDaily = useAppSelector(state =>
+    type === 'yearly' ? selectClmBlendedDaily(state, vaultId, walletAddress) : undefined
+  );
   const rows = useMemo(() => {
     const labels = getApyLabelsForVault(vault, rates.totalType);
     const allComponents = getApyComponents();
     const components = allComponents[type];
     const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';
     const boostedTotalKey = type === 'daily' ? 'boostedTotalDaily' : 'boostedTotalApy';
+    const suffix = type === 'daily' ? 'Daily' : 'Apr';
 
     const items: {
       label: string | string[];
       value: string;
-    }[] = components
-      .filter(key => key in rates)
-      .map(key => ({
-        label: labels[key],
-        value: rates[key] ?? '?',
-      }));
+    }[] =
+      isCowcentratedLikeVault(vault) ?
+        // One template for every CLM. The rows are the income streams the product can draw on, so
+        // they keep their order and their names whichever wrapper is being shown and whether or
+        // not a stream currently pays — a component at zero reads 0%, it does not disappear.
+        // The rewards row is one stream under two handlings: claimable on the pool wrapper,
+        // already harvested and compounded on the vault one, so it never names either.
+        (
+          [
+            {
+              label: labels[`clm${suffix}`],
+              value: rates[`clm${suffix}`] ?? ZERO_RATE,
+            },
+            {
+              label: labels[`rewardPoolTrading${suffix}`],
+              value:
+                rewards ?
+                  formatLargePercent(rewards.rewardPoolTradingApr, 2)
+                : (rates[`rewardPoolTrading${suffix}`] ?? rates[`vault${suffix}`] ?? ZERO_RATE),
+            },
+            {
+              label: labels[`merkl${suffix}`],
+              value:
+                rewards ?
+                  formatLargePercent(rewards.merklApr, 2)
+                : (rates[`merkl${suffix}`] ?? ZERO_RATE),
+            },
+          ] as { label: string | string[]; value: string }[]
+        ).concat(
+          // streams outside the template (boosts, other incentives) still count towards the total
+          components
+            .filter(
+              key =>
+                !CLM_TEMPLATE_COMPONENTS.some(c => key === `${c}${suffix}`) &&
+                key in rates &&
+                rates[key] !== ZERO_RATE
+            )
+            .map(key => ({ label: labels[key], value: rates[key] ?? '?' }))
+        )
+      : components
+          .filter(key => key in rates)
+          .map(key => ({
+            label: labels[key],
+            value: rates[key] ?? '?',
+          }));
 
     items.push({
       label: labels[totalKey],
@@ -51,9 +117,36 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
     });
 
     return items;
-  }, [vault, isBoosted, rates, type]);
+  }, [vault, isBoosted, rates, type, rewards]);
 
-  return <InterestTooltipContent rows={rows} header={header ? 'Current' : undefined} />;
+  return (
+    <InterestTooltipContent
+      rows={rows}
+      header={header ? 'Current' : undefined}
+      footer={
+        blendedDaily !== undefined ?
+          <AlternativeRow highlight={true}>
+            <span>{t('Vault-Apy-YourPositions')}</span>
+            <span>{t('Vault-Apy-PerDay', { rate: formatLargePercent(blendedDaily, 4) })}</span>
+          </AlternativeRow>
+        : undefined
+      }
+    />
+  );
+});
+
+/** the other wrapper's all-in rate, sat below the total rather than competing with the breakdown */
+const AlternativeRow = styled('div', {
+  base: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '16px',
+  },
+  variants: {
+    highlight: {
+      true: { color: 'text.light' },
+    },
+  },
 });
 
 type AverageApyTooltipContentProps = {
@@ -128,6 +221,7 @@ type ApyTooltipContentProps = {
   isBoosted: boolean;
   rates: FormattedTotalApy;
   averages?: FormattedAvgApy;
+  walletAddress?: string;
 };
 
 export const ApyTooltipContent = memo(function ApyTooltipContent({
@@ -136,6 +230,7 @@ export const ApyTooltipContent = memo(function ApyTooltipContent({
   isBoosted,
   rates,
   averages,
+  walletAddress,
 }: ApyTooltipContentProps) {
   const showAverages = !!averages && type === 'yearly';
 
@@ -147,6 +242,7 @@ export const ApyTooltipContent = memo(function ApyTooltipContent({
         isBoosted={isBoosted}
         rates={rates}
         header={showAverages}
+        walletAddress={walletAddress}
       />
       {showAverages && (
         <AverageApyTooltipContent
@@ -159,6 +255,11 @@ export const ApyTooltipContent = memo(function ApyTooltipContent({
     </Layout>
   );
 });
+
+/**
+ * A merged CLM row shows the autocompounding side, so the composition above is that side's. Name it,
+ * and give the claimable side's rate — the one number a user would otherwise have to go and find.
+ */
 
 const Layout = styled('div', {
   base: {

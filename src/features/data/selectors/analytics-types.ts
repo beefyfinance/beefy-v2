@@ -106,7 +106,8 @@ export type UserClmPnl = {
   pendingIndex: boolean;
 };
 
-export type UserVaultPnl = UserStandardPnl | UserGovPnl | UserClmPnl | UserErc4626Pnl;
+/** a CLM's dashboard row is the whole group, which carries no summed `shares` */
+export type UserVaultPnl = UserStandardPnl | UserGovPnl | UserClmGroupPnl | UserErc4626Pnl;
 
 export function isUserStandardPnl(pnl: UserVaultPnl): pnl is UserStandardPnl {
   return pnl.type === 'standard';
@@ -116,6 +117,12 @@ export function isUserGovPnl(pnl: UserVaultPnl): pnl is UserGovPnl {
   return pnl.type === 'gov';
 }
 
-export function isUserClmPnl(pnl: UserVaultPnl): pnl is UserClmPnl {
+export function isUserClmPnl(pnl: UserVaultPnl): pnl is UserClmGroupPnl {
   return pnl.type === 'cowcentrated';
 }
+
+/**
+ * A CLM group's combined position. Deliberately has no `shares`: the pool side counts CLM tokens
+ * and the vault side counts moo tokens, so a summed share figure would be dimensionally meaningless.
+ */
+export type UserClmGroupPnl = Omit<UserClmPnl, 'shares'>;

@@ -3,9 +3,10 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
-  selectUserVaultBalanceInDepositToken,
+  selectUserRowDeposit,
+  selectUserRowDepositIncludingDisplaced,
+  selectUserRowDepositInUsd,
   selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken,
-  selectUserVaultBalanceInUsdIncludingDisplaced,
 } from '../../features/data/selectors/balance.ts';
 
 import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
@@ -42,13 +43,14 @@ export const VaultDeposited = memo(function VaultDeposited({ vaultId }: VaultDep
   );
 });
 
+// same row totals as the list's Deposited stat, so a merged CLM reads the same on both screens
 const selectVaultDepositedStat = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
-    selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken(state, vaultId),
+    selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken(state, vaultId).token,
   (state: BeefyState, vaultId: VaultEntity['id']) =>
-    selectUserVaultBalanceInDepositToken(state, vaultId),
-  (state: BeefyState, vaultId: VaultEntity['id']) =>
-    selectUserVaultBalanceInUsdIncludingDisplaced(state, vaultId),
+    selectUserRowDepositIncludingDisplaced(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectUserRowDeposit(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectUserRowDepositInUsd(state, vaultId),
   (state: BeefyState) => selectIsBalanceHidden(state),
   (state: BeefyState) => selectWalletAddress(state),
   (state: BeefyState, vaultId: VaultEntity['id']) => {
@@ -62,14 +64,7 @@ const selectVaultDepositedStat = createSelector(
       selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress)
     );
   },
-  (
-    { amount: deposit, token: depositToken },
-    baseDeposit,
-    depositUsdAmount,
-    blurred,
-    walletAddress,
-    isLoaded
-  ) => {
+  (depositToken, deposit, baseDeposit, depositUsdAmount, blurred, walletAddress, isLoaded) => {
     const hasDeposit = deposit.gt(0);
 
     return {

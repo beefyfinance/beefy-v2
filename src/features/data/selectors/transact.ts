@@ -8,6 +8,7 @@ import type { BoostReward } from '../apis/balance/balance-types.ts';
 import {
   type CrossChainChainOption,
   type CrossChainTokenOption,
+  isClmSideSwitchDepositOption,
   isCrossChainOption,
   isVaultDestWithdrawOption,
   isVaultSourceDepositOption,
@@ -21,7 +22,12 @@ import {
 import { computeOptionZapFee } from '../apis/transact/helpers/fee.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
-import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
+import {
+  getCowcentratedWrapperIds,
+  isCowcentratedLikeVault,
+  isSingleGovVault,
+  type VaultEntity,
+} from '../entities/vault.ts';
 import {
   DepositSource,
   TransactMode,
@@ -56,7 +62,11 @@ import {
   selectConnectedUserHasMerklRewardsForVault,
   selectConnectedUserHasStellaSwapRewardsForVault,
 } from './user-rewards.ts';
-import { selectVaultById, selectVaultReplacementMigration } from './vaults.ts';
+import {
+  selectVaultById,
+  selectVaultByAddressOrUndefined,
+  selectVaultReplacementMigration,
+} from './vaults.ts';
 import { convertVaultShareToDepositTokenAmount } from '../apis/transact/helpers/quotes.ts';
 import { selectWalletAddressIfKnown } from './wallet.ts';
 import { selectChainById } from './chains.ts';
@@ -87,6 +97,10 @@ export function selectVaultRefIdForSelection(
   if (!option) return undefined;
   if (isVaultSourceDepositOption(option)) return option.srcVaultId;
   if (isVaultDestWithdrawOption(option)) return option.destVaultId;
+  // spends the other side's share token, so that side is the source vault
+  if (isClmSideSwitchDepositOption(option)) {
+    return selectVaultByAddressOrUndefined(state, option.chainId, option.inputs[0].address)?.id;
+  }
   return undefined;
 }
 
@@ -101,6 +115,16 @@ export const selectTransactDepositFromVaultId = (
 
 export const selectTransactOptionsStatus = (state: BeefyState) => state.ui.transact.options.status;
 export const selectTransactOptionsError = (state: BeefyState) => state.ui.transact.options.error;
+
+/**
+ * A CLM wrapper switch is mid-flight: the loaded options still describe the wrapper the user just
+ * left, so no quote can be built yet. The form stays rendered to avoid blanking, but anything
+ * typed into it would be discarded when the new options land.
+ */
+export const selectTransactIsSwitchingTarget = (state: BeefyState): boolean => {
+  const { vaultId, pendingVaultId, options } = state.ui.transact;
+  return pendingVaultId !== undefined || (!!vaultId && options.vaultId !== vaultId);
+};
 
 export const selectTransactOptionsVaultId = (state: BeefyState) =>
   state.ui.transact.options.vaultId;
@@ -810,6 +834,22 @@ export const selectTransactShouldShowBoost = (state: BeefyState, vaultId: VaultE
 
   // OR, there is an expired boost which the user is still staked in
   return selectPastBoostIdsWithUserBalance(state, vaultId).length > 0;
+};
+
+/** The CLM side its Boost tab acts on: boosts live on one side, so the tab follows it, not the yield mode */
+export const selectClmBoostVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultEntity['id'] | undefined => {
+  const vault = selectVaultById(state, vaultId);
+  if (!isCowcentratedLikeVault(vault)) {
+    return undefined;
+  }
+  const wrapperIds = getCowcentratedWrapperIds(vault);
+  return (
+    wrapperIds.find(id => selectPreStakeOrActiveBoostIds(state, id).length > 0) ??
+    wrapperIds.find(id => selectPastBoostIdsWithUserBalance(state, id).length > 0)
+  );
 };
 
 export const selectTransactShouldShowBoostNotification = (

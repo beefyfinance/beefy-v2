@@ -26,6 +26,9 @@ export const VaultFees = memo(function VaultFees({ css: cssProp }: VaultFeesProp
   const vaultId = useAppSelector(selectTransactVaultId);
   const fees = useAppSelector(state => selectFeesByVaultId(state, vaultId));
   const areFeesLoaded = useAppSelector(selectAreFeesLoaded);
+  // the CLM manager compounds trading fees and charges on them, so a pool-only CLM does carry a
+  // performance fee — read the actual number rather than inferring from the group's shape
+  const hasPerformanceFee = !fees || fees.total > 0;
 
   return (
     <div className={css(styles.container, cssProp)}>
@@ -52,16 +55,18 @@ export const VaultFees = memo(function VaultFees({ css: cssProp }: VaultFeesProp
         </Value>
         <MaybeZapFees />
       </div>
-      <div className={classes.performanceFees}>
-        <Trans
-          t={t}
-          i18nKey={'Transact-Fee-Performance-Explainer'}
-          components={{
-            PerformanceTooltip:
-              fees ? <LabelCustomTooltip tooltip={<PerformanceFees fees={fees} />} /> : <span />,
-          }}
-        />
-      </div>
+      {hasPerformanceFee ?
+        <div className={classes.performanceFees}>
+          <Trans
+            t={t}
+            i18nKey={'Transact-Fee-Performance-Explainer'}
+            components={{
+              PerformanceTooltip:
+                fees ? <LabelCustomTooltip tooltip={<PerformanceFees fees={fees} />} /> : <span />,
+            }}
+          />
+        </div>
+      : null}
     </div>
   );
 });

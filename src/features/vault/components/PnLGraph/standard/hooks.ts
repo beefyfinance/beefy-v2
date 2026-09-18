@@ -128,6 +128,11 @@ export const useVaultPeriods = (
     selectUserFirstDepositDateByVaultId(state, vaultId, address)
   );
 
+  return usePeriodsSince(vaultDepositDate, minHours);
+};
+
+/** The periods a chart starting at `vaultDepositDate` can show */
+export const usePeriodsSince = (vaultDepositDate: Date | undefined, minHours: number = 4) => {
   return useMemo(() => {
     if (!vaultDepositDate) return [];
 

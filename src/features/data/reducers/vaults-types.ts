@@ -9,6 +9,9 @@ import type { NormalizedEntity } from '../utils/normalized-entity.ts';
 export type VaultsState = NormalizedEntity<VaultEntity> & {
   /** All vault ids that have hidden: false */
   allVisibleIds: VaultEntity['id'][];
+  /** Vault ids that appear as their own row in the main list: every visible vault except CLM
+   * pools/vaults, which are represented by their base CLM's row (hidden or not) */
+  allListIds: VaultEntity['id'][];
   /** All chains that have at least 1 vault */
   allChainIds: ChainEntity['id'][];
   /** Vaults that have status: active, hidden: false */

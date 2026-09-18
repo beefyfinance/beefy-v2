@@ -10,7 +10,11 @@ import {
 } from '../../../helpers/string.ts';
 import type { PlatformEntity } from '../entities/platform.ts';
 import type { TokenEntity } from '../entities/token.ts';
-import { type VaultEntity } from '../entities/vault.ts';
+import {
+  getCowcentratedWrapperIds,
+  isCowcentratedVault,
+  type VaultEntity,
+} from '../entities/vault.ts';
 import {
   type EffectiveSortType,
   type FilterValues,
@@ -27,7 +31,7 @@ import {
   toSearchWords,
 } from '../utils/vault-search.ts';
 import { selectVaultTotalApy } from './apy.ts';
-import { selectUserDepositedVaultIds } from './balance.ts';
+import { selectUserDashboardVaultIds } from './balance.ts';
 import { selectActivePromoForVault } from './promos.ts';
 import {
   isTokenBluechip,
@@ -41,7 +45,7 @@ import {
   type TokensByChainId,
 } from './tokens.ts';
 import { computeUnderlyingTvlUsd } from './tvl.ts';
-import { selectAllActiveVaultIds, selectAllVisibleVaultIds, selectVaultById } from './vaults.ts';
+import { selectAllActiveVaultIds, selectAllListVaultIds, selectVaultById } from './vaults.ts';
 
 export const selectFilterValues = (state: BeefyState) => state.ui.filteredVaults.pending;
 export const selectFilterSearchText = (state: BeefyState) =>
@@ -225,7 +229,8 @@ const selectUserDashboardFilteredVaultsUncached = (
   walletAddress?: string
 ) => {
   if (!walletAddress) return [];
-  const vaults = selectUserDepositedVaultIds(state, walletAddress).map(id =>
+  // one row per product: a CLM held on both sides is a single row keyed by the CLM
+  const vaults = selectUserDashboardVaultIds(state, walletAddress).map(id =>
     selectVaultById(state, id)
   );
   const searchText = simplifySearchText(text);
@@ -275,16 +280,23 @@ export const selectFilteredVaults = (state: BeefyState) =>
 
 export const selectFilteredVaultCount = createSelector(selectFilteredVaults, ids => ids.length);
 
-export const selectTotalVaultCount = (state: BeefyState) => selectAllVisibleVaultIds(state).length;
+export const selectTotalVaultCount = (state: BeefyState) => selectAllListVaultIds(state).length;
 
 /** standard boost, off chain boost, or anything with boostedTotalDaily entry */
 export const selectVaultIsBoostedForFilter = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  if (selectActivePromoForVault(state, vaultId)) {
-    return true;
-  }
+  // a merged CLM row is boosted if any of its pools/vaults are
+  const vault = selectVaultById(state, vaultId);
+  const memberIds =
+    isCowcentratedVault(vault) ? [vault.id, ...getCowcentratedWrapperIds(vault)] : [vaultId];
 
-  const apy = selectVaultTotalApy(state, vaultId);
-  return !!apy && (apy.boostedTotalDaily || 0) > 0;
+  return memberIds.some(memberId => {
+    if (selectActivePromoForVault(state, memberId)) {
+      return true;
+    }
+
+    const apy = selectVaultTotalApy(state, memberId);
+    return !!apy && (apy.boostedTotalDaily || 0) > 0;
+  });
 };
 
 export const selectAnyDesktopExtenderFilterIsActive = createSelector(

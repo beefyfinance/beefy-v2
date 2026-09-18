@@ -769,3 +769,59 @@ export function getClmInvestorFeesTimeSeries(
   );
   return generator.generate();
 }
+
+/**
+ * Combine one CLM group member's overview series per side into a single series.
+ *
+ * Every plotted field is denominated in the base CLM's underlying or in USD, so all three sum
+ * across sides. Sides share a bucket grid (same bucket size, floored start) but not a start date,
+ * so a side contributes zero before its own first point and its last known value afterwards.
+ *
+ * `shares` is deliberately zeroed: the pool side counts CLM tokens and the vault side counts moo
+ * tokens, so a merged share count has no meaning. It is not plotted.
+ */
+export function mergeClmOverviewTimeSeries(
+  series: ClmInvestorOverviewTimeSeriesPoint[][]
+): ClmInvestorOverviewTimeSeriesPoint[] {
+  const present = series.filter(s => s.length > 0);
+  if (present.length === 0) {
+    return [];
+  }
+  if (present.length === 1) {
+    return present[0];
+  }
+
+  const timestamps = Array.from(new Set(present.flatMap(s => s.map(p => p.timestamp)))).sort(
+    (a, b) => a - b
+  );
+  const cursors = present.map(() => 0);
+
+  return timestamps.map(timestamp => {
+    let underlying = 0;
+    let underlyingUsd = 0;
+    let heldUsd = 0;
+
+    present.forEach((points, i) => {
+      while (cursors[i] + 1 < points.length && points[cursors[i] + 1].timestamp <= timestamp) {
+        cursors[i]++;
+      }
+      const point = points[cursors[i]];
+      // before this side's first point it held nothing, so it contributes nothing
+      if (point.timestamp > timestamp) {
+        return;
+      }
+      underlying += point.underlying;
+      underlyingUsd += point.underlyingUsd;
+      heldUsd += point.heldUsd;
+    });
+
+    return {
+      timestamp,
+      shares: 0,
+      underlying,
+      underlyingUsd,
+      heldUsd,
+      debug: {},
+    } as ClmInvestorOverviewTimeSeriesPoint;
+  });
+}

@@ -4,16 +4,14 @@ import { memo } from 'react';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
-  selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInDepositTokenIncludingDisplaced,
-  selectUserVaultBalanceNotInActiveBoostInDepositToken,
+  selectUserRowDeposit,
+  selectUserRowDepositIncludingDisplaced,
+  selectUserRowDepositInUsd,
+  selectUserRowDepositNotInActiveBoost,
 } from '../../features/data/selectors/balance.ts';
 
 import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
-import {
-  selectTokenByAddressOrUndefined,
-  selectTokenPriceByAddress,
-} from '../../features/data/selectors/tokens.ts';
+import { selectTokenByAddressOrUndefined } from '../../features/data/selectors/tokens.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import {
   selectIsBalanceHidden,
@@ -84,20 +82,19 @@ const selectVaultDepositStat = createSelector(
         )
       : false;
   },
+  // a merged CLM row sums its wrappers
   (state: BeefyState, vaultId: VaultEntity['id'], w?: string) =>
-    selectUserVaultBalanceInDepositTokenIncludingDisplaced(state, vaultId, w),
+    selectUserRowDepositIncludingDisplaced(state, vaultId, w),
   (state: BeefyState, vaultId: VaultEntity['id'], w?: string) =>
-    selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vaultId, w),
+    selectUserRowDepositNotInActiveBoost(state, vaultId, w),
   (state: BeefyState, vaultId: VaultEntity['id'], w?: string) =>
-    selectUserVaultBalanceInDepositToken(state, vaultId, w),
+    selectUserRowDeposit(state, vaultId, w),
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
     return selectTokenByAddressOrUndefined(state, vault.chainId, vault.depositTokenAddress);
   },
-  (state: BeefyState, vaultId: VaultEntity['id']) => {
-    const vault = selectVaultById(state, vaultId);
-    return selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
-  },
+  (state: BeefyState, vaultId: VaultEntity['id'], w?: string) =>
+    selectUserRowDepositInUsd(state, vaultId, w),
   (
     vault,
     walletAddress,
@@ -108,7 +105,7 @@ const selectVaultDepositStat = createSelector(
     notEarning,
     vaultDeposit,
     depositToken,
-    oraclePrice
+    totalDepositUsd
   ): SelectDataReturn => {
     const key = hideBalance ? 'true' : 'false';
 
@@ -133,7 +130,7 @@ const selectVaultDepositStat = createSelector(
       hideBalance,
       depositToken,
       totalDeposit,
-      totalDepositUsd: totalDeposit.multipliedBy(oraclePrice),
+      totalDepositUsd,
       vaultDeposit,
       notEarning,
     };
@@ -193,6 +190,7 @@ export const VaultDepositStat = memo(function VaultDepositStat({
       blur={data.hideBalance}
       loading={false}
       tooltip={
+        // displaced tooltip breaks balances down per vault id, which a merged group can't use
         hasDisplacedDeposit ?
           <VaultDepositedTooltip vaultId={vaultId} walletAddress={walletAddress} />
         : <BasicTooltipContent title={depositFormattedFull} />

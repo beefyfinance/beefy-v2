@@ -1,6 +1,6 @@
 import { type ComponentType, lazy, memo } from 'react';
 import { useAppSelector } from '../../../data/store/hooks.ts';
-import { selectActivePromoForVault } from '../../../data/selectors/promos.ts';
+import { selectActivePromoForVaultGroup } from '../../../data/selectors/promos.ts';
 import type { PromoCardLoaderProps, PromoCardProps, PromoCardTypeToComponent } from './types.ts';
 
 const typeToComponent: PromoCardTypeToComponent = {
@@ -11,9 +11,10 @@ const typeToComponent: PromoCardTypeToComponent = {
 };
 
 export const PromoCardLoader = memo(function PromoCardLoader({ vaultId }: PromoCardLoaderProps) {
-  const promo = useAppSelector(state => selectActivePromoForVault(state, vaultId));
+  const promo = useAppSelector(state => selectActivePromoForVaultGroup(state, vaultId));
   if (!promo) return null;
 
   const Component = typeToComponent[promo.type] as ComponentType<PromoCardProps>;
-  return <Component vaultId={vaultId} promo={promo} />;
+  // on a merged CLM the promo belongs to one side, not the base id the page is on
+  return <Component vaultId={promo.vaultId} promo={promo} />;
 });
