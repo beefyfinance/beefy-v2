@@ -25,7 +25,8 @@ export const supportedChainIds: ChainConfig['id'][] = [
   'linea',
   'sonic',
   'robinhood',
-  // 'unichain',
+  'monad',
+  'hyperevm',
 ];
 
 export class OneInchApi implements IOneInchApi {
