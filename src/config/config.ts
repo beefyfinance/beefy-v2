@@ -23,7 +23,7 @@ export const config = {
     explorerUrl: 'https://explorer.arc.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
-    native: { symbol: 'USDC', oracleId: 'USDC', decimals: 18 },
+    native: { symbol: 'USDC', oracleId: 'USDC', decimals: 18, balanceSharedWithWrapped: true },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -358,7 +358,7 @@ export const config = {
     explorerUrl: 'https://andromeda-explorer.metis.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xDc34b7e0f1F1512f088D1854a54EAFfD4dCaC7Bd',
-    native: { symbol: 'METIS', oracleId: 'WMETIS', decimals: 18 },
+    native: { symbol: 'METIS', oracleId: 'WMETIS', decimals: 18, balanceSharedWithWrapped: true },
     gas: {
       type: 'standard',
     },
@@ -621,7 +621,7 @@ export const config = {
     explorerUrl: 'https://celoscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x0bF5F48d8F761efAe0f187eCce60784e5d3E87E6',
-    native: { symbol: 'CELO', oracleId: 'WCELO', decimals: 18 },
+    native: { symbol: 'CELO', oracleId: 'WCELO', decimals: 18, balanceSharedWithWrapped: true },
     gas: {
       type: 'celo',
     },

@@ -12,6 +12,11 @@ import type { LpData } from '../apis/beefy/beefy-api-types.ts';
 export type TokenEntity = TokenErc20 | TokenNative;
 
 /**
+ * Token id of the native token on chains where wnative holds the native symbol as its id
+ */
+export const NATIVE_TOKEN_ID = 'NATIVE';
+
+/**
  * This represents a token implementation in a specific chain
  * We need this because tokens can have different implementations
  * On multiple chains

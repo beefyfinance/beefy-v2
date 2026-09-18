@@ -13,10 +13,10 @@ import { floorToSharedPrecision, isSameBalancePair } from './tokens.ts';
 
 // arc: native USDC (18 decimals) and the 0x3600 ERC-20 (6 decimals) are one balance
 
-function nativeToken(chainId: ChainEntity['id'], symbol: string): TokenNative {
+function nativeToken(chainId: ChainEntity['id'], symbol: string, id: string = symbol): TokenNative {
   return {
     type: 'native',
-    id: symbol,
+    id,
     chainId,
     address: 'native',
     oracleId: symbol,
@@ -57,8 +57,8 @@ const ARC_USDC_ADDRESS = '0x3600000000000000000000000000000000000000';
 const RECIPIENT = '0xA55e75C4815Ff39eFD76C257857441d9FD99b45b';
 const ROUTER = '0xaEFB7C930b9181A31a0CDF0409375b78C059395C';
 
-const arcNative = nativeToken('arc', 'USDC');
-const arcUsdc = erc20Token('arc', 'WUSDC', 'USDC', ARC_USDC_ADDRESS, 6);
+const arcNative = nativeToken('arc', 'USDC', 'NATIVE');
+const arcUsdc = erc20Token('arc', 'USDC', 'USDC', ARC_USDC_ADDRESS, 6);
 const arcEurc = erc20Token('arc', 'EURC', 'EURC', '0x0000000000000000000000000000000000000e0c', 6);
 const baseNative = nativeToken('base', 'ETH');
 const baseWeth = erc20Token(

@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { config } from '../../../../../config/config.ts';
 import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token.ts';
 import { isTokenEqual, isTokenNative, tokenEqualityKey } from '../../../entities/token.ts';
 import { sortBy } from 'lodash-es';
@@ -136,12 +137,21 @@ export function allTokensAreDistinct(inputs: TokenEntity[]): boolean {
   return inputs.every((input, i) => inputs.findIndex(other => isTokenEqual(input, other)) === i);
 }
 
+const sharedBalanceChainIds: Set<string> = new Set(
+  Object.entries(config)
+    .filter(
+      ([, chain]) =>
+        'balanceSharedWithWrapped' in chain.native && chain.native.balanceSharedWithWrapped
+    )
+    .map(([chainId]) => chainId)
+);
+
 /**
  * Returns true for chains where native and wnative balances are treated as one
  * (Chains where there is no need to wrap or unwrap)
  */
 export function nativeAndWrappedAreSame(chainId: ChainEntity['id']) {
-  return ['metis', 'celo', 'arc'].includes(chainId);
+  return sharedBalanceChainIds.has(chainId);
 }
 
 /**

@@ -237,6 +237,7 @@ export type ChainConfig = {
     symbol: string;
     oracleId: string;
     decimals: number;
+    balanceSharedWithWrapped?: boolean;
   };
   gas: GasConfig;
   new?: boolean;
