@@ -25,7 +25,7 @@ import {
   vaultMatchesMatcher,
   type ZapFeeMatch,
 } from './fee-rules.ts';
-import { nativeAndWrappedAreSame } from './tokens.ts';
+import { floorToSharedPrecision, nativeAndWrappedAreSame } from './tokens.ts';
 import { isOptionFeeable } from './options.ts';
 import { getTokenAddress } from './zap.ts';
 import {
@@ -92,14 +92,23 @@ function ruleAppliesToZap(
 }
 
 function computeFeeSplit(
+  state: BeefyState,
   grossAmount: BigNumber,
   token: TokenEntity,
   bps: number
 ): { feeAmount: BigNumber; netAmount: BigNumber } {
-  const feeAmount = grossAmount
+  let feeAmount = grossAmount
     .multipliedBy(bps)
     .dividedBy(BPS_DENOMINATOR)
     .decimalPlaces(token.decimals, BigNumber.ROUND_FLOOR);
+  if (isTokenNative(token) && nativeAndWrappedAreSame(token.chainId)) {
+    // charged via the wnative view, so only its precision can be skimmed
+    feeAmount = floorToSharedPrecision(
+      feeAmount,
+      token,
+      selectChainWrappedNativeToken(state, token.chainId)
+    );
+  }
   return { feeAmount, netAmount: grossAmount.minus(feeAmount) };
 }
 
@@ -209,7 +218,7 @@ export function resolveZapFee(
   if (!fee) {
     return undefined;
   }
-  const { feeAmount, netAmount } = computeFeeSplit(grossAmount, token, fee.effectiveBps);
+  const { feeAmount, netAmount } = computeFeeSplit(state, grossAmount, token, fee.effectiveBps);
   const reduced = fee.effectiveBps < fee.baseBps;
   const charge: ZapFeeCharge = {
     token,
@@ -235,7 +244,7 @@ export function buildFeeZapSteps(args: {
   bps: number;
 }): { zaps: ZapStep[]; feeAmount: BigNumber; netAmount: BigNumber } {
   const { state, token, grossAmount, recipient, bps } = args;
-  const { feeAmount, netAmount } = computeFeeSplit(grossAmount, token, bps);
+  const { feeAmount, netAmount } = computeFeeSplit(state, grossAmount, token, bps);
   if (feeAmount.isZero()) {
     return { zaps: [], feeAmount, netAmount };
   }
@@ -247,7 +256,13 @@ export function buildFeeZapSteps(args: {
 
   const wnative = selectChainWrappedNativeToken(state, token.chainId);
   if (nativeAndWrappedAreSame(token.chainId)) {
-    return { zaps: [transferStep(wnative.address, recipient, feeAmountWei)], feeAmount, netAmount };
+    // same balance, but decimals can differ (arc: 18 native vs 6 erc20)
+    const wnativeFeeAmountWei = toWeiString(feeAmount, wnative.decimals);
+    return {
+      zaps: [transferStep(wnative.address, recipient, wnativeFeeAmountWei)],
+      feeAmount,
+      netAmount,
+    };
   }
 
   return {

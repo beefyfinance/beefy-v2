@@ -42,6 +42,7 @@ import {
 import { calculatePriceImpact, ZERO_FEE } from '../helpers/quotes.ts';
 import {
   allTokensAreDistinct,
+  floorToSharedPrecision,
   includeWrappedAndNative,
   nativeAndWrappedAreSame,
   pickTokens,
@@ -284,12 +285,17 @@ export abstract class UniswapLikeStrategy<
       : [];
 
     // Swap
+    // native is used as wnative, whose view may hold fewer decimals on same-balance chains
+    const swapInTotal =
+      isInputNative ?
+        floorToSharedPrecision(input.amount, input.token, this.wnative)
+      : input.amount;
     const swapInAmountWei = pool.getOptimalSwapAmount(
-      toWei(input.amount, input.token.decimals),
+      toWei(swapInTotal, swapInToken.decimals),
       swapInToken.address
     );
     const swapInAmount = fromWei(swapInAmountWei, swapInToken.decimals);
-    const amountLeft = input.amount.minus(swapInAmount);
+    const amountLeft = swapInTotal.minus(swapInAmount);
     const swap = pool.swap(swapInAmountWei, swapInToken.address, true);
     const swapOutAmount = fromWei(swap.amountOut, swapOutToken.decimals);
 
@@ -324,7 +330,8 @@ export abstract class UniswapLikeStrategy<
     // Build quote steps
     const steps: ZapQuoteStep[] = [];
 
-    if (isInputNative && !nativeAndWrappedAreSame(input.token.chainId)) {
+    // on same-balance chains this is a call-less step, still needed to move the amount to wnative
+    if (isInputNative) {
       const wrapQuotes = await swapAggregator.fetchQuotes(
         {
           fromAmount: input.amount,
