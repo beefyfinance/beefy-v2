@@ -50,7 +50,6 @@ export function useIsMaxGasTokenQuote(quote: TransactQuote): boolean {
   );
 }
 
-/** symbol of the maxed gas token, if any */
 export function useMaxGasTokenSymbol(quote: TransactQuote): string | undefined {
   return useAppSelector(
     state =>

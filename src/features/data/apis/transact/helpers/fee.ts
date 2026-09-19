@@ -256,7 +256,6 @@ export function buildFeeZapSteps(args: {
 
   const wnative = selectChainWrappedNativeToken(state, token.chainId);
   if (nativeAndWrappedAreSame(token.chainId)) {
-    // same balance, but decimals can differ (arc: 18 native vs 6 erc20)
     const wnativeFeeAmountWei = toWeiString(feeAmount, wnative.decimals);
     return {
       zaps: [transferStep(wnative.address, recipient, wnativeFeeAmountWei)],
