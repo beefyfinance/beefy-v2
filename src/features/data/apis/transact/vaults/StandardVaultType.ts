@@ -390,7 +390,8 @@ export class StandardVaultType implements IStandardVaultType {
       input,
       this.vault,
       state,
-      address
+      address,
+      request.sharesOverrideWei
     );
 
     const inputs = [

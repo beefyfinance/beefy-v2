@@ -14,7 +14,17 @@ import {
   type WithdrawOption,
   type ZapWithdrawQuote,
 } from '../../transact-types.ts';
-import { isComposableStrategy, type IStrategy } from '../../strategies/IStrategy.ts';
+import {
+  isComposableStrategy,
+  type IStrategy,
+  type ZapTransactHelpers,
+} from '../../strategies/IStrategy.ts';
+import { BoostZapStrategy } from '../../strategies/BoostStrategy.ts';
+import { findBoostUnstakeStep } from '../../helpers/boost.ts';
+import { withBoostSourcedVaultType } from '../../vaults/BoostSourcedVaultType.ts';
+import { selectBoostById } from '../../../../selectors/boosts.ts';
+import { selectTransactUnstakeFromBoostTarget } from '../../../../selectors/transact.ts';
+import type { BoostPromoEntity } from '../../../../entities/promo.ts';
 import { collectIntermediateTokens } from '../dust.ts';
 import type {
   ISourceHandler,
@@ -43,7 +53,11 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
     input: InputTokenAmount,
     ctx: SourceHandlerContext
   ): Promise<SourceHandlerQuote<VaultSourceState>> {
-    const srcHelpers = await ctx.resolveHelpersForVault(this.srcVaultId);
+    const baseHelpers = await ctx.resolveHelpersForVault(this.srcVaultId);
+    const boost = this.resolveUnstakeBoost(baseHelpers);
+    // must precede getInnerZapStrategiesForVault: every strategy captures helpers.vaultType when
+    // it is constructed
+    const srcHelpers = withBoostSourcedVaultType(baseHelpers, boost?.id);
     const strategies = await (await getTransactApi()).getInnerZapStrategiesForVault(srcHelpers);
 
     const match = await VaultSourceHandler.findStrategyForOutputWithdraw(
@@ -56,10 +70,15 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
       );
     }
 
-    await match.strategy.beforeQuote?.();
+    const strategy =
+      boost && isComposableStrategy(match.strategy) ?
+        new BoostZapStrategy(match.strategy, srcHelpers, boost)
+      : match.strategy;
+
+    await strategy.beforeQuote?.();
 
     const adaptedInput = this.adaptInputToStrategy(input, match, srcHelpers.getState());
-    const underlyingQuote = await match.strategy.fetchWithdrawQuote([adaptedInput], match.option);
+    const underlyingQuote = await strategy.fetchWithdrawQuote([adaptedInput], match.option);
     if (!isZapQuote(underlyingQuote)) {
       throw new Error(
         `[vault-source] Composable strategy '${match.strategy.id}' returned a non-zap withdraw quote`
@@ -99,16 +118,29 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
     quote: SourceHandlerQuote<VaultSourceState>,
     ctx: SourceHandlerContext
   ): Promise<SourceHandlerSteps> {
-    const srcHelpers = await ctx.resolveHelpersForVault(this.srcVaultId);
+    const { underlyingQuote } = quote.state;
+    // keyed off the quote, not live state, so the executed route always matches the quoted one
+    const unstakeStep = findBoostUnstakeStep(underlyingQuote.steps);
+
+    const baseHelpers = await ctx.resolveHelpersForVault(this.srcVaultId);
+    const srcHelpers = withBoostSourcedVaultType(baseHelpers, unstakeStep?.boostId);
     const strategies = await (await getTransactApi()).getInnerZapStrategiesForVault(srcHelpers);
 
-    const { underlyingQuote } = quote.state;
-    const strategy = strategies.find(s => s.id === underlyingQuote.strategyId);
-    if (!strategy || !isComposableStrategy(strategy)) {
+    const inner = strategies.find(s => s.id === underlyingQuote.strategyId);
+    if (!inner || !isComposableStrategy(inner)) {
       throw new Error(
         `[vault-source] Source withdraw strategy '${underlyingQuote.strategyId}' on chain ${ctx.sourceChainId} is not composable`
       );
     }
+
+    const strategy =
+      unstakeStep ?
+        new BoostZapStrategy(
+          inner,
+          srcHelpers,
+          selectBoostById(srcHelpers.getState(), unstakeStep.boostId)
+        )
+      : inner;
 
     await strategy.beforeStep?.();
     const breakdown = await strategy.fetchWithdrawUserlessZapBreakdown(underlyingQuote);
@@ -118,6 +150,15 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
       orderInputs: breakdown.zapRequest.order.inputs,
       orderOutputs: breakdown.zapRequest.order.outputs,
     };
+  }
+
+  /**
+   * Mirror of VaultDestHandler.maybeStakeIntoBoost, with no recovery branch: recovery replays only
+   * the destination leg, so the live form is always authoritative when a source leg is quoted.
+   */
+  private resolveUnstakeBoost(helpers: ZapTransactHelpers): BoostPromoEntity | undefined {
+    const boost = selectTransactUnstakeFromBoostTarget(helpers.getState());
+    return boost && boost.vaultId === this.srcVaultId ? boost : undefined;
   }
 
   // Adapt source vault's shareToken input to what the matched underlying strategy declares
