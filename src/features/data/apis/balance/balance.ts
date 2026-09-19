@@ -9,7 +9,7 @@ import { BIG_ZERO, fromWei, isFiniteBigNumber } from '../../../../helpers/big-nu
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity, TokenErc20, TokenNative } from '../../entities/token.ts';
-import { isTokenErc20, isTokenNative } from '../../entities/token.ts';
+import { isTokenEqual, isTokenErc20, isTokenNative } from '../../entities/token.ts';
 import {
   isErc4626AsyncWithdrawVault,
   isGovVaultSingle,
@@ -23,7 +23,12 @@ import {
   selectGovVaultBalanceTokenEntity,
   selectGovVaultRewardsTokenEntity,
 } from '../../selectors/balance.ts';
-import { selectTokenByAddress } from '../../selectors/tokens.ts';
+import {
+  selectChainNativeToken,
+  selectChainWrappedNativeToken,
+  selectTokenByAddress,
+} from '../../selectors/tokens.ts';
+import { nativeAndWrappedAreSame } from '../transact/helpers/tokens.ts';
 import type { BeefyState } from '../../store/types.ts';
 import { isDefined } from '../../utils/array-utils.ts';
 import { featureFlag_getBalanceApiChunkSize } from '../../utils/feature-flags.ts';
@@ -62,10 +67,19 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     const CHUNK_SIZE = featureFlag_getBalanceApiChunkSize(this.chain.id);
 
+    // arc: native and wnative are one balance, so one native read serves both views
+    const sameBalanceWNative =
+      nativeAndWrappedAreSame(this.chain.id) ?
+        selectChainWrappedNativeToken(state, this.chain.id)
+      : undefined;
+    let sameBalanceWanted = false;
+
     const nativeTokens: TokenNative[] = [];
     const erc20Tokens: TokenErc20[] = [];
     for (const token of tokens) {
-      if (isTokenErc20(token)) {
+      if (sameBalanceWNative && isTokenEqual(token, sameBalanceWNative)) {
+        sameBalanceWanted = true;
+      } else if (isTokenErc20(token)) {
         erc20Tokens.push(token);
       } else if (isTokenNative(token)) {
         nativeTokens.push(token);
@@ -178,7 +192,17 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       });
     });
 
-    if (nativeTokens.length > 0) {
+    if (sameBalanceWNative && (sameBalanceWanted || nativeTokens.length > 0)) {
+      const native = nativeTokens[0] || selectChainNativeToken(state, this.chain.id);
+      const nativeBalance = this.nativeTokenFormatter(nativeResults, native);
+      res.tokens.push(nativeBalance, {
+        tokenAddress: sameBalanceWNative.address,
+        amount: nativeBalance.amount.decimalPlaces(
+          sameBalanceWNative.decimals,
+          BigNumber.ROUND_FLOOR
+        ),
+      });
+    } else if (nativeTokens.length > 0) {
       res.tokens.push(this.nativeTokenFormatter(nativeResults, nativeTokens[0]));
     }
 
