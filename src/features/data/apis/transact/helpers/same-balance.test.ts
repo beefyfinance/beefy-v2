@@ -6,10 +6,12 @@ import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenErc20, TokenNative } from '../../../entities/token.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import type { ISwapAggregator } from '../swap/ISwapAggregator.ts';
+import { SwapAggregator } from '../swap/SwapAggregator.ts';
+import { Balances } from './Balances.ts';
 import { WNativeSwapProvider } from '../swap/wnative/WNativeSwapProvider.ts';
 import { fetchZapAggregatorSwap } from '../zap/swap.ts';
 import { buildFeeZapSteps } from './fee.ts';
-import { floorToSharedPrecision, isSameBalancePair } from './tokens.ts';
+import { allTokensAreDistinct, floorToSharedPrecision, isSameBalancePair } from './tokens.ts';
 
 // arc: native USDC (18 decimals) and the 0x3600 ERC-20 (6 decimals) are one balance
 
@@ -132,32 +134,23 @@ describe('isSameBalancePair', () => {
 describe('WNativeSwapProvider', () => {
   const provider = new WNativeSwapProvider();
 
-  it('supports native and wnative on arc', async () => {
-    expect(await provider.getSupportedTokens(undefined, 'arc', state)).toEqual([
-      arcNative,
-      arcUsdc,
+  it('offers no wrap route on arc: there is nothing to wrap', async () => {
+    expect(await provider.getSupportedTokens(undefined, 'arc', state)).toEqual([]);
+    expect(await provider.getSupportedTokens(undefined, 'base', state)).toEqual([
+      baseNative,
+      baseWeth,
     ]);
   });
 
-  it('quotes arc native <-> wnative 1:1 at the shared precision', async () => {
-    const toWnative = await provider.fetchQuote(
-      { fromToken: arcNative, fromAmount: bn('12.34567890123456789'), toToken: arcUsdc },
-      state
-    );
-    expect(toWnative.toAmount.toString(10)).toBe('12.345678');
-
-    const toNative = await provider.fetchQuote(
-      { fromToken: arcUsdc, fromAmount: bn('3.5'), toToken: arcNative },
-      state
-    );
-    expect(toNative.toAmount.toString(10)).toBe('3.5');
-  });
-
   it('never builds a wrap call on arc', async () => {
-    const quote = await provider.fetchQuote(
-      { fromToken: arcNative, fromAmount: bn('1'), toToken: arcUsdc },
-      state
-    );
+    const quote = {
+      providerId: 'wnative',
+      fromToken: arcNative,
+      fromAmount: bn('1'),
+      toToken: arcUsdc,
+      toAmount: bn('1'),
+      fee: { value: 0 },
+    };
     await expect(
       provider.fetchSwap({ quote, fromAddress: ROUTER, slippage: 0.01 }, state)
     ).rejects.toThrow('No wrap/unwrap call on arc');
@@ -179,36 +172,35 @@ describe('WNativeSwapProvider', () => {
 });
 
 describe('fetchZapAggregatorSwap', () => {
-  it('moves arc native to wnative without a router call', async () => {
-    const provider = new WNativeSwapProvider();
+  it('refuses to build a step for the arc shared pair: strategies must use the erc20 view', async () => {
     const fromAmount = bn('10.0000005');
-    const quote = await provider.fetchQuote(
-      { fromToken: arcNative, fromAmount, toToken: arcUsdc },
-      state
-    );
+    const quote = {
+      providerId: 'wnative',
+      fromToken: arcNative,
+      fromAmount,
+      toToken: arcUsdc,
+      toAmount: bn('10'),
+      fee: { value: 0 },
+    };
     const fetchSwap = vi.fn();
     const aggregator = { fetchSwap } as unknown as ISwapAggregator;
 
-    const result = await fetchZapAggregatorSwap(
-      {
-        quote,
-        providerId: quote.providerId,
-        inputs: [{ token: arcNative, amount: fromAmount }],
-        outputs: [{ token: arcUsdc, amount: quote.toAmount }],
-        maxSlippage: 0.01,
-        zapRouter: ROUTER,
-        insertBalance: true,
-      },
-      aggregator,
-      state
-    );
-
+    await expect(
+      fetchZapAggregatorSwap(
+        {
+          quote,
+          providerId: quote.providerId,
+          inputs: [{ token: arcNative, amount: fromAmount }],
+          outputs: [{ token: arcUsdc, amount: quote.toAmount }],
+          maxSlippage: 0.01,
+          zapRouter: ROUTER,
+          insertBalance: true,
+        },
+        aggregator,
+        state
+      )
+    ).rejects.toThrow('share one balance');
     expect(fetchSwap).not.toHaveBeenCalled();
-    expect(result.zaps).toEqual([]);
-    expect(result.inputs).toEqual([{ token: arcNative, amount: fromAmount }]);
-    expect(result.minOutputs).toHaveLength(1);
-    expect(result.minOutputs[0].token).toBe(arcUsdc);
-    expect(result.minOutputs[0].amount.toString(10)).toBe('10');
   });
 
   it('still emits the wrap call on other chains', async () => {
@@ -289,5 +281,88 @@ describe('buildFeeZapSteps', () => {
     expect(zaps).toHaveLength(2);
     expect(zaps[0].value).toBe('50061728394506172');
     expect(decodeTransferAmount(zaps[1].data)).toBe(50061728394506172n);
+  });
+});
+
+describe('Balances', () => {
+  it('keeps arc native and wnative in one bucket, at the erc20 precision', () => {
+    const balances = new Balances([{ token: arcNative, amount: bn('10.0000005') }], arcUsdc);
+    expect(balances.get(arcUsdc).toString(10)).toBe('10');
+    expect(balances.get(arcNative).toString(10)).toBe('10');
+
+    expect(
+      balances
+        .subtract({ token: arcUsdc, amount: bn('10') })
+        .get(arcUsdc)
+        .toString(10)
+    ).toBe('0');
+  });
+
+  it('floors on the way in and out, so a native round trip nets to zero', () => {
+    const balances = new Balances([{ token: arcNative, amount: bn('10.0000005') }], arcUsdc);
+    balances.subtract({ token: arcNative, amount: bn('10.0000005') });
+    expect(balances.get(arcUsdc).toString(10)).toBe('0');
+  });
+
+  it('still catches a real underflow', () => {
+    const balances = new Balances([{ token: arcNative, amount: bn('10') }], arcUsdc);
+    expect(() => balances.subtract({ token: arcUsdc, amount: bn('10.000001') })).toThrow(
+      'is negative'
+    );
+  });
+
+  it('keeps native and wnative separate everywhere else', () => {
+    const balances = new Balances([{ token: baseNative, amount: bn('1.5') }], baseWeth);
+    expect(balances.get(baseNative).toString(10)).toBe('1.5');
+    expect(balances.get(baseWeth).toString(10)).toBe('0');
+  });
+
+  it('forChain only shares the bucket on same-balance chains', () => {
+    expect(
+      Balances.forChain(state, 'arc', [{ token: arcNative, amount: bn('10.0000005') }])
+        .get(arcUsdc)
+        .toString(10)
+    ).toBe('10');
+    expect(
+      Balances.forChain(state, 'base', [{ token: baseNative, amount: bn('1.5') }])
+        .get(baseWeth)
+        .toString(10)
+    ).toBe('0');
+  });
+});
+
+describe('allTokensAreDistinct', () => {
+  it('counts the arc pair as one token when given wnative', () => {
+    expect(allTokensAreDistinct([arcNative, arcUsdc, arcEurc], arcUsdc)).toBe(false);
+    expect(allTokensAreDistinct([arcNative, arcEurc], arcUsdc)).toBe(true);
+  });
+
+  it('is unchanged for other chains and without wnative', () => {
+    expect(allTokensAreDistinct([baseNative, baseWeth], baseWeth)).toBe(true);
+    expect(allTokensAreDistinct([arcNative, arcUsdc])).toBe(true);
+  });
+});
+
+describe('SwapAggregator on a same-balance chain', () => {
+  // no provider serves the arc pair: the wnative provider lists nothing and the api has no arc
+  const aggregator = new SwapAggregator([]);
+
+  it('still offers both views of the wanted token', async () => {
+    const support = await aggregator.fetchTokenSupport([arcUsdc], undefined, 'arc', state);
+    expect(support.any).toEqual([arcNative, arcUsdc]);
+  });
+
+  it('offers nothing extra on other chains', async () => {
+    const support = await aggregator.fetchTokenSupport([baseWeth], undefined, 'base', state);
+    expect(support.any).toEqual([]);
+  });
+
+  it('reports the shared pair as swappable, and unrelated pairs as not', async () => {
+    expect(await aggregator.canSwapTokenPair(arcNative, arcUsdc, undefined, 'arc', state)).toBe(
+      true
+    );
+    expect(await aggregator.canSwapTokenPair(arcNative, arcEurc, undefined, 'arc', state)).toBe(
+      false
+    );
   });
 });

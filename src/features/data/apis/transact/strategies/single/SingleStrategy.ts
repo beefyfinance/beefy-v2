@@ -38,11 +38,17 @@ import {
   onlyOneToken,
 } from '../../helpers/options.ts';
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
-import { nativeAndWrappedAreSame, pickTokens } from '../../helpers/tokens.ts';
+import {
+  floorToSharedPrecision,
+  isSameBalancePair,
+  nativeAndWrappedAreSame,
+  pickTokens,
+} from '../../helpers/tokens.ts';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import {
   type InputTokenAmount,
+  isZapQuoteStepDeposit,
   isZapQuoteStepSwap,
   isZapQuoteStepSwapAggregator,
   isZapQuoteStepWithdraw,
@@ -205,10 +211,16 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
 
     // Direct deposit: no swap needed (used by cross-chain when bridge token = deposit token)
     const state = getState();
-    if (isTokenEqual(input.token, this.vaultType.depositToken)) {
-      const outputs = [{ token: this.vaultType.depositToken, amount: input.amount }];
+    const isSameBalance = isSameBalancePair(input.token, this.vaultType.depositToken, this.wnative);
+    if (isTokenEqual(input.token, this.vaultType.depositToken) || isSameBalance) {
+      const amount =
+        isSameBalance ?
+          floorToSharedPrecision(input.amount, input.token, this.wnative)
+        : input.amount;
+      const outputs = [{ token: this.vaultType.depositToken, amount }];
+      // always the deposit token: the router reads its balance, which already holds a native input
       const steps: ZapQuoteStep[] = [
-        { type: 'deposit', inputs: [{ token: input.token, amount: input.amount }] },
+        { type: 'deposit', inputs: [{ token: this.vaultType.depositToken, amount }] },
       ];
       return {
         id: createQuoteId(option.id),
@@ -402,11 +414,18 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
 
     // Step 3. Swap if needed
     const swapInputToken = isTokenNative(withdrawnToken) ? this.wnative : withdrawnToken;
-    const swapInputAmount = withdrawnAmountAfterFee;
+    const swapInputAmount =
+      isTokenNative(withdrawnToken) ?
+        floorToSharedPrecision(withdrawnAmountAfterFee, withdrawnToken, this.wnative)
+      : withdrawnAmountAfterFee;
     const swapOutputToken = onlyOneToken(option.wantedOutputs);
     let outputs: TokenAmount[] = [{ token: swapInputToken, amount: swapInputAmount }];
 
-    if (!isTokenEqual(swapInputToken, swapOutputToken)) {
+    // the other view of the same balance is paid out by the order outputs, with no swap
+    if (
+      !isTokenEqual(swapInputToken, swapOutputToken) &&
+      !isSameBalancePair(swapInputToken, swapOutputToken, this.wnative)
+    ) {
       const swapQuotes = await swapAggregator.fetchQuotes(
         {
           vaultId: this.vault.id,
@@ -503,7 +522,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     const slippage = selectTransactSlippage(state);
 
     const steps: ZapStep[] = [];
-    const minBalances = new Balances(quote.inputs);
+    const minBalances = Balances.forChain(state, this.vault.chainId, quote.inputs);
     let depositInput: InputTokenAmount;
 
     if (quote.swapQuote) {
@@ -532,10 +551,14 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
         max: true,
       };
     } else {
-      // Direct deposit: input IS the deposit token, no swap needed
+      const depositStep = quote.steps.find(isZapQuoteStepDeposit);
+      if (!depositStep) {
+        throw new Error('Invalid quote steps');
+      }
+      const token = depositStep.inputs[0].token;
       depositInput = {
-        token: quote.inputs[0].token,
-        amount: quote.inputs[0].amount,
+        token,
+        amount: minBalances.get(token),
         max: true,
       };
     }

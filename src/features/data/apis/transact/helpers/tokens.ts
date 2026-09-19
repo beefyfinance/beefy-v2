@@ -132,9 +132,21 @@ export function tokensReachableFromAll(
 
 /**
  * Returns true if all tokens are different from each other
+ * Pass wnative so native and wnative count as one token where they are one balance (arc)
  */
-export function allTokensAreDistinct(inputs: TokenEntity[]): boolean {
-  return inputs.every((input, i) => inputs.findIndex(other => isTokenEqual(input, other)) === i);
+export function allTokensAreDistinct(inputs: TokenEntity[], wnative?: TokenErc20): boolean {
+  const tokens =
+    wnative ?
+      inputs.map(token =>
+        (
+          nativeAndWrappedAreSame(token.chainId) &&
+          (isTokenNative(token) || isTokenEqual(token, wnative))
+        ) ?
+          (wnative as TokenEntity)
+        : token
+      )
+    : inputs;
+  return tokens.every((token, i) => tokens.findIndex(other => isTokenEqual(token, other)) === i);
 }
 
 const sharedBalanceChainIds: Set<string> = new Set(

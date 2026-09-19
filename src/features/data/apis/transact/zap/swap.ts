@@ -2,11 +2,7 @@ import { first } from 'lodash-es';
 import { isTokenNative } from '../../../entities/token.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { slipBy } from '../helpers/amounts.ts';
-import {
-  floorToSharedPrecision,
-  isSameBalancePair,
-  nativeAndWrappedAreSame,
-} from '../helpers/tokens.ts';
+import { isSameBalancePair, nativeAndWrappedAreSame } from '../helpers/tokens.ts';
 import { getTokenAddress } from '../helpers/zap.ts';
 import { selectChainWrappedNativeToken } from '../../../selectors/tokens.ts';
 import { QuoteChangedError } from '../strategies/error.ts';
@@ -31,22 +27,17 @@ export async function fetchZapAggregatorSwap(
     throw new Error(`Invalid swap request`);
   }
 
-  const input = first(inputs)!;
   const output = first(outputs)!; // we checked length above
 
   const { chainId } = quote.fromToken;
-  if (nativeAndWrappedAreSame(chainId)) {
-    const wnative = selectChainWrappedNativeToken(state, chainId);
-    if (isSameBalancePair(quote.fromToken, quote.toToken, wnative)) {
-      // one balance: nothing to call, the next step's balance read already sees it
-      const moved = [
-        {
-          token: quote.toToken,
-          amount: floorToSharedPrecision(input.amount, input.token, wnative),
-        },
-      ];
-      return { inputs, outputs: moved, minOutputs: moved, returned: [], zaps: [] };
-    }
+  if (
+    nativeAndWrappedAreSame(chainId) &&
+    isSameBalancePair(quote.fromToken, quote.toToken, selectChainWrappedNativeToken(state, chainId))
+  ) {
+    // strategies must use the erc20 view directly on these chains
+    throw new Error(
+      `${quote.fromToken.symbol} and ${quote.toToken.symbol} share one balance on ${chainId}`
+    );
   }
 
   const swap = await swapAggregator.fetchSwap(

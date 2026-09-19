@@ -503,7 +503,7 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
     const slippage = selectTransactSlippage(state);
     const zapHelpers: ZapHelpers = { chain, slippage, state };
     const steps: ZapStep[] = [];
-    const minBalances = new Balances(quote.inputs);
+    const minBalances = Balances.forChain(state, this.vault.chainId, quote.inputs);
     const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
     const buildQuote = quote.steps.find(isZapQuoteStepBuild);
 
@@ -518,7 +518,8 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
     const insertBalance = allTokensAreDistinct(
       swapQuotes
         .map(quoteStep => quoteStep.fromToken)
-        .concat(buildQuote.inputs.map(({ token }) => token))
+        .concat(buildQuote.inputs.map(({ token }) => token)),
+      this.wnative
     );
     const swapZaps = await Promise.all(
       swapQuotes.map(quoteStep => this.fetchZapSwap(quoteStep, zapHelpers, insertBalance))
@@ -965,7 +966,10 @@ class GammaStrategyImpl implements IComposableStrategy<StrategyId> {
         throw new Error('Invalid swap quote');
       }
 
-      const insertBalance = allTokensAreDistinct(swapQuotes.map(quoteStep => quoteStep.fromToken));
+      const insertBalance = allTokensAreDistinct(
+        swapQuotes.map(quoteStep => quoteStep.fromToken),
+        this.wnative
+      );
       // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
       const lastSwapIndex = swapQuotes.length - 1;
 

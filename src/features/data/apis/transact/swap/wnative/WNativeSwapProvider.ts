@@ -11,7 +11,7 @@ import {
 } from '../../../../selectors/tokens.ts';
 import type { BeefyState } from '../../../../store/types.ts';
 import { ZERO_FEE } from '../../helpers/quotes.ts';
-import { floorToSharedPrecision, nativeAndWrappedAreSame } from '../../helpers/tokens.ts';
+import { nativeAndWrappedAreSame } from '../../helpers/tokens.ts';
 import { getInsertIndex } from '../../helpers/zap.ts';
 import type {
   ISwapProvider,
@@ -26,23 +26,14 @@ export class WNativeSwapProvider implements ISwapProvider {
     return 'wnative';
   }
 
-  async fetchQuote(request: QuoteRequest, state: BeefyState): Promise<QuoteResponse> {
-    const { fromToken, fromAmount } = request;
-    // 1:1, but on same-balance chains the wnative view may hold fewer decimals
-    const toAmount =
-      nativeAndWrappedAreSame(fromToken.chainId) ?
-        floorToSharedPrecision(
-          fromAmount,
-          fromToken,
-          selectChainWrappedNativeToken(state, fromToken.chainId)
-        )
-      : fromAmount;
+  async fetchQuote(request: QuoteRequest, _state: BeefyState): Promise<QuoteResponse> {
+    // 1:1
     return {
       providerId: this.getId(),
-      fromToken,
-      fromAmount,
+      fromToken: request.fromToken,
+      fromAmount: request.fromAmount,
       toToken: request.toToken,
-      toAmount,
+      toAmount: request.fromAmount,
       fee: ZERO_FEE,
     };
   }
@@ -51,7 +42,7 @@ export class WNativeSwapProvider implements ISwapProvider {
     const { quote } = request;
     const chainId = quote.fromToken.chainId;
     if (nativeAndWrappedAreSame(chainId)) {
-      // fetchZapAggregatorSwap moves these call-less; wnative may have no deposit()/withdraw()
+      // the erc20 view has no deposit()/withdraw(): strategies use it without a swap step
       throw new Error(`No wrap/unwrap call on ${chainId}`);
     }
     const wnative = selectChainWrappedNativeToken(state, chainId);
@@ -81,6 +72,10 @@ export class WNativeSwapProvider implements ISwapProvider {
     chainId: ChainEntity['id'],
     state: BeefyState
   ): Promise<TokenEntity[]> {
+    if (nativeAndWrappedAreSame(chainId)) {
+      return [];
+    }
+
     const native = selectChainNativeToken(state, chainId);
     const wnative = selectChainWrappedNativeToken(state, chainId);
     return [native, wnative];

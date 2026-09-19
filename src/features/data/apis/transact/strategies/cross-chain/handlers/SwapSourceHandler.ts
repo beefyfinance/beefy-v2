@@ -4,7 +4,11 @@ import { selectChainWrappedNativeToken } from '../../../../../selectors/tokens.t
 import { selectTransactSlippage } from '../../../../../selectors/transact.ts';
 import { selectZapByChainId } from '../../../../../selectors/zap.ts';
 import { Balances } from '../../../helpers/Balances.ts';
-import { isSameBalancePair, nativeAndWrappedAreSame } from '../../../helpers/tokens.ts';
+import {
+  floorToSharedPrecision,
+  isSameBalancePair,
+  nativeAndWrappedAreSame,
+} from '../../../helpers/tokens.ts';
 import { getTokenAddress } from '../../../helpers/zap.ts';
 import {
   isZapQuoteStepSwapAggregator,
@@ -46,17 +50,20 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
     const state = helpers.getState();
     const { swapAggregator } = helpers;
 
-    const isDirectOutput = input.token.address.toLowerCase() === outputToken.address.toLowerCase();
-    // native -> wnative on a same-balance chain is exact, no slippage
-    const isSameBalance =
-      nativeAndWrappedAreSame(sourceChainId) &&
-      isSameBalancePair(
-        input.token,
-        outputToken,
+    // one balance: the burn reads the erc20 view of a native input, so no swap is needed
+    const sharedWNative =
+      nativeAndWrappedAreSame(sourceChainId) ?
         selectChainWrappedNativeToken(state, sourceChainId)
-      );
+      : undefined;
+    const isSameBalance =
+      !!sharedWNative && isSameBalancePair(input.token, outputToken, sharedWNative);
+    const isDirectOutput =
+      input.token.address.toLowerCase() === outputToken.address.toLowerCase() || isSameBalance;
     const sourceSteps: ZapQuoteStep[] = [];
-    let outputAmount = input.amount;
+    let outputAmount =
+      isSameBalance ?
+        floorToSharedPrecision(input.amount, input.token, sharedWNative)
+      : input.amount;
     let swapStep: ZapQuoteStepSwapAggregator | undefined;
 
     if (!isDirectOutput) {
@@ -117,7 +124,7 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
       allowances,
       returned: [],
       dustTokens,
-      slippageAppliesToOutput: !isDirectOutput && !isSameBalance,
+      slippageAppliesToOutput: !isDirectOutput,
       state: { input, swapStep },
     };
   }
@@ -138,7 +145,7 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
     }
 
     const zapSteps: ZapStep[] = [];
-    const minBalances = new Balances([input]);
+    const minBalances = Balances.forChain(state, sourceChainId, [input]);
 
     if (swapStep && isZapQuoteStepSwapAggregator(swapStep)) {
       const swapZap = await fetchZapAggregatorSwap(

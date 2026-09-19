@@ -343,7 +343,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       };
 
       const expectedTokens = quote.outputs.map(output => output.token);
-      const minBalances = new Balances(quote.inputs);
+      const minBalances = Balances.forChain(state, this.vault.chainId, quote.inputs);
 
       return { zapRequest, expectedTokens, minBalances };
     } else {

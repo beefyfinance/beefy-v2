@@ -496,7 +496,7 @@ class PendleStrategyImpl implements IComposableStrategy<StrategyId> {
     const slippage = selectTransactSlippage(state);
     const zapHelpers: ZapHelpers = { chain, slippage, state };
     const steps: ZapStep[] = [];
-    const minBalances = new Balances(quote.inputs);
+    const minBalances = Balances.forChain(state, this.vault.chainId, quote.inputs);
     const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
     const buildQuote = quote.steps.find(isZapQuoteStepBuild);
 
