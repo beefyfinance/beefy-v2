@@ -41,10 +41,12 @@ import {
   selectPastVaultBoostIds,
   selectVaultCurrentBoostId,
 } from './boosts.ts';
+import { nativeAndWrappedAreSame } from '../apis/transact/helpers/tokens.ts';
 import { selectIsConfigAvailable } from './data-loader/config.ts';
 import { hasLoaderFulfilledOnce } from './data-loader-helpers.ts';
 import { selectIsPricesAvailable } from './data-loader/prices.ts';
 import {
+  selectChainWrappedNativeToken,
   selectTokenByAddress,
   selectTokenPriceByAddress,
   selectTokensByChainId,
@@ -940,6 +942,21 @@ export const selectPastBoostIdsWithUserBalance = (
   return arrayOrStaticEmpty(boostIds);
 };
 
+/**
+ * Key for one wallet balance; arc's native and wnative are the same funds, so they share a key
+ */
+export const selectBalanceKeyForToken = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  address: string
+): string => {
+  const key =
+    address === 'native' && nativeAndWrappedAreSame(chainId) ?
+      selectChainWrappedNativeToken(state, chainId).address
+    : address;
+  return `${chainId}:${key.toLowerCase()}`;
+};
+
 export const selectDepositOptionTokensBalanceByChainId = (
   state: BeefyState,
   chainId: ChainEntity['id'],
@@ -948,11 +965,15 @@ export const selectDepositOptionTokensBalanceByChainId = (
   const selectionIds = state.ui.transact.selections.byChainId[chainId];
   if (!selectionIds) return BIG_ZERO;
 
+  const counted = new Set<string>();
   return selectionIds.reduce((acc, selectionId) => {
     const selection = state.ui.transact.selections.bySelectionId[selectionId];
     if (!selection) return acc;
     if (isVaultSourceSelection(state, selectionId)) return acc;
     return selection.tokens.reduce((sum, token) => {
+      const key = selectBalanceKeyForToken(state, token.chainId, token.address);
+      if (counted.has(key)) return sum;
+      counted.add(key);
       const balance = selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress);
       const price = selectTokenPriceByAddress(state, token.chainId, token.address);
       return sum.plus(balance.multipliedBy(price));
