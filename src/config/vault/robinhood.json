@@ -1,5 +1,83 @@
 [
   {
+    "id": "uniswap-cow-robinhood-weth-inu-rp",
+    "name": "INU-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodWETH-INU",
+    "tokenAddress": "0x449b98bf76e1284E502148d54F42d7AF1285FC9e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x34980Db21351DFDa310493eCE6F50D0CfCfdafc4",
+    "earnedToken": "rCowUniswapRobinhoodWETH-INU",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-inu",
+    "status": "active",
+    "createdAt": 1789828584,
+    "platformId": "uniswap",
+    "assets": ["INU", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-weth-inu",
+    "name": "INU-WETH",
+    "type": "cowcentrated",
+    "token": "INU-WETH uniswap",
+    "tokenAddress": "0xa95D3882FB3fF32b6D8CC411f88cf7a2413f1a1c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0x63Ee32Ac3077d1fbd8a77eBBA2a6ed4b8e9c1e18"
+    ],
+    "earnContractAddress": "0x449b98bf76e1284E502148d54F42d7AF1285FC9e",
+    "earnedToken": "cowUniswapRobinhoodWETH-INU",
+    "earnedTokenAddress": "0x449b98bf76e1284E502148d54F42d7AF1285FC9e",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-inu",
+    "status": "active",
+    "createdAt": 1789828584,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["INU", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "alandale-cow-robinhood-weth-spy-vault",
     "name": "SPY-WETH",
     "type": "standard",
