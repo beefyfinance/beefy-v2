@@ -9,6 +9,7 @@ import {
   getDataApiBucketsLongerThan,
 } from '../apis/beefy/beefy-data-api-helpers.ts';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
+import { nativeAndWrappedAreSame } from '../apis/transact/helpers/tokens.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import { isTokenErc20, isTokenNative } from '../entities/token.ts';
@@ -177,6 +178,14 @@ export const selectChainWrappedNativeToken = (state: BeefyState, chainId: ChainE
     );
   }
   return token;
+};
+
+/** arc's native USDC is spent through its 6 decimal erc20 view, so finer input is only dust */
+export const selectTokenInputDecimals = (state: BeefyState, token: TokenEntity): number => {
+  if (!isTokenNative(token) || !nativeAndWrappedAreSame(token.chainId)) {
+    return token.decimals;
+  }
+  return Math.min(token.decimals, selectChainWrappedNativeToken(state, token.chainId).decimals);
 };
 
 export function isTokenStable(token: TokenEntity): boolean {

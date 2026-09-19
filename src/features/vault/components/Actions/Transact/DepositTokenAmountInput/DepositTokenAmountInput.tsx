@@ -15,6 +15,7 @@ import {
 } from '../../../../../data/selectors/balance.ts';
 import {
   selectTokenByAddress,
+  selectTokenInputDecimals,
   selectTokenPriceByTokenOracleId,
 } from '../../../../../data/selectors/tokens.ts';
 import {
@@ -64,18 +65,19 @@ const StandardDepositTokenAmountInput = memo(function StandardDepositTokenAmount
   );
   const value = useAppSelector(state => selectTransactInputIndexAmount(state, index));
   const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, token.oracleId));
+  const inputDecimals = useAppSelector(state => selectTokenInputDecimals(state, token));
 
   const handleChange = useCallback<NonNullable<AmountInputProps['onChange']>>(
     (value, isMax) => {
       dispatch(
         transactSetInputAmount({
           index,
-          amount: value.decimalPlaces(token.decimals, BigNumber.ROUND_FLOOR),
+          amount: value.decimalPlaces(inputDecimals, BigNumber.ROUND_FLOOR),
           max: isMax,
         })
       );
     },
-    [dispatch, token.decimals, index]
+    [dispatch, inputDecimals, index]
   );
 
   return (
@@ -85,7 +87,7 @@ const StandardDepositTokenAmountInput = memo(function StandardDepositTokenAmount
       price={price}
       maxValue={userBalance}
       onChange={handleChange}
-      tokenDecimals={token.decimals}
+      tokenDecimals={inputDecimals}
       endAdornment={<TokenSelectButton index={index} />}
     />
   );
