@@ -22,7 +22,7 @@ export const config = {
     rpc: ['https://rpc.mainnet.arc.io', 'https://rpc.blockdaemon.mainnet.arc.io'],
     explorerUrl: 'https://explorer.arc.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
+    appMulticallContractAddress: '0x61672cDAbc2B296e3Ea7d18EBCE86957f77f0685',
     native: { symbol: 'USDC', oracleId: 'USDC', decimals: 18, balanceSharedWithWrapped: true },
     gas: {
       type: 'eip1559',
