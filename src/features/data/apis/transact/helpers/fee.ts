@@ -5,7 +5,10 @@ import { toWeiString } from '../../../../../helpers/big-number.ts';
 import type { ChainEntity } from '../../../entities/chain.ts';
 import { isTokenNative, type TokenEntity } from '../../../entities/token.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
-import { selectChainWrappedNativeToken } from '../../../selectors/tokens.ts';
+import {
+  selectChainWrappedNativeToken,
+  selectSharedBalanceWrappedToken,
+} from '../../../selectors/tokens.ts';
 import { selectVaultById } from '../../../selectors/vaults.ts';
 import { selectValidZapFeeRules, selectZapFeeConfigByChainId } from '../../../selectors/zap.ts';
 import type { BeefyState } from '../../../store/types.ts';
@@ -25,7 +28,7 @@ import {
   vaultMatchesMatcher,
   type ZapFeeMatch,
 } from './fee-rules.ts';
-import { floorToSharedPrecision, nativeAndWrappedAreSame } from './tokens.ts';
+import { floorToSharedPrecision } from './tokens.ts';
 import { isOptionFeeable } from './options.ts';
 import { getTokenAddress } from './zap.ts';
 import {
@@ -97,18 +100,15 @@ function computeFeeSplit(
   token: TokenEntity,
   bps: number
 ): { feeAmount: BigNumber; netAmount: BigNumber } {
-  let feeAmount = grossAmount
-    .multipliedBy(bps)
-    .dividedBy(BPS_DENOMINATOR)
-    .decimalPlaces(token.decimals, BigNumber.ROUND_FLOOR);
-  if (isTokenNative(token) && nativeAndWrappedAreSame(token.chainId)) {
-    // charged via the wnative view, so only its precision can be skimmed
-    feeAmount = floorToSharedPrecision(
-      feeAmount,
-      token,
-      selectChainWrappedNativeToken(state, token.chainId)
-    );
-  }
+  // a shared-balance native fee is charged via the wnative view, so only its precision can be skimmed
+  const feeAmount = floorToSharedPrecision(
+    grossAmount
+      .multipliedBy(bps)
+      .dividedBy(BPS_DENOMINATOR)
+      .decimalPlaces(token.decimals, BigNumber.ROUND_FLOOR),
+    token,
+    selectSharedBalanceWrappedToken(state, token.chainId)
+  );
   return { feeAmount, netAmount: grossAmount.minus(feeAmount) };
 }
 
@@ -254,15 +254,17 @@ export function buildFeeZapSteps(args: {
     return { zaps: [transferStep(token.address, recipient, feeAmountWei)], feeAmount, netAmount };
   }
 
-  const wnative = selectChainWrappedNativeToken(state, token.chainId);
-  if (nativeAndWrappedAreSame(token.chainId)) {
-    const wnativeFeeAmountWei = toWeiString(feeAmount, wnative.decimals);
+  const sharedWnative = selectSharedBalanceWrappedToken(state, token.chainId);
+  if (sharedWnative) {
+    const wnativeFeeAmountWei = toWeiString(feeAmount, sharedWnative.decimals);
     return {
-      zaps: [transferStep(wnative.address, recipient, wnativeFeeAmountWei)],
+      zaps: [transferStep(sharedWnative.address, recipient, wnativeFeeAmountWei)],
       feeAmount,
       netAmount,
     };
   }
+
+  const wnative = selectChainWrappedNativeToken(state, token.chainId);
 
   return {
     zaps: [

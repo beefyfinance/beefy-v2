@@ -4,14 +4,11 @@ import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenEntity } from '../../../entities/token.ts';
 import { isTokenEqual, isTokenNative, tokenEqualityKey } from '../../../entities/token.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
-import {
-  selectChainNativeToken,
-  selectChainWrappedNativeToken,
-} from '../../../selectors/tokens.ts';
+import { selectChainWrappedNativeToken } from '../../../selectors/tokens.ts';
 import { selectZapTokenScore } from '../../../selectors/zap.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { sortQuotes } from '../helpers/quotes.ts';
-import { isSameBalancePair, mergeTokenLists, nativeAndWrappedAreSame } from '../helpers/tokens.ts';
+import { mergeTokenLists } from '../helpers/tokens.ts';
 import type { StrategySwapConfig } from '../strategies/strategy-configs.ts';
 import type { ISwapAggregator, TokenSupport } from './ISwapAggregator.ts';
 import type {
@@ -122,21 +119,8 @@ export class SwapAggregator implements ISwapAggregator {
       return merged;
     };
 
-    // one balance: no provider serves the pair, but both views are still usable without a swap
-    const sharedPair =
-      nativeAndWrappedAreSame(chainId) ?
-        [selectChainNativeToken(state, chainId), selectChainWrappedNativeToken(state, chainId)]
-      : undefined;
-    const withSharedPair = (supported: TokenEntity[], wanted: TokenEntity[]): TokenEntity[] =>
-      sharedPair && wanted.some(w => sharedPair.some(t => isTokenEqual(t, w))) ?
-        mergeTokenLists(sharedPair, supported)
-      : supported;
-
-    const supportPerWanted = wantedKeys.map((wantedKey, i) =>
-      withSharedPair(
-        tokensSupporting(p => keysPerProvider[p].has(wantedKey)),
-        [wantedTokens[i]]
-      )
+    const supportPerWanted = wantedKeys.map(wantedKey =>
+      tokensSupporting(i => keysPerProvider[i].has(wantedKey))
     );
 
     if (supportPerWanted.length === 1) {
@@ -146,9 +130,8 @@ export class SwapAggregator implements ISwapAggregator {
       };
     }
 
-    const supportAny = withSharedPair(
-      tokensSupporting(i => wantedKeys.some(wantedKey => keysPerProvider[i].has(wantedKey))),
-      wantedTokens
+    const supportAny = tokensSupporting(i =>
+      wantedKeys.some(wantedKey => keysPerProvider[i].has(wantedKey))
     );
 
     return {
@@ -187,13 +170,6 @@ export class SwapAggregator implements ISwapAggregator {
     state: BeefyState,
     options?: StrategySwapConfig
   ): Promise<boolean> {
-    if (
-      nativeAndWrappedAreSame(chainId) &&
-      isSameBalancePair(fromToken, toToken, selectChainWrappedNativeToken(state, chainId))
-    ) {
-      return true;
-    }
-
     const allowedProviders = this.allowedProviders(options);
     const tokensPerProvider = await Promise.all(
       allowedProviders.map(provider =>

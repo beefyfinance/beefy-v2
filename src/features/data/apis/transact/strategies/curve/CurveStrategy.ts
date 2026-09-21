@@ -505,7 +505,7 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
       poolAddress: this.options.poolAddress || this.depositToken.address,
     };
     const steps: ZapStep[] = [];
-    const minBalances = Balances.forChain(state, this.vault.chainId, quote.inputs);
+    const minBalances = new Balances(quote.inputs);
     const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
     const buildQuote = quote.steps.find(isZapQuoteStepBuild);
 
@@ -973,10 +973,7 @@ class CurveStrategyImpl implements IComposableStrategy<StrategyId> {
         throw new Error('More swap quotes than expected outputs');
       }
 
-      const insertBalance = allTokensAreDistinct(
-        swapQuotes.map(quoteStep => quoteStep.fromToken),
-        this.wnative
-      );
+      const insertBalance = allTokensAreDistinct(swapQuotes.map(quoteStep => quoteStep.fromToken));
       // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
       const lastSwapIndex = swapQuotes.length - 1;
 

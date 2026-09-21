@@ -1,9 +1,8 @@
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { TransactQuote } from '../../../../../data/apis/transact/transact-types.ts';
-import { nativeAndWrappedAreSame } from '../../../../../data/apis/transact/helpers/tokens.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
-import { isTokenEqual, isTokenNative } from '../../../../../data/entities/token.ts';
-import { selectChainWrappedNativeToken } from '../../../../../data/selectors/tokens.ts';
+import { isSharedBalanceToken, isTokenNative } from '../../../../../data/entities/token.ts';
+import { selectSharedBalanceWrappedToken } from '../../../../../data/selectors/tokens.ts';
 import type { BeefyState } from '../../../../../data/store/types.ts';
 import { StepContent } from '../../../../../data/reducers/wallet/stepper-types.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
@@ -34,13 +33,10 @@ export function useConfirmDisabled(): boolean {
 
 /** on same-balance chains (arc) the wnative view spends the same funds as native, so it pays gas */
 function isGasToken(state: BeefyState, token: TokenEntity): boolean {
-  if (isTokenNative(token)) {
-    return true;
-  }
-  if (!nativeAndWrappedAreSame(token.chainId)) {
-    return false;
-  }
-  return isTokenEqual(token, selectChainWrappedNativeToken(state, token.chainId));
+  return (
+    isTokenNative(token) ||
+    isSharedBalanceToken(token, selectSharedBalanceWrappedToken(state, token.chainId))
+  );
 }
 
 /** max-amount deposits of the gas token must leave gas behind, so the CTA is blocked */

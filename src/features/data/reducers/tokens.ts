@@ -18,7 +18,7 @@ import { fetchAllVaults } from '../actions/vaults.ts';
 import type { LpData } from '../apis/beefy/beefy-api-types.ts';
 import type { MinterConfig, VaultConfig } from '../apis/config-types.ts';
 import type { PromoTokenRewardConfig } from '../apis/promos/types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
+import { type ChainEntity, isChainNativeSharedWithWrapped } from '../entities/chain.ts';
 import type { TokenEntity, TokenErc20, TokenNative } from '../entities/token.ts';
 import { isTokenErc20, isTokenNative, NATIVE_TOKEN_ID } from '../entities/token.ts';
 import {
@@ -63,7 +63,7 @@ export const tokensSlice = createSlice({
 
         const token: TokenNative = {
           // wnative keeps the symbol as its id where the two are one balance (arc, metis, celo)
-          id: chainConf.native.balanceSharedWithWrapped ? NATIVE_TOKEN_ID : chainConf.native.symbol,
+          id: isChainNativeSharedWithWrapped(chainConf) ? NATIVE_TOKEN_ID : chainConf.native.symbol,
           chainId: chainId,
           oracleId: chainConf.native.oracleId,
           decimals: chainConf.native.decimals,

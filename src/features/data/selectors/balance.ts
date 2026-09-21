@@ -41,12 +41,11 @@ import {
   selectPastVaultBoostIds,
   selectVaultCurrentBoostId,
 } from './boosts.ts';
-import { nativeAndWrappedAreSame } from '../apis/transact/helpers/tokens.ts';
 import { selectIsConfigAvailable } from './data-loader/config.ts';
 import { hasLoaderFulfilledOnce } from './data-loader-helpers.ts';
 import { selectIsPricesAvailable } from './data-loader/prices.ts';
 import {
-  selectChainWrappedNativeToken,
+  selectSharedBalanceWrappedToken,
   selectTokenByAddress,
   selectTokenPriceByAddress,
   selectTokensByChainId,
@@ -951,9 +950,7 @@ export const selectBalanceKeyForToken = (
   address: string
 ): string => {
   const key =
-    address === 'native' && nativeAndWrappedAreSame(chainId) ?
-      selectChainWrappedNativeToken(state, chainId).address
-    : address;
+    (address === 'native' && selectSharedBalanceWrappedToken(state, chainId)?.address) || address;
   return `${chainId}:${key.toLowerCase()}`;
 };
 

@@ -1,14 +1,8 @@
 import { BIG_ZERO, toWeiString } from '../../../../../../../helpers/big-number.ts';
 import { isTokenErc20 } from '../../../../../entities/token.ts';
-import { selectChainWrappedNativeToken } from '../../../../../selectors/tokens.ts';
 import { selectTransactSlippage } from '../../../../../selectors/transact.ts';
 import { selectZapByChainId } from '../../../../../selectors/zap.ts';
 import { Balances } from '../../../helpers/Balances.ts';
-import {
-  floorToSharedPrecision,
-  isSameBalancePair,
-  nativeAndWrappedAreSame,
-} from '../../../helpers/tokens.ts';
 import { getTokenAddress } from '../../../helpers/zap.ts';
 import {
   isZapQuoteStepSwapAggregator,
@@ -50,20 +44,9 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
     const state = helpers.getState();
     const { swapAggregator } = helpers;
 
-    // one balance: the burn reads the erc20 view of a native input, so no swap is needed
-    const sharedWNative =
-      nativeAndWrappedAreSame(sourceChainId) ?
-        selectChainWrappedNativeToken(state, sourceChainId)
-      : undefined;
-    const isSameBalance =
-      !!sharedWNative && isSameBalancePair(input.token, outputToken, sharedWNative);
-    const isDirectOutput =
-      input.token.address.toLowerCase() === outputToken.address.toLowerCase() || isSameBalance;
+    const isDirectOutput = input.token.address.toLowerCase() === outputToken.address.toLowerCase();
     const sourceSteps: ZapQuoteStep[] = [];
-    let outputAmount =
-      isSameBalance ?
-        floorToSharedPrecision(input.amount, input.token, sharedWNative)
-      : input.amount;
+    let outputAmount = input.amount;
     let swapStep: ZapQuoteStepSwapAggregator | undefined;
 
     if (!isDirectOutput) {
@@ -145,7 +128,7 @@ export class SwapSourceHandler implements ISourceHandler<SwapSourceState> {
     }
 
     const zapSteps: ZapStep[] = [];
-    const minBalances = Balances.forChain(state, sourceChainId, [input]);
+    const minBalances = new Balances([input]);
 
     if (swapStep && isZapQuoteStepSwapAggregator(swapStep)) {
       const swapZap = await fetchZapAggregatorSwap(

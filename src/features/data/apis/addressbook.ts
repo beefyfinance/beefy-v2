@@ -1,5 +1,5 @@
 import { memoize } from 'lodash-es';
-import type { ChainEntity } from '../entities/chain.ts';
+import { type ChainEntity, isChainNativeSharedWithWrapped } from '../entities/chain.ts';
 import { NATIVE_TOKEN_ID, type TokenEntity } from '../entities/token.ts';
 
 export interface ChainAddressBook {
@@ -17,7 +17,7 @@ export const getChainAddressBook = memoize(
     const wnative = addressBookTokens['WNATIVE'];
     const native = addressBookChain.native;
     // when native and wnative are one balance, wnative keeps the symbol as its id
-    const nativeId = chain.native.balanceSharedWithWrapped ? NATIVE_TOKEN_ID : native.symbol;
+    const nativeId = isChainNativeSharedWithWrapped(chain) ? NATIVE_TOKEN_ID : native.symbol;
 
     const addrBookEntries = Object.entries(addressBookTokens);
     if (addrBookEntries.length <= 0) {
@@ -58,7 +58,7 @@ export const getChainAddressBook = memoize(
           type: 'erc20',
           tags: (bookToken.tags as string[]) || [],
         };
-      } else if (tokenId === native.symbol && !chain.native.balanceSharedWithWrapped) {
+      } else if (tokenId === native.symbol && !isChainNativeSharedWithWrapped(chain)) {
         agg[tokenId] = makeNativeToken(bookToken);
       } else {
         agg[tokenId] = {
@@ -82,7 +82,7 @@ export const getChainAddressBook = memoize(
       return agg;
     }, {} as ChainAddressBook);
 
-    if (chain.native.balanceSharedWithWrapped) {
+    if (isChainNativeSharedWithWrapped(chain)) {
       // the symbol-keyed entry is the erc20 view of the balance, so native gets its own entry
       book[nativeId] = makeNativeToken(addressBookTokens[native.symbol] ?? wnative);
     }

@@ -17,11 +17,15 @@ import { isStandardVault, type VaultStandard } from '../../../entities/vault.ts'
 import { type AmmEntityUniswapLike, isUniswapLikeAmm } from '../../../entities/zap.ts';
 import type { Step } from '../../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
-import { selectChainById } from '../../../selectors/chains.ts';
+import {
+  selectChainById,
+  selectIsChainNativeSharedWithWrapped,
+} from '../../../selectors/chains.ts';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
   selectIsTokenLoaded,
+  selectSharedBalanceWrappedToken,
   selectTokenById,
 } from '../../../selectors/tokens.ts';
 import { selectTransactSlippage } from '../../../selectors/transact.ts';
@@ -44,8 +48,6 @@ import {
   allTokensAreDistinct,
   floorToSharedPrecision,
   includeWrappedAndNative,
-  isSameBalancePair,
-  nativeAndWrappedAreSame,
   pickTokens,
   tokensReachableFromAll,
   tokensToLp,
@@ -286,11 +288,12 @@ export abstract class UniswapLikeStrategy<
       : [];
 
     // Swap
-    // native is used as wnative, whose view may hold fewer decimals on same-balance chains
-    const swapInTotal =
-      isInputNative ?
-        floorToSharedPrecision(input.amount, input.token, this.wnative)
-      : input.amount;
+    // native is used as wnative, whose view may hold fewer decimals on shared-balance chains (arc)
+    const swapInTotal = floorToSharedPrecision(
+      input.amount,
+      input.token,
+      selectSharedBalanceWrappedToken(state, input.token.chainId)
+    );
     const swapInAmountWei = pool.getOptimalSwapAmount(
       toWei(swapInTotal, swapInToken.decimals),
       swapInToken.address
@@ -331,7 +334,8 @@ export abstract class UniswapLikeStrategy<
     // Build quote steps
     const steps: ZapQuoteStep[] = [];
 
-    if (isInputNative && !nativeAndWrappedAreSame(input.token.chainId)) {
+    // on shared-balance chains (arc) this is a call-less step that moves the amount to wnative
+    if (isInputNative) {
       const wrapQuotes = await swapAggregator.fetchQuotes(
         {
           fromAmount: input.amount,
@@ -444,17 +448,14 @@ export abstract class UniswapLikeStrategy<
 
     // Swap quotes
     const quoteRequestsPerLpToken: (QuoteRequest | undefined)[] = lpTokens.map((lpTokenN, i) =>
-      (
-        isTokenEqual(lpTokenN, input.token) ||
-        isSameBalancePair(input.token, lpTokenN, this.wnative)
-      ) ?
-        undefined
-      : {
+      isTokenEqual(lpTokenN, input.token) ? undefined : (
+        {
           vaultId: this.vault.id,
           fromToken: input.token,
           fromAmount: swapInAmounts[i],
           toToken: lpTokenN,
         }
+      )
     );
 
     const quotesPerLpToken = await Promise.all(
@@ -488,10 +489,7 @@ export abstract class UniswapLikeStrategy<
       if (quote) {
         return { token: quote.toToken, amount: quote.toAmount };
       }
-      return {
-        token: lpTokens[i],
-        amount: floorToSharedPrecision(swapInAmounts[i], input.token, this.wnative),
-      };
+      return { token: lpTokens[i], amount: swapInAmounts[i] };
     });
 
     console.log(
@@ -739,7 +737,7 @@ export abstract class UniswapLikeStrategy<
     const slippage = selectTransactSlippage(state);
     const zapHelpers: ZapHelpers = { chain, pool, slippage, state };
     const steps: ZapStep[] = [];
-    const minBalances = Balances.forChain(state, this.vault.chainId, quote.inputs);
+    const minBalances = new Balances(quote.inputs);
     const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
     const buildQuote = quote.steps.find(isZapQuoteStepBuild);
 
@@ -751,8 +749,7 @@ export abstract class UniswapLikeStrategy<
     const insertBalance = allTokensAreDistinct(
       swapQuotes
         .map(quoteStep => quoteStep.fromToken)
-        .concat(buildQuote.inputs.map(({ token }) => token)),
-      this.wnative
+        .concat(buildQuote.inputs.map(({ token }) => token))
     );
     const swapZaps = await Promise.all(
       swapQuotes.map(quoteStep => this.fetchZapSwap(quoteStep, zapHelpers, insertBalance))
@@ -1077,7 +1074,10 @@ export abstract class UniswapLikeStrategy<
     });
 
     const outputAmount = keepTokenAmount.amount.plus(swapOutAmount);
-    if (isWantedOutputNative && !nativeAndWrappedAreSame(wantedOutput.chainId)) {
+    if (
+      isWantedOutputNative &&
+      !selectIsChainNativeSharedWithWrapped(this.helpers.getState(), wantedOutput.chainId)
+    ) {
       const { swapAggregator, getState } = this.helpers;
       const state = getState();
       const unwrapQuotes = await swapAggregator.fetchQuotes(
@@ -1129,9 +1129,7 @@ export abstract class UniswapLikeStrategy<
     const state = getState();
     const wantedOutput = onlyOneToken(wantedOutputs);
     const needsSwap = breakOutputs.map(
-      tokenAmount =>
-        !isTokenEqual(wantedOutput, tokenAmount.token) &&
-        !isSameBalancePair(tokenAmount.token, wantedOutput, this.wnative)
+      tokenAmount => !isTokenEqual(wantedOutput, tokenAmount.token)
     );
 
     const swapQuotes = await Promise.all(
@@ -1242,10 +1240,7 @@ export abstract class UniswapLikeStrategy<
         throw new Error('Invalid swap quote');
       }
 
-      const insertBalance = allTokensAreDistinct(
-        swapQuotes.map(quoteStep => quoteStep.fromToken),
-        this.wnative
-      );
+      const insertBalance = allTokensAreDistinct(swapQuotes.map(quoteStep => quoteStep.fromToken));
       // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
       const lastSwapIndex = swapQuotes.length - 1;
       const swapZaps = await Promise.all(

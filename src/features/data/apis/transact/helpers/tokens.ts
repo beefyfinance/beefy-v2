@@ -1,9 +1,18 @@
 import BigNumber from 'bignumber.js';
-import { config } from '../../../../../config/config.ts';
-import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token.ts';
-import { isTokenEqual, isTokenNative, tokenEqualityKey } from '../../../entities/token.ts';
+import type {
+  SharedBalanceWnative,
+  TokenEntity,
+  TokenErc20,
+  TokenNative,
+} from '../../../entities/token.ts';
+import {
+  isSharedBalanceToken,
+  isTokenEqual,
+  isTokenNative,
+  sharedPrecisionDecimals,
+  tokenEqualityKey,
+} from '../../../entities/token.ts';
 import { sortBy } from 'lodash-es';
-import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenAmount } from '../transact-types.ts';
 
 /**
@@ -130,71 +139,59 @@ export function tokensReachableFromAll(
   });
 }
 
-/**
- * Returns true if all tokens are different from each other
- * Pass wnative so native and wnative count as one token where they are one balance (arc)
- */
-export function allTokensAreDistinct(inputs: TokenEntity[], wnative?: TokenErc20): boolean {
-  const tokens =
-    wnative ?
-      inputs.map(token =>
-        (
-          nativeAndWrappedAreSame(token.chainId) &&
-          (isTokenNative(token) || isTokenEqual(token, wnative))
-        ) ?
-          (wnative as TokenEntity)
-        : token
-      )
-    : inputs;
-  return tokens.every((token, i) => tokens.findIndex(other => isTokenEqual(token, other)) === i);
+/** the token whose balance is spent: either side of a shared pair is its erc20 view */
+function toBalanceToken(
+  token: TokenEntity,
+  sharedWnative: SharedBalanceWnative | undefined
+): TokenEntity {
+  return isSharedBalanceToken(token, sharedWnative) ? sharedWnative : token;
 }
 
-const sharedBalanceChainIds: Set<string> = new Set(
-  Object.entries(config)
-    .filter(
-      ([, chain]) =>
-        'balanceSharedWithWrapped' in chain.native && chain.native.balanceSharedWithWrapped
-    )
-    .map(([chainId]) => chainId)
-);
-
 /**
- * Returns true for chains where native and wnative balances are treated as one
- * (Chains where there is no need to wrap or unwrap)
+ * Returns true if all tokens are different from each other
  */
-export function nativeAndWrappedAreSame(chainId: ChainEntity['id']) {
-  return sharedBalanceChainIds.has(chainId);
+export function allTokensAreDistinct(inputs: TokenEntity[]): boolean {
+  return inputs.every((input, i) => inputs.findIndex(other => isTokenEqual(input, other)) === i);
 }
 
 /**
  * Native <-> wnative on a chain where both are one balance, so moving between them needs no call
  */
-export function isSameBalancePair(a: TokenEntity, b: TokenEntity, wnative: TokenErc20): boolean {
-  if (a.chainId !== b.chainId || !nativeAndWrappedAreSame(a.chainId)) {
-    return false;
-  }
+export function isSameBalancePair(
+  a: TokenEntity,
+  b: TokenEntity,
+  sharedWnative: SharedBalanceWnative | undefined
+): boolean {
   return (
-    (isTokenNative(a) && isTokenEqual(b, wnative)) || (isTokenEqual(a, wnative) && isTokenNative(b))
+    !isTokenEqual(a, b) &&
+    isSharedBalanceToken(a, sharedWnative) &&
+    isSharedBalanceToken(b, sharedWnative)
   );
+}
+
+/** same token, or the other view of the same balance: either way no swap is needed */
+export function isSameOrSharedBalance(
+  a: TokenEntity,
+  b: TokenEntity,
+  sharedWnative: SharedBalanceWnative | undefined
+): boolean {
+  return isTokenEqual(toBalanceToken(a, sharedWnative), toBalanceToken(b, sharedWnative));
 }
 
 /**
  * Amounts are in whole tokens, so native and wnative need no conversion factor, but the wnative
  * view can hold fewer decimals (arc: 6 vs 18, balanceOf truncates the rest).
- * No-op unless token is native/wnative on a nativeAndWrappedAreSame chain.
+ * No-op unless token is native/wnative and sharedWnative is set.
  */
 export function floorToSharedPrecision(
   amount: BigNumber,
   token: TokenEntity,
-  wnative: TokenErc20
+  sharedWnative: SharedBalanceWnative | undefined
 ): BigNumber {
-  if (
-    !nativeAndWrappedAreSame(token.chainId) ||
-    !(isTokenNative(token) || isTokenEqual(token, wnative))
-  ) {
+  if (!isSharedBalanceToken(token, sharedWnative)) {
     return amount;
   }
-  return amount.decimalPlaces(Math.min(token.decimals, wnative.decimals), BigNumber.ROUND_FLOOR);
+  return amount.decimalPlaces(sharedPrecisionDecimals(token, sharedWnative), BigNumber.ROUND_FLOOR);
 }
 
 export function pickTokens(...inputs: TokenAmount[][]): TokenEntity[] {

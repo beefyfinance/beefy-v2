@@ -25,10 +25,9 @@ import {
 } from '../../selectors/balance.ts';
 import {
   selectChainNativeToken,
-  selectChainWrappedNativeToken,
+  selectSharedBalanceWrappedToken,
   selectTokenByAddress,
 } from '../../selectors/tokens.ts';
-import { nativeAndWrappedAreSame } from '../transact/helpers/tokens.ts';
 import type { BeefyState } from '../../store/types.ts';
 import { isDefined } from '../../utils/array-utils.ts';
 import { featureFlag_getBalanceApiChunkSize } from '../../utils/feature-flags.ts';
@@ -68,10 +67,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     const CHUNK_SIZE = featureFlag_getBalanceApiChunkSize(this.chain.id);
 
     // arc: native and wnative are one balance, so one native read serves both views
-    const sameBalanceWNative =
-      nativeAndWrappedAreSame(this.chain.id) ?
-        selectChainWrappedNativeToken(state, this.chain.id)
-      : undefined;
+    const sameBalanceWNative = selectSharedBalanceWrappedToken(state, this.chain.id);
     let sameBalanceWanted = false;
 
     const nativeTokens: TokenNative[] = [];

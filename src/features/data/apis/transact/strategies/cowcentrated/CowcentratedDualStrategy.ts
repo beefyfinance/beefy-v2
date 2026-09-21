@@ -311,7 +311,7 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
     const slippage = selectTransactSlippage(state);
     const zapHelpers: ZapHelpers = { chain, slippage, state, clmPool };
     const steps: ZapStep[] = [];
-    const minBalances = Balances.forChain(state, this.vault.chainId, quote.inputs);
+    const minBalances = new Balances(quote.inputs);
     const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
     const depositQuote = quote.steps.find(isZapQuoteStepDeposit);
 
