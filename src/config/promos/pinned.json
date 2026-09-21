@@ -1,17 +1,11 @@
 [
   {
-    "exclude": [
-      "alandale-cow-robinhood-weth-usdg-vault",
-      "alandale-cow-robinhood-weth-lute-vault",
-      "alandale-cow-robinhood-usdg-lute-vault",
-      "alandale-cow-robinhood-weth-spy-vault"
-    ],
     "conditions": [
       {
         "type": "boosted"
       }
     ],
-    "limit": 3,
+    "limit": 4,
     "period": 3600
   }
 ]
