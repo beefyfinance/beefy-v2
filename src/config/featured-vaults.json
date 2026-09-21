@@ -1,6 +1,6 @@
 {
-  "alandale-cow-robinhood-weth-usdg-vault": true,
-  "alandale-cow-robinhood-weth-lute-vault": true,
-  "alandale-cow-robinhood-usdg-lute-vault": true,
-  "alandale-cow-robinhood-weth-spy-vault": true
+  "uniswap-cow-base-usdc-basecat-rp": true,
+  "uniswap-cow-robinhood-weth-moo-rp": true,
+  "pancake-cow-bsc-usdt-4stock-rp": true,
+  "aerodrome-cow-base-weth-drv-vault": true
 }
