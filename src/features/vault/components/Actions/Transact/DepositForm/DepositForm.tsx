@@ -8,7 +8,10 @@ import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/
 import { errorToString } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
+import {
+  transactSetInputAmount,
+  transactSetTokenInputAmount,
+} from '../../../../../data/actions/transact.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { isVaultActive } from '../../../../../data/entities/vault.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
@@ -56,13 +59,7 @@ const TokenInWallet = memo(function TokenInWallet({ token, index }: TokenInWalle
 
   const handleMax = useCallback(() => {
     if (token && balance) {
-      dispatch(
-        transactSetInputAmount({
-          index,
-          amount: balance,
-          max: true,
-        })
-      );
+      dispatch(transactSetTokenInputAmount({ index, token, amount: balance, max: true }));
     }
   }, [balance, dispatch, token, index]);
 

@@ -2,7 +2,10 @@ import { type CssStyles } from '@repo/styles/css';
 import BigNumber from 'bignumber.js';
 import { memo, useCallback, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
+import {
+  transactSetInputAmount,
+  transactSetTokenInputAmount,
+} from '../../../../../data/actions/transact.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import {
   isVaultWithPricePerFullShare,
@@ -69,15 +72,9 @@ const StandardDepositTokenAmountInput = memo(function StandardDepositTokenAmount
 
   const handleChange = useCallback<NonNullable<AmountInputProps['onChange']>>(
     (value, isMax) => {
-      dispatch(
-        transactSetInputAmount({
-          index,
-          amount: value.decimalPlaces(inputDecimals, BigNumber.ROUND_FLOOR),
-          max: isMax,
-        })
-      );
+      dispatch(transactSetTokenInputAmount({ index, token, amount: value, max: isMax }));
     },
-    [dispatch, inputDecimals, index]
+    [dispatch, token, index]
   );
 
   return (
