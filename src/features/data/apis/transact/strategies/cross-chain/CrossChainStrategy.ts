@@ -42,7 +42,7 @@ import {
   totalValueOfTokenAmounts,
   ZERO_FEE,
 } from '../../helpers/quotes.ts';
-import { isSameOrSharedBalance } from '../../helpers/tokens.ts';
+import { isSameBalancePair, isSameOrSharedBalance } from '../../helpers/tokens.ts';
 import { NO_RELAY } from '../../helpers/zap.ts';
 import {
   type AllowanceTokenAmount,
@@ -324,8 +324,12 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
           state,
           this.options.swap
         );
+        const sourceSharedWnative = selectSharedBalanceWrappedToken(state, sourceChainId);
 
         for (const token of tokenSupport.any) {
+          // the other view of sourceUSDC's balance (arc) would duplicate its row
+          if (isSameBalancePair(token, sourceUSDC, sourceSharedWnative)) continue;
+
           const selectionId = createSelectionId(sourceChainId, [token], 'cross-chain');
           options.push({
             id: createOptionId('cross-chain', vault.id, selectionId),
