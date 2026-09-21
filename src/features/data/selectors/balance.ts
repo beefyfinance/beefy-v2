@@ -44,8 +44,8 @@ import {
 import { selectIsConfigAvailable } from './data-loader/config.ts';
 import { hasLoaderFulfilledOnce } from './data-loader-helpers.ts';
 import { selectIsPricesAvailable } from './data-loader/prices.ts';
+import { selectIsChainNativeSharedWithWrapped } from './chains.ts';
 import {
-  selectSharedBalanceWrappedToken,
   selectTokenByAddress,
   selectTokenPriceByAddress,
   selectTokensByChainId,
@@ -106,6 +106,23 @@ export const selectHasUserDepositInVault = (state: BeefyState, vaultId: VaultEnt
   return walletBalance ? walletBalance.depositedVaultIds.indexOf(vaultId) !== -1 : false;
 };
 
+/** native and wnative are one entry where they share a balance (arc), kept under the wnative address */
+const selectBalanceStorageAddress = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  tokenAddress: TokenEntity['address']
+): string => {
+  if (tokenAddress === 'native' && selectIsChainNativeSharedWithWrapped(state, chainId)) {
+    // not selectChainWrappedNativeToken: balances can be read before the addressbook loads
+    const chainTokens = state.entities.tokens.byChainId[chainId];
+    const wnativeAddress = chainTokens?.wnative && chainTokens.byId[chainTokens.wnative];
+    if (wnativeAddress) {
+      return wnativeAddress;
+    }
+  }
+  return tokenAddress.toLowerCase();
+};
+
 export const selectUserBalanceOfToken = (
   state: BeefyState,
   chainId: ChainEntity['id'],
@@ -114,8 +131,9 @@ export const selectUserBalanceOfToken = (
 ) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
   return (
-    walletBalance?.tokenAmount.byChainId[chainId]?.byTokenAddress[tokenAddress.toLowerCase()]
-      ?.balance || BIG_ZERO
+    walletBalance?.tokenAmount.byChainId[chainId]?.byTokenAddress[
+      selectBalanceStorageAddress(state, chainId, tokenAddress)
+    ]?.balance || BIG_ZERO
   );
 };
 
@@ -941,18 +959,12 @@ export const selectPastBoostIdsWithUserBalance = (
   return arrayOrStaticEmpty(boostIds);
 };
 
-/**
- * Key for one wallet balance; arc's native and wnative are the same funds, so they share a key
- */
+/** tokens with the same key read the same stored balance, so sums must count them once */
 export const selectBalanceKeyForToken = (
   state: BeefyState,
   chainId: ChainEntity['id'],
   address: string
-): string => {
-  const key =
-    (address === 'native' && selectSharedBalanceWrappedToken(state, chainId)?.address) || address;
-  return `${chainId}:${key.toLowerCase()}`;
-};
+): string => `${chainId}:${selectBalanceStorageAddress(state, chainId, address)}`;
 
 export const selectDepositOptionTokensBalanceByChainId = (
   state: BeefyState,

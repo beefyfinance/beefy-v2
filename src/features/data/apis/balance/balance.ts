@@ -9,7 +9,12 @@ import { BIG_ZERO, fromWei, isFiniteBigNumber } from '../../../../helpers/big-nu
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity, TokenErc20, TokenNative } from '../../entities/token.ts';
-import { isTokenEqual, isTokenErc20, isTokenNative } from '../../entities/token.ts';
+import {
+  isTokenEqual,
+  isTokenErc20,
+  isTokenNative,
+  sharedPrecisionDecimals,
+} from '../../entities/token.ts';
 import {
   isErc4626AsyncWithdrawVault,
   isGovVaultSingle,
@@ -66,7 +71,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     const CHUNK_SIZE = featureFlag_getBalanceApiChunkSize(this.chain.id);
 
-    // arc: native and wnative are one balance, so one native read serves both views
+    // arc: native and wnative are one balance, stored once under the erc20 view
     const sameBalanceWNative = selectSharedBalanceWrappedToken(state, this.chain.id);
     let sameBalanceWanted = false;
 
@@ -190,11 +195,11 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     if (sameBalanceWNative && (sameBalanceWanted || nativeTokens.length > 0)) {
       const native = nativeTokens[0] || selectChainNativeToken(state, this.chain.id);
-      const nativeBalance = this.nativeTokenFormatter(nativeResults, native);
-      res.tokens.push(nativeBalance, {
+      const { amount } = this.nativeTokenFormatter(nativeResults, native);
+      res.tokens.push({
         tokenAddress: sameBalanceWNative.address,
-        amount: nativeBalance.amount.decimalPlaces(
-          sameBalanceWNative.decimals,
+        amount: amount.decimalPlaces(
+          sharedPrecisionDecimals(native, sameBalanceWNative),
           BigNumber.ROUND_FLOOR
         ),
       });
