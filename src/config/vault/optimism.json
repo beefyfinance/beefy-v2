@@ -10929,8 +10929,10 @@
     "earnedTokenAddress": "0x935A64d0825D86c1ca57Fe8f270e635AC1a0878A",
     "oracle": "lps",
     "oracleId": "velodrome-v2-wsteth-ldo",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1688096352,
+    "retireReason": "tvl",
+    "retiredAt": 1789962734,
     "platformId": "velodrome",
     "assets": ["wstETH", "LDO"],
     "risks": {

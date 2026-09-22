@@ -193,7 +193,7 @@ export const config = {
     name: 'Robinhood',
     chainId: 4663,
     rpc: ['https://rpc.mainnet.chain.robinhood.com'],
-    explorerUrl: 'https://robinhoodchain.blockscout.com',
+    explorerUrl: 'https://robin.etherscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xe02749Ba85C543745aA5714263B75efc7e142a2A',
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
@@ -201,19 +201,6 @@ export const config = {
       type: 'eip1559',
       blocks: 100,
       percentile: 0.6,
-    },
-  },
-  rootstock: {
-    name: 'Rootstock',
-    chainId: 30,
-    rpc: ['https://public-node.rsk.co'],
-    explorerUrl: 'https://rootstock.blockscout.com',
-    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x8EfD3599488542Ec1719567c698a97Fb4e3751a1',
-    native: { symbol: 'RBTC', oracleId: 'WBTC', decimals: 18 },
-    new: false,
-    gas: {
-      type: 'standard',
     },
   },
   sonic: {
@@ -234,6 +221,20 @@ export const config = {
     brand: {
       icon: 'gradient',
       header: 'gradient',
+    },
+  },
+  rootstock: {
+    eol: 1789666812,
+    name: 'Rootstock',
+    chainId: 30,
+    rpc: ['https://public-node.rsk.co'],
+    explorerUrl: 'https://rootstock.blockscout.com',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x8EfD3599488542Ec1719567c698a97Fb4e3751a1',
+    native: { symbol: 'RBTC', oracleId: 'WBTC', decimals: 18 },
+    new: false,
+    gas: {
+      type: 'standard',
     },
   },
   linea: {
