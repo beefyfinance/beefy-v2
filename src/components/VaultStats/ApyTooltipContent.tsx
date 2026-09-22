@@ -135,16 +135,21 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
   );
 });
 
-/** the other wrapper's all-in rate, sat below the total rather than competing with the breakdown */
+/**
+ * The user's own rate, below the vault's breakdown. Same grid as the rows above so the figures line
+ * up, and the tooltip's palette rather than the page's — the light tooltip paints its text dark.
+ */
 const AlternativeRow = styled('div', {
   base: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    gap: '16px',
+    display: 'grid',
+    gridTemplateColumns: '1fr auto',
+    columnGap: '48px',
+    textStyle: 'body',
+    color: 'colorPalette.text.item',
   },
   variants: {
     highlight: {
-      true: { color: 'text.light' },
+      true: { color: 'colorPalette.text.highlight', fontWeight: 'medium' },
     },
   },
 });

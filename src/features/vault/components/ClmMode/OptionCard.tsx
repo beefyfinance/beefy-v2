@@ -14,6 +14,11 @@ export const OptionHeading = styled('div', {
   base: {
     textStyle: 'body.medium',
     color: 'text.dark',
+    // the deposit card hangs its rate off the right edge; text-only headings are unaffected
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '8px',
   },
 });
 

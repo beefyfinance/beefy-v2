@@ -7,11 +7,15 @@ import { useLocalStorageBoolean } from '../../../../helpers/useLocalStorageBoole
 import CheckBoxIcon from '../../../../images/icons/CheckBox.svg?react';
 import CheckBoxBlankIcon from '../../../../images/icons/CheckBoxBlank.svg?react';
 import ExpandMoreIcon from '../../../../images/icons/mui/ExpandMore.svg?react';
-import { selectClmPayoutTokens } from '../../../data/selectors/apy.ts';
+import {
+  formatApyUIRate,
+  selectApyVaultUIData,
+  selectClmPayoutTokens,
+} from '../../../data/selectors/apy.ts';
 import { selectIsStepperStepping } from '../../../data/selectors/stepper.ts';
 import { selectTransactExecuting } from '../../../data/selectors/transact.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
-import { useClmMode } from './ClmModeContext.tsx';
+import { type ClmModeContextValue, useClmMode } from './ClmModeContext.tsx';
 import { ModeIcon } from './ClmModeSelector.tsx';
 import { resolveClmRewardsVariant } from './clm-rewards.ts';
 import {
@@ -46,8 +50,8 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
   const [seen, setSeen] = useLocalStorageBoolean(SEEN_STORAGE_KEY, false);
   const [expanded, setExpanded] = useState(() => !seen);
   const isExecuting = useAppSelector(selectTransactExecuting);
-  // name what each side pays out in: users choose an asset, not a mechanism
-  const payout = useAppSelector(state =>
+  // name what the CLM pays out in: users choose an asset, not a mechanism
+  const payoutTokens = useAppSelector(state =>
     clmMode ? selectClmPayoutTokens(state, clmMode.clmId) : undefined
   );
   const isStepping = useAppSelector(selectIsStepperStepping);
@@ -77,24 +81,48 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
   const checked = variant === 'toggle' && clmMode.mode === 'vault';
   const busy = isExecuting || isStepping;
   const title = variant === 'info' ? 'Transact-ClmRewards-Info' : 'Transact-ClmRewards-Option';
-  // fees-only groups have no claim token to name; fall back to the generic wording
-  const hasRewardToken = !!payout && payout.claim.length > 0;
+  // fees-only groups have no reward token to name; fall back to the generic wording
+  const hasRewardToken = !!payoutTokens && payoutTokens.length > 0;
+  // fees are the main yield and they always compound; only name a handling when a token streams
   const subLine =
-    variant === 'info' ?
-      hasRewardToken ? 'Transact-ClmRewards-Info-Note'
-      : 'Transact-ClmRewards-Info-Note-Generic'
-    : checked ?
-      hasRewardToken ? 'Transact-ClmRewards-On-Note'
-      : 'Transact-ClmRewards-On-Note-Generic'
-    : hasRewardToken ? 'Transact-ClmRewards-Off-Note'
-    : 'Transact-ClmRewards-Off-Note-Generic';
-  const tokens = {
-    position: payout?.compound.join('-') ?? '',
-    reward: payout ? formatTokenList(payout.claim) : '',
-  };
+    !hasRewardToken ? 'Transact-ClmRewards-Note-FeesOnly'
+    : variant === 'info' ? 'Transact-ClmRewards-Info-Note'
+    : checked ? 'Transact-ClmRewards-On-Note'
+    : 'Transact-ClmRewards-Off-Note';
+  const tokens = { reward: payoutTokens ? formatTokenList(payoutTokens) : '' };
 
   // identical in both variants, so the title starts at the same offset whether the glyph sits in
   // an interactive halo beside the disclosure or inside it
+  const explainer =
+    variant === 'info' ?
+      <p>
+        {t(
+          hasRewardToken ?
+            'Transact-ClmRewards-Info-Explainer'
+          : 'Transact-ClmRewards-Info-Explainer-Generic',
+          tokens
+        )}
+      </p>
+    : <>
+        <p>{t('Transact-ClmRewards-Explainer')}</p>
+        <p>
+          {t(
+            hasRewardToken ?
+              'Transact-ClmRewards-Explainer-On'
+            : 'Transact-ClmRewards-Explainer-On-Generic',
+            tokens
+          )}
+        </p>
+        <p>
+          {t(
+            hasRewardToken ?
+              'Transact-ClmRewards-Explainer-Off'
+            : 'Transact-ClmRewards-Explainer-Off-Generic',
+            tokens
+          )}
+        </p>
+      </>;
+
   const content = (
     <OptionBody>
       <OptionTitleRow>
@@ -103,13 +131,20 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
           <ExpandMoreIcon />
         </Chevron>
       </OptionTitleRow>
-      {expanded ? null : <OptionNote>{t(subLine, tokens)}</OptionNote>}
+      {expanded ?
+        <Expansion>{explainer}</Expansion>
+      : <OptionNote>{t(subLine, tokens)}</OptionNote>}
     </OptionBody>
   );
 
   return (
     <OptionSection className={css(cssProp)}>
-      <OptionHeading>{t('Transact-ClmRewards-Title')}</OptionHeading>
+      <OptionHeading>
+        {t('Transact-ClmRewards-Title')}
+        {variant === 'toggle' ?
+          <RewardsRate ids={clmMode.ids} checked={checked} />
+        : null}
+      </OptionHeading>
       <OptionCard checked={checked} busy={busy}>
         {variant === 'info' ?
           // a statement, not a control: one expand target, and a mode icon so it can't read as a stuck tick
@@ -117,7 +152,7 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
             type="button"
             onClick={handleExpand}
             aria-expanded={expanded}
-            expanded={expanded}
+            aria-label={t(title)}
             disabled={busy}
           >
             <OptionGlyph aria-hidden={true}>
@@ -146,52 +181,62 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
               type="button"
               onClick={handleExpand}
               aria-expanded={expanded}
-              expanded={expanded}
+              aria-label={t(title)}
               disabled={busy}
             >
               {content}
             </Disclosure>
           </Row>
         }
-        {expanded ?
-          <Expansion>
-            {variant === 'info' ?
-              <>
-                <p>
-                  {t(
-                    hasRewardToken ?
-                      'Transact-ClmRewards-Info-Explainer'
-                    : 'Transact-ClmRewards-Info-Explainer-Generic',
-                    tokens
-                  )}
-                </p>
-                <p>{t('Transact-ClmRewards-Info-Explainer-2')}</p>
-              </>
-            : <>
-                <p>{t('Transact-ClmRewards-Explainer')}</p>
-                <p>
-                  {t(
-                    hasRewardToken ?
-                      'Transact-ClmRewards-Explainer-On'
-                    : 'Transact-ClmRewards-Explainer-On-Generic',
-                    tokens
-                  )}
-                </p>
-                <p>
-                  {t(
-                    hasRewardToken ?
-                      'Transact-ClmRewards-Explainer-Off'
-                    : 'Transact-ClmRewards-Explainer-Off-Generic',
-                    tokens
-                  )}
-                </p>
-              </>
-            }
-          </Expansion>
-        : null}
       </OptionCard>
     </OptionSection>
   );
+});
+
+type RewardsRateProps = {
+  ids: ClmModeContextValue['ids'];
+  checked: boolean;
+};
+
+/**
+ * What the route the tick selects pays today. The header states the product's headline rate; this
+ * states the depositor's own, which is a different number whenever the two wrappers disagree.
+ */
+const RewardsRate = memo(function RewardsRate({ ids, checked }: RewardsRateProps) {
+  const { t } = useTranslation();
+  const vaultData = useAppSelector(state =>
+    ids.vault ? selectApyVaultUIData(state, ids.vault) : undefined
+  );
+  const poolData = useAppSelector(state =>
+    ids.pool ? selectApyVaultUIData(state, ids.pool) : undefined
+  );
+  const rate = formatApyUIRate(checked ? vaultData : poolData);
+
+  if (!rate) {
+    return null;
+  }
+
+  return (
+    <Rate>
+      {rate.value} <RateKind>{t(rate.type === 'apr' ? 'VaultStat-APR' : 'VaultStat-APY')}</RateKind>
+    </Rate>
+  );
+});
+
+/** the depositor's rate reads as a value, not a status: same neutral text as the card above it */
+const Rate = styled('span', {
+  base: {
+    textStyle: 'body.medium',
+    color: 'text.light',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '4px',
+    whiteSpace: 'nowrap',
+  },
+});
+
+const RateKind = styled('span', {
+  base: { textStyle: 'body.medium', color: 'text.dark' },
 });
 
 const Row = styled('div', {
@@ -239,18 +284,12 @@ const Disclosure = styled('button', {
     justifyContent: 'flex-start',
     textAlign: 'left',
     cursor: 'pointer',
-    paddingBlockStart: '12px',
-    paddingBlockEnd: '12px',
+    paddingBlock: '12px',
     paddingInlineEnd: '12px',
     _focusVisible: {
       outline: 'solid 2px {colors.text.dark}',
       outlineOffset: '-2px',
       borderRadius: '8px',
-    },
-  },
-  variants: {
-    expanded: {
-      true: { paddingBlockEnd: '4px' },
     },
   },
 });
@@ -272,6 +311,7 @@ const Chevron = styled('span', {
   },
 });
 
+/** sits where the sub-line does, so the title-to-copy gap is the same open or closed */
 const Expansion = styled('div', {
   base: {
     textStyle: 'body.sm',
@@ -279,9 +319,7 @@ const Expansion = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     gap: '12px',
-    // one text column: the sub-line it replaces starts under the title, not the glyph
-    paddingInlineStart: '44px',
-    paddingInlineEnd: '12px',
-    paddingBlockEnd: '12px',
+    // the disclosure is a button, and its reset would keep these paragraphs on one line
+    textWrap: 'pretty',
   },
 });

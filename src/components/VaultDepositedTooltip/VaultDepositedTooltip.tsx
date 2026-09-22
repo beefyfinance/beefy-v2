@@ -3,8 +3,14 @@ import type BigNumber from 'bignumber.js';
 import { type FC, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
-import { isCowcentratedVault, type VaultEntity } from '../../features/data/entities/vault.ts';
 import {
+  getCowcentratedWrapperIds,
+  isCowcentratedVault,
+  type VaultEntity,
+} from '../../features/data/entities/vault.ts';
+import {
+  selectUserRowDepositIncludingDisplaced,
+  selectUserRowDepositInUsd,
   selectUserVaultBalanceInDepositTokenIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInDepositToken,
   selectVaultUserBalanceInDepositTokenBreakdown,
@@ -16,11 +22,13 @@ import {
 } from '../../features/data/selectors/balance.ts';
 import { selectBoostById } from '../../features/data/selectors/boosts.ts';
 import { selectChainById } from '../../features/data/selectors/chains.ts';
-import { selectTokenPriceByTokenOracleId } from '../../features/data/selectors/tokens.ts';
+import {
+  selectTokenByAddressOrUndefined,
+  selectTokenPriceByTokenOracleId,
+} from '../../features/data/selectors/tokens.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
-import { formatLargeUsd } from '../../helpers/format.ts';
+import { formatLargeUsd, formatTokenDisplay } from '../../helpers/format.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
-import { TokenAmount } from '../TokenAmount/TokenAmount.tsx';
 
 type EntryDisplayProps = {
   entry: UserVaultBalanceBreakdownEntry;
@@ -40,9 +48,7 @@ const EntryDisplay = memo(function VaultEntry({
     <>
       <Label>{label}</Label>
       <Details>
-        <div>
-          <TokenAmount amount={entry.amount} decimals={depositToken.decimals} />
-        </div>
+        <div>{formatTokenDisplay(entry.amount, depositToken.decimals)}</div>
         <Value>{formatLargeUsd(value)}</Value>
       </Details>
     </>
@@ -161,7 +167,12 @@ export const VaultDepositedTooltip = memo(function VaultDepositedTooltip({
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   if (!isCowcentratedVault(vault)) {
-    return <VaultBreakdown vaultId={vaultId} walletAddress={walletAddress} />;
+    return (
+      <Sides>
+        <VaultBreakdown vaultId={vaultId} walletAddress={walletAddress} />
+        <TotalRow vaultId={vaultId} walletAddress={walletAddress} />
+      </Sides>
+    );
   }
 
   // a merged CLM breaks down per side, named as on the withdraw tab
@@ -183,7 +194,43 @@ export const VaultDepositedTooltip = memo(function VaultDepositedTooltip({
           labelKey="Transact-ClmMode-Pool"
         />
       ))}
+      <TotalRow vaultId={vaultId} walletAddress={walletAddress} />
     </Sides>
+  );
+});
+
+/** the row the stat's own value used to carry: the whole position, at full precision */
+const TotalRow = memo(function TotalRow({ vaultId, walletAddress }: VaultDepositedTooltipProps) {
+  const { t } = useTranslation();
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const depositToken = useAppSelector(state =>
+    selectTokenByAddressOrUndefined(state, vault.chainId, vault.depositTokenAddress)
+  );
+  const amount = useAppSelector(state =>
+    selectUserRowDepositIncludingDisplaced(state, vaultId, walletAddress)
+  );
+  const usd = useAppSelector(state => selectUserRowDepositInUsd(state, vaultId, walletAddress));
+  // every row the panel will draw, across the group's wrappers for a merged CLM
+  const rows = useAppSelector(state =>
+    (isCowcentratedVault(vault) ? getCowcentratedWrapperIds(vault) : [vaultId]).reduce(
+      (count, id) =>
+        count +
+        selectVaultUserBalanceInDepositTokenBreakdown(state, id, walletAddress).entries.length,
+      0
+    )
+  );
+  // one row is the whole position already, so a total would just repeat it
+  if (!depositToken || rows < 2) {
+    return null;
+  }
+  return (
+    <Grid>
+      <TotalLabel>{t('VaultStat-Deposited-total')}</TotalLabel>
+      <Details>
+        <div>{formatTokenDisplay(amount, depositToken.decimals)}</div>
+        <Value>{formatLargeUsd(usd)}</Value>
+      </Details>
+    </Grid>
   );
 });
 
@@ -253,6 +300,13 @@ const Grid = styled('div', {
   },
 });
 
+const TotalLabel = styled('div', {
+  base: {
+    color: 'colorPalette.text.title',
+    fontWeight: 'medium',
+  },
+});
+
 const Label = styled('div', {
   base: {
     color: 'colorPalette.text.title',
@@ -269,7 +323,7 @@ const Details = styled('div', {
 const Value = styled('div', {
   base: {
     textStyle: 'subline.sm',
-    display: 'none',
+    color: 'colorPalette.text.label',
   },
 });
 

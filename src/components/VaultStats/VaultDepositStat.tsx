@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import { memo } from 'react';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
-import type { VaultEntity } from '../../features/data/entities/vault.ts';
+import { isCowcentratedVault, type VaultEntity } from '../../features/data/entities/vault.ts';
 import {
   selectUserRowDeposit,
   selectUserRowDepositIncludingDisplaced,
@@ -12,6 +12,7 @@ import {
 
 import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
 import { selectTokenByAddressOrUndefined } from '../../features/data/selectors/tokens.ts';
+import { selectHeldClmSideIds } from '../../features/data/selectors/analytics.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import {
   selectIsBalanceHidden,
@@ -56,6 +57,8 @@ type SelectDataReturn =
       totalDepositUsd: BigNumber;
       vaultDeposit: BigNumber;
       notEarning: BigNumber;
+      /** how many CLM sides the position spans; 1 for everything else */
+      sides: number;
     };
 
 const NO_DEPOSIT: Record<'true' | 'false', SelectDataReturn> = {
@@ -95,6 +98,11 @@ const selectVaultDepositStat = createSelector(
   },
   (state: BeefyState, vaultId: VaultEntity['id'], w?: string) =>
     selectUserRowDepositInUsd(state, vaultId, w),
+  // a merged CLM held on both sides has a split to show, boosts or no boosts
+  (state: BeefyState, vaultId: VaultEntity['id'], w?: string) => {
+    const vault = selectVaultById(state, vaultId);
+    return isCowcentratedVault(vault) ? selectHeldClmSideIds(state, vaultId, w).length : 1;
+  },
   (
     vault,
     walletAddress,
@@ -105,7 +113,8 @@ const selectVaultDepositStat = createSelector(
     notEarning,
     vaultDeposit,
     depositToken,
-    totalDepositUsd
+    totalDepositUsd,
+    sides
   ): SelectDataReturn => {
     const key = hideBalance ? 'true' : 'false';
 
@@ -133,6 +142,7 @@ const selectVaultDepositStat = createSelector(
       totalDepositUsd,
       vaultDeposit,
       notEarning,
+      sides,
     };
   }
 );
@@ -172,7 +182,8 @@ export const VaultDepositStat = memo(function VaultDepositStat({
     );
   }
 
-  const hasDisplacedDeposit = data.vaultDeposit.lt(data.totalDeposit) || data.notEarning.gt(0);
+  const hasBreakdown =
+    data.vaultDeposit.lt(data.totalDeposit) || data.notEarning.gt(0) || data.sides > 1;
   const isNotEarning = data.notEarning.gt(0);
   const depositFormattedCondensed = formatTokenDisplayCondensed(
     data.totalDeposit,
@@ -183,15 +194,16 @@ export const VaultDepositStat = memo(function VaultDepositStat({
 
   return (
     <VaultValueStat
-      label={t(label)}
+      label={t(
+        data.sides > 1 && label === 'VaultStat-DEPOSITED' ? 'VaultStat-DEPOSITED_plural' : label
+      )}
       value={depositFormattedCondensed}
       Icon={isNotEarning ? ExclaimRoundedSquare : undefined}
       subValue={formatLargeUsd(data.totalDepositUsd)}
       blur={data.hideBalance}
       loading={false}
       tooltip={
-        // displaced tooltip breaks balances down per vault id, which a merged group can't use
-        hasDisplacedDeposit ?
+        hasBreakdown ?
           <VaultDepositedTooltip vaultId={vaultId} walletAddress={walletAddress} />
         : <BasicTooltipContent title={depositFormattedFull} />
       }

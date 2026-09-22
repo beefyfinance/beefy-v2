@@ -231,7 +231,10 @@ const NativeRadio = styled('input', {
   },
 });
 
-/** drawn to match the checkbox glyph: 20px, 2px green outline, filled mark when selected */
+/**
+ * 20px to match the checkbox glyph, but neutral: green reads as "the good one" everywhere else on
+ * the page, and both sides are equally valid here. The ring is a container, the mark is the state.
+ */
 const Radio = styled('span', {
   base: {
     display: 'grid',
@@ -239,7 +242,7 @@ const Radio = styled('span', {
     width: '20px',
     height: '20px',
     borderRadius: '50%',
-    border: '2px solid {colors.green.40}',
+    border: '2px solid {colors.text.dark}',
   },
   variants: {
     checked: {
@@ -249,7 +252,7 @@ const Radio = styled('span', {
           width: '10px',
           height: '10px',
           borderRadius: '50%',
-          backgroundColor: 'green.40',
+          backgroundColor: 'text.light',
         },
       },
     },

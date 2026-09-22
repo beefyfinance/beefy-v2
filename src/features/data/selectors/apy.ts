@@ -4,6 +4,7 @@ import { bigNumberEqual, shallowArrayEqual } from '../utils/selector-equality.ts
 import { createCachedSelector } from 're-reselect';
 import { EMPTY_AVG_APY } from '../../../helpers/apy.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { formatTotalApy } from '../../../helpers/format.ts';
 import { isEmpty } from '../../../helpers/utils.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
 import {
@@ -30,7 +31,7 @@ import {
 import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from './boosts.ts';
 import { selectIsConfigAvailable } from './data-loader/config.ts';
 import { selectIsContractDataLoadedOnChain } from './data-loader/contract-data.ts';
-import { selectVaultActiveMerklCampaigns } from './rewards.ts';
+import { selectVaultActiveExtraRewardTokens, selectVaultActiveGovRewards } from './rewards.ts';
 import { selectGovVaultEarnedTokens, selectTokenPriceByAddress } from './tokens.ts';
 import {
   selectVaultById,
@@ -359,7 +360,7 @@ export const selectDashboardRowDailyUsd = createCachedSelector(
     `${vaultId}-${walletAddress.toLowerCase()}`
 );
 
-type ApyVaultUIData =
+export type ApyVaultUIData =
   | {
       status: 'loading' | 'missing' | 'hidden';
       type: 'apy' | 'apr';
@@ -398,6 +399,19 @@ const APY_UI_STATUS_ONLY: Record<
     apr: Object.freeze({ status: 'missing', type: 'apr' }),
   },
 };
+
+/** the percentage a side's own stat shows, boosted when a boost is live */
+export function formatApyUIRate(
+  data: ApyVaultUIData | undefined
+): { value: string; type: 'apr' | 'apy' } | undefined {
+  if (!data || data.status !== 'available') {
+    return undefined;
+  }
+  const formatted = formatTotalApy(data.values, '???');
+  const value =
+    (data.boosted === 'active' ? formatted.boostedTotalApy : undefined) ?? formatted.totalApy;
+  return value ? { value, type: data.type } : undefined;
+}
 
 export const selectApyVaultUIData = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
@@ -556,10 +570,11 @@ export const selectClmBlendedDaily = (
     .toNumber();
 };
 
+/** the symbols a CLM pays out today: what its pool streams on-chain, plus live campaign tokens */
 export const selectClmPayoutTokens = (
   state: BeefyState,
   vaultId: VaultEntity['id']
-): { compound: string[]; claim: string[] } | undefined => {
+): string[] | undefined => {
   const vault = selectVaultByIdOrUndefined(state, vaultId);
   if (!vault || !isCowcentratedLikeVault(vault)) {
     return undefined;
@@ -571,20 +586,20 @@ export const selectClmPayoutTokens = (
     return undefined;
   }
 
-  // gov-streamed rewards plus Merkl campaign tokens: some pools stream nothing themselves and
-  // pay only via Merkl (earnedTokenAddresses is empty), and campaigns can register against any
-  // member of the group
-  const claim = new Set(
-    selectGovVaultEarnedTokens(state, vault.chainId, pool).map(token => token.symbol)
+  // what the pool streams on-chain right now, as the claim form reads it; `earnedTokenAddresses` is
+  // config-only and stale both ways, so it stands in just until the contract data lands
+  const streamed = selectVaultActiveGovRewards(state, pool);
+  const symbols = new Set(
+    streamed ?
+      streamed.map(reward => reward.token.symbol)
+    : selectGovVaultEarnedTokens(state, vault.chainId, pool).map(token => token.symbol)
   );
+  // off-chain campaigns pay tokens the pool never streams, and register against any group member
   for (const id of getCowcentratedGroupIds(vault)) {
-    for (const campaign of selectVaultActiveMerklCampaigns(state, id) ?? []) {
-      claim.add(campaign.rewardToken.symbol);
+    for (const token of selectVaultActiveExtraRewardTokens(state, id) ?? []) {
+      symbols.add(token.symbol);
     }
   }
 
-  return {
-    compound: vault.assetIds,
-    claim: [...claim],
-  };
+  return [...symbols];
 };

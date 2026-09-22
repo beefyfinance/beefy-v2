@@ -3,6 +3,7 @@ import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import {
+  formatApyUIRate,
   selectApyVaultUIData,
   selectClmDisplayVaultId,
   selectDashboardClmBlendedApy,
@@ -183,14 +184,14 @@ const BlendedApyStat = memo(function BlendedApyStat({
   const rows = useMemo(
     () => [
       ...sides.map((side, i) => {
-        const data = rates[i];
-        if (data.status !== 'available') {
-          return { label: CLM_SIDE_NAME[side], value: '-' };
-        }
-        const formatted = formatTotalApy(data.values, '???');
-        const rate = data.boosted === 'active' ? formatted.boostedTotalApy : formatted.totalApy;
-        const kind = t(data.type === 'apr' ? 'VaultStat-APR' : 'VaultStat-APY');
-        return { label: CLM_SIDE_NAME[side], value: `${rate} ${kind}` };
+        const rate = formatApyUIRate(rates[i]);
+        return {
+          label: CLM_SIDE_NAME[side],
+          value:
+            rate ?
+              `${rate.value} ${t(rate.type === 'apr' ? 'VaultStat-APR' : 'VaultStat-APY')}`
+            : '-',
+        };
       }),
       { label: 'Vault-Apy-YourPositions', value },
     ],

@@ -1,7 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { VaultEntity } from '../../features/data/entities/vault.ts';
+import { isCowcentratedVault, type VaultEntity } from '../../features/data/entities/vault.ts';
+import { selectHeldClmSideIds } from '../../features/data/selectors/analytics.ts';
 import {
   selectUserRowDeposit,
   selectUserRowDepositIncludingDisplaced,
@@ -29,14 +30,20 @@ type VaultDepositedProps = {
 
 export const VaultDeposited = memo(function VaultDeposited({ vaultId }: VaultDepositedProps) {
   const { t } = useTranslation();
-  const { hasDeposit, hasDisplacedDeposit, deposit, depositUsd, depositToken, blurred, loading } =
+  const { hasDeposit, hasBreakdown, sides, deposit, depositUsd, depositToken, blurred, loading } =
     useAppSelector(state => selectVaultDepositedStat(state, vaultId));
   return (
     <ValueBlock
-      label={t('Vault-deposited')}
-      value={<TokenAmountFromEntity amount={deposit} token={depositToken} />}
+      label={t(sides > 1 ? 'Vault-deposited_plural' : 'Vault-deposited')}
+      value={
+        <TokenAmountFromEntity
+          amount={deposit}
+          token={depositToken}
+          disableTooltip={hasBreakdown}
+        />
+      }
       usdValue={hasDeposit ? depositUsd : null}
-      tooltip={hasDisplacedDeposit ? <VaultDepositedTooltip vaultId={vaultId} /> : undefined}
+      tooltip={hasBreakdown ? <VaultDepositedTooltip vaultId={vaultId} /> : undefined}
       blurred={blurred}
       loading={loading}
     />
@@ -64,12 +71,27 @@ const selectVaultDepositedStat = createSelector(
       selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress)
     );
   },
-  (depositToken, deposit, baseDeposit, depositUsdAmount, blurred, walletAddress, isLoaded) => {
+  // a merged CLM held on both sides has a split to show, boosts or no boosts
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+    return isCowcentratedVault(vault) ? selectHeldClmSideIds(state, vaultId).length : 1;
+  },
+  (
+    depositToken,
+    deposit,
+    baseDeposit,
+    depositUsdAmount,
+    blurred,
+    walletAddress,
+    isLoaded,
+    sides
+  ) => {
     const hasDeposit = deposit.gt(0);
 
     return {
       hasDeposit,
-      hasDisplacedDeposit: hasDeposit && deposit.gt(baseDeposit),
+      sides,
+      hasBreakdown: hasDeposit && (deposit.gt(baseDeposit) || sides > 1),
       deposit,
       depositUsd: formatLargeUsd(depositUsdAmount),
       depositToken,
