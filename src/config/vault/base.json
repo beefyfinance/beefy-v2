@@ -13101,46 +13101,6 @@
     ]
   },
   {
-    "id": "aerodrome-cow-base-vfy-zen-vault",
-    "name": "VFY-ZEN",
-    "type": "standard",
-    "token": "VFY-ZEN",
-    "tokenAddress": "0xe37FbAeB14a63FdcdE1FD803C31E6a3797890287",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnContractAddress": "0xe8b4e5248312e9D81BBE70753AbC116cFF32B868",
-    "earnedToken": "mooCowAerodromeVFY-ZEN",
-    "earnedTokenAddress": "0xe8b4e5248312e9D81BBE70753AbC116cFF32B868",
-    "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-vfy-zen",
-    "status": "eol",
-    "createdAt": 1769014697,
-    "platformId": "aerodrome",
-    "retireReason": "rewards",
-    "retiredAt": 1787656179,
-    "assets": ["VFY", "ZEN"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "pool",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
     "id": "aerodrome-cow-base-vfy-zen-rp",
     "name": "VFY-ZEN Reward Pool",
     "type": "gov",
