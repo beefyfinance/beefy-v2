@@ -58,7 +58,7 @@ export const arcEurc = erc20Token(
   'arc',
   'EURC',
   'EURC',
-  '0x0000000000000000000000000000000000000e0c',
+  '0xe0c0000000000000000000000000000000000e0c',
   6
 );
 export const baseNative = nativeToken('base', 'ETH');
@@ -80,7 +80,7 @@ export const metisNative = nativeToken('metis', 'METIS', 'NATIVE');
 export const metisWmetis = erc20Token(
   'metis',
   'WMETIS',
-  'METIS',
+  'WMETIS',
   '0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000',
   18
 );

@@ -122,8 +122,8 @@ describe('UniswapLikeStrategy pool deposit quote', () => {
 
     // 10.0000005 floored to 6dp, in 6dp wei; before the fix this was 10000000500000000000
     expect(pool.getOptimalSwapAmount).toHaveBeenCalledWith(bn('10000000'), arcUsdc.address);
-    // lpTokens sort EURC (0x...0e0c) before USDC (0x3600...), so USDC is amountB
-    expect(pool.addLiquidity).toHaveBeenCalledWith(bn('2500000'), arcEurc.address, bn('5000000'));
+    // lpTokens sort USDC (0x3600...) before EURC (0xe0c0...), so USDC is amountA
+    expect(pool.addLiquidity).toHaveBeenCalledWith(bn('5000000'), arcUsdc.address, bn('2500000'));
     expect(quote.inputs).toEqual([input]);
     // the native -> wnative step is call-less on a shared balance, but still moves the amount
     expect(fetchQuotes).toHaveBeenCalledTimes(1);
@@ -136,8 +136,8 @@ describe('UniswapLikeStrategy pool deposit quote', () => {
     expect(quote.steps[2]).toMatchObject({
       type: 'build',
       inputs: [
-        { token: arcEurc, amount: bn('2.5') },
         { token: arcUsdc, amount: bn('5') },
+        { token: arcEurc, amount: bn('2.5') },
       ],
     });
   });
