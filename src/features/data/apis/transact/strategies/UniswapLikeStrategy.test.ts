@@ -7,18 +7,24 @@ import {
   arcNative,
   arcUsdc,
   baseNative,
+  baseUsdc,
   baseWeth,
   bn,
+  depositRowTokens,
   erc20Token,
+  expectOneRowPerBalance,
   makeState,
-} from '../helpers/same-balance-fixture.ts';
+  withdrawRowTokens,
+} from '../helpers/same-balance.test-helper.ts';
 import type { QuoteRequest } from '../swap/ISwapProvider.ts';
+import { SwapAggregator } from '../swap/SwapAggregator.ts';
 import type { UniswapV2DepositOption } from '../transact-types.ts';
 import type { ZapTransactHelpers } from './IStrategy.ts';
 import { WNativeSwapProvider } from '../swap/wnative/WNativeSwapProvider.ts';
 import { UniswapV2StrategyImpl } from './uniswap-v2/UniswapV2Strategy.ts';
 
 const wnativeProvider = new WNativeSwapProvider();
+const swapAggregator = new SwapAggregator([new WNativeSwapProvider()]);
 
 const { pool } = vi.hoisted(() => ({
   pool: {
@@ -58,7 +64,10 @@ withLp(state, arcLp);
 withLp(state, baseLp);
 Object.assign(state.entities.tokens, { prices: { byOracleId: {} } });
 Object.assign(state.entities, {
-  zaps: { amms: { byId: { 'test-amm': { id: 'test-amm', type: 'uniswap-v2' } } } },
+  zaps: {
+    ...state.entities.zaps,
+    amms: { byId: { 'test-amm': { id: 'test-amm', type: 'uniswap-v2' } } },
+  },
 });
 
 function makeStrategy(chainId: 'arc' | 'base', assetIds: [string, string], lp: TokenErc20) {
@@ -71,9 +80,12 @@ function makeStrategy(chainId: 'arc' | 'base', assetIds: [string, string], lp: T
       assetIds,
       depositTokenAddress: lp.address,
     },
-    vaultType: { id: 'standard' },
+    vaultType: { id: 'standard', depositToken: lp },
     zap: { manager: '0x000000000000000000000000000000000000beef', router: '0x01' },
-    swapAggregator: { fetchQuotes },
+    swapAggregator: {
+      fetchQuotes,
+      fetchTokenSupport: swapAggregator.fetchTokenSupport.bind(swapAggregator),
+    },
     getState: () => state,
   } as unknown as ZapTransactHelpers;
   const strategy = new UniswapV2StrategyImpl(
@@ -99,7 +111,7 @@ beforeEach(() => {
 });
 
 describe('UniswapLikeStrategy pool deposit quote', () => {
-  it('arc native input reaches the pool in the 6 decimals of the erc20 view (D2)', async () => {
+  it('floors a native input to the erc20 view decimals where balanceSharedWithWrapped and dp differ', async () => {
     const { strategy, option, fetchQuotes } = makeStrategy('arc', ['USDC', 'EURC'], arcLp);
     const input = { token: arcNative, amount: bn('10.0000005'), max: false };
     fetchQuotes.mockImplementation(async (request: QuoteRequest, state: BeefyState) => [
@@ -113,7 +125,7 @@ describe('UniswapLikeStrategy pool deposit quote', () => {
     // lpTokens sort EURC (0x...0e0c) before USDC (0x3600...), so USDC is amountB
     expect(pool.addLiquidity).toHaveBeenCalledWith(bn('2500000'), arcEurc.address, bn('5000000'));
     expect(quote.inputs).toEqual([input]);
-    // the native -> wnative step is call-less on arc, but still moves the amount for the breakdown
+    // the native -> wnative step is call-less on a shared balance, but still moves the amount
     expect(fetchQuotes).toHaveBeenCalledTimes(1);
     expect(quote.steps.map(step => step.type)).toEqual(['swap', 'swap', 'build', 'deposit']);
     expect(quote.steps[0]).toMatchObject({ via: 'aggregator', providerId: 'wnative' });
@@ -130,7 +142,7 @@ describe('UniswapLikeStrategy pool deposit quote', () => {
     });
   });
 
-  it('arc erc20 input is unchanged', async () => {
+  it('leaves the erc20 view input unchanged where balanceSharedWithWrapped', async () => {
     const { strategy, option } = makeStrategy('arc', ['USDC', 'EURC'], arcLp);
 
     await strategy.fetchDepositQuote([{ token: arcUsdc, amount: bn('10'), max: false }], option);
@@ -138,7 +150,7 @@ describe('UniswapLikeStrategy pool deposit quote', () => {
     expect(pool.getOptimalSwapAmount).toHaveBeenCalledWith(bn('10000000'), arcUsdc.address);
   });
 
-  it('native input elsewhere still wraps and uses 18 decimals', async () => {
+  it('still wraps a native input at its own decimals without balanceSharedWithWrapped', async () => {
     const { strategy, option, fetchQuotes } = makeStrategy('base', ['WETH', 'USDC'], baseLp);
     const amount = bn('1.5');
     fetchQuotes.mockResolvedValue([
@@ -164,5 +176,40 @@ describe('UniswapLikeStrategy pool deposit quote', () => {
     expect(fetchQuotes).toHaveBeenCalledTimes(1);
     expect(quote.steps.map(step => step.type)).toEqual(['swap', 'swap', 'build', 'deposit']);
     expect(quote.steps[0]).toMatchObject({ via: 'aggregator', providerId: 'wnative' });
+  });
+});
+
+describe('UniswapLikeStrategy option lists where balanceSharedWithWrapped', () => {
+  it('does not add the native view beside the pool erc20 for deposit', async () => {
+    const { strategy } = makeStrategy('arc', ['USDC', 'EURC'], arcLp);
+
+    const rows = depositRowTokens(await strategy.fetchDepositOptions());
+
+    expectOneRowPerBalance(state, rows);
+    expect(rows).not.toContainEqual(arcNative);
+    expect(rows).toContainEqual(arcUsdc);
+    expect(rows).toContainEqual(arcEurc);
+  });
+
+  it('does not add the native view beside the pool erc20 for withdraw', async () => {
+    const { strategy } = makeStrategy('arc', ['USDC', 'EURC'], arcLp);
+
+    const rows = withdrawRowTokens(await strategy.fetchWithdrawOptions());
+
+    expectOneRowPerBalance(state, rows);
+    expect(rows).not.toContainEqual(arcNative);
+    expect(rows).toContainEqual(arcUsdc);
+  });
+});
+
+describe('UniswapLikeStrategy option lists where native and wnative are separate balances', () => {
+  it('still adds native beside the pool wnative, they are not the same funds', async () => {
+    const { strategy } = makeStrategy('base', ['WETH', 'USDC'], baseLp);
+
+    const rows = depositRowTokens(await strategy.fetchDepositOptions());
+
+    expect(rows).toContainEqual(baseNative);
+    expect(rows).toContainEqual(baseWeth);
+    expect(rows).toContainEqual(baseUsdc);
   });
 });

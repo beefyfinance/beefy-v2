@@ -18,7 +18,7 @@ import {
   baseWeth,
   bn,
   makeState,
-} from './same-balance-fixture.ts';
+} from './same-balance.test-helper.ts';
 import { NO_RELAY } from './zap.ts';
 
 const RECIPIENT = '0xA55e75C4815Ff39eFD76C257857441d9FD99b45b';
@@ -89,7 +89,7 @@ describe('applyWithdrawFeeToOrder', () => {
     expect(minOf(o, MOO_ADDRESS)).toBe('0');
   });
 
-  it('native output on a normal chain: wraps then transfers the fee in 18 decimals', () => {
+  it('native output without balanceSharedWithWrapped: wraps then transfers the fee at native decimals', () => {
     const o = order([{ token: ZERO_ADDRESS, minOutputAmount: '1492500000000000000' }]);
     const steps: ZapStep[] = [];
 
@@ -108,7 +108,7 @@ describe('applyWithdrawFeeToOrder', () => {
     expect(minOf(o, ZERO_ADDRESS)).toBe('1491753750000000000');
   });
 
-  it('arc native output: one erc20 transfer at 6 decimals, the min stays in native wei', () => {
+  it('native output where dp differ: one erc20 transfer at erc20 decimals, the min stays in native wei', () => {
     const gross = '100.123456789012345678';
     const execGrossWei = 99122222221122222221n; // slipBy(gross, 1%, 18)
     const o = order([
@@ -133,7 +133,7 @@ describe('applyWithdrawFeeToOrder', () => {
     expect(minOf(o, arcUsdc.address)).toBe('0');
   });
 
-  it('arc erc20 output: same fee as the native view of the same balance', () => {
+  it('erc20 output where balanceSharedWithWrapped: same fee as the native view of the one balance', () => {
     const o = order([{ token: arcUsdc.address, minOutputAmount: '99122221' }]);
     const steps: ZapStep[] = [];
 
@@ -144,7 +144,7 @@ describe('applyWithdrawFeeToOrder', () => {
     expect(minOf(o, arcUsdc.address)).toBe('99072660');
   });
 
-  it('arc native fee below the erc20 precision: no step, min unchanged', () => {
+  it('native fee below the erc20 precision where dp differ: no step, min unchanged', () => {
     const o = order([{ token: ZERO_ADDRESS, minOutputAmount: '1000000000000000' }]);
     const steps: ZapStep[] = [];
 
@@ -190,7 +190,7 @@ describe('applyWithdrawFeeToOrder', () => {
 
   it('throws when the order has no output for the fee token', () => {
     const o = order([{ token: arcUsdc.address, minOutputAmount: '1' }]);
-    // arc native is paid out under the zero address, not under the erc20 view
+    // a shared-balance native is paid out under the zero address, not under the erc20 view
     expect(() => applyWithdrawFeeToOrder(o, [], feeStep(arcNative, '1', 5), state, 0.01)).toThrow(
       'fee-basis output not found'
     );

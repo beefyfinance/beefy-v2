@@ -1,6 +1,9 @@
 import BigNumber from 'bignumber.js';
+import { expect } from 'vitest';
 import type { ChainEntity } from '../../../entities/chain.ts';
-import type { TokenErc20, TokenNative } from '../../../entities/token.ts';
+import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token.ts';
+import { isSharedBalanceToken } from '../../../entities/token.ts';
+import { selectSharedBalanceWrappedToken } from '../../../selectors/tokens.ts';
 import type { BeefyState } from '../../../store/types.ts';
 
 // arc: native USDC (18 decimals) and the 0x3600 ERC-20 (6 decimals) are one balance
@@ -132,3 +135,30 @@ export function makeState(extra: Record<string, unknown> = {}): BeefyState {
 }
 
 export const bn = (value: string) => new BigNumber(value);
+
+/** the balance a row actually spends: either view of a shared pair resolves to its erc20 view */
+export function balanceKeyOf(state: BeefyState, token: TokenEntity): string {
+  const shared = selectSharedBalanceWrappedToken(state, token.chainId);
+  return (isSharedBalanceToken(token, shared) ? shared.address : token.address).toLowerCase();
+}
+
+/** multi-token rows, such as the break-LP withdraw row, are a different kind of row */
+function onlySingleTokenRows(tokenLists: TokenEntity[][]): TokenEntity[] {
+  return tokenLists.filter(tokens => tokens.length === 1).map(tokens => tokens[0]);
+}
+
+/** the token a deposit row represents is what you spend */
+export function depositRowTokens(options: Array<{ inputs: TokenEntity[] }>): TokenEntity[] {
+  return onlySingleTokenRows(options.map(option => option.inputs));
+}
+
+/** the token a withdraw row represents is what you receive; inputs are the vault's deposit token */
+export function withdrawRowTokens(options: Array<{ wantedOutputs: TokenEntity[] }>): TokenEntity[] {
+  return onlySingleTokenRows(options.map(option => option.wantedOutputs));
+}
+
+/** no two rows may spend the same underlying balance */
+export function expectOneRowPerBalance(state: BeefyState, tokens: TokenEntity[]) {
+  const keys = tokens.map(token => balanceKeyOf(state, token));
+  expect(keys).toEqual([...new Set(keys)]);
+}

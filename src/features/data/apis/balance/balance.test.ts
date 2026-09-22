@@ -9,7 +9,7 @@ import {
   arcUsdc,
   bn,
   makeState,
-} from '../transact/helpers/same-balance-fixture.ts';
+} from '../transact/helpers/same-balance.test-helper.ts';
 import { BalanceAPI } from './balance.ts';
 
 const { NATIVE_WEI } = vi.hoisted(() => ({ NATIVE_WEI: 10_000000500000000000n })); // 10.0000005
@@ -39,7 +39,7 @@ const stateWith = (balance = initialBalanceState) => makeState({ user: { balance
 
 const api = new BalanceAPI({ id: 'arc', appMulticallContractAddress: '0x1' } as ChainEntity);
 
-describe('arc wallet balance: one entry for native and wnative', () => {
+describe('wallet balance where balanceSharedWithWrapped: one entry for native and wnative', () => {
   it.each([[[arcNative]], [[arcUsdc]], [[arcNative, arcUsdc]]])(
     'fetching %# stores one entry under the erc20 view, floored to its decimals',
     async tokens => {

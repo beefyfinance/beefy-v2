@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { makeState } from '../apis/transact/helpers/same-balance-fixture.ts';
+import { makeState } from '../apis/transact/helpers/same-balance.test-helper.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import { fetchAllBalanceAction, fetchBalanceAction } from './balance.ts';
 
@@ -39,7 +39,7 @@ describe.each([
   ],
   ['fetchBalanceAction', (chainId: ChainEntity['id']) => fetchBalanceAction({ chainId })],
 ])('%s', (_name, makeThunk) => {
-  it('waits for the addressbook where native and wnative share a balance', async () => {
+  it('waits for the addressbook where balanceSharedWithWrapped', async () => {
     expect(await dispatchedTypes(makeThunk('arc'), false)).toEqual([]);
   });
 
@@ -48,7 +48,7 @@ describe.each([
     expect(types[0]).toMatch(/\/pending$/);
   });
 
-  it('never waits on other chains', async () => {
+  it('never waits without balanceSharedWithWrapped', async () => {
     const types = await dispatchedTypes(makeThunk('base'), false);
     expect(types[0]).toMatch(/\/pending$/);
   });
