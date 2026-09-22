@@ -42,7 +42,10 @@ function fakeProvider(id: string, tokens: TokenEntity[]): ISwapProvider {
 
 function stateWithScores(scoreById: Record<string, number>): BeefyState {
   return {
-    entities: { zaps: { tokens: { byChainId: { [CHAIN]: { scoreById } } } } },
+    entities: {
+      chains: { byId: {} },
+      zaps: { tokens: { byChainId: { [CHAIN]: { scoreById } } } },
+    },
   } as unknown as BeefyState;
 }
 

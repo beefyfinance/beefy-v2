@@ -7,7 +7,12 @@ import { SwapAggregator } from '../swap/SwapAggregator.ts';
 import { WNativeSwapProvider } from '../swap/wnative/WNativeSwapProvider.ts';
 import { fetchZapAggregatorSwap } from '../zap/swap.ts';
 import { buildFeeZapSteps } from './fee.ts';
-import { floorToSharedPrecision, isSameBalancePair, isSameOrSharedBalance } from './tokens.ts';
+import {
+  floorToSharedPrecision,
+  isSameBalancePair,
+  isSameOrSharedBalance,
+  withoutSharedNativeView,
+} from './tokens.ts';
 import { selectSharedBalanceWrappedToken } from '../../../selectors/tokens.ts';
 import {
   ARC_USDC_ADDRESS,
@@ -76,6 +81,26 @@ describe('isSameOrSharedBalance', () => {
   it('is plain token equality without balanceSharedWithWrapped', () => {
     expect(isSameOrSharedBalance(baseNative, baseWeth, baseShared)).toBe(false);
     expect(isSameOrSharedBalance(baseWeth, baseWeth, baseShared)).toBe(true);
+  });
+});
+
+describe('withoutSharedNativeView', () => {
+  it('drops the native view when the erc20 view is listed too', () => {
+    expect(withoutSharedNativeView([arcNative, arcEurc, arcUsdc], arcShared)).toEqual([
+      arcEurc,
+      arcUsdc,
+    ]);
+  });
+
+  it('keeps native when it is the only view listed', () => {
+    expect(withoutSharedNativeView([arcNative, arcEurc], arcShared)).toEqual([arcNative, arcEurc]);
+  });
+
+  it('keeps both without balanceSharedWithWrapped', () => {
+    expect(withoutSharedNativeView([baseNative, baseWeth], baseShared)).toEqual([
+      baseNative,
+      baseWeth,
+    ]);
   });
 });
 
@@ -256,9 +281,10 @@ describe('buildFeeZapSteps', () => {
 describe('SwapAggregator where balanceSharedWithWrapped', () => {
   const aggregator = new SwapAggregator([new WNativeSwapProvider()]);
 
-  it('offers both views of the wanted token', async () => {
+  it('offers the wanted token once, as the erc20 view', async () => {
     const support = await aggregator.fetchTokenSupport([arcUsdc], undefined, 'arc', state);
-    expect(support.any).toEqual([arcNative, arcUsdc]);
+    expect(support.any).toEqual([arcUsdc]);
+    expect(support.tokens).toEqual([[arcUsdc]]);
   });
 
   it('quotes native -> wnative as an exact identity, floored to the erc20 decimals', async () => {

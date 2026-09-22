@@ -178,6 +178,19 @@ export function isSameOrSharedBalance(
   return isTokenEqual(toBalanceToken(a, sharedWnative), toBalanceToken(b, sharedWnative));
 }
 
+/** lists a shared balance once, as the erc20 view, when both views are in tokens */
+export function withoutSharedNativeView<T extends TokenEntity>(
+  tokens: T[],
+  sharedWnative: SharedBalanceWnative | undefined
+): T[] {
+  if (!sharedWnative || !tokens.some(token => isTokenEqual(token, sharedWnative))) {
+    return tokens;
+  }
+  return tokens.filter(
+    token => !(isTokenNative(token) && isSharedBalanceToken(token, sharedWnative))
+  );
+}
+
 /**
  * Amounts are in whole tokens, so native and wnative need no conversion factor, but the wnative
  * view can hold fewer decimals (arc: 6 vs 18, balanceOf truncates the rest).

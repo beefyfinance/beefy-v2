@@ -51,6 +51,7 @@ import {
   pickTokens,
   tokensReachableFromAll,
   tokensToLp,
+  withoutSharedNativeView,
 } from '../helpers/tokens.ts';
 import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../helpers/zap.ts';
@@ -204,9 +205,16 @@ export abstract class UniswapLikeStrategy<
     return tokensReachableFromAll(tokenSupport.any, this.lpTokens, tokenSupport.tokens);
   }
 
+  protected poolOptionTokens(): TokenEntity[] {
+    return withoutSharedNativeView(
+      includeWrappedAndNative(this.tokens, this.wnative, this.native),
+      selectSharedBalanceWrappedToken(this.helpers.getState(), this.vault.chainId)
+    );
+  }
+
   async fetchDepositOptions(): Promise<UniswapLikeDepositOption<TAmm>[]> {
     // what tokens can we can zap via pool with
-    const tokensWithNativeWrapped = includeWrappedAndNative(this.tokens, this.wnative, this.native);
+    const tokensWithNativeWrapped = this.poolOptionTokens();
     const poolTokens = tokensWithNativeWrapped.map(token => ({
       token,
       swap: 'pool' as const,
@@ -868,7 +876,7 @@ export abstract class UniswapLikeStrategy<
 
   async fetchWithdrawOptions(): Promise<UniswapLikeWithdrawOption<TAmm>[]> {
     // what tokens can we directly zap with
-    const tokensWithNativeWrapped = includeWrappedAndNative(this.tokens, this.wnative, this.native);
+    const tokensWithNativeWrapped = this.poolOptionTokens();
     const poolTokens = tokensWithNativeWrapped.map(token => ({
       token,
       swap: 'pool' as const,
