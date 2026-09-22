@@ -7,6 +7,8 @@ import {
   ARC_USDC_ADDRESS,
   arcNative,
   arcUsdc,
+  baseNative,
+  baseWeth,
   bn,
   makeState,
 } from '../transact/helpers/same-balance.test-helper.ts';
@@ -38,6 +40,7 @@ const WALLET = '0xa55e75c4815ff39efd76c257857441d9fd99b45b';
 const stateWith = (balance = initialBalanceState) => makeState({ user: { balance } });
 
 const api = new BalanceAPI({ id: 'arc', appMulticallContractAddress: '0x1' } as ChainEntity);
+const baseApi = new BalanceAPI({ id: 'base', appMulticallContractAddress: '0x1' } as ChainEntity);
 
 describe('wallet balance where balanceSharedWithWrapped: one entry for native and wnative', () => {
   it.each([[[arcNative]], [[arcUsdc]], [[arcNative, arcUsdc]]])(
@@ -47,6 +50,15 @@ describe('wallet balance where balanceSharedWithWrapped: one entry for native an
       expect(result.tokens).toEqual([{ tokenAddress: ARC_USDC_ADDRESS, amount: bn('10') }]);
     }
   );
+
+  it('falls back to the native address before the addressbook has loaded', async () => {
+    const state = makeState({ user: { balance: initialBalanceState } });
+    delete state.entities.tokens.byChainId.arc!.wnative;
+
+    const result = await api.fetchAllBalances(state, { tokens: [arcNative] }, WALLET);
+
+    expect(result.tokens).toEqual([{ tokenAddress: 'native', amount: bn('10.0000005') }]);
+  });
 
   it('native and wnative read the same stored balance and share a key', async () => {
     const data = await api.fetchAllBalances(stateWith(), { tokens: [arcNative] }, WALLET);
@@ -66,5 +78,26 @@ describe('wallet balance where balanceSharedWithWrapped: one entry for native an
     expect(selectBalanceKeyForToken(state, 'arc', 'native')).toBe(
       selectBalanceKeyForToken(state, 'arc', ARC_USDC_ADDRESS)
     );
+  });
+});
+
+describe('wallet balance where native and wnative are separate balances', () => {
+  it('stores native under its own address, at its own decimals', async () => {
+    const result = await baseApi.fetchAllBalances(stateWith(), { tokens: [baseNative] }, WALLET);
+
+    expect(result.tokens).toEqual([{ tokenAddress: 'native', amount: bn('10.0000005') }]);
+  });
+
+  it('keeps wnative as its own entry', async () => {
+    const result = await baseApi.fetchAllBalances(
+      stateWith(),
+      { tokens: [baseNative, baseWeth] },
+      WALLET
+    );
+
+    expect(result.tokens).toEqual([
+      { tokenAddress: baseWeth.address, amount: bn('0') },
+      { tokenAddress: 'native', amount: bn('10.0000005') },
+    ]);
   });
 });

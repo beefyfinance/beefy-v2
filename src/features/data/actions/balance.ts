@@ -20,8 +20,7 @@ import {
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
 } from '../selectors/balance.ts';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts.ts';
-import { selectChainById, selectIsChainNativeSharedWithWrapped } from '../selectors/chains.ts';
-import { selectIsAddressBookLoaded } from '../selectors/data-loader/tokens.ts';
+import { selectChainById } from '../selectors/chains.ts';
 import {
   selectCowcentratedLikeVaultDepositTokens,
   selectTokenByAddress,
@@ -48,56 +47,37 @@ export interface FetchAllBalanceFulfilledPayload {
   state: BeefyState;
 }
 
-/**
- * Where native and wnative share a balance (arc), the addressbook's wnative says where it is kept,
- * so wait for it; a wallet can auto-reconnect before the addressbook has loaded
- */
-function isBalanceFetchReady(
-  { chainId }: { chainId: ChainEntity['id'] },
-  { getState }: { getState: () => BeefyState }
-): boolean {
-  const state = getState();
-  return (
-    !selectIsChainNativeSharedWithWrapped(state, chainId) ||
-    selectIsAddressBookLoaded(state, chainId)
-  );
-}
-
 export const fetchAllBalanceAction = createAppAsyncThunk<
   FetchAllBalanceFulfilledPayload,
   FetchAllBalanceActionParams
->(
-  'balance/fetchAllBalanceAction',
-  async ({ chainId, walletAddress }, { getState }) => {
-    const state = getState();
-    const chain = selectChainById(state, chainId);
-    const api = await getBalanceApi(chain);
+>('balance/fetchAllBalanceAction', async ({ chainId, walletAddress }, { getState }) => {
+  const state = getState();
+  const chain = selectChainById(state, chainId);
+  const api = await getBalanceApi(chain);
 
-    const tokens = selectAllTokenWhereUserCouldHaveBalance(state, chainId).map(address =>
-      selectTokenByAddress(state, chain.id, address)
-    );
+  const tokens = selectAllTokenWhereUserCouldHaveBalance(state, chainId).map(address =>
+    selectTokenByAddress(state, chain.id, address)
+  );
 
-    // maybe have a way to retrieve those easily
-    const boosts = selectBoostsByChainId(state, chainId).map(boostId =>
-      selectBoostById(state, boostId)
-    );
-    const govVaults = selectAllGovVaultsByChainId(state, chain.id);
-    const erc4626Vaults: VaultErc4626[] = selectAllErc4626VaultsByChainId(state, chain.id);
+  // maybe have a way to retrieve those easily
+  const boosts = selectBoostsByChainId(state, chainId).map(boostId =>
+    selectBoostById(state, boostId)
+  );
+  const govVaults = selectAllGovVaultsByChainId(state, chain.id);
+  const erc4626Vaults: VaultErc4626[] = selectAllErc4626VaultsByChainId(state, chain.id);
 
-    const data = await api.fetchAllBalances(
-      getState(),
-      { tokens, govVaults, boosts, erc4626Vaults },
-      walletAddress
-    );
-    return {
-      chainId,
-      walletAddress,
-      data,
-      state: getState(),
-    };
-  },
-  { condition: isBalanceFetchReady }
-);
+  const data = await api.fetchAllBalances(
+    getState(),
+    { tokens, govVaults, boosts, erc4626Vaults },
+    walletAddress
+  );
+  return {
+    chainId,
+    walletAddress,
+    data,
+    state: getState(),
+  };
+});
 
 export type FetchBalanceParams = {
   chainId: ChainEntity['id'];
@@ -162,8 +142,7 @@ export const fetchBalanceAction = createAppAsyncThunk<
       data,
       state: getState(),
     };
-  },
-  { condition: isBalanceFetchReady }
+  }
 );
 
 export type RecalculateDepositedVaultsParams = {

@@ -32,6 +32,10 @@ async function dispatchedTypes(
   return dispatch.mock.calls.map(([action]) => (action as { type: string }).type);
 }
 
+/**
+ * The 60s poll awaits a captured fulfilled action, so a thunk that dispatches nothing stops the
+ * poll for that chain for the rest of the session
+ */
 describe.each([
   [
     'fetchAllBalanceAction',
@@ -39,17 +43,14 @@ describe.each([
   ],
   ['fetchBalanceAction', (chainId: ChainEntity['id']) => fetchBalanceAction({ chainId })],
 ])('%s', (_name, makeThunk) => {
-  it('waits for the addressbook where balanceSharedWithWrapped', async () => {
-    expect(await dispatchedTypes(makeThunk('arc'), false)).toEqual([]);
-  });
-
-  it('runs once that addressbook has loaded', async () => {
-    const types = await dispatchedTypes(makeThunk('arc'), true);
-    expect(types[0]).toMatch(/\/pending$/);
-  });
-
-  it('never waits without balanceSharedWithWrapped', async () => {
-    const types = await dispatchedTypes(makeThunk('base'), false);
-    expect(types[0]).toMatch(/\/pending$/);
+  it.each([
+    ['where balanceSharedWithWrapped', 'arc' as const],
+    ['on other chains', 'base' as const],
+  ])('always settles %s, addressbook or not', async (_case, chainId) => {
+    for (const addressBookLoaded of [false, true]) {
+      const types = await dispatchedTypes(makeThunk(chainId), addressBookLoaded);
+      expect(types[0]).toMatch(/\/pending$/);
+      expect(types[types.length - 1]).toMatch(/\/(fulfilled|rejected)$/);
+    }
   });
 });
