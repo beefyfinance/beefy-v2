@@ -178,16 +178,24 @@ export function isSameOrSharedBalance(
   return isTokenEqual(toBalanceToken(a, sharedWnative), toBalanceToken(b, sharedWnative));
 }
 
-/** lists a shared balance once, as the erc20 view, when both views are in tokens */
-export function withoutSharedNativeView<T extends TokenEntity>(
-  tokens: T[],
+/** the native view of a shared balance: the erc20 view is how the app holds and spends it */
+function isSharedNativeView(
+  token: TokenEntity,
   sharedWnative: SharedBalanceWnative | undefined
-): T[] {
-  if (!sharedWnative || !tokens.some(token => isTokenEqual(token, sharedWnative))) {
+): boolean {
+  return isTokenNative(token) && isSharedBalanceToken(token, sharedWnative);
+}
+
+/** lists a shared balance once, as the erc20 view, so it is never offered on neither view */
+export function withoutSharedNativeView(
+  tokens: TokenEntity[],
+  sharedWnative: SharedBalanceWnative | undefined
+): TokenEntity[] {
+  if (!sharedWnative || !tokens.some(token => isSharedNativeView(token, sharedWnative))) {
     return tokens;
   }
-  return tokens.filter(
-    token => !(isTokenNative(token) && isSharedBalanceToken(token, sharedWnative))
+  return uniqueTokens(
+    tokens.map(token => (isSharedNativeView(token, sharedWnative) ? sharedWnative : token))
   );
 }
 

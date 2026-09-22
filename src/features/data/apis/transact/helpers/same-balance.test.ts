@@ -85,15 +85,15 @@ describe('isSameOrSharedBalance', () => {
 });
 
 describe('withoutSharedNativeView', () => {
-  it('drops the native view when the erc20 view is listed too', () => {
+  it('keeps one entry when both views are listed', () => {
     expect(withoutSharedNativeView([arcNative, arcEurc, arcUsdc], arcShared)).toEqual([
-      arcEurc,
       arcUsdc,
+      arcEurc,
     ]);
   });
 
-  it('keeps native when it is the only view listed', () => {
-    expect(withoutSharedNativeView([arcNative, arcEurc], arcShared)).toEqual([arcNative, arcEurc]);
+  it('swaps in the erc20 view when native is the only view listed', () => {
+    expect(withoutSharedNativeView([arcNative, arcEurc], arcShared)).toEqual([arcUsdc, arcEurc]);
   });
 
   it('keeps both without balanceSharedWithWrapped', () => {
