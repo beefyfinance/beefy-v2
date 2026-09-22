@@ -12,7 +12,7 @@ import {
   bn,
   depositRowTokens,
   erc20Token,
-  expectOneRowPerBalance,
+  expectRowTokens,
   makeState,
   withdrawRowTokens,
 } from '../helpers/same-balance.test-helper.ts';
@@ -185,10 +185,7 @@ describe('UniswapLikeStrategy option lists where balanceSharedWithWrapped', () =
 
     const rows = depositRowTokens(await strategy.fetchDepositOptions());
 
-    expectOneRowPerBalance(state, rows);
-    expect(rows).not.toContainEqual(arcNative);
-    expect(rows).toContainEqual(arcUsdc);
-    expect(rows).toContainEqual(arcEurc);
+    expectRowTokens(rows, [arcUsdc, arcEurc]);
   });
 
   it('does not add the native view beside the pool erc20 for withdraw', async () => {
@@ -196,9 +193,7 @@ describe('UniswapLikeStrategy option lists where balanceSharedWithWrapped', () =
 
     const rows = withdrawRowTokens(await strategy.fetchWithdrawOptions());
 
-    expectOneRowPerBalance(state, rows);
-    expect(rows).not.toContainEqual(arcNative);
-    expect(rows).toContainEqual(arcUsdc);
+    expectRowTokens(rows, [arcUsdc, arcEurc]);
   });
 });
 
@@ -208,8 +203,6 @@ describe('UniswapLikeStrategy option lists where native and wnative are separate
 
     const rows = depositRowTokens(await strategy.fetchDepositOptions());
 
-    expect(rows).toContainEqual(baseNative);
-    expect(rows).toContainEqual(baseWeth);
-    expect(rows).toContainEqual(baseUsdc);
+    expectRowTokens(rows, [baseNative, baseWeth, baseUsdc]);
   });
 });

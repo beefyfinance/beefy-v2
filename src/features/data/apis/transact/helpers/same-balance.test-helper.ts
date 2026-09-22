@@ -2,8 +2,6 @@ import BigNumber from 'bignumber.js';
 import { expect } from 'vitest';
 import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token.ts';
-import { isSharedBalanceToken } from '../../../entities/token.ts';
-import { selectSharedBalanceWrappedToken } from '../../../selectors/tokens.ts';
 import type { BeefyState } from '../../../store/types.ts';
 
 // arc: native USDC (18 decimals) and the 0x3600 ERC-20 (6 decimals) are one balance
@@ -136,10 +134,12 @@ export function makeState(extra: Record<string, unknown> = {}): BeefyState {
 
 export const bn = (value: string) => new BigNumber(value);
 
-/** the balance a row actually spends: either view of a shared pair resolves to its erc20 view */
-export function balanceKeyOf(state: BeefyState, token: TokenEntity): string {
-  const shared = selectSharedBalanceWrappedToken(state, token.chainId);
-  return (isSharedBalanceToken(token, shared) ? shared.address : token.address).toLowerCase();
+/**
+ * Readable labels for assertion diffs. Both views of a shared balance carry the same symbol on
+ * arc, so a diff of symbols alone would show two identical-looking entries.
+ */
+export function tokenLabels(tokens: TokenEntity[]): string[] {
+  return tokens.map(token => `${token.symbol} ${token.type}@${token.address} ${token.decimals}dp`);
 }
 
 /** multi-token rows, such as the break-LP withdraw row, are a different kind of row */
@@ -157,8 +157,7 @@ export function withdrawRowTokens(options: Array<{ wantedOutputs: TokenEntity[] 
   return onlySingleTokenRows(options.map(option => option.wantedOutputs));
 }
 
-/** no two rows may spend the same underlying balance */
-export function expectOneRowPerBalance(state: BeefyState, tokens: TokenEntity[]) {
-  const keys = tokens.map(token => balanceKeyOf(state, token));
-  expect(keys).toEqual([...new Set(keys)]);
+/** asserts the exact rows offered, so a failure diffs the token lists rather than a derived key */
+export function expectRowTokens(actual: TokenEntity[], expected: TokenEntity[]) {
+  expect(tokenLabels(actual)).toEqual(tokenLabels(expected));
 }

@@ -1,12 +1,11 @@
-import { describe, expect, it } from 'vitest';
+import { describe, it } from 'vitest';
 import type { TokenErc20 } from '../../../../entities/token.ts';
 import {
-  arcNative,
   arcUsdc,
   baseNative,
   baseWeth,
   depositRowTokens,
-  expectOneRowPerBalance,
+  expectRowTokens,
   makeState,
   withdrawRowTokens,
 } from '../../helpers/same-balance.test-helper.ts';
@@ -40,17 +39,13 @@ describe('SingleStrategy option lists where balanceSharedWithWrapped', () => {
   it('offers the one balance once for deposit, as the erc20 view', async () => {
     const rows = depositRowTokens(await makeStrategy('arc', arcUsdc).fetchDepositOptions());
 
-    expectOneRowPerBalance(state, rows);
-    expect(rows).not.toContainEqual(arcNative);
-    expect(rows).toContainEqual(arcUsdc);
+    expectRowTokens(rows, [arcUsdc]);
   });
 
   it('offers the one balance once for withdraw, as the erc20 view', async () => {
     const rows = withdrawRowTokens(await makeStrategy('arc', arcUsdc).fetchWithdrawOptions());
 
-    expectOneRowPerBalance(state, rows);
-    expect(rows).not.toContainEqual(arcNative);
-    expect(rows).toContainEqual(arcUsdc);
+    expectRowTokens(rows, [arcUsdc]);
   });
 });
 
@@ -58,7 +53,6 @@ describe('SingleStrategy option lists where native and wnative are separate bala
   it('offers both, they are not the same funds', async () => {
     const rows = depositRowTokens(await makeStrategy('base', baseWeth).fetchDepositOptions());
 
-    expect(rows).toContainEqual(baseNative);
-    expect(rows).toContainEqual(baseWeth);
+    expectRowTokens(rows, [baseNative, baseWeth]);
   });
 });
