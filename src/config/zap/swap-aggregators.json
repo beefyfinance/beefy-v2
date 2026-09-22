@@ -283,5 +283,21 @@
     "priorityTokens": ["ETH", "WETH", "USDG"],
     "blockedTokens": [],
     "blockedVaults": []
+  },
+  {
+    "id": "one-inch-monad",
+    "type": "one-inch",
+    "chainId": "monad",
+    "priorityTokens": ["ETH", "WETH", "USDC", "USDT0", "MON", "cbBTC", "WBTC"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "one-inch-hyperevm",
+    "type": "one-inch",
+    "chainId": "hyperevm",
+    "priorityTokens": ["WHYPE", "HYPE", "USDC", "USDT0", "UBTC", "kHYPE"],
+    "blockedTokens": [],
+    "blockedVaults": []
   }
 ]
