@@ -138,6 +138,24 @@ export const selectUserBalanceOfToken = (
 };
 
 /**
+ * Where native and its erc20 view are one balance (arc), spending all of an amount held in it
+ * leaves nothing to pay gas with. False while the balance is unknown: the not-enough-balance
+ * gate covers that.
+ */
+export const selectSpendsWholeSharedBalance = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  amount: BigNumber,
+  walletAddress?: string
+): boolean => {
+  if (!selectIsChainNativeSharedWithWrapped(state, chainId)) {
+    return false;
+  }
+  const balance = selectUserBalanceOfToken(state, chainId, 'native', walletAddress);
+  return balance.gt(BIG_ZERO) && amount.gte(balance);
+};
+
+/**
  * Directly held shares only, excludes any shares deposited in boosts or bridged to another chain
  * (For gov vaults this will be in deposit token since there are no shares)
  */
