@@ -1,6 +1,5 @@
 [
   {
-  {
     "id": "up33-cow-robinhood-usdg-net-vault",
     "name": "NET-USDG",
     "type": "standard",
@@ -432,6 +431,7 @@
       }
     ]
   },
+  {
     "id": "alandale-cow-robinhood-weth-spy-vault",
     "name": "SPY-WETH",
     "type": "standard",
