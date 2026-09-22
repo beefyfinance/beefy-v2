@@ -5,7 +5,7 @@
         "type": "boosted"
       }
     ],
-    "limit": 3,
+    "limit": 4,
     "period": 3600
   }
 ]

@@ -1,7 +1,7 @@
 [
   {
     "id": "moo_alandale-cow-robinhood-weth-usdg-vault",
-    "title": "Beefy",
+    "title": "Alandale",
     "vaultId": "alandale-cow-robinhood-weth-usdg-vault",
     "assets": ["WETH", "USDG"],
     "tokenAddress": "0x4ED469Ac0080bE3CD192530D482E4d321823e743",
@@ -22,7 +22,7 @@
   },
   {
     "id": "moo_alandale-cow-robinhood-weth-lute-vault",
-    "title": "Beefy",
+    "title": "Alandale",
     "vaultId": "alandale-cow-robinhood-weth-lute-vault",
     "assets": ["LUTE", "WETH"],
     "tokenAddress": "0xd4A452bB077618b931603DbcB60ea43c05eBEa45",
@@ -43,7 +43,7 @@
   },
   {
     "id": "moo_alandale-cow-robinhood-usdg-lute-vault",
-    "title": "Beefy",
+    "title": "Alandale",
     "vaultId": "alandale-cow-robinhood-usdg-lute-vault",
     "assets": ["LUTE", "USDG"],
     "tokenAddress": "0xe50D89C43D0D13eE1439Bb5E94876A1163a26434",
@@ -64,7 +64,7 @@
   },
   {
     "id": "moo_alandale-cow-robinhood-weth-spy-vault",
-    "title": "Beefy",
+    "title": "Alandale",
     "vaultId": "alandale-cow-robinhood-weth-spy-vault",
     "assets": ["SPYrh", "WETH"],
     "tokenAddress": "0x87673A619Fc4F3Fc08068A0BB04f60aA2D04ca62",
