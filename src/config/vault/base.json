@@ -134,7 +134,7 @@
     "status": "active",
     "createdAt": 1790157457,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "0.3",
     "tickSpacing": 60,
     "assets": ["TRUE", "WETH"],
     "risks": {
