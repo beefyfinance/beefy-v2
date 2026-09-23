@@ -1,5 +1,161 @@
 [
   {
+    "id": "uniswap-cow-robinhood-weth-googl-rp",
+    "name": "GOOGL-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodWETH-GOOGL",
+    "tokenAddress": "0x43c67a19dF6206F70A843f0A66D26e1AFc39e385",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xAD2e28E9C8f3C4A0753Aea2d37a53bb6750A4faA",
+    "earnedToken": "rCowUniswapRobinhoodWETH-GOOGL",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-googl",
+    "status": "active",
+    "createdAt": 1790143013,
+    "platformId": "uniswap",
+    "assets": ["WETH", "GOOGLrh"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-weth-googl",
+    "name": "GOOGL-WETH",
+    "type": "cowcentrated",
+    "token": "WETH-GOOGL uniswap",
+    "tokenAddress": "0x8c2B4303fA0B99d07A5D3E9411497A277e65b673",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0x2e0847E8910a9732eB3fb1bb4b70a580ADAD4FE3"
+    ],
+    "earnContractAddress": "0x43c67a19dF6206F70A843f0A66D26e1AFc39e385",
+    "earnedToken": "cowUniswapRobinhoodWETH-GOOGL",
+    "earnedTokenAddress": "0x43c67a19dF6206F70A843f0A66D26e1AFc39e385",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-googl",
+    "status": "active",
+    "createdAt": 1790143013,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["WETH", "GOOGLrh"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-googl-usdg-rp",
+    "name": "GOOGL-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodGOOGL-USDG",
+    "tokenAddress": "0x94B049EaF61268039a79C9dF376F0689983e2a12",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x51e6f4CFb91E1D09A05528aAC305edD0D6E74409",
+    "earnedToken": "rCowUniswapRobinhoodGOOGL-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-googl-usdg",
+    "status": "active",
+    "createdAt": 1790143008,
+    "platformId": "uniswap",
+    "assets": ["GOOGLrh", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-googl-usdg",
+    "name": "GOOGL-USDG",
+    "type": "cowcentrated",
+    "token": "GOOGL-USDG uniswap",
+    "tokenAddress": "0x34D0dC122CF9A8Eb296fC5e0D3A233625D7d19b7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x2e0847E8910a9732eB3fb1bb4b70a580ADAD4FE3",
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+    ],
+    "earnContractAddress": "0x94B049EaF61268039a79C9dF376F0689983e2a12",
+    "earnedToken": "cowUniswapRobinhoodGOOGL-USDG",
+    "earnedTokenAddress": "0x94B049EaF61268039a79C9dF376F0689983e2a12",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-googl-usdg",
+    "status": "active",
+    "createdAt": 1790143008,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 10,
+    "assets": ["GOOGLrh", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "up33-cow-robinhood-usdg-net-vault",
     "name": "NET-USDG",
     "type": "standard",
