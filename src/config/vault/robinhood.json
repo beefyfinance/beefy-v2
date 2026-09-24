@@ -1,5 +1,83 @@
 [
   {
+    "id": "uniswap-cow-robinhood-weth-musebook-rp",
+    "name": "musebook-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodWETH-musebook",
+    "tokenAddress": "0x8cf7bAE9ac9d3E8BF81dEbCd2b6171335B0d7fC3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xf973B83766E8D93d67e0c1E8EB4b25f2B6b91E06",
+    "earnedToken": "rCowUniswapRobinhoodWETH-musebook",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-musebook",
+    "status": "active",
+    "createdAt": 1790239171,
+    "platformId": "uniswap",
+    "assets": ["musebook", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-weth-musebook",
+    "name": "WETH-musebook",
+    "type": "cowcentrated",
+    "token": "WETH-musebook uniswap",
+    "tokenAddress": "0xe972Dfc9032D148f4B1618fb914FBbD2fC41D6dC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0x91A2DAe9699f0B82540B5886b0d8759C22820bA3"
+    ],
+    "earnContractAddress": "0x8cf7bAE9ac9d3E8BF81dEbCd2b6171335B0d7fC3",
+    "earnedToken": "cowUniswapRobinhoodWETH-musebook",
+    "earnedTokenAddress": "0x8cf7bAE9ac9d3E8BF81dEbCd2b6171335B0d7fC3",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-musebook",
+    "status": "active",
+    "createdAt": 1790239171,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["WETH", "musebook"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-robinhood-weth-googl-rp",
     "name": "GOOGL-WETH Reward Pool",
     "type": "gov",
