@@ -1,5 +1,161 @@
 [
   {
+    "id": "uniswap-cow-base-weth-surplus-rp",
+    "name": "Surplus-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseSurplus-WETH",
+    "tokenAddress": "0x18fc65FFD4E059Ba769F64FAE1EE95F38a3b3152",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x5aeD150ecc86465D0B4aE5Ae60d8B99ddAF42D2B",
+    "earnedToken": "rCowUniswapBaseSurplus-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-surplus",
+    "status": "active",
+    "createdAt": 1790157737,
+    "platformId": "uniswap",
+    "assets": ["Surplus", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-surplus",
+    "name": "Surplus-WETH",
+    "type": "cowcentrated",
+    "token": "Surplus-WETH uniswap",
+    "tokenAddress": "0xbCf23F30a90f6D7c288fACdc932fF8F8B68b0f30",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xC52aeDec3374422d7510E294cfAa90799595CBa3"
+    ],
+    "earnContractAddress": "0x18fc65FFD4E059Ba769F64FAE1EE95F38a3b3152",
+    "earnedToken": "cowUniswapBaseSurplus-WETH",
+    "earnedTokenAddress": "0x18fc65FFD4E059Ba769F64FAE1EE95F38a3b3152",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-surplus",
+    "status": "active",
+    "createdAt": 1790157737,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["Surplus", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-true-weth-rp",
+    "name": "TRUE-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseTRUE-WETH",
+    "tokenAddress": "0x95f91190d6D09496239588a356a98151904C34Af",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x3F452f2e0ccb43978C5Fe86592a2c876434A322a",
+    "earnedToken": "rCowUniswapBaseTRUE-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-true-weth",
+    "status": "active",
+    "createdAt": 1790157457,
+    "platformId": "uniswap",
+    "assets": ["TRUE", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-true-weth",
+    "name": "TRUE-WETH",
+    "type": "cowcentrated",
+    "token": "TRUE-WETH uniswap",
+    "tokenAddress": "0x61E715f97a76E3EbE2282A309A4FfEB61ea22971",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x21CFCFc3d8F98fC728f48341D10Ad8283F6EB7AB",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "earnContractAddress": "0x95f91190d6D09496239588a356a98151904C34Af",
+    "earnedToken": "cowUniswapBaseTRUE-WETH",
+    "earnedTokenAddress": "0x95f91190d6D09496239588a356a98151904C34Af",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-true-weth",
+    "status": "active",
+    "createdAt": 1790157457,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["TRUE", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-bd-usdc",
     "name": "BD-USDC sLP",
     "type": "standard",
