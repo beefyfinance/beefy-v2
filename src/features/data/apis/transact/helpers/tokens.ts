@@ -178,6 +178,27 @@ export function isSameOrSharedBalance(
   return isTokenEqual(toBalanceToken(a, sharedWnative), toBalanceToken(b, sharedWnative));
 }
 
+/** the native view of a shared balance: the erc20 view is how the app holds and spends it */
+function isSharedNativeView(
+  token: TokenEntity,
+  sharedWnative: SharedBalanceWnative | undefined
+): boolean {
+  return isTokenNative(token) && isSharedBalanceToken(token, sharedWnative);
+}
+
+/** lists a shared balance once, as the erc20 view, so it is never offered on neither view */
+export function withoutSharedNativeView(
+  tokens: TokenEntity[],
+  sharedWnative: SharedBalanceWnative | undefined
+): TokenEntity[] {
+  if (!sharedWnative || !tokens.some(token => isSharedNativeView(token, sharedWnative))) {
+    return tokens;
+  }
+  return uniqueTokens(
+    tokens.map(token => (isSharedNativeView(token, sharedWnative) ? sharedWnative : token))
+  );
+}
+
 /**
  * Amounts are in whole tokens, so native and wnative need no conversion factor, but the wnative
  * view can hold fewer decimals (arc: 6 vs 18, balanceOf truncates the rest).

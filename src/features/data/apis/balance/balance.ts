@@ -30,7 +30,7 @@ import {
 } from '../../selectors/balance.ts';
 import {
   selectChainNativeToken,
-  selectSharedBalanceWrappedToken,
+  selectSharedBalanceWrappedTokenIfLoaded,
   selectTokenByAddress,
 } from '../../selectors/tokens.ts';
 import type { BeefyState } from '../../store/types.ts';
@@ -72,7 +72,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     const CHUNK_SIZE = featureFlag_getBalanceApiChunkSize(this.chain.id);
 
     // arc: native and wnative are one balance, stored once under the erc20 view
-    const sameBalanceWNative = selectSharedBalanceWrappedToken(state, this.chain.id);
+    const sameBalanceWNative = selectSharedBalanceWrappedTokenIfLoaded(state, this.chain.id);
     let sameBalanceWanted = false;
 
     const nativeTokens: TokenNative[] = [];

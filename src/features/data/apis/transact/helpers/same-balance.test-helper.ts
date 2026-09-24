@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
+import { expect } from 'vitest';
 import type { ChainEntity } from '../../../entities/chain.ts';
-import type { TokenErc20, TokenNative } from '../../../entities/token.ts';
+import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token.ts';
 import type { BeefyState } from '../../../store/types.ts';
 
 // arc: native USDC (18 decimals) and the 0x3600 ERC-20 (6 decimals) are one balance
@@ -57,7 +58,7 @@ export const arcEurc = erc20Token(
   'arc',
   'EURC',
   'EURC',
-  '0x0000000000000000000000000000000000000e0c',
+  '0xe0c0000000000000000000000000000000000e0c',
   6
 );
 export const baseNative = nativeToken('base', 'ETH');
@@ -79,7 +80,7 @@ export const metisNative = nativeToken('metis', 'METIS', 'NATIVE');
 export const metisWmetis = erc20Token(
   'metis',
   'WMETIS',
-  'METIS',
+  'WMETIS',
   '0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000',
   18
 );
@@ -132,3 +133,31 @@ export function makeState(extra: Record<string, unknown> = {}): BeefyState {
 }
 
 export const bn = (value: string) => new BigNumber(value);
+
+/**
+ * Readable labels for assertion diffs. Both views of a shared balance carry the same symbol on
+ * arc, so a diff of symbols alone would show two identical-looking entries.
+ */
+export function tokenLabels(tokens: TokenEntity[]): string[] {
+  return tokens.map(token => `${token.symbol} ${token.type}@${token.address} ${token.decimals}dp`);
+}
+
+/** multi-token rows, such as the break-LP withdraw row, are a different kind of row */
+function onlySingleTokenRows(tokenLists: TokenEntity[][]): TokenEntity[] {
+  return tokenLists.filter(tokens => tokens.length === 1).map(tokens => tokens[0]);
+}
+
+/** the token a deposit row represents is what you spend */
+export function depositRowTokens(options: Array<{ inputs: TokenEntity[] }>): TokenEntity[] {
+  return onlySingleTokenRows(options.map(option => option.inputs));
+}
+
+/** the token a withdraw row represents is what you receive; inputs are the vault's deposit token */
+export function withdrawRowTokens(options: Array<{ wantedOutputs: TokenEntity[] }>): TokenEntity[] {
+  return onlySingleTokenRows(options.map(option => option.wantedOutputs));
+}
+
+/** asserts the exact rows offered, so a failure diffs the token lists rather than a derived key */
+export function expectRowTokens(actual: TokenEntity[], expected: TokenEntity[]) {
+  expect(tokenLabels(actual)).toEqual(tokenLabels(expected));
+}

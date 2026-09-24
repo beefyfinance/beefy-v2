@@ -7,7 +7,7 @@ import {
   bn,
   makeState,
   metisNative,
-} from '../apis/transact/helpers/same-balance-fixture.ts';
+} from '../apis/transact/helpers/same-balance.test-helper.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import { selectTokenInputDecimals } from '../selectors/tokens.ts';
 import { transactSetInputAmount, transactSetTokenInputAmount } from './transact.ts';
@@ -28,7 +28,7 @@ function dispatched(token: TokenEntity, amount: string, max = false) {
 }
 
 describe('selectTokenInputDecimals', () => {
-  it('caps arc native at the decimals of its erc20 view', () => {
+  it('caps native at the erc20 view decimals where balanceSharedWithWrapped and dp differ', () => {
     expect(selectTokenInputDecimals(state, arcNative)).toBe(6);
     expect(selectTokenInputDecimals(state, arcUsdc)).toBe(6);
   });
@@ -42,7 +42,7 @@ describe('selectTokenInputDecimals', () => {
 });
 
 describe('transactSetTokenInputAmount', () => {
-  it('floors an arc native amount to 6 decimals, keeping index and max', () => {
+  it('floors a native amount to the erc20 view decimals where dp differ, keeping index and max', () => {
     const payload = dispatched(arcNative, '12.345678901234567891', true);
     expect(payload.amount.toString(10)).toBe('12.345678');
     expect(payload).toMatchObject({ index: 0, max: true });

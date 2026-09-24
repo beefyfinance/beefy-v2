@@ -14,7 +14,7 @@ export const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     rowGap: '24px',
-    borderRadius: '8px',
+    borderRadius: '12px',
     flex: 1,
   }),
   icon: css.raw({

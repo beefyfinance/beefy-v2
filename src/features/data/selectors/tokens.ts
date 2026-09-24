@@ -188,6 +188,20 @@ export const selectSharedBalanceWrappedToken = (
     (selectChainWrappedNativeToken(state, chainId) as SharedBalanceWnative)
   : undefined;
 
+/** as selectSharedBalanceWrappedToken, but the balance api runs before the addressbook loads */
+export const selectSharedBalanceWrappedTokenIfLoaded = (
+  state: BeefyState,
+  chainId: ChainEntity['id']
+): SharedBalanceWnative | undefined => {
+  if (!selectIsChainNativeSharedWithWrapped(state, chainId)) {
+    return undefined;
+  }
+  const chainTokens = state.entities.tokens.byChainId[chainId];
+  const address = chainTokens?.wnative ? chainTokens.byId[chainTokens.wnative] : undefined;
+  const token = address ? chainTokens?.byAddress[address] : undefined;
+  return token && isTokenErc20(token) ? (token as SharedBalanceWnative) : undefined;
+};
+
 /** arc's native USDC is spent through its 6 decimal erc20 view, so finer input is only dust */
 export const selectTokenInputDecimals = (state: BeefyState, token: TokenEntity): number => {
   return isTokenNative(token) ?
