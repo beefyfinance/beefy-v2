@@ -4,7 +4,7 @@ export const styles = {
   container: css.raw({
     width: '100%',
     backgroundColor: 'background.content',
-    borderRadius: '8px',
+    borderRadius: '12px',
     display: 'grid',
     padding: '16px',
     mdOnly: {
