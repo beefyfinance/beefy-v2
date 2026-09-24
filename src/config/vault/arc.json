@@ -56,7 +56,7 @@
     "status": "active",
     "createdAt": 1790076212,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "0.01",
     "tickSpacing": 1,
     "assets": ["cirBTC", "USDC"],
     "risks": {
@@ -134,7 +134,7 @@
     "status": "active",
     "createdAt": 1790075569,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "0.05",
     "tickSpacing": 10,
     "assets": ["EURC", "USDC"],
     "risks": {
