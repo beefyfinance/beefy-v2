@@ -1,5 +1,44 @@
 [
   {
+    "id": "aerodrome-usdc-alusdb",
+    "name": "USDC-alUSDb sLP",
+    "type": "standard",
+    "token": "sAMM-USDC/alUSDb",
+    "tokenAddress": "0x32d6Ec4400fBdd4085ce1e1664C48F8D21c4f9aa",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xfCa983Ea00D87DE9BB7eAF5561cC1ec4050Ad1ba",
+    "earnedToken": "mooAerodromeBaseUSDC-alUSDb",
+    "earnedTokenAddress": "0xfCa983Ea00D87DE9BB7eAF5561cC1ec4050Ad1ba",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usdc-alusdb",
+    "status": "active",
+    "createdAt": 1790270361,
+    "platformId": "aerodrome",
+    "assets": ["USDC", "alUSDb"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": true
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x252D36F435582EcB01686448d21e8C9eA0B2Ca65&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=-1&chain0=8453&chain1=8453&factory=0x420DD381b31aEf6683db6B902084cB0FFECe40Da",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-weth-surplus-rp",
     "name": "Surplus-WETH Reward Pool",
     "type": "gov",
