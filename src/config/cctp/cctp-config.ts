@@ -25,7 +25,7 @@ import type { Address } from 'viem';
  * Only chains with forwarding service can be used as destination for cross-chain zaps.
  * Chains without fast transfer use standard only (0 bps fee, slower).
  *
- * Supported chains (as of 2026-02):
+ * Supported chains (as of 2026-09):
  * @see https://developers.circle.com/cctp/cctp-supported-blockchains
  * Chain          | Domain | Fast | Forwarding
  * Ethereum       |   0    |  ✓  |     ✓
@@ -38,6 +38,7 @@ import type { Address } from 'viem';
  * Sonic          |  13    |  ✗  |     ✓
  * Monad          |  15    |  ✗  |     ✓
  * HyperEVM       |  19    |  ✗  |     ✓
+ * Arc            |  26    |  ✗  |     ✓
  */
 
 export type CCTPChainConfig = {
@@ -87,6 +88,16 @@ export const CCTP_CONFIG: CCTPConfig = {
       domain: 3,
       time: { outgoing: 5, incoming: 5 },
       fastFeeBps: 1.4,
+      beefyBridgeFeeUsd: 0.1,
+    },
+    arc: {
+      tokenMessenger: TOKEN_MESSENGER_V2,
+      messageTransmitter: MESSAGE_TRANSMITTER_V2,
+      maxMessageBodySize: MAX_MESSAGE_BODY_SIZE,
+      receiver: '0x00000076f6B75081EF1526C5d9c20D5430f0Beef',
+      usdcAddress: '0x3600000000000000000000000000000000000000',
+      domain: 26,
+      time: { outgoing: 5, incoming: 5 },
       beefyBridgeFeeUsd: 0.1,
     },
     avax: {

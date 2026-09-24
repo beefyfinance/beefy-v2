@@ -28,6 +28,7 @@ export const supportedChainIds: ChainConfig['id'][] = [
   'monad',
   'megaeth',
   'robinhood',
+  'arc',
 ];
 
 export class KyberSwapApi implements IKyberSwapApi {

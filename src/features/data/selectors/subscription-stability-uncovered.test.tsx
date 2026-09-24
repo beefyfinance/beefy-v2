@@ -37,7 +37,7 @@ import {
   FIXTURE_WALLET_KEY,
   OTHER_WALLET,
   renderTree,
-} from './subscription-stability-fixture.tsx';
+} from './subscription-stability.test-helper.tsx';
 
 const SortedDashboardVaultsProbe = memo(function SortedDashboardVaultsProbe({
   address,

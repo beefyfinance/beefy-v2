@@ -19,3 +19,8 @@ export type ChainEntity = Omit<
 };
 
 export type ChainId = ChainEntity['id'];
+
+/** native and wnative are one on-chain balance (arc, metis, celo), so nothing wraps or unwraps */
+export function isChainNativeSharedWithWrapped(chain: Pick<ChainEntity, 'native'>): boolean {
+  return !!chain.native.balanceSharedWithWrapped;
+}
