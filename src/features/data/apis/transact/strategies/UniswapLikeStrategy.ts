@@ -17,11 +17,15 @@ import { isStandardVault, type VaultStandard } from '../../../entities/vault.ts'
 import { type AmmEntityUniswapLike, isUniswapLikeAmm } from '../../../entities/zap.ts';
 import type { Step } from '../../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
-import { selectChainById } from '../../../selectors/chains.ts';
+import {
+  selectChainById,
+  selectIsChainNativeSharedWithWrapped,
+} from '../../../selectors/chains.ts';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
   selectIsTokenLoaded,
+  selectSharedBalanceWrappedToken,
   selectTokenById,
 } from '../../../selectors/tokens.ts';
 import { selectTransactSlippage } from '../../../selectors/transact.ts';
@@ -42,11 +46,12 @@ import {
 import { calculatePriceImpact, ZERO_FEE } from '../helpers/quotes.ts';
 import {
   allTokensAreDistinct,
+  floorToSharedPrecision,
   includeWrappedAndNative,
-  nativeAndWrappedAreSame,
   pickTokens,
   tokensReachableFromAll,
   tokensToLp,
+  withoutSharedNativeView,
 } from '../helpers/tokens.ts';
 import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../helpers/zap.ts';
@@ -200,9 +205,16 @@ export abstract class UniswapLikeStrategy<
     return tokensReachableFromAll(tokenSupport.any, this.lpTokens, tokenSupport.tokens);
   }
 
+  protected poolOptionTokens(): TokenEntity[] {
+    return withoutSharedNativeView(
+      includeWrappedAndNative(this.tokens, this.wnative, this.native),
+      selectSharedBalanceWrappedToken(this.helpers.getState(), this.vault.chainId)
+    );
+  }
+
   async fetchDepositOptions(): Promise<UniswapLikeDepositOption<TAmm>[]> {
     // what tokens can we can zap via pool with
-    const tokensWithNativeWrapped = includeWrappedAndNative(this.tokens, this.wnative, this.native);
+    const tokensWithNativeWrapped = this.poolOptionTokens();
     const poolTokens = tokensWithNativeWrapped.map(token => ({
       token,
       swap: 'pool' as const,
@@ -284,12 +296,18 @@ export abstract class UniswapLikeStrategy<
       : [];
 
     // Swap
+    // native is used as wnative, whose view may hold fewer decimals on shared-balance chains (arc)
+    const swapInTotal = floorToSharedPrecision(
+      input.amount,
+      input.token,
+      selectSharedBalanceWrappedToken(state, input.token.chainId)
+    );
     const swapInAmountWei = pool.getOptimalSwapAmount(
-      toWei(input.amount, input.token.decimals),
+      toWei(swapInTotal, swapInToken.decimals),
       swapInToken.address
     );
     const swapInAmount = fromWei(swapInAmountWei, swapInToken.decimals);
-    const amountLeft = input.amount.minus(swapInAmount);
+    const amountLeft = swapInTotal.minus(swapInAmount);
     const swap = pool.swap(swapInAmountWei, swapInToken.address, true);
     const swapOutAmount = fromWei(swap.amountOut, swapOutToken.decimals);
 
@@ -324,7 +342,8 @@ export abstract class UniswapLikeStrategy<
     // Build quote steps
     const steps: ZapQuoteStep[] = [];
 
-    if (isInputNative && !nativeAndWrappedAreSame(input.token.chainId)) {
+    // on shared-balance chains (arc) this is a call-less step that moves the amount to wnative
+    if (isInputNative) {
       const wrapQuotes = await swapAggregator.fetchQuotes(
         {
           fromAmount: input.amount,
@@ -857,7 +876,7 @@ export abstract class UniswapLikeStrategy<
 
   async fetchWithdrawOptions(): Promise<UniswapLikeWithdrawOption<TAmm>[]> {
     // what tokens can we directly zap with
-    const tokensWithNativeWrapped = includeWrappedAndNative(this.tokens, this.wnative, this.native);
+    const tokensWithNativeWrapped = this.poolOptionTokens();
     const poolTokens = tokensWithNativeWrapped.map(token => ({
       token,
       swap: 'pool' as const,
@@ -1063,7 +1082,10 @@ export abstract class UniswapLikeStrategy<
     });
 
     const outputAmount = keepTokenAmount.amount.plus(swapOutAmount);
-    if (isWantedOutputNative && !nativeAndWrappedAreSame(wantedOutput.chainId)) {
+    if (
+      isWantedOutputNative &&
+      !selectIsChainNativeSharedWithWrapped(this.helpers.getState(), wantedOutput.chainId)
+    ) {
       const { swapAggregator, getState } = this.helpers;
       const state = getState();
       const unwrapQuotes = await swapAggregator.fetchQuotes(

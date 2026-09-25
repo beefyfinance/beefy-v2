@@ -299,5 +299,21 @@
     "priorityTokens": ["WHYPE", "HYPE", "USDC", "USDT0", "UBTC", "kHYPE"],
     "blockedTokens": [],
     "blockedVaults": []
+  },
+  {
+    "id": "kyber-arc",
+    "type": "kyber",
+    "chainId": "arc",
+    "priorityTokens": ["USDC"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "one-inch-arc",
+    "type": "one-inch",
+    "chainId": "arc",
+    "priorityTokens": ["USDC"],
+    "blockedTokens": [],
+    "blockedVaults": []
   }
 ]

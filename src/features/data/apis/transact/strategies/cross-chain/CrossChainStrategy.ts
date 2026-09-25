@@ -9,7 +9,10 @@ import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
 import type { CrossChainRecoveryParams } from '../../../../reducers/wallet/transact-types.ts';
 import type { CrossChainExecuteMetadata } from '../../../../actions/wallet/cross-chain.ts';
-import { selectTokenByAddress } from '../../../../selectors/tokens.ts';
+import {
+  selectSharedBalanceWrappedToken,
+  selectTokenByAddress,
+} from '../../../../selectors/tokens.ts';
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
 import { selectVaultById } from '../../../../selectors/vaults.ts';
 import { selectWalletAddress } from '../../../../selectors/wallet.ts';
@@ -39,6 +42,7 @@ import {
   totalValueOfTokenAmounts,
   ZERO_FEE,
 } from '../../helpers/quotes.ts';
+import { isSameOrSharedBalance } from '../../helpers/tokens.ts';
 import { NO_RELAY } from '../../helpers/zap.ts';
 import {
   type AllowanceTokenAmount,
@@ -708,8 +712,11 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
           this.options.swap
         );
 
+        const destSharedWnative = selectSharedBalanceWrappedToken(state, destChainId);
+
         for (const token of destTokenSupport.any) {
-          if (token.address.toLowerCase() === destUSDC.address.toLowerCase()) continue;
+          // USDC, or its other view on a shared-balance chain (arc), is the passthrough output above
+          if (isSameOrSharedBalance(token, destUSDC, destSharedWnative)) continue;
 
           const selectionId = createSelectionId(destChainId, [token], 'cross-chain-withdraw');
           options.push({

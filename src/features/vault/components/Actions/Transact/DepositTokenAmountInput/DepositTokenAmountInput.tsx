@@ -2,7 +2,10 @@ import { type CssStyles } from '@repo/styles/css';
 import BigNumber from 'bignumber.js';
 import { memo, useCallback, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
+import {
+  transactSetInputAmount,
+  transactSetTokenInputAmount,
+} from '../../../../../data/actions/transact.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import {
   isVaultWithPricePerFullShare,
@@ -15,6 +18,7 @@ import {
 } from '../../../../../data/selectors/balance.ts';
 import {
   selectTokenByAddress,
+  selectTokenInputDecimals,
   selectTokenPriceByTokenOracleId,
 } from '../../../../../data/selectors/tokens.ts';
 import {
@@ -64,18 +68,13 @@ const StandardDepositTokenAmountInput = memo(function StandardDepositTokenAmount
   );
   const value = useAppSelector(state => selectTransactInputIndexAmount(state, index));
   const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, token.oracleId));
+  const inputDecimals = useAppSelector(state => selectTokenInputDecimals(state, token));
 
   const handleChange = useCallback<NonNullable<AmountInputProps['onChange']>>(
     (value, isMax) => {
-      dispatch(
-        transactSetInputAmount({
-          index,
-          amount: value.decimalPlaces(token.decimals, BigNumber.ROUND_FLOOR),
-          max: isMax,
-        })
-      );
+      dispatch(transactSetTokenInputAmount({ index, token, amount: value, max: isMax }));
     },
-    [dispatch, token.decimals, index]
+    [dispatch, token, index]
   );
 
   return (
@@ -85,7 +84,7 @@ const StandardDepositTokenAmountInput = memo(function StandardDepositTokenAmount
       price={price}
       maxValue={userBalance}
       onChange={handleChange}
-      tokenDecimals={token.decimals}
+      tokenDecimals={inputDecimals}
       endAdornment={<TokenSelectButton index={index} />}
     />
   );

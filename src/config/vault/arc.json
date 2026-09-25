@@ -1,0 +1,158 @@
+[
+  {
+    "id": "uniswap-cow-arc-cirbtc-usdc-rp",
+    "name": "cirBTC-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArccirBTC-USDC",
+    "tokenAddress": "0xAAa8C1e4F75Ec7DF802607D827Ea0efE8dCDDbDD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xcD68b5A8850E5A10531bDE1BC657329575E40E2C",
+    "earnedToken": "rCowUniswapArccirBTC-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arc-cirbtc-usdc",
+    "status": "active",
+    "createdAt": 1790076212,
+    "platformId": "uniswap",
+    "assets": ["cirBTC", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arc-cirbtc-usdc",
+    "name": "cirBTC-USDC",
+    "type": "cowcentrated",
+    "token": "cirBTC-USDC uniswap",
+    "tokenAddress": "0x82916bee18fCEF517B26C72d7Cb5F13694E1dB41",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x171A4217b86A807A64eB94757Db6849fb4bDbAA0",
+      "0x3600000000000000000000000000000000000000"
+    ],
+    "earnContractAddress": "0xAAa8C1e4F75Ec7DF802607D827Ea0efE8dCDDbDD",
+    "earnedToken": "cowUniswapArccirBTC-USDC",
+    "earnedTokenAddress": "0xAAa8C1e4F75Ec7DF802607D827Ea0efE8dCDDbDD",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arc-cirbtc-usdc",
+    "status": "active",
+    "createdAt": 1790076212,
+    "platformId": "beefy",
+    "feeTier": "0.01",
+    "tickSpacing": 1,
+    "assets": ["cirBTC", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arc-usdc-eurc-rp",
+    "name": "EURC-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArcEURC-USDC",
+    "tokenAddress": "0x104E6823bAB0be3fe9b48c5fB0F0413301d935a4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x8f6E62ac78B06F4f45DB8dE37C8A8B6e1F3e3a13",
+    "earnedToken": "rCowUniswapArcEURC-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arc-usdc-eurc",
+    "status": "active",
+    "createdAt": 1790075569,
+    "platformId": "uniswap",
+    "assets": ["EURC", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arc-usdc-eurc",
+    "name": "EURC-USDC",
+    "type": "cowcentrated",
+    "token": "EURC-USDC uniswap",
+    "tokenAddress": "0x6fd5F2fb831940DcD61A98c5B3aCB7D8C6f3bFc1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x3600000000000000000000000000000000000000",
+      "0xbEf5f6d51CB62b58e6A8f77868681825C6fe21c1"
+    ],
+    "earnContractAddress": "0x104E6823bAB0be3fe9b48c5fB0F0413301d935a4",
+    "earnedToken": "cowUniswapArcEURC-USDC",
+    "earnedTokenAddress": "0x104E6823bAB0be3fe9b48c5fB0F0413301d935a4",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arc-usdc-eurc",
+    "status": "active",
+    "createdAt": 1790075569,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["EURC", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  }
+]
