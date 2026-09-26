@@ -597,10 +597,14 @@
   "Stepper-Dust-Single": "<dust/> was not used and returned to you.",
   "Stepper-CrossChain-Deposit-Success-Title": "Cross-chain deposit confirmed",
   "Stepper-CrossChain-Deposit-Success-Content": "You deposited {{amount}} {{token}} from {{srcChain}} into {{vaultName}} on {{vaultChain}}.",
-  "Stepper-CrossChain-Deposit-Received": "<received/> was added to your position.",
   "Stepper-CrossChain-Withdraw-Success-Title": "Cross-chain withdrawal confirmed",
   "Stepper-CrossChain-Withdraw-Success-Content": "You withdrew {{amount}} {{token}} from {{vaultName}} on {{vaultChain}} to {{outputToken}} on {{destChain}}.",
-  "Stepper-CrossChain-Withdraw-Received": "<received/> was sent to your wallet.",
+  "Stepper-Zap-Deposit-Success-Content": "You deposited <input/> into {{vaultName}} on {{chain}}.",
+  "Stepper-Zap-Withdraw-Success-Content": "You withdrew <input/> from {{vaultName}} on {{chain}} to <output/>.",
+  "Stepper-Zap-VaultToVault-Success-Content": "You deposited <input/> from {{srcVaultName}} into {{destVaultName}} on {{chain}}.",
+  "Stepper-Zap-Deposit-Received": "<received/> was added to your position.",
+  "Stepper-Zap-Withdraw-Received": "<received/> was sent to your wallet.",
+  "Stepper-Zap-Withdraw-Received-Multi": "<received/> were sent to your wallet.",
 
   "Stepper-approve-Building-Content": "Building approve transaction...",
 
