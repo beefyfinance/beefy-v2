@@ -14,8 +14,10 @@ import {
 import {
   isErc4626AsyncWithdrawVault,
   isErc4626Vault,
+  isNonCowcentratedMultiGovVault,
   isStandardVault,
   type VaultErc4626,
+  type VaultGovMulti,
   type VaultStandard,
 } from '../../../../entities/vault.ts';
 import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
@@ -39,7 +41,7 @@ import {
 } from '../../helpers/options.ts';
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { nativeAndWrappedAreSame, pickTokens } from '../../helpers/tokens.ts';
-import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
+import { getGovVaultWithdrawnFromState, getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import {
   type InputTokenAmount,
@@ -57,7 +59,9 @@ import {
 } from '../../transact-types.ts';
 import {
   type IErc4626VaultType,
+  type IGovVaultType,
   isErc4626VaultType,
+  isGovVaultType,
   isStandardVaultType,
   type IStandardVaultType,
 } from '../../vaults/IVaultType.ts';
@@ -95,8 +99,8 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
 
   protected readonly wnative: TokenErc20;
   protected readonly native: TokenNative;
-  protected readonly vault: VaultStandard | VaultErc4626;
-  protected readonly vaultType: IStandardVaultType | IErc4626VaultType;
+  protected readonly vault: VaultStandard | VaultErc4626 | VaultGovMulti;
+  protected readonly vaultType: IStandardVaultType | IErc4626VaultType | IGovVaultType;
 
   public getHelpers(): ZapTransactHelpers {
     return this.helpers;
@@ -109,11 +113,19 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     // Make sure zap was configured correctly for this vault
     const { vault, vaultType, getState } = this.helpers;
 
-    if (!isStandardVault(vault) && !isErc4626Vault(vault)) {
-      throw new Error('Vault is not a standard/erc4626 vault');
+    if (
+      !isStandardVault(vault) &&
+      !isErc4626Vault(vault) &&
+      !isNonCowcentratedMultiGovVault(vault)
+    ) {
+      throw new Error('Vault is not a standard/erc4626/gov v2 vault');
     }
-    if (!isStandardVaultType(vaultType) && !isErc4626VaultType(vaultType)) {
-      throw new Error('Vault type is not standard/erc4626');
+    if (
+      !isStandardVaultType(vaultType) &&
+      !isErc4626VaultType(vaultType) &&
+      !isGovVaultType(vaultType)
+    ) {
+      throw new Error('Vault type is not standard/erc4626/gov');
     }
 
     onlyAssetCount(vault, 1);
@@ -332,8 +344,8 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
 
     const { swapAggregator, zap, getState } = this.helpers;
     const vault = this.vault;
-    if (!isStandardVault(vault)) {
-      throw new Error('Vault is not standard');
+    if (!isStandardVault(vault) && !isNonCowcentratedMultiGovVault(vault)) {
+      throw new Error('Vault is not standard/gov v2');
     }
 
     // Input
@@ -345,7 +357,9 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     // Token Allowances
     const state = getState();
     const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, vault, state);
+      isStandardVault(vault) ?
+        getVaultWithdrawnFromState(input, vault, state)
+      : getGovVaultWithdrawnFromState(input, vault, state);
     const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
     const allowances = [
       {

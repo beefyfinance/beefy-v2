@@ -435,6 +435,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
         {
           type: 'withdraw',
           outputs: underlyingQuote.outputs,
+          estimated: true,
         },
       ];
 

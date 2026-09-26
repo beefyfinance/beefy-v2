@@ -113,7 +113,7 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
   }
 
   async fetchTokensAllowance(
-    state: BeefyState,
+    _state: BeefyState,
     tokens: TokenErc20[],
     walletAddress: string,
     spenderAddress: string
@@ -129,12 +129,10 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
       [tokenAddress: string]: { tokenAddress: TokenEntity['address']; spenders: Set<string> };
     } = {};
     const tokensByAddress: { [tokenAddress: TokenEntity['address']]: TokenEntity } = {};
-    const addTokenAddressesToCalls = (tokenAddress: string, spenderAddress: string) => {
-      const token = selectTokenByAddress(state, this.chain.id, tokenAddress);
+    // takes the entity rather than re-resolving it: callers may pass a token that is not in the
+    // store, such as a synthesized boost receipt
+    const addTokenAddressesToCalls = (token: TokenErc20, spenderAddress: string) => {
       const keyTokenAddress = token.address.toLowerCase();
-      if (!isTokenErc20(token)) {
-        throw new Error(`Can't query allowance of non erc20 token, skipping ${token.id}`);
-      }
       if (allowanceCallsByToken[keyTokenAddress] === undefined) {
         allowanceCallsByToken[keyTokenAddress] = {
           tokenAddress: token.address,
@@ -149,7 +147,7 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
     };
 
     for (const token of tokens) {
-      addTokenAddressesToCalls(token.address, spenderAddress);
+      addTokenAddressesToCalls(token, spenderAddress);
     }
 
     // if we send too much in a single call, we get "execution reversed"

@@ -73,6 +73,7 @@ import {
 } from '../../../../actions/wallet/cross-chain.ts';
 import { enumerateDstVaultCandidates, enumerateSrcVaultCandidates } from './enumeration.ts';
 import { buildDustOutputs, mergeOutputs } from '../../handlers/dust.ts';
+import { findBoostStakeStep, findBoostUnstakeStep } from '../../helpers/boost.ts';
 import { buildBalanceCheckZapStep, findBridgeTokenMin } from './handlers/utils.ts';
 import type { SwapOptions } from '../../swap/ISwapProvider.ts';
 import { PassthroughDestHandler } from './handlers/PassthroughDestHandler.ts';
@@ -156,14 +157,18 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     helpers: ChainTransactHelpers;
     destChainId: ChainEntity['id'];
     inputToken: TokenEntity;
+    isRecovery?: boolean;
+    stakeIntoBoostId?: string;
     swapOptions: SwapOptions;
   }): DestHandlerContext {
-    const { helpers, destChainId, inputToken, swapOptions } = args;
+    const { helpers, destChainId, inputToken, isRecovery, stakeIntoBoostId, swapOptions } = args;
     const swapAggregator = helpers.swapAggregator.withOptions(swapOptions);
     return {
       helpers: { ...helpers, swapAggregator },
       destChainId,
       inputToken,
+      isRecovery,
+      stakeIntoBoostId,
       slippage: selectTransactSlippage(helpers.getState()),
       pageVaultId: this.helpers.vault.id,
       resolveHelpersForVault: async id => ({
@@ -643,7 +648,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         quote.option.vaultId,
         zapRequest,
         expectedTokens,
-        metadata
+        metadata,
+        findBoostUnstakeStep(quote.steps)?.boostId
       ),
       pending: false,
       extraInfo: {
@@ -853,6 +859,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
           ...base,
           destHandlerKind: 'vault',
           destVaultId: quote.option.destVaultId,
+          stakeIntoBoostId: findBoostStakeStep(quote.destSteps)?.boostId,
         };
         break;
       default:
@@ -916,6 +923,9 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       helpers: destChainHelpers,
       destChainId: recovery.destChainId,
       inputToken: destBridgeToken,
+      isRecovery: true,
+      stakeIntoBoostId:
+        recovery.destHandlerKind === 'vault' ? recovery.stakeIntoBoostId : undefined,
       swapOptions: DEST_RECOVERY_SWAP_OPTIONS,
     });
     const handler = this.makeRecoveryHandler(recovery, destChainHelpers);
@@ -960,6 +970,9 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       helpers: destChainHelpers,
       destChainId: recovery.destChainId,
       inputToken: destBridgeToken,
+      isRecovery: true,
+      stakeIntoBoostId:
+        recovery.destHandlerKind === 'vault' ? recovery.stakeIntoBoostId : undefined,
       swapOptions: DEST_RECOVERY_SWAP_OPTIONS,
     });
     const handler = this.makeRecoveryHandler(recovery, destChainHelpers);
@@ -998,7 +1011,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         destCtx.destChainId,
         attributedVaultId,
         zapRequest,
-        steps.expectedTokens
+        steps.expectedTokens,
+        destCtx.stakeIntoBoostId
       ),
       pending: false,
       extraInfo: { zap: true, vaultId: attributedVaultId },

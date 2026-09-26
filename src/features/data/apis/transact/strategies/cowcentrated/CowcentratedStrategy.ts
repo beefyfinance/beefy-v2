@@ -392,6 +392,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       {
         type: 'withdraw',
         outputs: vaultWithdrawn.outputs,
+        estimated: true,
       },
     ];
 

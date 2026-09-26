@@ -9,6 +9,7 @@ import { selectWalletAddress } from '../../../../selectors/wallet.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 import { getRoutingTokensForChain } from '../../../../../../config/vault-to-vault/routing-tokens.ts';
 import { mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
+import { findBoostStakeStep } from '../../helpers/boost.ts';
 import { buildFeeZapSteps, optionFeeEndpoints, resolveZapFee } from '../../helpers/fee.ts';
 import {
   createOptionId,
@@ -61,6 +62,22 @@ import { enumerateSameChainDstCandidates, enumerateSameChainSrcCandidates } from
 
 const strategyId = 'vault-to-vault-single-token';
 type StrategyId = typeof strategyId;
+
+/**
+ * Hand the shared token over directly instead of swapping out to the routing token and back.
+ * Only `single` offers the deposit token itself as an option, which both vault handlers match on.
+ * Native stays on the routing token: the fee step can't find a native bridge-token output.
+ */
+function canHandOverDepositToken(src: VaultEntity, dest: VaultEntity): boolean {
+  return (
+    'depositTokenAddress' in src &&
+    'depositTokenAddress' in dest &&
+    src.depositTokenAddress !== 'native' &&
+    src.depositTokenAddress.toLowerCase() === dest.depositTokenAddress.toLowerCase() &&
+    !!src.zaps?.some(zap => zap.strategyId === 'single' && !zap.disableWithdraw) &&
+    !!dest.zaps?.some(zap => zap.strategyId === 'single' && !zap.disableDeposit)
+  );
+}
 
 type V2VQuoteBody = {
   sourceSteps: ZapQuoteStep[];
@@ -131,23 +148,28 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const results: VaultToVaultSingleTokenDepositOption[] = [];
+    const seenSelectionIds = new Set<string>();
 
-    for (const routingToken of routingTokens) {
+    for (const configuredRoutingToken of routingTokens) {
       const candidates = await enumerateSameChainSrcCandidates(
         vault.id,
         state,
         walletAddress,
-        routingToken
+        configuredRoutingToken
       );
       for (const candidate of candidates) {
         const srcVault = selectVaultById(state, candidate.vaultId);
         if (!srcVault || !('contractAddress' in srcVault)) continue;
+        const routingToken =
+          canHandOverDepositToken(srcVault, vault) ? depositToken : configuredRoutingToken;
         const shareToken = selectTokenByAddress(state, candidate.chainId, srcVault.contractAddress);
         const selectionId = createSelectionId(
           candidate.chainId,
           [shareToken],
           `v2v:${candidate.vaultId}:${routingToken.address.toLowerCase()}`
         );
+        if (seenSelectionIds.has(selectionId)) continue;
+        seenSelectionIds.add(selectionId);
         results.push({
           id: createOptionId(strategyId, vault.id, selectionId, candidate.vaultId),
           strategyId,
@@ -327,7 +349,12 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
       message: t('Vault-TxnConfirm', {
         type: t(isDeposit ? 'Deposit-noun' : 'Withdraw-noun'),
       }),
-      action: zapExecuteOrder(this.helpers.vault.id, zapRequest, destSteps.expectedTokens),
+      action: zapExecuteOrder(
+        this.helpers.vault.id,
+        zapRequest,
+        destSteps.expectedTokens,
+        findBoostStakeStep(quote.steps)?.boostId
+      ),
       pending: false,
       extraInfo: { zap: true, vaultId: this.helpers.vault.id },
     };
