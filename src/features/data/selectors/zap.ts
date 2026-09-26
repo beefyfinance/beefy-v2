@@ -15,7 +15,11 @@ import {
 } from '../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
-import type { VaultEntity } from '../entities/vault.ts';
+import {
+  getCowcentratedGroupIds,
+  isCowcentratedLikeVault,
+  type VaultEntity,
+} from '../entities/vault.ts';
 import type { AmmEntity, SwapAggregatorEntity } from '../entities/zap.ts';
 import type { BeefyState } from '../store/types.ts';
 import { selectVaultByIdOrUndefined } from './vaults.ts';
@@ -109,6 +113,27 @@ export const selectZapCampaignByVaultId = createCachedSelector(
   keySelector: (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
   selectorCreator: createBoundedSelector,
 });
+
+/**
+ * A free-zap campaign targets whatever the rule matches — ids, platform, strategy type — which on a
+ * CLM describes its wrappers. A merged row is keyed by the base CLM, so it asks the whole group.
+ */
+export const selectZapCampaignForVaultGroup = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): ZapVaultCampaign | undefined => {
+  const vault = selectVaultByIdOrUndefined(state, vaultId);
+  if (!vault || !isCowcentratedLikeVault(vault)) {
+    return selectZapCampaignByVaultId(state, vaultId);
+  }
+  for (const id of getCowcentratedGroupIds(vault)) {
+    const campaign = selectZapCampaignByVaultId(state, id);
+    if (campaign) {
+      return campaign;
+    }
+  }
+  return undefined;
+};
 
 export const selectSwapAggregatorsExistForChain = (state: BeefyState, chainId: ChainEntity['id']) =>
   (state.entities.zaps.aggregators.byChainId[chainId]?.allIds.length || 0) > 0;

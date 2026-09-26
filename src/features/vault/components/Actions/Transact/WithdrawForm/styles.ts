@@ -13,6 +13,9 @@ export const styles = {
   notice: css.raw({
     marginBottom: '16px',
   }),
+  modeSelector: css.raw({
+    marginBottom: '16px',
+  }),
   labels: css.raw({
     display: 'flex',
     flexWrap: 'nowrap',

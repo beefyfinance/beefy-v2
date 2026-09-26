@@ -21,6 +21,13 @@ export const savedVaultsSlice = createSlice({
         sliceState.byVaultId[vaultId] = true;
       }
     },
+    /** re-key saved ids whose list row changed, e.g. a CLM wrapper now shown as its CLM's row */
+    reconcile(sliceState, action: PayloadAction<Record<VaultEntity['id'], VaultEntity['id']>>) {
+      for (const [fromId, toId] of Object.entries(action.payload)) {
+        delete sliceState.byVaultId[fromId];
+        sliceState.byVaultId[toId] = true;
+      }
+    },
   },
 });
 

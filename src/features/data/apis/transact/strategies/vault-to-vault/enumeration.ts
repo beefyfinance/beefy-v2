@@ -2,7 +2,12 @@ import { isVaultBlacklistedForV2V } from '../../../../../../config/vault-to-vaul
 import { isFulfilledResult, isRejectedResult } from '../../../../../../helpers/promises.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
 import type { TokenEntity } from '../../../../entities/token.ts';
-import { isVaultActive, type VaultEntity } from '../../../../entities/vault.ts';
+import {
+  getCowcentratedGroupIds,
+  isCowcentratedLikeVault,
+  isVaultActive,
+  type VaultEntity,
+} from '../../../../entities/vault.ts';
 import { selectUserDepositedVaultIds } from '../../../../selectors/balance.ts';
 import {
   selectVaultById,
@@ -31,9 +36,13 @@ export async function enumerateSameChainSrcCandidates(
   if (!destVault) return [];
 
   const userVaultIds = selectUserDepositedVaultIds(state, walletAddress);
+  // a CLM's own positions move through the direct pool↔vault zap or a plain deposit, never a swap
+  const ownGroupIds = new Set(
+    isCowcentratedLikeVault(destVault) ? getCowcentratedGroupIds(destVault) : [destVaultId]
+  );
   const survivors: SameChainVaultCandidate[] = [];
   for (const vaultId of userVaultIds) {
-    if (vaultId === destVaultId) continue;
+    if (ownGroupIds.has(vaultId)) continue;
     if (isVaultBlacklistedForV2V(vaultId)) continue;
     const vault = selectVaultById(state, vaultId);
     if (!vault) continue;

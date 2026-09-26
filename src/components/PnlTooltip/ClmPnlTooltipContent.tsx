@@ -1,7 +1,7 @@
 import { Fragment, memo } from 'react';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { styles } from './styles.ts';
-import { type UserClmPnl } from '../../features/data/selectors/analytics-types.ts';
+import { type UserClmGroupPnl } from '../../features/data/selectors/analytics-types.ts';
 import { formatLargeUsd } from '../../helpers/format.ts';
 import { featureFlag_detailedTooltips } from '../../features/data/utils/feature-flags.ts';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +10,7 @@ import { css } from '@repo/styles/css';
 const useStyles = legacyMakeStyles(styles);
 
 export type ClmPnlTooltipContentProps = {
-  userPnl: UserClmPnl;
+  userPnl: UserClmGroupPnl;
 };
 
 export const ClmPnlTooltipContent = memo(function ClmPnlTooltipContent({

@@ -1,6 +1,15 @@
 import { forwardRef, memo, type Ref, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
+import { selectDashboardRowSideIds } from '../../../../../data/selectors/balance.ts';
+import { shallowArrayEqual } from '../../../../../data/utils/selector-equality.ts';
+import {
+  CLM_SIDE_NAME,
+  getClmSide,
+} from '../../../../../vault/components/Actions/Transact/DepositFromVaultSelectList/groups.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { useAppSelector } from '../../../../../data/store/hooks.ts';
+import { ToggleButtons } from '../../../../../../components/ToggleButtons/ToggleButtons.tsx';
 import { Transaction, TransactionMobile } from './components/Transaction/Transaction.tsx';
 import { TransactionsFilter } from './components/TransactionsFilter/TransactionsFilter.tsx';
 import { useSortedTransactionHistory } from './hook.ts';
@@ -61,8 +70,12 @@ export const VaultTransactions = memo(function VaultTransactions({
   address,
 }: VaultTransactionsProps) {
   const { t } = useTranslation();
+  // a CLM row's wrappers keep separate timelines, so a row held on both sides picks one
+  const sideIds = useAppSelector(state => selectDashboardRowSideIds(state, vaultId, address));
+  const [pickedSide, setPickedSide] = useState<VaultEntity['id']>();
+  const txVaultId = pickedSide && sideIds.includes(pickedSide) ? pickedSide : sideIds[0];
   const { sortedTimeline, sortedOptions, handleSort } = useSortedTransactionHistory(
-    vaultId,
+    txVaultId,
     address
   );
   const isMobile = useBreakpoint({ to: 'sm' });
@@ -103,6 +116,9 @@ export const VaultTransactions = memo(function VaultTransactions({
 
   return (
     <TransactionsGrid>
+      {sideIds.length > 1 ?
+        <ClmSidePicker sideIds={sideIds} value={txVaultId} onChange={setPickedSide} />
+      : null}
       <TransactionsFilter sortOptions={sortedOptions} handleSort={handleSort} />
       <Transactions style={{ height: `${containerHeight}px` }}>
         <GroupedVirtuoso
@@ -118,6 +134,43 @@ export const VaultTransactions = memo(function VaultTransactions({
       </Transactions>
     </TransactionsGrid>
   );
+});
+
+type ClmSidePickerProps = {
+  sideIds: VaultEntity['id'][];
+  value: VaultEntity['id'];
+  onChange: (sideId: VaultEntity['id']) => void;
+};
+
+/** the withdraw cards' names for the two sides */
+const ClmSidePicker = memo(function ClmSidePicker({
+  sideIds,
+  value,
+  onChange,
+}: ClmSidePickerProps) {
+  const { t } = useTranslation();
+  const sides = useAppSelector(
+    state => sideIds.map(id => getClmSide(selectVaultById(state, id))!),
+    shallowArrayEqual
+  );
+  const options = useMemo(
+    () => sideIds.map((id, i) => ({ value: id, label: t(CLM_SIDE_NAME[sides[i]]) })),
+    [sideIds, sides, t]
+  );
+  return (
+    <SidePicker>
+      <ToggleButtons value={value} options={options} onChange={onChange} variant="filter" />
+    </SidePicker>
+  );
+});
+
+const SidePicker = styled('div', {
+  base: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '8px',
+    backgroundColor: 'background.content.dark',
+  },
 });
 
 const Transactions = styled('div', {

@@ -10,7 +10,7 @@ import { selectAllChains } from './chains.ts';
 import { selectFilterAppliedValues } from './filtered-vaults.ts';
 import { selectUsedPlatforms } from './platforms.ts';
 import { resolveAssetToken, resolveStockCompanyName } from './tokens.ts';
-import { selectAllVisibleVaultIds, selectVaultById } from './vaults.ts';
+import { selectAllListVaultIds, selectVaultById } from './vaults.ts';
 
 export type BlockerCategory =
   | 'chain'
@@ -115,7 +115,7 @@ function selectVaultIdsMatchingSearchText(
   filters: FilterValues
 ): VaultEntity['id'][] {
   const env = selectVaultFilterEnv(state, filters);
-  return selectAllVisibleVaultIds(state).filter(vaultId =>
+  return selectAllListVaultIds(state).filter(vaultId =>
     env.matchesSearch(selectVaultById(state, vaultId))
   );
 }
@@ -147,7 +147,7 @@ function selectAnyMatching(
 }
 
 const selectSearchDictionary = createSelector(
-  selectAllVisibleVaultIds,
+  selectAllListVaultIds,
   (state: BeefyState) => state.entities.vaults.byId,
   (state: BeefyState) => state.entities.tokens.byChainId,
   selectAllChains,
@@ -256,7 +256,7 @@ export function selectSearchNoResultsInfo(state: BeefyState): SearchNoResultsInf
   const filters = selectFilterAppliedValues(state);
   const deps: unknown[] = [
     filters,
-    selectAllVisibleVaultIds(state),
+    selectAllListVaultIds(state),
     // the raw address, not the effective one: the dev override is fixed for the page lifetime
     state.user.wallet.address,
     state.user.balance.byAddress,
