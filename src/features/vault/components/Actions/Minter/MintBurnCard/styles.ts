@@ -1,39 +1,6 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  header: css.raw({
-    backgroundColor: 'background.content.dark',
-    borderRadius: '12px',
-  }),
-  tabs: css.raw({
-    backgroundColor: 'background.content.dark',
-    borderTopLeftRadius: '12px',
-    borderTopRightRadius: '12px',
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(50%, 1fr))',
-  }),
-  tab: css.raw({
-    borderBottom: 'solid 2px transparent',
-    color: 'text.dark',
-    background: 'none',
-    padding: '0',
-    margin: '0',
-    height: '56px',
-    borderTopLeftRadius: '12px',
-    borderTopRightRadius: '12px',
-    borderBottomLeftRadius: '0',
-    borderBottomRightRadius: '0',
-    '&:first-child:last-child': {
-      pointerEvents: 'none',
-    },
-    '&:hover': {
-      background: 'none',
-    },
-  }),
-  selected: css.raw({
-    color: 'text.light',
-    borderBottom: 'solid 2px {colors.text.dark}',
-  }),
   cardContent: css.raw({
     display: 'flex',
     flexDirection: 'column',
@@ -44,30 +11,13 @@ export const styles = {
       padding: '24px',
     },
   }),
-  logo: css.raw({
-    height: '50px',
-  }),
   content: css.raw({
     color: 'text.middle',
   }),
   btn: css.raw({
-    color: 'text.light',
-    backgroundColor: 'bayOfMany',
-    padding: '12px 24px',
-    borderRadius: '8px',
     _disabled: {
       backgroundColor: 'minterButtonDisabledBackground',
     },
-  }),
-  info: css.raw({
-    display: 'flex',
-    marginBottom: '16px',
-  }),
-  info2: css.raw({
-    marginBottom: '24px',
-  }),
-  item: css.raw({
-    marginRight: '32px',
   }),
   inputContainer: css.raw({
     margin: '24px 0',

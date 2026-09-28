@@ -2,10 +2,8 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { WalletState } from './wallet-types.ts';
-import { tryToAutoConnectToEip6963Wallet } from '../../actions/wallet.ts';
 
 const initialWalletState: WalletState = {
-  isInMiniApp: false,
   address: undefined,
   connectedAddress: undefined,
   selectedChainId: null,
@@ -77,11 +75,6 @@ export const walletSlice = createSlice({
     setToggleHideBalance(sliceState) {
       sliceState.hideBalance = !sliceState.hideBalance;
     },
-  },
-  extraReducers: builder => {
-    builder.addCase(tryToAutoConnectToEip6963Wallet.pending, sliceState => {
-      sliceState.isInMiniApp = true;
-    });
   },
 });
 
