@@ -29,9 +29,13 @@ import {
   selectChainWrappedNativeToken,
   selectTokenByAddressOrUndefined,
 } from './tokens.ts';
-import { isStandardVault, isErc4626Vault } from '../entities/vault.ts';
+import { isStandardVault, isErc4626Vault, type VaultEntity } from '../entities/vault.ts';
 import { selectTokenByAddress } from './tokens.ts';
-import { selectVaultById, selectVaultPricePerFullShare } from './vaults.ts';
+import {
+  selectVaultById,
+  selectVaultByIdOrUndefined,
+  selectVaultPricePerFullShare,
+} from './vaults.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 
 const NO_TOKEN_AMOUNTS = EMPTY_ARRAY;
@@ -303,7 +307,8 @@ const parseTokenReturnedEvents = weakMapMemoize((logs: ReceiptLogs) =>
   parseEventLogs({ abi: tokenReturnedAbi, logs, eventName: 'TokenReturned' })
 );
 
-export function selectZapReturned(state: BeefyState): TokenAmount[] {
+/** Router outputs with a non-trivial amount, either the zap's expected tokens or the rest (dust) */
+function selectZapRouterOutputs(state: BeefyState, expected: boolean): TokenAmount[] {
   if (!isWalletActionSuccess(state.user.walletActions)) {
     return NO_TOKEN_AMOUNTS;
   }
@@ -316,7 +321,7 @@ export function selectZapReturned(state: BeefyState): TokenAmount[] {
 
   const tokenReturnedEvents = parseTokenReturnedEvents(receipt.logs);
 
-  if (!vaultId || !receipt || !tokenReturnedEvents || !receipt.contractAddress) {
+  if (!vaultId || !receipt || !tokenReturnedEvents || !receipt.to) {
     return NO_TOKEN_AMOUNTS;
   }
 
@@ -329,7 +334,8 @@ export function selectZapReturned(state: BeefyState): TokenAmount[] {
   );
 
   const vault = selectVaultById(state, vaultId);
-  const zapAddress = receipt.contractAddress.toLowerCase();
+  // the router emits TokenReturned for every order output, and the user calls the router directly
+  const zapAddress = receipt.to.toLowerCase();
   const returnEvents = tokenReturnedEvents.filter(e => e.address.toLowerCase() === zapAddress);
 
   if (!returnEvents.length) {
@@ -351,10 +357,49 @@ export function selectZapReturned(state: BeefyState): TokenAmount[] {
       };
     })
     .filter((t): t is TokenAmount => !!t.token)
-    .filter(t => !expectedTokensAddresses.has(t.token.address.toLowerCase()))
+    .filter(t => expectedTokensAddresses.has(t.token.address.toLowerCase()) === expected)
     .filter(t => t.amount.gte(minAmount));
 
   return arrayOrStaticEmpty(tokenAmounts);
+}
+
+export function selectZapReturned(state: BeefyState): TokenAmount[] {
+  return selectZapRouterOutputs(state, false);
+}
+
+/** What a same-chain zap sent to the user; shares of `sharesVaultId` are shown as its deposit token */
+export function selectZapReceived(
+  state: BeefyState,
+  sharesVaultId: VaultEntity['id'] | undefined
+): TokenAmount[] {
+  const received = selectZapRouterOutputs(state, true);
+  if (!sharesVaultId || !received.length) {
+    return received;
+  }
+
+  const vault = selectVaultByIdOrUndefined(state, sharesVaultId);
+  if (!vault || !(isStandardVault(vault) || isErc4626Vault(vault))) {
+    return received;
+  }
+  const depositToken = selectTokenByAddressOrUndefined(
+    state,
+    vault.chainId,
+    vault.depositTokenAddress
+  );
+  if (!depositToken) {
+    return received;
+  }
+
+  const ppfs = selectVaultPricePerFullShare(state, vault.id);
+  const shareAddress = vault.contractAddress.toLowerCase();
+  return received.map(item =>
+    item.token.address.toLowerCase() === shareAddress ?
+      {
+        amount: mooAmountToOracleAmount(item.token, depositToken, ppfs, item.amount),
+        token: depositToken,
+      }
+    : item
+  );
 }
 
 function selectDstTokensReturned(

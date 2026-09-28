@@ -1,6 +1,7 @@
 import type { ThunkAction } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import type { MessageLifecycleState } from '../../apis/cctp/cctp-api-types.ts';
+import type { TokenAmount } from '../../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { TokenEntity } from '../../entities/token.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
@@ -45,6 +46,7 @@ export type Step = {
   extraInfo?: {
     vaultId?: VaultEntity['id'];
     zap?: boolean;
+    zapDetails?: ZapStepDetails;
     rewards?: {
       token: TokenEntity;
       amount: BigNumber;
@@ -53,6 +55,18 @@ export type Step = {
       sourceChainId: ChainEntity['id'];
       destChainId: ChainEntity['id'];
     };
+  };
+};
+
+/** What a same-chain zap was built from, for the success screen */
+export type ZapStepDetails = {
+  /** Sent by the user; vault-to-vault shares are already converted to deposit token */
+  inputs: TokenAmount[];
+  /** Tokens the zap was quoted to deliver */
+  outputTokens: TokenEntity[];
+  vaultToVault?: {
+    srcVaultId: VaultEntity['id'];
+    destVaultId: VaultEntity['id'];
   };
 };
 

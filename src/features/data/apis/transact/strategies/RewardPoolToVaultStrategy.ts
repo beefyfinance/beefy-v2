@@ -452,7 +452,8 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
         steps: [...unstakeZap.zaps, depositZap.zap],
       };
 
-      const expectedTokens = quote.outputs.map(output => output.token);
+      // quote.outputs is the vault's deposit token, but the router returns its shares
+      const expectedTokens = depositZap.outputs.map(output => output.token);
 
       const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
