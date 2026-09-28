@@ -8,13 +8,12 @@ import {
   walletHasDisconnected,
 } from '../reducers/wallet/wallet.ts';
 import { selectAllChains } from '../selectors/chains.ts';
-import { selectIsInMiniApp, selectIsWalletConnected } from '../selectors/wallet.ts';
+import { selectIsWalletConnected } from '../selectors/wallet.ts';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { transactSetSuccessClosed } from './transact.ts';
 import { stepperReset } from './wallet/stepper.ts';
 import { createWalletActionResetAction } from './wallet/wallet-action.ts';
-import { selectHasWalletInitialized } from '../selectors/data-loader/wallet.ts';
 
 export const initWallet = createAppAsyncThunk(
   'wallet/initWallet',
@@ -23,7 +22,7 @@ export const initWallet = createAppAsyncThunk(
     const chains = selectAllChains(state);
 
     // instantiate and do the proper piping between both worlds
-    const walletApi = await getWalletConnectionApi({
+    await getWalletConnectionApi({
       chains,
       onConnect: (chainId, address) =>
         dispatch(userDidConnect({ chainId, address: featureFlag_walletAddressOverride(address) })),
@@ -47,9 +46,6 @@ export const initWallet = createAppAsyncThunk(
     });
 
     setTimeout(() => {
-      if (selectIsInMiniApp(getState())) {
-        walletApi.setAutoConnectToEip6963(true);
-      }
       dispatch(tryToAutoReconnect());
     }, 500);
   }
@@ -63,20 +59,6 @@ export const tryToAutoReconnect = createAppAsyncThunk(
       const walletConnection = await getWalletConnectionApi();
       await walletConnection.tryToAutoReconnect();
     }
-  }
-);
-
-export const tryToAutoConnectToEip6963Wallet = createAppAsyncThunk(
-  'wallet/tryToAutoConnectToEip6963Wallet',
-  async (_, { getState }) => {
-    const state = getState();
-    if (selectIsWalletConnected(state) || !selectHasWalletInitialized(state)) {
-      return;
-    }
-
-    const walletConnection = await getWalletConnectionApi();
-    walletConnection.setAutoConnectToEip6963();
-    await walletConnection.tryToAutoReconnect();
   }
 );
 
