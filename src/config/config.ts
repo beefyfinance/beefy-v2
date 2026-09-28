@@ -98,7 +98,6 @@ export const config = {
       'https://bsc-dataseed2.bnbchain.org',
       'https://rpc-bsc.blockmachine.io',
       'https://56.rpc.thirdweb.com',
-      'https://public-bsc.nownodes.io',
     ],
     explorerUrl: 'https://bscscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -113,7 +112,6 @@ export const config = {
     name: 'Ethereum',
     chainId: 1,
     rpc: [
-      'https://public-eth.nownodes.io',
       'https://ethereum-rpc.publicnode.com',
       'https://ethereum.public.blockpi.network/v1/rpc/public',
       'https://0xrpc.io/eth',
