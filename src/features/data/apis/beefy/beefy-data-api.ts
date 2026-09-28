@@ -15,7 +15,7 @@ import type { ChainEntity } from '../../entities/chain.ts';
 import { getJson } from '../../../../helpers/http/http.ts';
 
 export class BeefyDataApi implements IBeefyDataApi {
-  private readonly version = 'v2';
+  private readonly version = 'tiger';
   private readonly data: string;
 
   constructor() {
