@@ -457,7 +457,7 @@
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 60,
-    "assets": ["BABA", "USDG"],
+    "assets": ["BABArh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
