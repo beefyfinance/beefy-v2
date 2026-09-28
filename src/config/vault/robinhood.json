@@ -1,5 +1,83 @@
 [
   {
+    "id": "uniswap-cow-robinhood-usdg-dell-rp",
+    "name": "DELL-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodUSDG-DELL",
+    "tokenAddress": "0x563267A634a8f762046aDeBd9B128880f46BAAaA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x892A7C3D9Ba8d456e405e35e736b1a44a7A74794",
+    "earnedToken": "rCowUniswapRobinhoodUSDG-DELL",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-usdg-dell",
+    "status": "active",
+    "createdAt": 1790573631,
+    "platformId": "uniswap",
+    "assets": ["DELLrh", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-usdg-dell",
+    "name": "USDG-DELL",
+    "type": "cowcentrated",
+    "token": "USDG-DELL uniswap",
+    "tokenAddress": "0xc30c89cB7815A1488b7998D15eEC73961707Fc5a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "0x941AE714EC6D8130c7B75d67160Ca08f1e7d11Dd"
+    ],
+    "earnContractAddress": "0x563267A634a8f762046aDeBd9B128880f46BAAaA",
+    "earnedToken": "cowUniswapRobinhoodUSDG-DELL",
+    "earnedTokenAddress": "0x563267A634a8f762046aDeBd9B128880f46BAAaA",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-usdg-dell",
+    "status": "active",
+    "createdAt": 1790573631,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["USDG", "DELLrh"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-robinhood-jnj-usdg-rp",
     "name": "JNJ-USDG Reward Pool",
     "type": "gov",
