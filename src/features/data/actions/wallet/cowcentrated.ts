@@ -11,7 +11,8 @@ import { selectWalletAddress } from '../../selectors/wallet.ts';
 import { getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { selectChainById } from '../../selectors/chains.ts';
-import { selectTransactSelectedQuote, selectTransactSlippage } from '../../selectors/transact.ts';
+import { selectTransactSlippage } from '../../selectors/transact.ts';
+import type { TokenAmount } from '../../apis/transact/transact-types.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
@@ -23,7 +24,8 @@ import { selectTokenByAddress } from '../../selectors/tokens.ts';
 export const v3Deposit = (
   vault: VaultCowcentrated,
   amountToken0: BigNumber,
-  amountToken1: BigNumber
+  amountToken1: BigNumber,
+  expectedShares: BigNumber
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -52,10 +54,7 @@ export const v3Deposit = (
     );
     const gasPrices = await getGasPriceOptions(chain);
 
-    const estimatedLiquidity = toWeiString(
-      selectTransactSelectedQuote(state)?.outputs[0].amount.times(0.99),
-      18
-    );
+    const estimatedLiquidity = toWeiString(expectedShares.times(0.99), 18);
     txWallet(dispatch);
 
     const transaction = contract.write.deposit(
@@ -73,7 +72,7 @@ export const v3Deposit = (
       publicClient,
       {
         spender: vault.contractAddress,
-        amount: selectTransactSelectedQuote(state)?.outputs[0].amount,
+        amount: expectedShares,
         token: depositToken,
       },
       {
@@ -86,7 +85,12 @@ export const v3Deposit = (
     );
   });
 };
-export const v3Withdraw = (vault: VaultCowcentrated, withdrawAmount: BigNumber, max: boolean) => {
+export const v3Withdraw = (
+  vault: VaultCowcentrated,
+  withdrawAmount: BigNumber,
+  max: boolean,
+  expectedOutputs: TokenAmount[]
+) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -108,8 +112,7 @@ export const v3Withdraw = (vault: VaultCowcentrated, withdrawAmount: BigNumber, 
     );
     const gasPrices = await getGasPriceOptions(chain);
 
-    const outputs = selectTransactSelectedQuote(state).outputs;
-    const minOutputs = slipAllBy(outputs, slippage);
+    const minOutputs = slipAllBy(expectedOutputs, slippage);
     const minOutputsWei = minOutputs.map(output =>
       toWeiString(output.amount, output.token.decimals)
     );
