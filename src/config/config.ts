@@ -24,6 +24,29 @@ export const config = {
       percentile: 0.6,
     },
   },
+  arc: {
+    new: true,
+    name: 'Arc',
+    chainId: 5042,
+    rpc: [
+      'https://rpc.mainnet.arc.io',
+      'https://rpc.beamrpc.com',
+      'https://rpc.drpc.mainnet.arc.io',
+      'https://rpc.blockdaemon.mainnet.arc.io',
+      'https://rpc.quicknode.mainnet.arc.io',
+    ],
+    explorerUrl: 'https://arc.etherscan.io',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x61672cDAbc2B296e3Ea7d18EBCE86957f77f0685',
+    native: { symbol: 'USDC', oracleId: 'USDC', decimals: 18, balanceSharedWithWrapped: true },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.6,
+      baseMinimum: '20000000000',
+      priorityMinimum: '1000000000',
+    },
+  },
   avax: {
     name: 'Avalanche',
     chainId: 43114,
@@ -98,7 +121,6 @@ export const config = {
       'https://bsc-dataseed2.bnbchain.org',
       'https://rpc-bsc.blockmachine.io',
       'https://56.rpc.thirdweb.com',
-      'https://public-bsc.nownodes.io',
     ],
     explorerUrl: 'https://bscscan.com',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -113,7 +135,6 @@ export const config = {
     name: 'Ethereum',
     chainId: 1,
     rpc: [
-      'https://public-eth.nownodes.io',
       'https://ethereum-rpc.publicnode.com',
       'https://ethereum.public.blockpi.network/v1/rpc/public',
       'https://0xrpc.io/eth',
@@ -495,7 +516,7 @@ export const config = {
     explorerUrl: 'https://andromeda-explorer.metis.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xDc34b7e0f1F1512f088D1854a54EAFfD4dCaC7Bd',
-    native: { symbol: 'METIS', oracleId: 'WMETIS', decimals: 18 },
+    native: { symbol: 'METIS', oracleId: 'WMETIS', decimals: 18, balanceSharedWithWrapped: true },
     gas: {
       type: 'standard',
     },
@@ -817,7 +838,7 @@ export const config = {
     explorerUrl: 'https://celoscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x0bF5F48d8F761efAe0f187eCce60784e5d3E87E6',
-    native: { symbol: 'CELO', oracleId: 'WCELO', decimals: 18 },
+    native: { symbol: 'CELO', oracleId: 'WCELO', decimals: 18, balanceSharedWithWrapped: true },
     gas: {
       type: 'celo',
     },

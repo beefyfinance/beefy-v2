@@ -47,7 +47,7 @@ import {
   withBoostUnstakeSuccess,
   withZapSuccess,
   type BreakpointMatchesValue,
-} from './subscription-stability-fixture.tsx';
+} from './subscription-stability.test-helper.tsx';
 
 /**
  * react-redux's `stabilityCheck` calls each subscribed selector a second time with the same state
