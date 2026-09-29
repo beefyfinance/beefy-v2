@@ -44,6 +44,7 @@ import {
 import { selectIsConfigAvailable } from './data-loader/config.ts';
 import { hasLoaderFulfilledOnce } from './data-loader-helpers.ts';
 import { selectIsPricesAvailable } from './data-loader/prices.ts';
+import { selectIsChainNativeSharedWithWrapped } from './chains.ts';
 import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
@@ -105,6 +106,23 @@ export const selectHasUserDepositInVault = (state: BeefyState, vaultId: VaultEnt
   return walletBalance ? walletBalance.depositedVaultIds.indexOf(vaultId) !== -1 : false;
 };
 
+/** native and wnative are one entry where they share a balance (arc), kept under the wnative address */
+const selectBalanceStorageAddress = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  tokenAddress: TokenEntity['address']
+): string => {
+  if (tokenAddress === 'native' && selectIsChainNativeSharedWithWrapped(state, chainId)) {
+    // not selectChainWrappedNativeToken: balances can be read before the addressbook loads
+    const chainTokens = state.entities.tokens.byChainId[chainId];
+    const wnativeAddress = chainTokens?.wnative && chainTokens.byId[chainTokens.wnative];
+    if (wnativeAddress) {
+      return wnativeAddress;
+    }
+  }
+  return tokenAddress.toLowerCase();
+};
+
 export const selectUserBalanceOfToken = (
   state: BeefyState,
   chainId: ChainEntity['id'],
@@ -113,9 +131,28 @@ export const selectUserBalanceOfToken = (
 ) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
   return (
-    walletBalance?.tokenAmount.byChainId[chainId]?.byTokenAddress[tokenAddress.toLowerCase()]
-      ?.balance || BIG_ZERO
+    walletBalance?.tokenAmount.byChainId[chainId]?.byTokenAddress[
+      selectBalanceStorageAddress(state, chainId, tokenAddress)
+    ]?.balance || BIG_ZERO
   );
+};
+
+/**
+ * Where native and its erc20 view are one balance (arc), spending all of an amount held in it
+ * leaves nothing to pay gas with. False while the balance is unknown: the not-enough-balance
+ * gate covers that.
+ */
+export const selectSpendsWholeSharedBalance = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  amount: BigNumber,
+  walletAddress?: string
+): boolean => {
+  if (!selectIsChainNativeSharedWithWrapped(state, chainId)) {
+    return false;
+  }
+  const balance = selectUserBalanceOfToken(state, chainId, 'native', walletAddress);
+  return balance.gt(BIG_ZERO) && amount.gte(balance);
 };
 
 /**
@@ -940,6 +977,13 @@ export const selectPastBoostIdsWithUserBalance = (
   return arrayOrStaticEmpty(boostIds);
 };
 
+/** tokens with the same key read the same stored balance, so sums must count them once */
+export const selectBalanceKeyForToken = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  address: string
+): string => `${chainId}:${selectBalanceStorageAddress(state, chainId, address)}`;
+
 export const selectDepositOptionTokensBalanceByChainId = (
   state: BeefyState,
   chainId: ChainEntity['id'],
@@ -948,11 +992,15 @@ export const selectDepositOptionTokensBalanceByChainId = (
   const selectionIds = state.ui.transact.selections.byChainId[chainId];
   if (!selectionIds) return BIG_ZERO;
 
+  const counted = new Set<string>();
   return selectionIds.reduce((acc, selectionId) => {
     const selection = state.ui.transact.selections.bySelectionId[selectionId];
     if (!selection) return acc;
     if (isVaultSourceSelection(state, selectionId)) return acc;
     return selection.tokens.reduce((sum, token) => {
+      const key = selectBalanceKeyForToken(state, token.chainId, token.address);
+      if (counted.has(key)) return sum;
+      counted.add(key);
       const balance = selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress);
       const price = selectTokenPriceByAddress(state, token.chainId, token.address);
       return sum.plus(balance.multipliedBy(price));

@@ -35,6 +35,7 @@ import { bigNumberEqual } from '../utils/selector-equality.ts';
 import {
   selectAddressHasVaultPendingWithdrawal,
   selectBoostUserRewardsInToken,
+  selectBalanceKeyForToken,
   selectDepositOptionTokensBalanceByChainId,
   selectPastBoostIdsWithUserBalance,
   selectUserBalanceOfToken,
@@ -704,7 +705,7 @@ export const selectCrossChainSortedChains = (
         if (!selection) continue;
         if (selectVaultRefIdForSelection(state, selectionId)) continue;
         for (const token of selection.tokens) {
-          const key = `${token.chainId}:${token.address.toLowerCase()}`;
+          const key = selectBalanceKeyForToken(state, token.chainId, token.address);
           if (seenAddresses.has(key)) continue;
           seenAddresses.add(key);
           let tokenBalanceUsd = BIG_ZERO;
