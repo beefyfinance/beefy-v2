@@ -15,7 +15,7 @@
     "oracle": "lps",
     "oracleId": "uniswap-cow-arc-usdc-eurc",
     "status": "active",
-    "createdAt": 1790075569,
+    "createdAt": 1790686600,
     "platformId": "uniswap",
     "assets": ["EURC", "USDC"],
     "risks": {
@@ -54,7 +54,7 @@
     "oracle": "lps",
     "oracleId": "uniswap-cow-arc-usdc-eurc",
     "status": "active",
-    "createdAt": 1790075569,
+    "createdAt": 1790686600,
     "platformId": "beefy",
     "feeTier": "0.05",
     "tickSpacing": 10,
