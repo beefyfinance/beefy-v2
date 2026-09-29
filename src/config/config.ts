@@ -30,10 +30,10 @@ export const config = {
     chainId: 5042,
     rpc: [
       'https://rpc.mainnet.arc.io',
-      'https://rpc.blockdaemon.mainnet.arc.io',
-      'https://rpc.quicknode.mainnet.arc.io',
       'https://rpc.beamrpc.com',
       'https://rpc.drpc.mainnet.arc.io',
+      'https://rpc.blockdaemon.mainnet.arc.io',
+      'https://rpc.quicknode.mainnet.arc.io',
     ],
     explorerUrl: 'https://arc.etherscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
