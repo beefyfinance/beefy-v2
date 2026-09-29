@@ -4,11 +4,14 @@ import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenEntity } from '../../../entities/token.ts';
 import { isTokenEqual, isTokenNative, tokenEqualityKey } from '../../../entities/token.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
-import { selectChainWrappedNativeToken } from '../../../selectors/tokens.ts';
+import {
+  selectChainWrappedNativeToken,
+  selectSharedBalanceWrappedToken,
+} from '../../../selectors/tokens.ts';
 import { selectZapTokenScore } from '../../../selectors/zap.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { sortQuotes } from '../helpers/quotes.ts';
-import { mergeTokenLists } from '../helpers/tokens.ts';
+import { mergeTokenLists, withoutSharedNativeView } from '../helpers/tokens.ts';
 import type { StrategySwapConfig } from '../strategies/strategy-configs.ts';
 import type { ISwapAggregator, TokenSupport } from './ISwapAggregator.ts';
 import type {
@@ -100,6 +103,7 @@ export class SwapAggregator implements ISwapAggregator {
     // the merged+sorted list depends only on which providers passed, and the same subset recurs
     // for most wanted tokens, so merge and sort each distinct subset once
     const mergedBySubset = new Map<string, TokenEntity[]>();
+    const sharedWnative = selectSharedBalanceWrappedToken(state, chainId);
     const tokensSupporting = (supports: (providerIndex: number) => boolean): TokenEntity[] => {
       const passing: TokenEntity[][] = [];
       const subsetKey: number[] = [];
@@ -113,7 +117,7 @@ export class SwapAggregator implements ISwapAggregator {
       const cacheKey = subsetKey.join(',');
       let merged = mergedBySubset.get(cacheKey);
       if (merged === undefined) {
-        merged = this.mergeAndSortTokens(passing, state);
+        merged = withoutSharedNativeView(this.mergeAndSortTokens(passing, state), sharedWnative);
         mergedBySubset.set(cacheKey, merged);
       }
       return merged;

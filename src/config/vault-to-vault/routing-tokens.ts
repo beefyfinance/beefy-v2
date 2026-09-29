@@ -31,6 +31,7 @@ export const V2V_ROUTING_TOKENS: V2VRoutingTokenConfig = {
   sei: ['0xE30feDd158A2e3b13e9badaeABaFc5516e95e8C7'], // WSEI
   sonic: ['0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38'], // wS
   zksync: ['0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91'], // WETH
+  arc: ['0x3600000000000000000000000000000000000000'], //USDC
 };
 
 export function hasRoutingTokensForChain(chainId: ChainEntity['id']): boolean {
