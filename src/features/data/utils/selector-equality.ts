@@ -46,3 +46,7 @@ export function tokenAmountsEqual(a: TokenAmount[], b: TokenAmount[]): boolean {
     (entry, i) => entry.token === b[i].token && bigNumberEqual(entry.amount, b[i].amount)
   );
 }
+
+export function shallowArrayEqual<T>(a: T[], b: T[]): boolean {
+  return a === b || (a.length === b.length && a.every((item, i) => item === b[i]));
+}

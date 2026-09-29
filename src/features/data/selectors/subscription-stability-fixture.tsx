@@ -136,12 +136,21 @@ export async function buildFixture() {
       );
     });
 
+  const clmVaultSide = byType('standard', 'cowcentrated');
+  const clmVaultSideEntity =
+    clmVaultSide ? configured.entities.vaults.byId[clmVaultSide] : undefined;
   const vaultIds = [
-    byType('standard', 'standard'),
-    byType('standard', 'cowcentrated'),
-    byType('gov'),
-    byType('cowcentrated'),
-    byType('erc4626'),
+    ...new Set([
+      byType('standard', 'standard'),
+      clmVaultSide,
+      // its pool too, so one dashboard row stands for both sides of a CLM
+      clmVaultSideEntity && 'cowcentratedIds' in clmVaultSideEntity ?
+        clmVaultSideEntity.cowcentratedIds.pool
+      : undefined,
+      byType('gov'),
+      byType('cowcentrated'),
+      byType('erc4626'),
+    ]),
   ].filter((id): id is string => id !== undefined);
 
   // statuses are forced, or this goes vacuous the day every boost in `config/promos` expires

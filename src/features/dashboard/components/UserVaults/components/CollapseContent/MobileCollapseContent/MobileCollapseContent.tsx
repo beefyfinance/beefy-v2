@@ -23,7 +23,10 @@ export const MobileCollapseContent = memo(function MobileCollapseContent({
   const { t } = useTranslation();
   const [toggleTab, setToggleTab] = useState<ToggleTabOptions>('stats');
   const useDropdown = useMediaQuery('(max-width: 700px)', false);
-  const { PositionGraph, CompoundsGraph, availableCharts } = useChartOptions(vaultId, address);
+  const { PositionGraph, CompoundsGraph, availableCharts, chartVaultId } = useChartOptions(
+    vaultId,
+    address
+  );
 
   const options = useMemo<Array<SelectItem<ToggleTabOptions>>>(
     () => [
@@ -59,9 +62,9 @@ export const MobileCollapseContent = memo(function MobileCollapseContent({
       : toggleTab === 'txHistory' ?
         <VaultTransactions address={address} vaultId={vaultId} />
       : toggleTab === 'positionChart' ?
-        <PositionGraph address={address} vaultId={vaultId} />
+        <PositionGraph address={address} vaultId={chartVaultId} />
       : toggleTab === 'compoundsChart' ?
-        <CompoundsGraph address={address} vaultId={vaultId} />
+        <CompoundsGraph address={address} vaultId={chartVaultId} />
       : null}
     </div>
   );

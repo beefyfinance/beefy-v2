@@ -71,6 +71,7 @@ function makeState(filters: FilterValues, wallet?: { address: string; deposited:
           ])
         ),
         allVisibleIds: FIXTURE_VAULTS.map(v => v.id),
+        allListIds: FIXTURE_VAULTS.map(v => v.id),
         contractData: { byVaultId: {} },
       },
       chains: {
@@ -192,8 +193,8 @@ describe('selectSearchNoResultsInfo module cache', () => {
     expect(depositedState.ui.filteredVaults.applied).toBe(
       disconnectedState.ui.filteredVaults.applied
     );
-    expect(depositedState.entities.vaults.allVisibleIds).toBe(
-      disconnectedState.entities.vaults.allVisibleIds
+    expect(depositedState.entities.vaults.allListIds).toBe(
+      disconnectedState.entities.vaults.allListIds
     );
     const [deposited] = coldPair(['aero-usdc']);
     const [disconnected] = coldPair(undefined);

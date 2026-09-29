@@ -9,7 +9,7 @@ import {
   fetchClmHarvestsForUserVault,
   fetchClmPendingRewards,
 } from '../../../../data/actions/analytics.ts';
-import { isCowcentratedStandardVault, type VaultEntity } from '../../../../data/entities/vault.ts';
+import type { VaultEntity } from '../../../../data/entities/vault.ts';
 import {
   selectClmAutocompoundedFeesEnabledByVaultId,
   selectHasDataToShowGraphByVaultId,
@@ -26,7 +26,10 @@ import { CLMFeesGraph } from './components/FeesGraph/FeesGraph.tsx';
 import { useVaultPeriodsFeesGraph } from './components/FeesGraph/hooks.ts';
 import { FeesGraphHeader } from './components/FeesGraphHeader/FeesGraphHeader.tsx';
 import { FeesFooter, OverviewFooter } from './components/Footers/Footer.tsx';
-import { useVaultPeriodsOverviewGraph } from './components/OverviewGraph/hooks.ts';
+import {
+  useClmChartSides,
+  useVaultPeriodsOverviewGraph,
+} from './components/OverviewGraph/hooks.ts';
 import { CLMOverviewGraph } from './components/OverviewGraph/OverviewGraph.tsx';
 import { OverviewGraphHeader } from './components/OverviewGraphHeader/OverviewGraphHeader.tsx';
 import { styles } from './styles.ts';
@@ -75,10 +78,11 @@ export const OverviewGraph = memo(function OverviewGraph({
   address,
 }: CowcentratedPnlGraphProps) {
   const classes = useStyles();
-  const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
   const labels = useVaultPeriodsOverviewGraph(vaultId, address);
   const [period, setPeriod] = useState<number>(labels.length - 1);
   const canShowGraph = labels.length > 0;
+  // one rule with the chart: the CLM-token line is drawn, and named, only on the autocompounding side
+  const { type } = useClmChartSides(vaultId, address);
 
   return (
     <CardContent css={styles.content}>
@@ -95,7 +99,7 @@ export const OverviewGraph = memo(function OverviewGraph({
           labels={labels}
           period={period}
           handlePeriod={setPeriod}
-          position={isCowcentratedStandardVault(vault)}
+          position={type === 'vault'}
         />
       : null}
     </CardContent>
@@ -182,8 +186,8 @@ export const DashboardOverviewGraph = memo(function DashboardOverviewGraph({
   address,
 }: CowcentratedPnlGraphProps) {
   const classes = useStyles();
-  const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
   const labels = useVaultPeriodsOverviewGraph(vaultId, address);
+  const { type } = useClmChartSides(vaultId, address);
   const [period, setPeriod] = useState<number>(labels.length - 1);
   const canShowGraph = labels.length > 0;
 
@@ -197,7 +201,7 @@ export const DashboardOverviewGraph = memo(function DashboardOverviewGraph({
             labels={labels}
             period={period}
             handlePeriod={setPeriod}
-            position={isCowcentratedStandardVault(vault)}
+            position={type === 'vault'}
           />
         </>
       : <GraphNoData reason="wait-collect" />}

@@ -1,23 +1,28 @@
 import { first } from 'lodash-es';
 import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
-import { bigNumberEqual } from '../utils/selector-equality.ts';
+import { bigNumberEqual, shallowArrayEqual } from '../utils/selector-equality.ts';
 import { createCachedSelector } from 're-reselect';
 import { EMPTY_AVG_APY } from '../../../helpers/apy.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { formatTotalApy } from '../../../helpers/format.ts';
 import { isEmpty } from '../../../helpers/utils.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
 import {
   isCowcentratedGovVault,
+  isCowcentratedLikeVault,
   isCowcentratedVault,
   isVaultActive,
   type VaultEntity,
+  getCowcentratedGroupIds,
 } from '../entities/vault.ts';
 import type { AvgApy, TotalApy } from '../reducers/apy-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
   selectBoostUserBalanceInToken,
+  selectDashboardRowSideIds,
   selectIsUserBalanceAvailable,
+  selectUserDashboardVaultIds,
   selectUserDepositedVaultIds,
   selectUserVaultBalanceInDepositTokenIncludingDisplaced,
   selectUserVaultBalanceInUsdIncludingDisplaced,
@@ -26,8 +31,13 @@ import {
 import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from './boosts.ts';
 import { selectIsConfigAvailable } from './data-loader/config.ts';
 import { selectIsContractDataLoadedOnChain } from './data-loader/contract-data.ts';
-import { selectTokenPriceByAddress } from './tokens.ts';
-import { selectVaultById, selectVaultShouldShowInterest } from './vaults.ts';
+import { selectVaultActiveExtraRewardTokens, selectVaultActiveGovRewards } from './rewards.ts';
+import { selectGovVaultEarnedTokens, selectTokenPriceByAddress } from './tokens.ts';
+import {
+  selectVaultById,
+  selectVaultByIdOrUndefined,
+  selectVaultShouldShowInterest,
+} from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
 import { selectIsApyAvailable } from './data-loader/apy.ts';
 
@@ -70,6 +80,30 @@ export const selectDidAPIReturnValuesForVault = (state: BeefyState, vaultId: Vau
   return state.biz.apy.totalApy.byVaultId[vaultId] !== undefined;
 };
 
+/**
+ * The group member whose rate represents a merged CLM row: always the autocompounding side when it
+ * exists. Pass-through for anything that is not a base CLM.
+ *
+ * The two sides are not comparable. Both earn the same CLM trading fees, but the pool reports them
+ * gross as claimable while the vault reports them compounded and net of the performance fee, so the
+ * pool's headline is higher by construction — measured at 9.5% of the fee component, never more
+ * than a point. Picking "whichever is higher" therefore always chose the pool, swapping the unit
+ * from APY to APR for a fraction of a point of a rate the user has to claim by hand.
+ */
+export const selectClmDisplayVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultEntity['id'] => {
+  const vault = selectVaultById(state, vaultId);
+  if (!isCowcentratedVault(vault)) {
+    return vaultId;
+  }
+
+  const { pool, vault: vaultSide, pools, vaults } = vault.cowcentratedIds;
+  // the claimable side only represents the group when there is no compounding side at all
+  return vaultSide ?? pool ?? vaults[0] ?? pools[0] ?? vaultId;
+};
+
 const EMPTY_GLOBAL_STATS = {
   deposited: 0,
   daily: 0,
@@ -101,7 +135,8 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
 
   const newGlobalStats = {
     ...EMPTY_GLOBAL_STATS,
-    depositedVaults: userVaultIds.length,
+    // one per product, like the dashboard rows; the sums below stay per wrapper
+    depositedVaults: selectUserDashboardVaultIds(state, walletAddress).length,
   };
 
   const userVaults = userVaultIds.map(vaultId => selectVaultById(state, vaultId));
@@ -262,7 +297,70 @@ const selectYieldStatsByVaultIdUncached = (
   };
 };
 
-type ApyVaultUIData =
+/**
+ * A dashboard CLM row's rate when both sides earn: the mean of the rates each side quotes — the
+ * vault's APY, the pool's APR — weighted by deposit. Daily sums the sides' simple daily rates, so it
+ * runs a little under this x deposit / 365. Undefined until every side has its rate.
+ */
+export const selectDashboardClmBlendedApy = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress: string
+): number | undefined => {
+  const ids = selectDashboardRateVaultIds(state, vaultId, walletAddress);
+  if (ids.length < 2 || ids.some(id => !selectVaultTotalApyOrUndefined(state, id))) {
+    return undefined;
+  }
+  let yearly = BIG_ZERO;
+  let deposit = BIG_ZERO;
+  for (const id of ids) {
+    yearly = yearly.plus(selectYieldStatsByVaultId(state, id, walletAddress).yearlyUsd);
+    deposit = deposit.plus(selectUserVaultBalanceInUsdIncludingDisplaced(state, id, walletAddress));
+  }
+  return deposit.gt(BIG_ZERO) ? yearly.div(deposit).toNumber() : undefined;
+};
+
+/** the held sides a dashboard CLM row quotes a rate for: those still earning, autocompound first */
+export const selectDashboardRateVaultIds = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+    selectDashboardRowSideIds(state, vaultId, walletAddress),
+  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress: string) =>
+    state.entities.vaults.byId,
+  (ids, byId) => ids.filter(id => isVaultActive(byId[id]!)),
+  { memoizeOptions: { resultEqualityCheck: shallowArrayEqual } }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+    `${vaultId}-${walletAddress.toLowerCase()}`
+);
+
+/** the side a dashboard row's single rate and status come from; a retired one reads "-" */
+export const selectDashboardRateVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress: string
+): VaultEntity['id'] =>
+  selectDashboardRateVaultIds(state, vaultId, walletAddress)[0] ??
+  selectDashboardRowSideIds(state, vaultId, walletAddress)[0];
+
+/** a dashboard row's $/day: a CLM row's earning sides, as the portfolio Daily counts them */
+export const selectDashboardRowDailyUsd = createCachedSelector(
+  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress: string) => state,
+  (_state: BeefyState, vaultId: VaultEntity['id'], _walletAddress: string) => vaultId,
+  (_state: BeefyState, _vaultId: VaultEntity['id'], walletAddress: string) => walletAddress,
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+    selectDashboardRowSideIds(state, vaultId, walletAddress)[0] === vaultId ?
+      selectYieldStatsByVaultId(state, vaultId, walletAddress).dailyUsd
+    : selectDashboardRateVaultIds(state, vaultId, walletAddress).reduce(
+        (sum, id) => sum.plus(selectYieldStatsByVaultId(state, id, walletAddress).dailyUsd),
+        BIG_ZERO
+      ),
+  { memoizeOptions: { resultEqualityCheck: bigNumberEqual } }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+    `${vaultId}-${walletAddress.toLowerCase()}`
+);
+
+export type ApyVaultUIData =
   | {
       status: 'loading' | 'missing' | 'hidden';
       type: 'apy' | 'apr';
@@ -301,6 +399,19 @@ const APY_UI_STATUS_ONLY: Record<
     apr: Object.freeze({ status: 'missing', type: 'apr' }),
   },
 };
+
+/** the percentage a side's own stat shows, boosted when a boost is live */
+export function formatApyUIRate(
+  data: ApyVaultUIData | undefined
+): { value: string; type: 'apr' | 'apy' } | undefined {
+  if (!data || data.status !== 'available') {
+    return undefined;
+  }
+  const formatted = formatTotalApy(data.values, '???');
+  const value =
+    (data.boosted === 'active' ? formatted.boostedTotalApy : undefined) ?? formatted.totalApy;
+  return value ? { value, type: data.type } : undefined;
+}
 
 export const selectApyVaultUIData = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
@@ -378,3 +489,117 @@ export const selectYieldStatsByVaultId = createCachedSelector(
   (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
     `${vaultId}-${walletAddress ?? ''}`
 );
+
+/**
+ * The group's reward streams split per stream, scaled to whatever the shown wrapper actually pays.
+ *
+ * Only the pool wrapper reports the split; the vault wrapper reports one aggregate `vaultApr` that
+ * folds Merkl in and is net of the performance fee, so reading it directly attributes Merkl to
+ * trading rewards. Taking the pool's proportions and scaling them to the shown side's aggregate
+ * keeps each stream attributed while the rows still reconcile with the total above them.
+ */
+export const selectClmRewardBreakdown = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultByIdOrUndefined(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultByIdOrUndefined(state, vaultId);
+    const poolId =
+      vault && isCowcentratedLikeVault(vault) ?
+        (vault.cowcentratedIds.pool ?? vault.cowcentratedIds.pools[0])
+      : undefined;
+    return poolId ? selectVaultTotalApyOrUndefined(state, poolId) : undefined;
+  },
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultTotalApyOrUndefined(state, vaultId),
+  (vault, poolApy, shownApy): { rewardPoolTradingApr: number; merklApr: number } | undefined => {
+    if (!vault || !isCowcentratedLikeVault(vault) || !poolApy) {
+      return undefined;
+    }
+    const poolId = vault.cowcentratedIds.pool ?? vault.cowcentratedIds.pools[0];
+    const trading = poolApy.rewardPoolTradingApr ?? 0;
+    const merkl = poolApy.merklApr ?? 0;
+    const gross = trading + merkl;
+
+    const shownRewards =
+      vault.id === poolId ?
+        gross
+        // the vault wrapper's single aggregate: the same streams, harvested and net of the fee
+      : (shownApy?.vaultApr ?? 0);
+    // gross of 0 means nothing to split, and the scale would be undefined
+    const scale = gross > 0 ? shownRewards / gross : 0;
+
+    return {
+      rewardPoolTradingApr: trading * scale,
+      merklApr: merkl * scale,
+    };
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+/**
+ * The user's own rate across a CLM group, as a DAILY figure, when they hold both wrappers: both
+ * sides' $/day over both sides' USD, so it agrees with the Daily stat. Annualising it would not be
+ * honest — one side compounds and the other does not. Undefined unless both sides are held.
+ */
+export const selectClmBlendedDaily = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+): number | undefined => {
+  const vault = selectVaultByIdOrUndefined(state, vaultId);
+  if (!vault || !isCowcentratedLikeVault(vault)) {
+    return undefined;
+  }
+  const { pool, vault: vaultSide } = vault.cowcentratedIds;
+  if (!pool || !vaultSide) {
+    return undefined;
+  }
+
+  const sides = [vaultSide, pool].map(id => ({
+    usd: selectUserVaultBalanceInUsdIncludingDisplaced(state, id, walletAddress),
+    hasApy: !!selectVaultTotalApyOrUndefined(state, id),
+    // the same $/day the Daily stat and the portfolio total use, boosts included
+    dailyUsd: selectYieldStatsByVaultId(state, id, walletAddress).dailyUsd,
+  }));
+  // one side only is not a blend; the rows already describe it
+  if (sides.some(side => side.usd.lte(BIG_ZERO) || !side.hasApy)) {
+    return undefined;
+  }
+
+  const total = sides.reduce((sum, side) => sum.plus(side.usd), BIG_ZERO);
+  return sides
+    .reduce((sum, side) => sum.plus(side.dailyUsd), BIG_ZERO)
+    .dividedBy(total)
+    .toNumber();
+};
+
+/** the symbols a CLM pays out today: what its pool streams on-chain, plus live campaign tokens */
+export const selectClmPayoutTokens = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): string[] | undefined => {
+  const vault = selectVaultByIdOrUndefined(state, vaultId);
+  if (!vault || !isCowcentratedLikeVault(vault)) {
+    return undefined;
+  }
+
+  // every active CLM has a pool wrapper (0 vault-only measured); a retired one still names tokens
+  const pool = vault.cowcentratedIds.pool ?? vault.cowcentratedIds.pools[0];
+  if (!pool) {
+    return undefined;
+  }
+
+  // what the pool streams on-chain right now, as the claim form reads it; `earnedTokenAddresses` is
+  // config-only and stale both ways, so it stands in just until the contract data lands
+  const streamed = selectVaultActiveGovRewards(state, pool);
+  const symbols = new Set(
+    streamed ?
+      streamed.map(reward => reward.token.symbol)
+    : selectGovVaultEarnedTokens(state, vault.chainId, pool).map(token => token.symbol)
+  );
+  // off-chain campaigns pay tokens the pool never streams, and register against any group member
+  for (const id of getCowcentratedGroupIds(vault)) {
+    for (const token of selectVaultActiveExtraRewardTokens(state, id) ?? []) {
+      symbols.add(token.symbol);
+    }
+  }
+
+  return [...symbols];
+};

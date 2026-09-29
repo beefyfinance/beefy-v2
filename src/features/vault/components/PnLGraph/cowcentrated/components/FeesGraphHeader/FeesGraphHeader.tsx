@@ -8,6 +8,7 @@ import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
 import { selectClmAutocompoundedPendingFeesByVaultId } from '../../../../../../data/selectors/analytics.ts';
+import { useClmGroupScope } from '../../../../ClmMode/ClmModeContext.tsx';
 import { Stat } from '../Stat/Stat.tsx';
 import { styles } from './styles.ts';
 
@@ -25,6 +26,8 @@ export const FeesGraphHeader = memo(function FeesGraphHeader({
   const classes = useStyles();
 
   const { t } = useTranslation();
+  // the merged vault page and a dashboard CLM row report the whole CLM; anywhere else one side
+  const wholeGroup = useClmGroupScope();
 
   const {
     token0AccruedRewards,
@@ -41,7 +44,9 @@ export const FeesGraphHeader = memo(function FeesGraphHeader({
     token1Decimals,
     totalAutocompounded,
     totalPending,
-  } = useAppSelector(state => selectClmAutocompoundedPendingFeesByVaultId(state, vaultId, address));
+  } = useAppSelector(state =>
+    selectClmAutocompoundedPendingFeesByVaultId(state, vaultId, address, wholeGroup)
+  );
 
   return (
     <div className={classes.statsContainer}>

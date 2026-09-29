@@ -38,21 +38,30 @@ type IntervalDataAction<T> = AsyncThunk<
   }>
 >;
 
+/** stable identity so a skipped vaultId does not re-render every consumer */
+const NO_INTERVAL_DATA: Readonly<AnalyticsIntervalData<never>> = {
+  status: 'idle',
+  requestedSince: 0,
+  fulfilledSince: 0,
+  data: [],
+};
+
 function makeVaultIdToIntervalData<TSelector, TPayload>(
   selector: IntervalDataSelector<TSelector>,
   action: IntervalDataAction<TPayload>
 ) {
-  return function (vaultId: VaultEntity['id'], timeBucket: GraphBucket) {
+  /** `vaultId` may be undefined so callers can skip a series without breaking hook order */
+  return function (vaultId: VaultEntity['id'] | undefined, timeBucket: GraphBucket) {
     const dispatch = useAppDispatch();
     const { data, status, fulfilledSince, requestedSince } = useAppSelector(state =>
-      selector(state, vaultId, getDataApiBucketIntervalKey(timeBucket))
+      vaultId ? selector(state, vaultId, getDataApiBucketIntervalKey(timeBucket)) : NO_INTERVAL_DATA
     );
     const needSince = getDataApiBucketRangeStartDateUnix(timeBucket);
     const hasFulfilled = fulfilledSince > 0 && fulfilledSince <= needSince;
     const hasRequested = requestedSince > 0 && requestedSince <= needSince;
 
     useEffect(() => {
-      if (!hasFulfilled) {
+      if (vaultId && !hasFulfilled) {
         if (!hasRequested && (status === 'idle' || status === 'fulfilled')) {
           dispatch(action({ vaultId, timeBucket }));
         } else if (status === 'rejected') {

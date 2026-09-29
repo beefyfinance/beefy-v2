@@ -8,12 +8,16 @@ import type { BoostReward } from '../apis/balance/balance-types.ts';
 import {
   isVaultDestWithdrawOption,
   isVaultSourceDepositOption,
+  isClmSideSwitchDepositOption,
 } from '../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token.ts';
 import {
+  getCowcentratedWrapperIds,
+  getVaultListId,
   isCowcentratedLikeVault,
+  isCowcentratedVault,
   isErc4626Vault,
   isGovVault,
   isSingleGovVault,
@@ -23,7 +27,11 @@ import {
   type VaultEntity,
   type VaultGov,
 } from '../entities/vault.ts';
-import { deepEqualBigNumberAware } from '../utils/selector-equality.ts';
+import {
+  bigNumberEqual,
+  deepEqualBigNumberAware,
+  shallowArrayEqual,
+} from '../utils/selector-equality.ts';
 import type { BeefyState } from '../store/types.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
@@ -33,6 +41,7 @@ import {
   valueOrThrow,
 } from '../utils/selector-utils.ts';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils.ts';
+import { pickClmPositionSide } from '../../vault/components/ClmMode/resolve-clm-mode.ts';
 import type { UserLpBreakdownBalance } from './balance-types.ts';
 import {
   selectAllVaultBoostIds,
@@ -51,8 +60,10 @@ import {
 } from './tokens.ts';
 import {
   selectAllCowcentratedVaults,
+  selectCowcentratedVaultById,
   selectGovVaultById,
   selectVaultById,
+  selectVaultByIdOrUndefined,
   selectVaultReplacementMigration,
 } from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
@@ -90,6 +101,36 @@ export const selectUserDepositedVaultIds = (state: BeefyState, walletAddress?: s
 export const selectUserHasDepositedInAnyVault = createSelector(
   selectUserDepositedVaultIds,
   ids => ids.length > 0
+);
+
+/** The dashboard's rows: one per product, so a CLM held on both sides is one row keyed by the CLM */
+export const selectUserDashboardVaultIds = createCachedSelector(
+  (state: BeefyState, walletAddress: string) => selectUserDepositedVaultIds(state, walletAddress),
+  (state: BeefyState, _walletAddress: string) => state.entities.vaults.byId,
+  (ids, byId) => arrayOrStaticEmpty([...new Set(ids.map(id => getVaultListId(byId[id]!)))])
+)((_state: BeefyState, walletAddress: string) => walletAddress.toLowerCase());
+
+/**
+ * The wrappers a dashboard row stands for, autocompounding side first: a CLM row is the sides the
+ * address holds; anything else, or a CLM holding none, is itself.
+ */
+export const selectDashboardRowSideIds = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress: string) =>
+    selectVaultById(state, vaultId),
+  (state: BeefyState, _vaultId: VaultEntity['id'], walletAddress: string) =>
+    selectUserDepositedVaultIds(state, walletAddress),
+  (vault, depositedIds): VaultEntity['id'][] => {
+    if (!isCowcentratedVault(vault)) {
+      return [vault.id];
+    }
+    const { vaults, pools } = vault.cowcentratedIds;
+    const held = [...vaults, ...pools].filter(id => depositedIds.includes(id));
+    return held.length ? held : [vault.id];
+  },
+  { memoizeOptions: { resultEqualityCheck: shallowArrayEqual } }
+)(
+  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+    `${vaultId}-${walletAddress.toLowerCase()}`
 );
 
 export const selectUserDepositedVaultIdsForAsset = createSelector(
@@ -355,6 +396,10 @@ export const selectUserHasBalanceToMigrate = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ): boolean => {
+  // a merged CLM row migrates through whichever of its wrappers the user holds
+  if (isCowcentratedVault(selectVaultById(state, vaultId))) {
+    return !!selectClmMigrateVaultId(state, vaultId);
+  }
   const migration = selectVaultReplacementMigration(state, vaultId);
   if (!migration) {
     return false;
@@ -368,6 +413,17 @@ export const selectUserHasBalanceToMigrate = (
     migration.oldVaultId,
     walletAddress
   ).gt(BIG_ZERO);
+};
+
+/** The CLM wrapper the user holds that should migrate, reachable from any group member */
+export const selectClmMigrateVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultEntity['id'] | undefined => {
+  const vault = selectVaultById(state, vaultId);
+  return isCowcentratedLikeVault(vault) ?
+      getCowcentratedWrapperIds(vault).find(id => selectUserHasBalanceToMigrate(state, id))
+    : undefined;
 };
 
 /**
@@ -684,6 +740,86 @@ export const selectUserVaultBalanceInUsdIncludingDisplaced = createSelector(
   (vaultTokenDeposit, oraclePrice) => vaultTokenDeposit.multipliedBy(oraclePrice)
 );
 
+/**
+ * A deposit row's balance: a merged CLM sums its wrappers, which share the CLM token unit. The bare
+ * CLM is left out — it sits in the wallet with no timeline, so counting it disagrees with the PnL card.
+ */
+function sumOverClmWrappers(
+  select: (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) => BigNumber
+) {
+  const summed = createCachedSelector(
+    (state: BeefyState, _clmId: VaultEntity['id'], _walletAddress?: string) => state,
+    (_state: BeefyState, clmId: VaultEntity['id'], _walletAddress?: string) => clmId,
+    (_state: BeefyState, _clmId: VaultEntity['id'], walletAddress?: string) => walletAddress,
+    (state, clmId, walletAddress) =>
+      getCowcentratedWrapperIds(selectCowcentratedVaultById(state, clmId)).reduce(
+        (sum, id) => sum.plus(select(state, id, walletAddress)),
+        BIG_ZERO
+      ),
+    { memoizeOptions: { resultEqualityCheck: bigNumberEqual } }
+  )(
+    (_state: BeefyState, clmId: VaultEntity['id'], walletAddress?: string) =>
+      `${clmId}-${walletAddress ?? ''}`
+  );
+
+  return (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string): BigNumber => {
+    const vault = selectVaultById(state, vaultId);
+    // a CLM with no wrapper at all is its own position
+    return isCowcentratedVault(vault) && getCowcentratedWrapperIds(vault).length ?
+        summed(state, vaultId, walletAddress)
+      : select(state, vaultId, walletAddress);
+  };
+}
+
+export const selectUserRowDepositIncludingDisplaced = sumOverClmWrappers(
+  selectUserVaultBalanceInDepositTokenIncludingDisplaced
+);
+export const selectUserRowDeposit = sumOverClmWrappers(selectUserVaultBalanceInDepositToken);
+export const selectUserRowDepositInUsd = sumOverClmWrappers(
+  selectUserVaultBalanceInUsdIncludingDisplaced
+);
+export const selectUserRowDepositNotInActiveBoost = sumOverClmWrappers(
+  selectUserVaultBalanceNotInActiveBoostInDepositToken
+);
+
+/**
+ * The group member a merged CLM page reports the user's position on: the side they actually hold,
+ * largest first. Independent of the yield mode, which only routes new deposits. When they hold
+ * neither, any real side will do — the graph gate hides the card regardless.
+ */
+export const selectClmPositionVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultEntity['id'] => {
+  const vault = selectVaultByIdOrUndefined(state, vaultId);
+  if (!vault || !isCowcentratedVault(vault)) {
+    return vaultId;
+  }
+
+  const { pool, vault: vaultSide, pools, vaults } = vault.cowcentratedIds;
+  const vaultSideId = vaultSide ?? vaults[0];
+  const poolSideId = pool ?? pools[0];
+  const side = pickClmPositionSide(
+    vaultSideId ? selectUserVaultBalanceInUsdIncludingDisplaced(state, vaultSideId) : BIG_ZERO,
+    poolSideId ? selectUserVaultBalanceInUsdIncludingDisplaced(state, poolSideId) : BIG_ZERO
+  );
+  if (side === 'vault' && vaultSideId) {
+    return vaultSideId;
+  }
+  if (side === 'pool' && poolSideId) {
+    return poolSideId;
+  }
+  return vaultSideId ?? poolSideId ?? vaultId;
+};
+
+/** Whether the user has a deposit in any member of a CLM group */
+export const selectUserHasDepositInClmGroup = (state: BeefyState, clmId: VaultEntity['id']) => {
+  const vault = selectCowcentratedVaultById(state, clmId);
+  return [vault.id, ...getCowcentratedWrapperIds(vault)].some(id =>
+    selectHasUserDepositInVault(state, id)
+  );
+};
+
 /** @dev will NOT default to connected wallet address */
 export const selectGovVaultPendingRewards = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
@@ -965,5 +1101,9 @@ function isVaultSourceSelection(state: BeefyState, selectionId: string): boolean
   if (!optionIds?.length) return false;
   const option = state.ui.transact.options.byOptionId[optionIds[0]];
   if (!option) return false;
-  return isVaultSourceDepositOption(option) || isVaultDestWithdrawOption(option);
+  return (
+    isVaultSourceDepositOption(option) ||
+    isVaultDestWithdrawOption(option) ||
+    isClmSideSwitchDepositOption(option)
+  );
 }

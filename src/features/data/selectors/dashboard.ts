@@ -9,9 +9,11 @@ import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import {
   isCowcentratedLikeVault,
+  isCowcentratedVault,
   isErc4626Vault,
   isGovVault,
   isStandardVault,
+  isVaultActive,
   isVaultWithReceipt,
   type VaultEntity,
 } from '../entities/vault.ts';
@@ -22,14 +24,22 @@ import {
   selectClmPnl,
   selectStandardGovPnl,
   selectUserDepositedTimelineByVaultId,
+  selectUserHasCurrentDepositTimelineByVaultId,
   selectVaultPnl,
 } from './analytics.ts';
-import { selectYieldStatsByVaultId } from './apy.ts';
+import {
+  selectDashboardClmBlendedApy,
+  selectDashboardRateVaultIds,
+  selectDashboardRowDailyUsd,
+  selectVaultTotalApyOrUndefined,
+} from './apy.ts';
 import type { UserLpBreakdownBalanceAsset } from './balance-types.ts';
 import {
   selectBoostUserRewardsInToken,
+  selectDashboardRowSideIds,
   selectGovVaultPendingRewardsWithPrice,
   selectIsUserBalanceAvailable,
+  selectUserDashboardVaultIds,
   selectUserDepositedVaultIds,
   selectUserLpBreakdownBalance,
   selectUserVaultBalanceInUsdIncludingDisplaced,
@@ -55,6 +65,7 @@ import { selectIsAddressBookLoadedGlobal } from './data-loader/tokens.ts';
 import { selectIsAnalyticsLoadedByAddress } from './data-loader/analytics.ts';
 import { selectShouldInitDashboardForUserImpl } from './data-loader/dashboard.ts';
 import { recordEqualBy } from '../../../helpers/object.ts';
+import { mergeTokenEntries } from '../../../helpers/pnl.ts';
 
 export enum DashboardDataStatus {
   Loading,
@@ -162,6 +173,21 @@ const selectDashboardUserRewardsByVaultIdUncached = (
   }
 
   const vault = selectVaultById(state, vaultId);
+  // a CLM row is its held wrappers: each side's rewards, boosts included, merged per token
+  if (isCowcentratedVault(vault)) {
+    const sides = selectDashboardRowSideIds(state, vaultId, walletAddress);
+    if (sides[0] !== vaultId) {
+      return toUserRewards(
+        mergeTokenEntries(
+          sides.flatMap(
+            id => selectDashboardUserRewardsByVaultId(state, id, walletAddress).all.rewards
+          ),
+          reward => `${reward.status}:${reward.source}`
+        )
+      );
+    }
+  }
+
   const rewards: UserReward[] = [];
 
   if (isCowcentratedLikeVault(vault)) {
@@ -232,6 +258,10 @@ const selectDashboardUserRewardsByVaultIdUncached = (
     }
   }
 
+  return toUserRewards(rewards);
+};
+
+function toUserRewards(rewards: UserReward[]): UserRewards {
   if (!rewards.length) {
     return emptyUserRewards;
   }
@@ -245,7 +275,16 @@ const selectDashboardUserRewardsByVaultIdUncached = (
     }
     return acc;
   }, newUserRewards());
-};
+}
+
+/** a row built from several sources is only as ready as the least ready of them */
+export function combineDashboardStatuses(statuses: DashboardDataStatus[]): DashboardDataStatus {
+  return (
+    statuses.includes(DashboardDataStatus.Loading) ? DashboardDataStatus.Loading
+    : statuses.includes(DashboardDataStatus.Missing) ? DashboardDataStatus.Missing
+    : DashboardDataStatus.Available
+  );
+}
 
 // TODO add more checks
 const selectDashboardYieldRewardDataAvailableByVaultId = (
@@ -263,6 +302,14 @@ const selectDashboardYieldRewardDataAvailableByVaultId = (
   }
 
   const vault = selectVaultById(state, vaultId);
+  if (isCowcentratedVault(vault)) {
+    const sides = selectDashboardRowSideIds(state, vaultId, walletAddress);
+    if (sides[0] !== vaultId) {
+      return combineDashboardStatuses(
+        sides.map(id => selectDashboardYieldRewardDataAvailableByVaultId(state, id, walletAddress))
+      );
+    }
+  }
   if (isCowcentratedLikeVault(vault) || isStandardVault(vault) || isErc4626Vault(vault)) {
     if (!selectIsAnalyticsLoadedByAddress(state, walletAddress)) {
       return DashboardDataStatus.Loading;
@@ -602,7 +649,7 @@ export const selectDashboardUserVaultsPnl = createSelector(
   (state: BeefyState, _walletAddress: string) => state,
   (_state: BeefyState, walletAddress: string) => walletAddress,
   (state, walletAddress) => {
-    const userVaults = selectUserDepositedVaultIds(state, walletAddress);
+    const userVaults = selectUserDashboardVaultIds(state, walletAddress);
     const vaults: Record<string, UserVaultPnl> = {};
     for (const vaultId of userVaults) {
       vaults[vaultId] = selectVaultPnl(state, vaultId, walletAddress);
@@ -619,11 +666,13 @@ export const selectDashboardUserVaultsDailyYield = createSelector(
   (state: BeefyState, _walletAddress: string) => state,
   (_state: BeefyState, walletAddress: string) => walletAddress,
   (state, walletAddress) => {
-    const userVaults = selectUserDepositedVaultIds(state, walletAddress);
+    const userVaults = selectUserDashboardVaultIds(state, walletAddress);
     const vaults: Record<string, BigNumber> = {};
     for (const vaultId of userVaults) {
-      const { dailyUsd } = selectYieldStatsByVaultId(state, vaultId, walletAddress);
-      vaults[vaultId] = dailyUsd;
+      // a row with nothing still earning sorts last, as a retired vault does
+      if (selectDashboardRateVaultIds(state, vaultId, walletAddress).length) {
+        vaults[vaultId] = selectDashboardRowDailyUsd(state, vaultId, walletAddress);
+      }
     }
     return vaults;
   },
@@ -641,6 +690,65 @@ export const selectShouldInitDashboardForUser = (state: BeefyState, walletAddres
     selectIsConfigAvailable(state) &&
     selectIsAddressBookLoadedGlobal(state) &&
     selectShouldInitDashboardForUserImpl(state, walletAddress)
+  );
+};
+
+/** what each CLM row's APY cell shows, for sorting: the blend when both sides earn, else its side's rate */
+export const selectDashboardUserClmApy = createSelector(
+  (state: BeefyState, _walletAddress: string) => state,
+  (_state: BeefyState, walletAddress: string) => walletAddress,
+  (state, walletAddress) => {
+    const apy: Record<string, number> = {};
+    for (const vaultId of selectUserDashboardVaultIds(state, walletAddress)) {
+      if (!isCowcentratedVault(selectVaultById(state, vaultId))) {
+        continue;
+      }
+      const rateId = selectDashboardRateVaultIds(state, vaultId, walletAddress)[0];
+      if (!rateId) {
+        // nothing held still earns, as for a retired row
+        apy[vaultId] = -1;
+        continue;
+      }
+      const side = selectVaultTotalApyOrUndefined(state, rateId);
+      const value =
+        selectDashboardRateVaultIds(state, vaultId, walletAddress).length > 1 ?
+          selectDashboardClmBlendedApy(state, vaultId, walletAddress)
+        : (side?.boostedTotalApy ?? side?.totalApy);
+      // no rate on the cell yet sorts as none, never as the CLM's own
+      apy[vaultId] = value ?? -1;
+    }
+    return apy;
+  },
+  {
+    memoizeOptions: { resultEqualityCheck: recordEqualBy<number>(numberEqual) },
+  }
+);
+
+/**
+ * The wrapper a row's charts and timeline checks bind to. A CLM row's numbers merge every held side,
+ * so one not yet indexed holds them all back; otherwise its largest side that still earns — a side
+ * retired for over a month would close the chart gate for the whole group.
+ */
+export const selectDashboardPrimaryVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress: string
+): VaultEntity['id'] => {
+  const sides = selectDashboardRowSideIds(state, vaultId, walletAddress);
+  if (sides.length < 2) {
+    return sides[0];
+  }
+  const unindexed = sides.find(
+    id => !selectUserHasCurrentDepositTimelineByVaultId(state, id, walletAddress)
+  );
+  if (unindexed) {
+    return unindexed;
+  }
+  const earning = sides.filter(id => isVaultActive(selectVaultById(state, id)));
+  const usd = (id: VaultEntity['id']) =>
+    selectUserVaultBalanceInUsdIncludingDisplaced(state, id, walletAddress);
+  return (earning.length ? earning : sides).reduce((best, id) =>
+    usd(id).gt(usd(best)) ? id : best
   );
 };
 

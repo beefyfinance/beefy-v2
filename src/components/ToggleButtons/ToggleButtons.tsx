@@ -116,7 +116,7 @@ const CardHeader = styled('div', {
   },
 });
 
-const CardRadio = styled('span', {
+export const CardRadio = styled('span', {
   base: {
     flexShrink: 0,
     width: '16px',
@@ -130,7 +130,7 @@ const CardRadio = styled('span', {
   },
 });
 
-const CardRadioDot = styled('span', {
+export const CardRadioDot = styled('span', {
   base: {
     width: '6.4px',
     height: '6.4px',

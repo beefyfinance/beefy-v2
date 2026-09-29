@@ -5,6 +5,7 @@ import { useAppSelector } from '../../../data/store/hooks.ts';
 import { isVaultActive } from '../../../data/entities/vault.ts';
 import { isUserClmPnl } from '../../../data/selectors/analytics-types.ts';
 import {
+  selectDashboardUserClmApy,
   selectDashboardUserVaultsDailyYield,
   selectDashboardUserVaultsPnl,
 } from '../../../data/selectors/dashboard.ts';
@@ -30,6 +31,8 @@ export function useSortedDashboardVaults(address: string) {
   );
 
   const apyByVaultId = useAppSelector(state => state.biz.apy.totalApy.byVaultId);
+  // a CLM row sorts by the rate its cell shows, not the CLM's own
+  const clmApyByVaultId = useAppSelector(state => selectDashboardUserClmApy(state, address));
 
   const userVaultsPnl = useAppSelector(state => selectDashboardUserVaultsPnl(state, address));
 
@@ -75,6 +78,10 @@ export function useSortedDashboardVaults(address: string) {
                 return vaultPnl.totalPnlUsd.toNumber();
               }
               case 'apy': {
+                const clmApy = clmApyByVaultId[vault.id];
+                if (clmApy !== undefined) {
+                  return clmApy;
+                }
                 if (!isVaultActive(vault) || !apy) {
                   return -1;
                 }
@@ -104,6 +111,7 @@ export function useSortedDashboardVaults(address: string) {
     filteredVaults,
     userVaultsPnl,
     apyByVaultId,
+    clmApyByVaultId,
     userVaultsDailyYield,
   ]);
 

@@ -17,9 +17,16 @@ import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
-function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
+function VaultsStatsComponent({
+  vaultId,
+  modeVaultId = vaultId,
+}: {
+  vaultId: VaultEntity['id'];
+  /** on a merged CLM page: the selected wrapper, driving the rate/harvest stats */
+  modeVaultId?: VaultEntity['id'];
+}) {
   const classes = useStyles();
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const modeVault = useAppSelector(state => selectVaultById(state, modeVaultId));
 
   return (
     <div className={classes.boxes}>
@@ -28,22 +35,22 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
           <VaultTvl vaultId={vaultId} />
         </div>
         <div className={classes.stat}>
-          <ApyStats type="yearly" vaultId={vaultId} />
+          <ApyStats type="yearly" vaultId={modeVaultId} />
         </div>
         <div className={classes.stat}>
-          <ApyStats type="daily" vaultId={vaultId} />
+          <ApyStats type="daily" vaultId={modeVaultId} />
         </div>
       </div>
       <div className={css(styles.stats, styles.statsDeposit)}>
         <div className={classes.stat}>
           <VaultDeposited vaultId={vaultId} />
         </div>
-        {isGovVault(vault) && !isGovVaultCowcentrated(vault) ?
+        {isGovVault(modeVault) && !isGovVaultCowcentrated(modeVault) ?
           <div className={classes.stat}>
-            <GovVaultRewards vaultId={vaultId} />
+            <GovVaultRewards vaultId={modeVaultId} />
           </div>
         : <div className={classes.stat}>
-            <LastHarvest vaultId={vaultId} />
+            <LastHarvest vaultId={modeVaultId} />
           </div>
         }
       </div>

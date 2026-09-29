@@ -6,7 +6,10 @@ import {
   isCowcentratedLikeVault,
   type VaultEntity,
 } from '../../../features/data/entities/vault.ts';
-import { selectVaultTotalApy } from '../../../features/data/selectors/apy.ts';
+import {
+  selectClmDisplayVaultId,
+  selectVaultTotalApy,
+} from '../../../features/data/selectors/apy.ts';
 import {
   selectConcentratedLiquidityManagerPlatforms,
   selectPlatformById,
@@ -15,13 +18,12 @@ import {
   selectChainWrappedNativeToken,
   selectTokenByIdOrUndefined,
 } from '../../../features/data/selectors/tokens.ts';
-import { selectVaultTvl } from '../../../features/data/selectors/tvl.ts';
+import { selectVaultRawTvl } from '../../../features/data/selectors/tvl.ts';
 import {
   selectAllCowcentratedVaultsByChainId,
   selectVaultById,
 } from '../../../features/data/selectors/vaults.ts';
 import type { BeefyState } from '../../../features/data/store/types.ts';
-import { isDefined } from '../../../features/data/utils/array-utils.ts';
 import { formatLargePercent } from '../../../helpers/format.ts';
 import { getIcon } from '../../../helpers/iconSrc.ts';
 import { useAppSelector } from '../../../features/data/store/hooks.ts';
@@ -92,31 +94,25 @@ function selectClmsWithAssetsMatchingVault(state: BeefyState, vaultId: VaultEnti
     return undefined;
   }
 
-  // only vaults if there is any
-  let type: 'vault' | 'pool' = 'vault';
-  let ids = withSameAssets.map(clm => clm.cowcentratedIds.vault).filter(isDefined);
-
-  // otherwise pools
-  if (!ids.length) {
-    type = 'pool';
-    ids = withSameAssets.map(clm => clm.cowcentratedIds.pool).filter(isDefined);
-  }
-
-  if (!ids.length) {
-    return undefined;
-  }
-
+  // suggest the merged CLM page; raw = whole-group tvl
   return {
-    ids: orderBy(ids, id => selectVaultTvl(state, id).toNumber(), 'desc'),
-    type,
+    ids: orderBy(
+      withSameAssets.map(clm => clm.id),
+      id => selectVaultRawTvl(state, id).toNumber(),
+      'desc'
+    ),
   };
 }
 
 const VaultLink = memo(function VaultLink({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const platform = useAppSelector(state => selectPlatformById(state, vault.platformId));
-  const apy = useAppSelector(state => selectVaultTotalApy(state, vaultId));
+  // rate/platform of the side the merged row features; the clm itself is platform 'beefy'
+  const displayVault = useAppSelector(state =>
+    selectVaultById(state, selectClmDisplayVaultId(state, vaultId))
+  );
+  const platform = useAppSelector(state => selectPlatformById(state, displayVault.platformId));
+  const apy = useAppSelector(state => selectVaultTotalApy(state, displayVault.id));
   const apyLabel = apy.totalType.toUpperCase();
 
   return (
@@ -166,7 +162,7 @@ export const RetiredSuggestClmBanner = memo(function RetiredSuggestClmBanner({
       text={
         <Trans
           t={t}
-          i18nKey={`Banner-RetiredSuggestClm-${matching.type}`}
+          i18nKey="Banner-RetiredSuggestClm"
           values={{ count: matching.ids.length }}
           components={components}
         />

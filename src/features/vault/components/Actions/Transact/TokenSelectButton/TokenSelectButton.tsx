@@ -9,6 +9,8 @@ import {
   TokensImageWithChain,
 } from '../../../../../../components/TokenImage/TokenImage.tsx';
 import { VaultIcon } from '../../../../../../components/VaultIdentity/components/VaultIcon/VaultIcon.tsx';
+import { ClmSideIcon } from '../DepositFromVaultSelectList/DepositFromVaultSelectList.tsx';
+import { getClmSide } from '../DepositFromVaultSelectList/groups.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
@@ -118,6 +120,8 @@ const VaultSelectButton = memo(function VaultSelectButton({ cssProp }: VaultSele
   const fromVault = useAppSelector(state =>
     fromVaultId ? selectVaultById(state, fromVaultId) : undefined
   );
+  // CLM sides share a name, so the icon tells the chosen position apart
+  const fromVaultSide = fromVault && getClmSide(fromVault);
 
   const handleClick = useCallback(() => {
     dispatch(transactSwitchStep(TransactStep.DepositFromVaultSelect));
@@ -144,6 +148,9 @@ const VaultSelectButton = memo(function VaultSelectButton({ cssProp }: VaultSele
             </VaultChainBadge>
           </VaultIconWrapper>
           <VaultName>{fromVault.names.single}</VaultName>
+          {fromVaultSide ?
+            <ClmSideIcon side={fromVaultSide} />
+          : null}
         </div>
       : <div className={css(styles.select, styles.forceSelection)}>
           {t('Transact-DepositFromVault-Select')}

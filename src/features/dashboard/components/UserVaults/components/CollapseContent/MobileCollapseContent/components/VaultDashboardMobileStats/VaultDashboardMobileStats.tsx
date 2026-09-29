@@ -8,6 +8,7 @@ import { legacyMakeStyles } from '../../../../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../../../../data/store/hooks.ts';
 import { type VaultEntity } from '../../../../../../../../data/entities/vault.ts';
 import { selectVaultPnl } from '../../../../../../../../data/selectors/analytics.ts';
+import { selectDashboardPrimaryVaultId } from '../../../../../../../../data/selectors/dashboard.ts';
 import { RowMobile } from '../../../../Row/Row.tsx';
 import { styles } from './styles.ts';
 import { VaultDepositNowStat } from '../../../../../../../../../components/VaultStats/VaultDepositNowStat.tsx';
@@ -25,20 +26,23 @@ export const VaultDashboardMobileStats = memo(function VaultDashboardMobileStats
 }: VaultDashboardMobileStatsProps) {
   const classes = useStyles();
   const pnlData = useAppSelector(state => selectVaultPnl(state, vaultId, address));
+  const timelineVaultId = useAppSelector(state =>
+    selectDashboardPrimaryVaultId(state, vaultId, address)
+  );
 
   return (
     <RowMobile>
       <div className={classes.inner}>
         <VaultAtDepositStat
           pnlData={pnlData}
-          vaultId={vaultId}
+          vaultId={timelineVaultId}
           walletAddress={address}
           align="right"
           layout="horizontal"
         />
         <VaultDepositNowStat
           pnlData={pnlData}
-          vaultId={vaultId}
+          vaultId={timelineVaultId}
           walletAddress={address}
           align="right"
           layout="horizontal"
@@ -55,7 +59,13 @@ export const VaultDashboardMobileStats = memo(function VaultDashboardMobileStats
           align="right"
           layout="horizontal"
         />
-        <VaultApyStat type={'yearly'} vaultId={vaultId} align="right" layout="horizontal" />
+        <VaultApyStat
+          type={'yearly'}
+          vaultId={vaultId}
+          walletAddress={address}
+          align="right"
+          layout="horizontal"
+        />
         <VaultDailyUsdStat
           vaultId={vaultId}
           walletAddress={address}

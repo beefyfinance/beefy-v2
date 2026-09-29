@@ -9,7 +9,7 @@ import {
   selectVaultHasActiveStellaSwapCampaigns,
 } from '../../../../../data/selectors/rewards.ts';
 import { selectTransactVaultId } from '../../../../../data/selectors/transact.ts';
-import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { selectClmClaimVaultId, selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet.ts';
 import { GovRewards } from './Gov/GovRewards.tsx';
 import { MerklRewards } from './Merkl/MerklRewards.tsx';
@@ -25,7 +25,9 @@ const useStyles = legacyMakeStyles(styles);
 const ClaimFormLoader = memo(function ClaimFormLoader() {
   const classes = useStyles();
   const { t } = useTranslation();
-  const vaultId = useAppSelector(selectTransactVaultId);
+  const transactVaultId = useAppSelector(selectTransactVaultId);
+  // a CLM's rewards sit on its pool side regardless of the yield mode the deposit form is on
+  const vaultId = useAppSelector(state => selectClmClaimVaultId(state, transactVaultId));
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const walletAddress = useAppSelector(selectWalletAddress);
   const deposited = useAppSelector(state => selectHasUserDepositInVault(state, vaultId));

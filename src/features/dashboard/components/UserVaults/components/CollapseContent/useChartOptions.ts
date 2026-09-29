@@ -6,6 +6,7 @@ import {
   selectClmAutocompoundedFeesEnabledByVaultId,
   selectHasDataToShowGraphByVaultId,
 } from '../../../../../data/selectors/analytics.ts';
+import { selectDashboardPrimaryVaultId } from '../../../../../data/selectors/dashboard.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import {
   DashboardFeesGraph,
@@ -14,8 +15,12 @@ import {
 import { DashboardPnLGraph } from '../../../../../vault/components/PnLGraph/standard/StandardPnLGraph.tsx';
 import type { ChartTypes } from './types.ts';
 
-export function useChartOptions(vaultId: VaultEntity['id'], address: string) {
+export function useChartOptions(rowVaultId: VaultEntity['id'], address: string) {
   const { t } = useTranslation();
+  // a CLM row charts through one held wrapper (group-scoped by the row); anything else itself
+  const vaultId = useAppSelector(state =>
+    selectDashboardPrimaryVaultId(state, rowVaultId, address)
+  );
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const hasAnalyticsData = useAppSelector(state =>
     selectHasDataToShowGraphByVaultId(state, vaultId, address)
@@ -43,6 +48,6 @@ export function useChartOptions(vaultId: VaultEntity['id'], address: string) {
       }
     }
 
-    return { PositionGraph, CompoundsGraph, availableCharts };
-  }, [t, typeOfCharts, showCompounds, hasAnalyticsData]);
+    return { PositionGraph, CompoundsGraph, availableCharts, chartVaultId: vaultId };
+  }, [t, typeOfCharts, showCompounds, hasAnalyticsData, vaultId]);
 }

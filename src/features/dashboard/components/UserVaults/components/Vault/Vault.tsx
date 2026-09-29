@@ -6,15 +6,15 @@ import { VaultDashboardStats } from '../../../../../../components/VaultStats/Vau
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
-  isCowcentratedGovVault,
   isCowcentratedLikeVault,
-  isCowcentratedStandardVault,
   isCowcentratedVault,
   isGovVault,
   isVaultPaused,
   isVaultRetired,
   type VaultEntity,
 } from '../../../../../data/entities/vault.ts';
+import { ClmGroupScopeContext } from '../../../../../vault/components/ClmMode/ClmModeContext.tsx';
+import { selectDashboardRowSideIds } from '../../../../../data/selectors/balance.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { DesktopCollapseContent } from '../CollapseContent/DesktopCollapseContent/DesktopCollapseContent.tsx';
 import { MobileCollapseContent } from '../CollapseContent/MobileCollapseContent/MobileCollapseContent.tsx';
@@ -32,9 +32,11 @@ export const Vault = memo(function Vault({ vaultId, address }: VaultProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isRetired = isVaultRetired(vault);
   const isPaused = isVaultPaused(vault);
-  const isCowcentratedPool = isCowcentratedGovVault(vault); // cowcentrated pool
-  const isCowcentratedStandard = isCowcentratedStandardVault(vault); // cowcentrated vault
-  const isCowcentrated = isCowcentratedVault(vault); // naked clm
+  const isCowcentrated = isCowcentratedVault(vault);
+  // a CLM row held on both sides charts them together; one side charts itself, as on prod
+  const isClmGroup = useAppSelector(
+    state => selectDashboardRowSideIds(state, vaultId, address).length > 1
+  );
   const isGov = !isCowcentratedLikeVault(vault) && isGovVault(vault); // gov but not cowcentrated pool
   const handleOpen = useCallback(() => {
     setOpen(o => !o);
@@ -50,8 +52,6 @@ export const Vault = memo(function Vault({ vaultId, address }: VaultProps) {
           styles.vault,
           isGov && styles.vaultEarnings,
           isCowcentrated && styles.vaultClm,
-          isCowcentratedPool && styles.vaultClmPool,
-          isCowcentratedStandard && styles.vaultCowcentratedVault,
           isPaused && styles.vaultPaused,
           isRetired && styles.vaultRetired
         )}
@@ -62,7 +62,9 @@ export const Vault = memo(function Vault({ vaultId, address }: VaultProps) {
         </div>
       </div>
       {open ?
-        <CollapseComponent address={address} vaultId={vaultId} />
+        <ClmGroupScopeContext.Provider value={isClmGroup}>
+          <CollapseComponent address={address} vaultId={vaultId} />
+        </ClmGroupScopeContext.Provider>
       : null}
     </div>
   );

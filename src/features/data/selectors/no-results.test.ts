@@ -157,6 +157,8 @@ function makeState(
           ])
         ),
         allVisibleIds: vaults.map(v => v.id),
+        // no CLM groups in the fixture, so the list renders every visible vault
+        allListIds: vaults.map(v => v.id),
         contractData: { byVaultId: {} },
       },
       chains: {
@@ -379,7 +381,7 @@ describe('selectVaultPassesFilters search gate', () => {
       userCategory: 'deposited',
     });
     const state = makeState(FIXTURE_VAULTS, filters);
-    const visibleIds = state.entities.vaults.allVisibleIds;
+    const visibleIds = state.entities.vaults.allListIds;
     const searchOnly = clearBlockerCategories(filters, ALL_CATEGORIES);
     const searchEnv = selectVaultFilterEnv(state, searchOnly);
     const searchMatches = visibleIds.filter(id =>

@@ -20,7 +20,7 @@ import { useCalculatedBreakdown } from '../../vault/components/LiquidityPoolBrea
 import { ShareButton } from '../../vault/components/ShareButton/ShareButton.tsx';
 
 import type { TokenLpBreakdown } from '../entities/token.ts';
-import type { VaultEntity } from '../entities/vault.ts';
+import { getVaultListId, type VaultEntity } from '../entities/vault.ts';
 import { selectPastBoostIdsWithUserBalance } from './balance.ts';
 import { selectLpBreakdownForVaultId } from './tokens.ts';
 import { selectVaultById } from './vaults.ts';
@@ -133,7 +133,11 @@ describe('the trees the sibling file does not reach', () => {
       <SortedDashboardVaultsProbe address={FIXTURE_WALLET} />,
       fixture.state
     );
-    expect(result.html).toContain(`sorted:${fixture.vaultIds.length}`);
+    // one row per product: a CLM's wrappers and the CLM itself share a row
+    const rows = new Set(
+      fixture.vaultIds.map(id => getVaultListId(fixture.state.entities.vaults.byId[id]!))
+    );
+    expect(result.html).toContain(`sorted:${rows.size}`);
     expect(describeUnstable(result)).toEqual([]);
   });
 

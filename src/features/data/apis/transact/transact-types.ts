@@ -568,6 +568,13 @@ export function isCrossChainVaultDstWithdrawOption(
   return isCrossChainWithdrawOption(option) && option.destHandlerKind === 'vault';
 }
 
+/** The CLM pool↔vault zap: a deposit funded by the other side of the same CLM, no swap involved */
+export function isClmSideSwitchDepositOption(
+  option: TransactOption
+): option is RewardPoolToVaultDepositOption {
+  return option.strategyId === 'reward-pool-to-vault' && option.mode === TransactMode.Deposit;
+}
+
 export function isVaultToVaultSingleTokenDepositOption(
   option: TransactOption
 ): option is VaultToVaultSingleTokenDepositOption {

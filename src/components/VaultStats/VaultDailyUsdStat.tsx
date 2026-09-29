@@ -2,6 +2,9 @@ import { createSelector } from '@reduxjs/toolkit';
 import { memo } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
+  selectDashboardRateVaultId,
+  selectDashboardRateVaultIds,
+  selectDashboardRowDailyUsd,
   selectDidAPIReturnValuesForVault,
   selectIsVaultApyAvailable,
   selectYieldStatsByVaultId,
@@ -42,13 +45,30 @@ const selectDailyUsdStatus = (state: BeefyState, vaultId: VaultEntity['id']) =>
   : !selectDidAPIReturnValuesForVault(state, vaultId) ? 'no-api-values'
   : 'ok';
 
+/** a dashboard CLM row is only as ready as its least ready earning side */
+const selectRowDailyUsdStatus = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  if (!walletAddress) {
+    return selectDailyUsdStatus(state, vaultId);
+  }
+  const ids = selectDashboardRateVaultIds(state, vaultId, walletAddress);
+  const statuses = (
+    ids.length ? ids : [selectDashboardRateVaultId(state, vaultId, walletAddress)]).map(id =>
+    selectDailyUsdStatus(state, id)
+  );
+  return statuses.find(status => status !== 'ok') ?? 'ok';
+};
+
 const selectVaultDailyUsdStat = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
-    selectDailyUsdStatus(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
-    selectDailyUsdStatus(state, vaultId) === 'ok' ?
-      selectYieldStatsByVaultId(state, vaultId, walletAddress).dailyUsd
-    : undefined,
+    selectRowDailyUsdStatus(state, vaultId, walletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
+    selectRowDailyUsdStatus(state, vaultId, walletAddress) !== 'ok' ? undefined
+    : walletAddress ? selectDashboardRowDailyUsd(state, vaultId, walletAddress)
+    : selectYieldStatsByVaultId(state, vaultId).dailyUsd,
   (status, dailyUsd) => {
     if (status === 'no-interest') {
       return NO_INTEREST;

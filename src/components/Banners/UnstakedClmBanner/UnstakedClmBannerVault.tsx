@@ -8,7 +8,6 @@ import { selectUserIsUnstakedForVaultId } from '../../../features/data/selectors
 import { selectTokenByAddress } from '../../../features/data/selectors/tokens.ts';
 import { selectVaultById } from '../../../features/data/selectors/vaults.ts';
 import { useAppSelector } from '../../../features/data/store/hooks.ts';
-import { ClmVaultBanner } from '../ClmVaultBanner/ClmVaultBanner.tsx';
 import { InternalLink } from '../Links/InternalLink.tsx';
 import { ClmBanner } from './ClmBanner.tsx';
 import type { UnstakedClmBannerVaultImplProps, UnstakedClmBannerVaultProps } from './types.ts';
@@ -24,10 +23,6 @@ export const UnstakedClmBannerVault = memo<UnstakedClmBannerVaultProps>(
 
     if (shouldStake) {
       return <UnstakedClmBannerVaultImpl vault={vault} fromVault={fromVault || false} />;
-    }
-
-    if (fromVault) {
-      return <ClmVaultBanner vaultId={vaultId} />;
     }
 
     return null;
@@ -49,13 +44,17 @@ const UnstakedClmBannerVaultImpl = memo<UnstakedClmBannerVaultImplProps>(
       : vault.cowcentratedIds.pool ? 'gov'
       : 'standard';
     const thisType = vault.type;
+    // the merged CLM page has the deposit form right below the banner; anywhere else links to it
     const endOfKey =
-      !fromVault ?
-        `link-${availableTypes}`
+      isCowcentratedVault(vault) ?
+        fromVault ? 'this-clm'
+        : 'link-clm'
+      : !fromVault ? `link-${availableTypes}`
       : `this-${thisType}${availableTypes === 'both' ? '-both' : ''}`;
 
     const components = useMemo(() => {
       return {
+        Link: <InternalLink to={`/vault/${vault.cowcentratedIds.clm}`} />,
         GovLink:
           vault.cowcentratedIds.pool ?
             <InternalLink to={`/vault/${vault.cowcentratedIds.pool}`} />
@@ -65,7 +64,7 @@ const UnstakedClmBannerVaultImpl = memo<UnstakedClmBannerVaultImplProps>(
             <InternalLink to={`/vault/${vault.cowcentratedIds.vault}`} />
           : <span />,
       };
-    }, [vault.cowcentratedIds.pool, vault.cowcentratedIds.vault]);
+    }, [vault.cowcentratedIds.clm, vault.cowcentratedIds.pool, vault.cowcentratedIds.vault]);
 
     return (
       <ClmBanner

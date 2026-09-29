@@ -22,6 +22,11 @@ export const VaultPlatform = memo(function VaultPlatform({ vaultId }: VaultPlatf
   const platformName = platform.name;
   const providerName = provider ? provider.name : null;
 
+  // Beefy's own CLMs are named by the venue they manage liquidity on, not "Venue (Beefy)"
+  if (providerName && platform.id === 'beefy') {
+    return <>{t('VaultTag-Platform', { platform: providerName })}</>;
+  }
+
   return (
     <>
       {providerName && providerName !== platformName ?

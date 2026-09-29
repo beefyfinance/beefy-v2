@@ -31,6 +31,7 @@ import type { Step } from '../reducers/wallet/stepper-types.ts';
 import { TransactMode, TransactStatus, TransactStep } from '../reducers/wallet/transact-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { selectApyVaultUIData } from './apy.ts';
+import { selectDashboardRowSideIds, selectUserDashboardVaultIds } from './balance.ts';
 import { DashboardDataStatus, selectDashboardUserRewardsOrStatusByVaultId } from './dashboard.ts';
 import { selectTvlBreakdownByVaultId } from './tvl.ts';
 import { selectIsWalletConnected, selectWalletAddress } from './wallet.ts';
@@ -208,6 +209,9 @@ describe('the detector itself', () => {
   });
 });
 
+/** the dashboard lists one row per product: a CLM held on both sides is one row */
+const dashboardRowIds = () => selectUserDashboardVaultIds(fixture.state, FIXTURE_WALLET);
+
 describe('no subscription in a high-fanout tree is unstable', () => {
   it('the home vault row', () => {
     const result = renderTree(
@@ -240,26 +244,26 @@ describe('no subscription in a high-fanout tree is unstable', () => {
   it('the dashboard vault row', () => {
     const result = renderTree(
       <>
-        {fixture.vaultIds.map(id => (
+        {dashboardRowIds().map(id => (
           <DashboardVaultRow key={id} vaultId={id} address={FIXTURE_WALLET} />
         ))}
       </>,
       fixture.state
     );
-    expect(result.subscriptions).toBeGreaterThan(fixture.vaultIds.length);
+    expect(result.subscriptions).toBeGreaterThan(dashboardRowIds().length);
     expect(describeUnstable(result)).toEqual([]);
   });
 
   it('VaultDashboardStats on its own', () => {
     const result = renderTree(
       <>
-        {fixture.vaultIds.map(id => (
+        {dashboardRowIds().map(id => (
           <VaultDashboardStats key={id} vaultId={id} address={FIXTURE_WALLET} />
         ))}
       </>,
       fixture.state
     );
-    expect(result.subscriptions).toBeGreaterThan(fixture.vaultIds.length);
+    expect(result.subscriptions).toBeGreaterThan(dashboardRowIds().length);
     expect(result.html).toMatch(/\$[\d,.]+/);
     expect(describeUnstable(result)).toEqual([]);
   });
@@ -267,14 +271,14 @@ describe('no subscription in a high-fanout tree is unstable', () => {
   it('the mobile breakpoint of the dashboard row', () => {
     const result = renderTree(
       <>
-        {fixture.vaultIds.map(id => (
+        {dashboardRowIds().map(id => (
           <DashboardVaultRow key={id} vaultId={id} address={FIXTURE_WALLET} />
         ))}
       </>,
       fixture.state,
       MOBILE
     );
-    expect(result.subscriptions).toBeGreaterThan(fixture.vaultIds.length);
+    expect(result.subscriptions).toBeGreaterThan(dashboardRowIds().length);
     expect(result.html).toMatch(/\$[\d,.]+/);
     expect(describeUnstable(result)).toEqual([]);
   });
@@ -285,7 +289,7 @@ describe('no subscription in a high-fanout tree is unstable', () => {
         <ChainSelectStep />
         <DepositTokenSelectList />
         <WithdrawTokenSelectList />
-        <DepositFromVaultSelectList />
+        <DepositFromVaultSelectList onOpenClm={() => {}} />
         <MaybeZapFees />
         <FormStepFooter />
       </>,
@@ -378,6 +382,19 @@ describe('no subscription in a high-fanout tree is unstable', () => {
     );
     expect(result.subscriptions).toBeGreaterThan(0);
     expect(result.html).toContain('/tx/0x3333');
+    expect(describeUnstable(result)).toEqual([]);
+  });
+
+  it('the dashboard collapse content of a CLM row held on both sides', () => {
+    const clmId = dashboardRowIds().find(
+      id => selectDashboardRowSideIds(fixture.state, id, FIXTURE_WALLET).length > 1
+    );
+    expect(clmId).toBeDefined();
+    const result = renderTree(
+      <DesktopCollapseContent vaultId={clmId!} address={FIXTURE_WALLET} />,
+      fixture.state
+    );
+    expect(result.html).toContain('Claim manually');
     expect(describeUnstable(result)).toEqual([]);
   });
 

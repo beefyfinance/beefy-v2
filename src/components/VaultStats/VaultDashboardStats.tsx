@@ -2,6 +2,7 @@ import { css } from '@repo/styles/css';
 import { memo } from 'react';
 import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectVaultPnl } from '../../features/data/selectors/analytics.ts';
+import { selectDashboardPrimaryVaultId } from '../../features/data/selectors/dashboard.ts';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { styles } from './styles.ts';
@@ -21,6 +22,10 @@ export type VaultStatsProps = {
 export const VaultDashboardStats = memo(function VaultStats({ vaultId, address }: VaultStatsProps) {
   const classes = useStyles();
   const pnlData = useAppSelector(state => selectVaultPnl(state, vaultId, address));
+  // a CLM row's numbers are the group's, but its timelines live on the wrappers it holds
+  const timelineVaultId = useAppSelector(state =>
+    selectDashboardPrimaryVaultId(state, vaultId, address)
+  );
 
   return (
     <div className={classes.vaultStats}>
@@ -30,7 +35,7 @@ export const VaultDashboardStats = memo(function VaultStats({ vaultId, address }
             pnlData={pnlData}
             textWrap={false}
             showLabel={false}
-            vaultId={vaultId}
+            vaultId={timelineVaultId}
             walletAddress={address}
             align="right"
           />
@@ -40,7 +45,7 @@ export const VaultDashboardStats = memo(function VaultStats({ vaultId, address }
             pnlData={pnlData}
             textWrap={false}
             showLabel={false}
-            vaultId={vaultId}
+            vaultId={timelineVaultId}
             walletAddress={address}
             align="right"
           />
@@ -58,12 +63,18 @@ export const VaultDashboardStats = memo(function VaultStats({ vaultId, address }
             walletAddress={address}
             pnlData={pnlData}
             showLabel={false}
-            vaultId={vaultId}
+            vaultId={timelineVaultId}
             align="right"
           />
         </div>
         <div className={css(styles.column, styles.columnDashboard, styles.hideMd)}>
-          <VaultApyStat type="yearly" showLabel={false} vaultId={vaultId} align="right" />
+          <VaultApyStat
+            type="yearly"
+            showLabel={false}
+            vaultId={vaultId}
+            walletAddress={address}
+            align="right"
+          />
         </div>
         <div className={css(styles.column, styles.columnDashboard, styles.hideMd)}>
           <VaultDailyUsdStat

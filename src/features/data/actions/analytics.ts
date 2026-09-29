@@ -48,6 +48,7 @@ import {
 import type { ChainEntity, ChainId } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import {
+  getCowcentratedGroupIds,
   getCowcentratedPool,
   isCowcentratedLikeVault,
   isCowcentratedStandardVault,
@@ -986,7 +987,8 @@ export const fetchClmHarvestsForUserVault = createAppAsyncThunk<
       fetchClmHarvestsForVaultsOfUserOnChain({
         walletAddress,
         chainId: vault.chainId,
-        vaultIds: [vaultId],
+        // the whole group: the card reports on both sides whichever one the page is bound to
+        vaultIds: getCowcentratedGroupIds(vault),
       })
     );
   }

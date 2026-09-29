@@ -8,21 +8,19 @@ import { SearchInput } from '../../../../../../components/Form/Input/SearchInput
 import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
 import { VaultIcon } from '../../../../../../components/VaultIdentity/components/VaultIcon/VaultIcon.tsx';
 import { VaultPlatformTag } from '../../../../../../components/VaultIdentity/components/VaultTags/VaultTags.tsx';
+import AutocompoundIcon from '../../../../../../images/icons/autocompound.svg?react';
 import ChevronRight from '../../../../../../images/icons/chevron-right.svg?react';
+import ClaimableIcon from '../../../../../../images/icons/claimable.svg?react';
+import WalletIcon from '../../../../../../images/icons/wallet2.svg?react';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../../../../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSelectSelection } from '../../../../../data/actions/transact.ts';
-import {
-  isCowcentratedGovVault,
-  isCowcentratedLikeVault,
-  isGovVault,
-  isVaultRetired,
-  type VaultEntity,
-} from '../../../../../data/entities/vault.ts';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../../../../data/entities/vault.ts';
 import { selectVaultMatchesText } from '../../../../../data/selectors/filtered-vaults.ts';
 import {
   depositFromVaultEntriesEqual,
   selectTransactDepositFromVaultEntries,
+  selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import type { BeefyState } from '../../../../../data/store/types.ts';
@@ -37,24 +35,7 @@ import {
   SelectListSearch,
 } from '../common/CommonListStyles.tsx';
 import { listItemArrow, selectListScrollable } from '../common/CommonListStylesRaw.ts';
-
-type VaultGroupId = 'retired' | 'vault' | 'pool' | 'clmVault' | 'clmPool';
-
-const GROUP_LABELS: Record<VaultGroupId, string> = {
-  retired: 'Retired',
-  vault: 'Vault',
-  pool: 'Pool',
-  clmVault: 'CLM Vault',
-  clmPool: 'CLM Pool',
-};
-
-const categorizeVault = (vault: VaultEntity): VaultGroupId => {
-  if (isVaultRetired(vault)) return 'retired';
-  if (isGovVault(vault) && isCowcentratedGovVault(vault)) return 'clmPool';
-  if (isCowcentratedLikeVault(vault)) return 'clmVault';
-  if (isGovVault(vault)) return 'pool';
-  return 'vault';
-};
+import { CLM_SIDE_NAME, type ClmSide, groupDepositFromVaultEntries } from './groups.ts';
 
 const platformTagOverride = css.raw({
   alignSelf: 'flex-start',
@@ -67,10 +48,13 @@ const rightSideOverride = css.raw({
 
 export type DepositFromVaultSelectListProps = {
   css?: CssStyles;
+  /** a CLM held on several sides opens its positions instead of selecting */
+  onOpenClm: (clmId: VaultEntity['id']) => void;
 };
 
 export const DepositFromVaultSelectList = memo(function DepositFromVaultSelectList({
   css: cssProp,
+  onOpenClm,
 }: DepositFromVaultSelectListProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -91,43 +75,12 @@ export const DepositFromVaultSelectList = memo(function DepositFromVaultSelectLi
     });
   }, depositFromVaultEntriesEqual);
 
+  const destVaultId = useAppSelector(selectTransactVaultId);
   const groups = useMemo(() => {
-    const buckets = new Map<
-      VaultGroupId,
-      { entries: typeof searchFiltered; totalUsd: BigNumber }
-    >();
-    for (const entry of searchFiltered) {
-      const vault = vaultById[entry.vaultId];
-      if (!vault) continue;
-      const groupId = categorizeVault(vault);
-      const bucket = buckets.get(groupId);
-      if (bucket) {
-        bucket.entries.push(entry);
-        bucket.totalUsd = bucket.totalUsd.plus(entry.balanceUsd);
-      } else {
-        buckets.set(groupId, { entries: [entry], totalUsd: entry.balanceUsd });
-      }
-    }
-
-    const ordered: Array<{ id: VaultGroupId; label: string; entries: typeof searchFiltered }> = [];
-    const retired = buckets.get('retired');
-    if (retired) {
-      ordered.push({ id: 'retired', label: GROUP_LABELS.retired, entries: retired.entries });
-      buckets.delete('retired');
-    }
-    const rest = Array.from(buckets.entries()).sort(
-      ([, a], [, b]) => b.totalUsd.comparedTo(a.totalUsd) ?? 0
-    );
-    for (const [id, bucket] of rest) {
-      ordered.push({ id, label: GROUP_LABELS[id], entries: bucket.entries });
-    }
-    return ordered;
-  }, [searchFiltered, vaultById]);
-
-  const totalVisible = useMemo(
-    () => groups.reduce((sum, group) => sum + group.entries.length, 0),
-    [groups]
-  );
+    const dest = vaultById[destVaultId];
+    const destClmId = dest && isCowcentratedLikeVault(dest) ? dest.cowcentratedIds.clm : undefined;
+    return groupDepositFromVaultEntries(searchFiltered, vaultById, destClmId);
+  }, [searchFiltered, vaultById, destVaultId]);
 
   const handleSelect = useCallback(
     (selectionId: string) => {
@@ -143,22 +96,34 @@ export const DepositFromVaultSelectList = memo(function DepositFromVaultSelectLi
       </SelectListSearch>
       <Scrollable css={selectListScrollable}>
         <SelectListItems noGap={true}>
-          {totalVisible === 0 ?
+          {groups.length === 0 ?
             <SelectListNoResults>{t('Transact-DepositFromVault-NoResults')}</SelectListNoResults>
           : groups.map(group => (
               <Group key={group.id}>
-                <GroupHeader variant={group.id}>{group.label}</GroupHeader>
-                {group.entries.map(entry => (
-                  <VaultListItem
-                    key={entry.vaultId}
-                    vaultId={entry.vaultId}
-                    selectionId={entry.id}
-                    balance={entry.balance}
-                    balanceUsd={entry.balanceUsd}
-                    decimals={entry.decimals}
-                    onSelect={handleSelect}
-                  />
-                ))}
+                <GroupHeader variant={group.id}>
+                  {t(`Transact-DepositFromVault-Group-${group.id}`)}
+                </GroupHeader>
+                {group.rows.map(row =>
+                  row.kind === 'single' ?
+                    <VaultListItem
+                      key={row.entry.vaultId}
+                      vaultId={row.entry.vaultId}
+                      selectionId={row.entry.id}
+                      balance={row.entry.balance}
+                      balanceUsd={row.entry.balanceUsd}
+                      decimals={row.entry.decimals}
+                      side={row.side}
+                      onSelect={handleSelect}
+                    />
+                  : <ClmListItem
+                      key={row.clmId}
+                      vaultId={row.entries[0].vaultId}
+                      clmId={row.clmId}
+                      count={row.entries.length}
+                      totalUsd={row.totalUsd}
+                      onOpen={onOpenClm}
+                    />
+                )}
               </Group>
             ))
           }
@@ -174,6 +139,7 @@ type VaultListItemProps = {
   balance: BigNumber;
   balanceUsd: BigNumber;
   decimals: number;
+  side: ClmSide | undefined;
   onSelect: (selectionId: string) => void;
 };
 
@@ -183,6 +149,7 @@ const VaultListItem = memo(function VaultListItem({
   balance,
   balanceUsd,
   decimals,
+  side,
   onSelect,
 }: VaultListItemProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -206,7 +173,12 @@ const VaultListItem = memo(function VaultListItem({
         </IconWrapper>
         <VaultNameAndTags>
           <VaultRowName className="vault-row-name">{vault.names.list}</VaultRowName>
-          <VaultPlatformTag vaultId={vaultId} css={platformTagOverride} />
+          <TagLine>
+            <VaultPlatformTag vaultId={vaultId} css={platformTagOverride} />
+            {side ?
+              <ClmSideLabel side={side} />
+            : null}
+          </TagLine>
         </VaultNameAndTags>
       </VaultLeft>
       <ListItemRightSide css={rightSideOverride}>
@@ -223,6 +195,105 @@ const VaultListItem = memo(function VaultListItem({
     </VaultRowButton>
   );
 });
+
+type ClmListItemProps = {
+  /** any member of the CLM, for its icon, name and platform */
+  vaultId: VaultEntity['id'];
+  clmId: VaultEntity['id'];
+  count: number;
+  totalUsd: BigNumber;
+  onOpen: (clmId: VaultEntity['id']) => void;
+};
+
+const ClmListItem = memo(function ClmListItem({
+  vaultId,
+  clmId,
+  count,
+  totalUsd,
+  onOpen,
+}: ClmListItemProps) {
+  const { t } = useTranslation();
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const handleClick = useCallback(() => onOpen(clmId), [onOpen, clmId]);
+
+  return (
+    <VaultRowButton type="button" onClick={handleClick}>
+      <VaultLeft>
+        <IconWrapper>
+          <VaultIcon vaultId={vaultId} size={32} />
+          <ChainBadge>
+            <ChainIcon chainId={vault.chainId} size={12} />
+          </ChainBadge>
+        </IconWrapper>
+        <VaultNameAndTags>
+          <VaultRowName className="vault-row-name">{vault.names.list}</VaultRowName>
+          <TagLine>
+            <VaultPlatformTag vaultId={vaultId} css={platformTagOverride} />
+            <SideText>{t('Transact-DepositFromVault-Positions', { count })}</SideText>
+          </TagLine>
+        </VaultNameAndTags>
+      </VaultLeft>
+      <ListItemRightSide css={rightSideOverride}>
+        <ListItemBalanceAmount className="vault-row-balance">
+          {formatLargeUsd(totalUsd)}
+        </ListItemBalanceAmount>
+        <ChevronRight className={cx('list-item-arrow', css(listItemArrow))} />
+      </ListItemRightSide>
+    </VaultRowButton>
+  );
+});
+
+export const ClmSideIcon = memo(function ClmSideIcon({ side }: { side: ClmSide }) {
+  return (
+    side === 'vault' ? <SmallAutocompound />
+    : side === 'pool' ? <SmallClaimable />
+    : <SmallWallet />
+  );
+});
+
+/** a CLM position named as on the withdraw tab */
+const ClmSideLabel = memo(function ClmSideLabel({ side }: { side: ClmSide }) {
+  const { t } = useTranslation();
+  return (
+    <SideText>
+      <ClmSideIcon side={side} />
+      {t(CLM_SIDE_NAME[side])}
+    </SideText>
+  );
+});
+
+const TagLine = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    minWidth: 0,
+  },
+});
+
+const SideText = styled('span', {
+  base: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '4px',
+    textStyle: 'body.sm',
+    color: 'text.dark',
+    whiteSpace: 'nowrap',
+  },
+});
+
+const smallIcon = {
+  flex: 'none',
+  width: '12px',
+  height: '12px',
+  color: 'text.middle',
+} as const;
+
+const SmallAutocompound = styled(AutocompoundIcon, { base: smallIcon });
+
+const SmallClaimable = styled(ClaimableIcon, { base: smallIcon });
+
+const SmallWallet = styled(WalletIcon, { base: smallIcon });
 
 const Group = styled('div', {
   base: {
@@ -257,11 +328,12 @@ const GroupHeader = styled('div', {
       pool: {
         backgroundColor: 'tags.pool.background',
       },
-      clmVault: {
+      clm: {
         backgroundColor: 'tagClmBackground',
       },
-      clmPool: {
-        backgroundColor: 'tagClmBackground',
+      thisClm: {
+        backgroundColor: 'background.content.light',
+        color: 'text.middle',
       },
     },
   },

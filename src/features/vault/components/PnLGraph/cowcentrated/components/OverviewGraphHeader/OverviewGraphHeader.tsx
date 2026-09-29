@@ -13,9 +13,10 @@ import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../../data/store/hooks.ts';
 import HelpOutline from '../../../../../../../images/icons/mui/HelpOutline.svg?react';
 import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
-import { selectClmPnl } from '../../../../../../data/selectors/analytics.ts';
+import { selectClmGroupPnl } from '../../../../../../data/selectors/analytics.ts';
 import { selectCowcentratedLikeVaultById } from '../../../../../../data/selectors/vaults.ts';
 import { Stat } from '../Stat/Stat.tsx';
+import { useClmGroupScope } from '../../../../ClmMode/ClmModeContext.tsx';
 import { styles } from './styles.ts';
 import { PendingIndexNotice } from '../../../common/PendingIndexNotice.tsx';
 
@@ -32,15 +33,18 @@ export const OverviewGraphHeader = memo(function OverviewGraphHeader({
 }: OverviewGraphHeaderProps) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const userPnl = useAppSelector(state => selectClmPnl(state, vaultId, address));
+  // the whole CLM position, both yield modes; the toggle only routes deposits/withdrawals
+  const userPnl = useAppSelector(state => selectClmGroupPnl(state, vaultId, address));
   const { underlying, tokens, pnl, hold, pendingIndex } = userPnl;
   const hasPnlTooltip = showClmPnlTooltip(userPnl);
   const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
+  // the merged card always reports claimed and pending rewards, so it always takes that wording
+  const wholeGroup = useClmGroupScope();
   const tt = useMemo(() => {
-    const suffix = vault.type;
+    const suffix = wholeGroup ? 'gov' : vault.type;
     return (key: string, options?: Parameters<typeof t>[0]) =>
       t([`${key}-${suffix}`, key], options);
-  }, [t, vault.type]);
+  }, [t, vault.type, wholeGroup]);
 
   return (
     <>
