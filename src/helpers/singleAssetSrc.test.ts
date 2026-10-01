@@ -6,6 +6,8 @@ import {
   type SingleAsset,
   singleAssetKeys,
 } from './singleAssetSrc.ts';
+import avaxBenqiUrl from '../images/single-assets/avax/by-id/aQI.png?url';
+import qiDaoUrl from '../images/single-assets/QI.png?url';
 import ramUrl from '../images/single-assets/RAM.png?url';
 import robinhoodRamUrl from '../images/single-assets/robinhood/RAM.png?url';
 import up33Url from '../images/single-assets/UP33.svg?url';
@@ -49,6 +51,15 @@ describe('getSingleAssetSrc', () => {
 
   it('finds a dotted symbol without its dot', () => {
     expect(getSingleAssetSrc({ symbol: 'USDC.e', chainId: 'arbitrum' })).toBe(usdceUrl);
+  });
+
+  it('prefers the chain image for an id over the image for its symbol', () => {
+    expect(getSingleAssetSrc({ id: 'aQI', symbol: 'QI', chainId: 'avax' })).toBe(avaxBenqiUrl);
+    expect(getSingleAssetSrc({ id: 'QI', symbol: 'QI', chainId: 'avax' })).toBe(qiDaoUrl);
+  });
+
+  it('ignores the chain image for an id on other chains', () => {
+    expect(getSingleAssetSrc({ id: 'aQI', symbol: 'QI', chainId: 'polygon' })).toBe(qiDaoUrl);
   });
 
   it('ignores images named after the id outside by-id', () => {
