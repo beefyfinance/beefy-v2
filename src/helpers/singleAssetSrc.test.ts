@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  areSameSingleAssets,
   getSingleAssetSrc,
   isSameSingleAsset,
   type SingleAsset,
@@ -25,10 +26,6 @@ describe('singleAssetKeys', () => {
       'robinhood/NET',
       'NET',
     ]);
-  });
-
-  it('uses only the symbol without a chain', () => {
-    expect(singleAssetKeys({ id: 'NETrh', symbol: 'NET' })).toEqual(['NET']);
   });
 
   it('strips the first dot from the symbol but not the id', () => {
@@ -76,5 +73,22 @@ describe('isSameSingleAsset', () => {
     const asset: SingleAsset = { id: 'NETrh', symbol: 'NET', chainId: 'robinhood' };
     const token = { ...asset, address: '0x1', decimals: 18 };
     expect(isSameSingleAsset(asset, token)).toBe(true);
+  });
+});
+
+describe('areSameSingleAssets', () => {
+  const net: SingleAsset = { id: 'NETrh', symbol: 'NET', chainId: 'robinhood' };
+  const usdg: SingleAsset = { id: 'USDG', symbol: 'USDG', chainId: 'robinhood' };
+
+  it('compares assets in order', () => {
+    expect(areSameSingleAssets([net, usdg], [{ ...net }, { ...usdg }])).toBe(true);
+    expect(areSameSingleAssets([net, usdg], [usdg, net])).toBe(false);
+    expect(areSameSingleAssets([net, usdg], [net])).toBe(false);
+  });
+
+  it('treats a missing list as equal only to another missing list', () => {
+    expect(areSameSingleAssets(undefined, undefined)).toBe(true);
+    expect(areSameSingleAssets(undefined, [])).toBe(false);
+    expect(areSameSingleAssets([], undefined)).toBe(false);
   });
 });

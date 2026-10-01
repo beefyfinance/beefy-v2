@@ -1,8 +1,9 @@
 import type { TokenEntity } from '../features/data/entities/token.ts';
+import { areArraysEqual } from '../features/data/utils/array-utils.ts';
 import { createGlobLoader, removeExtension } from './globLoader.ts';
 
-export type SingleAsset = Pick<TokenEntity, 'symbol'> &
-  Partial<Pick<TokenEntity, 'id' | 'chainId'>>;
+export type SingleAsset = Pick<TokenEntity, 'symbol' | 'chainId'> &
+  Partial<Pick<TokenEntity, 'id'>>;
 
 const pathToUrl = import.meta.glob<string>('../images/single-assets/**/*.(svg|webp|png)', {
   query: '?url',
@@ -16,10 +17,6 @@ const keyToUrl = createGlobLoader(pathToUrl, path => {
 
 export function singleAssetKeys({ id, symbol, chainId }: SingleAsset): string[] {
   const symbolKey = symbol.replace('.', '');
-  if (!chainId) {
-    return [symbolKey];
-  }
-
   const symbolKeys = [`${chainId}/${symbolKey}`, symbolKey];
   return id ? [`${chainId}/by-id/${id}`, ...symbolKeys] : symbolKeys;
 }
@@ -34,4 +31,14 @@ export function singleAssetExists(asset: SingleAsset): boolean {
 
 export function isSameSingleAsset(a: SingleAsset, b: SingleAsset): boolean {
   return a.id === b.id && a.symbol === b.symbol && a.chainId === b.chainId;
+}
+
+export function areSameSingleAssets(
+  a: readonly SingleAsset[] | undefined,
+  b: readonly SingleAsset[] | undefined
+): boolean {
+  if (!a || !b) {
+    return a === b;
+  }
+  return areArraysEqual(a, b, isSameSingleAsset);
 }

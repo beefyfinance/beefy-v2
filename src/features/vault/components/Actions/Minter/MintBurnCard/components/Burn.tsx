@@ -164,7 +164,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           <div className={css(styles.reservesText)}>
             {t('reserves', { token: minter.depositToken.symbol })}
           </div>
-          <AssetsImage assetSymbols={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
+          <AssetsImage assets={[depositToken]} size={24} />
           <div className={css(styles.amountReserves)}>
             {reserves.shiftedBy(-depositToken.decimals).toFixed(2)} {depositToken.symbol}
           </div>
@@ -192,9 +192,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
               {t('Transact-Max')}
             </Button>
           }
-          startAdornment={
-            <AssetsImage assetSymbols={[minter.mintedToken.symbol]} size={24} chainId={chain.id} />
-          }
+          startAdornment={<AssetsImage assets={[mintedToken]} size={24} />}
         />
       </div>
       <div className={css(styles.customDivider)}>
@@ -220,9 +218,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           maxValue={outputAmount}
           allowInputAboveBalance={true}
           disabled={true}
-          startAdornment={
-            <AssetsImage assetSymbols={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
-          }
+          startAdornment={<AssetsImage assets={[depositToken]} size={24} />}
         />
       </div>
       <>

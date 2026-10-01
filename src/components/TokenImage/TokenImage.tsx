@@ -1,4 +1,3 @@
-import { createSelector } from '@reduxjs/toolkit';
 import { type CssStyles } from '@repo/styles/css';
 import { memo } from 'react';
 import { createCachedSelector } from 're-reselect';
@@ -7,7 +6,8 @@ import type { TokenEntity } from '../../features/data/entities/token.ts';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
   selectTokenByAddressOrUndefined,
-  selectVaultTokenSymbols,
+  selectVaultImageAssets,
+  selectVaultTokenImageAssets,
 } from '../../features/data/selectors/tokens.ts';
 import {
   selectNonGovVaultIdsByDepositTokenAddress,
@@ -15,7 +15,11 @@ import {
   selectVaultById,
 } from '../../features/data/selectors/vaults.ts';
 import type { BeefyState } from '../../features/data/store/types.ts';
-import { singleAssetExists } from '../../helpers/singleAssetSrc.ts';
+import {
+  areSameSingleAssets,
+  type SingleAsset,
+  singleAssetExists,
+} from '../../helpers/singleAssetSrc.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import type { AssetsImageProps } from '../AssetsImage/AssetsImage.tsx';
 import {
@@ -47,29 +51,17 @@ type VaultOptions = {
   assetsOnly?: boolean;
 };
 
-type ChainAssets = {
-  chainId: ChainEntity['id'];
-  assetSymbols: string[];
-};
-
-const chainAssetsEqual = (a: ChainAssets | undefined, b: ChainAssets | undefined): boolean =>
-  a === b ||
-  (!!a &&
-    !!b &&
-    a.chainId === b.chainId &&
-    a.assetSymbols.length === b.assetSymbols.length &&
-    a.assetSymbols.every((symbol, index) => symbol === b.assetSymbols[index]));
-
-const selectChainAssetsForSymbol = createCachedSelector(
-  (_state: BeefyState, chainId: ChainEntity['id'], _symbol: string) => chainId,
-  (_state: BeefyState, _chainId: ChainEntity['id'], symbol: string) => symbol,
-  (chainId, symbol): ChainAssets => ({ chainId, assetSymbols: [symbol] })
-)((_state: BeefyState, chainId: ChainEntity['id'], symbol: string) => `${chainId}-${symbol}`);
+const selectTokenAsAssets = createCachedSelector(
+  (_state: BeefyState, token: Token) => token.id,
+  (_state: BeefyState, token: Token) => token.symbol,
+  (_state: BeefyState, token: Token) => token.chainId,
+  (id, symbol, chainId): SingleAsset[] => [{ id, symbol, chainId }]
+)((_state: BeefyState, { id, symbol, chainId }: Token) => `${chainId}-${id ?? ''}-${symbol}`);
 
 const selectAssetsForAddressChainId = (
   state: BeefyState,
   { address, chainId }: AddressChainIdOptions
-): ChainAssets | undefined => {
+): SingleAsset[] | undefined => {
   // check vaults first, as not all vaults have a share token
   const vault = selectVaultByAddressOrUndefined(state, chainId, address);
   if (vault) {
@@ -88,16 +80,16 @@ const selectAssetsForAddressChainId = (
 const selectAssetsForToken = (
   state: BeefyState,
   { token }: TokenOptions
-): ChainAssets | undefined => {
+): SingleAsset[] | undefined => {
   // vault share token -> use vault icon
   const vault = selectVaultByAddressOrUndefined(state, token.chainId, token.address);
   if (vault) {
     return selectAssetsForVault(state, { vault });
   }
 
-  // image exists for symbol -> use single asset icon
-  if (singleAssetExists({ symbol: token.symbol, chainId: token.chainId })) {
-    return selectChainAssetsForSymbol(state, token.chainId, token.symbol);
+  // image exists for token -> use single asset icon
+  if (singleAssetExists(token)) {
+    return selectTokenAsAssets(state, token);
   }
 
   // LP token for a vault -> use vault icon
@@ -116,7 +108,7 @@ const selectAssetsForToken = (
 const selectAssetsForTokens = (
   state: BeefyState,
   { tokens }: TokensOptions
-): ChainAssets | undefined => {
+): SingleAsset[] | undefined => {
   if (tokens.length === 0) {
     return undefined;
   }
@@ -125,51 +117,33 @@ const selectAssetsForTokens = (
     return selectAssetsForToken(state, { token: tokens[0] });
   }
 
-  return {
-    chainId: tokens[0].chainId,
-    assetSymbols: tokens.map(token => token.symbol),
-  };
+  return tokens;
 };
 
 const selectAssetsForVaultId = (
   state: BeefyState,
   { vaultId, ...rest }: VaultIdOptions
-): ChainAssets | undefined => {
+): SingleAsset[] | undefined => {
   return selectAssetsForVault(state, { vault: selectVaultById(state, vaultId), ...rest });
 };
-
-const selectChainAssetsForVaultId = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id'], _assetsOnly: boolean) =>
-    selectVaultById(state, vaultId),
-  (state: BeefyState, vaultId: VaultEntity['id'], _assetsOnly: boolean) =>
-    selectVaultTokenSymbols(state, vaultId),
-  (_state: BeefyState, _vaultId: VaultEntity['id'], assetsOnly: boolean) => assetsOnly,
-  (vault, symbols, assetsOnly): ChainAssets | undefined => {
-    // Use custom icon from config if not disabled
-    if (!assetsOnly && vault.icons?.length) {
-      return { chainId: vault.chainId, assetSymbols: vault.icons };
-    }
-
-    // Make icon using symbols of all vault assets
-    if (symbols?.length) {
-      return { chainId: vault.chainId, assetSymbols: symbols };
-    }
-
-    return undefined;
-  }
-);
 
 const selectAssetsForVault = (
   state: BeefyState,
   { vault, assetsOnly = false }: VaultOptions
-): ChainAssets | undefined => selectChainAssetsForVaultId(state, vault.id, assetsOnly);
+): SingleAsset[] | undefined => {
+  const assets =
+    assetsOnly ?
+      selectVaultTokenImageAssets(state, vault.id)
+    : selectVaultImageAssets(state, vault.id);
+  return assets.length ? assets : undefined;
+};
 
 type CommonTokenImageProps = {
   size?: AssetsImageProps['size'];
   css?: CssStyles;
 };
 
-type Token = Pick<TokenEntity, 'address' | 'symbol' | 'chainId'>;
+type Token = Pick<TokenEntity, 'address'> & SingleAsset;
 
 export type TokenImageProps = AddressChainIdOptions & CommonTokenImageProps;
 export const TokenImage = memo(function TokenImage({
@@ -180,7 +154,7 @@ export const TokenImage = memo(function TokenImage({
   const assets = useAppSelector(state => selectAssetsForAddressChainId(state, options));
 
   return assets ?
-      <AssetsImage {...assets} css={cssProp} size={size} />
+      <AssetsImage assets={assets} css={cssProp} size={size} />
     : <MissingAssetsImage css={cssProp} size={size} />;
 });
 
@@ -193,7 +167,7 @@ export const TokenImageFromEntity = memo(function TokenImageFromEntity({
   const assets = useAppSelector(state => selectAssetsForToken(state, options));
 
   return assets ?
-      <AssetsImage {...assets} css={cssProp} size={size} />
+      <AssetsImage assets={assets} css={cssProp} size={size} />
     : <MissingAssetsImage css={cssProp} size={size} />;
 });
 
@@ -203,10 +177,13 @@ export const TokensImage = memo(function TokensImage({
   css: cssProp,
   ...options
 }: TokensImageProps) {
-  const assets = useAppSelector(state => selectAssetsForTokens(state, options), chainAssetsEqual);
+  const assets = useAppSelector(
+    state => selectAssetsForTokens(state, options),
+    areSameSingleAssets
+  );
 
   return assets ?
-      <AssetsImage {...assets} css={cssProp} size={size} />
+      <AssetsImage assets={assets} css={cssProp} size={size} />
     : <MissingAssetsImage css={cssProp} size={size} />;
 });
 
@@ -218,15 +195,13 @@ export const TokensImageWithChain = memo(function TokensImageWithChain({
   chainId,
   ...options
 }: TokensImageWithChainProps) {
-  const assets = useAppSelector(state => selectAssetsForTokens(state, options), chainAssetsEqual);
+  const assets = useAppSelector(
+    state => selectAssetsForTokens(state, options),
+    areSameSingleAssets
+  );
 
   return assets ?
-      <AssetsImageWithChain
-        chainId={chainId}
-        assetSymbols={assets.assetSymbols}
-        css={cssProp}
-        size={size}
-      />
+      <AssetsImageWithChain chainId={chainId} assets={assets} css={cssProp} size={size} />
     : <MissingAssetsImage css={cssProp} size={size} />;
 });
 
@@ -239,7 +214,7 @@ export const VaultIdImage = memo(function VaultIdImage({
   const assets = useAppSelector(state => selectAssetsForVaultId(state, options));
 
   return assets ?
-      <AssetsImage {...assets} css={cssProp} size={size} />
+      <AssetsImage assets={assets} css={cssProp} size={size} />
     : <MissingAssetsImage css={cssProp} size={size} />;
 });
 
@@ -252,7 +227,7 @@ export const VaultImage = memo(function VaultImage({
   const assets = useAppSelector(state => selectAssetsForVault(state, options));
 
   return assets ?
-      <AssetsImage {...assets} css={cssProp} size={size} />
+      <AssetsImage assets={assets} css={cssProp} size={size} />
     : <MissingAssetsImage css={cssProp} size={size} />;
 });
 
@@ -267,6 +242,6 @@ export const VaultDepositTokenImage = memo(function VaultDepositTokenImage({
   );
 
   return assets ?
-      <AssetsImage {...assets} css={cssProp} size={size} />
+      <AssetsImage assets={assets} css={cssProp} size={size} />
     : <MissingAssetsImage css={cssProp} size={size} />;
 });
