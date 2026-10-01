@@ -99,7 +99,7 @@
     "status": "active",
     "createdAt": 1786635001,
     "platformId": "beefy",
-    "feeTier": "0.5",
+    "feeTier": "0.50",
     "tickSpacing": 60,
     "assets": ["SHOPrh", "WETH"],
     "icons": ["SHOP", "WETH"],
@@ -219,7 +219,7 @@
     "status": "active",
     "createdAt": 1786635001,
     "platformId": "beefy",
-    "feeTier": "0.5",
+    "feeTier": "0.50",
     "tickSpacing": 60,
     "assets": ["NET", "USDG"],
     "risks": {
