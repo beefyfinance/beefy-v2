@@ -6,7 +6,6 @@ import { orderBy } from 'lodash-es';
 import type BigNumber from 'bignumber.js';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { ChainEntity } from '../entities/chain.ts';
-import type { TokenEntity } from '../entities/token.ts';
 import {
   isCowcentratedLikeVault,
   isErc4626Vault,
@@ -18,6 +17,7 @@ import {
 import type { BeefyState } from '../store/types.ts';
 import { getTopNArray } from '../utils/array-utils.ts';
 import { isUserClmPnl, type PnlYieldSource, type UserVaultPnl } from './analytics-types.ts';
+import type { UnifiedRewardToken } from './rewards.ts';
 import {
   selectClmPnl,
   selectStandardGovPnl,
@@ -81,7 +81,7 @@ export type UserRewardStatus = 'compounded' | 'pending' | 'claimed';
 export type UserRewardSource = PnlYieldSource['source'] | 'gov' | 'boost';
 
 export type UserReward = {
-  token: Pick<TokenEntity, 'symbol' | 'decimals' | 'address' | 'chainId'>;
+  token: UnifiedRewardToken;
   amount: BigNumber;
   usd: BigNumber;
   status: UserRewardStatus;

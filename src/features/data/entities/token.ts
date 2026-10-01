@@ -1,3 +1,4 @@
+import { pick } from 'lodash-es';
 import type { ChainEntity } from './chain.ts';
 import type { PlatformEntity } from './platform.ts';
 import type BigNumber from 'bignumber.js';
@@ -87,6 +88,14 @@ export function isTokenEqual(tokenA: TokenEntity, tokenB: TokenEntity): boolean 
  */
 export function tokenEqualityKey(token: TokenEntity): string {
   return `${token.type}|${token.chainId}|${token.address}`;
+}
+
+const rewardTokenKeys = ['id', 'address', 'symbol', 'decimals', 'oracleId', 'chainId'] as const;
+
+export type ContractRewardToken = Pick<TokenEntity, (typeof rewardTokenKeys)[number]>;
+
+export function pickContractRewardToken(token: TokenEntity): ContractRewardToken {
+  return pick(token, rewardTokenKeys);
 }
 
 /**

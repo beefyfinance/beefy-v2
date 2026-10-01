@@ -3,7 +3,6 @@ import type BigNumber from 'bignumber.js';
 import { lazy, memo } from 'react';
 import { shallowEqual } from 'react-redux';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
-import type { PromoReward } from '../../../../../data/entities/promo.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
@@ -12,9 +11,9 @@ import {
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInShareToken,
 } from '../../../../../data/selectors/balance.ts';
-import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../../data/selectors/boosts.ts';
 import {
   selectVaultActiveExtraRewardTokens,
+  selectVaultCurrentBoostRewardTokens,
   type UnifiedRewardToken,
 } from '../../../../../data/selectors/rewards.ts';
 import {
@@ -32,7 +31,7 @@ type FooterNotice =
   | {
       kind: 'boost-deposit';
       vaultId: VaultEntity['id'];
-      rewardTokens: PromoReward[];
+      rewardTokens: UnifiedRewardToken[];
     }
   | {
       kind: 'deposit-claim';
@@ -49,13 +48,13 @@ const vaultIdArgument = (_state: BeefyState, vaultId: VaultEntity['id']) => vaul
 const selectBoostDepositNotice = createSelector(
   [
     vaultIdArgument,
-    selectCurrentBoostByVaultIdOrUndefined,
+    selectVaultCurrentBoostRewardTokens,
     selectUserVaultBalanceInShareTokenIncludingDisplaced,
     selectUserVaultBalanceNotInActiveBoostInShareToken,
   ],
-  (vaultId, boost, inVaultAnywhere, notInActiveBoost): FooterNotice | undefined => {
-    if (!!boost && (inVaultAnywhere.isZero() || !notInActiveBoost.isZero())) {
-      return { kind: 'boost-deposit', vaultId, rewardTokens: boost.rewards };
+  (vaultId, rewardTokens, inVaultAnywhere, notInActiveBoost): FooterNotice | undefined => {
+    if (!!rewardTokens && (inVaultAnywhere.isZero() || !notInActiveBoost.isZero())) {
+      return { kind: 'boost-deposit', vaultId, rewardTokens };
     }
 
     return undefined;
@@ -126,7 +125,7 @@ function footerNoticeEqual(a: FooterNotice | undefined, b: FooterNotice | undefi
     return false;
   }
   if (a.kind === 'boost-deposit' && b.kind === 'boost-deposit') {
-    return a.vaultId === b.vaultId && a.rewardTokens === b.rewardTokens;
+    return a.vaultId === b.vaultId && rewardTokensEqual(a.rewardTokens, b.rewardTokens);
   }
   if (a.kind === 'deposit-claim' && b.kind === 'deposit-claim') {
     return rewardTokensEqual(a.rewardTokens, b.rewardTokens);

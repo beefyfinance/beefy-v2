@@ -1,6 +1,6 @@
 import type { Address } from 'viem';
 import BigNumber from 'bignumber.js';
-import { chunk, partition, pick } from 'lodash-es';
+import { chunk, partition } from 'lodash-es';
 import { type PublicClient } from 'viem';
 import { readContract } from 'viem/actions';
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi.ts';
@@ -13,6 +13,7 @@ import {
   isTokenEqual,
   isTokenErc20,
   isTokenNative,
+  pickContractRewardToken,
   sharedPrecisionDecimals,
 } from '../../entities/token.ts';
 import {
@@ -300,7 +301,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       balance: balance,
       rewards: [
         {
-          token: pick(rewardsToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+          token: pickContractRewardToken(rewardsToken),
           amount: rewards,
           index: 0,
         },
@@ -322,7 +323,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     const earnedToken = selectTokenByAddress(state, firstReward.chainId, firstReward.address);
     const balance = fromWei(result.balance.toString(10), balanceToken.decimals);
     const reward = {
-      token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+      token: pickContractRewardToken(earnedToken),
       amount: fromWei(result.rewards.toString(10), earnedToken.decimals),
       index: 0,
     };
@@ -358,7 +359,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
         const amount = fromWei(result.rewards[index]?.toString(10) || '0', rewardToken.decimals);
 
         return {
-          token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+          token: pickContractRewardToken(rewardToken),
           amount: isFiniteBigNumber(amount) ? amount : BIG_ZERO,
           index,
         };
@@ -393,7 +394,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
         const amount = fromWei(result.rewards[index]?.toString(10) || '0', rewardToken.decimals);
 
         return {
-          token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+          token: pickContractRewardToken(rewardToken),
           amount: isFiniteBigNumber(amount) ? amount : BIG_ZERO,
           index,
         };
@@ -409,7 +410,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       for (const reward of missing) {
         const earnedToken = selectTokenByAddress(state, reward.chainId, reward.address);
         rewards.push({
-          token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+          token: pickContractRewardToken(earnedToken),
           amount: BIG_ZERO,
           index: -1,
         });
